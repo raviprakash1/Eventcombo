@@ -1,0 +1,398 @@
+﻿@model EventKombo.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+<script>
+  WebFont.load({
+    google: {
+      families: ['Abel']
+    }
+  });
+</script>
+<style>
+    /* Prevents slides from flashing */
+    #slides {
+        display: none;
+    }
+
+    #accordion label {
+        /*	display:inline-block;
+        width: 180px;
+        margin:5px; */
+    }
+
+    h3 {
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: normal;
+    }
+</style>
+<style type="text/css">
+    .form-label {
+        width: 150px !important;
+    }
+
+    .form-label-left {
+        width: 150px !important;
+    }
+
+    .form-line {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .form-label-right {
+        width: 150px !important;
+    }
+
+    .form-all {
+        width: 600px;
+        color: #555 !important;
+        font-size: 14px;
+    }
+</style>
+<style>
+    .eventList span {
+        padding: 2px 15px;
+    }
+
+    .eventName {
+        display: inline-block;
+        width: 30%;
+    }
+
+    .eventTix {
+        display: inline-block;
+        width: 20%;
+    }
+
+    .eventStatus {
+        display: inline-block;
+        width: 20%;
+    }
+
+    .eventDate {
+        display: inline-block;
+        width: 20%;
+    }
+
+    .eventStatus.upcoming {
+        color: #FF9900;
+    }
+
+    .eventStatus.live {
+        color: #0F3;
+    }
+
+    .eventLinks {
+        display: inline-block;
+        width: 30%;
+        float: right;
+    }
+
+        .eventLinks a {
+            color: #00cfff;
+        }
+
+    .odd {
+        background-color: #Efefef;
+    }
+
+    .titles {
+        background-color: #999;
+        font-size: 16px;
+        color: #FFF;
+    }
+
+    .eventAnalytics {
+        display: none;
+    }
+
+    .ui-accordion-header-active {
+        background-color: #00cfff !important;
+        color: white;
+    }
+</style>
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <section id="page-content">
+        <div class="filter">
+            <div class="float-left"><img src="~/Images/desi-account-logo.gif"></div>
+            <div id="home" class="float-right left-kick"><</div>
+        </div>
+        <div id="page-container">
+            <div class="page-section">
+                <div id="back-content-account">
+                    <h2>CREATE AN ACCOUNT</h2>
+                    <div id="accordion" class="ui-accordion ui-widget ui-helper-reset" role="tablist">
+                        <h3 id="ui-accordion-accordion-header-0" class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-accordion-header-active ui-state-active ui-corner-top" role="tab" aria-controls="ui-accordion-accordion-panel-0" aria-selected="true" tabindex="0">
+                            <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>
+                            Personal Information
+                        </h3>
+                        <div id="ui-accordion-accordion-panel-0" class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" style="display: block;" aria-labelledby="ui-accordion-accordion-header-0" role="tabpanel" aria-expanded="true" aria-hidden="false">
+                            @Html.ValidationSummary("", new { @class = "text-danger reg-error" })
+                            <div class="jotform-form">
+                            <div class="form-all">
+                                <ul class="form-section">
+                                    <li class="form-line" id="id_10">
+                                        <label class="form-label-left" id="label_10" for="input_10"> E-mail (Used as login)</label>
+
+                                        @*@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })*@
+                                        <div id="cid_10" class="form-input">
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger reg-error" })
+                                        </div>
+                                    </li>
+                                    <li class="form-line" id="id_13">
+                                        <label class="form-label-left" id="label_13" for="input_13">Password </label>
+                                        <div id="cid_13" class="form-input">
+                                            @*<div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })*@
+
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger reg-error" })
+                                        </div>
+                                    </li>
+                                    <li class="form-line" id="id_13">
+                                        <label class="form-label-left" id="label_13" for="input_13">Password Again</label>
+                                        @*<div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })*@
+                                        <div id="cid_13" class="form-input">
+                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger reg-error" })
+                                        </div>
+                                        @*</div>*@
+                                    </li>
+                                    <li class="form-line" id="id_4">
+                                        <label class="form-label-left" id="label_4" for="input_4"> Name </label>
+                                        <div id="cid_4" class="form-input">
+                                            <span class="form-sub-label-container">
+                                                @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.Firstname, "", new { @class = "text-danger reg-error" })
+                                                <label class="form-sub-label" for="first_4" id="sublabel_first"> First Name </label>
+                                            </span><span class="form-sub-label-container">
+                                                @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control" })
+                                                <label class="form-sub-label" for="last_4" id="sublabel_last"> Last Name </label>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            
+                                        </div>
+                                    </li>
+                                    <li class="form-line" id="id_5">
+                                        <label class="form-label-left" id="label_5" for="input_5"> Address </label>
+                                        <div id="cid_5" class="form-input">
+                                            <table summary="" class="form-address-table" border="0" cellpadding="0" cellspacing="0">
+
+                                                <tr>
+                                                    <td width="50%">
+                                                        <span class="form-sub-label-container">
+                                                            @Html.TextBoxFor(m => m.city, new { @class = "form-control form-address-city", @Value = ViewBag.city })
+                                                            <label class="form-sub-label" for="input_5_city" id="sublabel_5_city"> City </label>
+                                                            @Html.ValidationMessageFor(m => m.city, "", new { @class = "text-danger reg-error" })
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="form-sub-label-container">
+                                                            @Html.TextBoxFor(m => m.state, new { @class = "form-control form-address-city", @Value = ViewBag.state })
+                                                            <label class="form-sub-label" for="input_5_state" id="sublabel_5_state"> State / Province </label>
+                                                            @Html.ValidationMessageFor(m => m.state, "", new { @class = "text-danger reg-error" })
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="50%">
+                                                        <span class="form-sub-label-container">
+                                                            @Html.TextBoxFor(m => m.PinCode, new { @class = "form-control form-address-postal", @Value = ViewBag.PinCode })
+                                                            @Html.ValidationMessageFor(m => m.PinCode, "", new { @class = "text-danger reg-error" })
+                                                            <label class="form-sub-label" for="input_5_postal" id="sublabel_5_postal"> Postal / Zip Code </label>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="form-sub-label-container">
+                                                            @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>)
+
+                                                            <label class="form-sub-label" for="input_5_country" id="sublabel_5_country"> Country </label>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </li>
+                                    <li style="clear:both"> </li>
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" class="btn" value="Register" disabled="disabled" />
+                        </div>
+                        <div class="clearboth" style="margin:10px;"></div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+        }
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript">
+            // <![CDATA[
+
+            var toValidate = $('#Email, #Password, #ConfirmPassword,#Firstname'),
+            valid = false;
+            toValidate.keyup(function () {
+                if ($(this).val().length > 0) {
+                    $(this).data('valid', true);
+                } else {
+                    $(this).data('valid', false);
+                }
+                toValidate.each(function () {
+                    if ($(this).data('valid') == true) {
+                        valid = true;
+                    } else {
+                        valid = false;
+                    }
+                });
+                if (valid === true) {
+
+                    $('input[type=submit]').prop('disabled', false);
+                } else {
+
+                    $('input[type=submit]').prop('disabled', true);
+                }
+            });
+
+            var val1, val2;
+            $('#PinCode').change(function () {
+                var pincode = $(this).val();
+                $.ajax({
+                    url: 'http://maps.googleapis.com/maps/api/geocode/json',
+                    data: '&address=' + pincode + '&sensor=true',
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
+
+
+                        if (data.status == 'OK') {
+
+                            for (var i = 0; i < data.results[0].address_components.length; i++) {
+                                var obj = data.results[0].address_components[i];
+                                var obj2 = obj['types'];
+                                for (var j = 0; j < obj2.length; j++) {
+                                    if (obj2[j] == 'locality') {
+                                        $('#city').val(obj['long_name']);
+                                        console.log(obj['long_name']);
+                                    }
+                                    if (obj2[j] == 'administrative_area_level_1') {
+                                        $('#state').val(obj['long_name']);
+                                        console.log(obj['long_name']);
+                                    }
+                                    if (obj2[j] == 'country') {
+                                        $("#Country option[text=" + obj['long_name'] + "]").attr("selected", "selected");
+                                        console.log(obj['long_name']);
+                                    }
+                                }
+
+
+
+                            }
+
+                        }
+
+
+
+                        else {
+                            alert('Invalid Zip/Pin Code');
+                            return false;
+                        }
+                    }
+                });
+            });
+
+            // ]]>
+        </script>
+<script>
+ // $(window).load(function(){
+ //   		$("#home").click(function () {
+ //     parent.history.back();
+ //       return false;
+ //    });
+ //   $("#logo").click(function () {
+ //     $(location).attr('href', 'index.php');
+ //       return false;
+ //    });
+ //   $("#logo-back").click(function () {
+ //     $(location).attr('href', 'index.php');
+ //       return false;
+ //    });
+
+ //});
+
+ 	//$("#expand").click(function () {
+	//  $(this).toggleClass("active");
+	//  $("#menu-expand").slideToggle("fast");
+
+	//});
+    //  $('#home').rotate(0);
+
+     var default_val = '';
+    $('input').focus(function() {
+        if($(this).val() == $(this).data('default_val') || !$(this).data('default_val')) {
+            $(this).data('default_val', $(this).val());
+            $(this).val('');
+        }
+    });
+
+    $('input').blur(function() {
+        if ($(this).val() == '') $(this).val($(this).data('default_val'));
+    });
+
+
+	//$(".showAccount").click(function () {
+	//  $('#back-content-account').show();
+	//  $('#back-content-account').siblings().hide();
+	//  });
+
+
+	//$('.showEvents').click(function () {
+	//  $('#back-content-events').show();
+	//  $('#back-content-events').siblings().hide();
+	//  });
+
+	//$('.showDeals').click(function () {
+	//  $('#back-content-deals').show();
+	//  $('#back-content-deals').siblings().hide();
+	//  });
+
+	//$('.ShowAnalytics').click(function () {
+	//  $(this).parents().siblings('.eventAnalytics').slideToggle();
+	//  });
+
+    $( "#accordion" ).accordion({
+      collapsible: true,
+	  heightStyle: "content"
+	  });
+    $( "#accordion2" ).accordion({
+      collapsible: true,
+	  heightStyle: "content"
+    });
+  $( "#accordion3" ).accordion({
+      collapsible: true,
+	  heightStyle: "content"
+    });
+
+
+</script>

@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "PaymentInformation";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<h3>Payment  Information</h3>
+<div>
+    <p> To collect payments online, Eventbrite offers you a choice of payment processors.</p>
+    <p>You will be able to modify your choice of processor for each event, until you have made your first ticket sale.</p>
+    <h4><strong>Collect payments from attendees</strong></h4>
+    <div id="payment_processor_select" data-has-atd="false">
+        <label id="payment_processor_label" for="payment_type">Select payment processor</label>
+        :
+        <select name="payment_type" id="payment_type" onChange="setPayment();">
+            <option value="eventbrite" selected="">Credit Card Processing</option>
+        </select>
+        <img src="images/VISA.png" alt="VISA"> <img src="images/MASTERCARD.png" alt="MASTERCARD"> <img src="images/AMEX.png" alt="AMEX"> <img src="images/DISCOVER.png" alt="DISCOVER">
+    </div>
+    <div id="payout_address">
+        <table cellpadding="5">
+            <tbody>
+                <tr>
+                    <td>
+                        <div id="eventbrite_div">
+                            <div id="epp_currency_us">
+                                <div>
+                                    We will collect payments on your behalf and begin issuing payment 5 days after your event ends. <br>
+                                    <br>
+                                    <input id="app-checkbox-id" type="checkbox" name="app_opt_in" value="1">
+                                    Enable Advance Payouts for my account.<br>
+                                    <span id="app_tagline">By signing up for this program, I agree to the DesiClub <a href="company.php">terms of service</a>.</span><br>
+                                    <br>
+                                </div>
+                                <h3>Receive payments</h3>
+                                <div id="payment_method_container">
+                                    <table cellspacing="0" cellpadding="5">
+                                        <tbody>
+                                            <tr id="epp_payout_type">
+                                                <td>
+                                                    <label>Payout method:</label>
+                                                    <select name="epp_payout_type">
+
+
+
+                                                        <option value="ACH" selected="">Direct Deposit</option>
+
+
+
+                                                        <option value="CHECK">Check</option>
+
+
+
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="epp_collect_info_container">
+                                    <div id="epp_direct_deposit">
+                                        <table cellspacing="0" cellpadding="5">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Name on Account
+                                                        <p>Your full name, as appears on bank statements</p>
+                                                    </td>
+                                                    <td>*</td>
+                                                    <td>
+                                                        <input type="text" maxlength="60" name="epp_name_on_account" value="">
+                                                        <span id="deposit" onMouseOver="ShowHelp(this,'deposit')" onMouseOut="ShowHelp(this,'deposit')"><img src="images/icon-question.gif" alt="" width="17" height="17" hspace="6" align="absbottom"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Account Type</td>
+                                                    <td>*</td>
+                                                    <td>
+                                                        <input name="epp_account_type" type="radio" value="C" id="payment_type_acct_type_checking" checked="">
+                                                        <label for="payment_type_acct_type_checking">Checking</label>
+                                                        <input name="epp_account_type" type="radio" value="S" id="payment_type_acct_type_savings">
+                                                        <label for="payment_type_acct_type_savings">Savings</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Routing Number</td>
+                                                    <td>*</td>
+                                                    <td><input type="text" maxlength="9" name="epp_routing_number" value="" onChange="if(isInt(this.value)) form.epp_routing_number_ismasked.value=0" onClick="if(!isInt(this.value)) this.value='';" onBlur="if(!isInt(this.value)) this.value=''"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Account Number</td>
+                                                    <td>*</td>
+                                                    <td><input maxlength="20" type="text" name="epp_account_number" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Re-enter Account Number</td>
+                                                    <td>*</td>
+                                                    <td><input maxlength="20" type="text" name="epp_account_number_copy" value=""></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <span class="btn1">SAVE</span>
+    <div class="clearboth" style="margin:10px;"></div>
+</div>
+        

@@ -1,0 +1,816 @@
+﻿@model EventCombo.Models.myAccount
+@using System.Threading
+@{
+    ViewBag.Title = "MyAccount";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+
+<style>
+.jFiler-input-dragDrop{ width:200px;height:auto; padding:0px; }
+.jFiler-item-thumb-image{ }
+.jFiler-item-thumb-image img{ width:100%;}
+.jFiler-item-list{ margin:0px;}
+.jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 150px;}
+.jFiler-item .jFiler-item-container{ margin:0px; padding:0px; }
+.jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
+.jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:226px;  margin-left:0px; }
+.can_btn i{ font-size:25px;}
+.can_btn{ padding:0px;}
+.jFiler-input-text{ margin-bottom:5px;}
+.jFiler-input-icon i{position: relative;
+    top: 35px;}
+</style>
+
+@{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
+
+<div class="col-sm-12">
+    <h3 class="acnt_title">ACCOUNT</h3>
+    <p class="p_info">Personal Information</p>
+</div>
+<div class="clearfix"></div>
+@using (Html.BeginForm("MyAccount", "Account", FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    if (ViewData["Message"] != null)
+                            {
+        <div class="er_suc_main" id="divaccsuc">
+            <div class="er_suc_img"></div>
+            <div class="er_suc">@ViewData["Message"] </div>
+        </div>
+
+    }
+    if (!ViewData.ModelState.IsValid)
+    {
+        
+        <div class="er_UI_main" id="diverro1acc">
+            <div class="er_sys_img"></div>
+            <div class="er_suc" id="erraccsucc">@Html.ValidationMessage("Error")</div>
+        </div>
+    }
+    @*if (ViewData["Error"]!=null)
+    {
+        <div class="er_UI_main" id="diverro1acc">
+            <div class="er_sys_img"></div>
+            <div class="er_suc">@ViewData["Error"]</div>
+        </div>
+   }*@
+        <div class="er_UI_main" id="diverroacc" style="display :none;">
+            <div class="er_UI_img"></div>
+            <div class="er_suc" id="erraccmsg">  </div>
+        </div>
+        <div class="clearfix"></div>
+<div class="col-sm-3">
+    <div>
+
+        <input type="file" multiple="multiple" name="image" id="input2">
+    </div>
+</div>
+
+
+<div class="col-sm-7">
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label ">Name</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-6">
+                    @Html.TextBoxFor(m => m.Firstname, new { @maxlength = 35, @class = "form-control" })
+                    <small class="acnt_form_name_mini">First Name</small>
+                </div>
+                <div class="col-xs-6">
+                    @Html.TextBoxFor(m => m.Lastname, new { @maxlength = 35, @class = "form-control" })
+                    <small class="acnt_form_name_mini">Last Name</small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Date of Birth</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-12 add_form_bot">
+                @Html.DropDownList("month", Enumerable.Range(1, 12).Select(i => new SelectListItem
+           {
+               Value = i.ToString(),
+               Text = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(i),
+               Selected = i == Model.month
+
+           }))    @Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
+                 {
+                     Value = i.ToString(),
+                     Text = i.ToString(),
+                     Selected = i == Model.day
+
+                 }))
+                @Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
+                           {
+                               Value = i.ToString(),
+                               Text = i.ToString(),
+                               Selected = i == Model.year
+
+                           }))
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Gender</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-12 add_form_bot">
+                    @Html.DropDownList("Gender", new List<SelectListItem>{
+        new SelectListItem{ Text="Male", Value="Male"},
+        new SelectListItem{ Text="Female", Value="Female"}
+        }, "--- Select ---"
+        )
+        </div>
+    </div>
+</div>
+</div>
+    <div class="clearfix"></div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Address</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-12 add_form_bot">
+                    @Html.TextBoxFor(m => m.StreetAddress1, new { @maxlength = 256, @class = "form-control" })
+                    <small class="acnt_form_name_mini">Street Address</small>
+                </div>
+                <div class="col-xs-12 add_form_bot">
+                    @Html.TextBoxFor(m => m.StreeAddress2, new { @maxlength = 256, @class = "form-control" })
+                    <small class="acnt_form_name_mini">Street Address 2</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    @Html.TextBoxFor(m => m.City, new { @maxlength = 256, @class = "form-control" })
+                    <small class="acnt_form_name_mini">City</small>
+                </div>
+                <div class="col-xs-6">
+                    @Html.TextBoxFor(m => m.State, new { @maxlength = 256, @class = "form-control" })
+                    <small class="acnt_form_name_mini">State</small>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    @Html.TextBoxFor(m => m.Zip, new { @maxlength = 5, @class = "form-control" })
+                    <small class="acnt_form_name_mini">Zip</small>
+                </div>
+                <div class="col-xs-6">
+                    @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>)
+                    <small class="acnt_form_name_mini">Country</small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Home Number</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-6 add_form_bot">
+                    @Html.TextBoxFor(m => m.MainPhone, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Cellular Number</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-6 add_form_bot">
+                    @Html.TextBoxFor(m => m.SecondPhone, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Work Number</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-6 add_form_bot">
+                    @Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Email</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-12 add_form_bot">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">E-mail Verification</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-12 add_form_bot">
+                    @Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Website</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-12 add_form_bot">
+                    @Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Current Password</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-12 add_form_bot">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">New Password</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-12 add_form_bot">
+                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label acnt_form_label">Confirm New Password</label>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-xs-12 add_form_bot">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-info col-md-offset-3 acnt_btn" value="Save" id="btnsave" />
+    
+
+
+</div>
+
+    }
+
+
+ 
+
+
+
+    <script type="text/javascript">
+     
+     
+        $("#Country").change(function () {
+            $("#Zip").val("");
+            $("#State").val("");
+            $("#City").val("");
+
+           
+        });
+        jQuery(function ($) {
+            $("#MainPhone").mask("999-999-9999");
+            $("#SecondPhone").mask("999-999-9999");
+            $("#WorkPhone").mask("999-999-9999");
+
+        });
+        var Model = "@Html.Raw(Model.editsave)";
+        console.log(Model)
+        var files1 = '@(MvcHtmlString.Create(Json.Encode(ViewData["results"])))';
+        console.log(files1)
+        $(document).ready(function () {
+
+            if (Model == "Save") {
+                $('#input2').filer({
+                    limit: '1',
+                    maxSize: 2 * 1024 * 1024,
+                    extensions: ['jpg', 'jpeg', 'png'],
+                    changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
+                    showThumbs: true,
+                    appendTo: "#drag-drop",
+                    theme: "dragdropbox",
+                    onChange: false,
+                    templates: {
+                        box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
+                        item: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <div class="jFiler-item-container">\
+                                <div class="jFiler-item-inner">\
+                                     <div class="jFiler-item-assets jFiler-row">\
+                                        <ul class="list-inline pull-left">\
+                                            <li>{{fi-progressBar}}</li>\
+                                        </ul>\
+                                    </div>\
+                                    </div>\
+                            </div>\
+                                            <span></span>\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+                        itemAppend: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+
+
+                        progressBar: '<div class="bar"></div>',
+                        itemAppendToEnd: true,
+                        removeConfirmation: true,
+                        _selectors: {
+                            list: '.jFiler-item-list',
+                            item: '.jFiler-item',
+                            progressBar: '.bar',
+                            remove: '.jFiler-item-trash-action',
+                        }
+                    },
+                    uploadFile: {
+                        url: "/Account/SaveUploadedFile",
+                        data: {},
+                        type: 'POST',
+                        enctype: 'multipart/form-data',
+                        beforeSend: function () { },
+                        success: function (data, el) {
+
+                            //el.find(".jFiler-item-assets").hide();
+                            ////    console.log(el);
+                            //// $(".jFiler-item-assets").hide();
+                            //var Celebrity_image_count=$("#Celebrity_image_count").val();
+                            //var imagejson=jQuery.parseJSON(data);
+                            //var imgdata=imagejson.image_name+'####'+imagejson.image_type;
+                            //$('<input>').attr({
+                            //    type: 'hidden',
+                            //    id:'image_hidden_'+el[0].jfiler_id,
+                            //    name: 'Celebritypicture['+imgdata+']',
+                            //    value: imagejson.image_path
+                            //}).appendTo('form');
+                            //var imgname=imagejson.image_name;
+                            //el.find('span').html(imgname.substring(0,18));
+                            var parent = el.find(".jFiler-jProgressBar").parent();
+                            el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                                $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                            });
+                            //el.find('img').attr('src',imagejson.image_path);
+                            //el.find(".jFiler-item-thumb-image").bind("click", function(e){
+                            //    $.magnificPopup.open({
+                            //        items: {
+                            //            src: imagejson.image_path
+                            //        },
+                            //        type: 'image',
+                            //        modal: true,
+                            //        closeMarkup: '<button class="mfp-close" type="button" title="Close (Esc)">×</button>',
+
+                            //        // You may add options here, they're exactly the same as for $.fn.magnificPopup call
+                            //        // Note that some settings that rely on click event (like disableOn or midClick) will not work here
+                            //    }, 0);
+
+                            //    $(".mfp-close").html("X");
+                            //});
+                            //if ($.trim(Celebrity_image_count)=='') {
+                            //    $("#Celebrity_image_count").val('1');
+                            //}else{
+                            //    Celebrity_image_count=parseInt(Celebrity_image_count)+1;
+                            //    $("#Celebrity_image_count").val(Celebrity_image_count);
+                            //}
+                            //if ($("#Celebrity_image_count").val()=='5') {
+                            //    $("#Celebrity_image_count_em_").hide();
+                            //}
+
+
+                        },
+                        error: function (el) {
+                            //var parent = el.find(".jFiler-jProgressBar").parent();
+                            //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                            //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                            //});
+                        },
+                        statusCode: {},
+                        onProgress: function () { },
+                    },
+                    dragDrop: {
+                        dragEnter: function () { },
+                        dragLeave: function () { },
+                        drop: function () { },
+                    },
+                    addMore: false,
+                    clipBoardPaste: true,
+                    excludeName: null,
+                    beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
+                    onSelect: function () { $(".jFiler-input-inner").hide(); },
+                    afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
+                    onRemove: function (el) {
+                        $('#input2').click(function (e) {
+                            e.preventDefault();
+                        })
+
+                    },
+                    onEmpty: function (el) { if ($(".jFiler-item").length == 1) { setTimeout(function () { $(".jFiler-input-inner").show(); $('#input2').unbind('click'); }, 200); }; },
+                    captions: {
+                        button: "Choose Files",
+                        feedback: "Choose files To Upload",
+                        feedback2: "files were chosen",
+                        drop: "Drop file here to Upload",
+                        removeConfirmation: "Are you sure you want to remove this file?",
+                        errors: {
+                            filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
+                            filesType: "Only files with extension .jpg,.png are allowed to be uploaded.",
+                            filesSize: "{{fi-name}} is too large! Please upload file up to {{fi-maxSize}} MB.",
+                            filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                        }
+                    }
+
+                });
+            }
+            else if (Model == "Edit") {
+
+                $('#input2').filer({
+                    limit: '1',
+                    maxSize: 2 * 1024 * 1024,
+                    extensions: ['jpg', 'jpeg', 'png'],
+                    changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
+                    showThumbs: true,
+                    appendTo: "#drag-drop",
+                    theme: "dragdropbox",
+                    onChange:false,
+                    templates: {
+                        box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
+                        item: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <div class="jFiler-item-container">\
+                                <div class="jFiler-item-inner">\
+                                     <div class="jFiler-item-assets jFiler-row">\
+                                        <ul class="list-inline pull-left">\
+                                            <li>{{fi-progressBar}}</li>\
+                                        </ul>\
+                                    </div>\
+                                    </div>\
+                            </div>\
+                                            <span></span>\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+                        itemAppend: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+
+
+                        progressBar: '<div class="bar"></div>',
+                        itemAppendToEnd: true,
+                        removeConfirmation: true,
+                        _selectors: {
+                            list: '.jFiler-item-list',
+                            item: '.jFiler-item',
+                            progressBar: '.bar',
+                            remove: '.jFiler-item-trash-action',
+                        }
+                    },
+                    uploadFile: {
+                        url: "/Account/SaveUploadedFile",
+                        data: {},
+                        type: 'POST',
+                        enctype: 'multipart/form-data',
+                        beforeSend: function () { },
+                        success: function (data, el) {
+                            
+                            //el.find(".jFiler-item-assets").hide();
+                            ////    console.log(el);
+                            //// $(".jFiler-item-assets").hide();
+                            //var Celebrity_image_count=$("#Celebrity_image_count").val();
+                            //var imagejson=jQuery.parseJSON(data);
+                            //var imgdata=imagejson.image_name+'####'+imagejson.image_type;
+                            //$('<input>').attr({
+                            //    type: 'hidden',
+                            //    id:'image_hidden_'+el[0].jfiler_id,
+                            //    name: 'Celebritypicture['+imgdata+']',
+                            //    value: imagejson.image_path
+                            //}).appendTo('form');
+                            //var imgname=imagejson.image_name;
+                            //el.find('span').html(imgname.substring(0,18));
+                            var parent = el.find(".jFiler-jProgressBar").parent();
+                            el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                                $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                            });
+                            //el.find('img').attr('src',imagejson.image_path);
+                            //el.find(".jFiler-item-thumb-image").bind("click", function(e){
+                            //    $.magnificPopup.open({
+                            //        items: {
+                            //            src: imagejson.image_path
+                            //        },
+                            //        type: 'image',
+                            //        modal: true,
+                            //        closeMarkup: '<button class="mfp-close" type="button" title="Close (Esc)">×</button>',
+
+                            //        // You may add options here, they're exactly the same as for $.fn.magnificPopup call
+                            //        // Note that some settings that rely on click event (like disableOn or midClick) will not work here
+                            //    }, 0);
+
+                            //    $(".mfp-close").html("X");
+                            //});
+                            //if ($.trim(Celebrity_image_count)=='') {
+                            //    $("#Celebrity_image_count").val('1');
+                            //}else{
+                            //    Celebrity_image_count=parseInt(Celebrity_image_count)+1;
+                            //    $("#Celebrity_image_count").val(Celebrity_image_count);
+                            //}
+                            //if ($("#Celebrity_image_count").val()=='5') {
+                            //    $("#Celebrity_image_count_em_").hide();
+                            //}
+
+
+                        },
+                        error: function (el) {
+                            //var parent = el.find(".jFiler-jProgressBar").parent();
+                            //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                            //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                            //});
+                        },
+                        statusCode: {},
+                        onProgress: function () { },
+                    },
+                    dragDrop: {
+                        dragEnter: function () { },
+                        dragLeave: function () { },
+                        drop: function () { },
+                    },
+                    addMore: false,
+                    clipBoardPaste: true,
+                    excludeName: null,
+                    beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
+                    onSelect: function () { $(".jFiler-input-inner").hide(); },
+                    afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
+                    onRemove: function (el) {
+                        $('#input2').click(function (e) {
+                            e.preventDefault();
+                        })
+                       
+                    },
+                    onEmpty: function (el) { if ($(".jFiler-item").length == 1) { setTimeout(function () { $(".jFiler-input-inner").show(); $('#input2').unbind('click'); }, 200); }; },
+                    captions: {
+                        button: "Choose Files",
+                        feedback: "Choose files To Upload",
+                        feedback2: "files were chosen",
+                        drop: "Drop file here to Upload",
+                        removeConfirmation: "Are you sure you want to remove this file?",
+                        errors: {
+                            filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
+                            filesType: "Only files with extension .jpg,.png are allowed to be uploaded.",
+                            filesSize: "{{fi-name}} is too large! Please upload file up to {{fi-maxSize}} MB.",
+                            filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                        }
+                    },
+                    files: [{
+                        "type": "@Model.contentype",
+                        "name": "@Model.UserProfileImage",
+                        "file": "@Model.ImagePath"
+                    }]
+
+                });
+            }
+
+        });
+
+
+    </script>
+    <script type="text/javascript">
+        $('#btnsave').click(function () {
+
+            var firstnmae = $("#Firstname").val();
+            console.log(firstnmae + '+++++++++++++++++');
+            var lastname = $("#Lastname").val();
+            var ConfirmPassword = $("#ConfirmPassword").val();
+
+            var Email = $("#Email").val();
+            var NewPassword = $("#NewPassword").val();
+            var ConfirmEmail = $("#ConfirmEmail").val();
+            var Websiteurl = $("#WebsiteURL").val();
+            var Password = $("#Password").val();
+            var ConfirmPassword = $("#ConfirmPassword").val();
+
+            var NewPassword = $("#NewPassword").val();
+
+            var msg = "";
+            if (firstnmae.trim() == " ") {
+                msg += "Please Enter First name! </br>"
+                $('#Firstname').focus();
+                $('#Firstname').css("border", "red solid 1px");
+            } else {
+                msg = "";
+                $('#Firstname').css("border", "black solid 1px");
+            }
+            if (lastname.trim() == " ") {
+                msg += "Please Enter Last name! </br>"
+                $('#Lastname').focus();
+                $('#Lastname').css("border", "red solid 1px");
+            } else {
+                $('#Lastname').css("border", "black solid 1px");
+                msg = "";
+            }
+
+
+
+            if (Email != "") {
+                if (!validateEmail(Email)) {
+                    $('#Email').focus();
+                    $('#Email').css("border", "red solid 1px");
+                    msg += "Invalid Email! </br>"
+
+                } else {
+
+                    msg = "";
+                    $('#Email').focus();
+                    $('#Email').css("border", "black solid 1px");
+                }
+            }
+
+            if (ConfirmEmail != "") {
+
+                if (!validateEmail(ConfirmEmail)) {
+                    $('#ConfirmEmail').focus();
+                    $('#ConfirmEmail').css("border", "red solid 1px");
+                    msg += "Invalid Confirm Email! </br>"
+
+                } else {
+                    $('#ConfirmEmail').css("border", "black solid 1px");
+                    msg = "";
+                }
+
+
+            }
+            if (Password != "") {
+                if (Password.length < 4) {
+                    $('#Password').focus();
+                    $('#Password').css("border", "red solid 1px");
+                    msg += "Password cannot be less than 4!! </br>"
+
+                }
+            }
+            if (NewPassword!="")
+            {
+                if (NewPassword.length < 4)
+                {
+                    $('#NewPassword').focus();
+                    $('#NewPassword').css("border", "red solid 1px");
+                    msg += "New Password length cannot be less than 4!</br>"
+
+                }
+               
+
+            }
+            if (ConfirmPassword != "") {
+                if (ConfirmPassword.length < 4) {
+                    $('#ConfirmPassword').focus();
+                    $('#ConfirmPassword').css("border", "red solid 1px");
+                    msg += "Confirm Password length cannot be less than 4! </br>"
+
+                }
+
+
+            }
+            //if (Email.Trim() == ConfirmEmail.Trim()) {
+            //    alert('equal')
+
+            //}
+            //else {
+            //    $('#ConfirmEmail').focus();
+            //    $('#ConfirmEmail').css("border", "red solid 1px");
+            //    msg += "Confirm Email doesnot match Email!! </br>"
+            //    alert('unequal')
+
+            //}
+
+            if (msg == "") {
+                $('#diverroacc').css("display", "none");
+                return true;
+            }
+            else {
+
+                $('#erraccmsg').html(msg);
+                $('#diverro1acc').css("display", "none");
+                $('#divaccsuc').css("display", "none");
+                
+                $('#diverroacc').css("display", "block");
+                return false;
+            }
+        });
+        function validateEmail(sEmail) {
+            var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+
+            if (filter.test(sEmail)) {
+
+                return true;
+            }
+            else {
+
+
+                return false;
+            }
+        }
+        var val1, val2;
+        $('#Zip').change(function () {
+            var country = $("#Country option:selected").text().trim();
+            console.log(country);
+            var city = "";
+            var state = "";
+
+            var pincode = $(this).val();
+            $.ajax({
+                url: 'http://maps.googleapis.com/maps/api/geocode/json',
+                data: '&address=' + pincode + '&sensor=true',
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+
+
+                    if (data.status == 'OK') {
+
+                        for (var i = 0; i < data.results[0].address_components.length; i++) {
+                            var obj = data.results[0].address_components[i];
+                         
+                            var obj2 = obj['types'];
+                          
+                            for (var j = 0; j < obj2.length; j++) {
+                                if (obj2[j] == 'locality') {
+                                    city = obj['long_name'];
+
+                                 
+                                }
+                                if (obj2[j] == 'postal_town') {
+                                    city = obj['long_name'];
+
+                               
+                                }
+                                if (obj2[j] == 'administrative_area_level_1') {
+                                    state = obj['long_name'];
+                                   
+                                }
+                                if (obj2[j] == 'administrative_area_level_2') {
+                                    state = obj['long_name'];
+                                  
+                                }
+                             
+                               
+                                if (obj2[j] == 'country') {
+                                    if (obj['long_name'] == country) {
+                                      
+                                      
+                                        $('#City').val(city);
+                                        $('#State').val(state);
+                                    }
+
+                                }
+
+                            }
+
+
+
+                        }
+
+                    }
+
+
+
+                    else {
+                       
+                        $('#erraccmsg').html('Invalid Zip/Pin Code');
+                        $('#diverroacc').css("display", "block");
+                        $('#Zip').css('border', 'red solid 1px');
+                        return false;
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+<!---<script src="~/Scripts/filer/jquery.filer.min.js"></script>-->

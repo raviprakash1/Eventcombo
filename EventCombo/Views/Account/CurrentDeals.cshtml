@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "CurrentDeals";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div id="DealCurrentDeals">
+    <h3>Current Deals</h3>
+    <div>
+        <div class="eventList titles"> <span class="eventName">Name</span>&nbsp;&nbsp;<span class="eventTix">Market</span><span class="eventDate">Launched</span>&nbsp;&nbsp;<span class="eventTix">Sold/Redeemed</span>&nbsp;&nbsp;<span class="eventLinks">Quick Links</span> </div>
+        <div class="eventList">
+            <span class="eventName" onClick="$(this).siblings('#DealNowDetail').slideToggle();">My test deal</span>&nbsp;&nbsp;<span class="eventTix">NYC</span>&nbsp;&nbsp;<span class="eventDate">10/12/2013</span>&nbsp;&nbsp;<span class="eventTix">4/0</span>&nbsp;&nbsp;<span class="eventLinks"><a href="#">Manage</a> | <a href="#">Edit</a> | <a href="#">View</a> | Invite | Voucher Download</span>
+            <div id="DealNowDetail" style="display:none;"><img src="~/Images/deal-now-info-FPO.jpg" alt="FPO" width="808" height="985"></div>
+        </div>
+        <div class="eventList odd">
+            <span class="eventName" onClick="$(this).siblings('#DealNowDetail').slideToggle();">My test deal</span>&nbsp;&nbsp;<span class="eventTix">LAX</span>&nbsp;&nbsp;<span class="eventDate">10/12/2013</span>&nbsp;&nbsp;<span class="eventTix">4/2</span>&nbsp;&nbsp;<span class="eventLinks"><a href="#">Manage</a> | <a href="#">Edit</a> | <a href="#">View</a> | Invite | Voucher Download</span>
+            <div id="DealNowDetail" style="display:none;"><img src="~/Images/deal-now-info-FPO.jpg" alt="FPO" width="808" height="985"></div>
+        </div>
+        <div class="eventList">
+            <span class="eventName" onClick="$(this).siblings('#DealNowDetail').slideToggle();">My test deal</span>&nbsp;&nbsp;<span class="eventTix">NYC</span>&nbsp;&nbsp;<span class="eventDate">10/12/2013</span>&nbsp;&nbsp;<span class="eventTix">4/1</span>&nbsp;&nbsp;<span class="eventLinks"><a href="#">Manage</a> | <a href="#">Edit</a> | <a href="#">View</a> | Invite | Voucher Download</span>
+            <div id="DealNowDetail" style="display:none;"><img src="~/Images/deal-now-info-FPO.jpg" alt="FPO" width="808" height="985"></div>
+        </div>
+        <div class="clearboth" style="margin:10px;"></div>
+    </div>
+</div>
+

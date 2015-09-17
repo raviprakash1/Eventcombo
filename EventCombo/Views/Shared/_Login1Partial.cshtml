@@ -1,0 +1,222 @@
+﻿@using EventCombo.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+@using Microsoft.AspNet.Identity
+<script src="~/Scripts/aes.js"></script>
+  
+       @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
+       {
+
+        @Html.AntiForgeryToken()
+
+        <div class="err_main">
+            <div class="er_UI_main" id="diverrologin" style="display :none;width:100%">
+                <div class="er_UI_img"></div>
+                <div class="er_suc" id="dverrui">  </div>
+            </div>
+        </div>
+
+
+        <div class="err_main">
+            <div class="er_UI_main" id="diverro1login" style="display :none;width:100%">
+                <div class="er_sys_img"></div>
+                <div class="er_suc" id="dverrsys">  </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-sm-5 login_form_bot">
+                        @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @class = "form-control login_place", @id = "loginemail" })
+                    </div>
+                    <div class="col-sm-5 login_form_bot">
+                        @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control login_place", @id = "loginpassword" })
+                    </div>
+                    <div class="col-sm-2 login_form_bot">
+                        <input type="button" value="LOGIN" class="btn btn-primary login_btn_sub" id="btnSavelogin"  disabled="disabled"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+             
+            
+                }
+
+          
+        
+
+      <script type="text/javascript">
+          $(document).ready(function () {
+
+              $('#loginemail').css("border", "black solid 1px");
+              $('#loginpassword').css("border", "black solid 1px");
+              $('#diverro1login').css('display', 'none');
+              $('#diverrologin').css("display", "none");
+              $('#loginemail').keyup(function () {
+             
+                  if ($(this).val() != '' && $('#loginpassword').val()!='')
+                  {
+                      $('#btnSavelogin').removeAttr("disabled");
+
+                  } else {
+
+                      $('#btnSavelogin').attr("disabled", true);
+                  }
+
+              })
+              $('#loginpassword').keyup(function () {
+                  if ($(this).val() != '' && $('#loginemail').val()!='')
+                  {
+               
+                      $('#btnSavelogin').removeAttr("disabled");
+
+                  } else {
+
+                      $('#btnSavelogin').attr("disabled", true);
+                  }
+
+              })
+            
+
+          });
+
+                function validationLogin()
+                {
+                    var msglogin = "";
+                    var Emaillogin = $("#loginemail").val();
+
+                    var Passowrdlogin = $("#loginpassword").val();
+                    if (!validateEmail(Emaillogin)) {
+                        $('#loginemail').focus();
+                        $('#loginemail').css("border", "red solid 1px");
+                        msglogin += "Invalid Email! </br>"
+
+                    } else {
+
+                        msglogin = "";
+                        $('#loginemail').focus();
+                        $('#loginemail').css("border", "black solid 1px");
+                    }
+                    console.log(Passowrdlogin.length);
+                    if (Passowrdlogin.length < 4) {
+                        $('#loginpassword').focus();
+                        $('#loginpassword').css("border", "red solid 1px");
+                        msglogin += "Password Length can't be less than 4!</br>"
+
+                    } else {
+                        if (msglogin == "") {
+                            msglogin = "";
+                        }
+                        $('#loginpassword').focus();
+                        $('#loginpassword').css("border", "black solid 1px");
+
+                    }
+                    return msglogin;
+                }
+                function validateEmail(sEmail) {
+                    var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+
+                    if (filter.test(sEmail)) {
+
+                        return true;
+                    }
+                    else {
+
+
+                        return false;
+                    }
+                }
+
+                $("#btnSavelogin").click(function () {
+                    var msgloginn = validationLogin();
+                   
+                    var flag1login = true;
+                    if (msgloginn == "") {
+                        $('#diverrologin').css("display", "none");
+                        flag1 = true;
+                    }
+                    else {
+                        $('#diverro1login').css('display', 'none');
+                        $('#dverrui').html(msgloginn);
+                        $('#diverrologin').css("display", "block");
+
+                        return false;
+                    }
+                    if (flag1login) {
+                        
+                        var flaglogin = false;
+                        var Emaillogin = $("#loginemail").val();
+                        var Emailpassword = $("#loginpassword").val();
+                        //var httpRequest = new XMLHttpRequest();
+                        
+                        
+                        //httpRequest.onreadystatechange = function () {
+                        //    console.log(httpRequest);
+                        //    if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                        //       // alert('SUCEESSSSSSS');
+                        //        console.log(httpRequest);
+                        //    }
+                        //}
+                        //httpRequest.open('GET', 'http://localhost:10159/Account/IsValid', true);
+                        //httpRequest.send();
+
+                        $.ajax({
+                            url: "/Home/IsValidID",
+                            data: { Email: Emaillogin, Password: Emailpassword },
+                            dataType: "text",
+                            type: 'Post',
+                            success: function (data, textStatus, xhr) {
+                              if (data != '') {
+                                    if (data =="NotFound")
+                                    {
+                                        $('#loginemail').focus();
+                                        $('#loginemail').css("border", "red solid 1px");
+                                        $('#diverrologin').css("display", "none");
+                                        $('#diverro1login').css('display', 'block');
+                                        $('#dverrsys').html('Email Not Found in our Database!');
+                                        
+                                        return false;
+
+                                    } else if (data == "PasswordNotMatch")
+                                    {
+                                        $('#loginemail').focus();
+                                        $('#loginemail').css("border", "red solid 1px");
+                                        $('#diverrologin').css("display", "none");
+                                        $('#diverro1login').css('display', 'block');
+                                        $('#dverrsys').html('Password Not Match In Our Database!Use Forget Password!!');
+
+                                    }
+                                    else if (data == "PasswordMatch")
+                                    {
+                                        $('#formlogin').submit();
+
+                                    }
+
+                                  
+                                }
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                            }
+                        });
+                     
+
+
+                    }
+                });
+          </script>
+
+
+
+
+
+
+
+
+

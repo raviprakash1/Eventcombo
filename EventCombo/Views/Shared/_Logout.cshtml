@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNet.Identity
+@*<link href="~/Content/desistyles.css" rel="stylesheet" />*@
+    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="navbar-right">
+            <li class="msg_icn"><span>12</span> </li>
+           
+            <li><a href="#">Welcome @User.Identity.Name!</a> </li>
+            <li>
+               @Html.ActionLink("MyAccount", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
+            </li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+            </li>
+        </ul>
+
+        
+    }
+

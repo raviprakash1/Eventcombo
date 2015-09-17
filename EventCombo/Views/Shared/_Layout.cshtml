@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="#">
+    <title>eventcombo</title>
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/Content/eventcombo.css" rel="stylesheet" />
+    <!--  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+  
+</head>
+
+<body >
+
+    @*<div id="login2" style="display: none; width: 600px;" class="login_popup">
+      
+        <p</p>
+        Use your social network login below or
+        <a href="#login3" class="nyroModal"><span class="btn1 log_sub">Sign Up</span></a>
+        <br />
+        <br />
+        <div class="social_login">
+           
+
+        </div>
+    </div>*@
+
+
+
+
+    @*<div class="login_popup" id="login3" style="display: none; width: 600px;">
+        <h2>Sign-up</h2>
+       
+
+    </div>*@
+
+
+    
+    <!-- Header -->
+    <div class="container-fluid headr_main ">
+        <div class="row">
+            <div class="col-sm-5">
+                <a class="logo" href="/Home/Index"><img src=" ~/Images/EventCombo_Red.jpg" /></a>
+            </div>
+
+            <div class="col-sm-6 head_left_nav">
+                <ul class="navbar-right">
+
+                    <li></li>
+                    <li><a href="#" data-toggle="modal" data-target="#myModal" id="loginPopup" >LogIn | SignUp </a>  </li>
+                  
+                </ul>
+
+            </div>
+            <div class="col-sm-1 text-right">
+                <div class="social_icn" style="width:40px; margin-top:10px;">
+                    <a href="http://www.facebook.com/Eventcombo"><img src="~/Images/fb.png" /></a>
+                    <a href="http://www.twitter.com/Eventcombo"><img src="~/Images/tw.png" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sub Header -->
+    <div class="container-fluid cont_margin2">
+        <div class="row cyan-line-new">
+            <div class="col-sm-3">
+                <form>
+                    <div class="input-group stylish-input-group">
+                        <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Searh for Event">
+                        <span class="input-group-addon">
+                            <button type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-2 disc_title_head">
+                @Html.ActionLink("Discover Events", "DiscoverEvents", "Home")
+               
+            </div>
+            <div class="col-sm-2 disc_title_head">@Html.ActionLink("Get the Buzz", "GetBuzz", "Home")  </div>
+            <div class="col-sm-5">
+                <div class="psst">
+                    <a class="" href="/Home/EventOraganizer">
+                        <span class="ps_text">PSST!</span>
+                        <span class="ev_org">&#160;&#160;Event organizer? Click here!</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Body Section -->
+
+    <div>
+        @RenderBody()
+    </div>
+    <!--Footer Section-->
+    <div class="container-fluid foot_bg">
+        <div class="col-sm-12 no-padding">
+            <div class="col-sm-12 foot_logo">
+                <a class="" href="#"><img src="~/Images/logo_small.png" /></a>
+            </div>
+
+            <div class="row fot_cont">
+                <div class="col-sm-4">
+                    <a href="#">About Us</a>
+                    <br>
+                    <a href="#">Contact Us</a>
+                    <br>
+                    <a href="#">Terms Of Service</a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="#">Ticket Purchase FAQ </a>
+                    <br>
+                    <a href="#">Ticket Fulfillment Policy</a>
+                    <br>
+                    <a href="#">Privacy Policy</a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="#">Facebook</a>
+                    <br>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialouge Box Start -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content login_pop" id="login_up">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title " id="myModalLabel">Login / Sign-up</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        @RenderPage("~/Views/Shared/_login1partial.cshtml")
+                    </div>
+                    <div class="col-md-12">
+                        @*forgt_pass*@
+                        @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, null)
+
+                    </div>
+                    <div class="col-md-12">
+                        <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="#"  id="signUpPopup" class="btn btn-primary login_btn_sub">Sign UP</a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-12 social-buttons text-center ">
+                        @RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")
+                    </div>
+                </div>
+            </div>
+
+            <div id="sign_up" class="modal-content login_pop sign_up" style="display:none;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title ">Sign-up</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        @RenderPage("~/Views/Shared/_signuppartial.cshtml")
+                    </div>
+                </div>
+            </div>
+
+    </div>
+ </div>
+</body>
+</html>
+<script type="text/javascript">
+
+    $("#signUpPopup").on('click', function () {
+        $('#SignupEmail').css("border", "black solid 1px");
+        $('#SignupPassword').css("border", "black solid 1px");
+        $('#diverro1').css('display', 'none');
+        $('#diverro').css("display", "none");
+      $("#login_up").css({"display":"none"});
+      $("#sign_up").css({"display":"block"});
+
+    });
+
+    $("#loginPopup").on('click', function () {
+        $('#loginemail').css("border", "black solid 1px");
+        $('#loginpassword').css("border", "black solid 1px");
+        $('#diverro1login').css('display', 'none');
+        $('#diverrologin').css("display", "none");
+      $("#login_up").css({"display":"block"});
+      $("#sign_up").css({"display":"none"});
+
+    });
+
+</script>

@@ -1,0 +1,250 @@
+﻿
+@using EventCombo.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Sign in";
+
+}
+@using Microsoft.AspNet.Identity
+
+
+@using (Html.BeginForm("Signup", "Home", FormMethod.Post, new { role = "form" ,id="form",@class= "form-horizontal acnt_form"}))
+{
+    @Html.AntiForgeryToken()
+    if (ViewData["Message"] != null)
+    {<div class="err_main">
+    <div class="er_suc_main">
+        <div class="er_suc_img"></div>
+        <div class="er_suc">ViewData["Message"] </div>
+    </div>
+    </div>
+    }
+    <div class="err_main">
+        <div class="er_UI_main" id="diverro" style="display :none;width:100%">
+            <div class="er_UI_img"></div>
+            <div class="er_suc" id="dverrsignui" >  </div>
+        </div>
+        </div>
+
+ 
+        <div class="err_main">
+            <div class="er_UI_main" id="diverro1" style="display :none;width:100%">
+                <div class="er_sys_img"></div>
+                <div class="er_suc" id="dverrsignsys">  </div>
+            </div>
+            </div>
+           <div class="clearfix"></div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm-5 login_form_bot">
+                           
+                            @Html.TextBoxFor(m => m.Email, new { @maxlength = 256, @placeholder = "Email", @class = "form-control login_place", @id = "SignupEmail" })
+                        </div>
+                        <div class="col-sm-5 login_form_bot">
+                            @Html.PasswordFor(m => m.Password, new { @maxlength = 15, @placeholder = "Password", @class = "form-control login_place", @id = "SignupPassword" })
+                           
+                        </div>
+                        <div class="col-sm-2 login_form_bot">
+                            @*<button type="button" class="btn btn-primary login_btn_sub" id="btnsave">SignUp</button>*@
+                            <input type="button" value="SignUp" class="btn btn-primary login_btn_sub" id="btnsave" disabled="disabled" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+
+
+
+          
+
+
+
+            
+
+            }
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+       
+        $('#SignupEmail').css("border", "black solid 1px");
+        $('#SignupPassword').css("border", "black solid 1px");
+        $('#diverro1').css('display', 'none');
+        $('#diverro').css("display", "none");
+        $('#SignupEmail').keyup(function () {
+
+            if ($(this).val() != '' && $('#SignupPassword').val() != '') {
+                $('#btnsave').removeAttr("disabled");
+
+            } else {
+
+                $('#btnsave').attr("disabled", true);
+            }
+
+        })
+        $('#SignupPassword').keyup(function () {
+            if ($(this).val() != '' && $('#SignupEmail').val() != '') {
+
+                $('#btnsave').removeAttr("disabled");
+
+            } else {
+
+                $('#btnsave').attr("disabled", true);
+            }
+
+        })
+    });
+
+</script>
+            <script type="text/javascript">
+             
+                function validation()
+                {
+                    var msg = "";
+                    var Email = $("#SignupEmail").val();
+
+                    var Passowrdw = $("#SignupPassword").val();
+
+                    if (!validateEmail(Email)) {
+                        $('#SignupEmail').focus();
+                        $('#SignupEmail').css("border", "red solid 1px");
+                        msg += "Invalid Email!! </br>"
+
+                    } else {
+
+                        msg = "";
+                        $('#SignupEmail').focus();
+                        $('#SignupEmail').css("border", "black solid 1px");
+                    }
+                    //console.log(Passowrdw.length);
+                    if (Passowrdw.length < 4) {
+                        $('#SignupPassword').focus();
+                        $('#SignupPassword').css("border", "red solid 1px");
+                        msg += "Password Length can't be less than 4!! </br>"
+
+                    } else {
+                        if (msg == "") {
+                            msg = "";
+                        }
+                        $('#SignupPassword').focus();
+                        $('#SignupPassword').css("border", "black solid 1px");
+
+                    }
+                    return msg;
+                }
+          
+    
+                $("#btnsave").click(function (event) {
+                  
+                  var msg = validation();
+                    var flag1 = true;
+                    if (msg == "") {
+                        $('#diverro').css("display", "none");
+                        flag1 = true;
+                    }
+                    else {
+                        $('#diverro1').css('display', 'none');
+                        $('#dverrsignui').html(msg);
+                        $('#diverro').css("display", "block");
+                       
+                        return false;
+                    }
+                    if (flag1) {
+                        var flag = false;
+                        var Emailsignin = $("#SignupEmail").val();
+                      
+                        $.ajax({
+                            url: "/Home/IsValid",
+                            data: 'Email='+Emailsignin,
+                            dataType: "text",
+                            success: function (data, textStatus, xhr) {
+                              
+                               if (data != '') {
+                                    if (data =="NotFound")
+                                                {
+                                                    flag = true;
+
+                                                    $('#form').submit();
+
+                                                } else if (data == "Found")
+                                                {
+                                                    console.log('Enter');
+                                                    $('#SignupEmail').focus();
+                                                    $('#SignupEmail').css("border", "red solid 1px");
+                                                    $('#diverro').css("display", "none");
+                                                    $('#diverro1').css('display', 'block');
+                                                    $('#dverrsignsys').html('Email Already Exist!!!');
+                                                    flag = false;
+                                                    return false;
+                                                }
+                                }
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                            }
+                        });
+                        //alert(Email);
+                        //$.ajax({
+                        //    url: '/Account/IsValid',
+                        //    type: 'Post',
+                        //    data: {"Email": Emailsignin},
+                        //    //cache: false,
+                        //    //contentType: "text/plain",
+                        //    dataType: "text",
+                        //    success: function (data) {
+                        //        alert(data);
+                        //        console.log(data);
+                        //        if (data =="NotFound")
+                        //        {
+                        //            flag = true;
+
+                        //            $('#form').submit();
+
+                        //        } else if (data == "Found")
+                        //        {
+                        //            console.log('Enter');
+                        //            $('#SignupEmail').focus();
+                        //            $('#SignupEmail').css("border", "red solid 1px");
+                        //            $('#diverro').css("display", "none");
+                        //            $('#diverro1').css('display', 'block');
+                        //            $('.er_suc').html('Email Already Exist!!!');
+                        //            flag = false;
+                        //            return false;
+                        //        }
+                               
+                        //    },
+                        //    error: function (data1) {
+
+                        //        alert('error');
+                        //    }
+                        //});
+                      
+                    
+                    }
+                });
+
+
+
+
+
+           
+
+             
+
+                function validateEmail(sEmail) {
+                    var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+
+                    if (filter.test(sEmail)) {
+
+                        return true;
+                    }
+                    else {
+
+
+                        return false;
+                    }
+                }
+
+            </script>

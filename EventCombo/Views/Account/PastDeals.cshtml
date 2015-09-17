@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "PastDeals";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div id="DealPastDeals">
+    <h3>Past Deals</h3>
+    <div>
+        <div class="eventList titles"> <span class="eventName">Name</span><span class="eventTix">Market</span><span class="eventDate">Launched</span><span class="eventTix">Sold/Redeemed</span><span class="eventLinks">Quick Links</span> </div>
+        <div class="eventList">
+            <span class="eventName" onClick="$(this).siblings('#DealNowDetail').slideToggle();">My test deal</span><span class="eventTix">NYC</span><span class="eventDate">10/09/2013</span><span class="eventTix">4/0</span><span class="eventLinks"><a href="#">Manage</a> | <a href="#">View</a> | Invite | Voucher Download</span>
+            <div id="DealNowDetail" style="display:none;"><img src="~/Images/deal-now-info-FPO.jpg" alt="FPO" width="808" height="985"></div>
+        </div>
+        <div class="eventList odd">
+            <span class="eventName" onClick="$(this).siblings('#DealNowDetail').slideToggle();">My test deal</span><span class="eventTix">LAX</span><span class="eventDate">10/09/2013</span><span class="eventTix">4/2</span><span class="eventLinks"><a href="#">Manage</a> | <a href="#">View</a> | Invite | Voucher Download</span>
+            <div id="DealNowDetail" style="display:none;"><img src="~/Images/deal-now-info-FPO.jpg" alt="FPO" width="808" height="985"></div>
+        </div>
+        <div class="eventList">
+            <span class="eventName" onClick="$(this).siblings('#DealNowDetail').slideToggle();">My test deal</span><span class="eventTix">NYC</span><span class="eventDate">10/09/2013</span><span class="eventTix">4/1</span><span class="eventLinks"><a href="#">Manage</a> | <a href="#">View</a> | Invite | Voucher Download</span>
+            <div id="DealNowDetail" style="display:none;"><img src="~/Images/deal-now-info-FPO.jpg" alt="FPO" width="808" height="985"></div>
+        </div>
+        <div class="clearboth" style="margin:10px;"></div>
+    </div>
+</div>
+

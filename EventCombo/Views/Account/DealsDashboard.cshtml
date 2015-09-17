@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "DealsDashboard";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div id="DealDashboard">
+    <h3>Dashboard</h3>
+    <div><img src="~/Images/deals-dashboard-home.jpg" alt="" width="902" height="959"></div>
+</div>
+<div id="DealOverview">
+    <h3>Deal Overview</h3>
+    <div><img src="~/Images/deals-overview-FPO.jpg" alt="FPO" width="896" height="1058"> </div>
+</div>
+<div id="DealCurrentDeals">
+    <h3>Current Deals</h3>
+    <div>
+        <div class="eventList titles"> <span class="eventName">Name</span><span class="eventTix">Market</span><span class="eventDate">Launched</span><span class="eventTix">Sold/Redeemed</span><span class="eventLinks">Quick Links</span> </div>
+        <div class="eventList">
+            <span class="eventName" onClick="$(this).siblings('#DealNowDetail').slideToggle();">My test deal</span><span class="eventTix">NYC</span><span class="eventDate">10/12/2013</span><span class="eventTix">4/0</span><span class="eventLinks"><a href="deal-edit.php">Manage</a> | <a href="deal-edit.php">Edit</a> | <a href="deal.php">View</a> | Invite | Voucher Download</span>
+            <div id="DealNowDetail" style="display:none;"><img src="~/Images/deal-now-info-FPO.jpg" alt="FPO" width="808" height="985"></div>
+        </div>
+        <div class="eventList odd">
+            <span class="eventName" onClick="$(this).siblings('#DealNowDetail').slideToggle();">My test deal</span><span class="eventTix">LAX</span><span class="eventDate">10/12/2013</span><span class="eventTix">4/2</span><span class="eventLinks"><a href="deal-edit.php">Manage</a> | <a href="deal-edit.php">Edit</a> | <a href="deal.php">View</a> | Invite | Voucher Download</span>
+            <div id="DealNowDetail" style="display:none;"><img src="~/Images/deal-now-info-FPO.jpg" alt="FPO" width="808" height="985"></div>
+        </div>
+        <div class="eventList">
+            <span class="eventName" onClick="$(this).siblings('#DealNowDetail').slideToggle();">My test deal</span><span class="eventTix">NYC</span><span class="eventDate">10/12/2013</span><span class="eventTix">4/1</span><span class="eventLinks"><a href="deal-edit.php">Manage</a> | <a href="deal-edit.php">Edit</a> | <a href="deal.php">View</a> | Invite | Voucher Download</span>
+            <div id="DealNowDetail" style="display:none;"><img src="~/Images/deal-now-info-FPO.jpg" alt="FPO" width="808" height="985"></div>
+        </div>
+        <div class="clearboth" style="margin:10px;"></div>
+    </div>
+</div>
+
