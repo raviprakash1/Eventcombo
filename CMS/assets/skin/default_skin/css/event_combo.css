@@ -1,0 +1,5 @@
+.event_email_cont{
+	background: #fff;
+}
+.em_bor_bot{ border-bottom: 1px solid #e5e5e5 !important;}
+.em_bor_bot:last-child{border-bottom: 0px !important;}
