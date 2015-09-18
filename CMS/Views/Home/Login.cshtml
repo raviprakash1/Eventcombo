@@ -48,7 +48,9 @@
 
         <!-- Start: Content-Wrapper -->
         <section id="content_wrapper">
-
+@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
+{
+    @Html.AntiForgeryToken()
             <!-- Begin: Content -->
             <section id="content">
 
@@ -63,8 +65,7 @@
 
                     <!-- Login Panel/Form -->
                     <div class="panel mt30 mb25">
-@using (Html.BeginForm("Login", "Home",  FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
-{
+
 
                        
                             <div class="panel-body bg-light p25 pb15">
@@ -106,7 +107,7 @@
                             </div>
 
                      
-}
+
                     </div>
 
                     <!-- Registration Links -->
@@ -128,6 +129,7 @@
             </section>
             <!-- End: Content -->
 
+}
         </section>
         <!-- End: Content-Wrapper -->
 
