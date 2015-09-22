@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data;
+using CMS.Models;
 namespace CMS.Models
 {
     [Table("AspNetUsers")]
@@ -12,5 +14,8 @@ namespace CMS.Models
         public string UserName { get; set; }
         public string EMail { get; set; }
 
+       
     }
+
+    
 }

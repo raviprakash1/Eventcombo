@@ -1,4 +1,4 @@
-﻿@*@model System.Data.DataTable*@
+﻿@model IEnumerable<CMS.Models.UsersTemplate>
 
 @{
     ViewBag.Title = "Users";
@@ -71,6 +71,7 @@
                                 </div>
                             </div>
                             <div class="panel-body pn">
+
                                 <table class="table footable" data-page-navigation=".pagination" data-page-size="3">
                                     <thead>
                                         <tr>
@@ -89,14 +90,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-@foreach (var obj in ViewData.Model)
-{
+                                        
+                                      
+@foreach(var obj in Model)
+{ 
+    
                                         <tr>
                                             
                                             <td>1</td>
                                             <td>
                                            
-                                               @obj["UserName"]
+                                               @obj.UserName
                                            
                                             </td>
                                             <td>
@@ -104,7 +108,7 @@
                                                     <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY">Manage</button>
                                                 </a>
                                             </td>
-                                            <td>@obj["EMail"]</td>
+                                            <td>@obj.EMail</td>
                                             <td>10</td>
                                             <td>15</td>
                                             <td>India</td>
