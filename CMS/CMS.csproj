@@ -229,6 +229,7 @@
     <Compile Include="Models\Status.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsersContext.cs" />
     <Compile Include="Models\UsersTemplate.cs" />
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
@@ -950,7 +951,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>6495</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
