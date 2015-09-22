@@ -91,6 +91,7 @@
           <Property Name="Bcc" Type="varchar" MaxLength="300" />
           <Property Name="Subject" Type="varchar" MaxLength="300" />
           <Property Name="TemplateHtml" Type="nvarchar(max)" />
+          <Property Name="From" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -473,6 +474,7 @@
           <Property Name="Bcc" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Subject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -623,6 +625,7 @@
           <EntitySetMapping Name="Email_Template">
             <EntityTypeMapping TypeName="CmsModel.Email_Template">
               <MappingFragment StoreEntitySet="Email_Template">
+                <ScalarProperty Name="From" ColumnName="From" />
                 <ScalarProperty Name="TemplateHtml" ColumnName="TemplateHtml" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="Bcc" ColumnName="Bcc" />

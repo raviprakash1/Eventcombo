@@ -86,6 +86,7 @@
     <Property Name="Bcc" Type="varchar" MaxLength="300" />
     <Property Name="Subject" Type="varchar" MaxLength="300" />
     <Property Name="TemplateHtml" Type="nvarchar(max)" />
+    <Property Name="From" Type="varchar" MaxLength="300" />
   </EntityType>
   <EntityType Name="Permission_Detail">
     <Key>

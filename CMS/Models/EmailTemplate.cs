@@ -10,6 +10,7 @@ namespace CMS.Models
     {
        public string Template_Name{get;set;}
         public string To { get; set; }
+        public string From { get; set; }
         public string  CC { get; set; }
         public string Bcc { get; set; }
         public string Subject{ get; set; }

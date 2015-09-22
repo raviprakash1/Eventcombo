@@ -14,18 +14,21 @@ namespace CMS.Controllers
         {
             if (templatename == null)
             {
-                templatename = "Welcome Template";
+                templatename = "Welcome";
             }
             EmailTemplate obj = new EmailTemplate();
             obj = EmailData(templatetag);
             if(obj!=null)
             {
+                obj.Template_Name = templatename + "Template";
+                obj.emailtag = templatetag;
                 return View(obj);
 
             }else
             {
                 EmailTemplate obj1 = new EmailTemplate();
                 obj1.Template_Name = templatename + "Template";
+                obj1.emailtag = templatetag;
                 return View(obj1);
 
             }
@@ -38,7 +41,7 @@ namespace CMS.Controllers
             {
 
                 EmailTemplate obj = new EmailTemplate();
-                obj = EmailData(model.Template_Name);
+                obj = EmailData(model.emailtag);
                 if (obj != null)
                 {
 
@@ -48,7 +51,7 @@ namespace CMS.Controllers
 
                         Email_Template email = objEntity.Email_Template.First(i => i.Template_Name == model.emailtag);
 
-                        email.Template_Name = model.Template_Name;
+                        //email.Template_Name = model.emailtag;
                         email.Subject = model.Subject;
                         email.To = model.To;
                         email.CC = model.CC;
@@ -67,11 +70,12 @@ namespace CMS.Controllers
                     {
                         Email_Template email = new Email_Template();
 
-                        email.Template_Name = model.Template_Name;
+                        email.Template_Name = model.emailtag;
                         email.Subject = model.Subject;
                         email.To = model.To;
                         email.CC = model.CC;
                         email.Bcc = model.Bcc;
+                        email.From = model.From;
                         email.TemplateHtml = model.ckeditor1;
                         email.TemplateId = Guid.NewGuid().ToString ();
                         objEntity.Email_Template.Add(email);
@@ -80,10 +84,11 @@ namespace CMS.Controllers
 
 
                 }
-                return View(model);
+                ModelState.Clear();
+                return View();
             }
-
-                return View(model);
+            ModelState.Clear();
+            return View();
         }
         public EmailTemplate EmailData(string templatename)
         {
@@ -97,6 +102,7 @@ namespace CMS.Controllers
                                         To = cpd.To,
                                         CC = cpd.CC,
                                         Bcc = cpd.Bcc,
+                                        From=cpd.From,
                                         Subject = cpd.Subject,
                                         ckeditor1 = cpd.TemplateHtml,
                                         Template_Name=cpd.Template_Name ,

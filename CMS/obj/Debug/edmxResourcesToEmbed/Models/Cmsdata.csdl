@@ -217,5 +217,6 @@
     <Property Name="Bcc" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
     <Property Name="Subject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
     <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>
