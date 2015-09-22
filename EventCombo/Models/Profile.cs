@@ -44,7 +44,6 @@ namespace EventCombo.Models
         public string DateofBirth { get; set; }
     
         public virtual Country Country { get; set; }
-        public virtual User User { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

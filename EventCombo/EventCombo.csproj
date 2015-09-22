@@ -199,6 +199,12 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Email_Tag.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Email_Template.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventComboModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -218,25 +224,16 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\Permission_Detail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Profile.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Provider.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Role.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Status.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\User.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserClaim.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserLogin.cs">
+    <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

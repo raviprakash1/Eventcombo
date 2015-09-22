@@ -1,0 +1,205 @@
+﻿@model CMS.Models.EmailTemplate
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="content_wrapper">
+
+    <!-- Start: Topbar -->
+    <header id="topbar" class="alt">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+
+                <li class="crumb-icon">
+                    <a href="dashboard.html">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+                <li class="crumb-active">
+                    Dashboard
+                </li>
+            </ol>
+        </div>
+
+    </header>
+    <!-- End: Topbar -->
+    <!-- Begin: Content -->
+    <div id="content" class="animated fadeIn">
+        <div class="row">
+
+            <div class="col-md-2">
+                <div class="panel">
+                    <div class="panel-body p10">
+                        <!-- Tags Menu -->
+                        <div class="list-group list-group-links">
+                            <div class="list-group-header"> User Name List </div>
+                            <a href="#" class="list-group-item em_bor_bot">
+                                User First Name ID
+                            </a>
+                            <a href="#" class="list-group-item em_bor_bot">
+                                User Last Name ID
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel">
+                   
+                    <div class="panel-body">
+                        <div class="panel-heading">
+                            <div class="col-lg-12">
+                                @Html.TextBoxFor(m => m.Template_Name, new { @class = "form-control wel_tem_name fs20", id = "inputStandard", @readonly = "readonly" })
+                               @Html.HiddenFor(x => x.emailtag)
+                            </div>
+
+                        </div>
+                      @using (Html.BeginForm("Index", "Email", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                      {
+                        
+                            <div class="form-group">
+                                <label  class="col-lg-1 control-label">&nbsp;</label>
+                                <div class="col-lg-8">
+
+                                    
+                                 </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-1 control-label">To</label>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control", id = "inputStandard", @placeholder = "Type Here..." })
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-1 control-label">Cc</label>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(m => m.CC, new { @class = "form-control", id = "inputStandard", @placeholder = "Type Here..." })
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-1 control-label">Bcc</label>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(m => m.Bcc, new { @class = "form-control", id = "inputStandard", @placeholder = "Type Here..." })
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-1 control-label">Subject</label>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", id = "inputStandard", @placeholder = "Type Here..." })
+
+                                    </div>
+                                </div>
+
+                                <textarea name="ckeditor1" id="ckeditor1" rows="12">
+                                    This is the
+                                    <b>editor</b> .......
+                                </textarea>
+                                <br>
+                           
+                                <button class="btn btn-primary col-sm-3" type="submit">Send</button>
+
+
+
+                      }
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-2">
+                <div class="panel">
+                    <div class="panel-body p10">
+                        <!-- Tags Menu -->
+                        <div class="list-group list-group-links">
+                            <div class="list-group-header"> Template Name </div>
+                            <a href="~/Email/Index?templatetag=email_welcome&templatename=Welcome" class="list-group-item em_bor_bot">
+                                Welcome Email
+                            </a>
+                        
+                            <a href="~/Email/Index?templatetag=email_friend&templatename=Email a Friend" class="list-group-item em_bor_bot">
+                                Email a Friend
+                            </a>
+                         
+                            <a href="~/Email/Index?templatename=email_contact_tickets" class="list-group-item em_bor_bot">
+                               Contact Tickets
+                            </a>
+                            <a href="~/Email/Index?templatename=email_error" class="list-group-item em_bor_bot">
+                             Error
+                            </a>
+                            <a href="~/Email/Index?templatename=email_lost_pwd" class="list-group-item em_bor_bot">
+                                 Lost Password
+                            </a>
+                            <a href="~/Email/Index?templatename=email_new_registration" class="list-group-item em_bor_bot">
+                                 New Registration
+                            </a>
+                            <a href="~/Email/Index?templatename=email_new_ticket_sold" class="list-group-item em_bor_bot">
+                                 New Ticket Sold
+                            </a>
+                            <a href="~/Email/Index?templatename=email_new_deal_sold" class="list-group-item em_bor_bot">
+                                 New Deal Sold
+                            </a>
+                            <a href="~/Email/Index?templatename=dealinvite" class="list-group-item em_bor_bot">
+                                Deal Invite 
+                            </a>
+                            <a href="~/Email/Index?templatename=eventinvite" class="list-group-item em_bor_bot">
+                                Event Invite 
+                            </a>
+                            <a href="~/Email/Index?templatename=dealchange" class="list-group-item em_bor_bot">
+                                Deal Change 
+                            </a>
+                            <a href="~/Email/Index?templatename=eventchange" class="list-group-item em_bor_bot">
+                                Event Change 
+                            </a>
+                            <a href="~/Email/Index?templatename=dealcancelled" class="list-group-item em_bor_bot">
+                                Deal Cancelled 
+                            </a>
+                            <a href="~/Email/Index?templatename=eventcancelled" class="list-group-item em_bor_bot">
+                                Event Cancelled 
+                            </a>
+                            <a href="~/Email/Index?templatename=abuse" class="list-group-item em_bor_bot">
+                                Abuse 
+                            </a>
+                            <a href="~/Email/Index?templatename=new_deal_notification_email" class="list-group-item em_bor_bot">
+                                New Deal Notification
+                            </a>
+                            <a href="~/Email/Index?templatename=new_event_notification_email" class="list-group-item em_bor_bot">
+                                New Event Notification
+                             </a>
+                            <a href="~/Email/Index?templatename=email_welcome_deal" class="list-group-item em_bor_bot">
+                                Welcome Deal
+                            </a>
+                            <a href="~/Email/Index?templatename=email_welcome_ticket" class="list-group-item em_bor_bot">
+                                Welcome Ticket 
+                            </a>
+                          
+                            <a href="~/Email/Index?templatename=email_notify_tix_cust" class="list-group-item em_bor_bot">
+                                Notify Tix cust 
+                            </a>
+                            <a href="~/Email/Index?templatename=email_event_submission" class="list-group-item em_bor_bot">
+                                Email Event Submission
+                            </a>
+                            <a href="~/Email/Index?templatename=email_deal_submission" class="list-group-item em_bor_bot">
+                                Email Deal Submission
+                            </a>
+                            <a href="~/Email/Index?templatename=email_ticket_purchase" class="list-group-item em_bor_bot">
+                                Email Ticket Purchase
+                            </a>
+                            <a href="~/Email/Index?templatename=email_deal_purchase" class="list-group-item em_bor_bot">
+                                Email Deal Purchase
+                            </a>
+                           
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: Content -->
+
+</section>

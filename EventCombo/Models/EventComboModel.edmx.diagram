@@ -12,25 +12,16 @@
         <EntityTypeShape EntityType="Models.AspNetUser" Width="1.5" PointX="13" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.Country" Width="1.5" PointX="6" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.Profile" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.Provider" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.Role" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.Status" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.User" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.UserClaim" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.UserLogin" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
         <AssociationConnector Association="Models.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="Models.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="Models.FK__Profile__Country__182C9B23" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK__Profile__UserID__173876EA" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK__Provider__UserID__0EA330E9" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK__User__RoleID__08EA5793" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK__User__StatusID__09DE7BCC" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK_UserClaim_User" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK_UserLogin_User" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK_UserLogin_UserLogin" ManuallyRouted="false" />
         <AssociationConnector Association="Models.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.UserRole" ManuallyRouted="false" />
         <AssociationConnector Association="Models.FK_Profile_Profile" />
+        <EntityTypeShape EntityType="Models.Permission_Detail" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Models.User_Permission_Detail" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Models.Status" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Models.Email_Tag" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="Models.Email_Template" Width="1.5" PointX="5.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
