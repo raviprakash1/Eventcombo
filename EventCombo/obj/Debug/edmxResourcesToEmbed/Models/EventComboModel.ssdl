@@ -68,6 +68,33 @@
     <Property Name="CountryID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Country" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
+  <EntityType Name="Email_Tag">
+    <Key>
+      <PropertyRef Name="Tag_Id" />
+    </Key>
+    <Property Name="Tag_Id" Type="nchar" MaxLength="150" Nullable="false" />
+    <Property Name="Tag_Name" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Email_Template">
+    <Key>
+      <PropertyRef Name="TemplateId" />
+    </Key>
+    <Property Name="TemplateId" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Template_Name" Type="varchar" MaxLength="300" />
+    <Property Name="To" Type="varchar" MaxLength="300" />
+    <Property Name="CC" Type="varchar" MaxLength="300" />
+    <Property Name="Bcc" Type="varchar" MaxLength="300" />
+    <Property Name="Subject" Type="varchar" MaxLength="300" />
+    <Property Name="TemplateHtml" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Permission_Detail">
+    <Key>
+      <PropertyRef Name="Permission_Id" />
+    </Key>
+    <Property Name="Permission_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Permission_Desc" Type="varchar" MaxLength="100" />
+    <Property Name="Permission_Category" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Profile">
     <Key>
       <PropertyRef Name="ProfileID" />
@@ -101,24 +128,6 @@
     <Property Name="Gender" Type="varchar" MaxLength="50" />
     <Property Name="DateofBirth" Type="varchar" MaxLength="50" />
   </EntityType>
-  <EntityType Name="Provider">
-    <Key>
-      <PropertyRef Name="ProviderID" />
-    </Key>
-    <Property Name="ProviderID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Provider" Type="varchar" MaxLength="200" Nullable="false" />
-    <Property Name="ProviderUserID" Type="varchar" MaxLength="200" />
-    <Property Name="UserID" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="AddedOn" Type="datetime" />
-    <Property Name="UpdateOn" Type="datetime" />
-  </EntityType>
-  <EntityType Name="Role">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="RoleName" Type="varchar" MaxLength="20" Nullable="false" />
-  </EntityType>
   <EntityType Name="Status">
     <Key>
       <PropertyRef Name="StatusID" />
@@ -126,99 +135,15 @@
     <Property Name="StatusID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StatusName" Type="varchar" MaxLength="20" Nullable="false" />
   </EntityType>
-  <EntityType Name="User">
+  <EntityType Name="User_Permission_Detail">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="UP_Id" />
     </Key>
-    <Property Name="id" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="RoleID" Type="bigint" Nullable="false" />
-    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="PasswordHash" Type="varchar" MaxLength="100" />
-    <Property Name="CreationDate" Type="datetime" />
-    <Property Name="ApprovalDate" Type="datetime" />
-    <Property Name="PasswordReset" Type="bit" />
-    <Property Name="ForgotPasswordKey" Type="varchar" MaxLength="200" />
-    <Property Name="StatusID" Type="bigint" />
-    <Property Name="UserName" Type="nvarchar" MaxLength="100" />
-    <Property Name="SecurityStamp" Type="nvarchar" MaxLength="254" />
-    <Property Name="Discriminator" Type="nvarchar" MaxLength="254" />
-    <Property Name="IsConfirmed" Type="bit" />
-    <Property Name="LastLoginDate" Type="datetime" />
-    <Property Name="IsLocked" Type="bit" />
-    <Property Name="ActivationToken" Type="nvarchar" MaxLength="200" />
-    <Property Name="PasswordAnswer" Type="nvarchar(max)" />
-    <Property Name="PasswordQuestion" Type="nvarchar(max)" />
-    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
-    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-    <Property Name="LockoutEndDateUtc" Type="datetime2" Precision="7" />
-    <Property Name="LockoutEnabled" Type="bit" />
-    <Property Name="AccessFailedCount" Type="int" />
+    <Property Name="UP_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UP_User_Id" Type="int" Nullable="false" />
+    <Property Name="UP_Permission_Id" Type="int" Nullable="false" />
+    <Property Name="UP_Flag" Type="nchar" MaxLength="1" />
   </EntityType>
-  <EntityType Name="UserClaim">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="ClaimType" Type="nvarchar(max)" />
-    <Property Name="ClaimValue" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="UserLogin">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="LoginProvider" />
-      <PropertyRef Name="ProviderKey" />
-    </Key>
-    <Property Name="UserId" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
-  </EntityType>
-  <EntityType Name="UserRole">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="RoleId" />
-    </Key>
-    <Property Name="UserId" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="RoleId" Type="bigint" Nullable="false" />
-  </EntityType>
-  <Association Name="FK__Provider__UserID__0EA330E9">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="Provider" Type="Self.Provider" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Provider">
-        <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__User__RoleID__08EA5793">
-    <End Role="Role" Type="Self.Role" Multiplicity="1" />
-    <End Role="User" Type="Self.User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Role">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="RoleID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__User__StatusID__09DE7BCC">
-    <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
-    <End Role="User" Type="Self.User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Status">
-        <PropertyRef Name="StatusID" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="StatusID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -287,78 +212,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserClaim_User">
-    <End Role="User" Type="Self.User" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="UserClaim">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserLogin_User">
-    <End Role="User" Type="Self.User" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="UserLogin">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserLogin_UserLogin">
-    <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
-    <End Role="UserLogin1" Type="Self.UserLogin" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="UserLogin">
-        <PropertyRef Name="UserId" />
-        <PropertyRef Name="LoginProvider" />
-        <PropertyRef Name="ProviderKey" />
-      </Principal>
-      <Dependent Role="UserLogin1">
-        <PropertyRef Name="UserId" />
-        <PropertyRef Name="LoginProvider" />
-        <PropertyRef Name="ProviderKey" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserRole_Role">
-    <End Role="Role" Type="Self.Role" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Role">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="UserRole">
-        <PropertyRef Name="RoleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserRole_User">
-    <End Role="User" Type="Self.User" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="UserRole">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="ModelsStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -367,26 +220,12 @@
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Provider__UserID__0EA330E9" Association="Self.FK__Provider__UserID__0EA330E9">
-      <End Role="User" EntitySet="User" />
-      <End Role="Provider" EntitySet="Provider" />
-    </AssociationSet>
-    <AssociationSet Name="FK__User__RoleID__08EA5793" Association="Self.FK__User__RoleID__08EA5793">
-      <End Role="Role" EntitySet="Role" />
-      <End Role="User" EntitySet="User" />
-    </AssociationSet>
-    <AssociationSet Name="FK__User__StatusID__09DE7BCC" Association="Self.FK__User__StatusID__09DE7BCC">
-      <End Role="Status" EntitySet="Status" />
-      <End Role="User" EntitySet="User" />
-    </AssociationSet>
+    <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -406,26 +245,6 @@
     <AssociationSet Name="FK_Profile_Profile" Association="Self.FK_Profile_Profile">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Profile" EntitySet="Profile" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserClaim_User" Association="Self.FK_UserClaim_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserClaim" EntitySet="UserClaim" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserLogin_User" Association="Self.FK_UserLogin_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserLogin" EntitySet="UserLogin" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserLogin_UserLogin" Association="Self.FK_UserLogin_UserLogin">
-      <End Role="UserLogin" EntitySet="UserLogin" />
-      <End Role="UserLogin1" EntitySet="UserLogin" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
-      <End Role="Role" EntitySet="Role" />
-      <End Role="UserRole" EntitySet="UserRole" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserRole" EntitySet="UserRole" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

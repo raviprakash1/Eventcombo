@@ -1,0 +1,256 @@
+﻿@*@model System.Data.DataTable*@
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <title>Eventcombo Admin</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
+</head>
+
+<body class="email-templates-page">
+
+
+        <!-- Start: Content-Wrapper -->
+        <section id="content_wrapper">
+
+            <!-- Start: Topbar -->
+            <header id="topbar" class="alt">
+                <div class="topbar-left">
+                    <ol class="breadcrumb">
+
+                        <li class="crumb-icon">
+                            <a href="dashboard.html">
+                                <span class="glyphicon glyphicon-home"></span>
+                            </a>
+                        </li>
+                        <li class="crumb-active">
+                            Dashboard
+                        </li>
+                    </ol>
+                </div>
+
+            </header>
+            <!-- End: Topbar -->
+            <!-- Begin: Content -->
+            <div id="content" class="animated fadeIn">
+                <div class="row" id="modal-content">
+                    <div class="col-md-12">
+
+                        <div class="panel">
+                            <div class="panel-menu admin-form theme-primary">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <span class="panel-title"> All Member List (50)</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="field select">
+                                            <select>
+                                                <option value="0">Select</option>
+                                                <option value="0">01 - 50</option>
+                                                <option value="1">51 - 100</option>
+                                                <option value="2">101 - 150</option>
+                                            </select>
+                                            <i class="arrow double"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body pn">
+                                <table class="table footable" data-page-navigation=".pagination" data-page-size="3">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Role</th>
+                                            <th>Email Id</th>
+                                            <th>Event</th>
+                                            <th>Deals</th>
+                                            <th>Location</th>
+                                            <th>Organiser</th>
+                                            <th>Merchant</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                            <th>Online</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+@foreach (var obj in ViewData.Model)
+{
+                                        <tr>
+                                            
+                                            <td>1</td>
+                                            <td>
+                                           
+                                               @obj["UserName"]
+                                           
+                                            </td>
+                                            <td>
+                                                <a id="animation-switcher" class="holder-active" href="#modal-text">
+                                                    <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY">Manage</button>
+                                                </a>
+                                            </td>
+                                            <td>@obj["EMail"]</td>
+                                            <td>10</td>
+                                            <td>15</td>
+                                            <td>India</td>
+                                            <td>
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select>
+                                                            <option value="0">Select</option>
+                                                            <option value="1">Yes</option>
+                                                            <option value="2">No</option>
+                                                        </select>
+                                                        <i class="arrow double"></i>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select>
+                                                            <option value="0">Select</option>
+                                                            <option value="1">Yes</option>
+                                                            <option value="2">No</option>
+                                                        </select>
+                                                        <i class="arrow double"></i>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select>
+                                                            <option value="0">Select</option>
+                                                            <option value="1">Active</option>
+                                                            <option value="2">Deactive</option>
+                                                        </select>
+                                                        <i class="arrow double"></i>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                            </td>
+                                            <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
+                                        </tr>
+}
+                                    </tbody>
+                                    <tfoot class="footer-menu">
+                                        <tr>
+                                            <td colspan="12">
+                                                <nav class="text-right">
+                                                    <ul class="pagination hide-if-no-paging"></ul>
+                                                </nav>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="modal-text" class="popup-basic p25 popup-lg mfp-with-anim mfp-hide">
+
+                        <div class="col-md-4">
+                            select role
+                        </div>
+
+
+                        <div class="col-md-8">
+                            You may put any HTML here. This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- End: Content -->
+
+        </section>
+
+
+
+    <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>
+
+    <!-- FooTable Addon -->
+    <script src="~/plugins/footable/js/footable.all.min.js"></script>
+    <script src="~/plugins/footable/js/footable.filter.min.js"></script>    
+
+    <script type="text/javascript">
+  jQuery(document).ready(function() {
+
+    "use strict";
+
+    // Init Theme Core
+    Core.init();
+
+    // Init Demo JS
+    Demo.init();
+
+    $('.footable').footable();
+
+    var modalContent = $('#modal-content');
+
+    function findActive() {
+      var activeModal = modalContent.find('.holder-active').attr('href');
+      return activeModal;
+    };
+
+    // Form Skin Switcher
+    $('#animation-switcher button').on('click', function() {
+      $('#animation-switcher').find('button').removeClass('active-animation');
+      $(this).addClass('active-animation item-checked');
+
+      // Inline Admin-Form example
+      $.magnificPopup.open({
+        removalDelay: 500, //delay removal by X to allow out-animation,
+        items: {
+          src: findActive()
+        },
+        // overflowY: 'hidden', //
+        callbacks: {
+          beforeOpen: function(e) {
+            var Animation = $("#animation-switcher").find('.active-animation').attr('data-effect');
+            this.st.mainClass = Animation;
+          }
+        },
+        midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+      });
+
+    });
+
+  });
+
+    </script>
+
+
+    <!-- END: PAGE SCRIPTS -->
+
+</body>
+
+</html>
+
+

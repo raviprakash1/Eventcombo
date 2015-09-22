@@ -170,8 +170,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -209,6 +211,13 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailTemplate.cs" />
+    <Compile Include="Models\Email_Tag.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Email_Template.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Permission_Detail.cs">
@@ -220,6 +229,7 @@
     <Compile Include="Models\Status.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsersTemplate.cs" />
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -570,6 +580,33 @@
     <Content Include="plugins\ckeditor\skins\bootstrapck\sample\js\analytics.js" />
     <Content Include="plugins\ckeditor\skins\bootstrapck\sample\js\jquery-1.11.0.min.js" />
     <Content Include="plugins\ckeditor\styles.js" />
+    <Content Include="plugins\footable\css\fonts\footable.svg" />
+    <Content Include="plugins\footable\css\footable.core.css" />
+    <Content Include="plugins\footable\css\footable.core.min.css" />
+    <Content Include="plugins\footable\css\footable.metro.css" />
+    <Content Include="plugins\footable\css\footable.metro.min.css" />
+    <Content Include="plugins\footable\css\footable.standalone.css" />
+    <Content Include="plugins\footable\css\footable.standalone.min.css" />
+    <Content Include="plugins\footable\js\footable.all.min.js" />
+    <Content Include="plugins\footable\js\footable.bookmarkable.min.js" />
+    <Content Include="plugins\footable\js\footable.filter.min.js" />
+    <Content Include="plugins\footable\js\footable.grid.min.js" />
+    <Content Include="plugins\footable\js\footable.min.js" />
+    <Content Include="plugins\footable\js\footable.paginate.min.js" />
+    <Content Include="plugins\footable\js\footable.sort.min.js" />
+    <Content Include="plugins\footable\js\footable.striping.min.js" />
+    <Content Include="plugins\magnific\example_thumbs\1.jpg" />
+    <Content Include="plugins\magnific\example_thumbs\2.jpg" />
+    <Content Include="plugins\magnific\example_thumbs\3.jpg" />
+    <Content Include="plugins\magnific\example_thumbs\4.jpg" />
+    <Content Include="plugins\magnific\example_thumbs\5.jpg" />
+    <Content Include="plugins\magnific\example_thumbs\6.jpg" />
+    <Content Include="plugins\magnific\example_thumbs\7.jpg" />
+    <Content Include="plugins\magnific\example_thumbs\8.jpg" />
+    <Content Include="plugins\magnific\example_thumbs\9.jpg" />
+    <Content Include="plugins\magnific\jquery.magnific-popup.js" />
+    <Content Include="plugins\magnific\jquery.magnific-popup.min.js" />
+    <Content Include="plugins\magnific\magnific-popup.css" />
     <Content Include="plugins\tabdrop\bootstrap-tabdrop.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -829,10 +866,15 @@
     <Content Include="plugins\ckeditor\skins\bootstrapck\scss\config\_config.scss" />
     <Content Include="plugins\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
     <Content Include="plugins\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
+    <Content Include="plugins\footable\css\fonts\footable.eot" />
+    <Content Include="plugins\footable\css\fonts\footable.ttf" />
+    <Content Include="plugins\footable\css\fonts\footable.woff" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -877,6 +919,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Email\Index.cshtml" />
+    <Content Include="Views\Users\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

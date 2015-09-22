@@ -2,6 +2,9 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
+    <WebStackScaffolding_ControllerDialogWidth>600</WebStackScaffolding_ControllerDialogWidth>
+    <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <NameOfLastUsedPublishProfile>Test</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions />
 </Project>

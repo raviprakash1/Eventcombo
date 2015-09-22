@@ -98,84 +98,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Providers">
-      <EntityTypeMapping TypeName="Models.Provider">
-        <MappingFragment StoreEntitySet="Provider">
-          <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
-          <ScalarProperty Name="Provider1" ColumnName="Provider" />
-          <ScalarProperty Name="ProviderUserID" ColumnName="ProviderUserID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
-          <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="Models.Role">
-        <MappingFragment StoreEntitySet="Role">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Status">
-      <EntityTypeMapping TypeName="Models.Status">
-        <MappingFragment StoreEntitySet="Status">
-          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="Models.User">
-        <MappingFragment StoreEntitySet="User">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-          <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-          <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
-          <ScalarProperty Name="PasswordReset" ColumnName="PasswordReset" />
-          <ScalarProperty Name="ForgotPasswordKey" ColumnName="ForgotPasswordKey" />
-          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-          <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
-          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
-          <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
-          <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
-          <ScalarProperty Name="ActivationToken" ColumnName="ActivationToken" />
-          <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
-          <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
-          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserClaims">
-      <EntityTypeMapping TypeName="Models.UserClaim">
-        <MappingFragment StoreEntitySet="UserClaim">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserLogins">
-      <EntityTypeMapping TypeName="Models.UserLogin">
-        <MappingFragment StoreEntitySet="UserLogin">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <AssociationSetMapping Name="AspNetUserRoles" TypeName="Models.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
       <EndProperty Name="AspNetRoles">
         <ScalarProperty Name="Id" ColumnName="RoleId" />
@@ -184,13 +106,53 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="UserRole" TypeName="Models.UserRole" StoreEntitySet="UserRole">
-      <EndProperty Name="Role">
-        <ScalarProperty Name="id" ColumnName="RoleId" />
-      </EndProperty>
-      <EndProperty Name="User">
-        <ScalarProperty Name="id" ColumnName="UserId" />
-      </EndProperty>
-    </AssociationSetMapping>
+    <EntitySetMapping Name="Permission_Detail">
+      <EntityTypeMapping TypeName="Models.Permission_Detail">
+        <MappingFragment StoreEntitySet="Permission_Detail">
+          <ScalarProperty Name="Permission_Category" ColumnName="Permission_Category" />
+          <ScalarProperty Name="Permission_Desc" ColumnName="Permission_Desc" />
+          <ScalarProperty Name="Permission_Id" ColumnName="Permission_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Permission_Detail">
+      <EntityTypeMapping TypeName="Models.User_Permission_Detail">
+        <MappingFragment StoreEntitySet="User_Permission_Detail">
+          <ScalarProperty Name="UP_Flag" ColumnName="UP_Flag" />
+          <ScalarProperty Name="UP_Permission_Id" ColumnName="UP_Permission_Id" />
+          <ScalarProperty Name="UP_User_Id" ColumnName="UP_User_Id" />
+          <ScalarProperty Name="UP_Id" ColumnName="UP_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Status">
+      <EntityTypeMapping TypeName="Models.Status">
+        <MappingFragment StoreEntitySet="Status">
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Email_Tag">
+      <EntityTypeMapping TypeName="Models.Email_Tag">
+        <MappingFragment StoreEntitySet="Email_Tag">
+          <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
+          <ScalarProperty Name="Tag_Id" ColumnName="Tag_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Email_Template">
+      <EntityTypeMapping TypeName="Models.Email_Template">
+        <MappingFragment StoreEntitySet="Email_Template">
+          <ScalarProperty Name="TemplateHtml" ColumnName="TemplateHtml" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Bcc" ColumnName="Bcc" />
+          <ScalarProperty Name="CC" ColumnName="CC" />
+          <ScalarProperty Name="To" ColumnName="To" />
+          <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
+          <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
