@@ -47,7 +47,13 @@ namespace CMS.Controllers
             //objUserList.Add(objUser);
             //    ViewBag.UserList = objUserList;
 
-            return View(GetAllUsers());
+
+            List<UsersTemplate> objuser = GetAllUsers();
+           // List<Permissions> objPerm = GetPermission("APP");
+            UsersTemplate objU = new UsersTemplate();
+            objU.objPermissions = GetPermission("APP");
+            objuser.Add(objU);
+            return View(objuser);
         }
         public List<UsersTemplate> GetAllUsers()
         {
@@ -62,12 +68,43 @@ namespace CMS.Controllers
                                     }
                                     );
 
-
+                
                 return modelUserTemp.ToList();
 
             }
+         
 
 
+
+        }
+
+
+
+
+        public ActionResult Permission()
+        {
+            return View(GetPermission("APP"));
+        }
+
+        public List<Permissions> GetPermission(string strCategory)
+        {
+
+            using (EmsEntities objEntity = new EmsEntities())
+            {
+                var modelPerm = (from Perm in objEntity.Permission_Detail
+                                 where Perm.Permission_Category.Equals(strCategory)
+                                 select new Permissions
+                                 {
+                                     Permission_Id = Perm.Permission_Id,
+                                     Permission_Desc = Perm.Permission_Desc,
+                                     Permission_Category = Perm.Permission_Category
+                                 }
+                                    );
+
+
+               return  modelPerm.ToList();
+
+            }
 
         }
     }

@@ -13,9 +13,10 @@ namespace CMS.Models
     {
         public string UserName { get; set; }
         public string EMail { get; set; }
-
-       
+        public List<Permissions> objPermissions { get; set; }
+        
     }
 
-    
+
+
 }

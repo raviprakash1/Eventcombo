@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<CMS.Models.UsersTemplate>
-
+@using CMS.Models;
 @{
     ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -98,19 +98,19 @@
                                         <tr>
                                             
                                             <td>1</td>
-                                            <td>
+                                            <td class="eml-ellps">
                                            
                                                @obj.UserName
                                            
                                             </td>
                                             <td>
-                                                <a id="animation-switcher" class="holder-active" href="#modal-text">
+                                                <a  class="holder-active animation-switcher" href="#modal-panel">
                                                     <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY">Manage</button>
                                                 </a>
                                             </td>
-                                            <td>@obj.EMail</td>
-                                            <td>10</td>
-                                            <td>15</td>
+                                            <td class="eml-ellps">@obj.EMail</td>
+                                            <td>0</td>
+                                            <td>0</td>
                                             <td>India</td>
                                             <td>
                                                 <div class="section">
@@ -152,7 +152,8 @@
 
                                             </td>
                                             <td>
-                                                <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                @Html.ActionLink("Update", "MyAccount","MyAcc")
                                                 <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
                                             </td>
                                             <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
@@ -176,19 +177,93 @@
 
                     </div>
 
-                    <div id="modal-text" class="popup-basic p25 popup-lg mfp-with-anim mfp-hide">
+                   
 
-                        <div class="col-md-4">
-                            select role
+                    <div id="modal-panel" class="popup-basic bg-none popup-lg mfp-with-anim mfp-hide">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <span class="panel-title">Manage Role</span>
+                            </div>
+                            <div class="panel-body admin-form">
+                                <form class="form-horizontal">
+                                    <div class="col-md-12">
+                                        <h3 class="mt5"> Select Role</h3>
+
+                                        @*@foreach (var obj in Model)
+                                        {
+                                            if (obj.objPermissions != null)
+                                            {
+                                                foreach (Permissions objPer in obj.objPermissions)
+                                                {
+                                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                                        <input id="radioExample" type="radio" name="radioExample">
+                                                        <label for="radioExample">@objPer.Permission_Desc</label>
+                                                    </div>
+                                                }
+                                            }
+                                        }*@
+
+                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                        <input id="rdAdmin" type="radio" name="rdAdmin">
+                                        <label for="Admin">Admin</label>
+                                    </div>
+                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                        <input id="rdMemberLimit" type="radio" name="MemberLimit">
+                                        <label for="MemberLimit">Member Limited</label>
+                                    </div>
+                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                        <input id="rdMember" type="radio" name="rdMember">
+                                        <label for="Member">Member</label>
+                                    </div>
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-12"><hr class="short alt"></div>
+                                    <div class="col-md-12">
+                                      
+
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="checkboxDefault1">
+                                            <label for="checkboxDefault1">check1</label>
+                                        </div>
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="checkboxDefault2">
+                                            <label for="checkboxDefault2">check2</label>
+                                        </div>
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="checkboxDefault3">
+                                            <label for="checkboxDefault3">check2</label>
+                                        </div>
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="checkboxDefault4">
+                                            <label for="checkboxDefault4">check2</label>
+                                        </div>
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="checkboxDefault5">
+                                            <label for="checkboxDefault5">check2</label>
+                                        </div>
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="checkboxDefault6">
+                                            <label for="checkboxDefault6">check2</label>
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="panel-footer text-right">
+                                <button class="btn btn-primary" type="button">Save</button>
+                            </div>
                         </div>
+                        @*@RenderPage("~/Views/Permissions/Permission.cshtml")*@
 
-
-                        <div class="col-md-8">
-                            You may put any HTML here. This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
-                        </div>
                     </div>
-
-
                 </div>
             </div>
             <!-- End: Content -->
@@ -219,30 +294,30 @@
     var modalContent = $('#modal-content');
 
     function findActive() {
-      var activeModal = modalContent.find('.holder-active').attr('href');
-      return activeModal;
+        var activeModal = modalContent.find('.holder-active').attr('href');
+        return activeModal;
     };
 
-    // Form Skin Switcher
-    $('#animation-switcher button').on('click', function() {
-      $('#animation-switcher').find('button').removeClass('active-animation');
-      $(this).addClass('active-animation item-checked');
+      // Form Skin Switcher
+    $('.animation-switcher button').on('click', function () {
+        $('.animation-switcher').find('button').removeClass('active-animation');
+        $(this).addClass('active-animation item-checked');
 
-      // Inline Admin-Form example
-      $.magnificPopup.open({
-        removalDelay: 500, //delay removal by X to allow out-animation,
-        items: {
-          src: findActive()
-        },
-        // overflowY: 'hidden', //
-        callbacks: {
-          beforeOpen: function(e) {
-            var Animation = $("#animation-switcher").find('.active-animation').attr('data-effect');
-            this.st.mainClass = Animation;
-          }
-        },
-        midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
-      });
+        // Inline Admin-Form example 
+        $.magnificPopup.open({
+            removalDelay: 500, //delay removal by X to allow out-animation,
+            items: {
+                src: findActive()
+            },
+            // overflowY: 'hidden', // 
+            callbacks: {
+                beforeOpen: function (e) {
+                    var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
+                    this.st.mainClass = Animation;
+                }
+            },
+            midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+        });
 
     });
 
