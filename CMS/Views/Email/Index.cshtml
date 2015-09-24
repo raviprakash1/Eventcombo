@@ -275,9 +275,13 @@
 
                 if (!validateEmail(frommail)) {
                    
-                    emailmsg += frommail+"\n";
+                    emailmsg += frommail + "\n";
+                    $('#From').addClass('err-bor');
                     flag = true;
                   
+                } else {
+                    $('#From').removeClass('err-bor');
+
                 }
                 
             }
@@ -287,14 +291,21 @@
                     var res = bccmail.split(",");
                     for (i = 0; i < res.length; i++) {
                         if (!validateEmail(res[i])) {
+                            $('#Bcc').addClass('err-bor');
                             emailmsg += res[i] + "\n";
                             flag = true;
                         }
                     }
                 }
                 else if (!validateEmail(bccmail)) {
+                    $('#Bcc').addClass('err-bor');
                     emailmsg += bccmail;
                     flag = true;
+                }
+                else 
+                {
+                    $('#Bcc').removeClass('err-bor');
+
                 }
                
             }
@@ -308,6 +319,7 @@
                     for (i = 0; i < res.length; i++) {
                       
                         if (!validateEmail(res[i])) {
+                            $('#CC').addClass('err-bor');
                             emailmsg += res[i] + "\n";
                           
                             flag = true;
@@ -315,8 +327,13 @@
                     }
                 }
                 else if (!validateEmail(cc)) {
+                    $('#CC').addClass('err-bor');
                     emailmsg += cc;
                     flag = true;
+                }
+                else {
+
+                    $('#CC').removeClass('err-bor');
                 }
                
             }
@@ -326,7 +343,7 @@
                 flag = true;
 
             }
-            console.log(emailmsg + "dfsdfd");
+            
             var invalid = "Invalid E-mail Id:\n";
             if (emailmsg != "")
             {
@@ -337,7 +354,7 @@
             if (flag) {
                 $('#divError').css('display', 'block');
                 $('#spanid').html(msg);
-                setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor'); }, 200);
+                setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
                 //alert(msg);
                 return false;
             }

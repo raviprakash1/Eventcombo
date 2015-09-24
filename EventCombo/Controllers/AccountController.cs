@@ -609,6 +609,7 @@ namespace EventCombo.Controllers
                                 profile.Email = model.Email;
 
                             }
+                        }
                             try
                             {
                                 objEntity.SaveChanges();
@@ -618,7 +619,7 @@ namespace EventCombo.Controllers
                                 string message = ex.Message;
 
                             }
-                        }
+                        
                     }
                     using (EventComboEntities objEntity = new EventComboEntities())
                     {

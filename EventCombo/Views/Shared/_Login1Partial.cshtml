@@ -55,7 +55,7 @@
           $(window).load(function () {
               console.log($('#loginemail').val());
               console.log($('#loginpassword').val());
-              if ($('#loginemail').val() != '' && $('#loginpassword').val() != '') {
+              if ($('#loginemail').val().length>0 && $('#loginpassword').val().length>0) {
                   $('#btnSavelogin').removeAttr("disabled");
 
               }
