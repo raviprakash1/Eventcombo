@@ -25,7 +25,7 @@ namespace EventCombo.Models
         public string NewPasswordAgain { get; set; }
         public string Picturename { get; set; }
         public string Pictureurl { get; set; }
-      
+        public string WorkPhone { get; set; }
 
     }
 }

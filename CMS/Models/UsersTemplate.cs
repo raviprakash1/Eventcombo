@@ -11,6 +11,8 @@ namespace CMS.Models
     [Table("AspNetUsers")]
     public class UsersTemplate
     {
+
+        public string Id { get; set; }
         public string UserName { get; set; }
         public string EMail { get; set; }
         public List<Permissions> objPermissions { get; set; }

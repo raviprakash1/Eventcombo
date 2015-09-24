@@ -61,10 +61,11 @@ namespace CMS.Controllers
             using (EmsEntities objEntity = new EmsEntities())
             {
                 var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
-                                    select new UsersTemplate
-                                    {
-                                        EMail = UserTemp.Email,
-                                        UserName = UserTemp.UserName
+                                     select new UsersTemplate
+                                     {
+                                         EMail = UserTemp.Email,
+                                         UserName = UserTemp.UserName,
+                                         Id = UserTemp.Id
                                     }
                                     );
 
@@ -106,6 +107,17 @@ namespace CMS.Controllers
 
             }
 
+        }
+
+        public void SavePermisions(string userId,string permission)
+        {
+            //EmsEntities objEnt = new EmsEntities();
+            //User_Permission_Detail upd = new User_Permission_Detail();
+            //upd.UP_Permission_Id = 1;
+            //upd.UP_User_Id = 1;
+            //objEnt.User_Permission_Detail.Add(upd);
+            //objEnt.SaveChanges();
+            
         }
     }
 }

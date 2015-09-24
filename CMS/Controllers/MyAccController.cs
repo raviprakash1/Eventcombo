@@ -25,6 +25,7 @@ namespace CMS.Controllers
     public class MyAccController : Controller
     {
         EmsEntities db = new EmsEntities();
+        
         // GET: MyAcc
         //public ActionResult MyAccount()
         //{
@@ -34,9 +35,10 @@ namespace CMS.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult MyAccount()
+        public ActionResult MyAccount(string UserId)
         {
             string defaultCountry = "";
+            
             if ((Session["AppId"] != null))
             {
                 var client = new WebClient();
@@ -51,8 +53,9 @@ namespace CMS.Controllers
                 //ViewBag.PinCode = stuff.zip_code;
 
 
-                string userid = "7bd93525-a288-43fd-84f8-40ec4b7c50bd";
+                string userid = UserId;
                 MyAccount myacc = new MyAccount();
+                myacc.Id = userid;
                 var accountdetail = GetLoginDetails(userid);
                 if (accountdetail != null)
                 {
@@ -79,9 +82,9 @@ namespace CMS.Controllers
                     {
                         string[] day = myacc.Dateofbirth.Split('-');
 
-                        myacc.day = int.Parse(day[0].ToString());
-                        myacc.month = int.Parse(day[1].ToString());
-                        myacc.year = int.Parse(day[2].ToString());
+                        myacc.day = day[0].ToString().Trim() != string.Empty ? int.Parse(day[0].ToString()) :1;
+                        myacc.month = day[1].ToString().Trim() != string.Empty ? int.Parse(day[1].ToString()) : 1;
+                        myacc.year = day[2].ToString().Trim() != string.Empty ? int.Parse(day[2].ToString()) : 1; 
 
 
                     }
@@ -94,6 +97,8 @@ namespace CMS.Controllers
                     {
                         myacc.City = accountdetail.City;
                     }
+                    myacc.Email = accountdetail.Email;
+
                     string state = accountdetail.State;
                     if (string.IsNullOrEmpty(state))
                     {
@@ -214,20 +219,20 @@ namespace CMS.Controllers
                                           contentype = pfd.ContentType,
                                           Dateofbirth = pfd.DateofBirth,
                                           Gender = pfd.Gender,
-                                          PreviousEmail = cpd.Email
+                                          PreviousEmail = cpd.Email,
+                                          Email = cpd.Email,
+                                          WorkPhone = pfd.WorkPhone
                                       });
                 return modelmyaccount.FirstOrDefault();
             }
         }
         [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> MyAccount(MyAccount model, HttpPostedFileBase file)
+        public ActionResult MyAccount(MyAccount model)
         {
             string msg = "", errormessage = "";
-            if (Session["AppId"] != null)
-            {
-                string Userid = Session["AppId"].ToString();
+            //if (Session["AppId"] != null)
+            //{
+                string Userid = model.Id;
                 var accountdetail = GetLoginDetails(Userid);
                 if (string.IsNullOrEmpty(model.Firstname) && string.IsNullOrEmpty(model.Lastname))
                 {
@@ -392,12 +397,12 @@ namespace CMS.Controllers
                 //}
 
                 return View(model);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "Home");
 
-            }
+            //}
 
         }
     }

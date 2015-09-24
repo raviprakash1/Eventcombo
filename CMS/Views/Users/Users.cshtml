@@ -91,21 +91,22 @@
                                     </thead>
                                     <tbody>
                                         
-                                      
+
 @foreach(var obj in Model)
 { 
     
                                         <tr>
                                             
-                                            <td>1</td>
+                                            <td></td>
                                             <td class="eml-ellps">
-                                           
+                                            
                                                @obj.UserName
                                            
                                             </td>
                                             <td>
-                                                <a  class="holder-active animation-switcher" href="#modal-panel">
-                                                    <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY">Manage</button>
+                                                <a class="holder-active animation-switcher" href="#modal-panel">
+                                                    <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" onclick="AssignUserId(@obj.Id)" >Manage</button>
+                                                    <input type="hidden" id="hidUid" class="hUname" value="" />
                                                 </a>
                                             </td>
                                             <td class="eml-ellps">@obj.EMail</td>
@@ -153,7 +154,7 @@
                                             </td>
                                             <td>
                                                 <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                                @Html.ActionLink("Update", "MyAccount","MyAcc")
+                                                @Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)
                                                 <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
                                             </td>
                                             <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
@@ -188,32 +189,19 @@
                                 <form class="form-horizontal">
                                     <div class="col-md-12">
                                         <h3 class="mt5"> Select Role</h3>
-
-                                        @*@foreach (var obj in Model)
-                                        {
-                                            if (obj.objPermissions != null)
-                                            {
-                                                foreach (Permissions objPer in obj.objPermissions)
-                                                {
-                                                    <div class="radio-custom radio-primary mt5 fl-lft">
-                                                        <input id="radioExample" type="radio" name="radioExample">
-                                                        <label for="radioExample">@objPer.Permission_Desc</label>
-                                                    </div>
-                                                }
-                                            }
-                                        }*@
-
+                                        
                                     <div class="radio-custom radio-primary mt5 fl-lft">
-                                        <input id="rdAdmin" type="radio" name="rdAdmin">
-                                        <label for="Admin">Admin</label>
+                                        <input id="rdAdmin" type="radio"  name="Permission">
+                                        <label for="rdAdmin">Admin</label>
+                                        
                                     </div>
                                     <div class="radio-custom radio-primary mt5 fl-lft">
-                                        <input id="rdMemberLimit" type="radio" name="MemberLimit">
-                                        <label for="MemberLimit">Member Limited</label>
+                                        <input id="rdMemberLimit" type="radio" class="Permission" name="Permission">
+                                        <label for="rdMemberLimit">Member Limited</label>
                                     </div>
                                     <div class="radio-custom radio-primary mt5 fl-lft">
-                                        <input id="rdMember" type="radio" name="rdMember">
-                                        <label for="Member">Member</label>
+                                        <input id="rdMember" type="radio" class="Permission" name="Permission">
+                                        <label for="rdMember">Member</label>
                                     </div>
 
                                     </div>
@@ -221,44 +209,46 @@
                                     <div class="col-md-12"><hr class="short alt"></div>
                                     <div class="col-md-12">
                                       
-
-
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" checked="" id="checkboxDefault1">
-                                            <label for="checkboxDefault1">check1</label>
+                                        <div id="dvMemLimited">
+                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                                <input type="checkbox" checked="" id="chkDeal_2">
+                                                <label for="checkboxDefault1">Deals</label>
+                                            </div>
+                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                                <input type="checkbox" checked="" id="chkEvent_1">
+                                                <label for="checkboxDefault1">Events</label>
+                                            </div>
                                         </div>
 
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" checked="" id="checkboxDefault2">
-                                            <label for="checkboxDefault2">check2</label>
+                                        <div id="dvAdmin">
+                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                                <input type="checkbox" checked="" id="chkUsers_3">
+                                                <label for="checkboxDefault1">Users</label>
+                                            </div>
+                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                                <input type="checkbox" checked="" id="chkEvents_4">
+                                                <label for="checkboxDefault1">Events</label>
+                                            </div>
+                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                                <input type="checkbox" checked="" id="chkTickets_5">
+                                                <label for="checkboxDefault1">Tickets</label>
+                                            </div>
+                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                                <input type="checkbox" checked="" id="chkEmails_6">
+                                                <label for="checkboxDefault1">Emails</label>
+                                            </div>
+                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                                <input type="checkbox" checked="" id="chkMes_7">
+                                                <label for="checkboxDefault1">Messages</label>
+                                            </div>
                                         </div>
 
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" checked="" id="checkboxDefault3">
-                                            <label for="checkboxDefault3">check2</label>
-                                        </div>
-
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" checked="" id="checkboxDefault4">
-                                            <label for="checkboxDefault4">check2</label>
-                                        </div>
-
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" checked="" id="checkboxDefault5">
-                                            <label for="checkboxDefault5">check2</label>
-                                        </div>
-
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" checked="" id="checkboxDefault6">
-                                            <label for="checkboxDefault6">check2</label>
-                                        </div>
-
-                                    </div>
+                                       </div>
                                 </form>
 
                             </div>
                             <div class="panel-footer text-right">
-                                <button class="btn btn-primary" type="button">Save</button>
+                                <button class="btn btn-primary" id="btSave" type="button">Save</button>
                             </div>
                         </div>
                         @*@RenderPage("~/Views/Permissions/Permission.cshtml")*@
@@ -279,7 +269,36 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>    
 
     <script type="text/javascript">
+        
   jQuery(document).ready(function() {
+      $("#rdAdmin").click(function () {
+          $("#dvMemLimited").hide();
+          $("#dvAdmin").show();
+      })
+
+      $("#rdMemberLimit").click(function () {
+          $("#dvMemLimited").show();
+          $("#dvAdmin").hide();
+      })
+
+      $("#rdMember").click(function () {
+          $("#dvMemLimited").show();
+          $("#dvAdmin").hide();
+      })
+       
+      $("#btSave").click(function () {
+          var obj = $("#hidUid").val();
+          alert(obj);
+          //$.ajax({
+          //    url: "/Users/SavePermisions",
+          //    data: { userid: 'test', permission: 'testPer' },
+          //    datatype: "Text",
+          //    type: "Post",
+          //    success: function (response) {
+          //        //alert(("#hidUid").val());
+          //    }
+          //});
+      })
 
     "use strict";
 
