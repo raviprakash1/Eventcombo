@@ -221,6 +221,10 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\Permission_Detail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>

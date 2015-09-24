@@ -155,5 +155,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="CmsModel.Message">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="Message1" ColumnName="Message" />
+          <ScalarProperty Name="Form_Tag" ColumnName="Form_Tag" />
+          <ScalarProperty Name="Form_Name" ColumnName="Form_Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

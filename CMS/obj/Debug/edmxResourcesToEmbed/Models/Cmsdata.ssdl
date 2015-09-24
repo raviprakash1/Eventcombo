@@ -88,6 +88,15 @@
     <Property Name="TemplateHtml" Type="nvarchar(max)" />
     <Property Name="From" Type="varchar" MaxLength="300" />
   </EntityType>
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Form_Name" Type="varchar" MaxLength="200" />
+    <Property Name="Form_Tag" Type="varchar" MaxLength="200" />
+    <Property Name="Message" Type="varchar" MaxLength="500" />
+  </EntityType>
   <EntityType Name="Permission_Detail">
     <Key>
       <PropertyRef Name="Permission_Id" />
@@ -223,6 +232,7 @@
     <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />

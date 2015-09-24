@@ -21,6 +21,7 @@
         <AssociationConnector Association="CmsModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CmsModel.Email_Tag" Width="1.5" PointX="7.375" PointY="9.75" />
         <EntityTypeShape EntityType="CmsModel.Email_Template" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="CmsModel.Message" Width="1.5" PointX="0.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

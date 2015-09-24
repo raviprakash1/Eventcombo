@@ -198,6 +198,7 @@
     </AssociationSet>
     <EntitySet Name="Email_Tag" EntityType="CmsModel.Email_Tag" />
     <EntitySet Name="Email_Template" EntityType="CmsModel.Email_Template" />
+    <EntitySet Name="Messages" EntityType="CmsModel.Message" />
   </EntityContainer>
   <EntityType Name="Email_Tag">
     <Key>
@@ -218,5 +219,14 @@
     <Property Name="Subject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
     <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Form_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Form_Tag" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Message1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>
