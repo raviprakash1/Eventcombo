@@ -84,10 +84,10 @@
     <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="StreetAddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="StreetAddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StreetAddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="StreetAddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="CountryID" Type="Byte" Nullable="false" />
     <Property Name="MainPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />

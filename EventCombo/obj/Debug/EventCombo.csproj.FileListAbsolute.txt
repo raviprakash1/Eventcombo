@@ -10,7 +10,6 @@ D:\Projects\EventCombo\bin\roslyn\System.Reflection.Metadata.dll
 D:\Projects\EventCombo\bin\roslyn\vbc.exe
 D:\Projects\EventCombo\bin\roslyn\VBCSCompiler.exe
 D:\Projects\EventCombo\bin\roslyn\VBCSCompiler.exe.config
-D:\Projects\EventCombo\bin\EventCombo.dll.config
 D:\Projects\EventCombo\bin\EventCombo.dll
 D:\Projects\EventCombo\bin\EventCombo.pdb
 D:\Projects\EventCombo\bin\Antlr3.Runtime.dll
@@ -140,3 +139,4 @@ D:\Navreet\projects\EventCombo-Webs\EventCombo\bin\Microsoft.Owin.Security.Micro
 D:\Navreet\projects\EventCombo-Webs\EventCombo\obj\Debug\EventCombo.csprojResolveAssemblyReference.cache
 D:\Navreet\projects\EventCombo-Webs\EventCombo\obj\Debug\EventCombo.dll
 D:\Navreet\projects\EventCombo-Webs\EventCombo\obj\Debug\EventCombo.pdb
+D:\Projects\EventCombo\bin\EventCombo.dll.config

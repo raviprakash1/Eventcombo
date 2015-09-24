@@ -5,3 +5,5 @@
 .em_bor_bot:last-child{border-bottom: 0px !important;}
 
 .wel_tem_name{ margin-top: 5px; border:0px; background: #fafafa; padding: 0 5px;}
+
+.err-bor{ border-color: red;}

@@ -188,8 +188,19 @@
                     _filesCheck: function() {
                         var s = 0;
                         if (n.limit && f.files.length + f._itFl.length > n.limit) {
-                            alert(f._assets.textParse(n.captions.errors.filesLimit));
+                            $('#diverroacc').css('display', 'block');
+                            $('#diverro1acc').css('display', 'none');
+                            $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesLimit));
+                            $("#imageeror").val('1');
+                            setTimeout(function () {
+                                $('#diverroacc').fadeOut();
+                                $("#imageeror").val('0');
+                            }, 200)
+                          
                             return false
+                        } else
+                        {
+                            $('#diverroacc').css('display', 'none');
                         }
                         for (var t = 0; t < f.files.length; t++) {
                             var x = f.files[t].name.split(".").pop().toLowerCase(),
@@ -202,14 +213,28 @@
                                     ext: x
                                 };
                             if (n.extensions != null && $.inArray(x, n.extensions) == -1) {
-                                alert(f._assets.textParse(n.captions.errors.filesType, m));
+                                $('#diverroacc').css('display', 'block');
+                                  $('#diverro1acc').css('display', 'none');
+                                $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesType, m));
                                 return false;
                                 break
                             }
+                            else
+                            {
+                                 $('#diverroacc').css('display', 'none');
+                            }
                             if (n.maxSize != null && f.files[t].size > n.maxSize * 1048576) {
-                                alert(f._assets.textParse(n.captions.errors.filesSize, m));
+                                console.log('sdfsdfasdfadfasdfdsaf');
+                                $('#diverroacc').css('display', 'block');
+                                $('#diverro1acc').css('display', 'none');
+                                //alert(f._assets.textParse(n.captions.errors.filesSize, m));
+                               // $('#diverroacc').html()
+                                $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesSize, m));
                                 return false;
                                 break
+                            }
+                            else {
+                                $('#diverroacc').css('display', 'none');
                             }
                             if (file.size == 4096 && file.type.length == 0) {
                                 return false;
@@ -218,8 +243,14 @@
                             s += f.files[t].size
                         }
                         if (n.maxSize != null && s >= Math.round(n.maxSize * 1048576)) {
-                            alert(f._assets.textParse(n.captions.errors.filesSizeAll));
+                            
+                            $('#diverroacc').css('display', 'block');
+                            $('#diverro1acc').css('display', 'none');
+                            $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesSizeAll));
                             return false
+                        } else
+                        {
+                            $('#diverroacc').css('display', 'none');
                         }
                         if ((n.addMore || n.uploadFile)) {
                             var m = f._itFl.filter(function(a, b) {

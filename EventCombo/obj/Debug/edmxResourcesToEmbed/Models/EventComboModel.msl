@@ -144,6 +144,7 @@
     <EntitySetMapping Name="Email_Template">
       <EntityTypeMapping TypeName="Models.Email_Template">
         <MappingFragment StoreEntitySet="Email_Template">
+          <ScalarProperty Name="From" ColumnName="From" />
           <ScalarProperty Name="TemplateHtml" ColumnName="TemplateHtml" />
           <ScalarProperty Name="Subject" ColumnName="Subject" />
           <ScalarProperty Name="Bcc" ColumnName="Bcc" />

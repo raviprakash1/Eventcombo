@@ -21,5 +21,6 @@ namespace EventCombo.Models
         public string Bcc { get; set; }
         public string Subject { get; set; }
         public string TemplateHtml { get; set; }
+        public string From { get; set; }
     }
 }

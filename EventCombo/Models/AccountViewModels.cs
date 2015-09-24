@@ -42,6 +42,9 @@ namespace EventCombo.Models
         [EmailAddress]
        
         public string Email { get; set; }
+      
+
+      
         public string PreviousEmail { get; set; }
         [EmailAddress]
       

@@ -33,7 +33,7 @@
                     <div class="panel-body p10">
                         <!-- Tags Menu -->
                         <div class="list-group list-group-links">
-                            <div class="list-group-header"> User Name List </div>
+                            <div class="list-group-header"> Tags </div>
                             <ul id="allfields" class="list-group">
                                 <li class="list-group-item em_bor_bot">
                                     <span id="node1">UserFirstNameID</span>
@@ -80,6 +80,14 @@
                    
                     <div class="panel-body" id="cart">
                         <div class="panel-heading">
+                            <div class="col-md-12" style="display:none;" id="divError">
+                                <div class="alert alert-danger alert-dismissable"  >
+                                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">&#215;</button>
+                                    <i class="fa fa-info pr10"></i>
+                                   <span id="spanid" ></span>
+                                </div>
+                            </div>
+
                             <div class="col-lg-12">
                                 @Html.TextBoxFor(m => m.Template_Name, new { @class = "form-control wel_tem_name fs20", id = "inputStandard", @readonly = "readonly",value="Template" })
                             
@@ -131,7 +139,7 @@
 
                                     </div>
                                 </div>
-                          @Html.TextAreaFor(m => m.ckeditor1, new { rows = "12",id= "ckeditor1" ,@value= " This is the < b > editor </ b > .......",@class= "txtSubject})
+                          @Html.TextAreaFor(m => m.ckeditor1, new { rows = "12",id= "ckeditor1" ,@value= " This is the < b > editor </ b > .......",@class= "txtSubject"})
                                 @*<textarea name="ckeditor1" id="ckeditor1" rows="12">
                                     This is the
                                     <b>editor</b> .......
@@ -254,8 +262,13 @@
             var bccmail = $('#Bcc').val();
             if (tomail == "")
             {
-                msg += "To  can't be empty \n";
+                $('#To').addClass('err-bor');
+                msg += "To Address can't be empty \n";
                 flag = true;
+            } else {
+
+                $('#To').removeClass('err-bor');
+               
             }
            
             if (frommail != "") {
@@ -322,7 +335,10 @@
                 flag = true;
             }
             if (flag) {
-                alert(msg);
+                $('#divError').css('display', 'block');
+                $('#spanid').html(msg);
+                setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor'); }, 200);
+                //alert(msg);
                 return false;
             }
 

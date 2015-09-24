@@ -7,7 +7,7 @@
 <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
 
 <link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-
+<script src="~/Scripts/filer/jquery.filer.js"></script>
 <style>
 .jFiler-input-dragDrop{ width:200px;height:auto; padding:0px; }
 .jFiler-item-thumb-image{ }
@@ -66,7 +66,7 @@
 <div class="col-sm-3">
     <div>
 
-        <input type="file" multiple="multiple" name="image" id="input2">
+        <input type="file"  name="image" id="input2">
     </div>
 </div>
 
@@ -207,7 +207,8 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-xs-12 add_form_bot">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.HiddenFor(m=>m.PreviousEmail, new { id="hdEmail"})
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control",@maxlength = 256 })
                 </div>
             </div>
         </div>
@@ -217,7 +218,7 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-xs-12 add_form_bot">
-                    @Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control", @maxlength = 256 })
                 </div>
             </div>
         </div>
@@ -227,7 +228,7 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-xs-12 add_form_bot">
-                    @Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control", @maxlength = 256 })
                 </div>
             </div>
         </div>
@@ -237,7 +238,7 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-xs-12 add_form_bot">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" , @maxlength = 15 })
                 </div>
             </div>
         </div>
@@ -247,7 +248,7 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-xs-12 add_form_bot">
-                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @maxlength = 15 })
                 </div>
             </div>
         </div>
@@ -257,7 +258,7 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-xs-12 add_form_bot">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" , @maxlength = 15 })
                 </div>
             </div>
         </div>
@@ -272,7 +273,7 @@
 
 
  
-
+<input type="hidden" value="0" id="imageeror" />
 
 
     <script type="text/javascript">
@@ -300,7 +301,7 @@
             if (Model == "Save") {
                 $('#input2').filer({
                     limit: '1',
-                    maxSize: 2 * 1024 * 1024,
+                    maxSize: '2',
                     extensions: ['jpg', 'jpeg', 'png'],
                     changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
                     showThumbs: true,
@@ -339,7 +340,7 @@
 
                         progressBar: '<div class="bar"></div>',
                         itemAppendToEnd: true,
-                        removeConfirmation: true,
+                        removeConfirmation: false,
                         _selectors: {
                             list: '.jFiler-item-list',
                             item: '.jFiler-item',
@@ -402,6 +403,7 @@
 
                         },
                         error: function (el) {
+                        
                             //var parent = el.find(".jFiler-jProgressBar").parent();
                             //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                             //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
@@ -436,8 +438,8 @@
                         removeConfirmation: "Are you sure you want to remove this file?",
                         errors: {
                             filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
-                            filesType: "Only files with extension .jpg,.png are allowed to be uploaded.",
-                            filesSize: "{{fi-name}} is too large! Please upload file up to {{fi-maxSize}} MB.",
+                            filesType: "Only files with extension .jpg,.png,.jpeg are allowed to be uploaded.",
+                            filesSize: "Image is too large! Please upload file up to {{fi-maxSize}} MB.",
                             filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
                         }
                     }
@@ -448,7 +450,7 @@
 
                 $('#input2').filer({
                     limit: '1',
-                    maxSize: 2 * 1024 * 1024,
+                    maxSize: '2',
                     extensions: ['jpg', 'jpeg', 'png'],
                     changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
                     showThumbs: true,
@@ -486,8 +488,8 @@
 
 
                         progressBar: '<div class="bar"></div>',
-                        itemAppendToEnd: true,
-                        removeConfirmation: true,
+                        itemAppendToEnd: false,
+                        removeConfirmation: false,
                         _selectors: {
                             list: '.jFiler-item-list',
                             item: '.jFiler-item',
@@ -502,8 +504,7 @@
                         enctype: 'multipart/form-data',
                         beforeSend: function () { },
                         success: function (data, el) {
-                            
-                            //el.find(".jFiler-item-assets").hide();
+                                                   //el.find(".jFiler-item-assets").hide();
                             ////    console.log(el);
                             //// $(".jFiler-item-assets").hide();
                             //var Celebrity_image_count=$("#Celebrity_image_count").val();
@@ -566,16 +567,25 @@
                     addMore: false,
                     clipBoardPaste: true,
                     excludeName: null,
-                    beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
+                    beforeShow: function () {  $(".jFiler-input-inner").hide(); return true },
                     onSelect: function () { $(".jFiler-input-inner").hide(); },
-                    afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
+                    afterShow: function () {  $(".jFiler-input-inner").hide(); },
                     onRemove: function (el) {
+                        
                         $('#input2').click(function (e) {
                             e.preventDefault();
+                           
                         })
                        
                     },
-                    onEmpty: function (el) { if ($(".jFiler-item").length == 1) { setTimeout(function () { $(".jFiler-input-inner").show(); $('#input2').unbind('click'); }, 200); }; },
+                    onEmpty: function (el) {
+                        console.log(el);
+                     
+                        // alert($("#drag-drop div").hasClass("jFiler-items"))
+                        if ($("#imageeror").val()==0) {
+                            if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                        }
+                    },
                     captions: {
                         button: "Choose Files",
                         feedback: "Choose files To Upload",
@@ -583,9 +593,11 @@
                         drop: "Drop file here to Upload",
                         removeConfirmation: "Are you sure you want to remove this file?",
                         errors: {
+                           
+
                             filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
-                            filesType: "Only files with extension .jpg,.png are allowed to be uploaded.",
-                            filesSize: "{{fi-name}} is too large! Please upload file up to {{fi-maxSize}} MB.",
+                            filesType: "Only files with extension jpg,.png,.jpeg are allowed to be uploaded.",
+                            filesSize: "Image is too large! Please upload file up to {{fi-maxSize}} MB.",
                             filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
                         }
                     },
@@ -812,5 +824,4 @@
         });
     </script>
     <script src="~/Scripts/jquery.maskedinput.min.js"></script>
-<script src="~/Scripts/filer/jquery.filer.js"></script>
-<!---<script src="~/Scripts/filer/jquery.filer.min.js"></script>-->
+
