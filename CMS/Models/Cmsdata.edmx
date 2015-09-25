@@ -19,7 +19,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
@@ -47,7 +47,7 @@
             <PropertyRef Name="RoleId" />
           </Key>
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
@@ -91,6 +91,16 @@
           <Property Name="Bcc" Type="varchar" MaxLength="300" />
           <Property Name="Subject" Type="varchar" MaxLength="300" />
           <Property Name="TemplateHtml" Type="nvarchar(max)" />
+          <Property Name="From" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Form_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Form_Tag" Type="varchar" MaxLength="200" />
+          <Property Name="Message" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -109,10 +119,10 @@
           <Property Name="FirstName" Type="varchar" MaxLength="50" />
           <Property Name="LastName" Type="varchar" MaxLength="50" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
-          <Property Name="StreetAddressLine1" Type="varchar" MaxLength="100" />
-          <Property Name="StreetAddressLine2" Type="varchar" MaxLength="100" />
-          <Property Name="City" Type="varchar" MaxLength="100" />
-          <Property Name="State" Type="varchar" MaxLength="50" />
+          <Property Name="StreetAddressLine1" Type="varchar" MaxLength="256" />
+          <Property Name="StreetAddressLine2" Type="varchar" MaxLength="256" />
+          <Property Name="City" Type="varchar" MaxLength="256" />
+          <Property Name="State" Type="varchar" MaxLength="256" />
           <Property Name="Zip" Type="varchar" MaxLength="10" />
           <Property Name="CountryID" Type="tinyint" Nullable="false" />
           <Property Name="MainPhone" Type="varchar" MaxLength="20" />
@@ -145,7 +155,7 @@
             <PropertyRef Name="UP_Id" />
           </Key>
           <Property Name="UP_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UP_User_Id" Type="int" Nullable="false" />
+          <Property Name="UP_User_Id" Type="nvarchar" MaxLength="128" />
           <Property Name="UP_Permission_Id" Type="int" Nullable="false" />
           <Property Name="UP_Flag" Type="nchar" MaxLength="1" />
         </EntityType>
@@ -227,6 +237,7 @@
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
@@ -265,14 +276,6 @@
           <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetRole">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -314,7 +317,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="AspNetRoles" Relationship="CmsModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -340,10 +343,10 @@
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="StreetAddressLine1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="StreetAddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StreetAddressLine1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="StreetAddressLine2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CountryID" Type="Byte" Nullable="false" />
           <Property Name="MainPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -371,15 +374,6 @@
           </Key>
           <Property Name="StatusID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StatusName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="User_Permission_Detail">
-          <Key>
-            <PropertyRef Name="UP_Id" />
-          </Key>
-          <Property Name="UP_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UP_User_Id" Type="Int32" Nullable="false" />
-          <Property Name="UP_Permission_Id" Type="Int32" Nullable="false" />
-          <Property Name="UP_Flag" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -421,13 +415,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="EmsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
@@ -435,7 +424,6 @@
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="Status" EntityType="Self.Status" />
-          <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -448,12 +436,15 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
           <EntitySet Name="Email_Tag" EntityType="CmsModel.Email_Tag" />
           <EntitySet Name="Email_Template" EntityType="CmsModel.Email_Template" />
+          <EntitySet Name="Messages" EntityType="CmsModel.Message" />
+          <EntitySet Name="User_Permission_Detail" EntityType="CmsModel.User_Permission_Detail" />
+          <EntitySet Name="AspNetRoles" EntityType="CmsModel.AspNetRole" />
+          <AssociationSet Name="AspNetUserRoles" Association="CmsModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Email_Tag">
           <Key>
@@ -473,7 +464,38 @@
           <Property Name="Bcc" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Subject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Form_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Form_Tag" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Message1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User_Permission_Detail">
+          <Key>
+            <PropertyRef Name="UP_Id" />
+          </Key>
+          <Property Name="UP_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UP_User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UP_Permission_Id" Type="Int32" Nullable="false" />
+          <Property Name="UP_Flag" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="CmsModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="AspNetUserRoles">
+          <End Type="CmsModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="CmsModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -487,14 +509,6 @@
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="CmsModel.AspNetRole">
-              <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -594,24 +608,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="User_Permission_Detail">
-            <EntityTypeMapping TypeName="CmsModel.User_Permission_Detail">
-              <MappingFragment StoreEntitySet="User_Permission_Detail">
-                <ScalarProperty Name="UP_Id" ColumnName="UP_Id" />
-                <ScalarProperty Name="UP_User_Id" ColumnName="UP_User_Id" />
-                <ScalarProperty Name="UP_Permission_Id" ColumnName="UP_Permission_Id" />
-                <ScalarProperty Name="UP_Flag" ColumnName="UP_Flag" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="CmsModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Email_Tag">
             <EntityTypeMapping TypeName="CmsModel.Email_Tag">
               <MappingFragment StoreEntitySet="Email_Tag">
@@ -623,6 +619,7 @@
           <EntitySetMapping Name="Email_Template">
             <EntityTypeMapping TypeName="CmsModel.Email_Template">
               <MappingFragment StoreEntitySet="Email_Template">
+                <ScalarProperty Name="From" ColumnName="From" />
                 <ScalarProperty Name="TemplateHtml" ColumnName="TemplateHtml" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="Bcc" ColumnName="Bcc" />
@@ -633,7 +630,43 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="CmsModel.Message">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="Message1" ColumnName="Message" />
+                <ScalarProperty Name="Form_Tag" ColumnName="Form_Tag" />
+                <ScalarProperty Name="Form_Name" ColumnName="Form_Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Permission_Detail">
+            <EntityTypeMapping TypeName="CmsModel.User_Permission_Detail">
+              <MappingFragment StoreEntitySet="User_Permission_Detail">
+                <ScalarProperty Name="UP_Flag" ColumnName="UP_Flag" />
+                <ScalarProperty Name="UP_Permission_Id" ColumnName="UP_Permission_Id" />
+                <ScalarProperty Name="UP_User_Id" ColumnName="UP_User_Id" />
+                <ScalarProperty Name="UP_Id" ColumnName="UP_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="CmsModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="CmsModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

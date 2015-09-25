@@ -5,3 +5,13 @@
 .em_bor_bot:last-child{border-bottom: 0px !important;}
 
 .wel_tem_name{ margin-top: 5px; border:0px; background: #fafafa; padding: 0 5px;}
+
+
+
+
+.fl-lft{ float: left;}
+.eml-ellps{  
+ max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;}

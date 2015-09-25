@@ -6,21 +6,22 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c00018613ef44cd4ada7efd2a7f12fe9" Name="Diagram1">
         <EntityTypeShape EntityType="CmsModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CmsModel.AspNetRole" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CmsModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CmsModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CmsModel.AspNetUser" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CmsModel.Country" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CmsModel.Permission_Detail" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CmsModel.Permission_Detail" Width="2.25" PointX="7.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CmsModel.Profile" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CmsModel.Status" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CmsModel.User_Permission_Detail" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="CmsModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="CmsModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="CmsModel.FK_Profile_Profile" ManuallyRouted="false" />
-        <AssociationConnector Association="CmsModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CmsModel.Email_Tag" Width="1.5" PointX="7.375" PointY="9.75" />
         <EntityTypeShape EntityType="CmsModel.Email_Template" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="CmsModel.Message" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="CmsModel.User_Permission_Detail" Width="2.25" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CmsModel.AspNetRole" Width="1.5" PointX="0.75" PointY="6.5" />
+        <AssociationConnector Association="CmsModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

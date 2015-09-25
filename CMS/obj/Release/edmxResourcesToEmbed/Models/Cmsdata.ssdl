@@ -14,7 +14,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Id" Type="varchar" MaxLength="150" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetUserClaims">
@@ -42,7 +42,7 @@
       <PropertyRef Name="RoleId" />
     </Key>
     <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="varchar" MaxLength="150" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetUsers">
     <Key>
@@ -86,6 +86,16 @@
     <Property Name="Bcc" Type="varchar" MaxLength="300" />
     <Property Name="Subject" Type="varchar" MaxLength="300" />
     <Property Name="TemplateHtml" Type="nvarchar(max)" />
+    <Property Name="From" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Form_Name" Type="varchar" MaxLength="200" />
+    <Property Name="Form_Tag" Type="varchar" MaxLength="200" />
+    <Property Name="Message" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="Permission_Detail">
     <Key>
@@ -104,10 +114,10 @@
     <Property Name="FirstName" Type="varchar" MaxLength="50" />
     <Property Name="LastName" Type="varchar" MaxLength="50" />
     <Property Name="Email" Type="varchar" MaxLength="100" />
-    <Property Name="StreetAddressLine1" Type="varchar" MaxLength="100" />
-    <Property Name="StreetAddressLine2" Type="varchar" MaxLength="100" />
-    <Property Name="City" Type="varchar" MaxLength="100" />
-    <Property Name="State" Type="varchar" MaxLength="50" />
+    <Property Name="StreetAddressLine1" Type="varchar" MaxLength="256" />
+    <Property Name="StreetAddressLine2" Type="varchar" MaxLength="256" />
+    <Property Name="City" Type="varchar" MaxLength="256" />
+    <Property Name="State" Type="varchar" MaxLength="256" />
     <Property Name="Zip" Type="varchar" MaxLength="10" />
     <Property Name="CountryID" Type="tinyint" Nullable="false" />
     <Property Name="MainPhone" Type="varchar" MaxLength="20" />
@@ -140,7 +150,7 @@
       <PropertyRef Name="UP_Id" />
     </Key>
     <Property Name="UP_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UP_User_Id" Type="int" Nullable="false" />
+    <Property Name="UP_User_Id" Type="nvarchar" MaxLength="128" />
     <Property Name="UP_Permission_Id" Type="int" Nullable="false" />
     <Property Name="UP_Flag" Type="nchar" MaxLength="1" />
   </EntityType>
@@ -222,6 +232,7 @@
     <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />

@@ -109,15 +109,31 @@ namespace CMS.Controllers
 
         }
 
-        public void SavePermisions(string userId,string permission)
+        public void SavePermisions(string strUserId,string strPermission, string strRole)
         {
-            //EmsEntities objEnt = new EmsEntities();
-            //User_Permission_Detail upd = new User_Permission_Detail();
-            //upd.UP_Permission_Id = 1;
-            //upd.UP_User_Id = 1;
-            //objEnt.User_Permission_Detail.Add(upd);
-            //objEnt.SaveChanges();
-            
+            string strResult = "";
+            try
+            {
+                string[] strAry = strPermission.Split('#');
+                EmsEntities objEnt = new EmsEntities();
+                User_Permission_Detail upd = new User_Permission_Detail();
+                foreach (string str in strAry)
+                {
+                    if (!str.Trim().Equals(string.Empty))
+                    {
+                        upd = new User_Permission_Detail();
+                        upd.UP_Permission_Id = Convert.ToInt16(str);
+                        upd.UP_User_Id = strUserId;
+                        objEnt.User_Permission_Detail.Add(upd);
+                    }
+                }
+                objEnt.SaveChanges();
+                strResult = "Y";
+            }
+            catch (Exception)
+            {
+                strResult = "N";
+            }
         }
     }
 }

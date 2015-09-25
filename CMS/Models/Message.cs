@@ -12,15 +12,11 @@ namespace CMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Email_Template
+    public partial class Message
     {
-        public string TemplateId { get; set; }
-        public string Template_Name { get; set; }
-        public string To { get; set; }
-        public string CC { get; set; }
-        public string Bcc { get; set; }
-        public string Subject { get; set; }
-        public string TemplateHtml { get; set; }
-        public string From { get; set; }
+        public int Id { get; set; }
+        public string Form_Name { get; set; }
+        public string Form_Tag { get; set; }
+        public string Message1 { get; set; }
     }
 }

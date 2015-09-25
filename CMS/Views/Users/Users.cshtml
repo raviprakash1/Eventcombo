@@ -106,7 +106,7 @@
                                             <td>
                                                 <a class="holder-active animation-switcher" href="#modal-panel">
                                                     <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" onclick="AssignUserId(@obj.Id)" >Manage</button>
-                                                    <input type="hidden" id="hidUid" class="hUname" value="" />
+                                                   
                                                 </a>
                                             </td>
                                             <td class="eml-ellps">@obj.EMail</td>
@@ -184,6 +184,7 @@
                         <div class="panel">
                             <div class="panel-heading">
                                 <span class="panel-title">Manage Role</span>
+                                <input type="hidden" id="hidUid" class="hUname" value="" />
                             </div>
                             <div class="panel-body admin-form">
                                 <form class="form-horizontal">
@@ -269,7 +270,11 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>    
 
     <script type="text/javascript">
-        
+        function AssignUserId(userId)
+        {
+            document.getElementById("hidUid").value = userId;
+        }
+          
   jQuery(document).ready(function() {
       $("#rdAdmin").click(function () {
           $("#dvMemLimited").hide();
@@ -286,18 +291,45 @@
           $("#dvAdmin").hide();
       })
        
+      
+
       $("#btSave").click(function () {
-          var obj = $("#hidUid").val();
-          alert(obj);
-          //$.ajax({
-          //    url: "/Users/SavePermisions",
-          //    data: { userid: 'test', permission: 'testPer' },
-          //    datatype: "Text",
-          //    type: "Post",
-          //    success: function (response) {
-          //        //alert(("#hidUid").val());
-          //    }
-          //});
+          debugger;
+          var UserId = $("#hidUid").val();
+          var Permisions;var URole;
+          if ($("#chkDeal_2").checked == true)
+              Permisions = "2";
+          if ($("#chkEvent_1").checked == true)
+              Permisions = Permisions + "#1";
+          if ($("#chkUsers_3").checked == true)
+              Permisions = Permisions + "#3";
+          if ($("#chkEvents_4").checked == true)
+              Permisions = Permisions + "#4";
+          if ($("#chkTickets_5").checked == true)
+              Permisions = Permisions + "#5";
+          if ($("#chkEmails_6").checked == true)
+              Permisions = Permisions + "#6";
+          if ($("#chkMes_7").checked == true)
+              Permisions = Permisions + "#7";
+
+          if  ($("#rdAdmin").checked == true)
+              URole = 2;
+          else 
+              URole = 3;
+
+
+          $.ajax({
+              url: "/Users/SavePermisions",
+              data: { strUserId: UserId, strPermission: Permisions,strRole:URole },
+              datatype: "Text",
+              type: "Post",
+              success: function (response) {
+                  if (response == "Y")
+                      alert("Record Updated.");
+                else
+                      alert("Some error occur while saving");
+              }
+          });
       })
 
     "use strict";
