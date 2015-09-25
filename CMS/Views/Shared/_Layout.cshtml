@@ -61,9 +61,13 @@
                     <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
 
                         <li class="dropdown-footer">
-                            <a href="#" class="">
+@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+{
+
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="">
                                 <span class="fa fa-power-off pr5"></span> Logout
                             </a>
+}
                         </li>
                     </ul>
                 </li>
@@ -87,7 +91,12 @@
                             </a>
                             <div class="media-body">
                                 <div class="media-links">
-                                    <a href="#" class="sidebar-menu-toggle">User Menu -</a> <a href="pages_login(alt).html">Logout</a>
+
+                                    <a href="#" class="sidebar-menu-toggle">User Menu -</a> 
+@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutidForm" }))
+{
+                                    <a href="javascript:document.getElementById('logoutidForm').submit()">Logout</a>
+}
                                 </div>
                                 <div class="media-author">Michael Richards</div>
                             </div>
