@@ -50,7 +50,7 @@
         <section id="content_wrapper">
 @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
 {
-    @Html.AntiForgeryToken()
+ 
             <!-- Begin: Content -->
             <section id="content">
 
@@ -69,7 +69,13 @@
 
                        
                             <div class="panel-body bg-light p25 pb15">
-
+                                <div class="alert alert-micro alert-border-left alert-danger pastel alert-dismissable mn mb5">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    <i class="fa fa-info pr10"></i> <span id="spanemail">
+    Enter your
+    <b>Email</b> and instructions will be sent to you!
+</span>
+                                </div>
                                 <!-- Username Input -->
                                 <div class="section">
                                     <label for="username" class="field-label text-muted fs18 mb10">Username</label>

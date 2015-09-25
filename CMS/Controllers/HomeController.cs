@@ -90,15 +90,16 @@ namespace CMS.Controllers
             return View();
 
         }
+   
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+      
       
         public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                return View(model);
             }
 
             // This doesn't count login failures towards account lockout
@@ -109,7 +110,7 @@ namespace CMS.Controllers
                 case SignInStatus.Success:
                     var User = UserManager.FindByEmail(model.Email.ToString());
                     var roleSuperAdmin = (from r in db.AspNetRoles  where r.Name.Contains("Super Admin")  select r).FirstOrDefault();
-                    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id ).Contains(roleSuperAdmin.Id)).ToList();
+                    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id ).Contains(roleSuperAdmin.Id)  ).ToList();
                     if (users.Find(x => x.Id == User.Id ) != null)
                     {
                         Session["AppId"] = User.Id;
@@ -126,7 +127,8 @@ namespace CMS.Controllers
                         }
                         else
                         {
-                            return View();
+                            ModelState.AddModelError("", "Invalid login attempt.");
+                            return View(model);
                         }
                       
                     }
