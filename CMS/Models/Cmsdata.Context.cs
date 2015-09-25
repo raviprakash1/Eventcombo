@@ -35,13 +35,8 @@ namespace CMS.Models
         public virtual DbSet<Email_Tag> Email_Tag { get; set; }
         public virtual DbSet<Email_Template> Email_Template { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
-<<<<<<< HEAD
-        public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-=======
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
->>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
     }
 }
