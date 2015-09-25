@@ -619,13 +619,6 @@
     <Content Include="plugins\tabdrop\bootstrap-tabdrop.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Cmsdata.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Cmsdata.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Cmsdata.edmx.diagram">
-      <DependentUpon>Cmsdata.edmx</DependentUpon>
-    </Content>
     <Content Include="assets\admin-tools\admin-forms\less\admin-forms.less" />
     <Content Include="assets\admin-tools\admin-forms\less\bootstrap_fix.less" />
     <Content Include="assets\admin-tools\admin-forms\less\elements.less" />
@@ -878,6 +871,13 @@
     <Content Include="plugins\footable\css\fonts\footable.eot" />
     <Content Include="plugins\footable\css\fonts\footable.ttf" />
     <Content Include="plugins\footable\css\fonts\footable.woff" />
+    <EntityDeploy Include="Models\Cmsdata.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Cmsdata.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Cmsdata.edmx.diagram">
+      <DependentUpon>Cmsdata.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\filer\jquery.filer.js" />
