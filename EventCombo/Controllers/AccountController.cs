@@ -166,18 +166,42 @@ namespace EventCombo.Controllers
         public ActionResult MyAccount()
         {
             string defaultCountry = "";
+        
+            string city = "",state="",zipcode="",country="";
             if ((Session["AppId"] != null))
             {
-                var client = new WebClient();
-                string ip =  GetLanIPAddress().Replace("::ffff:", "");
-                var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-                dynamic stuff = JsonConvert.DeserializeObject(json);
+                try {
+                    using (WebClient client = new WebClient())
+                    {
+                        string ip = GetLanIPAddress().Replace("::ffff:", "");
+                        var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
+                         dynamic stuff = JsonConvert.DeserializeObject(json);
+                        if(stuff!=null)
+                        {
+                            city = stuff.city;
+                            state = stuff.region_name;
+                            zipcode = stuff.zip_code;
+                            country = stuff.country_name;
+                        }
+                        else
+                        {
+                            city = "";
+                            state = "";
+                            zipcode = "";
+                            country = "";
 
+                        }
+                    }
+                }
+                catch(Exception ex)
+                {
+                    city = "";
+                    state ="";
+                    zipcode = "";
+                    country = "";
 
-                //ViewBag.Country = stuff.country_name;
-                //ViewBag.city = stuff.city;
-                //ViewBag.state =stuff.region_name;
-                //ViewBag.PinCode = stuff.zip_code;
+                }
+
 
 
                 string userid = Session["AppId"].ToString();
@@ -185,7 +209,7 @@ namespace EventCombo.Controllers
                 var accountdetail = GetLoginDetails(userid);
                 if(accountdetail!=null)
                 {
-
+                   
                     myacc = accountdetail;
                 }
                 if (myacc != null)
@@ -197,7 +221,7 @@ namespace EventCombo.Controllers
                         Name = myacc.UserProfileImage,
                         path = "a.jpg"
                     };
-                    string city = stuff.city;
+                   
                     if (string.IsNullOrEmpty(myacc.Dateofbirth))
                     {
                         myacc.day = 1;
@@ -215,31 +239,44 @@ namespace EventCombo.Controllers
 
                     }
                   
-                        if (string.IsNullOrEmpty(city))
+                    if (string.IsNullOrEmpty(myacc.City))
                     {
-                        myacc.City = "";
+                      
+                            if (!string.IsNullOrEmpty(city))
+                            {
+                                myacc.City = city;
+                            }
+                            else
+                            {
+                                myacc.City = "";
+
+                            }
+                            
+                        
                     }
-                    else
+                 
+                    if (string.IsNullOrEmpty(myacc.State))
                     {
-                        myacc.City = stuff.city;
+                        if (string.IsNullOrEmpty(state))
+                        {
+                            myacc.State = "";
+                        }
+                        else
+                        {
+                            myacc.State = state;
+                        }
                     }
-                    string state = stuff.region_name;
-                    if (string.IsNullOrEmpty(state))
+                  
+                    if (string.IsNullOrEmpty(myacc.Zip))
                     {
-                        myacc.State = "";
-                    }
-                    else
-                    {
-                        myacc.State = stuff.region_name;
-                    }
-                    string zipcode = stuff.zip_code;
-                    if (string.IsNullOrEmpty(zipcode))
-                    {
-                        myacc.Zip = "";
-                    }
-                    else
-                    {
-                        myacc.Zip = stuff.zip_code;
+                        if (string.IsNullOrEmpty(zipcode))
+                        {
+                            myacc.Zip = "";
+                        }
+                        else
+                        {
+                            myacc.Zip = zipcode;
+                        }
                     }
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     var results = js.Serialize(x);
@@ -269,7 +306,7 @@ namespace EventCombo.Controllers
                     myacc.Password = "";
 
                 }
-                string COuntryname = stuff.country_name;
+               
                 var countryQuery = (from c in db.Countries
                                     orderby c.Country1 ascending
                                     select c).Distinct();
@@ -291,14 +328,14 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(COuntryname))
+                    if (!string.IsNullOrEmpty(country))
                     {
 
                         defaultCountry = "United States";
                     }
                     else
                     {
-                        defaultCountry = COuntryname;
+                        defaultCountry = country;
 
                     }
 
@@ -507,6 +544,7 @@ namespace EventCombo.Controllers
             if (Session["AppId"] != null)
             {
                 string Userid = Session["AppId"].ToString();
+               
                 var accountdetail = GetLoginDetails(Userid);
                 if (string.IsNullOrEmpty(model.Firstname)&& string.IsNullOrEmpty(model.Lastname))
                 {
@@ -543,14 +581,17 @@ namespace EventCombo.Controllers
 
                         }
                     }
-                
-                if (!string.IsNullOrEmpty(model.Email))
+             
+                    if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.ConfirmEmail))
                 {
-                    var user = UserManager.FindByEmail(model.Email);
-                    if (user != null)
+                    if (model.PreviousEmail != model.Email)
                     {
-                        ModelState.AddModelError("Error", "Confirm email already exist!");
-                        //errormessage += "Confirm email already exist!! </br>";
+                        var user = UserManager.FindByEmail(model.Email);
+                        if (user != null)
+                        {
+                            ModelState.AddModelError("Error", "Confirm email already exist!");
+                            //errormessage += "Confirm email already exist!! </br>";
+                        }
                     }
                 }
               
@@ -579,25 +620,49 @@ namespace EventCombo.Controllers
                         //profile.UserProfileImage = model.UserProfileImage;
                         profile.Gender = model.Gender;
                         profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
-                        if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email))
+                        if (!checkexternallogin(Userid))
                         {
-                            profile.Email = model.Email;
+                            if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
+                            {
+                                profile.Email = model.Email;
 
+                            }
                         }
-                        objEntity.SaveChanges();
+                            try
+                            {
+                                objEntity.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                string message = ex.Message;
+
+                            }
+                        
                     }
                     using (EventComboEntities objEntity = new EventComboEntities())
                     {
-                        AspNetUser aspuser = objEntity.AspNetUsers.First(i => i.Id == Userid); ;
-                        if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email))
+                        AspNetUser aspuser = objEntity.AspNetUsers.First(i => i.Id == Userid);
+                        if (!checkexternallogin(Userid))
                         {
-                            aspuser.Email = model.Email;
-                            aspuser.UserName = model.Email;
+                            if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
+                            {
+                                aspuser.Email = model.Email;
+                                aspuser.UserName = model.Email;
 
 
+
+                                //   objEntity.AspNetUsers.Attach(aspuser);
+                                try
+                                {
+                                    objEntity.SaveChanges();
+                                }
+                                catch (Exception ex)
+                                {
+                                    string message = ex.Message;
+
+                                }
+                            }
                         }
-                        //   objEntity.AspNetUsers.Attach(aspuser);
-                        objEntity.SaveChanges();
                     }
 
                            
@@ -709,7 +774,9 @@ namespace EventCombo.Controllers
                                            MainPhone = pfd.MainPhone,
                                           SecondPhone = pfd.SecondPhone,
                                           WebsiteURL = pfd.WebsiteURL,
-                                         UserProfileImage = pfd.UserProfileImage,
+                                          UserProfileImage = pfd.UserProfileImage,
+                                          Email=cpd.Email ,
+                                          Password=cpd.PasswordHash,
                                           contentype=pfd.ContentType,
                                           Dateofbirth=pfd.DateofBirth,
                                           Gender=pfd.Gender ,
@@ -718,6 +785,29 @@ namespace EventCombo.Controllers
                 return modelmyaccount.FirstOrDefault();
 
             }
+        }
+
+        public bool checkexternallogin(string userid)
+        {
+            using (EventComboEntities objEntity = new EventComboEntities())
+            {
+                var modelmyaccount = (from cpd in objEntity.AspNetUsers
+                                      join pfd in objEntity.AspNetUserLogins
+                                      on cpd.Id equals pfd.UserId
+                                      where cpd.Id == userid
+                                      select cpd);
+            if( modelmyaccount.FirstOrDefault()!= null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+
+                }
+
+            }
+
         }
         public ApplicationSignInManager SignInManager
         {

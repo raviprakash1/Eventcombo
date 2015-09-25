@@ -326,14 +326,6 @@
           <Property Name="CountryID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Country1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="Permission_Detail">
-          <Key>
-            <PropertyRef Name="Permission_Id" />
-          </Key>
-          <Property Name="Permission_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Permission_Desc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Permission_Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Profile">
           <Key>
             <PropertyRef Name="ProfileID" />
@@ -421,7 +413,6 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
-          <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -439,12 +430,20 @@
           <EntitySet Name="Email_Tag" EntityType="CmsModel.Email_Tag" />
           <EntitySet Name="Email_Template" EntityType="CmsModel.Email_Template" />
           <EntitySet Name="Messages" EntityType="CmsModel.Message" />
+<<<<<<< HEAD
           <EntitySet Name="User_Permission_Detail" EntityType="CmsModel.User_Permission_Detail" />
+=======
+>>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
           <EntitySet Name="AspNetRoles" EntityType="CmsModel.AspNetRole" />
           <AssociationSet Name="AspNetUserRoles" Association="CmsModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+<<<<<<< HEAD
+=======
+          <EntitySet Name="Permission_Detail" EntityType="CmsModel.Permission_Detail" />
+          <EntitySet Name="User_Permission_Detail" EntityType="CmsModel.User_Permission_Detail" />
+>>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
         </EntityContainer>
         <EntityType Name="Email_Tag">
           <Key>
@@ -475,6 +474,29 @@
           <Property Name="Form_Tag" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Message1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+<<<<<<< HEAD
+=======
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="CmsModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="AspNetUserRoles">
+          <End Type="CmsModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="CmsModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Permission_Detail">
+          <Key>
+            <PropertyRef Name="Permission_Id" />
+          </Key>
+          <Property Name="Permission_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Permission_Desc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Permission_Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+>>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
         <EntityType Name="User_Permission_Detail">
           <Key>
             <PropertyRef Name="UP_Id" />
@@ -483,6 +505,7 @@
           <Property Name="UP_User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="UP_Permission_Id" Type="Int32" Nullable="false" />
           <Property Name="UP_Flag" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+<<<<<<< HEAD
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -491,6 +514,8 @@
           <Property Name="Id" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="CmsModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+=======
+>>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
         </EntityType>
         <Association Name="AspNetUserRoles">
           <End Type="CmsModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
@@ -554,15 +579,6 @@
               <MappingFragment StoreEntitySet="Country">
                 <ScalarProperty Name="CountryID" ColumnName="CountryID" />
                 <ScalarProperty Name="Country1" ColumnName="Country" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Permission_Detail">
-            <EntityTypeMapping TypeName="CmsModel.Permission_Detail">
-              <MappingFragment StoreEntitySet="Permission_Detail">
-                <ScalarProperty Name="Permission_Id" ColumnName="Permission_Id" />
-                <ScalarProperty Name="Permission_Desc" ColumnName="Permission_Desc" />
-                <ScalarProperty Name="Permission_Category" ColumnName="Permission_Category" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -640,6 +656,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+<<<<<<< HEAD
           <EntitySetMapping Name="User_Permission_Detail">
             <EntityTypeMapping TypeName="CmsModel.User_Permission_Detail">
               <MappingFragment StoreEntitySet="User_Permission_Detail">
@@ -650,6 +667,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+=======
+>>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="CmsModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
@@ -666,6 +685,28 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+<<<<<<< HEAD
+=======
+          <EntitySetMapping Name="Permission_Detail">
+            <EntityTypeMapping TypeName="CmsModel.Permission_Detail">
+              <MappingFragment StoreEntitySet="Permission_Detail">
+                <ScalarProperty Name="Permission_Category" ColumnName="Permission_Category" />
+                <ScalarProperty Name="Permission_Desc" ColumnName="Permission_Desc" />
+                <ScalarProperty Name="Permission_Id" ColumnName="Permission_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Permission_Detail">
+            <EntityTypeMapping TypeName="CmsModel.User_Permission_Detail">
+              <MappingFragment StoreEntitySet="User_Permission_Detail">
+                <ScalarProperty Name="UP_Flag" ColumnName="UP_Flag" />
+                <ScalarProperty Name="UP_Permission_Id" ColumnName="UP_Permission_Id" />
+                <ScalarProperty Name="UP_User_Id" ColumnName="UP_User_Id" />
+                <ScalarProperty Name="UP_Id" ColumnName="UP_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+>>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -31,10 +31,10 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-sm-5 login_form_bot">
-                        @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @class = "form-control login_place", @id = "loginemail" })
+                        @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @class = "form-control login_place", @id = "loginemail", @maxlength = 256 })
                     </div>
                     <div class="col-sm-5 login_form_bot">
-                        @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control login_place", @id = "loginpassword" })
+                        @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control login_place", @id = "loginpassword", @maxlength = 15 })
                     </div>
                     <div class="col-sm-2 login_form_bot">
                         <input type="button" value="LOGIN" class="btn btn-primary login_btn_sub" id="btnSavelogin"  disabled="disabled"/>
@@ -52,12 +52,23 @@
         
 
       <script type="text/javascript">
+          $(window).load(function () {
+              console.log($('#loginemail').val());
+              console.log($('#loginpassword').val());
+              if ($('#loginemail').val().length>0 && $('#loginpassword').val().length>0) {
+                  $('#btnSavelogin').removeAttr("disabled");
+
+              }
+          });
           $(document).ready(function () {
 
-              $('#loginemail').css("border", "black solid 1px");
-              $('#loginpassword').css("border", "black solid 1px");
+              $('#loginemail').css("border", "gray solid 1px");
+              $('#loginpassword').css("border", "gray solid 1px");
               $('#diverro1login').css('display', 'none');
               $('#diverrologin').css("display", "none");
+              console.log($('#loginemail').val());
+              console.log($('#loginpassword').val());
+             
               $('#loginemail').keyup(function () {
              
                   if ($(this).val() != '' && $('#loginpassword').val()!='')

@@ -173,7 +173,11 @@
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\MyAccController.cs" />
+=======
+    <Compile Include="Controllers\MessagesController.cs" />
+>>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -224,8 +228,12 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Models\MyAccount.cs" />
     <Compile Include="Models\Permissions.cs" />
+=======
+    <Compile Include="Models\MessageTemplate.cs" />
+>>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
     <Compile Include="Models\Permission_Detail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -931,8 +939,12 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Email\Index.cshtml" />
     <Content Include="Views\Users\Users.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Permissions\Permission.cshtml" />
     <Content Include="Views\MyAcc\MyAccount.cshtml" />
+=======
+    <Content Include="Views\Messages\Index.cshtml" />
+>>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

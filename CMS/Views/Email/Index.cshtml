@@ -33,13 +33,42 @@
                     <div class="panel-body p10">
                         <!-- Tags Menu -->
                         <div class="list-group list-group-links">
-                            <div class="list-group-header"> User Name List </div>
-                            <a href="#" class="list-group-item em_bor_bot">
-                                User First Name ID
-                            </a>
-                            <a href="#" class="list-group-item em_bor_bot">
-                                User Last Name ID
-                            </a>
+                            <div class="list-group-header"> Tags </div>
+                            <ul id="allfields" class="list-group">
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node1">UserFirstNameID</span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node2">UserLastNameID</span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node3">EventNameID</span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node4">EventStartDateID</span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node4">EventEndDateID</span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node4">EventStartTimeID</span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node4">EventEndTimeID </span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node4">EventVenueID</span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node4">EventAddressID</span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node4">Ticket Order NumberID</span>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
+                                    <span id="node4">Deal Order NumberID</span>
+                                </li>
+                            </ul>
 
                         </div>
 
@@ -49,11 +78,19 @@
             <div class="col-md-8">
                 <div class="panel">
                    
-                    <div class="panel-body">
+                    <div class="panel-body" id="cart">
                         <div class="panel-heading">
+                            <div class="col-md-12" style="display:none;" id="divError">
+                                <div class="alert alert-danger alert-dismissable"  >
+                                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">&#215;</button>
+                                    <i class="fa fa-info pr10"></i>
+                                   <span id="spanid" ></span>
+                                </div>
+                            </div>
+
                             <div class="col-lg-12">
-                                @Html.TextBoxFor(m => m.Template_Name, new { @class = "form-control wel_tem_name fs20", id = "inputStandard", @readonly = "readonly" })
-                               @Html.HiddenFor(x => x.emailtag)
+                                @Html.TextBoxFor(m => m.Template_Name, new { @class = "form-control wel_tem_name fs20", id = "inputStandard", @readonly = "readonly",value="Template" })
+                            
                             </div>
 
                         </div>
@@ -70,39 +107,47 @@
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">To</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control", id = "inputStandard", @placeholder = "Type Here..." })
+                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control", id = "To", @placeholder = "Type Here..." })
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-1 control-label">From</label>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(m => m.From, new { @class = "form-control", id = "From", @placeholder = "Type Here..." })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">Cc</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.CC, new { @class = "form-control", id = "inputStandard", @placeholder = "Type Here..." })
+                                        @Html.TextBoxFor(m => m.CC, new { @class = "form-control", id = "CC", @placeholder = "Type Here..." })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">Bcc</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.Bcc, new { @class = "form-control", id = "inputStandard", @placeholder = "Type Here..." })
+                                        @Html.TextBoxFor(m => m.Bcc, new { @class = "form-control", id = "Bcc", @placeholder = "Type Here..." })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">Subject</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", id = "inputStandard", @placeholder = "Type Here..." })
+                                        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control txtSubject", id = "Subject", @placeholder = "Type Here..." })
 
                                     </div>
                                 </div>
-
-                                <textarea name="ckeditor1" id="ckeditor1" rows="12">
+                          @Html.TextAreaFor(m => m.ckeditor1, new { rows = "12",id= "ckeditor1" ,@value= " This is the < b > editor </ b > .......",@class= "txtSubject"})
+                                @*<textarea name="ckeditor1" id="ckeditor1" rows="12">
                                     This is the
                                     <b>editor</b> .......
-                                </textarea>
+                                </textarea>*@
                                 <br>
-                           
-                                <button class="btn btn-primary col-sm-3" type="submit">Send</button>
+
+                               @Html.HiddenFor(m => m.emailtag , new { id = "emailtag" })
+                           <button class="btn btn-primary col-sm-3" type="submit" id="btnsave">Save</button>
 
 
 
@@ -125,71 +170,71 @@
                                 Email a Friend
                             </a>
                          
-                            <a href="~/Email/Index?templatename=email_contact_tickets" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_contact_tickets&templatename=Contact Tickets" class="list-group-item em_bor_bot">
                                Contact Tickets
                             </a>
-                            <a href="~/Email/Index?templatename=email_error" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_error&templatename=Error" class="list-group-item em_bor_bot">
                              Error
                             </a>
-                            <a href="~/Email/Index?templatename=email_lost_pwd" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_lost_pwd&templatename=Lost password" class="list-group-item em_bor_bot">
                                  Lost Password
                             </a>
-                            <a href="~/Email/Index?templatename=email_new_registration" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_new_registration&templatename=New Registration" class="list-group-item em_bor_bot">
                                  New Registration
                             </a>
-                            <a href="~/Email/Index?templatename=email_new_ticket_sold" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_new_ticket_sold&templatename=New Ticket Sold" class="list-group-item em_bor_bot">
                                  New Ticket Sold
                             </a>
-                            <a href="~/Email/Index?templatename=email_new_deal_sold" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_new_deal_sold&templatename=New Deal Sold" class="list-group-item em_bor_bot">
                                  New Deal Sold
                             </a>
-                            <a href="~/Email/Index?templatename=dealinvite" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=dealinvite&templatename=Deal Invite" class="list-group-item em_bor_bot">
                                 Deal Invite 
                             </a>
-                            <a href="~/Email/Index?templatename=eventinvite" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=eventinvite&templatename=Event Invite" class="list-group-item em_bor_bot">
                                 Event Invite 
                             </a>
-                            <a href="~/Email/Index?templatename=dealchange" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=dealchange&templatename=Deal Change" class="list-group-item em_bor_bot">
                                 Deal Change 
                             </a>
-                            <a href="~/Email/Index?templatename=eventchange" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=eventchange&templatename=Event Change" class="list-group-item em_bor_bot">
                                 Event Change 
                             </a>
-                            <a href="~/Email/Index?templatename=dealcancelled" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=dealcancelled&templatename=Deal Cancelled" class="list-group-item em_bor_bot">
                                 Deal Cancelled 
                             </a>
-                            <a href="~/Email/Index?templatename=eventcancelled" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=eventcancelled&templatename=Event Cancelled" class="list-group-item em_bor_bot">
                                 Event Cancelled 
                             </a>
-                            <a href="~/Email/Index?templatename=abuse" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=abuse&templatename=abuse" class="list-group-item em_bor_bot">
                                 Abuse 
                             </a>
-                            <a href="~/Email/Index?templatename=new_deal_notification_email" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=new_deal_notification_email&templatename=New Deal Notification" class="list-group-item em_bor_bot">
                                 New Deal Notification
                             </a>
-                            <a href="~/Email/Index?templatename=new_event_notification_email" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=new_event_notification_email&templatename=New Event Notification" class="list-group-item em_bor_bot">
                                 New Event Notification
                              </a>
-                            <a href="~/Email/Index?templatename=email_welcome_deal" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_welcome_deal&templatename=Welcome Deal" class="list-group-item em_bor_bot">
                                 Welcome Deal
                             </a>
-                            <a href="~/Email/Index?templatename=email_welcome_ticket" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_welcome_ticket&templatename=Welcome Ticket" class="list-group-item em_bor_bot">
                                 Welcome Ticket 
                             </a>
                           
-                            <a href="~/Email/Index?templatename=email_notify_tix_cust" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_notify_tix_cust&templatename=Notify Tix Cust" class="list-group-item em_bor_bot">
                                 Notify Tix cust 
                             </a>
-                            <a href="~/Email/Index?templatename=email_event_submission" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_event_submission&templatename=Event Submission" class="list-group-item em_bor_bot">
                                 Email Event Submission
                             </a>
-                            <a href="~/Email/Index?templatename=email_deal_submission" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_deal_submission&templatename=Deal Submission" class="list-group-item em_bor_bot">
                                 Email Deal Submission
                             </a>
-                            <a href="~/Email/Index?templatename=email_ticket_purchase" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_ticket_purchase&templatename=Ticket Purchase" class="list-group-item em_bor_bot">
                                 Email Ticket Purchase
                             </a>
-                            <a href="~/Email/Index?templatename=email_deal_purchase" class="list-group-item em_bor_bot">
+                            <a href="~/Email/Index?templatetag=email_deal_purchase&templatename=Deal Purchase" class="list-group-item em_bor_bot">
                                 Email Deal Purchase
                             </a>
                            
@@ -203,3 +248,166 @@
     <!-- End: Content -->
 
 </section>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnsave').click(function () {
+
+
+            var tomail = $('#To').val();
+            var flag = false;
+            var frommail = $('#From').val();
+            var cc = $('#CC').val();
+            var msg = "";
+            var emailmsg = "";
+            var bccmail = $('#Bcc').val();
+            if (tomail == "")
+            {
+                $('#To').addClass('err-bor');
+                msg += "To Address can't be empty \n";
+                flag = true;
+            } else {
+
+                $('#To').removeClass('err-bor');
+               
+            }
+           
+            if (frommail != "") {
+
+                if (!validateEmail(frommail)) {
+                   
+                    emailmsg += frommail + "\n";
+                    $('#From').addClass('err-bor');
+                    flag = true;
+                  
+                } else {
+                    $('#From').removeClass('err-bor');
+
+                }
+                
+            }
+        
+            if (bccmail != "") {
+                if (bccmail.indexOf(",") > -1) {
+                    var res = bccmail.split(",");
+                    for (i = 0; i < res.length; i++) {
+                        if (!validateEmail(res[i])) {
+                            $('#Bcc').addClass('err-bor');
+                            emailmsg += res[i] + "\n";
+                            flag = true;
+                        }
+                    }
+                }
+                else if (!validateEmail(bccmail)) {
+                    $('#Bcc').addClass('err-bor');
+                    emailmsg += bccmail;
+                    flag = true;
+                }
+                else 
+                {
+                    $('#Bcc').removeClass('err-bor');
+
+                }
+               
+            }
+        
+            
+            if (cc != "") {
+             
+                if (cc.indexOf(",") > -1) {
+                 
+                    var res = cc.split(",");
+                    for (i = 0; i < res.length; i++) {
+                      
+                        if (!validateEmail(res[i])) {
+                            $('#CC').addClass('err-bor');
+                            emailmsg += res[i] + "\n";
+                          
+                            flag = true;
+                        }
+                    }
+                }
+                else if (!validateEmail(cc)) {
+                    $('#CC').addClass('err-bor');
+                    emailmsg += cc;
+                    flag = true;
+                }
+                else {
+
+                    $('#CC').removeClass('err-bor');
+                }
+               
+            }
+           
+            if (!validateEmail(tomail)) {
+                emailmsg += tomail;
+                flag = true;
+
+            }
+            
+            var invalid = "Invalid E-mail Id:\n";
+            if (emailmsg != "")
+            {
+                emailmsg= invalid + emailmsg;
+                msg += "\n" + emailmsg;
+                flag = true;
+            }
+            if (flag) {
+                $('#divError').css('display', 'block');
+                $('#spanid').html(msg);
+                setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                //alert(msg);
+                return false;
+            }
+
+        })
+    });
+    function validateEmail(sEmail) {
+        var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+
+        if (filter.test(sEmail)) {
+
+            return true;
+        }
+        else {
+
+
+            return false;
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#allfields li span").draggable({
+            appendTo: "body",
+            helper: "clone",
+            cursor: "select",
+            revert: "invalid"
+        });
+        initDroppable($("#TextArea1"));
+        initDroppable($(".txtSubject"));
+        function initDroppable($elements) {
+            $elements.droppable({
+                hoverClass: "textarea",
+                accept: ":not(.ui-sortable-helper)",
+                drop: function (event, ui) {
+                    var $this = $(this);
+
+                    var tempid = ui.draggable.text();
+                    var dropText;
+                    dropText = "$$" + tempid + "$$";
+                    var ids = $this.attr('id');
+                    var droparea = document.getElementById(ids);
+                    var range1 = droparea.selectionStart;
+                    var range2 = droparea.selectionEnd;
+                    var val = droparea.value;
+                    var str1 = val.substring(0, range1);
+                    var str3 = val.substring(range1, val.length);
+                    droparea.value = str1 + dropText + str3;
+                }
+            });
+        }
+
+
+    });
+
+</script>
