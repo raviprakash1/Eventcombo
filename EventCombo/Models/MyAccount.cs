@@ -7,7 +7,7 @@ namespace EventCombo.Models
 {
     public class MyAccount
     {
-
+  
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string StreetAddress1 { get; set; }
@@ -25,6 +25,7 @@ namespace EventCombo.Models
         public string NewPasswordAgain { get; set; }
         public string Picturename { get; set; }
         public string Pictureurl { get; set; }
+        public string WorkPhone { get; set; }
 
     }
 }

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CMS.Models.UsersTemplate>
+@using CMS.Models
+
+<div>
+    <div class="panel">
+        <div class="panel-heading">
+            <span class="panel-title">Manage Role</span>
+        </div>
+        <div class="panel-body admin-form">
+            <form class="form-horizontal">
+                <div class="col-md-12">
+                    <h3 class="mt5"> Select Role</h3>
+                  
+                    @foreach (var obj in Model)
+                    {
+                        if (obj.objPermissions != null)
+                        { 
+                            foreach (Permissions objPer in obj.objPermissions)
+                            {
+                                <div class="radio-custom radio-primary mt5 fl-lft">
+                                    <input id="radioExample" type="radio" name="radioExample">
+                                    <label for="radioExample">@objPer.Permission_Desc</label>
+                                </div>
+                            }
+                        }
+                    }
+                    @*<div class="radio-custom radio-primary mt5 fl-lft">
+                        <input id="radioExample2" type="radio" name="radioExample">
+                        <label for="radioExample2">Member Limit</label>
+                    </div>
+                    <div class="radio-custom radio-primary mt5 fl-lft">
+                        <input id="radioExample3" type="radio" name="radioExample">
+                        <label for="radioExample3">Member</label>
+                    </div>*@
+
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12"><hr class="short alt"></div>
+                <div class="col-md-12">
+
+                    <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                        <input type="checkbox" checked="" id="checkboxDefault1">
+                        <label for="checkboxDefault1">check1</label>
+                    </div>
+
+                    <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                        <input type="checkbox" checked="" id="checkboxDefault2">
+                        <label for="checkboxDefault2">check2</label>
+                    </div>
+
+                    <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                        <input type="checkbox" checked="" id="checkboxDefault3">
+                        <label for="checkboxDefault3">check2</label>
+                    </div>
+
+                    <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                        <input type="checkbox" checked="" id="checkboxDefault4">
+                        <label for="checkboxDefault4">check2</label>
+                    </div>
+
+                    <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                        <input type="checkbox" checked="" id="checkboxDefault5">
+                        <label for="checkboxDefault5">check2</label>
+                    </div>
+
+                    <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                        <input type="checkbox" checked="" id="checkboxDefault6">
+                        <label for="checkboxDefault6">check2</label>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+        <div class="panel-footer text-right">
+            <button class="btn btn-primary" type="button">Save</button>
+        </div>
+    </div>
+
+</div>
