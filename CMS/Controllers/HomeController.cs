@@ -114,6 +114,8 @@ namespace CMS.Controllers
                     if (users.Find(x => x.Id == User.Id ) != null)
                     {
                         Session["AppId"] = User.Id;
+                        ViewData["UserImage"] = "";
+                         ViewData["UserName"] = model.Email;
                         return RedirectToAction("Dashboard");
                     }
                     else
@@ -123,11 +125,13 @@ namespace CMS.Controllers
                         if (users.Find(x => x.Id == User.Id) != null)
                         {
                             Session["AppId"] = User.Id;
+                            ViewData["UserImage"] = "";
+                            ViewData["UserName"] = model.Email;
                             return RedirectToAction("Dashboard");
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Invalid login attempt.");
+                            ModelState.AddModelError("", "You not authorized user");
                             return View(model);
                         }
                       

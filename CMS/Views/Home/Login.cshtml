@@ -50,7 +50,7 @@
         <section id="content_wrapper">
 @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
 {
- 
+
             <!-- Begin: Content -->
             <section id="content">
 
@@ -69,19 +69,23 @@
 
                        
                             <div class="panel-body bg-light p25 pb15">
-                                <div class="alert alert-micro alert-border-left alert-danger pastel alert-dismissable mn mb5">
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-micro alert-border-left alert-danger pastel alert-dismissable mn mb5" id="diverrorsys">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <i class="fa fa-info pr10"></i> <span id="spanid"> @Html.ValidationMessage("")</span>
+    </div>
+}
+                                <div class="alert alert-micro alert-border-left alert-danger pastel alert-dismissable mn mb5" style="display:none;" id="diverror">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                    <i class="fa fa-info pr10"></i> <span id="spanemail">
-    Enter your
-    <b>Email</b> and instructions will be sent to you!
-</span>
+                                    <i class="fa fa-info pr10"></i> <span id="spanid"></span>
                                 </div>
                                 <!-- Username Input -->
                                 <div class="section">
-                                    <label for="username" class="field-label text-muted fs18 mb10">Username</label>
+                                    <label for="username" class="field-label text-muted fs18 mb10">Email</label>
                                     <label for="username" class="field prepend-icon">
-                                        @Html.TextBoxFor(m => m.Email, new { @placeholder = "Enter Email", @class = "gui-input" })
-                                      
+                                        @Html.TextBoxFor(m => m.Email, new { @placeholder = "Enter Email", @class = "gui-input", @maxlength = 256,id= "Email" })
+
                                         <label for="username" class="field-icon">
                                             <i class="fa fa-user"></i>
                                         </label>
@@ -92,8 +96,8 @@
                                 <div class="section">
                                     <label for="username" class="field-label text-muted fs18 mb10">Password</label>
                                     <label for="password" class="field prepend-icon">
-                                        @Html.PasswordFor(m => m.Password, new { @placeholder = "Enter password", @class = "form-control" })
-                                      
+                                        @Html.PasswordFor(m => m.Password, new { @placeholder = "Enter password", @class = "form-control",@maxlength=15 ,id= "Password"})
+
                                         <label for="password" class="field-icon">
                                             <i class="fa fa-lock"></i>
                                         </label>
@@ -103,9 +107,9 @@
 
                             <div class="panel-footer clearfix">
                               
-                                    <input type="submit" value="Sign In" class="button btn-primary mr10 pull-right"  />
+                                    <input type="submit" value="Sign In" class="button btn-primary mr10 pull-right" id="btnsave"  disabled="disabled"/>
                             
-                                <label class="switch ib switch-primary mt10">
+                                <label class="switch ib switch-primary mt10 hidden">
                                     <input type="checkbox" name="remember" id="remember" checked>
                                     <label for="remember" data-on="YES" data-off="NO"></label>
                                     <span>Remember me</span>
@@ -117,7 +121,7 @@
                     </div>
 
                     <!-- Registration Links -->
-                    <div class="login-links">
+                    <div class="login-links hidden">
                         <p>
                             <a href="pages_forgotpw(alt).html" class="active" title="Sign In">Forgot Password?</a>
                         </p>
@@ -153,6 +157,93 @@
 
     <!-- Page Javascript -->
     <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#Email').keyup(function () {
+             
+                if ($(this).val() != '' && $('#Password').val()!='')
+                {
+                    $('#btnsave').removeAttr("disabled");
+
+                } else {
+
+                    $('#btnsave').attr("disabled", true);
+                }
+
+            })
+            $('#Password').keyup(function () {
+                if ($(this).val() != '' && $('#Email').val()!='')
+                {
+               
+                    $('#btnsave').removeAttr("disabled");
+
+                } else {
+
+                    $('#btnsave').attr("disabled", true);
+                }
+
+            })
+            
+
+        
+            $('#btnsave').click(function () {
+                var msglogin = "";
+                var Emaillogin = $("#Email").val();
+
+                var Passowrdlogin = $("#Password").val();
+                if (!validateEmail(Emaillogin)) {
+
+                    $('#Email').focus();
+                    $('#Email').addClass('err-bor');
+
+                    msglogin += "Invalid Email!\n"
+
+                }
+                else {
+
+                    $('#Email').removeClass('err-bor');
+                }
+
+                if (Passowrdlogin.length < 4) {
+                    $('#Password').focus();
+                    $('#Password').addClass('err-bor');
+                    msglogin += "Password Length can't be less than 4!\n"
+
+                } else {
+                    $('#Password').removeClass('err-bor');
+
+                }
+                console.log(msglogin);
+                if (msglogin != "")
+                {
+                    $('#diverror').css("display", "block");
+                    setTimeout(function () { $('#diverror').css("display", "none"); $('input[type=text]').removeClass('err-bor'); $('input[type=password]').removeClass('err-bor') }, 3000);
+                    $('#spanid').text(msglogin);
+                      return false;
+
+                 
+                }
+                else {
+
+                    $('#diverror').css("display", "none");
+                    return true;
+                  
+                }
+            });
+            function validateEmail(sEmail) {
+                var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+
+                if (filter.test(sEmail)) {
+
+                    return true;
+                }
+                else {
+
+
+                    return false;
+                }
+            }
+        });
         jQuery(document).ready(function () {
 
             "use strict";
