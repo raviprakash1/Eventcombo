@@ -166,8 +166,8 @@ namespace EventCombo.Controllers
         public ActionResult MyAccount()
         {
             string defaultCountry = "";
-            dynamic stuff = "";
-            string city = "";
+        
+            string city = "",state="",zipcode="",country="";
             if ((Session["AppId"] != null))
             {
                 try {
@@ -175,12 +175,30 @@ namespace EventCombo.Controllers
                     {
                         string ip = GetLanIPAddress().Replace("::ffff:", "");
                         var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-                         stuff = JsonConvert.DeserializeObject(json);
+                         dynamic stuff = JsonConvert.DeserializeObject(json);
+                        if(stuff!=null)
+                        {
+                            city = stuff.city;
+                            state = stuff.region_name;
+                            zipcode = stuff.zip_code;
+                            country = stuff.country_name;
+                        }
+                        else
+                        {
+                            city = "";
+                            state = "";
+                            zipcode = "";
+                            country = "";
+
+                        }
                     }
                 }
                 catch(Exception ex)
                 {
-
+                    city = "";
+                    state ="";
+                    zipcode = "";
+                    country = "";
 
                 }
 
@@ -224,9 +242,9 @@ namespace EventCombo.Controllers
                     if (string.IsNullOrEmpty(myacc.City))
                     {
                       
-                            if (!string.IsNullOrEmpty(stuff))
+                            if (!string.IsNullOrEmpty(city))
                             {
-                                myacc.City = stuff.city;
+                                myacc.City = city;
                             }
                             else
                             {
@@ -239,25 +257,25 @@ namespace EventCombo.Controllers
                  
                     if (string.IsNullOrEmpty(myacc.State))
                     {
-                        if (string.IsNullOrEmpty(stuff))
+                        if (string.IsNullOrEmpty(state))
                         {
                             myacc.State = "";
                         }
                         else
                         {
-                            myacc.State = stuff.region_name;
+                            myacc.State = state;
                         }
                     }
                   
                     if (string.IsNullOrEmpty(myacc.Zip))
                     {
-                        if (string.IsNullOrEmpty(stuff))
+                        if (string.IsNullOrEmpty(zipcode))
                         {
                             myacc.Zip = "";
                         }
                         else
                         {
-                            myacc.Zip = stuff.zip_code;
+                            myacc.Zip = zipcode;
                         }
                     }
                     JavaScriptSerializer js = new JavaScriptSerializer();
@@ -310,14 +328,14 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(stuff))
+                    if (!string.IsNullOrEmpty(country))
                     {
 
                         defaultCountry = "United States";
                     }
                     else
                     {
-                        defaultCountry = stuff.country_name; ;
+                        defaultCountry = country;
 
                     }
 

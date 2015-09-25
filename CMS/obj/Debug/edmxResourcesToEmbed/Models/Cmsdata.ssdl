@@ -14,7 +14,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Id" Type="varchar" MaxLength="150" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetUserClaims">
@@ -42,7 +42,7 @@
       <PropertyRef Name="RoleId" />
     </Key>
     <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="varchar" MaxLength="150" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetUsers">
     <Key>
@@ -150,7 +150,7 @@
       <PropertyRef Name="UP_Id" />
     </Key>
     <Property Name="UP_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UP_User_Id" Type="int" Nullable="false" />
+    <Property Name="UP_User_Id" Type="nvarchar" MaxLength="128" />
     <Property Name="UP_Permission_Id" Type="int" Nullable="false" />
     <Property Name="UP_Flag" Type="nchar" MaxLength="1" />
   </EntityType>

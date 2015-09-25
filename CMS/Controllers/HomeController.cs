@@ -30,7 +30,7 @@ namespace CMS.Controllers
         public HomeController()
         {
         }
-
+        EmsEntities db = new EmsEntities();
         public HomeController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -79,11 +79,12 @@ namespace CMS.Controllers
             return View();
         }
 
-       public ActionResult Login()
+        public ActionResult Login()
         {
 
             return View();
         }
+        [Authorize(Roles = "Super Admin,Admin")]
         public ActionResult Dashboard()
         {
             return View();
@@ -92,6 +93,7 @@ namespace CMS.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+      
         public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -106,8 +108,29 @@ namespace CMS.Controllers
             {
                 case SignInStatus.Success:
                     var User = UserManager.FindByEmail(model.Email.ToString());
-                    Session["AppId"] = User.Id;
-                    return RedirectToAction("Dashboard");
+                    var roleSuperAdmin = (from r in db.AspNetRoles  where r.Name.Contains("Super Admin")  select r).FirstOrDefault();
+                    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id ).Contains(roleSuperAdmin.Id)).ToList();
+                    if (users.Find(x => x.Id == User.Id ) != null)
+                    {
+                        Session["AppId"] = User.Id;
+                        return RedirectToAction("Dashboard");
+                    }
+                    else
+                    {
+                        var roleAdmin = (from r in db.AspNetRoles where r.Name.Contains("Admin") select r).FirstOrDefault();
+                        var usersAdmin = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleAdmin.Id)).ToList();
+                        if (users.Find(x => x.Id == User.Id) != null)
+                        {
+                            Session["AppId"] = User.Id;
+                            return RedirectToAction("Dashboard");
+                        }
+                        else
+                        {
+                            return View();
+                        }
+                      
+                    }
+                   
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -116,9 +139,32 @@ namespace CMS.Controllers
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
-                    
+
             }
         }
 
+
+        public bool isadmin(string Userid)
+        {
+            //using (EmsEntities objEntity = new EmsEntities())
+            //{
+            //    var modelmyaccount = (from cpd in objEntity.AspNetUsers
+            //                          join pfd in objEntity.AspNetRoles
+            //                          on cpd.Id equals pfd
+            //                          where cpd.Id == userid
+            //                          select cpd);
+            //    if (modelmyaccount.FirstOrDefault() != null)
+            //    {
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        return false;
+
+            //    }
+
+            //}
+            return false;
+        }
     }
 }

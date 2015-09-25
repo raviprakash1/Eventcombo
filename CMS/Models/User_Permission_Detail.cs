@@ -15,7 +15,7 @@ namespace CMS.Models
     public partial class User_Permission_Detail
     {
         public int UP_Id { get; set; }
-        public int UP_User_Id { get; set; }
+        public string UP_User_Id { get; set; }
         public int UP_Permission_Id { get; set; }
         public string UP_Flag { get; set; }
     }
