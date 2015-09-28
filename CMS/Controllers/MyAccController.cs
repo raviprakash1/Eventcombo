@@ -237,14 +237,14 @@ namespace CMS.Controllers
                 if (string.IsNullOrEmpty(model.Firstname) && string.IsNullOrEmpty(model.Lastname))
                 {
 
-                    ModelState.AddModelError("Error", "Please provide first name and last name!");
+                    ModelState.AddModelError("", "Please provide first name and last name!");
 
                 }
                 if (!string.IsNullOrEmpty(model.ConfirmEmail))
                 {
                     if (model.Email != model.ConfirmEmail)
                     {
-                        ModelState.AddModelError("Error", "Email and email verification doesn't match!");
+                        ModelState.AddModelError("", "Email and email verification doesn't match!");
 
                     }
                 }
@@ -252,7 +252,7 @@ namespace CMS.Controllers
                 {
                     if (model.NewPassword != model.ConfirmPassword)
                     {
-                        ModelState.AddModelError("Error", "New password and confirm new password doesn't match!");
+                        ModelState.AddModelError("", "New password and confirm new password doesn't match!");
 
 
                     }

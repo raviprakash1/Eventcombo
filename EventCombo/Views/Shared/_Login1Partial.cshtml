@@ -37,6 +37,7 @@
                         @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control login_place", @id = "loginpassword", @maxlength = 15 })
                     </div>
                     <div class="col-sm-2 login_form_bot">
+                        <input type="hidden" id="hderror" />
                         <input type="button" value="LOGIN" class="btn btn-primary login_btn_sub" id="btnSavelogin"  disabled="disabled"/>
                     </div>
                 </div>
@@ -106,7 +107,26 @@
                     if (!validateEmail(Emaillogin)) {
                         $('#loginemail').focus();
                         $('#loginemail').css("border", "red solid 1px");
-                        msglogin += "Invalid Email! </br>"
+                        $.ajax({
+                            url: "/ValidationMessage/Index",
+                            data: { formname: 'Login', errortype: 'LoginEmailValidationUI' },
+                            type: 'Post',
+                            async: false,
+                            success: function (data, textStatus, xhr) {
+                                if (data != '') {
+                                    console.log(data);
+                                    $('#hderror').val(data);
+                                   
+                                }
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                            }
+                        });
+                      
+                        alert($('#hderror').val())
+                        msglogin += $('#hderror').val() + "\n";
+                        console.log(msglogin)
 
                     } else {
 
@@ -114,11 +134,29 @@
                         $('#loginemail').focus();
                         $('#loginemail').css("border", "black solid 1px");
                     }
-                    console.log(Passowrdlogin.length);
+                  
                     if (Passowrdlogin.length < 4) {
                         $('#loginpassword').focus();
                         $('#loginpassword').css("border", "red solid 1px");
-                        msglogin += "Password Length can't be less than 4!</br>"
+                        $.ajax({
+                            url: "/ValidationMessage/Index",
+                            data: { formname: 'Login', errortype: 'LoginPasswordValidationUI' },
+                            type: 'Post',
+                            async:false,
+                            success: function (data, textStatus, xhr) {
+                                if (data != '') {
+                                   console.log(data);
+                                    $('#hderror').val(data);
+                                    console.log($('#hderror').val(data)+'asdasdas');
+                                }
+                            },
+                           error: function (xhr, textStatus, errorThrown) {
+                                    alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                                }
+                        });
+                         
+                        alert($('#hderror').val()+'asad');
+                        msglogin += $('#hderror').val() + "\n";
 
                     } else {
                         if (msglogin == "") {
