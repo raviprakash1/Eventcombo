@@ -55,13 +55,13 @@
                             @Html.ActionLink("Back", "Users", "Users",null, new { @class = "btn btn-primary col-sm-1 pull-right mt5" }) 
                         </div>
                         <div class="panel-body">
-                            @*if (ViewData["Message"] != null)
+                            @if (TempData["SuccessMessage"]!= null)
                             {
                             <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <i class="fa fa-info pr10"></i> <span id="spanid"> @ViewData["Message"]</span>
+                                <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
                             </div>
-                           }*@
+                           }
                             @if (!ViewData.ModelState.IsValid)
                             {
                                 <div class="alert alert-micro alert-border-left alert-danger pastel alert-dismissable mn mb5" id="diverrorsys">
@@ -231,6 +231,82 @@
 }
     </section>
     <script type="text/javascript">
+     
+        $('#ZipCode').change(function () {
+            
+                var country = $("#Country option:selected").text().trim();
+                console.log(country);
+                var city = "";
+                var state = "";
+
+                var pincode = $(this).val();
+                $.ajax({
+                    url: 'http://maps.googleapis.com/maps/api/geocode/json',
+                    data: '&address=' + pincode + '&sensor=true',
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
+
+
+                        if (data.status == 'OK') {
+
+                            for (var i = 0; i < data.results[0].address_components.length; i++) {
+                                var obj = data.results[0].address_components[i];
+
+                                var obj2 = obj['types'];
+
+                                for (var j = 0; j < obj2.length; j++) {
+                                    if (obj2[j] == 'locality') {
+                                        city = obj['long_name'];
+
+
+                                    }
+                                    if (obj2[j] == 'postal_town') {
+                                        city = obj['long_name'];
+
+
+                                    }
+                                    if (obj2[j] == 'administrative_area_level_1') {
+                                        state = obj['long_name'];
+
+                                    }
+                                    if (obj2[j] == 'administrative_area_level_2') {
+                                        state = obj['long_name'];
+
+                                    }
+
+
+                                    if (obj2[j] == 'country') {
+                                        if (obj['long_name'] == country) {
+
+
+                                            $('#City').val(city);
+                                            $('#State').val(state);
+                                        }
+
+                                    }
+
+                                }
+
+
+
+                            }
+
+                        }
+
+
+
+                        else {
+
+                            $('#spanid').html('Invalid Zip/Pin Code');
+                            $('#divError').css("display", "block");
+                            $('#Zip').addClass('err-bor');
+                            return false;
+                        }
+                    }
+                });
+            });
+   
         $('#btnsave').click(function () {
             var msg = "";
             var Email = $("#Email").val();

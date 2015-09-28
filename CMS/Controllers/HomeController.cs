@@ -87,7 +87,15 @@ namespace CMS.Controllers
         [Authorize(Roles = "Super Admin,Admin")]
         public ActionResult Dashboard()
         {
-            return View();
+            if ((Session["AppId"] != null))
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+
+            }
 
         }
 
@@ -104,16 +112,31 @@ namespace CMS.Controllers
 
         private string getuserImage()
         {
-            string userid = Session["AppId"].ToString();
-            var userImage = db.Profiles.Where(x => x.UserID == userid).Select(y => y.UserProfileImage).SingleOrDefault();
-            return "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepath/" + userImage;
+            if ((Session["AppId"] != null))
+            {
+                string userid = Session["AppId"].ToString();
+                var userImage = db.Profiles.Where(x => x.UserID == userid).Select(y => y.UserProfileImage).SingleOrDefault();
+                return "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepath/" + userImage;
+            }
+            else
+            {
+                return "";
+            }
         }
 
         private string getusername()
         {
-            string userid = Session["AppId"].ToString();
-            var userEmail = db.AspNetUsers.Where(x => x.Id == userid).Select(y => y.Email).SingleOrDefault();
-            return userEmail;
+            if ((Session["AppId"] != null))
+            {
+                string userid = Session["AppId"].ToString();
+                var userEmail = db.AspNetUsers.Where(x => x.Id == userid).Select(y => y.Email).SingleOrDefault();
+                return userEmail;
+            }
+            else
+            {
+                return "";
+
+            }
         }
 
         [HttpPost]

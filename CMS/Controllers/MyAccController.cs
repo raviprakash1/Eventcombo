@@ -25,7 +25,31 @@ namespace CMS.Controllers
     public class MyAccController : Controller
     {
         EmsEntities db = new EmsEntities();
-        
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         // GET: MyAcc
         //public ActionResult MyAccount()
         //{
@@ -38,7 +62,7 @@ namespace CMS.Controllers
         public ActionResult MyAccount(string UserId)
         {
             string defaultCountry = "";
-            
+
             if ((Session["AppId"] != null))
             {
                 var client = new WebClient();
@@ -82,9 +106,9 @@ namespace CMS.Controllers
                     {
                         string[] day = myacc.Dateofbirth.Split('-');
 
-                        myacc.day = day[0].ToString().Trim() != string.Empty ? int.Parse(day[0].ToString()) :1;
+                        myacc.day = day[0].ToString().Trim() != string.Empty ? int.Parse(day[0].ToString()) : 1;
                         myacc.month = day[1].ToString().Trim() != string.Empty ? int.Parse(day[1].ToString()) : 1;
-                        myacc.year = day[2].ToString().Trim() != string.Empty ? int.Parse(day[2].ToString()) : 1; 
+                        myacc.year = day[2].ToString().Trim() != string.Empty ? int.Parse(day[2].ToString()) : 1;
 
 
                     }
@@ -187,7 +211,7 @@ namespace CMS.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Home");
             }
 
         }
@@ -232,156 +256,128 @@ namespace CMS.Controllers
             string msg = "", errormessage = "";
             //if (Session["AppId"] != null)
             //{
-                string Userid = model.Id;
-                var accountdetail = GetLoginDetails(Userid);
-                if (string.IsNullOrEmpty(model.Firstname) && string.IsNullOrEmpty(model.Lastname))
-                {
+            string Userid = model.Id;
+            var accountdetail = GetLoginDetails(Userid);
+            if (string.IsNullOrEmpty(model.Firstname) && string.IsNullOrEmpty(model.Lastname))
+            {
 
-                    ModelState.AddModelError("", "Please provide first name and last name!");
+                ModelState.AddModelError("", "Please provide first name and last name!");
+
+            }
+            if (!string.IsNullOrEmpty(model.ConfirmEmail))
+            {
+                if (model.Email != model.ConfirmEmail)
+                {
+                    ModelState.AddModelError("", "Email and email verification doesn't match!");
 
                 }
-                if (!string.IsNullOrEmpty(model.ConfirmEmail))
+            }
+            if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
+            {
+                if (model.NewPassword != model.ConfirmPassword)
                 {
-                    if (model.Email != model.ConfirmEmail)
+                    ModelState.AddModelError("", "New password and confirm new password doesn't match!");
+
+
+                }
+            }
+
+            if (!string.IsNullOrEmpty(model.Password))
+            {
+
+                //var user12 = UserManager.FindByEmail(accountdetail.PreviousEmail);
+                //var result = UserManager.PasswordHasher.VerifyHashedPassword(user12.PasswordHash, model.Password);
+                //if (result.ToString() != "Success")
+                //{
+                //    ModelState.AddModelError("Error", "Invalid current password!");
+
+                //}
+            }
+            if (model.PreviousEmail != model.Email)
+            {
+                var user = UserManager.FindByEmail(model.Email);
+                if (user != null)
+                {
+                    ModelState.AddModelError("", "Email already exist!");
+                    //errormessage += "Confirm email already exist!! </br>";
+                }
+            }
+
+
+
+            if (ModelState.IsValid)
+            {
+
+                using (EmsEntities objEntity = new EmsEntities())
+                {
+                    var ApplicationUser = objEntity.AspNetUsers.Find(Userid);
+                    Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
+                    profile.FirstName = model.Firstname;
+                    profile.LastName = model.Lastname;
+                    profile.StreetAddressLine1 = model.StreetAddress1;
+                    profile.StreetAddressLine2 = model.StreetAddress2;
+                    profile.City = model.City;
+                    profile.State = model.State;
+                    profile.Zip = model.ZipCode;
+                    profile.CountryID = byte.Parse(model.Country);
+                    profile.MainPhone = model.MainPhone;
+                    profile.SecondPhone = model.SecondPhone;
+                    profile.WorkPhone = model.WorkPhone;
+                    profile.WebsiteURL = model.WebsiteURL;
+                    //profile.UserProfileImage = model.UserProfileImage;
+                    profile.Gender = model.Gender;
+                    profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
+                    if (!checkexternallogin(Userid))
                     {
-                        ModelState.AddModelError("", "Email and email verification doesn't match!");
-
-                    }
-                }
-                if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
-                {
-                    if (model.NewPassword != model.ConfirmPassword)
-                    {
-                        ModelState.AddModelError("", "New password and confirm new password doesn't match!");
-
-
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(model.Password))
-                {
-
-                    //var user12 = UserManager.FindByEmail(accountdetail.PreviousEmail);
-                    //var result = UserManager.PasswordHasher.VerifyHashedPassword(user12.PasswordHash, model.Password);
-                    //if (result.ToString() != "Success")
-                    //{
-                    //    ModelState.AddModelError("Error", "Invalid current password!");
-
-                    //}
-                }
-
-                if (!string.IsNullOrEmpty(model.Email))
-                {
-                    //var user = UserManager.FindByEmail(model.Email);
-                    //if (user != null)
-                    //{
-                    //    ModelState.AddModelError("Error", "Confirm email already exist!");
-                    //    //errormessage += "Confirm email already exist!! </br>";
-                    //}
-                }
-
-                if (ModelState.IsValid)
-                {
-
-                    using (EmsEntities objEntity = new EmsEntities())
-                    {
-                        var ApplicationUser = objEntity.AspNetUsers.Find(Userid);
-                        Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
-                        profile.FirstName = model.Firstname;
-                        profile.LastName = model.Lastname;
-                        profile.StreetAddressLine1 = model.StreetAddress1;
-                        profile.StreetAddressLine2 = model.StreetAddress2;
-                        profile.City = model.City;
-                        profile.State = model.State;
-                        profile.Zip = model.ZipCode;
-                        profile.CountryID = byte.Parse(model.Country);
-                        profile.MainPhone = model.MainPhone;
-                        profile.SecondPhone = model.SecondPhone;
-                        profile.WorkPhone = model.WorkPhone;
-                        profile.WebsiteURL = model.WebsiteURL;
-                        //profile.UserProfileImage = model.UserProfileImage;
-                        profile.Gender = model.Gender;
-                        profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
-                        if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email))
+                        if (!string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
                         {
                             profile.Email = model.Email;
 
                         }
-                        objEntity.SaveChanges();
                     }
-                    using (EmsEntities objEntity = new EmsEntities())
+                    objEntity.SaveChanges();
+                }
+                using (EmsEntities objEntity = new EmsEntities())
+                {
+                    AspNetUser aspuser = objEntity.AspNetUsers.First(i => i.Id == Userid); ;
+                    if (!checkexternallogin(Userid))
                     {
-                        AspNetUser aspuser = objEntity.AspNetUsers.First(i => i.Id == Userid); ;
-                        if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email))
+                        if (!string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
                         {
                             aspuser.Email = model.Email;
                             aspuser.UserName = model.Email;
                         }
                         objEntity.SaveChanges();
                     }
-
-
-
-                    if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
-                    {
-                        //var token = await UserManager.GeneratePasswordResetTokenAsync(Userid);
-
-                        //var result = await UserManager.ResetPasswordAsync(Userid, token, model.NewPassword);
-
-                    }
-
-
-                    var countryQuery = (from c in db.Countries
-                                        orderby c.Country1 ascending
-                                        select c).Distinct();
-                    List<SelectListItem> countryList = new List<SelectListItem>();
-                    string defaultCountry = model.Country;
-                    foreach (var item in countryQuery)
-                    {
-                        countryList.Add(new SelectListItem()
-                        {
-                            Text = item.Country1,
-                            Value = item.CountryID.ToString(),
-                            Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
-                        });
-                    }
-                    ViewBag.Country = countryList;
-
-                    //if (string.IsNullOrEmpty(accountdetail.UserProfileImage))
-                    //{
-                    //    model.editsave = "Save";
-                    //    model.UserProfileImage = "image-drop2.gif";
-                    //}
-                    //else
-                    //{
-                    //    model.UserProfileImage = accountdetail.UserProfileImage;
-                    //    model.contentype = accountdetail.contentype;
-                    //    model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + accountdetail.UserProfileImage;
-                    //    model.editsave = "Edit";
-
-                    //}
-                    ViewData["Message"] = "Updated Successfully!!!!!";
-                    return View(model);
-
                 }
 
 
 
-                var countryQuery12 = (from c in db.Countries
-                                      orderby c.Country1 ascending
-                                      select c).Distinct();
-                List<SelectListItem> countryList12 = new List<SelectListItem>();
-                string defaultCountry12 = model.Country;
-                foreach (var item in countryQuery12)
+                if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
                 {
-                    countryList12.Add(new SelectListItem()
+                    //var token = await UserManager.GeneratePasswordResetTokenAsync(Userid);
+
+                    //var result = await UserManager.ResetPasswordAsync(Userid, token, model.NewPassword);
+
+                }
+
+
+                var countryQuery = (from c in db.Countries
+                                    orderby c.Country1 ascending
+                                    select c).Distinct();
+                List<SelectListItem> countryList = new List<SelectListItem>();
+                string defaultCountry = model.Country;
+                foreach (var item in countryQuery)
+                {
+                    countryList.Add(new SelectListItem()
                     {
                         Text = item.Country1,
                         Value = item.CountryID.ToString(),
-                        Selected = (item.CountryID.ToString().Trim() == defaultCountry12.Trim() ? true : false)
+                        Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
                     });
                 }
-                ViewBag.Country = countryList12;
+                ViewBag.Country = countryList;
+
                 //if (string.IsNullOrEmpty(accountdetail.UserProfileImage))
                 //{
                 //    model.editsave = "Save";
@@ -395,14 +391,72 @@ namespace CMS.Controllers
                 //    model.editsave = "Edit";
 
                 //}
-
+                TempData["SuccessMessage"] = "Updated Successfully!!";
                 return View(model);
+
+            }
+
+
+
+            var countryQuery12 = (from c in db.Countries
+                                  orderby c.Country1 ascending
+                                  select c).Distinct();
+            List<SelectListItem> countryList12 = new List<SelectListItem>();
+            string defaultCountry12 = model.Country;
+            foreach (var item in countryQuery12)
+            {
+                countryList12.Add(new SelectListItem()
+                {
+                    Text = item.Country1,
+                    Value = item.CountryID.ToString(),
+                    Selected = (item.CountryID.ToString().Trim() == defaultCountry12.Trim() ? true : false)
+                });
+            }
+            ViewBag.Country = countryList12;
+            //if (string.IsNullOrEmpty(accountdetail.UserProfileImage))
+            //{
+            //    model.editsave = "Save";
+            //    model.UserProfileImage = "image-drop2.gif";
+            //}
+            //else
+            //{
+            //    model.UserProfileImage = accountdetail.UserProfileImage;
+            //    model.contentype = accountdetail.contentype;
+            //    model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + accountdetail.UserProfileImage;
+            //    model.editsave = "Edit";
+
+            //}
+
+            return View(model);
             //}
             //else
             //{
             //    return RedirectToAction("Index", "Home");
 
             //}
+
+        }
+
+        public bool checkexternallogin(string userid)
+        {
+            using (EmsEntities objEntity = new EmsEntities())
+            {
+                var modelmyaccount = (from cpd in objEntity.AspNetUsers
+                                      join pfd in objEntity.AspNetUserLogins
+                                      on cpd.Id equals pfd.UserId
+                                      where cpd.Id == userid
+                                      select cpd);
+                if (modelmyaccount.FirstOrDefault() != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+
+                }
+
+            }
 
         }
     }
