@@ -26,26 +26,22 @@ namespace CMS.Controllers
         }
         public List<UsersTemplate> GetAllUsers()
         {
-
             using (EmsEntities objEntity = new EmsEntities())
             {
                 var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
+                                     join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
                                      select new UsersTemplate
                                      {
                                          EMail = UserTemp.Email,
                                          UserName = UserTemp.UserName,
-                                         Id = UserTemp.Id
-                                    }
+                                         Id = UserTemp.Id,
+                                         Organiser = Pr.Organiser.Trim(),
+                                         Merchant = Pr.Merchant.Trim(),
+                                         UserStatus = Pr.UserStatus.Trim()
+                                     }
                                     );
-
-                
                 return modelUserTemp.ToList();
-
             }
-         
-
-
-
         }
 
 
@@ -117,6 +113,22 @@ namespace CMS.Controllers
             return strResult;
         }
 
+
+        public string SaveOtherInfo(string strField, string strvalue,string strUserId)
+        {
+            string strResult = "";
+            try
+            {
+                EmsEntities objEnt = new EmsEntities();
+                objEnt.Database.ExecuteSqlCommand("Update Profile set " + strField +  " = '" + strvalue + "' Where UserId = '" + strUserId + "'");
+                strResult = "Y";
+            }
+            catch (Exception ex)
+            {
+                strResult = "N";
+            }
+            return strResult;
+        }
         public string GetUserPermission(string strUserId)
         {
             StringBuilder strResult = new StringBuilder();

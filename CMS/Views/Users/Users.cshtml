@@ -22,189 +22,193 @@
 <body class="email-templates-page">
 
 
-        <!-- Start: Content-Wrapper -->
-        <section id="content_wrapper">
+    <!-- Start: Content-Wrapper -->
+    <section id="content_wrapper">
 
-            <!-- Start: Topbar -->
-            <header id="topbar" class="alt">
-                <div class="topbar-left">
-                    <ol class="breadcrumb">
+        <!-- Start: Topbar -->
+        <header id="topbar" class="alt">
+            <div class="topbar-left">
+                <ol class="breadcrumb">
 
-                        <li class="crumb-icon">
-                            <a href="dashboard.html">
-                                <span class="glyphicon glyphicon-home"></span>
-                            </a>
-                        </li>
-                        <li class="crumb-active">
-                            Dashboard
-                        </li>
-                    </ol>
-                </div>
+                    <li class="crumb-icon">
+                        <a href="dashboard.html">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </a>
+                    </li>
+                    <li class="crumb-active">
+                        Dashboard
+                    </li>
+                </ol>
+            </div>
 
-            </header>
-            <!-- End: Topbar -->
-            <!-- Begin: Content -->
-            <div id="content" class="animated fadeIn">
-                <div class="row" id="modal-content">
-                    <div class="col-md-12">
+        </header>
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+        <div id="content" class="animated fadeIn">
+            <div class="row" id="modal-content">
+                <div class="col-md-12">
 
-                        <div class="panel">
-                            <div class="panel-menu admin-form theme-primary">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <span class="panel-title"> All Member List (50)</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        &nbsp;
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="field select">
-                                            <select>
-                                                <option value="0">Select</option>
-                                                <option value="0">01 - 50</option>
-                                                <option value="1">51 - 100</option>
-                                                <option value="2">101 - 150</option>
-                                            </select>
-                                            <i class="arrow double"></i>
-                                        </label>
-                                    </div>
+                    <div class="panel">
+                        <div class="panel-menu admin-form theme-primary">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span class="panel-title"> All Member List (50)</span>
+                                </div>
+                                <div class="col-md-6">
+                                    &nbsp;
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="field select">
+                                        <select>
+                                            <option value="0">Select</option>
+                                            <option value="0">01 - 50</option>
+                                            <option value="1">51 - 100</option>
+                                            <option value="2">101 - 150</option>
+                                        </select>
+                                        <i class="arrow double"></i>
+                                    </label>
                                 </div>
                             </div>
-                            <div class="panel-body pn">
-
-                                <table class="table footable" data-page-navigation=".pagination" data-page-size="3">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Role</th>
-                                            <th>Email Id</th>
-                                            <th>Event</th>
-                                            <th>Deals</th>
-                                            <th>Location</th>
-                                            <th>Organiser</th>
-                                            <th>Merchant</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                            <th>Online</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-@{ int i = 0;
-foreach (var obj in Model)
-{
-     i = i + 1;
-                                        <tr>
-                                            
-                                            <td>@i.ToString()</td>
-                                            <td class="eml-ellps">
-                                            
-                                               @obj.UserName
-                                           
-                                            </td>
-                                            <td>
-                                                 <a class="holder-active animation-switcher" href="#modal-panel">
-                                                     <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')">Manage</button>
-
-                                                   @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
-                                                </a>
-                                            </td>
-                                            <td class="eml-ellps">@obj.EMail</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>India</td>
-                                            <td>
-                                                <div class="section">
-                                                    <label class="field select">
-                                                        <select>
-                                                            <option value="0">Select</option>
-                                                            <option value="1">Yes</option>
-                                                            <option value="2">No</option>
-                                                        </select>
-                                                        <i class="arrow double"></i>
-                                                    </label>
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="section">
-                                                    <label class="field select">
-                                                        <select>
-                                                            <option value="0">Select</option>
-                                                            <option value="1">Yes</option>
-                                                            <option value="2">No</option>
-                                                        </select>
-                                                        <i class="arrow double"></i>
-                                                    </label>
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="section">
-                                                    <label class="field select">
-                                                        <select>
-                                                            <option value="0">Select</option>
-                                                            <option value="1">Active</option>
-                                                            <option value="2">Deactive</option>
-                                                        </select>
-                                                        <i class="arrow double"></i>
-                                                    </label>
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                                @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
-                                                <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                            </td>
-                                            <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
-                                        </tr>
-}
-    }
-                                    </tbody>
-                                    <tfoot class="footer-menu">
-                                        <tr>
-                                            <td colspan="12">
-                                                <nav class="text-right">
-                                                    <ul class="pagination hide-if-no-paging"></ul>
-                                                </nav>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-
-                                </table>
-
-                            </div>
                         </div>
+                        <div class="panel-body pn">
 
+                            <table class="table footable" data-page-navigation=".pagination" data-page-size="3">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Email Id</th>
+                                        <th>Event</th>
+                                        <th>Deals</th>
+                                        <th>Location</th>
+                                        <th>Organiser</th>
+                                        <th>Merchant</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                        <th>Online</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @{ int i = 0;
+                                        foreach (var obj in Model)
+                                        {
+                                            i = i + 1;
+                                            <tr>
+
+                                                <td>@i.ToString()</td>
+                                                <td class="eml-ellps">
+
+                                                    @obj.UserName
+
+                                                </td>
+                                                <td>
+                                                    <a class="holder-active animation-switcher" href="#modal-panel">
+                                                        <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')">Manage</button>
+
+                                                        @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
+                                                    </a>
+                                                </td>
+                                                <td class="eml-ellps">@obj.EMail</td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>India</td>
+                                                <td>
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownList("Organiser", new List<SelectListItem>{
+                                                            new SelectListItem{ Text="Y", Value="1"},
+                                                            new SelectListItem{ Text="N", Value="2"}
+                                                                }, "Select", new { onchange = "SaveFields('" + obj.Id + "', 'dlOrgnizer');"})
+                                                                @*<select id="dlOrgnizer"  onchange="SaveFields('@obj.Id','dlOrgnizer')">
+                                                                <option value="0">Select</option>
+                                                                <option value="1">Yes</option>
+                                                                <option value="2">No</option>
+                                                            </select>*@
+                                                            <i class="arrow double"></i>
+                                                        </label>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant')">
+                                                                <option value="0">Select</option>
+                                                                <option value="1">Yes</option>
+                                                                <option value="2">No</option>
+                                                            </select>
+                                                            <i class="arrow double"></i>
+                                                        </label>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus')">
+                                                                <option value="0">Select</option>
+                                                                <option value="1">Active</option>
+                                                                <option value="2">Deactive</option>
+                                                            </select>
+                                                            <i class="arrow double"></i>
+                                                        </label>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                    @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
+                                                    <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                </td>
+                                                <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                                <tfoot class="footer-menu">
+                                    <tr>
+                                        <td colspan="12">
+                                            <nav class="text-right">
+                                                <ul class="pagination hide-if-no-paging"></ul>
+                                            </nav>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+
+                        </div>
                     </div>
 
-                   
+                </div>
 
-                    <div id="modal-panel" class="popup-basic bg-none popup-lg mfp-with-anim mfp-hide">
-                        <input type="hidden" id="hidUid" class="hUname" value="" />
-                        <div class="col-md-12" style="display:none;" id="divError">
-                            <div class="alert alert-success alert-dismissable">
-                                <button class="close" aria-hidden="true" data-dismiss="alert" type="button">&#215;</button>
-                                <i class="fa fa-info pr10"></i>
-                                <span id="spanid"></span>
-                            </div>
+
+
+                <div id="modal-panel" class="popup-basic bg-none popup-lg mfp-with-anim mfp-hide">
+                    <input type="hidden" id="hidUid" class="hUname" value="" />
+                    <div class="col-md-12" style="display:none;" id="divError">
+                        <div class="alert alert-success alert-dismissable">
+                            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">&#215;</button>
+                            <i class="fa fa-info pr10"></i>
+                            <span id="spanid"></span>
                         </div>
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <span class="panel-title">Manage Role</span>
-                               
-                            </div>
-                            <div class="panel-body admin-form">
-                                <form class="form-horizontal">
-                                    <div class="col-md-12">
-                                        <h3 class="mt5"> Select Role</h3>
-                                        
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="panel-title">Manage Role</span>
+
+                        </div>
+                        <div class="panel-body admin-form">
+                            <form class="form-horizontal">
+                                <div class="col-md-12">
+                                    <h3 class="mt5"> Select Role</h3>
+
                                     <div class="radio-custom radio-primary mt5 fl-lft">
-                                        <input id="rdAdmin" type="radio"  name="Permission">
+                                        <input id="rdAdmin" type="radio" name="Permission">
                                         <label for="rdAdmin">Admin</label>
-                                        
+
                                     </div>
                                     <div class="radio-custom radio-primary mt5 fl-lft">
                                         <input id="rdMemberLimit" type="radio" class="Permission" name="Permission">
@@ -215,61 +219,61 @@ foreach (var obj in Model)
                                         <label for="rdMember">Member</label>
                                     </div>
 
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12"><hr class="short alt"></div>
+                                <div class="col-md-12">
+
+                                    <div id="dvMemLimited">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" class="chkPermission" checked="" id="chk_2">
+                                            <label for="chk_2">Deals</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" class="chkPermission" checked="" id="chk_1">
+                                            <label for="chk_1">Events</label>
+                                        </div>
                                     </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-md-12"><hr class="short alt"></div>
-                                    <div class="col-md-12">
-                                      
-                                        <div id="dvMemLimited">
-                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" class="chkPermission" checked="" id="chk_2">
-                                                <label for="chk_2">Deals</label>
-                                            </div>
-                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" class="chkPermission" checked="" id="chk_1">
-                                                <label for="chk_1">Events</label>
-                                            </div>
+
+                                    <div id="dvAdmin">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chk_3">
+                                            <label for="chk_3">Users</label>
                                         </div>
-
-                                        <div id="dvAdmin">
-                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chk_3">
-                                                <label for="chk_3">Users</label>
-                                            </div>
-                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chk_4">
-                                                <label for="chk_4">Events</label>
-                                            </div>
-                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chk_5">
-                                                <label for="chk_5">Tickets</label>
-                                            </div>
-                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chk_6">
-                                                <label for="chk_6">Emails</label>
-                                            </div>
-                                            <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chk_7">
-                                                <label for="chk_7">Messages</label>
-                                            </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chk_4">
+                                            <label for="chk_4">Events</label>
                                         </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chk_5">
+                                            <label for="chk_5">Tickets</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chk_6">
+                                            <label for="chk_6">Emails</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chk_7">
+                                            <label for="chk_7">Messages</label>
+                                        </div>
+                                    </div>
 
-                                       </div>
-                                </form>
+                                </div>
+                            </form>
 
-                            </div>
-                            <div class="panel-footer text-right">
-                                <button class="btn btn-primary" id="btSave" type="button">Save</button>
-                            </div>
                         </div>
-                        @*@RenderPage("~/Views/Permissions/Permission.cshtml")*@
-
+                        <div class="panel-footer text-right">
+                            <button class="btn btn-primary" id="btSave" type="button">Save</button>
+                        </div>
                     </div>
+                    @*@RenderPage("~/Views/Permissions/Permission.cshtml")*@
+
                 </div>
             </div>
-            <!-- End: Content -->
+        </div>
+        <!-- End: Content -->
 
-        </section>
+    </section>
 
 
 
@@ -277,9 +281,61 @@ foreach (var obj in Model)
 
     <!-- FooTable Addon -->
     <script src="~/plugins/footable/js/footable.all.min.js"></script>
-    <script src="~/plugins/footable/js/footable.filter.min.js"></script>    
+    <script src="~/plugins/footable/js/footable.filter.min.js"></script>
 
     <script type="text/javascript">
+        function SelectFields() {
+            $("#dlOrgnizer").val(1);
+
+        }
+        function SaveFields(UserId,strId) {
+            var vvalue = '';
+            var sFields = '';
+            if (strId == "dlStatus") {
+                sFields = "UserStatus";
+                if ($("#dlStatus").val() == "1")
+                    vvalue = '1';
+                else
+                    vvalue = '0';
+            }
+
+            else if (strId == "dlMerchant") {
+                sFields = "Merchant";
+                if ($("#dlMerchant").val() == "1")
+                    vvalue = 'Y';
+                else
+                    vvalue = 'N';
+            }
+
+            else if (strId == "dlOrgnizer") {
+                sFields = "Organiser";
+                if ($("#Organiser").val() == "1")
+                    vvalue = 'Y';
+                else
+                    vvalue = 'N';
+            }
+
+            $.ajax({
+                url: "/Users/SaveOtherInfo",
+                data: { strField: sFields, strvalue: vvalue, strUserId: UserId },
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    if (response == "Y") {
+                        alert("Record Updated.");
+                        //  $('#spanid').html("Record Updated.");
+                        // $('#divError').css('display', 'block');
+                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                    }
+                    else {
+                        alert("Some error occur while saving.");
+                        //$('#spanid').html("Some error occur while saving.");
+                        //  $('#divError').css('display', 'block');
+                        //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                    }
+                }
+            });
+        }
         function AssignUserId(userId) {
             document.getElementById("hdUName").value = userId;
 
@@ -289,10 +345,10 @@ foreach (var obj in Model)
             $("#rdAdmin").prop("checked", true);
             $("#dvMemLimited").hide();
             $("#dvAdmin").show();
-            
+
             $.ajax({
                 url: "/Users/GetUserPermission",
-                data: { strUserId: userId},
+                data: { strUserId: userId },
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
@@ -300,14 +356,12 @@ foreach (var obj in Model)
                     for (i = 0; i < AryResult.length ; i++) {
                         $("#chk_" + AryResult[i]).prop("checked", true);
                     }
-                    if (AryResult[AryResult.length - 1] == "2")
-                    {
+                    if (AryResult[AryResult.length - 1] == "2") {
                         $("#rdAdmin").is(":checked") = true;
                         $("#dvMemLimited").hide();
                         $("#dvAdmin").show();
                     }
-                    else
-                    {
+                    else {
                         $("#dvMemLimited").show();
                         $("#dvAdmin").hide();
                         if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
@@ -317,134 +371,172 @@ foreach (var obj in Model)
                     }
                 }
             });
-           }
-        
-   jQuery(document).ready(function() {
-             
-       $(".chkPermission").click(function () {
-           if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
-               $("#rdMember").prop("checked", true);
-           else
-               $("#rdMemberLimit").prop("checked", true);
-       });
+        }
 
-       $("#btnRoles").click(function(){
-           $("#hdUName").val()
-       });
+        jQuery(document).ready(function () {
+            $(".dlOrgnizer").change(function () {
+                alert($(".dlOrgnizer").val());
+                //alert($("#dlOrgnizer").val()[2]);
 
-      $("#rdAdmin").click(function () {
-          $("#dvMemLimited").hide();
-          $("#dvAdmin").show();
-      })
+
+                var selID = document.getElementById("dlorg");
+                var text = selID.options[3].text;
+                alert(text);
+                //var vvalue = '';
+                //if ($("#dlOrgnizer").val() == "1")
+                //    vvalue='Y';
+                //else
+                //    vvalue =  'N';
 
 
 
-      $("#rdMemberLimit").click(function () {
-          $("#dvMemLimited").show();
-          $("#dvAdmin").hide();
-      })
 
-      $("#rdMember").click(function () {
-          $("#dvMemLimited").show();
-          $("#dvAdmin").hide();
-      })
-       
-      
 
-      $("#btSave").click(function () {
-          debugger;
-          var UserId = $("#hdUName").val();
-          var Permisions="";var URole;
-          for (i = 1; i <= 7; i++)
-          {
-              if ($("#chk_" + i).is(":checked") == true)
-              {
-                if (Permisions == "")
-                    Permisions = i;
+                //Merchant
+                //UserStatus
+
+                //$.ajax({
+                //    url: "/Users/SaveOtherInfo",
+                //    data: { strField: "Organiser", strvalue :vvalue  , strUserId: URole },
+                //    datatype: "Text",
+                //    type: "Post",
+                //    success: function (response) {
+                //        if (response == "Y") {
+                //            alert("Record Updated.");
+                //            //  $('#spanid').html("Record Updated.");
+                //            // $('#divError').css('display', 'block');
+                //            ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                //        }
+                //        else {
+                //            alert("Some error occur while saving.");
+                //            //$('#spanid').html("Some error occur while saving.");
+                //            //  $('#divError').css('display', 'block');
+                //            //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                //        }
+                //    }
+                //});
+
+            });
+
+
+            $(".chkPermission").click(function () {
+                if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
+                    $("#rdMember").prop("checked", true);
                 else
-                    Permisions = Permisions + "#" + i.toString();
-              }
-          }
-    
-        
+                    $("#rdMemberLimit").prop("checked", true);
+            });
 
-          if  ($("#rdAdmin").is(":checked") == true)
-              URole = 2;
-          else 
-              URole = 3;
+            $("#btnRoles").click(function () {
+                $("#hdUName").val()
+            });
+
+            $("#rdAdmin").click(function () {
+                $("#dvMemLimited").hide();
+                $("#dvAdmin").show();
+            })
 
 
-          $.ajax({
-              url: "/Users/SavePermisions",
-              data: { strUserId: UserId, strPermission: Permisions,strRole:URole },
-              datatype: "Text",
-              type: "Post",
-              success: function (response) {
-                  if (response == "Y") {
-                      alert("Record Updated.");
-                    //  $('#spanid').html("Record Updated.");
-                    // $('#divError').css('display', 'block');
-                   ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                  }
-                  else {
-                      alert("Some error occur while saving.");
-                      //$('#spanid').html("Some error occur while saving.");
-                    //  $('#divError').css('display', 'block');
-                      //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                  }
-              }
-          });
-      })
 
-    "use strict";
+            $("#rdMemberLimit").click(function () {
+                $("#dvMemLimited").show();
+                $("#dvAdmin").hide();
+            })
 
-    // Init Theme Core
-    Core.init();
+            $("#rdMember").click(function () {
+                $("#dvMemLimited").show();
+                $("#dvAdmin").hide();
+            })
 
-    // Init Demo JS
-    Demo.init();
 
-    $('.footable').footable();
 
-    var modalContent = $('#modal-content');
-
-    function findActive() {
-        var activeModal = modalContent.find('.holder-active').attr('href');
-        return activeModal;
-    };
-
-      // Form Skin Switcher
-    $('.animation-switcher button').on('click', function () {
-        $('.animation-switcher').find('button').removeClass('active-animation');
-        $(this).addClass('active-animation item-checked');
-
-        // Inline Admin-Form example 
-        $.magnificPopup.open({
-            removalDelay: 500, //delay removal by X to allow out-animation,
-            items: {
-                src: findActive()
-            },
-            // overflowY: 'hidden', // 
-            callbacks: {
-                beforeOpen: function (e) {
-                    var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
-                    this.st.mainClass = Animation;
+            $("#btSave").click(function () {
+                debugger;
+                var UserId = $("#hdUName").val();
+                var Permisions = ""; var URole;
+                for (i = 1; i <= 7; i++) {
+                    if ($("#chk_" + i).is(":checked") == true) {
+                        if (Permisions == "")
+                            Permisions = i;
+                        else
+                            Permisions = Permisions + "#" + i.toString();
+                    }
                 }
-            },
-            midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+
+
+
+                if ($("#rdAdmin").is(":checked") == true)
+                    URole = 2;
+                else
+                    URole = 3;
+
+
+                $.ajax({
+                    url: "/Users/SavePermisions",
+                    data: { strUserId: UserId, strPermission: Permisions, strRole: URole },
+                    datatype: "Text",
+                    type: "Post",
+                    success: function (response) {
+                        if (response == "Y") {
+                            alert("Record Updated.");
+                            //  $('#spanid').html("Record Updated.");
+                            // $('#divError').css('display', 'block');
+                            ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                        }
+                        else {
+                            alert("Some error occur while saving.");
+                            //$('#spanid').html("Some error occur while saving.");
+                            //  $('#divError').css('display', 'block');
+                            //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                        }
+                    }
+                });
+            })
+
+            "use strict";
+
+            // Init Theme Core
+            Core.init();
+
+            // Init Demo JS
+            Demo.init();
+
+            $('.footable').footable();
+
+            var modalContent = $('#modal-content');
+
+            function findActive() {
+                var activeModal = modalContent.find('.holder-active').attr('href');
+                return activeModal;
+            };
+
+            // Form Skin Switcher
+            $('.animation-switcher button').on('click', function () {
+                $('.animation-switcher').find('button').removeClass('active-animation');
+                $(this).addClass('active-animation item-checked');
+
+                // Inline Admin-Form example
+                $.magnificPopup.open({
+                    removalDelay: 500, //delay removal by X to allow out-animation,
+                    items: {
+                        src: findActive()
+                    },
+                    // overflowY: 'hidden', //
+                    callbacks: {
+                        beforeOpen: function (e) {
+                            var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
+                            this.st.mainClass = Animation;
+                        }
+                    },
+                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                });
+
+            });
+
         });
 
-    });
-
-  });
-
     </script>
-
-
     <!-- END: PAGE SCRIPTS -->
 
 </body>
 
 </html>
-
-
