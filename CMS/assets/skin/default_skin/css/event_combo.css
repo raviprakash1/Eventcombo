@@ -6,16 +6,10 @@
 
 .wel_tem_name{ margin-top: 5px; border:0px; background: #fafafa; padding: 0 5px;}
 
-<<<<<<< HEAD
-
-
-
-.fl-lft{ float: left;}
+.fl-lft{ float: left !important;}
 .eml-ellps{  
  max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;}
-=======
 .err-bor{ border-color: red;}
->>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2

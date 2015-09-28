@@ -234,6 +234,7 @@
     <Compile Include="Models\Profile.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SQLConnection.cs" />
     <Compile Include="Models\Status.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>

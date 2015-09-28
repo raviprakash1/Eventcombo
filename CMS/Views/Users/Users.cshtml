@@ -91,22 +91,23 @@
                                     </thead>
                                     <tbody>
                                         
-
-@foreach(var obj in Model)
-{ 
-    
+@{ int i = 0;
+foreach (var obj in Model)
+{
+     i = i + 1;
                                         <tr>
                                             
-                                            <td></td>
+                                            <td>@i.ToString()</td>
                                             <td class="eml-ellps">
                                             
                                                @obj.UserName
                                            
                                             </td>
                                             <td>
-                                                <a class="holder-active animation-switcher" href="#modal-panel">
-                                                    <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" onclick="AssignUserId(@obj.Id)" >Manage</button>
-                                                   
+                                                 <a class="holder-active animation-switcher" href="#modal-panel">
+                                                     <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')">Manage</button>
+
+                                                   @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
                                                 </a>
                                             </td>
                                             <td class="eml-ellps">@obj.EMail</td>
@@ -154,12 +155,13 @@
                                             </td>
                                             <td>
                                                 <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                                @Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)
+                                                @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
                                                 <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
                                             </td>
                                             <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
                                         </tr>
 }
+    }
                                     </tbody>
                                     <tfoot class="footer-menu">
                                         <tr>
@@ -181,10 +183,18 @@
                    
 
                     <div id="modal-panel" class="popup-basic bg-none popup-lg mfp-with-anim mfp-hide">
+                        <input type="hidden" id="hidUid" class="hUname" value="" />
+                        <div class="col-md-12" style="display:none;" id="divError">
+                            <div class="alert alert-success alert-dismissable">
+                                <button class="close" aria-hidden="true" data-dismiss="alert" type="button">&#215;</button>
+                                <i class="fa fa-info pr10"></i>
+                                <span id="spanid"></span>
+                            </div>
+                        </div>
                         <div class="panel">
                             <div class="panel-heading">
                                 <span class="panel-title">Manage Role</span>
-                                <input type="hidden" id="hidUid" class="hUname" value="" />
+                               
                             </div>
                             <div class="panel-body admin-form">
                                 <form class="form-horizontal">
@@ -212,35 +222,35 @@
                                       
                                         <div id="dvMemLimited">
                                             <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chkDeal_2">
-                                                <label for="checkboxDefault1">Deals</label>
+                                                <input type="checkbox" class="chkPermission" checked="" id="chk_2">
+                                                <label for="chk_2">Deals</label>
                                             </div>
                                             <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chkEvent_1">
-                                                <label for="checkboxDefault1">Events</label>
+                                                <input type="checkbox" class="chkPermission" checked="" id="chk_1">
+                                                <label for="chk_1">Events</label>
                                             </div>
                                         </div>
 
                                         <div id="dvAdmin">
                                             <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chkUsers_3">
-                                                <label for="checkboxDefault1">Users</label>
+                                                <input type="checkbox" checked="" id="chk_3">
+                                                <label for="chk_3">Users</label>
                                             </div>
                                             <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chkEvents_4">
-                                                <label for="checkboxDefault1">Events</label>
+                                                <input type="checkbox" checked="" id="chk_4">
+                                                <label for="chk_4">Events</label>
                                             </div>
                                             <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chkTickets_5">
-                                                <label for="checkboxDefault1">Tickets</label>
+                                                <input type="checkbox" checked="" id="chk_5">
+                                                <label for="chk_5">Tickets</label>
                                             </div>
                                             <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chkEmails_6">
-                                                <label for="checkboxDefault1">Emails</label>
+                                                <input type="checkbox" checked="" id="chk_6">
+                                                <label for="chk_6">Emails</label>
                                             </div>
                                             <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                                <input type="checkbox" checked="" id="chkMes_7">
-                                                <label for="checkboxDefault1">Messages</label>
+                                                <input type="checkbox" checked="" id="chk_7">
+                                                <label for="chk_7">Messages</label>
                                             </div>
                                         </div>
 
@@ -270,16 +280,64 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>    
 
     <script type="text/javascript">
-        function AssignUserId(userId)
-        {
-            document.getElementById("hidUid").value = userId;
-        }
-          
-  jQuery(document).ready(function() {
+        function AssignUserId(userId) {
+            document.getElementById("hdUName").value = userId;
+
+            for (i = 1; i <= 7 ; i++) {
+                $("#chk_" + i.toString()).prop("checked", false);
+            }
+            $("#rdAdmin").prop("checked", true);
+            $("#dvMemLimited").hide();
+            $("#dvAdmin").show();
+            
+            $.ajax({
+                url: "/Users/GetUserPermission",
+                data: { strUserId: userId},
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    var AryResult = response.split("^");
+                    for (i = 0; i < AryResult.length ; i++) {
+                        $("#chk_" + AryResult[i]).prop("checked", true);
+                    }
+                    if (AryResult[AryResult.length - 1] == "2")
+                    {
+                        $("#rdAdmin").is(":checked") = true;
+                        $("#dvMemLimited").hide();
+                        $("#dvAdmin").show();
+                    }
+                    else
+                    {
+                        $("#dvMemLimited").show();
+                        $("#dvAdmin").hide();
+                        if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
+                            $("#rdMember").prop("checked", true);
+                        else
+                            $("#rdMemberLimit").prop("checked", true);
+                    }
+                }
+            });
+           }
+        
+   jQuery(document).ready(function() {
+             
+       $(".chkPermission").click(function () {
+           if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
+               $("#rdMember").prop("checked", true);
+           else
+               $("#rdMemberLimit").prop("checked", true);
+       });
+
+       $("#btnRoles").click(function(){
+           $("#hdUName").val()
+       });
+
       $("#rdAdmin").click(function () {
           $("#dvMemLimited").hide();
           $("#dvAdmin").show();
       })
+
+
 
       $("#rdMemberLimit").click(function () {
           $("#dvMemLimited").show();
@@ -295,24 +353,22 @@
 
       $("#btSave").click(function () {
           debugger;
-          var UserId = $("#hidUid").val();
-          var Permisions;var URole;
-          if ($("#chkDeal_2").checked == true)
-              Permisions = "2";
-          if ($("#chkEvent_1").checked == true)
-              Permisions = Permisions + "#1";
-          if ($("#chkUsers_3").checked == true)
-              Permisions = Permisions + "#3";
-          if ($("#chkEvents_4").checked == true)
-              Permisions = Permisions + "#4";
-          if ($("#chkTickets_5").checked == true)
-              Permisions = Permisions + "#5";
-          if ($("#chkEmails_6").checked == true)
-              Permisions = Permisions + "#6";
-          if ($("#chkMes_7").checked == true)
-              Permisions = Permisions + "#7";
+          var UserId = $("#hdUName").val();
+          var Permisions="";var URole;
+          for (i = 1; i <= 7; i++)
+          {
+              if ($("#chk_" + i).is(":checked") == true)
+              {
+                if (Permisions == "")
+                    Permisions = i;
+                else
+                    Permisions = Permisions + "#" + i.toString();
+              }
+          }
+    
+        
 
-          if  ($("#rdAdmin").checked == true)
+          if  ($("#rdAdmin").is(":checked") == true)
               URole = 2;
           else 
               URole = 3;
@@ -324,10 +380,18 @@
               datatype: "Text",
               type: "Post",
               success: function (response) {
-                  if (response == "Y")
+                  if (response == "Y") {
                       alert("Record Updated.");
-                else
-                      alert("Some error occur while saving");
+                    //  $('#spanid').html("Record Updated.");
+                    // $('#divError').css('display', 'block');
+                   ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                  }
+                  else {
+                      alert("Some error occur while saving.");
+                      //$('#spanid').html("Some error occur while saving.");
+                    //  $('#divError').css('display', 'block');
+                      //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                  }
               }
           });
       })

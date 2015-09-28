@@ -12,6 +12,8 @@ namespace CMS.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class EmsEntities : DbContext
     {
@@ -38,5 +40,22 @@ namespace CMS.Models
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
+    
+        public virtual ObjectResult<string> GetSetUserRole(string user_Id, string gETSET, string role_Id)
+        {
+            var user_IdParameter = user_Id != null ?
+                new ObjectParameter("user_Id", user_Id) :
+                new ObjectParameter("user_Id", typeof(string));
+    
+            var gETSETParameter = gETSET != null ?
+                new ObjectParameter("GETSET", gETSET) :
+                new ObjectParameter("GETSET", typeof(string));
+    
+            var role_IdParameter = role_Id != null ?
+                new ObjectParameter("Role_Id", role_Id) :
+                new ObjectParameter("Role_Id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSetUserRole", user_IdParameter, gETSETParameter, role_IdParameter);
+        }
     }
 }
