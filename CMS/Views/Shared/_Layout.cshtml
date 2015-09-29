@@ -136,7 +136,7 @@
 
                     <li class="sidebar-label pt15">Exclusive Tools</li>
                     <li>
-                        <a class="CheckPermission" href="~/Users/Users">
+                        <a onclick="return checkPermission(3);" href="">
                             <span class="fa fa-user"></span>
                             <span class="sidebar-title">User</span>
 
@@ -163,7 +163,7 @@
 
                     <li>
                       
-                        <a href="~/Email/Index?templatetag=email_welcome&templatename=Welcome">
+                        <a onclick="return checkPermission('6');" href="">
                             <span class="fa fa-envelope-o"></span>
                             <span class="sidebar-title">Email Content Management</span>
                         </a>
@@ -176,13 +176,13 @@
                         </a>
                         <ul class="nav sub-nav" style="">
                            <li>
-                            <a href="~/Messages/Index?Form=MyAccount">
+                            <a onclick="return checkPermission('7');" href="">
                                 <span class="fa fa-circle-o"></span>
                                 <span class="sidebar-title">My Account Form</span>
                             </a>
                            </li>
                             <li>
-                                <a href="~/Messages/Index?Form=Login">
+                                <a  onclick="return checkPermission('7A');" href="">
                                     <span class="fa fa-circle-o"></span>
                                     <span class="sidebar-title">Login Form</span>
                                 </a>
@@ -227,31 +227,40 @@
     <!-- Widget Javascript -->
 
     <script type="text/javascript">
+        function checkPermission(PermisionId)
+        {
+            var vPerm = PermisionId;
+            if (PermisionId == "7A") PermisionId = "7";
+
+            $.ajax({
+                url: "/Permission/GetPermission",
+                data: { iPermissionId: PermisionId },
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    if (response != "Y") {
+                        alert("Access Denied !!!");
+                        return false;
+                        //  $('#spanid').html("Record Updated.");
+                        // $('#divError').css('display', 'block');
+                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                    }
+                    else
+                    {
+                        if (vPerm == "3")
+                            window.location.href = "../Users/Users";
+                        else if (vPerm == "6")
+                            window.location.href = "../Email/Index?templatetag=email_welcome&templatename=Welcome";
+                        else if (vPerm == "7")
+                            window.location.href = "../Messages/Index?Form=MyAccount";
+                        else if (vPerm == "7A")
+                            window.location.href = "../Messages/Index?Form=Login";
+                    }
+                }
+            });
+        }
   jQuery(document).ready(function() {
-      $(".CheckPermission").click(function () {
-          $.ajax({
-              url: "/Users/SaveOtherInfo",
-              data: { strField: sFields, strvalue: vvalue, strUserId: UserId },
-              datatype: "Text",
-              type: "Post",
-              success: function (response) {
-                  if (response == "Y") {
-                      alert("Record Updated.");
-                      //  $('#spanid').html("Record Updated.");
-                      // $('#divError').css('display', 'block');
-                      ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                  }
-                  else {
-                      alert("Some error occur while saving.");
-                      //$('#spanid').html("Some error occur while saving.");
-                      //  $('#divError').css('display', 'block');
-                      //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                  }
-              }
-          });
-
-      });
-
+   
     "use strict";
 
     // Init Theme Core
