@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Cmsdata.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Cmsdata.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -142,6 +142,9 @@
           <Property Name="ContentType" Type="varchar" MaxLength="50" />
           <Property Name="Gender" Type="varchar" MaxLength="50" />
           <Property Name="DateofBirth" Type="varchar" MaxLength="50" />
+          <Property Name="Organiser" Type="varchar" MaxLength="2" />
+          <Property Name="Merchant" Type="varchar" MaxLength="2" />
+          <Property Name="UserStatus" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -227,6 +230,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetSetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
+          <Parameter Name="GETSET" Type="varchar" Mode="In" />
+          <Parameter Name="Role_Id" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="CmsdataStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -263,8 +271,7 @@
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Cmsdata" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -405,6 +412,9 @@
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateofBirth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUsers" />
+          <Property Name="Organiser" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Merchant" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="UserStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -496,6 +506,11 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <FunctionImport Name="GetSetUserRole" ReturnType="Collection(String)">
+            <Parameter Name="user_Id" Mode="In" Type="String" />
+            <Parameter Name="GETSET" Mode="In" Type="String" />
+            <Parameter Name="Role_Id" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -610,6 +625,9 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="Cmsdata.Profile">
               <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
+                <ScalarProperty Name="Merchant" ColumnName="Merchant" />
+                <ScalarProperty Name="Organiser" ColumnName="Organiser" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -667,6 +685,7 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="Cmsdata.Store.GetSetUserRole" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

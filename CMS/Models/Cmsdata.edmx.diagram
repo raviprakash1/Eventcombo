@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="Cmsdata.AspNetRole" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.AspNetUser" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.AspNetUser" Width="1.875" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Country" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Email_Tag" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Email_Template" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
