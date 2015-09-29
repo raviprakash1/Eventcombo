@@ -116,7 +116,14 @@ namespace CMS.Controllers
             {
                 string userid = Session["AppId"].ToString();
                 var userImage = db.Profiles.Where(x => x.UserID == userid).Select(y => y.UserProfileImage).SingleOrDefault();
-                return "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepath/" + userImage;
+                if (userImage != null)
+                {
+                    return "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepath/" + userImage;
+                }
+                else
+                {
+                    return "";
+                }
             }
             else
             {
@@ -130,7 +137,15 @@ namespace CMS.Controllers
             {
                 string userid = Session["AppId"].ToString();
                 var userEmail = db.AspNetUsers.Where(x => x.Id == userid).Select(y => y.Email).SingleOrDefault();
-                return userEmail;
+                if(userEmail!=null)
+                {
+                    return userEmail;
+                }
+                else
+                {
+                    return "";
+                }
+               
             }
             else
             {
