@@ -229,7 +229,26 @@
     <script type="text/javascript">
   jQuery(document).ready(function() {
       $(".CheckPermission").click(function () {
-          alert("Before Load");
+          $.ajax({
+              url: "/Users/SaveOtherInfo",
+              data: { strField: sFields, strvalue: vvalue, strUserId: UserId },
+              datatype: "Text",
+              type: "Post",
+              success: function (response) {
+                  if (response == "Y") {
+                      alert("Record Updated.");
+                      //  $('#spanid').html("Record Updated.");
+                      // $('#divError').css('display', 'block');
+                      ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                  }
+                  else {
+                      alert("Some error occur while saving.");
+                      //$('#spanid').html("Some error occur while saving.");
+                      //  $('#divError').css('display', 'block');
+                      //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                  }
+              }
+          });
 
       });
 
