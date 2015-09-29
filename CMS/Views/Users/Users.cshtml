@@ -117,15 +117,13 @@
                                                 <td>
                                                     <div class="section">
                                                         <label class="field select">
+                                                            @*@Html.DropDownList("Organiser",Model.Select(item => new SelectListItem { Text=item.Organiser, Value = item.Organiser } ) , "select" , new { onchange = "SaveFields('" + obj.Id + "', 'dlOrgnizer');"})*@
+                                                             
                                                             @Html.DropDownList("Organiser", new List<SelectListItem>{
-                                                            new SelectListItem{ Text="Y", Value="1"},
-                                                            new SelectListItem{ Text="N", Value="2"}
+                                                            new SelectListItem{ Text="Y", Value="Y"},
+                                                            new SelectListItem{ Text="N", Value="N"}
                                                                 }, "Select", new { onchange = "SaveFields('" + obj.Id + "', 'dlOrgnizer');"})
-                                                                @*<select id="dlOrgnizer"  onchange="SaveFields('@obj.Id','dlOrgnizer')">
-                                                                <option value="0">Select</option>
-                                                                <option value="1">Yes</option>
-                                                                <option value="2">No</option>
-                                                            </select>*@
+
                                                             <i class="arrow double"></i>
                                                         </label>
                                                     </div>
