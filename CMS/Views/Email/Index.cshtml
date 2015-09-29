@@ -377,21 +377,23 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
+        console.log($('#cke_1_contents'));
         $("#allfields li span").draggable({
             appendTo: "body",
             helper: "clone",
             cursor: "select",
             revert: "invalid"
         });
-        initDroppable($("#TextArea1"));
+        //initDroppable($("#cke_editable p"));
         initDroppable($(".txtSubject"));
         function initDroppable($elements) {
+            console.log($elements);
             $elements.droppable({
                 hoverClass: "textarea",
                 accept: ":not(.ui-sortable-helper)",
                 drop: function (event, ui) {
                     var $this = $(this);
-
+                    console.log($this);
                     var tempid = ui.draggable.text();
                     var dropText;
                     dropText = "$$" + tempid + "$$";

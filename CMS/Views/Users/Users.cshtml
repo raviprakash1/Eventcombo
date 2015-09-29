@@ -153,9 +153,10 @@
 
                                             </td>
                                             <td>
-                                                <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                                @Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)
-                                                <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                <a href="~/MyAcc/MyAccount?UserId=@obj.Id" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                @*@Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)*@
+                                                @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
+                                                <button class="btn btn-danger br2 btn-xs fs12" onclick="ConfirmDelete('@obj.Id')"><i class="fa fa-remove"></i></button>
                                             </td>
                                             <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
                                         </tr>
@@ -270,6 +271,31 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>    
 
     <script type="text/javascript">
+        function ConfirmDelete(userId)
+        {
+            console.log(userId);
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+            {
+                
+                $.ajax({
+                    url: "/Users/Deleteuser",
+                    data: { userid: userId},
+                    datatype: "Text",
+                    type: "Post",
+                    success: function (response) {
+                        if (response == "Deleted")
+                            alert("Record Deleted Successfully.");
+                        else
+                            alert("Some error occur while Deleting");
+                    }
+                });
+                return true;
+            }
+            else
+                return false;
+        
+        }
         function AssignUserId(userId)
         {
             document.getElementById("hidUid").value = userId;

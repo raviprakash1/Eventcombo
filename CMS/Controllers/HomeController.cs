@@ -206,27 +206,6 @@ namespace CMS.Controllers
         }
 
 
-        public bool isadmin(string Userid)
-        {
-            //using (EmsEntities objEntity = new EmsEntities())
-            //{
-            //    var modelmyaccount = (from cpd in objEntity.AspNetUsers
-            //                          join pfd in objEntity.AspNetRoles
-            //                          on cpd.Id equals pfd
-            //                          where cpd.Id == userid
-            //                          select cpd);
-            //    if (modelmyaccount.FirstOrDefault() != null)
-            //    {
-            //        return true;
-            //    }
-            //    else
-            //    {
-            //        return false;
-
-            //    }
-
-            //}
-            return false;
-        }
+      
     }
 }

@@ -10,12 +10,44 @@ namespace CMS.Controllers
     public class UsersController : Controller
     {
         // GET: Users
+        EmsEntities db = new EmsEntities();
+        public ActionResult Deleteuser(string userid)
+        {
+            try {
+                //User_Permission_Detail userper = db.User_Permission_Detail.Where(i => i.UP_User_Id.Trim() == userid.Trim()).FirstOrDefault();
+                //db.User_Permission_Detail.Remove(userper);
+                //db.SaveChanges();
+                db.Database.ExecuteSqlCommand("Delete from User_Permission_Detail where UP_User_Id='" + userid + "'");
+                Profile prof = db.Profiles.Where(i => i.UserID == userid).FirstOrDefault();
+                db.Profiles.Remove(prof);
+                db.SaveChanges();
+
+                db.Database.ExecuteSqlCommand("Delete from AspNetUserRoles where UserId='" + userid + "'");
+
+
+                AspNetUser user = db.AspNetUsers.Find(userid);
+                db.AspNetUsers.Remove(user);
+                db.SaveChanges();
+
+              
+                return Content("Deleted");
+
+            }
+            catch(Exception ex)
+            {
+                return Content(ex.Message);
+
+            }
+
+        }
+
         public ActionResult Users()
         {
            
 
 
             List<UsersTemplate> objuser = GetAllUsers();
+
            // List<Permissions> objPerm = GetPermission("APP");
             UsersTemplate objU = new UsersTemplate();
             objU.objPermissions = GetPermission("APP");
