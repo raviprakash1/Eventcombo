@@ -1,0 +1,384 @@
+﻿@model IEnumerable<CMS.Models.E>
+@using CMS.Models;
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <title>Eventcombo Admin</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
+</head>
+
+<body class="email-templates-page">
+
+
+    <!-- Start: Content-Wrapper -->
+    <section id="content_wrapper">
+
+        <!-- Start: Topbar -->
+        <header id="topbar" class="alt">
+            <div class="topbar-left">
+                <ol class="breadcrumb">
+
+                    <li class="crumb-icon">
+                        <a href="dashboard.html">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </a>
+                    </li>
+                    <li class="crumb-active">
+                        Dashboard
+                    </li>
+                </ol>
+            </div>
+
+        </header>
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+        <div id="content" class="animated fadeIn">
+            <div class="row" id="modal-content">
+                <div class="col-md-12">
+
+                    <div class="panel">
+                        <div class="panel-menu admin-form theme-primary">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span class="panel-title"> All Event List (25)</span>
+                                </div>
+                                <div class="col-md-6">
+                                    &nbsp;
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="field select">
+                                        <select>
+                                            <option value="0">Select</option>
+                                            <option value="0">01 - 25</option>
+                                            <option value="1">26 - 50</option>
+                                            <option value="2">51 - 100</option>
+                                        </select>
+                                        <i class="arrow double"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body pn">
+
+                            <table class="table footable" data-page-navigation=".pagination" data-page-size="3">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Type</th>
+                                        <th>Catogary-Sub Catogary</th>
+                                        <th>Dates</th>
+                                        <th>Venue Name & Address</th>
+                                        <th>Organiser name & Email</th>
+                                        <th>Manage Ticketing</th>
+                                        <th>Tickets Sold</th>
+                                        <th>Feature</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                @*<tbody>
+
+
+                                    @foreach (var obj in Model)
+                                    {
+
+                                        <tr>
+
+                                            <td></td>
+                                            <td class="eml-ellps">
+
+                                                @obj.UserName
+
+                                            </td>
+                                            <td>
+                                                <a class="holder-active animation-switcher" href="#modal-panel">
+                                                    <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" onclick="AssignUserId(@obj.Id)">Manage</button>
+
+                                                </a>
+                                            </td>
+                                            <td class="eml-ellps">@obj.EMail</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>India</td>
+                                            <td>
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select>
+                                                            <option value="0">Select</option>
+                                                            <option value="1">Yes</option>
+                                                            <option value="2">No</option>
+                                                        </select>
+                                                        <i class="arrow double"></i>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select>
+                                                            <option value="0">Select</option>
+                                                            <option value="1">Yes</option>
+                                                            <option value="2">No</option>
+                                                        </select>
+                                                        <i class="arrow double"></i>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select>
+                                                            <option value="0">Select</option>
+                                                            <option value="1">Active</option>
+                                                            <option value="2">Deactive</option>
+                                                        </select>
+                                                        <i class="arrow double"></i>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
+                                                <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                            </td>
+                                            <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
+                                        </tr>
+                                    }
+                                </tbody>*@
+                                <tfoot class="footer-menu">
+                                    <tr>
+                                        <td colspan="12">
+                                            <nav class="text-right">
+                                                <ul class="pagination hide-if-no-paging"></ul>
+                                            </nav>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div id="modal-panel" class="popup-basic bg-none popup-lg mfp-with-anim mfp-hide">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="panel-title">Manage Role</span>
+                            <input type="hidden" id="hidUid" class="hUname" value="" />
+                        </div>
+                        <div class="panel-body admin-form">
+                            <form class="form-horizontal">
+                                <div class="col-md-12">
+                                    <h3 class="mt5"> Select Role</h3>
+
+                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                        <input id="rdAdmin" type="radio" name="Permission">
+                                        <label for="rdAdmin">Admin</label>
+
+                                    </div>
+                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                        <input id="rdMemberLimit" type="radio" class="Permission" name="Permission">
+                                        <label for="rdMemberLimit">Member Limited</label>
+                                    </div>
+                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                        <input id="rdMember" type="radio" class="Permission" name="Permission">
+                                        <label for="rdMember">Member</label>
+                                    </div>
+
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12"><hr class="short alt"></div>
+                                <div class="col-md-12">
+
+                                    <div id="dvMemLimited">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chkDeal_2">
+                                            <label for="checkboxDefault1">Deals</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chkEvent_1">
+                                            <label for="checkboxDefault1">Events</label>
+                                        </div>
+                                    </div>
+
+                                    <div id="dvAdmin">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chkUsers_3">
+                                            <label for="checkboxDefault1">Users</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chkEvents_4">
+                                            <label for="checkboxDefault1">Events</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chkTickets_5">
+                                            <label for="checkboxDefault1">Tickets</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chkEmails_6">
+                                            <label for="checkboxDefault1">Emails</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" checked="" id="chkMes_7">
+                                            <label for="checkboxDefault1">Messages</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="panel-footer text-right">
+                            <button class="btn btn-primary" id="btSave" type="button">Save</button>
+                        </div>
+                    </div>
+                    @*@RenderPage("~/Views/Permissions/Permission.cshtml")*@
+
+                </div>
+            </div>
+        </div>
+        <!-- End: Content -->
+
+    </section>
+
+
+
+    <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>
+
+    <!-- FooTable Addon -->
+    <script src="~/plugins/footable/js/footable.all.min.js"></script>
+    <script src="~/plugins/footable/js/footable.filter.min.js"></script>
+
+    <script type="text/javascript">
+        function AssignUserId(userId)
+        {
+            document.getElementById("hidUid").value = userId;
+        }
+
+  jQuery(document).ready(function() {
+      $("#rdAdmin").click(function () {
+          $("#dvMemLimited").hide();
+          $("#dvAdmin").show();
+      })
+
+      $("#rdMemberLimit").click(function () {
+          $("#dvMemLimited").show();
+          $("#dvAdmin").hide();
+      })
+
+      $("#rdMember").click(function () {
+          $("#dvMemLimited").show();
+          $("#dvAdmin").hide();
+      })
+
+
+
+      $("#btSave").click(function () {
+          debugger;
+          var UserId = $("#hidUid").val();
+          var Permisions;var URole;
+          if ($("#chkDeal_2").checked == true)
+              Permisions = "2";
+          if ($("#chkEvent_1").checked == true)
+              Permisions = Permisions + "#1";
+          if ($("#chkUsers_3").checked == true)
+              Permisions = Permisions + "#3";
+          if ($("#chkEvents_4").checked == true)
+              Permisions = Permisions + "#4";
+          if ($("#chkTickets_5").checked == true)
+              Permisions = Permisions + "#5";
+          if ($("#chkEmails_6").checked == true)
+              Permisions = Permisions + "#6";
+          if ($("#chkMes_7").checked == true)
+              Permisions = Permisions + "#7";
+
+          if  ($("#rdAdmin").checked == true)
+              URole = 2;
+          else
+              URole = 3;
+
+
+          $.ajax({
+              url: "/Users/SavePermisions",
+              data: { strUserId: UserId, strPermission: Permisions,strRole:URole },
+              datatype: "Text",
+              type: "Post",
+              success: function (response) {
+                  if (response == "Y")
+                      alert("Record Updated.");
+                else
+                      alert("Some error occur while saving");
+              }
+          });
+      })
+
+    "use strict";
+
+    // Init Theme Core
+    Core.init();
+
+    // Init Demo JS
+    Demo.init();
+
+    $('.footable').footable();
+
+    var modalContent = $('#modal-content');
+
+    function findActive() {
+        var activeModal = modalContent.find('.holder-active').attr('href');
+        return activeModal;
+    };
+
+      // Form Skin Switcher
+    $('.animation-switcher button').on('click', function () {
+        $('.animation-switcher').find('button').removeClass('active-animation');
+        $(this).addClass('active-animation item-checked');
+
+        // Inline Admin-Form example
+        $.magnificPopup.open({
+            removalDelay: 500, //delay removal by X to allow out-animation,
+            items: {
+                src: findActive()
+            },
+            // overflowY: 'hidden', //
+            callbacks: {
+                beforeOpen: function (e) {
+                    var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
+                    this.st.mainClass = Animation;
+                }
+            },
+            midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+        });
+
+    });
+
+  });
+
+    </script>
+
+
+    <!-- END: PAGE SCRIPTS -->
+
+</body>
+
+</html>

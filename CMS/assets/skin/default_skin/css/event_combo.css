@@ -5,8 +5,15 @@
 .em_bor_bot:last-child{border-bottom: 0px !important;}
 
 .wel_tem_name{ margin-top: 5px; border:0px; background: #fafafa; padding: 0 5px;}
+.err-bor{ border-color: red !important;}
+
 
 .fl-lft{ float: left !important;}
+
+.top_nav{ margin-top: 0px;}
+  .top_nav_right{ margin-right: 0px !important;}
+
+.fl-lft{ float: left;}
 .eml-ellps{  
  max-width: 100px;
     overflow: hidden;

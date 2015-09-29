@@ -50,28 +50,32 @@
                     <input type="text" class="form-control" placeholder="Search..." value="Search...">
                 </div>
             </form>
+@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+{
+
             <ul class="nav navbar-nav navbar-right">
 
                 <li class="dropdown menu-merge">
                     <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
-                        <img src="~/assets/img/avatars/1.jpg" alt="avatar" class="mw30 br64">
-                        <span class="hidden-xs pl15"> Navreet </span>
+                       
+                     
+                        <img src="@{Html.RenderAction("UserImage", "Home");}" alt="avatar" class="mw30 br64">
+                        <span class="hidden-xs pl15">@{Html.RenderAction("UserName", "Home");}</span>
                         <span class="caret caret-tp hidden-xs"></span>
                     </a>
                     <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
 
                         <li class="dropdown-footer">
-@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-{
 
                             <a href="javascript:document.getElementById('logoutForm').submit()" class="">
                                 <span class="fa fa-power-off pr5"></span> Logout
                             </a>
-}
+
                         </li>
                     </ul>
                 </li>
             </ul>
+}
         </header>
 
         <!-- Start: Sidebar -->
@@ -82,26 +86,29 @@
 
                 <!-- Start: Sidebar Header -->
                 <header class="sidebar-header">
-
+@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutidForm" }))
+{
                     <!-- Sidebar Widget - Author -->
                     <div class="sidebar-widget author-widget">
                         <div class="media">
                             <a class="media-left" href="#">
-                                <img src="~/assets/img/avatars/3.jpg" class="img-responsive">
+                                <img src="@{Html.RenderAction("UserImage", "Home");}" class="img-responsive">
                             </a>
+
                             <div class="media-body">
                                 <div class="media-links">
 
                                     <a href="#" class="sidebar-menu-toggle">User Menu -</a> 
-@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutidForm" }))
-{
+
                                     <a href="javascript:document.getElementById('logoutidForm').submit()">Logout</a>
-}
+
                                 </div>
-                                <div class="media-author">Michael Richards</div>
+                                <div class="media-author">@{Html.RenderAction("UserName", "Home");}</div>
                             </div>
+
                         </div>
                     </div>
+}
 
                     <!-- Sidebar Widget - Menu (slidedown) -->
                     <!-- Sidebar Widget - Search (hidden) -->
@@ -174,6 +181,12 @@
                                 <span class="sidebar-title">My Account Form</span>
                             </a>
                            </li>
+                            <li>
+                                <a href="~/Messages/Index?Form=Login">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title">Login Form</span>
+                                </a>
+                            </li>
                          </ul>   
                     </li>
                    
@@ -200,11 +213,7 @@
     <!-- End: Main -->
     <!-- BEGIN: PAGE SCRIPTS -->
     <!-- jQuery -->
-<<<<<<< HEAD
-    
-=======
-   
->>>>>>> 5705c7d31816007f1a6d36b6116266e177ee4bd2
+
     <script src="~/assets/js/jquery-ui.min.js"></script>
 
     <!-- Bootstrap Tabdrop Plugin -->

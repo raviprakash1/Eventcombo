@@ -87,15 +87,61 @@ namespace CMS.Controllers
         [Authorize(Roles = "Super Admin,Admin")]
         public ActionResult Dashboard()
         {
-            return View();
+            if ((Session["AppId"] != null))
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+
+            }
 
         }
-   
+
+        public ActionResult UserName()
+        {
+            string result = getusername();
+            return Content(result);
+        }
+        public ActionResult UserImage()
+        {
+            string result = getuserImage();
+            return Content(result);
+        }
+
+        private string getuserImage()
+        {
+            if ((Session["AppId"] != null))
+            {
+                string userid = Session["AppId"].ToString();
+                var userImage = db.Profiles.Where(x => x.UserID == userid).Select(y => y.UserProfileImage).SingleOrDefault();
+                return "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepath/" + userImage;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private string getusername()
+        {
+            if ((Session["AppId"] != null))
+            {
+                string userid = Session["AppId"].ToString();
+                var userEmail = db.AspNetUsers.Where(x => x.Id == userid).Select(y => y.Email).SingleOrDefault();
+                return userEmail;
+            }
+            else
+            {
+                return "";
+
+            }
+        }
+
         [HttpPost]
         [AllowAnonymous]
-      
-      
-        public async Task<ActionResult> Login(LoginViewModel model)
+       public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -110,10 +156,16 @@ namespace CMS.Controllers
                 case SignInStatus.Success:
                     var User = UserManager.FindByEmail(model.Email.ToString());
                     var roleSuperAdmin = (from r in db.AspNetRoles  where r.Name.Contains("Super Admin")  select r).FirstOrDefault();
-                    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id ).Contains(roleSuperAdmin.Id)  ).ToList();
+                    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id ).Contains(roleSuperAdmin.Id)).ToList();
                     if (users.Find(x => x.Id == User.Id ) != null)
                     {
                         Session["AppId"] = User.Id;
+                       var userprofile = db.Profiles.Where(x => x.UserID == User.Id).Select(y => y.UserProfileImage).SingleOrDefault();
+                        if(!string.IsNullOrEmpty(userprofile))
+                        {
+                            ViewData["UserImage"] = "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepathuserprofile/"+ userprofile;
+                        }
+                         ViewData["UserName"] = model.Email;
                         return RedirectToAction("Dashboard");
                     }
                     else
@@ -123,11 +175,19 @@ namespace CMS.Controllers
                         if (users.Find(x => x.Id == User.Id) != null)
                         {
                             Session["AppId"] = User.Id;
+                            var userprofile = db.Profiles.Where(x => x.UserID == User.Id).Select(y => y.UserProfileImage).SingleOrDefault();
+                            if (!string.IsNullOrEmpty(userprofile))
+                            {
+                                ViewData["UserImage"] = "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepathuserprofile/" + userprofile;
+
+                            }
+                            ViewData["UserImage"] = "";
+                            ViewData["UserName"] = model.Email;
                             return RedirectToAction("Dashboard");
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Invalid login attempt.");
+                            ModelState.AddModelError("", "You not authorized user");
                             return View(model);
                         }
                       

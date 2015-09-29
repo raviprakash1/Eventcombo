@@ -177,6 +177,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ValidationMessageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -223,6 +224,9 @@
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MyAccount.cs" />
     <Compile Include="Models\Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -606,6 +610,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="assets\" />
     <Folder Include="Views\Validate\" />
+    <Folder Include="Views\ValidationMessage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

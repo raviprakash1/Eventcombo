@@ -55,6 +55,27 @@
                             @Html.ActionLink("Back", "Users", "Users",null, new { @class = "btn btn-primary col-sm-1 pull-right mt5" }) 
                         </div>
                         <div class="panel-body">
+                            @if (TempData["SuccessMessage"]!= null)
+                            {
+                            <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
+                            </div>
+                           }
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-micro alert-border-left alert-danger pastel alert-dismissable mn mb5" id="diverrorsys">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    <i class="fa fa-info pr10"></i> <span id="spanid"> @Html.ValidationMessage("")</span>
+                                </div>
+                            }
+                            <div class="col-md-12" style="display:none;" id="divError">
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">&#215;</button>
+                                    <i class="fa fa-info pr10"></i>
+                                    <span id="spanid"></span>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="col-md-8">
                                     <form class="form-horizontal" role="form">
@@ -139,7 +160,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        @*<div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-lg-12">New Password</label>
                                                 <div class="col-lg-12">
@@ -154,7 +175,7 @@
                                                     <input type="text" class="form-control" readonly="readonly" placeholder="Confirm Password">
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>*@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-lg-12">Website</label>
@@ -191,7 +212,7 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <button class="btn btn-primary col-sm-3" type="submit">Update</button>
+                                            <button class="btn btn-primary col-sm-3" type="submit" id="btnsave" >Update</button>
                                         </div>
                                     </form>
                                 </div>
@@ -209,8 +230,130 @@
         </div>
 }
     </section>
+    <script type="text/javascript">
+     
+        $('#ZipCode').change(function () {
+            
+                var country = $("#Country option:selected").text().trim();
+                console.log(country);
+                var city = "";
+                var state = "";
+
+                var pincode = $(this).val();
+                $.ajax({
+                    url: 'http://maps.googleapis.com/maps/api/geocode/json',
+                    data: '&address=' + pincode + '&sensor=true',
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
+
+
+                        if (data.status == 'OK') {
+
+                            for (var i = 0; i < data.results[0].address_components.length; i++) {
+                                var obj = data.results[0].address_components[i];
+
+                                var obj2 = obj['types'];
+
+                                for (var j = 0; j < obj2.length; j++) {
+                                    if (obj2[j] == 'locality') {
+                                        city = obj['long_name'];
+
+
+                                    }
+                                    if (obj2[j] == 'postal_town') {
+                                        city = obj['long_name'];
+
+
+                                    }
+                                    if (obj2[j] == 'administrative_area_level_1') {
+                                        state = obj['long_name'];
+
+                                    }
+                                    if (obj2[j] == 'administrative_area_level_2') {
+                                        state = obj['long_name'];
+
+                                    }
+
+
+                                    if (obj2[j] == 'country') {
+                                        if (obj['long_name'] == country) {
+
+
+                                            $('#City').val(city);
+                                            $('#State').val(state);
+                                        }
+
+                                    }
+
+                                }
+
+
+
+                            }
+
+                        }
+
+
+
+                        else {
+
+                            $('#spanid').html('Invalid Zip/Pin Code');
+                            $('#divError').css("display", "block");
+                            $('#Zip').addClass('err-bor');
+                            return false;
+                        }
+                    }
+                });
+            });
+   
+        $('#btnsave').click(function () {
+            var msg = "";
+            var Email = $("#Email").val();
+            if (Email != "") {
+                if (!validateEmail(Email)) {
+                    $('#Email').focus();
+                    $('#Email').addClass('err-bor');
+                    msg += "Invalid Email! </br>"
+
+                } else {
+
+                    msg = "";
+                    $('#Email').focus();
+                    $('#Email').removeClass('err-bor');
+                }
+            }
+            if (msg == "") {
+                $('#divError').css("display", "none");
+                return true;
+            }
+            else {
+                console.log(msg)
+                $('#spanid').html(msg);
+                $('#diverro1acc').css("display", "none");
+                $('#divaccsuc').css("display", "none");
+
+                $('#divError').css("display", "block");
+                setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                return false;
+            }
+        });
+        function validateEmail(sEmail) {
+            var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+
+            if (filter.test(sEmail)) {
+
+                return true;
+            }
+            else {
+
+
+                return false;
+            }
+        }
+    </script>
     <script src="~/Scripts/jquery.maskedinput.min.js"></script>
-    <script src="~/Scripts/filer/jquery.filer.js"></script>
+
 
     <script type="text/javascript">
         jQuery(function ($) {

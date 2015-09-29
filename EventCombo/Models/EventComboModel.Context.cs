@@ -32,10 +32,11 @@ namespace EventCombo.Models
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
-        public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
-        public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Email_Tag> Email_Tag { get; set; }
         public virtual DbSet<Email_Template> Email_Template { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
+        public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
     }
 }
