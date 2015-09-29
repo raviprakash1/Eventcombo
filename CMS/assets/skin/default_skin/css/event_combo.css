@@ -19,4 +19,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;}
-.err-bor{ border-color: red;}
+
+
+.bg_white{ background:#fff;}
+.mb_0{ margin-bottom: 0px;}
+.view_evnt{ font-weight: 300;  color: #626262;}
+.view_sel_wid ul{ min-width: 130px;}
+.view_sel_wid button{ min-width: 130px;}
+
