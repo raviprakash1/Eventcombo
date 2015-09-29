@@ -98,7 +98,7 @@
                                             <tr>
 
                                                 <td>@i.ToString()</td>
-                                                <td class="eml-ellps">
+                                                <td class="eml-ellps" title="@obj.UserName">
 
                                                     @obj.UserName
 
@@ -118,11 +118,11 @@
                                                     <div class="section">
                                                         <label class="field select">
                                                             @*@Html.DropDownList("Organiser",Model.Select(item => new SelectListItem { Text=item.Organiser, Value = item.Organiser } ) , "select" , new { onchange = "SaveFields('" + obj.Id + "', 'dlOrgnizer');"})*@
-                                                             
+
                                                             @Html.DropDownList("Organiser", new List<SelectListItem>{
                                                             new SelectListItem{ Text="Y", Value="Y"},
                                                             new SelectListItem{ Text="N", Value="N"}
-                                                                }, "Select", new { onchange = "SaveFields('" + obj.Id + "', 'dlOrgnizer');"})
+                                                                }, "Select", new { onchange = "SaveFields('" + obj.Id + "', 'dlOrgnizer');" })
 
                                                             <i class="arrow double"></i>
                                                         </label>
@@ -155,10 +155,16 @@
                                                     </div>
 
                                                 </td>
+                                                @*<td>
+                                                        <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                        @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    </td>*@
                                                 <td>
-                                                    <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                                    @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
-                                                    <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    <a href="~/MyAcc/MyAccount?UserId=@obj.Id" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                    @*@Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)*@
+                                                    @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
+                                                    <button class="btn btn-danger br2 btn-xs fs12" onclick="ConfirmDelete('@obj.Id')"><i class="fa fa-remove"></i></button>
                                                 </td>
                                                 <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
                                             </tr>
@@ -286,7 +292,7 @@
             $("#dlOrgnizer").val(1);
 
         }
-        function SaveFields(UserId,strId) {
+        function SaveFields(UserId, strId) {
             var vvalue = '';
             var sFields = '';
             if (strId == "dlStatus") {
@@ -307,7 +313,7 @@
 
             else if (strId == "dlOrgnizer") {
                 sFields = "Organiser";
-                if ($("#Organiser").val() == "1")
+                if ($("#Organiser").val() == "Y")
                     vvalue = 'Y';
                 else
                     vvalue = 'N';
