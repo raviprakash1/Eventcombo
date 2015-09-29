@@ -310,6 +310,7 @@ namespace EventCombo.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     await this.UserManager.AddToRoleAsync(user.Id,"Member");
+                  
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -318,6 +319,16 @@ namespace EventCombo.Controllers
 
                     using (EventComboEntities objEntity = new EventComboEntities())
                     {
+                        User_Permission_Detail permdetail = new User_Permission_Detail();
+                        for (int i = 1; i < 3; i++)
+                        {
+                           
+                            permdetail.UP_Permission_Id = i;
+                            permdetail.UP_User_Id = Userid.Id.ToString();
+                            objEntity.User_Permission_Detail.Add(permdetail);
+                            objEntity.SaveChanges();
+                        }
+
                         Profile prof = new Profile();
 
                         prof.Email = model.Email;

@@ -107,26 +107,26 @@
                     if (!validateEmail(Emaillogin)) {
                         $('#loginemail').focus();
                         $('#loginemail').css("border", "red solid 1px");
-                        $.ajax({
-                            url: "/ValidationMessage/Index",
-                            data: { formname: 'Login', errortype: 'LoginEmailValidationUI' },
-                            type: 'Post',
-                            async: false,
-                            success: function (data, textStatus, xhr) {
-                                if (data != '') {
-                                    console.log(data);
-                                    $('#hderror').val(data);
+                        //$.ajax({
+                        //    url: "/ValidationMessage/Index",
+                        //    data: { formname: 'Login', errortype: 'LoginEmailValidationUI' },
+                        //    type: 'Post',
+                        //    async: false,
+                        //    success: function (data, textStatus, xhr) {
+                        //        if (data != '') {
+                        //            console.log(data);
+                        //            $('#hderror').val(data);
                                    
-                                }
-                            },
-                            error: function (xhr, textStatus, errorThrown) {
-                                alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
-                            }
-                        });
+                        //        }
+                        //    },
+                        //    error: function (xhr, textStatus, errorThrown) {
+                        //        alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                        //    }
+                        //});
                       
-                        alert($('#hderror').val())
-                        msglogin += $('#hderror').val() + "\n";
-                        console.log(msglogin)
+                        
+                        msglogin += "Invalid Email"+ "\n";
+                       
 
                     } else {
 
@@ -138,25 +138,25 @@
                     if (Passowrdlogin.length < 4) {
                         $('#loginpassword').focus();
                         $('#loginpassword').css("border", "red solid 1px");
-                        $.ajax({
-                            url: "/ValidationMessage/Index",
-                            data: { formname: 'Login', errortype: 'LoginPasswordValidationUI' },
-                            type: 'Post',
-                            async:false,
-                            success: function (data, textStatus, xhr) {
-                                if (data != '') {
-                                   console.log(data);
-                                    $('#hderror').val(data);
-                                    console.log($('#hderror').val(data)+'asdasdas');
-                                }
-                            },
-                           error: function (xhr, textStatus, errorThrown) {
-                                    alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
-                                }
-                        });
+                        //$.ajax({
+                        //    url: "/ValidationMessage/Index",
+                        //    data: { formname: 'Login', errortype: 'LoginPasswordValidationUI' },
+                        //    type: 'Post',
+                        //    async:false,
+                        //    success: function (data, textStatus, xhr) {
+                        //        if (data != '') {
+                        //           console.log(data);
+                        //            $('#hderror').val(data);
+                        //            console.log($('#hderror').val(data)+'asdasdas');
+                        //        }
+                        //    },
+                        //   error: function (xhr, textStatus, errorThrown) {
+                        //            alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                        //        }
+                        //});
                          
-                        alert($('#hderror').val()+'asad');
-                        msglogin += $('#hderror').val() + "\n";
+                        //alert($('#hderror').val()+'asad');
+                        msglogin += "Invalid Password" + "\n";
 
                     } else {
                         if (msglogin == "") {

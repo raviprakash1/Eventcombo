@@ -270,7 +270,7 @@
         </div>
     </div>
     <input type="submit" class="btn btn-info col-md-offset-3 acnt_btn" value="Save" id="btnsave" />
-    
+    @Html.HiddenFor(m=>m.ImagePresent )
 
 
 </div>
@@ -280,6 +280,7 @@
 
  
 <input type="hidden" value="0" id="imageeror" />
+
 
 
     <script type="text/javascript">
@@ -414,6 +415,7 @@
                             el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
                                 $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
                             });
+                            $('#ImagePresent').val("Yes");
                             //el.find('img').attr('src',imagejson.image_path);
                             //el.find(".jFiler-item-thumb-image").bind("click", function(e){
                             //    $.magnificPopup.open({
@@ -467,7 +469,7 @@
                         $('#input2').click(function (e) {
                             e.preventDefault();
                         })
-
+                        $('#ImagePresent').val("NO");
                     },
                     onEmpty: function (el) { if ($(".jFiler-item").length == 1) { setTimeout(function () { $(".jFiler-input-inner").show(); $('#input2').unbind('click'); }, 200); }; },
                     captions: {
@@ -562,6 +564,7 @@
                             el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                                 $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
                             });
+                            $('#ImagePresent').val("Yes");
                             //el.find('img').attr('src',imagejson.image_path);
                             //el.find(".jFiler-item-thumb-image").bind("click", function(e){
                             //    $.magnificPopup.open({
@@ -616,7 +619,7 @@
                             e.preventDefault();
                            
                         })
-                       
+                        $('#ImagePresent').val("NO");
                     },
                     onEmpty: function (el) {
                         console.log(el);
@@ -655,8 +658,31 @@
 
     </script>
     <script type="text/javascript">
+        function isleap(leapyear) {
+            var yr = leapyear;
+            if ((parseInt(yr) % 4) == 0) {
+                if (parseInt(yr) % 100 == 0) {
+                    if (parseInt(yr) % 400 != 0) {
+                       
+                        return "false";
+                    }
+                    if (parseInt(yr) % 400 == 0) {
+                      
+                        return "true";
+                    }
+                }
+                if (parseInt(yr) % 100 != 0) {
+                   
+                    return "true";
+                }
+            }
+            if ((parseInt(yr) % 4) != 0) {
+             
+                return "false";
+            }
+        }
         $('#btnsave').click(function () {
-
+            var msg = "";
             var firstnmae = $("#Firstname").val();
             console.log(firstnmae + '+++++++++++++++++');
             var lastname = $("#Lastname").val();
@@ -670,14 +696,44 @@
             var ConfirmPassword = $("#ConfirmPassword").val();
 
             var NewPassword = $("#NewPassword").val();
+            var month = $("#month").val();
+          
+            var year = $("#year").val();
+            var day = $("#day").val();
+            if (isleap(year)==true)
+            {
+              
+                if (day > 29 && month == 2) {
+                    msg += "Invalid Date\n";
+                    $('#month').css("border", "red solid 1px");
+                    $('#year').css("border", "red solid 1px");
+                    $('#day').css("border", "red solid 1px");
+                }
 
-            var msg = "";
+            }
+            else {
+                if (day > 28 && month == 2) {
+                    msg += "Invalid Date\n";
+                    $('#month').css("border", "red solid 1px");
+                    $('#year').css("border", "red solid 1px");
+                    $('#day').css("border", "red solid 1px");
+                }
+            }
+            if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
+            {
+                msg += "Invalid Date\n";
+                $('#month').css("border", "red solid 1px");
+                $('#year').css("border", "red solid 1px");
+                $('#day').css("border", "red solid 1px");
+
+            }
+          
             if (firstnmae.trim() == " ") {
                 msg += "Please Enter First name! </br>"
                 $('#Firstname').focus();
                 $('#Firstname').css("border", "red solid 1px");
             } else {
-                msg = "";
+               
                 $('#Firstname').css("border", "black solid 1px");
             }
             if (lastname.trim() == " ") {
@@ -686,7 +742,7 @@
                 $('#Lastname').css("border", "red solid 1px");
             } else {
                 $('#Lastname').css("border", "black solid 1px");
-                msg = "";
+              
             }
 
 
@@ -699,7 +755,7 @@
 
                 } else {
 
-                    msg = "";
+                   
                     $('#Email').focus();
                     $('#Email').css("border", "black solid 1px");
                 }
@@ -714,7 +770,7 @@
 
                 } else {
                     $('#ConfirmEmail').css("border", "black solid 1px");
-                    msg = "";
+                   
                 }
 
 
@@ -766,7 +822,7 @@
                 return true;
             }
             else {
-
+              
                 $('#erraccmsg').html(msg);
                 $('#diverro1acc').css("display", "none");
                 $('#divaccsuc').css("display", "none");

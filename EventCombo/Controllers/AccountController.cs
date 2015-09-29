@@ -544,7 +544,7 @@ namespace EventCombo.Controllers
             if (Session["AppId"] != null)
             {
                 string Userid = Session["AppId"].ToString();
-               
+                string imagepresent = model.ImagePresent;
                 var accountdetail = GetLoginDetails(Userid);
                 if (string.IsNullOrEmpty(model.Firstname)&& string.IsNullOrEmpty(model.Lastname))
                 {
@@ -617,7 +617,11 @@ namespace EventCombo.Controllers
                         profile.SecondPhone = model.SecondPhone;
                         profile.WorkPhone = model.WorkPhone;
                         profile.WebsiteURL = model.WebsiteURL;
-                        //profile.UserProfileImage = model.UserProfileImage;
+                        if(imagepresent== "NO")
+                        {
+                        profile.UserProfileImage = "";
+                        }
+
                         profile.Gender = model.Gender;
                         profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
                         if (!checkexternallogin(Userid))

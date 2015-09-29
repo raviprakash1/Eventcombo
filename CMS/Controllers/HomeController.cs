@@ -172,10 +172,10 @@ namespace CMS.Controllers
                     {
                         var roleAdmin = (from r in db.AspNetRoles where r.Name.Contains("Admin") select r).FirstOrDefault();
                         var usersAdmin = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleAdmin.Id)).ToList();
-                        if (users.Find(x => x.Id == User.Id) != null)
+                        if (usersAdmin.Find(x => x.Id == User.Id) != null)
                         {
-                            Session["AppId"] = User.Id;
-                            var userprofile = db.Profiles.Where(x => x.UserID == User.Id).Select(y => y.UserProfileImage).SingleOrDefault();
+                            Session["AppId"] = User.Id; 
+                                     var userprofile = db.Profiles.Where(x => x.UserID.Trim() == User.Id.Trim()).Select(y => y.UserProfileImage).SingleOrDefault();
                             if (!string.IsNullOrEmpty(userprofile))
                             {
                                 ViewData["UserImage"] = "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepathuserprofile/" + userprofile;

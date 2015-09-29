@@ -487,6 +487,7 @@
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
+    <None Include="Properties\PublishProfiles\temp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dropit.js" />
     <Content Include="Scripts\dropzone\basic.css" />

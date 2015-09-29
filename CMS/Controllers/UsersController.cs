@@ -58,10 +58,12 @@ namespace CMS.Controllers
         }
         public List<UsersTemplate> GetAllUsers()
         {
+            string user = Session["AppId"].ToString();
             using (EmsEntities objEntity = new EmsEntities())
             {
                 var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
                                      join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
+                                     where UserTemp.Id != user
                                      select new UsersTemplate
                                      {
                                          EMail = UserTemp.Email,

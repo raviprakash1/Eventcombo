@@ -84,7 +84,7 @@ namespace EventCombo.Models
         public int? day { get; set; }
         public int? month { get; set; }
         public int? year { get; set; }
-     
+     public string ImagePresent { get; set; }
 
 
 
