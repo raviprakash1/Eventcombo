@@ -136,7 +136,7 @@
 
                     <li class="sidebar-label pt15">Exclusive Tools</li>
                     <li>
-                        <a href="~/Users/Users">
+                        <a class="CheckPermission" href="~/Users/Users">
                             <span class="fa fa-user"></span>
                             <span class="sidebar-title">User</span>
 
@@ -228,6 +228,10 @@
 
     <script type="text/javascript">
   jQuery(document).ready(function() {
+      $(".CheckPermission").click(function () {
+          alert("Before Load");
+
+      });
 
     "use strict";
 
