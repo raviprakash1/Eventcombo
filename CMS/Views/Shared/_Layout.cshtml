@@ -141,7 +141,7 @@
 
                     <li class="sidebar-label pt15">Exclusive Tools</li>
                     <li>
-                        <a onclick="return checkPermission(3);" href="">
+                        <a href="~/Users/Users">
                             <span class="fa fa-user"></span>
                             <span class="sidebar-title">User</span>
 
@@ -149,7 +149,7 @@
                      </li>
                     
                     <li>
-                        <a onclick="return checkPermission(4);" href="">
+                        <a  href="~/ManageEvent/Index">
                             <span class="fa fa-lemon-o"></span>
                             <span class="sidebar-title">Event</span>
                         </a>
@@ -168,7 +168,7 @@
 
                     <li>
                       
-                        <a onclick="return checkPermission('6');" href="">
+                        <a  href="~/Email/Index?templatetag=email_welcome&templatename=Welcome">
                             <span class="fa fa-envelope-o"></span>
                             <span class="sidebar-title">Email Content Management</span>
                         </a>
@@ -181,13 +181,13 @@
                         </a>
                         <ul class="nav sub-nav" style="">
                            <li>
-                            <a onclick="return checkPermission('7');" href="">
+                            <a  href="~/Messages/Index?Form=MyAccount">
                                 <span class="fa fa-circle-o"></span>
                                 <span class="sidebar-title">My Account Form</span>
                             </a>
                            </li>
                             <li>
-                                <a  onclick="return checkPermission('7A');" href="">
+                                <a  href="~/Messages/Index?Form=Login">
                                     <span class="fa fa-circle-o"></span>
                                     <span class="sidebar-title">Login Form</span>
                                 </a>
@@ -236,11 +236,22 @@
     <script src="~/plugins/footable/js/footable.all.min.js"></script>
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>
     <script type="text/javascript">
-
         function checkPermission(PermisionId) {
+           
             var vPerm = PermisionId;
+            alert(vPerm);
+            if (vPerm == "3")
+                window.location.href = "../Users/Users";
+            else if (vPerm == "6")
+                window.location.href = "../Email/Index?templatetag=email_welcome&templatename=Welcome";
+            else if (vPerm == "7")
+                window.location.href = "../Messages/Index?Form=MyAccount";
+            else if (vPerm == "7A")
+                window.location.href = "../Messages/Index?Form=Login";
+            else if (vPerm == "4")
+                window.location.href = "../ManageEvent/Index";
             if (PermisionId == "7A") PermisionId = "7";
-          //  var iUserId = '';
+            //  var iUserId = '';
             //$.ajax({
             //    url: "/Permission/IsSuperAdmin",
             // //   async: false,
@@ -251,41 +262,36 @@
             //    }
             //});
 
-           // if (iUserId != 'Y') {
-                $.ajax({
-                    url: "/Permission/GetPermission",
-                    data: { iPermissionId: PermisionId },
-                    datatype: "Text",
-                    type: "Post",
-                    success: function (response) {
-                        if (response != "Y") {
-                            alert("Access Denied !!!");
-                            return false;
-                            //  $('#spanid').html("Record Updated.");
-                            // $('#divError').css('display', 'block');
-                            ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                        }
-                        else {
-                            if (vPerm == "3")
-                                window.location.href = "../Users/Users";
-                            else if (vPerm == "6")
-                                window.location.href = "../Email/Index?templatetag=email_welcome&templatename=Welcome";
-                            else if (vPerm == "7")
-                                window.location.href = "../Messages/Index?Form=MyAccount";
-                            else if (vPerm == "7A")
-                                window.location.href = "../Messages/Index?Form=Login";
-                            else if (vPerm == "4")
-                                window.location.href = "../ManageEvent/Index";
-                        }
+            // if (iUserId != 'Y') {
+            $.ajax({
+                url: "/Permission/GetPermission",
+                data: { iPermissionId: PermisionId },
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    if (response != "Y") {
+                        alert("Access Denied !!!");
+                        return false;
+                        //  $('#spanid').html("Record Updated.");
+                        // $('#divError').css('display', 'block');
+                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
                     }
-                });
-           // }
+                    else {
+                        //alert(vPerm);
+                       
+                    }
+                }
+            });
+
+          
+            // }
         }
 
+        
 
         jQuery(document).ready(function () {
          
-       
+          
 
 
             "use strict";

@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
 
 
-@using (Html.BeginForm("Users", "Users", FormMethod.Post,new { id="formuser"}))
+@using (Html.BeginForm("Users", "Users", FormMethod.Post,new { id="formuser",cssClass= "admin-form" }))
 {
     <!-- Start: Content-Wrapper -->
     <section id="content_wrapper">
@@ -63,25 +63,25 @@
                                         <div class="panel-body">
                                             <!--  <hr class="short alt"> -->
 
-                                            <div class="col-md-2 col-sm-2">
-                                                <div class="">
-                                                    User First Name: @Html.TextBox("SearchStringFirstName")
-                                                </div>
+                                            <div class="col-md-3">
+                                                @Html.TextBox("SearchStringFirstName","",new { cssClass= "form-control", placeholder = "First Name" })
+                                                     
+                                                
                                             </div>
 
-                                            <div class="col-md-2 col-sm-2">
-                                                <div class="">
-                                                    User Last Name: @Html.TextBox("SearchStringLastName")
-                                                </div>
+                                            <div class="col-md-3">
+                                                
+                                                 @Html.TextBox("SearchStringLastName", "", new { cssClass = "form-control", placeholder = "Last Name" })
+                                                
                                             </div>
-                                            <div class="col-md-2 col-sm-2">
-                                                <div class="">
-                                                    Email Id: @Html.TextBox("SearchStringEmail")
-                                                </div>
+                                            <div class="col-md-3">
+                                                
+                                                   @Html.TextBox("SearchStringEmail","",new { cssClass= "form-control", placeholder = "Email Id" })
+                                                
                                             </div>
 
 
-                                            <div class="col-md-2 col-sm-2">
+                                            <div class="col-md-3">
                                                 <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
                                             </div>
 
