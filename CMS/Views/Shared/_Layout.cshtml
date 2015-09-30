@@ -236,42 +236,56 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>
     <script type="text/javascript">
 
-        function checkPermission(PermisionId)
-        {
+        function checkPermission(PermisionId) {
             var vPerm = PermisionId;
             if (PermisionId == "7A") PermisionId = "7";
+          //  var iUserId = '';
+            //$.ajax({
+            //    url: "/Permission/IsSuperAdmin",
+            // //   async: false,
+            //    datatype: "Text",
+            //    type: "Get",
+            //    success: function (response) {
+            //        iUserId = response;
+            //    }
+            //});
 
-            $.ajax({
-                url: "/Permission/GetPermission",
-                data: { iPermissionId: PermisionId },
-                datatype: "Text",
-                type: "Post",
-                success: function (response) {
-                    if (response != "Y") {
-                        alert("Access Denied !!!");
-                        return false;
-                        //  $('#spanid').html("Record Updated.");
-                        // $('#divError').css('display', 'block');
-                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+           // if (iUserId != 'Y') {
+                $.ajax({
+                    url: "/Permission/GetPermission",
+                    data: { iPermissionId: PermisionId },
+                    datatype: "Text",
+                    type: "Post",
+                    success: function (response) {
+                        if (response != "Y") {
+                            alert("Access Denied !!!");
+                            return false;
+                            //  $('#spanid').html("Record Updated.");
+                            // $('#divError').css('display', 'block');
+                            ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                        }
+                        else {
+                            if (vPerm == "3")
+                                window.location.href = "../Users/Users";
+                            else if (vPerm == "6")
+                                window.location.href = "../Email/Index?templatetag=email_welcome&templatename=Welcome";
+                            else if (vPerm == "7")
+                                window.location.href = "../Messages/Index?Form=MyAccount";
+                            else if (vPerm == "7A")
+                                window.location.href = "../Messages/Index?Form=Login";
+                            else if (vPerm == "4")
+                                window.location.href = "../ManageEvent/Index";
+                        }
                     }
-                    else
-                    {
-                        if (vPerm == "3")
-                            window.location.href = "../Users/Users";
-                        else if (vPerm == "6")
-                            window.location.href = "../Email/Index?templatetag=email_welcome&templatename=Welcome";
-                        else if (vPerm == "7")
-                            window.location.href = "../Messages/Index?Form=MyAccount";
-                        else if (vPerm == "7A")
-                            window.location.href = "../Messages/Index?Form=Login";
-                        else if (vPerm == "4")
-                            window.location.href = "../ManageEvent/Index";
-                    }
-                }
-            });
+                });
+           // }
         }
+
+
         jQuery(document).ready(function () {
          
+       
+
 
             "use strict";
 
