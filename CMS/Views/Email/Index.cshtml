@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Ckeditor/ckeditor.js"></script>
+
+<style>
+    .cke_editable {
+        border: 1px solid #ccc;
+        height: 300px;
+    }
+</style>
 <section id="content_wrapper">
 
     <!-- Start: Topbar -->
@@ -34,7 +41,64 @@
                         <!-- Tags Menu -->
                         <div class="list-group list-group-links">
                             <div class="list-group-header"> Tags </div>
-                            <ul id="allfields" class="list-group">
+                            <ul id="contactList">
+                                <li>
+                                    <div class="contact h-card" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        UserFirstNameID
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="1" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        UserLastNameID
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="2" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        EventNameID 
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="3" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        EventStartDateID 
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="4" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        EventEndDateID
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="5" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        EventStartTimeID
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="6" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        EventEndTimeID
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="7" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        EventVenueID
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="8" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        EventAddressID
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="9" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        TicketOrderNumberID 
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="contact h-card" data-contact="10" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                        DealOrderNumberID
+                                    </div>
+                                </li>
+                            </ul>
+                            @*<ul id="allfields" class="list-group">
                                 <li class="list-group-item em_bor_bot">
                                    
                                   <a href="#" ondragstart="drag(event)" draggable="true">UserFirstNameID</a>
@@ -69,7 +133,7 @@
                                 <li class="list-group-item em_bor_bot">
                                     <a href="#" ondragstart="drag(event)" draggable="true">   DealOrderNumberID </a>
 </li>
-                            </ul>
+                            </ul>*@
 
                         </div>
 
@@ -140,11 +204,8 @@
 
                                     </div>
                                 </div>
-                          @Html.TextAreaFor(m => m.ckeditor1, new { rows = "12",id= "editor1", @value= " This is the < b > editor </ b > .......",@class= "txtSubject"})
-                                @*<textarea name="ckeditor1" id="ckeditor1" rows="12">
-                                    This is the
-                                    <b>editor</b> .......
-                                </textarea>*@
+                          @Html.TextAreaFor(m => m.ckeditor1, 10, 63, new { id= "editor1", @value= " This is the < b > editor </ b > .......",@class= "txtSubject"})
+                               
                                 <br>
 
                                @Html.HiddenFor(m => m.emailtag , new { id = "emailtag" })
@@ -300,67 +361,67 @@
     //})
                 // Replace the <textarea id="editor1"> with a CKEditor
                 // instance, using default configuration.
-    CKEDITOR.replace('editor1');
+    //CKEDITOR.replace('editor1');
 
-    $(document).ready(function () {
-        CKEDITOR.on('instanceReady', function (ev) {
+    //$(document).ready(function () {
+    //    CKEDITOR.on('instanceReady', function (ev) {
 
-            //console.log(ev.editor);
-           // console.log(ev.editor.document);
+    //        //console.log(ev.editor);
+    //       // console.log(ev.editor.document);
 
-            ev.editor.document.on('dragenter', function (ev) {
-                console.log("Yep we get here")
-                ev.data.preventDefault(true);
-                console.log(ev);
-            })
+    //        ev.editor.document.on('dragenter', function (ev) {
+    //            console.log("Yep we get here")
+    //            ev.data.preventDefault(true);
+    //            console.log(ev);
+    //        })
 
-            ev.editor.document.on('dragover', function (ev) {
-               // console.log(ev);
-               //console.log("Yep we get here too")
-                ev.data.preventDefault(true);
-            })
-            ev.editor.document.on('drop', function (e) {
-               // e.preventDefault();
-               // e.stopPropagation();
-               // e.data.preventDefault(true);
-                console.log("Element was dropped");
-                //console.log(data);
-                //e.data.$.srcElement.fir
-                //var data = e.dataTransfer.getData("text");
-                //console.log(e.data);
-                var c;
-                var a = e.data.$.srcElement.innerText;
-                console.log(a);
-                var b = e.data.$.srcElement.firstChild.nodeValue;
-                console.log(b);
-                if (b != null)
-                {
+    //        ev.editor.document.on('dragover', function (ev) {
+    //           // console.log(ev);
+    //           //console.log("Yep we get here too")
+    //            ev.data.preventDefault(true);
+    //        })
+    //        ev.editor.document.on('drop', function (e) {
+    //           // e.preventDefault();
+    //           // e.stopPropagation();
+    //           // e.data.preventDefault(true);
+    //            console.log("Element was dropped");
+    //            //console.log(data);
+    //            //e.data.$.srcElement.fir
+    //            //var data = e.dataTransfer.getData("text");
+    //            //console.log(e.data);
+    //            var c;
+    //            var a = e.data.$.srcElement.innerText;
+    //            console.log(a);
+    //            var b = e.data.$.srcElement.firstChild.nodeValue;
+    //            console.log(b);
+    //            if (b != null)
+    //            {
                    
-                     c = a.replace(b, '');
-                     c = '$$' + c + '$$';
-                     e.data.$.target.innerHTML = b + c;
+    //                 c = a.replace(b, '');
+    //                 c = '$$' + c + '$$';
+    //                 e.data.$.target.innerHTML = b + c;
 
-                } else
-                {
-                    console.log('asdasdasd');
-                    c = '$$' + a + '$$';
-                    e.data.$.target.innerHTML = "<p>"+c+"</p>";
-                }
+    //            } else
+    //            {
+    //                console.log('asdasdasd');
+    //                c = '$$' + a + '$$';
+    //                e.data.$.target.innerHTML = "<p>"+c+"</p>";
+    //            }
 
 
 
 
              
-                console.log(c);
-               // var b = "<p>";
-             //   e.data.$.target.innerHTML =b+c;
-                //console.log(document.getElementsByClassName('cke_editable'));
-                console.log(e);
-            });
-        });
+    //            console.log(c);
+    //           // var b = "<p>";
+    //         //   e.data.$.target.innerHTML =b+c;
+    //            //console.log(document.getElementsByClassName('cke_editable'));
+    //            console.log(e);
+    //        });
+    //    });
 
 
-    })
+    
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -489,7 +550,7 @@
         }
     }
 </script>
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(document).ready(function () {
         console.log($('#cke_1_contents'));
         $("#allfields li span").draggable({
@@ -525,5 +586,108 @@
 
 
     });
+
+</script>*@
+
+<script>
+		'use strict';
+
+		var CONTACTS = [
+			{ name: 'UserFirstNameID' },
+			{ name: 'UserLastNameID' },
+			{ name: 'EventNameID' },
+			{ name: 'EventStartDateID '},
+			{ name: 'EventEndDateID' },
+			{ name: 'EventStartTimeID' },
+			{ name: 'EventEndTimeID'},
+			{ name: 'EventVenueID' },
+            {name:'EventAddressID'},
+            {name:'TicketOrderNumberID'},
+            {name:'DealOrderNumberID'}
+
+		];
+
+		CKEDITOR.disableAutoInline = true;
+
+		// Implements a simple widget that represents contact details (see http://microformats.org/wiki/h-card).
+		CKEDITOR.plugins.add( 'hcard', {
+			requires: 'widget',
+
+			init: function( editor ) {
+				editor.widgets.add( 'hcard', {
+					allowedContent: 'span(!h-card); a[href](!u-email,!p-name); span(!p-tel)',
+					requiredContent: 'span(h-card)',
+					pathName: 'hcard',
+
+					upcast: function( el ) {
+						return el.name == 'span' && el.hasClass( 'h-card' );
+					}
+				} );
+
+				// This feature does not have a button, so it needs to be registered manually.
+				editor.addFeature( editor.widgets.registered.hcard );
+
+				// Handle dropping a contact by transforming the contact object into HTML.
+				// Note: All pasted and dropped content is handled in one event - editor#paste.
+				editor.on( 'paste', function( evt ) {
+					var contact = evt.data.dataTransfer.getData( 'contact' );
+					if ( !contact ) {
+						return;
+					}
+
+					evt.data.dataValue =
+						'' +
+							'$$' + contact.name + '$$' +
+						'';
+				} );
+			}
+		} );
+
+		// When an item in the contact list is dragged, copy its data into drag and drop data transfer.
+		// This data is later read by the editor#paste listener in the hcard plugin defined above.
+		CKEDITOR.document.getById( 'contactList' ).on( 'dragstart', function( evt ) {
+			// The target may be some element inside the draggable div (e.g. the image), so get the div.h-card.
+			var target = evt.data.getTarget().getAscendant( 'div', true );
+
+			// Initialization of CKEditor data transfer facade is a necessary step to extend and unify native
+			// browser capabilities. For instance, Internet Explorer does not support any other data type than 'text' and 'URL'.
+			// Note: evt is an instance of CKEDITOR.dom.event, not a native event.
+			CKEDITOR.plugins.clipboard.initDragDataTransfer( evt );
+
+			var dataTransfer = evt.data.dataTransfer;
+
+			// Pass an object with contact details. Based on it, the editor#paste listener in the hcard plugin
+			// will create HTML to be inserted into the editor. We could set text/html here as well, but:
+			// * It is a more elegant and logical solution that this logic is kept in the hcard plugin.
+			// * We do not know now where the content will be dropped and the HTML to be inserted
+			// might vary depending on the drop target.
+			dataTransfer.setData( 'contact', CONTACTS[ target.data( 'contact' ) ] );
+
+			// We need to set some normal data types to backup values for two reasons:
+			// * In some browsers this is necessary to enable drag and drop into text in editor.
+			// * The content may be dropped in another place than the editor.
+			dataTransfer.setData( 'text/html', target.getText() );
+
+			// You can still access and use the native dataTransfer - e.g. to set the drag image.
+			// Note: IEs do not support this method... :(.
+			//if ( dataTransfer.$.setDragImage ) {
+			//	dataTransfer.$.setDragImage( target.findOne( 'i' ).$, 0, 0 );
+			//}
+		} );
+
+		// Initialize the editor with the hcard plugin.
+		CKEDITOR.inline( 'editor1', {
+		    extraPlugins: 'hcard,sourcedialog,justify'
+            
+		});
+		
+	//	CKEDITOR.replace('editor1', {
+    //    height: 210,
+    //    on: {
+    //        instanceReady: function (evt) {
+    //            $('.cke').addClass('admin-skin cke-hide-bottom');
+    //        }
+    //    },
+    //});
 
 </script>
