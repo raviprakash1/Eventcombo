@@ -194,6 +194,9 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Event_Detail.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageEvent.cs" />
     <Compile Include="Models\Cmsdata.Context.cs">
       <AutoGen>True</AutoGen>
@@ -394,6 +397,12 @@
     <Content Include="assets\skin\default_skin\css\event_combo.css" />
     <Content Include="assets\skin\default_skin\css\theme.css" />
     <Content Include="assets\skin\default_skin\css\theme.min.css" />
+    <Content Include="Ckeditor\build-config.js" />
+    <Content Include="Ckeditor\ckeditor.js" />
+    <Content Include="Ckeditor\config.js" />
+    <Content Include="Ckeditor\contents.css" />
+    <Content Include="Ckeditor\index.html" />
+    <Content Include="Ckeditor\styles.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -882,6 +891,7 @@
     <Content Include="Models\Cmsdata.edmx.diagram">
       <DependentUpon>Cmsdata.edmx</DependentUpon>
     </Content>
+    <Content Include="Ckeditor\CHANGES.md" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\filer\jquery.filer.js" />
@@ -944,6 +954,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Ckeditor\adapters\" />
+    <Folder Include="Ckeditor\lang\" />
+    <Folder Include="Ckeditor\plugins\" />
+    <Folder Include="Ckeditor\skins\" />
     <Folder Include="Views\Permission\" />
   </ItemGroup>
   <ItemGroup>

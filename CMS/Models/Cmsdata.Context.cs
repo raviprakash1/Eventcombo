@@ -40,6 +40,7 @@ namespace CMS.Models
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
+        public virtual DbSet<Event_Detail> Event_Detail { get; set; }
     
         public virtual ObjectResult<string> GetSetUserRole(string user_Id, string gETSET, string role_Id)
         {

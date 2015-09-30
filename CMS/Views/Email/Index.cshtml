@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="~/Ckeditor/ckeditor.js"></script>
 <section id="content_wrapper">
 
     <!-- Start: Topbar -->
@@ -36,38 +36,39 @@
                             <div class="list-group-header"> Tags </div>
                             <ul id="allfields" class="list-group">
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node1">UserFirstNameID</span>
+                                   
+                                  <a href="#" ondragstart="drag(event)" draggable="true">UserFirstNameID</a>
                                 </li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node2">UserLastNameID</span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true"> UserLastNameID</a>
+</li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node3">EventNameID</span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true"> EventNameID </a>
+</li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node4">EventStartDateID</span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true"> EventStartDateID </a>
+</li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node4">EventEndDateID</span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true">  EventEndDateID </a>
+</li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node4">EventStartTimeID</span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true"> EventStartTimeID</a>
+</li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node4">EventEndTimeID </span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true">   EventEndTimeID </a>
+</li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node4">EventVenueID</span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true">EventVenueID </a>
+</li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node4">EventAddressID</span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true"> EventAddressID </a>
+</li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node4">Ticket Order NumberID</span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true">  TicketOrderNumberID </a>
+</li>
                                 <li class="list-group-item em_bor_bot">
-                                    <span id="node4">Deal Order NumberID</span>
-                                </li>
+                                    <a href="#" ondragstart="drag(event)" draggable="true">   DealOrderNumberID </a>
+</li>
                             </ul>
 
                         </div>
@@ -107,39 +108,39 @@
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">To</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control", id = "To", @placeholder = "Type Here..." })
+                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control", id = "To", @placeholder = "Type Here..." , onDrop = "blur();return false;" })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">From</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.From, new { @class = "form-control", id = "From", @placeholder = "Type Here..." })
+                                        @Html.TextBoxFor(m => m.From, new { @class = "form-control", id = "From", @placeholder = "Type Here...", onDrop = "blur();return false;" })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">Cc</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.CC, new { @class = "form-control", id = "CC", @placeholder = "Type Here..." })
+                                        @Html.TextBoxFor(m => m.CC, new { @class = "form-control", id = "CC", @placeholder = "Type Here...", onDrop = "blur();return false;" })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">Bcc</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.Bcc, new { @class = "form-control", id = "Bcc", @placeholder = "Type Here..." })
+                                        @Html.TextBoxFor(m => m.Bcc, new { @class = "form-control", id = "Bcc", @placeholder = "Type Here...", onDrop = "blur();return false;" })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">Subject</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control txtSubject", id = "Subject", @placeholder = "Type Here..." })
+                                        @Html.TextBoxFor(m => m.Subject, new { @class = "form-control txtSubject", id = "Subject", @placeholder = "Type Here..." , ondrop = "drop(event)", ondragover = "allowDrop(event)" })
 
                                     </div>
                                 </div>
-                          @Html.TextAreaFor(m => m.ckeditor1, new { rows = "12",id= "ckeditor1" ,@value= " This is the < b > editor </ b > .......",@class= "txtSubject"})
+                          @Html.TextAreaFor(m => m.ckeditor1, new { rows = "12",id= "editor1", @value= " This is the < b > editor </ b > .......",@class= "txtSubject"})
                                 @*<textarea name="ckeditor1" id="ckeditor1" rows="12">
                                     This is the
                                     <b>editor</b> .......
@@ -248,6 +249,119 @@
     <!-- End: Content -->
 
 </section>
+<script>
+    var data;
+    function drop(ev) {
+        ev.preventDefault();
+        data = ev.dataTransfer.getData("text");
+        console.log(ev);
+        var dropText;
+        dropText = "$$" + data + "$$";
+        var ids = $('#' + ev.srcElement.id);
+        var droparea = document.getElementById(ids);
+        //var range1 = droparea.selectionStart;
+        //var range2 = droparea.selectionEnd;
+        var value = $('#' + ev.srcElement.id).val();
+        console.log(value);
+        //var str1 = val.substring(0, range1);
+        //var str3 = val.substring(range1, val.length);
+        $('#' + ev.srcElement.id).val(value + " " + dropText);
+       
+    }
+    
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.srcElement.innerText);
+
+        console.log(ev.srcElement.innerText);
+    }
+    //$('#Subject').focus(function () {
+    //    $('#Subject').addClass('Insertinto');
+    //    //var ctl = document.getElementById('Subject');
+    //    //var startPos = ctl.selectionStart;
+    //    //var endPos = ctl.selectionEnd;
+    //    //alert(startPos + ", " + endPos);
+
+    //});
+    //$('#ckeditor1').focus(function () {
+    //    $('#ckeditor1').addClass('Insertinto');
+    //});
+    ////$('#Subject').blur(function () {
+    ////    $('#Subject').removeClass('Insertinto');
+    ////});
+    //$("span.dbclickcss").dblclick(function () {
+    //    alert($(this).text());
+    //    var text = $('input.Insertinto').val();
+    //    text += "   $$" + $(this).text() + "$$";
+    //    $('input.Insertinto').val(text);
+    //})
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+    CKEDITOR.replace('editor1');
+
+    $(document).ready(function () {
+        CKEDITOR.on('instanceReady', function (ev) {
+
+            //console.log(ev.editor);
+           // console.log(ev.editor.document);
+
+            ev.editor.document.on('dragenter', function (ev) {
+                console.log("Yep we get here")
+                ev.data.preventDefault(true);
+                console.log(ev);
+            })
+
+            ev.editor.document.on('dragover', function (ev) {
+               // console.log(ev);
+               //console.log("Yep we get here too")
+                ev.data.preventDefault(true);
+            })
+            ev.editor.document.on('drop', function (e) {
+               // e.preventDefault();
+               // e.stopPropagation();
+               // e.data.preventDefault(true);
+                console.log("Element was dropped");
+                //console.log(data);
+                //e.data.$.srcElement.fir
+                //var data = e.dataTransfer.getData("text");
+                //console.log(e.data);
+                var c;
+                var a = e.data.$.srcElement.innerText;
+                console.log(a);
+                var b = e.data.$.srcElement.firstChild.nodeValue;
+                console.log(b);
+                if (b != null)
+                {
+                   
+                     c = a.replace(b, '');
+                     c = '$$' + c + '$$';
+                     e.data.$.target.innerHTML = b + c;
+
+                } else
+                {
+                    console.log('asdasdasd');
+                    c = '$$' + a + '$$';
+                    e.data.$.target.innerHTML = "<p>"+c+"</p>";
+                }
+
+
+
+
+             
+                console.log(c);
+               // var b = "<p>";
+             //   e.data.$.target.innerHTML =b+c;
+                //console.log(document.getElementsByClassName('cke_editable'));
+                console.log(e);
+            });
+        });
+
+
+    })
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#btnsave').click(function () {

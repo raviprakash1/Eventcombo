@@ -22,6 +22,7 @@
         <AssociationConnector Association="Cmsdata.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.FK_Profile_Profile" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Cmsdata.Event_Detail" Width="1.5" PointX="0.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

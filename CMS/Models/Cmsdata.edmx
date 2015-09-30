@@ -93,6 +93,43 @@
           <Property Name="TemplateHtml" Type="nvarchar(max)" />
           <Property Name="From" Type="varchar" MaxLength="300" />
         </EntityType>
+        <EntityType Name="Event_Detail">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Event_Category" Type="varchar" MaxLength="250" />
+          <Property Name="Event_SubCategory" Type="varchar" MaxLength="250" />
+          <Property Name="Title" Type="varchar" MaxLength="250" />
+          <Property Name="Byline" Type="varchar" MaxLength="250" />
+          <Property Name="Flyer" Type="varchar" MaxLength="250" />
+          <Property Name="Multiple_Days" Type="varchar" MaxLength="250" />
+          <Property Name="Multiple_Start_Times" Type="varchar" MaxLength="250" />
+          <Property Name="Multiple_End_Times" Type="varchar" MaxLength="250" />
+          <Property Name="Venue_Name" Type="varchar" MaxLength="250" />
+          <Property Name="Venue_Address" Type="varchar" MaxLength="250" />
+          <Property Name="Venue_City" Type="varchar" MaxLength="250" />
+          <Property Name="Venue_State" Type="varchar" MaxLength="250" />
+          <Property Name="Venue_Zip" Type="varchar" MaxLength="250" />
+          <Property Name="Venue_Country" Type="varchar" MaxLength="250" />
+          <Property Name="NoLocation" Type="varchar" MaxLength="250" />
+          <Property Name="Multiple_Venue_Names" Type="varchar" MaxLength="250" />
+          <Property Name="Mutiple_Venue_Addresses" Type="varchar" MaxLength="250" />
+          <Property Name="Mutiple_Venue_City" Type="varchar" MaxLength="250" />
+          <Property Name="Mutiple_Venue_State" Type="varchar" MaxLength="250" />
+          <Property Name="Mutiple_Venue_Zip" Type="varchar" MaxLength="250" />
+          <Property Name="Mutiple_Venue_Country" Type="varchar" MaxLength="250" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="EventURL" Type="varchar" MaxLength="250" />
+          <Property Name="Event_Host_Id" Type="varchar" MaxLength="250" />
+          <Property Name="Event_Contact_Name" Type="varchar" MaxLength="250" />
+          <Property Name="Event_Contact_Email" Type="varchar" MaxLength="250" />
+          <Property Name="Event_Contact_Phone" Type="varchar" MaxLength="250" />
+          <Property Name="Facebook_URL" Type="varchar" MaxLength="250" />
+          <Property Name="Twitter_URL" Type="varchar" MaxLength="250" />
+          <Property Name="LinkedIn_URL" Type="varchar" MaxLength="250" />
+          <Property Name="Googl_URL" Type="varchar" MaxLength="250" />
+        </EntityType>
         <EntityType Name="Messages">
           <Key>
             <PropertyRef Name="Id" />
@@ -245,6 +282,7 @@
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event_Detail" EntityType="Self.Event_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
@@ -511,7 +549,45 @@
             <Parameter Name="GETSET" Mode="In" Type="String" />
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Event_Detail" EntityType="Cmsdata.Event_Detail" />
         </EntityContainer>
+        <EntityType Name="Event_Detail">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Event_Category" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Event_SubCategory" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Byline" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Flyer" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Multiple_Days" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Multiple_Start_Times" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Multiple_End_Times" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Venue_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Venue_Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Venue_City" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Venue_State" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Venue_Zip" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Venue_Country" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="NoLocation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Multiple_Venue_Names" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Mutiple_Venue_Addresses" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Mutiple_Venue_City" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Mutiple_Venue_State" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Mutiple_Venue_Zip" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Mutiple_Venue_Country" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="EventURL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Event_Host_Id" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Event_Contact_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Event_Contact_Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Event_Contact_Phone" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Facebook_URL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Twitter_URL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LinkedIn_URL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Googl_URL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -686,6 +762,44 @@
             </EndProperty>
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="Cmsdata.Store.GetSetUserRole" />
+          <EntitySetMapping Name="Event_Detail">
+            <EntityTypeMapping TypeName="Cmsdata.Event_Detail">
+              <MappingFragment StoreEntitySet="Event_Detail">
+                <ScalarProperty Name="Googl_URL" ColumnName="Googl_URL" />
+                <ScalarProperty Name="LinkedIn_URL" ColumnName="LinkedIn_URL" />
+                <ScalarProperty Name="Twitter_URL" ColumnName="Twitter_URL" />
+                <ScalarProperty Name="Facebook_URL" ColumnName="Facebook_URL" />
+                <ScalarProperty Name="Event_Contact_Phone" ColumnName="Event_Contact_Phone" />
+                <ScalarProperty Name="Event_Contact_Email" ColumnName="Event_Contact_Email" />
+                <ScalarProperty Name="Event_Contact_Name" ColumnName="Event_Contact_Name" />
+                <ScalarProperty Name="Event_Host_Id" ColumnName="Event_Host_Id" />
+                <ScalarProperty Name="EventURL" ColumnName="EventURL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Mutiple_Venue_Country" ColumnName="Mutiple_Venue_Country" />
+                <ScalarProperty Name="Mutiple_Venue_Zip" ColumnName="Mutiple_Venue_Zip" />
+                <ScalarProperty Name="Mutiple_Venue_State" ColumnName="Mutiple_Venue_State" />
+                <ScalarProperty Name="Mutiple_Venue_City" ColumnName="Mutiple_Venue_City" />
+                <ScalarProperty Name="Mutiple_Venue_Addresses" ColumnName="Mutiple_Venue_Addresses" />
+                <ScalarProperty Name="Multiple_Venue_Names" ColumnName="Multiple_Venue_Names" />
+                <ScalarProperty Name="NoLocation" ColumnName="NoLocation" />
+                <ScalarProperty Name="Venue_Country" ColumnName="Venue_Country" />
+                <ScalarProperty Name="Venue_Zip" ColumnName="Venue_Zip" />
+                <ScalarProperty Name="Venue_State" ColumnName="Venue_State" />
+                <ScalarProperty Name="Venue_City" ColumnName="Venue_City" />
+                <ScalarProperty Name="Venue_Address" ColumnName="Venue_Address" />
+                <ScalarProperty Name="Venue_Name" ColumnName="Venue_Name" />
+                <ScalarProperty Name="Multiple_End_Times" ColumnName="Multiple_End_Times" />
+                <ScalarProperty Name="Multiple_Start_Times" ColumnName="Multiple_Start_Times" />
+                <ScalarProperty Name="Multiple_Days" ColumnName="Multiple_Days" />
+                <ScalarProperty Name="Flyer" ColumnName="Flyer" />
+                <ScalarProperty Name="Byline" ColumnName="Byline" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Event_SubCategory" ColumnName="Event_SubCategory" />
+                <ScalarProperty Name="Event_Category" ColumnName="Event_Category" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

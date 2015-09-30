@@ -14,6 +14,10 @@
     <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
 
 
+    <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
+
+
     <!-- Theme CSS -->
     <link rel="stylesheet" type="text/css" href="~/assets/skin/default_skin/css/theme.css">
     <link rel="stylesheet" type="text/css" href="~/assets/skin/default_skin/css/event_combo.css">
@@ -144,7 +148,7 @@
                      </li>
                     
                     <li>
-                        <a href="#">
+                        <a onclick="return checkPermission(4);" href="">
                             <span class="fa fa-lemon-o"></span>
                             <span class="sidebar-title">Event</span>
                         </a>
@@ -225,8 +229,13 @@
     <script src="~/assets/js/main.js"></script>
     
     <!-- Widget Javascript -->
+    <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>
 
+    <!-- FooTable Addon -->
+    <script src="~/plugins/footable/js/footable.all.min.js"></script>
+    <script src="~/plugins/footable/js/footable.filter.min.js"></script>
     <script type="text/javascript">
+
         function checkPermission(PermisionId)
         {
             var vPerm = PermisionId;
@@ -255,51 +264,86 @@
                             window.location.href = "../Messages/Index?Form=MyAccount";
                         else if (vPerm == "7A")
                             window.location.href = "../Messages/Index?Form=Login";
+                        else if (vPerm == "4")
+                            window.location.href = "../ManageEvent/Index";
                     }
                 }
             });
         }
-  jQuery(document).ready(function() {
-   
-    "use strict";
+        jQuery(document).ready(function () {
+         
 
-    // Init Theme Core
-    Core.init();
+            "use strict";
 
-    // Init Demo JS
-    Demo.init();
+            // Init Theme Core    
+            Core.init();
 
-    // Demo Code - Email Template Switcher
-    $('ul.tray-nav > li > a').on('click', function(e) {
-      e.preventDefault();
+            // Init Demo JS  
+            Demo.init();
 
-      // Change active navigation element
-      $(this).parents('.tray-nav').children('li').removeClass('active')
-      $(this).parent('li').addClass('active');
+            
 
-      // Change active email template
-      $('.template-tray').children('.email-template').removeClass('active');
+            $('.footable').footable();
 
-      var btnHref = $(this).attr('href');
-      $(btnHref).addClass('active');
-    });
+            var modalContent = $('#modal-content');
 
-    CKEDITOR.disableAutoInline = true;
+            function findActive() {
+                var activeModal = modalContent.find('.holder-active').attr('href');
+                return activeModal;
+            };
 
-    // Init Ckeditor
-    CKEDITOR.replace('ckeditor1', {
-      height: 210,
-      on: {
-        instanceReady: function(evt) {
-          $('.cke').addClass('admin-skin cke-hide-bottom');
-        }
-      },
-    });
+            // Form Skin Switcher
+            $('.animation-switcher button').on('click', function () {
+                $('.animation-switcher').find('button').removeClass('active-animation');
+                $(this).addClass('active-animation item-checked');
 
-    // Init Inline Ckeditors
-    CKEDITOR.inline('ckeditor-inline2');
+                // Inline Admin-Form example 
+                $.magnificPopup.open({
+                    removalDelay: 500, //delay removal by X to allow out-animation,
+                    items: {
+                        src: findActive()
+                    },
+                    // overflowY: 'hidden', // 
+                    callbacks: {
+                        beforeOpen: function (e) {
+                            var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
+                            this.st.mainClass = Animation;
+                        }
+                    },
+                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
 
-  });
+                });
+
+            });
+
+            $('.admin-panels').adminpanel({
+                onFinish: function () {
+                    $('.admin-panels').addClass('animated fadeIn').removeClass('fade-onload');
+                },
+
+            });
+
+            $('#multiselect2').multiselect({
+                includeSelectAllOption: true
+            });
+
+            //CKEDITOR.disableAutoInline = true;
+
+            //// Init Ckeditor
+            //CKEDITOR.replace('ckeditor1', {
+            //    height: 210,
+            //    on: {
+            //        instanceReady: function (evt) {
+            //            $('.cke').addClass('admin-skin cke-hide-bottom');
+            //        }
+            //    },
+            //});
+
+            //// Init Inline Ckeditors
+            //CKEDITOR.inline('ckeditor-inline2');
+
+        });
+
     </script>
     <!-- END: PAGE SCRIPTS -->
 

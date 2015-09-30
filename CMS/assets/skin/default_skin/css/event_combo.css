@@ -26,4 +26,7 @@
 .view_evnt{ font-weight: 300;  color: #626262;}
 .view_sel_wid ul{ min-width: 130px;}
 .view_sel_wid button{ min-width: 130px;}
+.aler_center1{ width:400px; float: left;  position:absolute; z-index: 9999; text-align: center;  
+top: 40%; left: 30%; border:1px solid #e2e2e2; display: none; }
+.aler_center_inner{ width: 100%; float: left;background:#fafafa; text-align: center; padding: 20px 0; }
 

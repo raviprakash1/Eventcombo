@@ -120,5 +120,16 @@ namespace CMS.Controllers
 
         }
 
+
+
+
+        public ActionResult Index1()
+        {
+
+            return View();
+
+        }
+
+
     }
 }
