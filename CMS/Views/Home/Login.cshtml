@@ -58,9 +58,9 @@
 
                     <!-- Login Logo -->
                     <div class="row table-layout">
-                        <a href="dashboard.html" title="Return to Dashboard">
+                        
                             <img src="~/assets/img/logos/logo.png" title="AdminDesigns Logo" class="center-block img-responsive" style="max-width: 275px;">
-                        </a>
+                        
                     </div>
 
                     <!-- Login Panel/Form -->
@@ -96,7 +96,7 @@
                                 <div class="section">
                                     <label for="username" class="field-label text-muted fs18 mb10">Password</label>
                                     <label for="password" class="field prepend-icon">
-                                        @Html.PasswordFor(m => m.Password, new { @placeholder = "Enter password", @class = "form-control",@maxlength=15 ,id= "Password"})
+                                        @Html.PasswordFor(m => m.Password, new { @placeholder = "Enter Password", @class = "gui-input",@maxlength=15 ,id= "Password"})
 
                                         <label for="password" class="field-icon">
                                             <i class="fa fa-lock"></i>
@@ -217,8 +217,8 @@
                 if (msglogin != "")
                 {
                     $('#diverror').css("display", "block");
-                    setTimeout(function () { $('#diverror').css("display", "none"); $('input[type=text]').removeClass('err-bor'); $('input[type=password]').removeClass('err-bor') }, 3000);
-                    $('#spanid').text(msglogin);
+                    $('#diverrorsys').css("display", "none");
+                         $('#spanid').text(msglogin);
                       return false;
 
                  

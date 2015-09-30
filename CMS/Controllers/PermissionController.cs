@@ -35,7 +35,7 @@ namespace CMS.Controllers
 
                // vPer = objEms.Database.SqlQuery("SELECT UP_Id FROM User_Permission_Detail WHERE UP_User_Id = '" + strUserId + "' AND UP_Permission_Id = " + iPermissionId)
 
-                if (vPer != null && Convert.ToInt16(vPer) >0) strPer = "Y";
+                if (vPer != null && Convert.ToInt16(vPer.UP_Id) >0) strPer = "Y";
 
             }
             catch (Exception ex)
@@ -44,6 +44,45 @@ namespace CMS.Controllers
             }
             return strPer;
         }
+
+
+        public string IsSuperAdmin()
+        {
+            string strPer = "N";
+            try
+            {
+                string strUserId = Session["AppId"].ToString();
+                EmsEntities objEms = new EmsEntities();
+                var vRole = objEms.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + strUserId + "'").Single();
+                if (vRole != null && Convert.ToInt16(vRole) == 1)
+                    return "Y";
+            }
+            catch (Exception ex)
+            {
+                return "N";
+            }
+            return strPer;
+        }
+
+        public int GetUserRole(string strUserId)
+        {
+            int iURole = 0;
+            try
+            {
+                EmsEntities objEms = new EmsEntities();
+                var vRole = objEms.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + strUserId + "'").Single();
+                if (vRole != null)
+                    iURole= Convert.ToInt16(vRole);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            return iURole;
+        }
+
+        
+        
 
         //<label for="chk_3">Users</label>
         //<label for="chk_4">Events</label>

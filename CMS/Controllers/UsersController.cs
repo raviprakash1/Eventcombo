@@ -43,38 +43,47 @@ namespace CMS.Controllers
 
         }
 
-        public ActionResult Users()
+        public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {
            
 
 
-            List<UsersTemplate> objuser = GetAllUsers();
+            List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
 
            // List<Permissions> objPerm = GetPermission("APP");
-            UsersTemplate objU = new UsersTemplate();
-            objU.objPermissions = GetPermission("APP");
-            objuser.Add(objU);
+           // UsersTemplate objU = new UsersTemplate();
+          //  objU.objPermissions = GetPermission("APP");
+           // objuser.Add(objU);
             return View(objuser);
         }
-        public List<UsersTemplate> GetAllUsers()
+        public List<UsersTemplate> GetAllUsers(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {
             string user = Session["AppId"].ToString();
+            if (SearchStringFirstName == null) SearchStringFirstName = "";
+            if (SearchStringLastName == null) SearchStringLastName = "";
+            if (SearchStringEmail == null) SearchStringEmail = "";
+
             using (EmsEntities objEntity = new EmsEntities())
             {
-                var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
-                                     join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
-                                     where UserTemp.Id != user
-                                     select new UsersTemplate
-                                     {
-                                         EMail = UserTemp.Email,
-                                         UserName = UserTemp.UserName,
-                                         Id = UserTemp.Id,
-                                         Organiser = Pr.Organiser.Trim(),
-                                         Merchant = Pr.Merchant.Trim(),
-                                         UserStatus = Pr.UserStatus.Trim()
-                                     }
-                                    );
-                return modelUserTemp.ToList();
+                    var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
+                                         join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
+                                         where UserTemp.Id != user && Pr.FirstName.Contains(SearchStringFirstName != "" ? SearchStringFirstName:  Pr.FirstName)
+                                         && Pr.LastName.Contains(SearchStringLastName != "" ? SearchStringLastName : Pr.LastName)
+                                         && Pr.Email.Contains(SearchStringEmail != "" ? SearchStringEmail : Pr.Email)
+                                         select new UsersTemplate
+                                         {
+                                             EMail = UserTemp.Email,
+                                             UserName = UserTemp.UserName,
+                                             Id = UserTemp.Id,
+                                             Organiser = Pr.Organiser.Trim(),
+                                             Merchant = Pr.Merchant.Trim(),
+                                             UserStatus = Pr.UserStatus.Trim(),
+                                             FirstName = Pr.FirstName,
+                                             LastName = Pr.LastName
+                                         }
+                                        );
+                    return modelUserTemp.ToList();
+               
             }
         }
 

@@ -232,7 +232,35 @@
 }
     </section>
     <script type="text/javascript">
-     
+        $(document).ready(function () {
+            var uId = $("#Id").val();
+            var iUserId = '';
+            $.ajax({
+                url: "/Permission/IsSuperAdmin",
+                async:false,
+                datatype: "Text",
+                type: "Get",
+                success: function (response) {
+                    iUserId = response;
+                }
+            });
+          
+            if (iUserId != 'Y') {
+                $.ajax({
+                    url: "/Permission/GetUserRole",
+                    async: false,
+                    data: { strUserId: uId },
+                    datatype: "Text",
+                    type: "Get",
+                    success: function (response) {
+                        if (parseInt(response) == 1) {
+                            $('*', 'form').attr('disabled', 'disabled').attr('readonly', 'readonly');
+                        }
+                    }
+                });
+            }
+            
+        });
         $('#ZipCode').change(function () {
             
                 var country = $("#Country option:selected").text().trim();

@@ -27,3 +27,7 @@
 .view_sel_wid ul{ min-width: 130px;}
 .view_sel_wid button{ min-width: 130px;}
 
+.srh_filter{ width:50px !important;font-size: 14px !important; color:#666666 !important;}
+.srh_filter:hover{ color:#666666; opacity: 0.7 !important; }
+.srh-by-no{ margin-top: 15px;}
+.panel_loader .panel-controls a.panel-control-loader{ display: none !important;}
