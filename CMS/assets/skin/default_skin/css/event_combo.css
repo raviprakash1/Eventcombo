@@ -19,7 +19,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;}
-
+.eml-ellps-wid{ max-width:200px !important;}
 
 .bg_white{ background:#fff;}
 .mb_0{ margin-bottom: 0px;}

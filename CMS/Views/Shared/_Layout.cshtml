@@ -39,7 +39,7 @@
         <!-- Start: Header -->
         <header class="navbar navbar-fixed-top navbar-shadow">
             <div class="navbar-branding">
-                <a class="navbar-brand" href="dashboard.html">
+                <a class="navbar-brand" href="/Home/Dashboard">
                     <b>Event</b>combo
                 </a>
                 <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
@@ -59,8 +59,8 @@
                     <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
                        
                      
-                        <img src="@{Html.RenderAction("UserImage", "Home");}" alt="avatar" class="mw30 br64">
-                        <span class="hidden-xs pl15">@{Html.RenderAction("UserName", "Home");}</span>
+                        @*<img src="@{Html.RenderAction("UserImage", "Home");}" alt="avatar" class="mw30 br64">*@
+                        <span class="hidden-xs pl15 ">@{Html.RenderAction("UserName", "Home");}</span>
                         <span class="caret caret-tp hidden-xs"></span>
                     </a>
                     <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
@@ -86,8 +86,8 @@
 
                 <!-- Start: Sidebar Header -->
                 <header class="sidebar-header">
-@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutidForm" }))
-{
+@*@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutidForm" }))
+{*@
                     <!-- Sidebar Widget - Author -->
                     <div class="sidebar-widget author-widget">
                         <div class="media">
@@ -98,17 +98,17 @@
                             <div class="media-body">
                                 <div class="media-links">
 
-                                    <a href="#" class="sidebar-menu-toggle">User Menu -</a> 
+                                    <a href="#" class="sidebar-menu-toggle">User Menu</a> 
 
-                                    <a href="javascript:document.getElementById('logoutidForm').submit()">Logout</a>
+                                    @*<a href="javascript:document.getElementById('logoutidForm').submit()">Logout</a>*@
 
                                 </div>
-                                <div class="media-author">@{Html.RenderAction("UserName", "Home");}</div>
+                                <div class="media-author eml-ellps eml-ellps-wid">@{Html.RenderAction("UserName", "Home");}</div>
                             </div>
 
                         </div>
                     </div>
-}
+@*//}*@
 
                     <!-- Sidebar Widget - Menu (slidedown) -->
                     <!-- Sidebar Widget - Search (hidden) -->
@@ -128,7 +128,7 @@
                     <li class="sidebar-label pt20">Menu</li>
 
                     <li class="active">
-                        <a href="index.html">
+                        <a href="/Home/Dashboard">
                             <span class="fa fa-tachometer"></span>
                             <span class="sidebar-title">Dashboard</span>
                         </a>
