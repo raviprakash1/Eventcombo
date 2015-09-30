@@ -57,6 +57,7 @@ namespace CMS.Controllers
         //    return View();
         //}
 
+
         [HttpGet]
         [Authorize]
         public ActionResult MyAccount(string UserId)
@@ -223,7 +224,7 @@ namespace CMS.Controllers
             {
                 var modelmyaccount = (from cpd in objEntity.AspNetUsers
                                       join pfd in objEntity.Profiles
-    on cpd.Id equals pfd.UserID
+                                            on cpd.Id equals pfd.UserID
                                       where cpd.Id == userid
                                       select new MyAccount
                                       {
@@ -459,5 +460,9 @@ namespace CMS.Controllers
             }
 
         }
+
+
+       
+
     }
 }

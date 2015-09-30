@@ -20,8 +20,9 @@ namespace CMS.Models
         public string Organiser { get; set; }
         public string Merchant { get; set; }
         public string UserStatus { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
-        
 
 
     }
