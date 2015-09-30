@@ -14,8 +14,8 @@
     <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
 
 
-    <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
-    <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
+    @*<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">*@
 
 
     <!-- Theme CSS -->
@@ -323,6 +323,8 @@
 
             });
 
+          
+
             $('#multiselect2').multiselect({
                 includeSelectAllOption: true
             });
@@ -342,6 +344,11 @@
             //// Init Inline Ckeditors
             //CKEDITOR.inline('ckeditor-inline2');
 
+        });
+
+
+        jQuery(document).ready(function () {
+            jQuery(".panel-heading .panel-controls").prepend('<a class="srh_filter" href="#">Search</a>');
         });
 
     </script>

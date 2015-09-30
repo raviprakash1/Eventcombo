@@ -7,16 +7,13 @@
 
 
     <!-- Meta, title, CSS, favicons, etc. -->
-    <title>Eventcombo Admin</title>
-    <meta name="keywords" content="" />
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
     <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
     <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
 
 
-
+@using (Html.BeginForm("Users", "Users", FormMethod.Post,new { id="formuser"}))
+{
     <!-- Start: Content-Wrapper -->
     <section id="content_wrapper">
 
@@ -39,8 +36,7 @@
         </header>
         <!-- End: Topbar -->
         <!-- Begin: Content -->
-         @using (Html.BeginForm("Users", "Users", FormMethod.Post))
-         {
+        
         <div id="content" class="animated fadeIn">
             <div class="row" id="modal-content">
                 <div class="col-md-12">
@@ -66,31 +62,31 @@
 
                                         <div class="panel-body">
                                             <!--  <hr class="short alt"> -->
-                                            <form class="admin-form">
-                                                <div class="col-md-2 col-sm-2">
-                                                    <div class="">
-                                                         User First Name: @Html.TextBox("SearchStringFirstName")
-                                                    </div>
-                                                </div>
 
-                                                <div class="col-md-2 col-sm-2">
-                                                    <div class="">
-                                                        User Last Name: @Html.TextBox("SearchStringLastName")
-                                                    </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <div class="">
+                                                    User First Name: @Html.TextBox("SearchStringFirstName")
                                                 </div>
-                                                <div class="col-md-2 col-sm-2">
-                                                    <div class="">
-                                                        Email Id: @Html.TextBox("SearchStringEmail")
-                                                    </div>
+                                            </div>
+
+                                            <div class="col-md-2 col-sm-2">
+                                                <div class="">
+                                                    User Last Name: @Html.TextBox("SearchStringLastName")
                                                 </div>
-                                               
-                                           
-                                                <div class="col-md-2 col-sm-2">
-                                                    <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <div class="">
+                                                    Email Id: @Html.TextBox("SearchStringEmail")
                                                 </div>
-                                            </form>
+                                            </div>
+
+
+                                            <div class="col-md-2 col-sm-2">
+                                                <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
+                                            </div>
 
                                         </div>
+                                     
                                     </div>
 
                                 </div>
@@ -130,7 +126,9 @@
                                                         </td>
                                                         <td>
                                                             <a class="holder-active animation-switcher" href="#modal-panel">
-                                                                <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')">Manage</button>
+                                                                <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" type="button">Manage</button>
+                                                                @*<input type="button" class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" value="Manage" />*@
+                                                                
 
                                                                 @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
                                                             </a>
@@ -365,18 +363,155 @@
             </div>
         </div>
         <!-- End: Content -->
-                                                }
+        
     </section>
- </div>
 
+  }
 
-    <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>
+   @*// <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>*@
 
     <!-- FooTable Addon -->
-    <script src="~/plugins/footable/js/footable.all.min.js"></script>
-    <script src="~/plugins/footable/js/footable.filter.min.js"></script>
+    @*<script src="~/plugins/footable/js/footable.all.min.js"></script>
+    <script src="~/plugins/footable/js/footable.filter.min.js"></script>*@
 
     <script type="text/javascript">
+       
+
+        jQuery(document).ready(function () {
+           
+           
+            //"use strict";
+
+            //// Init Theme Core
+            //Core.init();
+
+            //// Init Demo JS
+            //Demo.init();
+
+            //$('.footable').footable();
+
+            //var modalContent = $('#modal-content');
+
+            //function findActive() {
+            //    var activeModal = modalContent.find('.holder-active').attr('href');
+            //    return activeModal;
+            //};
+
+            //// Form Skin Switcher
+            //$('.animation-switcher button').on('click', function () {
+            //    $('.animation-switcher').find('button').removeClass('active-animation');
+            //    $(this).addClass('active-animation item-checked');
+
+            //    // Inline Admin-Form example
+            //    $.magnificPopup.open({
+            //        removalDelay: 500, //delay removal by X to allow out-animation,
+            //        items: {
+            //            src: findActive()
+            //        },
+            //        // overflowY: 'hidden', //
+            //        callbacks: {
+            //            beforeOpen: function (e) {
+            //                var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
+            //                this.st.mainClass = Animation;
+            //            }
+            //        },
+            //        midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+            //    });
+
+            //});
+
+            //$('.admin-panels').adminpanel({
+            //    onFinish: function() {
+            //        $('.admin-panels').addClass('animated fadeIn').removeClass('fade-onload');
+            //    },
+     
+            //});
+           
+            // Page code starts here
+            $(".chkPermission").click(function () {
+                if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
+                    $("#rdMember").prop("checked", true);
+                else
+                    $("#rdMemberLimit").prop("checked", true);
+            });
+
+            $("#btnRoles").click(function () {
+                $("#hdUName").val()
+            });
+
+            $("#rdAdmin").click(function () {
+                $("#dvMemLimited").hide();
+                $("#dvAdmin").show();
+            })
+
+
+
+            $("#rdMemberLimit").click(function () {
+                $("#dvMemLimited").show();
+                $("#dvAdmin").hide();
+            })
+
+            $("#rdMember").click(function () {
+                $("#dvMemLimited").show();
+                $("#dvAdmin").hide();
+            })
+
+
+
+            $("#btSave").click(function () {
+                debugger;
+                var UserId = $("#hdUName").val();
+                var Permisions = ""; var URole;
+                for (i = 1; i <= 7; i++) {
+                    if ($("#chk_" + i).is(":checked") == true) {
+                        if (Permisions == "")
+                            Permisions = i;
+                        else
+                            Permisions = Permisions + "#" + i.toString();
+                    }
+                }
+
+
+
+                if ($("#rdAdmin").is(":checked") == true)
+                    URole = 2;
+                else
+                    URole = 3;
+
+
+                $.ajax({
+                    url: "/Users/SavePermisions",
+                    data: { strUserId: UserId, strPermission: Permisions, strRole: URole },
+                    datatype: "Text",
+                    type: "Post",
+                    success: function (response) {
+                        if (response == "Y") {
+                            alert("Record Updated.");
+                            //  $('#spanid').html("Record Updated.");
+                            // $('#divError').css('display', 'block');
+                            ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                        }
+                        else {
+                            alert("Some error occur while saving.");
+                            //$('#spanid').html("Some error occur while saving.");
+                            //  $('#divError').css('display', 'block');
+                            //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                        }
+                    }
+                });
+            })
+
+
+
+
+
+        });
+
+    
+
+
+
+
         function ConfirmDelete(userId) {
             console.log(userId);
             var x = confirm("Are you sure you want to delete?");
@@ -400,9 +535,9 @@
                 return false;
 
         }
-  
+
         function SaveFields(UserId, strId, dlValue) {
-            
+
             var vvalue = '';
             var sFields = '';
             if (strId == "dlStatus") {
@@ -480,201 +615,7 @@
             });
         }
 
-        jQuery(document).ready(function () {
-            //alert("each row");
-            //var table = $("#tblMain table tbody");
-            //alert(table);
-            //table.find('tr').each(function (i, el) {
-            //    alert("each row");
-            //    //var $tds = $(this).find('td'),
-            //    //    productId = $tds.eq(0).text(),
-            //    //    product = $tds.eq(1).text(),
-            //    //    Quantity = $tds.eq(2).text();
-            //    // do something with productId, product, Quantity
-            //});
-            
-            
-                
-            
-                
-            
-
-            $(".dlOrgnizer").change(function () {
-                alert($(".dlOrgnizer").val());
-                //alert($("#dlOrgnizer").val()[2]);
-
-
-                var selID = document.getElementById("dlorg");
-                var text = selID.options[3].text;
-                alert(text);
-                //var vvalue = '';
-                //if ($("#dlOrgnizer").val() == "1")
-                //    vvalue='Y';
-                //else
-                //    vvalue =  'N';
-
-
-
-
-
-                //Merchant
-                //UserStatus
-
-                //$.ajax({
-                //    url: "/Users/SaveOtherInfo",
-                //    data: { strField: "Organiser", strvalue :vvalue  , strUserId: URole },
-                //    datatype: "Text",
-                //    type: "Post",
-                //    success: function (response) {
-                //        if (response == "Y") {
-                //            alert("Record Updated.");
-                //            //  $('#spanid').html("Record Updated.");
-                //            // $('#divError').css('display', 'block');
-                //            ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                //        }
-                //        else {
-                //            alert("Some error occur while saving.");
-                //            //$('#spanid').html("Some error occur while saving.");
-                //            //  $('#divError').css('display', 'block');
-                //            //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                //        }
-                //    }
-                //});
-
-            });
-
-
-            $(".chkPermission").click(function () {
-                if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
-                    $("#rdMember").prop("checked", true);
-                else
-                    $("#rdMemberLimit").prop("checked", true);
-            });
-
-            $("#btnRoles").click(function () {
-                $("#hdUName").val()
-            });
-
-            $("#rdAdmin").click(function () {
-                $("#dvMemLimited").hide();
-                $("#dvAdmin").show();
-            })
-
-
-
-            $("#rdMemberLimit").click(function () {
-                $("#dvMemLimited").show();
-                $("#dvAdmin").hide();
-            })
-
-            $("#rdMember").click(function () {
-                $("#dvMemLimited").show();
-                $("#dvAdmin").hide();
-            })
-
-
-
-            $("#btSave").click(function () {
-                debugger;
-                var UserId = $("#hdUName").val();
-                var Permisions = ""; var URole;
-                for (i = 1; i <= 7; i++) {
-                    if ($("#chk_" + i).is(":checked") == true) {
-                        if (Permisions == "")
-                            Permisions = i;
-                        else
-                            Permisions = Permisions + "#" + i.toString();
-                    }
-                }
-
-
-
-                if ($("#rdAdmin").is(":checked") == true)
-                    URole = 2;
-                else
-                    URole = 3;
-
-
-                $.ajax({
-                    url: "/Users/SavePermisions",
-                    data: { strUserId: UserId, strPermission: Permisions, strRole: URole },
-                    datatype: "Text",
-                    type: "Post",
-                    success: function (response) {
-                        if (response == "Y") {
-                            alert("Record Updated.");
-                            //  $('#spanid').html("Record Updated.");
-                            // $('#divError').css('display', 'block');
-                            ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                        }
-                        else {
-                            alert("Some error occur while saving.");
-                            //$('#spanid').html("Some error occur while saving.");
-                            //  $('#divError').css('display', 'block');
-                            //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                        }
-                    }
-                });
-            })
-
-            "use strict";
-
-            // Init Theme Core
-            Core.init();
-
-            // Init Demo JS
-            Demo.init();
-
-            $('.footable').footable();
-
-            var modalContent = $('#modal-content');
-
-            function findActive() {
-                var activeModal = modalContent.find('.holder-active').attr('href');
-                return activeModal;
-            };
-
-            // Form Skin Switcher
-            $('.animation-switcher button').on('click', function () {
-                $('.animation-switcher').find('button').removeClass('active-animation');
-                $(this).addClass('active-animation item-checked');
-
-                // Inline Admin-Form example
-                $.magnificPopup.open({
-                    removalDelay: 500, //delay removal by X to allow out-animation,
-                    items: {
-                        src: findActive()
-                    },
-                    // overflowY: 'hidden', //
-                    callbacks: {
-                        beforeOpen: function (e) {
-                            var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
-                            this.st.mainClass = Animation;
-                        }
-                    },
-                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
-                });
-
-            });
-
-            $('.admin-panels').adminpanel({
-                onFinish: function() {
-                    $('.admin-panels').addClass('animated fadeIn').removeClass('fade-onload');
-                },
-     
-            });
-
-        });
-
-        jQuery(document).ready(function() {
-            jQuery(".panel-heading .panel-controls").prepend('<a class="srh_filter" href="#">Search</a>');
-        });
-
        
 
     </script>
     <!-- END: PAGE SCRIPTS -->
-
-</body>
-
-</html>
