@@ -383,6 +383,7 @@
     <Content Include="Images\event-fpo.png" />
     <Content Include="Images\event-reports-fpo.jpg" />
     <Content Include="Images\event-type-language-FPO.jpg" />
+    <Content Include="Images\event1.jpg" />
     <Content Include="Images\EventCombo_Red.jpg" />
     <Content Include="Images\EventCombo_Redesign1.jpg" />
     <Content Include="Images\EVENT_DASH-FPO.jpg" />
@@ -393,6 +394,8 @@
     <Content Include="Images\FOOD-FPO.jpg" />
     <Content Include="Images\food1.jpg" />
     <Content Include="Images\food2.jpg" />
+    <Content Include="Images\gmap.png" />
+    <Content Include="Images\go.png" />
     <Content Include="Images\google-analytics-FPO.jpg" />
     <Content Include="Images\guestlist-FPO.jpg" />
     <Content Include="Images\header-bg.png" />
@@ -409,6 +412,7 @@
     <Content Include="Images\logo-footer.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\logo_orig.png" />
+    <Content Include="Images\logo_small.png" />
     <Content Include="Images\logo_vertical.gif" />
     <Content Include="Images\logo_vertical.png" />
     <Content Include="Images\MAP-FPO.jpg" />
