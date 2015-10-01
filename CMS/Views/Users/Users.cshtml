@@ -480,7 +480,7 @@
 
 
                 $.ajax({
-                    url: "/Users/SavePermisions",
+                    url: '@Url.Action("SavePermisions","Users")',
                     data: { strUserId: UserId, strPermission: Permisions, strRole: URole },
                     datatype: "Text",
                     type: "Post",
@@ -518,7 +518,7 @@
             if (x) {
 
                 $.ajax({
-                    url: "/Users/Deleteuser",
+                    url:'@Url.Action("Deleteuser","Users")',
                     data: { userid: userId },
                     datatype: "Text",
                     type: "Post",
@@ -558,7 +558,7 @@
                 vvalue = 'N';
 
             $.ajax({
-                url: "/Users/SaveOtherInfo",
+                url: '@Url.Action("SaveOtherInfo","Users")',
                 data: { strField: sFields, strvalue: vvalue, strUserId: UserId },
                 datatype: "Text",
                 type: "Post",
@@ -589,30 +589,30 @@
             $("#dvAdmin").show();
 
             $.ajax({
-                url: "/Users/GetUserPermission",
+                url: '@Url.Action("GetUserPermission","Users")',
                 data: { strUserId: userId },
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
-                    var AryResult = response.split("^");
-                    for (i = 0; i < AryResult.length ; i++) {
+                        var AryResult = response.split("^");
+                        for (i = 0; i < AryResult.length ; i++) {
                         $("#chk_" + AryResult[i]).prop("checked", true);
-                    }
-                    if (AryResult[AryResult.length - 1] == "2") {
+                        }
+                        if (AryResult[AryResult.length - 1] == "2") {
                         $("#rdAdmin").is(":checked") = true;
                         $("#dvMemLimited").hide();
                         $("#dvAdmin").show();
-                    }
-                    else {
+                        }
+                        else {
                         $("#dvMemLimited").show();
                         $("#dvAdmin").hide();
-                        if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
+                            if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
                             $("#rdMember").prop("checked", true);
                         else
                             $("#rdMemberLimit").prop("checked", true);
+                        }
                     }
-                }
-            });
+                });
         }
 
        

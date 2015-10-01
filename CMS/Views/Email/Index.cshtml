@@ -323,18 +323,18 @@
         console.log(ev);
         var dropText;
         dropText = "$$" + data + "$$";
-        console.log($('#' + ev.target.id));
+        var target = ev.target || ev.srcElement;
         //var idtarget = document.getElementById($('#' + ev.target.id));
-        console.log(idtarget);
-        var ids = $('#' + ev.srcElement.id);
+        console.log(target.id);
+        var ids = $('#' + target.id);
         var droparea = document.getElementById(ids);
         //var range1 = droparea.selectionStart;
         //var range2 = droparea.selectionEnd;
-        var value = $('#' + ev.srcElement.id).val();
+        var value = $('#' + target.id).val();
         console.log(value);
         //var str1 = val.substring(0, range1);
         //var str3 = val.substring(range1, val.length);
-        $('#' + ev.srcElement.id).val(value + " " + dropText);
+        $('#' + target.id).val(value + " " + dropText);
        
     }
     
@@ -343,9 +343,10 @@
     }
 
     function drag(ev) {
-        ev.dataTransfer.setData("text", ev.srcElement.innerText);
+        var target = ev.target || ev.srcElement;
+        ev.dataTransfer.setData("text", target.innerText);
 
-        console.log(ev.srcElement.innerText);
+        
     }
     //$('#Subject').focus(function () {
     //    $('#Subject').addClass('Insertinto');

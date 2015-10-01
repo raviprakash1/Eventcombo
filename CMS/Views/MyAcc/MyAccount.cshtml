@@ -236,18 +236,18 @@
             var uId = $("#Id").val();
             var iUserId = '';
             $.ajax({
-                url: "/Permission/IsSuperAdmin",
+                url: '@Url.Action("IsSuperAdmin", "Permission")',
                 async:false,
                 datatype: "Text",
                 type: "Get",
                 success: function (response) {
-                    iUserId = response;
-                }
-            });
+                        iUserId = response;
+                    }
+                });
           
             if (iUserId != 'Y') {
                 $.ajax({
-                    url: "/Permission/GetUserRole",
+                    url: '@Url.Action("GetUserRole","Permission")',
                     async: false,
                     data: { strUserId: uId },
                     datatype: "Text",
