@@ -133,7 +133,7 @@
                     <li class="sidebar-label pt20">Menu</li>
 
                     <li class="active">
-                        <a href="~/Home/Dashboard">
+                        <a href="@Url.Action("Dashboard", "Home")">
                             <span class="fa fa-tachometer"></span>
                             <span class="sidebar-title">Dashboard</span>
                         </a>
@@ -141,7 +141,7 @@
 
                     <li class="sidebar-label pt15">Exclusive Tools</li>
                     <li>
-                        <a href="~/Users/Users">
+                        <a href="@Url.Action("Users", "Users")">
                             <span class="fa fa-user"></span>
                             <span class="sidebar-title">User</span>
 
@@ -149,7 +149,7 @@
                      </li>
                     
                     <li>
-                        <a  href="~/ManageEvent/Index">
+                        <a  href="@Url.Action("Index", "ManageEvent")">
                             <span class="fa fa-lemon-o"></span>
                             <span class="sidebar-title">Event</span>
                         </a>
@@ -168,7 +168,7 @@
 
                     <li>
                       
-                        <a  href="~/Email/Index?templatetag=email_welcome&templatename=Welcome">
+                        <a  href="@Url.Action("Index", "Email",new{templatetag="email_welcome", templatename="Welcome"})">
                             <span class="fa fa-envelope-o"></span>
                             <span class="sidebar-title">Email Content Management</span>
                         </a>
@@ -181,13 +181,13 @@
                         </a>
                         <ul class="nav sub-nav" style="">
                            <li>
-                            <a  href="~/Messages/Index?Form=MyAccount">
+                            <a  href="@Url.Action("Index", "Messages",new{Form="MyAccount"})">
                                 <span class="fa fa-circle-o"></span>
                                 <span class="sidebar-title">My Account Form</span>
                             </a>
                            </li>
                             <li>
-                                <a  href="~/Messages/Index?Form=Login">
+                                <a  href="@Url.Action("Index", "Messages",new{Form="Login"})">
                                     <span class="fa fa-circle-o"></span>
                                     <span class="sidebar-title">Login Form</span>
                                 </a>
