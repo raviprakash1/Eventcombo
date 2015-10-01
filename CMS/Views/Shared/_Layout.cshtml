@@ -269,6 +269,7 @@
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
+                    alert(response);
                     if (response != "Y") {
                         alert("Access Denied !!!");
                         return false;
@@ -277,7 +278,7 @@
                         ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
                     }
                     else {
-                        //alert(vPerm);
+                        alert(vPerm);
                        
                     }
                 }
