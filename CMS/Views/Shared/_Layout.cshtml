@@ -141,7 +141,7 @@
 
                     <li class="sidebar-label pt15">Exclusive Tools</li>
                     <li>
-                        <a href="@Url.Action("Users", "Users")">
+                        <a href="#" onclick="checkPermission('3');">
                             <span class="fa fa-user"></span>
                             <span class="sidebar-title">User</span>
 
@@ -149,7 +149,7 @@
                      </li>
                     
                     <li>
-                        <a  href="@Url.Action("Index", "ManageEvent")">
+                        <a  href="#" onclick="checkPermission('4');">
                             <span class="fa fa-lemon-o"></span>
                             <span class="sidebar-title">Event</span>
                         </a>
@@ -168,7 +168,7 @@
 
                     <li>
                       
-                        <a  href="@Url.Action("Index", "Email",new{templatetag="email_welcome", templatename="Welcome"})">
+                        <a  href="#" onclick="checkPermission('6');">
                             <span class="fa fa-envelope-o"></span>
                             <span class="sidebar-title">Email Content Management</span>
                         </a>
@@ -181,13 +181,13 @@
                         </a>
                         <ul class="nav sub-nav" style="">
                            <li>
-                            <a  href="@Url.Action("Index", "Messages",new{Form="MyAccount"})">
+                            <a href="#" onclick="checkPermission('7');">
                                 <span class="fa fa-circle-o"></span>
                                 <span class="sidebar-title">My Account Form</span>
                             </a>
                            </li>
                             <li>
-                                <a  href="@Url.Action("Index", "Messages",new{Form="Login"})">
+                                <a href="#" onclick="checkPermission('7A');" >
                                     <span class="fa fa-circle-o"></span>
                                     <span class="sidebar-title">Login Form</span>
                                 </a>
@@ -237,39 +237,19 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>
     <script type="text/javascript">
         function checkPermission(PermisionId) {
-           
-            var vPerm = PermisionId;
-            alert(vPerm);
-            if (vPerm == "3")
-                window.location.href = "../Users/Users";
-            else if (vPerm == "6")
-                window.location.href = "../Email/Index?templatetag=email_welcome&templatename=Welcome";
-            else if (vPerm == "7")
-                window.location.href = "../Messages/Index?Form=MyAccount";
-            else if (vPerm == "7A")
-                window.location.href = "../Messages/Index?Form=Login";
-            else if (vPerm == "4")
-                window.location.href = "../ManageEvent/Index";
-            if (PermisionId == "7A") PermisionId = "7";
-            //  var iUserId = '';
-            //$.ajax({
-            //    url: "/Permission/IsSuperAdmin",
-            // //   async: false,
-            //    datatype: "Text",
-            //    type: "Get",
-            //    success: function (response) {
-            //        iUserId = response;
-            //    }
-            //});
 
-            // if (iUserId != 'Y') {
+            var vPerm = PermisionId;
+          //  alert(vPerm);
+
+            if (PermisionId == "7A") PermisionId = "7";
+
             $.ajax({
                 url: "/Permission/GetPermission",
                 data: { iPermissionId: PermisionId },
+                async:false,
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
-                    alert(response);
                     if (response != "Y") {
                         alert("Access Denied !!!");
                         return false;
@@ -278,32 +258,41 @@
                         ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
                     }
                     else {
-                        alert(vPerm);
-                       
+                      //  alert(vPerm);
+                        if (vPerm == "3")
+                            window.location.href = '@Url.Action("Users", "Users")';
+                        else if (vPerm == "6")
+                            window.location.href='@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
+                        else if (vPerm == "7")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "MyAccount" })';
+                        else if (vPerm == "7A")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "Login" })';
+                        else if (vPerm == "4")
+                            window.location.href = '@Url.Action("Index", "ManageEvent")';
                     }
                 }
             });
 
-          
-            // }
+
+
         }
 
-        
+
 
         jQuery(document).ready(function () {
-         
-          
+
+
 
 
             "use strict";
 
-            // Init Theme Core    
+            // Init Theme Core
             Core.init();
 
-            // Init Demo JS  
+            // Init Demo JS
             Demo.init();
 
-            
+
 
             $('.footable').footable();
 
@@ -319,13 +308,13 @@
                 $('.animation-switcher').find('button').removeClass('active-animation');
                 $(this).addClass('active-animation item-checked');
 
-                // Inline Admin-Form example 
+                // Inline Admin-Form example
                 $.magnificPopup.open({
                     removalDelay: 500, //delay removal by X to allow out-animation,
                     items: {
                         src: findActive()
                     },
-                    // overflowY: 'hidden', // 
+                    // overflowY: 'hidden', //
                     callbacks: {
                         beforeOpen: function (e) {
                             var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
@@ -345,7 +334,7 @@
 
             });
 
-          
+
 
             $('#multiselect2').multiselect({
                 includeSelectAllOption: true
