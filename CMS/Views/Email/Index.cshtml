@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Ckeditor/ckeditor.js"></script>
-
+<script src="~/assets/js/jquery.ui.touch-punch.js"></script>
 <style>
     .cke_editable {
         border: 1px solid #ccc;
@@ -41,59 +41,59 @@
                         <!-- Tags Menu -->
                         <div class="list-group list-group-links">
                             <div class="list-group-header"> Tags </div>
-                            <ul id="contactList">
-                                <li>
-                                    <div class="contact h-card" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                            <ul id="contactList" class="list-group">
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable" >
                                         UserFirstNameID
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="1" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="1" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
                                         UserLastNameID
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="2" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="2" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
                                         EventNameID 
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="3" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="3" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
                                         EventStartDateID 
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="4" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="4" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
                                         EventEndDateID
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="5" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="5" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
                                         EventStartTimeID
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="6" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="6" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
                                         EventEndTimeID
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="7" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="7" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
                                         EventVenueID
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="8" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="8" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
                                         EventAddressID
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="9" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="9" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
                                         TicketOrderNumberID 
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="contact h-card" data-contact="10" draggable="true" tabindex="0" ondragstart="drag(event)" >
+                                <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="10" draggable="true" tabindex="0"  ondragstart="drag(event)" id="draggable">
                                         DealOrderNumberID
                                     </div>
                                 </li>
@@ -311,6 +311,11 @@
 
 </section>
 <script>
+
+    $(function () {
+        $("#draggable").draggable();
+    });
+
     var data;
     function drop(ev) {
         ev.preventDefault();
@@ -318,6 +323,9 @@
         console.log(ev);
         var dropText;
         dropText = "$$" + data + "$$";
+        console.log($('#' + ev.target.id));
+        //var idtarget = document.getElementById($('#' + ev.target.id));
+        console.log(idtarget);
         var ids = $('#' + ev.srcElement.id);
         var droparea = document.getElementById(ids);
         //var range1 = droparea.selectionStart;
@@ -551,9 +559,10 @@
     }
 </script>
 @*<script type="text/javascript">
+
     $(document).ready(function () {
-        console.log($('#cke_1_contents'));
-        $("#allfields li span").draggable({
+       
+        $("#contactList li div").draggable({
             appendTo: "body",
             helper: "clone",
             cursor: "select",

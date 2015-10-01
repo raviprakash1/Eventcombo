@@ -361,6 +361,7 @@
     <Content Include="assets\js\demo\widgets.js" />
     <Content Include="assets\js\jquery-1.11.1.min.js" />
     <Content Include="assets\js\jquery-ui.min.js" />
+    <Content Include="assets\js\jquery.ui.touch-punch.js" />
     <Content Include="assets\js\main.js" />
     <Content Include="assets\js\utility\admindock\admindock.js" />
     <Content Include="assets\js\utility\adminpanels\adminpanels.js" />
