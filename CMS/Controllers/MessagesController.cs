@@ -12,6 +12,7 @@ namespace CMS.Controllers
         public ActionResult Index(string Form)
         {
             List<MessageTemplate> lstmsg = new List<MessageTemplate>();
+            TempData["FormName"] = Form;
             lstmsg = MessageData(Form);
             return View(lstmsg);
         }
