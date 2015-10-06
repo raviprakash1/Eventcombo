@@ -15,7 +15,8 @@ namespace CMS.Controllers
         EmsEntities db = new EmsEntities();
         public ActionResult Deleteuser(string userid)
         {
-            try {
+            try
+            {
                 //User_Permission_Detail userper = db.User_Permission_Detail.Where(i => i.UP_User_Id.Trim() == userid.Trim()).FirstOrDefault();
                 //db.User_Permission_Detail.Remove(userper);
                 //db.SaveChanges();
@@ -31,11 +32,11 @@ namespace CMS.Controllers
                 db.AspNetUsers.Remove(user);
                 db.SaveChanges();
 
-              
+
                 return Content("Deleted");
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Content(ex.Message);
 
@@ -45,45 +46,51 @@ namespace CMS.Controllers
 
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {
-           
+
 
 
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
 
-           // List<Permissions> objPerm = GetPermission("APP");
-           // UsersTemplate objU = new UsersTemplate();
-          //  objU.objPermissions = GetPermission("APP");
-           // objuser.Add(objU);
+            // List<Permissions> objPerm = GetPermission("APP");
+            // UsersTemplate objU = new UsersTemplate();
+            //  objU.objPermissions = GetPermission("APP");
+            // objuser.Add(objU);
             return View(objuser);
         }
         public List<UsersTemplate> GetAllUsers(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {
-            string user = Session["AppId"].ToString();
+            string user = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
+
             if (SearchStringFirstName == null) SearchStringFirstName = "";
             if (SearchStringLastName == null) SearchStringLastName = "";
             if (SearchStringEmail == null) SearchStringEmail = "";
 
             using (EmsEntities objEntity = new EmsEntities())
             {
-                    var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
-                                         join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
-                                         where UserTemp.Id != user && Pr.FirstName.Contains(SearchStringFirstName != "" ? SearchStringFirstName:  Pr.FirstName)
-                                         && Pr.LastName.Contains(SearchStringLastName != "" ? SearchStringLastName : Pr.LastName)
-                                         && Pr.Email.Contains(SearchStringEmail != "" ? SearchStringEmail : Pr.Email)
-                                         select new UsersTemplate
-                                         {
-                                             EMail = UserTemp.Email,
-                                             UserName = UserTemp.UserName,
-                                             Id = UserTemp.Id,
-                                             Organiser = Pr.Organiser.Trim(),
-                                             Merchant = Pr.Merchant.Trim(),
-                                             UserStatus = Pr.UserStatus.Trim(),
-                                             FirstName = Pr.FirstName,
-                                             LastName = Pr.LastName
-                                         }
-                                        );
+                var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
+                                     join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
+                                     where UserTemp.Id != user
+                                     select new UsersTemplate
+                                     {
+                                         EMail = UserTemp.Email,
+                                         UserName = UserTemp.UserName,
+                                         Id = UserTemp.Id,
+                                         Organiser = Pr.Organiser.Trim(),
+                                         Merchant = Pr.Merchant.Trim(),
+                                         UserStatus = Pr.UserStatus.Trim(),
+                                         FirstName = Pr.FirstName,
+                                         LastName = Pr.LastName
+                                     }
+                                    );
+                //return modelUserTemp.ToList();
+                if (!SearchStringFirstName.Equals(string.Empty))
+                    return modelUserTemp.Where(us => us.FirstName.ToLower().Contains(SearchStringFirstName.ToLower()) || us.LastName.ToLower().Contains(SearchStringLastName.ToLower())
+                    || us.EMail.ToLower().Contains(SearchStringEmail.ToLower())).ToList();
+                else
                     return modelUserTemp.ToList();
-               
+
+                
+
             }
         }
 
@@ -111,13 +118,13 @@ namespace CMS.Controllers
                                     );
 
 
-               return  modelPerm.ToList();
+                return modelPerm.ToList();
 
             }
 
         }
 
-        public string SavePermisions(string strUserId,string strPermission, string strRole)
+        public string SavePermisions(string strUserId, string strPermission, string strRole)
         {
             string strResult = "";
             try
@@ -157,13 +164,13 @@ namespace CMS.Controllers
         }
 
 
-        public string SaveOtherInfo(string strField, string strvalue,string strUserId)
+        public string SaveOtherInfo(string strField, string strvalue, string strUserId)
         {
             string strResult = "";
             try
             {
                 EmsEntities objEnt = new EmsEntities();
-                objEnt.Database.ExecuteSqlCommand("Update Profile set " + strField +  " = '" + strvalue + "' Where UserId = '" + strUserId + "'");
+                objEnt.Database.ExecuteSqlCommand("Update Profile set " + strField + " = '" + strvalue + "' Where UserId = '" + strUserId + "'");
                 strResult = "Y";
             }
             catch (Exception ex)
@@ -179,7 +186,7 @@ namespace CMS.Controllers
             {
                 EmsEntities objEms = new EmsEntities();
                 List<User_Permission_Detail> objUpList = objEms.User_Permission_Detail.Where(x => x.UP_User_Id == strUserId).ToList();
-                foreach(User_Permission_Detail upd in objUpList)
+                foreach (User_Permission_Detail upd in objUpList)
                     strResult.Append(upd.UP_Permission_Id.ToString() + "^");
 
                 string strRoleId = objEms.GetSetUserRole(strUserId, "GET", "").Single();

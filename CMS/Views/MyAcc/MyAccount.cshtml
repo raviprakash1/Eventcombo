@@ -254,7 +254,8 @@
                     type: "Get",
                     success: function (response) {
                         if (parseInt(response) == 1) {
-                            $('*', 'form').attr('disabled', 'disabled').attr('readonly', 'readonly');
+                            $("#btnsave").prop("disabled", true);
+                           // $('*', 'form').attr('disabled', 'disabled').attr('readonly', 'readonly');
                         }
                     }
                 });
