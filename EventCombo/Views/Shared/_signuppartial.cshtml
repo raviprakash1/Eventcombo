@@ -20,7 +20,8 @@
     </div>
     }
     <div class="err_main">
-        <div class="er_UI_main" id="diverro" style="display :none;width:100%">
+        <div class="er_UI_main alert-danger" id="diverro" style="display :none;width:100%">
+            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro">&#215;</button>
             <div class="er_UI_img"></div>
             <div class="er_suc" id="dverrsignui" >  </div>
         </div>
@@ -28,7 +29,8 @@
 
  
         <div class="err_main">
-            <div class="er_UI_main" id="diverro1" style="display :none;width:100%">
+            <div class="er_UI_main alert-danger" id="diverro1" style="display :none;width:100%">
+                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1">&#215;</button>
                 <div class="er_sys_img"></div>
                 <div class="er_suc" id="dverrsignsys">  </div>
             </div>
@@ -66,11 +68,32 @@
             }
 
 <script type="text/javascript">
+    $(document).click(function () {
+        $('#diverro').css('display', 'none');
+        $('#diverro1').css('display', 'none');
 
+
+        $("input").removeClass('err-bor');
+    });
+    $('#btndiverro').click(function () {
+        $('#diverro').css('display', 'none');
+        $('#diverro1').css('display', 'none');
+
+
+        $("input").removeClass('err-bor');
+    })
+    $('#btndiverro1').click(function () {
+        $('#diverro').css('display', 'none');
+        $('#diverro1').css('display', 'none');
+
+
+        $("input").removeClass('err-bor');
+    })
     $(document).ready(function () {
-       
-        $('#SignupEmail').css("border", "black solid 1px");
-        $('#SignupPassword').css("border", "black solid 1px");
+
+        $('#SignupEmail').removeClass('err-bor');
+        $('#SignupPassword').removeClass('err-bor');
+      
         $('#diverro1').css('display', 'none');
         $('#diverro').css("display", "none");
         $('#SignupEmail').keyup(function () {
@@ -109,19 +132,19 @@
 
                     if (!validateEmail(Email)) {
                         $('#SignupEmail').focus();
-                        $('#SignupEmail').css("border", "red solid 1px");
+                        $('#SignupEmail').addClass('err-bor');
                         msg += "Invalid Email!! </br>"
 
                     } else {
 
                         msg = "";
                         $('#SignupEmail').focus();
-                        $('#SignupEmail').css("border", "black solid 1px");
+                        $('#SignupEmail').removeClass('err-bor');
                     }
                     //console.log(Passowrdw.length);
                     if (Passowrdw.length < 4) {
                         $('#SignupPassword').focus();
-                        $('#SignupPassword').css("border", "red solid 1px");
+                        $('#SignupPassword').addClass('err-bor');
                         msg += "Password Length can't be less than 4!! </br>"
 
                     } else {
@@ -129,7 +152,7 @@
                             msg = "";
                         }
                         $('#SignupPassword').focus();
-                        $('#SignupPassword').css("border", "black solid 1px");
+                        $('#SignupPassword').removeClass('err-bor');
 
                     }
                     return msg;
@@ -172,7 +195,7 @@
                                                 {
                                                     console.log('Enter');
                                                     $('#SignupEmail').focus();
-                                                    $('#SignupEmail').css("border", "red solid 1px");
+                                                    $('#SignupEmail').addClass('err-bor');
                                                     $('#diverro').css("display", "none");
                                                     $('#diverro1').css('display', 'block');
                                                     $('#dverrsignsys').html('Email Already Exist!!!');

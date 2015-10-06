@@ -293,6 +293,34 @@ namespace EventCombo.Controllers
 
         }
 
+        public ActionResult UserName()
+        {
+            string result = getusername();
+            return Content(result);
+        }
+        private string getusername()
+        {
+            if ((Session["AppId"] != null))
+            {
+                string userid = Session["AppId"].ToString();
+                var userEmail = db.AspNetUsers.Where(x => x.Id == userid).Select(y => y.Email).SingleOrDefault();
+                if (userEmail != null)
+                {
+                    return userEmail.Substring(0, userEmail.IndexOf("@")+1);
+                }
+                else
+                {
+                    return "";
+                }
+
+            }
+            else
+            {
+                return "";
+
+            }
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

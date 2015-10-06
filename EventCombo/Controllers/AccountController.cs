@@ -364,7 +364,8 @@ namespace EventCombo.Controllers
         {
             if (Session["AppId"] != null)
             {
-
+                Random rnd = new Random();
+                var rndnumber = rnd.Next(1, 7);
                 //string Name = Request.Form[1];
                 //if (Request.Files.Count > 0)
                 //{
@@ -390,22 +391,28 @@ namespace EventCombo.Controllers
                             string pathString = System.IO.Path.Combine(originalDirectory.ToString(), "imagepath");
 
                             var fileName1 = Path.GetFileName(file.FileName);
-
+                           
+                        //var format=    getImageFormat(fileName1);
+                          
                             bool isExists = System.IO.Directory.Exists(pathString);
 
                             if (!isExists)
                                 System.IO.Directory.CreateDirectory(pathString);
 
                             var path = string.Format("{0}\\{1}", pathString, file.FileName);
+                            var imageformat = getImageFormat(path);
+                            var NFilename = Userid.Trim() + "_ProfImage"+ rndnumber+"."+ imageformat;
+                            var pathnew= string.Format("{0}\\{1}", pathString, NFilename);
                             using (EventComboEntities objEntity = new EventComboEntities())
                             {
                                 Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
-                                profile.UserProfileImage = fName;
+                                profile.UserProfileImage = NFilename;
+                                //profile.UserProfileImage = fName;
                                 profile.ContentType = content_type;
                                 objEntity.SaveChanges();
                             }
                            // file.SaveAs(path);
-                            HandleImageUpload(file, path);
+                            HandleImageUpload(file, pathnew);
                         }
 
                     }
@@ -530,7 +537,7 @@ namespace EventCombo.Controllers
         }
 
         private void HandleImageUpload(HttpPostedFileBase file,string path1)
-        {
+        {//ProfileID_SequentialImage#
             Image img = RezizeImage(Image.FromStream(file.InputStream), 200, 200);
             string path = file.FileName;
             img.Save(path1, getImageFormat(path));
@@ -546,7 +553,7 @@ namespace EventCombo.Controllers
                 string Userid = Session["AppId"].ToString();
                 string imagepresent = model.ImagePresent;
                 var accountdetail = GetLoginDetails(Userid);
-                if (string.IsNullOrEmpty(model.Firstname)&& string.IsNullOrEmpty(model.Lastname))
+                if (string.IsNullOrEmpty(model.Firstname))
                 {
                   
                         ModelState.AddModelError("Error", "Please provide first name and last name!");
@@ -865,8 +872,24 @@ namespace EventCombo.Controllers
             {
                 case SignInStatus.Success:
                    var User = UserManager.FindByEmail(model.Email.ToString());
-                    Session["AppId"] = User.Id;
-                    return RedirectToLocal(returnUrl);
+                   
+                    var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
+                    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
+                    if (users.Find(x => x.Id == User.Id) != null)
+                    {
+                        Session["AppId"] = User.Id;
+
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                       
+                            ModelState.AddModelError("", "You not authorized user");
+                            return RedirectToAction("Index", "Home");
+                        
+
+                    }
+                   
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -936,52 +959,7 @@ namespace EventCombo.Controllers
         }
     
 
-    //
-    // GET: /Account/Register
-    //[AllowAnonymous]
-    //    public ActionResult Register()
-    //    {
-    //        //var countries = (from app in db.Countries select app).ToList();
-    //        var client = new WebClient();
-    //        System.Web.Script.Serialization.JavaScriptSerializer ser = new System.Web.Script.Serialization.JavaScriptSerializer();
-    //        string ip = GetLanIPAddress().Replace("::ffff:", "");
-    //        //var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-    //        //dynamic stuff = JsonConvert.DeserializeObject(json);
-
-            
-    //        //ViewBag.Country = stuff.country_name;
-    //        //ViewBag.city = stuff.city;
-    //        //ViewBag.state =stuff.region_name;
-    //        //ViewBag.PinCode = stuff.zip_code;
-
-    //        //foreach (var date in nodes)
-    //        //{
-    //        //    string theKey = date.Key;
-    //        //    string thisNode = date.Value[0];
-    //        //}
-    //        // var search = Json.Decode(json);
-    //        var countryQuery = (from c in db.Countries
-    //                            orderby c.Country1 ascending
-    //                            select c).Distinct();
-    //        List<SelectListItem> countryList = new List<SelectListItem>();
-    //        string defaultCountry = "United States";
-    //        foreach (var item in countryQuery)
-    //        {
-    //            countryList.Add(new SelectListItem()
-    //            {
-    //                Text = item.Country1  ,
-    //                Value = item.CountryID.ToString (),
-    //                Selected = (item.Country1.Trim () == defaultCountry.Trim () ? true : false)
-    //            });
-    //        }
-    //        ViewBag.Country = countryList;
-         
-          
-    //        return View();
-    //    }
-
-        //
-        // POST: /Account/Register
+    
 
      
 
@@ -1255,10 +1233,23 @@ namespace EventCombo.Controllers
                     if (result1.Succeeded)
                     {
                         await SignInManager.SignInAsync(user1, isPersistent: false, rememberBrowser: false);
-
+                        await this.UserManager.AddToRoleAsync(user1.Id, "Member");
 
                         Session["AppId"] = user1.Id;
-                        var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+                        using (EventComboEntities objEntity = new EventComboEntities())
+                        {
+                            User_Permission_Detail permdetail = new User_Permission_Detail();
+                            for (int i = 1; i < 3; i++)
+                            {
+
+                                permdetail.UP_Permission_Id = i;
+                                permdetail.UP_User_Id = user1.Id.ToString();
+                                objEntity.User_Permission_Detail.Add(permdetail);
+                                objEntity.SaveChanges();
+                            }
+                        }
+
+                            var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
                         if (loginInfo.Login.LoginProvider == "Facebook")
                         {
 
@@ -1396,11 +1387,33 @@ namespace EventCombo.Controllers
 
                 }
                 var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-                Session["AppId"] = user.Id;
-                return RedirectToLocal(returnUrl);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        //var User = UserManager.FindByEmail(model.Email.ToString());
+
+                        var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
+                        var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
+                        if (users.Find(x => x.Id == user.Id) != null)
+                        {
+                            Session["AppId"] = user.Id;
+
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                        {
+
+                            ModelState.AddModelError("", "You not authorized user");
+                            return RedirectToAction("Index", "Home");
 
 
+                        }
 
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        // return View();
+                        return RedirectToAction("Index", "Home");
+                }
 
 
 

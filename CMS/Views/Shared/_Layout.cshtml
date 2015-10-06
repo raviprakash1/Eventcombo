@@ -192,6 +192,12 @@
                                     <span class="sidebar-title">Login Form</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7B');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title">Sign Up Form</span>
+                                </a>
+                            </li>
                          </ul>   
                     </li>
                    
@@ -241,7 +247,11 @@
             var vPerm = PermisionId;
           //  alert(vPerm);
 
-            if (PermisionId == "7A") PermisionId = "7";
+            if (PermisionId == "7A" || PermisionId == "7B")
+            {
+                PermisionId = "7";
+            }
+                
 
             $.ajax({
                 url: '@Url.Action("GetPermission", "Permission")',
@@ -267,6 +277,8 @@
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "MyAccount" })';
                         else if (vPerm == "7A")
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Login" })';
+                        else if (vPerm == "7B")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "Signup" })';
                         else if (vPerm == "4")
                             window.location.href = '@Url.Action("Index", "ManageEvent")';
                     }
