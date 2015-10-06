@@ -248,7 +248,7 @@
                                                             <a href="~/MyAcc/MyAccount?UserId=@obj.Id" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
                                                             @*@Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)*@
                                                             @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
-                                                            <button class="btn btn-danger br2 btn-xs fs12" onclick="ConfirmDelete('@obj.Id')"><i class="fa fa-remove"></i></button>
+                                                            <button class="btn btn-danger br2 btn-xs fs12" id="btnManage" onclick="ConfirmDelete('@obj.Id')"><i class="fa fa-remove"></i></button>
                                                         </td>
                                                         <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
                                                     </tr>
@@ -291,7 +291,7 @@
                             <span class="panel-title">Manage Role</span>
 
                         </div>
-                        <div class="panel-body admin-form">
+                        <div id="dvRoleMain" class="panel-body admin-form">
                             <form class="form-horizontal">
                                 <div class="col-md-12">
                                     <h3 class="mt5"> Select Role</h3>
@@ -353,9 +353,11 @@
                             </form>
 
                         </div>
-                        <div class="panel-footer text-right">
+                        <div class="panel-footer text-right" id="dvSave">
+                           
                             <button class="btn btn-primary" id="btSave" type="button">Save</button>
                         </div>
+                        @Html.Hidden("hdCurrentUserRole")
                     </div>
                     @*@RenderPage("~/Views/Permissions/Permission.cshtml")*@
 
@@ -375,11 +377,27 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>*@
 
     <script type="text/javascript">
-       
-
         jQuery(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("CurrentUserRole", "Permission")',
+                datatype: "Text",
+                type: "Get",
+                success: function (response) {
+                    if ($.trim(response) != 1)
+                    {
+                        //alert(response);
+                        $("#hdCurrentUserRole").val($.trim(response));
+                        
+                     //   alert($("#hdCurrentUserRole").val());
+                        //$("#rdAdmin").prop("disabled", true);
+                        //$("#dvAdmin").prop("disabled", true);
+                    }
+                    //
+                }
+            });
            
-           
+            
+
             //"use strict";
 
             //// Init Theme Core
@@ -596,23 +614,34 @@
                 success: function (response) {
                         var AryResult = response.split("^");
                         for (i = 0; i < AryResult.length ; i++) {
-                        $("#chk_" + AryResult[i]).prop("checked", true);
+                            $("#chk_" + AryResult[i]).prop("checked", true);
                         }
-                        if (AryResult[AryResult.length - 1] == "2") {
-                        $("#rdAdmin").is(":checked") = true;
-                        $("#dvMemLimited").hide();
-                        $("#dvAdmin").show();
+                        //alert(AryResult[AryResult.length - 1].toString());
+                        if (AryResult[AryResult.length - 1].toString() == "2") {
+                            if ($("#hdCurrentUserRole").val().toString() != "1") $("#btSave").prop("disabled", true);
+                            
+                            $("#rdAdmin").is(":checked") = true;
+                            $("#dvMemLimited").hide();
+                            $("#dvAdmin").show();
+                          
                         }
                         else {
-                        $("#dvMemLimited").show();
-                        $("#dvAdmin").hide();
+                            if ($("#hdCurrentUserRole").val() != "1") {
+                                $("#rdAdmin").prop("disabled", true);
+                                $("#dvAdmin").prop("disabled", true);
+                                $("#btSave").prop("disabled", false);
+                            }
+                            $("#dvMemLimited").show();
+                            $("#dvAdmin").hide();
                             if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
-                            $("#rdMember").prop("checked", true);
-                        else
-                            $("#rdMemberLimit").prop("checked", true);
+                                $("#rdMember").prop("checked", true);
+                            else
+                                $("#rdMemberLimit").prop("checked", true);
                         }
                     }
-                });
+            });
+
+
         }
 
        

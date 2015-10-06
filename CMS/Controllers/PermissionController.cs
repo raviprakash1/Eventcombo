@@ -20,22 +20,22 @@ namespace CMS.Controllers
             string strPer = "N";
             try
             {
-                string strUserId = Session["AppId"].ToString();
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
                 EmsEntities objEms = new EmsEntities();
                 var vRole = objEms.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + strUserId + "'").Single();
                 if (vRole != null && Convert.ToInt16(vRole) == 1)
                     return "Y";
-                
-                
-                
+
+
+
                 //int iGet = 
                 var vPer = (from c in objEms.User_Permission_Detail
                             where c.UP_User_Id.Equals(strUserId) && c.UP_Permission_Id.Equals(iPermissionId)
                             select new { c.UP_Id }).SingleOrDefault();
 
-               // vPer = objEms.Database.SqlQuery("SELECT UP_Id FROM User_Permission_Detail WHERE UP_User_Id = '" + strUserId + "' AND UP_Permission_Id = " + iPermissionId)
+                // vPer = objEms.Database.SqlQuery("SELECT UP_Id FROM User_Permission_Detail WHERE UP_User_Id = '" + strUserId + "' AND UP_Permission_Id = " + iPermissionId)
 
-                if (vPer != null && Convert.ToInt16(vPer.UP_Id) >0) strPer = "Y";
+                if (vPer != null && Convert.ToInt16(vPer.UP_Id) > 0) strPer = "Y";
 
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace CMS.Controllers
             string strPer = "N";
             try
             {
-                string strUserId = Session["AppId"].ToString();
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
                 EmsEntities objEms = new EmsEntities();
                 var vRole = objEms.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + strUserId + "'").Single();
                 if (vRole != null && Convert.ToInt16(vRole) == 1)
@@ -72,7 +72,7 @@ namespace CMS.Controllers
                 EmsEntities objEms = new EmsEntities();
                 var vRole = objEms.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + strUserId + "'").Single();
                 if (vRole != null)
-                    iURole= Convert.ToInt16(vRole);
+                    iURole = Convert.ToInt16(vRole);
             }
             catch (Exception ex)
             {
@@ -81,8 +81,27 @@ namespace CMS.Controllers
             return iURole;
         }
 
-        
-        
+        public int CurrentUserRole()
+        {
+            int iURole = 0;
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
+                if (!strUserId.Equals(string.Empty))
+                {
+                    EmsEntities objEms = new EmsEntities();
+                    var vRole = objEms.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + strUserId + "'").Single();
+                    if (vRole != null)
+                        iURole = Convert.ToInt16(vRole);
+                }
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            return iURole;
+        }
+
 
         //<label for="chk_3">Users</label>
         //<label for="chk_4">Events</label>
