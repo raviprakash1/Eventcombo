@@ -23,6 +23,34 @@
         <EntityTypeShape EntityType="Models.Message" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="Models.Permission_Detail" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="Models.User_Permission_Detail" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Models.Address" Width="1.5" PointX="16" PointY="7.75" />
+        <EntityTypeShape EntityType="Models.DeliveryMethod" Width="1.5" PointX="0.75" PointY="9.875" />
+        <EntityTypeShape EntityType="Models.Event" Width="1.5" PointX="15.25" PointY="15.25" />
+        <EntityTypeShape EntityType="Models.Event_Detail" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Models.EventCategory" Width="1.5" PointX="10.75" PointY="14" />
+        <EntityTypeShape EntityType="Models.EventImage" Width="1.5" PointX="17.5" PointY="25.875" />
+        <EntityTypeShape EntityType="Models.EventOrganizer" Width="1.5" PointX="17.5" PointY="19.25" />
+        <EntityTypeShape EntityType="Models.EventSubCategory" Width="1.5" PointX="13" PointY="20.5" />
+        <EntityTypeShape EntityType="Models.EventType" Width="1.5" PointX="5.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Models.EventVenue" Width="1.5" PointX="20.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.LookUpEntry" Width="1.5" PointX="15.25" PointY="12.25" />
+        <EntityTypeShape EntityType="Models.MultipleEvent" Width="1.5" PointX="17.5" PointY="14.875" />
+        <EntityTypeShape EntityType="Models.Ticket" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Models.TicketDeliveryMethod" Width="1.5" PointX="3" PointY="9.875" />
+        <EntityTypeShape EntityType="Models.TicketType" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Models.Venue" Width="1.5" PointX="18.25" PointY="8.25" />
+        <AssociationConnector Association="Models.FK__Address__Country__30592A6F" />
+        <AssociationConnector Association="Models.FK__Venue__AddressID__10AB74EC" />
+        <AssociationConnector Association="Models.FK__TicketDel__Deliv__1A69E950" />
+        <AssociationConnector Association="Models.FK__Event__EventCate__75F77EB0" />
+        <AssociationConnector Association="Models.FK__Event__EventSubC__76EBA2E9" />
+        <AssociationConnector Association="Models.FK__EventImag__Event__0DCF0841" />
+        <AssociationConnector Association="Models.FK__EventOrga__Event__47FBA9D6" />
+        <AssociationConnector Association="Models.FK__MultipleE__Event__4EA8A765" />
+        <AssociationConnector Association="Models.FK__EventSubC__Event__5F141958" />
+        <AssociationConnector Association="Models.FK__MultipleE__Frequ__4F9CCB9E" />
+        <AssociationConnector Association="Models.FK_EventVenue_Event" />
+        <AssociationConnector Association="Models.FK_EventVenue_EventVenue" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

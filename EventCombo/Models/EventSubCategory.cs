@@ -12,21 +12,20 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class EventSubCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Country()
+        public EventSubCategory()
         {
-            this.Profiles = new HashSet<Profile>();
-            this.Addresses = new HashSet<Address>();
+            this.Events = new HashSet<Event>();
         }
     
-        public byte CountryID { get; set; }
-        public string Country1 { get; set; }
+        public long EventSubCategoryID { get; set; }
+        public long EventCategoryID { get; set; }
+        public string EventSubCategory1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
+        public virtual EventCategory EventCategory { get; set; }
     }
 }

@@ -38,5 +38,21 @@ namespace EventCombo.Models
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<Event_Detail> Event_Detail { get; set; }
+        public virtual DbSet<EventCategory> EventCategories { get; set; }
+        public virtual DbSet<EventImage> EventImages { get; set; }
+        public virtual DbSet<EventOrganizer> EventOrganizers { get; set; }
+        public virtual DbSet<EventSubCategory> EventSubCategories { get; set; }
+        public virtual DbSet<EventType> EventTypes { get; set; }
+        public virtual DbSet<EventVenue> EventVenues { get; set; }
+        public virtual DbSet<LookUpEntry> LookUpEntries { get; set; }
+        public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
+        public virtual DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
+        public virtual DbSet<TicketType> TicketTypes { get; set; }
+        public virtual DbSet<Venue> Venues { get; set; }
     }
 }

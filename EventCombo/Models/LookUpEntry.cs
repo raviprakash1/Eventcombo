@@ -12,21 +12,20 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class LookUpEntry
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Country()
+        public LookUpEntry()
         {
-            this.Profiles = new HashSet<Profile>();
-            this.Addresses = new HashSet<Address>();
+            this.MultipleEvents = new HashSet<MultipleEvent>();
         }
     
-        public byte CountryID { get; set; }
-        public string Country1 { get; set; }
+        public int LookUp_Id { get; set; }
+        public string LookUp_Description { get; set; }
+        public string LookUp_Category { get; set; }
+        public string LookUp_Remarks { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<MultipleEvent> MultipleEvents { get; set; }
     }
 }

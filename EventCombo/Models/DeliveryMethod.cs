@@ -12,21 +12,18 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class DeliveryMethod
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Country()
+        public DeliveryMethod()
         {
-            this.Profiles = new HashSet<Profile>();
-            this.Addresses = new HashSet<Address>();
+            this.TicketDeliveryMethods = new HashSet<TicketDeliveryMethod>();
         }
     
-        public byte CountryID { get; set; }
-        public string Country1 { get; set; }
+        public long DeliveryMethodID { get; set; }
+        public string DeliveryMethod1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
     }
 }

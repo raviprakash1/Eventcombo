@@ -174,7 +174,7 @@ namespace EventCombo.Controllers
                     using (WebClient client = new WebClient())
                     {
                         string ip = GetLanIPAddress().Replace("::ffff:", "");
-                        var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
+                        var json = "";//client.DownloadString("http://freegeoip.net/json/" + ip + "");
                          dynamic stuff = JsonConvert.DeserializeObject(json);
                         if(stuff!=null)
                         {

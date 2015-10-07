@@ -12,21 +12,27 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class Address
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Country()
+        public Address()
         {
-            this.Profiles = new HashSet<Profile>();
-            this.Addresses = new HashSet<Address>();
+            this.Venues = new HashSet<Venue>();
         }
     
+        public long AddressID { get; set; }
+        public string Name { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
         public byte CountryID { get; set; }
-        public string Country1 { get; set; }
+        public string VenueName { get; set; }
+        public string UserId { get; set; }
     
+        public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Venue> Venues { get; set; }
     }
 }
