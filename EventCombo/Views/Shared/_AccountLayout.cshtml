@@ -26,8 +26,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/main.js"></script>
-    
-   
+    <script src="~/Scripts/summernote.min.js"></script>
+
 </head>
 <body>
     @*Header Section*@
@@ -97,7 +97,7 @@
                                         </div>
                                         <div id="collapse2" class="panel-collapse collapse">
                                             <div class="panel-body no-padding">
-                                                <p>Create Event</p>
+                                                <p>@Html.ActionLink("Create Events", "EventCreation", "Event")</p>
                                                 <p>@Html.ActionLink("Live Events", "LiveEvents", "Account")</p>
                                                 <p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>
                                                 <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>

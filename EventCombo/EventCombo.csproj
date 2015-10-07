@@ -174,6 +174,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -221,6 +222,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventCreation.cs" />
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -246,8 +248,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\desistyles.css" />
-    <Content Include="Content\desistyles_alt.css" />
+    <Content Include="Content\datepicker.css" />
     <Content Include="Content\dropit.css" />
     <Content Include="Content\eventcombo-old.css" />
     <Content Include="Content\eventcombo.css" />
@@ -256,7 +257,6 @@
     <Content Include="Content\Filer\assets\fonts\jquery.filer-icons\jquery-filer.svg" />
     <Content Include="Content\Filer\jquery.filer-dragdropbox-theme.css" />
     <Content Include="Content\Filer\jquery.filer.css" />
-    <Content Include="Content\flexnav.css" />
     <Content Include="Content\form.css" />
     <Content Include="Content\gridiculous.css" />
     <Content Include="Content\jquery-ui.css" />
@@ -264,11 +264,13 @@
     <Content Include="Content\jquery.alt-checkbox.icon-font.css" />
     <Content Include="Content\jquery.alt-checkbox.icon-font.min.css" />
     <Content Include="Content\jquery.appendGrid-1.6.1.css" />
+    <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\nyroModal.css" />
     <Content Include="Content\responsive-nav.css" />
     <Content Include="Content\style-test.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\summernote.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="ForgotPassword.html" />
@@ -472,6 +474,7 @@
     </Content>
     <Content Include="Page.html" />
     <Content Include="Scripts\aes.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\EventComboModel.edmx">
@@ -491,20 +494,17 @@
     <None Include="Properties\PublishProfiles\temp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dropit.js" />
-    <Content Include="Scripts\dropzone\basic.css" />
-    <Content Include="Scripts\dropzone\basic.min.css" />
-    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
-    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
-    <Content Include="Scripts\dropzone\dropzone.css" />
-    <Content Include="Scripts\dropzone\dropzone.js" />
-    <Content Include="Scripts\dropzone\dropzone.min.css" />
-    <Content Include="Scripts\dropzone\dropzone.min.js" />
     <Content Include="Scripts\fake-element.js" />
     <Content Include="Scripts\filer\jquery.filer.js" />
     <Content Include="Scripts\filer\jquery.filer.min.js" />
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.appendGrid\appendGrid.jquery.json" />
+    <Content Include="Scripts\jquery.appendGrid\CHANGELOG.md" />
+    <Content Include="Scripts\jquery.appendGrid\LGPL-LICENSE.md" />
+    <Content Include="Scripts\jquery.appendGrid\MIT-LICENSE.md" />
+    <Content Include="Scripts\jquery.appendGrid\README.md" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -512,6 +512,14 @@
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.alt-checkbox.min.js" />
     <Content Include="Scripts\jquery.appendGrid-1.6.1.js" />
+    <Content Include="Scripts\jquery.appendGrid\.gitattributes" />
+    <Content Include="Scripts\jquery.appendGrid\.gitignore" />
+    <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-1.4.2.css" />
+    <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-1.4.2.js" />
+    <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-1.4.2.min.css" />
+    <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-1.4.2.min.js" />
+    <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-development.css" />
+    <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-development.js" />
     <Content Include="Scripts\jquery.ba-bbq.min.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
@@ -524,6 +532,7 @@
     <Content Include="Scripts\jquery.scrollto.js" />
     <Content Include="Scripts\jquery.slides.js" />
     <Content Include="Scripts\jquery.slides.min.js" />
+    <Content Include="Scripts\jquery.timepicker.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -545,6 +554,7 @@
     <Content Include="Scripts\nyromodal\nyroModal.css" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -603,6 +613,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Event\EventCreation.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

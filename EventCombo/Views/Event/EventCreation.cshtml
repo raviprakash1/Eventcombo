@@ -1,0 +1,379 @@
+﻿@model EventCombo.Models.EventCreation
+
+@{
+    ViewBag.Title = "EventCreation";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<h2>EventCreation</h2>
+
+<div>
+   
+ 
+    <div class="event_container">
+        <form>
+            <div class="event-upload-container">
+                <input class="event-upload form-control" type="file" />
+                <div class="evnt_title_bg evnt_title_top">
+                    <div class="form-group">
+                        <input class="form-control evnt_title_control" placeholder="Enter Name of the event" value="Enter Name of the event" />
+                    </div>
+                    <div class="form-group">
+                        <label class="label-control evnt_title_control">Event Discription</label>
+                        <div class="summernote"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="event_detail_container">
+                <div class="evnt_tile_head">
+                    <h2>Event Details</h2>
+                </div>
+                <div class="evnt_details_body">
+                    <div class="form-group">
+                        <label class="label-control wd600">Event Location</label>
+                        <input class="form-control evnt_inp_cont wd600 " placeholder="Specify Where it's is held." />
+                        <div class="trigger mt5 ent_add"><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Enter Address</a> </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group">
+                        <table id="tblAddress" class="table table-responsive">
+                            <tbody>
+                                <tr class="event_add_table">
+                                    <th>Venue Name</th>
+                                    <th>Address 1</th>
+                                    <th>Address 2</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Zip Code</th>
+                                    <th>Country</th>
+                                   
+                                    <td>
+                                        <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit"></i></a> <a href="">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table id="tblTest">
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            @*------------------------------Create Ticket Section-----------------------------------------------------------------*@
+
+            <div class="event_detail_container">
+                <div class="evnt_tile_head">
+                    <h2>Create Tickets </h2>
+                </div>
+                <div class="evnt_details_body">
+                    <div class="col-sm-12 text-right mt10">
+                        <div class="form-group">
+                            <label>Reserved Seating:</label>
+                            <input type="checkbox" class="" />
+                        </div>
+                    </div>
+                    <div class="col-sm-12 text-center mt10 evnt_tct_btn">
+                        <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Free Ticket</button>
+                        <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Paid Ticket</button>
+                        <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Donation</button>
+                    </div>
+                    <div class="col-sm-12 mt10 no_pad">
+                        <div class="modal-content ticket_panel">
+                            <ul class="list-group ticket_haeding">
+                                <li class="list-group-item" style="width:4%;">&nbsp;</li>
+                                <li class="list-group-item" style="width:41%;">Ticket Name*</li>
+                                <li class="list-group-item" style="width:20%;">Quantity available*</li>
+                                <li class="list-group-item" style="width:20%;">Price</li>
+                                <li class="list-group-item" style="width:15%;">Actions</li>
+                            </ul>
+                            <div id="MasterDiv" class="">
+                                <ul id="CloneDiv" class="list-group ticket_haeding">
+                                    <li class="list-group-item" style="width:4%;">
+                                        <span><i class="fa fa-ellipsis-v"></i></span>
+                                    </li>
+                                    <li class="list-group-item" style="width:41%;">
+                                        <div class="form-group mb0">
+                                            <input class="form-control evnt_inp_cont" id="" placeholder="Give your ticket a name, like General Admission, Early Bird, RSVP, etc." />
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item" style="width:20%;">
+                                        <div class="form-group mb0">
+                                            <input class="form-control evnt_inp_cont" placeholder="100" />
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item" style="width:20%;">
+                                        <div class="form-group mb0">
+                                            <input class="form-control evnt_inp_cont" placeholder="$ 100" />
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item" style="width:15%;">
+                                        <ul class="nav evnt_setting">
+                                            <li class="">
+                                                <a href="#evnt_set" class="evnt_set active_setting"><i class="fa fa-cog"></i></a>
+                                            </li>
+                                            <li><a href=""><i class="fa fa-trash-o"></i></a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- Event Setting Start  -->
+                                    <div class="tab-content" id="evnt_set">
+                                        <div class="col-sm-12 no_pad ">
+                                            <div class="modal-content evnt_set_panel">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel">Settings</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label wd600">Ticket description</label>
+                                                            <textarea class="form-control evnt_inp_cont wd600" placeholder="Tell your attendees more about this ticket type."></textarea>
+                                                            <label class="label-control evnt_ticket_label fs-13 mt5">
+                                                                <input type="checkbox" class="" />
+                                                                Show ticket description on event page
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label wd600">Sales channel</label>
+                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                <input type="checkbox" />
+                                                                Online sales
+                                                            </label>
+                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
+                                                                <input type="checkbox" />
+                                                                At the door sales using Neon (app)
+                                                            </label>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
+                                                            <div class="evt_time evnt_time_cont wd600">
+                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" id="" />
+
+                                                                <input id="" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
+                                                                <div class="clearfix"></div>
+                                                                <label class="ev_tic_end label-control lbl_bot_text wd600">or when ticket sales end</label>
+                                                            </div>
+                                                            <div class="evnt_doll_amnt evnt_time_cont wd600">
+                                                                <select class="form-control evnt_inp_cont">
+                                                                    <option>$100</option>
+                                                                    <option>$100</option>
+                                                                </select>
+
+                                                                <label class="ev_by_date label-control lbl_bot_text wd600">or by Date</label>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
+                                                            <div class="evnt_time_cont wd600">
+                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" />
+
+                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label wd600">Ticket visibility</label>
+                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                <input type="checkbox" />
+                                                                Hide this ticket type
+                                                            </label>
+                                                            <label class="EvaddTkt label-control lbl_bot_text wd600">Add ticket auto-hide schedule</label>
+                                                            <div class="CusdateCont evnt_cus_date_cont">
+                                                                <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                    <input type="radio" />
+                                                                    When ticket is not on sale
+                                                                </label>
+                                                                <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
+                                                                    <input type="radio" />
+                                                                    For custom date and time
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="modal-footer">
+                                                    <a href="#" class=""> Minimize Setting</a>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!-- Event Setting End  -->
+                                </ul>
+                            </div>
+
+
+
+
+
+                            <div class="clearfix"></div>
+                            <div class="modal-footer ticket_footer">
+                                <button type="button" class="btn btn-primary btn-lg save_btn" id="AddMore"><i class="fa fa-plus"></i> Free Ticket</button>
+                                <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Paid Ticket</button>
+                                <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Donation</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            @*------------------------------Create Ticket Section-----------------------------------------------------------------*@
+            <div class="col-sm-12 text-center mb10 ">
+                <button type="button" id="btSave" class="btn btn-primary btn-lg save_btn">Save</button>
+                <button type="button" class="btn btn-primary btn-lg save_btn">Make your Event Live</button>
+                <input type="button" id="btTest" value="Add Row" />
+            </div>
+        </form>
+    </div>
+    <!-- modal Start Here  -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Location</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input class="form-control evnt_inp_cont" placeholder="Enter the Venue Name" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control evnt_inp_cont" placeholder="Address 1" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control evnt_inp_cont" placeholder="Address 2" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control evnt_inp_cont" placeholder="City" />
+                        </div>
+
+                        <div class="col-sm-6 row">
+                            <div class="form-group">
+                                <input class="form-control evnt_inp_cont" placeholder="State" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6 row pull-right">
+                            <div class="form-group">
+                                <input class="form-control evnt_inp_cont" placeholder="Zip Code" />
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group mb5 ">
+                            <select class="form-control evnt_inp_cont">
+                                <option>dawadasd</option>
+                                <option>dawadasd</option>
+                                <option>dawadasd</option>
+                                <option>dawadasd</option>
+                                <option>dawadasd</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6 location_map_div">
+                        <div class="col-sm-6 loc_map"> <i class="fa fa-map-marker"></i> </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"><i class="fa fa-undo"></i> Reset Address</button>
+                    <button type="button" id="btAddAddress" class="btn btn-primary">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.min.js"></script>
+    
+<link href="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $("#btTest").click(function () {
+           // alert("test");
+              $('#tblTest').appendGrid('insertRow', 1, 2);
+
+        });
+
+      $('.summernote').summernote({
+        height: 70,   //set editable area's height
+
+
+      });
+
+    
+     
+//      $('#myModal').modal(options);
+
+      $(".ticket_panel").hide();
+      $(".save_btn").click(function () {
+          $(".ticket_panel").slideDown();
+          $(".evnt_tct_btn").fadeOut("slow");
+      });
+
+
+
+      $('#AddMore').click(function () {
+          var data = $('#CloneDiv').clone();
+          data.attr('id', '');
+          //data.append('<span class="RemoveMoreHub" style="width:80%;"><a href="javascript:void(0);" style="float:right;color:#CE0009;font-size:13px;text-decoration:none;margin-right:5%;" >- Remove</a></span>');
+          data.find('#AddMore').remove();
+          data.find('.form_text1').val('');
+          $('#MasterDiv').append(data);
+      });
+
+      $(".tab-content").hide();
+      $(".evnt_set").click(function () {
+
+          $(".tab-content").toggle(800);
+      });
+      $(".evnt_set").click(function () {
+
+          $(".evnt_setting li a:first").addClass("active_setting");
+      });
+      $('.date_picker').datepicker({
+          format: "dd/mm/yyyy"
+      });
+      $(function () {
+          $('.time_picker').timepicker();
+      });
+
+      $(".evnt_doll_amnt").hide();
+      $(".ev_tic_end").click(function () {
+          $(".evt_time").css("display", "none");
+          $(".evnt_doll_amnt").css("display", "block");
+      });
+      $(".ev_by_date").click(function () {
+          $(".evnt_doll_amnt").css("display", "none");
+          $(".evt_time").css("display", "block");
+      });
+
+      $(".CusdateCont").hide();
+      $(".EvaddTkt").click(function () {
+          $(".CusdateCont").css("display", "block");
+      });
+
+
+
+});
+    </script>
+
+
