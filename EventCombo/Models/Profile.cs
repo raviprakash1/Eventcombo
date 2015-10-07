@@ -42,6 +42,9 @@ namespace EventCombo.Models
         public string ContentType { get; set; }
         public string Gender { get; set; }
         public string DateofBirth { get; set; }
+        public string Organiser { get; set; }
+        public string Merchant { get; set; }
+        public string UserStatus { get; set; }
     
         public virtual Country Country { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }

@@ -139,7 +139,7 @@ namespace CMS.Controllers
                 var userEmail = db.AspNetUsers.Where(x => x.Id == userid).Select(y => y.Email).SingleOrDefault();
                 if(userEmail!=null)
                 {
-                    return userEmail;
+                  return  userEmail.Substring(0, userEmail.IndexOf("@") + 1);
                 }
                 else
                 {
@@ -175,12 +175,7 @@ namespace CMS.Controllers
                     if (users.Find(x => x.Id == User.Id ) != null)
                     {
                         Session["AppId"] = User.Id;
-                       var userprofile = db.Profiles.Where(x => x.UserID == User.Id).Select(y => y.UserProfileImage).SingleOrDefault();
-                        if(!string.IsNullOrEmpty(userprofile))
-                        {
-                            ViewData["UserImage"] = "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepathuserprofile/"+ userprofile;
-                        }
-                         ViewData["UserName"] = model.Email;
+                     
                         return RedirectToAction("Dashboard");
                     }
                     else
@@ -190,14 +185,7 @@ namespace CMS.Controllers
                         if (usersAdmin.Find(x => x.Id == User.Id) != null)
                         {
                             Session["AppId"] = User.Id; 
-                                     var userprofile = db.Profiles.Where(x => x.UserID.Trim() == User.Id.Trim()).Select(y => y.UserProfileImage).SingleOrDefault();
-                            if (!string.IsNullOrEmpty(userprofile))
-                            {
-                                ViewData["UserImage"] = "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepathuserprofile/" + userprofile;
-
-                            }
-                            ViewData["UserImage"] = "";
-                            ViewData["UserName"] = model.Email;
+                                    
                             return RedirectToAction("Dashboard");
                         }
                         else

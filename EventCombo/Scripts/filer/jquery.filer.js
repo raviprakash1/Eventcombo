@@ -192,10 +192,10 @@
                             $('#diverro1acc').css('display', 'none');
                             $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesLimit));
                             $("#imageeror").val('1');
-                            setTimeout(function () {
-                                $('#diverroacc').fadeOut();
-                                $("#imageeror").val('0');
-                            }, 200)
+                            //setTimeout(function () {
+                            //    $('#diverroacc').fadeOut();
+                            //    $("#imageeror").val('0');
+                            //}, 200)
                           
                             return false
                         } else
@@ -224,7 +224,7 @@
                                  $('#diverroacc').css('display', 'none');
                             }
                             if (n.maxSize != null && f.files[t].size > n.maxSize * 1048576) {
-                                console.log('sdfsdfasdfadfasdfdsaf');
+                               
                                 $('#diverroacc').css('display', 'block');
                                 $('#diverro1acc').css('display', 'none');
                                 //alert(f._assets.textParse(n.captions.errors.filesSize, m));

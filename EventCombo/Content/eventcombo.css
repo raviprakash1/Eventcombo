@@ -5,6 +5,12 @@ html {
     
 }
 body{font-family:"Abel",Arial,sans-serif;}
+ .closebtn {
+     
+       margin-right:10px;
+      font-size:30px;
+      line-height:40px;
+    }
 a:focus { outline: none; text-decoration: none; }
 button:focus { outline: none;}
 .form-control:focus{ border:1px solid #ccc; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;}
@@ -28,6 +34,7 @@ button:focus { outline: none;}
 .nav_cus .menu_list p:nth-child(even) {background: #e5e5e5;}
 .menu_title{ display: block;}
 .no-padding{ padding: 0px;}
+.err-bor{ border-color: red !important;}
 
 .closed {
     display: inline-block;
@@ -311,6 +318,35 @@ button:focus { outline: none;}
 .login_place:-ms-input-placeholder {  
    font-weight: bold; color: #000; font-size: 1em;
 } 
+
+
+
+.err_main {
+    width: 100%;
+   float:left;
+
+}
+    
+
+.er_suc_main{
+	border: 1px solid green;
+    width: 100%;
+    float: left; height: 50px;  }
+.er_suc {width: 100%; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: center; }
+.er_suc_img{ background: green url(../Images/3.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
+
+.er_UI_main{border: 1px solid red;
+    width: 100%;
+    float: left;height: 50px; 
+    margin-bottom :10px;
+}
+
+.er_UI_img{ background: red url(../Images/2.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px; }
+
+.er_sys_img{background: red url(../Images/1.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
+  
+
+
 @media (min-width:1200px) {
 	.acnt_form{ width:500px; margin-bottom:20px;}
 }

@@ -19,7 +19,7 @@ namespace EventCombo.Models
         [Required]
         [StringLength(35, ErrorMessage = "The {0} cannot exceed 35 characters")]
         public string  Firstname{ get; set; }
-        [Required]
+       
         [StringLength(35, ErrorMessage = "The {0} cannot exceed 35 characters")]
         public string Lastname { get; set; }
 

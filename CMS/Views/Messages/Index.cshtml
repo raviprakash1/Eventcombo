@@ -62,7 +62,7 @@
                                     <div class="col-md-8">
                                         <div class="section">
                                             <label class="field">
-                                             @Html.TextBoxFor(x => x[i].Message, new { @class = "gui-input", id = "from", placeholder = "Message" })
+                                             @Html.TextBoxFor(x => x[i].Message, new { @class = "gui-input", id = "from", placeholder = "Message",@maxlength = 256 })
                                                 @*<input type="text" name="from" id="from" class="gui-input" placeholder="Message">*@
                                             </label>
                                         </div>

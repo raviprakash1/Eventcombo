@@ -12,7 +12,8 @@
         @Html.AntiForgeryToken()
 
         <div class="err_main">
-            <div class="er_UI_main" id="diverrologin" style="display :none;width:100%">
+            <div class="er_UI_main alert-danger" id="diverrologin" style="display :none;width:100%">
+                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
                 <div class="er_UI_img"></div>
                 <div class="er_suc" id="dverrui">  </div>
             </div>
@@ -20,7 +21,8 @@
 
 
         <div class="err_main">
-            <div class="er_UI_main" id="diverro1login" style="display :none;width:100%">
+            <div class="er_UI_main alert-danger" id="diverro1login" style="display :none;width:100%">
+                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1login">&#215;</button>
                 <div class="er_sys_img"></div>
                 <div class="er_suc" id="dverrsys">  </div>
             </div>
@@ -53,6 +55,25 @@
         
 
       <script type="text/javascript">
+          $(document).click(function () {
+              $('#diverrologin').css('display', 'none');
+              $('#diverro1login').css('display', 'none');
+            
+
+              $("input").removeClass('err-bor');
+          });
+          $('#btndiverrologin').click(function () {
+              $('#diverrologin').css('display', 'none');
+              $('#diverro1login').css('display', 'none');
+            
+              $("input").removeClass('err-bor');
+          })
+          $('#btndiverro1login').click(function () {
+              $('#diverrologin').css('display', 'none');
+              $('#diverro1login').css('display', 'none');
+             
+              $("input").removeClass('err-bor');
+          })
           $(window).load(function () {
               console.log($('#loginemail').val());
               console.log($('#loginpassword').val());
@@ -62,13 +83,12 @@
               }
           });
           $(document).ready(function () {
-
-              $('#loginemail').css("border", "gray solid 1px");
-              $('#loginpassword').css("border", "gray solid 1px");
+              $('#loginemail').removeClass('err-bor');
+              $('#loginpassword').removeClass('err-bor');
+          
               $('#diverro1login').css('display', 'none');
               $('#diverrologin').css("display", "none");
-              console.log($('#loginemail').val());
-              console.log($('#loginpassword').val());
+             
              
               $('#loginemail').keyup(function () {
              
@@ -106,7 +126,8 @@
                     var Passowrdlogin = $("#loginpassword").val();
                     if (!validateEmail(Emaillogin)) {
                         $('#loginemail').focus();
-                        $('#loginemail').css("border", "red solid 1px");
+                        $('#loginemail').addClass('err-bor');
+                       // $('#loginemail').css("border", "red solid 1px");
                         //$.ajax({
                         //    url: "/ValidationMessage/Index",
                         //    data: { formname: 'Login', errortype: 'LoginEmailValidationUI' },
@@ -132,12 +153,13 @@
 
                         msglogin = "";
                         $('#loginemail').focus();
-                        $('#loginemail').css("border", "black solid 1px");
+                        $('#loginemail').removeClass('err-bor');
                     }
                   
                     if (Passowrdlogin.length < 4) {
                         $('#loginpassword').focus();
-                        $('#loginpassword').css("border", "red solid 1px");
+                        $('#loginpassword').addClass('err-bor');
+                       // $('#loginpassword').css("border", "red solid 1px");
                         //$.ajax({
                         //    url: "/ValidationMessage/Index",
                         //    data: { formname: 'Login', errortype: 'LoginPasswordValidationUI' },
@@ -163,7 +185,8 @@
                             msglogin = "";
                         }
                         $('#loginpassword').focus();
-                        $('#loginpassword').css("border", "black solid 1px");
+                        $('#loginpassword').removeClass('err-bor');
+                       // $('#loginpassword').css("border", "black solid 1px");
 
                     }
                     return msglogin;
@@ -225,7 +248,8 @@
                                     if (data =="NotFound")
                                     {
                                         $('#loginemail').focus();
-                                        $('#loginemail').css("border", "red solid 1px");
+                                        $('#loginemail').addClass('err-bor');
+                                     
                                         $('#diverrologin').css("display", "none");
                                         $('#diverro1login').css('display', 'block');
                                         $('#dverrsys').html('Email Not Found in our Database!');
@@ -235,7 +259,9 @@
                                     } else if (data == "PasswordNotMatch")
                                     {
                                         $('#loginemail').focus();
-                                        $('#loginemail').css("border", "red solid 1px");
+                                        $('#loginemail').addClass('err-bor');
+                                        $('#loginpassword').addClass('err-bor');
+                                      //  $('#loginemail').css("border", "red solid 1px");
                                         $('#diverrologin').css("display", "none");
                                         $('#diverro1login').css('display', 'block');
                                         $('#dverrsys').html('Password Not Match In Our Database!Use Forget Password!!');

@@ -23,6 +23,7 @@
 .jFiler-input-icon i{position: relative;
     top: 35px;}
 .coun_lef{ color:#000; margin-top:5px;}
+   
 </style>
 
 @{Html.EnableClientValidation();}
@@ -38,7 +39,8 @@
     @Html.AntiForgeryToken()
     if (ViewData["Message"] != null)
                             {
-        <div class="er_suc_main" id="divaccsuc">
+        <div class="er_suc_main alert-success" id="divaccsuc">
+            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
             <div class="er_suc_img"></div>
             <div class="er_suc">@ViewData["Message"] </div>
         </div>
@@ -47,7 +49,8 @@
     if (!ViewData.ModelState.IsValid)
     {
         
-        <div class="er_UI_main" id="diverro1acc">
+        <div class="er_UI_main alert-danger" id="diverro1acc">
+            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1acc">&#215;</button>
             <div class="er_sys_img"></div>
             <div class="er_suc" id="erraccsucc">@Html.ValidationMessage("Error")</div>
         </div>
@@ -59,9 +62,15 @@
             <div class="er_suc">@ViewData["Error"]</div>
         </div>
    }*@
-        <div class="er_UI_main" id="diverroacc" style="display :none;">
-            <div class="er_UI_img"></div>
-            <div class="er_suc" id="erraccmsg">  </div>
+        <div class="er_UI_main alert-danger" id="diverroacc" style="display :none;">
+            
+            @*<div class="alert alert-danger alert-dismissable">*@
+                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverroacc">&#215;</button>
+                <div class="er_UI_img"></div>
+                <div class="er_suc" id="erraccmsg">  </div>
+            @*</div>*@
+       
+           
         </div>
         <div class="clearfix"></div>
 <div class="col-sm-3">
@@ -284,6 +293,33 @@
 
 
     <script type="text/javascript">
+        $(document).click(function () {
+            $('#diverro1acc').css('display', 'none');
+            $('#diverroacc').css('display', 'none');
+            $('#divaccsuc').css('display', 'none');
+            $("input").removeClass('err-bor');
+        });
+        $('#btndivaccsuc').click(function () {
+            $('#diverro1acc').css('display', 'none');
+            $('#diverroacc').css('display', 'none');
+            $('#divaccsuc').css('display', 'none');
+            $("input").removeClass('err-bor');
+
+        })
+        $('#btndiverro1acc').click(function () {
+            $('#diverro1acc').css('display', 'none');
+            $('#diverroacc').css('display', 'none');
+            $("input").removeClass('err-bor');
+
+        })
+        $('#btndiverroacc').click(function () {
+            $("#imageeror").val('0');
+            $('#diverro1acc').css('display', 'none');
+            $('#diverroacc').css('display', 'none');
+            $("input").removeClass('err-bor');
+           
+        })
+
         $(window).load(function () {
             var cntstreet2 = 256 - $("#StreeAddress2").val().length;
             var cntstreet2 = 256 - $("#StreetAddress1").val().length;
@@ -468,10 +504,15 @@
                     onRemove: function (el) {
                         $('#input2').click(function (e) {
                             e.preventDefault();
+
                         })
                         $('#ImagePresent').val("NO");
                     },
-                    onEmpty: function (el) { if ($(".jFiler-item").length == 1) { setTimeout(function () { $(".jFiler-input-inner").show(); $('#input2').unbind('click'); }, 200); }; },
+                    onEmpty: function (el) {
+                        if ($("#imageeror").val() == 0) {
+                            if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                        }
+                    },
                     captions: {
                         button: "Choose Files",
                         feedback: "Choose files To Upload",
@@ -684,7 +725,7 @@
         $('#btnsave').click(function () {
             var msg = "";
             var firstnmae = $("#Firstname").val();
-            console.log(firstnmae + '+++++++++++++++++');
+           
             var lastname = $("#Lastname").val();
             var ConfirmPassword = $("#ConfirmPassword").val();
 
@@ -705,43 +746,44 @@
               
                 if (day > 29 && month == 2) {
                     msg += "Invalid Date\n";
-                    $('#month').css("border", "red solid 1px");
-                    $('#year').css("border", "red solid 1px");
-                    $('#day').css("border", "red solid 1px");
+                   
+                    $('#month').addClass('err-bor');
+                    $('#year').addClass('err-bor');
+                    $('#day').addClass('err-bor');
                 }
 
             }
             else {
                 if (day > 28 && month == 2) {
                     msg += "Invalid Date\n";
-                    $('#month').css("border", "red solid 1px");
-                    $('#year').css("border", "red solid 1px");
-                    $('#day').css("border", "red solid 1px");
+                    $('#month').addClass('err-bor');
+                    $('#year').addClass('err-bor');
+                    $('#day').addClass('err-bor');
                 }
             }
             if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
             {
                 msg += "Invalid Date\n";
-                $('#month').css("border", "red solid 1px");
-                $('#year').css("border", "red solid 1px");
-                $('#day').css("border", "red solid 1px");
+                $('#month').addClass('err-bor');
+                $('#year').addClass('err-bor');
+                $('#day').addClass('err-bor');
 
             }
           
             if (firstnmae.trim() == " ") {
                 msg += "Please Enter First name! </br>"
                 $('#Firstname').focus();
-                $('#Firstname').css("border", "red solid 1px");
+                $('#Firstname').addClass('err-bor');
             } else {
                
-                $('#Firstname').css("border", "black solid 1px");
+                $('#Firstname').removeClass('err-bor');
             }
             if (lastname.trim() == " ") {
                 msg += "Please Enter Last name! </br>"
                 $('#Lastname').focus();
-                $('#Lastname').css("border", "red solid 1px");
+                $('#Lastname').addClass('err-bor');
             } else {
-                $('#Lastname').css("border", "black solid 1px");
+                $('#Lastname').removeClass('err-bor');
               
             }
 
@@ -750,14 +792,14 @@
             if (Email != "") {
                 if (!validateEmail(Email)) {
                     $('#Email').focus();
-                    $('#Email').css("border", "red solid 1px");
+                    $('#Email').addClass('err-bor');
                     msg += "Invalid Email! </br>"
 
                 } else {
 
                    
                     $('#Email').focus();
-                    $('#Email').css("border", "black solid 1px");
+                    $('#Email').removeClass('err-bor');
                 }
             }
 
@@ -765,11 +807,11 @@
 
                 if (!validateEmail(ConfirmEmail)) {
                     $('#ConfirmEmail').focus();
-                    $('#ConfirmEmail').css("border", "red solid 1px");
+                    $('#ConfirmEmail').addClass('err-bor');
                     msg += "Invalid Confirm Email! </br>"
 
                 } else {
-                    $('#ConfirmEmail').css("border", "black solid 1px");
+                    $('#ConfirmEmail').removeClass('err-bor');
                    
                 }
 
@@ -778,7 +820,7 @@
             if (Password != "") {
                 if (Password.length < 4) {
                     $('#Password').focus();
-                    $('#Password').css("border", "red solid 1px");
+                    $('#Password').addClass('err-bor');
                     msg += "Password cannot be less than 4!! </br>"
 
                 }
@@ -788,7 +830,7 @@
                 if (NewPassword.length < 4)
                 {
                     $('#NewPassword').focus();
-                    $('#NewPassword').css("border", "red solid 1px");
+                    $('#NewPassword').removeClass('err-bor');
                     msg += "New Password length cannot be less than 4!</br>"
 
                 }
@@ -798,7 +840,7 @@
             if (ConfirmPassword != "") {
                 if (ConfirmPassword.length < 4) {
                     $('#ConfirmPassword').focus();
-                    $('#ConfirmPassword').css("border", "red solid 1px");
+                    $('#ConfirmPassword').addClass('err-bor');
                     msg += "Confirm Password length cannot be less than 4! </br>"
 
                 }
@@ -819,6 +861,7 @@
 
             if (msg == "") {
                 $('#diverroacc').css("display", "none");
+                $("#imageeror").val('0');
                 return true;
             }
             else {
@@ -912,7 +955,7 @@
                        
                         $('#erraccmsg').html('Invalid Zip/Pin Code');
                         $('#diverroacc').css("display", "block");
-                        $('#Zip').css('border', 'red solid 1px');
+                        $('#Zip').addClass('err-bor');
                         return false;
                     }
                 }

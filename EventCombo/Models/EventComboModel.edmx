@@ -132,7 +132,7 @@
           <Property Name="FacebookURL" Type="varchar" MaxLength="100" />
           <Property Name="GooglePlusURL" Type="varchar" MaxLength="100" />
           <Property Name="LinkedInURL" Type="varchar" MaxLength="100" />
-          <Property Name="UserProfileImage" Type="varchar" MaxLength="50" />
+          <Property Name="UserProfileImage" Type="varchar" MaxLength="300" />
           <Property Name="OrganizerName" Type="varchar" MaxLength="50" />
           <Property Name="SecondaryEmail" Type="varchar" MaxLength="50" />
           <Property Name="OrganizerDescription" Type="varchar(max)" />
@@ -142,6 +142,9 @@
           <Property Name="ContentType" Type="varchar" MaxLength="50" />
           <Property Name="Gender" Type="varchar" MaxLength="50" />
           <Property Name="DateofBirth" Type="varchar" MaxLength="50" />
+          <Property Name="Organiser" Type="varchar" MaxLength="2" />
+          <Property Name="Merchant" Type="varchar" MaxLength="2" />
+          <Property Name="UserStatus" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -357,7 +360,7 @@
           <Property Name="FacebookURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="GooglePlusURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LinkedInURL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="UserProfileImage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserProfileImage" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="OrganizerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="SecondaryEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="OrganizerDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -369,6 +372,9 @@
           <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateofBirth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Organiser" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Merchant" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="UserStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -586,6 +592,9 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="Models.Profile">
               <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
+                <ScalarProperty Name="Merchant" ColumnName="Merchant" />
+                <ScalarProperty Name="Organiser" ColumnName="Organiser" />
                 <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="ContentType" ColumnName="ContentType" />
