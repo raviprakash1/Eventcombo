@@ -43,6 +43,11 @@
                             <div class="list-group-header"> Tags </div>
                             <ul id="contactList" class="list-group">
                                 <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
+                                        UserEmailID
+                                    </div>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
                                     <div class="contact h-card ui-widget-content ui-draggable" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable" >
                                         UserFirstNameID
                                     </div>
@@ -172,7 +177,7 @@
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">To</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control", id = "To", @placeholder = "Type Here..." , onDrop = "blur();return false;" })
+                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control", id = "To", @placeholder = "Type Here..."  })
 
                                     </div>
                                 </div>
@@ -331,11 +336,26 @@
         var droparea = document.getElementById(ids);
         //var range1 = droparea.selectionStart;
         //var range2 = droparea.selectionEnd;
-        var value = $('#' + target.id).val();
+        if ((target.id == "To" || target.id == "From" || target.id == "CC" || target.id == "Bcc") && data.trim() == "UserEmailID")
+        {
+            var value = $('#' + target.id).val();
+
+            //var str1 = val.substring(0, range1);
+            //var str3 = val.substring(range1, val.length);
+            $('#' + target.id).val(value + " " + dropText);
+
+        }
+        else
+        {
+            var value = $('#' + target.id).val();
+
+            //var str1 = val.substring(0, range1);
+            //var str3 = val.substring(range1, val.length);
+            $('#' + target.id).val(value + " " + dropText);
+
+
+        }
        
-        //var str1 = val.substring(0, range1);
-        //var str3 = val.substring(range1, val.length);
-        $('#' + target.id).val(value + " " + dropText);
        
     }
     

@@ -263,6 +263,7 @@
     <Content Include="Content\jquery.alt-checkbox.css" />
     <Content Include="Content\jquery.alt-checkbox.icon-font.css" />
     <Content Include="Content\jquery.alt-checkbox.icon-font.min.css" />
+    <Content Include="Content\jquery.appendGrid-1.6.1.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\nyroModal.css" />
     <Content Include="Content\responsive-nav.css" />
@@ -505,10 +506,12 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.alt-checkbox.min.js" />
+    <Content Include="Scripts\jquery.appendGrid-1.6.1.js" />
     <Content Include="Scripts\jquery.ba-bbq.min.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
