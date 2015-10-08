@@ -77,9 +77,9 @@
                         </div>
                     </div>
                     <div class="col-sm-12 text-center mt10 evnt_tct_btn">
-                        <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Free Ticket</button>
-                        <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Paid Ticket</button>
-                        <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Donation</button>
+                        <button type="button" class="btn btn-primary btn-lg save_btnfree"><i class="fa fa-plus"></i> Free Ticket</button>
+                        <button type="button" class="btn btn-primary btn-lg save_btnpaid"><i class="fa fa-plus"></i> Paid Ticket</button>
+                        <button type="button" class="btn btn-primary btn-lg save_btndonation"><i class="fa fa-plus"></i> Donation</button>
                     </div>
                     <div class="col-sm-12 mt10 no_pad">
                         <div class="modal-content ticket_panel">
@@ -91,23 +91,24 @@
                                 <div class="list-group-item" style="width:15%;">Actions</div>
                             </div>
                             <div id="MasterDiv" class="">
-                                <div id="CloneDiv" class="list-group ticket_haeding">
+                                <div  class="list-group ticket_haeding create-tickets--ticket" id="clonediv" >
                                     <div class="list-group-item" style="width:4%;">
                                         <span><i class="fa fa-ellipsis-v"></i></span>
                                     </div>
                                     <div class="list-group-item" style="width:41%;">
                                         <div class="form-group mb0">
-                                            <input class="form-control evnt_inp_cont" placeholder="Give your ticket a name, like General Admission, Early Bird, RSVP, etc." />
+                                            <input class="form-control evnt_inp_cont" id="id_ticket_type-0" placeholder="Give your ticket a name, like General Admission, Early Bird, RSVP, etc." maxlength="256" />
                                         </div>
                                     </div>
                                     <div class="list-group-item" style="width:20%;">
                                         <div class="form-group mb0">
-                                            <input class="form-control evnt_inp_cont" placeholder="100" />
+                                            <input class="form-control evnt_inp_cont" id="id_quantity_total-0" placeholder="100" maxlength="6" />
                                         </div>
                                     </div>
                                     <div class="list-group-item" style="width:20%;">
                                         <div class="form-group mb0">
-                                            <input class="form-control evnt_inp_cont" placeholder="$ 100" />
+                                            <input class="form-control evnt_inp_cont paidticket-0" placeholder="$ 100" id="id_cost-0" maxlength="9"/>
+                                            <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Ticket description</label>
                                         </div>
                                     </div>
                                     <div class="list-group-item" style="width:15%;">
@@ -115,8 +116,8 @@
                                             <div class="evnt_setting_list">
                                                 <a href="#evnt_set" class="evnt_set active_setting"><i class="fa fa-cog"></i></a>
                                             </div>
-                                            <div class="evnt_setting_list">
-                                                <a href=""><i class="fa fa-trash-o"></i></a>
+                                            <div class="evnt_setting_list" >
+                                                <a href="" id="id_delete_ticket"><i class="fa fa-trash-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -131,40 +132,40 @@
                                                     <div class="col-sm-12">
                                                         <div class="form-group">
                                                             <label class="label-control evnt_ticket_label wd600">Ticket description</label>
-                                                            <textarea class="form-control evnt_inp_cont wd600" placeholder="Tell your attendees more about this ticket type."></textarea>
+                                                            <textarea id="id_descriptionclass-0" class="form-control evnt_inp_cont wd600" placeholder="Tell your attendees more about this ticket type." maxlength="1000"></textarea>
                                                             <label class="label-control evnt_ticket_label fs-13 mt5">
-                                                                <input type="checkbox" class="" />
+                                                                <input type="checkbox" class="" id="id_show_description-0"/>
                                                                 Show ticket description on event page
                                                             </label>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="label-control evnt_ticket_label wd600">Sales channel</label>
                                                             <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                <input type="checkbox" />
+                                                                <input type="checkbox" id="id_available_online-0" />
                                                                 Online sales
                                                             </label>
-                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
+                                                            @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
                                                                 <input type="checkbox" />
                                                                 At the door sales using Neon (app)
-                                                            </label>
+                                                            </label>*@
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         <div class="form-group">
                                                             <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
                                                             <div class="evt_time evnt_time_cont wd600">
-                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" id="" />
+                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" id="id_salestart-0" />
 
-                                                                <input id="" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
+                                                                <input id="id_saletimestart-0" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
                                                                 <div class="clearfix"></div>
-                                                                <label class="ev_tic_end label-control lbl_bot_text wd600">or when ticket sales end</label>
+                                                                <label class="ev_tic_end label-control lbl_bot_text wd600" >or when ticket sales end</label>
                                                             </div>
                                                             <div class="evnt_doll_amnt evnt_time_cont wd600">
-                                                                <select class="form-control evnt_inp_cont">
+                                                                <select class="form-control evnt_inp_cont" id="id_start_sales_after_ticket-0">
                                                                     <option>$100</option>
                                                                     <option>$100</option>
                                                                 </select>
 
-                                                                <label class="ev_by_date label-control lbl_bot_text wd600">or by Date</label>
+                                                                <label class="ev_by_date label-control lbl_bot_text wd600" >or by Date</label>
                                                             </div>
 
                                                         </div>
@@ -172,9 +173,9 @@
                                                         <div class="form-group">
                                                             <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
                                                             <div class="evnt_time_cont wd600">
-                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" />
+                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" id="id_saleend-0"/>
 
-                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
+                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM"  id="id_saletimeend-0" />
 
 
                                                             </div>
@@ -184,39 +185,39 @@
                                                         <div class="form-group">
                                                             <label class="label-control evnt_ticket_label wd600">Ticket visibility</label>
                                                             <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                <input type="checkbox" />
+                                                                <input type="checkbox" id="id_ticketshidden-0" />
                                                                 Hide this ticket type
                                                             </label>
                                                             <label class="EvaddTkt label-control lbl_bot_text wd600">Add ticket auto-hide schedule</label>
                                                             <label class="RemvTkt label-control lbl_bot_text wd600">Remove ticket auto-hide schedule</label>
                                                             <div class="CusdateCont evnt_cus_date_cont">
                                                                 <label class="TktnotSale col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                    <input type="radio" />
+                                                                    <input type="radio" id="id_auto_hide_type_0-0"/>
                                                                     When ticket is not on sale
                                                                 </label>
                                                                 <label class="CusdateTime col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
-                                                                    <input type="radio" />
+                                                                    <input type="radio" id="id_auto_hide_type_1-0"/>
                                                                     For custom date and time
                                                                 </label>
                                                                 <div class="HideuntDiv hide_unt_aft">
                                                                     <div class="form-group">
                                                                         <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                            <input type="checkbox" /> Hide Until
+                                                                            <input type="checkbox" id="id_auto_hide_until-0" /> Hide Until
                                                                         </label>
                                                                         <div class="evnt_time_cont wd600">
-                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" />
+                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" id="id_auto_hide_until_Date-0" placeholder="dd/mm/yyyy" />
 
-                                                                            <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
+                                                                            <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                            <input type="checkbox" /> Hide After
+                                                                            <input type="checkbox" id="id_auto_hide_after-0"/> Hide After
                                                                         </label>
                                                                         <div class="evnt_time_cont wd600">
-                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" />
+                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" id="id_auto_hide_after_Date-0" placeholder="dd/mm/yyyy" />
 
-                                                                            <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
+                                                                            <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -237,6 +238,8 @@
                                         </div>
                                     </div>
                                     <!-- Event Setting End  -->
+                                    <input type="hidden" value="0" id="id_count" />
+                                    <input type="hidden" value="0" id="id_Order"/>
                                 </div>
                             </div>
 
@@ -246,9 +249,9 @@
 
                             <div class="clearfix"></div>
                             <div class="modal-footer ticket_footer">
-                                <button type="button" class="btn btn-primary btn-lg save_btn" id="AddMore"><i class="fa fa-plus"></i> Free Ticket</button>
-                                <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Paid Ticket</button>
-                                <button type="button" class="btn btn-primary btn-lg save_btn"><i class="fa fa-plus"></i> Donation</button>
+                                <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-free-button"><i class="fa fa-plus"></i> Free Ticket</button>
+                                <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-paid-button"><i class="fa fa-plus"></i> Paid Ticket</button>
+                                <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-donation-button"><i class="fa fa-plus"></i> Donation</button>
                             </div>
                         </div>
                     </div>
@@ -326,10 +329,11 @@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.min.js"></script>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.min.js"></script>
-    
+   
+
 <link href="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.js"></script>
-<script src="~/Scripts/jquery-ui.js"></script>
+@*<script src="~/Scripts/jquery-ui.js"></script>*@
 
     <script>
     $(document).ready(function() {
@@ -350,20 +354,130 @@
 //      $('#myModal').modal(options);
 
       $(".ticket_panel").hide();
-      $(".save_btn").click(function () {
+      $(".save_btnfree").click(function () {
           $(".ticket_panel").slideDown();
+          $(".normalticket-0").css('display', 'block');
+          $(".paidticket-0").css('display', 'none');
+          $("#id_paymenttype-0").text("Free");
           $(".evnt_tct_btn").fadeOut("slow");
+         
+      });
+      $(".save_btnpaid").click(function () {
+          $(".ticket_panel").slideDown();
+          $(".normalticket-").css('display', 'none');
+          $(".paidticket-0").css('display', 'block');
+          $(".evnt_tct_btn").fadeOut("slow");
+          $("#id_paymenttype-0").text("Free"); 
+      });
+      $(".save_btndonation").click(function () {
+          $(".ticket_panel").slideDown();
+          $(".normalticket-0").css('display', 'block');
+          $(".paidticket-0").css('display', 'none');
+          $(".evnt_tct_btn").fadeOut("slow");
+          $("#id_paymenttype-0").text("Donation"); 
       });
 
+      $('#create-ticket-free-button').click(function () {
+          console.log($("#MasterDiv> div").size());
+          var divlength = $("#MasterDiv> div").size();
+          var data = $('#clonediv').clone();
+          data.attr('id', 'clonediv' + divlength);
+          console.log(data.find('input[type=text]'));
+         data.find('*[id]').andSelf().each(function () {
+              console.log($(this));
+             
+              var id = $(this).attr('id');
+              //console.log(id);
+              id1 = id.substr(0, id.indexOf('-'));
+              ////console.log(id);
+             var idn = id1 + "-" + divlength;
+             $(this).attr("id", idn);
+
+             if ($(this).hasClass("paidticket-0")) {
+                 $(this).removeClass('paidticket-0');
+                 $(this).addClass('paidticket-' + divlength + '');
+             }
+             if ($(this).hasClass("normalticket-0")) {
+                 $(this).removeClass('normalticket-0');
+                 $(this).addClass('normalticket-' + divlength + '');
+             }
+              console.log(  $(this).attr('id'));
+         });
+
+       
+         $('#MasterDiv').append(data);
+         $(".normalticket-" + divlength).css('display', 'block');
+         $(".paidticket-" + divlength).css('display', 'none');
+      
+         $("#id_paymenttype-" + divlength).text("Free");
+      });
+      $('#create-ticket-paid-button').click(function () {
+          console.log($("#MasterDiv> div").size());
+          var divlength = $("#MasterDiv> div").size();
+          var data = $('#clonediv').clone();
+          data.attr('id', 'clonediv' + divlength);
+          console.log(data.find('input[type=text]'));
+          data.find('*[id]').andSelf().each(function () {
+              //console.log($(this));
+
+              var id = $(this).attr('id');
+              //console.log(id);
+              id1 = id.substr(0, id.indexOf('-'));
+              ////console.log(id);
+              var idn = id1 + "-" + divlength;
+              $(this).attr("id", idn);
+              if ($(this).hasClass("paidticket-0"))
+              {
+                  $(this).removeClass('paidticket-0');
+                  $(this).addClass('paidticket-' + divlength + '');
+              }
+              if ($(this).hasClass("normalticket-0")) {
+                  $(this).removeClass('normalticket-0');
+                  $(this).addClass('normalticket-' + divlength + '');
+              }
+           
+          });
 
 
-      $('#AddMore').click(function () {
-          var data = $('#CloneDiv').clone();
-          data.attr('id', '');
-          //data.append('<span class="RemoveMoreHub" style="width:80%;"><a href="javascript:void(0);" style="float:right;color:#CE0009;font-size:13px;text-decoration:none;margin-right:5%;" >- Remove</a></span>');
-          data.find('#AddMore').remove();
-          data.find('.form_text1').val('');
           $('#MasterDiv').append(data);
+
+          $(".normalticket-"+divlength).css('display', 'none');
+          $(".paidticket-" + divlength).css('display', 'block');
+         
+         // $("#id_paymenttype-" + divlength).text("Free");
+      });
+      $('#create-ticket-donation-button').click(function () {
+          console.log($("#MasterDiv> div").size());
+          var divlength = $("#MasterDiv> div").size();
+          var data = $('#clonediv').clone();
+          data.attr('id', 'clonediv' + divlength);
+          console.log(data.find('input[type=text]'));
+          data.find('*[id]').andSelf().each(function () {
+              //console.log($(this));
+
+              var id = $(this).attr('id');
+              //console.log(id);
+              id1 = id.substr(0, id.indexOf('-'));
+              ////console.log(id);
+              var idn = id1 + "-" + divlength;
+              $(this).attr("id", idn);
+              if ($(this).hasClass("paidticket-0")) {
+                  $(this).removeClass('paidticket-0');
+                  $(this).addClass('paidticket-' + divlength + '');
+              }
+              if ($(this).hasClass("normalticket-0")) {
+                  $(this).removeClass('normalticket-0');
+                  $(this).addClass('normalticket-' + divlength + '');
+              }
+
+          });
+
+
+          $('#MasterDiv').append(data);
+          $(".normalticket-" + divlength).css('display', 'block');
+          $(".paidticket-" + divlength).css('display', 'none');
+
+          $("#id_paymenttype-" + divlength).text("Donation");
       });
 
       $(".tab-content").hide();
