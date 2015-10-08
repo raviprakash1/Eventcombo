@@ -43,6 +43,11 @@
                             <div class="list-group-header"> Tags </div>
                             <ul id="contactList" class="list-group">
                                 <li class="list-group-item em_bor_bot">
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
+                                        UserEmailID
+                                    </div>
+                                </li>
+                                <li class="list-group-item em_bor_bot">
                                     <div class="contact h-card ui-widget-content ui-draggable" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable" >
                                         UserFirstNameID
                                     </div>
@@ -172,28 +177,28 @@
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">To</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control", id = "To", @placeholder = "Type Here..." , onDrop = "blur();return false;" })
+                                        @Html.TextBoxFor(m => m.To, new { @class = "form-control txtSubject", id = "To", @placeholder = "Type Here...", ondrop = "drop(event)", ondragover = "allowDrop(event)" })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">From</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.From, new { @class = "form-control", id = "From", @placeholder = "Type Here...", onDrop = "blur();return false;" })
+                                        @Html.TextBoxFor(m => m.From, new { @class = "form-control", id = "From", @placeholder = "Type Here...", ondrop = "drop(event)", ondragover = "allowDrop(event)" })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">Cc</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.CC, new { @class = "form-control", id = "CC", @placeholder = "Type Here...", onDrop = "blur();return false;" })
+                                        @Html.TextBoxFor(m => m.CC, new { @class = "form-control", id = "CC", @placeholder = "Type Here...", ondrop = "drop(event)", ondragover = "allowDrop(event)" })
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStandard" class="col-lg-1 control-label">Bcc</label>
                                     <div class="col-lg-8">
-                                        @Html.TextBoxFor(m => m.Bcc, new { @class = "form-control", id = "Bcc", @placeholder = "Type Here...", onDrop = "blur();return false;" })
+                                        @Html.TextBoxFor(m => m.Bcc, new { @class = "form-control", id = "Bcc", @placeholder = "Type Here...", ondrop = "drop(event)", ondragover = "allowDrop(event)" })
 
                                     </div>
                                 </div>
@@ -209,7 +214,7 @@
                                 <br>
 
                                @Html.HiddenFor(m => m.emailtag , new { id = "emailtag" })
-                           <button class="btn btn-primary col-sm-3" type="submit" id="btnsave">Save</button>
+                           <button class="btn btn-primary col-sm-3" type="button" id="btnsave">Save</button>
 
 
 
@@ -326,16 +331,33 @@
         console.log(dropText);
         var target = ev.target || ev.srcElement;
         //var idtarget = document.getElementById($('#' + ev.target.id));
-        console.log(target.id);
+      
         var ids = $('#' + target.id);
         var droparea = document.getElementById(ids);
         //var range1 = droparea.selectionStart;
         //var range2 = droparea.selectionEnd;
-        var value = $('#' + target.id).val();
        
-        //var str1 = val.substring(0, range1);
-        //var str3 = val.substring(range1, val.length);
-        $('#' + target.id).val(value + " " + dropText);
+        if ((target.id == "To" || target.id == "From" || target.id == "CC" || target.id == "Bcc") && data.trim() == "UserEmailID")
+        {
+            console.log(target.id);
+            var value = $('#' + target.id).val();
+           
+            //var str1 = val.substring(0, range1);
+            //var str3 = val.substring(range1, val.length);
+            $('#' + target.id).val(value + " " + dropText);
+
+        }
+        else if (target.id == "Subject")
+        {
+            var value = $('#' + target.id).val();
+
+            //var str1 = val.substring(0, range1);
+            //var str3 = val.substring(range1, val.length);
+            $('#' + target.id).val(value + " " + dropText);
+
+
+        }
+       
        
     }
     
@@ -456,82 +478,224 @@
             } else {
 
                 $('#To').removeClass('err-bor');
-               
+
             }
-           
+
+            if (tomail.indexOf('$$') > -1)
+            {
+                var toReplace = tomail.replace('$$', '');
+                toReplace = tomail.replace('$$', '');
+                console.log(toReplace)
+                if (toReplace.trim() != "UserEmailID")
+                {
+                    emailmsg += "Wrong Tag Inserted in to" + "\n";
+                    $('#To').addClass('err-bor');
+                    flag = true;
+
+                }
+                   
+                
+            } else {
+                if (!validateEmail(tomail)) {
+
+                    emailmsg += tomail + "\n";
+                    $('#To').addClass('err-bor');
+                    flag = true;
+
+                } else {
+                    $('#To').removeClass('err-bor');
+
+                }
+
+            }
+
+
             if (frommail != "") {
 
-                if (!validateEmail(frommail)) {
+            
+
+                if (frommail.indexOf('$$') > -1) {
+                    var fromReplace = frommail.replace('$$', '');
+                    fromReplace = fromReplace.replace('$$', '');
+                    console.log(fromReplace)
+                    if (fromReplace.trim() != "UserEmailID") {
+                        emailmsg += "Wrong Tag Inserted in from" + "\n";
+                        $('#From').addClass('err-bor');
+                        flag = true;
+
+                    }
                    
-                    emailmsg += frommail + "\n";
-                    $('#From').addClass('err-bor');
-                    flag = true;
-                  
-                } else {
-                    $('#From').removeClass('err-bor');
+                } else
+                   {
+                    if (!validateEmail(frommail)) {
+
+                        emailmsg += frommail + "\n";
+                        $('#From').addClass('err-bor');
+                        flag = true;
+
+                    } else {
+                        $('#From').removeClass('err-bor');
+
+                    }
+
+                }
+
+            
+
+
+            }
+
+            if (bccmail != "") 
+            {
+                if (bccmail.indexOf(",") > -1) 
+                {
+                    var res = bccmail.split(",");
+                    for (i = 0; i < res.length; i++)
+                    {
+                   
+                        if (res[i].indexOf('$$') != -1 && res[i].lastIndexOf('$$')!=-1) {
+                           
+                           
+                            console.log(res[i].lastIndexOf('$$'))
+                            var bccReplace = res[i].replace('$$', '');
+                            bccReplace = bccReplace.replace('$$', '');
+                            console.log(bccReplace)
+                            if (bccReplace.trim() != "UserEmailID") {
+                                emailmsg += "Wrong Tag Inserted in BCC" + "\n";
+                                $('#Bcc').addClass('err-bor');
+                                flag = true;
+                                break;
+                            }
+                           
+                        }
+                        else if (!validateEmail(res[i]))
+                        {
+                           
+                                emailmsg += res[i] + "\n";
+                                $('#Bcc').addClass('err-bor');
+                                flag = true;
+                                break;
+
+                        }
+                        else {
+                             $('#Bcc').removeClass('err-bor');
+
+
+                            }
+
+                        
+
+
+                    
+                    }
+                }
+                else if (bccmail.indexOf('$$') > -1) 
+                {
+                    var bccssplit = bccmail.split('$$');
+                    console.log(bccssplit)
+                    var bccReplace = res[i].replace('$$', '');
+                    bccReplace = bccReplace.replace('$$', '');
+                    console.log(bccReplace)
+                    if (bccReplace.trim() != "UserEmailID") 
+                    {
+                        emailmsg += "Wrong Tag Inserted in BCC" + "\n";
+                        $('#Bcc').addClass('err-bor');
+                        flag = true;
+                      
+                    }
+                } 
+                else 
+                   {
+                    if (!validateEmail(bccmail))
+                    {
+
+                        emailmsg += bccmail + "\n";
+                        $('#Bcc').addClass('err-bor');
+                        flag = true;
+
+                    } else {
+                        $('#Bcc').removeClass('err-bor');
+
+                    }
 
                 }
                 
-            }
-        
-            if (bccmail != "") {
-                if (bccmail.indexOf(",") > -1) {
-                    var res = bccmail.split(",");
-                    for (i = 0; i < res.length; i++) {
-                        if (!validateEmail(res[i])) {
-                            $('#Bcc').addClass('err-bor');
-                            emailmsg += res[i] + "\n";
-                            flag = true;
-                        }
-                    }
-                }
-                else if (!validateEmail(bccmail)) {
-                    $('#Bcc').addClass('err-bor');
-                    emailmsg += bccmail;
-                    flag = true;
-                }
-                else 
-                {
-                    $('#Bcc').removeClass('err-bor');
 
-                }
-               
             }
-        
-            
             if (cc != "") {
-             
                 if (cc.indexOf(",") > -1) {
-                 
                     var res = cc.split(",");
                     for (i = 0; i < res.length; i++) {
-                      
-                        if (!validateEmail(res[i])) {
-                            $('#CC').addClass('err-bor');
-                            emailmsg += res[i] + "\n";
-                          
-                            flag = true;
+                        if (res[i].indexOf('$$') > -1 && res[i].lastIndexOf('$$') > -1) {
+                            //var bccsplit = res[i].split('$$');
+                            console.log(res[i].lastIndexOf('$$'))
+                            var ccReplace = res[i].replace('$$', '');
+                            ccReplace = bccReplace.replace('$$', '');
+                            console.log(ccReplace)
+                            if (ccReplace.trim() != "UserEmailID") {
+                                emailmsg += "Wrong Tag Inserted in CC" + "\n";
+                                $('#cc').addClass('err-bor');
+                                flag = true;
+                                break;
+                            }
+
+                        } else {
+                            if (!validateEmail(res[i])) {
+
+                                emailmsg += res[i] + "\n";
+                                $('#cc').addClass('err-bor');
+                                break;
+                                flag = true;
+
+                            } else {
+                                $('#cc').removeClass('err-bor');
+
+                            }
+
                         }
+
+
+
                     }
                 }
-                else if (!validateEmail(cc)) {
-                    $('#CC').addClass('err-bor');
-                    emailmsg += cc;
-                    flag = true;
+                else if (cc.indexOf('$$') > -1) {
+                    var ccssplit = bccmail.split('$$');
+                    console.log(bccssplit)
+                    var ccReplace = res[i].replace('$$', '');
+                    ccReplace = ccReplace.replace('$$', '');
+                    console.log(ccReplace)
+                    if (ccReplace.trim() != "UserEmailID") {
+                        emailmsg += "Wrong Tag Inserted in BCC" + "\n";
+                        $('#cc').addClass('err-bor');
+                        flag = true;
+
+                    }
                 }
                 else {
+                    if (!validateEmail(cc)) {
 
-                    $('#CC').removeClass('err-bor');
+                        emailmsg += cc + "\n";
+                        $('#cc').addClass('err-bor');
+                        flag = true;
+
+                    } else {
+                        $('#cc').removeClass('err-bor');
+
+                    }
+
                 }
-               
-            }
-           
-            if (!validateEmail(tomail)) {
-                emailmsg += tomail;
-                flag = true;
+
 
             }
-            
+
+        
+
+            //if (!validateEmail(tomail)) {
+            //    emailmsg += tomail;
+            //    flag = true;
+
+            //}
+
             var invalid = "Invalid E-mail Id:\n";
             if (emailmsg != "")
             {
@@ -542,11 +706,11 @@
             if (flag) {
                 $('#divError').css('display', 'block');
                 $('#spanid').html(msg);
-                setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+               // setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
                 //alert(msg);
                 return false;
             }
-
+            return false;
         })
     });
     function validateEmail(sEmail) {
