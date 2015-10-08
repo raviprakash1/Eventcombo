@@ -242,21 +242,21 @@ button:focus { outline: none;}
 /************Create Ticket**********************/
 .ticket_panel{ box-shadow: none !important; border-radius: 3px !important;}
 .ticket_footer{ text-align: left !important;}
-.ticket_table td a i{font-size: 1.3em !important; margin-left: 8%; margin-top: 10px;}
-.ticket_table td .evnt_setting li{ float: left;}
-.ticket_table td .evnt_setting li a{ padding: 5px 15px !important;}
-.ticket_table td .evnt_setting li a:hover{ background: none;}
 
-
+.evnt_setting{ margin-top: 6px;}
+.evnt_setting .evnt_setting_list a i{font-size: 1.3em !important; margin-left: 8%;}
+.evnt_setting .evnt_setting_list{ float: left;}
+.evnt_setting .evnt_setting_list a{ padding: 5px 10px !important;}
+.evnt_setting .evnt_setting_list a:hover{ background: none;}
 
 .evnt_set_panel{box-shadow: none !important; border-radius: 3px !important; border:0px; background:#eee;}
 .evnt_ticket_label{ font-size: 1.2em; font-weight: normal; }
 .evnt_tick_inp_cont{ height: 40px; border-radius: 0px; float: left; margin-right: 6%; margin-bottom: 15px; }
 .mr0{ margin-right: 0px;}
 .ticket_haeding{  float: left; padding-top: 10px;padding-bottom: 10px; margin-bottom: 0px;   width: 100%; border-bottom: 1px solid #ccc;}
-.ticket_haeding li{ float: left; border: 0px; font-size: 1.2em; }
-.ticket_haeding li span{ float: left; padding-left: 2px; color: #d1d1d1; margin-top: 10px; cursor: move; }
-.ticket_haeding li a:hover{ background: none; }
+.ticket_haeding .list-group-item{ float: left; border: 0px; font-size: 1.2em; }
+.ticket_haeding .list-group-item span{ float: left; padding-left: 2px; color: #d1d1d1; margin-top: 10px; cursor: move; }
+.ticket_haeding .list-group-item a:hover{ background: none; }
 .active_setting{ background: #eee !important;}
 .ui-timepicker-wrapper{ width: 10em !important;}
 .datepicker{width: 20em !important;}
@@ -267,11 +267,7 @@ button:focus { outline: none;}
 .event_time_str{ margin-bottom:0px;}
 .evnt_cus_date_cont{ width: 100%; float: left;}
 
-
-
-
-
-
+.hide_unt_aft{ width: 100%; float:left;}
 
 
 
@@ -289,15 +285,18 @@ button:focus { outline: none;}
 /************Start Placeholder & Media Query**********************/
 .no_pad{ padding: 0px 0px;}
 .mb0{ margin-bottom: 0px;}
+.mb5{ margin-bottom: 5px;}
 .mt5{ margin-top: 5px;}
 .mt10{ margin-top: 10px;}
 .mb10{ margin-bottom:10px;}
+.ml10{ margin-left: 10px;}
 .wd600{ width: 600px; max-width: 100%;}
 .wd350{width: 350px; max-width: 100%;}
+.wd280{width: 280px; max-width: 100%;}
 .col-60{ width: 60%; float: left; margin-right: 5%;}
 .col-35{ width: 35%; float: left;}
 
-
+.fs-13{ font-size: 13px; }
 
 
 .place_hold::-webkit-input-placeholder {

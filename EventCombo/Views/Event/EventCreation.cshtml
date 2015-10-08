@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            @*------------------------------Create Ticket Section-----------------------------------------------------------------*@
+            @*------------------------------Start Create Ticket Section-----------------------------------------------------------------*@
 
             <div class="event_detail_container">
                 <div class="evnt_tile_head">
@@ -83,41 +83,43 @@
                     </div>
                     <div class="col-sm-12 mt10 no_pad">
                         <div class="modal-content ticket_panel">
-                            <ul class="list-group ticket_haeding">
-                                <li class="list-group-item" style="width:4%;">&nbsp;</li>
-                                <li class="list-group-item" style="width:41%;">Ticket Name*</li>
-                                <li class="list-group-item" style="width:20%;">Quantity available*</li>
-                                <li class="list-group-item" style="width:20%;">Price</li>
-                                <li class="list-group-item" style="width:15%;">Actions</li>
-                            </ul>
+                            <div class="list-group ticket_haeding">
+                                <div class="list-group-item" style="width:4%;">&nbsp;</div>
+                                <div class="list-group-item" style="width:41%;">Ticket Name*</div>
+                                <div class="list-group-item" style="width:20%;">Quantity available*</div>
+                                <div class="list-group-item" style="width:20%;">Price</div>
+                                <div class="list-group-item" style="width:15%;">Actions</div>
+                            </div>
                             <div id="MasterDiv" class="">
-                                <ul id="CloneDiv" class="list-group ticket_haeding">
-                                    <li class="list-group-item" style="width:4%;">
+                                <div id="CloneDiv" class="list-group ticket_haeding">
+                                    <div class="list-group-item" style="width:4%;">
                                         <span><i class="fa fa-ellipsis-v"></i></span>
-                                    </li>
-                                    <li class="list-group-item" style="width:41%;">
+                                    </div>
+                                    <div class="list-group-item" style="width:41%;">
                                         <div class="form-group mb0">
-                                            <input class="form-control evnt_inp_cont" id="" placeholder="Give your ticket a name, like General Admission, Early Bird, RSVP, etc." />
+                                            <input class="form-control evnt_inp_cont" placeholder="Give your ticket a name, like General Admission, Early Bird, RSVP, etc." />
                                         </div>
-                                    </li>
-                                    <li class="list-group-item" style="width:20%;">
+                                    </div>
+                                    <div class="list-group-item" style="width:20%;">
                                         <div class="form-group mb0">
                                             <input class="form-control evnt_inp_cont" placeholder="100" />
                                         </div>
-                                    </li>
-                                    <li class="list-group-item" style="width:20%;">
+                                    </div>
+                                    <div class="list-group-item" style="width:20%;">
                                         <div class="form-group mb0">
                                             <input class="form-control evnt_inp_cont" placeholder="$ 100" />
                                         </div>
-                                    </li>
-                                    <li class="list-group-item" style="width:15%;">
-                                        <ul class="nav evnt_setting">
-                                            <li class="">
+                                    </div>
+                                    <div class="list-group-item" style="width:15%;">
+                                        <div class="nav evnt_setting">
+                                            <div class="evnt_setting_list">
                                                 <a href="#evnt_set" class="evnt_set active_setting"><i class="fa fa-cog"></i></a>
-                                            </li>
-                                            <li><a href=""><i class="fa fa-trash-o"></i></a></li>
-                                        </ul>
-                                    </li>
+                                            </div>
+                                            <div class="evnt_setting_list">
+                                                <a href=""><i class="fa fa-trash-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- Event Setting Start  -->
                                     <div class="tab-content" id="evnt_set">
                                         <div class="col-sm-12 no_pad ">
@@ -186,15 +188,39 @@
                                                                 Hide this ticket type
                                                             </label>
                                                             <label class="EvaddTkt label-control lbl_bot_text wd600">Add ticket auto-hide schedule</label>
+                                                            <label class="RemvTkt label-control lbl_bot_text wd600">Remove ticket auto-hide schedule</label>
                                                             <div class="CusdateCont evnt_cus_date_cont">
-                                                                <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                <label class="TktnotSale col-sm-12 no_pad label-control evnt_ticket_label fs-13">
                                                                     <input type="radio" />
                                                                     When ticket is not on sale
                                                                 </label>
-                                                                <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
+                                                                <label class="CusdateTime col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
                                                                     <input type="radio" />
                                                                     For custom date and time
                                                                 </label>
+                                                                <div class="HideuntDiv hide_unt_aft">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                            <input type="checkbox" /> Hide Until
+                                                                        </label>
+                                                                        <div class="evnt_time_cont wd600">
+                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" />
+
+                                                                            <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                            <input type="checkbox" /> Hide After
+                                                                        </label>
+                                                                        <div class="evnt_time_cont wd600">
+                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" />
+
+                                                                            <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                         </div>
 
@@ -211,7 +237,7 @@
                                         </div>
                                     </div>
                                     <!-- Event Setting End  -->
-                                </ul>
+                                </div>
                             </div>
 
 
@@ -230,7 +256,7 @@
             </div>
 
             <div class="clearfix"></div>
-            @*------------------------------Create Ticket Section-----------------------------------------------------------------*@
+            @*------------------------------End Create Ticket Section-----------------------------------------------------------------*@
             <div class="col-sm-12 text-center mb10 ">
                 <button type="button" id="btSave" class="btn btn-primary btn-lg save_btn">Save</button>
                 <button type="button" class="btn btn-primary btn-lg save_btn">Make your Event Live</button>
@@ -369,6 +395,25 @@
       $(".CusdateCont").hide();
       $(".EvaddTkt").click(function () {
           $(".CusdateCont").css("display", "block");
+      });
+
+      $(".RemvTkt").hide();
+      $(".EvaddTkt").click(function () {
+          $(".RemvTkt").css("display", "block");
+          $(".EvaddTkt").css("display", "none");
+      });
+      $(".RemvTkt").click(function () {
+          $(".EvaddTkt").css("display", "block");
+          $(".CusdateCont").css("display", "none");
+          $(".RemvTkt").css("display", "none");
+      });
+
+      $(".HideuntDiv").hide();
+      $(".CusdateTime").click(function () {
+          $(".HideuntDiv").css("display", "block");
+      });
+      $(".TktnotSale").click(function () {
+          $(".HideuntDiv").css("display", "none");
       });
 
 
