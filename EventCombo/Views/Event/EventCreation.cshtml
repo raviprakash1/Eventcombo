@@ -59,6 +59,33 @@
                             </table>
 
                         </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group">
+                            <div class="str_evnt">
+                                <label class="label-control evnt_ticket_label wd140">Start</label>
+                                <div class="evnt_time_cont">
+                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="dd/mm/yyyy" />
+
+                                    <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
+
+                                </div>
+                            </div>
+                            <div class="str_evnt">
+                                <label class="label-control evnt_ticket_label wd140">Ends</label>
+                                <div class="evnt_time_cont">
+                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="dd/mm/yyyy" />
+
+                                    <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="sch_evnt_label"><a href="#" data-toggle="modal" data-target="#ScheduleDate"><i class="fa fa-map-marker"></i> Schedule multiple events</a> </div>
+                            <div class="sch_evnt_label"><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Timezone & date settings (IST)</a> </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -316,6 +343,89 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"><i class="fa fa-undo"></i> Reset Address</button>
                         <button type="button" id="btAddAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary close">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="ScheduleDate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Schedule dates</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="label-control schedule_label wd350">HOW OFTEN DOES THIS EVENT OCCUR?</label>
+                                <select class="form-control evnt_inp_cont wd350">
+                                    <option>Daily</option>
+                                    <option>Weekly</option>
+                                    <option>Monthly</option>
+                                    <option>Custome</option>
+                                </select>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label class="col-sm-12 no_pad label-control schedule_label fs-13">
+                                    From
+                                </label>
+                                <div class="evnt_time_cont">
+                                    <input class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="dd/mm/yyyy" />
+                                    <label class="label-control label_cont_to fs-13">
+                                        To
+                                    </label>
+                                    <input type="text" class="time_picker form-control evnt_inp_cont sch_time_from " placeholder="00:00 AM" />
+                                    <label class="label-control label_cont_to fs-13">
+                                        of the
+                                    </label>
+                                    <select class="form-control evnt_inp_cont nth-day wd140">
+                                        <option>Daily</option>
+                                        <option>Weekly</option>
+                                        <option>Monthly</option>
+                                        <option>Custome</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label class="col-sm-12 no_pad label-control schedule_label fs-13">
+                                    On
+                                </label>
+                                <div class="evnt_time_cont">
+                                    <input class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="dd/mm/yyyy" />
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label class="col-sm-12 no_pad label-control schedule_label fs-13">
+                                    Occurs From
+                                </label>
+                                <div class="evnt_time_cont">
+                                    <input class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="dd/mm/yyyy" />
+                                    <label class="label-control label_cont_to fs-13">
+                                        Untill
+                                    </label>
+                                    <input type="text" class="time_picker form-control evnt_inp_cont sch_time_from " placeholder="00:00 AM" />
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label col-sm-12 no_pad label-control schedule_label fs-13>
+                                    1 date (3 hours) <br>
+                                    Starting on December 1 2015
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" aria-label="Close"> Cancel</button>
+                        <button type="button" class="btn btn-primary btn-lg">Add</button>
                     </div>
                 </div>
             </div>

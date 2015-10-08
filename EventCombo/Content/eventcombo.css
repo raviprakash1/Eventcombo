@@ -238,6 +238,18 @@ button:focus { outline: none;}
 .save_btn{ border-radius: 0px !important;}
 
 
+/**********************start evnt mnamagement 2nd*************************/
+.str_evnt{ width: 300px; float: left;}
+.str_evnt_date{width: 150px; float: left !important; margin-right: 10px !important;}
+.str_evnt_time{ width: 120px; float: left !important;}
+.sch_evnt_label{ width:180px; float: left; max-width: 100%;}
+.schedule_label{ font-size: 1em; }
+.sch_date_from{ width: 180px; float: left;}
+.sch_time_from{width: 120px; float: left;}
+.label_cont_to{width:auto; float: left; margin:10px;}
+.nth-day{display: inline-block;}
+
+
 
 /************Create Ticket**********************/
 .ticket_panel{ box-shadow: none !important; border-radius: 3px !important;}
@@ -293,6 +305,7 @@ button:focus { outline: none;}
 .wd600{ width: 600px; max-width: 100%;}
 .wd350{width: 350px; max-width: 100%;}
 .wd280{width: 280px; max-width: 100%;}
+.wd140{width: 140px; max-width: 100%;}
 .col-60{ width: 60%; float: left; margin-right: 5%;}
 .col-35{ width: 35%; float: left;}
 
