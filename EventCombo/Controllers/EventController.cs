@@ -15,7 +15,7 @@ namespace EventCombo.Controllers
 
 
 
-                return View();
+            return View();
         }
 
         public ActionResult EventCreation()
@@ -23,68 +23,74 @@ namespace EventCombo.Controllers
             return View();
         }
 
-        public string SaveEvent(EventCreation model)
+        public long SaveEvent(EventCreation model)
         {
+            long lEventId = 0;
             try
             {
-
-           
-            using (EventComboEntities objEnt = new EventComboEntities())
-            {
-                Event ObjEC = new Event();
-
-                ObjEC.EventTypeID = model.EventTypeID;
-                ObjEC.EventCategoryID = model.EventCategoryID;
-                ObjEC.EventSubCategoryID = model.EventSubCategoryID;
-                ObjEC.UserID = model.UserID;
-                ObjEC.EventTitle = model.EventTitle;
-                ObjEC.DisplayStartTime = model.DisplayStartTime;
-                ObjEC.DisplayEndTime = model.DisplayEndTime;
-                ObjEC.DisplayTimeZone = model.DisplayTimeZone;
-                ObjEC.EventDescription = model.EventDescription;
-                ObjEC.EventPrivacy = model.EventPrivacy;
-                ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
-                ObjEC.Private_GuestOnly = model.Private_GuestOnly;
-                ObjEC.Private_Password = model.Private_Password;
-                ObjEC.EventUrl = model.EventUrl;
-                ObjEC.PublishOnFB = model.PublishOnFB;
-                ObjEC.EventStatus = model.EventStatus;
-
-                objEnt.Events.Add(ObjEC);
-                //    objEnt.Events.Add(ObjEC)
-                Address ObjAdd = new Models.Address();
-                foreach (Address objA in model.AddressDetail)
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                    ObjAdd.Address1 = objA.Address1;
-                    ObjAdd.Address2 = objA.Address2;
-                    ObjAdd.City = objA.City;
-                    ObjAdd.CountryID = objA.CountryID;
-                    ObjAdd.Name = objA.Name;
-                    ObjAdd.State = objA.State;
-                    ObjAdd.UserId = objA.UserId;
-                    ObjAdd.VenueName = objA.VenueName;
-                    ObjAdd.Zip = objA.Zip;
-                    objEnt.Addresses.Add(ObjAdd);
+                    Event ObjEC = new Event();
+
+                    ObjEC.EventTypeID = model.EventTypeID;
+                    ObjEC.EventCategoryID = model.EventCategoryID;
+                    ObjEC.EventSubCategoryID = model.EventSubCategoryID;
+                    ObjEC.UserID = strUserId;
+                    ObjEC.EventTitle = model.EventTitle;
+                    ObjEC.DisplayStartTime = model.DisplayStartTime;
+                    ObjEC.DisplayEndTime = model.DisplayEndTime;
+                    ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                    ObjEC.EventDescription = model.EventDescription;
+                    ObjEC.EventPrivacy = model.EventPrivacy;
+                    ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
+                    ObjEC.Private_GuestOnly = model.Private_GuestOnly;
+                    ObjEC.Private_Password = model.Private_Password;
+                    ObjEC.EventUrl = model.EventUrl;
+                    ObjEC.PublishOnFB = model.PublishOnFB;
+                    ObjEC.EventStatus = model.EventStatus;
+                    
+                    objEnt.Events.Add(ObjEC);
+                    //    objEnt.Events.Add(ObjEC)
+                    Address ObjAdd = new Models.Address();
+                    foreach (Address objA in model.AddressDetail)
+                    {
+                        ObjAdd.Address1 = objA.Address1;
+                        ObjAdd.Address2 = objA.Address2;
+                        ObjAdd.City = objA.City;
+                        ObjAdd.CountryID = objA.CountryID;
+                        ObjAdd.State = objA.State;
+                        ObjAdd.UserId = strUserId;
+                        ObjAdd.VenueName = objA.VenueName;
+                        ObjAdd.Zip = objA.Zip;
+                        ObjAdd.EventId = ObjEC.EventID;
+                        ObjAdd.Name = "";
+                        objEnt.Addresses.Add(ObjAdd);
+                        
+                    }
+
+                    EventVenue objEventVenue = new EventVenue();
+                    objEventVenue.EventID= ObjEC.EventID;
+                    objEventVenue.EventStartDate = DateTime.Today;
+                    objEventVenue.EventEndDate = DateTime.Today;
+                    objEventVenue.EventStartTime =  TimeSpan.Parse("09:00");
+                    objEventVenue.EventEndTime = TimeSpan.Parse("12:00");
+                    objEnt.EventVenues.Add(objEventVenue);
+
+
+
+
+
+                    objEnt.SaveChanges();
+                    lEventId = ObjEC.EventID;
+
                 }
-
-                objEnt.SaveChanges();
-
-                //modelAdd.Address1 = model.Address1;
-                //modelAdd.Address2 = model.Address2;
-                //modelAdd.City = model.City;
-                //modelAdd.CountryID = 1;
-                //modelAdd.Name = model.Name;
-                //modelAdd.State = model.State;
-                //modelAdd.Zip = model.Zip;
-                //modelEnt.Addresses.Add(modelAdd);
-                //modelEnt.SaveChanges();
-            }
             }
             catch (Exception ex)
             {
-                return ex.InnerException.ToString();
+                return 0;
             }
-            return "Test";
+            return lEventId;
         }
 
         //public void SaveTable(EventCreation model)

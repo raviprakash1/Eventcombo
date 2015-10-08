@@ -18,7 +18,7 @@
                     <input class="event-upload form-control" type="file" />
                     <div class="evnt_title_bg evnt_title_top">
                         <div class="form-group">
-                            <input class="form-control evnt_title_control" placeholder="Enter Name of the event" value="Enter Name of the event" />
+                            <input id="txtEventTitle" class="form-control evnt_title_control" placeholder="Enter Name of the event" value="Enter Name of the event" />
                         </div>
                         <div class="form-group">
                             <label class="label-control evnt_title_control">Event Discription</label>
@@ -50,9 +50,9 @@
                                         <th>Zip Code</th>
                                         <th>Country</th>
                                         <td>
-                                            <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit"></i></a> <a href="">
-                                                <i class="fa fa-trash-o"></i>
-                                            </a>
+                                            @*<a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit"></i></a> <a href="">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>*@
                                         </td>
                                     </tr>
                                 </tbody>
@@ -72,6 +72,7 @@
                     <button type="button" id="btSave" class="btn btn-primary btn-lg save_btn">Save</button>
                     <button type="button" class="btn btn-primary btn-lg save_btn">Make your Event Live</button>
                     <input type="button" id="btTest" value="Add Row" />
+                    <input type="hidden" id="hidAddSno" />
                 </div>
             </form>
         </div>
@@ -111,11 +112,9 @@
                             <div class="clearfix"></div>
                             <div class="form-group mb5 ">
                                 <select id="CountryID" class="form-control evnt_inp_cont">
-                                    <option>dawadasd</option>
-                                    <option>dawadasd</option>
-                                    <option>dawadasd</option>
-                                    <option>dawadasd</option>
-                                    <option>dawadasd</option>
+                                    <option>India</option>
+                                    <option>US</option>
+                                    <option>England</option>
                                 </select>
                             </div>
 
@@ -127,7 +126,7 @@
                     <div class="clearfix"></div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"><i class="fa fa-undo"></i> Reset Address</button>
-                        <button type="button" id="btAddAddress" class="btn btn-primary">Ok</button>
+                        <button type="button" id="btAddAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary close">Ok</button>
                     </div>
                 </div>
             </div>
@@ -139,14 +138,33 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.min.js"></script>
 
 @*<link href="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.js"></script>
-<script src="~/Scripts/jquery-ui.js"></script>*@
-<script type="text/javascript" >
-    function editRow(ColumnValue) {
-     //   var row_index = $(this).parent().index('tr');
-        alert(ColumnValue);
-       // var i = 1;
-//var myTr = [];
+    <script src="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>*@
+<script type="text/javascript">
+    function DeleteTableRow(Sno) {
+
+        $('#tblAddress tr').each(function () {
+            if (Sno == $(this).find("td:first").html())
+                $(this).remove();
+        });
+    }
+
+
+    function editRow(Sno) {
+        //alert(ColumnValue);
+        $("#hidAddSno").val(Sno);
+        $("#VenueName").val($("#VenueName" + Sno).val());
+        $("#Address1").val($("#Address1" + Sno).val());
+        $("#Address2").val($("#Address2" + Sno).val());
+        $("#City").val($("#City" + Sno).val());
+        $("#State").val($("#State" + Sno).val());
+        $("#Zip").val($("#Zip" + Sno).val());
+        $("#CountryID").val($("#CountryID" + Sno).val());
+        //   var row_index = $(this).parent().index('tr');
+
+
+        // var i = 1;
+        //var myTr = [];
         //$('#tblAddress tr').each(function () {
         //    $(this).find('td').each(function () {
         //    });
@@ -165,6 +183,7 @@
         //});
 
     }
+
     $(document).ready(function () {
         $("#btTest").click(function () {
             // alert("test");
@@ -174,29 +193,41 @@
 
         $('.summernote').summernote({
             height: 70,   //set editable area's height
-
-
         });
-        function AddRow(TableId,ColumnValue, IncludeSNo) {
+
+        function AddRow(TableId, ColumnValue, ColumnName, IncludeSNo) {
             var ColAry = ColumnValue.split('¶');
+            var ColName = ColumnName.split('¶');
             var Sno = $("#" + TableId + " tr").length;
             var cval = ColumnValue;
             var strHTML = '<tr>';
             strHTML = strHTML + '<td>' + Sno + '</td>';
 
-               // alert(ColAry.length);
-
             for (i = 0; i <= ColAry.length - 1; i++) {
-                strHTML = strHTML + '<td>' + ColAry[i] + '</td>';
+                CellId = ColName[i] + Sno.toString();
+                strHTML = strHTML + '<td> <input type="text" name=" " id="' + CellId + '" readonly="readonly" value="' + ColAry[i] + '" /></td>';
             }
 
-            strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a> </div></td>';
+            strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <input type="button" name="Delete" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')" value="Delete" /> </div> </td>';
             //strHTML = strHTML + '<td><input type="button" onclick="editRow();" id="btnEdit" value="Edit" /></td>';
             strHTML = strHTML + '</tr>';
             $("#" + TableId).append(strHTML);
         }
+
+        function EditRow(TableId, ColumnValue, ColumnName, Sno) {
+            var ColAry = ColumnValue.split('¶');
+            var ColName = ColumnName.split('¶');
+
+            for (i = 0; i <= ColName.length - 1; i++) {
+                CtrlId = ColName[i] + Sno.toString();
+                $("#" + CtrlId).val(ColAry[i]);
+            }
+
+        }
+
+
         $("#btAddAddress").click(function () {
-           // alert("Chal Pya");
+            // alert("Chal Pya");
             //var sno = parseInt($("#tblAddress tr").length);
             //var strHtml = '<tr><td>' + sno + '</td>' + $("#Address1").val() +'<td>' +  + '</td><td>' + $("#Address2").val() + '</td><td>' +
             //      $("#Address2").val() + '</td><td>' + $("#State").val() + '</td><td>' + $("#Zip").val() + '</td><td>' + $("#CountryID").val() + '</td></tr> '
@@ -204,71 +235,76 @@
             //var strHtml = '<tr><td>' + sno + '</td><td>Add1</td>Add2</td><td>City</td><td>State</td><td>ZipCode</td></tr> ';
 
             var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID").val();
+            var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID";
+            if ($("#hidAddSno").val().trim() != "")
+                EditRow("tblAddress", vCols, vColName, $("#hidAddSno").val().trim());
+            else
+                AddRow("tblAddress", vCols, vColName, "Y");
 
-            AddRow("tblAddress", vCols, "Y");
+
+            $("#VenueName").val("");
+            $("#Address1").val("");
+            $("#Address2").val("");
+            $("#City").val("");
+            $("#State").val("");
+            $("#Zip").val("");
+            $("#hidAddSno").val("");
+            //$("#CountryID").val('');
+
             //$("#tblAddress").append(strHtml);
 
         });
 
-        
+
 
         //$('form').submit(function () {
         $('#btSave').click(function () {
-            var myTr = [];
-            $('#tblAddress tr').each(function () {
-                $(this).find('td').each(function () {
-                    myTr.push($(this).text());
-                });
-                alert(myTr);
-            });
-        
-            //alert("chal pya");
-            //debugger;
-            //var SubmitAddress = [];
+
+            alert("chal pya");
+            // Address Entry
+            var SubmitAddress = [];
             //var table = $("#tblAddress");
-            //table.find('tr').each(function (i,el) {
-            //    var $td = $(this).find('td');
-            //    alert($td.eq(1).text());
-            //});
-            //$("#tblAddress tr").each(function () {
 
-            //    //SubmitAddress.push({
-            //    //    Name: "Name" ,
-            //    //    Address1:"Add1",
-            //    //    Address2:"Add2",
-            //    //    City:"City",
-            //    //    State: "State",
-            //    //    Zip: "ZIP",
-            //    //    VenueName: "Vname",
-            //    //    UserId:"UserTest"
-            //    //});
+
+            //$('#tblAddress tr').each(function () {
+                
+                    
             //});
 
+            $("#tblAddress tr").each(function () {
+                var Sno = $(this).find("td:first").html();
+                if (Sno.trim() != '') {
+                    SubmitAddress.push({
+                        VenueName: $("#VenueName" + Sno).val(),
+                        Address1: $("#Address1" + Sno).val(),
+                        Address2: $("#Address2" + Sno).val(),
+                        City: $("#City" + Sno).val(),
+                        State: $("#State" + Sno).val(),
+                        Zip: $("#Zip" + Sno).val(),
+                        CountryID: $("#CountryID" + Sno).val()
+                    });
+                }
+            });
 
-            //Address1:$('td input[name="Address1"]', this).val(),
-            //Address2:$('td input[name="Address2"]', this).val(),
-            //City:$('td input[name="City"]', this).val(),
-            //State: $('td input[name="State"]', this).val(),
-            //Zip: $('td input[name="Zip"]', this).val()
 
 
-            //alert("InModel");
-            @*var model = {
-                'EventTypeID':1,
-                'EventCategoryID':1,
-                'EventSubCategoryID':1,
-                'UserID':'UserId',
-                'EventTitle':'Demo' ,
-                'DisplayStartTime':'Y',
-                'DisplayEndTime':'Y',
-                'DisplayTimeZone':'Y',
-                'EventDescription':'Testing',
-                'EventPrivacy':'Public',
-                'Private_ShareOnFB' :'N',
-                'Private_GuestOnly':'N' ,
-                'Private_Password' :'Test',
-                'EventUrl':'',
-                'PublishOnFB' :'N',
+            // Basic Event Info
+            var model = {
+                'EventTypeID': 1,
+                'EventCategoryID': 1,
+                'EventSubCategoryID': 1,
+                'UserID': '',
+                'EventTitle': $("#txtEventTitle").val(),
+                'DisplayStartTime': 'Y',
+                'DisplayEndTime': 'Y',
+                'DisplayTimeZone': 'Y',
+                'EventDescription': 'Testing',
+                'EventPrivacy': 'Public',
+                'Private_ShareOnFB': 'N',
+                'Private_GuestOnly': 'N',
+                'Private_Password': 'Test',
+                'EventUrl': '',
+                'PublishOnFB': 'N',
                 'EventStatus': 'Save',
                 'AddressDetail': SubmitAddress
             };
@@ -283,7 +319,7 @@
 
                     alert('Document Saved.');
                 }
-            });*@
+            });
         });
         //      $('#myModal').modal(options);
     });

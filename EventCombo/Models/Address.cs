@@ -30,6 +30,7 @@ namespace EventCombo.Models
         public byte CountryID { get; set; }
         public string VenueName { get; set; }
         public string UserId { get; set; }
+        public Nullable<long> EventId { get; set; }
     
         public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -29,6 +29,7 @@
           <Property Name="CountryID" Type="tinyint" Nullable="false" />
           <Property Name="VenueName" Type="varchar" MaxLength="500" />
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="EventId" Type="bigint" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -899,6 +900,7 @@
           <NavigationProperty Name="Venues" Relationship="Models.FK__Venue__AddressID__10AB74EC" FromRole="Address" ToRole="Venue" />
           <Property Name="VenueName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EventId" Type="Int64" />
         </EntityType>
         <EntityType Name="DeliveryMethod">
           <Key>
@@ -1428,6 +1430,7 @@
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="Models.Address">
               <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="VenueName" ColumnName="VenueName" />
                 <ScalarProperty Name="CountryID" ColumnName="CountryID" />
