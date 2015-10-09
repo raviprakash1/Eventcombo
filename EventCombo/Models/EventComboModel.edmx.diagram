@@ -32,9 +32,8 @@
         <EntityTypeShape EntityType="Models.EventOrganizer" Width="1.5" PointX="17.5" PointY="19.25" />
         <EntityTypeShape EntityType="Models.EventSubCategory" Width="1.5" PointX="13" PointY="20.5" />
         <EntityTypeShape EntityType="Models.EventType" Width="1.5" PointX="5.75" PointY="10.75" />
-        <EntityTypeShape EntityType="Models.EventVenue" Width="1.5" PointX="20.5" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.LookUpEntry" Width="1.5" PointX="15.25" PointY="12.25" />
-        <EntityTypeShape EntityType="Models.MultipleEvent" Width="1.5" PointX="17.5" PointY="14.875" />
+        <EntityTypeShape EntityType="Models.EventVenue" Width="2.375" PointX="20.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.MultipleEvent" Width="2.375" PointX="17.5" PointY="14.875" />
         <EntityTypeShape EntityType="Models.Ticket" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="Models.TicketDeliveryMethod" Width="1.5" PointX="3" PointY="9.875" />
         <EntityTypeShape EntityType="Models.TicketType" Width="1.5" PointX="10.75" PointY="6.75" />
@@ -48,7 +47,6 @@
         <AssociationConnector Association="Models.FK__EventOrga__Event__47FBA9D6" />
         <AssociationConnector Association="Models.FK__MultipleE__Event__4EA8A765" />
         <AssociationConnector Association="Models.FK__EventSubC__Event__5F141958" />
-        <AssociationConnector Association="Models.FK__MultipleE__Frequ__4F9CCB9E" />
         <AssociationConnector Association="Models.FK_EventVenue_Event" />
         <AssociationConnector Association="Models.FK_EventVenue_EventVenue" />
       </Diagram>

@@ -139,6 +139,7 @@
           <Property Name="EventStatus" Type="varchar" MaxLength="20" />
           <Property Name="AddedOn" Type="datetime" />
           <Property Name="UpdateOn" Type="datetime" />
+          <Property Name="IsMultipleEvent" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -211,15 +212,6 @@
           <Property Name="EventStartTime" Type="time" Precision="7" />
           <Property Name="EventEndTime" Type="time" Precision="7" />
         </EntityType>
-        <EntityType Name="LookUpEntries">
-          <Key>
-            <PropertyRef Name="LookUp_Id" />
-          </Key>
-          <Property Name="LookUp_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LookUp_Description" Type="varchar" MaxLength="1000" />
-          <Property Name="LookUp_Category" Type="varchar" MaxLength="500" />
-          <Property Name="LookUp_Remarks" Type="varchar" MaxLength="1000" />
-        </EntityType>
         <EntityType Name="Messages">
           <Key>
             <PropertyRef Name="Id" />
@@ -235,11 +227,15 @@
           </Key>
           <Property Name="MultipleEventID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="bigint" Nullable="false" />
-          <Property Name="Frequency_Id" Type="int" Nullable="false" />
-          <Property Name="StartingFrom" Type="date" />
-          <Property Name="StartingTo" Type="date" />
-          <Property Name="WeeklyDay" Type="varchar" MaxLength="20" />
+          <Property Name="Frequency" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="StartingFrom" Type="varchar" MaxLength="50" />
+          <Property Name="StartingTo" Type="varchar" MaxLength="50" />
+          <Property Name="WeeklyDay" Type="varchar" MaxLength="100" />
           <Property Name="MonthlyDay" Type="int" />
+          <Property Name="StartTime" Type="varchar" MaxLength="50" />
+          <Property Name="EndTime" Type="varchar" MaxLength="50" />
+          <Property Name="MonthlyWeek" Type="varchar" MaxLength="10" />
+          <Property Name="MonthlyWeekDays" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -377,18 +373,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MultipleE__Frequ__4F9CCB9E">
-          <End Role="LookUpEntries" Type="Self.LookUpEntries" Multiplicity="1" />
-          <End Role="MultipleEvent" Type="Self.MultipleEvent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LookUpEntries">
-              <PropertyRef Name="LookUp_Id" />
-            </Principal>
-            <Dependent Role="MultipleEvent">
-              <PropertyRef Name="Frequency_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__TicketDel__Deliv__1A69E950">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
@@ -513,7 +497,6 @@
           <EntitySet Name="EventSubCategory" EntityType="Self.EventSubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVenue" EntityType="Self.EventVenue" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LookUpEntries" EntityType="Self.LookUpEntries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
@@ -527,10 +510,6 @@
           <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
-          </AssociationSet>
-          <AssociationSet Name="FK__MultipleE__Frequ__4F9CCB9E" Association="Self.FK__MultipleE__Frequ__4F9CCB9E">
-            <End Role="LookUpEntries" EntitySet="LookUpEntries" />
-            <End Role="MultipleEvent" EntitySet="MultipleEvent" />
           </AssociationSet>
           <AssociationSet Name="FK__TicketDel__Deliv__1A69E950" Association="Self.FK__TicketDel__Deliv__1A69E950">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
@@ -764,7 +743,6 @@
           <EntitySet Name="EventSubCategories" EntityType="Models.EventSubCategory" />
           <EntitySet Name="EventTypes" EntityType="Models.EventType" />
           <EntitySet Name="EventVenues" EntityType="Models.EventVenue" />
-          <EntitySet Name="LookUpEntries" EntityType="Models.LookUpEntry" />
           <EntitySet Name="MultipleEvents" EntityType="Models.MultipleEvent" />
           <EntitySet Name="Tickets" EntityType="Models.Ticket" />
           <EntitySet Name="TicketDeliveryMethods" EntityType="Models.TicketDeliveryMethod" />
@@ -805,10 +783,6 @@
           <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Models.FK__EventSubC__Event__5F141958">
             <End Role="EventCategory" EntitySet="EventCategories" />
             <End Role="EventSubCategory" EntitySet="EventSubCategories" />
-          </AssociationSet>
-          <AssociationSet Name="FK__MultipleE__Frequ__4F9CCB9E" Association="Models.FK__MultipleE__Frequ__4F9CCB9E">
-            <End Role="LookUpEntry" EntitySet="LookUpEntries" />
-            <End Role="MultipleEvent" EntitySet="MultipleEvents" />
           </AssociationSet>
           <AssociationSet Name="FK_EventVenue_Event" Association="Models.FK_EventVenue_Event">
             <End Role="Event" EntitySet="Events" />
@@ -939,6 +913,7 @@
           <NavigationProperty Name="EventOrganizers" Relationship="Models.FK__EventOrga__Event__47FBA9D6" FromRole="Event" ToRole="EventOrganizer" />
           <NavigationProperty Name="MultipleEvents" Relationship="Models.FK__MultipleE__Event__4EA8A765" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="EventVenues" Relationship="Models.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
+          <Property Name="IsMultipleEvent" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1020,29 +995,22 @@
           <NavigationProperty Name="EventVenue1" Relationship="Models.FK_EventVenue_EventVenue" FromRole="EventVenue" ToRole="EventVenue1" />
           <NavigationProperty Name="EventVenue2" Relationship="Models.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
         </EntityType>
-        <EntityType Name="LookUpEntry">
-          <Key>
-            <PropertyRef Name="LookUp_Id" />
-          </Key>
-          <Property Name="LookUp_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LookUp_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="LookUp_Category" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="LookUp_Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MultipleEvents" Relationship="Models.FK__MultipleE__Frequ__4F9CCB9E" FromRole="LookUpEntry" ToRole="MultipleEvent" />
-        </EntityType>
         <EntityType Name="MultipleEvent">
           <Key>
             <PropertyRef Name="MultipleEventID" />
           </Key>
           <Property Name="MultipleEventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventID" Type="Int64" Nullable="false" />
-          <Property Name="Frequency_Id" Type="Int32" Nullable="false" />
-          <Property Name="StartingFrom" Type="DateTime" Precision="0" />
-          <Property Name="StartingTo" Type="DateTime" Precision="0" />
-          <Property Name="WeeklyDay" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StartingFrom" Type="String" />
+          <Property Name="StartingTo" Type="String" />
+          <Property Name="WeeklyDay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyDay" Type="Int32" />
           <NavigationProperty Name="Event" Relationship="Models.FK__MultipleE__Event__4EA8A765" FromRole="MultipleEvent" ToRole="Event" />
-          <NavigationProperty Name="LookUpEntry" Relationship="Models.FK__MultipleE__Frequ__4F9CCB9E" FromRole="MultipleEvent" ToRole="LookUpEntry" />
+          <Property Name="StartTime" Type="String" />
+          <Property Name="EndTime" Type="String" />
+          <Property Name="Frequency" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
@@ -1215,18 +1183,6 @@
             </Principal>
             <Dependent Role="EventSubCategory">
               <PropertyRef Name="EventCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__MultipleE__Frequ__4F9CCB9E">
-          <End Type="Models.LookUpEntry" Role="LookUpEntry" Multiplicity="1" />
-          <End Type="Models.MultipleEvent" Role="MultipleEvent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LookUpEntry">
-              <PropertyRef Name="LookUp_Id" />
-            </Principal>
-            <Dependent Role="MultipleEvent">
-              <PropertyRef Name="Frequency_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1455,6 +1411,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="Models.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="IsMultipleEvent" ColumnName="IsMultipleEvent" />
                 <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
                 <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
                 <ScalarProperty Name="EventStatus" ColumnName="EventStatus" />
@@ -1555,24 +1512,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LookUpEntries">
-            <EntityTypeMapping TypeName="Models.LookUpEntry">
-              <MappingFragment StoreEntitySet="LookUpEntries">
-                <ScalarProperty Name="LookUp_Remarks" ColumnName="LookUp_Remarks" />
-                <ScalarProperty Name="LookUp_Category" ColumnName="LookUp_Category" />
-                <ScalarProperty Name="LookUp_Description" ColumnName="LookUp_Description" />
-                <ScalarProperty Name="LookUp_Id" ColumnName="LookUp_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MultipleEvents">
             <EntityTypeMapping TypeName="Models.MultipleEvent">
               <MappingFragment StoreEntitySet="MultipleEvent">
+                <ScalarProperty Name="MonthlyWeekDays" ColumnName="MonthlyWeekDays" />
+                <ScalarProperty Name="MonthlyWeek" ColumnName="MonthlyWeek" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="MonthlyDay" ColumnName="MonthlyDay" />
                 <ScalarProperty Name="WeeklyDay" ColumnName="WeeklyDay" />
                 <ScalarProperty Name="StartingTo" ColumnName="StartingTo" />
                 <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
-                <ScalarProperty Name="Frequency_Id" ColumnName="Frequency_Id" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="MultipleEventID" ColumnName="MultipleEventID" />
               </MappingFragment>

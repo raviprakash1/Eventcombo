@@ -248,6 +248,30 @@ button:focus { outline: none;}
 .sch_time_from{width: 120px; float: left;}
 .label_cont_to{width:auto; float: left; margin:10px;}
 .nth-day{display: inline-block;}
+.evnt_inp_sel_day button.multiselect{border-radius: 0;height: 40px; width: 200px; text-align: left !important;}
+.evnt_inp_sel_day ul.multiselect-container{ width: 200px; border-radius: 0px;} 
+.evnt_inp_sel_day b.caret{ float: right; margin-top: -12px;}
+.event_reap_time{ float: left; margin-right: 20px;}
+.sch_save_btn {border-radius: 0 !important;}
+
+/*****3rd start******/
+.Sch_evnt_cont{ box-shadow: none !important; border: 0px;  border-radius: 3px !important;}
+.Sch_evnt_main{  float: left; background: #fff; padding-top: 10px;margin-bottom:0px; width: 100%; border-bottom: 2px solid #ccc;}
+.Sch_evnt_main .list-group-item{ float: left; border: 0px; font-size: 1.2em; }
+.Sch_evnt_main .list-group-item span{ float: left; padding-left: 2px; color: #d1d1d1; margin-top: 10px; cursor: move; }
+.Sch_evnt_main .list-group-item a:hover{ background: none; }
+.Sch_evnt_main .list-group-item.Sch_title{ border-radius:0px; background: none;}
+.Sch_evnt_main .list-group-item.Sch_act_main{ margin-top: 5px; text-align: center;}
+.Sch_date{ font-size: 1.2em; font-weight: bold; text-align: center; display: block;} 
+.Sch_title_desc{font-size: 1.2em; font-weight: bold; text-align: left; display: block;}  
+.Sch_title_desc_bot{font-size: .8em; font-weight: normal; text-align: left; display: block;}
+.sch_action{float: left; margin: 5px 8px; font-size: 1.3em;}    
+
+.Sch_evnt_main_inner{ background:#ebecec; padding-top: 0px; border-bottom: 1px solid #ccc;}
+.Sch_evnt_main_inner .Sch_title_desc{font-size: 1em; font-weight: normal; }
+.Sch_evnt_main_inner .Sch_title_desc_bot{font-size: 1em; font-weight: normal;}
+
+
 
 
 
@@ -271,7 +295,7 @@ button:focus { outline: none;}
 .ticket_haeding .list-group-item a:hover{ background: none; }
 .active_setting{ background: #eee !important;}
 .ui-timepicker-wrapper{ width: 10em !important;}
-.datepicker{width: 20em !important;}
+.datepicker{width: 20em !important; z-index: 9999;}
 .datepicker td, .datepicker th{ border-radius: 0 !important;}
 .evnt_time_cont{ float: left; margin-bottom: 10px;}
 .lbl_bot_text{ font-size: 1.2em; color:#3cf; font-weight: normal; }
@@ -280,7 +304,6 @@ button:focus { outline: none;}
 .evnt_cus_date_cont{ width: 100%; float: left;}
 
 .hide_unt_aft{ width: 100%; float:left;}
-
 
 
 
@@ -305,10 +328,10 @@ button:focus { outline: none;}
 .wd600{ width: 600px; max-width: 100%;}
 .wd350{width: 350px; max-width: 100%;}
 .wd280{width: 280px; max-width: 100%;}
+.wd200{width: 200px; max-width: 100%;}
 .wd140{width: 140px; max-width: 100%;}
 .col-60{ width: 60%; float: left; margin-right: 5%;}
 .col-35{ width: 35%; float: left;}
-
 .fs-13{ font-size: 13px; }
 
 

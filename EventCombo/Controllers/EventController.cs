@@ -49,41 +49,65 @@ namespace EventCombo.Controllers
                     ObjEC.EventUrl = model.EventUrl;
                     ObjEC.PublishOnFB = model.PublishOnFB;
                     ObjEC.EventStatus = model.EventStatus;
-                    
+                    ObjEC.IsMultipleEvent = model.IsMultipleEvent;
                     objEnt.Events.Add(ObjEC);
-                    //    objEnt.Events.Add(ObjEC)
-                    Address ObjAdd = new Models.Address();
-                    foreach (Address objA in model.AddressDetail)
+                    // Address info
+                    if (model.AddressDetail != null)
                     {
-                        ObjAdd.Address1 = objA.Address1;
-                        ObjAdd.Address2 = objA.Address2;
-                        ObjAdd.City = objA.City;
-                        ObjAdd.CountryID = objA.CountryID;
-                        ObjAdd.State = objA.State;
-                        ObjAdd.UserId = strUserId;
-                        ObjAdd.VenueName = objA.VenueName;
-                        ObjAdd.Zip = objA.Zip;
-                        ObjAdd.EventId = ObjEC.EventID;
-                        ObjAdd.Name = "";
-                        objEnt.Addresses.Add(ObjAdd);
-                        
+                        Address ObjAdd = new Models.Address();
+                        foreach (Address objA in model.AddressDetail)
+                        {
+                            ObjAdd.EventId = ObjEC.EventID;
+                            ObjAdd.Address1 = objA.Address1;
+                            ObjAdd.Address2 = objA.Address2;
+                            ObjAdd.City = objA.City;
+                            ObjAdd.CountryID = objA.CountryID;
+                            ObjAdd.State = objA.State;
+                            ObjAdd.UserId = strUserId;
+                            ObjAdd.VenueName = objA.VenueName;
+                            ObjAdd.Zip = objA.Zip;
+
+                            ObjAdd.Name = "";
+                            objEnt.Addresses.Add(ObjAdd);
+
+                        }
                     }
-
-                    EventVenue objEventVenue = new EventVenue();
-                    objEventVenue.EventID= ObjEC.EventID;
-                    objEventVenue.EventStartDate = DateTime.Today;
-                    objEventVenue.EventEndDate = DateTime.Today;
-                    objEventVenue.EventStartTime =  TimeSpan.Parse("09:00");
-                    objEventVenue.EventEndTime = TimeSpan.Parse("12:00");
-                    objEnt.EventVenues.Add(objEventVenue);
-
-
-
-
+ // Event on Single Timing 
+                    if (model.EventVenue != null)
+                    {
+                        EventVenue objEVenue = new EventVenue();
+                        foreach (EventVenue objEv in model.EventVenue)
+                        {
+                            objEVenue.EventID = ObjEC.EventID;
+                            objEVenue.EventStartDate = objEv.EventStartDate;
+                            objEVenue.EventEndDate = objEv.EventEndDate;
+                            objEVenue.EventStartTime = objEv.EventStartTime;
+                            objEVenue.EventEndTime = objEv.EventEndTime;
+                            objEnt.EventVenues.Add(objEVenue);
+                        }
+                    }
+// Event on Multiple timing 
+                    if (model.MultipleEvents != null)
+                    {
+                        MultipleEvent objMEvents = new MultipleEvent();
+                        foreach (MultipleEvent objME in model.MultipleEvents)
+                        {
+                            objMEvents.EventID = ObjEC.EventID;
+                            objMEvents.Frequency = objME.Frequency;
+                            objMEvents.WeeklyDay = objME.WeeklyDay;
+                            objMEvents.MonthlyDay = objME.MonthlyDay;
+                            objMEvents.MonthlyWeek = objME.MonthlyWeek;
+                            objMEvents.MonthlyWeekDays = objME.MonthlyWeekDays;
+                            objMEvents.StartingFrom = objME.StartingFrom;
+                            objMEvents.StartingTo = objME.StartingTo;
+                            objMEvents.StartTime= objME.StartTime;
+                            objMEvents.EndTime = objME.EndTime;
+                            objEnt.MultipleEvents.Add(objMEvents);
+                        }
+                    }
 
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
-
                 }
             }
             catch (Exception ex)

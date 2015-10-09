@@ -48,7 +48,6 @@ namespace EventCombo.Models
         public virtual DbSet<EventSubCategory> EventSubCategories { get; set; }
         public virtual DbSet<EventType> EventTypes { get; set; }
         public virtual DbSet<EventVenue> EventVenues { get; set; }
-        public virtual DbSet<LookUpEntry> LookUpEntries { get; set; }
         public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
