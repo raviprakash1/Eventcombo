@@ -252,6 +252,7 @@ button:focus { outline: none;}
 
 
 /************Create Ticket**********************/
+
 .ticket_panel{ box-shadow: none !important; border-radius: 3px !important;}
 .ticket_footer{ text-align: left !important;}
 
@@ -282,7 +283,13 @@ button:focus { outline: none;}
 .hide_unt_aft{ width: 100%; float:left;}
 
 
-
+ /************Create Ticket 2nd**********************/
+.lbl_bot_price{ font-size: 1em; color: #979898; font-weight: normal;}
+.lbl_bot_price span.buyer_price{ float: none; margin: 0px; cursor: inherit; color: #3cf;}
+.evnt_set_minimise{ font-size: 1.2em;}
+.lbl_bot_minim{ font-size: 1.2em; font-weight: normal;}
+.fess_online{ width: 100%; float: left; background: #ebecec; padding: 5px;}
+.fess_online p{ color: #979898; font-size: 1.1em; margin-bottom: 0px; }
 
 
 
@@ -308,7 +315,7 @@ button:focus { outline: none;}
 .wd140{width: 140px; max-width: 100%;}
 .col-60{ width: 60%; float: left; margin-right: 5%;}
 .col-35{ width: 35%; float: left;}
-
+.mr5_p{ margin-right: 5%;}
 .fs-13{ font-size: 13px; }
 
 
