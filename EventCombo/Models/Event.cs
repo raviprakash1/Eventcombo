@@ -17,10 +17,8 @@ namespace EventCombo.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Event()
         {
-            this.EventImages = new HashSet<EventImage>();
-            this.EventOrganizers = new HashSet<EventOrganizer>();
-            this.MultipleEvents = new HashSet<MultipleEvent>();
             this.EventVenues = new HashSet<EventVenue>();
+            this.Tickets = new HashSet<Ticket>();
         }
     
         public long EventID { get; set; }
@@ -43,16 +41,13 @@ namespace EventCombo.Models
         public Nullable<System.DateTime> AddedOn { get; set; }
         public Nullable<System.DateTime> UpdateOn { get; set; }
         public string IsMultipleEvent { get; set; }
+        public string TimeZone { get; set; }
+        public string FBUrl { get; set; }
+        public string TwitterUrl { get; set; }
     
-        public virtual EventCategory EventCategory { get; set; }
-        public virtual EventSubCategory EventSubCategory { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventImage> EventImages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventOrganizer> EventOrganizers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MultipleEvent> MultipleEvents { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventVenue> EventVenues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

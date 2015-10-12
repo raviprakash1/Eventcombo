@@ -20,7 +20,5 @@ namespace EventCombo.Models
         public string OrganizerDescription { get; set; }
         public string FBLink { get; set; }
         public string TwitterLink { get; set; }
-    
-        public virtual Event Event { get; set; }
     }
 }

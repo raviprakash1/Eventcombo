@@ -17,7 +17,5 @@ namespace EventCombo.Models
         public long EventImageID { get; set; }
         public long EventID { get; set; }
         public string EventImageUrl { get; set; }
-    
-        public virtual Event Event { get; set; }
     }
 }

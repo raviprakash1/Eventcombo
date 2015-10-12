@@ -14,12 +14,6 @@ namespace EventCombo.Models
     
     public partial class Address
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Address()
-        {
-            this.Venues = new HashSet<Venue>();
-        }
-    
         public long AddressID { get; set; }
         public string Name { get; set; }
         public string Address1 { get; set; }
@@ -31,9 +25,5 @@ namespace EventCombo.Models
         public string VenueName { get; set; }
         public string UserId { get; set; }
         public Nullable<long> EventId { get; set; }
-    
-        public virtual Country Country { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Venue> Venues { get; set; }
     }
 }

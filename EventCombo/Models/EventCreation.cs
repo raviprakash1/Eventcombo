@@ -28,6 +28,11 @@ namespace EventCombo.Models
         public string EventUrl { get; set; }
         public string PublishOnFB { get; set; }
         public string EventStatus { get; set; }
+        public string IsMultipleEvent  { get; set; }
+        public string TimeZone { get; set; }
         public Address[] AddressDetail { get; set; }
+        public EventVenue[] EventVenue { get; set; }
+        public MultipleEvent[] MultipleEvents { get; set; }
+
     }
 }
