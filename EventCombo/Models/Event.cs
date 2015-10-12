@@ -43,6 +43,7 @@ namespace EventCombo.Models
         public Nullable<System.DateTime> AddedOn { get; set; }
         public Nullable<System.DateTime> UpdateOn { get; set; }
         public string IsMultipleEvent { get; set; }
+        public string TimeZone { get; set; }
     
         public virtual EventCategory EventCategory { get; set; }
         public virtual EventSubCategory EventSubCategory { get; set; }

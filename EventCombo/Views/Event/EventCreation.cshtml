@@ -21,6 +21,7 @@
                             <input id="txtEventTitle" class="form-control evnt_title_control" placeholder="Enter Name of the event" value="Enter Name of the event" />
                         </div>
                         <div class="form-group">
+
                             <label class="label-control evnt_title_control">Event Discription</label>
                             <div class="summernote"></div>
                         </div>
@@ -34,7 +35,7 @@
                         <div class="form-group">
                             <label class="label-control wd600">Event Location</label>
                             <input class="form-control evnt_inp_cont wd600 " placeholder="Specify Where it's is held." />
-                            <div class="trigger mt5 ent_add"><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Enter Address</a> </div>
+                            <div class="trigger mt5 ent_add"><a href="#" id="btEnterAddress" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Enter Address</a> </div>
                         </div>
                         <div class="clearfix"></div>
                         <div class="form-group">
@@ -60,7 +61,7 @@
 
                         </div>
                         <div class="clearfix"></div>
-                        <div class="form-group">
+                        <div id="dvSingleEvent" class="form-group">
                             <div class="str_evnt">
                                 <label class="label-control evnt_ticket_label wd140">Start</label>
                                 <div class="evnt_time_cont">
@@ -75,15 +76,19 @@
                                     <input id="txtEndTime" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
                                 </div>
                             </div>
-                            <div class="clearfix"></div>
-                            <div class="sch_evnt_label"><a href="#" data-toggle="modal" data-target="#ScheduleDate"><i class="fa fa-map-marker"></i> Schedule multiple events</a> </div>
-                            <div class="sch_evnt_label"><a href="#" data-toggle="modal" data-target="#Timezone"><i class="fa fa-map-marker"></i> Timezone & date settings (IST)</a> </div>
-
                         </div>
                         <div class="clearfix"></div>
 
+
+                        <div class="sch_evnt_label"><a href="#" id="btMultipleEvent" data-toggle="modal" data-target="#ScheduleDate"><i class="fa fa-map-marker"></i> Schedule multiple events</a> </div>
+                        <div class="sch_evnt_label"><a href="#" id="btCancleMEVents"><i class="fa fa-map-marker"></i> Cancle Multiple Events</a> </div>
+                        <div class="sch_evnt_label"><a href="#" data-toggle="modal" data-target="#Timezone"><i class="fa fa-map-marker"></i> Timezone & date settings (IST)</a> </div>
+
+
                         <div class="clearfix"></div>
-                        <div class="col-sm-12 mt10 no_pad">
+
+                        <div class="clearfix"></div>
+                        <div id="dvShowMultipleSch" class="col-sm-12 mt10 no_pad">
                             <div class="modal-content Sch_evnt_cont" style="display:block;">
                                 <div class="col-sm-12 no_pad">
                                     <div class="list-group Sch_evnt_main">
@@ -92,7 +97,10 @@
                                             <div class="Sch_date">Dates</div>
                                         </div>
                                         <div class="list-group-item Sch_title" style="width:70%;">
-                                            <div class="Sch_title_desc">Custom schedule 7:00 PM - 10:00 PM on the next day</div>
+                                            <div class="Sch_title_desc">
+
+                                                Custom schedule 7:00 PM - 10:00 PM on the next day
+                                            </div>
                                             <div class="Sch_title_desc_bot">Starting November 18 2015 through December 18 2015</div>
                                         </div>
                                         <div class="list-group-item Sch_title Sch_act_main" style="width:20%;">
@@ -330,11 +338,12 @@
 
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-center mb10 ">
-                    <input type="submit" value="Submit" />
+
                     <button type="button" id="btSave" class="btn btn-primary btn-lg save_btn">Save</button>
                     <button type="button" class="btn btn-primary btn-lg save_btn">Make your Event Live</button>
-                    <input type="button" id="btTest" value="Add Row" />
-                    <input type="hidden" id="hidAddSno" />
+
+                    <input type="hidden" id="hidAddSno" value="" />
+                    <input type="hidden" id="hidSchLastState" value="" />
                 </div>
             </form>
         </div>
@@ -531,9 +540,13 @@
                             </div>
                             <div class="clearfix"></div>
                             <div class="form-group">
-                                <label col-sm-12 no_pad label-control schedule_label fs-13>
-                                    1 date (3 hours) <br>
-                                    Starting on December 1 2015
+
+                                <label col-sm-12 no_pad label-control schedule_label fs-13 id="lblSchDatDiff">
+                                    
+                                </label>
+                                <label col-sm-12 no_pad label-control schedule_label fs-13 id="lblSchDate">
+                                
+
                                 </label>
                             </div>
                         </div>
@@ -541,8 +554,8 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-lg sch_save_btn" data-dismiss="modal" aria-label="Close"> Cancel</button>
-                        <button type="button" id="btnAddSch" class="btn btn-primary btn-lg sch_save_btn">Add</button>
+                        <button type="button" id="btCancleSch" class="btn btn-default btn-lg sch_save_btn" data-dismiss="modal" aria-label="Close"> Cancel</button>
+                        <button type="button" id="btnAddSch" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-lg sch_save_btn close">Add</button>
                     </div>
                 </div>
             </div>
@@ -558,12 +571,22 @@
                     <div class="modal-body">
                         <div class="col-sm-12 no_pad">
                             <div class="form-group mb5 ">
-                                <select class="form-control evnt_inp_cont wd600">
-                                    <option>dawadasd</option>
-                                    <option>dawadasd</option>
-                                    <option>dawadasd</option>
-                                    <option>dawadasd</option>
-                                    <option>dawadasd</option>
+                                <select id="dllTimeZone" class="form-control evnt_inp_cont wd600">
+                                    <option> Australian Central Daylight Savings Time   </option>
+                                    <option> Australian Central Standard Time	        </option>
+                                    <option> Acre Time	                                </option>
+                                    <option> ASEAN Common Time	                        </option>
+                                    <option> Atlantic Daylight Time	                    </option>
+                                    <option> Australian Eastern Daylight Savings Time    </option>
+                                    <option> Australian Eastern Standard Time            </option>
+                                    <option> Afghanistan Time                            </option>
+                                    <option> Alaska Daylight Time                        </option>
+                                    <option> Alaska Standard Time                        </option>
+                                    <option> Amazon Summer Time (Brazil)[1]              </option>
+                                    <option> Armenia Summer Time                        </option>
+                                    <option> Amazon Time (Brazil)[2]                    </option>
+                                    <option> Armenia Time                               </option>
+                                    <option> Argentina Time                             </option>
                                 </select>
                             </div>
                             <div class="clearfix"></div>
@@ -572,13 +595,13 @@
                             </div>
                             <div class="form-group mb5 ">
                                 <label class="col-sm-12 no_pad label-control evnt_ticket_label">
-                                    <input type="checkbox" /> Display start time on event page
+                                    <input id="chkDisplayStartTime" type="checkbox" /> Display start time on event page
                                 </label>
                                 <label class="col-sm-12 no_pad label-control evnt_ticket_label">
-                                    <input type="checkbox" /> Display start time on event page
+                                    <input id="chkDisplayEndTime" type="checkbox" />  Display end time on event page
                                 </label>
                                 <label class="col-sm-12 no_pad label-control evnt_ticket_label">
-                                    <input type="checkbox" /> Display start time on event page
+                                    <input id="chkTimeZone" type="checkbox" /> Display time zone on event page
                                 </label>
                             </div>
                         </div>
@@ -586,8 +609,8 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default">Cancel</button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" id="btCancelTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-default close">Cancel</button>
+                        <button type="button" id="btSaveTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-primary Close">Save</button>
                     </div>
                 </div>
             </div>
@@ -613,6 +636,11 @@
             if (Sno == $(this).find("td:first").html())
                 $(this).remove();
         });
+        if (parseInt($('#tblAddress tr').length) <= 1) {
+            $("#tblAddress").hide();
+
+        }
+
     }
 
 
@@ -649,15 +677,89 @@
         //});
 
     }
+    function checkValidDate(datevalue) {
+        var date = Date.parse(datevalue);
+        if (isNaN(date))
+            return 'N';
+        else
+            return 'Y';
+
+    }
+    function GetSchDateDiff() {
+        alert("IN fun");
+        var dateFrom = date.parse($("#txtDateFrom").val());
+        var dateTo = date.parse($("#txtDateTo").val());
+        dateDiff = new Date(dateTo - dateFrom);
+        alert(dateDiff);
+
+    }
 
     $(document).ready(function () {
+
+
+       
+            //$('#txtDateFrom').datepicker({
+            //    onSelect: function (selectedDate) {
+            //        alert("dateselected");
+            //    }
+            //});
+       
+        $("#txtDateFrom").focusout(function () {
+            //alert("chal pya");
+            GetSchDateDiff();
+
+            // alert($("#txtStartDate").val());
+            //if ($("#txtStartDate").val().trim() != "") {
+            //    var result = checkValidDate($("#txtStartDate").val());
+            //    if (result == 'N') {
+            //        alert("Please Enter Valid Event Start Date");
+            //        $("#txtStartDate").val('');
+            //        $("#txtStartDate").focus();
+            //    }
+            //}
+        });
+
+
+        $("#btCancleMEVents").hide();
+        $("#dvShowMultipleSch").hide();
+        $("#tblAddress").hide();
+
+        $("#btCancleSch").click(function () {
+            $("#dvSingleEvent").show();
+            $("#btCancleMEVents").hide();
+            $("#dvShowMultipleSch").hide();
+        });
+        if ($("#hidSchLastState").val() == "") {
+            $("#dlSchOption").val("Daily");
+            $("#hidSchLastState").val("Daily");
+            $("#dvWeeklyDayChk").hide();
+            $("#dvMonthly").hide();
+        }
+        $("#btCancleMEVents").click(function () {
+            $("#dvSingleEvent").show();
+            $("#btCancleMEVents").hide();
+            $("#dvShowMultipleSch").hide();
+        });
+        //$("#btMultipleEvent").click(function () {
+
+        //});
         $("#btnAddSch").click(function () {
-            var vSch = $("#dllWeeklyDayChk").val();
+            $("#dvSingleEvent").hide();
+            $("#btCancleMEVents").show();
+            $("#hidSchLastState").val($("#dlSchOption").val());
+            $("#dvShowMultipleSch").show();
+            //var vSch = $("#dllWeeklyDayChk").val();
 
-            var vStartTime = $("#txtTimeStart").val();
-            var vEndTime = $("#txtTimeEnd").val();
+            //var vStartTime = $("#txtTimeStart").val();
+            //var vEndTime = $("#txtTimeEnd").val();
 
-            alert(vStartTime);
+            //alert(vStartTime);
+        });
+
+        $("#btCancelTimeZone").click(function () {
+            $("#chkDisplayStartTime").prop("checked", false);
+            $("#chkDisplayEndTime").prop("checked", false);
+            $("#chkTimeZone").prop("checked", false);
         });
 
         $('.summernote').summernote({
@@ -706,10 +808,11 @@
 
             for (i = 0; i <= ColAry.length - 1; i++) {
                 CellId = ColName[i] + Sno.toString();
-                strHTML = strHTML + '<td> <input type="text" name=" " id="' + CellId + '" readonly="readonly" value="' + ColAry[i] + '" /></td>';
+                strHTML = strHTML + '<td> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
             }
 
-            strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <input type="button" name="Delete" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')" value="Delete" /> </div> </td>';
+            strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
+            //strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <input type="button" name="Delete" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')" value="Delete" /> </div> </td>';
             //strHTML = strHTML + '<td><input type="button" onclick="editRow();" id="btnEdit" value="Edit" /></td>';
             strHTML = strHTML + '</tr>';
             $("#" + TableId).append(strHTML);
@@ -728,6 +831,7 @@
 
 
         $("#btAddAddress").click(function () {
+            $("#tblAddress").show();
             // alert("Chal Pya");
             //var sno = parseInt($("#tblAddress tr").length);
             //var strHtml = '<tr><td>' + sno + '</td>' + $("#Address1").val() +'<td>' +  + '</td><td>' + $("#Address2").val() + '</td><td>' +
@@ -761,7 +865,7 @@
         //$('form').submit(function () {
         $('#btSave').click(function () {
 
-            alert("chal pya");
+
             // Address Entry
             var SubmitAddress = [];
             var SingleTiming = [];
@@ -800,67 +904,62 @@
             // Multiple Schedule
 
 
+            if ($("#dvSingleEvent").css('display') == 'none') {
 
-            //'Frequency' :      $("#dlSchOption").val(),
-            //'WeeklyDay':       $("#dllWeeklyDayChk").val(),
-            //'MonthlyDay':      $("#dllMonth").val(),
-            //'MonthlyWeek':     $("#dllMonthlyWeek").val(),
-            //'MonthlyWeekDays': $("#dllMonthlyWeekDay").val(),
-            //'StartingFrom':    $("#txtDateFrom").val(),
-            //'StartingTo':      $("#txtDateTo").val(),
-            //'StartTime':       $("#txtTimeStart").val(),
-            //'EndTime':         $("#txtTimeEnd").val()
-
-            var SchOption = $("#dlSchOption").val();
-            var vWeeklyDay = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
-            var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
-            var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
-            var vMonthlyWeekDays = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
-            var vStartingFrom = $("#txtDateFrom").val();
-            var vStartingTo = $("#txtDateTo").val();
-            var vStartTime = $("#txtTimeStart").val();
-            var vEndTime = $("#txtTimeEnd").val();
-            //var newChar = '^';
-            //alert(vWeeklyDay.split(',').join(newChar));
-            alert(vWeeklyDay);
-            vWeeklyDay= vWeeklyDay.replace(',', '^');
-            alert(vWeeklyDay);
+                var SchOption = $("#dlSchOption").val();
+                var vWeeklyDay = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
+                var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
+                var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
+                var vMonthlyWeekDays = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
+                var vStartingFrom = $("#txtDateFrom").val();
+                var vStartingTo = $("#txtDateTo").val();
+                var vStartTime = $("#txtTimeStart").val();
+                var vEndTime = $("#txtTimeEnd").val();
+                //var newChar = '^';
+                //alert(vWeeklyDay.split(',').join(newChar));
+                //alert(vWeeklyDay);
+                //vWeeklyDay= vWeeklyDay.replace(',', '^');
+                //alert(vWeeklyDay);
 
 
-            if (SchOption == "Daily") {
-                vWeeklyDay = '';
-                vMonthlyDay = '';
-                vMonthlyWeek = '';
-                vMonthlyWeekDays = '';
+                if (SchOption == "Daily") {
+                    vWeeklyDay = '';
+                    vMonthlyDay = '';
+                    vMonthlyWeek = '';
+                    vMonthlyWeekDays = '';
+                    $("#hidSchLastState").val("Daily");
+                }
+                else if (SchOption == "Weekly") {
+                    vMonthlyDay = '';
+                    vMonthlyWeek = '';
+                    vMonthlyWeekDays = '';
+                    $("#hidSchLastState").val("Weekly");
+                }
+                else if (SchOption == "Monthly") {
+                    vWeeklyDay = '';
+                    $("#hidSchLastState").val("Monthly");
+                }
+                else if (SchOption == "Custom") {
+                    vWeeklyDay = '';
+                    vMonthlyDay = '';
+                    vMonthlyWeek = '';
+                    vMonthlyWeekDays = '';
+                    $("#hidSchLastState").val("Custom");
+                }
+
+                MultipleSchedule.push({
+                    'Frequency': SchOption,
+                    'WeeklyDay': vWeeklyDay,
+                    'MonthlyDay': vMonthlyDay,
+                    'MonthlyWeek': vMonthlyWeek,
+                    'MonthlyWeekDays': vMonthlyWeekDays,
+                    'StartingFrom': vStartingFrom,
+                    'StartingTo': vStartingTo,
+                    'StartTime': vStartTime,
+                    'EndTime': vEndTime
+                });
+
             }
-            else if (SchOption == "Weekly") {
-                vMonthlyDay = '';
-                vMonthlyWeek = '';
-                vMonthlyWeekDays = '';
-            }
-            else if (SchOption == "Monthly") {
-                vWeeklyDay = '';
-            }
-            else if (SchOption == "Custom") {
-                vWeeklyDay = '';
-                vMonthlyDay = '';
-                vMonthlyWeek = '';
-                vMonthlyWeekDays = '';
-            }
-
-            MultipleSchedule.push({
-                'Frequency': SchOption,
-                'WeeklyDay':  vWeeklyDay,
-                'MonthlyDay': vMonthlyDay,
-                'MonthlyWeek': vMonthlyWeek,
-                'MonthlyWeekDays': vMonthlyWeekDays,
-                'StartingFrom':  vStartingFrom,
-                'StartingTo': vStartingTo,
-                'StartTime': vStartTime,
-                'EndTime': vEndTime
-            });
-   
-            
             // Basic Event Info
             var model = {
                 'EventTypeID': 1,
@@ -881,11 +980,15 @@
                 'EventStatus': 'Save',
                 'AddressDetail': SubmitAddress,
                 'EventVenue': SingleTiming,
+                'TimeZone': $("#dllTimeZone").val(),
+                'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
+                'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
+                'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
                 'MultipleEvents': MultipleSchedule
             };
 
             //data: JSON.stringify({ EventCreation: model }),
-          
+
             $.ajax({
                 url: '@Url.Action("SaveEvent", "Event")',
                 data: model,

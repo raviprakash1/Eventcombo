@@ -50,6 +50,10 @@ namespace EventCombo.Controllers
                     ObjEC.PublishOnFB = model.PublishOnFB;
                     ObjEC.EventStatus = model.EventStatus;
                     ObjEC.IsMultipleEvent = model.IsMultipleEvent;
+                    ObjEC.TimeZone = model.TimeZone;
+                    ObjEC.DisplayStartTime  = model.DisplayStartTime;
+                    ObjEC.DisplayEndTime = model.DisplayEndTime;
+                    ObjEC.DisplayTimeZone = model.DisplayTimeZone;
                     objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)

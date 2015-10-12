@@ -140,6 +140,7 @@
           <Property Name="AddedOn" Type="datetime" />
           <Property Name="UpdateOn" Type="datetime" />
           <Property Name="IsMultipleEvent" Type="varchar" MaxLength="1" />
+          <Property Name="TimeZone" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -914,6 +915,7 @@
           <NavigationProperty Name="MultipleEvents" Relationship="Models.FK__MultipleE__Event__4EA8A765" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="EventVenues" Relationship="Models.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
           <Property Name="IsMultipleEvent" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1001,13 +1003,13 @@
           </Key>
           <Property Name="MultipleEventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventID" Type="Int64" Nullable="false" />
-          <Property Name="StartingFrom" Type="String" />
-          <Property Name="StartingTo" Type="String" />
+          <Property Name="StartingFrom" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="StartingTo" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="WeeklyDay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyDay" Type="Int32" />
           <NavigationProperty Name="Event" Relationship="Models.FK__MultipleE__Event__4EA8A765" FromRole="MultipleEvent" ToRole="Event" />
-          <Property Name="StartTime" Type="String" />
-          <Property Name="EndTime" Type="String" />
+          <Property Name="StartTime" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="EndTime" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Frequency" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -1411,6 +1413,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="Models.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
                 <ScalarProperty Name="IsMultipleEvent" ColumnName="IsMultipleEvent" />
                 <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
                 <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
