@@ -30,7 +30,6 @@ namespace EventCombo.Models
         public Nullable<System.DateTime> Sale_End_Date { get; set; }
         public Nullable<System.TimeSpan> Sale_End_Time { get; set; }
         public Nullable<bool> Hide_Ticket { get; set; }
-        public string Auto_Hide_Sche { get; set; }
         public Nullable<bool> Hide_Untill { get; set; }
         public Nullable<System.DateTime> Hide_Untill_Date { get; set; }
         public Nullable<System.TimeSpan> Hide_Untill_Time { get; set; }
@@ -51,5 +50,10 @@ namespace EventCombo.Models
         public Nullable<bool> T_DeliveryAdd { get; set; }
         public Nullable<bool> T_WillCall { get; set; }
         public Nullable<bool> T_Seated { get; set; }
+        public Nullable<int> T_AutoSechduleType { get; set; }
+        public Nullable<decimal> Additional_Fee { get; set; }
+        public Nullable<decimal> T_Discount { get; set; }
+    
+        public virtual Event Event { get; set; }
     }
 }

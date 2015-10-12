@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b17a76b56db547d4afeae6f461d0fff9" Name="Diagram1">
+      <Diagram DiagramId="b17a76b56db547d4afeae6f461d0fff9" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="Models.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.AspNetRole" Width="1.5" PointX="10.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.AspNetUserClaim" Width="1.5" PointX="15.25" PointY="1" IsExpanded="true" />
@@ -27,11 +27,8 @@
         <EntityTypeShape EntityType="Models.DeliveryMethod" Width="1.5" PointX="0.75" PointY="9.875" />
         <EntityTypeShape EntityType="Models.Event" Width="1.5" PointX="15.25" PointY="15.25" />
         <EntityTypeShape EntityType="Models.Event_Detail" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Models.EventCategory" Width="1.5" PointX="10.75" PointY="14" />
         <EntityTypeShape EntityType="Models.EventImage" Width="1.5" PointX="17.5" PointY="25.875" />
         <EntityTypeShape EntityType="Models.EventOrganizer" Width="1.5" PointX="17.5" PointY="19.25" />
-        <EntityTypeShape EntityType="Models.EventSubCategory" Width="1.5" PointX="13" PointY="20.5" />
-        <EntityTypeShape EntityType="Models.EventType" Width="1.5" PointX="5.75" PointY="10.75" />
         <EntityTypeShape EntityType="Models.EventVenue" Width="2.375" PointX="20.5" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.MultipleEvent" Width="2.375" PointX="17.5" PointY="14.875" />
         <EntityTypeShape EntityType="Models.Ticket" Width="1.5" PointX="0.75" PointY="12.75" />
@@ -41,14 +38,15 @@
         <AssociationConnector Association="Models.FK__Address__Country__30592A6F" />
         <AssociationConnector Association="Models.FK__Venue__AddressID__10AB74EC" />
         <AssociationConnector Association="Models.FK__TicketDel__Deliv__1A69E950" />
-        <AssociationConnector Association="Models.FK__Event__EventCate__75F77EB0" />
-        <AssociationConnector Association="Models.FK__Event__EventSubC__76EBA2E9" />
         <AssociationConnector Association="Models.FK__EventImag__Event__0DCF0841" />
         <AssociationConnector Association="Models.FK__EventOrga__Event__47FBA9D6" />
         <AssociationConnector Association="Models.FK__MultipleE__Event__4EA8A765" />
-        <AssociationConnector Association="Models.FK__EventSubC__Event__5F141958" />
         <AssociationConnector Association="Models.FK_EventVenue_Event" />
         <AssociationConnector Association="Models.FK_EventVenue_EventVenue" />
+        <EntityTypeShape EntityType="Models.Fee_Structure" Width="1.5" PointX="10.375" PointY="9.75" />
+        <AssociationConnector Association="Models.FK_Ticket_Event" />
+        <EntityTypeShape EntityType="Models.Event_Orgnizer_Detail" Width="1.5" PointX="17.5" PointY="22.75" />
+        <AssociationConnector Association="Models.FK_Event_Orgnizer_Detail_Event" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -141,6 +141,8 @@
           <Property Name="UpdateOn" Type="datetime" />
           <Property Name="IsMultipleEvent" Type="varchar" MaxLength="1" />
           <Property Name="TimeZone" Type="nvarchar" MaxLength="1000" />
+          <Property Name="FBUrl" Type="nvarchar" MaxLength="1000" />
+          <Property Name="TwitterUrl" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -159,6 +161,15 @@
           <Property Name="E_ShareOnFB" Type="varchar" MaxLength="1" />
           <Property Name="E_GuestOnly" Type="varchar" MaxLength="1" />
           <Property Name="E_Password" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Event_Orgnizer_Detail">
+          <Key>
+            <PropertyRef Name="Orgnizer_Id" />
+          </Key>
+          <Property Name="Orgnizer_Id" Type="bigint" Nullable="false" />
+          <Property Name="Orgnizer_Event_Id" Type="bigint" />
+          <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Orgnizer_Desc" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="EventCategory">
           <Key>
@@ -212,6 +223,14 @@
           <Property Name="EventEndDate" Type="date" />
           <Property Name="EventStartTime" Type="time" Precision="7" />
           <Property Name="EventEndTime" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Fee_Structure">
+          <Key>
+            <PropertyRef Name="FeeId" />
+          </Key>
+          <Property Name="FeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FeeType" Type="varchar" MaxLength="50" />
+          <Property Name="FeeAmount" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Messages">
           <Key>
@@ -293,7 +312,7 @@
           <Key>
             <PropertyRef Name="T_Id" />
           </Key>
-          <Property Name="T_Id" Type="bigint" Nullable="false" />
+          <Property Name="T_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="E_Id" Type="bigint" />
           <Property Name="T_name" Type="nvarchar" MaxLength="256" />
           <Property Name="Qty_Available" Type="bigint" Nullable="false" />
@@ -309,7 +328,7 @@
           <Property Name="Sale_End_Date" Type="date" />
           <Property Name="Sale_End_Time" Type="time" Precision="7" />
           <Property Name="Hide_Ticket" Type="bit" />
-          <Property Name="Auto_Hide_Sche" Type="varchar" MaxLength="50" />
+          <Property Name="Auto_Hide_Sche" Type="bit" />
           <Property Name="Hide_Untill" Type="bit" />
           <Property Name="Hide_Untill_Date" Type="date" />
           <Property Name="Hide_Untill_Time" Type="time" Precision="7" />
@@ -325,11 +344,14 @@
           <Property Name="T_Sale_By" Type="varchar" MaxLength="50" />
           <Property Name="T_Saleby_End" Type="bigint" />
           <Property Name="T_No_Show" Type="bit" />
-          <Property Name="EC_Fee" Type="bigint" />
-          <Property Name="Customer_Fee" Type="bigint" />
+          <Property Name="EC_Fee" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="Customer_Fee" Type="decimal" Precision="6" Scale="2" />
           <Property Name="T_DeliveryAdd" Type="bit" />
           <Property Name="T_WillCall" Type="bit" />
           <Property Name="T_Seated" Type="bit" />
+          <Property Name="T_AutoSechduleType" Type="int" />
+          <Property Name="Additional_Fee" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="T_Discount" Type="decimal" Precision="6" Scale="2" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -442,6 +464,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Event_Orgnizer_Detail_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Event_Orgnizer_Detail" Type="Self.Event_Orgnizer_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_Orgnizer_Detail">
+              <PropertyRef Name="Orgnizer_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EventVenue_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
           <End Role="EventVenue" Type="Self.EventVenue" Multiplicity="*" />
@@ -478,6 +512,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Ticket_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="E_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ModelsStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
@@ -492,12 +538,14 @@
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Detail" EntityType="Self.Event_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventCategory" EntityType="Self.EventCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventImage" EntityType="Self.EventImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventOrganizer" EntityType="Self.EventOrganizer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventSubCategory" EntityType="Self.EventSubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVenue" EntityType="Self.EventVenue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
@@ -532,6 +580,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Self.FK_Event_Orgnizer_Detail_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
+          </AssociationSet>
           <AssociationSet Name="FK_EventVenue_Event" Association="Self.FK_EventVenue_Event">
             <End Role="Event" EntitySet="Event" />
             <End Role="EventVenue" EntitySet="EventVenue" />
@@ -543,6 +595,10 @@
           <AssociationSet Name="FK_Profile_Profile" Association="Self.FK_Profile_Profile">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Event" Association="Self.FK_Ticket_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -793,6 +849,16 @@
             <End Role="EventVenue" EntitySet="EventVenues" />
             <End Role="EventVenue1" EntitySet="EventVenues" />
           </AssociationSet>
+          <EntitySet Name="Fee_Structure" EntityType="Models.Fee_Structure" />
+          <AssociationSet Name="FK_Ticket_Event" Association="Models.FK_Ticket_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <EntitySet Name="Event_Orgnizer_Detail" EntityType="Models.Event_Orgnizer_Detail" />
+          <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Models.FK_Event_Orgnizer_Detail_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Profile_Profile">
           <End Type="Models.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -916,6 +982,10 @@
           <NavigationProperty Name="EventVenues" Relationship="Models.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
           <Property Name="IsMultipleEvent" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="TimeZone" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tickets" Relationship="Models.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
+          <Property Name="FBUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TwitterUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Models.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1034,7 +1104,6 @@
           <Property Name="Sale_End_Date" Type="DateTime" Precision="0" />
           <Property Name="Sale_End_Time" Type="Time" Precision="7" />
           <Property Name="Hide_Ticket" Type="Boolean" />
-          <Property Name="Auto_Hide_Sche" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Hide_Untill" Type="Boolean" />
           <Property Name="Hide_Untill_Date" Type="DateTime" Precision="0" />
           <Property Name="Hide_Untill_Time" Type="Time" Precision="7" />
@@ -1055,6 +1124,10 @@
           <Property Name="T_DeliveryAdd" Type="Boolean" />
           <Property Name="T_WillCall" Type="Boolean" />
           <Property Name="T_Seated" Type="Boolean" />
+          <Property Name="T_AutoSechduleType" Type="Int32" />
+          <Property Name="Additional_Fee" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="T_Discount" Type="Decimal" Precision="6" Scale="2" />
+          <NavigationProperty Name="Event" Relationship="Models.FK_Ticket_Event" FromRole="Ticket" ToRole="Event" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -1209,6 +1282,48 @@
             </Principal>
             <Dependent Role="EventVenue1">
               <PropertyRef Name="EventVenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Fee_Structure">
+          <Key>
+            <PropertyRef Name="FeeId" />
+          </Key>
+          <Property Name="FeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FeeAmount" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <Association Name="FK_Ticket_Event">
+          <End Type="Models.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="Models.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="E_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Event_Orgnizer_Detail">
+          <Key>
+            <PropertyRef Name="Orgnizer_Id" />
+          </Key>
+          <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" />
+          <Property Name="Orgnizer_Event_Id" Type="Int64" />
+          <Property Name="Orgnizer_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Orgnizer_Desc" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="Models.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
+        </EntityType>
+        <Association Name="FK_Event_Orgnizer_Detail_Event">
+          <End Type="Models.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="Models.Event_Orgnizer_Detail" Role="Event_Orgnizer_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_Orgnizer_Detail">
+              <PropertyRef Name="Orgnizer_Event_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1413,6 +1528,8 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="Models.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="TwitterUrl" ColumnName="TwitterUrl" />
+                <ScalarProperty Name="FBUrl" ColumnName="FBUrl" />
                 <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
                 <ScalarProperty Name="IsMultipleEvent" ColumnName="IsMultipleEvent" />
                 <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
@@ -1535,6 +1652,9 @@
           <EntitySetMapping Name="Tickets">
             <EntityTypeMapping TypeName="Models.Ticket">
               <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="T_Discount" ColumnName="T_Discount" />
+                <ScalarProperty Name="Additional_Fee" ColumnName="Additional_Fee" />
+                <ScalarProperty Name="T_AutoSechduleType" ColumnName="T_AutoSechduleType" />
                 <ScalarProperty Name="T_Seated" ColumnName="T_Seated" />
                 <ScalarProperty Name="T_WillCall" ColumnName="T_WillCall" />
                 <ScalarProperty Name="T_DeliveryAdd" ColumnName="T_DeliveryAdd" />
@@ -1555,7 +1675,6 @@
                 <ScalarProperty Name="Hide_Untill_Time" ColumnName="Hide_Untill_Time" />
                 <ScalarProperty Name="Hide_Untill_Date" ColumnName="Hide_Untill_Date" />
                 <ScalarProperty Name="Hide_Untill" ColumnName="Hide_Untill" />
-                <ScalarProperty Name="Auto_Hide_Sche" ColumnName="Auto_Hide_Sche" />
                 <ScalarProperty Name="Hide_Ticket" ColumnName="Hide_Ticket" />
                 <ScalarProperty Name="Sale_End_Time" ColumnName="Sale_End_Time" />
                 <ScalarProperty Name="Sale_End_Date" ColumnName="Sale_End_Date" />
@@ -1597,6 +1716,25 @@
                 <ScalarProperty Name="VenueName" ColumnName="VenueName" />
                 <ScalarProperty Name="AddressID" ColumnName="AddressID" />
                 <ScalarProperty Name="VenueID" ColumnName="VenueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fee_Structure">
+            <EntityTypeMapping TypeName="Models.Fee_Structure">
+              <MappingFragment StoreEntitySet="Fee_Structure">
+                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
+                <ScalarProperty Name="FeeType" ColumnName="FeeType" />
+                <ScalarProperty Name="FeeId" ColumnName="FeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event_Orgnizer_Detail">
+            <EntityTypeMapping TypeName="Models.Event_Orgnizer_Detail">
+              <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
+                <ScalarProperty Name="Orgnizer_Desc" ColumnName="Orgnizer_Desc" />
+                <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
+                <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
+                <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

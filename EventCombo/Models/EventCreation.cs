@@ -30,9 +30,12 @@ namespace EventCombo.Models
         public string EventStatus { get; set; }
         public string IsMultipleEvent  { get; set; }
         public string TimeZone { get; set; }
+        public string FBUrl { get; set; }
+        public string TwitterUrl { get; set; }
         public Address[] AddressDetail { get; set; }
         public EventVenue[] EventVenue { get; set; }
         public MultipleEvent[] MultipleEvents { get; set; }
+        public Event_Orgnizer_Detail[] Orgnizer { get; set; }
 
     }
 }

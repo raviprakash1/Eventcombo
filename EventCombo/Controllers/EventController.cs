@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
+using System.Collections;
+using System.Data;
+
 namespace EventCombo.Controllers
 {
     public class EventController : Controller
@@ -54,6 +57,9 @@ namespace EventCombo.Controllers
                     ObjEC.DisplayStartTime  = model.DisplayStartTime;
                     ObjEC.DisplayEndTime = model.DisplayEndTime;
                     ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                    ObjEC.FBUrl = model.FBUrl;
+                    ObjEC.TwitterUrl = model.TwitterUrl;
+
                     objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -109,7 +115,18 @@ namespace EventCombo.Controllers
                             objEnt.MultipleEvents.Add(objMEvents);
                         }
                     }
-
+    // Orgnizer
+                    if (model.Orgnizer != null)
+                    {
+                        Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
+                        foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
+                        {
+                            objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name ;
+                            objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
+                            objEnt.Event_Orgnizer_Detail.Add(objEOrg);
+                        }
+                    }
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
                 }
@@ -122,8 +139,51 @@ namespace EventCombo.Controllers
         }
 
 
+        //public string Dictionary<string,string> Test()
+        //{
 
-       
+
+        //}
+        public List<EventCategory> GetEventType()
+        {
+            List<EventCategory> objETL = new List<EventCategory>();
+            //List<KeyValuePair<string, string>> objList = new List<KeyValuePair<string, string>>();
+            try
+            {
+                
+
+            using (EventComboEntities objEntity = new EventComboEntities())
+            {
+                    //IEnumerable<SelectListItem> EventTypeList = (from ET in objEntity.EventTypes select ET).AsEnumerable().Select(ET => new SelectListItem() { Text = ET.EventType1, Value = ET.EventTypeID.ToString() });
+
+                    //SelectList objSL = new SelectList(EventTypeList, "Value", "Text");
+                    var EventList = objEntity.EventCategories.SqlQuery("Select * from EventCategory").ToList();
+
+                //var modelPerm = (from Perm in objEntity.EventTypes
+                //                 select new EventType
+                //                 {
+                //                     EventTypeID = Perm.EventTypeID,
+                //                     EventType1 = Perm.EventType1
+                //                 }
+                //            );
+
+                    //JsonResult j = Json(modelPerm, JsonRequestBehavior.AllowGet);
+                    //objETL = modelPerm.ToList();
+                    return EventList;
+
+                //return modelPerm.ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return objETL;
+            }
+        }
+
+
+
         //public void SaveTable(EventCreation model)
         //{
 

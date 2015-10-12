@@ -271,8 +271,37 @@ button:focus { outline: none;}
 .Sch_evnt_main_inner .Sch_title_desc{font-size: 1em; font-weight: normal; }
 .Sch_evnt_main_inner .Sch_title_desc_bot{font-size: 1em; font-weight: normal;}
 
+/*****4th Start********/
+.evnt_descp_cont{ width: 100%; float: left;}
+.desc_editor .panel{ margin-bottom: 5px;}
+.edit_organ_label{ width:auto; float: left; padding-right: 5px; max-width: 100%; font-weight: normal; color:#337ab7; font-size: 1em;}
+.edit_organ_label:hover{ text-decoration: underline; cursor: pointer;}
+.edit_org_cont{ width: 100%; float: left;}
+.can_org_cont{ width: 100%; float: left;}
+.add_social_cont{width: 100%; float: left;}
+.add_social_input{width: 100%; float: left;}
+.fb{ color:#3d5a98;}
+.tw{ color:#5ea9dd;}
+.Moderor{ width: 600px; float: left; max-width: 100%;}
+.note-codable{ display:none;}
 
+.er_war_main{
+    border: 1px solid #ffdb00;
+    width: 100%;
+    float: left;height: 50px; display: table;}
+.er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; }
+.er_war_img{ background: #ffdb00 url(../images/info_icn.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
 
+.add_set_cont{ width: 100%; float: left;}
+.priv_cont{ width: 97%; float: left; margin-left: 3%;}
+.label_private{ font-weight: normal;}
+
+.evnt_onl9{ margin-right: 10px; cursor: pointer; color: #337ab7;}
+.evnt_onl9:hover{ text-decoration: underline;}
+.evnt_inp_sel_day b.caret {
+    float: right;
+    margin-top: -12px;
+}
 
 
 /************Create Ticket**********************/

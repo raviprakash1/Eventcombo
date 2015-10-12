@@ -23,7 +23,7 @@
                         <div class="form-group">
 
                             <label class="label-control evnt_title_control">Event Discription</label>
-                            <div class="summernote"></div>
+                            <div id="edSummer1" class="summernote"></div>
                         </div>
                     </div>
                 </div>
@@ -34,8 +34,21 @@
                     <div class="evnt_details_body">
                         <div class="form-group">
                             <label class="label-control wd600">Event Location</label>
-                            <input class="form-control evnt_inp_cont wd600 " placeholder="Specify Where it's is held." />
-                            <div class="trigger mt5 ent_add"><a href="#" id="btEnterAddress" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Enter Address</a> </div>
+                            <div class="EnterAdd mb10 ent_add ">
+                                <input id="txtEventLocation" class="form-control mb5 evnt_inp_cont wd600 " placeholder="Specify Where it's is held." />
+                                <span class="OnlineEvent evnt_onl9"><i class="fa fa-television"></i> Online event </span>
+                                <a href="#" id="btEnterAddress" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Enter Address</a>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="form-group online_main_cont">
+                                <div class="online_container">
+                                    <input class="form-control evnt_inp_cont wd600 " placeholder="This is Online Event" readonly="" />
+                                    <div class="clearfix"></div>
+                                    <span class="AddLocatondiv label-control wd600 evnt_onl9 mt10">Add a location</span>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="clearfix"></div>
                         <div class="form-group">
@@ -65,14 +78,14 @@
                             <div class="str_evnt">
                                 <label class="label-control evnt_ticket_label wd140">Start</label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtStartDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="dd/mm/yyyy" />
+                                    <input id="txtStartDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="mm/dd/yyyy" />
                                     <input id="txtStartTime" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
                                 </div>
                             </div>
                             <div class="str_evnt">
                                 <label class="label-control evnt_ticket_label wd140">Ends</label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtEndDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="dd/mm/yyyy" />
+                                    <input id="txtEndDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="mm/dd/yyyy" />
                                     <input id="txtEndTime" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
                                 </div>
                             </div>
@@ -140,6 +153,71 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>
+                        <div class="evnt_descp_cont">
+
+
+                            <div class="clearfix"></div>
+                            <label class="label-control evnt_ticket_label wd600 mt10">Organiser Name</label>
+                            <div class="edit_org_cont">
+                                <label id="btEditOrg" class="EditOrg label-control edit_organ_label ">Edit this organizer | </label>
+                                <label class="AddOrg label-control edit_organ_label ">Add organizer</label>
+                                <div class="clearfix"></div>
+                                <select id="dllOrganizer" class="form-control evnt_inp_cont wd600"></select>
+                                <datalist id="dtList"></datalist>
+                            </div>
+                            <div class="can_org_cont">
+                                <label class="CanOrg label-control edit_organ_label ">Cancel </label>
+                                <label id="btAddOrg" class="CanOrg label-control edit_organ_label ">Save </label>
+                                @*<input id="btAddOrg" type="button" class="btn btn-primary btn-lg save_btn" value="Save" placeholder="" />*@
+                                <div class="clearfix"></div>
+                                <input id="txtOrgnizer" class="form-control wd600 mb10" placeholder="" />
+
+                                <div class="clearfix"></div>
+                                <div class="Moderor mb10">
+
+                                    <div class="er_war_main">
+                                        <div class="er_war_img"></div>
+                                        <div class="er_war"> &#9;&#9;&#9;Modyfy this organiser apply to all event.</div>
+                                    </div>
+
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group wd600 mb0 desc_editor">
+                                    <div class="summernote" id="edSummer2"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group mt10">
+                                <label class="label-control">
+                                    <input id="chkLinkonFBTwit" type="checkbox">
+                                    Include links to Facebook and Twitter
+
+                                </label>
+                                <div class="AddSocial add_social_cont">
+                                    <div class="add_social_input">
+                                        <label class="fs15">
+                                            <span class="fb">
+                                                <i class="fa fa-facebook-square"></i>
+                                            </span> facebook.com/
+                                        </label>
+                                        <input class="form-control wd600" id="txtFBUrl" placeholder="" />
+                                    </div>
+                                    <div class="add_social_input mt10">
+                                        <label class="fs15">
+                                            <span class="tw">
+                                                <i class="fa fa-twitter-square"></i>
+                                            </span> twitter.com/
+                                        </label>
+                                        <input class="form-control wd600" id="txtTwitterurl" placeholder="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -173,7 +251,7 @@
                                     <div class="list-group ticket_haeding create-tickets--ticket" id="clonediv-0">
                                         <div class="list-group-item" style="width:4%;">
                                             <span><i class="fa fa-ellipsis-v"></i></span>
-                                            <input type="hidden" id="id_ticket_id-0"/>
+                                            <input type="hidden" id="id_ticket_id-0" />
                                             <input type="hidden" id="id_order-0" />
                                         </div>
                                         <div class="list-group-item" style="width:31%;">
@@ -188,13 +266,13 @@
                                         </div>
                                         <div class="list-group-item" style="width:20%;">
                                             <div class="form-group mb0">
-                                                <input class="form-control evnt_inp_cont paidticket-0" placeholder="$ 100" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)"/>
+                                                <input class="form-control evnt_inp_cont paidticket-0" placeholder="$ 100" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)" />
                                                 <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
                                                 <label class="label-control lbl_bot_price">
                                                     Buyer total:
                                                     <span class="buyer_price">$0.00 </span> <i class="fa fa-info-circle"></i>
                                                 </label>
-                                             </div>
+                                            </div>
                                         </div>
                                         <div class="list-group-item" style="width:15%;">
                                             <div class="form-group mb0">
@@ -209,13 +287,13 @@
                                                     @*<a href="#" class="evnt_set active_setting"></a>*@
                                                 </div>
                                                 <div class="evnt_setting_list">
-                                                    <button  id="btndelete-0" type="button" onclick="deletediv(this.id);"><i class="fa fa-trash-o"></i></button>
+                                                    <button id="btndelete-0" type="button" onclick="deletediv(this.id);"><i class="fa fa-trash-o"></i></button>
                                                     @*<a href="" id="id_delete_ticket"><i class="fa fa-trash-o"></i></a>*@
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- Event Setting Start  -->
-                                        <div  id="evnt_set-0" style="display:none;">
+                                        <div id="evnt_set-0" style="display:none;">
                                             <div class="col-sm-12 no_pad ">
                                                 <div class="modal-content evnt_set_panel">
                                                     <div class="modal-header">
@@ -243,16 +321,16 @@
                                                                 </div>
                                                             </div>
                                                             @*<div class="form-group">
-                                                                <label class="label-control evnt_ticket_label wd600">Sales channel</label>
-                                                                <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                    <input type="checkbox" id="id_available_online-0" />
-                                                                    Online sales
-                                                                </label>
-                                                                @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
-                                                                        <input type="checkbox" />
-                                                                        At the door sales using Neon (app)
+                                                                    <label class="label-control evnt_ticket_label wd600">Sales channel</label>
+                                                                    <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                        <input type="checkbox" id="id_available_online-0" />
+                                                                        Online sales
                                                                     </label>
-                                                            </div>*@
+                                                                    @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
+                                                                            <input type="checkbox" />
+                                                                            At the door sales using Neon (app)
+                                                                        </label>
+                                                                </div>*@
                                                             <div class="clearfix"></div>
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
@@ -277,7 +355,7 @@
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
                                                                 <div class="evnt_time_cont wd600">
-                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" id="id_saleend-0" />
+                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="mm/dd/yyyy" id="id_saleend-0" />
 
                                                                     <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" id="id_saletimeend-0" />
 
@@ -309,7 +387,7 @@
                                                                                 <input type="checkbox" id="id_auto_hide_until-0" /> Hide Until
                                                                             </label>
                                                                             <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" id="id_auto_hide_until_Date-0" placeholder="dd/mm/yyyy" />
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" id="id_auto_hide_until_Date-0" placeholder="mm/dd/yyyy" />
 
                                                                                 <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
                                                                             </div>
@@ -319,7 +397,7 @@
                                                                                 <input type="checkbox" id="id_auto_hide_after-0" /> Hide After
                                                                             </label>
                                                                             <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" id="id_auto_hide_after_Date-0" placeholder="dd/mm/yyyy" />
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" id="id_auto_hide_after_Date-0" placeholder="mm/dd/yyyy" />
 
                                                                                 <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
                                                                             </div>
@@ -342,16 +420,16 @@
 
                                                                 </div>
                                                             </div>
-                                                            
-                                                            <div class="clearfix"></div>   
+
+                                                            <div class="clearfix"></div>
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label fs-13 mt5">
                                                                     <input type="checkbox" class="" id="id_disableticket-0" />
-                                                                    Disables ticket from being displayed or sold 
-                                                                  
+                                                                    Disables ticket from being displayed or sold
+
                                                                 </label>
-                                                            </div>   
-                                                            
+                                                            </div>
+
                                                             <div class="clearfix"></div>
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label fs-13 mt5">
@@ -359,7 +437,7 @@
                                                                     Shows ticket as sold out on purchase page
 
                                                                 </label>
-                                                            </div>    
+                                                            </div>
                                                             <div class="clearfix"></div>
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label fs-13 mt5">
@@ -367,8 +445,8 @@
                                                                     Displays Qty of tickets remaining to be sold
 
                                                                 </label>
-                                                            </div>                                                     
-                                                          </div>
+                                                            </div>
+                                                        </div>
 
                                                     </div>
                                                     <div class="clearfix"></div>
@@ -380,7 +458,7 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                  
+
                                                 </div>
 
 
@@ -409,20 +487,82 @@
                             <div class="form-group">
                                 <input type="checkbox" class="" id="id_ticketdeliveryaddr" />
                                 <label> Ticket Delivery Address:</label>
-                                
+
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" class="" id="id_showremaningticket" />
                                 <label> Show the number of tickets remaining on the registration page:</label>
-                                
+
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" class="" id="id_variablecharge" />
                                 <label> Variable Charges:</label>
-                               
+
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="event_detail_container">
+                    <div class="evnt_tile_head">
+                        <h2>Additional Settings </h2>
+                    </div>
+                    <div class="evnt_details_body">
+                        <label class="label-control evnt_ticket_label wd600">Listing Privacy</label>
+                        <div class="form-group">
+                            <label class="Pubpage label-control evnt_ticket_label fs-13">
+                                <input type="radio" name="rdPr" id="rdPublic" />
+                                <strong>Public page:</strong> list this event on Eventbrite and search engines
+                            </label>
+                            <div class="clearfix"></div>
+                            <label class="Prvpage label-control evnt_ticket_label fs-13 mt5">
+                                <input type="radio" name="rdPr" id="rdPrivate" />
+                                <strong>Private page: </strong>do not list this event publicly
+                            </label>
+                            <div class="clearfix"></div>
+                            <div class="priv_cont">
+                                <label class="label-control label_private">
+                                    <input type="checkbox" id="chkShareOnFB">
+                                    Attendees can share this event on Facebook, Twitter, and LinkedIn
+                                </label>
+                                <div class="clearfix"></div>
+                                <label class="label-control label_private">
+                                    <input type="checkbox" id="chkGuestonly">
+                                    This event is by Invite-Only (guests must receive an Eventbrite invitation to attend)
+                                </label>
+                                <div class="clearfix"></div>
+                                <label class="label-control label_private">
+                                    <input type="checkbox">
+                                    Require a password to view the event page:
+                                </label>
+                                <input type="text" id="txtReqPassword" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group">
+                            <label class="label-control evnt_ticket_label wd600">Event Type</label>
+                            <select id="ddlEventType" class="form-control evnt_inp_cont wd600"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-control evnt_ticket_label wd600">Event Category</label>
+                            <select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-control evnt_ticket_label wd600">Event Sub-category</label>
+                            <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group">
+                            <label class="col-sm-12 no_pad label-control evnt_ticket_label wd600">Remaining Ticket</label>
+                            <div class="clearfix"></div>
+                            <label class="label-control label_private">
+                                <input type="checkbox">
+                                Show the number of tickets remaining on the registration page
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -434,6 +574,7 @@
 
                     <input type="hidden" id="hidAddSno" value="" />
                     <input type="hidden" id="hidSchLastState" value="" />
+                    <input type="hidden" id="hidOrgnizer" value="" />
                 </div>
             </form>
         </div>
@@ -454,7 +595,7 @@
                                 <input id="Address1" class="form-control evnt_inp_cont" placeholder="Address 1" />
                             </div>
                             <div class="form-group">
-                                <input id="Address2" class="form-control evnt_inp_cont" placeholder="Address 2" />
+                                @*             <input id="Address2" class="form-control evnt_inp_cont" placeholder="Address 2" />*@
                             </div>
                             <div class="form-group">
                                 <input id="City" class="form-control evnt_inp_cont" placeholder="City" />
@@ -480,7 +621,7 @@
                             </div>
 
                         </div>
-                        <div class="col-sm-6 location_map_div">
+                        <div id="map_canvas" class="col-sm-6 location_map_div">
                             <div class="col-sm-6 loc_map"> <i class="fa fa-map-marker"></i> </div>
                         </div>
                     </div>
@@ -545,7 +686,7 @@
                                             <option value="6">Saturday</option>
                                         </select>
                                     </div>
-                                    <!--  <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" id="" />
+                                    <!--  <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="mm/dd/yyyy" id="" />
 
                                     <input id="" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM"/> -->
                                     <div class="clearfix"></div>
@@ -620,11 +761,11 @@
                                     Occurs From
                                 </label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtDateFrom" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="dd/mm/yyyy" />
+                                    <input id="txtDateFrom" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="mm/dd/yyyy" />
                                     <label class="label-control label_cont_to fs-13">
                                         Untill
                                     </label>
-                                    <input id="txtDateTo" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="dd/mm/yyyy" />
+                                    <input id="txtDateTo" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="mm/dd/yyyy" />
 
                                 </div>
                             </div>
@@ -632,10 +773,10 @@
                             <div class="form-group">
 
                                 <label col-sm-12 no_pad label-control schedule_label fs-13 id="lblSchDatDiff">
-                                    
+
                                 </label>
                                 <label col-sm-12 no_pad label-control schedule_label fs-13 id="lblSchDate">
-                                
+
 
                                 </label>
                             </div>
@@ -712,6 +853,10 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.min.js"></script>
 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+
+
+
 @*<link href="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.css" rel="stylesheet" />
     <script src="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>*@
@@ -775,39 +920,188 @@
             return 'Y';
 
     }
-    function GetSchDateDiff() {
-        alert("IN fun");
-        var dateFrom = date.parse($("#txtDateFrom").val());
-        var dateTo = date.parse($("#txtDateTo").val());
-        dateDiff = new Date(dateTo - dateFrom);
-        alert(dateDiff);
+    //function GetSchDateDiff() {
+    //    alert("IN fun");
+    //    var dateFrom = date.parse($("#txtDateFrom").val());
+    //    var dateTo = date.parse($("#txtDateTo").val());
+    //    dateDiff = new Date(dateTo - dateFrom);
+    //    alert(dateDiff);
 
-    }
+    //}
 
     $(document).ready(function () {
 
+        $("#btEditOrg").click(function () {
+            $("#txtOrgnizer").val('');
+            $("#hidOrgnizer").val('');
+            $("#edSummer2").code('');
 
-       
-            //$('#txtDateFrom').datepicker({
-            //    onSelect: function (selectedDate) {
-            //        alert("dateselected");
-            //    }
-            //});
-       
-        $("#txtDateFrom").focusout(function () {
-            //alert("chal pya");
-            GetSchDateDiff();
+            var OrgVal = $('#dllOrganizer option:selected').text();
+            //alert(OrgVal);
+            //alert(OrgVal);
+            var OrgEditor = $("#dllOrganizer").val();
+            //alert(OrgEditor);
+            $("#txtOrgnizer").val(OrgVal);
+            $("#hidOrgnizer").val(OrgVal);
+            $("#edSummer2").code(OrgEditor);
 
-            // alert($("#txtStartDate").val());
-            //if ($("#txtStartDate").val().trim() != "") {
-            //    var result = checkValidDate($("#txtStartDate").val());
-            //    if (result == 'N') {
-            //        alert("Please Enter Valid Event Start Date");
-            //        $("#txtStartDate").val('');
-            //        $("#txtStartDate").focus();
-            //    }
-            //}
         });
+
+        $("#btAddOrg").click(function () {
+            //  alert($('#dllOrganizer option').length);
+            if (parseInt($('#dllOrganizer option').length) < 25) {
+                if ($("#hidOrgnizer").val() == "") {
+                    var vval = $("#edSummer2").code();
+                    var addOption = '<option value="' + vval + '" id="' + $("#txtOrgnizer").val() + '">' + $("#txtOrgnizer").val() + '</option>';
+                    $("#dllOrganizer").append(addOption);
+                }
+                else {
+                    //$('#dllOrganizer option:selected').removeAttr('selected');
+                    var vval = $("#edSummer2").code();
+                    $("#dllOrganizer option").each(function (i) {
+                        //alert($(this).text());
+                        //alert($("#hidOrgnizer").val());
+                        if ($("#hidOrgnizer").val() == $(this).text()) {
+
+                            $(this).remove();
+                            //alert($("#hidOrgnizer").val());
+                            //$(this).text($("#txtOrgnizer").val());
+                            //$(this).val(vval);
+                        }
+                        //alert($(this).text() + " : " + $(this).val());
+                    });
+                    var vval = $("#edSummer2").code();
+                    var addOption = '<option value="' + vval + '" id="' + vval + '" >' + $("#txtOrgnizer").val() + '</option>';
+                    $("#dllOrganizer").append(addOption);
+
+
+
+                    //var addOption = '<option value="' + vval + '" id="' + vval + '" >' + $("#txtOrgnizer").val() + '</option>';
+                    //$("#dllOrganizer").append(addOption);
+                }
+            }
+            else {
+                alert("Limit Exceeded, System Alow Only 25 Orgnizer.");
+
+            }
+            $("#hidOrgnizer").val('');
+            $("#txtOrgnizer").val('');
+            $("#edSummer2").code('');
+            // $("#txtOrgnizer").focus();
+            //$("#dllOrganizer option").each(function (i) {
+            //    alert($(this).text() + " : " + $(this).val());
+            //});
+
+            //alert(vval);
+
+        });
+
+        // Drop Down Binding
+        @*$.ajax({
+            url: '@Url.Action("GetEventType", "Event")',
+            type: "POST",
+            success: function (data) {
+
+                //            alert(data.items);
+
+                ////            $('#ddlEventType').find('option').remove();
+                //            // alert(data.);
+                //            data = data.d;
+                //            var items = [];
+                //            items.push("<option>--Select--</option>");
+                //            alert("after Array");
+                //            $.each(data, function () {
+                //                alert("test");
+                //                //items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                //            });
+                //            $("#ddlEventType").html(items.join(' '));
+
+                //$(data).each(function (index, item) { // GETTING ERROR HERE
+                //    $('#ddlEventType').append($('<option></option>').val(item.Value).html(item.Text));
+                //});
+            }
+        });*@
+
+
+
+
+        // Map Implemetation
+        var input = document.getElementById('txtEventLocation');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(6.9167, 79.8473),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+              mapOptions);
+            // create a marker
+            var latlng = new google.maps.LatLng(6.9167, 79.8473);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: 'My Place'
+            });
+            var place = autocomplete.getPlace();
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            }
+            else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);
+
+            }
+            marker.setIcon(({
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(35, 35)
+            }));
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+
+            var address = '';
+            if (place.address_components) {
+                address = [
+                  (place.address_components[0] && place.address_components[0].short_name || ''),
+                  (place.address_components[1] && place.address_components[1].short_name || ''),
+                  (place.address_components[2] && place.address_components[2].short_name || '')
+                ].join(' ');
+            }
+            $("#VenueName").val(address[0].toString());
+            $("#Address1").val(address[1].toString());
+            $("#Address2").val(address[2].toString());
+        });
+
+
+        //google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        //    //var place = autocomplete.getPlace();
+
+        //});
+
+        //$('#txtDateFrom').datepicker({
+        //    onSelect: function (selectedDate) {
+        //        alert("dateselected");
+        //    }
+        //});
+
+        //$("#txtDateFrom").focusout(function () {
+        //    //alert("chal pya");
+        //    GetSchDateDiff();
+
+        //    // alert($("#txtStartDate").val());
+        //    //if ($("#txtStartDate").val().trim() != "") {
+        //    //    var result = checkValidDate($("#txtStartDate").val());
+        //    //    if (result == 'N') {
+        //    //        alert("Please Enter Valid Event Start Date");
+        //    //        $("#txtStartDate").val('');
+        //    //        $("#txtStartDate").focus();
+        //    //    }
+        //    //}
+        //});
 
 
         $("#btCancleMEVents").hide();
@@ -852,9 +1146,19 @@
             $("#chkTimeZone").prop("checked", false);
         });
 
-        $('.summernote').summernote({
+        //$('.summernote').summernote({
+        //    height: 70,   //set editable area's height
+        //});
+
+        $('#edSummer1').summernote({
             height: 70,   //set editable area's height
         });
+
+        $('#edSummer2').summernote({
+            height: 70,   //set editable area's height
+        });
+
+
 
         $(".ShowdateList").hide();
         $(".DateList").click(function () {
@@ -960,6 +1264,7 @@
             var SubmitAddress = [];
             var SingleTiming = [];
             var MultipleSchedule = [];
+            var Orgnizer = [];
             //var table = $("#tblAddress");
 
 
@@ -1050,23 +1355,38 @@
                 });
 
             }
+            // Orgnizer
+            //$("#dllOrganizer option").each(function (i) {
+            //    alert($(this).text());
+            //    Orgnizer.push({
+            //        'Orgnizer_Name': $(this).text(),
+            //        'Orgnizer_Desc': $(this).val()
+            //    });
+            //    //alert($(this).text() + " : " + $(this).val());
+            //});
+
+
+
+
+
+            //$("#dllOrganizer option").each(function (i) {
+            //    alert($(this).text() + " : " + $(this).val());
+            //});
+
             // Basic Event Info
             var model = {
-                'EventTypeID': 1,
-                'EventCategoryID': 1,
-                'EventSubCategoryID': 1,
+                'EventTypeID': 1,//$("#ddlEventType").val(),
+                'EventCategoryID':1,// $("#ddlEventCategory").val(),
+                'EventSubCategoryID':1,// $("#ddlEventSubCategory").val(),
                 'UserID': '',
                 'EventTitle': $("#txtEventTitle").val(),
-                'DisplayStartTime': 'Y',
-                'DisplayEndTime': 'Y',
-                'DisplayTimeZone': 'Y',
                 'EventDescription': 'Testing',
-                'EventPrivacy': 'Public',
-                'Private_ShareOnFB': 'N',
-                'Private_GuestOnly': 'N',
-                'Private_Password': 'Test',
+                'EventPrivacy': 'Y',//($("#rdPublic").is("checked") == true ? 'Public' : 'Private'),
+                'Private_ShareOnFB': 'Y',//($("#chkShareOnFB").is("checked") == true ? 'Y' : 'N'),
+                'Private_GuestOnly': 'Y',//($("#chkGuestonly").is("checked") == true ? 'Y' : 'N'),
+                'Private_Password': $("#txtReqPassword").val(),
                 'EventUrl': '',
-                'PublishOnFB': 'N',
+                'PublishOnFB': 'Y',//($("#chkLinkonFBTwit").is("checked") != true ? 'Y' : 'N'),
                 'EventStatus': 'Save',
                 'AddressDetail': SubmitAddress,
                 'EventVenue': SingleTiming,
@@ -1074,9 +1394,12 @@
                 'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
                 'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
                 'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
-                'MultipleEvents': MultipleSchedule
+                'FBUrl': $("#txtFBUrl").val(),
+                'TwitterUrl': $("#txtTwitterurl").val(),
+                'MultipleEvents': MultipleSchedule,
+                'Orgnizer': Orgnizer
             };
-
+            alert("after model")
             //data: JSON.stringify({ EventCreation: model }),
 
             $.ajax({
@@ -1095,50 +1418,44 @@
 
 @*Tickiting Starts Here*@
 <script>
-   
-    function changefeetype(e)
-    {
-     
+
+    function changefeetype(e) {
+
         alert($('#' + e).val());
 
     }
 
-    function minimize(e)
-    {
-        
+    function minimize(e) {
+
         var id = e;
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
-        $('#evnt_set-'+el).css('display', 'none');
+        $('#evnt_set-' + el).css('display', 'none');
 
 
     }
-    function hideunhide(e)
-    {
-        
+    function hideunhide(e) {
+
 
         var id = e;
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
         var al = e.substr(0, e.indexOf('-'));
-       
+
         var divlength = $("#MasterDiv> div").size();
-        if (al == "id_EvaddTkt")
-        {
-           
-            $("#id_RemvTkt-"+el).css("display", "block");
+        if (al == "id_EvaddTkt") {
+
+            $("#id_RemvTkt-" + el).css("display", "block");
             $("#id_EvaddTkt-" + el).css("display", "none");
             $("#id_CusdateCont-" + el).css("display", "block");
-          
+
         }
-        if (al == "id_RemvTkt")
-        {
+        if (al == "id_RemvTkt") {
             $("#id_RemvTkt-" + el).css("display", "none");
             $("#id_EvaddTkt-" + el).css("display", "block");
             $("#id_CusdateCont-" + el).css("display", "none");
-           
+
         }
-        if(al=="id_CusdateTime")
-        {
+        if (al == "id_CusdateTime") {
             $("#id_HideuntDiv-" + el).css("display", "block");
             $("#id_auto_hide_type_0-" + el).prop('checked', false);
         }
@@ -1158,10 +1475,9 @@
         }
         return randomString;
     }
-    function deletediv(e)
-    {
+    function deletediv(e) {
 
-       
+
         var x = confirm("Are you sure you want to delete?");
         if (x) {
             var divlength = $("#MasterDiv> div").size();
@@ -1169,18 +1485,17 @@
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
             var div = document.getElementById("clonediv-" + el);
-            if (length == 1)
-            {
+            if (length == 1) {
                 $('#beforeticket').css('display', 'block');
                 $('#afterticket').css('display', 'none');
                 div.parentNode.removeChild(div);
 
             } else {
-               
+
                 div.parentNode.removeChild(div);
 
             }
-         
+
 
 
             return true;
@@ -1189,21 +1504,20 @@
             return false;
 
     }
-    function showsettingdiv(e)
-    {
+    function showsettingdiv(e) {
         var id = e;
-        var el = e.substr(e.indexOf('-')+1, e.length - e.indexOf('-'));
-        
-      
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+
         if ($('#evnt_set-' + el).css('display') == 'none') {
             $('#evnt_set-' + el).css('display', 'block');
-         
+
         } else {
 
             $('#evnt_set-' + el).css('display', 'none');
-         
+
         }
-    
+
 
     }
     $(document).ready(function () {
@@ -1287,7 +1601,7 @@
             $(".paidticket-" + divlength).css('display', 'none');
 
             $("#id_paymenttype-" + divlength).text("Free");
-            $("#id_paymenttype-"+divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
+            $("#id_paymenttype-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
             $("#id_paymenttype-" + divlength).attr("placeholder", "Early Bird, RSVP...");
             $("#id_Discount-" + divlength).prop("readonly", true);
             var randomValue = randomString(4);
@@ -1326,7 +1640,7 @@
 
             $(".normalticket-" + divlength).css('display', 'none');
             $(".paidticket-" + divlength).css('display', 'block');
-            $("#id_paymenttype-"+divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
+            $("#id_paymenttype-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
             $("#id_paymenttype-" + divlength).attr("placeholder", "Early Bird, RSVP...");
             $("#id_Discount-" + divlength).prop("readonly", false);
             var randomValue = randomString(4);
@@ -1371,7 +1685,7 @@
             $("#id_Discount-" + divlength).prop("readonly", true);
             var randomValue = randomString(4);
             $("#id_ticket_id-" + divlength).val(randomValue);
-       
+
             $("#id_order-" + divlength).val(divlength + 1);
         });
 
@@ -1385,7 +1699,7 @@
             $(".evnt_setting li a:first").addClass("active_setting");
         });
         $('.date_picker').datepicker({
-            format: "dd/mm/yyyy"
+            format: "mm/dd/yyyy"
         });
         $(function () {
             $('.time_picker').timepicker();
@@ -1400,6 +1714,65 @@
             $(".evnt_doll_amnt").css("display", "none");
             $(".evt_time").css("display", "block");
         });
+
+        // Event Orgnization
+
+
+
+
+        $(".can_org_cont").hide();
+        $(".EditOrg").click(function () {
+            $(".can_org_cont").css("display", "block");
+            $(".edit_org_cont").css("display", "none");
+            $(".Moderor").css("display", "block");
+
+        });
+        $(".AddOrg").click(function () {
+            $(".can_org_cont").css("display", "block");
+            $(".edit_org_cont").css("display", "none");
+            $(".Moderor").css("display", "none");
+
+        });
+        $(".CanOrg").click(function () {
+            $(".edit_org_cont").css("display", "block");
+            $(".can_org_cont").css("display", "none");
+
+        });
+
+
+        $(".AddSocial").css("display", "none");
+        $('#chkLinkonFBTwit').change(function () {
+            if ($(this).is(":checked")) {
+                $('.AddSocial').show();
+            } else {
+                $('.AddSocial').hide();
+            }
+        });
+
+        $(".priv_cont").hide();
+        $(".Prvpage").click(function () {
+            $(".priv_cont").css("display", "block");
+        });
+        $(".Pubpage").click(function () {
+            $(".priv_cont").css("display", "none");
+        });
+
+
+
+        $(".online_main_cont").hide();
+        $(".OnlineEvent").click(function () {
+            $(".online_main_cont").css("display", "block");
+            $(".EnterAdd").css("display", "none");
+        });
+
+        $(".AddLocatondiv").click(function () {
+            $(".EnterAdd").css("display", "block");
+            $(".online_main_cont").css("display", "none");
+
+        });
+
+
+
 
         //$(".CusdateCont").hide();
         //$(".EvaddTkt").click(function () {

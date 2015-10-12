@@ -21,6 +21,8 @@ namespace EventCombo.Models
             this.EventOrganizers = new HashSet<EventOrganizer>();
             this.MultipleEvents = new HashSet<MultipleEvent>();
             this.EventVenues = new HashSet<EventVenue>();
+            this.Tickets = new HashSet<Ticket>();
+            this.Event_Orgnizer_Detail = new HashSet<Event_Orgnizer_Detail>();
         }
     
         public long EventID { get; set; }
@@ -44,6 +46,8 @@ namespace EventCombo.Models
         public Nullable<System.DateTime> UpdateOn { get; set; }
         public string IsMultipleEvent { get; set; }
         public string TimeZone { get; set; }
+        public string FBUrl { get; set; }
+        public string TwitterUrl { get; set; }
     
         public virtual EventCategory EventCategory { get; set; }
         public virtual EventSubCategory EventSubCategory { get; set; }
@@ -55,5 +59,9 @@ namespace EventCombo.Models
         public virtual ICollection<MultipleEvent> MultipleEvents { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventVenue> EventVenues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ticket> Tickets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
     }
 }
