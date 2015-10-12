@@ -379,7 +379,7 @@ button:focus { outline: none;}
        -o-transform: translateY(0px);
           transform: translateY(0px);
 }
-
+.total_qty{ margin-top:10px; }
 
 
  /************Create Ticket 2nd**********************/

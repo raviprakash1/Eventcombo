@@ -187,7 +187,7 @@
                                         </div>
                                         <div class="list-group-item" style="width:15%;">
                                             <div class="form-group mb0">
-                                                <input class="form-control evnt_inp_cont" id="id_quantity_total-0" placeholder="100" maxlength="6" />
+                                                <input class="form-control evnt_inp_cont" id="id_quantity_total-0" placeholder="100" maxlength="6" onkeyup="changeqty(this.id)" />
                                             </div>
                                         </div>
                                         <div class="list-group-item" style="width:20%;">
@@ -410,6 +410,7 @@
                                     <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-free-button"><i class="fa fa-plus"></i> Free Ticket</button>
                                     <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-paid-button"><i class="fa fa-plus"></i> Paid Ticket</button>
                                     <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-donation-button"><i class="fa fa-plus"></i> Donation</button>
+                                    <label  class="total_qty pull-right fs-18" id="">Total Qty: <span id="id_totalqty">0</span></label>
                                 </div>
                             </div>
                         </div>
@@ -1182,12 +1183,27 @@
 
 @*Tickiting Starts Here*@
 <script>
-    function feechange(e)
+
+    function changeqty(e)
     {
+        var qty = $('#id_totalqty').html();
+        alert(qty);
         var dropval = $('#' + e).val();
-        alert(dropval);
-        if ($('#' + e).val().trim() == '0')
+        var total = parseInt(qty) + parseInt(dropval);
+
+        $('#id_totalqty').html(total);
+
+
+    }
+    function feechange(e)
+{
+        var dropval = $('#' + e).val();
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        var amount = $('#id_cost-' + el).val();
+      
+        if (dropval.trim() == '0')
         {
+            
           var  ccp = $('#id_cc').val();
             var ccpamount = ((amount * ccp) / 100);
 
@@ -1195,20 +1211,22 @@
             var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
             $('#id_buyerprice-' + el).html(ccpfinal);
             $('#id-tooltip-' + el).html(msg);
-            $("#id_feetype-0").val(0);
-            alert(ccpfinal);
+            $('#id_feetype-' + el).val(0);
+           
 
         }
-        if ($('#' + e).val().trim() == '1')
+        if (dropval.trim() == '1')
         {
+           
            var ccp = $('#id_cc').val();
             var ccpamount = ((amount * ccp) / 100);
             var ccpfinal = parseFloat(amount);
             $('#id_buyerprice-' + el).html(ccpfinal);
             var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
             $('#id-tooltip-' + el).html(msg);
-            $("#id_feetype-0").val(1);
-            alert(ccpfinal);
+            $('#id_feetype-' + el).val(1);
+
+           
         }
 
     }
