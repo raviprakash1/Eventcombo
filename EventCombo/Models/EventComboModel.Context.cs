@@ -54,5 +54,6 @@ namespace EventCombo.Models
         public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
+        public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
     }
 }

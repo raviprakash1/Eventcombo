@@ -254,6 +254,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ExternalLogin.cs" />
+    <Compile Include="Models\Fee_Structure.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LookUpEntry.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>

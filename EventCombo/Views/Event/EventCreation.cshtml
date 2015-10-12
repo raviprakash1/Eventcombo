@@ -136,9 +136,9 @@
                                             <div class="form-group mb0">
                                                 <input class="form-control evnt_inp_cont paidticket-0" placeholder="$ 100" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)"/>
                                                 <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
-                                                <label class="label-control lbl_bot_price">
+                                                <label class="label-control lbl_bot_price paidticket-0"  id="idlbuyertotal-0">
                                                     Buyer total:
-                                                    <span class="buyer_price">$0.00 </span> <i class="fa fa-info-circle"></i>
+                                                    <span class="buyer_price" id="id_buyerprice-0">$0.00 </span> <i class="fa fa-info-circle"></i>
                                                 </label>
                                              </div>
                                         </div>
@@ -320,7 +320,7 @@
                                                     <div class="clearfix"></div>
                                                     <div class="modal-footer">
                                                         <div class="col-sm-12 text-center">
-                                                            <a href="#" class="evnt_set_minimise" onclick="minimize(this.id);">
+                                                            <a  class="evnt_set_minimise" id="id_Minimize-0" onclick="minimize(this.id);">
                                                                 <i class="fa fa-arrow-up"></i>
                                                                 Minimize Setting
                                                             </a>
@@ -718,11 +718,12 @@
      
         alert($('#' + e).val());
 
+
     }
 
     function minimize(e)
     {
-        
+        alert(e);
         var id = e;
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
@@ -847,7 +848,7 @@
             $("#id_ticket_id-0").val(randomValue);
             $("#id_order-0").val(1);
             $(".ticket_panel").slideDown();
-            $(".normalticket-").css('display', 'none');
+            $(".normalticket-0").css('display', 'none');
             $(".paidticket-0").css('display', 'block');
             $(".evnt_tct_btn").fadeOut("slow");
             $("#id_paymenttype-0").text("Free");

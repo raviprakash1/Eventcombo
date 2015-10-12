@@ -51,6 +51,7 @@
         <AssociationConnector Association="Models.FK__MultipleE__Frequ__4F9CCB9E" />
         <AssociationConnector Association="Models.FK_EventVenue_Event" />
         <AssociationConnector Association="Models.FK_EventVenue_EventVenue" />
+        <EntityTypeShape EntityType="Models.Fee_Structure" Width="1.5" PointX="10.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
