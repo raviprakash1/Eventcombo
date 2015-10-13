@@ -18,8 +18,17 @@
                     <input class="event-upload form-control" type="file" />
                     <div class="evnt_title_bg evnt_title_top">
                         <div class="form-group">
-                            <input id="txtEventTitle" class="form-control evnt_title_control" placeholder="Enter Name of the event" value="Enter Name of the event" />
+                            <input id="txtEventTitle" class="form-control evnt_title_control" placeholder="Enter Name of the event" value="" />
+
+                            @*<input id="txtEventTitle" class="form-control evnt_title_control" value="Enter Name of the event" onclick='this.value=""' onfocus='this.select()' onblur="this.value=!this.value?'Enter Name of the event':this.value;" />*@
+
                         </div>
+
+
+                        
+
+
+
                         <div class="form-group">
 
                             <label class="label-control evnt_title_control">Event Discription</label>
@@ -178,7 +187,7 @@
 
                                     <div class="er_war_main">
                                         <div class="er_war_img"></div>
-                                        <div class="er_war"> &#9;&#9;&#9;Modyfy this organiser apply to all event.</div>
+                                        <div class="er_war"> &#9;&#9;&#9;Modify this organiser apply to all event.</div>
                                     </div>
 
                                 </div>
@@ -580,8 +589,8 @@
                         </div>
                         <div class="form-group">
                             <label class="label-control evnt_ticket_label wd600">Event Category</label>
-                            <select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>
-
+                            @*<select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>*@
+                            @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>,new {@class="form-control evnt_inp_cont" })
                         </div>
                         <div class="form-group">
                             <label class="label-control evnt_ticket_label wd600">Event Sub-category</label>
@@ -651,8 +660,9 @@
                                     <option>US</option>
                                     <option>England</option>
                                 </select>*@
+                                @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>,new {@class="form-control evnt_inp_cont" })
                             </div>
-                            @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>,new {@class="form-control evnt_inp_cont" })
+                            
 
                         </div>
                         <div  class="col-sm-6 location_map_div">
@@ -668,7 +678,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default"><i class="fa fa-undo"></i> Reset Address</button>
+                        @*<button type="button" class="btn btn-default"><i class="fa fa-undo"></i> Reset Address</button>*@
                         <button type="button" id="btAddAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary close">Ok</button>
                     </div>
                 </div>
@@ -971,6 +981,10 @@
     //}
 
     $(document).ready(function () {
+        $("#ddlEventCategory").change(function () {
+           // alert("Chal Pya");
+        });
+
 
         $("#btEditOrg").click(function () {
             $("#txtOrgnizer").val('');
@@ -1777,9 +1791,17 @@
 
             $(".evnt_setting li a:first").addClass("active_setting");
         });
+        //$('.date_picker').datepicker({
+        //    format: "mm/dd/yyyy"
+        //});
+
         $('.date_picker').datepicker({
-            format: "mm/dd/yyyy"
-        });
+            format: "mm/dd/yyyy",
+        })
+          .on('changeDate', function (ev) {
+              $('.date_picker').datepicker('hide');
+          });
+
         $(function () {
             $('.time_picker').timepicker();
         });

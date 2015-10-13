@@ -61,8 +61,23 @@ namespace EventCombo.Controllers
                     });
                 }
 
+                var EventCat = (from myRow in db.EventCategories
+                            select myRow).ToList();
+                List<SelectListItem> EventCategory = new List<SelectListItem>();
+                foreach (var item in EventCat)
+                {
+                    EventCategory.Add(new SelectListItem()
+                    {
+                        Text = item.EventCategory1,
+                        Value = item.EventCategoryID.ToString(),
+                    });
+                }
+
+
+
                 ViewBag.CountryID = countryList;
                 ViewBag.EventType = EventType;
+                ViewBag.ddlEventCategory = EventCategory;
 
             }
             return View();
