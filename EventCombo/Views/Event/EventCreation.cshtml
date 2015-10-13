@@ -1499,7 +1499,7 @@
             data.attr('id', 'clonediv-' + divlength);
             console.log(data.find('input[type=text]'));
             data.find('*[id]').andSelf().each(function () {
-                console.log($(this));
+
 
                 var id = $(this).attr('id');
                 //console.log(id);
@@ -1507,7 +1507,8 @@
                 ////console.log(id);
                 var idn = id1 + "-" + divlength;
                 $(this).attr("id", idn);
-
+                $(this).val('');
+              
                 if ($(this).hasClass("paidticket-0")) {
                     $(this).removeClass('paidticket-0');
                     $(this).addClass('paidticket-' + divlength + '');
@@ -1550,6 +1551,8 @@
                 ////console.log(id);
                 var idn = id1 + "-" + divlength;
                 $(this).attr("id", idn);
+                $(this).val('');
+              
                 if ($(this).hasClass("paidticket-0")) {
                     $(this).removeClass('paidticket-0');
                     $(this).addClass('paidticket-' + divlength + '');
@@ -1574,6 +1577,8 @@
             $("#id_order-" + divlength).val(divlength + 1);
             $("#id_feetype-" + divlength).css('display', 'block');
             $("#id_Tickettype-" + divlength).val("Paid");
+            $("#id_buyerprice-" + divlength).html('$0.00');
+            $("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
             $("#id_feetype-0").val(0);
         });
         $('#create-ticket-donation-button').click(function () {
@@ -1591,6 +1596,8 @@
                 ////console.log(id);
                 var idn = id1 + "-" + divlength;
                 $(this).attr("id", idn);
+                $(this).val('');
+             
                 if ($(this).hasClass("paidticket-0")) {
                     $(this).removeClass('paidticket-0');
                     $(this).addClass('paidticket-' + divlength + '');
@@ -1616,6 +1623,7 @@
 
             $("#id_order-" + divlength).val(divlength + 1);
             $("#id_Tickettype-" + divlength).val("Donation");
+           
             $("#id_feetype-0").val(0);
         });
 
