@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EventCombo.Models;
 using System.Collections;
 using System.Data;
+using System.Text;
 
 namespace EventCombo.Controllers
 {
@@ -15,7 +16,7 @@ namespace EventCombo.Controllers
         [HttpPost]
         public ActionResult EventCreation(EventCreation model)
         {
-           
+
             return View();
         }
 
@@ -38,7 +39,7 @@ namespace EventCombo.Controllers
                                     select c).Distinct();
                 List<SelectListItem> countryList = new List<SelectListItem>();
                 defaultCountry = "United States";
-                
+
                 foreach (var item in countryQuery)
                 {
                     countryList.Add(new SelectListItem()
@@ -52,6 +53,12 @@ namespace EventCombo.Controllers
                 var rows = (from myRow in db.EventTypes
                             select myRow).ToList();
                 List<SelectListItem> EventType = new List<SelectListItem>();
+                EventType.Add(new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "0",
+                    Selected = true
+                });
                 foreach (var item in rows)
                 {
                     EventType.Add(new SelectListItem()
@@ -61,9 +68,16 @@ namespace EventCombo.Controllers
                     });
                 }
 
+
                 var EventCat = (from myRow in db.EventCategories
-                            select myRow).ToList();
+                                select myRow).ToList();
                 List<SelectListItem> EventCategory = new List<SelectListItem>();
+                EventCategory.Add(new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "0",
+                    Selected = true
+                });
                 foreach (var item in EventCat)
                 {
                     EventCategory.Add(new SelectListItem()
@@ -72,6 +86,11 @@ namespace EventCombo.Controllers
                         Value = item.EventCategoryID.ToString(),
                     });
                 }
+
+
+
+
+
 
 
 
@@ -111,12 +130,13 @@ namespace EventCombo.Controllers
                     ObjEC.EventStatus = model.EventStatus;
                     ObjEC.IsMultipleEvent = model.IsMultipleEvent;
                     ObjEC.TimeZone = model.TimeZone;
-                    ObjEC.DisplayStartTime  = model.DisplayStartTime;
+                    ObjEC.DisplayStartTime = model.DisplayStartTime;
                     ObjEC.DisplayEndTime = model.DisplayEndTime;
                     ObjEC.DisplayTimeZone = model.DisplayTimeZone;
                     ObjEC.FBUrl = model.FBUrl;
                     ObjEC.TwitterUrl = model.TwitterUrl;
-
+                    ObjEC.LastLocationAddress = model.LastLocationAddress;
+                    ObjEC.AddressStatus = model.AddressStatus;
                     objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -139,7 +159,7 @@ namespace EventCombo.Controllers
 
                         }
                     }
- // Event on Single Timing 
+                    // Event on Single Timing 
                     if (model.EventVenue != null)
                     {
                         EventVenue objEVenue = new EventVenue();
@@ -153,7 +173,7 @@ namespace EventCombo.Controllers
                             objEnt.EventVenues.Add(objEVenue);
                         }
                     }
-// Event on Multiple timing 
+                    // Event on Multiple timing 
                     if (model.MultipleEvents != null)
                     {
                         MultipleEvent objMEvents = new MultipleEvent();
@@ -167,19 +187,19 @@ namespace EventCombo.Controllers
                             objMEvents.MonthlyWeekDays = objME.MonthlyWeekDays;
                             objMEvents.StartingFrom = objME.StartingFrom;
                             objMEvents.StartingTo = objME.StartingTo;
-                            objMEvents.StartTime= objME.StartTime;
+                            objMEvents.StartTime = objME.StartTime;
                             objMEvents.EndTime = objME.EndTime;
                             objEnt.MultipleEvents.Add(objMEvents);
                         }
                     }
-    // Orgnizer
+                    // Orgnizer
                     if (model.Orgnizer != null)
                     {
                         Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
                         foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
                         {
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name ;
+                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
                             objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
@@ -199,12 +219,12 @@ namespace EventCombo.Controllers
         {
             List<Fees> eList = new List<Fees>();
             EventComboEntities objEnt = new EventComboEntities();
-           
 
-                var rows = (from myRow in objEnt.Fee_Structure
-                           select myRow).ToList();
 
-               return Json(rows.ToArray(), JsonRequestBehavior.AllowGet);
+            var rows = (from myRow in objEnt.Fee_Structure
+                        select myRow).ToList();
+
+            return Json(rows.ToArray(), JsonRequestBehavior.AllowGet);
 
         }
 
@@ -231,9 +251,94 @@ namespace EventCombo.Controllers
             catch (Exception)
             {
                 return objJs;
-                
+
             }
         }
+        public string GetSubCat(long lECatId)
+        {
+
+            StringBuilder strHtml = new StringBuilder();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var EventCat = (from myRow in objEnt.EventSubCategories
+                                    where myRow.EventCategoryID == lECatId
+                                    select myRow).ToList();
+
+                    //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    foreach (var item in EventCat)
+                        strHtml.Append("<option value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
+
+                    return strHtml.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return strHtml.ToString();
+
+            }
+
+
+        }
+
+        public string CheckEventUrl(string strUserUrl)
+        {
+
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var Eventurl = (from myRow in objEnt.Events
+                                    where myRow.EventUrl == strUserUrl
+                                    select myRow).SingleOrDefault();
+
+                    if (Eventurl == null) return "N";
+                    if (Eventurl.ToString().Equals(string.Empty))
+                        return "N"; // Not Exists
+                    else
+                        return "Y"; // Exists
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Y";
+
+            }
+
+
+        }
+
+        public string GetPreviousAddress()
+        {
+            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+
+            StringBuilder strHtml = new StringBuilder();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var PrevAdd = (from myRow in objEnt.Addresses
+                                    where myRow.UserId == strUsers
+                                    select myRow).ToList();
+
+                    //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    foreach (var item in PrevAdd)
+                        strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+
+                    return strHtml.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return strHtml.ToString();
+
+            }
+
+
+        }
+
+
 
 
         //public JsonResult GetEventType()
@@ -242,7 +347,7 @@ namespace EventCombo.Controllers
         //    //List<KeyValuePair<string, string>> objList = new List<KeyValuePair<string, string>>();
         //    try
         //    {
-                
+
 
         //    using (EventComboEntities objEntity = new EventComboEntities())
         //    {
@@ -280,7 +385,7 @@ namespace EventCombo.Controllers
 
 
 
-         
+
 
         public class Fees
         {

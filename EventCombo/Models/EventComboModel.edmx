@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -143,6 +143,8 @@
           <Property Name="TimeZone" Type="nvarchar" MaxLength="1000" />
           <Property Name="FBUrl" Type="nvarchar" MaxLength="1000" />
           <Property Name="TwitterUrl" Type="nvarchar" MaxLength="1000" />
+          <Property Name="AddressStatus" Type="varchar" MaxLength="100" />
+          <Property Name="LastLocationAddress" Type="bigint" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -185,6 +187,7 @@
           <Property Name="EventImageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="bigint" Nullable="false" />
           <Property Name="EventImageUrl" Type="varchar" MaxLength="200" />
+          <Property Name="ImageType" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="EventOrganizer">
           <Key>
@@ -622,8 +625,7 @@
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventComboModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -769,6 +771,8 @@
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
           <NavigationProperty Name="EventVenues" Relationship="Self.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
+          <Property Name="AddressStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastLocationAddress" Type="Int64" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -813,6 +817,7 @@
           <Property Name="EventImageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventID" Type="Int64" Nullable="false" />
           <Property Name="EventImageUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="EventOrganizer">
           <Key>
@@ -1348,6 +1353,8 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="LastLocationAddress" ColumnName="LastLocationAddress" />
+                <ScalarProperty Name="AddressStatus" ColumnName="AddressStatus" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
@@ -1414,6 +1421,7 @@
           <EntitySetMapping Name="EventImages">
             <EntityTypeMapping TypeName="EventComboModel.EventImage">
               <MappingFragment StoreEntitySet="EventImage">
+                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
                 <ScalarProperty Name="EventImageID" ColumnName="EventImageID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventImageUrl" ColumnName="EventImageUrl" />

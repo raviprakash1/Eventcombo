@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Abel);
-@import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
-
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 html {
     
 }
@@ -307,6 +306,13 @@ button:focus { outline: none;}
 
 .evnt_onl9{ margin-right: 10px; cursor: pointer; color: #337ab7;}
 .evnt_onl9:hover{ text-decoration: underline;}
+
+.past_loc{ margin-left: 10px; cursor: pointer; color: #337ab7;}
+.past_loc:hover{ text-decoration: underline;}
+.past_locat_cont{ width: 100%; float: left;}
+
+
+
 
 
 .url-width {

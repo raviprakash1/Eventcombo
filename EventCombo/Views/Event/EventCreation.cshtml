@@ -41,12 +41,13 @@
                         <h2>Event Details</h2>
                     </div>
                     <div class="evnt_details_body">
-                        <div class="form-group">
+                        <div class="EvntLocatTitle form-group">
                             <label class="label-control wd600">Event Location</label>
                             <div class="EnterAdd mb10 ent_add ">
                                 <input id="txtEventLocation" class="form-control mb5 evnt_inp_cont wd600 " placeholder="Specify Where it's is held." />
-                                <span class="OnlineEvent evnt_onl9"><i class="fa fa-television"></i> Online event </span>
+                                <span id="btOnlineEvent" class="OnlineEvent evnt_onl9"><i class="fa fa-television"></i> Online event </span>
                                 <a href="#" id="btEnterAddress" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Enter Address</a>
+                                <span id="btPastLocation" class="UsePast past_loc"><i class="fa fa-map"></i> Use Past Location </span>
                             </div>
 
                             <div class="clearfix"></div>
@@ -59,6 +60,28 @@
                             </div>
 
                         </div>
+
+                        <div class="PastLocatMain past_locat_cont">
+                            <div class="form-group">
+                                <label class="label-control wd600">Past Location</label>
+                                <div class="clearfix"></div>
+                                <select id="dllPastLocation" class="form-control evnt_inp_cont wd600">
+                                </select>
+                                <span class="RetunEvent past_loc">Add New </span>
+                            </div>
+                        </div>
+
+
+                        
+
+
+
+
+                       
+
+
+
+
                         <div class="clearfix"></div>
                         <div class="form-group">
                             <table id="tblAddress" class="table table-responsive">
@@ -87,14 +110,14 @@
                             <div class="str_evnt">
                                 <label class="label-control evnt_ticket_label wd140">Start</label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtStartDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="mm/dd/yyyy" />
+                                    <input id="txtStartDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="MM/DD/YYYY" />
                                     <input id="txtStartTime" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
                                 </div>
                             </div>
                             <div class="str_evnt">
                                 <label class="label-control evnt_ticket_label wd140">Ends</label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtEndDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="mm/dd/yyyy" />
+                                    <input id="txtEndDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="MM/DD/YYYY" />
                                     <input id="txtEndTime" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
                                 </div>
                             </div>
@@ -110,57 +133,57 @@
                         <div class="clearfix"></div>
 
                         <div class="clearfix"></div>
-                        <div id="dvShowMultipleSch" class="col-sm-12 mt10 no_pad">
-                            <div class="modal-content Sch_evnt_cont" style="display:block;">
-                                <div class="col-sm-12 no_pad">
-                                    <div class="list-group Sch_evnt_main">
-                                        <div class="list-group-item Sch_title" style="width:10%;">
-                                            <div class="Sch_date">2</div>
-                                            <div class="Sch_date">Dates</div>
-                                        </div>
-                                        <div class="list-group-item Sch_title" style="width:70%;">
-                                            <div class="Sch_title_desc">
+                        @*<div id="dvShowMultipleSch" class="col-sm-12 mt10 no_pad">
+                                <div class="modal-content Sch_evnt_cont" style="display:block;">
+                                    <div class="col-sm-12 no_pad">
+                                        <div class="list-group Sch_evnt_main">
+                                            <div class="list-group-item Sch_title" style="width:10%;">
+                                                <div class="Sch_date">2</div>
+                                                <div class="Sch_date">Dates</div>
+                                            </div>
+                                            <div class="list-group-item Sch_title" style="width:70%;">
+                                                <div class="Sch_title_desc">
 
-                                                Custom schedule 7:00 PM - 10:00 PM on the next day
+                                                    Custom schedule 7:00 PM - 10:00 PM on the next day
+                                                </div>
+                                                <div class="Sch_title_desc_bot">Starting November 18 2015 through December 18 2015</div>
                                             </div>
-                                            <div class="Sch_title_desc_bot">Starting November 18 2015 through December 18 2015</div>
-                                        </div>
-                                        <div class="list-group-item Sch_title Sch_act_main" style="width:20%;">
-                                            <div class="sch_action">
-                                                <a href="javascript:void(0)" class="DateList"><i class="fa fa-list-ul"></i></a>
+                                            <div class="list-group-item Sch_title Sch_act_main" style="width:20%;">
+                                                <div class="sch_action">
+                                                    <a href="javascript:void(0)" class="DateList"><i class="fa fa-list-ul"></i></a>
+                                                </div>
+                                                <div class="sch_action">
+                                                    <a href=""><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                                <div class="sch_action">
+                                                    <a href=""><i class="fa fa-trash-o"></i></a>
+                                                </div>
                                             </div>
-                                            <div class="sch_action">
-                                                <a href=""><i class="fa fa-pencil"></i></a>
-                                            </div>
-                                            <div class="sch_action">
-                                                <a href=""><i class="fa fa-trash-o"></i></a>
-                                            </div>
-                                        </div>
 
+                                        </div>
+                                        <div class="ShowdateList list-group Sch_evnt_main Sch_evnt_main_inner">
+                                            <div class="list-group-item Sch_title" style="width:10%;">
+                                                <div class="Sch_date">&nbsp;</div>
+                                                <div class="Sch_date">&nbsp;</div>
+                                            </div>
+                                            <div class="list-group-item Sch_title" style="width:74%;">
+                                                <div class="Sch_title_desc">Custom schedule 7:00 PM - 10:00 PM on the next day</div>
+                                                <div class="Sch_title_desc_bot">Starting November 18 2015 through December 18 2015</div>
+                                            </div>
+                                            <div class="list-group-item Sch_title Sch_act_main" style="width:16%;">
+                                                <div class="sch_action">
+                                                    <a href=""><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                                <div class="sch_action">
+                                                    <a href=""><i class="fa fa-trash-o"></i></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
-                                    <div class="ShowdateList list-group Sch_evnt_main Sch_evnt_main_inner">
-                                        <div class="list-group-item Sch_title" style="width:10%;">
-                                            <div class="Sch_date">&nbsp;</div>
-                                            <div class="Sch_date">&nbsp;</div>
-                                        </div>
-                                        @*<div class="list-group-item Sch_title" style="width:74%;">
-                                            <div class="Sch_title_desc">Custom schedule 7:00 PM - 10:00 PM on the next day</div>
-                                            <div class="Sch_title_desc_bot">Starting November 18 2015 through December 18 2015</div>
-                                        </div>*@
-                                        <div class="list-group-item Sch_title Sch_act_main" style="width:16%;">
-                                            <div class="sch_action">
-                                                <a href=""><i class="fa fa-pencil"></i></a>
-                                            </div>
-                                            <div class="sch_action">
-                                                <a href=""><i class="fa fa-trash-o"></i></a>
-                                            </div>
-                                        </div>
 
-                                    </div>
                                 </div>
-
-                            </div>
-                        </div>
+                            </div>*@
 
                         <div class="clearfix"></div>
                         <div class="evnt_descp_cont">
@@ -340,26 +363,26 @@
                                                                     <option value="1">I absorb the fee</option>
                                                                 </select>
                                                                 @*<div class="fess_online mb10">
-                                                            <p><strong>Online:</strong> Fee: $73.34 Buyer total: $2,186.34</p>
-                                                            <p><strong>At The Door:</strong> Fee: $63.39 Buyer total: $2,113.00</p>
-                                                        </div>*@
+                                                                        <p><strong>Online:</strong> Fee: $73.34 Buyer total: $2,186.34</p>
+                                                                        <p><strong>At The Door:</strong> Fee: $63.39 Buyer total: $2,113.00</p>
+                                                                    </div>*@
                                                             </div>
                                                             @*<div class="form-group">
-                                                        <label class="label-control evnt_ticket_label wd600">Sales channel</label>
-                                                        <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                            <input type="checkbox" id="id_available_online-0" />
-                                                            Online sales
-                                                        </label>
-                                                        @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
-                                                                <input type="checkbox" />
-                                                                At the door sales using Neon (app)
-                                                            </label>
-                                                    </div>*@
+                                                                    <label class="label-control evnt_ticket_label wd600">Sales channel</label>
+                                                                    <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                        <input type="checkbox" id="id_available_online-0" />
+                                                                        Online sales
+                                                                    </label>
+                                                                    @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
+                                                                            <input type="checkbox" />
+                                                                            At the door sales using Neon (app)
+                                                                        </label>
+                                                                </div>*@
                                                             <div class="clearfix"></div>
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
                                                                 <div class="evt_time evnt_time_cont wd600">
-                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="mm/dd/yyyy" id="id_salestart-0" />
+                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="MM/DD/YYYY" id="id_salestart-0" />
 
                                                                     <input id="id_saletimestart-0" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" />
                                                                     <div class="clearfix"></div>
@@ -379,7 +402,7 @@
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
                                                                 <div class="evnt_time_cont wd600">
-                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="mm/dd/yyyy" id="id_saleend-0" onchange="" />
+                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="MM/DD/YYYY" id="id_saleend-0" onchange="" />
 
                                                                     <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" id="id_saletimeend-0" />
 
@@ -411,7 +434,7 @@
                                                                                 <input type="checkbox" id="id_auto_hide_until-0" /> Hide Until
                                                                             </label>
                                                                             <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="mm/dd/yyyy" />
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="MM/DD/YYYY" />
 
                                                                                 <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
                                                                             </div>
@@ -421,8 +444,7 @@
                                                                                 <input type="checkbox" id="id_auto_hide_after-0" /> Hide After
                                                                             </label>
                                                                             <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="mm/dd/yyyy" />
-
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="MM/DD/YYYY" />
                                                                                 <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
                                                                             </div>
                                                                         </div>
@@ -544,7 +566,7 @@
                         <label class="label-control evnt_ticket_label wd600">Listing Privacy</label>
                         <div class="form-group">
                             <label class="Pubpage label-control evnt_ticket_label fs-13">
-                                <input type="radio" name="rdPr" id="rdPublic" />
+                                <input type="radio"  checked="checked"  name="rdPr" id="rdPublic" />
                                 <strong>Public page:</strong> list this event on Eventbrite and search engines
                             </label>
                             <div class="clearfix"></div>
@@ -587,12 +609,20 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="label-control label_private">
+                                <input type="checkbox">
+                                Duplicate This Event
+                            </label>
+                        </div>
+
+
+                        <div class="form-group">
                             <label class="col-sm-12 no_pad label-control wd600">Create a unique URL</label>
                             <div class="clearfix"></div>
                             <div class="url-width">
 
                                 <span class="url-filed">
-                                    <input class="gui-input url-filed-border" type="text" placeholder="enter url name">
+                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" placeholder="enter url name">
                                 </span>
                                 <span class="url-name">.eventcombo.com</span>
                             </div>
@@ -606,16 +636,18 @@
 
                         <div class="form-group">
                             <label class="label-control evnt_ticket_label wd600">Event Type</label>
-                            @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" })
+                            @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
                         </div>
                         <div class="form-group">
                             <label class="label-control evnt_ticket_label wd600">Event Category</label>
-                            @*<select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>*@
-                            @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" })
+                            @*<select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>*@ 
+                            @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
                         </div>
                         <div class="form-group">
                             <label class="label-control evnt_ticket_label wd600">Event Sub-category</label>
-                            <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                            <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600">
+
+                            </select>
                         </div>
                         <div class="clearfix"></div>
                         <div class="form-group">
@@ -638,6 +670,7 @@
                     <input type="hidden" id="hidAddSno" value="" />
                     <input type="hidden" id="hidSchLastState" value="" />
                     <input type="hidden" id="hidOrgnizer" value="" />
+                    <input type="hidden" id="hidAddressStatus" value="" />
                 </div>
             </form>
         </div>
@@ -700,7 +733,7 @@
                     <div class="clearfix"></div>
                     <div class="modal-footer">
                         @*<button type="button" class="btn btn-default"><i class="fa fa-undo"></i> Reset Address</button>*@
-                        <button type="button" id="btAddAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary close">Ok</button>
+                        <button type="button" id="btAddAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-lg Close">Save</button>
                     </div>
                 </div>
             </div>
@@ -833,11 +866,11 @@
                                     Occurs From
                                 </label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtDateFrom" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="mm/dd/yyyy" />
+                                    <input id="txtDateFrom" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="MM/DD/YYYY" />
                                     <label class="label-control label_cont_to fs-13">
                                         Untill
                                     </label>
-                                    <input id="txtDateTo" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="mm/dd/yyyy" />
+                                    <input id="txtDateTo" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="MM/DD/YYYY" />
 
                                 </div>
                             </div>
@@ -857,8 +890,8 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
-                        <button type="button" id="btCancleSch" class="btn btn-default btn-lg sch_save_btn" data-dismiss="modal" aria-label="Close"> Cancel</button>
-                        <button type="button" id="btnAddSch" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-lg sch_save_btn close">Add</button>
+                        @*<button type="button" id="btCancleSch" class="btn btn-default btn-lg sch_save_btn" data-dismiss="modal" aria-label="Close"> Cancel</button>*@
+                        <button type="button" id="btnAddSch" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-lg  Close">Save</button>
                     </div>
                 </div>
             </div>
@@ -912,8 +945,8 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
-                        <button type="button" id="btCancelTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-default close">Cancel</button>
-                        <button type="button" id="btSaveTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-primary Close">Save</button>
+                        @*<button type="button" id="btCancelTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-default close">Cancel</button>*@
+                        <button type="button" id="btSaveTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-lg Close">Save</button>
                     </div>
                 </div>
             </div>
@@ -1003,6 +1036,22 @@
 
     $(document).ready(function () {
 
+            
+
+        $(".PastLocatMain").hide();
+        $(".UsePast").click(function () {
+            $(".PastLocatMain").css("display", "block");
+            $(".EvntLocatTitle").css("display", "none");
+            $(".EnterAdd").css("display", "none");
+        });
+
+        $(".RetunEvent").click(function () {
+            $(".EnterAdd").css("display", "block");
+            $(".EvntLocatTitle").css("display", "block");
+            $(".PastLocatMain").css("display", "none");
+
+        });
+
         // Event Orgnization
 
 
@@ -1056,11 +1105,72 @@
         $(".AddLocatondiv").click(function () {
             $(".EnterAdd").css("display", "block");
             $(".online_main_cont").css("display", "none");
+            $("#hidAddressStatus").val('Normal');
+        });
 
+        //hidAddressStatus
+        $("#btOnlineEvent").click(function () {
+            $("#hidAddressStatus").val('Online');
+        });
+
+        $("#btPastLocation").click(function () {
+            $("#hidAddressStatus").val('PastLocation');
+            $.ajax({
+                url: '@Url.Action("GetPreviousAddress", "Event")',
+                type: "Post",
+                success: function (data) {
+                    $("#dllPastLocation").html(data);
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                }
+            });
+
+            //$("#dllPastLocation")
+        });
+        //
+
+        $("#txtEventUrl").focusout(function () {
+            var vval = $("#txtEventUrl").val().trim();
+            if (vval != '') {
+                $.ajax({
+                    url: '@Url.Action("CheckEventUrl", "Event")',
+                    data: { strUserUrl: $("#txtEventUrl").val().trim() },
+                    type: "Post",
+                    success: function (data) {
+                        if (data == "Y") {
+                            alert("Event Url already exists.");
+                            $("#txtEventUrl").val('');
+                            $("#txtEventUrl").focus();
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Sorry there is some problem.");
+                    }
+                });
+            }
         });
 
         $("#ddlEventCategory").change(function () {
-            // alert("Chal Pya");
+            //alert("change Fires");
+            var vCatId = $("#ddlEventCategory").val();
+            $.ajax({
+                url: '@Url.Action("GetSubCat", "Event")',
+                data: { lECatId: vCatId },
+                type: "Post",
+                success: function (data) {
+                    //$.each(data, function () {
+                   // debugger;
+                    //                   alert(data.length);
+                    $("#ddlEventSubCategory").html(data);
+                    // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                    //});
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                }
+            });
         });
 
 
@@ -1374,7 +1484,8 @@
 
 
         $("#btAddAddress").click(function () {
-            $("#tblAddress").show();
+            alert("chal pya");
+            // $("#tblAddress").show();
             // alert("Chal Pya");
             //var sno = parseInt($("#tblAddress tr").length);
             //var strHtml = '<tr><td>' + sno + '</td>' + $("#Address1").val() +'<td>' +  + '</td><td>' + $("#Address2").val() + '</td><td>' +
@@ -1416,7 +1527,7 @@
             var Orgnizer = [];
             //var table = $("#tblAddress");
 
-// Ticket 
+            // Ticket
 
             var Ticket = [];
             var divlength = $("#MasterDiv> div").size();
@@ -1604,7 +1715,7 @@
             var vEventDiscription = '';//$("#edSummer1").code();
             //alert(vEventDiscription);
             var model = {
-                'EventTypeID': $("#ddlEventType").val(),
+                'EventTypeID': $("#EventType").val(),
                 'EventCategoryID': $("#ddlEventCategory").val(),
                 'EventSubCategoryID': $("#ddlEventSubCategory").val(),
                 'UserID': '',
@@ -1614,7 +1725,7 @@
                 'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
                 'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
                 'Private_Password': $("#txtReqPassword").val(),
-                'EventUrl': '',
+                'EventUrl': $("#txtEventUrl").val().trim(),
                 'PublishOnFB': ($("#chkLinkonFBTwit").is(":checked") != true ? 'Y' : 'N'),
                 'EventStatus': 'Save',
                 'AddressDetail': SubmitAddress,
@@ -1626,7 +1737,10 @@
                 'FBUrl': $("#txtFBUrl").val(),
                 'TwitterUrl': $("#txtTwitterurl").val(),
                 'MultipleEvents': MultipleSchedule,
-                'Orgnizer': Orgnizer
+                'Orgnizer': Orgnizer,
+                'AddressStatus': $("#hidAddressStatus").val(),
+                'LastLocationAddress': ($("#hidAddressStatus").val().trim() == "PastLocation" ? $("#dllPastLocation").val() : 0)
+                //dllPastLocation
             };
             //alert(model.FBUrl);
             //'UserID': '',
@@ -1656,7 +1770,7 @@
                 data: model,
                 type: "Post",
                 success: function (response) {
-                    alert('Document Saved.');
+                    alert('Congratulations, your event is on Eventcombo!');
                 }
             });
         });
