@@ -195,6 +195,21 @@ namespace EventCombo.Controllers
             return lEventId;
         }
 
+        public ActionResult returnfees()
+        {
+            List<Fees> eList = new List<Fees>();
+            EventComboEntities objEnt = new EventComboEntities();
+           
+
+                var rows = (from myRow in objEnt.Fee_Structure
+                           select myRow).ToList();
+
+               return Json(rows.ToArray(), JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
 
         //public string Dictionary<string,string> Test()
         //{
@@ -264,6 +279,15 @@ namespace EventCombo.Controllers
         //}
 
 
+
+         
+
+        public class Fees
+        {
+            public string Feetype { get; set; }
+            public string FeeAmount { get; set; }
+            public string TotalAmount { get; set; }
+        }
 
         //public void SaveTable(EventCreation model)
         //{

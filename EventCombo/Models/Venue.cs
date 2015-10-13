@@ -17,7 +17,5 @@ namespace EventCombo.Models
         public long VenueID { get; set; }
         public long AddressID { get; set; }
         public string VenueName { get; set; }
-    
-        public virtual Address Address { get; set; }
     }
 }

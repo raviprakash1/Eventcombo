@@ -4,51 +4,48 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b17a76b56db547d4afeae6f461d0fff9" Name="Diagram1" ZoomLevel="66">
-        <EntityTypeShape EntityType="Models.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.AspNetRole" Width="1.5" PointX="10.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.AspNetUserClaim" Width="1.5" PointX="15.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.AspNetUserLogin" Width="1.5" PointX="15.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.AspNetUser" Width="1.5" PointX="13" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.Country" Width="1.5" PointX="6" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.Profile" Width="1.5" PointX="8.25" PointY="6" IsExpanded="true" />
-        <AssociationConnector Association="Models.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK__Profile__Country__182C9B23" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="Models.FK_Profile_Profile" />
-        <EntityTypeShape EntityType="Models.Status" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="Models.Email_Tag" Width="1.5" PointX="3.375" PointY="3.75" />
-        <EntityTypeShape EntityType="Models.Email_Template" Width="1.5" PointX="5.375" PointY="3.75" />
-        <EntityTypeShape EntityType="Models.Message" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="Models.Permission_Detail" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Models.User_Permission_Detail" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Models.Address" Width="1.5" PointX="16" PointY="7.75" />
-        <EntityTypeShape EntityType="Models.DeliveryMethod" Width="1.5" PointX="0.75" PointY="9.875" />
-        <EntityTypeShape EntityType="Models.Event" Width="1.5" PointX="15.25" PointY="15.25" />
-        <EntityTypeShape EntityType="Models.Event_Detail" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Models.EventImage" Width="1.5" PointX="17.5" PointY="25.875" />
-        <EntityTypeShape EntityType="Models.EventOrganizer" Width="1.5" PointX="17.5" PointY="19.25" />
-        <EntityTypeShape EntityType="Models.EventVenue" Width="2.375" PointX="20.5" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.MultipleEvent" Width="2.375" PointX="17.5" PointY="14.875" />
-        <EntityTypeShape EntityType="Models.Ticket" Width="1.5" PointX="0.75" PointY="12.75" />
-        <EntityTypeShape EntityType="Models.TicketDeliveryMethod" Width="1.5" PointX="3" PointY="9.875" />
-        <EntityTypeShape EntityType="Models.TicketType" Width="1.5" PointX="10.75" PointY="6.75" />
-        <EntityTypeShape EntityType="Models.Venue" Width="1.5" PointX="18.25" PointY="8.25" />
-        <AssociationConnector Association="Models.FK__Address__Country__30592A6F" />
-        <AssociationConnector Association="Models.FK__Venue__AddressID__10AB74EC" />
-        <AssociationConnector Association="Models.FK__TicketDel__Deliv__1A69E950" />
-        <AssociationConnector Association="Models.FK__EventImag__Event__0DCF0841" />
-        <AssociationConnector Association="Models.FK__EventOrga__Event__47FBA9D6" />
-        <AssociationConnector Association="Models.FK__MultipleE__Event__4EA8A765" />
-        <AssociationConnector Association="Models.FK_EventVenue_Event" />
-        <AssociationConnector Association="Models.FK_EventVenue_EventVenue" />
-        <EntityTypeShape EntityType="Models.Fee_Structure" Width="1.5" PointX="10.375" PointY="9.75" />
-        <AssociationConnector Association="Models.FK_Ticket_Event" />
-        <EntityTypeShape EntityType="Models.Event_Orgnizer_Detail" Width="1.5" PointX="17.5" PointY="22.75" />
-        <AssociationConnector Association="Models.FK_Event_Orgnizer_Detail_Event" />
-        <EntityTypeShape EntityType="Models.EventType" Width="2.875" PointX="11.625" PointY="18" />
-        <AssociationConnector Association="Models.FK_Event_EventType" />
+      <Diagram DiagramId="7b14b122ec7642f1b4af5e1b0c3577aa" Name="Diagram1">
+        <EntityTypeShape EntityType="EventComboModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Address" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.AspNetRole" Width="1.5" PointX="7.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.AspNetUser" Width="1.5" PointX="10" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Country" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.DeliveryMethod" Width="1.5" PointX="14.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Email_Tag" Width="1.5" PointX="7.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Email_Template" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Event" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Event_Detail" Width="1.5" PointX="7.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Event_Orgnizer_Detail" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventCategory" Width="1.5" PointX="14.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventImage" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventOrganizer" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventSubCategory" Width="1.5" PointX="17" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventType" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventVenue" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="9.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Message" Width="1.5" PointX="11.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.MultipleEvent" Width="1.5" PointX="14.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Permission_Detail" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Profile" Width="1.5" PointX="12.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Status" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.TicketDeliveryMethod" Width="1.5" PointX="17" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.TicketType" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.User_Permission_Detail" Width="1.5" PointX="13.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Venue" Width="1.5" PointX="16.75" PointY="15.75" IsExpanded="true" />
+        <AssociationConnector Association="EventComboModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_Profile_Profile" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK__TicketDel__Deliv__1A69E950" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_Event_EventType" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_EventVenue_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_Ticket_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK__EventSubC__Event__5F141958" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_EventVenue_EventVenue" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.AspNetUserRoles" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

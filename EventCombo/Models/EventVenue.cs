@@ -16,11 +16,11 @@ namespace EventCombo.Models
     {
         public long EventVenueID { get; set; }
         public long EventID { get; set; }
+        public long AddressId { get; set; }
         public Nullable<System.DateTime> EventStartDate { get; set; }
         public Nullable<System.DateTime> EventEndDate { get; set; }
         public Nullable<System.TimeSpan> EventStartTime { get; set; }
         public Nullable<System.TimeSpan> EventEndTime { get; set; }
-        public long AddressId { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual EventVenue EventVenue1 { get; set; }

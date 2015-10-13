@@ -46,7 +46,6 @@ namespace EventCombo.Models
         public string Merchant { get; set; }
         public string UserStatus { get; set; }
     
-        public virtual Country Country { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

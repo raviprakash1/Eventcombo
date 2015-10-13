@@ -14,18 +14,10 @@ namespace EventCombo.Models
     
     public partial class EventSubCategory
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EventSubCategory()
-        {
-            this.Events = new HashSet<Event>();
-        }
-    
         public long EventSubCategoryID { get; set; }
         public long EventCategoryID { get; set; }
         public string EventSubCategory1 { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Event> Events { get; set; }
         public virtual EventCategory EventCategory { get; set; }
     }
 }
