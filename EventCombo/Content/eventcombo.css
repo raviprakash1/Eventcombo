@@ -228,9 +228,12 @@ button:focus { outline: none;}
 .evnt_details_body{ width: 100%; float: left; padding: 5px 20px; margin-bottom: 30px; }
 .evnt_inp_cont{ height: 40px; border-radius: 0px; }
 
+
 .location_map_div{ line-height:200px; text-align: center; height: 200px; border: 1px solid #ccc; background: #fafafa;}
-.ent_add{ color:#00a1ee; font-size: 1em; cursor: pointer; }
-.loc_map i{ font-size: 5em;  color: #dedede; margin-left: 100%;}
+.ent_add{ color:#00a1ee; font-size: 1em; }
+.loc_map i{ font-size: 5em;  color: #dedede; margin-left: 0;}
+.shw_map{ font-weight: normal;}
+
 
 .event_add_table{ background: #fff;}
 .event_add_table td{ padding-top: 15px !important; padding-bottom: 15px !important; font-size: 1.1em;}
@@ -250,7 +253,6 @@ button:focus { outline: none;}
 .nth-day{display: inline-block;}
 .evnt_inp_sel_day button.multiselect{border-radius: 0;height: 40px; width: 200px; text-align: left !important;}
 .evnt_inp_sel_day ul.multiselect-container{ width: 200px; border-radius: 0px;} 
-.evnt_inp_sel_day b.caret{ float: right; margin-top: -12px;}
 .event_reap_time{ float: left; margin-right: 20px;}
 .sch_save_btn {border-radius: 0 !important;}
 
@@ -271,8 +273,75 @@ button:focus { outline: none;}
 .Sch_evnt_main_inner .Sch_title_desc{font-size: 1em; font-weight: normal; }
 .Sch_evnt_main_inner .Sch_title_desc_bot{font-size: 1em; font-weight: normal;}
 
+/*****4th Start********/
+.evnt_descp_cont{ width: 100%; float: left;}
+.desc_editor .panel{ margin-bottom: 5px;}
+.edit_organ_label{ width:auto; float: left; padding-right: 5px; max-width: 100%; font-weight: normal; color:#337ab7; font-size: 1em;}
+.edit_organ_label:hover{ text-decoration: underline; cursor: pointer;}
+.edit_org_cont{ width: 100%; float: left;}
+.can_org_cont{ width: 100%; float: left;}
+.add_social_cont{width: 100%; float: left;}
+.add_social_input{width: 100%; float: left;}
+.fb{ color:#3d5a98;}
+.tw{ color:#5ea9dd;}
+.Moderor{ width: 600px; float: left; max-width: 100%;}
+.note-codable{ display:none;}
+
+.er_war_main{
+    border: 1px solid #ffdb00;
+    width: 100%;
+    float: left;height: 50px; display: table;}
+.er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; }
+.er_war_img{ background: #ffdb00 url(../images/info_icn.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
+
+.add_set_cont{ width: 100%; float: left;}
+.priv_cont{ width: 97%; float: left; margin-left: 3%;}
+.label_private{ font-weight: normal;}
 
 
+/************5th Start**********************/
+.evnt_inp_sel_day b.caret {
+    float: right;
+    margin-top: 8px;
+}
+
+.evnt_onl9{ margin-right: 10px; cursor: pointer; color: #337ab7;}
+.evnt_onl9:hover{ text-decoration: underline;}
+
+
+.url-width {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    float: left;
+    width: auto;
+}
+.url-name {
+    color: #b2b2b2;
+    float: left;
+    line-height: 42px;
+    min-width: 103px;
+    padding-left: 10px;
+    font-size: 1.1em;
+    padding-right: 10px;
+}
+.url-filed {
+    float: left;
+    width: auto;
+    font-size: 1.1em;
+    line-height: 40px;
+    padding-left: 10px;
+}
+.url-filed-border {
+    border: 0 none !important;
+    padding-left: 0 !important;
+}
+.gnrate-url {
+    float: left;
+    font-style: italic;
+    margin-top: 7px !important;
+    width: 100%;
+}
 
 
 /************Create Ticket**********************/
@@ -407,7 +476,9 @@ button:focus { outline: none;}
 .mt10{ margin-top: 10px;}
 .mb10{ margin-bottom:10px;}
 .ml10{ margin-left: 10px;}
+.mr5_p{ margin-right: 5%;}
 .wd600{ width: 600px; max-width: 100%;}
+.wd500{width: 500px; max-width: 100%;}
 .wd350{width: 350px; max-width: 100%;}
 .wd280{width: 280px; max-width: 100%;}
 .wd200{width: 200px; max-width: 100%;}
@@ -415,9 +486,9 @@ button:focus { outline: none;}
 .col-60{ width: 60%; float: left; margin-right: 5%;}
 .col-35{ width: 35%; float: left;}
 
-.mr5_p{ margin-right: 5%;}
-
 .fs-13{ font-size: 13px; }
+.fs15{font-size: 15px; font-weight: normal; }
+.fs18{font-size: 18px; font-weight: normal; }
 
 
 .place_hold::-webkit-input-placeholder {
@@ -558,4 +629,11 @@ button:focus { outline: none;}
   
 }
 
-
+.evnt_title_bg{ position:absolute; top:88px; right:0px; margin-right:20px; }
+.event-upload-container .jFiler-items ul li.jFiler-item {margin-right:20px;}
+.event-upload-container .jFiler-input-dragDrop{ width:100%;height: 560px; background:#ccc;}
+.event-upload-container .jFiler-item-thumb-image {  width:180px; margin-top:10px;}
+.event-upload-container .jFiler-item-thumb-image img{ width:180px;height:140px; border:2px solid #fff; }
+.event-upload-container .jFiler-item-container{ margin:0px !important;}
+.event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets{margin-top:0px !important;}
+.event-upload-container .jFiler-item .jFiler-item-container{padding:5px!important;}

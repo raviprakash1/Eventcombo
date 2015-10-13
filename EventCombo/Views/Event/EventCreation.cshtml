@@ -15,7 +15,8 @@
         <div class="event_container">
             <form>
                 <div class="event-upload-container">
-                    <input class="event-upload form-control" type="file" />
+                    <input type="file" name="image" id="input2">
+                    @*<input class="event-upload form-control" type="file" />*@
                     <div class="evnt_title_bg evnt_title_top">
                         <div class="form-group">
                             <input id="txtEventTitle" class="form-control evnt_title_control" placeholder="Enter Name of the event" value="Enter Name of the event" />
@@ -449,7 +450,7 @@
                 
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-center mb10 ">
-
+                    <input id="imageeror" type="hidden" value="0"/>
                     <button type="button" id="btSave" class="btn btn-primary btn-lg save_btn">Save</button>
                     <button type="button" class="btn btn-primary btn-lg save_btn">Make your Event Live</button>
 
@@ -1059,7 +1060,7 @@
                 }
 
             }
-            console.log(Ticket);
+         
             //$('#tblAddress tr').each(function () {
 
 
@@ -1867,3 +1868,170 @@ return false;
 
     });
 </script>
+
+
+
+@*Image Section*@
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#input2').filer({
+            limit: '5',
+            maxSize: '2',
+            extensions: ['jpg', 'jpeg', 'png'],
+            changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
+            showThumbs: true,
+            appendTo: "#drag-drop",
+            theme: "dragdropbox",
+            onChange: false,
+            templates: {
+                box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
+                item: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <div class="jFiler-item-container">\
+                                <div class="jFiler-item-inner">\
+                                     <div class="jFiler-item-assets jFiler-row">\
+                                        <ul class="list-inline pull-left">\
+                                            <li>{{fi-progressBar}}</li>\
+                                        </ul>\
+                                    </div>\
+                                    </div>\
+                            </div>\
+                                            <span></span>\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+                itemAppend: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+
+
+                progressBar: '<div class="bar"></div>',
+                itemAppendToEnd: true,
+                removeConfirmation: false,
+                _selectors: {
+                    list: '.jFiler-item-list',
+                    item: '.jFiler-item',
+                    progressBar: '.bar',
+                    remove: '.jFiler-item-trash-action',
+                }
+            },
+            uploadFile: {
+                url: "/Event/SaveUploadedFile",
+                data: {},
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                beforeSend: function () { },
+                success: function (data, el) {
+
+                    //el.find(".jFiler-item-assets").hide();
+                    ////    console.log(el);
+                    //// $(".jFiler-item-assets").hide();
+                    //var Celebrity_image_count=$("#Celebrity_image_count").val();
+                    //var imagejson=jQuery.parseJSON(data);
+                    //var imgdata=imagejson.image_name+'####'+imagejson.image_type;
+                    //$('<input>').attr({
+                    //    type: 'hidden',
+                    //    id:'image_hidden_'+el[0].jfiler_id,
+                    //    name: 'Celebritypicture['+imgdata+']',
+                    //    value: imagejson.image_path
+                    //}).appendTo('form');
+                    //var imgname=imagejson.image_name;
+                    //el.find('span').html(imgname.substring(0,18));
+                    var parent = el.find(".jFiler-jProgressBar").parent();
+                    el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                        $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                    });
+                    $('#ImagePresent').val("Yes");
+                    //el.find('img').attr('src',imagejson.image_path);
+                    //el.find(".jFiler-item-thumb-image").bind("click", function(e){
+                    //    $.magnificPopup.open({
+                    //        items: {
+                    //            src: imagejson.image_path
+                    //        },
+                    //        type: 'image',
+                    //        modal: true,
+                    //        closeMarkup: '<button class="mfp-close" type="button" title="Close (Esc)">×</button>',
+
+                    //        // You may add options here, they're exactly the same as for $.fn.magnificPopup call
+                    //        // Note that some settings that rely on click event (like disableOn or midClick) will not work here
+                    //    }, 0);
+
+                    //    $(".mfp-close").html("X");
+                    //});
+                    //if ($.trim(Celebrity_image_count)=='') {
+                    //    $("#Celebrity_image_count").val('1');
+                    //}else{
+                    //    Celebrity_image_count=parseInt(Celebrity_image_count)+1;
+                    //    $("#Celebrity_image_count").val(Celebrity_image_count);
+                    //}
+                    //if ($("#Celebrity_image_count").val()=='5') {
+                    //    $("#Celebrity_image_count_em_").hide();
+                    //}
+
+
+                },
+                error: function (el) {
+
+                    //var parent = el.find(".jFiler-jProgressBar").parent();
+                    //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                    //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                    //});
+                },
+                statusCode: {},
+                onProgress: function () { },
+            },
+            dragDrop: {
+                dragEnter: function () { },
+                dragLeave: function () { },
+                drop: function () { },
+            },
+            addMore: false,
+            clipBoardPaste: true,
+            excludeName: null,
+            beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
+            onSelect: function () { $(".jFiler-input-inner").hide(); },
+            afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
+            onRemove: function (el) {
+                $('#input2').click(function (e) {
+                    e.preventDefault();
+
+                })
+                $('#ImagePresent').val("NO");
+            },
+            onEmpty: function (el) {
+                alert($("#imageeror").val());
+                if ($("#imageeror").val() == 0) {
+                    if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                }
+            },
+            captions: {
+                button: "Choose Files",
+                feedback: "Choose files To Upload",
+                feedback2: "files were chosen",
+                drop: "Drop file here to Upload",
+                removeConfirmation: "Are you sure you want to remove this file?",
+                errors: {
+                    filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
+                    filesType: "Only files with extension .jpg,.png,.jpeg are allowed to be uploaded.",
+                    filesSize: "Image is too large! Please upload file up to {{fi-maxSize}} MB.",
+                    filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                }
+            }
+
+        });
+    });
+    </script>
