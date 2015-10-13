@@ -46,7 +46,6 @@ namespace EventCombo.Models
         public virtual DbSet<EventImage> EventImages { get; set; }
         public virtual DbSet<EventOrganizer> EventOrganizers { get; set; }
         public virtual DbSet<EventSubCategory> EventSubCategories { get; set; }
-        public virtual DbSet<EventType> EventTypes { get; set; }
         public virtual DbSet<EventVenue> EventVenues { get; set; }
         public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
@@ -55,5 +54,6 @@ namespace EventCombo.Models
         public virtual DbSet<Venue> Venues { get; set; }
         public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        public virtual DbSet<EventType> EventTypes { get; set; }
     }
 }

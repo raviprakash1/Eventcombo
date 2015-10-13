@@ -63,5 +63,6 @@ namespace EventCombo.Models
         public virtual ICollection<Ticket> Tickets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        public virtual EventType EventType { get; set; }
     }
 }

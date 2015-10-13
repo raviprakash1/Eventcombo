@@ -542,13 +542,46 @@
                             </div>
                         </div>
                         <div class="clearfix"></div>
+
+                        <div class="form-group">
+                            <label class="label-control label_private">
+                                <input type="checkbox">
+                                Allow users discussion on facebook
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-control label_private">
+                                <input type="checkbox">
+                                Allow Publish Event to facebook
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-12 no_pad label-control wd600">Create a unique URL</label>
+                            <div class="clearfix"></div>
+                            <div class="url-width">
+
+                                <span class="url-filed">
+                                    <input class="gui-input url-filed-border" type="text" placeholder="enter url name">
+                                </span>
+                                <span class="url-name">.eventcombo.com</span>
+                            </div>
+                            <div class="gnrate-url mb10 fs13"> ( For eg: xyz.eventcombo.com )</div>
+
+                        </div>
+
+                        <div class="clearfix"></div>
+
+
+
                         <div class="form-group">
                             <label class="label-control evnt_ticket_label wd600">Event Type</label>
-                            <select id="ddlEventType" class="form-control evnt_inp_cont wd600"></select>
+                            @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>,new {@class="form-control evnt_inp_cont" })
                         </div>
                         <div class="form-group">
                             <label class="label-control evnt_ticket_label wd600">Event Category</label>
                             <select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>
+
                         </div>
                         <div class="form-group">
                             <label class="label-control evnt_ticket_label wd600">Event Sub-category</label>
@@ -595,7 +628,7 @@
                                 <input id="Address1" class="form-control evnt_inp_cont" placeholder="Address 1" />
                             </div>
                             <div class="form-group">
-                                @*             <input id="Address2" class="form-control evnt_inp_cont" placeholder="Address 2" />*@
+                                <input id="Address2" class="form-control evnt_inp_cont" placeholder="Address 2" />
                             </div>
                             <div class="form-group">
                                 <input id="City" class="form-control evnt_inp_cont" placeholder="City" />
@@ -613,17 +646,25 @@
                             </div>
                             <div class="clearfix"></div>
                             <div class="form-group mb5 ">
-                                <select id="CountryID" class="form-control evnt_inp_cont">
+                                @*<select id="CountryID" class="form-control evnt_inp_cont">
                                     <option>India</option>
                                     <option>US</option>
                                     <option>England</option>
-                                </select>
+                                </select>*@
                             </div>
+                            @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>,new {@class="form-control evnt_inp_cont" })
 
                         </div>
-                        <div id="map_canvas" class="col-sm-6 location_map_div">
-                            <div class="col-sm-6 loc_map"> <i class="fa fa-map-marker"></i> </div>
+                        <div  class="col-sm-6 location_map_div">
+                            <div id="map_canvas" class="col-sm-12 no_pad location_map_div loc_map"> <i class="fa fa-map-marker"></i> </div>
+                            <div class="col-sm-12 no_pad mt10 ">
+                                <label class="label-control shw_map"><input type="checkbox" />  Show map on event page.</label>
+
+                            </div>
                         </div>
+                        
+                       
+
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
@@ -997,28 +1038,36 @@
         });
 
         // Drop Down Binding
-        @*$.ajax({
+        @*$.getJSON({
             url: '@Url.Action("GetEventType", "Event")',
-            type: "POST",
             success: function (data) {
+                alert("In loop");
+                debugger;
 
-                //            alert(data.items);
-
-                ////            $('#ddlEventType').find('option').remove();
-                //            // alert(data.);
-                //            data = data.d;
-                //            var items = [];
+                //            $('#ddlEventType').find('option').remove();
+                            // alert(data.);
+                           // data = data.d;
+                //var items = [];
+                //debugger;
                 //            items.push("<option>--Select--</option>");
-                //            alert("after Array");
+                //            alert(data);
+
                 //            $.each(data, function () {
                 //                alert("test");
                 //                //items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
                 //            });
-                //            $("#ddlEventType").html(items.join(' '));
+                            //$("#ddlEventType").html(items.join(' '));
 
                 //$(data).each(function (index, item) { // GETTING ERROR HERE
                 //    $('#ddlEventType').append($('<option></option>').val(item.Value).html(item.Text));
                 //});
+            },
+            error:function(data)
+            {
+                debugger;
+                // alert(data);
+                alert(data.message);
+
             }
         });*@
 
@@ -1071,9 +1120,17 @@
                   (place.address_components[2] && place.address_components[2].short_name || '')
                 ].join(' ');
             }
-            $("#VenueName").val(address[0].toString());
-            $("#Address1").val(address[1].toString());
-            $("#Address2").val(address[2].toString());
+
+            $("#VenueName").val(place.address_components[0].long_name);
+
+            $("#City").val(place.address_components[1].long_name);
+            $("#State").val(place.address_components[3].long_name);
+            $("#Zip").val(place.address_components[5].long_name);
+            $("#CountryID").val(place.address_components[4].long_name);
+
+            //$("#VenueName").val(address.toString());
+            //$("#Address1").val(address[1].toString());
+            //$("#Address2").val(address[2].toString());
         });
 
 
@@ -1364,7 +1421,7 @@
             //    });
             //    //alert($(this).text() + " : " + $(this).val());
             //});
-
+            //alert(Orgnizer[0].toString());
 
 
 
@@ -1374,19 +1431,22 @@
             //});
 
             // Basic Event Info
+            //alert($("#edSummer1").code());
+            var vEventDiscription = '';//$("#edSummer1").code();
+            //alert(vEventDiscription);
             var model = {
-                'EventTypeID': 1,//$("#ddlEventType").val(),
-                'EventCategoryID':1,// $("#ddlEventCategory").val(),
-                'EventSubCategoryID':1,// $("#ddlEventSubCategory").val(),
+                'EventTypeID': $("#ddlEventType").val(),
+                'EventCategoryID': $("#ddlEventCategory").val(),
+                'EventSubCategoryID': $("#ddlEventSubCategory").val(),
                 'UserID': '',
                 'EventTitle': $("#txtEventTitle").val(),
-                'EventDescription': 'Testing',
-                'EventPrivacy': 'Y',//($("#rdPublic").is("checked") == true ? 'Public' : 'Private'),
-                'Private_ShareOnFB': 'Y',//($("#chkShareOnFB").is("checked") == true ? 'Y' : 'N'),
-                'Private_GuestOnly': 'Y',//($("#chkGuestonly").is("checked") == true ? 'Y' : 'N'),
+                'EventDescription': vEventDiscription.toString(),
+                'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
+                'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
+                'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
                 'Private_Password': $("#txtReqPassword").val(),
                 'EventUrl': '',
-                'PublishOnFB': 'Y',//($("#chkLinkonFBTwit").is("checked") != true ? 'Y' : 'N'),
+                'PublishOnFB': ($("#chkLinkonFBTwit").is(":checked") != true ? 'Y' : 'N'),
                 'EventStatus': 'Save',
                 'AddressDetail': SubmitAddress,
                 'EventVenue': SingleTiming,
@@ -1399,7 +1459,27 @@
                 'MultipleEvents': MultipleSchedule,
                 'Orgnizer': Orgnizer
             };
-            alert("after model")
+            //alert(model.FBUrl);
+            //'UserID': '',
+            //'EventTitle': $("#txtEventTitle").val(),
+            //'EventDescription': $("#edSummer1").code(),
+            //'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
+            //'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
+            //'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
+            //'Private_Password': $("#txtReqPassword").val(),
+            //'EventUrl': '',
+            //'PublishOnFB': ($("#chkLinkonFBTwit").is(":checked") != true ? 'Y' : 'N'),
+            //'EventStatus': 'Save',
+            //'AddressDetail': SubmitAddress,
+            //'EventVenue': SingleTiming,
+            //'TimeZone': $("#dllTimeZone").val(),
+            //'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
+            //'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
+            //'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
+            //'FBUrl'
+            //'TwitterUrl'
+            //'MultipleEvents'
+            //'Orgnizer'
             //data: JSON.stringify({ EventCreation: model }),
 
             $.ajax({
@@ -1407,7 +1487,6 @@
                 data: model,
                 type: "Post",
                 success: function (response) {
-
                     alert('Document Saved.');
                 }
             });

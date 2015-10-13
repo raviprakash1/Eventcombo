@@ -464,6 +464,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Event_EventType">
+          <End Role="EventType" Type="Self.EventType" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="EventTypeID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EventTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Event_Orgnizer_Detail_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Event_Orgnizer_Detail" Type="Self.Event_Orgnizer_Detail" Multiplicity="*" />
@@ -579,6 +591,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventType" Association="Self.FK_Event_EventType">
+            <End Role="EventType" EntitySet="EventType" />
+            <End Role="Event" EntitySet="Event" />
           </AssociationSet>
           <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Self.FK_Event_Orgnizer_Detail_Event">
             <End Role="Event" EntitySet="Event" />
@@ -798,7 +814,6 @@
           <EntitySet Name="EventImages" EntityType="Models.EventImage" />
           <EntitySet Name="EventOrganizers" EntityType="Models.EventOrganizer" />
           <EntitySet Name="EventSubCategories" EntityType="Models.EventSubCategory" />
-          <EntitySet Name="EventTypes" EntityType="Models.EventType" />
           <EntitySet Name="EventVenues" EntityType="Models.EventVenue" />
           <EntitySet Name="MultipleEvents" EntityType="Models.MultipleEvent" />
           <EntitySet Name="Tickets" EntityType="Models.Ticket" />
@@ -858,6 +873,11 @@
           <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Models.FK_Event_Orgnizer_Detail_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
+          </AssociationSet>
+          <EntitySet Name="EventTypes" EntityType="Models.EventType" />
+          <AssociationSet Name="FK_Event_EventType" Association="Models.FK_Event_EventType">
+            <End Role="EventType" EntitySet="EventTypes" />
+            <End Role="Event" EntitySet="Events" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Profile_Profile">
@@ -986,6 +1006,7 @@
           <Property Name="FBUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="TwitterUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Models.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
+          <NavigationProperty Name="EventType" Relationship="Models.FK_Event_EventType" FromRole="Event" ToRole="EventType" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1044,13 +1065,6 @@
           <Property Name="EventSubCategory1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Events" Relationship="Models.FK__Event__EventSubC__76EBA2E9" FromRole="EventSubCategory" ToRole="Event" />
           <NavigationProperty Name="EventCategory" Relationship="Models.FK__EventSubC__Event__5F141958" FromRole="EventSubCategory" ToRole="EventCategory" />
-        </EntityType>
-        <EntityType Name="EventType">
-          <Key>
-            <PropertyRef Name="EventTypeID" />
-          </Key>
-          <Property Name="EventTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventType1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -1324,6 +1338,26 @@
             </Principal>
             <Dependent Role="Event_Orgnizer_Detail">
               <PropertyRef Name="Orgnizer_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="EventTypeID" />
+          </Key>
+          <Property Name="EventTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventType1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Events" Relationship="Models.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
+        </EntityType>
+        <Association Name="FK_Event_EventType">
+          <End Type="Models.EventType" Role="EventType" Multiplicity="1" />
+          <End Type="Models.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="EventTypeID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EventTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1611,14 +1645,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EventTypes">
-            <EntityTypeMapping TypeName="Models.EventType">
-              <MappingFragment StoreEntitySet="EventType">
-                <ScalarProperty Name="EventType1" ColumnName="EventType" />
-                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EventVenues">
             <EntityTypeMapping TypeName="Models.EventVenue">
               <MappingFragment StoreEntitySet="EventVenue">
@@ -1735,6 +1761,14 @@
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
                 <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
                 <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="Models.EventType">
+              <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="EventType1" ColumnName="EventType" />
+                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

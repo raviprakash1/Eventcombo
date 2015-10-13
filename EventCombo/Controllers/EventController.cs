@@ -15,14 +15,56 @@ namespace EventCombo.Controllers
         [HttpPost]
         public ActionResult EventCreation(EventCreation model)
         {
-
-
-
+           
             return View();
         }
 
         public ActionResult EventCreation()
         {
+            //List<string> ListItems = new List<string>();
+            //ListItems.Add("Select");
+            //ListItems.Add("India");
+            //ListItems.Add("Australia");
+            //ListItems.Add("America");
+            //ListItems.Add("South Africa");
+            //SelectList Countries = new SelectList(ListItems);
+            //ViewData["Country"] = Countries;
+            //ViewBag.Countries = new SelectList(ListItems);
+            string defaultCountry = "";
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var countryQuery = (from c in db.Countries
+                                    orderby c.Country1 ascending
+                                    select c).Distinct();
+                List<SelectListItem> countryList = new List<SelectListItem>();
+                defaultCountry = "United States";
+                
+                foreach (var item in countryQuery)
+                {
+                    countryList.Add(new SelectListItem()
+                    {
+                        Text = item.Country1,
+                        Value = item.CountryID.ToString(),
+                        Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
+                    });
+                }
+
+                var rows = (from myRow in db.EventTypes
+                            select myRow).ToList();
+                List<SelectListItem> EventType = new List<SelectListItem>();
+                foreach (var item in rows)
+                {
+                    EventType.Add(new SelectListItem()
+                    {
+                        Text = item.EventType1,
+                        Value = item.EventTypeID.ToString(),
+                    });
+                }
+
+                ViewBag.CountryID = countryList;
+                ViewBag.EventType = EventType;
+
+            }
             return View();
         }
 
@@ -144,43 +186,67 @@ namespace EventCombo.Controllers
 
 
         //}
-        public List<EventCategory> GetEventType()
+
+        public JsonResult GetEventType()
         {
-            List<EventCategory> objETL = new List<EventCategory>();
-            //List<KeyValuePair<string, string>> objList = new List<KeyValuePair<string, string>>();
+            JsonResult objJs = new JsonResult();
             try
             {
-                
-
-            using (EventComboEntities objEntity = new EventComboEntities())
-            {
-                    //IEnumerable<SelectListItem> EventTypeList = (from ET in objEntity.EventTypes select ET).AsEnumerable().Select(ET => new SelectListItem() { Text = ET.EventType1, Value = ET.EventTypeID.ToString() });
-
-                    //SelectList objSL = new SelectList(EventTypeList, "Value", "Text");
-                    var EventList = objEntity.EventCategories.SqlQuery("Select * from EventCategory").ToList();
-
-                //var modelPerm = (from Perm in objEntity.EventTypes
-                //                 select new EventType
-                //                 {
-                //                     EventTypeID = Perm.EventTypeID,
-                //                     EventType1 = Perm.EventType1
-                //                 }
-                //            );
-
-                    //JsonResult j = Json(modelPerm, JsonRequestBehavior.AllowGet);
-                    //objETL = modelPerm.ToList();
-                    return EventList;
-
-                //return modelPerm.ToList();
-
-                }
+                List<EventType> eList = new List<EventType>();
+                EventComboEntities objEnt = new EventComboEntities();
+                var rows = (from myRow in objEnt.EventTypes
+                            select myRow).ToList();
+                return Json(rows, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                return objETL;
+                return objJs;
+                
             }
         }
+
+
+        //public JsonResult GetEventType()
+        //{
+        //    List<EventType> objETL = new List<EventType>();
+        //    //List<KeyValuePair<string, string>> objList = new List<KeyValuePair<string, string>>();
+        //    try
+        //    {
+                
+
+        //    using (EventComboEntities objEntity = new EventComboEntities())
+        //    {
+        //            //IEnumerable<SelectListItem> EventTypeList = (from ET in objEntity.EventTypes select ET).AsEnumerable().Select(ET => new SelectListItem() { Text = ET.EventType1, Value = ET.EventTypeID.ToString() });
+
+        //            //SelectList objSL = new SelectList(EventTypeList, "Value", "Text");
+        //            var EventList = objEntity.EventTypes.SqlQuery("Select EventType as 'EventType1',EventTypeID from EventType").ToList();
+        //            //EventCategories.SqlQuery("Select * from EventCategory").ToList<Event>
+
+
+
+
+        //            //var EventList = (from Perm in objEntity.EventTypes
+        //            //                 select new EventType
+        //            //                 {
+        //            //                     EventTypeID = Perm.EventTypeID,
+        //            //                     EventType1 = Perm.EventType1
+        //            //                 }
+        //            //            );
+
+        //            //JsonResult j = Json(modelPerm, JsonRequestBehavior.AllowGet);
+        //            //objETL = modelPerm.ToList();
+        //            return  Json(EventList.ToArray(),JsonRequestBehavior.AllowGet);
+
+        //        //return modelPerm.ToList();
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return Json("Result", JsonRequestBehavior.AllowGet); ;
+        //    }
+        //}
 
 
 
