@@ -574,6 +574,7 @@
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
     <Content Include="Scripts\jquery.maskedinput.min.js" />
+    <Content Include="Scripts\jquery.maskMoney.js" />
     <Content Include="Scripts\jquery.mousewheel.js" />
     <Content Include="Scripts\jquery.nyroModal-ie6.js" />
     <Content Include="Scripts\jquery.nyroModal-ie6.min.js" />

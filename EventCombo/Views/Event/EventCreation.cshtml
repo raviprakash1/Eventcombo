@@ -150,9 +150,12 @@
                     <div class="evnt_details_body">
                         <div class="col-sm-12 text-right mt10">
                             <div class="form-group">
-                                <label>Reserved Seating:</label>
-                                <input type="checkbox" class="" id="id_reservedseating" />
+                                <label>Will Call:</label>
+                                <input type="radio" class="" id="id_willcall" />
+                                <label> Seating:</label>
+                                <input type="radio" class="" id="id_reservedseating" />
                             </div>
+                          
                         </div>
                         <div class="col-sm-12 text-center mt10 evnt_tct_btn" id="beforeticket">
                             <button type="button" class="btn btn-primary btn-lg save_btnfree"><i class="fa fa-plus"></i> Free Ticket</button>
@@ -187,17 +190,19 @@
                                         </div>
                                         <div class="list-group-item" style="width:15%;">
                                             <div class="form-group mb0">
-                                                <input class="form-control evnt_inp_cont" id="id_quantity_total-0" placeholder="100" maxlength="6" onkeyup="changeqty(this.id)" />
+                                                <input class="form-control evnt_inp_cont numeric txtsum" id="id_quantity_total-0" placeholder="0" maxlength="6" onblur="changeqty(this.id)" />
+                                            <label class="label-control wd600" id="id_lbl_quantity-0" style="display:none; color:red"></label>
                                             </div>
                                         </div>
                                         <div class="list-group-item" style="width:20%;">
                                             <div class="form-group mb0">
-                                                <input class="form-control evnt_inp_cont paidticket-0" placeholder="$ 100" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)" />
-                                                <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
+                                                <input class="form-control evnt_inp_cont paidticket-0 Price " placeholder="$ 0" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)" pattern='^\d+(?:\.\d{0,2})$' />
+                                                <label class="label-control wd600" id="id_lbl_price-0" style="display:none; color:red"></label>
+                                                 <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
                                                 <div class="evnt_toltip label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
                                                     Buyer total:
                                                        <span class="buyer_price" id="id_buyerprice-0">$0.00 </span> <i class="fa fa-info-circle"></i>
-                                                    <div class="tooltip" id="id-tooltip-0">Ticket Price  </div>
+                                                    <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
 
                                                 </div>
                                                
@@ -205,8 +210,10 @@
                                         </div>
                                         <div class="list-group-item" style="width:15%;">
                                             <div class="form-group mb0">
-                                                <input class="form-control evnt_inp_cont" placeholder="$ 100" id="id_Discount-0" maxlength="9" />
-                                                @*<label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Ticket description</label>*@
+                                                <input class="form-control evnt_inp_cont Price" placeholder="$ 0" id="id_Discount-0" maxlength="9" pattern='^\d+(?:\.\d{0,2})$' />
+                                                <label class="label-control wd600" id="id_lbl_discount-0" style="display:none; color:red"></label>
+
+                                                  @*<label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Ticket description</label>*@
                                             </div>
                                         </div>
                                         <div class="list-group-item" style="width:15%;">
@@ -241,8 +248,8 @@
                                                             <div class="form-group" id="id_feestruct-0" style="display:none">
                                                                 <label class="label-control evnt_ticket_label wd600">Fees</label>
                                                                 <select class="form-control evnt_inp_cont" id="id_include_ticket_fees-0" onchange="feechange(this.id)">
-                                                                    <option value="0">Pass fees on</option>
-                                                                    <option value="1">Absorb fees</option>
+                                                                    <option value="0">customer pays the fees</option>
+                                                                    <option value="1">I absorb the fee</option>
                                                                 </select>
                                                                 @*<div class="fess_online mb10">
                                                                     <p><strong>Online:</strong> Fee: $73.34 Buyer total: $2,186.34</p>
@@ -264,9 +271,9 @@
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
                                                                 <div class="evt_time evnt_time_cont wd600">
-                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" id="id_salestart-0" />
+                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="mm/dd/yyyy" id="id_salestart-0" />
 
-                                                                    <input id="id_saletimestart-0" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" />
+                                                                    <input id="id_saletimestart-0" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" />
                                                                     <div class="clearfix"></div>
                                                                     @*<label class="ev_tic_end label-control lbl_bot_text wd600">or when ticket sales end</label>*@
                                                                 </div>
@@ -284,9 +291,9 @@
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
                                                                 <div class="evnt_time_cont wd600">
-                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" id="id_saleend-0" />
+                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="mm/dd/yyyy" id="id_saleend-0" onchange="" />
 
-                                                                    <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM" id="id_saletimeend-0" />
+                                                                    <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" id="id_saletimeend-0" />
 
 
                                                                 </div>
@@ -316,9 +323,9 @@
                                                                                 <input type="checkbox" id="id_auto_hide_until-0" /> Hide Until
                                                                             </label>
                                                                             <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" id="id_auto_hide_until_Date-0" placeholder="dd/mm/yyyy" />
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="mm/dd/yyyy" />
 
-                                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
+                                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -326,9 +333,9 @@
                                                                                 <input type="checkbox" id="id_auto_hide_after-0" /> Hide After
                                                                             </label>
                                                                             <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" id="id_auto_hide_after_Date-0" placeholder="dd/mm/yyyy" />
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="mm/dd/yyyy" />
 
-                                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
+                                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -354,7 +361,7 @@
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label fs-13 mt5">
                                                                     <input type="checkbox" class="" id="id_disableticket-0" />
-                                                                    Disables ticket from being displayed or sold
+                                                                    Disable Ticket
 
                                                                 </label>
                                                             </div>
@@ -363,7 +370,7 @@
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label fs-13 mt5">
                                                                     <input type="checkbox" class="" id="id_marksoldout-0" />
-                                                                    Shows ticket as sold out on purchase page
+                                                                    Mark Sold Out
 
                                                                 </label>
                                                             </div>
@@ -371,7 +378,7 @@
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label fs-13 mt5">
                                                                     <input type="checkbox" class="" id="id_displayremaining-0" />
-                                                                    Displays Qty of tickets remaining to be sold
+                                                                    Display Remaining Tickets
 
                                                                 </label>
                                                             </div>
@@ -410,7 +417,7 @@
                                     <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-free-button"><i class="fa fa-plus"></i> Free Ticket</button>
                                     <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-paid-button"><i class="fa fa-plus"></i> Paid Ticket</button>
                                     <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-donation-button"><i class="fa fa-plus"></i> Donation</button>
-                                    <label  class="total_qty pull-right fs-18" id="">Total Qty: <span id="id_totalqty">0</span></label>
+                                    <label  class="total_qty pull-right fs-18" id="">Total capacity: <span id="id_totalqty">0</span></label>
                                 </div>
                             </div>
                         </div>
@@ -723,7 +730,7 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.min.js"></script>
-
+<script src="~/Scripts/jquery.maskMoney.js"></script>
 @*<link href="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.css" rel="stylesheet" />
     <script src="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>*@
@@ -788,11 +795,11 @@
 
     }
     function GetSchDateDiff() {
-        alert("IN fun");
+      
         var dateFrom = date.parse($("#txtDateFrom").val());
         var dateTo = date.parse($("#txtDateTo").val());
         dateDiff = new Date(dateTo - dateFrom);
-        alert(dateDiff);
+      
 
     }
 
@@ -994,7 +1001,7 @@
                        
                         if ($('#id_auto_hide_type_0-' + i).is("checked") == true) {
                             AutoSechduleType = 1;
-                            alert('hi');
+
                         }
                         if ($('#id_auto_hide_type_1-' + i).is("checked") == true) {
                             AutoSechduleType = 2;
@@ -1186,12 +1193,29 @@
 
     function changeqty(e)
     {
-        var qty = $('#id_totalqty').html();
-        alert(qty);
         var dropval = $('#' + e).val();
-        var total = parseInt(qty) + parseInt(dropval);
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        if (dropval != '') {
+            if ($.isNumeric(dropval) === false) {
 
-        $('#id_totalqty').html(total);
+                $('#' + e).addClass('err-bor');
+                $('#id_lbl_quantity-' + el).css('display', 'block');
+                $('#id_lbl_quantity-' + el).html('Please enter a number');
+            } else {
+                var qty = $('#id_totalqty').html();
+
+                $('#id_lbl_quantity-' + el).css('display', 'none');
+                calculateSum();
+
+               // var total = parseInt(qty) + parseInt(dropval);
+
+               // $('#id_totalqty').html(total);
+                $('#' + e).removeClass('err-bor');
+
+            }
+        }
+        
+    
 
 
     }
@@ -1205,12 +1229,12 @@
         {
             
           var  ccp = $('#id_cc').val();
-            var ccpamount = ((amount * ccp) / 100);
+          var ccpamount = ((amount * ccp) / 100).toFixed(2);
 
-            var ccpfinal = parseFloat(ccpamount) + parseFloat(amount);
+            var ccpfinal = parseFloat(ccpamount).toFixed(2) + parseFloat(amount).toFixed(2);
             var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
             $('#id_buyerprice-' + el).html(ccpfinal);
-            $('#id-tooltip-' + el).html(msg);
+            $('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(0);
            
 
@@ -1219,11 +1243,11 @@
         {
            
            var ccp = $('#id_cc').val();
-            var ccpamount = ((amount * ccp) / 100);
-            var ccpfinal = parseFloat(amount);
+           var ccpamount = ((amount * ccp) / 100).toFixed(2);
+           var ccpfinal = parseFloat(amount).toFixed(2);
             $('#id_buyerprice-' + el).html(ccpfinal);
             var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
-            $('#id-tooltip-' + el).html(msg);
+            $('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(1);
 
            
@@ -1232,33 +1256,35 @@
     }
     function changefeetype(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-        
+      
         if($('#' + e).val()>0)
         {
             $('#id_feestruct-' + el).css('display', 'block');
-            var amount = $('#' + e).val();
+            var amount = parseFloat($('#' + e).val()).toFixed(2);
+           
             var val=$("#id_feetype-0").val();
             var fee = 0;
         
            
             if(val==0)
             {
-                ccp = $('#id_cc').val();
-                var ccpamount = ((amount * ccp) / 100);
+                ccp = parseFloat($('#id_cc').val()).toFixed(2);
+               
+                var ccpamount = ((amount * ccp) / 100).toFixed(2);
               
-                var ccpfinal = parseFloat(ccpamount) + parseFloat(amount);
+                var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
                 var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
                 $('#id_buyerprice-' + el).html(ccpfinal);
-                $('#id-tooltip-' + el).html(msg);
+                $('#id_tooltip-' + el).html(msg);
 
             }
             if (val == 1) {
                 ccp = $('#id_cc').val();
-                var ccpamount = ((amount * ccp) / 100);
-                var ccpfinal =  parseFloat(amount);
+                var ccpamount = ((amount * ccp) / 100).toFixed(2);
+                var ccpfinal = parseFloat(amount).toFixed(2);
                 $('#id_buyerprice-' + el).html(ccpfinal);
                 var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
-                $('#id-tooltip-' + el).html(msg);
+                $('#id_tooltip-' + el).html(msg);
             }
 
           // var tamt= $('#id_totalamt-'+el).val();
@@ -1275,7 +1301,7 @@
     }
 
     function minimize(e) {
-        alert(e);
+      
         var id = e;
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
@@ -1330,14 +1356,19 @@
         var x = confirm("Are you sure you want to delete?");
         if (x) {
             var divlength = $("#MasterDiv> div").size();
+        
             var id = e;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
             var div = document.getElementById("clonediv-" + el);
-            if (length == 1) {
+           // var div = document.getElementById("clonediv-0");
+          
+            if (divlength == 1) {
                 $('#beforeticket').css('display', 'block');
-                $('#afterticket').css('display', 'none');
-                div.parentNode.removeChild(div);
+                $('.ticket_panel').css('display', 'none');
+                  //var data = $('#clonediv-0').clone();
+                  //  $('#MasterDiv').append(data);
+               // div.parentNode.removeChild(div);
 
             } else {
 
@@ -1598,7 +1629,7 @@
             $(".evnt_setting li a:first").addClass("active_setting");
         });
         $('.date_picker').datepicker({
-            format: "dd/mm/yyyy"
+            format: "mm/dd/yyyy"
         });
         $(function () {
             $('.time_picker').timepicker();
@@ -1614,31 +1645,215 @@
             $(".evt_time").css("display", "block");
         });
         $('[data-toggle="tooltip"]').tooltip();
-        //$(".CusdateCont").hide();
-        //$(".EvaddTkt").click(function () {
-        //    $(".CusdateCont").css("display", "block");
-        //});
 
-        //$(".RemvTkt").hide();
-        //$("#id_EvaddTkt-0").click(function () {
-        //    $(".RemvTkt").css("display", "block");
-        //    $(".EvaddTkt").css("display", "none");
-        //});
-        //$(".RemvTkt").click(function () {
-        //    $(".EvaddTkt").css("display", "block");
-        //    $(".CusdateCont").css("display", "none");
-        //    $(".RemvTkt").css("display", "none");
-        //});
-
-        //$(".HideuntDiv").hide();
-        //$(".CusdateTime").click(function () {
-        //    $(".HideuntDiv").css("display", "block");
-        //});
-        //$(".TktnotSale").click(function () {
-        //    $(".HideuntDiv").css("display", "none");
-        //});
+        $('.datecheck').blur(function () {
+            var date = $(this).val();
 
 
+         
+
+
+            if (date != '')
+            {
+                    checkDate(this);
+            }
+
+
+            
+
+
+        });
+        $('.timecheck').change(function () {
+            var time = $(this).val();
+            if (time != '')
+            {
+                checkTime(this);
+
+            }
+           
+        });
+        function checkTime(field) {
+            var errorMsg = "";
+
+            // regular expression to match required time format
+            re = /^(\d{1,2}):(\d{2})(:00)?([ap]m)?$/;
+
+            if (field.value != '') {
+                if (regs = field.value.match(re)) {
+                    if (regs[4]) {
+                        // 12-hour time format with am/pm
+                        if (regs[1] < 1 || regs[1] > 12) {
+                            errorMsg = "Invalid value for hours: " + regs[1];
+                        }
+                    } else {
+                        // 24-hour time format
+                        if (regs[1] > 23) {
+                            errorMsg = "Invalid value for hours: " + regs[1];
+                        }
+                    }
+                    if (!errorMsg && regs[2] > 59) {
+                        errorMsg = "Invalid value for minutes: " + regs[2];
+                    }
+                } else {
+                    errorMsg = "Invalid time format: " + field.value;
+                }
+            }
+
+            if (errorMsg != "") {
+                alert(errorMsg);
+                field.focus();
+                field.value = "";
+                return false;
+            }
+
+            return true;
+        }
+        function checkDate(field) {
+            var allowBlank = true;
+            var minYear = 1902;
+            var maxYear = (new Date()).getFullYear();
+
+            var errorMsg = "";
+
+            // regular expression to match required date format
+            re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+
+            if (field.value != '') {
+                if (regs = field.value.match(re))
+                {
+                    if (regs[2] != '' && regs[2] != '' && regs[3] != '')
+                    {
+                        if (regs[2] < 1 || regs[2] > 31) {
+                            errorMsg = "Invalid value for day: " + regs[2];
+                        } else if (regs[1] < 1 || regs[1] > 12) {
+                            errorMsg = "Invalid value for month: " + regs[1];
+                        } else if (regs[3] < minYear || regs[3] > maxYear) {
+                            errorMsg = "Invalid value for year: " + regs[3] + " - must be between " + minYear + " and " + maxYear;
+                        }
+                    }
+                } else {
+                    errorMsg = "Invalid date format: " + field.value;
+                }
+            } else if (!allowBlank) {
+                errorMsg = "Empty date not allowed!";
+            }
+
+            if (errorMsg != "") {
+                alert(errorMsg);
+             
+               
+                field.focus();
+                field.value = "";
+return false;
+            }
+
+            return true;
+        }
+
+       
+
+
+
+    });
+   
+
+   
+</script>
+
+<script type="text/javascript">
+    function AssignNumeric() {
+        $('.Price').each(function (i) {
+            $(this).blur(function () {
+               var e = $(this).attr('id');
+                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+                var elid = e.substr(0, e.indexOf('-'));
+              
+                if ($(this).val() != '') {
+                    var regex = /^\d+(?:\.\d{0,2})$/;
+                    if (regex.test($(this).val()))
+                    {
+                        if (elid.trim() == "id_cost") {
+                            $('#id_lbl_price-' + el).css('display', 'none');
+                          
+                        }
+                        if (elid.trim() == "id_Discount") {
+                            $('#id_lbl_discount-' + el).css('display', 'none');
+                        }
+                        $(this).removeClass('err-bor');
+                    } else {
+                        var reg = /^[0-9]*$/;
+                        if (reg.test($(this).val())) {
+                            if (elid.trim() == "id_cost") {
+                                $('#id_lbl_price-' + el).css('display', 'none');
+
+                            }
+                            if (elid.trim() == "id_Discount") {
+                                $('#id_lbl_discount-' + el).css('display', 'none');
+                            }
+                            $(this).removeClass('err-bor');
+                            var j = $(this).val();
+                            j = j + ".00";
+                            $(this).val(j);
+                          
+                        } else {
+                            $(this).addClass('err-bor');
+                            if (elid.trim() == "id_cost") {
+                                $('#id_lbl_price-' + el).css('display', 'block');
+                                $('#id_lbl_price-' + el).html('Please Enter Number');
+
+                            }
+                            if (elid.trim() == "id_Discount") {
+                                $('#id_lbl_discount-' + el).css('display', 'block');
+                                $('#id_lbl_discount-' + el).html('Please Enter Number');
+                            }
+                           
+                        }
+
+
+                    }
+                }
+            });
+        });
+    }
+    function calculateSum() {
+
+        var sum = 0;
+        //iterate through each textboxes and add the values
+        $(".txtsum").each(function () {
+
+            //add only if the value is number
+            if (!isNaN(this.value) && this.value.length != 0) {
+                sum += parseFloat(this.value);
+            }
+
+        });
+        //.toFixed() method will roundoff the final sum to 2 decimal places
+        $("#id_totalqty").html(sum);
+    }
+    //$('.numeric').each(function (i) {
+    //    $(this).blur(function () 
+    //    {
+    //        if ($.isNumeric($(this).val()) === false) {
+              
+    //            $(this).addClass('err-bor');
+    //        } else {
+             
+    //            $(this).removeClass('err-bor');
+
+    //        }
+        
+    //    })
+    //});
+    $(document).ready(function () {
+        $(".txtsum").each(function () {
+
+            $(this).keyup(function () {
+                calculateSum();
+            });
+        });
+        $('#id_totalqty').html(0);
+        AssignNumeric();
+        calculateSum();
 
     });
 </script>
