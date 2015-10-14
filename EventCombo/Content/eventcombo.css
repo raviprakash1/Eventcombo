@@ -228,9 +228,9 @@ button:focus { outline: none;}
 .evnt_inp_cont{ height: 40px; border-radius: 0px; }
 
 
-.location_map_div{ line-height:200px; text-align: center; height: 200px; border: 1px solid #ccc; background: #fafafa;}
+.location_map_div{ text-align: center; height: 200px; border: 1px solid #ccc; background: #fafafa;}
 .ent_add{ color:#00a1ee; font-size: 1em; }
-.loc_map i{ font-size: 5em;  color: #dedede; margin-left: 0;}
+.loc_map i{ font-size: 5em; padding-top:50px;  color: #dedede; margin-left: 0;}
 .shw_map{ font-weight: normal;}
 
 

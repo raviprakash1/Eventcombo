@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<h2>EventCreation</h2>
+<h2>Create Events</h2>
 @using (Html.BeginForm())
 
 {
@@ -31,7 +31,7 @@
 
                         <div class="form-group">
 
-                            <label class="label-control evnt_title_control">Event Discription</label>
+                            <label class="label-control evnt_title_control">Event Description</label>
                             <div id="edSummer1" class="summernote"></div>
                         </div>
                     </div>
@@ -67,19 +67,9 @@
                                 <div class="clearfix"></div>
                                 <select id="dllPastLocation" class="form-control evnt_inp_cont wd600">
                                 </select>
-                                <span class="RetunEvent past_loc">Add New </span>
+                                <span class="RetunEvent past_loc">Find a new venue</span>
                             </div>
                         </div>
-
-
-                        
-
-
-
-
-                       
-
-
 
 
                         <div class="clearfix"></div>
@@ -94,12 +84,7 @@
                                         <th>City</th>
                                         <th>State</th>
                                         <th>Zip Code</th>
-                                        <th>Country</th>
-                                        <td>
-                                            @*<a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit"></i></a> <a href="">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </a>*@
-                                        </td>
+                                        @*<th>Country</th>*@
                                     </tr>
                                 </tbody>
                             </table>
@@ -615,6 +600,12 @@
                             </label>
                         </div>
 
+                        <div class="form-group">
+                            <label class="label-control label_private">
+                                <input type="checkbox">
+                                Enable Facebook Discussion
+                            </label>
+                        </div>
 
                         <div class="form-group">
                             <label class="col-sm-12 no_pad label-control wd600">Create a unique URL</label>
@@ -721,8 +712,8 @@
                         </div>
                         <div class="col-sm-6 location_map_div">
                             <div id="map_canvas" class="col-sm-12 no_pad location_map_div loc_map"> <i class="fa fa-map-marker"></i> </div>
-                            <div class="col-sm-12 no_pad mt10 ">
-                                <label class="label-control shw_map"><input type="checkbox" />  Show map on event page.</label>
+                            <div class="col-sm-12 no_pad mt10 text-left">
+                                <label class="label-control shw_map "><input type="checkbox" />  Show map on event page.</label>
 
                             </div>
                         </div>
@@ -977,7 +968,7 @@
                 $(this).remove();
         });
         if (parseInt($('#tblAddress tr').length) <= 1) {
-            $("#tblAddress").hide();
+            
 
         }
 
@@ -993,7 +984,7 @@
         $("#City").val($("#City" + Sno).val());
         $("#State").val($("#State" + Sno).val());
         $("#Zip").val($("#Zip" + Sno).val());
-        $("#CountryID").val($("#CountryID" + Sno).val());
+        $("#CountryID").val($("#CID" + Sno).val());
         //   var row_index = $(this).parent().index('tr');
 
 
@@ -1035,7 +1026,7 @@
     //}
 
     $(document).ready(function () {
-
+        //alert("Reload");
             
 
         $(".PastLocatMain").hide();
@@ -1461,7 +1452,10 @@
 
             for (i = 0; i <= ColAry.length - 1; i++) {
                 CellId = ColName[i] + Sno.toString();
-                strHTML = strHTML + '<td> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
+                if (ColName[i].toString() == "CID" || ColName[i].toString() == "CountryID")
+                    strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
+                else
+                    strHTML = strHTML + '<td> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
             }
 
             strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
@@ -1476,7 +1470,18 @@
             var ColName = ColumnName.split('¶');
 
             for (i = 0; i <= ColName.length - 1; i++) {
+                
                 CtrlId = ColName[i] + Sno.toString();
+                //alert(CtrlId);
+                //if (ColName[i] == "CID")
+                //{
+                //    CtrlId = "CountryID" + Sno.toString();
+                //    alert("In country");
+                //}
+                //else
+                //    CtrlId = ColName[i] + Sno.toString();
+
+
                 $("#" + CtrlId).val(ColAry[i]);
             }
 
@@ -1484,8 +1489,9 @@
 
 
         $("#btAddAddress").click(function () {
-            alert("chal pya");
-            // $("#tblAddress").show();
+
+            //alert("chal pya");
+            $("#tblAddress").show();
             // alert("Chal Pya");
             //var sno = parseInt($("#tblAddress tr").length);
             //var strHtml = '<tr><td>' + sno + '</td>' + $("#Address1").val() +'<td>' +  + '</td><td>' + $("#Address2").val() + '</td><td>' +
@@ -1493,8 +1499,8 @@
 
             //var strHtml = '<tr><td>' + sno + '</td><td>Add1</td>Add2</td><td>City</td><td>State</td><td>ZipCode</td></tr> ';
 
-            var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID").val();
-            var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID";
+            var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID").text() + "¶" + $("#CountryID").val();
+            var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
             if ($("#hidAddSno").val().trim() != "")
                 EditRow("tblAddress", vCols, vColName, $("#hidAddSno").val().trim());
             else
@@ -1508,7 +1514,7 @@
             $("#State").val("");
             $("#Zip").val("");
             $("#hidAddSno").val("");
-            //$("#CountryID").val('');
+            $("#CountryID").val('');
 
             //$("#tblAddress").append(strHtml);
 
