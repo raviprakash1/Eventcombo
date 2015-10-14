@@ -145,6 +145,7 @@
           <Property Name="TwitterUrl" Type="nvarchar" MaxLength="1000" />
           <Property Name="AddressStatus" Type="varchar" MaxLength="100" />
           <Property Name="LastLocationAddress" Type="bigint" />
+          <Property Name="EnableFBDiscussion" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -773,6 +774,7 @@
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <Property Name="AddressStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LastLocationAddress" Type="Int64" />
+          <Property Name="EnableFBDiscussion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1353,6 +1355,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="EnableFBDiscussion" ColumnName="EnableFBDiscussion" />
                 <ScalarProperty Name="LastLocationAddress" ColumnName="LastLocationAddress" />
                 <ScalarProperty Name="AddressStatus" ColumnName="AddressStatus" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />

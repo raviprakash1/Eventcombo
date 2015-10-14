@@ -7,6 +7,10 @@ using EventCombo.Models;
 using System.Collections;
 using System.Data;
 using System.Text;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace EventCombo.Controllers
 {
@@ -137,6 +141,7 @@ namespace EventCombo.Controllers
                     ObjEC.TwitterUrl = model.TwitterUrl;
                     ObjEC.LastLocationAddress = model.LastLocationAddress;
                     ObjEC.AddressStatus = model.AddressStatus;
+                    ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
                     objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -383,8 +388,53 @@ namespace EventCombo.Controllers
         //    }
         //}
 
+       
 
+        protected ImageFormat getImageFormat(String path)
+        {
+            switch (Path.GetExtension(path))
+            {
+                case ".bmp": return ImageFormat.Bmp;
+                case ".gif": return ImageFormat.Gif;
+                case ".jpg": return ImageFormat.Jpeg;
+                case ".png": return ImageFormat.Png;
+                default: break;
+            }
+            return ImageFormat.Jpeg;
+        }
+        private void HandleImageUpload(HttpPostedFileBase file, string path1)
+        {//ProfileID_SequentialImage#
+            Image img = RezizeImage(Image.FromStream(file.InputStream), 200, 200);
+            string path = file.FileName;
+            img.Save(path1, getImageFormat(path));
+        }
+        private Image RezizeImage(Image img, int maxWidth, int maxHeight)
+        {
+            if (img.Height < maxHeight && img.Width < maxWidth) return img;
+            using (img)
+            {
+                Double xRatio = (double)img.Width / maxWidth;
+                Double yRatio = (double)img.Height / maxHeight;
+                Double ratio = Math.Max(xRatio, yRatio);
+                int nnx = (int)Math.Floor(img.Width / ratio);
+                int nny = (int)Math.Floor(img.Height / ratio);
+                Bitmap cpy = new Bitmap(nnx, nny, PixelFormat.Format32bppArgb);
+                cpy.SetResolution(72, 72);
+                using (Graphics gr = Graphics.FromImage(cpy))
+                {
+                    gr.Clear(Color.Transparent);
 
+                    // This is said to give best quality when resizing images
+                    gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    gr.DrawImage(img,
+                        new Rectangle(0, 0, nnx, nny),
+                        new Rectangle(0, 0, img.Width, img.Height),
+                        GraphicsUnit.Pixel);
+                }
+                return cpy;
+            }
+
+        }
 
 
         public class Fees
@@ -393,7 +443,97 @@ namespace EventCombo.Controllers
             public string FeeAmount { get; set; }
             public string TotalAmount { get; set; }
         }
+        public JsonResult SaveUploadedFile(string Uniqueid)
+        {
+            if (Session["AppId"] != null)
+            {
+                Random rnd = new Random();
+                var rndnumber = rnd.Next(1, 7);
+                //string Name = Request.Form[1];
+                //if (Request.Files.Count > 0)
+                //{
+                //    HttpPostedFileBase file = Request.Files[0];
+                //}
+                string Userid = Session["AppId"].ToString();
+                bool isSavedSuccessfully = true;
+                string fName = "";
+                string content_type = "";
+                var pathnew = "";
+                try
+                {
+                    foreach (string fileName in Request.Files)
+                    {
+                        HttpPostedFileBase file = Request.Files[fileName];
+                        //Save file content goes here
+                        fName = file.FileName;
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            fName = file.FileName;
+                            content_type = file.ContentType;
+                            var originalDirectory = new DirectoryInfo(string.Format("{0}\\Images\\events\\event_flyers", Server.MapPath(@"\")));
 
+                            string pathString = System.IO.Path.Combine(originalDirectory.ToString(), "imagepath");
+
+                            var fileName1 = Path.GetFileName(file.FileName);
+
+                            //var format=    getImageFormat(fileName1);
+
+                            bool isExists = System.IO.Directory.Exists(pathString);
+
+                            if (!isExists)
+                                System.IO.Directory.CreateDirectory(pathString);
+
+                            var path = string.Format("{0}\\{1}", pathString, file.FileName);
+                            var imageformat = getImageFormat(path);
+                            var NFilename = file.FileName;
+                            pathnew = string.Format("{0}\\{1}", pathString, NFilename);
+                            //using (EventComboEntities objEntity = new EventComboEntities())
+                            //{
+                            //    EventTempImage Imageold = objEntity.EventTempImages.FirstOrDefault(i => i.EvenUniqueid == Uniqueid);
+
+
+
+                            //    //profile.UserProfileImage = fName;
+                            //    //Image.ContentType = content_type;
+
+                            //        EventTempImage Image = new EventTempImage();
+                            //        Image.EventImageUrl = NFilename;
+                            //        Image.EvenUniqueid = Uniqueid;
+                            //        Image.ImageType = content_type;
+                            //        Image.UserId = Userid;
+                            //        objEntity.EventTempImages.Add(Image);
+                            //        objEntity.SaveChanges();
+
+
+                            //}
+                            // file.SaveAs(path);
+                            HandleImageUpload(file, pathnew);
+                        }
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    isSavedSuccessfully = false;
+                }
+
+
+                if (isSavedSuccessfully)
+                {
+                    return Json(new { image_name = fName, image_type = content_type, image_path = pathnew });
+                }
+                else
+                {
+                    return Json(new { Message = "Error in saving file" });
+                }
+            }
+            else
+            {
+                return Json(new { Message = "Error in saving file" });
+
+            }
+        }
         //public void SaveTable(EventCreation model)
         //{
 
