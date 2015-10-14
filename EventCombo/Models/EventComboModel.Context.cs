@@ -57,6 +57,7 @@ namespace EventCombo.Models
         public virtual DbSet<TicketType> TicketTypes { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
+        public virtual DbSet<EventTempImage> EventTempImages { get; set; }
     
         public virtual ObjectResult<string> GetSetUserRole(string user_Id, string gETSET, string role_Id)
         {

@@ -13,7 +13,7 @@
 
 
         <div class="event_container">
-            <form>
+          
                 <div class="event-upload-container">
                     <input type="file" name="image" id="input2">
                     @*<input class="event-upload form-control" type="file" />*@
@@ -153,9 +153,9 @@
                         <div class="col-sm-12 text-right mt10">
                             <div class="form-group">
                                 <label>Will Call:</label>
-                                <input type="radio" class="" id="id_willcall" />
+                                <input type="radio" class="" name="seating" id="id_willcall" />
                                 <label> Seating:</label>
-                                <input type="radio" class="" id="id_reservedseating" />
+                                <input type="radio" class="" name="seating" id="id_reservedseating" />
                             </div>
                           
                         </div>
@@ -201,13 +201,19 @@
                                                 <input class="form-control evnt_inp_cont paidticket-0 Price " placeholder="$ 0" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)" pattern='^\d+(?:\.\d{0,2})$' />
                                                 <label class="label-control wd600" id="id_lbl_price-0" style="display:none; color:red"></label>
                                                  <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
-                                                <div class="evnt_toltip label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
+                                                @*<div class="evnt_toltip label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
                                                     Buyer total:
                                                        <span class="buyer_price" id="id_buyerprice-0">$0.00 </span> <i class="fa fa-info-circle"></i>
                                                     <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
 
-                                                </div>
-                                               
+                                                </div>*@
+                                                <label class="label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
+                                                    Buyer total:
+                                                    <span class="buyer_price" id="id_buyerprice-0">$0.00 </span>
+                                                    <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
+                                                    <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
+
+                                                </label>
                                             </div>
                                         </div>
                                         <div class="list-group-item" style="width:15%;">
@@ -221,11 +227,11 @@
                                         <div class="list-group-item" style="width:15%;">
                                             <div class="nav evnt_setting">
                                                 <div class="evnt_setting_list">
-                                                    <button class="evnt_set active_setting" id="btnsetting-0" type="button" onclick="showsettingdiv(this.id);"><i class="fa fa-cog"></i></button>
+                                                    <button class="evnt_set active_setting btn " id="btnsetting-0" type="button" onclick="showsettingdiv(this.id);"><i class="fa fa-cog"></i></button>
                                                     @*<a href="#" class="evnt_set active_setting"></a>*@
                                                 </div>
                                                 <div class="evnt_setting_list">
-                                                    <button id="btndelete-0" type="button" onclick="deletediv(this.id);"><i class="fa fa-trash-o"></i></button>
+                                                    <button id="btndelete-0" type="button" class="btn" onclick="deletediv(this.id);"><i class="fa fa-trash-o"></i></button>
                                                     @*<a href="" id="id_delete_ticket"><i class="fa fa-trash-o"></i></a>*@
                                                 </div>
                                             </div>
@@ -390,10 +396,10 @@
                                                     <div class="clearfix"></div>
                                                     <div class="modal-footer">
                                                         <div class="col-sm-12 text-center">
-                                                            <a class="evnt_set_minimise" id="id_Minimize-0" onclick="minimize(this.id);">
+                                                            <button class="evnt_set_minimise evnt_set btn " id="id_Minimize-0" onclick="minimize(this.id);" type="button">
                                                                 <i class="fa fa-arrow-up"></i>
                                                                 Minimize Setting
-                                                            </a>
+                                                            </button>
                                                         </div>
                                                     </div>
 
@@ -408,9 +414,243 @@
                                       
                                         <input type="hidden" value="0" id="id_Order" />
                                     </div>
+                                    
                                 </div>
 
+                                <div class="list-group ticket_haeding create-tickets--ticket" id="clonediv-n" style="display:none;">
+                                        <div class="list-group-item" style="width:4%;">
+                                            <span><i class="fa fa-ellipsis-v"></i></span>
+                                            <input type="hidden" id="id_ticket_id-0" />
+                                            <input type="hidden" id="id_order-0" />
+                                            <input type="hidden" id="id_Tickettype-0" />
+                                            <input type="hidden" value="0" id="id_feetype-0" />
+                                            <input type="text" value="0" id="id_totalamt-0" hidden />
+                                            <input type="text" value="0" id="id_msg-0" hidden />
+                                        </div>
+                                        <div class="list-group-item" style="width:31%;">
+                                            <div class="form-group mb0">
+                                                <input class="form-control evnt_inp_cont" id="id_ticket_type-0" placeholder="Early Bird, RSVP..." maxlength="256" />
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item" style="width:15%;">
+                                            <div class="form-group mb0">
+                                                <input class="form-control evnt_inp_cont numeric txtsum" id="id_quantity_total-0" placeholder="0" maxlength="6" onblur="changeqty(this.id)" />
+                                                <label class="label-control wd600" id="id_lbl_quantity-0" style="display:none; color:red"></label>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item" style="width:20%;">
+                                            <div class="form-group mb0">
+                                                <input class="form-control evnt_inp_cont paidticket-0 Price " placeholder="$ 0" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)" pattern='^\d+(?:\.\d{0,2})$' />
+                                                <label class="label-control wd600" id="id_lbl_price-0" style="display:none; color:red"></label>
+                                                <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
+                                                <label class="label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
+                                                    Buyer total:
+                                                    <span class="buyer_price" id="id_buyerprice-0">$0.00 </span>
+                                                    <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
+                                                    <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
 
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item" style="width:15%;">
+                                            <div class="form-group mb0">
+                                                <input class="form-control evnt_inp_cont Price" placeholder="$ 0" id="id_Discount-0" maxlength="9" pattern='^\d+(?:\.\d{0,2})$' />
+                                                <label class="label-control wd600" id="id_lbl_discount-0" style="display:none; color:red"></label>
+
+                                                @*<label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Ticket description</label>*@
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item" style="width:15%;">
+                                            <div class="nav evnt_setting">
+                                                <div class="evnt_setting_list">
+                                                    <button class="evnt_set active_setting btn " id="btnsetting-0" type="button" onclick="showsettingdiv(this.id);"><i class="fa fa-cog"></i></button>
+                                                    @*<a href="#" class="evnt_set active_setting"></a>*@
+                                                </div>
+                                                <div class="evnt_setting_list">
+                                                    <button id="btndelete-0" type="button" class="btn" onclick="deletediv(this.id);"><i class="fa fa-trash-o"></i></button>
+                                                    @*<a href="" id="id_delete_ticket"><i class="fa fa-trash-o"></i></a>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Event Setting Start  -->
+                                        <div id="evnt_set-0" style="display:none;">
+                                            <div class="col-sm-12 no_pad ">
+                                                <div class="modal-content evnt_set_panel">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myModalLabel">Settings</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <label class="label-control evnt_ticket_label wd600">Ticket description</label>
+                                                                <textarea id="id_descriptionclass-0" class="form-control evnt_inp_cont wd600" placeholder="Tell your attendees more about this ticket type." maxlength="1000"></textarea>
+                                                                <label class="label-control evnt_ticket_label fs-13 mt5">
+                                                                    <input type="checkbox" class="" id="id_show_description-0" />
+                                                                    Show ticket description on event page
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-group" id="id_feestruct-0" style="display:none">
+                                                                <label class="label-control evnt_ticket_label wd600">Fees</label>
+                                                                <select class="form-control evnt_inp_cont" id="id_include_ticket_fees-0" onchange="feechange(this.id)">
+                                                                    <option value="0">customer pays the fees</option>
+                                                                    <option value="1">I absorb the fee</option>
+                                                                </select>
+                                                                @*<div class="fess_online mb10">
+                                        <p><strong>Online:</strong> Fee: $73.34 Buyer total: $2,186.34</p>
+                                        <p><strong>At The Door:</strong> Fee: $63.39 Buyer total: $2,113.00</p>
+                                    </div>*@
+                                                            </div>
+                                                            @*<div class="form-group">
+                                    <label class="label-control evnt_ticket_label wd600">Sales channel</label>
+                                    <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                        <input type="checkbox" id="id_available_online-0" />
+                                        Online sales
+                                    </label>
+                                    @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
+                                            <input type="checkbox" />
+                                            At the door sales using Neon (app)
+                                        </label>
+                                </div>*@
+                                                            <div class="clearfix"></div>
+                                                            <div class="form-group">
+                                                                <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
+                                                                <div class="evt_time evnt_time_cont wd600">
+                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="mm/dd/yyyy" id="id_salestart-0" />
+
+                                                                    <input id="id_saletimestart-0" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" />
+                                                                    <div class="clearfix"></div>
+                                                                    @*<label class="ev_tic_end label-control lbl_bot_text wd600">or when ticket sales end</label>*@
+                                                                </div>
+                                                                <div class="evnt_doll_amnt evnt_time_cont wd600">
+                                                                    <select class="form-control evnt_inp_cont" id="id_start_sales_after_ticket-0">
+                                                                        <option>$100</option>
+                                                                        <option>$100</option>
+                                                                    </select>
+
+                                                                    <label class="ev_by_date label-control lbl_bot_text wd600">or by Date</label>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="form-group">
+                                                                <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
+                                                                <div class="evnt_time_cont wd600">
+                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="mm/dd/yyyy" id="id_saleend-0" onchange="" />
+
+                                                                    <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" id="id_saletimeend-0" />
+
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+
+                                                            <div class="form-group">
+                                                                <label class="label-control evnt_ticket_label wd600">Ticket visibility</label>
+                                                                <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                    <input type="checkbox" id="id_ticketshidden-0" />
+                                                                    Hide this ticket type
+                                                                </label>
+                                                                <label class="EvaddTkt label-control lbl_bot_text wd600" id="id_EvaddTkt-0" onclick="hideunhide(this.id);">Add ticket auto-hide schedule</label>
+                                                                <label class="RemvTkt label-control lbl_bot_text wd600" id="id_RemvTkt-0" onclick="hideunhide(this.id);" style="display:none;">Remove ticket auto-hide schedule</label>
+                                                                <div class="CusdateCont evnt_cus_date_cont" id="id_CusdateCont-0" style="display:none;">
+                                                                    <label class="TktnotSale col-sm-12 no_pad label-control evnt_ticket_label fs-13" id="id_TktnotSale-0" onclick="hideunhide(this.id)">
+                                                                        <input type="radio" id="id_auto_hide_type_0-0" />
+                                                                        When ticket is not on sale
+                                                                    </label>
+                                                                    <label class="CusdateTime col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5" id="id_CusdateTime-0" onclick="hideunhide(this.id)">
+                                                                        <input type="radio" id="id_auto_hide_type_1-0" />
+                                                                        For custom date and time
+                                                                    </label>
+                                                                    <div class="HideuntDiv hide_unt_aft" id="id_HideuntDiv-0" style="display:none;">
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                                <input type="checkbox" id="id_auto_hide_until-0" /> Hide Until
+                                                                            </label>
+                                                                            <div class="evnt_time_cont wd600">
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="mm/dd/yyyy" />
+
+                                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                                <input type="checkbox" id="id_auto_hide_after-0" /> Hide After
+                                                                            </label>
+                                                                            <div class="evnt_time_cont wd600">
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="mm/dd/yyyy" />
+
+                                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-12 no_pad label-control evnt_ticket_label">Tickets allowed per order</label>
+                                                                <div class="evnt_time_cont wd280 mr5_p">
+                                                                    <input class="form-control event_time_str evnt_tick_inp_cont wd240 " id="id_min_ticket-0" placeholder="" />
+                                                                    <label class="label-control lbl_bot_minim ">Minimum</label>
+
+                                                                </div>
+                                                                <div class="evnt_time_cont wd280">
+                                                                    <input class="form-control event_time_str evnt_tick_inp_cont wd240" placeholder="" id="id_max_ticket-0" />
+                                                                    <label class="label-control lbl_bot_minim">Maximum</label>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="clearfix"></div>
+                                                            <div class="form-group">
+                                                                <label class="label-control evnt_ticket_label fs-13 mt5">
+                                                                    <input type="checkbox" class="" id="id_disableticket-0" />
+                                                                    Disable Ticket
+
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="clearfix"></div>
+                                                            <div class="form-group">
+                                                                <label class="label-control evnt_ticket_label fs-13 mt5">
+                                                                    <input type="checkbox" class="" id="id_marksoldout-0" />
+                                                                    Mark Sold Out
+
+                                                                </label>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="form-group">
+                                                                <label class="label-control evnt_ticket_label fs-13 mt5">
+                                                                    <input type="checkbox" class="" id="id_displayremaining-0" />
+                                                                    Display Remaining Tickets
+
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="modal-footer">
+                                                        <div class="col-sm-12 text-center">
+                                                            <button class="evnt_set_minimise evnt_set btn " id="id_Minimize-0" onclick="minimize(this.id);" type="button">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                                Minimize Setting
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <!-- Event Setting End  -->
+                                        <input type="hidden" value="0" id="id_feetype-0" />
+
+
+                                        <input type="hidden" value="0" id="id_Order" />
+                                    </div>
 
 
 
@@ -451,13 +691,15 @@
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-center mb10 ">
                     <input id="imageeror" type="hidden" value="0"/>
+                    <input id="image_count" type="hidden" />
                     <button type="button" id="btSave" class="btn btn-primary btn-lg save_btn">Save</button>
                     <button type="button" class="btn btn-primary btn-lg save_btn">Make your Event Live</button>
 
                     <input type="hidden" id="hidAddSno" value="" />
                     <input type="hidden" id="hidSchLastState" value="" />
+                    <input type="hidden" id="hdUniqueguid" value="" />
                 </div>
-            </form>
+          
         </div>
         <!-- modal Start Here  -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -1365,7 +1607,11 @@
 
             var div = document.getElementById("clonediv-" + el);
            // var div = document.getElementById("clonediv-0");
+            var toatlqty = $("#id_totalqty").html();
+            var qty = $("#id_quantity_total-" + el).val();
+            var leftqty = parseInt(toatlqty) - parseInt(qty);
           
+            $("#id_totalqty").html(leftqty);
             if (divlength == 1) {
                 $('#beforeticket').css('display', 'block');
                 $('.ticket_panel').css('display', 'none');
@@ -1460,6 +1706,10 @@
             $("#id_Discount-0").prop("readonly", true);
             $("#id_Tickettype-0").val("Free");
             $("#id_feetype-0").val(0);
+            var data = $('#clonediv-0');
+            data.find('*[id]').andSelf().each(function () {
+                $(this).val('');
+            });
 
         });
         $(".save_btnpaid").click(function () {
@@ -1476,6 +1726,12 @@
             $("#id_feetype-0").css('display', 'block');
             $("#id_Tickettype-0").val("Paid");
             $("#id_feetype-0").val(0);
+            var data = $('#clonediv-0');
+            data.find('*[id]').andSelf().each(function () {
+                $(this).val('');
+            });
+            $("#id_buyerprice-0").html('$0.00');
+            $("#id_tooltip-0").html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
         });
         $(".save_btndonation").click(function () {
             var randomValue = randomString(4);
@@ -1492,14 +1748,19 @@
             $("#id_feetype-0").css('display', 'block');
             $("#id_Tickettype-0").val("Donation");
             $("#id_feetype-0").val(0);
+            var data = $('#clonediv-0');
+            data.find('*[id]').andSelf().each(function () {
+                $(this).val('');
+            });
         });
 
         $('#create-ticket-free-button').click(function () {
             console.log($("#MasterDiv> div").size());
             var divlength = $("#MasterDiv> div").size();
-            var data = $('#clonediv-0').clone();
+            var data = $('#clonediv-n').clone();
 
             data.attr('id', 'clonediv-' + divlength);
+            data.removeAttr("style")
             console.log(data.find('input[type=text]'));
             data.find('*[id]').andSelf().each(function () {
 
@@ -1537,13 +1798,17 @@
             $("#id_order-" + divlength).val(divlength + 1);
             $("#id_feetype-" + divlength).css('display', 'none');
             $("#id_Tickettype-" + divlength).val("Free");
+            //$("clonediv-" + divlength).css('display', 'block');
+            
             $("#id_feetype-0").val(0);
+          
         });
         $('#create-ticket-paid-button').click(function () {
             console.log($("#MasterDiv> div").size());
             var divlength = $("#MasterDiv> div").size();
-            var data = $('#clonediv-0').clone();
+            var data = $('#clonediv-n').clone();
             data.attr('id', 'clonediv-' + divlength);
+            data.removeAttr("style")
             console.log(data.find('input[type=text]'));
             data.find('*[id]').andSelf().each(function () {
                 //console.log($(this));
@@ -1583,12 +1848,15 @@
             $("#id_buyerprice-" + divlength).html('$0.00');
             $("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
             $("#id_feetype-0").val(0);
+           // $("clonediv-" + divlength).css('display', 'block');
         });
         $('#create-ticket-donation-button').click(function () {
             console.log($("#MasterDiv> div").size());
             var divlength = $("#MasterDiv> div").size();
-            var data = $('#clonediv-0').clone();
+           
+            var data = $('#clonediv-n').clone();
             data.attr('id', 'clonediv-' + divlength);
+            data.removeAttr("style")
             console.log(data.find('input[type=text]'));
             data.find('*[id]').andSelf().each(function () {
                 //console.log($(this));
@@ -1612,7 +1880,7 @@
 
             });
 
-
+           
             $('#MasterDiv').append(data);
             $(".normalticket-" + divlength).css('display', 'block');
             $(".paidticket-" + divlength).css('display', 'none');
@@ -1628,6 +1896,7 @@
             $("#id_Tickettype-" + divlength).val("Donation");
            
             $("#id_feetype-0").val(0);
+           // $("clonediv-" + divlength).css('display', 'block');
         });
 
         $(".tab-content").hide();
@@ -1880,6 +2149,41 @@ return false;
 
 <script type="text/javascript">
     $(document).ready(function () {
+        function uuid() {
+            var chars = '0123456789abcdef'.split('');
+
+            var uuid = [], rnd = Math.random, r;
+            uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+            uuid[14] = '4'; // version 4
+
+            for (var i = 0; i < 36; i++) {
+                if (!uuid[i]) {
+                    r = 0 | rnd() * 16;
+
+                    uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r & 0xf];
+                }
+            }
+
+            return uuid.join('');
+        }
+        
+        $(function () {
+            $("#MasterDiv").sortable({
+                update: function () {
+                    var strItems = "";
+
+                    $("#MasterDiv").children().each(function (i) {
+                        var li = $(this).attr("id");
+                        var el = li.substr(li.indexOf('-') + 1, li.length - li.indexOf('-'));
+                        alert(li);
+                        $('#id_order-' + el).val(i);
+                       
+                    });
+                }
+            });
+            $("#MasterDiv").disableSelection();
+        });
+        $('#hdUniqueguid').val(uuid());
         $('#input2').filer({
             limit: '5',
             maxSize: '2',
@@ -1931,30 +2235,33 @@ return false;
             },
             uploadFile: {
                 url: "/Event/SaveUploadedFile",
-                data: {},
+                data: {'Uniqueid':  $('#hdUniqueguid').val()},
                 type: 'POST',
                 enctype: 'multipart/form-data',
                 beforeSend: function () { },
                 success: function (data, el) {
-
-                    //el.find(".jFiler-item-assets").hide();
-                    ////    console.log(el);
-                    //// $(".jFiler-item-assets").hide();
-                    //var Celebrity_image_count=$("#Celebrity_image_count").val();
-                    //var imagejson=jQuery.parseJSON(data);
-                    //var imgdata=imagejson.image_name+'####'+imagejson.image_type;
-                    //$('<input>').attr({
-                    //    type: 'hidden',
-                    //    id:'image_hidden_'+el[0].jfiler_id,
-                    //    name: 'Celebritypicture['+imgdata+']',
-                    //    value: imagejson.image_path
-                    //}).appendTo('form');
-                    //var imgname=imagejson.image_name;
-                    //el.find('span').html(imgname.substring(0,18));
+                    console.log(data);
                     var parent = el.find(".jFiler-jProgressBar").parent();
                     el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
                         $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
                     });
+                    //el.find(".jFiler-item-assets").hide();
+                    ////    console.log(el);
+                    //// $(".jFiler-item-assets").hide();
+                    var image_count=$("#image_count").val();
+                    var imagejson = jQuery.parseJSON(JSON.stringify(data));
+                    var imgdata = imagejson.image_name + '####' + imagejson.image_type;
+                  
+                    $("#image_count").val(el[0].jfiler_id)
+                    $('<input>').attr({
+                        type: 'hidden',
+                        id:'image_hidden_'+el[0].jfiler_id,
+                        name: 'Eventpicture['+imgdata+']',
+                        value: imgdata
+                    }).appendTo('form');
+                    //var imgname=imagejson.image_name;
+                    //el.find('span').html(imgname.substring(0,18));
+                  
                     $('#ImagePresent').val("Yes");
                     //el.find('img').attr('src',imagejson.image_path);
                     //el.find(".jFiler-item-thumb-image").bind("click", function(e){
@@ -1972,16 +2279,16 @@ return false;
 
                     //    $(".mfp-close").html("X");
                     //});
-                    //if ($.trim(Celebrity_image_count)=='') {
-                    //    $("#Celebrity_image_count").val('1');
-                    //}else{
-                    //    Celebrity_image_count=parseInt(Celebrity_image_count)+1;
-                    //    $("#Celebrity_image_count").val(Celebrity_image_count);
-                    //}
+                    if ($.trim(image_count) == '') {
+                        $("#image_count").val('1');
+                    }else{
+                        image_count = parseInt(image_count) + 1;
+                        $("#image_count").val(image_count);
+                    }
                     //if ($("#Celebrity_image_count").val()=='5') {
                     //    $("#Celebrity_image_count_em_").hide();
                     //}
-
+                  
 
                 },
                 error: function (el) {
@@ -2006,14 +2313,31 @@ return false;
             onSelect: function () { $(".jFiler-input-inner").hide(); },
             afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
             onRemove: function (el) {
+                var image_count = $("#image_count").val();
+                image_count = parseInt(image_count) - 1;
+                var id_div = el[0].jfiler_id;
+                var hidden_image_element = 'image_hidden_' + id_div;
+                if (image_count == 0) {
+                    $("#image_count").val('');
+                } else {
+                    $("#image_count").val(image_count);
+                }
+                $("#" + hidden_image_element).remove();
                 $('#input2').click(function (e) {
                     e.preventDefault();
 
                 })
                 $('#ImagePresent').val("NO");
+              
+              
+                //$.post("/Event/RemoveFile", function (data) {
+                //    alert("gsdgertet");
+                //});
+
+              
             },
             onEmpty: function (el) {
-                alert($("#imageeror").val());
+              
                 if ($("#imageeror").val() == 0) {
                     if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
                 }

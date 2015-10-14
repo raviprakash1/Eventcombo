@@ -244,6 +244,9 @@
     <Compile Include="Models\EventSubCategory.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventTempImage.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>

@@ -12,11 +12,12 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EventImage
+    public partial class EventTempImage
     {
-        public long EventImageID { get; set; }
-        public long EventID { get; set; }
+        public string UserId { get; set; }
+        public string EvenUniqueid { get; set; }
         public string EventImageUrl { get; set; }
         public string ImageType { get; set; }
+        public long Id { get; set; }
     }
 }

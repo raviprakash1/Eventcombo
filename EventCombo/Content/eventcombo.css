@@ -351,7 +351,7 @@ button:focus { outline: none;}
 
 .evnt_setting{ margin-top: 6px;}
 .evnt_setting .evnt_setting_list a i{font-size: 1.3em !important; margin-left: 8%;}
-.evnt_setting .evnt_setting_list{ float: left;}
+.evnt_setting .evnt_setting_list{ float: left; margin-right:5px; }
 .evnt_setting .evnt_setting_list a{ padding: 5px 10px !important;}
 .evnt_setting .evnt_setting_list a:hover{ background: none;}
 
@@ -375,58 +375,24 @@ button:focus { outline: none;}
 
 .hide_unt_aft{ width: 100%; float:left;}
 
-.evnt_toltip {
-  color: #555;
-  font-size: 20px;
-  margin:0;
-  padding: 0;
-  position: relative;
-  text-align: center;
-  width: 180px; float: left;
-  -webkit-transform: translateZ(0); /* webkit flicker fix */
-  -webkit-font-smoothing: antialiased; /* webkit text rendering fix */
+span.evnt_toltip{ 
+    cursor: pointer !important;
+    float: right !important;
+    width: auto; margin-top: 0px !important;}
+
+.evnt_toltip{ width: auto !important; float: left !important;}    
+.evnt_toltip:hover + .tooltip {
+    display: block;opacity:.9;
 }
+.tooltip{ width: 200px; float: left; 
+    background: #333; border-radius: 3px; color: #fff;  
+    left: 47px;
+    padding: 5px;
+    position: absolute;
+    top: -16px;
+ }
 
-.evnt_toltip .tooltip {
-  background: #333;
-  bottom: 100%; border-radius: 3px;
-  color: #fff;
-  display: block;
-  margin-bottom: 6px;
-  opacity: 0;
-  padding: 5px; text-align: left;
-  position: absolute;
-  width: 180px; left: 33%;
-  -webkit-transform: translateY(10px);
-     -moz-transform: translateY(10px);
-      -ms-transform: translateY(10px);
-       -o-transform: translateY(10px);
-          transform: translateY(10px);
-  -webkit-transition: all .25s ease-out;
-     -moz-transition: all .25s ease-out;
-      -ms-transition: all .25s ease-out;
-       -o-transition: all .25s ease-out;
-          transition: all .25s ease-out;
-  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
-     -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
-      -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
-       -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
-          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
-}
-
-/* This bridges the gap so you can mouse into the tooltip without it disappearing */
-.evnt_toltip .tooltip:before {
-  bottom: -20px;
-  content: " ";
-  display: block;
-  height: 20px;
-  left: 0;
-  position: absolute;
-  width: 100%;
-}  
-
-/* CSS Triangles - see Trevor's post */
-.evnt_toltip .tooltip:after {
+.tooltip:after {
   border-left: solid transparent 7px;
   border-right: solid transparent 7px;
   border-top: solid #333 7px;
@@ -438,23 +404,13 @@ button:focus { outline: none;}
   position: absolute;
   width: 0;
 }
-  
-.evnt_toltip:hover .tooltip {
-  opacity: 1;
-  pointer-events: auto;
-  -webkit-transform: translateY(0px);
-     -moz-transform: translateY(0px);
-      -ms-transform: translateY(0px);
-       -o-transform: translateY(0px);
-          transform: translateY(0px);
-}
 .total_qty{ margin-top:10px; }
 
 
  /************Create Ticket 2nd**********************/
 .lbl_bot_price{ font-size: 1em; color: #979898; font-weight: normal;}
 .lbl_bot_price span.buyer_price{ float: none; margin: 0px; cursor: inherit; color: #3cf;}
-.evnt_set_minimise{ font-size: 1.2em;}
+.evnt_set_minimise{ font-size: 1.2em; background:none; color:#337ab7;}
 .lbl_bot_minim{ font-size: 1.2em; font-weight: normal;}
 .fess_online{ width: 100%; float: left; background: #ebecec; padding: 5px;}
 .fess_online p{ color: #979898; font-size: 1.1em; margin-bottom: 0px; }

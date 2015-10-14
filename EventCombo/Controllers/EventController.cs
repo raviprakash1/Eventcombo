@@ -281,8 +281,33 @@ namespace EventCombo.Controllers
         //        return Json("Result", JsonRequestBehavior.AllowGet); ;
         //    }
         //}
+        public ActionResult RemoveFile(string Uniqueid)
+        {
+            string fName = "";
+            if (Session["AppId"] != null)
+            {
+                bool isSavedSuccessfully = true;
+                foreach (string fileName in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[fileName];
+                }
+                if (isSavedSuccessfully)
+                {
+                    return Json(new { Message = fName });
+                }
+                else
+                {
+                    return Json(new { Message = "Error in saving file" });
+                }
 
-        public ActionResult SaveUploadedFile()
+            }
+            else
+            {
+                return Json(new { Message = "Error in saving file" });
+
+            }
+        }
+        public JsonResult SaveUploadedFile(string Uniqueid)
         {
             if (Session["AppId"] != null)
             {
@@ -297,6 +322,7 @@ namespace EventCombo.Controllers
                 bool isSavedSuccessfully = true;
                 string fName = "";
                 string content_type = "";
+                var pathnew = "";
                 try
                 {
                     foreach (string fileName in Request.Files)
@@ -308,7 +334,7 @@ namespace EventCombo.Controllers
                         {
                             fName = file.FileName;
                             content_type = file.ContentType;
-                            var originalDirectory = new DirectoryInfo(string.Format("{0}\\Images\\Profile\\Profile_Images", Server.MapPath(@"\")));
+                            var originalDirectory = new DirectoryInfo(string.Format("{0}\\Images\\events\\event_flyers", Server.MapPath(@"\")));
 
                             string pathString = System.IO.Path.Combine(originalDirectory.ToString(), "imagepath");
 
@@ -323,15 +349,26 @@ namespace EventCombo.Controllers
 
                             var path = string.Format("{0}\\{1}", pathString, file.FileName);
                             var imageformat = getImageFormat(path);
-                            var NFilename = Userid.Trim() + "_ProfImage" + rndnumber + "." + imageformat;
-                            var pathnew = string.Format("{0}\\{1}", pathString, NFilename);
+                            var NFilename=  file.FileName;
+                             pathnew = string.Format("{0}\\{1}", pathString, NFilename);
                             //using (EventComboEntities objEntity = new EventComboEntities())
                             //{
-                            //    Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
-                            //    profile.UserProfileImage = NFilename;
+                            //    EventTempImage Imageold = objEntity.EventTempImages.FirstOrDefault(i => i.EvenUniqueid == Uniqueid);
+                               
+
+                                  
                             //    //profile.UserProfileImage = fName;
-                            //    profile.ContentType = content_type;
-                            //    objEntity.SaveChanges();
+                            //    //Image.ContentType = content_type;
+                         
+                            //        EventTempImage Image = new EventTempImage();
+                            //        Image.EventImageUrl = NFilename;
+                            //        Image.EvenUniqueid = Uniqueid;
+                            //        Image.ImageType = content_type;
+                            //        Image.UserId = Userid;
+                            //        objEntity.EventTempImages.Add(Image);
+                            //        objEntity.SaveChanges();
+                                
+                                
                             //}
                             // file.SaveAs(path);
                             HandleImageUpload(file, pathnew);
@@ -348,7 +385,7 @@ namespace EventCombo.Controllers
 
                 if (isSavedSuccessfully)
                 {
-                    return Json(new { Message = fName });
+                    return Json(new { image_name = fName , image_type = content_type, image_path= pathnew });
                 }
                 else
                 {
@@ -357,7 +394,7 @@ namespace EventCombo.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return Json(new { Message = "Error in saving file" });
 
             }
         }
@@ -376,7 +413,7 @@ namespace EventCombo.Controllers
         }
         private void HandleImageUpload(HttpPostedFileBase file, string path1)
         {//ProfileID_SequentialImage#
-            Image img = RezizeImage(Image.FromStream(file.InputStream), 200, 200);
+            Image img = RezizeImage(Image.FromStream(file.InputStream), 900, 600);
             string path = file.FileName;
             img.Save(path1, getImageFormat(path));
         }

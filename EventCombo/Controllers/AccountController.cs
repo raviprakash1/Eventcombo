@@ -1402,7 +1402,7 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
-
+                           
                             ModelState.AddModelError("", "You not authorized user");
                             return RedirectToAction("Index", "Home");
 
