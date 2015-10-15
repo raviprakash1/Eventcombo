@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EventCombo.Models;
 using System.Collections;
 using System.Data;
+using System.Text;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Drawing;
@@ -19,7 +20,7 @@ namespace EventCombo.Controllers
         [HttpPost]
         public ActionResult EventCreation(EventCreation model)
         {
-           
+
             return View();
         }
 
@@ -42,7 +43,7 @@ namespace EventCombo.Controllers
                                     select c).Distinct();
                 List<SelectListItem> countryList = new List<SelectListItem>();
                 defaultCountry = "United States";
-                
+
                 foreach (var item in countryQuery)
                 {
                     countryList.Add(new SelectListItem()
@@ -56,6 +57,12 @@ namespace EventCombo.Controllers
                 var rows = (from myRow in db.EventTypes
                             select myRow).ToList();
                 List<SelectListItem> EventType = new List<SelectListItem>();
+                EventType.Add(new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "0",
+                    Selected = true
+                });
                 foreach (var item in rows)
                 {
                     EventType.Add(new SelectListItem()
@@ -65,9 +72,16 @@ namespace EventCombo.Controllers
                     });
                 }
 
+
                 var EventCat = (from myRow in db.EventCategories
-                            select myRow).ToList();
+                                select myRow).ToList();
                 List<SelectListItem> EventCategory = new List<SelectListItem>();
+                EventCategory.Add(new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "0",
+                    Selected = true
+                });
                 foreach (var item in EventCat)
                 {
                     EventCategory.Add(new SelectListItem()
@@ -76,6 +90,11 @@ namespace EventCombo.Controllers
                         Value = item.EventCategoryID.ToString(),
                     });
                 }
+
+
+
+
+
 
 
 
@@ -115,12 +134,14 @@ namespace EventCombo.Controllers
                     ObjEC.EventStatus = model.EventStatus;
                     ObjEC.IsMultipleEvent = model.IsMultipleEvent;
                     ObjEC.TimeZone = model.TimeZone;
-                    ObjEC.DisplayStartTime  = model.DisplayStartTime;
+                    ObjEC.DisplayStartTime = model.DisplayStartTime;
                     ObjEC.DisplayEndTime = model.DisplayEndTime;
                     ObjEC.DisplayTimeZone = model.DisplayTimeZone;
                     ObjEC.FBUrl = model.FBUrl;
                     ObjEC.TwitterUrl = model.TwitterUrl;
-
+                    ObjEC.LastLocationAddress = model.LastLocationAddress;
+                    ObjEC.AddressStatus = model.AddressStatus;
+                    ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
                     objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -143,7 +164,7 @@ namespace EventCombo.Controllers
 
                         }
                     }
- // Event on Single Timing 
+                    // Event on Single Timing 
                     if (model.EventVenue != null)
                     {
                         EventVenue objEVenue = new EventVenue();
@@ -157,7 +178,7 @@ namespace EventCombo.Controllers
                             objEnt.EventVenues.Add(objEVenue);
                         }
                     }
-// Event on Multiple timing 
+                    // Event on Multiple timing 
                     if (model.MultipleEvents != null)
                     {
                         MultipleEvent objMEvents = new MultipleEvent();
@@ -171,19 +192,19 @@ namespace EventCombo.Controllers
                             objMEvents.MonthlyWeekDays = objME.MonthlyWeekDays;
                             objMEvents.StartingFrom = objME.StartingFrom;
                             objMEvents.StartingTo = objME.StartingTo;
-                            objMEvents.StartTime= objME.StartTime;
+                            objMEvents.StartTime = objME.StartTime;
                             objMEvents.EndTime = objME.EndTime;
                             objEnt.MultipleEvents.Add(objMEvents);
                         }
                     }
-    // Orgnizer
+                    // Orgnizer
                     if (model.Orgnizer != null)
                     {
                         Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
                         foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
                         {
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name ;
+                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
                             objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
@@ -203,12 +224,12 @@ namespace EventCombo.Controllers
         {
             List<Fees> eList = new List<Fees>();
             EventComboEntities objEnt = new EventComboEntities();
-           
 
-                var rows = (from myRow in objEnt.Fee_Structure
-                           select myRow).ToList();
 
-               return Json(rows.ToArray(), JsonRequestBehavior.AllowGet);
+            var rows = (from myRow in objEnt.Fee_Structure
+                        select myRow).ToList();
+
+            return Json(rows.ToArray(), JsonRequestBehavior.AllowGet);
 
         }
 
@@ -235,9 +256,94 @@ namespace EventCombo.Controllers
             catch (Exception)
             {
                 return objJs;
-                
+
             }
         }
+        public string GetSubCat(long lECatId)
+        {
+
+            StringBuilder strHtml = new StringBuilder();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var EventCat = (from myRow in objEnt.EventSubCategories
+                                    where myRow.EventCategoryID == lECatId
+                                    select myRow).ToList();
+
+                    //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    foreach (var item in EventCat)
+                        strHtml.Append("<option value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
+
+                    return strHtml.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return strHtml.ToString();
+
+            }
+
+
+        }
+
+        public string CheckEventUrl(string strUserUrl)
+        {
+
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var Eventurl = (from myRow in objEnt.Events
+                                    where myRow.EventUrl == strUserUrl
+                                    select myRow).SingleOrDefault();
+
+                    if (Eventurl == null) return "N";
+                    if (Eventurl.ToString().Equals(string.Empty))
+                        return "N"; // Not Exists
+                    else
+                        return "Y"; // Exists
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Y";
+
+            }
+
+
+        }
+
+        public string GetPreviousAddress()
+        {
+            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+
+            StringBuilder strHtml = new StringBuilder();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var PrevAdd = (from myRow in objEnt.Addresses
+                                    where myRow.UserId == strUsers
+                                    select myRow).ToList();
+
+                    //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    foreach (var item in PrevAdd)
+                        strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+
+                    return strHtml.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return strHtml.ToString();
+
+            }
+
+
+        }
+
+
 
 
         //public JsonResult GetEventType()
@@ -281,31 +387,61 @@ namespace EventCombo.Controllers
         //        return Json("Result", JsonRequestBehavior.AllowGet); ;
         //    }
         //}
-        public ActionResult RemoveFile(string Uniqueid)
+
+       
+
+        protected ImageFormat getImageFormat(String path)
         {
-            string fName = "";
-            if (Session["AppId"] != null)
+            switch (Path.GetExtension(path))
             {
-                bool isSavedSuccessfully = true;
-                foreach (string fileName in Request.Files)
-                {
-                    HttpPostedFileBase file = Request.Files[fileName];
-                }
-                if (isSavedSuccessfully)
-                {
-                    return Json(new { Message = fName });
-                }
-                else
-                {
-                    return Json(new { Message = "Error in saving file" });
-                }
-
+                case ".bmp": return ImageFormat.Bmp;
+                case ".gif": return ImageFormat.Gif;
+                case ".jpg": return ImageFormat.Jpeg;
+                case ".png": return ImageFormat.Png;
+                default: break;
             }
-            else
+            return ImageFormat.Jpeg;
+        }
+        private void HandleImageUpload(HttpPostedFileBase file, string path1)
+        {//ProfileID_SequentialImage#
+            Image img = RezizeImage(Image.FromStream(file.InputStream), 200, 200);
+            string path = file.FileName;
+            img.Save(path1, getImageFormat(path));
+        }
+        private Image RezizeImage(Image img, int maxWidth, int maxHeight)
+        {
+            if (img.Height < maxHeight && img.Width < maxWidth) return img;
+            using (img)
             {
-                return Json(new { Message = "Error in saving file" });
+                Double xRatio = (double)img.Width / maxWidth;
+                Double yRatio = (double)img.Height / maxHeight;
+                Double ratio = Math.Max(xRatio, yRatio);
+                int nnx = (int)Math.Floor(img.Width / ratio);
+                int nny = (int)Math.Floor(img.Height / ratio);
+                Bitmap cpy = new Bitmap(nnx, nny, PixelFormat.Format32bppArgb);
+                cpy.SetResolution(72, 72);
+                using (Graphics gr = Graphics.FromImage(cpy))
+                {
+                    gr.Clear(Color.Transparent);
 
+                    // This is said to give best quality when resizing images
+                    gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    gr.DrawImage(img,
+                        new Rectangle(0, 0, nnx, nny),
+                        new Rectangle(0, 0, img.Width, img.Height),
+                        GraphicsUnit.Pixel);
+                }
+                return cpy;
             }
+
+        }
+
+
+        public class Fees
+        {
+            public string Feetype { get; set; }
+            public string FeeAmount { get; set; }
+            public string TotalAmount { get; set; }
         }
         public JsonResult SaveUploadedFile(string Uniqueid)
         {
@@ -349,17 +485,17 @@ namespace EventCombo.Controllers
 
                             var path = string.Format("{0}\\{1}", pathString, file.FileName);
                             var imageformat = getImageFormat(path);
-                            var NFilename=  file.FileName;
-                             pathnew = string.Format("{0}\\{1}", pathString, NFilename);
+                            var NFilename = file.FileName;
+                            pathnew = string.Format("{0}\\{1}", pathString, NFilename);
                             //using (EventComboEntities objEntity = new EventComboEntities())
                             //{
                             //    EventTempImage Imageold = objEntity.EventTempImages.FirstOrDefault(i => i.EvenUniqueid == Uniqueid);
-                               
 
-                                  
+
+
                             //    //profile.UserProfileImage = fName;
                             //    //Image.ContentType = content_type;
-                         
+
                             //        EventTempImage Image = new EventTempImage();
                             //        Image.EventImageUrl = NFilename;
                             //        Image.EvenUniqueid = Uniqueid;
@@ -367,8 +503,8 @@ namespace EventCombo.Controllers
                             //        Image.UserId = Userid;
                             //        objEntity.EventTempImages.Add(Image);
                             //        objEntity.SaveChanges();
-                                
-                                
+
+
                             //}
                             // file.SaveAs(path);
                             HandleImageUpload(file, pathnew);
@@ -385,7 +521,7 @@ namespace EventCombo.Controllers
 
                 if (isSavedSuccessfully)
                 {
-                    return Json(new { image_name = fName , image_type = content_type, image_path= pathnew });
+                    return Json(new { image_name = fName, image_type = content_type, image_path = pathnew });
                 }
                 else
                 {
@@ -398,61 +534,6 @@ namespace EventCombo.Controllers
 
             }
         }
-
-        protected ImageFormat getImageFormat(String path)
-        {
-            switch (Path.GetExtension(path))
-            {
-                case ".bmp": return ImageFormat.Bmp;
-                case ".gif": return ImageFormat.Gif;
-                case ".jpg": return ImageFormat.Jpeg;
-                case ".png": return ImageFormat.Png;
-                default: break;
-            }
-            return ImageFormat.Jpeg;
-        }
-        private void HandleImageUpload(HttpPostedFileBase file, string path1)
-        {//ProfileID_SequentialImage#
-            Image img = RezizeImage(Image.FromStream(file.InputStream), 900, 600);
-            string path = file.FileName;
-            img.Save(path1, getImageFormat(path));
-        }
-        private Image RezizeImage(Image img, int maxWidth, int maxHeight)
-        {
-            if (img.Height < maxHeight && img.Width < maxWidth) return img;
-            using (img)
-            {
-                Double xRatio = (double)img.Width / maxWidth;
-                Double yRatio = (double)img.Height / maxHeight;
-                Double ratio = Math.Max(xRatio, yRatio);
-                int nnx = (int)Math.Floor(img.Width / ratio);
-                int nny = (int)Math.Floor(img.Height / ratio);
-                Bitmap cpy = new Bitmap(nnx, nny, PixelFormat.Format32bppArgb);
-                cpy.SetResolution(72, 72);
-                using (Graphics gr = Graphics.FromImage(cpy))
-                {
-                    gr.Clear(Color.Transparent);
-
-                    // This is said to give best quality when resizing images
-                    gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-                    gr.DrawImage(img,
-                        new Rectangle(0, 0, nnx, nny),
-                        new Rectangle(0, 0, img.Width, img.Height),
-                        GraphicsUnit.Pixel);
-                }
-                return cpy;
-            }
-
-        }
-
-        public class Fees
-        {
-            public string Feetype { get; set; }
-            public string FeeAmount { get; set; }
-            public string TotalAmount { get; set; }
-        }
-
         //public void SaveTable(EventCreation model)
         //{
 

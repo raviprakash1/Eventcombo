@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Abel);
-@import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
-
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 html {
     
 }
@@ -229,9 +228,9 @@ button:focus { outline: none;}
 .evnt_inp_cont{ height: 40px; border-radius: 0px; }
 
 
-.location_map_div{ line-height:200px; text-align: center; height: 200px; border: 1px solid #ccc; background: #fafafa;}
+.location_map_div{ text-align: center; height: 200px; border: 1px solid #ccc; background: #fafafa;}
 .ent_add{ color:#00a1ee; font-size: 1em; }
-.loc_map i{ font-size: 5em;  color: #dedede; margin-left: 0;}
+.loc_map i{ font-size: 5em; padding-top:50px;  color: #dedede; margin-left: 0;}
 .shw_map{ font-weight: normal;}
 
 
@@ -308,6 +307,13 @@ button:focus { outline: none;}
 .evnt_onl9{ margin-right: 10px; cursor: pointer; color: #337ab7;}
 .evnt_onl9:hover{ text-decoration: underline;}
 
+.past_loc{ margin-left: 10px; cursor: pointer; color: #337ab7;}
+.past_loc:hover{ text-decoration: underline;}
+.past_locat_cont{ width: 100%; float: left;}
+
+
+
+
 
 .url-width {
     background: #fff none repeat scroll 0 0;
@@ -375,11 +381,21 @@ button:focus { outline: none;}
 
 .hide_unt_aft{ width: 100%; float:left;}
 
+<<<<<<< HEAD
 span.evnt_toltip{ 
     cursor: pointer !important;
     float: right !important;
     width: auto; margin-top: 0px !important;}
 
+=======
+
+
+span.evnt_toltip{ 
+    cursor: pointer !important;
+    float: right !important;
+    width: auto; margin-top: 0px !important;}
+
+>>>>>>> fcffb28af0e4f353eaf35d1a8884d989d5905753
 .evnt_toltip{ width: auto !important; float: left !important;}    
 .evnt_toltip:hover + .tooltip {
     display: block;opacity:.9;
@@ -404,6 +420,11 @@ span.evnt_toltip{
   position: absolute;
   width: 0;
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> fcffb28af0e4f353eaf35d1a8884d989d5905753
 .total_qty{ margin-top:10px; }
 
 
@@ -593,3 +614,8 @@ span.evnt_toltip{
 .event-upload-container .jFiler-item-container{ margin:0px !important;}
 .event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets{margin-top:0px !important;}
 .event-upload-container .jFiler-item .jFiler-item-container{padding:5px!important;}
+
+
+
+
+

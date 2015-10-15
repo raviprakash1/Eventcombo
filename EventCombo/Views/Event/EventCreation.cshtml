@@ -4,8 +4,9 @@
     ViewBag.Title = "EventCreation";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
-
-<h2>EventCreation</h2>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+<h2>Create Events</h2>
 @using (Html.BeginForm())
 
 {
@@ -13,18 +14,18 @@
 
 
         <div class="event_container">
-          
+            <form>
                 <div class="event-upload-container">
-                    <input type="file" name="image" id="input2">
-                    @*<input class="event-upload form-control" type="file" />*@
+                    <input class="event-upload form-control" type="file" />
                     <div class="evnt_title_bg evnt_title_top">
                         <div class="form-group">
-                            <input id="txtEventTitle" class="form-control evnt_title_control" placeholder="Enter Name of the event" value="Enter Name of the event" />
+                            <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control" placeholder="Click here to enter the name of your event" value="" />
+                            @*<input id="txtEventTitle" class="form-control evnt_title_control" value="Enter Name of the event" onclick='this.value=""' onfocus='this.select()' onblur="this.value=!this.value?'Enter Name of the event':this.value;" />*@
                         </div>
-                        <div class="form-group">
 
-                            <label class="label-control evnt_title_control">Event Discription</label>
-                            <div class="summernote"></div>
+                        <div class="form-group">
+                            <label class="label-control evnt_title_control">Event Description</label>
+                            <div id="edSummer1" class="summernote"></div>
                         </div>
                     </div>
                 </div>
@@ -33,11 +34,36 @@
                         <h2>Event Details</h2>
                     </div>
                     <div class="evnt_details_body">
-                        <div class="form-group">
+                        <div class="EvntLocatTitle form-group">
                             <label class="label-control wd600">Event Location</label>
-                            <input class="form-control evnt_inp_cont wd600 " placeholder="Specify Where it's is held." />
-                            <div class="trigger mt5 ent_add"><a href="#" id="btEnterAddress" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Enter Address</a> </div>
+                            <div class="EnterAdd mb10 ent_add ">
+                                <input id="txtEventLocation" class="form-control mb5 evnt_inp_cont wd600 " placeholder="Specify Where it's is held." />
+                                <span id="btOnlineEvent" class="OnlineEvent evnt_onl9"><i class="fa fa-television"></i> Online event </span>
+                                <a href="#" id="btEnterAddress" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i>Multiple venues</a>
+                                <span id="btPastLocation" class="UsePast past_loc"><i class="fa fa-map"></i> Use Past Location </span>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="form-group online_main_cont">
+                                <div class="online_container">
+                                    <input class="form-control evnt_inp_cont wd600 " placeholder="This is Online Event" readonly="" />
+                                    <div class="clearfix"></div>
+                                    <span class="AddLocatondiv label-control wd600 evnt_onl9 mt10">Add a location</span>
+                                </div>
+                            </div>
+
                         </div>
+
+                        <div class="PastLocatMain past_locat_cont">
+                            <div class="form-group">
+                                <label class="label-control wd600">Past Location</label>
+                                <div class="clearfix"></div>
+                                <select id="dllPastLocation" class="form-control evnt_inp_cont wd600"></select>
+                                <span class="RetunEvent past_loc">Find a new venue</span>
+                            </div>
+                        </div>
+
+
                         <div class="clearfix"></div>
                         <div class="form-group">
                             <table id="tblAddress" class="table table-responsive">
@@ -50,12 +76,7 @@
                                         <th>City</th>
                                         <th>State</th>
                                         <th>Zip Code</th>
-                                        <th>Country</th>
-                                        <td>
-                                            @*<a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit"></i></a> <a href="">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </a>*@
-                                        </td>
+                                        @*<th>Country</th>*@
                                     </tr>
                                 </tbody>
                             </table>
@@ -66,15 +87,15 @@
                             <div class="str_evnt">
                                 <label class="label-control evnt_ticket_label wd140">Start</label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtStartDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="dd/mm/yyyy" />
-                                    <input id="txtStartTime" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
+                                    <input id="txtStartDate" class="datecheck date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="MM/DD/YYYY" />
+                                    <input id="txtStartTime" type="text" class="timecheck time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 PM" />
                                 </div>
                             </div>
                             <div class="str_evnt">
                                 <label class="label-control evnt_ticket_label wd140">Ends</label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtEndDate" class="date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="dd/mm/yyyy" />
-                                    <input id="txtEndTime" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
+                                    <input id="txtEndDate" class="datecheck date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="MM/DD/YYYY" />
+                                    <input id="txtEndTime" type="text" class="timecheck time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
                                 </div>
                             </div>
                         </div>
@@ -89,62 +110,127 @@
                         <div class="clearfix"></div>
 
                         <div class="clearfix"></div>
-                        <div id="dvShowMultipleSch" class="col-sm-12 mt10 no_pad">
-                            <div class="modal-content Sch_evnt_cont" style="display:block;">
-                                <div class="col-sm-12 no_pad">
-                                    <div class="list-group Sch_evnt_main">
-                                        <div class="list-group-item Sch_title" style="width:10%;">
-                                            <div class="Sch_date">2</div>
-                                            <div class="Sch_date">Dates</div>
-                                        </div>
-                                        <div class="list-group-item Sch_title" style="width:70%;">
-                                            <div class="Sch_title_desc">
+                        @*<div id="dvShowMultipleSch" class="col-sm-12 mt10 no_pad">
+                                <div class="modal-content Sch_evnt_cont" style="display:block;">
+                                    <div class="col-sm-12 no_pad">
+                                        <div class="list-group Sch_evnt_main">
+                                            <div class="list-group-item Sch_title" style="width:10%;">
+                                                <div class="Sch_date">2</div>
+                                                <div class="Sch_date">Dates</div>
+                                            </div>
+                                            <div class="list-group-item Sch_title" style="width:70%;">
+                                                <div class="Sch_title_desc">
 
-                                                Custom schedule 7:00 PM - 10:00 PM on the next day
+                                                    Custom schedule 7:00 PM - 10:00 PM on the next day
+                                                </div>
+                                                <div class="Sch_title_desc_bot">Starting November 18 2015 through December 18 2015</div>
                                             </div>
-                                            <div class="Sch_title_desc_bot">Starting November 18 2015 through December 18 2015</div>
-                                        </div>
-                                        <div class="list-group-item Sch_title Sch_act_main" style="width:20%;">
-                                            <div class="sch_action">
-                                                <a href="javascript:void(0)" class="DateList"><i class="fa fa-list-ul"></i></a>
+                                            <div class="list-group-item Sch_title Sch_act_main" style="width:20%;">
+                                                <div class="sch_action">
+                                                    <a href="javascript:void(0)" class="DateList"><i class="fa fa-list-ul"></i></a>
+                                                </div>
+                                                <div class="sch_action">
+                                                    <a href=""><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                                <div class="sch_action">
+                                                    <a href=""><i class="fa fa-trash-o"></i></a>
+                                                </div>
                                             </div>
-                                            <div class="sch_action">
-                                                <a href=""><i class="fa fa-pencil"></i></a>
-                                            </div>
-                                            <div class="sch_action">
-                                                <a href=""><i class="fa fa-trash-o"></i></a>
-                                            </div>
-                                        </div>
 
+                                        </div>
+                                        <div class="ShowdateList list-group Sch_evnt_main Sch_evnt_main_inner">
+                                            <div class="list-group-item Sch_title" style="width:10%;">
+                                                <div class="Sch_date">&nbsp;</div>
+                                                <div class="Sch_date">&nbsp;</div>
+                                            </div>
+                                            <div class="list-group-item Sch_title" style="width:74%;">
+                                                <div class="Sch_title_desc">Custom schedule 7:00 PM - 10:00 PM on the next day</div>
+                                                <div class="Sch_title_desc_bot">Starting November 18 2015 through December 18 2015</div>
+                                            </div>
+                                            <div class="list-group-item Sch_title Sch_act_main" style="width:16%;">
+                                                <div class="sch_action">
+                                                    <a href=""><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                                <div class="sch_action">
+                                                    <a href=""><i class="fa fa-trash-o"></i></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
-                                    <div class="ShowdateList list-group Sch_evnt_main Sch_evnt_main_inner">
-                                        <div class="list-group-item Sch_title" style="width:10%;">
-                                            <div class="Sch_date">&nbsp;</div>
-                                            <div class="Sch_date">&nbsp;</div>
-                                        </div>
-                                        <div class="list-group-item Sch_title" style="width:74%;">
-                                            <div class="Sch_title_desc">Custom schedule 7:00 PM - 10:00 PM on the next day</div>
-                                            <div class="Sch_title_desc_bot">Starting November 18 2015 through December 18 2015</div>
-                                        </div>
-                                        <div class="list-group-item Sch_title Sch_act_main" style="width:16%;">
-                                            <div class="sch_action">
-                                                <a href=""><i class="fa fa-pencil"></i></a>
-                                            </div>
-                                            <div class="sch_action">
-                                                <a href=""><i class="fa fa-trash-o"></i></a>
-                                            </div>
-                                        </div>
 
+                                </div>
+                            </div>*@
+
+                        <div class="clearfix"></div>
+                        <div class="evnt_descp_cont">
+
+
+                            <div class="clearfix"></div>
+                            <label class="label-control evnt_ticket_label wd600 mt10">Organizer Name</label>
+                            <div class="edit_org_cont">
+                                <label id="btEditOrg" class="EditOrg label-control edit_organ_label ">Edit this organizer | </label>
+                                <label class="AddOrg label-control edit_organ_label ">Add organizer</label>
+                                <div class="clearfix"></div>
+                                <select id="dllOrganizer" class="form-control evnt_inp_cont wd600"></select>
+                                <datalist id="dtList"></datalist>
+                            </div>
+                            <div class="can_org_cont">
+                                <label class="CanOrg label-control edit_organ_label ">Cancel </label>
+                                <label id="btAddOrg" class="CanOrg label-control edit_organ_label ">|Save </label>
+                                @*<input id="btAddOrg" type="button" class="btn btn-primary btn-lg save_btn" value="Save" placeholder="" />*@
+                                <div class="clearfix"></div>
+                                <input id="txtOrgnizer" class="form-control wd600 mb10" placeholder="" />
+
+                                <div class="clearfix"></div>
+                                <div class="Moderor mb10">
+
+                                    <div class="er_war_main">
+                                        <div class="er_war_img"></div>
+                                        <div class="er_war"> &#9;&#9;&#9;Modify this Organizer apply to all event.</div>
+                                    </div>
+
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group wd600 mb0 desc_editor">
+                                    <div class="summernote" id="edSummer2"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group mt10">
+                                <label class="label-control">
+                                    <input id="chkLinkonFBTwit" type="checkbox">
+                                    Include links to Facebook and Twitter
+
+                                </label>
+                                <div class="AddSocial add_social_cont">
+                                    <div class="add_social_input">
+                                        <label class="fs15">
+                                            <span class="fb">
+                                                <i class="fa fa-facebook-square"></i>
+                                            </span> facebook.com/
+                                        </label>
+                                        <input class="form-control wd600" id="txtFBUrl" placeholder="" />
+                                    </div>
+                                    <div class="add_social_input mt10">
+                                        <label class="fs15">
+                                            <span class="tw">
+                                                <i class="fa fa-twitter-square"></i>
+                                            </span> twitter.com/
+                                        </label>
+                                        <input class="form-control wd600" id="txtTwitterurl" placeholder="" />
                                     </div>
                                 </div>
-
                             </div>
                         </div>
+
+
+
 
                     </div>
                 </div>
                 <div class="clearfix"></div>
-               @*Ticket Start*@ 
+                @*Ticket Start*@
                 <div class="event_detail_container">
                     <div class="evnt_tile_head">
                         <h2>Create Tickets </h2>
@@ -157,7 +243,7 @@
                                 <label> Seating:</label>
                                 <input type="radio" class="" name="seating" id="id_reservedseating" />
                             </div>
-                          
+
                         </div>
                         <div class="col-sm-12 text-center mt10 evnt_tct_btn" id="beforeticket">
                             <button type="button" class="btn btn-primary btn-lg save_btnfree"><i class="fa fa-plus"></i> Free Ticket</button>
@@ -176,248 +262,6 @@
                                 </div>
                                 <div id="MasterDiv" class="">
                                     <div class="list-group ticket_haeding create-tickets--ticket" id="clonediv-0">
-                                        <div class="list-group-item" style="width:4%;">
-                                            <span><i class="fa fa-ellipsis-v"></i></span>
-                                            <input type="hidden" id="id_ticket_id-0" />
-                                            <input type="hidden" id="id_order-0" />
-                                            <input type="hidden" id="id_Tickettype-0" />
-                                            <input type="hidden" value="0" id="id_feetype-0" />
-                                            <input type="text" value="0" id="id_totalamt-0"  hidden/>
-                                            <input type="text" value="0" id="id_msg-0"   hidden/>
-                                        </div>
-                                        <div class="list-group-item" style="width:31%;">
-                                            <div class="form-group mb0">
-                                                <input class="form-control evnt_inp_cont" id="id_ticket_type-0" placeholder="Early Bird, RSVP..." maxlength="256" />
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item" style="width:15%;">
-                                            <div class="form-group mb0">
-                                                <input class="form-control evnt_inp_cont numeric txtsum" id="id_quantity_total-0" placeholder="0" maxlength="6" onblur="changeqty(this.id)" />
-                                            <label class="label-control wd600" id="id_lbl_quantity-0" style="display:none; color:red"></label>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item" style="width:20%;">
-                                            <div class="form-group mb0">
-                                                <input class="form-control evnt_inp_cont paidticket-0 Price " placeholder="$ 0" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)" pattern='^\d+(?:\.\d{0,2})$' />
-                                                <label class="label-control wd600" id="id_lbl_price-0" style="display:none; color:red"></label>
-                                                 <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
-                                                @*<div class="evnt_toltip label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
-                                                    Buyer total:
-                                                       <span class="buyer_price" id="id_buyerprice-0">$0.00 </span> <i class="fa fa-info-circle"></i>
-                                                    <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
-
-                                                </div>*@
-                                                <label class="label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
-                                                    Buyer total:
-                                                    <span class="buyer_price" id="id_buyerprice-0">$0.00 </span>
-                                                    <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
-                                                    <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
-
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item" style="width:15%;">
-                                            <div class="form-group mb0">
-                                                <input class="form-control evnt_inp_cont Price" placeholder="$ 0" id="id_Discount-0" maxlength="9" pattern='^\d+(?:\.\d{0,2})$' />
-                                                <label class="label-control wd600" id="id_lbl_discount-0" style="display:none; color:red"></label>
-
-                                                  @*<label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Ticket description</label>*@
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item" style="width:15%;">
-                                            <div class="nav evnt_setting">
-                                                <div class="evnt_setting_list">
-                                                    <button class="evnt_set active_setting btn " id="btnsetting-0" type="button" onclick="showsettingdiv(this.id);"><i class="fa fa-cog"></i></button>
-                                                    @*<a href="#" class="evnt_set active_setting"></a>*@
-                                                </div>
-                                                <div class="evnt_setting_list">
-                                                    <button id="btndelete-0" type="button" class="btn" onclick="deletediv(this.id);"><i class="fa fa-trash-o"></i></button>
-                                                    @*<a href="" id="id_delete_ticket"><i class="fa fa-trash-o"></i></a>*@
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Event Setting Start  -->
-                                        <div id="evnt_set-0" style="display:none;">
-                                            <div class="col-sm-12 no_pad ">
-                                                <div class="modal-content evnt_set_panel">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title" id="myModalLabel">Settings</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="col-sm-12">
-                                                            <div class="form-group">
-                                                                <label class="label-control evnt_ticket_label wd600">Ticket description</label>
-                                                                <textarea id="id_descriptionclass-0" class="form-control evnt_inp_cont wd600" placeholder="Tell your attendees more about this ticket type." maxlength="1000"></textarea>
-                                                                <label class="label-control evnt_ticket_label fs-13 mt5">
-                                                                    <input type="checkbox" class="" id="id_show_description-0" />
-                                                                    Show ticket description on event page
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-group" id="id_feestruct-0" style="display:none">
-                                                                <label class="label-control evnt_ticket_label wd600">Fees</label>
-                                                                <select class="form-control evnt_inp_cont" id="id_include_ticket_fees-0" onchange="feechange(this.id)">
-                                                                    <option value="0">customer pays the fees</option>
-                                                                    <option value="1">I absorb the fee</option>
-                                                                </select>
-                                                                @*<div class="fess_online mb10">
-                                                                    <p><strong>Online:</strong> Fee: $73.34 Buyer total: $2,186.34</p>
-                                                                    <p><strong>At The Door:</strong> Fee: $63.39 Buyer total: $2,113.00</p>
-                                                                </div>*@
-                                                            </div>
-                                                            @*<div class="form-group">
-                                                                    <label class="label-control evnt_ticket_label wd600">Sales channel</label>
-                                                                    <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                        <input type="checkbox" id="id_available_online-0" />
-                                                                        Online sales
-                                                                    </label>
-                                                                    @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
-                                                                            <input type="checkbox" />
-                                                                            At the door sales using Neon (app)
-                                                                        </label>
-                                                                </div>*@
-                                                            <div class="clearfix"></div>
-                                                            <div class="form-group">
-                                                                <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
-                                                                <div class="evt_time evnt_time_cont wd600">
-                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="mm/dd/yyyy" id="id_salestart-0" />
-
-                                                                    <input id="id_saletimestart-0" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" />
-                                                                    <div class="clearfix"></div>
-                                                                    @*<label class="ev_tic_end label-control lbl_bot_text wd600">or when ticket sales end</label>*@
-                                                                </div>
-                                                                <div class="evnt_doll_amnt evnt_time_cont wd600">
-                                                                    <select class="form-control evnt_inp_cont" id="id_start_sales_after_ticket-0">
-                                                                        <option>$100</option>
-                                                                        <option>$100</option>
-                                                                    </select>
-
-                                                                    <label class="ev_by_date label-control lbl_bot_text wd600">or by Date</label>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                            <div class="form-group">
-                                                                <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
-                                                                <div class="evnt_time_cont wd600">
-                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="mm/dd/yyyy" id="id_saleend-0" onchange="" />
-
-                                                                    <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" id="id_saletimeend-0" />
-
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-
-                                                            <div class="form-group">
-                                                                <label class="label-control evnt_ticket_label wd600">Ticket visibility</label>
-                                                                <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                    <input type="checkbox" id="id_ticketshidden-0" />
-                                                                    Hide this ticket type
-                                                                </label>
-                                                                <label class="EvaddTkt label-control lbl_bot_text wd600" id="id_EvaddTkt-0" onclick="hideunhide(this.id);">Add ticket auto-hide schedule</label>
-                                                                <label class="RemvTkt label-control lbl_bot_text wd600" id="id_RemvTkt-0" onclick="hideunhide(this.id);" style="display:none;">Remove ticket auto-hide schedule</label>
-                                                                <div class="CusdateCont evnt_cus_date_cont" id="id_CusdateCont-0" style="display:none;">
-                                                                    <label class="TktnotSale col-sm-12 no_pad label-control evnt_ticket_label fs-13" id="id_TktnotSale-0" onclick="hideunhide(this.id)">
-                                                                        <input type="radio" id="id_auto_hide_type_0-0"  />
-                                                                        When ticket is not on sale
-                                                                    </label>
-                                                                    <label class="CusdateTime col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5" id="id_CusdateTime-0" onclick="hideunhide(this.id)">
-                                                                        <input type="radio" id="id_auto_hide_type_1-0" />
-                                                                        For custom date and time
-                                                                    </label>
-                                                                    <div class="HideuntDiv hide_unt_aft" id="id_HideuntDiv-0" style="display:none;">
-                                                                        <div class="form-group">
-                                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                                <input type="checkbox" id="id_auto_hide_until-0" /> Hide Until
-                                                                            </label>
-                                                                            <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="mm/dd/yyyy" />
-
-                                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                                                                <input type="checkbox" id="id_auto_hide_after-0" /> Hide After
-                                                                            </label>
-                                                                            <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="mm/dd/yyyy" />
-
-                                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                            <div class="form-group">
-                                                                <label class="col-sm-12 no_pad label-control evnt_ticket_label">Tickets allowed per order</label>
-                                                                <div class="evnt_time_cont wd280 mr5_p">
-                                                                    <input class="form-control event_time_str evnt_tick_inp_cont wd240 " id="id_min_ticket-0" placeholder="" />
-                                                                    <label class="label-control lbl_bot_minim ">Minimum</label>
-
-                                                                </div>
-                                                                <div class="evnt_time_cont wd280">
-                                                                    <input class="form-control event_time_str evnt_tick_inp_cont wd240" placeholder="" id="id_max_ticket-0" />
-                                                                    <label class="label-control lbl_bot_minim">Maximum</label>
-
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="clearfix"></div>
-                                                            <div class="form-group">
-                                                                <label class="label-control evnt_ticket_label fs-13 mt5">
-                                                                    <input type="checkbox" class="" id="id_disableticket-0" />
-                                                                    Disable Ticket
-
-                                                                </label>
-                                                            </div>
-
-                                                            <div class="clearfix"></div>
-                                                            <div class="form-group">
-                                                                <label class="label-control evnt_ticket_label fs-13 mt5">
-                                                                    <input type="checkbox" class="" id="id_marksoldout-0" />
-                                                                    Mark Sold Out
-
-                                                                </label>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                            <div class="form-group">
-                                                                <label class="label-control evnt_ticket_label fs-13 mt5">
-                                                                    <input type="checkbox" class="" id="id_displayremaining-0" />
-                                                                    Display Remaining Tickets
-
-                                                                </label>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="modal-footer">
-                                                        <div class="col-sm-12 text-center">
-                                                            <button class="evnt_set_minimise evnt_set btn " id="id_Minimize-0" onclick="minimize(this.id);" type="button">
-                                                                <i class="fa fa-arrow-up"></i>
-                                                                Minimize Setting
-                                                            </button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                        <!-- Event Setting End  -->
-                                        <input type="hidden" value="0" id="id_feetype-0" />
-                                     
-                                      
-                                        <input type="hidden" value="0" id="id_Order" />
-                                    </div>
-                                    
-                                </div>
-
-                                <div class="list-group ticket_haeding create-tickets--ticket" id="clonediv-n" style="display:none;">
                                         <div class="list-group-item" style="width:4%;">
                                             <span><i class="fa fa-ellipsis-v"></i></span>
                                             <input type="hidden" id="id_ticket_id-0" />
@@ -443,6 +287,12 @@
                                                 <input class="form-control evnt_inp_cont paidticket-0 Price " placeholder="$ 0" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)" pattern='^\d+(?:\.\d{0,2})$' />
                                                 <label class="label-control wd600" id="id_lbl_price-0" style="display:none; color:red"></label>
                                                 <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
+                                                @*<div class="evnt_toltip label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
+                                            Buyer total:
+                                               <span class="buyer_price" id="id_buyerprice-0">$0.00 </span> <i class="fa fa-info-circle"></i>
+                                            <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
+
+                                        </div>*@
                                                 <label class="label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
                                                     Buyer total:
                                                     <span class="buyer_price" id="id_buyerprice-0">$0.00 </span>
@@ -450,7 +300,6 @@
                                                     <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
 
                                                 </label>
-
                                             </div>
                                         </div>
                                         <div class="list-group-item" style="width:15%;">
@@ -497,21 +346,21 @@
                                                                     <option value="1">I absorb the fee</option>
                                                                 </select>
                                                                 @*<div class="fess_online mb10">
-                                        <p><strong>Online:</strong> Fee: $73.34 Buyer total: $2,186.34</p>
-                                        <p><strong>At The Door:</strong> Fee: $63.39 Buyer total: $2,113.00</p>
-                                    </div>*@
+                                                            <p><strong>Online:</strong> Fee: $73.34 Buyer total: $2,186.34</p>
+                                                            <p><strong>At The Door:</strong> Fee: $63.39 Buyer total: $2,113.00</p>
+                                                        </div>*@
                                                             </div>
                                                             @*<div class="form-group">
-                                    <label class="label-control evnt_ticket_label wd600">Sales channel</label>
-                                    <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
-                                        <input type="checkbox" id="id_available_online-0" />
-                                        Online sales
-                                    </label>
-                                    @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
-                                            <input type="checkbox" />
-                                            At the door sales using Neon (app)
-                                        </label>
-                                </div>*@
+                                                        <label class="label-control evnt_ticket_label wd600">Sales channel</label>
+                                                        <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                            <input type="checkbox" id="id_available_online-0" />
+                                                            Online sales
+                                                        </label>
+                                                        @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
+                                                                <input type="checkbox" />
+                                                                At the door sales using Neon (app)
+                                                            </label>
+                                                    </div>*@
                                                             <div class="clearfix"></div>
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
@@ -652,6 +501,243 @@
                                         <input type="hidden" value="0" id="id_Order" />
                                     </div>
 
+                                </div>
+
+                                <div class="list-group ticket_haeding create-tickets--ticket" id="clonediv-n" style="display:none;">
+                                    <div class="list-group-item" style="width:4%;">
+                                        <span><i class="fa fa-ellipsis-v"></i></span>
+                                        <input type="hidden" id="id_ticket_id-0" />
+                                        <input type="hidden" id="id_order-0" />
+                                        <input type="hidden" id="id_Tickettype-0" />
+                                        <input type="hidden" value="0" id="id_feetype-0" />
+                                        <input type="text" value="0" id="id_totalamt-0" hidden />
+                                        <input type="text" value="0" id="id_msg-0" hidden />
+                                    </div>
+                                    <div class="list-group-item" style="width:31%;">
+                                        <div class="form-group mb0">
+                                            <input class="form-control evnt_inp_cont" id="id_ticket_type-0" placeholder="Early Bird, RSVP..." maxlength="256" />
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item" style="width:15%;">
+                                        <div class="form-group mb0">
+                                            <input class="form-control evnt_inp_cont numeric txtsum" id="id_quantity_total-0" placeholder="0" maxlength="6" onblur="changeqty(this.id)" />
+                                            <label class="label-control wd600" id="id_lbl_quantity-0" style="display:none; color:red"></label>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item" style="width:20%;">
+                                        <div class="form-group mb0">
+                                            <input class="form-control evnt_inp_cont paidticket-0 Price " placeholder="$ 0" id="id_cost-0" maxlength="9" onkeyup="changefeetype(this.id)" pattern='^\d+(?:\.\d{0,2})$' />
+                                            <label class="label-control wd600" id="id_lbl_price-0" style="display:none; color:red"></label>
+                                            <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
+                                            <label class="label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
+                                                Buyer total:
+                                                <span class="buyer_price" id="id_buyerprice-0">$0.00 </span>
+                                                <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
+                                                <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
+
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item" style="width:15%;">
+                                        <div class="form-group mb0">
+                                            <input class="form-control evnt_inp_cont Price" placeholder="$ 0" id="id_Discount-0" maxlength="9" pattern='^\d+(?:\.\d{0,2})$' />
+                                            <label class="label-control wd600" id="id_lbl_discount-0" style="display:none; color:red"></label>
+
+                                            @*<label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Ticket description</label>*@
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item" style="width:15%;">
+                                        <div class="nav evnt_setting">
+                                            <div class="evnt_setting_list">
+                                                <button class="evnt_set active_setting btn " id="btnsetting-0" type="button" onclick="showsettingdiv(this.id);"><i class="fa fa-cog"></i></button>
+                                                @*<a href="#" class="evnt_set active_setting"></a>*@
+                                            </div>
+                                            <div class="evnt_setting_list">
+                                                <button id="btndelete-0" type="button" class="btn" onclick="deletediv(this.id);"><i class="fa fa-trash-o"></i></button>
+                                                @*<a href="" id="id_delete_ticket"><i class="fa fa-trash-o"></i></a>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Event Setting Start  -->
+                                    <div id="evnt_set-0" style="display:none;">
+                                        <div class="col-sm-12 no_pad ">
+                                            <div class="modal-content evnt_set_panel">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel">Settings</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label wd600">Ticket description</label>
+                                                            <textarea id="id_descriptionclass-0" class="form-control evnt_inp_cont wd600" placeholder="Tell your attendees more about this ticket type." maxlength="1000"></textarea>
+                                                            <label class="label-control evnt_ticket_label fs-13 mt5">
+                                                                <input type="checkbox" class="" id="id_show_description-0" />
+                                                                Show ticket description on event page
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-group" id="id_feestruct-0" style="display:none">
+                                                            <label class="label-control evnt_ticket_label wd600">Fees</label>
+                                                            <select class="form-control evnt_inp_cont" id="id_include_ticket_fees-0" onchange="feechange(this.id)">
+                                                                <option value="0">customer pays the fees</option>
+                                                                <option value="1">I absorb the fee</option>
+                                                            </select>
+                                                            @*<div class="fess_online mb10">
+                                                        <p><strong>Online:</strong> Fee: $73.34 Buyer total: $2,186.34</p>
+                                                        <p><strong>At The Door:</strong> Fee: $63.39 Buyer total: $2,113.00</p>
+                                                    </div>*@
+                                                        </div>
+                                                        @*<div class="form-group">
+                                                    <label class="label-control evnt_ticket_label wd600">Sales channel</label>
+                                                    <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                        <input type="checkbox" id="id_available_online-0" />
+                                                        Online sales
+                                                    </label>
+                                                    @*<label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5">
+                                                            <input type="checkbox" />
+                                                            At the door sales using Neon (app)
+                                                        </label>
+                                                </div>*@
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
+                                                            <div class="evt_time evnt_time_cont wd600">
+                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="mm/dd/yyyy" id="id_salestart-0" />
+
+                                                                <input id="id_saletimestart-0" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" />
+                                                                <div class="clearfix"></div>
+                                                                @*<label class="ev_tic_end label-control lbl_bot_text wd600">or when ticket sales end</label>*@
+                                                            </div>
+                                                            <div class="evnt_doll_amnt evnt_time_cont wd600">
+                                                                <select class="form-control evnt_inp_cont" id="id_start_sales_after_ticket-0">
+                                                                    <option>$100</option>
+                                                                    <option>$100</option>
+                                                                </select>
+
+                                                                <label class="ev_by_date label-control lbl_bot_text wd600">or by Date</label>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
+                                                            <div class="evnt_time_cont wd600">
+                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="mm/dd/yyyy" id="id_saleend-0" onchange="" />
+
+                                                                <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" id="id_saletimeend-0" />
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label wd600">Ticket visibility</label>
+                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                <input type="checkbox" id="id_ticketshidden-0" />
+                                                                Hide this ticket type
+                                                            </label>
+                                                            <label class="EvaddTkt label-control lbl_bot_text wd600" id="id_EvaddTkt-0" onclick="hideunhide(this.id);">Add ticket auto-hide schedule</label>
+                                                            <label class="RemvTkt label-control lbl_bot_text wd600" id="id_RemvTkt-0" onclick="hideunhide(this.id);" style="display:none;">Remove ticket auto-hide schedule</label>
+                                                            <div class="CusdateCont evnt_cus_date_cont" id="id_CusdateCont-0" style="display:none;">
+                                                                <label class="TktnotSale col-sm-12 no_pad label-control evnt_ticket_label fs-13" id="id_TktnotSale-0" onclick="hideunhide(this.id)">
+                                                                    <input type="radio" id="id_auto_hide_type_0-0" />
+                                                                    When ticket is not on sale
+                                                                </label>
+                                                                <label class="CusdateTime col-sm-12 no_pad label-control evnt_ticket_label fs-13 mt5" id="id_CusdateTime-0" onclick="hideunhide(this.id)">
+                                                                    <input type="radio" id="id_auto_hide_type_1-0" />
+                                                                    For custom date and time
+                                                                </label>
+                                                                <div class="HideuntDiv hide_unt_aft" id="id_HideuntDiv-0" style="display:none;">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                            <input type="checkbox" id="id_auto_hide_until-0" /> Hide Until
+                                                                        </label>
+                                                                        <div class="evnt_time_cont wd600">
+                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="mm/dd/yyyy" />
+
+                                                                            <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-12 no_pad label-control evnt_ticket_label fs-13">
+                                                                            <input type="checkbox" id="id_auto_hide_after-0" /> Hide After
+                                                                        </label>
+                                                                        <div class="evnt_time_cont wd600">
+                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="mm/dd/yyyy" />
+
+                                                                            <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-12 no_pad label-control evnt_ticket_label">Tickets allowed per order</label>
+                                                            <div class="evnt_time_cont wd280 mr5_p">
+                                                                <input class="form-control event_time_str evnt_tick_inp_cont wd240 " id="id_min_ticket-0" placeholder="" />
+                                                                <label class="label-control lbl_bot_minim ">Minimum</label>
+
+                                                            </div>
+                                                            <div class="evnt_time_cont wd280">
+                                                                <input class="form-control event_time_str evnt_tick_inp_cont wd240" placeholder="" id="id_max_ticket-0" />
+                                                                <label class="label-control lbl_bot_minim">Maximum</label>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label fs-13 mt5">
+                                                                <input type="checkbox" class="" id="id_disableticket-0" />
+                                                                Disable Ticket
+
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label fs-13 mt5">
+                                                                <input type="checkbox" class="" id="id_marksoldout-0" />
+                                                                Mark Sold Out
+
+                                                            </label>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            <label class="label-control evnt_ticket_label fs-13 mt5">
+                                                                <input type="checkbox" class="" id="id_displayremaining-0" />
+                                                                Display Remaining Tickets
+
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="modal-footer">
+                                                    <div class="col-sm-12 text-center">
+                                                        <button class="evnt_set_minimise evnt_set btn " id="id_Minimize-0" onclick="minimize(this.id);" type="button">
+                                                            <i class="fa fa-arrow-up"></i>
+                                                            Minimize Setting
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!-- Event Setting End  -->
+                                    <input type="hidden" value="0" id="id_feetype-0" />
+
+
+                                    <input type="hidden" value="0" id="id_Order" />
+                                </div>
+
 
 
                                 <div class="clearfix"></div>
@@ -659,7 +745,7 @@
                                     <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-free-button"><i class="fa fa-plus"></i> Free Ticket</button>
                                     <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-paid-button"><i class="fa fa-plus"></i> Paid Ticket</button>
                                     <button type="button" class="btn btn-primary btn-lg save_btn" id="create-ticket-donation-button"><i class="fa fa-plus"></i> Donation</button>
-                                    <label  class="total_qty pull-right fs-18" id="">Total capacity: <span id="id_totalqty">0</span></label>
+                                    <label class="total_qty pull-right fs-18" id="">Total capacity: <span id="id_totalqty">0</span></label>
                                 </div>
                             </div>
                         </div>
@@ -687,19 +773,123 @@
                     </div>
                 </div>
                 @*Ticket End*@
-                
+
+                <div class="clearfix"></div>
+
+                <div class="event_detail_container">
+                    <div class="evnt_tile_head">
+                        <h2>Additional Settings </h2>
+                    </div>
+                    <div class="evnt_details_body">
+                        <label class="label-control evnt_ticket_label wd600">Listing Privacy</label>
+                        <div class="form-group">
+                            <label class="Pubpage label-control evnt_ticket_label fs-13">
+                                <input type="radio" checked="checked" name="rdPr" id="rdPublic" />
+                                <strong>Public page:</strong> list this event on Eventbrite and search engines
+                            </label>
+                            <div class="clearfix"></div>
+                            <label class="Prvpage label-control evnt_ticket_label fs-13 mt5">
+                                <input type="radio" name="rdPr" id="rdPrivate" />
+                                <strong>Private page: </strong>do not list this event publicly
+                            </label>
+                            <div class="clearfix"></div>
+                            <div class="priv_cont">
+                                <label class="label-control label_private">
+                                    <input type="checkbox" id="chkShareOnFB">
+                                    Attendees can share this event on Facebook, Twitter, and Linkedin
+                                </label>
+                                <div class="clearfix"></div>
+                                <label class="label-control label_private">
+                                    <input type="checkbox" id="chkGuestonly">
+                                    This event is by Invite-Only (guests must receive an EventCombo invitation to attend)
+                                </label>
+                                <div class="clearfix"></div>
+                                <label class="label-control label_private">
+                                    <input type="checkbox">
+                                    Require a password to view the event page:
+                                </label>
+                                <input type="text" id="txtReqPassword" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="form-group">
+                            <label  class="label-control label_private">
+                                <input id="chkAllowFBDis" type="checkbox">
+                                Allow users discussion on facebook
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="label-control label_private">
+                                <input id="chkPublishEventOnFB" type="checkbox">
+                                Allow Publish Event to facebook
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="label-control label_private">
+                                <input type="checkbox">
+                                Duplicate This Event
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-12 no_pad label-control wd600">Create a unique URL</label>
+                            <div class="clearfix"></div>
+                            <div class="url-width">
+
+                                <span class="url-filed">
+                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" placeholder="enter url name">
+                                </span>
+                                <span class="url-name">.eventcombo.com</span>
+                            </div>
+                            <div class="gnrate-url mb10 fs13"> ( For eg: xyz.eventcombo.com )</div>
+
+                        </div>
+
+                        <div class="clearfix"></div>
+
+
+
+                        <div class="form-group">
+                            <label class="label-control evnt_ticket_label wd600">Event Type</label>
+                            @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                        </div>
+                        <div class="form-group">
+                            <label class="label-control evnt_ticket_label wd600">Event Category</label>
+                            @*<select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>*@
+                            @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                        </div>
+                        <div class="form-group">
+                            <label class="label-control evnt_ticket_label wd600">Event Sub-category</label>
+                            <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                        </div>
+                        <div class="clearfix"></div>
+                        @*<div class="form-group">
+                            <label class="col-sm-12 no_pad label-control evnt_ticket_label wd600">Remaining Ticket</label>
+                            <div class="clearfix"></div>
+                            <label class="label-control label_private">
+                                <input type="checkbox">
+                                Show the number of tickets remaining on the registration page
+                            </label>
+                        </div>*@
+                    </div>
+                </div>
+
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-center mb10 ">
-                    <input id="imageeror" type="hidden" value="0"/>
+                    <input id="imageeror" type="hidden" value="0" />
                     <input id="image_count" type="hidden" />
                     <button type="button" id="btSave" class="btn btn-primary btn-lg save_btn">Save</button>
                     <button type="button" class="btn btn-primary btn-lg save_btn">Make your Event Live</button>
 
                     <input type="hidden" id="hidAddSno" value="" />
                     <input type="hidden" id="hidSchLastState" value="" />
+                    <input type="hidden" id="hidOrgnizer" value="" />
+                    <input type="hidden" id="hidAddressStatus" value="" />
                     <input type="hidden" id="hdUniqueguid" value="" />
                 </div>
-          
+            </form>
         </div>
         <!-- modal Start Here  -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -707,7 +897,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Add Location</h4>
+                        <h4 class="modal-title" id="myModalLabel">Add Venues</h4>
                     </div>
                     <div class="modal-body">
                         <div class="col-sm-6">
@@ -736,22 +926,31 @@
                             </div>
                             <div class="clearfix"></div>
                             <div class="form-group mb5 ">
-                                <select id="CountryID" class="form-control evnt_inp_cont">
-                                    <option>India</option>
-                                    <option>US</option>
-                                    <option>England</option>
-                                </select>
+                                @*<select id="CountryID" class="form-control evnt_inp_cont">
+                                        <option>India</option>
+                                        <option>US</option>
+                                        <option>England</option>
+                                    </select>*@
+                                @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" })
                             </div>
+
 
                         </div>
                         <div class="col-sm-6 location_map_div">
-                            <div class="col-sm-6 loc_map"> <i class="fa fa-map-marker"></i> </div>
+                            <div id="map_canvas" class="col-sm-12 no_pad location_map_div loc_map"> <i class="fa fa-map-marker"></i> </div>
+                            <div class="col-sm-12 no_pad mt10 text-left">
+                                <label class="label-control shw_map "><input type="checkbox" />  Show map on event page.</label>
+
+                            </div>
                         </div>
+
+
+
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default"><i class="fa fa-undo"></i> Reset Address</button>
-                        <button type="button" id="btAddAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary close">Ok</button>
+                        @*<button type="button" class="btn btn-default"><i class="fa fa-undo"></i> Reset Address</button>*@
+                        <button type="button" id="btAddAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-lg Close">Save</button>
                     </div>
                 </div>
             </div>
@@ -809,7 +1008,7 @@
                                             <option value="6">Saturday</option>
                                         </select>
                                     </div>
-                                    <!--  <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="dd/mm/yyyy" id="" />
+                                    <!--  <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="mm/dd/yyyy" id="" />
 
                                     <input id="" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280" placeholder="00:00 AM"/> -->
                                     <div class="clearfix"></div>
@@ -861,11 +1060,11 @@
                                     From
                                 </label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtTimeStart" type="text" class="time_picker form-control evnt_inp_cont sch_time_from " placeholder="00:00 AM" />
+                                    <input id="txtTimeStart" type="text" class="timecheck time_picker form-control evnt_inp_cont sch_time_from " placeholder="00:00 AM" />
                                     <label class="label-control label_cont_to fs-13">
                                         To
                                     </label>
-                                    <input id="txtTimeEnd" type="text" class="time_picker form-control evnt_inp_cont sch_time_from " placeholder="00:00 AM" />
+                                    <input id="txtTimeEnd" type="text" class="timecheck time_picker form-control evnt_inp_cont sch_time_from " placeholder="00:00 AM" />
                                     @*<label class="label-control label_cont_to fs-13">
                                             of the
                                         </label>
@@ -884,11 +1083,11 @@
                                     Occurs From
                                 </label>
                                 <div class="evnt_time_cont">
-                                    <input id="txtDateFrom" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="dd/mm/yyyy" />
+                                    <input id="txtDateFrom" class="datecheck date_picker form-control evnt_inp_cont sch_date_from" placeholder="MM/DD/YYYY" />
                                     <label class="label-control label_cont_to fs-13">
                                         Untill
                                     </label>
-                                    <input id="txtDateTo" class="date_picker form-control evnt_inp_cont sch_date_from" placeholder="dd/mm/yyyy" />
+                                    <input id="txtDateTo" class="datecheck date_picker form-control evnt_inp_cont sch_date_from" placeholder="MM/DD/YYYY" />
 
                                 </div>
                             </div>
@@ -908,8 +1107,8 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
-                        <button type="button" id="btCancleSch" class="btn btn-default btn-lg sch_save_btn" data-dismiss="modal" aria-label="Close"> Cancel</button>
-                        <button type="button" id="btnAddSch" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-lg sch_save_btn close">Add</button>
+                        @*<button type="button" id="btCancleSch" class="btn btn-default btn-lg sch_save_btn" data-dismiss="modal" aria-label="Close"> Cancel</button>*@
+                        <button type="button" id="btnAddSch" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-lg  Close">Save</button>
                     </div>
                 </div>
             </div>
@@ -963,8 +1162,8 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
-                        <button type="button" id="btCancelTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-default close">Cancel</button>
-                        <button type="button" id="btSaveTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-primary Close">Save</button>
+                        @*<button type="button" id="btCancelTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-default close">Cancel</button>*@
+                        <button type="button" id="btSaveTimeZone" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-lg Close">Save</button>
                     </div>
                 </div>
             </div>
@@ -972,13 +1171,870 @@
 
     </div>
 }
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.min.js"></script>
+@*<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.min.js"></script>
-<script src="~/Scripts/jquery.maskMoney.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.min.js"></script>*@
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+
+
+
 @*<link href="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.css" rel="stylesheet" />
     <script src="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>*@
+<script type="text/javascript">
+
+
+
+
+
+    function DeleteTableRow(Sno) {
+
+        $('#tblAddress tr').each(function () {
+            if (Sno == $(this).find("td:first").html())
+                $(this).remove();
+        });
+        if (parseInt($('#tblAddress tr').length) <= 1) {
+
+
+        }
+
+    }
+
+
+    function editRow(Sno) {
+        //alert(ColumnValue);
+        $("#hidAddSno").val(Sno);
+        $("#VenueName").val($("#VenueName" + Sno).val());
+        $("#Address1").val($("#Address1" + Sno).val());
+        $("#Address2").val($("#Address2" + Sno).val());
+        $("#City").val($("#City" + Sno).val());
+        $("#State").val($("#State" + Sno).val());
+        $("#Zip").val($("#Zip" + Sno).val());
+        $("#CountryID").val($("#CID" + Sno).val());
+        //   var row_index = $(this).parent().index('tr');
+
+
+        // var i = 1;
+        //var myTr = [];
+        //$('#tblAddress tr').each(function () {
+        //    $(this).find('td').each(function () {
+        //    });
+        //    alert(myTr);
+        //});
+
+        //$('#tblAddress tr').each(function () {
+        //    $(this).find('td').each(function () {
+        //        i =parseInt($(this).text());
+        //        if (parseInt(Sno) == )
+        //        {
+        //            myTr.push($(this).text());
+        //        }
+        //    });
+        //    alert(myTr);
+        //});
+
+    }
+    function checkValidDate(datevalue) {
+        var date = Date.parse(datevalue);
+        if (isNaN(date))
+            return 'N';
+        else
+            return 'Y';
+
+    }
+    //function GetSchDateDiff() {
+    //    alert("IN fun");
+    //    var dateFrom = date.parse($("#txtDateFrom").val());
+    //    var dateTo = date.parse($("#txtDateTo").val());
+    //    dateDiff = new Date(dateTo - dateFrom);
+    //    alert(dateDiff);
+
+    //}
+
+    $(document).ready(function () {
+        //alert("Reload");
+        $("#txtStartTime").val("7:00pm");
+        $("#txtEndTime").val("7:00pm");
+        $("#txtTimeStart").val("7:00pm");
+        $("#txtTimeEnd").val("7:00pm");
+        
+        $("#txtDateTo").focusin(function () {
+
+            $("#txtDateTo").val($("#txtDateFrom").val());
+
+
+
+        });
+
+
+        $("#txtEndDate").focusin(function () {
+            
+            $("#txtEndDate").val($("#txtStartDate").val());
+
+
+
+        });
+
+        $(".PastLocatMain").hide();
+        $(".UsePast").click(function () {
+            $(".PastLocatMain").css("display", "block");
+            $(".EvntLocatTitle").css("display", "none");
+            $(".EnterAdd").css("display", "none");
+        });
+
+        $(".RetunEvent").click(function () {
+            $(".EnterAdd").css("display", "block");
+            $(".EvntLocatTitle").css("display", "block");
+            $(".PastLocatMain").css("display", "none");
+
+        });
+
+        // Event Orgnization
+
+
+
+
+        $(".can_org_cont").hide();
+        $(".EditOrg").click(function () {
+            $(".can_org_cont").css("display", "block");
+            $(".edit_org_cont").css("display", "none");
+            $(".Moderor").css("display", "block");
+
+        });
+        $(".AddOrg").click(function () {
+            $(".can_org_cont").css("display", "block");
+            $(".edit_org_cont").css("display", "none");
+            $(".Moderor").css("display", "none");
+
+        });
+        $(".CanOrg").click(function () {
+            $(".edit_org_cont").css("display", "block");
+            $(".can_org_cont").css("display", "none");
+
+        });
+
+
+        $(".AddSocial").css("display", "none");
+        $('#chkLinkonFBTwit').change(function () {
+            if ($(this).is(":checked")) {
+                $('.AddSocial').show();
+            } else {
+                $('.AddSocial').hide();
+            }
+        });
+
+        $(".priv_cont").hide();
+        $(".Prvpage").click(function () {
+            $(".priv_cont").css("display", "block");
+        });
+        $(".Pubpage").click(function () {
+            $(".priv_cont").css("display", "none");
+        });
+
+
+
+        $(".online_main_cont").hide();
+        $(".OnlineEvent").click(function () {
+            $(".online_main_cont").css("display", "block");
+            $(".EnterAdd").css("display", "none");
+        });
+
+        $(".AddLocatondiv").click(function () {
+            $(".EnterAdd").css("display", "block");
+            $(".online_main_cont").css("display", "none");
+            $("#hidAddressStatus").val('Normal');
+        });
+
+        //hidAddressStatus
+        $("#btOnlineEvent").click(function () {
+            $("#hidAddressStatus").val('Online');
+        });
+
+        $("#btPastLocation").click(function () {
+            $("#hidAddressStatus").val('PastLocation');
+            $.ajax({
+                url: '@Url.Action("GetPreviousAddress", "Event")',
+                type: "Post",
+                success: function (data) {
+                    $("#dllPastLocation").html(data);
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                }
+            });
+
+            //$("#dllPastLocation")
+        });
+        //
+
+        $("#txtEventUrl").focusout(function () {
+            var vval = $("#txtEventUrl").val().trim();
+            if (vval != '') {
+                $.ajax({
+                    url: '@Url.Action("CheckEventUrl", "Event")',
+                    data: { strUserUrl: $("#txtEventUrl").val().trim() },
+                    type: "Post",
+                    success: function (data) {
+                        if (data == "Y") {
+                            alert("Event Url already exists.");
+                            $("#txtEventUrl").val('');
+                            $("#txtEventUrl").focus();
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Sorry there is some problem.");
+                    }
+                });
+            }
+        });
+
+        $("#ddlEventCategory").change(function () {
+            //alert("change Fires");
+            var vCatId = $("#ddlEventCategory").val();
+            $.ajax({
+                url: '@Url.Action("GetSubCat", "Event")',
+                data: { lECatId: vCatId },
+                type: "Post",
+                success: function (data) {
+                    //$.each(data, function () {
+                   // debugger;
+                    //                   alert(data.length);
+                    $("#ddlEventSubCategory").html(data);
+                    // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                    //});
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                }
+            });
+        });
+
+
+        $("#btEditOrg").click(function () {
+            $("#txtOrgnizer").val('');
+            $("#hidOrgnizer").val('');
+            $("#edSummer2").code('');
+
+            var OrgVal = $('#dllOrganizer option:selected').text();
+            //alert(OrgVal);
+            //alert(OrgVal);
+            var OrgEditor = $("#dllOrganizer").val();
+            //alert(OrgEditor);
+            $("#txtOrgnizer").val(OrgVal);
+            $("#hidOrgnizer").val(OrgVal);
+            $("#edSummer2").code(OrgEditor);
+
+        });
+
+        $("#btAddOrg").click(function () {
+            //  alert($('#dllOrganizer option').length);
+            if (parseInt($('#dllOrganizer option').length) < 25) {
+                if ($("#hidOrgnizer").val() == "") {
+                    var vval = $("#edSummer2").code();
+                    var addOption = '<option value="' + vval + '" id="' + $("#txtOrgnizer").val() + '">' + $("#txtOrgnizer").val() + '</option>';
+                    $("#dllOrganizer").append(addOption);
+                }
+                else {
+                    //$('#dllOrganizer option:selected').removeAttr('selected');
+                    var vval = $("#edSummer2").code();
+                    $("#dllOrganizer option").each(function (i) {
+                        //alert($(this).text());
+                        //alert($("#hidOrgnizer").val());
+                        if ($("#hidOrgnizer").val() == $(this).text()) {
+
+                            $(this).remove();
+                            //alert($("#hidOrgnizer").val());
+                            //$(this).text($("#txtOrgnizer").val());
+                            //$(this).val(vval);
+                        }
+                        //alert($(this).text() + " : " + $(this).val());
+                    });
+                    var vval = $("#edSummer2").code();
+                    var addOption = '<option value="' + vval + '" id="' + vval + '" >' + $("#txtOrgnizer").val() + '</option>';
+                    $("#dllOrganizer").append(addOption);
+
+
+
+                    //var addOption = '<option value="' + vval + '" id="' + vval + '" >' + $("#txtOrgnizer").val() + '</option>';
+                    //$("#dllOrganizer").append(addOption);
+                }
+            }
+            else {
+                alert("Limit Exceeded, System Alow Only 25 Orgnizer.");
+
+            }
+            $("#hidOrgnizer").val('');
+            $("#txtOrgnizer").val('');
+            $("#edSummer2").code('');
+            // $("#txtOrgnizer").focus();
+            //$("#dllOrganizer option").each(function (i) {
+            //    alert($(this).text() + " : " + $(this).val());
+            //});
+
+            //alert(vval);
+
+        });
+
+        // Drop Down Binding
+        @*$.getJSON({
+            url: '@Url.Action("GetEventType", "Event")',
+            success: function (data) {
+                alert("In loop");
+                debugger;
+
+                //            $('#ddlEventType').find('option').remove();
+                            // alert(data.);
+                           // data = data.d;
+                //var items = [];
+                //debugger;
+                //            items.push("<option>--Select--</option>");
+                //            alert(data);
+
+                //            $.each(data, function () {
+                //                alert("test");
+                //                //items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                //            });
+                            //$("#ddlEventType").html(items.join(' '));
+
+                //$(data).each(function (index, item) { // GETTING ERROR HERE
+                //    $('#ddlEventType').append($('<option></option>').val(item.Value).html(item.Text));
+                //});
+            },
+            error:function(data)
+            {
+                debugger;
+                // alert(data);
+                alert(data.message);
+
+            }
+        });*@
+
+
+
+
+        // Map Implemetation
+        var input = document.getElementById('txtEventLocation');
+        debugger;
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        //autocomplete.bindTo('Hello');
+        
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(6.9167, 79.8473),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+              mapOptions);
+            // create a marker
+            var latlng = new google.maps.LatLng(6.9167, 79.8473);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: 'My Place'
+                
+            });
+            var place = autocomplete.getPlace();
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            }
+            else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);
+
+            }
+            marker.setIcon(({
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(35, 35)
+            }));
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+
+            var address = '';
+            if (place.address_components) {
+                address = [
+                  (place.address_components[0] && place.address_components[0].short_name || ''),
+                  (place.address_components[1] && place.address_components[1].short_name || ''),
+                  (place.address_components[2] && place.address_components[2].short_name || '')
+                ].join(' ');
+            }
+
+            $("#VenueName").val(place.address_components[0].long_name);
+
+            $("#City").val(place.address_components[1].long_name);
+            $("#State").val(place.address_components[3].long_name);
+            $("#Zip").val(place.address_components[5].long_name);
+            $("#CountryID").val(place.address_components[4].long_name);
+
+            //$("#VenueName").val(address.toString());
+            //$("#Address1").val(address[1].toString());
+            //$("#Address2").val(address[2].toString());
+        });
+
+
+        //google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        //    //var place = autocomplete.getPlace();
+
+        //});
+
+        //$('#txtDateFrom').datepicker({
+        //    onSelect: function (selectedDate) {
+        //        alert("dateselected");
+        //    }
+        //});
+
+        //$("#txtDateFrom").focusout(function () {
+        //    //alert("chal pya");
+        //    GetSchDateDiff();
+
+        //    // alert($("#txtStartDate").val());
+        //    //if ($("#txtStartDate").val().trim() != "") {
+        //    //    var result = checkValidDate($("#txtStartDate").val());
+        //    //    if (result == 'N') {
+        //    //        alert("Please Enter Valid Event Start Date");
+        //    //        $("#txtStartDate").val('');
+        //    //        $("#txtStartDate").focus();
+        //    //    }
+        //    //}
+        //});
+
+
+        $("#btCancleMEVents").hide();
+        $("#dvShowMultipleSch").hide();
+        $("#tblAddress").hide();
+
+        $("#btCancleSch").click(function () {
+            $("#dvSingleEvent").show();
+            $("#btCancleMEVents").hide();
+            $("#dvShowMultipleSch").hide();
+        });
+        if ($("#hidSchLastState").val() == "") {
+            $("#dlSchOption").val("Daily");
+            $("#hidSchLastState").val("Daily");
+            $("#dvWeeklyDayChk").hide();
+            $("#dvMonthly").hide();
+        }
+        $("#btCancleMEVents").click(function () {
+            $("#dvSingleEvent").show();
+            $("#btCancleMEVents").hide();
+            $("#dvShowMultipleSch").hide();
+        });
+        //$("#btMultipleEvent").click(function () {
+
+        //});
+        $("#btnAddSch").click(function () {
+            $("#dvSingleEvent").hide();
+            $("#btCancleMEVents").show();
+            $("#hidSchLastState").val($("#dlSchOption").val());
+            $("#dvShowMultipleSch").show();
+            //var vSch = $("#dllWeeklyDayChk").val();
+
+            //var vStartTime = $("#txtTimeStart").val();
+            //var vEndTime = $("#txtTimeEnd").val();
+
+            //alert(vStartTime);
+        });
+
+        $("#btCancelTimeZone").click(function () {
+            $("#chkDisplayStartTime").prop("checked", false);
+            $("#chkDisplayEndTime").prop("checked", false);
+            $("#chkTimeZone").prop("checked", false);
+        });
+
+        //$('.summernote').summernote({
+        //    height: 70,   //set editable area's height
+        //});
+
+        $('#edSummer1').summernote({
+            height: 70,   //set editable area's height
+        });
+
+        $('#edSummer2').summernote({
+            height: 70,   //set editable area's height
+        });
+
+
+
+        $(".ShowdateList").hide();
+        $(".DateList").click(function () {
+            $(".ShowdateList").toggle(500);
+        });
+
+        $('.checkboxName').multiselect({
+            checkboxName: 'multiselect[]'
+        });
+
+
+        $("#dlSchOption").change(function () {
+            if ($("#dlSchOption").val() == "Daily") {
+                $("#dvWeeklyDayChk").hide();
+                $("#dvMonthly").hide();
+
+            }
+            else if ($("#dlSchOption").val() == "Weekly") {
+                $("#dvWeeklyDayChk").show();
+                $("#dvMonthly").hide();
+            }
+            else if ($("#dlSchOption").val() == "Monthly") {
+                $("#dvWeeklyDayChk").hide();
+                $("#dvMonthly").show();
+            }
+            else if ($("#dlSchOption").val() == "Custom") {
+                $("#dvWeeklyDayChk").hide();
+                $("#dvMonthly").hide();
+            }
+
+
+        });
+
+        function AddRow(TableId, ColumnValue, ColumnName, IncludeSNo) {
+            var ColAry = ColumnValue.split('¶');
+            var ColName = ColumnName.split('¶');
+            var Sno = $("#" + TableId + " tr").length;
+            var cval = ColumnValue;
+            var strHTML = '<tr>';
+            strHTML = strHTML + '<td>' + Sno + '</td>';
+
+            for (i = 0; i <= ColAry.length - 1; i++) {
+                CellId = ColName[i] + Sno.toString();
+                if (ColName[i].toString() == "CID" || ColName[i].toString() == "CountryID")
+                    strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
+                else
+                    strHTML = strHTML + '<td> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
+            }
+
+            strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
+            //strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <input type="button" name="Delete" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')" value="Delete" /> </div> </td>';
+            //strHTML = strHTML + '<td><input type="button" onclick="editRow();" id="btnEdit" value="Edit" /></td>';
+            strHTML = strHTML + '</tr>';
+            $("#" + TableId).append(strHTML);
+        }
+
+        function EditRow(TableId, ColumnValue, ColumnName, Sno) {
+            var ColAry = ColumnValue.split('¶');
+            var ColName = ColumnName.split('¶');
+
+            for (i = 0; i <= ColName.length - 1; i++) {
+
+                CtrlId = ColName[i] + Sno.toString();
+                //alert(CtrlId);
+                //if (ColName[i] == "CID")
+                //{
+                //    CtrlId = "CountryID" + Sno.toString();
+                //    alert("In country");
+                //}
+                //else
+                //    CtrlId = ColName[i] + Sno.toString();
+
+
+                $("#" + CtrlId).val(ColAry[i]);
+            }
+
+        }
+
+
+        $("#btAddAddress").click(function () {
+
+            //alert("chal pya");
+            $("#tblAddress").show();
+            // alert("Chal Pya");
+            //var sno = parseInt($("#tblAddress tr").length);
+            //var strHtml = '<tr><td>' + sno + '</td>' + $("#Address1").val() +'<td>' +  + '</td><td>' + $("#Address2").val() + '</td><td>' +
+            //      $("#Address2").val() + '</td><td>' + $("#State").val() + '</td><td>' + $("#Zip").val() + '</td><td>' + $("#CountryID").val() + '</td></tr> '
+
+            //var strHtml = '<tr><td>' + sno + '</td><td>Add1</td>Add2</td><td>City</td><td>State</td><td>ZipCode</td></tr> ';
+
+            var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID").text() + "¶" + $("#CountryID").val();
+            var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
+            if ($("#hidAddSno").val().trim() != "")
+                EditRow("tblAddress", vCols, vColName, $("#hidAddSno").val().trim());
+            else
+                AddRow("tblAddress", vCols, vColName, "Y");
+
+
+            $("#VenueName").val("");
+            $("#Address1").val("");
+            $("#Address2").val("");
+            $("#City").val("");
+            $("#State").val("");
+            $("#Zip").val("");
+            $("#hidAddSno").val("");
+            $("#CountryID").val('');
+
+            //$("#tblAddress").append(strHtml);
+
+        });
+
+
+
+        //$('form').submit(function () {
+        $('#btSave').click(function () {
+
+
+            // Address Entry
+            var SubmitAddress = [];
+            var SingleTiming = [];
+            var MultipleSchedule = [];
+            var Orgnizer = [];
+            //var table = $("#tblAddress");
+
+            // Ticket
+
+            var Ticket = [];
+            var divlength = $("#MasterDiv> div").size();
+            if (divlength > 0) {
+                var TicketPrice = 0;
+                var Auto_Schedule = 0;
+                var AutoSechduleType = 0;
+                var TicketTypeID = 0;
+                for (var i = 0; i < divlength; i++) {
+
+                    if ($('#id_cost-' + i).css('display') == "block") {
+                        TicketPrice = $('#id_cost-' + i).val();
+
+                    }
+                    if ($('#id_CusdateCont-' + i).css('display') == "block") {
+
+                        Auto_Schedule = 1;
+
+                        if ($('#id_auto_hide_type_0-' + i).is("checked") == true) {
+                            AutoSechduleType = 1;
+
+                        }
+                        if ($('#id_auto_hide_type_1-' + i).is("checked") == true) {
+                            AutoSechduleType = 2;
+
+                        }
+
+                    }
+                    if ($('#id_Tickettype-' + i).val() == "Free") {
+                        TicketTypeID = 1
+
+                    } else if ($('#id_Tickettype-' + i).val() == "Paid") {
+                        TicketTypeID = 2
+
+                    } else {
+
+                        TicketTypeID = 3
+                    }
+                    Ticket.push({
+                        T_name: $('#id_ticket_type-' + i).val(),
+                        T_Qty: $('#id_quantity_total-' + i).val(),
+                        T_Type: $('#id_Tickettype-' + i).val(),
+                        T_Price: TicketPrice,
+                        T_Desc: $('#id_descriptionclass-' + i).val(),
+                        T_Show_Desc: ($('#id_show_description-' + i).is("checked") == true ? 1 : 0),
+                        T_Sale_Start_Date: $('#id_salestart-' + i).val(),
+                        T_Sale_Start_Time: $('#id_saletimestart-' + i).val(),
+                        T_Sale_End_Date: $('#id_saleend-' + i).val(),
+                        T_Sale_End_Time: $('#id_saletimeend-' + i).val(),
+                        T_Hide_Ticket: ($('#id_ticketshidden-' + i).is("checked") == true ? 1 : 0),
+                        T_AutoSchedule: Auto_Schedule,
+                        T_AutoSechduleType: AutoSechduleType,
+                        T_Hide_Untill: ($('#id_auto_hide_until-' + i).is("checked") == true ? 1 : 0),
+                        T_Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
+                        T_Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
+                        T_Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
+                        T_Hide_After: ($('#id_auto_hide_after-' + i).is("checked") == true ? 1 : 0),
+                        T_Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
+                        T_Hide_After_Time: $('#id_auto_hide_after_Time-' + i).val(),
+                        T_MinTicket: $('#id_min_ticket-' + i).val(),
+                        T_MaxTicket: $('#id_max_ticket-' + i).val(),
+                        T_DisableTicket: ($('#id_disableticket-' + i).is("checked") == true ? 1 : 0),
+                        T_MarkSolout: ($('#id_marksoldout-' + i).is("checked") == true ? 1 : 0),
+                        T_DisplayRemaining: ($('#id_displayremaining-' + i).is("checked") == true ? 1 : 0),
+                        T_TicketTypeID: TicketTypeID,
+                        T_FeeType: $('#id_include_ticket_fees-' + i).val(),
+                        T_Discount: $('#id_Discount-' + i).val()
+
+
+                    });
+
+                }
+
+            }
+
+
+
+            //$('#tblAddress tr').each(function () {
+
+
+            //});
+
+            $("#tblAddress tr").each(function () {
+                var Sno = $(this).find("td:first").html();
+                // Multiple Address
+                if (Sno != '') {
+                    SubmitAddress.push({
+                        VenueName: $("#VenueName" + Sno).val(),
+                        Address1: $("#Address1" + Sno).val(),
+                        Address2: $("#Address2" + Sno).val(),
+                        City: $("#City" + Sno).val(),
+                        State: $("#State" + Sno).val(),
+                        Zip: $("#Zip" + Sno).val(),
+                        CountryID: $("#CountryID" + Sno).val()
+                    });
+                }
+            });
+            // Single Timing
+
+            SingleTiming.push({
+                'EventStartDate': $("#txtStartDate").val(),
+                'EventEndDate': $("#txtStartTime").val(),
+                'EventStartTime': $("#txtEndDate").val(),
+                'EventEndTime': $("#txtEndTime").val()
+            });
+            // Multiple Schedule
+
+
+            if ($("#dvSingleEvent").css('display') == 'none') {
+
+                var SchOption = $("#dlSchOption").val();
+                var vWeeklyDay = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
+                var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
+                var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
+                var vMonthlyWeekDays = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
+                var vStartingFrom = $("#txtDateFrom").val();
+                var vStartingTo = $("#txtDateTo").val();
+                var vStartTime = $("#txtTimeStart").val();
+                var vEndTime = $("#txtTimeEnd").val();
+                //var newChar = '^';
+                //alert(vWeeklyDay.split(',').join(newChar));
+                //alert(vWeeklyDay);
+                //vWeeklyDay= vWeeklyDay.replace(',', '^');
+                //alert(vWeeklyDay);
+
+
+                if (SchOption == "Daily") {
+                    vWeeklyDay = '';
+                    vMonthlyDay = '';
+                    vMonthlyWeek = '';
+                    vMonthlyWeekDays = '';
+                    $("#hidSchLastState").val("Daily");
+                }
+                else if (SchOption == "Weekly") {
+                    vMonthlyDay = '';
+                    vMonthlyWeek = '';
+                    vMonthlyWeekDays = '';
+                    $("#hidSchLastState").val("Weekly");
+                }
+                else if (SchOption == "Monthly") {
+                    vWeeklyDay = '';
+                    $("#hidSchLastState").val("Monthly");
+                }
+                else if (SchOption == "Custom") {
+                    vWeeklyDay = '';
+                    vMonthlyDay = '';
+                    vMonthlyWeek = '';
+                    vMonthlyWeekDays = '';
+                    $("#hidSchLastState").val("Custom");
+                }
+
+                MultipleSchedule.push({
+                    'Frequency': SchOption,
+                    'WeeklyDay': vWeeklyDay,
+                    'MonthlyDay': vMonthlyDay,
+                    'MonthlyWeek': vMonthlyWeek,
+                    'MonthlyWeekDays': vMonthlyWeekDays,
+                    'StartingFrom': vStartingFrom,
+                    'StartingTo': vStartingTo,
+                    'StartTime': vStartTime,
+                    'EndTime': vEndTime
+                });
+
+            }
+            // Orgnizer
+            //$("#dllOrganizer option").each(function (i) {
+            //    alert($(this).text());
+            //    Orgnizer.push({
+            //        'Orgnizer_Name': $(this).text(),
+            //        'Orgnizer_Desc': $(this).val()
+            //    });
+            //    //alert($(this).text() + " : " + $(this).val());
+            //});
+            //alert(Orgnizer[0].toString());
+
+
+
+
+            //$("#dllOrganizer option").each(function (i) {
+            //    alert($(this).text() + " : " + $(this).val());
+            //});
+
+            // Basic Event Info
+            //alert($("#edSummer1").code());
+            var vEventDiscription = '';//$("#edSummer1").code();
+            //alert(vEventDiscription);
+            var model = {
+                'EventTypeID': $("#EventType").val(),
+                'EventCategoryID': $("#ddlEventCategory").val(),
+                'EventSubCategoryID': $("#ddlEventSubCategory").val(),
+                'UserID': '',
+                'EventTitle': $("#txtEventTitle").val(),
+                'EventDescription': vEventDiscription.toString(),
+                'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
+                'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
+                'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
+                'Private_Password': $("#txtReqPassword").val(),
+                'EventUrl': $("#txtEventUrl").val().trim(),
+                'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") != true ? 'Y' : 'N'),
+                'EventStatus': 'Save',
+                'AddressDetail': SubmitAddress,
+                'EventVenue': SingleTiming,
+                'TimeZone': $("#dllTimeZone").val(),
+                'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
+                'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
+                'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
+                'FBUrl': $("#txtFBUrl").val(),
+                'TwitterUrl': $("#txtTwitterurl").val(),
+                'MultipleEvents': MultipleSchedule,
+                'Orgnizer': Orgnizer,
+                'AddressStatus': $("#hidAddressStatus").val(),
+                'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
+                'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N')
+                //dllPastLocation
+            };
+            //alert(model.FBUrl);
+            //'UserID': '',
+            //'EventTitle': $("#txtEventTitle").val(),
+            //'EventDescription': $("#edSummer1").code(),
+            //'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
+            //'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
+            //'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
+            //'Private_Password': $("#txtReqPassword").val(),
+            //'EventUrl': '',
+            //'PublishOnFB': ($("#chkLinkonFBTwit").is(":checked") != true ? 'Y' : 'N'),
+            //'EventStatus': 'Save',
+            //'AddressDetail': SubmitAddress,
+            //'EventVenue': SingleTiming,
+            //'TimeZone': $("#dllTimeZone").val(),
+            //'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
+            //'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
+            //'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
+            //'FBUrl'
+            //'TwitterUrl'
+            //'MultipleEvents'
+            //'Orgnizer'
+            //data: JSON.stringify({ EventCreation: model }),
+
+            $.ajax({
+                url: '@Url.Action("SaveEvent", "Event")',
+                data: model,
+                type: "Post",
+                success: function (response) {
+                    alert('Congratulations, your event is on Eventcombo!');
+                }
+            });
+        });
+        //      $('#myModal').modal(options);
+    });
+</script>
+
 <script type="text/javascript">
 
 
@@ -1040,11 +2096,11 @@
 
     }
     function GetSchDateDiff() {
-      
+
         var dateFrom = date.parse($("#txtDateFrom").val());
         var dateTo = date.parse($("#txtDateTo").val());
         dateDiff = new Date(dateTo - dateFrom);
-      
+
 
     }
 
@@ -1241,9 +2297,9 @@
 
                     }
                     if ($('#id_CusdateCont-' + i).css('display') == "block") {
-                       
+
                         Auto_Schedule = 1;
-                       
+
                         if ($('#id_auto_hide_type_0-' + i).is("checked") == true) {
                             AutoSechduleType = 1;
 
@@ -1302,7 +2358,7 @@
                 }
 
             }
-         
+
             //$('#tblAddress tr').each(function () {
 
 
@@ -1428,7 +2484,7 @@
                     alert('Document Saved.');
                 }
             });*@
-        });
+            });
         //      $('#myModal').modal(options);
     });
 </script>
@@ -1459,8 +2515,8 @@
 
             }
         }
-        
-    
+
+
 
 
     }
@@ -1469,10 +2525,10 @@
         var dropval = $('#' + e).val();
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
         var amount = $('#id_cost-' + el).val();
-      
+
         if (dropval.trim() == '0')
         {
-            
+
           var  ccp = $('#id_cc').val();
           var ccpamount = ((amount * ccp) / 100).toFixed(2);
 
@@ -1481,12 +2537,12 @@
             $('#id_buyerprice-' + el).html(ccpfinal);
             $('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(0);
-           
+
 
         }
         if (dropval.trim() == '1')
         {
-           
+
            var ccp = $('#id_cc').val();
            var ccpamount = ((amount * ccp) / 100).toFixed(2);
            var ccpfinal = parseFloat(amount).toFixed(2);
@@ -1495,28 +2551,28 @@
             $('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(1);
 
-           
+
         }
 
     }
     function changefeetype(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-      
+
         if($('#' + e).val()>0)
         {
             $('#id_feestruct-' + el).css('display', 'block');
             var amount = parseFloat($('#' + e).val()).toFixed(2);
-           
+
             var val=$("#id_feetype-0").val();
             var fee = 0;
-        
-           
+
+
             if(val==0)
             {
                 ccp = parseFloat($('#id_cc').val()).toFixed(2);
-               
+
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
-              
+
                 var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
                 var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
                 $('#id_buyerprice-' + el).html(ccpfinal);
@@ -1534,7 +2590,7 @@
 
           // var tamt= $('#id_totalamt-'+el).val();
           // var tmsg = $('#id_msg-'+el).val();
-       
+
           //
           //$('#id-tooltip-' + el).html(tmsg);
 
@@ -1546,7 +2602,7 @@
     }
 
     function minimize(e) {
-      
+
         var id = e;
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
@@ -1601,7 +2657,7 @@
         var x = confirm("Are you sure you want to delete?");
         if (x) {
             var divlength = $("#MasterDiv> div").size();
-        
+
             var id = e;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
@@ -1610,7 +2666,7 @@
             var toatlqty = $("#id_totalqty").html();
             var qty = $("#id_quantity_total-" + el).val();
             var leftqty = parseInt(toatlqty) - parseInt(qty);
-          
+
             $("#id_totalqty").html(leftqty);
             if (divlength == 1) {
                 $('#beforeticket').css('display', 'block');
@@ -1653,7 +2709,7 @@
         $.ajax({
             url: '@Url.Action("returnfees", "Event")',
             success: function (data) {
-               
+
                 for (var i = 0; i < data.length; ++i) {
                     if (data[i].FeeType == "Customer Fee") {
 
@@ -1772,7 +2828,7 @@
                 var idn = id1 + "-" + divlength;
                 $(this).attr("id", idn);
                 $(this).val('');
-              
+
                 if ($(this).hasClass("paidticket-0")) {
                     $(this).removeClass('paidticket-0');
                     $(this).addClass('paidticket-' + divlength + '');
@@ -1799,9 +2855,9 @@
             $("#id_feetype-" + divlength).css('display', 'none');
             $("#id_Tickettype-" + divlength).val("Free");
             //$("clonediv-" + divlength).css('display', 'block');
-            
+
             $("#id_feetype-0").val(0);
-          
+
         });
         $('#create-ticket-paid-button').click(function () {
             console.log($("#MasterDiv> div").size());
@@ -1820,7 +2876,7 @@
                 var idn = id1 + "-" + divlength;
                 $(this).attr("id", idn);
                 $(this).val('');
-              
+
                 if ($(this).hasClass("paidticket-0")) {
                     $(this).removeClass('paidticket-0');
                     $(this).addClass('paidticket-' + divlength + '');
@@ -1853,7 +2909,7 @@
         $('#create-ticket-donation-button').click(function () {
             console.log($("#MasterDiv> div").size());
             var divlength = $("#MasterDiv> div").size();
-           
+
             var data = $('#clonediv-n').clone();
             data.attr('id', 'clonediv-' + divlength);
             data.removeAttr("style")
@@ -1868,7 +2924,7 @@
                 var idn = id1 + "-" + divlength;
                 $(this).attr("id", idn);
                 $(this).val('');
-             
+
                 if ($(this).hasClass("paidticket-0")) {
                     $(this).removeClass('paidticket-0');
                     $(this).addClass('paidticket-' + divlength + '');
@@ -1880,7 +2936,7 @@
 
             });
 
-           
+
             $('#MasterDiv').append(data);
             $(".normalticket-" + divlength).css('display', 'block');
             $(".paidticket-" + divlength).css('display', 'none');
@@ -1894,7 +2950,7 @@
 
             $("#id_order-" + divlength).val(divlength + 1);
             $("#id_Tickettype-" + divlength).val("Donation");
-           
+
             $("#id_feetype-0").val(0);
            // $("clonediv-" + divlength).css('display', 'block');
         });
@@ -1930,7 +2986,7 @@
             var date = $(this).val();
 
 
-         
+
 
 
             if (date != '')
@@ -1939,7 +2995,7 @@
             }
 
 
-            
+
 
 
         });
@@ -1950,7 +3006,7 @@
                 checkTime(this);
 
             }
-           
+
         });
         function checkTime(field) {
             var errorMsg = "";
@@ -2020,8 +3076,8 @@
 
             if (errorMsg != "") {
                 alert(errorMsg);
-             
-               
+
+
                 field.focus();
                 field.value = "";
 return false;
@@ -2030,31 +3086,31 @@ return false;
             return true;
         }
 
-       
+
 
 
 
     });
-   
 
-   
+
+
 </script>
 
 <script type="text/javascript">
     function AssignNumeric() {
         $('.Price').each(function (i) {
             $(this).blur(function () {
-               var e = $(this).attr('id');
+                var e = $(this).attr('id');
                 var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
                 var elid = e.substr(0, e.indexOf('-'));
-              
+
                 if ($(this).val() != '') {
                     var regex = /^\d+(?:\.\d{0,2})$/;
                     if (regex.test($(this).val()))
                     {
                         if (elid.trim() == "id_cost") {
                             $('#id_lbl_price-' + el).css('display', 'none');
-                          
+
                         }
                         if (elid.trim() == "id_Discount") {
                             $('#id_lbl_discount-' + el).css('display', 'none');
@@ -2074,7 +3130,7 @@ return false;
                             var j = $(this).val();
                             j = j + ".00";
                             $(this).val(j);
-                          
+
                         } else {
                             $(this).addClass('err-bor');
                             if (elid.trim() == "id_cost") {
@@ -2086,7 +3142,7 @@ return false;
                                 $('#id_lbl_discount-' + el).css('display', 'block');
                                 $('#id_lbl_discount-' + el).html('Please Enter Number');
                             }
-                           
+
                         }
 
 
@@ -2111,17 +3167,17 @@ return false;
         $("#id_totalqty").html(sum);
     }
     //$('.numeric').each(function (i) {
-    //    $(this).blur(function () 
+    //    $(this).blur(function ()
     //    {
     //        if ($.isNumeric($(this).val()) === false) {
-              
+
     //            $(this).addClass('err-bor');
     //        } else {
-             
+
     //            $(this).removeClass('err-bor');
 
     //        }
-        
+
     //    })
     //});
     $(document).ready(function () {
@@ -2137,8 +3193,6 @@ return false;
 
     });
 </script>
-
-
 
 @*Image Section*@
 <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
@@ -2166,7 +3220,7 @@ return false;
 
             return uuid.join('');
         }
-        
+
         $(function () {
             $("#MasterDiv").sortable({
                 update: function () {
@@ -2177,13 +3231,14 @@ return false;
                         var el = li.substr(li.indexOf('-') + 1, li.length - li.indexOf('-'));
                         alert(li);
                         $('#id_order-' + el).val(i);
-                       
+
                     });
                 }
             });
             $("#MasterDiv").disableSelection();
         });
         $('#hdUniqueguid').val(uuid());
+        alert("CHal Pya");
         $('#input2').filer({
             limit: '5',
             maxSize: '2',
@@ -2251,7 +3306,7 @@ return false;
                     var image_count=$("#image_count").val();
                     var imagejson = jQuery.parseJSON(JSON.stringify(data));
                     var imgdata = imagejson.image_name + '####' + imagejson.image_type;
-                  
+
                     $("#image_count").val(el[0].jfiler_id)
                     $('<input>').attr({
                         type: 'hidden',
@@ -2261,7 +3316,7 @@ return false;
                     }).appendTo('form');
                     //var imgname=imagejson.image_name;
                     //el.find('span').html(imgname.substring(0,18));
-                  
+
                     $('#ImagePresent').val("Yes");
                     //el.find('img').attr('src',imagejson.image_path);
                     //el.find(".jFiler-item-thumb-image").bind("click", function(e){
@@ -2288,11 +3343,11 @@ return false;
                     //if ($("#Celebrity_image_count").val()=='5') {
                     //    $("#Celebrity_image_count_em_").hide();
                     //}
-                  
+
 
                 },
                 error: function (el) {
-
+                    alert("Error" + el);
                     //var parent = el.find(".jFiler-jProgressBar").parent();
                     //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                     //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
@@ -2328,16 +3383,16 @@ return false;
 
                 })
                 $('#ImagePresent').val("NO");
-              
-              
+
+
                 //$.post("/Event/RemoveFile", function (data) {
                 //    alert("gsdgertet");
                 //});
 
-              
+
             },
             onEmpty: function (el) {
-              
+
                 if ($("#imageeror").val() == 0) {
                     if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
                 }
@@ -2358,4 +3413,4 @@ return false;
 
         });
     });
-    </script>
+</script>

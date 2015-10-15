@@ -32,6 +32,9 @@ namespace EventCombo.Models
         public string TimeZone { get; set; }
         public string FBUrl { get; set; }
         public string TwitterUrl { get; set; }
+        public string AddressStatus { get; set; }
+        public long LastLocationAddress { get; set; }
+        public string EnableFBDiscussion { get; set; }
         public Address[] AddressDetail { get; set; }
         public EventVenue[] EventVenue { get; set; }
         public MultipleEvent[] MultipleEvents { get; set; }
