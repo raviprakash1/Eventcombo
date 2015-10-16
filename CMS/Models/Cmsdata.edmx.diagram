@@ -22,6 +22,30 @@
         <AssociationConnector Association="Cmsdata.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.FK_Profile_Profile" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Cmsdata.Address" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Cmsdata.DeliveryMethod" Width="1.5" PointX="7.375" PointY="12.875" />
+        <EntityTypeShape EntityType="Cmsdata.Event" Width="1.5" PointX="14.625" PointY="6.125" />
+        <EntityTypeShape EntityType="Cmsdata.Event_Orgnizer_Detail" Width="1.5" PointX="16.875" PointY="1.625" />
+        <EntityTypeShape EntityType="Cmsdata.EventCategory" Width="1.5" PointX="3.375" PointY="16" />
+        <EntityTypeShape EntityType="Cmsdata.EventImage" Width="1.5" PointX="12.375" PointY="13.75" />
+        <EntityTypeShape EntityType="Cmsdata.EventOrganizer" Width="1.5" PointX="8.375" PointY="15.75" />
+        <EntityTypeShape EntityType="Cmsdata.EventSubCategory" Width="1.5" PointX="5.625" PointY="15.875" />
+        <EntityTypeShape EntityType="Cmsdata.EventTempImage" Width="1.5" PointX="10.375" PointY="16.75" />
+        <EntityTypeShape EntityType="Cmsdata.EventType" Width="1.5" PointX="12.375" PointY="8.625" />
+        <EntityTypeShape EntityType="Cmsdata.EventVenue" Width="1.5" PointX="16.875" PointY="4.75" />
+        <EntityTypeShape EntityType="Cmsdata.Fee_Structure" Width="1.5" PointX="12.375" PointY="16.75" />
+        <EntityTypeShape EntityType="Cmsdata.MultipleEvent" Width="1.5" PointX="3.375" PointY="18.75" />
+        <EntityTypeShape EntityType="Cmsdata.Ticket" Width="1.5" PointX="16.875" PointY="8.375" />
+        <EntityTypeShape EntityType="Cmsdata.TicketDeliveryMethod" Width="1.5" PointX="9.625" PointY="12.875" />
+        <EntityTypeShape EntityType="Cmsdata.TicketType" Width="1.5" PointX="5.375" PointY="18.75" />
+        <EntityTypeShape EntityType="Cmsdata.Venue" Width="1.5" PointX="7.375" PointY="18.75" />
+        <AssociationConnector Association="Cmsdata.FK__TicketDel__Deliv__1A69E950" />
+        <AssociationConnector Association="Cmsdata.FK_Event_EventType" />
+        <AssociationConnector Association="Cmsdata.FK_Event_Orgnizer_Detail_Event" />
+        <AssociationConnector Association="Cmsdata.FK_EventVenue_Event" />
+        <AssociationConnector Association="Cmsdata.FK_Ticket_Event" />
+        <AssociationConnector Association="Cmsdata.FK__EventSubC__Event__5F141958" />
+        <AssociationConnector Association="Cmsdata.FK_EventVenue_EventVenue" />
         <EntityTypeShape EntityType="Cmsdata.Event_Detail" Width="1.5" PointX="0.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>

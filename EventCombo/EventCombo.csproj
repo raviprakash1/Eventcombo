@@ -301,6 +301,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-multiselect.css" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery.timepicker.css" />
+    <Content Include="Images\ui-icons_222222_256x240.png" />
+    <Content Include="Images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Images\ui-icons_ffffff_256x240.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
@@ -325,12 +330,10 @@
     <Content Include="Content\Filer\jquery.filer.css" />
     <Content Include="Content\form.css" />
     <Content Include="Content\gridiculous.css" />
-    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.alt-checkbox.css" />
     <Content Include="Content\jquery.alt-checkbox.icon-font.css" />
     <Content Include="Content\jquery.alt-checkbox.icon-font.min.css" />
     <Content Include="Content\jquery.appendGrid-1.6.1.css" />
-    <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\nyroModal.css" />
     <Content Include="Content\responsive-nav.css" />

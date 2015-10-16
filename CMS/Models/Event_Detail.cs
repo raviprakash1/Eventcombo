@@ -14,37 +14,18 @@ namespace CMS.Models
     
     public partial class Event_Detail
     {
-        public string EventID { get; set; }
-        public string Event_Category { get; set; }
-        public string Event_SubCategory { get; set; }
-        public string Title { get; set; }
-        public string Byline { get; set; }
-        public string Flyer { get; set; }
-        public string Multiple_Days { get; set; }
-        public string Multiple_Start_Times { get; set; }
-        public string Multiple_End_Times { get; set; }
-        public string Venue_Name { get; set; }
-        public string Venue_Address { get; set; }
-        public string Venue_City { get; set; }
-        public string Venue_State { get; set; }
-        public string Venue_Zip { get; set; }
-        public string Venue_Country { get; set; }
-        public string NoLocation { get; set; }
-        public string Multiple_Venue_Names { get; set; }
-        public string Mutiple_Venue_Addresses { get; set; }
-        public string Mutiple_Venue_City { get; set; }
-        public string Mutiple_Venue_State { get; set; }
-        public string Mutiple_Venue_Zip { get; set; }
-        public string Mutiple_Venue_Country { get; set; }
-        public string Description { get; set; }
-        public string EventURL { get; set; }
-        public string Event_Host_Id { get; set; }
-        public string Event_Contact_Name { get; set; }
-        public string Event_Contact_Email { get; set; }
-        public string Event_Contact_Phone { get; set; }
-        public string Facebook_URL { get; set; }
-        public string Twitter_URL { get; set; }
-        public string LinkedIn_URL { get; set; }
-        public string Googl_URL { get; set; }
+        public long E_Id { get; set; }
+        public string E_Title { get; set; }
+        public Nullable<System.DateTime> E_StartDate { get; set; }
+        public Nullable<System.TimeSpan> E_StartTime { get; set; }
+        public Nullable<System.DateTime> E_EndDate { get; set; }
+        public Nullable<System.TimeSpan> E_EndTime { get; set; }
+        public string E_DisplayStartTime { get; set; }
+        public string E_DisplayEndTime { get; set; }
+        public string E_DisplayTimeZone { get; set; }
+        public string E_EventPrivacy { get; set; }
+        public string E_ShareOnFB { get; set; }
+        public string E_GuestOnly { get; set; }
+        public string E_Password { get; set; }
     }
 }

@@ -6,7 +6,9 @@
 }
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/summernote.css" rel="stylesheet" />
-<h2>Create Events</h2>
+
+<h2>Create Event</h2>
+
 @using (Html.BeginForm())
 
 {
@@ -16,7 +18,8 @@
         <div class="event_container">
             <form>
                 <div class="event-upload-container">
-                    <input class="event-upload form-control" type="file" />
+                    <input type="file" name="image" id="input2">
+                    @*<input class="event-upload form-control" type="file" />*@
                     <div class="evnt_title_bg evnt_title_top">
                         <div class="form-group">
                             <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control" placeholder="Click here to enter the name of your event" value="" />
@@ -92,7 +95,7 @@
                                 </div>
                             </div>
                             <div class="str_evnt">
-                                <label class="label-control evnt_ticket_label wd140">Ends</label>
+                                <label class="label-control evnt_ticket_label wd140">End</label>
                                 <div class="evnt_time_cont">
                                     <input id="txtEndDate" class="datecheck date_picker form-control event_time_str evnt_tick_inp_cont str_evnt_date" placeholder="MM/DD/YYYY" />
                                     <input id="txtEndTime" type="text" class="timecheck time_picker form-control evnt_tick_inp_cont event_time_str mr0 str_evnt_time" placeholder="00:00 AM" />
@@ -104,7 +107,7 @@
 
                         <div class="sch_evnt_label"><a href="#" id="btMultipleEvent" data-toggle="modal" data-target="#ScheduleDate"><i class="fa fa-map-marker"></i> Schedule multiple events</a> </div>
                         <div class="sch_evnt_label"><a href="#" id="btCancleMEVents"><i class="fa fa-map-marker"></i> Cancle Multiple Events</a> </div>
-                        <div class="sch_evnt_label"><a href="#" data-toggle="modal" data-target="#Timezone"><i class="fa fa-map-marker"></i> Timezone & date settings (IST)</a> </div>
+                        <div class="sch_evnt_label"><a href="#" data-toggle="modal" data-target="#Timezone"><i class="fa fa-map-marker"></i> Timezone & date settings</a> </div>
 
 
                         <div class="clearfix"></div>
@@ -294,7 +297,7 @@
 
                                         </div>*@
                                                 <label class="label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
-                                                    Buyer total:
+                                                    <span class="buyer_tot">Buyer total:</span>
                                                     <span class="buyer_price" id="id_buyerprice-0">$0.00 </span>
                                                     <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
                                                     <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
@@ -365,7 +368,7 @@
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
                                                                 <div class="evt_time evnt_time_cont wd600">
-                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="mm/dd/yyyy" id="id_salestart-0" />
+                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="MM/DD/YYYY" id="id_salestart-0" />
 
                                                                     <input id="id_saletimestart-0" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" />
                                                                     <div class="clearfix"></div>
@@ -385,7 +388,7 @@
                                                             <div class="form-group">
                                                                 <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
                                                                 <div class="evnt_time_cont wd600">
-                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="mm/dd/yyyy" id="id_saleend-0" onchange="" />
+                                                                    <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="MM/DD/YYYY" id="id_saleend-0" onchange="" />
 
                                                                     <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" id="id_saletimeend-0" />
 
@@ -417,7 +420,7 @@
                                                                                 <input type="checkbox" id="id_auto_hide_until-0" /> Hide Until
                                                                             </label>
                                                                             <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="mm/dd/yyyy" />
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="MM/DD/YYYY" />
 
                                                                                 <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
                                                                             </div>
@@ -427,7 +430,7 @@
                                                                                 <input type="checkbox" id="id_auto_hide_after-0" /> Hide After
                                                                             </label>
                                                                             <div class="evnt_time_cont wd600">
-                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="mm/dd/yyyy" />
+                                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="MM/DD/YYYY" />
 
                                                                                 <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
                                                                             </div>
@@ -530,7 +533,7 @@
                                             <label class="label-control wd600" id="id_lbl_price-0" style="display:none; color:red"></label>
                                             <label class="label-control evnt_ticket_label wd600 normalticket-0" style="display:none;" id="id_paymenttype-0">Free</label>
                                             <label class="label-control lbl_bot_price paidticket-0" id="idlbuyertotal-0">
-                                                Buyer total:
+                                                <span class="buyer_tot">Buyer total:</span>
                                                 <span class="buyer_price" id="id_buyerprice-0">$0.00 </span>
                                                 <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
                                                 <div class="tooltip" id="id_tooltip-0">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 </div>
@@ -602,7 +605,7 @@
                                                         <div class="form-group">
                                                             <label class="label-control evnt_ticket_label wd600">Ticket Sales Start</label>
                                                             <div class="evt_time evnt_time_cont wd600">
-                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="mm/dd/yyyy" id="id_salestart-0" />
+                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 dateformat datecheck" placeholder="MM/DD/YYYY" id="id_salestart-0" />
 
                                                                 <input id="id_saletimestart-0" type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" />
                                                                 <div class="clearfix"></div>
@@ -622,7 +625,7 @@
                                                         <div class="form-group">
                                                             <label class="label-control evnt_ticket_label wd600">Ticket Sales End</label>
                                                             <div class="evnt_time_cont wd600">
-                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="mm/dd/yyyy" id="id_saleend-0" onchange="" />
+                                                                <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" placeholder="MM/DD/YYYY" id="id_saleend-0" onchange="" />
 
                                                                 <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" placeholder="00:00 AM" id="id_saletimeend-0" />
 
@@ -654,7 +657,7 @@
                                                                             <input type="checkbox" id="id_auto_hide_until-0" /> Hide Until
                                                                         </label>
                                                                         <div class="evnt_time_cont wd600">
-                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="mm/dd/yyyy" />
+                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_until_Date-0" placeholder="MM/DD/YYYY" />
 
                                                                             <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_until_time-0" placeholder="00:00 AM" />
                                                                         </div>
@@ -664,7 +667,7 @@
                                                                             <input type="checkbox" id="id_auto_hide_after-0" /> Hide After
                                                                         </label>
                                                                         <div class="evnt_time_cont wd600">
-                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="mm/dd/yyyy" />
+                                                                            <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280 datecheck" id="id_auto_hide_after_Date-0" placeholder="MM/DD/YYYY" />
 
                                                                             <input type="text" class="time_picker form-control evnt_tick_inp_cont event_time_str mr0 wd280 timecheck" id="id_auto_hide_after_Time-0" placeholder="00:00 AM" />
                                                                         </div>
@@ -785,7 +788,7 @@
                         <div class="form-group">
                             <label class="Pubpage label-control evnt_ticket_label fs-13">
                                 <input type="radio" checked="checked" name="rdPr" id="rdPublic" />
-                                <strong>Public page:</strong> list this event on Eventbrite and search engines
+                                <strong>Public page:</strong> list this event on EventCombo and search engines
                             </label>
                             <div class="clearfix"></div>
                             <label class="Prvpage label-control evnt_ticket_label fs-13 mt5">
@@ -999,13 +1002,13 @@
                                     </div>
                                     <div class="event_reap_time evnt_inp_sel_day">
                                         <select id="dllMonthlyWeekDay" class="checkboxName" multiple="multiple">
-                                            <option value="1">Sunday</option>
-                                            <option value="2">Monday</option>
-                                            <option value="3">Tuesday</option>
-                                            <option value="4">Wednesday</option>
-                                            <option value="5">Thursday</option>
-                                            <option value="6">Friday</option>
+                                            <option value="1">Monday</option>
+                                            <option value="2">Tuesday</option>
+                                            <option value="3">Wednesday</option>
+                                            <option value="4">Thursday</option>
+                                            <option value="5">Friday</option>
                                             <option value="6">Saturday</option>
+                                            <option value="7">Sunday</option>
                                         </select>
                                     </div>
                                     <!--  <input class="date_picker form-control event_time_str evnt_tick_inp_cont wd280" placeholder="mm/dd/yyyy" id="" />
@@ -1171,9 +1174,9 @@
 
     </div>
 }
-@*<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.min.js"></script>*@
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.min.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
@@ -1182,6 +1185,7 @@
 @*<link href="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.css" rel="stylesheet" />
     <script src="~/Scripts/jquery.appendGrid/jquery.appendGrid-1.4.2.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>*@
+
 <script type="text/javascript">
 
 
@@ -1258,7 +1262,7 @@
         $("#txtEndTime").val("7:00pm");
         $("#txtTimeStart").val("7:00pm");
         $("#txtTimeEnd").val("7:00pm");
-        
+
         $("#txtDateTo").focusin(function () {
 
             $("#txtDateTo").val($("#txtDateFrom").val());
@@ -1269,7 +1273,7 @@
 
 
         $("#txtEndDate").focusin(function () {
-            
+
             $("#txtEndDate").val($("#txtStartDate").val());
 
 
@@ -1519,7 +1523,7 @@
         debugger;
         var autocomplete = new google.maps.places.Autocomplete(input);
         //autocomplete.bindTo('Hello');
-        
+
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var mapOptions = {
                 center: new google.maps.LatLng(6.9167, 79.8473),
@@ -1534,7 +1538,7 @@
                 position: latlng,
                 map: map,
                 title: 'My Place'
-                
+
             });
             var place = autocomplete.getPlace();
             if (place.geometry.viewport) {
@@ -1651,11 +1655,13 @@
         //});
 
         $('#edSummer1').summernote({
-            height: 70,   //set editable area's height
+            height: 70,//set editable area's height
+            maxHeight: 80
         });
 
         $('#edSummer2').summernote({
             height: 70,   //set editable area's height
+            maxHeight: 80
         });
 
 
@@ -2035,459 +2041,6 @@
     });
 </script>
 
-<script type="text/javascript">
-
-
-
-
-    function DeleteTableRow(Sno) {
-
-        $('#tblAddress tr').each(function () {
-            if (Sno == $(this).find("td:first").html())
-                $(this).remove();
-        });
-        if (parseInt($('#tblAddress tr').length) <= 1) {
-            $("#tblAddress").hide();
-
-        }
-
-    }
-
-
-    function editRow(Sno) {
-        //alert(ColumnValue);
-        $("#hidAddSno").val(Sno);
-        $("#VenueName").val($("#VenueName" + Sno).val());
-        $("#Address1").val($("#Address1" + Sno).val());
-        $("#Address2").val($("#Address2" + Sno).val());
-        $("#City").val($("#City" + Sno).val());
-        $("#State").val($("#State" + Sno).val());
-        $("#Zip").val($("#Zip" + Sno).val());
-        $("#CountryID").val($("#CountryID" + Sno).val());
-        //   var row_index = $(this).parent().index('tr');
-
-
-        // var i = 1;
-        //var myTr = [];
-        //$('#tblAddress tr').each(function () {
-        //    $(this).find('td').each(function () {
-        //    });
-        //    alert(myTr);
-        //});
-
-        //$('#tblAddress tr').each(function () {
-        //    $(this).find('td').each(function () {
-        //        i =parseInt($(this).text());
-        //        if (parseInt(Sno) == )
-        //        {
-        //            myTr.push($(this).text());
-        //        }
-        //    });
-        //    alert(myTr);
-        //});
-
-    }
-    function checkValidDate(datevalue) {
-        var date = Date.parse(datevalue);
-        if (isNaN(date))
-            return 'N';
-        else
-            return 'Y';
-
-    }
-    function GetSchDateDiff() {
-
-        var dateFrom = date.parse($("#txtDateFrom").val());
-        var dateTo = date.parse($("#txtDateTo").val());
-        dateDiff = new Date(dateTo - dateFrom);
-
-
-    }
-
-    $(document).ready(function () {
-
-
-
-        //$('#txtDateFrom').datepicker({
-        //    onSelect: function (selectedDate) {
-        //        alert("dateselected");
-        //    }
-        //});
-
-        $("#txtDateFrom").focusout(function () {
-            //alert("chal pya");
-            GetSchDateDiff();
-
-            // alert($("#txtStartDate").val());
-            //if ($("#txtStartDate").val().trim() != "") {
-            //    var result = checkValidDate($("#txtStartDate").val());
-            //    if (result == 'N') {
-            //        alert("Please Enter Valid Event Start Date");
-            //        $("#txtStartDate").val('');
-            //        $("#txtStartDate").focus();
-            //    }
-            //}
-        });
-
-
-        $("#btCancleMEVents").hide();
-        $("#dvShowMultipleSch").hide();
-        $("#tblAddress").hide();
-
-        $("#btCancleSch").click(function () {
-            $("#dvSingleEvent").show();
-            $("#btCancleMEVents").hide();
-            $("#dvShowMultipleSch").hide();
-        });
-        if ($("#hidSchLastState").val() == "") {
-            $("#dlSchOption").val("Daily");
-            $("#hidSchLastState").val("Daily");
-            $("#dvWeeklyDayChk").hide();
-            $("#dvMonthly").hide();
-        }
-        $("#btCancleMEVents").click(function () {
-            $("#dvSingleEvent").show();
-            $("#btCancleMEVents").hide();
-            $("#dvShowMultipleSch").hide();
-        });
-        //$("#btMultipleEvent").click(function () {
-
-        //});
-        $("#btnAddSch").click(function () {
-            $("#dvSingleEvent").hide();
-            $("#btCancleMEVents").show();
-            $("#hidSchLastState").val($("#dlSchOption").val());
-            $("#dvShowMultipleSch").show();
-            //var vSch = $("#dllWeeklyDayChk").val();
-
-            //var vStartTime = $("#txtTimeStart").val();
-            //var vEndTime = $("#txtTimeEnd").val();
-
-            //alert(vStartTime);
-        });
-
-        $("#btCancelTimeZone").click(function () {
-            $("#chkDisplayStartTime").prop("checked", false);
-            $("#chkDisplayEndTime").prop("checked", false);
-            $("#chkTimeZone").prop("checked", false);
-        });
-
-        $('.summernote').summernote({
-            height: 70,   //set editable area's height
-        });
-
-        $(".ShowdateList").hide();
-        $(".DateList").click(function () {
-            $(".ShowdateList").toggle(500);
-        });
-
-        $('.checkboxName').multiselect({
-            checkboxName: 'multiselect[]'
-        });
-
-
-        $("#dlSchOption").change(function () {
-            if ($("#dlSchOption").val() == "Daily") {
-                $("#dvWeeklyDayChk").hide();
-                $("#dvMonthly").hide();
-
-            }
-            else if ($("#dlSchOption").val() == "Weekly") {
-                $("#dvWeeklyDayChk").show();
-                $("#dvMonthly").hide();
-            }
-            else if ($("#dlSchOption").val() == "Monthly") {
-                $("#dvWeeklyDayChk").hide();
-                $("#dvMonthly").show();
-            }
-            else if ($("#dlSchOption").val() == "Custom") {
-                $("#dvWeeklyDayChk").hide();
-                $("#dvMonthly").hide();
-            }
-
-
-        });
-
-        function AddRow(TableId, ColumnValue, ColumnName, IncludeSNo) {
-            var ColAry = ColumnValue.split('¶');
-            var ColName = ColumnName.split('¶');
-            var Sno = $("#" + TableId + " tr").length;
-            var cval = ColumnValue;
-            var strHTML = '<tr>';
-            strHTML = strHTML + '<td>' + Sno + '</td>';
-
-            for (i = 0; i <= ColAry.length - 1; i++) {
-                CellId = ColName[i] + Sno.toString();
-                strHTML = strHTML + '<td> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
-            }
-
-            strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
-            //strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <input type="button" name="Delete" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')" value="Delete" /> </div> </td>';
-            //strHTML = strHTML + '<td><input type="button" onclick="editRow();" id="btnEdit" value="Edit" /></td>';
-            strHTML = strHTML + '</tr>';
-            $("#" + TableId).append(strHTML);
-        }
-
-        function EditRow(TableId, ColumnValue, ColumnName, Sno) {
-            var ColAry = ColumnValue.split('¶');
-            var ColName = ColumnName.split('¶');
-
-            for (i = 0; i <= ColName.length - 1; i++) {
-                CtrlId = ColName[i] + Sno.toString();
-                $("#" + CtrlId).val(ColAry[i]);
-            }
-
-        }
-
-
-        $("#btAddAddress").click(function () {
-            $("#tblAddress").show();
-            // alert("Chal Pya");
-            //var sno = parseInt($("#tblAddress tr").length);
-            //var strHtml = '<tr><td>' + sno + '</td>' + $("#Address1").val() +'<td>' +  + '</td><td>' + $("#Address2").val() + '</td><td>' +
-            //      $("#Address2").val() + '</td><td>' + $("#State").val() + '</td><td>' + $("#Zip").val() + '</td><td>' + $("#CountryID").val() + '</td></tr> '
-
-            //var strHtml = '<tr><td>' + sno + '</td><td>Add1</td>Add2</td><td>City</td><td>State</td><td>ZipCode</td></tr> ';
-
-            var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID").val();
-            var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID";
-            if ($("#hidAddSno").val().trim() != "")
-                EditRow("tblAddress", vCols, vColName, $("#hidAddSno").val().trim());
-            else
-                AddRow("tblAddress", vCols, vColName, "Y");
-
-
-            $("#VenueName").val("");
-            $("#Address1").val("");
-            $("#Address2").val("");
-            $("#City").val("");
-            $("#State").val("");
-            $("#Zip").val("");
-            $("#hidAddSno").val("");
-            //$("#CountryID").val('');
-
-            //$("#tblAddress").append(strHtml);
-
-        });
-
-
-
-        //$('form').submit(function () {
-        $('#btSave').click(function () {
-
-
-            // Address Entry
-            var SubmitAddress = [];
-            var SingleTiming = [];
-            var MultipleSchedule = [];
-            //var table = $("#tblAddress");
-
-
-            var Ticket = [];
-            var divlength = $("#MasterDiv> div").size();
-            if (divlength > 0) {
-                var TicketPrice = 0;
-                var Auto_Schedule = 0;
-                var AutoSechduleType = 0;
-                var TicketTypeID = 0;
-                for (var i = 0; i < divlength; i++) {
-
-                    if ($('#id_cost-' + i).css('display') == "block") {
-                        TicketPrice = $('#id_cost-' + i).val();
-
-                    }
-                    if ($('#id_CusdateCont-' + i).css('display') == "block") {
-
-                        Auto_Schedule = 1;
-
-                        if ($('#id_auto_hide_type_0-' + i).is("checked") == true) {
-                            AutoSechduleType = 1;
-
-                        }
-                        if ($('#id_auto_hide_type_1-' + i).is("checked") == true) {
-                            AutoSechduleType = 2;
-
-                        }
-
-                    }
-                    if ($('#id_Tickettype-' + i).val() == "Free")
-                    {
-                        TicketTypeID=1
-
-                    } else if ($('#id_Tickettype-' + i).val() == "Paid")
-                    {
-                        TicketTypeID = 2
-
-                    } else {
-
-                        TicketTypeID = 3
-                    }
-                    Ticket.push({
-                        T_name: $('#id_ticket_type-' + i).val(),
-                        T_Qty: $('#id_quantity_total-' + i).val(),
-                        T_Type: $('#id_Tickettype-' + i).val(),
-                        T_Price: TicketPrice,
-                        T_Desc: $('#id_descriptionclass-' + i).val(),
-                        T_Show_Desc:($('#id_show_description-' + i).is("checked") == true ? 1 : 0) ,
-                        T_Sale_Start_Date: $('#id_salestart-' + i).val(),
-                        T_Sale_Start_Time: $('#id_saletimestart-' + i).val(),
-                        T_Sale_End_Date: $('#id_saleend-' + i).val(),
-                        T_Sale_End_Time: $('#id_saletimeend-' + i).val(),
-                        T_Hide_Ticket:($('#id_ticketshidden-' + i).is("checked") == true ? 1 : 0),
-                        T_AutoSchedule: Auto_Schedule,
-                        T_AutoSechduleType: AutoSechduleType,
-                        T_Hide_Untill: ($('#id_auto_hide_until-' + i).is("checked") == true ? 1 : 0),
-                        T_Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
-                        T_Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
-                        T_Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
-                        T_Hide_After: ($('#id_auto_hide_after-' + i).is("checked") == true ? 1 : 0),
-                        T_Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
-                        T_Hide_After_Time: $('#id_auto_hide_after_Time-' + i).val(),
-                        T_MinTicket: $('#id_min_ticket-' + i).val(),
-                        T_MaxTicket: $('#id_max_ticket-' + i).val(),
-                        T_DisableTicket: ($('#id_disableticket-' + i).is("checked") == true ? 1 : 0),
-                        T_MarkSolout:($('#id_marksoldout-' + i).is("checked") == true ? 1 : 0),
-                        T_DisplayRemaining: ($('#id_displayremaining-' + i).is("checked") == true ? 1 : 0),
-                        T_TicketTypeID: TicketTypeID,
-                        T_FeeType: $('#id_include_ticket_fees-' + i).val(),
-                        T_Discount: $('#id_Discount-' + i).val()
-
-
-                    });
-
-                }
-
-            }
-
-            //$('#tblAddress tr').each(function () {
-
-
-            //});
-
-            $("#tblAddress tr").each(function () {
-                var Sno = $(this).find("td:first").html();
-                // Multiple Address
-                if (Sno.trim() != '') {
-                    SubmitAddress.push({
-                        VenueName: $("#VenueName" + Sno).val(),
-                        Address1: $("#Address1" + Sno).val(),
-                        Address2: $("#Address2" + Sno).val(),
-                        City: $("#City" + Sno).val(),
-                        State: $("#State" + Sno).val(),
-                        Zip: $("#Zip" + Sno).val(),
-                        CountryID: $("#CountryID" + Sno).val()
-                    });
-                }
-            });
-            // Single Timing
-
-            SingleTiming.push({
-                'EventStartDate': $("#txtStartDate").val(),
-                'EventEndDate': $("#txtStartTime").val(),
-                'EventStartTime': $("#txtEndDate").val(),
-                'EventEndTime': $("#txtEndTime").val()
-            });
-            // Multiple Schedule
-
-
-            if ($("#dvSingleEvent").css('display') == 'none') {
-
-                var SchOption = $("#dlSchOption").val();
-                var vWeeklyDay = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
-                var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
-                var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
-                var vMonthlyWeekDays = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
-                var vStartingFrom = $("#txtDateFrom").val();
-                var vStartingTo = $("#txtDateTo").val();
-                var vStartTime = $("#txtTimeStart").val();
-                var vEndTime = $("#txtTimeEnd").val();
-                //var newChar = '^';
-                //alert(vWeeklyDay.split(',').join(newChar));
-                //alert(vWeeklyDay);
-                //vWeeklyDay= vWeeklyDay.replace(',', '^');
-                //alert(vWeeklyDay);
-
-
-                if (SchOption == "Daily") {
-                    vWeeklyDay = '';
-                    vMonthlyDay = '';
-                    vMonthlyWeek = '';
-                    vMonthlyWeekDays = '';
-                    $("#hidSchLastState").val("Daily");
-                }
-                else if (SchOption == "Weekly") {
-                    vMonthlyDay = '';
-                    vMonthlyWeek = '';
-                    vMonthlyWeekDays = '';
-                    $("#hidSchLastState").val("Weekly");
-                }
-                else if (SchOption == "Monthly") {
-                    vWeeklyDay = '';
-                    $("#hidSchLastState").val("Monthly");
-                }
-                else if (SchOption == "Custom") {
-                    vWeeklyDay = '';
-                    vMonthlyDay = '';
-                    vMonthlyWeek = '';
-                    vMonthlyWeekDays = '';
-                    $("#hidSchLastState").val("Custom");
-                }
-
-                MultipleSchedule.push({
-                    'Frequency': SchOption,
-                    'WeeklyDay': vWeeklyDay,
-                    'MonthlyDay': vMonthlyDay,
-                    'MonthlyWeek': vMonthlyWeek,
-                    'MonthlyWeekDays': vMonthlyWeekDays,
-                    'StartingFrom': vStartingFrom,
-                    'StartingTo': vStartingTo,
-                    'StartTime': vStartTime,
-                    'EndTime': vEndTime
-                });
-
-            }
-            // Basic Event Info
-            var model = {
-                'EventTypeID': 1,
-                'EventCategoryID': 1,
-                'EventSubCategoryID': 1,
-                'UserID': '',
-                'EventTitle': $("#txtEventTitle").val(),
-                'DisplayStartTime': 'Y',
-                'DisplayEndTime': 'Y',
-                'DisplayTimeZone': 'Y',
-                'EventDescription': 'Testing',
-                'EventPrivacy': 'Public',
-                'Private_ShareOnFB': 'N',
-                'Private_GuestOnly': 'N',
-                'Private_Password': 'Test',
-                'EventUrl': '',
-                'PublishOnFB': 'N',
-                'EventStatus': 'Save',
-                'AddressDetail': SubmitAddress,
-                'EventVenue': SingleTiming,
-                'TimeZone': $("#dllTimeZone").val(),
-                'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
-                'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
-                'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
-                'MultipleEvents': MultipleSchedule
-            };
-
-            //data: JSON.stringify({ EventCreation: model }),
-
-            @*$.ajax({
-                url: '@Url.Action("SaveEvent", "Event")',
-                data: model,
-                type: "Post",
-                success: function (response) {
-
-                    alert('Document Saved.');
-                }
-            });*@
-            });
-        //      $('#myModal').modal(options);
-    });
-</script>
 
 @*Tickiting Starts Here*@
 <script>
@@ -2557,7 +2110,13 @@
     }
     function changefeetype(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        if ($('#' + e).val() == "")
+        {
+            $('#id_buyerprice-' + el).html("$0");
+            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
 
+
+        }
         if($('#' + e).val()>0)
         {
             $('#id_feestruct-' + el).css('display', 'block');
@@ -2574,8 +2133,8 @@
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
 
                 var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
-                $('#id_buyerprice-' + el).html(ccpfinal);
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       $" + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+                $('#id_buyerprice-' + el).html("$"+ccpfinal);
                 $('#id_tooltip-' + el).html(msg);
 
             }
@@ -2583,8 +2142,8 @@
                 ccp = $('#id_cc').val();
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
                 var ccpfinal = parseFloat(amount).toFixed(2);
-                $('#id_buyerprice-' + el).html(ccpfinal);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
+                $('#id_buyerprice-' + el).html("$"+ccpfinal);
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       $" + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
                 $('#id_tooltip-' + el).html(msg);
             }
 
@@ -3229,21 +2788,21 @@ return false;
                     $("#MasterDiv").children().each(function (i) {
                         var li = $(this).attr("id");
                         var el = li.substr(li.indexOf('-') + 1, li.length - li.indexOf('-'));
-                        alert(li);
+                        //alert(li);
                         $('#id_order-' + el).val(i);
 
                     });
                 }
             });
-            $("#MasterDiv").disableSelection();
+            //$("#MasterDiv").disableSelection();
         });
         $('#hdUniqueguid').val(uuid());
-        alert("CHal Pya");
+        
         $('#input2').filer({
             limit: '5',
             maxSize: '2',
             extensions: ['jpg', 'jpeg', 'png'],
-            changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
+            changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag upto 5 images or normal upload</h3> </div></div></div>',
             showThumbs: true,
             appendTo: "#drag-drop",
             theme: "dragdropbox",

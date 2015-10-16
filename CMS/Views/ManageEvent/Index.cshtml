@@ -1,10 +1,11 @@
-﻿
+﻿@model IEnumerable<CMS.Models.EventCreation>
 @using CMS.Models;
 @{
     ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using  (Html.BeginForm("Index", "ManageEvent", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
+{
 <section id="content_wrapper">
 
     <!-- Start: Topbar -->
@@ -153,85 +154,57 @@
                                 <thead class="bg_white">
                                     <tr>
                                         <th>#</th>
-                                        <th>Date</th>
-                                        <th>Title</th>
-                                        <th>Org Name </th>
+                                        <th>Event Title</th>
                                         <th>Event Type</th>
-                                        <th>Category</th>
-                                        <th>Venue Det.</th>
-                                        <th>Mang Ticket</th>
-                                        <th>Ticket Sold</th>
-                                        <th>Action</th>
+                                        <th>Event Category</th>
+                                        <th>Event SubCategory</th>
+                                        <th>Event Date(s)</th>
+                                        <th>Organizer Name & Email</th>
+                                        <th>Venue name & address</th>
+                                        <th>Manage Ticketing</th>
+                                        <th>Tickets Sold</th>
                                         <th>Feature </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td class="eml-ellps">28/9/2015</td>
-                                        <td class="eml-ellps">
-                                            Event Title
-                                            <!-- <a id="" class="holder-active animation-switcher" href="#modal-panel">
-                                               <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY">Manage</button>
-                                            </a> -->
-                                        </td>
-                                        <td>
-                                            <div class="">Org Name</div>
-                                            <div class="">abc@gmail.com</div>
-                                        </td>
+                                    @{ int i = 0;
+                                        foreach (var obj in Model)
+                                        {
+                                            i = i + 1;
+                                            <tr>
+                                                <td>@i.ToString()</td>
+                                                <td>@obj.EventTitle</td>
+                                                <td>@obj.EventType</td>
+                                                <td>@obj.EventCategory</td>
+                                                <td>@obj.EventSubCategory</td>
+                                                <td>@obj.EventTiming</td>
+                                                
+                                                <td>
 
-                                        <td>
-                                            <div class="section">
-                                                <label class="field select">
-                                                    <select>
-                                                        <option value="0">Category</option>
-                                                        <option value="1">Category 1</option>
-                                                        <option value="2">Category 2</option>
-                                                    </select>
-                                                    <i class="arrow double"></i>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="">Category</div>
-                                            <div class="">Sub Category</div>
-                                        </td>
+                                                    @*<div class="view_sel_wid">
+                                                        <select id="multiselect2" multiple="multiple">
+                                                            <option value="cheese">Platinum</option>
+                                                            <option value="tomatoes">Gold </option>
+                                                            <option value="mozarella">Silver </option>
+                                                            <option value="mushrooms">Bronze </option>
+                                                        </select>
+                                                    </div>*@
 
-                                        <td>
-                                            <div class="">Venue Name</div>
-                                            <div class="">Address</div>
-                                        </td>
+                                                </td>
+                                                <td>
+                                                    @*<button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                    <a id="" class="holder-active animation-switcher" href="#modal-panel">
+                                                        <button class="btn btn-danger br2 btn-xs fs12" data-effect="mfp-flipInY"><i class="fa fa-remove"></i></button>
+                                                    </a>*@
 
-                                        <td>
-                                            <span class="btn btn-warning br2 fs12" title="Ticket">Ticket</span>
-                                        </td>
-                                        <td>
-                                            <span class="btn btn-warning br2 fs12">Yes</span>
-                                        </td>
-                                        <td>
-
-                                            <div class="view_sel_wid">
-                                                <select id="multiselect2" multiple="multiple">
-                                                    <option value="cheese">Platinum</option>
-                                                    <option value="tomatoes">Gold </option>
-                                                    <option value="mozarella">Silver </option>
-                                                    <option value="mushrooms">Bronze </option>
-                                                </select>
-                                            </div>
-
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                            <a id="" class="holder-active animation-switcher" href="#modal-panel">
-                                                <button class="btn btn-danger br2 btn-xs fs12" data-effect="mfp-flipInY"><i class="fa fa-remove"></i></button>
-                                            </a>
-
-                                        </td>
+                                                </td>
 
 
 
-                                    </tr>
+                                            </tr>
+                                            }
 
+                                        }
 
                                 </tbody>
                                 <tfoot class="footer-menu">
@@ -300,3 +273,4 @@
     <!-- End: Content -->
 
 </section>
+}

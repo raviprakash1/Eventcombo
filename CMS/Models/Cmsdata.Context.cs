@@ -40,6 +40,23 @@ namespace CMS.Models
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        public virtual DbSet<EventCategory> EventCategories { get; set; }
+        public virtual DbSet<EventImage> EventImages { get; set; }
+        public virtual DbSet<EventOrganizer> EventOrganizers { get; set; }
+        public virtual DbSet<EventSubCategory> EventSubCategories { get; set; }
+        public virtual DbSet<EventTempImage> EventTempImages { get; set; }
+        public virtual DbSet<EventType> EventTypes { get; set; }
+        public virtual DbSet<EventVenue> EventVenues { get; set; }
+        public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
+        public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
+        public virtual DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
+        public virtual DbSet<TicketType> TicketTypes { get; set; }
+        public virtual DbSet<Venue> Venues { get; set; }
         public virtual DbSet<Event_Detail> Event_Detail { get; set; }
     
         public virtual ObjectResult<string> GetSetUserRole(string user_Id, string gETSET, string role_Id)
@@ -57,6 +74,11 @@ namespace CMS.Models
                 new ObjectParameter("Role_Id", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSetUserRole", user_IdParameter, gETSETParameter, role_IdParameter);
+        }
+    
+        public virtual ObjectResult<EventCreation> GetEventListing()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventListing");
         }
     }
 }

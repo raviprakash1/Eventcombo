@@ -381,21 +381,13 @@ button:focus { outline: none;}
 
 .hide_unt_aft{ width: 100%; float:left;}
 
-<<<<<<< HEAD
-span.evnt_toltip{ 
-    cursor: pointer !important;
-    float: right !important;
-    width: auto; margin-top: 0px !important;}
-
-=======
-
 
 span.evnt_toltip{ 
     cursor: pointer !important;
-    float: right !important;
+    float: left !important;
     width: auto; margin-top: 0px !important;}
 
->>>>>>> fcffb28af0e4f353eaf35d1a8884d989d5905753
+
 .evnt_toltip{ width: auto !important; float: left !important;}    
 .evnt_toltip:hover + .tooltip {
     display: block;opacity:.9;
@@ -420,17 +412,17 @@ span.evnt_toltip{
   position: absolute;
   width: 0;
 }
-<<<<<<< HEAD
-=======
 
-
->>>>>>> fcffb28af0e4f353eaf35d1a8884d989d5905753
 .total_qty{ margin-top:10px; }
 
 
  /************Create Ticket 2nd**********************/
 .lbl_bot_price{ font-size: 1em; color: #979898; font-weight: normal;}
-.lbl_bot_price span.buyer_price{ float: none; margin: 0px; cursor: inherit; color: #3cf;}
+.lbl_bot_price span.buyer_tot {
+        float: left;
+        width: auto; margin-top:0px;
+    }
+.lbl_bot_price span.buyer_price{ float: left; width:auto; margin: 0px; cursor: inherit; color: #3cf;}
 .evnt_set_minimise{ font-size: 1.2em; background:none; color:#337ab7;}
 .lbl_bot_minim{ font-size: 1.2em; font-weight: normal;}
 .fess_online{ width: 100%; float: left; background: #ebecec; padding: 5px;}
@@ -593,19 +585,29 @@ span.evnt_toltip{
 .affix-top {position:relative; top: 0px;}
 .midd_cont {top: 0px;}
 .social_icn{ width: auto; margin-top: 10px; }
-.wid_get_buzz{ width: 90% !important; margin-right: 3%;
-		}  
+.wid_get_buzz{ width: 90% !important; margin-right: 3%;} 
+.home_fixed_header{ width: 100%; float: left; height: auto !important; position: relative !important; top: 0px !important}
+.con_scr0l_home {margin-top:0px !important;}  
 }
 
 @media (min-width: 360px) and (max-width: 640px) {
 .fix_head{ position: relative;}
 .affix-top {position:relative; top: 0px;}
 .midd_cont {top: 0px;}
-.social_icn{ width: auto; margin-top: 10px;
-}
+.social_icn{ width: auto; margin-top: 10px;}
+.home_fixed_header{ width: 100%; float: left; height: auto !important; position: relative !important; top: 0px !important}
+
+.con_scr0l_home {margin-top: 0 !important;}
+  
   
 }
 
+/*Fixed header css*/
+
+.home_fixed_header{ width: 100%; float: left; height: 120px; position: fixed; top: 0px; background: #fff; z-index: 999;}
+.con_scr0l_home{ margin-top: 130px;}
+
+/*upload image event  css*/
 .evnt_title_bg{ position:absolute; top:88px; right:0px; margin-right:20px; }
 .event-upload-container .jFiler-items ul li.jFiler-item {margin-right:20px;}
 .event-upload-container .jFiler-input-dragDrop{ width:100%;height: 560px; background:#ccc;}
@@ -614,6 +616,9 @@ span.evnt_toltip{
 .event-upload-container .jFiler-item-container{ margin:0px !important;}
 .event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets{margin-top:0px !important;}
 .event-upload-container .jFiler-item .jFiler-item-container{padding:5px!important;}
+
+.evnt_title_bg .note-editor.panel .note-dialog .modal-body .note-image-input.form-control{ padding: 0px; border: 0px; box-shadow: none;}
+.evnt_descp_cont .note-editor.panel .note-dialog .modal-body .note-image-input.form-control{ padding: 0px; border: 0px; box-shadow: none;}
 
 
 

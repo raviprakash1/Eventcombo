@@ -31,95 +31,97 @@
 
  
     <!-- Header -->
-    <div class="container-fluid headr_main ">
-        <div class="row">
-            <div class="col-sm-5">
-                <a class="logo" href="/Home/Index"><img src=" ~/Images/EventCombo_Red.jpg" /></a>
-            </div>
-
-            <div class="col-sm-6 head_left_nav">
-                <ul class="navbar-right">
-
-                    <li></li>
-                    <li>@Html.Partial("_Logout")</li>
-                   
-
-                </ul>
-
-            </div>
-            <div class="col-sm-1 text-right">
-                <div class="social_icn" style="width:40px; margin-top:10px;">
-                    <a href="http://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
-                    <a href="http://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
+    <div class="home_fixed_header">
+        <div class="container-fluid headr_main ">
+            <div class="row">
+                <div class="col-sm-5">
+                    <a class="logo" href="/Home/Index"><img src=" ~/Images/EventCombo_Red.jpg" /></a>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Sub Header -->
-    <div class="container-fluid cont_margin2">
-        <div class="row cyan-line-new">
-            <div class="col-sm-3">
-                <form>
-                    <div class="input-group stylish-input-group">
-                        <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Searh for Event">
-                        <span class="input-group-addon">
-                            <button type="submit">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
+
+                <div class="col-sm-6 head_left_nav">
+                    <ul class="navbar-right">
+
+                        <li></li>
+                        <li>@Html.Partial("_Logout")</li>
+
+
+                    </ul>
+
+                </div>
+                <div class="col-sm-1 text-right">
+                    <div class="social_icn" style="width:40px; margin-top:10px;">
+                        <a href="http://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
+                        <a href="http://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
                     </div>
-                </form>
-            </div>
-            <div class="col-sm-2 disc_title_head">
-                @Html.ActionLink("Discover Events", "EventCreation", "Event")
-
-            </div>
-            <div class="col-sm-2 disc_title_head">@Html.ActionLink("Get the Buzz", "GetBuzz", "Home")  </div>
-            <div class="col-sm-5">
-                <div class="psst">
-                    <a class="" href="/Home/EventOraganizer">
-                        <span class="ps_text">PSST!</span>
-                        <span class="ev_org">&#160;&#160;Event organizer? Click here!</span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- Body Section -->
-    <div>
-        @RenderBody()
-    </div>
-
-    <!--Footer Section-->
-    <div class="container-fluid foot_bg">
-        <div class="col-sm-12 no-padding">
-            <div class="col-sm-12 foot_logo">
-                <a class="" href="#"><img src="~/Images/logo_small.png" /></a>
-            </div>
-
-            <div class="row fot_cont">
-                <div class="col-sm-4">
-                    <a href="#">About Us</a>
-                    <br>
-                    <a href="#">Contact Us</a>
-                    <br>
-                    <a href="#">Terms Of Service</a>
-                </div>
-                <div class="col-sm-4">
-                    <a href="#">Ticket Purchase FAQ </a>
-                    <br>
-                    <a href="#">Ticket Fulfillment Policy</a>
-                    <br>
-                    <a href="#">Privacy Policy</a>
-                </div>
-                <div class="col-sm-4">
-                    <a href="#">Facebook</a>
-                    <br>
-                    <a href="#">Twitter</a>
                 </div>
             </div>
         </div>
-    </div>
+        <!-- Sub Header -->
+        <div class="container-fluid cont_margin2">
+            <div class="row cyan-line-new">
+                <div class="col-sm-3">
+                    <form>
+                        <div class="input-group stylish-input-group">
+                            <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Searh for Event">
+                            <span class="input-group-addon">
+                                <button type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-2 disc_title_head">
+                    @Html.ActionLink("Discover Events", "EventCreation", "Event")
+
+                </div>
+                <div class="col-sm-2 disc_title_head">@Html.ActionLink("Get the Buzz", "GetBuzz", "Home")  </div>
+                <div class="col-sm-5">
+                    <div class="psst">
+                        <a class="" href="/Home/EventOraganizer">
+                            <span class="ps_text">PSST!</span>
+                            <span class="ev_org">&#160;&#160;Event organizer? Click here!</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+        <!-- Body Section -->
+        <div>
+            @RenderBody()
+        </div>
+
+        <!--Footer Section-->
+        <div class="container-fluid foot_bg">
+            <div class="col-sm-12 no-padding">
+                <div class="col-sm-12 foot_logo">
+                    <a class="" href="#"><img src="~/Images/logo_small.png" /></a>
+                </div>
+
+                <div class="row fot_cont">
+                    <div class="col-sm-4">
+                        <a href="#">About Us</a>
+                        <br>
+                        <a href="#">Contact Us</a>
+                        <br>
+                        <a href="#">Terms Of Service</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#">Ticket Purchase FAQ </a>
+                        <br>
+                        <a href="#">Ticket Fulfillment Policy</a>
+                        <br>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#">Facebook</a>
+                        <br>
+                        <a href="#">Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 </html>

@@ -57,137 +57,139 @@
 
 
     <!-- Header -->
-    <div class="container-fluid headr_main ">
-        <div class="row">
-            <div class="col-sm-5">
-                <a class="logo" href="/Home/Index"><img src=" ~/Images/EventCombo_Red.jpg" /></a>
-            </div>
+    <div class="home_fixed_header">
+        <div class="container-fluid headr_main ">
+            <div class="row">
+                <div class="col-sm-5">
+                    <a class="logo" href="/Home/Index"><img src=" ~/Images/EventCombo_Red.jpg" /></a>
+                </div>
 
-            <div class="col-sm-6 head_left_nav">
-                <ul class="navbar-right">
+                <div class="col-sm-6 head_left_nav">
+                    <ul class="navbar-right">
 
-                    <li></li>
-                    <li><a href="#" data-toggle="modal" data-target="#myModal" id="loginPopup">LogIn | SignUp </a>  </li>
+                        <li></li>
+                        <li><a href="#" data-toggle="modal" data-target="#myModal" id="loginPopup">LogIn | SignUp </a>  </li>
 
-                </ul>
+                    </ul>
 
-            </div>
-            <div class="col-sm-1 text-right">
-                <div class="social_icn" style="width:40px; margin-top:10px;">
-                    <a href="http://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
-                    <a href="http://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
+                </div>
+                <div class="col-sm-1 text-right">
+                    <div class="social_icn" style="width:40px; margin-top:10px;">
+                        <a href="http://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
+                        <a href="http://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Sub Header -->
-    <div class="container-fluid cont_margin2">
-        <div class="row cyan-line-new">
-            <div class="col-sm-3">
-                <form>
-                    <div class="input-group stylish-input-group">
-                        <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Searh for Event">
-                        <span class="input-group-addon">
-                            <button type="submit">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
+        <!-- Sub Header -->
+        <div class="container-fluid cont_margin2">
+            <div class="row cyan-line-new">
+                <div class="col-sm-3">
+                    <form>
+                        <div class="input-group stylish-input-group">
+                            <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Searh for Event">
+                            <span class="input-group-addon">
+                                <button type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-2 disc_title_head">
+                    @Html.ActionLink("Discover Events", "DiscoverEvents", "Home")
+
+                </div>
+                <div class="col-sm-2 disc_title_head">@Html.ActionLink("Get the Buzz", "GetBuzz", "Home")  </div>
+                <div class="col-sm-5">
+                    <div class="psst">
+                        <a class="" href="/Home/EventOraganizer">
+                           
+                            <span class="ps_text"> Create Event</span>
+                            @*<span class="ev_org">&#160;&#160;Event organizer? Click here!</span>*@
+                        </a>
                     </div>
-                </form>
-            </div>
-            <div class="col-sm-2 disc_title_head">
-                @Html.ActionLink("Discover Events", "DiscoverEvents", "Home")
-
-            </div>
-            <div class="col-sm-2 disc_title_head">@Html.ActionLink("Get the Buzz", "GetBuzz", "Home")  </div>
-            <div class="col-sm-5">
-                <div class="psst">
-                    <a class="" href="/Home/EventOraganizer">
-                        <span class="ps_text">PSST!</span>
-                        <span class="ev_org">&#160;&#160;Event organizer? Click here!</span>
-                    </a>
                 </div>
-            </div>
 
-        </div>
-    </div>
-    <!-- Body Section -->
-
-    <div>
-        @RenderBody()
-    </div>
-    <!--Footer Section-->
-    <div class="container-fluid foot_bg">
-        <div class="col-sm-12 no-padding">
-            <div class="col-sm-12 foot_logo">
-                <a class="" href="#"><img src="~/Images/logo_small.png" /></a>
-            </div>
-
-            <div class="row fot_cont">
-                <div class="col-sm-4">
-                    <a href="#">About Us</a>
-                    <br>
-                    <a href="#">Contact Us</a>
-                    <br>
-                    <a href="#">Terms Of Service</a>
-                </div>
-                <div class="col-sm-4">
-                    <a href="#">Ticket Purchase FAQ </a>
-                    <br>
-                    <a href="#">Ticket Fulfillment Policy</a>
-                    <br>
-                    <a href="#">Privacy Policy</a>
-                </div>
-                <div class="col-sm-4">
-                    <a href="#">Facebook</a>
-                    <br>
-                    <a href="#">Twitter</a>
-                </div>
             </div>
         </div>
+        <!-- Body Section -->
     </div>
-
-    <!-- Dialouge Box Start -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content login_pop" id="login_up">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title " id="myModalLabel">Login / Sign-up</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-12">
-                        @RenderPage("~/Views/Shared/_login1partial.cshtml")
-                    </div>
-                    <div class="col-md-12">
-                        @*forgt_pass*@
-                        @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, null)
-
-                    </div>
-                    <div class="col-md-12">
-                        <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="#" id="signUpPopup" class="btn btn-primary login_btn_sub">Sign UP</a>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="col-md-12 social-buttons text-center ">
-                        @RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")
-                    </div>
-                </div>
-            </div>
-
-            <div id="sign_up" class="modal-content login_pop sign_up" style="display:none;">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title ">Sign-up</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-12">
-                        @RenderPage("~/Views/Shared/_signuppartial.cshtml")
-                    </div>
-                </div>
-            </div>
-
+        <div>
+            @RenderBody()
         </div>
-    </div>
+        <!--Footer Section-->
+        <div class="container-fluid foot_bg">
+            <div class="col-sm-12 no-padding">
+                <div class="col-sm-12 foot_logo">
+                    <a class="" href="#"><img src="~/Images/logo_small.png" /></a>
+                </div>
+
+                <div class="row fot_cont">
+                    <div class="col-sm-4">
+                        <a href="#">About Us</a>
+                        <br>
+                        <a href="#">Contact Us</a>
+                        <br>
+                        <a href="#">Terms Of Service</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#">Ticket Purchase FAQ </a>
+                        <br>
+                        <a href="#">Ticket Fulfillment Policy</a>
+                        <br>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#">Facebook</a>
+                        <br>
+                        <a href="#">Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dialouge Box Start -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content login_pop" id="login_up">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title " id="myModalLabel">Login / Sign-up</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            @RenderPage("~/Views/Shared/_login1partial.cshtml")
+                        </div>
+                        <div class="col-md-12">
+                            @*forgt_pass*@
+                            @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, null)
+
+                        </div>
+                        <div class="col-md-12">
+                            <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="#" id="signUpPopup" class="btn btn-primary login_btn_sub">Sign UP</a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12 social-buttons text-center ">
+                            @RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sign_up" class="modal-content login_pop sign_up" style="display:none;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title ">Sign-up</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            @RenderPage("~/Views/Shared/_signuppartial.cshtml")
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 </body>
 </html>
 <script type="text/javascript">

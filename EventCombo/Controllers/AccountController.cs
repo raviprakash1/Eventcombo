@@ -1387,37 +1387,39 @@ namespace EventCombo.Controllers
 
                 }
                 var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+                Session["AppId"] = user.Id;
 
-                if (result == SignInStatus.Success)
-                {
-                    //var User = UserManager.FindByEmail(model.Email.ToString());
+                       return RedirectToLocal(returnUrl);
+                //if (result == SignInStatus.Success)
+                //{
+                //    //var User = UserManager.FindByEmail(model.Email.ToString());
 
-                    var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
-                    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
-                    if (users.Find(x => x.Id == user.Id) != null)
-                    {
-                        Session["AppId"] = user.Id;
+                //    var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
+                //    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
+                //    if (users.Find(x => x.Id == user.Id) != null)
+                //    {
+                //        Session["AppId"] = user.Id;
 
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
+                //        return RedirectToLocal(returnUrl);
+                //    }
+                //    else
+                //    {
 
-                        ModelState.AddModelError("", "You not authorized user");
-                        return RedirectToAction("Index", "Home");
-
-
-                    }
-
+                //        ModelState.AddModelError("", "You not authorized user");
+                //        return RedirectToAction("Index", "Home");
 
 
+                //    }
 
-                }
-                else {
-                    ModelState.AddModelError("", "You are  not a authorized user");
-                    return RedirectToAction("Index", "Home");
 
-                }
+
+
+                //}
+                //else {
+                //    ModelState.AddModelError("", "You are  not a authorized user");
+                //    return RedirectToAction("Index", "Home");
+
+                //}
 
 
 
