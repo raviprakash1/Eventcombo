@@ -302,6 +302,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-multiselect.css" />
+    <Content Include="Content\eventcombo-new.css" />
+    <Content Include="Content\eventcombo.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Images\ui-icons_222222_256x240.png" />
@@ -323,7 +325,7 @@
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\dropit.css" />
     <Content Include="Content\eventcombo-old.css" />
-    <Content Include="Content\eventcombo.css" />
+    <Content Include="Content\eventcombo old 18.css" />
     <Content Include="Content\Filer\assets\fonts\jquery.filer-icons\jquery-filer-preview.html" />
     <Content Include="Content\Filer\assets\fonts\jquery.filer-icons\jquery-filer.css" />
     <Content Include="Content\Filer\assets\fonts\jquery.filer-icons\jquery-filer.svg" />

@@ -11,6 +11,7 @@ namespace EventCombo.Controllers
         // GET: CreateEvent
         public ActionResult CreateEvent()
         {
+            Session["Fromname"] = "events";
             return View();
         }
     }
