@@ -1247,7 +1247,8 @@
         }
 
     }
-    function checkValidDate(datevalue) {
+    function checkValidDate(datevalue)
+    {
         var date = Date.parse(datevalue);
         if (isNaN(date))
             return 'N';
@@ -1281,7 +1282,7 @@
 
 
         $("#txtStartDate").focusout(function () {
-            alert($("#txtStartDate").val());
+          
             $("#txtEndDate").val($("#txtStartDate").val());
 
 

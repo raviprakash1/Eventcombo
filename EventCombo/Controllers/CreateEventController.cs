@@ -14,5 +14,15 @@ namespace EventCombo.Controllers
             Session["Fromname"] = "events";
             return View();
         }
+
+
+        #region Ticketing 
+
+
+
+
+
+        #endregion
+
     }
 }
