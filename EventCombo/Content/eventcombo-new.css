@@ -96,7 +96,21 @@
 
 
 
-
+/*Start New 1*/
+.ev_live_sub_btn {
+    background: #00cfff;
+    border: 0 none; color: #fff !important;
+    border-radius: 3px !important;
+    font-size: 1.5em;
+    line-height: 1 !important;
+    margin-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px; min-width: 100px;
+}
+.ev_add_sub_btn:hover{background:#00cfff !important; color: #fff !important;  }
+.ev_add_sub_btn:focus{color: #fff !important;}
+.grn_live_btn{ background: #1eff00}
+.grn_live_btn:hover{ background: #1eff00}
 
 
 
