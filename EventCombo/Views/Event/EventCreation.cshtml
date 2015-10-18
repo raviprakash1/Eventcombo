@@ -1239,6 +1239,14 @@
         //});
 
     }
+
+    function compare(fromdate, todate) {
+        if (Date.parse(fromDate) > Date.parse(toDate)) {
+            alert("Invalid Date Range!\nStart Date cannot be after End Date!")
+            return false;
+        }
+
+    }
     function checkValidDate(datevalue) {
         var date = Date.parse(datevalue);
         if (isNaN(date))
@@ -1263,7 +1271,7 @@
         $("#txtTimeStart").val("7:00pm");
         $("#txtTimeEnd").val("7:00pm");
 
-        $("#txtDateTo").focusin(function () {
+        $("#txtDateTo").focusout(function () {
 
             $("#txtDateTo").val($("#txtDateFrom").val());
 
@@ -1272,8 +1280,8 @@
         });
 
 
-        $("#txtEndDate").focusin(function () {
-
+        $("#txtStartDate").focusout(function () {
+            alert($("#txtStartDate").val());
             $("#txtEndDate").val($("#txtStartDate").val());
 
 

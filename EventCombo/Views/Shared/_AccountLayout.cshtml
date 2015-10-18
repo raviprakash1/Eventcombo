@@ -56,11 +56,20 @@
             </div>
         </div>
         <div class="col-sm-12 filter_sep cont_margin">
-            <img src="~/Images/desi-account-logo.gif">
+            <img src="~/Images/desi-@HttpContext.Current.Session["Fromname"].ToString().Trim()-logo.gif">
             <div class="cus_left_kick"><</div>
         </div>
     </div>
     <div class="container-fluid cont_margin">
+        @if (HttpContext.Current.Session["Fromname"].ToString() == "events" || HttpContext.Current.Session["Fromname"].ToString() == "deals")
+        {
+            @RenderBody()
+
+        }
+        else
+        {
+
+
         <div class="row">
             <div class="col-sm-2">
                 <div class="affix-top">
@@ -80,7 +89,7 @@
                                     <div class="panel panel-default menu_list">
                                         <div class="panel-heading">
                                             <a class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                                Account <b class="closed"></b>
+                                                 Account <b class="closed"></b>
 
                                             </a>
                                         </div>
@@ -134,7 +143,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><!--/.nav-collapse -->
+                            </div>
                         </div>
                     </nav>
                 </div>
@@ -147,6 +156,7 @@
                     </div>
                 </div>
             </div>
+        }
 
     </div>
 

@@ -166,7 +166,7 @@ namespace EventCombo.Controllers
         public ActionResult MyAccount()
         {
             string defaultCountry = "";
-
+            Session["Fromname"] = "account";
             string city = "", state = "", zipcode = "", country = "";
             if ((Session["AppId"] != null))
             {
@@ -860,6 +860,11 @@ namespace EventCombo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            string url = null;
+        if(Session["ReturnUrl"]!=null)
+            {
+                url = Session["ReturnUrl"].ToString();
+            }
             if (!ModelState.IsValid)
             {
                 return RedirectToAction("Index", "Home");
@@ -879,7 +884,7 @@ namespace EventCombo.Controllers
                     {
                         Session["AppId"] = User.Id;
 
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToLocal(url);
                     }
                     else
                     {
@@ -1540,6 +1545,9 @@ namespace EventCombo.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session["Fromname"] = null;
+            Session["AppId"] = null;
+            Session["ReturnUrl"] = null;
             return RedirectToAction("Index", "Home");
         }
 
