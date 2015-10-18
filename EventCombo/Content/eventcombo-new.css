@@ -94,8 +94,6 @@
 .ev_ven_mod_lebel{ font-weight: normal; font-size: 1.2em;}
 .bor1bot{border-bottom: 1px solid #aaa;}
 
-
-
 /*Start New 1*/
 .ev_live_sub_btn {
     background: #00cfff;
@@ -112,10 +110,17 @@
 .grn_live_btn{ background: #1eff00}
 .grn_live_btn:hover{ background: #1eff00}
 
+.cong_text{ color: #00cfff; font-size: 1.8em;}
 
-
-
-
+.ev_set_del_btn {
+ background: none;
+    color: #00cfff;
+    cursor: pointer;
+    font-size: 1.4em;
+    margin-top: -6px;
+    padding: 0;
+}
+.ev_set_del_btn:hover{color: #00cfff;}
 
 .ev_pad_l0{ padding-left: 0px;}
 .ev_pad_r0{ padding-right: 0px;}
@@ -123,3 +128,5 @@
 .pt5{ padding-top: 5px !important;}
 .pb0{ padding-bottom: 0px !important;}
 .pl0{ padding-left: 0px !important;}
+
+
