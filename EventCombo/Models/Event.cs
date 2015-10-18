@@ -47,9 +47,8 @@ namespace EventCombo.Models
         public string TwitterUrl { get; set; }
         public string AddressStatus { get; set; }
         public Nullable<long> LastLocationAddress { get; set; }
-
         public string EnableFBDiscussion { get; set; }
-
+        public Nullable<int> Feature { get; set; }
     
         public virtual EventType EventType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

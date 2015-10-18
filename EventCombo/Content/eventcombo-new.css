@@ -94,8 +94,6 @@
 .ev_ven_mod_lebel{ font-weight: normal; font-size: 1.2em;}
 .bor1bot{border-bottom: 1px solid #aaa;}
 
-
-
 /*Start New 1*/
 .ev_live_sub_btn {
     background: #00cfff;
@@ -112,8 +110,7 @@
 .grn_live_btn{ background: #1eff00}
 .grn_live_btn:hover{ background: #1eff00}
 
-
-
+.cong_text{ color: #00cfff; font-size: 1.8em;}
 
 
 

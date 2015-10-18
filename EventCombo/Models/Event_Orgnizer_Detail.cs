@@ -18,6 +18,8 @@ namespace EventCombo.Models
         public Nullable<long> Orgnizer_Event_Id { get; set; }
         public string Orgnizer_Name { get; set; }
         public string Orgnizer_Desc { get; set; }
+        public string FBLink { get; set; }
+        public string Twitter { get; set; }
     
         public virtual Event Event { get; set; }
     }
