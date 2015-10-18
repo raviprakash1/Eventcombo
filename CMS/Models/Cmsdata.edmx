@@ -146,6 +146,7 @@
           <Property Name="AddressStatus" Type="varchar" MaxLength="100" />
           <Property Name="LastLocationAddress" Type="bigint" />
           <Property Name="EnableFBDiscussion" Type="varchar" MaxLength="1" />
+          <Property Name="Feature" Type="int" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -552,7 +553,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetEventListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetEventListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventTitle" Type="varchar" Mode="In" />
+          <Parameter Name="EventType" Type="varchar" Mode="In" />
+          <Parameter Name="EventCat" Type="varchar" Mode="In" />
+          <Parameter Name="EventSubCat" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetSetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
           <Parameter Name="GETSET" Type="varchar" Mode="In" />
@@ -926,7 +932,12 @@
             <End Role="EventVenue1" EntitySet="EventVenues" />
           </AssociationSet>
           <EntitySet Name="Event_Detail" EntityType="Cmsdata.Event_Detail" />
-          <FunctionImport Name="GetEventListing" ReturnType="Collection(Cmsdata.EventCreation)" />
+          <FunctionImport Name="GetEventListing" ReturnType="Collection(Cmsdata.EventCreation)" >
+            <Parameter Name="EventTitle" Mode="In" Type="String" />
+            <Parameter Name="EventType" Mode="In" Type="String" />
+            <Parameter Name="EventCat" Mode="In" Type="String" />
+            <Parameter Name="EventSubCat" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Address">
           <Key>
@@ -986,6 +997,7 @@
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Cmsdata.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
           <NavigationProperty Name="EventVenues" Relationship="Cmsdata.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
           <NavigationProperty Name="Tickets" Relationship="Cmsdata.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
+          <Property Name="Feature" Type="Int32" />
         </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
@@ -1273,6 +1285,8 @@
           <Property Type="String" Name="EventCategory" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="135" />
+          <Property Type="Int64" Name="EventID" Nullable="false" />
+          <Property Type="Int32" Name="Feature" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1476,6 +1490,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="Cmsdata.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Feature" ColumnName="Feature" />
                 <ScalarProperty Name="EnableFBDiscussion" ColumnName="EnableFBDiscussion" />
                 <ScalarProperty Name="LastLocationAddress" ColumnName="LastLocationAddress" />
                 <ScalarProperty Name="AddressStatus" ColumnName="AddressStatus" />
@@ -1712,6 +1727,8 @@
                 <ScalarProperty Name="EventCategory" ColumnName="EventCategory" />
                 <ScalarProperty Name="EventSubCategory" ColumnName="EventSubCategory" />
                 <ScalarProperty Name="EventTiming" ColumnName="EventTiming" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="Feature" ColumnName="Feature" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

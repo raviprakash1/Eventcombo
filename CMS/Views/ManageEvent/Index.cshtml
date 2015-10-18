@@ -4,273 +4,359 @@
     ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using  (Html.BeginForm("Index", "ManageEvent", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
+@using (Html.BeginForm("Index", "ManageEvent", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
 {
-<section id="content_wrapper">
+    <section id="content_wrapper">
 
-    <!-- Start: Topbar -->
-    <header id="topbar" class="alt">
-        <div class="topbar-left">
-            <ol class="breadcrumb">
+        <!-- Start: Topbar -->
+        <header id="topbar" class="alt">
+            <div class="topbar-left">
+                <ol class="breadcrumb">
 
-                <li class="crumb-icon">
-                    <a href="dashboard.html">
-                        <span class="glyphicon glyphicon-home"></span>
-                    </a>
-                </li>
-                <li class="crumb-active">
-                    Dashboard
-                </li>
-            </ol>
-        </div>
-
-    </header>
-    <!-- End: Topbar -->
-    <!-- Begin: Content -->
-    <div id="content" class="animated fadeIn">
-      
-        @*<div class="aler_center1">
-            <div class="aler_center_inner fs18">
-                <strong>Are you sure !</strong> <br>
-                You want to Delete ?
-
-                <br>
-                <div class="col-sm-12 text-center">
-                    <button class="btn btn-info " type="button">Delte</button>
-                    <button class="btn btn-info " type="button">Cancel</button>
-                </div>
+                    <li class="crumb-icon">
+                        <a href="dashboard.html">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </a>
+                    </li>
+                    <li class="crumb-active">
+                        Dashboard
+                    </li>
+                </ol>
             </div>
 
-        </div>*@
-        <div class="row" id="modal-content">
-            <div class="col-md-12">
-                <div class="admin-panels ">
-                    <div class="row">
-                        <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
-                            <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
-                                <div class="panel-heading">
-                                    <span class="view_evnt fs26">  View Event</span>
+        </header>
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+        <div id="content" class="animated fadeIn">
 
-                                </div>
-                                <div class="panel-body">
-                                    <!--  <hr class="short alt"> -->
-                                    <form class="admin-form">
-                                        <div class="col-md-2 col-sm-2">
-                                            <div class="">
-                                                <input type="text" class="form-control" placeholder="Search Event Title" value="Search Event Title">
-                                            </div>
-                                        </div>
+            @*<div class="aler_center1">
+                    <div class="aler_center_inner fs18">
+                        <strong>Are you sure !</strong> <br>
+                        You want to Delete ?
 
-                                        <div class="col-md-2 col-sm-2">
-                                            <div class="">
-                                                <input type="text" class="form-control" placeholder="Search by ID" value="Search Event Id">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2 col-sm-2">
-                                            <div class="section">
-                                                <label class="field select">
-                                                    <select>
-                                                        <option value="0">Event Type</option>
-                                                        <option value="1">Type 1</option>
-                                                        <option value="2">Type 2</option>
-                                                    </select>
-                                                    <i class="arrow single"></i>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-sm-2">
-                                            <div class="section">
-                                                <label class="field select">
-                                                    <select>
-                                                        <option value="0">Event Category</option>
-                                                        <option value="1">Upcoming</option>
-                                                        <option value="2">Expired</option>
-                                                    </select>
-                                                    <i class="arrow single"></i>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-sm-2">
-                                            <div class="section">
-                                                <label class="field select">
-                                                    <select>
-                                                        <option value="0">Event Subcategory</option>
-                                                        <option value="1">Subcategory1</option>
-                                                        <option value="2">Subcategory2</option>
-                                                    </select>
-                                                    <i class="arrow single"></i>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-sm-2">
-                                            <div class="section">
-                                                <label class="field select">
-                                                    <select>
-                                                        <option value="0">Any Event</option>
-                                                        <option value="1">Upcoming</option>
-                                                        <option value="2">Expired</option>
-                                                    </select>
-                                                    <i class="arrow single"></i>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-sm-2">
-                                            <div class="section">
-                                                <label class="field select">
-                                                    <select>
-                                                        <option value="0">Any Event</option>
-                                                        <option value="1">No Sales</option>
-                                                        <option value="2">Sold Tickets</option>
-                                                    </select>
-                                                    <i class="arrow single"></i>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-sm-2">
-                                            <div class="section">
-                                                <label class="field select">
-                                                    <select>
-                                                        <option value="0">Feature</option>
-                                                        <option value="1">Platinum</option>
-                                                        <option value="2">Bronze</option>
-                                                        <option value="3">Silver</option>
-                                                    </select>
-                                                    <i class="arrow single"></i>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-sm-2">
-                                            <button class="btn btn-info br2 col-md-12 fs15">Search</button>
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-md-12">
-                            <table class="table footable" data-page-navigation=".pagination" data-page-size="6">
-                                <thead class="bg_white">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Event Title</th>
-                                        <th>Event Type</th>
-                                        <th>Event Category</th>
-                                        <th>Event SubCategory</th>
-                                        <th>Event Date(s)</th>
-                                        <th>Organizer Name & Email</th>
-                                        <th>Venue name & address</th>
-                                        <th>Manage Ticketing</th>
-                                        <th>Tickets Sold</th>
-                                        <th>Feature </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{ int i = 0;
-                                        foreach (var obj in Model)
-                                        {
-                                            i = i + 1;
-                                            <tr>
-                                                <td>@i.ToString()</td>
-                                                <td>@obj.EventTitle</td>
-                                                <td>@obj.EventType</td>
-                                                <td>@obj.EventCategory</td>
-                                                <td>@obj.EventSubCategory</td>
-                                                <td>@obj.EventTiming</td>
-                                                
-                                                <td>
-
-                                                    @*<div class="view_sel_wid">
-                                                        <select id="multiselect2" multiple="multiple">
-                                                            <option value="cheese">Platinum</option>
-                                                            <option value="tomatoes">Gold </option>
-                                                            <option value="mozarella">Silver </option>
-                                                            <option value="mushrooms">Bronze </option>
-                                                        </select>
-                                                    </div>*@
-
-                                                </td>
-                                                <td>
-                                                    @*<button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                    <a id="" class="holder-active animation-switcher" href="#modal-panel">
-                                                        <button class="btn btn-danger br2 btn-xs fs12" data-effect="mfp-flipInY"><i class="fa fa-remove"></i></button>
-                                                    </a>*@
-
-                                                </td>
-
-
-
-                                            </tr>
-                                            }
-
-                                        }
-
-                                </tbody>
-                                <tfoot class="footer-menu">
-                                    <tr>
-                                        <td colspan="13">
-                                            <nav class="text-right">
-                                                <ul class="pagination hide-if-no-paging"></ul>
-                                            </nav>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-
-            <!--  <div id="modal-text" class="popup-basic p25 popup-lg mfp-with-anim mfp-hide">
-                 <div class="row">
-                   <div class="col-md-12"><h3>Select Role</h3></div>
-                   <div class="col-md-4 admin-form">
-                     <h3>Select Role</h3>
-                     <label class="field select">
-                        <select>
-                         <option value="0">Select</option>
-                          <option value="0">Admin</option>
-                          <option value="1">Member Limit</option>
-                          <option value="2">Member</option>
-                        </select>
-                        <i class="arrow double"></i>
-                      </label>
-                   </div>
-                   <div class="col-md-8">
-                      You may put any HTML here. This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
-
-                   </div>
-                 </div>
-            </div> -->
-            @*<div id="modal-panel" class="popup-basic bg-none mfp-hide">
-
-                <div class="panel">
-
-                    <div class="panel-body">
-                        <div class="col-sm-12 text-center fs18">
-                            <strong>Are you sure !</strong> <br>
-                            You want to Delete ?
-                        </div>
                         <br>
                         <div class="col-sm-12 text-center">
                             <button class="btn btn-info " type="button">Delte</button>
                             <button class="btn btn-info " type="button">Cancel</button>
                         </div>
-
-
                     </div>
 
+                </div>*@
+            <div class="row" id="modal-content">
+                <div class="col-md-12">
+                    <div class="admin-panels ">
+                        <div class="row">
+                            <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
+                                <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
+                                    <div class="panel-heading">
+                                        <span class="view_evnt fs26">  View Event</span>
+
+                                    </div>
+                                    <div class="panel-body">
+                                        <!--  <hr class="short alt"> -->
+                                        <form class="admin-form">
+                                            <div class="col-md-2 col-sm-2">
+                                                <div class="">
+                                                    @Html.TextBox("SearchStringEventTitle", "", new { cssClass = "form-control", placeholder = "Search Event Title" })
+                                                    @*<input type="text" class="form-control" placeholder="Search Event Title" value="Search Event Title">*@
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="label-control evnt_ticket_label wd600">Event Type</label>
+                                                @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label-control evnt_ticket_label wd600">Event Category</label>
+                                                @*<select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>*@
+                                                @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label-control evnt_ticket_label wd600">Event Sub-category</label>
+                                                @Html.DropDownList("ddlEventSubCategory")
+                                                <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                                            </div>
+                                        
+                                            <div class="col-md-2 col-sm-2">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select>
+                                                            <option value="0">Any Event</option>
+                                                            <option value="1">Upcoming</option>
+                                                            <option value="2">Expired</option>
+                                                        </select>
+                                                        <i class="arrow single"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select>
+                                                            <option value="0">Any Event</option>
+                                                            <option value="1">No Sales</option>
+                                                            <option value="2">Sold Tickets</option>
+                                                        </select>
+                                                        <i class="arrow single"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select>
+                                                            <option value="0">Feature</option>
+                                                            <option value="1">Platinum</option>
+                                                            <option value="2">Bronze</option>
+                                                            <option value="3">Silver</option>
+                                                        </select>
+                                                        <i class="arrow single"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <button class="btn btn-info br2 col-md-12 fs15">Search</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table footable" data-page-navigation=".pagination" data-page-size="6">
+                                    <thead class="bg_white">
+                                        <tr>
+                                            <th>Sno.</th>
+                                            <th>Event Title</th>
+                                            <th>Event Type</th>
+                                            <th>Event Category</th>
+                                            <th>Event SubCategory</th>
+                                            <th>Event Date(s)</th>
+                                            <th>Organizer Name & Email</th>
+                                            <th>Venue name & address</th>
+                                            <th>Manage Ticketing</th>
+                                            <th>Tickets Sold</th>
+                                            <th>Feature </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ int i = 0;
+                                            foreach (var obj in Model)
+                                            {
+                                                i = i + 1;
+                                                <tr>
+                                                    <td>@i.ToString()</td>
+                                                    <td>@obj.EventTitle</td>
+                                                    <td>@obj.EventType</td>
+                                                    <td>@obj.EventCategory</td>
+                                                    <td>@obj.EventSubCategory</td>
+                                                    <td>@obj.EventTiming</td>
+                                                    <td>Orgnizer</td>
+                                                    <td>VenueName</td>
+                                                    <td>ManageTickets</td>
+                                                    <td>TicketSold</td>
+                                                    <td>
+                                                        <div class="view_sel_wid">
+                                                            @if (obj.Feature == 1)
+                                                            {
+                                                                <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)" >
+                                                                    <option text=0 value="0">Select</option>
+                                                                    <option value=1 selected="selected">Platinum</option>
+                                                                    <option value=2>Gold</option>
+                                                                    <option value=3>Silver</option>
+                                                                    <option value=4>Bronze</option>
+                                                                </select>
+                                                            }
+                                                            else if (obj.Feature == 2)
+                                                            {
+                                                                <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
+                                                                    <option text=0 value="0">Select</option>
+                                                                    <option value=1>Platinum</option>
+                                                                    <option value=2 selected="selected">Gold</option>
+                                                                    <option value=3>Silver</option>
+                                                                    <option value=4>Bronze</option>
+                                                                </select>
+                                                            }
+
+                                                            else if (obj.Feature == 3)
+                                                            {
+                                                                <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
+                                                                    <option text=0 value="0">Select</option>
+                                                                    <option value=1>Platinum</option>
+                                                                    <option value=2>Gold</option>
+                                                                    <option value=3 selected="selected">Silver</option>
+                                                                    <option value=4>Bronze</option>
+                                                                </select>
+                                                            }
+                                                            else if (obj.Feature == 4)
+                                                            {
+                                                                <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
+                                                                    <option text=0 value="0">Select</option>
+                                                                    <option value=1>Platinum</option>
+                                                                    <option value=2>Gold</option>
+                                                                    <option value=3>Silver</option>
+                                                                    <option value=4 selected="selected">Bronze</option>
+                                                                </select>
+                                                            }
+                                                            else if (obj.Feature == 0)
+                                                            {
+                                                                <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
+                                                                    <option text=0 value="0">Select</option>
+                                                                    <option value=1>Platinum</option>
+                                                                    <option value=2>Gold</option>
+                                                                    <option value=3>Silver</option>
+                                                                    <option value=4>Bronze</option>
+                                                                </select>
+                                                            }
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        @*<button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                            <a id="" class="holder-active animation-switcher" href="#modal-panel">
+                                                                <button class="btn btn-danger br2 btn-xs fs12" data-effect="mfp-flipInY"><i class="fa fa-remove"></i></button>
+                                                            </a>*@
+
+                                                    </td>
+
+
+
+                                                </tr>
+                                            }
+
+                                        }
+
+                                    </tbody>
+                                    <tfoot class="footer-menu">
+                                        <tr>
+                                            <td colspan="13">
+                                                <nav class="text-right">
+                                                    <ul class="pagination hide-if-no-paging"></ul>
+                                                </nav>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
-            </div>*@
 
+                <!--  <div id="modal-text" class="popup-basic p25 popup-lg mfp-with-anim mfp-hide">
+                     <div class="row">
+                       <div class="col-md-12"><h3>Select Role</h3></div>
+                       <div class="col-md-4 admin-form">
+                         <h3>Select Role</h3>
+                         <label class="field select">
+                            <select>
+                             <option value="0">Select</option>
+                              <option value="0">Admin</option>
+                              <option value="1">Member Limit</option>
+                              <option value="2">Member</option>
+                            </select>
+                            <i class="arrow double"></i>
+                          </label>
+                       </div>
+                       <div class="col-md-8">
+                          You may put any HTML here. This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
+
+                       </div>
+                     </div>
+                </div> -->
+                @*<div id="modal-panel" class="popup-basic bg-none mfp-hide">
+
+                        <div class="panel">
+
+                            <div class="panel-body">
+                                <div class="col-sm-12 text-center fs18">
+                                    <strong>Are you sure !</strong> <br>
+                                    You want to Delete ?
+                                </div>
+                                <br>
+                                <div class="col-sm-12 text-center">
+                                    <button class="btn btn-info " type="button">Delte</button>
+                                    <button class="btn btn-info " type="button">Cancel</button>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>*@
+
+            </div>
         </div>
-    </div>
-    <!-- End: Content -->
+        <!-- End: Content -->
+        <script>
+            function SaveFeature(EventId,vValue)
+            {
+                $.ajax({
+                    url: '@Url.Action("UpdateEventFeature", "ManageEvent")',
+                    data: { iFid: parseInt(vValue), lEventId: parseInt(EventId) },
+                    type: "Post",
+                    success: function (data) {
+                        if (data == "Y")
+                            alert("Event Feature Updated Successfully.");
+                        else
+                            alert("There is some Problem, not able to update.");
+                    },
+                    error: function (data) {
+                        alert("Sorry there is some problem.");
+                    }
+                });
 
-</section>
+
+            }
+            $(document).ready(function () {
+
+                $("#ddlEventCategory").change(function () {
+                    //alert("change Fires");
+                    var vCatId = $("#ddlEventCategory").val();
+                    $.ajax({
+                        url: '@Url.Action("GetSubCat", "ManageEvent")',
+                        data: { lECatId: vCatId },
+                        type: "Post",
+                        success: function (data) {
+                            //$.each(data, function () {
+                            // debugger;
+                            //                   alert(data.length);
+                            $("#ddlEventSubCategory").html(data);
+                            // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                            //});
+                        },
+                        error: function (data) {
+                            alert("Sorry there is some problem.");
+                        }
+                    });
+                });
+
+
+
+                $("#dlFeature").change(function () {
+                    alert("chal pya");
+                    var vValue = 0;
+                    var EventId = $(this).val();
+                    var Feature = $("#dlFeature option:selected").text();
+                    alert(Feature);
+                    if (Feature == "Platinum")
+                        vValue = 1;
+                    else if (Feature == "Gold")
+                        vValue = 2;
+                    else if (Feature == "Silver")
+                        vValue = 3;
+                    else if (Feature == "Bronze")
+                        vValue = 4;
+
+                    //   alert(Feature + " " + EventId);
+                });
+            });
+
+        </script>
+    </section>
 }

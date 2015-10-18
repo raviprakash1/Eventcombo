@@ -76,9 +76,25 @@ namespace CMS.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSetUserRole", user_IdParameter, gETSETParameter, role_IdParameter);
         }
     
-        public virtual ObjectResult<EventCreation> GetEventListing()
+        public virtual ObjectResult<EventCreation> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventListing");
+            var eventTitleParameter = eventTitle != null ?
+                new ObjectParameter("EventTitle", eventTitle) :
+                new ObjectParameter("EventTitle", typeof(string));
+    
+            var eventTypeParameter = eventType != null ?
+                new ObjectParameter("EventType", eventType) :
+                new ObjectParameter("EventType", typeof(string));
+    
+            var eventCatParameter = eventCat != null ?
+                new ObjectParameter("EventCat", eventCat) :
+                new ObjectParameter("EventCat", typeof(string));
+    
+            var eventSubCatParameter = eventSubCat != null ?
+                new ObjectParameter("EventSubCat", eventSubCat) :
+                new ObjectParameter("EventSubCat", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter);
         }
     }
 }

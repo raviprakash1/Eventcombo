@@ -1,0 +1,111 @@
+
+
+.ev_date_icn{ background-image: url(../images/icon-date.png); width: 29px; height: 29px; margin-top: 7px; left: -15px; position: absolute; cursor: pointer;}
+.ev_loc_icn{ background-image: url(../images/icon-location.png); width: 26px; height: 35px; position: absolute;   left: 45px; cursor: pointer;}
+.ev_loca_check_main{ margin-top: 20%;}
+.ev_loca_check{ color: #aaa; font-size: 18px; font-weight: normal; }
+.evnt_tile_bg_l{background-image: url(../images/title_bg_l.png); width: 19px; height: 34px; float: left; margin-left: -19px; position: absolute; cursor: pointer;  }
+.evnt_tile_bg_r{background-image: url(../images/title_bg_r.png); width: 19px; height: 34px; float: right; margin-right: -19px; margin-right: -19px;
+    margin-top: -34px !important; top: 6px; position: absolute;right: 0; position: relative; cursor: pointer;  }
+ .evnt_tile_head h2{ font-size: 1.2em; color: #fff;}
+ .ev_add_tkt_tit{ font-size: 1.6em; font-weight: normal; color: #4a4a4a; margin-right: 10px;}
+ .ev_btn_type button.save_btn{ font-size: 1.2em; margin-right: 10px; border-radius: 3px!important; padding-left: 15px; padding-right: 15px; line-height: 1 !important; background: #00cfff; border: 0px;}
+.list_typ1{width:4%;}
+.list_typ2{width:25%;}
+.list_typ3{width:21%;}
+.list_typ4{width:20%;}
+.list_typ5{width:15%;}
+.ev_ticket_haeding .list-group-item{ padding: 5px 10px;}
+.ev_tickt_lebel{ font-weight: normal; font-size: 1.4em; padding-left:6px; }
+.ev_tickt_input{ font-weight: normal; font-size: 1em;}
+.evnt_set{ margin-right: 5px;}
+.evnt_setting a{ font-size: 1.4em; color: #00cfff;}
+.ev_row_mov{ width: 5%;}
+.ev_row_icn{ top: 5px; position: relative;}
+.evnt_sett_main{ width: 90px;}
+.ev_drop_label{ font-size: 1.2em;}
+.ev_fb_lable{ font-weight: normal; margin-right: 10px;}
+.fb_dis_head{ padding-top: 1px !important; padding-bottom: 0px !important;}
+.evnt_tile_bg_r_fb{ margin-top: -34px !important}
+.evnt_tile_bg_r_call{ margin-top:-6px !important}
+.ev_set_more{font-size: 1.4em; color: #00cfff; cursor: pointer;}
+
+.ev_add_sub_btn {
+    background: #00cfff;
+    border: 0 none;
+    border-radius: 3px !important;
+    font-size: 1.2em;
+    line-height: 1 !important;
+    margin-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px; min-width: 100px;
+}
+.ev_add_sub_btn:hover{background: #00cfff;  }
+
+.ev_modal_add_btn{min-width: 100px;font-size: 1.2em;}
+.ev_orgz_list{ min-height: 40px; border:0px; font-size: 1.2em;}
+.ev_orgz_group{ border-radius: 0px ; border:1px solid #aaa; border-top: 0px; min-height: 44px; height: 100px; overflow: auto;}
+.Orgz_dro_con{ background: #fff; min-height: 40px; line-height: 40px; font-size: 1.2em; border:1px solid #aaa;}
+
+.org_right{ cursor: pointer;}
+.ev_org_edt_main{color:#00cfff; }
+.ev_org_edt_main a{ color:#00cfff;  }
+
+
+.evnt_title_date{ color: #baff00; font-size: 2em; font-weight: normal; } 
+.evnt_title_timezone{color: #fff; font-size: 1.5em; font-weight: normal; cursor: pointer;}
+.evnt_title_location{ font-weight: normal; color: #00cfff;}
+.evnt_title_multi{color: #aaa; font-size: 1.2em; font-weight: normal;}
+.evnt_title_multi a{color: #aaa;}
+.evnt_title_multi a:hover{color: #aaa;}
+.evnt_title_online{ margin-top: 10px; color: #aaa }
+
+.ev_modal_header_title{ font-size: 1.4em;font-weight: normal;}
+.ev_add_sr_no{ width: 30px; height: 30px; border-radius: 50%; background: #7f7f7f; color: #fff; text-align: center; line-height: 35px;}
+.ev_add_venue_group{ min-height: 50px;  max-height: 150px; overflow: auto;}
+.ev_add_venue_list{  
+    width: 100%; float: left; min-height: 50px;  padding: 10px 0;
+    padding-right: 0; border-bottom: 1px solid #7f7f7f !important;}
+.ev_add_venue_group .ev_add_venue_list:last-child{ border-bottom: 0px;}
+.ev_add_venue_addres{  color: #000; font-size:1em; }    
+
+.ev_add_venue_action .ev_ven_act{width: 35px; height: 35px; float: left; margin-right: 5px; border-radius: 50%; background: #7f7f7f; color: #fff; text-align: center; line-height: 35px;}
+.ev_add_venue_action .ev_ven_act a{ color: #fff; font-size: 1em;}
+.ev_add_venue_action .ev_ven_act.ev_ven_blue{ background: #00cfff; color: #fff;}
+.ad_ven_mod_btn{ min-height: 50px; border-radius: 0px; font-size: 1.5em; }
+
+
+.ev_time_zone_model_main{ position: absolute;  margin-top: 2%; z-index: 9; width: 500px; border-radius: 5px; max-width: 100%; float: right; text-align: left;}
+.ev_time_zone_model:after {
+  border-left: solid transparent 10px;
+  border-right: solid transparent 10px;
+  border-bottom: solid #fff 10px;
+  top: -9px;
+  content: " ";
+  height: 0;
+  right: 10%;
+  margin-left: -13px;
+  position: absolute;
+  width: 0;
+}
+.ev_timezone_lebel{ font-weight: normal; font-size: 1.2em;}
+.ev_tm_zon_cont{ box-shadow: none;}
+.ev_date_time_model{ margin-top: 45px; width: 625px; }
+.ev_ven_mod_lebel{ font-weight: normal; font-size: 1.2em;}
+.bor1bot{border-bottom: 1px solid #aaa;}
+
+
+
+
+
+
+
+
+
+
+.ev_pad_l0{ padding-left: 0px;}
+.ev_pad_r0{ padding-right: 0px;}
+.mt20{ margin-top: 20px;}
+.pt5{ padding-top: 5px !important;}
+.pb0{ padding-bottom: 0px !important;}
+.pl0{ padding-left: 0px !important;}

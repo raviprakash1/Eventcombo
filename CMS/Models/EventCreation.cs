@@ -18,5 +18,7 @@ namespace CMS.Models
         public string EventCategory { get; set; }
         public string EventSubCategory { get; set; }
         public string EventTiming { get; set; }
+        public long EventID { get; set; }
+        public int Feature { get; set; }
     }
 }
