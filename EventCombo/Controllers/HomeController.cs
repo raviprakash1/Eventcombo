@@ -298,6 +298,43 @@ namespace EventCombo.Controllers
             string result = getusername();
             return Content(result);
         }
+        public void setsessid(string id)
+        {
+            if (id == "discover")
+            {
+
+
+
+                Session["ReturnUrl"]= Url.Action("DiscoverEvents", "Home");
+
+            }
+
+            if (id == "GetBuzz")
+            {
+                Session["ReturnUrl"] = Url.Action("GetBuzz", "Home");
+            
+             
+
+            }
+         
+
+        }
+        public string checkid() {
+            Session["ReturnUrl"] =Url.Action("EventCreation", "Event");
+            if (Session["AppId"] == null)
+            {
+                return "Y";
+
+            }
+            else
+            {
+                return "N";
+
+            }
+                }
+
+
+
         private string getusername()
         {
             if ((Session["AppId"] != null))
