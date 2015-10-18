@@ -36,11 +36,11 @@
                 </div>
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
-                        <input class="form-control evnt_title_control" placeholder="Click here to enter the name of the event" />
+                        <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control" placeholder="Click here to enter the name of the event" value="" />
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
                         <div class="form-group mb0">
-                            <label class="label-control evnt_title_date evnt_title_online fs24"><input type="checkbox"> Online Event</label>
+                            <label class="label-control evnt_title_date evnt_title_online fs24"><input id="btOnlineEvent" type="checkbox"> Online Event</label>
                         </div>
                     </div>
                     <div class="col-sm-9 text-right no_pad">
@@ -807,6 +807,13 @@
             <div class="col-sm-12 text-center mb10 make_live_btn">
                 <button type="button" class="btn btn-primary btn-lg save_btn">Save</button>
                 <button type="button" class="btn btn-primary btn-lg save_btn">Make your Event Live</button>
+
+                <input type="hidden" id="hidAddSno" value="" />
+                <input type="hidden" id="hidSchLastState" value="" />
+                <input type="hidden" id="hidOrgnizer" value="" />
+                <input type="hidden" id="hidAddressStatus" value="" />
+                <input type="hidden" id="hdUniqueguid" value="" />
+
             </div>
         
     </div>
@@ -823,37 +830,31 @@
                 <div class="modal-body">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <input class="form-control evnt_inp_cont" placeholder="Enter the Venue Name" />
+                            <input id="VenueName" class="form-control evnt_inp_cont" placeholder="Enter the Venue Name" />
                         </div>
                         <div class="form-group">
-                            <input class="form-control evnt_inp_cont" placeholder="Address 1" />
+                            <input id="Address1" class="form-control evnt_inp_cont" placeholder="Address 1" />
                         </div>
                         <div class="form-group">
-                            <input class="form-control evnt_inp_cont" placeholder="Address 2" />
+                            <input id="Address2" class="form-control evnt_inp_cont" placeholder="Address 2" />
                         </div>
                         <div class="form-group">
-                            <input class="form-control evnt_inp_cont" placeholder="City" />
+                            <input id="City" class="form-control evnt_inp_cont" placeholder="City" />
                         </div>
 
                         <div class="col-sm-6 row">
                             <div class="form-group">
-                                <input class="form-control evnt_inp_cont" placeholder="State" />
+                                <input id="State" class="form-control evnt_inp_cont" placeholder="State" />
                             </div>
                         </div>
                         <div class="col-sm-6 row pull-right">
                             <div class="form-group">
-                                <input class="form-control evnt_inp_cont" placeholder="Zip Code" />
+                                <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" />
                             </div>
                         </div>
                         <div class="clearfix"></div>
                         <div class="form-group mb5 ">
-                            <select class="form-control evnt_inp_cont">
-                                <option>dawadasd</option>
-                                <option>dawadasd</option>
-                                <option>dawadasd</option>
-                                <option>dawadasd</option>
-                                <option>dawadasd</option>
-                            </select>
+                            @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" })
                         </div>
 
                     </div>
@@ -862,14 +863,23 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 mt10">
-                        <button type="button" class="btn btn-primary ev_add_sub_btn">Add More</button>
+                        <button type="button" id="btAddMore" class="btn btn-primary ev_add_sub_btn">Add More</button>
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12">
                         <div class="col-sm-12 no_pad ">
                             <div class="list-group ev_add_venue_group mb0">
-                                <div class="ev_add_venue_list">
-                                    <div class="col-sm-10 no_pad mt5 ev_add_venue_addres">USA, Aghapur Road, Sector 41, Noida, Uttar Pradesh, India </div>
+                                <table id="tblAddress" class="table table-responsive">
+                                    <tbody>
+                                        <tr class="event_add_table">
+                                            <th>Address</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @*<div class="ev_add_venue_list">
+                                    <div  class="col-sm-10 no_pad mt5 ev_add_venue_addres">
+                                    
+                                    USA, Aghapur Road, Sector 41, Noida, Uttar Pradesh, India </div>
                                     <div class="col-sm-2 no_pad text-right ev_add_venue_action">
                                         <a href="#"><div class="ev_ven_act"><i class="fa fa-pencil"></i>  </div></a>
                                         <a href="#"><div class="ev_ven_act ev_ven_blue"><i class="fa fa-trash"></i> </div></a>
@@ -881,7 +891,7 @@
                                         <a href="#"><div class="ev_ven_act"><i class="fa fa-pencil"></i>  </div></a>
                                         <a href="#"><div class="ev_ven_act ev_ven_blue"><i class="fa fa-trash"></i> </div></a>
                                     </div>
-                                </div>
+                                </div>*@
 
 
 
@@ -902,10 +912,130 @@
 
 
 
-
+// ---------------------Event Creation Script -------------------
     <script>
-    $(document).ready(function() {
+        function DeleteTableRow(Sno) {
 
+            $('#tblAddress tr').each(function () {
+                if (Sno == $(this).find("td:first").html())
+                    $(this).remove();
+            });
+            if (parseInt($('#tblAddress tr').length) <= 1) {
+
+
+            }
+
+        }
+
+
+        function editRow(Sno) {
+            //alert(ColumnValue);
+            $("#hidAddSno").val(Sno);
+            $("#VenueName").val($("#VenueName" + Sno).val());
+            $("#Address1").val($("#Address1" + Sno).val());
+            $("#Address2").val($("#Address2" + Sno).val());
+            $("#City").val($("#City" + Sno).val());
+            $("#State").val($("#State" + Sno).val());
+            $("#Zip").val($("#Zip" + Sno).val());
+            $("#CountryID").val($("#CID" + Sno).val());
+            //   var row_index = $(this).parent().index('tr');
+
+
+            // var i = 1;
+            //var myTr = [];
+            //$('#tblAddress tr').each(function () {
+            //    $(this).find('td').each(function () {
+            //    });
+            //    alert(myTr);
+            //});
+
+            //$('#tblAddress tr').each(function () {
+            //    $(this).find('td').each(function () {
+            //        i =parseInt($(this).text());
+            //        if (parseInt(Sno) == )
+            //        {
+            //            myTr.push($(this).text());
+            //        }
+            //    });
+            //    alert(myTr);
+            //});
+
+        }
+
+
+        $(document).ready(function () {
+
+
+            // --------------------Multiple Venue---------------------------
+
+            function AddRow(TableId, ColumnValue, ColumnName, IncludeSNo) {
+                var ColAry = ColumnValue.split('¶');
+                var ColName = ColumnName.split('¶');
+                var Sno = $("#" + TableId + " tr").length;
+                var cval = ColumnValue;
+                var strHTML = '<tr>';
+                strHTML = strHTML + '<td>' + Sno + '</td>';
+
+                for (i = 0; i <= ColAry.length - 1; i++) {
+                    CellId = ColName[i] + Sno.toString();
+                    if (ColName[i].toString() == "CID" || ColName[i].toString() == "CountryID")
+                        strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
+                    else
+                        strHTML = strHTML + '<td> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
+                }
+
+                strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
+                //strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-marker"></i> Edit</a>  <input type="button" name="Delete" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')" value="Delete" /> </div> </td>';
+                //strHTML = strHTML + '<td><input type="button" onclick="editRow();" id="btnEdit" value="Edit" /></td>';
+                strHTML = strHTML + '</tr>';
+                $("#" + TableId).append(strHTML);
+            }
+
+            function EditRow(TableId, ColumnValue, ColumnName, Sno) {
+                var ColAry = ColumnValue.split('¶');
+                var ColName = ColumnName.split('¶');
+
+                for (i = 0; i <= ColName.length - 1; i++) {
+
+                    CtrlId = ColName[i] + Sno.toString();
+                    //alert(CtrlId);
+                    //if (ColName[i] == "CID")
+                    //{
+                    //    CtrlId = "CountryID" + Sno.toString();
+                    //    alert("In country");
+                    //}
+                    //else
+                    //    CtrlId = ColName[i] + Sno.toString();
+
+
+                    $("#" + CtrlId).val(ColAry[i]);
+                }
+
+            }
+            $("#btAddMore").click(function () {
+                alert("Chal Pya");
+                var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID").text() + "¶" + $("#CountryID").val();
+                var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
+                if ($("#hidAddSno").val().trim() != "")
+                    EditRow("tblAddress", vCols, vColName, $("#hidAddSno").val().trim());
+                else
+                    AddRow("tblAddress", vCols, vColName, "Y");
+
+
+                $("#VenueName").val("");
+                $("#Address1").val("");
+                $("#Address2").val("");
+                $("#City").val("");
+                $("#State").val("");
+                $("#Zip").val("");
+                $("#hidAddSno").val("");
+                $("#CountryID").val('');
+        });
+
+
+
+
+// ------Designer Code-----------
       $('.summernote').summernote({
         height: 70,   //set editable area's height
 
