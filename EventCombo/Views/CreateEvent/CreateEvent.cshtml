@@ -528,7 +528,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input class="form-control wd600" placeholder="" />
+                                        <input class="form-control wd600" id="txtOrgFBlink" placeholder="" />
                                     </div>
                                 </div>
                                 <div class="add_social_input mt10">
@@ -538,7 +538,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input class="form-control wd600" placeholder="" />
+                                        <input id="txtOrgTWlink" class="form-control wd600" placeholder="" />
                                     </div>
                                 </div>
                             </div>
@@ -559,12 +559,16 @@
                             <div class="OrglistShow col-sm-8 no_pad ">
                                 <div id="dvOrganizer" class="list-group ev_orgz_group">
                                     <div id="dvOrg_0" class="list-group-item ev_orgz_list">
-                                        <div class="col-sm-8 no_pad">Organizer 1</div>
+                                        <table id="tblOrgnizer">
+                                            
+                                        </table>
+                                        @*<div class="col-sm-8 no_pad">Organizer 1</div>
                                         <div class="col-sm-4 no_pad text-right ev_org_edt_main">
                                             <a href="#"><i class="fa fa-pencil"></i> </a> |
                                             <a href="#"><i class="fa fa-trash"></i> </a>
-                                        </div>
+                                        </div>*@
                                     </div>
+                                    
                                 </div>
 
                             </div>
@@ -1290,14 +1294,62 @@
             //});
 
         }
+        function editOrgnizer(Sno) {
+            alert(Sno);
+            $("#hidOrgnizer").val(Sno);
+            var vOrgName = $("#OrgName_" + Sno).text();
+            var vOrgDes = $("#OrgDes_" + Sno).text();
+            var vOrgFB = $("#OrgFB_" + Sno).text();
+            var vOrgTw = $("#OrgTw_" + Sno).text();
 
+            $("#txtOrgnizer").val(vOrgName);
+            $("#edOrgDes").code(vOrgDes);
+            $("#txtOrgFBlink").val(vOrgFB);
+            $("#txtOrgTWlink").val(vOrgTw);
+
+        }
+
+        function AddOrgnizer() {
+            $("#hidOrgnizer").val('');
+            var Sno = $("#tblOrgnizer tr").length;
+            var vOrgName = $("#txtOrgnizer").val();
+            var vOrgDes = $("#edOrgDes").code();
+            var vOrgFB = $("#txtOrgFBlink").val();
+            var vOrgTw = $("#txtOrgTWlink").val();
+
+            var strHTML = '<tr>';
+            strHTML = strHTML + '<td width="92%"><label id=OrgName_"' + Sno + '>' + vOrgName + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgDes_"' + Sno + '>' + vOrgDes + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgFB_"' + Sno + '>' + vOrgFB + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgTw_"' + Sno + '>' + vOrgTw + '</label></td>';
+            strHTML = strHTML + '<td align="right"><a href="#" onclick="editOrgnizer(' + Sno + ');" >Edit </a> | <a href="#"><i class="fa fa-trash"></i> </a></td>';
+
+
+
+            strHTML = strHTML + '</tr>';
+            //                strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
+
+
+            $("#tblOrgnizer").append(strHTML);
+        }
+
+        function UpdateOrgnizer(Sno) {
+
+            vOrgName = $("#txtOrgnizer").val();
+            vOrgDes = $("#edOrgDes").code();
+            vOrgFB = $("#txtOrgFBlink").val();
+            vOrgTw = $("#txtOrgTWlink").val();
+
+            $("#OrgName_" + Sno).text(vOrgName);
+            $("#OrgDes_" + Sno).text(vOrgDes);
+            $("#OrgFB_" + Sno).text(vOrgFB);
+            $("#OrgTw_" + Sno).text(vOrgTw);
+
+        }
 
         $(document).ready(function () {
-
-
             $('#btSave').click(function () {
-                debugger;
-                alert("Chal Pya");
+           
                 // Address Entry
                 var SubmitAddress = [];
                 var SingleTiming = [];
@@ -1521,7 +1573,7 @@
                     'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N')
                     //dllPastLocation
                 };
-                if ($("#hdEventId").val() != '') {
+                //if ($("#hdEventId").val() != '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
                         data: model,
@@ -1532,10 +1584,10 @@
                             alert('Congratulations, your event is on Eventcombo!');
                         }
                     });
-                }
-                else {
-                    alert("Event modified successfully.");
-                }
+                //}
+                //else {
+                //    alert("Event modified successfully.");
+                //}
             });
 
 
@@ -1564,17 +1616,27 @@
                 //$("#dvAddress").prop('disabled', true);
             });
 
+    
+
+
             $("#btAddOrg").click(function () {
+              //  alert("Test");
                 //  alert($('#dllOrganizer option').length);
                 //    if (parseInt($('#dllOrganizer option').length) < 25) {
                 //if ($("#hidOrgnizer").val() == "") {
-                var vval = $("#edSummer2").code();
-                var vLenght = $("#dvOrganizer").length;
+                //var vval = $("#edSummer2").code();
+                //var vLenght = $("#dvOrganizer").length;
 
-                var divlength = $("#dvOrg_0> div").size();
+                //var divlength = $("#dvOrg_0> div").size();
 
-                var data = $("#dvOrg_0").clone();
-                $("#dvOrganizer").append(data);
+                //var data = $("#dvOrg_0").clone();
+                //$("#dvOrganizer").append(data);
+                if ($("#hidOrgnizer").val() == "")
+                    AddOrgnizer();
+                else
+                    UpdateOrgnizer($("#hidOrgnizer").val());
+                
+
 
 
                 //alert(divlength);
@@ -2117,6 +2179,26 @@
                 $(".SchmultiDetail").hide();
                 $(".Schmultisingle").hide();
             });
+
+
+
+
+            $('body').click(function () {
+                $(".StartDatemodal").hide();
+            });
+
+            $('.StartDatemodal,.StartDate').click(function (event) {
+                event.stopPropagation();
+            });
+
+            $('body').click(function () {
+                $(".TmezoneSet").hide();
+            });
+
+            $('.TmezoneSet,.Timezone').click(function (event) {
+                event.stopPropagation();
+            });
+
 
 
         });
