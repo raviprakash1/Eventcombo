@@ -233,7 +233,7 @@
                                                     <input id="txtStartDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" onchange="ValEventdate(this.id)" />
                                                 </div>
                                                 <div class="col-sm-6 ">
-                                                    <input id="txtStartTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" />
+                                                    <input id="txtStartTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)" />
                                                 </div>
 
                                             </div>
@@ -243,7 +243,7 @@
                                                     <input id="txtEndDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY"  onchange="ValEventdate(this.id)"/>
                                                 </div>
                                                 <div class="col-sm-6 ">
-                                                    <input id="txtEndTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" />
+                                                    <input id="txtEndTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)"/>
                                                 </div>
 
                                             </div>
@@ -373,13 +373,13 @@
                                             <div class="col-sm-6 no_pad">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">From</label></div>
                                                 <div class="col-sm-6 pl0">
-                                                    <input id="txtTimeStart" class="timecheck time_picker form-control" placeholder="00:00 AM" />
+                                                    <input id="txtTimeStart" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)"/>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 no_pad">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">To</label></div>
                                                 <div class="col-sm-6 pl0">
-                                                    <input id="txtTimeEnd" class="timecheck time_picker form-control" placeholder="00:00 AM" />
+                                                    <input id="txtTimeEnd" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)" />
                                                 </div>
 
                                             </div>
@@ -706,7 +706,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
-                                                                <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" />
+                                                                <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" onchange="checkvalidtime(this.id)"  />
                                                             </div>
 
                                                         </div>
@@ -719,7 +719,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
-                                                                <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" />
+                                                                <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" onchange="checkvalidtime(this.id) "  />
                                                             </div>
 
                                                         </div>
@@ -1181,7 +1181,68 @@
 
         }
         }
-       
+        function ValEventTime(e) {
+            var errorMsg = "";
+            if (e == "txtStartTime")
+            {
+                errorMsg = checkTime(e);
+                if (errorMsg != "") {
+
+
+
+                    $('#txtStartTime').focus();
+                    $('#txtStartTime').val("7:00pm");
+                    $('#txtEndTime').val("7:00pm");
+
+                } else {
+
+                    $('#txtEndTime').val($('#' + e).val());
+                }
+
+            }
+            if (e == "txtEndTime")
+            {
+                errorMsg = checkTime(e);
+                if (errorMsg != "") {
+
+                    $('#txtEndTime').val($('#txtStartTime').val());
+
+                    $('#txtEndTime').focus();
+                   
+
+                }
+
+            }
+            if (e == "txtTimeStart") {
+
+                errorMsg = checkTime(e);
+                if (errorMsg != "") {
+
+
+
+                    $('#txtTimeStart').focus();
+                    $('#txtTimeStart').val("7:00pm");
+                    $('#txtTimeEnd').val("7:00pm");
+
+                } else {
+
+                    $('#txtTimeEnd').val($('#' + e).val());
+                }
+            }
+            if (e == "txtTimeEnd") {
+                errorMsg = checkTime(e);
+                if (errorMsg != "") {
+
+                    $('#txtTimeEnd').val($('#txtTimeStart').val());
+
+                    $('#txtTimeEnd').focus();
+
+
+                }
+
+            }
+
+        }
         function DeleteTableRow(Sno) {
 
             $('#tblAddress tr').each(function () {
@@ -2370,7 +2431,10 @@
             $("#id_saleend-" + divlength).datepicker('hide');
         });;
         $("#id_saletimestart-" + divlength).timepicker();
+    
         $("#id_saletimeend-" + divlength).timepicker();
+        $("#id_saletimestart-" + divlength).val("7:00 PM");
+        $("#id_saletimeend-" + divlength).val("7:00 PM");
 
 
     });
@@ -2440,6 +2504,9 @@
         });;;
         $("#id_saletimestart-" + divlength).timepicker();
         $("#id_saletimeend-" + divlength).timepicker();
+        $("#id_saletimestart-" + divlength).val("7:00 PM");
+        $("#id_saletimeend-" + divlength).val("7:00 PM");
+
     });
     $('.save_btnfree').click(function () {
 
@@ -2508,6 +2575,9 @@
         });
         $("#id_saletimestart-" + divlength).timepicker();
         $("#id_saletimeend-" + divlength).timepicker();
+        $("#id_saletimestart-" + divlength).val("7:00 PM");
+        $("#id_saletimeend-" + divlength).val("7:00 PM");
+
     });
     function randomString(len, charSet) {
         charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -2586,7 +2656,7 @@
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
         var price = parseFloat($('#id_cost-' + el).val());
         var discount = parseFloat($('#' + e).val());
-
+      
         if (!isNaN(price)) {
             if (price != 0) {
                 if (discount >= price) {
@@ -2605,13 +2675,52 @@
 
 
         } else {
-
-            $('#' + e).addClass('err-bor');
-            return false;
+            if (discount == 0) {
+                $('#' + e).removeClass('err-bor');
+            } else {
+                $('#' + e).addClass('err-bor');
+                return false;
+            }
         }
 
-    }
+        
 
+    }
+    function checkvalidtime(e) {
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        var al = e.substr(0, e.indexOf('-'));
+        if (al == "id_saletimestart")
+        {
+            errorMsg = checkTime(e);
+            if (errorMsg != "") {
+
+
+
+                $('#id_saletimestart-'+el).focus();
+                $('#id_saletimestart-' + el).val("7:00pm");
+                $('#id_saletimeend-' + el).val("7:00pm");
+
+            } else {
+                $('#id_saletimeend-' + el).val($('#' + e).val());
+               
+            }
+        }
+        if (al == "id_saletimeend")
+        {
+            errorMsg = checkTime(e);
+            if (errorMsg != "") {
+
+                $('#id_saletimeend-' + el).val($('#txtStartTime').val());
+
+                $('#id_saletimeend-' + el).focus();
+
+
+            }
+        }
+
+       
+       
+    }
     function checkvalidDate(e) {
 
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
@@ -2957,7 +3066,7 @@
         re = /^(\d{1,2}):(\d{2})(:00)?([ap]m)?$/;
         var value = $("#" + field).val();
         if (value != '') {
-            if (regs = field.value.match(re)) {
+            if (regs = value.match(re)) {
                 if (regs[4]) {
                     // 12-hour time format with am/pm
                     if (regs[1] < 1 || regs[1] > 12) {
@@ -2973,7 +3082,7 @@
                     errorMsg = "Invalid value for minutes: " + regs[2];
                 }
             } else {
-                errorMsg = "Invalid time format: " + field.value;
+                errorMsg = "Invalid time format: " + value;
             }
         }
 
