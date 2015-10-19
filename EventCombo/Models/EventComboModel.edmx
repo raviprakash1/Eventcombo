@@ -30,6 +30,7 @@
           <Property Name="VenueName" Type="varchar" MaxLength="500" />
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
           <Property Name="EventId" Type="bigint" />
+          <Property Name="ConsolidateAddress" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -145,9 +146,8 @@
           <Property Name="TwitterUrl" Type="nvarchar" MaxLength="1000" />
           <Property Name="AddressStatus" Type="varchar" MaxLength="100" />
           <Property Name="LastLocationAddress" Type="bigint" />
-
           <Property Name="EnableFBDiscussion" Type="varchar" MaxLength="1" />
-
+          <Property Name="Feature" Type="int" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -175,6 +175,8 @@
           <Property Name="Orgnizer_Event_Id" Type="bigint" />
           <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
           <Property Name="Orgnizer_Desc" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FBLink" Type="varchar" MaxLength="100" />
+          <Property Name="Twitter" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="EventCategory">
           <Key>
@@ -668,6 +670,7 @@
           <Property Name="VenueName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EventId" Type="Int64" />
+          <Property Name="ConsolidateAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -789,6 +792,7 @@
           <Property Name="LastLocationAddress" Type="Int64" />
 
           <Property Name="EnableFBDiscussion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Feature" Type="Int32" />
 
         </EntityType>
         <EntityType Name="Event_Detail">
@@ -818,6 +822,8 @@
           <Property Name="Orgnizer_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Orgnizer_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
+          <Property Name="FBLink" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Twitter" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="EventCategory">
           <Key>
@@ -1281,6 +1287,7 @@
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="EventComboModel.Address">
               <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="ConsolidateAddress" ColumnName="ConsolidateAddress" />
                 <ScalarProperty Name="AddressID" ColumnName="AddressID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Address1" ColumnName="Address1" />
@@ -1382,6 +1389,7 @@
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
 
+                <ScalarProperty Name="Feature" ColumnName="Feature" />
                 <ScalarProperty Name="EnableFBDiscussion" ColumnName="EnableFBDiscussion" />
 
                 <ScalarProperty Name="LastLocationAddress" ColumnName="LastLocationAddress" />
@@ -1434,6 +1442,8 @@
           <EntitySetMapping Name="Event_Orgnizer_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Event_Orgnizer_Detail">
               <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="FBLink" ColumnName="FBLink" />
                 <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
                 <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />

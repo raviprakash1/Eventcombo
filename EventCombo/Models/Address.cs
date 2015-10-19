@@ -25,5 +25,6 @@ namespace EventCombo.Models
         public string VenueName { get; set; }
         public string UserId { get; set; }
         public Nullable<long> EventId { get; set; }
+        public string ConsolidateAddress { get; set; }
     }
 }
