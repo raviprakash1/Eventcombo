@@ -54,7 +54,7 @@
 
 .evnt_title_date{ color: #baff00; font-size: 2em; font-weight: normal; } 
 .evnt_title_timezone{color: #fff; font-size: 1.5em; font-weight: normal; cursor: pointer;}
-.evnt_title_location{ font-weight: normal; color: #00cfff;}
+.evnt_title_location{ font-weight: normal; color: #baff00;}
 .evnt_title_multi{color: #aaa; font-size: 1.2em; font-weight: normal;}
 .evnt_title_multi a{color: #aaa;}
 .evnt_title_multi a:hover{color: #aaa;}
@@ -110,6 +110,7 @@
 .grn_live_btn{ background: #1eff00}
 .grn_live_btn:hover{ background: #1eff00}
 
+.ev_ven_mod_sch_mul{ border-bottom: 1px solid #aaa;}
 .cong_text{ color: #00cfff; font-size: 1.8em;}
 
 .ev_set_del_btn {
@@ -147,4 +148,3 @@
 .ev_ven_mod_sch_mul{ border-bottom: 1px solid #aaa;}
 .bggrey{ background: #f0f0f0;}
 .event_container_inner{ width:100%; float: left;}
-

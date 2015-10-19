@@ -211,7 +211,8 @@ button:focus { outline: none;}
 .event-upload{ width: 100%; float: left; } 
 .evnt_title_bg{ width: 650px; max-width: 100%; float: right; background: #575757; padding:10px 15px;}
 .evnt_title_top{ margin-top: 15%;}  
-.evnt_title_control{ background:none !important;  text-align: right; padding: 0px; border: 0px; box-shadow: none; color: #baff00; font-size: 2em; font-weight: bold; } 
+
+.evnt_title_control{ background:none !important; height:auto;  text-align: right; padding: 0px; border: 0px; box-shadow: none; color: #baff00; font-size: 2em; font-weight: bold; } 
 .form-control.evnt_title_control:focus{ border: 0px; box-shadow: none;}
 .loc_icon{ width: 26px; height: 35px; position: absolute; margin-left: 22%; float: left; background: url(../images/icon-location.png) no-repeat;}
 .evnt_disc{ height: 100px !important;}
@@ -242,12 +243,13 @@ button:focus { outline: none;}
 .sch_time_from{width: 120px; float: left;}
 .label_cont_to{width:auto; float: left; margin:10px;}
 .nth-day{display: inline-block;}
-.evnt_inp_sel_day button.multiselect{border-radius: 0;
-    height: 40px; width: 200px; text-align: left !important;}
-.evnt_inp_sel_day ul.multiselect-container{ width: 200px; border-radius: 0px;} 
-.evnt_inp_sel_day b.caret{ float: right; margin-top: -12px;}
+.evnt_inp_sel_day button.multiselect{ width: 150px; text-align: left !important;}
+.evnt_inp_sel_day ul.multiselect-container{ width: 145px; border-radius: 0px;} 
+.evnt_inp_sel_day b.caret{ float: right; margin-top: 8px;}
 .event_reap_time{ float: left; margin-right: 20px;}
 .sch_save_btn {border-radius: 0 !important;}
+
+
 
 
 /*****3rd start******/
@@ -496,7 +498,37 @@ span.evnt_toltip{
 
 
 
+.err_main {
+    width: 100%;
+    margin: 0 auto;
 
+}
+    
+.err-bor{ border-color: red !important;}
+.er_war_main{
+    border: 1px solid #ffdb00;
+    width: 100%;
+    float: left;height: 50px; display: table;}
+.er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; }
+.er_war_img{ background: #ffdb00 url(../images/info_icn.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
+
+.er_suc_main{
+ border: 1px solid green;
+    width: 100%;
+    float: left;height: 50px; display: table;}
+.er_suc {width: 1000px;display: table-cell; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: center; }
+
+.er_UI_main{border: 1px solid red;
+    width: 100%;
+    float: left;height: 50px; display: table;
+    margin-bottom :10px;
+}
+
+.er_UI_img{ background: red url(../Images/2.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px; }
+
+.er_sys_img{background: red url(../Images/1.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
+  
+.er_suc_img{ background: green url(../Images/3.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
 
 
 
@@ -567,6 +599,24 @@ span.evnt_toltip{
 .fs24{ font-size: 24px; }
 
 
+
+.evnt_title_location{ font-weight: normal; color: #baff00;}
+/*Placeholder Event name & event address*/
+.evnt_placehold::-webkit-input-placeholder {
+  color: #baff00
+}
+
+.evnt_placehold:-moz-placeholder { 
+   color: #baff00
+}
+
+.evnt_placehold::-moz-placeholder {
+  color: #baff00
+}
+
+.evnt_placehold:-ms-input-placeholder {  
+   color: #baff00
+}
 
 
 .place_hold::-webkit-input-placeholder {
