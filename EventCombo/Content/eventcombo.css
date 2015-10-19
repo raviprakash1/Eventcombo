@@ -211,6 +211,7 @@ button:focus { outline: none;}
 .event-upload{ width: 100%; float: left; } 
 .evnt_title_bg{ width: 650px; max-width: 100%; float: right; background: #575757; padding:10px 15px;}
 .evnt_title_top{ margin-top: 15%;}  
+
 .evnt_title_control{ background:none !important; height:auto;  text-align: right; padding: 0px; border: 0px; box-shadow: none; color: #baff00; font-size: 2em; font-weight: bold; } 
 .form-control.evnt_title_control:focus{ border: 0px; box-shadow: none;}
 .loc_icon{ width: 26px; height: 35px; position: absolute; margin-left: 22%; float: left; background: url(../images/icon-location.png) no-repeat;}
@@ -283,12 +284,6 @@ button:focus { outline: none;}
           margin-top:23px;
 }
 
-.er_war_main{
-    border: 1px solid #ffdb00;
-    width: 100%;
-    float: left;height: 50px; display: table;}
-.er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; }
-.er_war_img{ background: #ffdb00 url(../images/info_icn.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
 
 .add_set_cont{ width: 100%; float: left;}
 .priv_cont{ width: 97%; float: left; margin-left: 3%;}
@@ -537,6 +532,40 @@ span.evnt_toltip{
 
 
 
+
+
+
+.err_main {
+    width: 100%;
+    margin: 0 auto;
+
+}
+    
+.err-bor{ border-color: red !important;}
+.er_war_main{
+    border: 1px solid #ffdb00;
+    width: 100%;
+    float: left;height: 50px; display: table;}
+.er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; }
+.er_war_img{ background: #ffdb00 url(../images/info_icn.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
+
+.er_suc_main{
+	border: 1px solid green;
+    width: 100%;
+    float: left;height: 50px; display: table;}
+.er_suc {width: 1000px;display: table-cell; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: center; }
+
+.er_UI_main{border: 1px solid red;
+    width: 100%;
+    float: left;height: 50px; display: table;
+    margin-bottom :10px;
+}
+
+.er_UI_img{ background: red url(../Images/2.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px; }
+
+.er_sys_img{background: red url(../Images/1.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
+  
+.er_suc_img{ background: green url(../Images/3.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
 
 
 

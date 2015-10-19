@@ -25,7 +25,7 @@
             </div>
 
 
-            <div class="event-upload-container event_top">
+            <div class="event-upload-container">
                 <input type="file" name="image" id="input2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
@@ -823,9 +823,9 @@
                                                             Minimize Setting
                                                         </button>
                                                         @*<label class="EvntMinim evnt_set_minimise">
-                                                        <i class="fa fa-arrow-up"></i>
-                                                        Minimize Ticket details
-                                                    </label>*@
+                                                                <i class="fa fa-arrow-up"></i>
+                                                                Minimize Ticket details
+                                                            </label>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -1357,7 +1357,7 @@
                     data: model,
                     type: "Post",
                     success: function (response) {
-                        alert(response);
+                     //   alert(response);
                         $("#hdEventId").val(response);
                         alert('Congratulations, your event is on Eventcombo!');
                     }
@@ -1368,19 +1368,21 @@
 
             $("#btOnlineEvent").click(function () {
                 if ($("#btOnlineEvent").is(":checked") == true) {
-                    $("#txtEventLocation").prop('disabled', true);
-                    $("#dllPastLocation").prop('disabled', true);
-                    $("#FindNewVen").prop('disabled', true);
-                    $("#btMultiVenue").prop('disabled', true);
-                    $("#UsepastLoc").prop('disabled', true);
+                    $("#dvAddress").hide();
+                    //$("#txtEventLocation").prop('disabled', true);
+                    //$("#dllPastLocation").prop('disabled', true);
+                    //$("#FindNewVen").prop('disabled', true);
+                    //$("#btMultiVenue").prop('disabled', true);
+                    //$("#UsepastLoc").prop('disabled', true);
                     $("#hidAddressStatus").val('Online');
                 }
                 else {
-                    $("#txtEventLocation").prop('disabled', false);
-                    $("#dllPastLocation").prop('disabled', false);
-                    $("#FindNewVen").prop('disabled', false);
-                    $("#btMultiVenue").prop('disabled', false);
-                    $("#UsepastLoc").prop('disabled', false);
+                    $("#dvAddress").show();
+                    //$("#txtEventLocation").prop('disabled', false);
+                    //$("#dllPastLocation").prop('disabled', false);
+                    //$("#FindNewVen").prop('disabled', false);
+                    //$("#btMultiVenue").prop('disabled', false);
+                    //$("#UsepastLoc").prop('disabled', false);
                     $("#hidAddressStatus").val('');
                 }
 
@@ -1950,7 +1952,7 @@
 
 
     //Ticket Section Starts
-<script>
+    <script>
 
     function changetext(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
@@ -2589,16 +2591,16 @@
         }
         return randomString;
     }
-</script>
+    </script>
 
-@*Image Section*@
-<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+    @*Image Section*@
+    <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
 
-<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-<script src="~/Scripts/filer/jquery.filer.js"></script>
+    <link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+    <script src="~/Scripts/filer/jquery.filer.js"></script>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function () {
         function uuid() {
             var chars = '0123456789abcdef'.split('');
@@ -2810,10 +2812,10 @@
 
         });
     });
-</script>
+    </script>
 
     //DateTime
-<script>
+    <script>
 
 
     function compare(DateA, DateB) {
@@ -2905,7 +2907,7 @@
 
         //return true;
     }
-</script>
+    </script>
 
 
 
