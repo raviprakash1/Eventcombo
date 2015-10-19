@@ -102,7 +102,10 @@
                 </div>
                 <div class="col-sm-2 disc_title_head"><a href="#" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
                 <div class="col-sm-5">
-                    <a href="#" onclick= "checksession();">Create Event</a>
+                    <div class="psst">
+                        <a href="#" onclick="checksession();">Create Event</a>
+                    </div>
+                    
                        @*@Html.ActionLink("Create Event", "EventCreation", "Event", new { id = "Eventclick", onclick = "return checksession();" })*@
                        @*<div class="psst">
                         <a class="" href="/Home/EventOraganizer">

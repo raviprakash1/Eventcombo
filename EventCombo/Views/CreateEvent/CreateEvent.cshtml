@@ -527,7 +527,7 @@
                                 Include links to Facebook and Twitter
 
                             </label>
-                            <div class="AddSocial add_social_cont">
+                            <div id="dvOrgnizerFBTw" class="AddSocial add_social_cont">
                                 <div class="add_social_input">
                                     <div class="col-sm-12 ">
                                         <label class="control-label ev_tickt_lebel pl0">
@@ -1270,6 +1270,24 @@
         }
 
 
+        function DeleteOrgnizer(Sno) {
+            $('#tblOrgnizer tr').each(function () {
+                if (Sno == $(this).find("td:first").html()) {
+                     $(this).remove();
+                }
+            });
+
+
+            $("#hidOrgnizer").val('');
+            $("#txtOrgnizer").val('');
+            $("#edOrgDes").code('');
+            $("#txtOrgFBlink").val('');
+            $("#txtOrgTWlink").val('');
+            $("#Incsocial").prop("checked", false);
+            $("#dvOrgnizerFBTw").hide();
+
+        }
+
         function editRow(Sno) {
             //alert(ColumnValue);
             $("#hidAddSno").val(Sno);
@@ -1304,7 +1322,7 @@
 
         }
         function editOrgnizer(Sno) {
-            alert(Sno);
+            //alert(Sno);
             debugger;
             $("#hidOrgnizer").val(Sno);
             var vOrgName = $("#OrgName_" + Sno).text();
@@ -1316,6 +1334,14 @@
             $("#edOrgDes").code(vOrgDes);
             $("#txtOrgFBlink").val(vOrgFB);
             $("#txtOrgTWlink").val(vOrgTw);
+            
+        
+            if (vOrgFB !=''  || vOrgTw !='')
+            {
+                $("#Incsocial").prop("checked", true);
+                $("#dvOrgnizerFBTw").show();
+            }      
+
 
         }
 
@@ -1328,13 +1354,13 @@
             var vOrgTw = $("#txtOrgTWlink").val();
 
             var strHTML = '<tr>';
-            strHTML = strHTML + '<td width="92%"><label id=OrgName_"' + Sno + '>' + vOrgName + '</label></td>';
-            strHTML = strHTML + '<td style="display:none"><label id=OrgDes_"' + Sno + '>' + vOrgDes + '</label></td>';
-            strHTML = strHTML + '<td style="display:none"><label id=OrgFB_"' + Sno + '>' + vOrgFB + '</label></td>';
-            strHTML = strHTML + '<td style="display:none"><label id=OrgTw_"' + Sno + '>' + vOrgTw + '</label></td>';
-            strHTML = strHTML + '<td align="right"><a href="#" onclick="editOrgnizer(' + Sno + ');" >Edit </a> | <a href="#"><i class="fa fa-trash"></i> </a></td>';
-
-
+            strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
+            strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgFB_' + Sno + '>' + vOrgFB + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgTw_' + Sno + '>' + vOrgTw + '</label></td>';
+            //strHTML = strHTML + '<td align="right"><a href="#" onclick="editOrgnizer(' + Sno + ');"><i class="fa fa-pencil"></i> </a> | <a href="#"  onclick="DeleteOrgnizer(' + Sno + ');"><i class="fa fa-trash"></i> </a></td>';
+            strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
 
             strHTML = strHTML + '</tr>';
             //                strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
@@ -1539,14 +1565,34 @@
 
                 ////}
                 // Orgnizer
-                //$("#dllOrganizer option").each(function (i) {
-                //    alert($(this).text());
+                //$("#tblOrgnizer option").each(function (i) {
                 //    Orgnizer.push({
                 //        'Orgnizer_Name': $(this).text(),
                 //        'Orgnizer_Desc': $(this).val()
                 //    });
                 //    //alert($(this).text() + " : " + $(this).val());
                 //});
+
+
+                $("#tblOrgnizer tr").each(function () {
+                    var Sno = $(this).find("td:first").html();
+                    // Multiple Address
+                    if (Sno != '') {
+                        Orgnizer.push({
+                            Orgnizer_Name: $("#OrgName_" + Sno).text(),
+                            Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
+                            FBLink: $("#OrgFB_" + Sno).text(),
+                            Twitter: $("#OrgTw_" + Sno).text()
+                        });
+                    }
+                });
+
+
+                //var vOrgName = $("#OrgName_" + Sno).text();
+                //var vOrgDes = $("#OrgDes_" + Sno).text();
+                //var vOrgFB = $("#OrgFB_" + Sno).text();
+                //var vOrgTw = $("#OrgTw_" + Sno).text();
+
                 //alert(Orgnizer[0].toString());
 
 
@@ -1648,14 +1694,19 @@
 
                 //var data = $("#dvOrg_0").clone();
                 //$("#dvOrganizer").append(data);
-                if ($("#hidOrgnizer").val() == "")
+                if ($("#hidOrgnizer").val() == '')
                     AddOrgnizer();
                 else
                     UpdateOrgnizer($("#hidOrgnizer").val());
                 
 
-
-
+                $("#hidOrgnizer").val('') ;
+                $("#txtOrgnizer").val('');
+                $("#edOrgDes").code('');
+                $("#txtOrgFBlink").val('');
+                $("#txtOrgTWlink").val('');
+                $("#Incsocial").prop("checked", false);
+                $("#dvOrgnizerFBTw").hide();
                 //alert(divlength);
                 //var addOption = '<div class="list-group-item ev_orgz_list"></div> <div id = dvOrg_' + vLenght.toString() + '  class="col-sm-8 no_pad">' + $("#txtOrgnizer").val() + '</div><div class="col-sm-4 no_pad text-right ev_org_edt_main"><a href="#"><i class="fa fa-pencil"></i> </a> | <a href="#"><i class="fa fa-trash"></i></a></div>';
                 //$("#dvOrganizer").append(addOption)
