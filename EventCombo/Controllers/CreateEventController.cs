@@ -133,5 +133,34 @@ namespace EventCombo.Controllers
 
 
         }
+
+        public string GetSubCat(long lECatId)
+        {
+
+            StringBuilder strHtml = new StringBuilder();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var EventCat = (from myRow in objEnt.EventSubCategories
+                                    where myRow.EventCategoryID == lECatId
+                                    select myRow).ToList();
+
+                    //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    foreach (var item in EventCat)
+                        strHtml.Append("<option value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
+
+                    return strHtml.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return strHtml.ToString();
+
+            }
+
+
+        }
+
     }
 }
