@@ -7,6 +7,7 @@
 <link href="~/Content/summernote.css" rel="stylesheet" />
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+
 <h2>Create Event</h2>
 @using (Html.BeginForm())
 
@@ -20,6 +21,13 @@
                         <div class="er_suc" id="erraccmsg">
 
                         </div>
+                    </div>
+                </div>
+                <div class="Moderor">
+                    <div class="er_suc_main alert-success" id="divaccsuc" style="display: none;">
+                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+                        <div class="er_suc_img"></div>
+                        <div class="er_suc" id="succaccmsg"> </div>
                     </div>
                 </div>
             </div>
@@ -638,13 +646,20 @@
                                         <label class="col-sm-4 no_pad control-label ev_tickt_lebel" id="id_paymenttype-n" />
 
                                     </div>
-                                    <div class="label-control lbl_bot_price  paidticket-n" id="idlbuyertotal-n">
+                                    <div class="label-control lbl_bot_price paidticket-n" id="idlbuyertotal-n">
                                         <span class="buyer_tot">Buyer total: </span>
                                         <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
                                         <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
                                         <div class="tooltip" id="id_tooltip-n">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00</div>
-
                                     </div>
+                                    @*<div class="label-control lbl_bot_price  paidticket-n" id="idlbuyertotal-n">
+                                        <span class="buyer_tot">Buyer total: </span>
+                                        <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
+                                        <p title="Ticket Price  $0.00 &#013;        Fee $0.00 &#013;           Buyer(s) Total $0.00" id="id_tooltip-n" class="masterTooltip"><span ><i class="fa fa-info-circle"></i></span></p>
+                                        @*<span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
+                                        <div class="tooltip" id="id_tooltip-n" >Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00</div
+
+                                    </div>*@
                                 </div>
                                 <div class="col-sm-2 no_pad">
                                     <div class="form-group paidticket-n" id="id_Disc-n">
@@ -658,7 +673,7 @@
                                     <div class="nav evnt_setting">
                                         <span class="evnt_set ev_set_more" id="id_setting-n" onclick="showsettingdiv(this.id);"> Detail </span>
                                         <!--  <a href="#evnt_set" class="evnt_set">More </a> -->
-                                        <button class="btn ev_set_del_btn evnt_set" id="btndelete-n" onclick="deletediv(this.id);"><i class="fa fa-trash"></i></button>
+                                        <button class="btn ev_set_del_btn evnt_set" id="btndelete-n" type="button" onclick="deletediv(this.id);"><i class="fa fa-trash"></i></button>
 
                                         @*<a href=""><i class="fa fa-trash"></i></a>*@
 
@@ -841,15 +856,15 @@
 
                             </div>
                             @*<div class="clearfix"></div>*@
-
+                            <div class="modal-footer ticket_footer mt10 text">
+                                <div class="col-sm-12 text-right">
+                                    <label class="ev_tickt_lebel">Total Capacity:<span id="id_totalqty">0</span></label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-12 row mt10">
-                        <div class="modal-footer ticket_footer mt10 text">
-                            <div class="col-sm-12 text-right">
-                                <label class="ev_tickt_lebel">Total Capacity:<span id="id_totalqty">0</span></label>
-                            </div>
-                        </div>
+                      
                         <div class="col-sm-12 no_pad">
                             <label class="label-control ev_tickt_lebel pl0">
                                 <input type="hidden" value="0" id="id_cc" />
@@ -948,6 +963,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-right mb10 make_live_btn">
+                   
                     <button type="button" id="btSave" class="btn ev_live_sub_btn grn_live_btn">
                         SAVE
                         <span> > </span>
@@ -966,7 +982,7 @@
                     <input id="imageeror" type="hidden" value="0" />
                     <input id="image_count" type="hidden" />
                     <input type="hidden" id="hdUniqueguid" value="" />
-
+                    <input type="hidden" id="hddiscount" value="0" />
                 </div>
             </div>
 
@@ -1295,8 +1311,15 @@
 
 
             $('#btSave').click(function () {
-                debugger;
-                alert("Chal Pya");
+              
+                var msg = validatemain();
+                if (msg != "")
+                {
+                    $('#diverroacc').css('display', 'block');
+                    $('#erraccmsg').html(msg);
+                    return false;
+
+                }
                 // Address Entry
                 var SubmitAddress = [];
                 var SingleTiming = [];
@@ -1528,7 +1551,9 @@
                     success: function (response) {
                         alert(response);
                         $("#hdEventId").val(response);
-                        alert('Congratulations, your event is on Eventcombo!');
+                        $('#divaccsuc').css('display', 'block');
+                        $('#diverroacc').css('display', 'none');
+                        $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
                     }
                 });
             });
@@ -2247,8 +2272,9 @@
 
             var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
 
-            var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
+            var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "&lt;br /&gt;" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
             $('#id_buyerprice-' + el).html(ccpfinal);
+          
             $('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(0);
 
@@ -2261,7 +2287,8 @@
             var ccpfinal = parseFloat(amount).toFixed(2);
             $('#id_buyerprice-' + el).html(ccpfinal);
             var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
-            $('#id_tooltip-' + el).html(msg);
+            $('#id_tooltip-' + el).html( msg);
+            //$('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(1);
 
 
@@ -2274,7 +2301,8 @@
         if ((code < 48 || code > 57) && (code != 190)) {
             $('#' + id).val("");
             $('#id_buyerprice-' + el).html("$0");
-            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer(s) Total $0.00" );
+            //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
             return false;
 
         }
@@ -2286,27 +2314,29 @@
             if (price != 0) {
                 if (discount >= price) {
                     $('#id_Discount-' + el).addClass('err-bor');
-
+                    $('#hddiscount').val('1');
 
                 } else {
-
+                    $('#hddiscount').val('0');
                     $('#id_Discount-' + el).removeClass('err-bor');
                 }
 
             } else {
+                $('#hddiscount').val('1');
                 $('#id_Discount-' + el).addClass('err-bor');
 
             }
 
 
         } else {
-
+            $('#hddiscount').val('1');
             $('#id_Discount-' + el).addClass('err-bor');
 
         }
         if ($('#' + id).val() == "") {
             $('#id_buyerprice-' + el).html("$0");
-            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+            $('#id_tooltip-' + el).html( "Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+            //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
 
 
         }
@@ -2335,6 +2365,7 @@
                 var ccpfinal = parseFloat(amount).toFixed(2);
                 $('#id_buyerprice-' + el).html("$" + ccpfinal);
                 var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       $" + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+                //$('#id_tooltip-' + el).html(msg);
                 $('#id_tooltip-' + el).html(msg);
             }
 
@@ -2403,7 +2434,8 @@
         $("#id_feetype-" + divlength).css('display', 'block');
         $("#id_Tickettype-" + divlength).val("Paid");
         $("#id_buyerprice-" + divlength).html('$0.00');
-        $("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
+        $('#id_tooltip-' + divlength).html( 'Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
+        //$("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
         $("#id_feemethod").val(0);
         $("#id_salestart-" + divlength).datepicker({
             format: "mm/dd/yyyy",
@@ -2654,14 +2686,16 @@
             if (price != 0) {
                 if (discount >= price) {
                     $('#' + e).addClass('err-bor');
+                    $('#hddiscount').val('1');
                     return false;
 
                 } else {
-
+                    $('#hddiscount').val('0');
                     $('#' + e).removeClass('err-bor');
                 }
 
             } else {
+                $('#hddiscount').val('1');
                 $('#' + e).addClass('err-bor');
                 return false;
             }
@@ -2669,8 +2703,10 @@
 
         } else {
             if (discount == 0) {
+                $('#hddiscount').val('0');
                 $('#' + e).removeClass('err-bor');
             } else {
+                $('#hddiscount').val('1');
                 $('#' + e).addClass('err-bor');
                 return false;
             }
@@ -3032,7 +3068,72 @@
     //DateTime
     <script>
 
+        function validatemain() {
+            var msg = "";
+            var count = 0;
+            var title = $('#txtEventTitle').val();
 
+            if (title == "") {
+                msg = "Please Enter the name of Event";
+
+            }
+            var divlength = $("#MasterDiv> div").size();
+            if (divlength > 0) {
+
+                for (var i = 0; i < divlength; i++) {
+                    var ticket_name=$('#id_ticket_type-' + i).val();
+                    var ticket_Qty= $('#id_quantity_total-' + i).val();
+                    if (ticket_name == "" && ticket_Qty == "") {
+                        $('#id_ticket_type-' + i).addClass('err-bor');
+                        $('#id_quantity_total-' + i).addClass('err-bor');
+                        count++;
+                    } else
+                    {
+                        $('#id_ticket_type-' + i).removeClass('err-bor');
+                        $('#id_quantity_total-' + i).removeClass('err-bor');
+                    }
+
+                }
+
+
+            }
+            if ($('#hddiscount').val() == 1)
+            {
+                count++;
+
+            }
+            if (count > 0)
+            {
+                msg += "<br/>Please Fix the Highlightened Fields";
+            }
+            if ($('#id_variablecharge').is(":checked") == true)
+            {
+                if($('#id_vardesc').val()=="")
+                {
+                    $('#id_vardesc').addClass('err-bor');
+                    msg += "<br/> Please enter description for variable charges";
+
+                } else {
+                    $('#id_vardesc').removeClass('err-bor');
+
+                }
+
+            }
+
+            if ($('#chkReqPassword').is(":checked") == true)
+            {
+                if($('#txtReqPassword').val()=="")
+                {
+                    $('#txtReqPassword').addClass('err-bor');
+                    msg += "<br/> Please enter password for view event";
+
+                } else {
+                    $('#txtReqPassword').removeClass('err-bor');
+                }
+
+            }
+            return msg;
+        }
     function compare(DateA, DateB) {
         var errorMsg = "";
         var a = new Date(DateA);
@@ -3122,8 +3223,35 @@
 
         //return true;
     }
+
+
+    $(function () {
+        $(document).tooltip();
+    });
     </script>
 
-
+    @*<script type="text/javascript">
+$(document).ready(function() {
+// Tooltip only Text
+$('.masterTooltip').hover(function(){
+        // Hover over code
+        var title = $(this).attr('title');
+        $(this).data('tipText', title).removeAttr('title');
+        $('<p class="tooltip"></p>')
+        .text(title)
+        .appendTo('body')
+        .fadeIn('slow');
+}, function() {
+        // Hover out code
+        $(this).attr('title', $(this).data('tipText'));
+        $('.tooltip').remove();
+}).mousemove(function(e) {
+        var mousex = e.pageX + 20; //Get X coordinates
+        var mousey = e.pageY + 10; //Get Y coordinates
+        $('.tooltip')
+        .css({ top: mousey, left: mousex })
+});
+});
+    </script>*@
 
 }

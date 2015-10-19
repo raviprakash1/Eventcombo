@@ -258,10 +258,10 @@
               
                 if (data == "Y") {
                     $("#loginPopup").click();
-                    url.val('@Url.Action("EventCreation", "Event")');
+                    url.val('@Url.Action("CreateEvent", "CreateEvent")');
                     return false;
                 } else {
-                    window.location.href = '@Url.Action("EventCreation", "Event")';
+                    window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
                     return true;
                 }
             },

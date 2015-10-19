@@ -305,7 +305,8 @@ span.evnt_toltip{
     left: 79px !important;
     padding: 5px;
     position: absolute;
-    top: -55px !important;
+    top: -42px !important;
+    display:none;
  }
 
 .tooltip:after {
