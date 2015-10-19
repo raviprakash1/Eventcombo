@@ -104,8 +104,7 @@
                                 </div>
                             </div>
                             <div class="PastLocat col-sm-12 no_pad">
-                                <select id="dllPastLocation" class="form-control evnt_inp_cont ">
-                                </select>
+                                <select id="dllPastLocation" class="form-control evnt_inp_cont "></select>
                                 <div class="clearfix"></div>
                                 <div class="FindNewVen col-sm-12 lbl_bot_text">Find a new venue</div>
                             </div>
@@ -136,7 +135,7 @@
                     <div class="ev_time_zone_model">
                         <div class="modal-content ev_tm_zon_cont">
                             <div class="modal-header">
-                                
+
                                 <button class="close closemodal" type="button">
                                     <span>&#215;</span>
                                 </button><h4 class="modal-title ev_modal_header_title" id="myModalLabel">Schedule dates</h4>
@@ -188,7 +187,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div id="dvWeeklyDayChk" class="col-sm-12 mt10 no_pad">
-                                            <select  id="dllWeeklyDayChk" class="checkboxName" multiple="multiple">
+                                            <select id="dllWeeklyDayChk" class="checkboxName" multiple="multiple">
                                                 <option value="1">Sunday</option>
                                                 <option value="2">Monday</option>
                                                 <option value="3">Tuesday</option>
@@ -336,7 +335,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type</label>
                             <div class="col-sm-9">
-                               @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
                             </div>
                         </div>
                     </div>
@@ -344,7 +343,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category</label>
                             <div class="col-sm-9">
-                              @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
                             </div>
                         </div>
                     </div>
@@ -746,9 +745,9 @@
                                                         Minimize Setting
                                                     </button>
                                                     @*<label class="EvntMinim evnt_set_minimise">
-                                                        <i class="fa fa-arrow-up"></i>
-                                                        Minimize Ticket details
-                                                    </label>*@
+                                                            <i class="fa fa-arrow-up"></i>
+                                                            Minimize Ticket details
+                                                        </label>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -826,7 +825,7 @@
                 <div class="evnt_tile_bg_l"></div>
                 <h2 class="fb_dis_head">
                     <label class="ev_fb_lable"><img src="~/Images/fb.png"> ENABLE DISCUSSION <input id="chkAllowFBDis" type="checkbox" /></label>
-                    <label class="ev_fb_lable">PUBLISH EVENT TO FACEBOOK <input id="chkPublishEventOnFB"  type="checkbox" /></label>
+                    <label class="ev_fb_lable">PUBLISH EVENT TO FACEBOOK <input id="chkPublishEventOnFB" type="checkbox" /></label>
                 </h2>
                 <div class="evnt_tile_bg_r evnt_tile_bg_r_fb"></div>
             </div>
@@ -895,8 +894,8 @@
                 <input type="hidden" id="hdUniqueguid" value="" />
             </div>
         </div>
-        
-       
+
+
     </div>
     //----------Model Starts Here------------------
 
@@ -940,7 +939,7 @@
 
                     </div>
                     <div class="col-sm-6">
-                        <div class="col-sm-12 no_pad location_map_div loc_map" id="map_canvas" > <i class="fa fa-map-marker"></i> </div>
+                        <div class="col-sm-12 no_pad location_map_div loc_map" id="map_canvas"> <i class="fa fa-map-marker"></i> </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 mt10">
@@ -1103,7 +1102,7 @@
                 $(".TmezoneSet").hide();
 
             });
-// ------------------------------------Multiple schedule-----------------------------------
+            // ------------------------------------Multiple schedule-----------------------------------
             $("#txtStartTime").val("7:00pm");
             $("#txtEndTime").val("7:00pm");
             $("#txtTimeStart").val("7:00pm");
@@ -1130,7 +1129,7 @@
 
 
             });
-            
+
             $("#btnAddSch").click(function () {
                 $("#hidSchLastState").val($("#dlSchOption").val());
             });
@@ -1144,10 +1143,10 @@
 
 
 
-// ------------------------------------End Multiple schedule-----------------------------------
+            // ------------------------------------End Multiple schedule-----------------------------------
 
             $("#UsepastLoc").click(function () {
-               // $("#hidAddressStatus").val('PastLocation');
+                // $("#hidAddressStatus").val('PastLocation');
                 $.ajax({
                     url: '@Url.Action("GetPreviousAddress", "CreateEvent")',
                     type: "Post",
@@ -1164,7 +1163,7 @@
 
 
 
-// ---------------------------------Map Implemetation--------------------------------------------
+            // ---------------------------------Map Implemetation--------------------------------------------
             var input = document.getElementById('txtEventLocation');
             debugger;
             var autocomplete = new google.maps.places.Autocomplete(input);
@@ -1234,7 +1233,7 @@
                 var cval = ColumnValue;
                 var strHTML = '<tr>';
                 strHTML = strHTML + '<td style="display:none">' + Sno + '</td>';
-                
+
                 var ConsolidateValue = '';
                 for (i = 0; i <= ColAry.length - 1; i++) {
                     CellId = ColName[i] + Sno.toString();
@@ -1909,7 +1908,7 @@
                 }
 
 
-                    div.parentNode.removeChild(div);
+                div.parentNode.removeChild(div);
 
 
 

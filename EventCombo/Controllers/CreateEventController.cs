@@ -104,7 +104,6 @@ namespace EventCombo.Controllers
         }
 
 
-
         public string GetPreviousAddress()
         {
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
@@ -161,6 +160,5 @@ namespace EventCombo.Controllers
 
 
         }
-
     }
 }
