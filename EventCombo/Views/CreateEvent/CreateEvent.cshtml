@@ -25,6 +25,7 @@
             </div>
 
 
+
             <div class="event-upload-container">
                 <input type="file" name="image" id="input2">
                 <div class="evnt_title_bg evnt_title_top">
@@ -163,14 +164,14 @@
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary ev_add_sub_btn">Save</button>
+                                                <button type="button" class="closetimemodal btn btn-primary ev_add_sub_btn">Save</button>
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                            <div id="dvAddress">
+                            <div class="col-sm-12 no_pad" id="dvAddress">
                                 <div class="form-group mb5">
                                     <div class="EntVenAdd col-sm-12 no_pad">
                                         <div class="ev_loc_icn"></div>
@@ -229,7 +230,7 @@
                                             <div class="col-sm-6 no_pad">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">Start</label></div>
                                                 <div class="col-sm-6 no_pad">
-                                                    <input id="txtStartDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" />
+                                                    <input id="txtStartDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" onchange="ValEventdate(this.id)" />
                                                 </div>
                                                 <div class="col-sm-6 ">
                                                     <input id="txtStartTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" />
@@ -239,7 +240,7 @@
                                             <div class="col-sm-6 no_pad">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">End</label></div>
                                                 <div class="col-sm-6 no_pad">
-                                                    <input id="txtEndDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" />
+                                                    <input id="txtEndDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY"  onchange="ValEventdate(this.id)"/>
                                                 </div>
                                                 <div class="col-sm-6 ">
                                                     <input id="txtEndTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" />
@@ -388,14 +389,14 @@
                                             <div class="col-sm-6 no_pad ">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">Occurs From</label></div>
                                                 <div class="col-sm-12 pl0">
-                                                    <input id="txtDateFrom" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" />
+                                                    <input id="txtDateFrom" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" onchange="ValEventdate(this.id)"/>
                                                 </div>
 
                                             </div>
                                             <div class="col-sm-6 no_pad">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">Untill</label></div>
                                                 <div class="col-sm-12 pl0">
-                                                    <input id="txtDateTo" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" />
+                                                    <input id="txtDateTo" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" onchange="ValEventdate(this.id)" />
                                                 </div>
 
                                             </div>
@@ -406,7 +407,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="modal-footer mt10">
-                                    <button type="button" id="btnAddSch" class="btn btn-primary btn-lg ev_add_sub_btn">Save</button>
+                                    <button type="button" id="btnAddSch"  class="closemodal btn btn-primary btn-lg ev_add_sub_btn">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -1060,7 +1061,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="modal-footer no_pad">
-                    <button type="button" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
                 </div>
 
             </div>
@@ -1073,6 +1074,114 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script>
+        function ValEventdate(e) {
+            if (e.trim() == "txtDateFrom")
+            {
+               
+                var enddate = $('#txtDateTo').val();
+                var startdate = $('#txtDateFrom').val();
+                var errorMsg = checkDate(e);
+
+                if (errorMsg != "") {
+
+
+
+                    $('#txtDateFrom').focus();
+                    $('#txtDateFrom').val("");
+                    $('#txtDateTo').val("");
+
+                } else {
+
+                    $('#txtDateTo').val($('#' + e).val());
+                }
+
+
+            }
+            if (e.trim() == "txtDateTo") {
+                var enddate = $('#txtDateTo').val();
+                var startdate = $('#txtDateFrom').val();
+              
+                var errorMsg = checkDate(e);
+
+                if (errorMsg != "") {
+
+
+
+                    $('#' + e).focus();
+                    $('#txtDateTo').val(startdate);
+
+
+                }
+
+                errorMsg = compare(startdate, enddate);
+
+                if (errorMsg != "") {
+
+
+
+                    $('#' + e).focus();
+                    $('#txtDateTo').val(startdate);
+                    // field.value = "";
+
+
+                }
+
+            }
+            if(e.trim()=="txtStartDate"){
+                
+                var enddate = $('#txtEndDate').val();
+                var startdate = $('#txtStartDate').val();
+
+            var errorMsg = checkDate(e);
+
+            if (errorMsg != "") {
+
+              
+
+                $('#txtStartDate').focus();
+                $('#txtStartDate').val("");
+                $('#txtEndDate').val("");
+
+            } else {
+              
+                $('#txtEndDate').val($('#' + e).val());
+            }
+
+
+
+            }
+            if (e == "txtEndDate")
+            {
+                var enddate = $('#txtEndDate').val();
+                var startdate = $('#txtStartDate').val();
+            var errorMsg = checkDate(e);
+
+            if (errorMsg != "") {
+
+
+
+                $('#' +e).focus();
+                $('#txtEndDate').val(startdate);
+
+
+            }
+
+            errorMsg = compare(startdate, enddate);
+
+            if (errorMsg != "") {
+
+
+
+                $('#' + e).focus();
+                $('#txtEndDate').val(startdate);
+                // field.value = "";
+
+
+            }
+
+        }
+        }
+       
         function DeleteTableRow(Sno) {
 
             $('#tblAddress tr').each(function () {
@@ -1351,17 +1460,21 @@
                     'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N')
                     //dllPastLocation
                 };
-
-                $.ajax({
-                    url: '@Url.Action("SaveEvent", "CreateEvent")',
-                    data: model,
-                    type: "Post",
-                    success: function (response) {
-                     //   alert(response);
-                        $("#hdEventId").val(response);
-                        alert('Congratulations, your event is on Eventcombo!');
-                    }
-                });
+                if ($("#hdEventId").val() != '') {
+                    $.ajax({
+                        url: '@Url.Action("SaveEvent", "CreateEvent")',
+                        data: model,
+                        type: "Post",
+                        success: function (response) {
+                            //   alert(response);
+                            $("#hdEventId").val(response);
+                            alert('Congratulations, your event is on Eventcombo!');
+                        }
+                    });
+                }
+                else {
+                    alert("Event modified successfully.");
+                }
             });
 
 
