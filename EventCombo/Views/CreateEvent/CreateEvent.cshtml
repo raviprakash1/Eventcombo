@@ -7,7 +7,7 @@
 <link href="~/Content/summernote.css" rel="stylesheet" />
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
-<h2>Create Event</h2>
+
 @using (Html.BeginForm())
 
 {
@@ -584,6 +584,7 @@
                 </div>
             </div>
             <div class="clearfix"></div>
+
             <div class="event_detail_container">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
@@ -669,7 +670,8 @@
                                     <div class="form-group paidticket-n" id="id_Disc-n">
                                         <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control evnt_inp_cont" placeholder="0" id="id_Discount-n" onkeyup="allownumberdec(event,this.id)" onchange="checkdiscount(this.id)" />
+                                            <input type="text" class="form-control evnt_inp_cont" placeholder="0" id="id_Discount-n" onkeyup="allownumberdec(event,this.id)" onblur="checkdiscount(this.id)" />
+
                                         </div>
                                     </div>
                                 </div>
@@ -801,14 +803,14 @@
                                                     <div class="form-group">
                                                         <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
                                                         <div class="evnt_time_cont wd280 mr5_p">
-                                                            <input class="form-control event_time_str evnt_tick_inp_cont wd240 " placeholder="0" id="id_min_ticket-n" />
+                                                            <input class="form-control evnt_inp_cont wd240 " placeholder="0" id="id_min_ticket-n" onblur="checkminum(this.id);" onkeyup="allownumber(event,this.id)" />
                                                             <label class="label-control lbl_bot_minim ">Minimum</label>
 
                                                         </div>
                                                         <div class="evnt_time_cont wd280">
-                                                            <input class="form-control event_time_str evnt_tick_inp_cont wd240" placeholder="0" id="id_max_ticket-n" />
+                                                            <input class="form-control evnt_inp_cont wd240" placeholder="0" id="id_max_ticket-n" onblur="checkminum(this.id);" onkeyup="allownumber(event,this.id)" />
                                                             <label class="label-control lbl_bot_minim">Maximum</label>
-
+                                                            <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
 
                                                         </div>
                                                     </div>
@@ -904,7 +906,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="clearfix"></div>
             <div class="event_detail_container">
@@ -2314,9 +2315,8 @@
 
 
 
-
     //Ticket Section Starts
-<script>
+    <script>
 
     function changetext(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
@@ -2368,7 +2368,7 @@
                         $('#id_ec').val(data[i].FeeAmount);
 
                     }
-                    console.log();
+
 
                 }
             }
@@ -2415,6 +2415,29 @@
 
 
 
+    }
+    function checkminum(e)
+    {
+
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+
+        var minamt = parseInt(  $('#id_min_ticket-' + el).val());
+        var maxamt = parseInt($('#id_max_ticket-' + el).val());
+
+        if(maxamt<minamt)
+        {
+            $('#hddiscount').val('1');
+            $('#id_max_ticket-' + el).addClass('err-bor');
+            $('#id_lblmax-' + el).css('display', 'block');
+
+
+        } else
+        {
+            $('#hddiscount').val('0');
+            $('#id_max_ticket-' + el).removeClass('err-bor');
+            $('#id_lblmax-' + el).css('display', 'none');
+        }
     }
     function calculateSum() {
 
@@ -2470,14 +2493,22 @@
     function changefeetype(event, id) {
         var code = event.charCode ? event.charCode : event.keyCode;
         var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-        if ((code < 48 || code > 57) && (code != 190)) {
+        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        {
+
+        }
+        else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9  && code != 190) // not esc, del, left or right
+        {
             $('#' + id).val("");
             $('#id_buyerprice-' + el).html("$0");
             $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer(s) Total $0.00");
             //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
             return false;
-
         }
+        //if ((code < 48 || code > 57) && (code != 190)) {
+
+
+        //}
 
         var price = parseFloat($('#id_cost-' + el).val());
         var discount = parseFloat($('#id_Discount-' + el).val());
@@ -2486,28 +2517,43 @@
             if (price != 0) {
                 if (discount >= price) {
                     $('#id_Discount-' + el).addClass('err-bor');
+
                     $('#hddiscount').val('1');
 
                 } else {
                     $('#hddiscount').val('0');
                     $('#id_Discount-' + el).removeClass('err-bor');
+
                 }
 
             } else {
-                $('#hddiscount').val('1');
-                $('#id_Discount-' + el).addClass('err-bor');
+
+                if (!isNaN(discount)) {
+                    if (discount != 0) {
+                        $('#hddiscount').val('1');
+                        $('#id_Discount-' + el).addClass('err-bor');
+                    }
+                }
+
+
 
             }
 
 
         } else {
-            $('#hddiscount').val('1');
-            $('#id_Discount-' + el).addClass('err-bor');
+
+            if (!isNaN(discount)) {
+                if (discount != 0) {
+                    $('#hddiscount').val('1');
+                    $('#id_Discount-' + el).addClass('err-bor');
+                }
+            }
+
 
         }
         if ($('#' + id).val() == "") {
             $('#id_buyerprice-' + el).html("$0");
-            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br/> Fee $0.00 <br /> Buyer's Total $0.00 ");
             //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
 
 
@@ -2526,7 +2572,7 @@
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
 
                 var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       $" + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee     &nbsp;&nbsp; &nbsp;       $" + ccpamount + "<br/>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
                 $('#id_buyerprice-' + el).html("$" + ccpfinal);
                 $('#id_tooltip-' + el).html(msg);
 
@@ -2536,7 +2582,7 @@
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
                 var ccpfinal = parseFloat(amount).toFixed(2);
                 $('#id_buyerprice-' + el).html("$" + ccpfinal);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       $" + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee     &nbsp;&nbsp; &nbsp;       $" + ccpamount + "<br/>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
                 //$('#id_tooltip-' + el).html(msg);
                 $('#id_tooltip-' + el).html(msg);
             }
@@ -2809,10 +2855,44 @@
 
 
             div.parentNode.removeChild(div);
+            divlength = $("#MasterDiv> div").size();
+
+            var count = 0;
+            $('#MasterDiv').children('div').each(function () {
+
+                var id = $(this).attr('id');
+
+                id1 = id.substr(0, id.indexOf('-'));
+                ////console.log(id);
+                var idn = id1 + "-" + (count);
+                $(this).attr("id", idn);
+                $(this).find('*[id]').andSelf().each(function () {
 
 
+                    var id = $(this).attr('id');
+                    //console.log(id);
+                    id1 = id.substr(0, id.indexOf('-'));
+                    ////console.log(id);
+                    var idn = id1 + "-" + (count);
+                    $(this).attr("id", idn);
 
 
+                    if ($(this).hasClass("paidticket-n")) {
+                        $(this).removeClass('paidticket-n');
+                        $(this).addClass('paidticket-' + (count) + '');
+                    }
+                    if ($(this).hasClass("normalticket-n")) {
+                        $(this).removeClass('normalticket-n');
+                        $(this).addClass('normalticket-' + (count) + '');
+                    }
+
+                });
+                count = count+1;
+
+            });
+
+
+            calculateSum();
 
             return true;
         }
@@ -2858,17 +2938,20 @@
             if (price != 0) {
                 if (discount >= price) {
                     $('#' + e).addClass('err-bor');
+
                     $('#hddiscount').val('1');
                     return false;
 
                 } else {
                     $('#hddiscount').val('0');
                     $('#' + e).removeClass('err-bor');
+
                 }
 
             } else {
                 $('#hddiscount').val('1');
                 $('#' + e).addClass('err-bor');
+
                 return false;
             }
 
@@ -2877,9 +2960,11 @@
             if (discount == 0) {
                 $('#hddiscount').val('0');
                 $('#' + e).removeClass('err-bor');
+
             } else {
                 $('#hddiscount').val('1');
                 $('#' + e).addClass('err-bor');
+
                 return false;
             }
         }
@@ -2955,21 +3040,46 @@
     }
     function allownumber(event, id) {
         var code = event.charCode ? event.charCode : event.keyCode;
-
-        if (code < 48 || code > 57) {
-            $('#' + id).val("");
-            return false;
+        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        {
 
         }
+        else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9) // not esc, del, left or right
+        {
+            $('#' + id).val("");
+            return false;
+        }
+
+
+
     }
-    function allownumberdec(event, id) {
+    function allownumberdec(event, id)
+    {
         var code = event.charCode ? event.charCode : event.keyCode;
-
-        if ((code < 48 || code > 57) && (code != 190)) {
-            $('#' + id).val("");
-            return false;
+        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        {
 
         }
+        else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9) // not esc, del, left or right
+        {
+
+            $('#' + id).val("");
+            return false;
+        }
+        //if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105)) && code == 190) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        //{
+        //    alert('hello');
+        //}
+        //else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9) // not esc, del, left or right
+        //{
+        //    $('#' + id).val("");
+        //    return false;
+        //}
+        //if (code > 31 && (code < 48 || code > 57) && (code != 190)) {
+        //    $('#' + id).val("");
+        //    return false;
+
+        //}
     }
     function hideunhide(e) {
 
@@ -3012,16 +3122,16 @@
         }
         return randomString;
     }
-</script>
+    </script>
 
-@*Image Section*@
-<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+    @*Image Section*@
+    <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
 
-<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-<script src="~/Scripts/filer/jquery.filer.js"></script>
+    <link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+    <script src="~/Scripts/filer/jquery.filer.js"></script>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function () {
         function uuid() {
             var chars = '0123456789abcdef'.split('');
@@ -3233,10 +3343,10 @@
 
         });
     });
-</script>
+    </script>
 
     //DateTime
-<script>
+    <script>
 
     function validatemain() {
         var msg = "";
@@ -3391,7 +3501,6 @@
     $(function () {
         $(document).tooltip();
     });
-</script>
-
+    </script>
 
 }
