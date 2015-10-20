@@ -20,5 +20,7 @@ namespace CMS.Models
         public string EventTiming { get; set; }
         public long EventID { get; set; }
         public int Feature { get; set; }
+        public string Orgnizer_Name { get; set; }
+        public string EventAddress { get; set; }
     }
 }

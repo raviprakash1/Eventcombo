@@ -30,6 +30,7 @@
           <Property Name="VenueName" Type="varchar" MaxLength="500" />
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
           <Property Name="EventId" Type="bigint" />
+          <Property Name="ConsolidateAddress" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -170,7 +171,7 @@
           <Key>
             <PropertyRef Name="Orgnizer_Id" />
           </Key>
-          <Property Name="Orgnizer_Id" Type="bigint" Nullable="false" />
+          <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orgnizer_Event_Id" Type="bigint" />
           <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
           <Property Name="Orgnizer_Desc" Type="nvarchar(max)" Nullable="false" />
@@ -425,6 +426,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Address_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -558,6 +571,7 @@
           <Parameter Name="EventType" Type="varchar" Mode="In" />
           <Parameter Name="EventCat" Type="varchar" Mode="In" />
           <Parameter Name="EventSubCat" Type="varchar" Mode="In" />
+          <Parameter Name="EventFeature" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetSetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
@@ -604,6 +618,10 @@
           <AssociationSet Name="FK__TicketDel__Deliv__1A69E950" Association="Self.FK__TicketDel__Deliv__1A69E950">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_Event" Association="Self.FK_Address_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Address" EntitySet="Address" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -937,7 +955,12 @@
             <Parameter Name="EventType" Mode="In" Type="String" />
             <Parameter Name="EventCat" Mode="In" Type="String" />
             <Parameter Name="EventSubCat" Mode="In" Type="String" />
+            <Parameter Name="EventFeature" Mode="In" Type="String" />
           </FunctionImport>
+          <AssociationSet Name="FK_Address_Event" Association="Cmsdata.FK_Address_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Address">
           <Key>
@@ -954,6 +977,8 @@
           <Property Name="VenueName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EventId" Type="Int64" />
+          <Property Name="ConsolidateAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="Cmsdata.FK_Address_Event" FromRole="Address" ToRole="Event" />
         </EntityType>
         <EntityType Name="DeliveryMethod">
           <Key>
@@ -998,6 +1023,7 @@
           <NavigationProperty Name="EventVenues" Relationship="Cmsdata.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
           <NavigationProperty Name="Tickets" Relationship="Cmsdata.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <Property Name="Feature" Type="Int32" />
+          <NavigationProperty Name="Addresses" Relationship="Cmsdata.FK_Address_Event" FromRole="Event" ToRole="Address" />
         </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
@@ -1287,7 +1313,21 @@
           <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="135" />
           <Property Type="Int64" Name="EventID" Nullable="false" />
           <Property Type="Int32" Name="Feature" Nullable="false" />
+          <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventAddress" Nullable="true" MaxLength="1320" />
         </ComplexType>
+        <Association Name="FK_Address_Event">
+          <End Type="Cmsdata.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="Cmsdata.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1465,6 +1505,7 @@
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="Cmsdata.Address">
               <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="ConsolidateAddress" ColumnName="ConsolidateAddress" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="VenueName" ColumnName="VenueName" />
@@ -1729,6 +1770,8 @@
                 <ScalarProperty Name="EventTiming" ColumnName="EventTiming" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="Feature" ColumnName="Feature" />
+                <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
+                <ScalarProperty Name="EventAddress" ColumnName="EventAddress" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

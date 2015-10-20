@@ -171,7 +171,7 @@
           <Key>
             <PropertyRef Name="Orgnizer_Id" />
           </Key>
-          <Property Name="Orgnizer_Id" Type="bigint" Nullable="false" />
+          <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orgnizer_Event_Id" Type="bigint" />
           <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
           <Property Name="Orgnizer_Desc" Type="nvarchar(max)" Nullable="false" />
@@ -426,6 +426,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Address_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -600,6 +612,10 @@
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
+          <AssociationSet Name="FK_Address_Event" Association="Self.FK_Address_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -671,6 +687,7 @@
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EventId" Type="Int64" />
           <Property Name="ConsolidateAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_Address_Event" FromRole="Address" ToRole="Event" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -793,6 +810,7 @@
 
           <Property Name="EnableFBDiscussion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Feature" Type="Int32" />
+          <NavigationProperty Name="Addresses" Relationship="EventComboModel.FK_Address_Event" FromRole="Event" ToRole="Address" />
 
         </EntityType>
         <EntityType Name="Event_Detail">
@@ -1257,6 +1275,10 @@
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="EventTempImages" EntityType="EventComboModel.EventTempImage" />
+          <AssociationSet Name="FK_Address_Event" Association="EventComboModel.FK_Address_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="EventTempImage">
           <Key>
@@ -1268,6 +1290,18 @@
           <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
+        <Association Name="FK_Address_Event">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

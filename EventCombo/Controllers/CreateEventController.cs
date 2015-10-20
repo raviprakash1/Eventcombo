@@ -146,6 +146,7 @@ namespace EventCombo.Controllers
                                     select myRow).ToList();
 
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    strHtml.Append("<option value=0>Select</option>");
                     foreach (var item in EventCat)
                         strHtml.Append("<option value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
 
@@ -240,7 +241,7 @@ namespace EventCombo.Controllers
                             ObjAdd.UserId = strUserId;
                             ObjAdd.VenueName = objA.VenueName;
                             ObjAdd.Zip = objA.Zip;
-
+                            ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
                             ObjAdd.Name = "";
                             objEnt.Addresses.Add(ObjAdd);
 

@@ -558,7 +558,7 @@
                         <div class="form-group ">
                             <label class="col-sm-12 control-label ev_tickt_lebel pl0">Added Organizer</label>
                             <div class="col-sm-8 Orgz_dro_con">
-                                Select Organizer
+                                Organizer(s) List
                                 <span class="OrgIcn org_right pull-right">
                                     <i class="fa fa-angle-down"></i>
                                 </span>
@@ -1482,21 +1482,61 @@
 
                 //});
 
-                $("#tblAddress tr").each(function () {
-                    var Sno = $(this).find("td:first").html();
-                    // Multiple Address
-                    if (Sno != '') {
+               
+              //  alert($("#tblAddress tr").length);
+                if ($("#tblAddress tr").length <= 1)
+                {
+                    if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
                         SubmitAddress.push({
-                            VenueName: $("#VenueName" + Sno).val(),
-                            Address1: $("#Address1" + Sno).val(),
-                            Address2: $("#Address2" + Sno).val(),
-                            City: $("#City" + Sno).val(),
-                            State: $("#State" + Sno).val(),
-                            Zip: $("#Zip" + Sno).val(),
-                            CountryID: $("#CountryID" + Sno).val()
-                        });
+                            VenueName: ' ',
+                            Address1: ' ',
+                            Address2: ' ',
+                            City: ' ',
+                            State: ' ',
+                            Zip: ' ',
+                            CountryID: ' ',
+                            ConsolidateAddress: $("#txtEventLocation").val()
+                        })
                     }
-                });
+                }
+                else
+                {
+                    $("#tblAddress tr").each(function () {
+                        var Sno = $(this).find("td:first").html();
+                        // Multiple Address
+                        if (Sno != '') {
+                            SubmitAddress.push({
+                                VenueName: $("#VenueName" + Sno).val(),
+                                Address1: $("#Address1" + Sno).val(),
+                                Address2: $("#Address2" + Sno).val(),
+                                City: $("#City" + Sno).val(),
+                                State: $("#State" + Sno).val(),
+                                Zip: $("#Zip" + Sno).val(),
+                                CountryID: $("#CountryID" + Sno).val(),
+                                ConsolidateAddress: $("#consolidate" + Sno).text()
+                            });
+                        }
+
+                    });
+
+                }
+
+                //if (SubmitAddress == null && )
+                //{
+                //    alert("In Submit");
+                //    SubmitAddress.push({
+                //        VenueName: '',
+                //        Address1: '',
+                //        Address2: '',
+                //        City: '',
+                //        State: '',
+                //        Zip: '',
+                //        CountryID: '',
+                //        ConsolidateAddress: $("#txtEventLocation").val()
+                //    });
+
+                //}
+
                 // Single Timing
 
                 SingleTiming.push({
@@ -2251,21 +2291,21 @@
 
 
 
-            $('body').click(function () {
-                $(".StartDatemodal").hide();
-            });
+            //$('body').click(function () {
+            //    $(".StartDatemodal").hide();
+            //});
 
-            $('.StartDatemodal,.StartDate').click(function (event) {
-                event.stopPropagation();
-            });
+            //$('.StartDatemodal,.StartDate').click(function (event) {
+            //    event.stopPropagation();
+            //});
 
-            $('body').click(function () {
-                $(".TmezoneSet").hide();
-            });
+            //$('body').click(function () {
+            //    $(".TmezoneSet").hide();
+            //});
 
-            $('.TmezoneSet,.Timezone').click(function (event) {
-                event.stopPropagation();
-            });
+            //$('.TmezoneSet,.Timezone').click(function (event) {
+            //    event.stopPropagation();
+            //});
 
 
 
