@@ -148,3 +148,19 @@
 .ev_ven_mod_sch_mul{ border-bottom: 1px solid #aaa;}
 .bggrey{ background: #f0f0f0;}
 .event_container_inner{ width:100%; float: left;}
+
+
+
+
+.ev1{ width: 200px;}
+.th_day_time{ font-size: 16px; margin-bottom: 0px;}
+.th_tilte{ margin: 0px; margin-top: 0px; margin-bottom: 15px; }
+.th_min_height{ min-height: 200px;}
+
+.note-editor .note-fontname{ display: none;}
+.note-editor .note-fontsize{ display: none;}
+.note-editor .note-color{ display: none;}
+.note-editor .note-height{ display: none;}
+.note-editor .note-table{ display: none;}
+.note-editor .note-insert{ display: none;}
+.note-editor .note-help{ display: none;}

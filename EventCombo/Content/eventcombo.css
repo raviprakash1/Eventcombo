@@ -160,6 +160,7 @@ button:focus { outline: none;}
 .disc_title_head a{ color: #fff;}
 .disc_title_head a:hover{ text-decoration: none;}
 
+
 .psst {
     background-color: #ff008a;
     border-radius: 4px;
@@ -167,14 +168,12 @@ button:focus { outline: none;}
     font-size: 1.1em !important;
     margin-top: 0px !important; 
     color: #fff;float: right !important;
-    min-width: 300px; padding: 0 20px;
+    min-width: 300px; 
 }
-.psst a{ color:#fff;  font-weight:bold;  text-decoration: none;}
-.psst span.ps_text {
-    display: inline-block;
-    font-size: 1.5em;
-    transform: rotate(-7deg);
-}
+.psst a{ padding:0 20px; color:#fff; text-align: center;  text-decoration: none; display:block;
+    font-size: 1.5em; }
+
+
 .psst span.ev_org{ position: relative; top:-3px;}
 
 .login_pop{ min-height: 300px; border:4px solid #777; border-radius:0px; }

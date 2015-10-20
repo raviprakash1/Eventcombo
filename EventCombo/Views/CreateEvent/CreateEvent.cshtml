@@ -33,7 +33,8 @@
             </div>
 
 
-            <div class="event-upload-container ">
+
+            <div class="event-upload-container">
                 <input type="file" name="image" id="input2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
@@ -171,14 +172,14 @@
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary ev_add_sub_btn">Save</button>
+                                                <button type="button" class="closetimemodal btn btn-primary ev_add_sub_btn">Save</button>
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                            <div id="dvAddress">
+                            <div class="col-sm-12 no_pad" id="dvAddress">
                                 <div class="form-group mb5">
                                     <div class="EntVenAdd col-sm-12 no_pad">
                                         <div class="ev_loc_icn"></div>
@@ -414,7 +415,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="modal-footer mt10">
-                                    <button type="button" id="btnAddSch" class="btn btn-primary btn-lg ev_add_sub_btn">Save</button>
+                                    <button type="button" id="btnAddSch"  class="closemodal btn btn-primary btn-lg ev_add_sub_btn">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -527,7 +528,7 @@
                                 Include links to Facebook and Twitter
 
                             </label>
-                            <div class="AddSocial add_social_cont">
+                            <div id="dvOrgnizerFBTw" class="AddSocial add_social_cont">
                                 <div class="add_social_input">
                                     <div class="col-sm-12 ">
                                         <label class="control-label ev_tickt_lebel pl0">
@@ -535,7 +536,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input class="form-control wd600" placeholder="" />
+                                        <input class="form-control wd600" id="txtOrgFBlink" placeholder="" />
                                     </div>
                                 </div>
                                 <div class="add_social_input mt10">
@@ -545,7 +546,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input class="form-control wd600" placeholder="" />
+                                        <input id="txtOrgTWlink" class="form-control wd600" placeholder="" />
                                     </div>
                                 </div>
                             </div>
@@ -566,12 +567,16 @@
                             <div class="OrglistShow col-sm-8 no_pad ">
                                 <div id="dvOrganizer" class="list-group ev_orgz_group">
                                     <div id="dvOrg_0" class="list-group-item ev_orgz_list">
-                                        <div class="col-sm-8 no_pad">Organizer 1</div>
+                                        <table id="tblOrgnizer">
+                                            
+                                        </table>
+                                        @*<div class="col-sm-8 no_pad">Organizer 1</div>
                                         <div class="col-sm-4 no_pad text-right ev_org_edt_main">
                                             <a href="#"><i class="fa fa-pencil"></i> </a> |
                                             <a href="#"><i class="fa fa-trash"></i> </a>
-                                        </div>
+                                        </div>*@
                                     </div>
+                                    
                                 </div>
 
                             </div>
@@ -653,6 +658,7 @@
                                         <div class="tooltip" id="id_tooltip-n">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00</div>
                                     </div>
                                     @*<div class="label-control lbl_bot_price  paidticket-n" id="idlbuyertotal-n">
+<<<<<<< HEAD
                                         <span class="buyer_tot">Buyer total: </span>
                                         <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
                                         <p title="Ticket Price  $0.00 &#013;        Fee $0.00 &#013;           Buyer(s) Total $0.00" id="id_tooltip-n" class="masterTooltip"><span ><i class="fa fa-info-circle"></i></span></p>
@@ -660,6 +666,15 @@
                                         <div class="tooltip" id="id_tooltip-n" >Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00</div
 
                                     </div>*@
+=======
+                                    <span class="buyer_tot">Buyer total: </span>
+                                    <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
+                                    <p title="Ticket Price  $0.00 &#013;        Fee $0.00 &#013;           Buyer(s) Total $0.00" id="id_tooltip-n" class="masterTooltip"><span ><i class="fa fa-info-circle"></i></span></p>
+                                    @*<span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
+                                    <div class="tooltip" id="id_tooltip-n" >Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00</div
+
+                                </div>*@
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
                                 </div>
                                 <div class="col-sm-2 no_pad">
                                     <div class="form-group paidticket-n" id="id_Disc-n">
@@ -720,7 +735,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
-                                                                <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" onchange="checkvalidtime(this.id)"  />
+                                                                <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" onchange="checkvalidtime(this.id)" />
                                                             </div>
 
                                                         </div>
@@ -733,7 +748,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
-                                                                <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" onchange="checkvalidtime(this.id) "  />
+                                                                <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" onchange="checkvalidtime(this.id) " />
                                                             </div>
 
                                                         </div>
@@ -838,9 +853,9 @@
                                                             Minimize Setting
                                                         </button>
                                                         @*<label class="EvntMinim evnt_set_minimise">
-                                                                <i class="fa fa-arrow-up"></i>
-                                                                Minimize Ticket details
-                                                            </label>*@
+                                                        <i class="fa fa-arrow-up"></i>
+                                                        Minimize Ticket details
+                                                    </label>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -864,7 +879,11 @@
                         </div>
                     </div>
                     <div class="col-sm-12 row mt10">
+<<<<<<< HEAD
                       
+=======
+
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
                         <div class="col-sm-12 no_pad">
                             <label class="label-control ev_tickt_lebel pl0">
                                 <input type="hidden" value="0" id="id_cc" />
@@ -900,8 +919,6 @@
                     </div>
                 </div>
             </div>
-
-
 
 
             <div class="clearfix"></div>
@@ -983,6 +1000,10 @@
                     <input id="image_count" type="hidden" />
                     <input type="hidden" id="hdUniqueguid" value="" />
                     <input type="hidden" id="hddiscount" value="0" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
                 </div>
             </div>
 
@@ -1076,7 +1097,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="modal-footer no_pad">
-                    <button type="button" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
                 </div>
 
             </div>
@@ -1090,9 +1111,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script>
         function ValEventdate(e) {
-            if (e.trim() == "txtDateFrom")
-            {
-               
+            if (e.trim() == "txtDateFrom") {
+
                 var enddate = $('#txtDateTo').val();
                 var startdate = $('#txtDateFrom').val();
                 var errorMsg = checkDate(e);
@@ -1115,7 +1135,7 @@
             if (e.trim() == "txtDateTo") {
                 var enddate = $('#txtDateTo').val();
                 var startdate = $('#txtDateFrom').val();
-              
+
                 var errorMsg = checkDate(e);
 
                 if (errorMsg != "") {
@@ -1142,64 +1162,62 @@
                 }
 
             }
-            if(e.trim()=="txtStartDate"){
-                
+            if (e.trim() == "txtStartDate") {
+
                 var enddate = $('#txtEndDate').val();
                 var startdate = $('#txtStartDate').val();
 
-            var errorMsg = checkDate(e);
+                var errorMsg = checkDate(e);
 
-            if (errorMsg != "") {
+                if (errorMsg != "") {
 
-              
 
-                $('#txtStartDate').focus();
-                $('#txtStartDate').val("");
-                $('#txtEndDate').val("");
 
-            } else {
-              
-                $('#txtEndDate').val($('#' + e).val());
+                    $('#txtStartDate').focus();
+                    $('#txtStartDate').val("");
+                    $('#txtEndDate').val("");
+
+                } else {
+
+                    $('#txtEndDate').val($('#' + e).val());
+                }
+
+
+
             }
-
-
-
-            }
-            if (e == "txtEndDate")
-            {
+            if (e == "txtEndDate") {
                 var enddate = $('#txtEndDate').val();
                 var startdate = $('#txtStartDate').val();
-            var errorMsg = checkDate(e);
+                var errorMsg = checkDate(e);
 
-            if (errorMsg != "") {
+                if (errorMsg != "") {
 
 
 
-                $('#' +e).focus();
-                $('#txtEndDate').val(startdate);
+                    $('#' + e).focus();
+                    $('#txtEndDate').val(startdate);
 
+
+                }
+
+                errorMsg = compare(startdate, enddate);
+
+                if (errorMsg != "") {
+
+
+
+                    $('#' + e).focus();
+                    $('#txtEndDate').val(startdate);
+                    // field.value = "";
+
+
+                }
 
             }
-
-            errorMsg = compare(startdate, enddate);
-
-            if (errorMsg != "") {
-
-
-
-                $('#' + e).focus();
-                $('#txtEndDate').val(startdate);
-                // field.value = "";
-
-
-            }
-
-        }
         }
         function ValEventTime(e) {
             var errorMsg = "";
-            if (e == "txtStartTime")
-            {
+            if (e == "txtStartTime") {
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
 
@@ -1215,15 +1233,14 @@
                 }
 
             }
-            if (e == "txtEndTime")
-            {
+            if (e == "txtEndTime") {
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
 
                     $('#txtEndTime').val($('#txtStartTime').val());
 
                     $('#txtEndTime').focus();
-                   
+
 
                 }
 
@@ -1272,6 +1289,24 @@
         }
 
 
+        function DeleteOrgnizer(Sno) {
+            $('#tblOrgnizer tr').each(function () {
+                if (Sno == $(this).find("td:first").html()) {
+                     $(this).remove();
+                }
+            });
+
+
+            $("#hidOrgnizer").val('');
+            $("#txtOrgnizer").val('');
+            $("#edOrgDes").code('');
+            $("#txtOrgFBlink").val('');
+            $("#txtOrgTWlink").val('');
+            $("#Incsocial").prop("checked", false);
+            $("#dvOrgnizerFBTw").hide();
+
+        }
+
         function editRow(Sno) {
             //alert(ColumnValue);
             $("#hidAddSno").val(Sno);
@@ -1305,16 +1340,79 @@
             //});
 
         }
+        function editOrgnizer(Sno) {
+            //alert(Sno);
+            debugger;
+            $("#hidOrgnizer").val(Sno);
+            var vOrgName = $("#OrgName_" + Sno).text();
+            var vOrgDes = $("#OrgDes_" + Sno).text();
+            var vOrgFB = $("#OrgFB_" + Sno).text();
+            var vOrgTw = $("#OrgTw_" + Sno).text();
 
+            $("#txtOrgnizer").val(vOrgName);
+            $("#edOrgDes").code(vOrgDes);
+            $("#txtOrgFBlink").val(vOrgFB);
+            $("#txtOrgTWlink").val(vOrgTw);
+            
+        
+            if (vOrgFB !=''  || vOrgTw !='')
+            {
+                $("#Incsocial").prop("checked", true);
+                $("#dvOrgnizerFBTw").show();
+            }      
+
+
+        }
+
+        function AddOrgnizer() {
+            $("#hidOrgnizer").val('');
+            var Sno = $("#tblOrgnizer tr").length;
+            var vOrgName = $("#txtOrgnizer").val();
+            var vOrgDes = $("#edOrgDes").code();
+            var vOrgFB = $("#txtOrgFBlink").val();
+            var vOrgTw = $("#txtOrgTWlink").val();
+
+            var strHTML = '<tr>';
+            strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
+            strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgFB_' + Sno + '>' + vOrgFB + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgTw_' + Sno + '>' + vOrgTw + '</label></td>';
+            //strHTML = strHTML + '<td align="right"><a href="#" onclick="editOrgnizer(' + Sno + ');"><i class="fa fa-pencil"></i> </a> | <a href="#"  onclick="DeleteOrgnizer(' + Sno + ');"><i class="fa fa-trash"></i> </a></td>';
+            strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
+
+            strHTML = strHTML + '</tr>';
+            //                strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
+
+
+            $("#tblOrgnizer").append(strHTML);
+        }
+
+        function UpdateOrgnizer(Sno) {
+
+            vOrgName = $("#txtOrgnizer").val();
+            vOrgDes = $("#edOrgDes").code();
+            vOrgFB = $("#txtOrgFBlink").val();
+            vOrgTw = $("#txtOrgTWlink").val();
+
+            $("#OrgName_" + Sno).text(vOrgName);
+            $("#OrgDes_" + Sno).text(vOrgDes);
+            $("#OrgFB_" + Sno).text(vOrgFB);
+            $("#OrgTw_" + Sno).text(vOrgTw);
+
+        }
 
         $(document).ready(function () {
-
-
             $('#btSave').click(function () {
+<<<<<<< HEAD
               
                 var msg = validatemain();
                 if (msg != "")
                 {
+=======
+                var msg = validatemain();
+                if (msg != "") {
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
                     $('#diverroacc').css('display', 'block');
                     $('#erraccmsg').html(msg);
                     return false;
@@ -1493,14 +1591,34 @@
 
                 ////}
                 // Orgnizer
-                //$("#dllOrganizer option").each(function (i) {
-                //    alert($(this).text());
+                //$("#tblOrgnizer option").each(function (i) {
                 //    Orgnizer.push({
                 //        'Orgnizer_Name': $(this).text(),
                 //        'Orgnizer_Desc': $(this).val()
                 //    });
                 //    //alert($(this).text() + " : " + $(this).val());
                 //});
+
+
+                $("#tblOrgnizer tr").each(function () {
+                    var Sno = $(this).find("td:first").html();
+                    // Multiple Address
+                    if (Sno != '') {
+                        Orgnizer.push({
+                            Orgnizer_Name: $("#OrgName_" + Sno).text(),
+                            Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
+                            FBLink: $("#OrgFB_" + Sno).text(),
+                            Twitter: $("#OrgTw_" + Sno).text()
+                        });
+                    }
+                });
+
+
+                //var vOrgName = $("#OrgName_" + Sno).text();
+                //var vOrgDes = $("#OrgDes_" + Sno).text();
+                //var vOrgFB = $("#OrgFB_" + Sno).text();
+                //var vOrgTw = $("#OrgTw_" + Sno).text();
+
                 //alert(Orgnizer[0].toString());
 
 
@@ -1543,6 +1661,7 @@
                     'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N')
                     //dllPastLocation
                 };
+<<<<<<< HEAD
 
                 $.ajax({
                     url: '@Url.Action("SaveEvent", "CreateEvent")',
@@ -1556,25 +1675,45 @@
                         $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
                     }
                 });
+=======
+                //if ($("#hdEventId").val() != '') {
+                    $.ajax({
+                        url: '@Url.Action("SaveEvent", "CreateEvent")',
+                        data: model,
+                        type: "Post",
+                        success: function (response) {
+                            $("#hdEventId").val(response);
+                            $('#divaccsuc').css('display', 'block');
+                            $('#diverroacc').css('display', 'none');
+                            $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
+                        }
+                    });
+                //}
+                //else {
+                //    alert("Event modified successfully.");
+                //}
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
             });
 
 
 
             $("#btOnlineEvent").click(function () {
                 if ($("#btOnlineEvent").is(":checked") == true) {
-                    $("#txtEventLocation").prop('disabled', true);
-                    $("#dllPastLocation").prop('disabled', true);
-                    $("#FindNewVen").prop('disabled', true);
-                    $("#btMultiVenue").prop('disabled', true);
-                    $("#UsepastLoc").prop('disabled', true);
+                    $("#dvAddress").hide();
+                    //$("#txtEventLocation").prop('disabled', true);
+                    //$("#dllPastLocation").prop('disabled', true);
+                    //$("#FindNewVen").prop('disabled', true);
+                    //$("#btMultiVenue").prop('disabled', true);
+                    //$("#UsepastLoc").prop('disabled', true);
                     $("#hidAddressStatus").val('Online');
                 }
                 else {
-                    $("#txtEventLocation").prop('disabled', false);
-                    $("#dllPastLocation").prop('disabled', false);
-                    $("#FindNewVen").prop('disabled', false);
-                    $("#btMultiVenue").prop('disabled', false);
-                    $("#UsepastLoc").prop('disabled', false);
+                    $("#dvAddress").show();
+                    //$("#txtEventLocation").prop('disabled', false);
+                    //$("#dllPastLocation").prop('disabled', false);
+                    //$("#FindNewVen").prop('disabled', false);
+                    //$("#btMultiVenue").prop('disabled', false);
+                    //$("#UsepastLoc").prop('disabled', false);
                     $("#hidAddressStatus").val('');
                 }
 
@@ -1582,19 +1721,34 @@
                 //$("#dvAddress").prop('disabled', true);
             });
 
+    
+
+
             $("#btAddOrg").click(function () {
+              //  alert("Test");
                 //  alert($('#dllOrganizer option').length);
                 //    if (parseInt($('#dllOrganizer option').length) < 25) {
                 //if ($("#hidOrgnizer").val() == "") {
-                var vval = $("#edSummer2").code();
-                var vLenght = $("#dvOrganizer").length;
+                //var vval = $("#edSummer2").code();
+                //var vLenght = $("#dvOrganizer").length;
 
-                var divlength = $("#dvOrg_0> div").size();
+                //var divlength = $("#dvOrg_0> div").size();
 
-                var data = $("#dvOrg_0").clone();
-                $("#dvOrganizer").append(data);
+                //var data = $("#dvOrg_0").clone();
+                //$("#dvOrganizer").append(data);
+                if ($("#hidOrgnizer").val() == '')
+                    AddOrgnizer();
+                else
+                    UpdateOrgnizer($("#hidOrgnizer").val());
+                
 
-
+                $("#hidOrgnizer").val('') ;
+                $("#txtOrgnizer").val('');
+                $("#edOrgDes").code('');
+                $("#txtOrgFBlink").val('');
+                $("#txtOrgTWlink").val('');
+                $("#Incsocial").prop("checked", false);
+                $("#dvOrgnizerFBTw").hide();
                 //alert(divlength);
                 //var addOption = '<div class="list-group-item ev_orgz_list"></div> <div id = dvOrg_' + vLenght.toString() + '  class="col-sm-8 no_pad">' + $("#txtOrgnizer").val() + '</div><div class="col-sm-4 no_pad text-right ev_org_edt_main"><a href="#"><i class="fa fa-pencil"></i> </a> | <a href="#"><i class="fa fa-trash"></i></a></div>';
                 //$("#dvOrganizer").append(addOption)
@@ -2137,6 +2291,26 @@
             });
 
 
+
+
+            $('body').click(function () {
+                $(".StartDatemodal").hide();
+            });
+
+            $('.StartDatemodal,.StartDate').click(function (event) {
+                event.stopPropagation();
+            });
+
+            $('body').click(function () {
+                $(".TmezoneSet").hide();
+            });
+
+            $('.TmezoneSet,.Timezone').click(function (event) {
+                event.stopPropagation();
+            });
+
+
+
         });
     </script>
 
@@ -2144,7 +2318,7 @@
 
 
     //Ticket Section Starts
-    <script>
+<script>
 
     function changetext(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
@@ -2274,7 +2448,11 @@
 
             var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "&lt;br /&gt;" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
             $('#id_buyerprice-' + el).html(ccpfinal);
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
             $('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(0);
 
@@ -2287,7 +2465,11 @@
             var ccpfinal = parseFloat(amount).toFixed(2);
             $('#id_buyerprice-' + el).html(ccpfinal);
             var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "</br>" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "</br>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
+<<<<<<< HEAD
             $('#id_tooltip-' + el).html( msg);
+=======
+            $('#id_tooltip-' + el).html(msg);
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
             //$('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(1);
 
@@ -2301,7 +2483,11 @@
         if ((code < 48 || code > 57) && (code != 190)) {
             $('#' + id).val("");
             $('#id_buyerprice-' + el).html("$0");
+<<<<<<< HEAD
             $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer(s) Total $0.00" );
+=======
+            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer(s) Total $0.00");
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
             //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
             return false;
 
@@ -2335,7 +2521,11 @@
         }
         if ($('#' + id).val() == "") {
             $('#id_buyerprice-' + el).html("$0");
+<<<<<<< HEAD
             $('#id_tooltip-' + el).html( "Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+=======
+            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
             //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
 
 
@@ -2434,7 +2624,11 @@
         $("#id_feetype-" + divlength).css('display', 'block');
         $("#id_Tickettype-" + divlength).val("Paid");
         $("#id_buyerprice-" + divlength).html('$0.00');
+<<<<<<< HEAD
         $('#id_tooltip-' + divlength).html( 'Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
+=======
+        $('#id_tooltip-' + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
         //$("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
         $("#id_feemethod").val(0);
         $("#id_salestart-" + divlength).datepicker({
@@ -2456,7 +2650,7 @@
             $("#id_saleend-" + divlength).datepicker('hide');
         });;
         $("#id_saletimestart-" + divlength).timepicker();
-    
+
         $("#id_saletimeend-" + divlength).timepicker();
         $("#id_saletimestart-" + divlength).val("7:00 PM");
         $("#id_saletimeend-" + divlength).val("7:00 PM");
@@ -2681,7 +2875,7 @@
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
         var price = parseFloat($('#id_cost-' + el).val());
         var discount = parseFloat($('#' + e).val());
-      
+
         if (!isNaN(price)) {
             if (price != 0) {
                 if (discount >= price) {
@@ -2712,30 +2906,28 @@
             }
         }
 
-        
+
 
     }
     function checkvalidtime(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
         var al = e.substr(0, e.indexOf('-'));
-        if (al == "id_saletimestart")
-        {
+        if (al == "id_saletimestart") {
             errorMsg = checkTime(e);
             if (errorMsg != "") {
 
 
 
-                $('#id_saletimestart-'+el).focus();
+                $('#id_saletimestart-' + el).focus();
                 $('#id_saletimestart-' + el).val("7:00pm");
                 $('#id_saletimeend-' + el).val("7:00pm");
 
             } else {
                 $('#id_saletimeend-' + el).val($('#' + e).val());
-               
+
             }
         }
-        if (al == "id_saletimeend")
-        {
+        if (al == "id_saletimeend") {
             errorMsg = checkTime(e);
             if (errorMsg != "") {
 
@@ -2747,8 +2939,8 @@
             }
         }
 
-       
-       
+
+
     }
     function checkvalidDate(e) {
 
@@ -2842,16 +3034,16 @@
         }
         return randomString;
     }
-    </script>
+</script>
 
-    @*Image Section*@
-    <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+@*Image Section*@
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
 
-    <link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-    <script src="~/Scripts/filer/jquery.filer.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         function uuid() {
             var chars = '0123456789abcdef'.split('');
@@ -3063,10 +3255,36 @@
 
         });
     });
-    </script>
+</script>
 
     //DateTime
-    <script>
+<script>
+
+    function validatemain() {
+        var msg = "";
+        var count = 0;
+        var title = $('#txtEventTitle').val();
+
+        if (title == "") {
+            msg = "Please Enter the name of Event";
+
+        }
+        var divlength = $("#MasterDiv> div").size();
+        if (divlength > 0) {
+
+            for (var i = 0; i < divlength; i++) {
+                var ticket_name = $('#id_ticket_type-' + i).val();
+                var ticket_Qty = $('#id_quantity_total-' + i).val();
+                if (ticket_name == "" && ticket_Qty == "") {
+                    $('#id_ticket_type-' + i).addClass('err-bor');
+                    $('#id_quantity_total-' + i).addClass('err-bor');
+                    count++;
+                } else {
+                    $('#id_ticket_type-' + i).removeClass('err-bor');
+                    $('#id_quantity_total-' + i).removeClass('err-bor');
+                }
+
+            }
 
         function validatemain() {
             var msg = "";
@@ -3076,6 +3294,7 @@
             if (title == "") {
                 msg = "Please Enter the name of Event";
 
+<<<<<<< HEAD
             }
             var divlength = $("#MasterDiv> div").size();
             if (divlength > 0) {
@@ -3134,6 +3353,40 @@
             }
             return msg;
         }
+=======
+        }
+        if ($('#hddiscount').val() == 1) {
+            count++;
+
+        }
+        if (count > 0) {
+            msg += "<br/>Please Fix the Highlightened Fields";
+        }
+        if ($('#id_variablecharge').is(":checked") == true) {
+            if ($('#id_vardesc').val() == "") {
+                $('#id_vardesc').addClass('err-bor');
+                msg += "<br/> Please enter description for variable charges";
+
+            } else {
+                $('#id_vardesc').removeClass('err-bor');
+
+            }
+
+        }
+
+        if ($('#chkReqPassword').is(":checked") == true) {
+            if ($('#txtReqPassword').val() == "") {
+                $('#txtReqPassword').addClass('err-bor');
+                msg += "<br/> Please enter password for view event";
+
+            } else {
+                $('#txtReqPassword').removeClass('err-bor');
+            }
+
+        }
+        return msg;
+    }
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
     function compare(DateA, DateB) {
         var errorMsg = "";
         var a = new Date(DateA);
@@ -3228,6 +3481,7 @@
     $(function () {
         $(document).tooltip();
     });
+<<<<<<< HEAD
     </script>
 
     @*<script type="text/javascript">
@@ -3253,5 +3507,9 @@ $('.masterTooltip').hover(function(){
 });
 });
     </script>*@
+=======
+</script>
+
+>>>>>>> bd1e809bc1a7fae21f465fa32c83414d0923bbf1
 
 }
