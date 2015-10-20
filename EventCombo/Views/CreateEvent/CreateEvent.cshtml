@@ -57,7 +57,7 @@
                                                 <button class="close closetimemodal" type="button">
                                                     <span>&#215;</span>
                                                 </button>
-                                                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Time Zone Setting</h4>
+                                                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Timezone & date setting</h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="col-sm-12 no_pad">
@@ -160,10 +160,10 @@
                                                             <input id="chkDisplayStartTime" type="checkbox" /> Display start time on event page
                                                         </label>
                                                         <label class="col-sm-12 no_pad label-control ev_timezone_lebel">
-                                                            <input id="chkDisplayEndTime" type="checkbox" /> Display start time on event page
+                                                            <input id="chkDisplayEndTime" type="checkbox" /> Display end time on event page
                                                         </label>
                                                         <label class="col-sm-12 no_pad label-control ev_timezone_lebel">
-                                                            <input id="chkTimeZone" type="checkbox" /> Display start time on event page
+                                                            <input id="chkTimeZone" type="checkbox" />  Display time zone on event page
                                                         </label>
                                                     </div>
                                                 </div>
@@ -521,6 +521,13 @@
                         </div>
                     </div>
                     <div class="col-sm-12 no_pad">
+                        <div class="form-group">
+                            <label class="control-label ev_tickt_lebel pl0 ">
+                                <input id="chkDefaultOrg" type="checkbox">
+                                    Set user as event organizer
+                            </label>
+
+                        </div>
                         <div class="form-group mb0">
                             <label class="control-label ev_tickt_lebel pl0 ">
                                 <input id="Incsocial" type="checkbox">
@@ -581,6 +588,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label id="lblOrgOfEvent" class="control-label ev_tickt_lebel pl0 mt10 ">
+                            Organizer of the event : David
+                        </label>
+
+                    </div>
+                   
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -726,7 +741,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
-                                                                <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" onchange="checkvalidtime(this.id)" />
+                                                                <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" />
                                                             </div>
 
                                                         </div>
@@ -739,7 +754,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
-                                                                <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00 AM" onchange="checkvalidtime(this.id) " />
+                                                                <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
                                                             </div>
 
                                                         </div>
@@ -3498,9 +3513,6 @@
     }
 
 
-    $(function () {
-        $(document).tooltip();
-    });
     </script>
 
 }

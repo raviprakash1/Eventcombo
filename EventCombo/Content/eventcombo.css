@@ -209,7 +209,7 @@ button:focus { outline: none;}
 .event_top{ margin-top: 62px;}
 .event-upload{ width: 100%; float: left; } 
 .evnt_title_bg{ width: 650px; max-width: 100%; float: right; background: #575757; padding:10px 15px;}
-.evnt_title_top{ margin-top: 15%;}  
+.evnt_title_top{ margin-top: 12%;}  
 
 .evnt_title_control{ background:none !important; height:auto;  text-align: right; padding: 0px; border: 0px; box-shadow: none; color: #baff00; font-size: 2em; font-weight: bold; } 
 .form-control.evnt_title_control:focus{ border: 0px; box-shadow: none;}
@@ -242,9 +242,12 @@ button:focus { outline: none;}
 .sch_time_from{width: 120px; float: left;}
 .label_cont_to{width:auto; float: left; margin:10px;}
 .nth-day{display: inline-block;}
-.evnt_inp_sel_day button.multiselect{ width: 150px; text-align: left !important;}
-.evnt_inp_sel_day ul.multiselect-container{ width: 145px; border-radius: 0px;} 
-.evnt_inp_sel_day b.caret{ float: right; margin-top: 8px;}
+.evnt_inp_sel_day button.multiselect{ width: 200px; text-align: left !important;}
+.evnt_inp_sel_day ul.multiselect-container{ width: 195px; border-radius: 0px;} 
+.evnt_inp_sel_day b.caret{ 
+    margin-top: 8px;
+    position: absolute;
+    right: 8px;}
 .event_reap_time{ float: left; margin-right: 20px;}
 .sch_save_btn {border-radius: 0 !important;}
 
