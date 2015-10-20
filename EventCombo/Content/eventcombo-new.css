@@ -135,7 +135,7 @@
 
 
 /*upload image event  css*/
-.evnt_title_bg{ position:absolute;top: 284px;right: 225px; margin-right:20px; }
+.evnt_title_bg{ position:absolute;bottom: -40px;right: 225px; margin-right:20px; }
 .event-upload-container .jFiler-items ul li.jFiler-item {margin-right:20px;}
 .event-upload-container .jFiler-input-dragDrop{ width:100%;height: 560px; background:#ccc;}
 .event-upload-container .jFiler-item-thumb-image {  width:180px; margin-top:10px;}
@@ -143,6 +143,8 @@
 .event-upload-container .jFiler-item-container{ margin:0px !important;}
 .event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets{margin-top:0px !important;}
 .event-upload-container .jFiler-item .jFiler-item-container{padding:5px!important;}
+
+.jFiler-input-inner{margin-top:50px;}
 
 
 .ev_ven_mod_sch_mul{ border-bottom: 1px solid #aaa;}

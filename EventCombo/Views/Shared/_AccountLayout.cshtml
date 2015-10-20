@@ -36,7 +36,7 @@
 </head>
 <body>
     @*Header Section*@
-    <div class="container-fluid headr_main fix_head">
+    <div class="container-fluid headr_main fix_head" id="mainhead">
         <div class="row">
             <div class="col-sm-5">
                 <a class="logo" href="/Home/Index"><img src="~/Images/logo.png" /></a>
@@ -45,14 +45,22 @@
                 @Html.Partial("_Logout")
 
             </div>
+         
             <div class="col-sm-1 text-right">
                 <div class="social_icn">
                     <a href="http://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
                     <a href="http://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
                     @*<a href="#"><img src="~/Images/fb.png" /></a>
                     <a href="#"><img src="~/Images/tw.png" /></a>*@
-                    <a href="#"><img src="~/Images/msg.png" /></a>
+                    @*<a href="#"><img src="~/Images/msg.png" /></a>*@
                 </div>
+            </div>
+            <div class="Fix_Head mt10" title="Clik to fixed Header">
+                <label class="switch">
+                    <input type="checkbox" class="switch-input" checked  onchange="changeheader(this.id)" id="idchecked">
+                    <span class="switch-label" data-on="On" data-off="Off" ></span>
+                    <span class="switch-handle"></span>
+                </label>
             </div>
         </div>
         <div class="col-sm-12 filter_sep cont_margin">
@@ -60,7 +68,7 @@
             <div class="cus_left_kick"><</div>
         </div>
     </div>
-    <div class="container-fluid cont_margin">
+    <div class="container-fluid cont_margin" id="bodysec">
         @if (HttpContext.Current.Session["Fromname"].ToString() == "events" || HttpContext.Current.Session["Fromname"].ToString() == "deals")
         {
             @RenderBody()
@@ -72,7 +80,7 @@
 
         <div class="row">
             <div class="col-sm-2">
-                <div class="affix-top">
+                <div class="affix-top" id="navtop">
                     <nav class="navbar navbar-default nav_cus_main ">
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle collapsed nav_btn" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -149,7 +157,7 @@
                 </div>
             </div>
             <div class="col-sm-10 ">
-                <div class="midd_cont">
+                <div class="midd_cont" id="midsection">
                     
                     @RenderBody()
 
@@ -160,6 +168,31 @@
 
     </div>
 
+    <script type="text/javascript">
+    function changeheader(e)
+    {
+        if ($('#idchecked').is(":checked") == true) {
+          
+            $('#mainhead').addClass('fix_head');
+            $('#bodysec').addClass('cont_margin');
+            $('#navtop').addClass('affix-top');
+            $('#midsection').addClass('midd_cont');
+            $('#eventtop').addClass('event_top');
+            $('#divsuccerr').addClass('aler_container');
+        } else
+        {
+            $('#mainhead').removeClass('fix_head');
+            $('#bodysec').removeClass('cont_margin');
+            $('#navtop').removeClass('affix-top');
+            $('#midsection').removeClass('midd_cont');
+            $('#eventtop').removeClass('event_top');
+            $('#divsuccerr').removeClass('aler_container');
+        }
+    }
+    </script>
 </body>
+
 </html>
+
+
 

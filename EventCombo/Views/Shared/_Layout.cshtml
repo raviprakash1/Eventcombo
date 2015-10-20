@@ -57,8 +57,8 @@
 
 
     <!-- Header -->
-    <div class="home_fixed_header">
-        <div class="container-fluid headr_main ">
+    <div class="home_fixed_header" id="divmain">
+        <div class="container-fluid headr_main " id="divsecmain">
             <div class="row">
                 <div class="col-sm-5">
                     <a class="logo" href="/Home/Index"><img src=" ~/Images/EventCombo_Red.jpg" /></a>
@@ -73,6 +73,13 @@
                     </ul>
 
                 </div>
+                <div class="Fix_Head" title="Clik to fixed Header">
+                    <label class="switch">
+                       <input type="checkbox" class="switch-input" checked  id="idchecked" onchange="changeheader(this.id);" >
+                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                        <span class="switch-handle"></span>
+                    </label>
+                </div>
                 <div class="col-sm-1 text-right">
                     <div class="social_icn" style="width:40px; margin-top:10px;">
                         <a href="http://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
@@ -82,7 +89,7 @@
             </div>
         </div>
         <!-- Sub Header -->
-        <div class="container-fluid cont_margin2">
+        <div class="container-fluid cont_margin2" id="divcontmain">
             <div class="row cyan-line-new">
                 <div class="col-sm-3">
                     <form>
@@ -198,6 +205,20 @@
 </body>
 </html>
 <script type="text/javascript">
+    function changeheader(e)
+    {
+        if ($('#idchecked').is(":checked") == true) {
+            $('#divmain').addClass('home_fixed_header');
+            $('#divcontmain').addClass('cont_margin2');
+            $('#scrollhome').addClass('con_scr0l_home');
+
+        } else
+        {
+            $('#scrollhome').removeClass('con_scr0l_home');
+            $('#divmain').removeClass('home_fixed_header');
+            $('#divcontmain').removeClass('cont_margin2');
+        }
+    }
     function setsession(e) {
         $.ajax({
             url: '@Url.Action("setsessid", "Home")',
