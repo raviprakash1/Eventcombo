@@ -1222,7 +1222,11 @@ namespace EventCombo.Controllers
             }
 
             // var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-
+            string url = null;
+            if (Session["ReturnUrl"] != null)
+            {
+                url = Session["ReturnUrl"].ToString();
+            }
 
             var user = UserManager.FindByEmail(loginInfo.Email);
 
@@ -1299,7 +1303,7 @@ namespace EventCombo.Controllers
                             }
 
                         }
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToLocal(url);
                     }
                     else
                     {
@@ -1394,7 +1398,7 @@ namespace EventCombo.Controllers
                 var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
                 Session["AppId"] = user.Id;
 
-                       return RedirectToLocal(returnUrl);
+                       return RedirectToLocal(url);
                 //if (result == SignInStatus.Success)
                 //{
                 //    //var User = UserManager.FindByEmail(model.Email.ToString());
