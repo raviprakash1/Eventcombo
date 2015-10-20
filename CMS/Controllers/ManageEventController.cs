@@ -12,7 +12,7 @@ namespace CMS.Controllers
     public class ManageEventController : Controller
     {
         // GET: ManageEvent
-        public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory)
+        public ActionResult Index(string SearchStringEventTitle, string EventTypeId, string ddlEventCategory, string ddlEventSubCategory)
         {
 
             using (EmsEntities db = new EmsEntities())
@@ -20,8 +20,8 @@ namespace CMS.Controllers
 
                 var rows = (from myRow in db.EventTypes
                             select myRow).ToList();
-                List<SelectListItem> EventTypes = new List<SelectListItem>();
-                EventTypes.Add(new SelectListItem()
+                List<SelectListItem> EventType = new List<SelectListItem>();
+                EventType.Add(new SelectListItem()
                 {
                     Text = "Select",
                     Value = "0",
@@ -29,7 +29,7 @@ namespace CMS.Controllers
                 });
                 foreach (var item in rows)
                 {
-                    EventTypes.Add(new SelectListItem()
+                    EventType.Add(new SelectListItem()
                     {
                         Text = item.EventType1,
                         Value = item.EventTypeID.ToString(),
@@ -63,7 +63,7 @@ namespace CMS.Controllers
             }
 
 
-            return View(GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory));
+            return View(GetAllEvents(SearchStringEventTitle, EventTypeId, ddlEventCategory, ddlEventSubCategory));
         }
         public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory)
         {
