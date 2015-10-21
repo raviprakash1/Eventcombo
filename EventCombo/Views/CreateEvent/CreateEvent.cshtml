@@ -1633,62 +1633,57 @@
                 // Multiple Schedule
 
 
-                ////if ($("#dvSingleEvent").css('display') == 'none') {
+                if ($("#dvSingleEvent").css('display') == 'none') {
 
-                ////    var SchOption = $("#dlSchOption").val();
-                ////    var vWeeklyDay = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
-                ////    var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
-                ////    var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
-                ////    var vMonthlyWeekDays = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
-                ////    var vStartingFrom = $("#txtDateFrom").val();
-                ////    var vStartingTo = $("#txtDateTo").val();
-                ////    var vStartTime = $("#txtTimeStart").val();
-                ////    var vEndTime = $("#txtTimeEnd").val();
-                ////    //var newChar = '^';
-                ////    //alert(vWeeklyDay.split(',').join(newChar));
-                ////    //alert(vWeeklyDay);
-                ////    //vWeeklyDay= vWeeklyDay.replace(',', '^');
-                ////    //alert(vWeeklyDay);
+                    var SchOption = $("#dlSchOption").val();
+                    var vWeeklyDay = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
+                    var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
+                    var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
+                    var vMonthlyWeekDays = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
+                    var vStartingFrom = $("#txtDateFrom").val();
+                    var vStartingTo = $("#txtDateTo").val();
+                    var vStartTime = $("#txtTimeStart").val();
+                    var vEndTime = $("#txtTimeEnd").val();
+                   
 
+                    if (SchOption == "Daily") {
+                        vWeeklyDay = '';
+                        vMonthlyDay = '';
+                        vMonthlyWeek = '';
+                        vMonthlyWeekDays = '';
+                        $("#hidSchLastState").val("Daily");
+                    }
+                    else if (SchOption == "Weekly") {
+                        vMonthlyDay = '';
+                        vMonthlyWeek = '';
+                        vMonthlyWeekDays = '';
+                        $("#hidSchLastState").val("Weekly");
+                    }
+                    else if (SchOption == "Monthly") {
+                        vWeeklyDay = '';
+                        $("#hidSchLastState").val("Monthly");
+                    }
+                    else if (SchOption == "Custom") {
+                        vWeeklyDay = '';
+                        vMonthlyDay = '';
+                        vMonthlyWeek = '';
+                        vMonthlyWeekDays = '';
+                        $("#hidSchLastState").val("Custom");
+                    }
 
-                ////    if (SchOption == "Daily") {
-                ////        vWeeklyDay = '';
-                ////        vMonthlyDay = '';
-                ////        vMonthlyWeek = '';
-                ////        vMonthlyWeekDays = '';
-                ////        $("#hidSchLastState").val("Daily");
-                ////    }
-                ////    else if (SchOption == "Weekly") {
-                ////        vMonthlyDay = '';
-                ////        vMonthlyWeek = '';
-                ////        vMonthlyWeekDays = '';
-                ////        $("#hidSchLastState").val("Weekly");
-                ////    }
-                ////    else if (SchOption == "Monthly") {
-                ////        vWeeklyDay = '';
-                ////        $("#hidSchLastState").val("Monthly");
-                ////    }
-                ////    else if (SchOption == "Custom") {
-                ////        vWeeklyDay = '';
-                ////        vMonthlyDay = '';
-                ////        vMonthlyWeek = '';
-                ////        vMonthlyWeekDays = '';
-                ////        $("#hidSchLastState").val("Custom");
-                ////    }
+                    MultipleSchedule.push({
+                        'Frequency': SchOption,
+                        'WeeklyDay': vWeeklyDay,
+                        'MonthlyDay': vMonthlyDay,
+                        'MonthlyWeek': vMonthlyWeek,
+                        'MonthlyWeekDays': vMonthlyWeekDays,
+                        'StartingFrom': vStartingFrom,
+                        'StartingTo': vStartingTo,
+                        'StartTime': vStartTime,
+                        'EndTime': vEndTime
+                    });
 
-                ////    MultipleSchedule.push({
-                ////        'Frequency': SchOption,
-                ////        'WeeklyDay': vWeeklyDay,
-                ////        'MonthlyDay': vMonthlyDay,
-                ////        'MonthlyWeek': vMonthlyWeek,
-                ////        'MonthlyWeekDays': vMonthlyWeekDays,
-                ////        'StartingFrom': vStartingFrom,
-                ////        'StartingTo': vStartingTo,
-                ////        'StartTime': vStartTime,
-                ////        'EndTime': vEndTime
-                ////    });
-
-                ////}
+                }
                 // Orgnizer
                 //$("#tblOrgnizer option").each(function (i) {
                 //    Orgnizer.push({
@@ -1713,19 +1708,8 @@
                 });
 
 
-                //var vOrgName = $("#OrgName_" + Sno).text();
-                //var vOrgDes = $("#OrgDes_" + Sno).text();
-                //var vOrgFB = $("#OrgFB_" + Sno).text();
-                //var vOrgTw = $("#OrgTw_" + Sno).text();
+             
 
-                //alert(Orgnizer[0].toString());
-
-
-
-
-                //$("#dllOrganizer option").each(function (i) {
-                //    alert($(this).text() + " : " + $(this).val());
-                //});
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
@@ -3057,7 +3041,7 @@
             if (!isNaN(leftqty)) {
                 $("#id_totalqty").html(leftqty);
             } else {
-                $('#id_ticket_footer').css('display', 'none');
+                
                 $("#id_totalqty").html(0);
             }
 
@@ -3104,7 +3088,10 @@
 
             });
 
+            if (divlength == 0) {
+                $('#id_ticket_footer').css('display', 'none');
 
+            }
             calculateSum();
 
             return true;
