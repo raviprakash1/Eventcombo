@@ -14,19 +14,20 @@
     <div class="event_container">
         <div class="event_inner_container event_top">
             <div class="col-sm-12 pt10 bggrey">
-                <div class="Moderor">
-                    <div class="er_UI_main" style="display: none;" id="diverroacc">
+                <div class="Moderor" style="display: none;" id="diverroacc">
+                    <div class="er_UI_main" >
                         <div class="er_UI_img"></div>
                         <div class="er_suc" id="erraccmsg">
 
                         </div>
                     </div>
                 </div>
-                <div class="Moderor">
-                    <div class="er_suc_main alert-success" id="divaccsuc" style="display: none;">
-                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+                <div class="Moderor" id="divaccsuc" style="display: none;">
+                    <div class="er_suc_main alert-success" >
+                       
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg"> </div>
+                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
                     </div>
                 </div>
             </div>
@@ -261,7 +262,7 @@
 
                                     </div>
                                     <div class="col-sm-12 mt10 ">
-                                        <label class="Schmultisingle label-control lbl_bot_text">Schedule single event</label>
+                                        <label id="btSchSingleEv" class="Schmultisingle label-control lbl_bot_text">Schedule single event</label>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="SchmultiDetail col-sm-12 mt10">
@@ -1062,6 +1063,8 @@
                     <input id="image_count" type="hidden" />
                     <input type="hidden" id="hdUniqueguid" value="" />
                     <input type="hidden" id="hddiscount" value="0" />
+                    <input type="hidden" id="hdSchType" value="" />
+
 
                 </div>
             </div>
@@ -1462,9 +1465,31 @@
         }
 
         $(document).ready(function () {
+            $(".StartDatemodal").hide();
+            $(".StartDate").click(function () {
+                $(".StartDatemodal").slideToggle("fast");
+
+            });
+
+            $("#btSchMultipleEv").click(function () {
+                $("#hdSchType").val('Multiple');
+            });
+
+            $("#btSchSingleEv").click(function () {
+                $("#hdSchType").val('Single');
+            });
+
+
 
             $("#btMakeLive").click(function () {
-                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation")';
+                if ($("#hdEventId").val() != '') {
+                    window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation")';
+                }
+                else {
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                    $('#erraccmsg').html('Please first save an event');
+                }
 
             });
 
@@ -1485,7 +1510,6 @@
                 //var table = $("#tblAddress");
 
                 // Ticket
-
                 var Ticket = [];
                 var divlength = $("#MasterDiv> div").size();
                 if (divlength > 0) {
@@ -1525,41 +1549,40 @@
                         }
                         Ticket.push({
                             T_name: $('#id_ticket_type-' + i).val(),
-                            T_Qty: $('#id_quantity_total-' + i).val(),
+                            Qty_Available: $('#id_quantity_total-' + i).val(),
                             T_Type: $('#id_Tickettype-' + i).val(),
-                            T_Price: TicketPrice,
+                            Price: TicketPrice,
                             T_Desc: $('#id_descriptionclass-' + i).val(),
-                            T_Show_Desc: ($('#id_show_description-' + i).is("checked") == true ? 1 : 0),
-                            T_Sale_Start_Date: $('#id_salestart-' + i).val(),
-                            T_Sale_Start_Time: $('#id_saletimestart-' + i).val(),
-                            T_Sale_End_Date: $('#id_saleend-' + i).val(),
-                            T_Sale_End_Time: $('#id_saletimeend-' + i).val(),
-                            T_Hide_Ticket: ($('#id_ticketshidden-' + i).is("checked") == true ? 1 : 0),
-                            T_AutoSchedule: Auto_Schedule,
-                            T_AutoSechduleType: AutoSechduleType,
+                            Show_T_Desc: ($('#id_show_description-' + i).is("checked") == true ? 1 : 0),
+                            Sale_Start_Date: $('#id_salestart-' + i).val(),
+                            Sale_Start_Time: $('#id_saletimestart-' + i).val(),
+                            Sale_End_Date: $('#id_saleend-' + i).val(),
+                            Sale_End_Time: $('#id_saletimeend-' + i).val(),
+                            Hide_Ticket: ($('#id_ticketshidden-' + i).is("checked") == true ? 1 : 0),
+                            Auto_Hide_Sche: Auto_Schedule,
                             T_Hide_Untill: ($('#id_auto_hide_until-' + i).is("checked") == true ? 1 : 0),
-                            T_Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
-                            T_Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
+                            Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
+                            Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
                             T_Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
                             T_Hide_After: ($('#id_auto_hide_after-' + i).is("checked") == true ? 1 : 0),
-                            T_Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
-                            T_Hide_After_Time: $('#id_auto_hide_after_Time-' + i).val(),
-                            T_MinTicket: $('#id_min_ticket-' + i).val(),
-                            T_MaxTicket: $('#id_max_ticket-' + i).val(),
-                            T_DisableTicket: ($('#id_disableticket-' + i).is("checked") == true ? 1 : 0),
-                            T_MarkSolout: ($('#id_marksoldout-' + i).is("checked") == true ? 1 : 0),
-                            T_DisplayRemaining: ($('#id_displayremaining-' + i).is("checked") == true ? 1 : 0),
-                            T_TicketTypeID: TicketTypeID,
-                            T_FeeType: $('#id_include_ticket_fees-' + i).val(),
-                            T_Discount: $('#id_Discount-' + i).val()
-
+                            Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
+                            Hide_After_Time: $('#id_auto_hide_after_Time-' + i).val(),
+                            Min_T_Qty: $('#id_min_ticket-' + i).val(),
+                            Max_T_Qty: $('#id_max_ticket-' + i).val(),
+                            T_Disable: ($('#id_disableticket-' + i).is("checked") == true ? 1 : 0),
+                            T_Mark_SoldOut: ($('#id_marksoldout-' + i).is("checked") == true ? 1 : 0),
+                            T_No_Show: ($('#id_displayremaining-' + i).is("checked") == true ? 1 : 0),
+                            Fees_Type: $('#id_include_ticket_fees-' + i).val(),
+                            T_Discount: $('#id_Discount-' + i).val(),
+                            T_order: $('#id_order-' + i).val(),
+                            TicketTypeID: TicketTypeID,
+                            T_AutoSechduleType: AutoSechduleType
 
                         });
 
                     }
 
                 }
-
 
 
                 //$('#tblAddress tr').each(function () {
@@ -1623,17 +1646,18 @@
                 //}
 
                 // Single Timing
-
-                SingleTiming.push({
-                    'EventStartDate': $("#txtStartDate").val(),
-                    'EventEndDate': $("#txtStartTime").val(),
-                    'EventStartTime': $("#txtEndDate").val(),
-                    'EventEndTime': $("#txtEndTime").val()
-                });
+                if ($("#hdSchType").val() == 'Single') {
+                    SingleTiming.push({
+                        'EventStartDate': $("#txtStartDate").val(),
+                        'EventEndDate': $("#txtStartTime").val(),
+                        'EventStartTime': $("#txtEndDate").val(),
+                        'EventEndTime': $("#txtEndTime").val()
+                    });
+                }
                 // Multiple Schedule
 
 
-                if ($("#dvSingleEvent").css('display') == 'none') {
+                if ($("#hdSchType").val() == 'Multiple') {
 
                     var SchOption = $("#dlSchOption").val();
                     var vWeeklyDay = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
@@ -1644,7 +1668,7 @@
                     var vStartingTo = $("#txtDateTo").val();
                     var vStartTime = $("#txtTimeStart").val();
                     var vEndTime = $("#txtTimeEnd").val();
-                   
+
 
                     if (SchOption == "Daily") {
                         vWeeklyDay = '';
@@ -1707,9 +1731,7 @@
                     }
                 });
 
-
-             
-
+          
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
@@ -1741,10 +1763,12 @@
                     'Orgnizer': Orgnizer,
                     'AddressStatus': $("#hidAddressStatus").val(),
                     'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
-                    'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N')
-                    //dllPastLocation
+                    'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N'),
+                    'Ticket': Ticket
+                    
                 };
-                //if ($("#hdEventId").val() != '') {
+              
+                if ($("#hdEventId").val() == '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
                         data: model,
@@ -1754,12 +1778,16 @@
                             $('#divaccsuc').css('display', 'block');
                             $('#diverroacc').css('display', 'none');
                             $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
+                            $("#hdEventId").val(response);
+
                         }
                     });
-                //}
-                //else {
-                //    alert("Event modified successfully.");
-                //}
+                }
+                else {
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                    $('#erraccmsg').html('Event already saved');
+                }
             });
 
 
@@ -2301,11 +2329,7 @@
 
             });
 
-            $(".StartDatemodal").hide();
-            $(".StartDate").click(function () {
-                $(".StartDatemodal").slideToggle("fast");
 
-            });
 
 
             $(".PastLocat").css("display", "none");
@@ -3620,9 +3644,17 @@
         var title = $('#txtEventTitle').val();
 
         if (title == "") {
-            msg = "Please Enter the name of Event";
+            msg = "Please enter the name of event";
 
         }
+
+        var type = $("#EventType").val();
+        var cat = $("#ddlEventCategory").val();
+        if (type <= 0) { msg += "</br>Please select type of event"; }
+        if (cat <= 0) { msg += "</br>Please select category of event"; }
+
+
+
         var divlength = $("#MasterDiv> div").size();
         if (divlength > 0) {
 

@@ -232,6 +232,7 @@ namespace EventCombo.Controllers
                         Address ObjAdd = new Models.Address();
                         foreach (Address objA in model.AddressDetail)
                         {
+                            ObjAdd = new Models.Address();
                             ObjAdd.EventId = ObjEC.EventID;
                             ObjAdd.Address1 = objA.Address1;
                             ObjAdd.Address2 = objA.Address2;
@@ -253,6 +254,7 @@ namespace EventCombo.Controllers
                         EventVenue objEVenue = new EventVenue();
                         foreach (EventVenue objEv in model.EventVenue)
                         {
+                            objEVenue = new EventVenue();
                             objEVenue.EventID = ObjEC.EventID;
                             objEVenue.EventStartDate = objEv.EventStartDate;
                             objEVenue.EventEndDate = objEv.EventEndDate;
@@ -267,6 +269,7 @@ namespace EventCombo.Controllers
                         MultipleEvent objMEvents = new MultipleEvent();
                         foreach (MultipleEvent objME in model.MultipleEvents)
                         {
+                            objMEvents = new MultipleEvent();
                             objMEvents.EventID = ObjEC.EventID;
                             objMEvents.Frequency = objME.Frequency;
                             objMEvents.WeeklyDay = objME.WeeklyDay;
@@ -286,6 +289,7 @@ namespace EventCombo.Controllers
                         Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
                         foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
                         {
+                            objEOrg = new Event_Orgnizer_Detail();
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
                             objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
                             objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
@@ -294,6 +298,42 @@ namespace EventCombo.Controllers
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
                     }
+                    // Tickets
+                    if (model.Ticket != null)
+                    {
+                        Ticket ticket = new Ticket();
+                        foreach (Ticket tick in model.Ticket)
+                        {
+                            ticket = new Ticket();
+                            ticket.E_Id = ObjEC.EventID;
+                            ticket.TicketTypeID = tick.TicketTypeID;
+                            ticket.T_name = tick.T_name;
+                            ticket.T_Desc = tick.T_Desc;
+                            ticket.TicketTypeID = tick.TicketTypeID;
+                            ticket.T_order = tick.T_order;
+                            ticket.T_AutoSechduleType = tick.T_AutoSechduleType;
+                            ticket.T_Discount = ticket.T_Discount;
+                            ticket.Show_T_Desc = tick.Show_T_Desc;
+                            ticket.Sale_Start_Date = tick.Sale_Start_Date;
+                            ticket.Sale_Start_Time = tick.Sale_Start_Time;
+                            ticket.Sale_End_Date = tick.Sale_End_Date;
+                            ticket.Sale_End_Time = tick.Sale_End_Time;
+                            ticket.Qty_Available = tick.Qty_Available;
+                            ticket.Price = tick.Price;
+                            ticket.T_Disable = tick.T_Disable;
+                            ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
+                            ticket.T_No_Show = tick.T_No_Show;
+                            ticket.Fees_Type = tick.Fees_Type;
+                            objEnt.Tickets.Add(ticket);
+                        }
+
+
+                    }
+
+
+
+
+
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
                 }
