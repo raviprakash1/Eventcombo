@@ -652,8 +652,9 @@
                                         <span class="buyer_tot">Buyer total: </span>
                                         <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
                                         <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
-                                        <label class="pull-right" style="color:red;display:none;" id="id_lblprice-n" >Please enter valid number</label>
+                                      
                                         <div class="tooltip" id="id_tooltip-n">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00</div>
+                                        <label class="pull-right" style="color:red;display:none;" id="id_lblprice-n" >Please enter valid number</label>
                                     </div>
                                     @*<div class="label-control lbl_bot_price  paidticket-n" id="idlbuyertotal-n">
                                             <span class="buyer_tot">Buyer total: </span>
@@ -801,12 +802,12 @@
                                                     <div class="form-group">
                                                         <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
                                                         <div class="evnt_time_cont wd280 mr5_p">
-                                                            <input class="form-control evnt_inp_cont wd240 " placeholder="0" id="id_min_ticket-n" onblur="checkminum(this.id);" onkeyup="allownumber(event,this.id)" />
+                                                            <input class="form-control evnt_inp_cont wd240 " placeholder="0" id="id_min_ticket-n" onblur="checkminum(this.id);" onkeyup="allownumber(event,this.id)"  maxlength="6" />
                                                             <label class="label-control lbl_bot_minim ">Minimum</label>
 
                                                         </div>
                                                         <div class="evnt_time_cont wd280">
-                                                            <input class="form-control evnt_inp_cont wd240" placeholder="0" id="id_max_ticket-n" onblur="checkminum(this.id);" onkeyup="allownumber(event,this.id)"/>
+                                                            <input class="form-control evnt_inp_cont wd240" placeholder="0" id="id_max_ticket-n" onblur="checkminum(this.id);" onkeyup="allownumber(event,this.id)"  maxlength="6"/>
                                                             <label class="label-control lbl_bot_minim">Maximum</label>
                                                             <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
 
@@ -860,7 +861,7 @@
 
                             </div>
                             @*<div class="clearfix"></div>*@
-                            <div class="modal-footer ticket_footer mt10 text">
+                            <div class="modal-footer ticket_footer mt10 text" id="id_ticket_footer">
                                 <div class="col-sm-12 text-right">
                                     <label class="ev_tickt_lebel">Total Capacity:<span id="id_totalqty">0</span></label>
                                 </div>
@@ -901,6 +902,66 @@
                             </div>
 
                         </div>
+                        @*<div class="TicketFees col-sm-12 no_pad">
+                            <div class="form-group">
+                                <div class="col-sm-5 no_pad">
+                                    <label class="col-sm-4 control-label ev_tickt_lebel">Description</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 no_pad">
+                                    <label class="col-sm-2 control-label ev_tickt_lebel">Type</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control ev_drop_label">
+                                            <option>Type 1 </option>
+                                            <option>Type 2 </option>
+                                            <option>Type 3 </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 no_pad">
+                                    <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mt20 no_pad">
+                                <div class="list-group ev_var_chrg_group">
+                                    <div class="col-sm-12 no_pad">
+                                        <div class="list-group-item ev_var_chrg_list">
+                                            <div class="form-group">
+                                                <div class="col-sm-7 col-xs-7">
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Description">
+                                                </div>
+                                                <div class="col-sm-4 col-xs-4">
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="$ 12.22">
+                                                </div>
+                                                <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
+                                                    <button class="btn" type="button"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 no_pad">
+                                        <div class="list-group-item ev_var_chrg_list">
+                                            <div class="form-group">
+                                                <div class="col-sm-7 col-xs-7">
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Description">
+                                                </div>
+                                                <div class="col-sm-4 col-xs-4">
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="$ 12.22">
+                                                </div>
+                                                <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
+                                                    <button class="btn" type="button"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>*@
                     </div>
                 </div>
             </div>
@@ -1101,7 +1162,7 @@
                 var enddate = $('#txtDateTo').val();
                 var startdate = $('#txtDateFrom').val();
                 var errorMsg = checkDate(e);
-
+                alert(errorMsg);
                 if (errorMsg != "") {
 
 
@@ -2078,6 +2139,7 @@
 
             $('.date_picker').datepicker({
                 format: "MM/DD/YYYY",
+                minDate: "0",
             })
             .on('changeDate', function (ev) {
                 $('.date_picker').datepicker('hide');
@@ -2294,6 +2356,7 @@
         var al = e.substr(0, e.indexOf('-'));
        
         var errorMsg = checkDate(e);
+       
         if (al == "id_auto_hide_until_Date")
         {
             
@@ -2618,6 +2681,7 @@
     }
     $('.save_btnpaid ').click(function () {
         $(".ticket_panel").show();
+        $("#id_ticket_footer").css('display', 'block');
         var divlength = $("#MasterDiv> div").size();
         var data = $('#clonediv-n').clone();
         data.attr('id', 'clonediv-' + divlength);
@@ -2657,7 +2721,7 @@
         $("#id_Discount-" + divlength).prop("readonly", false);
         var randomValue = randomString(4);
         $("#id_ticket_id-" + divlength).val(randomValue);
-        $("#id_order-" + divlength).val(divlength + 1);
+        $("#id_order-" + divlength).val(divlength);
         $("#id_feetype-" + divlength).css('display', 'block');
         $("#id_Tickettype-" + divlength).val("Paid");
         $("#id_buyerprice-" + divlength).html('$0.00');
@@ -2666,6 +2730,7 @@
         $("#id_feemethod").val(0);
         $("#id_salestart-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2675,6 +2740,7 @@
         });
         $("#id_saleend-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2685,6 +2751,7 @@
       
         $("#id_auto_hide_until_Date-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2694,6 +2761,7 @@
         });
         $("#id_auto_hide_after_Date-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2717,6 +2785,7 @@
     });
     $('.save_btndonation').click(function () {
         $(".ticket_panel").show();
+        $("#id_ticket_footer").css('display', 'block');
         var divlength = $("#MasterDiv> div").size();
 
         var data = $('#clonediv-n').clone();
@@ -2757,12 +2826,13 @@
         var randomValue = randomString(4);
         $("#id_ticket_id-" + divlength).val(randomValue);
 
-        $("#id_order-" + divlength).val(divlength + 1);
+        $("#id_order-" + divlength).val(divlength);
         $("#id_Tickettype-" + divlength).val("Donation");
 
         $("#id_feemethod").val(0);
         $("#id_salestart-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2772,6 +2842,7 @@
         });
         $("#id_saleend-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2782,6 +2853,7 @@
 
         $("#id_auto_hide_until_Date-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2791,6 +2863,7 @@
         });
         $("#id_auto_hide_after_Date-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2814,6 +2887,7 @@
     $('.save_btnfree').click(function () {
 
         $(".ticket_panel").show();
+        $("#id_ticket_footer").css('display', 'block');
         var divlength = $("#MasterDiv> div").size();
         var data = $('#clonediv-n').clone();
         data.attr('id', 'clonediv-' + divlength);
@@ -2852,7 +2926,7 @@
         $("#id_Discount-" + divlength).prop("readonly", true);
         var randomValue = randomString(4);
         $("#id_ticket_id-" + divlength).val(randomValue);
-        $("#id_order-" + divlength).val(divlength + 1);
+        $("#id_order-" + divlength).val(divlength);
         //$("#id_feetype-" + divlength).css('display', 'none');
         $("#id_Tickettype-" + divlength).val("Free");
         //$("clonediv-" + divlength).css('display', 'block');
@@ -2860,6 +2934,7 @@
         $("#id_feemethod").val(0);
         $("#id_salestart-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2869,6 +2944,7 @@
         });
         $("#id_saleend-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2879,6 +2955,7 @@
 
         $("#id_auto_hide_until_Date-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2888,6 +2965,7 @@
         });
         $("#id_auto_hide_after_Date-" + divlength).datepicker({
             format: "mm/dd/yyyy",
+            minDate: "0",
             onSelect: function () {
 
                 this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -2936,9 +3014,10 @@
             if (!isNaN(leftqty)) {
                 $("#id_totalqty").html(leftqty);
             } else {
+              
                 $("#id_totalqty").html(0);
             }
-
+           
 
             div.parentNode.removeChild(div);
             divlength = $("#MasterDiv> div").size();
@@ -2961,14 +3040,19 @@
                     ////console.log(id);
                     var idn = id1 + "-" + (count);
                     $(this).attr("id", idn);
-                
+                    var al = $(this).attr("id").substr(0, e.indexOf('-'));
+                  
+                    if (al == "id_order-") {
+                       
+                        $(this).val(count+1);
+                    }
 
-                    if ($(this).hasClass("paidticket-n")) {
-                        $(this).removeClass('paidticket-n');
+                    if ($(this).hasClass("paidticket-" + (count+1))) {
+                        $(this).removeClass('paidticket-'+ (count+1));
                         $(this).addClass('paidticket-' + (count) + '');
                     }
-                    if ($(this).hasClass("normalticket-n")) {
-                        $(this).removeClass('normalticket-n');
+                    if ($(this).hasClass("normalticket-"+ (count+1))) {
+                        $(this).removeClass('normalticket-'+ (count+1));
                         $(this).addClass('normalticket-' + (count) + '');
                     }
 
@@ -2977,7 +3061,11 @@
 
             });
            
-            
+            if (divlength == 0)
+            {
+                $('#id_ticket_footer').css('display', 'none');
+
+            }
             calculateSum();
 
             return true;
@@ -3022,37 +3110,57 @@
       
         if (!isNaN(price)) {
             if (price != 0) {
-                if (discount >= price) {
-                    $('#' + e).addClass('err-bor');
-                 
-                    $('#hddiscount').val('1');
-                    return false;
+                if (!isNaN(discount)) {
+                    if (discount >= price) {
+                        $('#' + e).addClass('err-bor');
 
+                        $('#hddiscount').val('1');
+                        return false;
+
+                    } else {
+                        $('#hddiscount').val('0');
+                        $('#' + e).removeClass('err-bor');
+
+                    }
                 } else {
                     $('#hddiscount').val('0');
                     $('#' + e).removeClass('err-bor');
-                   
                 }
 
-            } else {
-                $('#hddiscount').val('1');
-                $('#' + e).addClass('err-bor');
-               
-                return false;
+            }
+            else {
+                if (!isNaN(discount)) {
+                    $('#hddiscount').val('1');
+                    $('#' + e).addClass('err-bor');
+
+                    return false;
+                } else {
+                    $('#hddiscount').val('0');
+                    $('#' + e).removeClass('err-bor');
+                }
             }
 
 
         } else {
-            if (discount == 0) {
+            if (!isNaN(discount))
+            {
+                if (discount == 0) {
+                    $('#hddiscount').val('0');
+                    $('#' + e).removeClass('err-bor');
+
+                } else {
+                    $('#hddiscount').val('1');
+                    $('#' + e).addClass('err-bor');
+
+                    return false;
+                }
+            }
+            else {
                 $('#hddiscount').val('0');
                 $('#' + e).removeClass('err-bor');
-               
-            } else {
-                $('#hddiscount').val('1');
-                $('#' + e).addClass('err-bor');
-                
-                return false;
+
             }
+           
         }
 
 
@@ -3241,6 +3349,7 @@
             $("#id_auto_hide_type_0-" + el).prop('checked', true);
             $("#id_auto_hide_until_Date-" + el).datepicker({
                 format: "mm/dd/yyyy",
+                minDate: "0",
                 onSelect: function () {
 
                     this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -3250,6 +3359,7 @@
             });
             $("#id_auto_hide_after_Date-" + el).datepicker({
                 format: "mm/dd/yyyy",
+                minDate: "0",
                 onSelect: function () {
 
                     this.fireEvent && this.fireEvent('onchange') || $(this).change();
@@ -3332,16 +3442,16 @@
         $('#hdUniqueguid').val(uuid());
 
         $('#input2').filer({
-            limit: '5',
-            maxSize: '2',
+            limit: 5,
+            maxSize: null,
             extensions: ['jpg', 'jpeg', 'png'],
             changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drop Images here to upload or click here</h3></br><h4>Upto 5 Images,900X600</h4> </div></div></div>',
             showThumbs: true,
-            appendTo: "#drag-drop",
+            appendTo:  "#drag-drop",
             theme: "dragdropbox",
-            onChange: false,
             templates: {
-                box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
+               box: '<ul class="jFiler-item-list clearfix"></ul>',
+             
                 item: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
@@ -3360,6 +3470,7 @@
                                              </button>\
                                        </div>\
                         </li>',
+            
                 itemAppend: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
@@ -3368,10 +3479,8 @@
                                              </button>\
                                        </div>\
                         </li>',
-
-
                 progressBar: '<div class="bar"></div>',
-                itemAppendToEnd: true,
+                itemAppendToEnd: false,
                 removeConfirmation: false,
                 _selectors: {
                     list: '.jFiler-item-list',
@@ -3392,9 +3501,7 @@
                     el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
                         $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
                     });
-                    //el.find(".jFiler-item-assets").hide();
-                    ////    console.log(el);
-                    //// $(".jFiler-item-assets").hide();
+                   
                     var image_count = $("#image_count").val();
                     var imagejson = jQuery.parseJSON(JSON.stringify(data));
                     var imgdata = imagejson.image_name + '####' + imagejson.image_type;
@@ -3406,44 +3513,24 @@
                         name: 'Eventpicture[' + imgdata + ']',
                         value: imgdata
                     }).appendTo('form');
-                    //var imgname=imagejson.image_name;
-                    //el.find('span').html(imgname.substring(0,18));
-
+                  
                     $('#ImagePresent').val("Yes");
-                    //el.find('img').attr('src',imagejson.image_path);
-                    //el.find(".jFiler-item-thumb-image").bind("click", function(e){
-                    //    $.magnificPopup.open({
-                    //        items: {
-                    //            src: imagejson.image_path
-                    //        },
-                    //        type: 'image',
-                    //        modal: true,
-                    //        closeMarkup: '<button class="mfp-close" type="button" title="Close (Esc)">×</button>',
-
-                    //        // You may add options here, they're exactly the same as for $.fn.magnificPopup call
-                    //        // Note that some settings that rely on click event (like disableOn or midClick) will not work here
-                    //    }, 0);
-
-                    //    $(".mfp-close").html("X");
-                    //});
+                   
                     if ($.trim(image_count) == '') {
                         $("#image_count").val('1');
                     } else {
                         image_count = parseInt(image_count) + 1;
                         $("#image_count").val(image_count);
                     }
-                    //if ($("#Celebrity_image_count").val()=='5') {
-                    //    $("#Celebrity_image_count_em_").hide();
-                    //}
+                  
 
 
                 },
                 error: function (el) {
-
-                    //var parent = el.find(".jFiler-jProgressBar").parent();
-                    //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                    //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
-                    //});
+                    var parent = el.find(".jFiler-jProgressBar").parent();
+                    el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                        $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                    });
                 },
                 statusCode: {},
                 onProgress: function () { },
@@ -3459,6 +3546,7 @@
             beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
             onSelect: function () { $(".jFiler-input-inner").hide(); },
             afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
+
             onRemove: function (el) {
                 var image_count = $("#image_count").val();
                 image_count = parseInt(image_count) - 1;
@@ -3477,16 +3565,11 @@
                 $('#ImagePresent').val("NO");
 
 
-                //$.post("/Event/RemoveFile", function (data) {
-                //    alert("gsdgertet");
-                //});
-
-
             },
             onEmpty: function (el) {
-
+              
                 if ($("#imageeror").val() == 0) {
-                    if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                    if ($(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
                 }
             },
             captions: {
@@ -3496,13 +3579,12 @@
                 drop: "Drop file here to Upload",
                 removeConfirmation: "Are you sure you want to remove this file?",
                 errors: {
-                    filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
-                    filesType: "Only files with extension .jpg,.png,.jpeg are allowed to be uploaded.",
-                    filesSize: "Image is too large! Please upload file up to {{fi-maxSize}} MB.",
+                    filesLimit: "Only {{fi-limit}} files are allowed to be uploaded.",
+                    filesType: "Only Images are allowed to be uploaded.",
+                    filesSize: "{{fi-name}} is too large! Please upload file up to {{fi-maxSize}} MB.",
                     filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
                 }
             }
-
         });
     });
     </script>
@@ -3523,9 +3605,11 @@
         if (divlength > 0) {
 
             for (var i = 0; i < divlength; i++) {
+
                 var ticket_name = $('#id_ticket_type-' + i).val();
                 var ticket_Qty = $('#id_quantity_total-' + i).val();
-                if (ticket_name == "" && ticket_Qty == "") {
+                if (ticket_name == "" && ticket_Qty == "")
+                {
                     $('#id_ticket_type-' + i).addClass('err-bor');
                     $('#id_quantity_total-' + i).addClass('err-bor');
                     count++;
@@ -3533,6 +3617,8 @@
                     $('#id_ticket_type-' + i).removeClass('err-bor');
                     $('#id_quantity_total-' + i).removeClass('err-bor');
                 }
+
+                if ($('#id_cost-' + i).hasClass('err-bor')) { count++; }
 
             }
 
@@ -3619,12 +3705,19 @@
     }
     function checkDate(field) {
         var allowBlank = true;
-        var minYear = 1902;
-        var maxYear = (new Date()).getFullYear();
-
+        var minYear = (new Date()).getFullYear();
+        var maxYear = (new Date()).getFullYear()+10;
+        var d = new Date();
+      
         var errorMsg = "";
         var value = $("#" + field).val();
+        var datelast = new Date(value);
+       
+        var msDateA = Date.UTC(d.getFullYear(), d.getMonth() + 1, d.getDate());
+        var msDateB = Date.UTC(datelast.getFullYear(), datelast.getMonth() + 1, datelast.getDate());
+     
 
+       
         // regular expression to match required date format
         re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
 
@@ -3645,6 +3738,12 @@
         } else if (!allowBlank) {
             errorMsg = "Empty date not allowed!";
         }
+
+       if (parseFloat(msDateB) < parseFloat(msDateA))
+        {
+            
+            errorMsg = "Invalid date format: " + field.value;
+        }
         return errorMsg;
 
         //if (errorMsg != "") {
@@ -3659,7 +3758,12 @@
         //return true;
     }
 
-
+    $(document).ready(function () {
+        $('#drag-drop').on('click', function (e) {
+            $('#input2').unbind('click'); 
+          
+        });
+    });
   
     </script>
 

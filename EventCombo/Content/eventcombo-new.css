@@ -136,14 +136,15 @@
 
 /*upload image event  css*/
 .evnt_title_bg{ position:absolute;bottom: -40px;right: 225px; margin-right:20px; }
+.event-upload-container .jFiler-items ul { margin-top:30px;}
 .event-upload-container .jFiler-items ul li.jFiler-item {margin-right:20px;}
 .event-upload-container .jFiler-input-dragDrop{ width:100%;height: 560px; background:#ccc;}
-.event-upload-container .jFiler-item-thumb-image {  width:180px; margin-top:10px;}
-.event-upload-container .jFiler-item-thumb-image img{ width:180px;height:140px; border:2px solid #fff; }
+.event-upload-container .jFiler-item-thumb-image {  width:140px; height:105px; background:#fff; margin-top:10px;}
+.event-upload-container .jFiler-item-thumb-image img{ max-width:100%;height:auto; text-align:center; border:2px solid #fff; }
 .event-upload-container .jFiler-item-container{ margin:0px !important;}
 .event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets{margin-top:0px !important;}
+.event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets ul{margin-top:0px !important;}
 .event-upload-container .jFiler-item .jFiler-item-container{padding:5px!important;}
-
 .jFiler-input-inner{margin-top:50px;}
 
 
@@ -166,3 +167,19 @@
 .note-editor .note-table{ display: none;}
 .note-editor .note-insert{ display: none;}
 .note-editor .note-help{ display: none;}
+
+
+
+/*Variable charges*/
+.ev_var_chrg_list{ min-height: 55px; border:0px; font-size: 1.2em;}
+.ev_var_chrg_group{ border-radius: 0px ; border:1px solid #aaa; min-height: 44px; max-height: 200px; overflow: auto;}
+
+.var_chrg_edt_main{color:#00cfff; }
+.var_chrg_edt_main a{ color:#00cfff;  }
+.var_chg_btn{ line-height: .8 !important;}
+.var_chrg_edt_main button{ background: none; font-size: 1em;}
+.var_chrg_edt_main button:hover{color:#00cfff;}
+.var_chrg_edt_main button:focus{color:#00cfff; outline: none !important;}
+.var_chrg_edt_main button.focus{color:#00cfff; outline: none !important;}
+.var_chrg_edt_main button.active{ box-shadow: none !important;}
+.var_chrg_edt_main button:active{ box-shadow: none !important;}
