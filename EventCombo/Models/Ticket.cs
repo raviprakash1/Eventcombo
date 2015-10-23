@@ -20,40 +20,34 @@ namespace EventCombo.Models
         public long Qty_Available { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<long> TicketTypeID { get; set; }
-        public Nullable<bool> T_Sold { get; set; }
-        public Nullable<bool> Registration_Recorded { get; set; }
+        public string T_Sold { get; set; }
+        public string Registration_Recorded { get; set; }
         public string T_Desc { get; set; }
-        public Nullable<bool> Show_T_Desc { get; set; }
+        public string Show_T_Desc { get; set; }
         public string Fees_Type { get; set; }
         public Nullable<System.DateTime> Sale_Start_Date { get; set; }
         public Nullable<System.TimeSpan> Sale_Start_Time { get; set; }
         public Nullable<System.DateTime> Sale_End_Date { get; set; }
         public Nullable<System.TimeSpan> Sale_End_Time { get; set; }
-        public Nullable<bool> Hide_Ticket { get; set; }
-        public Nullable<bool> Auto_Hide_Sche { get; set; }
-        public Nullable<bool> Hide_Untill { get; set; }
+        public string Hide_Ticket { get; set; }
+        public string Auto_Hide_Sche { get; set; }
         public Nullable<System.DateTime> Hide_Untill_Date { get; set; }
         public Nullable<System.TimeSpan> Hide_Untill_Time { get; set; }
-        public Nullable<bool> Hide_After { get; set; }
         public Nullable<System.DateTime> Hide_After_Date { get; set; }
         public Nullable<System.TimeSpan> Hide_After_Time { get; set; }
         public Nullable<decimal> Min_T_Qty { get; set; }
         public Nullable<decimal> Max_T_Qty { get; set; }
-        public Nullable<bool> T_Disable { get; set; }
-        public Nullable<bool> T_Mark_SoldOut { get; set; }
+        public string T_Disable { get; set; }
+        public string T_Mark_SoldOut { get; set; }
         public Nullable<long> T_Sold_Qty { get; set; }
         public Nullable<byte> T_order { get; set; }
-        public string T_Sale_By { get; set; }
-        public Nullable<long> T_Saleby_End { get; set; }
-        public Nullable<bool> T_No_Show { get; set; }
         public Nullable<decimal> EC_Fee { get; set; }
         public Nullable<decimal> Customer_Fee { get; set; }
-        public Nullable<bool> T_DeliveryAdd { get; set; }
-        public Nullable<bool> T_WillCall { get; set; }
-        public Nullable<bool> T_Seated { get; set; }
-        public Nullable<int> T_AutoSechduleType { get; set; }
+        public string T_Displayremaining { get; set; }
+        public string T_AutoSechduleType { get; set; }
         public Nullable<decimal> Additional_Fee { get; set; }
         public Nullable<decimal> T_Discount { get; set; }
+        public Nullable<decimal> TotalPrice { get; set; }
     
         public virtual Event Event { get; set; }
     }

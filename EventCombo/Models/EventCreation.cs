@@ -35,11 +35,18 @@ namespace EventCombo.Models
         public string AddressStatus { get; set; }
         public long LastLocationAddress { get; set; }
         public string EnableFBDiscussion { get; set; }
+        public string Ticket_DAdress { get; set; }
+        public string Ticket_showremain { get; set; }
+        public string Ticket_showvariable { get; set; }
+        public string Ticket_variabledesc { get; set; }
+        public string Ticket_variabletype { get; set; }
         public Address[] AddressDetail { get; set; }
         public EventVenue[] EventVenue { get; set; }
         public MultipleEvent[] MultipleEvents { get; set; }
         public Event_Orgnizer_Detail[] Orgnizer { get; set; }
         public Ticket[] Ticket { get; set; }
+        public EventImage[] EventImage { get; set; }
+        public Event_VariableDesc[] EventVariable { get; set; }
 
     }
 }

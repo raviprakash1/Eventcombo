@@ -12,12 +12,12 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EventImage
+    public partial class Event_VariableDesc
     {
-        public long EventImageID { get; set; }
-        public long EventID { get; set; }
-        public string EventImageUrl { get; set; }
-        public string ImageType { get; set; }
+        public string VariableDesc { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<long> Event_Id { get; set; }
+        public long Variable_Id { get; set; }
     
         public virtual Event Event { get; set; }
     }
