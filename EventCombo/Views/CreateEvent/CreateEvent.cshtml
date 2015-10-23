@@ -507,7 +507,7 @@
                         <div class="form-group ">
                             <label class="col-sm-12 control-label ev_tickt_lebel pl0">Organizer Name</label>
                             <div class="col-sm-8 no_pad">
-                                <input id="txtOrgnizer" class="form-control evnt_inp_cont" type="text">
+                                <input id="txtOrgnizer" maxlength="200" class="form-control evnt_inp_cont" type="text">
                             </div>
                         </div>
                     </div>
@@ -565,14 +565,14 @@
                                 </span>
                             </div>*@
                             <div class="col-sm-12 no_pad">
-                                <div class="col-sm-8 no_pad">
+                                <div class="col-sm-8 no_pad col-xs-4">
                                     <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
                                 </div>
-                                <div class="col-sm-2">
-                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn">Edit <i class="fa fa-pencil"></i></button>
+                                <div class="col-sm-2 col-xs-4">
+                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
-                                <div class="col-sm-2 ">
-                                    <button type="button" onclick="DeleteOrgnizer();" class="btn btn-primary ev_add_sub_btn">Delete <i class="fa fa-trash"></i></button>
+                                <div class="col-sm-2 col-xs-4">
+                                    <button type="button" onclick="DeleteOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
                             </div>
@@ -1327,10 +1327,16 @@
                 if (Sno == $(this).find("td:first").html())
                     $(this).remove();
             });
-            if (parseInt($('#tblAddress tr').length) <= 1) {
+            
+            $("#VenueName").val("");
+            $("#Address1").val("");
+            $("#Address2").val("");
+            $("#City").val("");
+            $("#State").val("");
+            $("#Zip").val("");
+            $("#hidAddSno").val("");
+            $("#CountryID").val('1');
 
-
-            }
 
         }
 
@@ -1886,6 +1892,9 @@
             });
 
 
+            $("#btMultiVenue").click(function () {
+                $("#txtEventLocation").val('');
+            });
 
             $("#btOnlineEvent").click(function () {
                 if ($("#btOnlineEvent").is(":checked") == true) {
@@ -1926,17 +1935,25 @@
 
                 //var data = $("#dvOrg_0").clone();
                 //$("#dvOrganizer").append(data);
+                //alert(parseInt($("#ddlOrgnizers option").length));
+              
+
                 if ($("#txtOrgnizer").val().trim() == '')
                 {
-                    alert("Please enter valid orgnizer.");
+                    alert("Please enter valid organizer.");
                     $("#txtOrgnizer").focus();
                     return false;
                 }
 
 
 
-                if ($("#hidOrgnizer").val() == '')
+                if ($("#hidOrgnizer").val() == '') {
+                    if (parseInt($("#ddlOrgnizers option").length) > 24) {
+                        alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
+                        return false;
+                    }
                     AddOrgnizer();
+                }
                 else
                     UpdateOrgnizer($("#hidOrgnizer").val());
 
@@ -2000,7 +2017,20 @@
             });
 
 
+            $('#txtEventUrl').bind('keypress', function (event) {
+                var regex = new RegExp("^[a-zA-Z0-9]+$");
+                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                if (!regex.test(key)) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
 
+
+            $('#txtEventUrl').bind('cut copy paste', function (event) {
+                    event.preventDefault();
+                    return false;
+            });
 
             $("#txtEventUrl").focusout(function () {
                 var vval = $("#txtEventUrl").val().trim();
@@ -2158,7 +2188,9 @@
                     zoom: 10,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
-                var map = new google.maps.Map(document.getElementById("map_canvas"),
+                //var map = new google.maps.Map(document.getElementById("map_canvas"),
+                //  mapOptions);
+                var map = new google.maps.Map(document.getElementById("map"),
                   mapOptions);
                 // create a marker
                 var latlng = new google.maps.LatLng(6.9167, 79.8473);
@@ -2196,12 +2228,12 @@
                     ].join(' ');
                 }
 
-                $("#VenueName").val(place.address_components[0].long_name);
+                //$("#VenueName").val(place.address_components[0].long_name);
 
-                $("#City").val(place.address_components[1].long_name);
-                $("#State").val(place.address_components[3].long_name);
-                $("#Zip").val(place.address_components[5].long_name);
-                $("#CountryID").val(place.address_components[4].long_name);
+                //$("#City").val(place.address_components[1].long_name);
+                //$("#State").val(place.address_components[3].long_name);
+                //$("#Zip").val(place.address_components[5].long_name);
+                //$("#CountryID").val(place.address_components[4].long_name);
 
                 //$("#VenueName").val(address.toString());
                 //$("#Address1").val(address[1].toString());
@@ -2269,7 +2301,7 @@
 
                     $("#" + CtrlId).val(ColAry[i]);
                 }
-                alert(ConsolidateValue);
+             //   alert(ConsolidateValue);
                 $("#consolidate" + Sno).text(ConsolidateValue);
 
             }
@@ -2281,11 +2313,11 @@
                     $("#VenueName").focus();
                     return false;
                 }
-                if ($("#Address1").val().trim() == '') {
-                    alert("Please enter valid address");
-                    $("#Address1").focus();
-                    return false;
-                }
+                //if ($("#Address1").val().trim() == '') {
+                //    alert("Please enter valid address");
+                //    $("#Address1").focus();
+                //    return false;
+                //}
             }
 
             $("#btReset").click(function () {
@@ -2822,7 +2854,7 @@
             $('#id_cost-' + el).addClass('err-bor');
             $('#id_lblprice-' + el).css('display', 'block');
             $('#id_buyerprice-' + el).html("$0.00");
-            $('#id_tooltip-' + el).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer's Total $0.00 ");
+            $('#id_tooltip-' + el).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 ");
             total = 0;
             fee = 0;
             return false;
@@ -2998,7 +3030,7 @@
         $("#id_feetype-" + divlength).css('display', 'block');
         $("#id_Tickettype-" + divlength).val("Paid");
         $("#id_buyerprice-" + divlength).html('$0.00');
-        $('#id_tooltip-' + divlength).html('Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;   $0.00 <br /> Buyers Total $0.00');
+        $('#id_tooltip-' + divlength).html('Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;   $0.00 <br /> Buyer(s) Total $0.00');
         //$("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
         $("#id_feemethod").val(0);
         $("#id_salestart-" + divlength).datepicker({
@@ -3969,7 +4001,7 @@
 
         }
         if (count > 0) {
-            msg += "<br/>Please Fix the Highlightened Fields";
+            msg += "<br/>Please fix the highlighted fields";
         }
         if ($('#id_variablecharge').is(":checked") == true) {
             if ($('#id_vardesc').val() == "") {

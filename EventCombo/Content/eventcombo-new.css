@@ -23,12 +23,13 @@
 .ev_row_mov{ width: 5%;}
 .ev_row_icn{ top: 5px; position: relative;}
 .evnt_sett_main{ width: 90px;}
-.ev_drop_label{ font-size: 1.2em;}
+.ev_drop_label{ font-size: 1.2em; height:37px; }
 .ev_fb_lable{ font-weight: normal; margin-right: 10px;}
 .fb_dis_head{ padding-top: 1px !important; padding-bottom: 0px !important;}
 .evnt_tile_bg_r_fb{ margin-top: -34px !important}
 .evnt_tile_bg_r_call{ margin-top:-6px !important}
 .ev_set_more{font-size: 1.4em; color: #00cfff; cursor: pointer;}
+.org_dele_btn{ min-height:37px;}
 
 .ev_add_sub_btn {
     background: #00cfff;

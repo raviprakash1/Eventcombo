@@ -414,7 +414,7 @@ namespace EventCombo.Controllers
         }
         private void HandleImageUpload(HttpPostedFileBase file, string path1)
         {//ProfileID_SequentialImage#
-            Image img = RezizeImage(Image.FromStream(file.InputStream), 200, 200);
+            Image img = RezizeImage(Image.FromStream(file.InputStream), 900, 600);
             string path = file.FileName;
             img.Save(path1, getImageFormat(path));
         }
