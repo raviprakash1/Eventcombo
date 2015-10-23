@@ -146,6 +146,7 @@ namespace EventCombo.Controllers
                                     select myRow).ToList();
 
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    strHtml.Append("<option value=0>Select</option>");
                     foreach (var item in EventCat)
                         strHtml.Append("<option value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
 
@@ -240,7 +241,7 @@ namespace EventCombo.Controllers
                             ObjAdd.UserId = strUserId;
                             ObjAdd.VenueName = objA.VenueName;
                             ObjAdd.Zip = objA.Zip;
-
+                            ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
                             ObjAdd.Name = "";
                             objEnt.Addresses.Add(ObjAdd);
 
@@ -292,6 +293,37 @@ namespace EventCombo.Controllers
                             objEOrg.Twitter = objOr.Twitter;
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
+                    }
+
+                    if (model.Ticket != null)
+                    {
+                        Ticket ticket = new Ticket();
+                        foreach (Ticket tick in model.Ticket)
+                        {
+                            ticket = new Ticket();
+                            ticket.E_Id= ObjEC.EventID;
+                            ticket.TicketTypeID = tick.TicketTypeID;
+                            ticket.T_name = tick.T_name;
+                            ticket.T_Desc = tick.T_Desc;
+                            ticket.TicketTypeID = tick.TicketTypeID;
+                            ticket.T_order = tick.T_order;
+                            ticket.T_AutoSechduleType=tick.T_AutoSechduleType;
+                            ticket.T_Discount = ticket.T_Discount;
+                            ticket.Show_T_Desc = tick.Show_T_Desc;
+                            ticket.Sale_Start_Date = tick.Sale_Start_Date;
+                            ticket.Sale_Start_Time = tick.Sale_Start_Time;
+                            ticket.Sale_End_Date = tick.Sale_End_Date;
+                            ticket.Sale_End_Time = tick.Sale_End_Time;
+                            ticket.Qty_Available = tick.Qty_Available;
+                            ticket.Price = tick.Price;
+                            ticket.T_Disable = tick.T_Disable;
+                            ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
+                            ticket.T_No_Show = tick.T_No_Show;
+                            ticket.Fees_Type = tick.Fees_Type;
+                            objEnt.Tickets.Add(ticket);
+                        }
+
+
                     }
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;

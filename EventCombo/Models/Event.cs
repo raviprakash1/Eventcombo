@@ -20,6 +20,7 @@ namespace EventCombo.Models
             this.Event_Orgnizer_Detail = new HashSet<Event_Orgnizer_Detail>();
             this.EventVenues = new HashSet<EventVenue>();
             this.Tickets = new HashSet<Ticket>();
+            this.Addresses = new HashSet<Address>();
         }
     
         public long EventID { get; set; }
@@ -57,5 +58,7 @@ namespace EventCombo.Models
         public virtual ICollection<EventVenue> EventVenues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

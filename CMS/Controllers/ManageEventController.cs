@@ -12,13 +12,35 @@ namespace CMS.Controllers
     public class ManageEventController : Controller
     {
         // GET: ManageEvent
-        public ActionResult Index(string SearchStringEventTitle, string EventTypeId, string ddlEventCategory, string ddlEventSubCategory)
+        [HttpPost]
+        public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory,string Features)
         {
 
-            using (EmsEntities db = new EmsEntities())
+            return View(GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features));
+
+        }
+
+        
+
+
+        public ActionResult Index()
+        {
+
+            return View(GetAllEvents("", "", "", "",""));
+        }
+        public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory,string strFeature)
+        {
+            string user = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
+
+            //if (SearchStringEventTitle == null) SearchStringEventTitle = "";
+            //if (SearchStringEventType == null) SearchStringEventType = "";
+            //if (SearchStringEventCategory == null) SearchStringEventCategory = "";
+
+            using (EmsEntities objEntity = new EmsEntities())
             {
 
-                var rows = (from myRow in db.EventTypes
+
+                 var rows = (from myRow in objEntity.EventTypes
                             select myRow).ToList();
                 List<SelectListItem> EventType = new List<SelectListItem>();
                 EventType.Add(new SelectListItem()
@@ -37,7 +59,7 @@ namespace CMS.Controllers
                 }
 
 
-                var EventCat = (from myRow in db.EventCategories
+                var EventCat = (from myRow in objEntity.EventCategories
                                 select myRow).ToList();
                 List<SelectListItem> EventCategory = new List<SelectListItem>();
                 EventCategory.Add(new SelectListItem()
@@ -54,30 +76,48 @@ namespace CMS.Controllers
                         Value = item.EventCategoryID.ToString(),
                     });
                 }
-
+                                                            
+                List <SelectListItem> Features = new List<SelectListItem>();
+                Features.Add(new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "0",
+                    Selected = true
+                });
+                Features.Add(new SelectListItem()
+                {
+                    Text = "Platinum",
+                    Value = "1",
+                    Selected = true
+                });
+                Features.Add(new SelectListItem()
+                {
+                    Text = "Gold",
+                    Value = "2",
+                    Selected = true
+                });
+                Features.Add(new SelectListItem()
+                {
+                    Text = "Silver",
+                    Value = "3",
+                    Selected = true
+                });
+                Features.Add(new SelectListItem()
+                {
+                    Text = "Bronze",
+                    Value = "4",
+                    Selected = true
+                });
 
 
                 ViewBag.EventType = EventType;
                 ViewBag.ddlEventCategory = EventCategory;
+                ViewBag.Features = Features;
 
-            }
 
-
-            return View(GetAllEvents(SearchStringEventTitle, EventTypeId, ddlEventCategory, ddlEventSubCategory));
-        }
-        public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory)
-        {
-            string user = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
-
-            //if (SearchStringEventTitle == null) SearchStringEventTitle = "";
-            //if (SearchStringEventType == null) SearchStringEventType = "";
-            //if (SearchStringEventCategory == null) SearchStringEventCategory = "";
-
-            using (EmsEntities objEntity = new EmsEntities())
-            {
 
                 List<EventCreation> objEv = new List<EventCreation>();
-                objEv = objEntity.GetEventListing(SearchStringEventTitle, iEventType, iEventCategory, iEventSubCategory).ToList();
+                objEv = objEntity.GetEventListing(SearchStringEventTitle, iEventType, iEventCategory, iEventSubCategory,strFeature).ToList();
 
                 //var modelEvent = (from Ev in objEntity.Events
                 //                  join EType in objEntity.EventTypes on Ev.EventTypeID equals EType.EventTypeID
@@ -132,7 +172,7 @@ namespace CMS.Controllers
                     var EventCat = (from myRow in objEnt.EventSubCategories
                                     where myRow.EventCategoryID == lECatId
                                     select myRow).ToList();
-
+                    strHtml.Append("<option value=0>Select</option>");
                     foreach (var item in EventCat)
                         strHtml.Append("<option value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
 

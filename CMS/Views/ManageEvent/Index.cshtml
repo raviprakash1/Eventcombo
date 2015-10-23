@@ -48,74 +48,62 @@
                         <div class="row">
                             <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
                                 <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
-                                    <div class="panel-heading">
-                                        <span class="view_evnt fs26">  View Event</span>
-
+                                    <div class="panel-heading panel_loader">
+                                        <span class="view_evnt fs26 col-sm-6">  View Event</span>
+                                        <label class="field select admin-form col-sm-4 text-right srh-by-no">
+                                            <select >
+                                                <option value="0">Select</option>
+                                                <option value="0">01 - 50</option>
+                                                <option value="1">51 - 100</option>
+                                                <option value="2">101 - 150</option>
+                                            </select>
+                                            <i class="arrow double"></i>
+                                        </label>
                                     </div>
                                     <div class="panel-body">
                                         <!--  <hr class="short alt"> -->
                                         <form class="admin-form">
                                             <div class="col-md-2 col-sm-2">
-                                                <div class="">
-                                                    @Html.TextBox("SearchStringEventTitle", "", new { cssClass = "form-control", placeholder = "Search Event Title" })
+                                               
+                                                     <label> Event Title </label>
+                                                    @Html.TextBox("SearchStringEventTitle", "", new { Class = "form-control", placeholder = "Search Event Title" })
                                                     @*<input type="text" class="form-control" placeholder="Search Event Title" value="Search Event Title">*@
-                                                </div>
+                                               
                                             </div>
 
 
-                                            <div class="form-group">
-                                                <label class="label-control evnt_ticket_label wd600">Event Type</label>
-                                                @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                            <div class="col-md-3 col-sm-3">
+                                                <label>Event Type</label>
+                                                @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
-                                                <label class="label-control evnt_ticket_label wd600">Event Category</label>
+                                            <div class="col-md-3 col-sm-3">
+                                                <label>Event Category</label>
                                                 @*<select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>*@
-                                                @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                                @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
-                                                <label class="label-control evnt_ticket_label wd600">Event Sub-category</label>
-                                                @Html.DropDownList("ddlEventSubCategory")
-                                                <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                                            <div class="col-md-3 col-sm-3">
+                                                <label>Event Sub-category</label>
+                                                <select id="ddlEventSubCategory" class="form-control"></select>
                                             </div>
                                         
-                                            <div class="col-md-2 col-sm-2">
+                                           
+                                           
+                                            <div class="col-md-2 col-sm-2 mt10">
                                                 <div class="section">
-                                                    <label class="field select">
-                                                        <select>
-                                                            <option value="0">Any Event</option>
-                                                            <option value="1">Upcoming</option>
-                                                            <option value="2">Expired</option>
+                                                    @Html.DropDownList("Features", ViewBag.Features as List<SelectListItem>, new { @class = "form-control" })
+                                                    @*<label class="field select">
+                                                        <select id="strFeature" class="form-control">
+                                                            <option text=0 value="0">Select</option>
+                                                            <option value=1>Platinum</option>
+                                                            <option value=2>Gold</option>
+                                                            <option value=3>Silver</option>
+                                                            <option value=4>Bronze</option>
                                                         </select>
                                                         <i class="arrow single"></i>
-                                                    </label>
+                                                    </label>*@
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-sm-2">
-                                                <div class="section">
-                                                    <label class="field select">
-                                                        <select>
-                                                            <option value="0">Any Event</option>
-                                                            <option value="1">No Sales</option>
-                                                            <option value="2">Sold Tickets</option>
-                                                        </select>
-                                                        <i class="arrow single"></i>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 col-sm-2">
-                                                <div class="section">
-                                                    <label class="field select">
-                                                        <select>
-                                                            <option value="0">Feature</option>
-                                                            <option value="1">Platinum</option>
-                                                            <option value="2">Bronze</option>
-                                                            <option value="3">Silver</option>
-                                                        </select>
-                                                        <i class="arrow single"></i>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 col-sm-2">
+                                            <div class="col-md-2 col-sm-2 mt10">
                                                 <button class="btn btn-info br2 col-md-12 fs15">Search</button>
                                             </div>
                                         </form>
@@ -127,7 +115,7 @@
                             <div class="col-md-12">
                                 <table class="table footable" data-page-navigation=".pagination" data-page-size="6">
                                     <thead class="bg_white">
-                                        <tr>
+                                        <tr class="bg_white">
                                             <th>Sno.</th>
                                             <th>Event Title</th>
                                             <th>Event Type</th>
@@ -153,10 +141,10 @@
                                                     <td>@obj.EventCategory</td>
                                                     <td>@obj.EventSubCategory</td>
                                                     <td>@obj.EventTiming</td>
-                                                    <td>Orgnizer</td>
-                                                    <td>VenueName</td>
-                                                    <td>ManageTickets</td>
-                                                    <td>TicketSold</td>
+                                                    <td>@obj.Orgnizer_Name </td>
+                                                    <td>@obj.EventAddress</td>
+                                                    <td></td>
+                                                    <td></td>
                                                     <td>
                                                         <div class="view_sel_wid">
                                                             @if (obj.Feature == 1)

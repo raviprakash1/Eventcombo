@@ -171,7 +171,7 @@
           <Key>
             <PropertyRef Name="Orgnizer_Id" />
           </Key>
-          <Property Name="Orgnizer_Id" Type="bigint" Nullable="false" />
+          <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orgnizer_Event_Id" Type="bigint" />
           <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
           <Property Name="Orgnizer_Desc" Type="nvarchar(max)" Nullable="false" />
@@ -385,6 +385,13 @@
           <Property Name="TicketTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TicketType" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
+        <EntityType Name="TimeZoneDetail">
+          <Key>
+            <PropertyRef Name="TimeZone_Id" />
+          </Key>
+          <Property Name="TimeZone_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimeZone_Name" Type="varchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="User_Permission_Detail">
           <Key>
             <PropertyRef Name="UP_Id" />
@@ -423,6 +430,18 @@
             </Principal>
             <Dependent Role="TicketDeliveryMethod">
               <PropertyRef Name="DeliveryMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="EventId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -554,6 +573,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetEventListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventTitle" Type="varchar" Mode="In" />
+          <Parameter Name="EventType" Type="varchar" Mode="In" />
+          <Parameter Name="EventCat" Type="varchar" Mode="In" />
+          <Parameter Name="EventSubCat" Type="varchar" Mode="In" />
+          <Parameter Name="EventFeature" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetSetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
           <Parameter Name="GETSET" Type="varchar" Mode="In" />
@@ -590,6 +616,7 @@
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketDeliveryMethod" EntityType="Self.TicketDeliveryMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
@@ -599,6 +626,10 @@
           <AssociationSet Name="FK__TicketDel__Deliv__1A69E950" Association="Self.FK__TicketDel__Deliv__1A69E950">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_Event" Association="Self.FK_Address_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Address" EntitySet="Address" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -671,6 +702,7 @@
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EventId" Type="Int64" />
           <Property Name="ConsolidateAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_Address_Event" FromRole="Address" ToRole="Event" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -793,6 +825,7 @@
 
           <Property Name="EnableFBDiscussion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Feature" Type="Int32" />
+          <NavigationProperty Name="Addresses" Relationship="EventComboModel.FK_Address_Event" FromRole="Event" ToRole="Address" />
 
         </EntityType>
         <EntityType Name="Event_Detail">
@@ -1257,6 +1290,18 @@
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="EventTempImages" EntityType="EventComboModel.EventTempImage" />
+          <AssociationSet Name="FK_Address_Event" Association="EventComboModel.FK_Address_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
+            <Parameter Name="EventTitle" Mode="In" Type="String" />
+            <Parameter Name="EventType" Mode="In" Type="String" />
+            <Parameter Name="EventCat" Mode="In" Type="String" />
+            <Parameter Name="EventSubCat" Mode="In" Type="String" />
+            <Parameter Name="EventFeature" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TimeZoneDetails" EntityType="EventComboModel.TimeZoneDetail" />
         </EntityContainer>
         <EntityType Name="EventTempImage">
           <Key>
@@ -1267,6 +1312,36 @@
           <Property Name="EventImageUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="FK_Address_Event">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetEventListing_Result">
+          <Property Type="Int64" Name="EventID" Nullable="false" />
+          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
+          <Property Type="String" Name="EventType" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventCategory" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="135" />
+          <Property Type="Int32" Name="Feature" Nullable="false" />
+          <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventAddress" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="TimeZoneDetail">
+          <Key>
+            <PropertyRef Name="TimeZone_Id" />
+          </Key>
+          <Property Name="TimeZone_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeZone_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1699,6 +1774,29 @@
                 <ScalarProperty Name="EventImageUrl" ColumnName="EventImageUrl" />
                 <ScalarProperty Name="EvenUniqueid" ColumnName="EvenUniqueid" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetEventListing" FunctionName="EventComboModel.Store.GetEventListing">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EventComboModel.GetEventListing_Result">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="EventCategory" ColumnName="EventCategory" />
+                <ScalarProperty Name="EventSubCategory" ColumnName="EventSubCategory" />
+                <ScalarProperty Name="EventTiming" ColumnName="EventTiming" />
+                <ScalarProperty Name="Feature" ColumnName="Feature" />
+                <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
+                <ScalarProperty Name="EventAddress" ColumnName="EventAddress" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TimeZoneDetails">
+            <EntityTypeMapping TypeName="EventComboModel.TimeZoneDetail">
+              <MappingFragment StoreEntitySet="TimeZoneDetail">
+                <ScalarProperty Name="TimeZone_Name" ColumnName="TimeZone_Name" />
+                <ScalarProperty Name="TimeZone_Id" ColumnName="TimeZone_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -83,7 +83,7 @@ namespace CMS.Controllers
                                      }
                                     );
                 //return modelUserTemp.ToList();
-                if (!SearchStringFirstName.Equals(string.Empty))
+                if (!SearchStringFirstName.Equals(string.Empty) || !SearchStringLastName.Equals(string.Empty) || !SearchStringEmail.Equals(string.Empty))
                     return modelUserTemp.Where(us => us.FirstName.ToLower().Contains(SearchStringFirstName.ToLower()) || us.LastName.ToLower().Contains(SearchStringLastName.ToLower())
                     || us.EMail.ToLower().Contains(SearchStringEmail.ToLower())).ToList();
                 else

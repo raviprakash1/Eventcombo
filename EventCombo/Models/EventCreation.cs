@@ -39,6 +39,7 @@ namespace EventCombo.Models
         public EventVenue[] EventVenue { get; set; }
         public MultipleEvent[] MultipleEvents { get; set; }
         public Event_Orgnizer_Detail[] Orgnizer { get; set; }
+        public Ticket[] Ticket { get; set; }
 
     }
 }

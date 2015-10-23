@@ -47,6 +47,7 @@
         <AssociationConnector Association="Cmsdata.FK__EventSubC__Event__5F141958" />
         <AssociationConnector Association="Cmsdata.FK_EventVenue_EventVenue" />
         <EntityTypeShape EntityType="Cmsdata.Event_Detail" Width="1.5" PointX="0.75" PointY="10.75" />
+        <AssociationConnector Association="Cmsdata.FK_Address_Event" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
