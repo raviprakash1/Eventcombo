@@ -206,7 +206,8 @@ button:focus { outline: none;}
 .event-upload-container{
     width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: 600px;}
 
-.event_top{ margin-top: 62px;}
+/*.event_top{ margin-top: 62px;}*/
+.event_top{ margin-top: 15%;}
 .event-upload{ width: 100%; float: left; } 
 .evnt_title_bg{ width: 650px; max-width: 100%; float: right; background: #575757; padding:10px 15px;}
 
@@ -289,7 +290,7 @@ button:focus { outline: none;}
 .fb{ color:#3d5a98;}
 .tw{ color:#5ea9dd;}
 .Moderor{ width:100%; float: left; max-width: 100%;
-          margin-top:23px;
+          margin-top:23px; 
 }
 
 

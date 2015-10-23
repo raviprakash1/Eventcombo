@@ -225,6 +225,11 @@ namespace EventCombo.Controllers
                     ObjEC.LastLocationAddress = model.LastLocationAddress;
                     ObjEC.AddressStatus = model.AddressStatus;
                     ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
+                    ObjEC.Ticket_DAdress =model.Ticket_DAdress;
+                    ObjEC.Ticket_showremain = model.Ticket_showremain;
+                    ObjEC.Ticket_showvariable = model.Ticket_showvariable;
+                    ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
+                    ObjEC.Ticket_variabletype = model.Ticket_variabletype;
                     objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -232,6 +237,7 @@ namespace EventCombo.Controllers
                         Address ObjAdd = new Models.Address();
                         foreach (Address objA in model.AddressDetail)
                         {
+                            ObjAdd = new Models.Address();
                             ObjAdd.EventId = ObjEC.EventID;
                             ObjAdd.Address1 = objA.Address1;
                             ObjAdd.Address2 = objA.Address2;
@@ -253,6 +259,7 @@ namespace EventCombo.Controllers
                         EventVenue objEVenue = new EventVenue();
                         foreach (EventVenue objEv in model.EventVenue)
                         {
+                            objEVenue = new EventVenue();
                             objEVenue.EventID = ObjEC.EventID;
                             objEVenue.EventStartDate = objEv.EventStartDate;
                             objEVenue.EventEndDate = objEv.EventEndDate;
@@ -267,6 +274,7 @@ namespace EventCombo.Controllers
                         MultipleEvent objMEvents = new MultipleEvent();
                         foreach (MultipleEvent objME in model.MultipleEvents)
                         {
+                            objMEvents = new MultipleEvent();
                             objMEvents.EventID = ObjEC.EventID;
                             objMEvents.Frequency = objME.Frequency;
                             objMEvents.WeeklyDay = objME.WeeklyDay;
@@ -286,6 +294,7 @@ namespace EventCombo.Controllers
                         Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
                         foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
                         {
+                            objEOrg = new Event_Orgnizer_Detail();
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
                             objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
                             objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
@@ -295,36 +304,82 @@ namespace EventCombo.Controllers
                         }
                     }
 
+                    // Tickets
+
                     if (model.Ticket != null)
                     {
                         Ticket ticket = new Ticket();
                         foreach (Ticket tick in model.Ticket)
                         {
                             ticket = new Ticket();
-                            ticket.E_Id= ObjEC.EventID;
+
+                            ticket.E_Id = ObjEC.EventID;
+
                             ticket.TicketTypeID = tick.TicketTypeID;
                             ticket.T_name = tick.T_name;
+                            ticket.Qty_Available = tick.Qty_Available;
+                            ticket.Price = tick.Price;
                             ticket.T_Desc = tick.T_Desc;
                             ticket.TicketTypeID = tick.TicketTypeID;
                             ticket.T_order = tick.T_order;
-                            ticket.T_AutoSechduleType=tick.T_AutoSechduleType;
-                            ticket.T_Discount = ticket.T_Discount;
                             ticket.Show_T_Desc = tick.Show_T_Desc;
+                            ticket.Fees_Type = tick.Fees_Type;
                             ticket.Sale_Start_Date = tick.Sale_Start_Date;
                             ticket.Sale_Start_Time = tick.Sale_Start_Time;
                             ticket.Sale_End_Date = tick.Sale_End_Date;
                             ticket.Sale_End_Time = tick.Sale_End_Time;
-                            ticket.Qty_Available = tick.Qty_Available;
-                            ticket.Price = tick.Price;
+                            ticket.Hide_Ticket = tick.Hide_Ticket;
+                            ticket.Auto_Hide_Sche = tick.Auto_Hide_Sche;
+                            ticket.T_AutoSechduleType = tick.T_AutoSechduleType;
+                            ticket.Hide_Untill_Date = tick.Hide_Untill_Date;
+                            ticket.Hide_Untill_Time = tick.Hide_Untill_Time;
+                            ticket.Hide_After_Date = tick.Hide_After_Date;
+                            ticket.Hide_After_Time = tick.Hide_After_Time;
+                            ticket.Min_T_Qty = tick.Min_T_Qty;
+                            ticket.Max_T_Qty = tick.Max_T_Qty;
                             ticket.T_Disable = tick.T_Disable;
                             ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
-                            ticket.T_No_Show = tick.T_No_Show;
-                            ticket.Fees_Type = tick.Fees_Type;
+                            ticket.EC_Fee = tick.EC_Fee;
+                            ticket.Customer_Fee = tick.Customer_Fee;
+                            ticket.TotalPrice = tick.TotalPrice;
+                            ticket.T_Discount = tick.T_Discount;
+                           
+                           
                             objEnt.Tickets.Add(ticket);
                         }
 
 
                     }
+
+
+                    if (model.EventImage != null)
+                    {
+                        EventImage Image = new EventImage();
+                        foreach (EventImage img in model.EventImage)
+                        {
+                            Image = new EventImage();
+                            Image.EventID= ObjEC.EventID;
+                            Image.EventImageUrl = img.EventImageUrl;
+                            Image.ImageType = img.ImageType;
+                            objEnt.EventImages.Add(Image);
+
+                        }
+                    }
+
+                    if (model.EventVariable != null)
+                    {
+                        Event_VariableDesc var = new Event_VariableDesc();
+                        foreach (Event_VariableDesc variable in model.EventVariable)
+                        {
+                            var = new Event_VariableDesc();
+                            var.Event_Id = ObjEC.EventID;
+                            var.VariableDesc = variable.VariableDesc;
+                            var.Price = variable.Price;
+                            objEnt.Event_VariableDesc.Add(var);
+
+                        }
+                    }
+
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
                 }

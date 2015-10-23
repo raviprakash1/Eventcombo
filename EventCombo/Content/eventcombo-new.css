@@ -132,7 +132,11 @@
 .pl0{ padding-left: 0px !important;}
 
 
-
+.StartDatemodal{ display:none;}
+.TmezoneSet { display:none; }
+.PastLocat {
+    display: none;
+}
 
 /*upload image event  css*/
 .evnt_title_bg{ position:absolute;bottom: -40px;right: 225px; margin-right:20px; }

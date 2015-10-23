@@ -19,8 +19,10 @@ namespace EventCombo.Models
         {
             this.Event_Orgnizer_Detail = new HashSet<Event_Orgnizer_Detail>();
             this.EventVenues = new HashSet<EventVenue>();
-            this.Tickets = new HashSet<Ticket>();
             this.Addresses = new HashSet<Address>();
+            this.Event_VariableDesc = new HashSet<Event_VariableDesc>();
+            this.Tickets = new HashSet<Ticket>();
+            this.EventImages = new HashSet<EventImage>();
         }
     
         public long EventID { get; set; }
@@ -50,6 +52,11 @@ namespace EventCombo.Models
         public Nullable<long> LastLocationAddress { get; set; }
         public string EnableFBDiscussion { get; set; }
         public Nullable<int> Feature { get; set; }
+        public string Ticket_DAdress { get; set; }
+        public string Ticket_showremain { get; set; }
+        public string Ticket_showvariable { get; set; }
+        public string Ticket_variabledesc { get; set; }
+        public string Ticket_variabletype { get; set; }
     
         public virtual EventType EventType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -57,8 +64,12 @@ namespace EventCombo.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventVenue> EventVenues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Address> Addresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event_VariableDesc> Event_VariableDesc { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<EventImage> EventImages { get; set; }
     }
 }

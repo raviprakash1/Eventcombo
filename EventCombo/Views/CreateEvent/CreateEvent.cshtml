@@ -14,19 +14,20 @@
     <div class="event_container">
         <div class="event_inner_container event_top">
             <div class="col-sm-12 pt10 bggrey">
-                <div class="Moderor">
-                    <div class="er_UI_main" style="display: none;" id="diverroacc">
+                <div class="Moderor" style="display: none;" id="diverroacc">
+                    <div class="er_UI_main">
                         <div class="er_UI_img"></div>
                         <div class="er_suc" id="erraccmsg">
 
                         </div>
                     </div>
                 </div>
-                <div class="Moderor">
-                    <div class="er_suc_main alert-success" id="divaccsuc" style="display: none;">
-                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+                <div class="Moderor" id="divaccsuc" style="display: none;">
+                    <div class="er_suc_main alert-success">
+
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg"> </div>
+                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
                     </div>
                 </div>
             </div>
@@ -261,7 +262,7 @@
 
                                     </div>
                                     <div class="col-sm-12 mt10 ">
-                                        <label class="Schmultisingle label-control lbl_bot_text">Schedule single event</label>
+                                        <label id="btSchSingleEv" class="Schmultisingle label-control lbl_bot_text">Schedule single event</label>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="SchmultiDetail col-sm-12 mt10">
@@ -632,6 +633,8 @@
                                     <input type="hidden" id="id_ticket_id-n" />
                                     <input type="hidden" id="id_order-n" />
                                     <input type="hidden" id="id_Tickettype-n" />
+                                    <input type="hidden" id="id_fee-n" />
+                                    <input type="hidden" id="id_total-n" />
                                     <input type="hidden" value="0" id="id_feetype-n" />
                                     <input type="text" value="0" id="id_totalamt-n" hidden />
                                     <input type="text" value="0" id="id_msg-n" hidden />
@@ -656,7 +659,7 @@
                                     <div class="form-group paidticket-n" id="id_paid-n">
                                         <label class="col-sm-4 no_pad control-label ev_tickt_lebel">Price $</label>
                                         <div class="col-sm-8 ">
-                                            <input type="text" class="form-control evnt_inp_cont" id="id_cost-n" onkeyup="changefeetype(event,this.id)" placeholder="0" maxlength="9" />
+                                            <input type="text" class="form-control evnt_inp_cont" id="id_cost-n" onkeyup="changefeetype(event,this.id)" placeholder="0.00" maxlength="9" />
                                         </div>
 
                                     </div>
@@ -665,11 +668,11 @@
 
                                     </div>
                                     <div class="label-control lbl_bot_price paidticket-n" id="idlbuyertotal-n">
-                                        <span class="buyer_tot">Buyer total: </span>
+                                        <span class="buyer_tot">Buyer(s) total: </span>
                                         <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
                                         <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
 
-                                        <div class="tooltip" id="id_tooltip-n">Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00</div>
+                                        <div class="tooltip" id="id_tooltip-n">Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>
                                         <label class="pull-right" style="color:red;display:none;" id="id_lblprice-n">Please enter valid number</label>
                                     </div>
                                     @*<div class="label-control lbl_bot_price  paidticket-n" id="idlbuyertotal-n">
@@ -741,6 +744,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
+                                                                <input type="hidden" value="0" id="id_hdsaletimestart-n" />
                                                                 <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" />
                                                             </div>
 
@@ -754,6 +758,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
+                                                                <input type="hidden" value="0" id="id_hdsaletimeend-n"/>
                                                                 <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
                                                             </div>
 
@@ -794,6 +799,7 @@
                                                                             <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_until_Date-n" onchange="changetext(this.id); " />
                                                                         </div>
                                                                         <div class="col-sm-4 no_pad">
+                                                                            <input type="hidden" value="0" id="id_hdautohideuntil-n" />
                                                                             <input id="id_auto_hide_until_time-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
                                                                         </div>
                                                                     </div>
@@ -806,6 +812,7 @@
                                                                             <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_after_Date-n" onchange="checkvalidDate(this.id)" />
                                                                         </div>
                                                                         <div class="col-sm-4 no_pad">
+                                                                            <input type="hidden" value="0" id="id_hdautohideafter-n" />
                                                                             <input id="id_auto_hide_after_Time-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
                                                                         </div>
                                                                     </div>
@@ -897,87 +904,68 @@
                         <div class="col-sm-12 no_pad">
                             <label class="label-control ev_tickt_lebel pl0">
                                 <input class="" type="checkbox" id="id_showremaningticket">
-                                &#10; Show the number of tickets remaining on the registration page
+                                &#10; Show the number of ticket(s) remaining on the registration page
                             </label>
                         </div>
                         <div class="col-sm-12 no_pad">
                             <label class="label-control ev_tickt_lebel pl0">
                                 <input class="" type="checkbox" id="id_variablecharge">
-                                &#10; Variable Charges
+                                &#10; Variable Charge(s)
                             </label>
                         </div>
+                        
+
+
                         <div class="TicketFees col-sm-12 no_pad">
-                            <div class="TicketFees col-sm-12">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label ev_tickt_lebel">Description</label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="" id="id_vardesc">
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        @*<div class="TicketFees col-sm-12 no_pad">
                                 <div class="form-group">
                                     <div class="col-sm-5 no_pad">
                                         <label class="col-sm-4 control-label ev_tickt_lebel">Description</label>
                                         <div class="col-sm-8">
-                                            <input class="form-control evnt_inp_cont" type="text" placeholder="">
+                                            <input class="form-control evnt_inp_cont" type="text" placeholder="" id="id_vardesc">
                                         </div>
                                     </div>
                                     <div class="col-sm-5 no_pad">
                                         <label class="col-sm-2 control-label ev_tickt_lebel">Type</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control ev_drop_label">
-                                                <option>Type 1 </option>
-                                                <option>Type 2 </option>
-                                                <option>Type 3 </option>
+                                            <select class="form-control ev_drop_label" id="variabletype">
+                                                <option value="O">Optional</option>
+                                                <option value="R">Required </option>
+                                               
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-2 no_pad">
-                                        <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
+                                        <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button" >Add</button>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 mt20 no_pad">
-                                    <div class="list-group ev_var_chrg_group">
-                                        <div class="col-sm-12 no_pad">
-                                            <div class="list-group-item ev_var_chrg_list">
-                                                <div class="form-group">
-                                                    <div class="col-sm-7 col-xs-7">
-                                                        <input class="form-control evnt_inp_cont" type="text" placeholder="Description">
+                                    <div class="list-group ev_var_chrg_group" id="id_Mainvariable" style="display:none;">
+                                        
+
+                                        
+
+                                    </div>
+                                    <div class="col-sm-12 no_pad" id="id_clonevariable-n" style="display:none;">
+                                        <div class="list-group-item ev_var_chrg_list">
+                                            <div class="form-group">
+                                                <div class="col-sm-7 col-xs-7">
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256">
+                                                </div>
+                                                <div class="col-sm-4 col-xs-4">
+                                                    <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
+                                                    <div class="col-sm-10 no_pad">
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeyup="checkprice(this.id);">
                                                     </div>
-                                                    <div class="col-sm-4 col-xs-4">
-                                                        <input class="form-control evnt_inp_cont" type="text" placeholder="$ 12.22">
                                                     </div>
-                                                    <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
-                                                        <button class="btn" type="button"><i class="fa fa-times"></i></button>
-                                                    </div>
+                                                <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
+                                                    <button class="btn" type="button" id="btn_vardelete-n" onclick="deletevariable(this.id)" ><i class="fa fa-times"></i></button>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="col-sm-12 no_pad">
-                                            <div class="list-group-item ev_var_chrg_list">
-                                                <div class="form-group">
-                                                    <div class="col-sm-7 col-xs-7">
-                                                        <input class="form-control evnt_inp_cont" type="text" placeholder="Description">
-                                                    </div>
-                                                    <div class="col-sm-4 col-xs-4">
-                                                        <input class="form-control evnt_inp_cont" type="text" placeholder="$ 12.22">
-                                                    </div>
-                                                    <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
-                                                        <button class="btn" type="button"><i class="fa fa-times"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
 
-                            </div>*@
+                            </div>
                     </div>
                 </div>
             </div>
@@ -1033,7 +1021,7 @@
                                 <input type="checkbox" id="chkReqPassword">
                                 Require a password to view the event page
                             </label>
-                            <input type="password" id="txtReqPassword" value="" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />
+                            <input type="password" id="txtReqPassword" value="" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" readonly="readonly"/>
                         </div>
                     </div>
 
@@ -1060,6 +1048,8 @@
                     <input id="image_count" type="hidden" />
                     <input type="hidden" id="hdUniqueguid" value="" />
                     <input type="hidden" id="hddiscount" value="0" />
+                    <input type="hidden" id="hdSchType" value="" />
+
 
                 </div>
             </div>
@@ -1460,12 +1450,45 @@
         }
 
         $(document).ready(function () {
-
-            $("#btMakeLive").click(function () {
-                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation")';
+            $(".StartDatemodal").hide();
+            $(".StartDate").click(function () {
+                $(".StartDatemodal").slideToggle("fast");
 
             });
 
+            $("#btSchMultipleEv").click(function () {
+                $("#hdSchType").val('Multiple');
+            });
+
+            $("#btSchSingleEv").click(function () {
+                $("#hdSchType").val('Single');
+            });
+
+
+
+            $("#btMakeLive").click(function () {
+                if ($("#hdEventId").val() != '') {
+                    window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation")';
+                }
+                else {
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                    $('#erraccmsg').html('Please first save an event');
+                }
+
+            });
+            $('#chkReqPassword').change(function () {
+               
+                if ($('#chkReqPassword').is(":checked") == true) {
+                  
+                    $('#txtReqPassword').attr('readonly', false);
+                    
+                } else {
+                    $('#txtReqPassword').attr('readonly', true);
+                    $('#txtReqPassword').val('');
+                }
+
+            })
 
             $('#btSave').click(function () {
                 var msg = validatemain();
@@ -1480,11 +1503,54 @@
                 var SingleTiming = [];
                 var MultipleSchedule = [];
                 var Orgnizer = [];
-               
+                var EventImage = [];
+                var EventVariable = [];
                 //var table = $("#tblAddress");
 
-                // Ticket
+                //Variable charges
+                var varlength = $("#id_Mainvariable> div").size();
+                if (varlength > 0)
+                {
+                    for (var i = 0; i < varlength; i++) {
 
+                        EventVariable.push({
+                            VariableDesc: $('#id_varsubdesc-' + i).val(),
+                            Price: $('#id_varsubprice-' + i).val(),
+                         
+                        });
+                    }
+
+
+                }
+
+
+
+                //Image Section
+
+                if ($("#image_count").val() > 0)
+                {
+                    var count=($("#image_count").val());
+                    for (var i = 0; i < count; i++)
+                    {
+
+                        var image = $("#image_hidden_" + i).val();
+                        var res = image.split("####");
+
+                        var imagename = res[0];
+                        var imagetype = res[1];
+
+                        EventImage.push({
+                            EventImageUrl: imagename,
+                            ImageType: imagetype,
+                        });
+                    }
+
+                }
+
+
+
+
+                // Ticket
                 var Ticket = [];
                 var divlength = $("#MasterDiv> div").size();
                 if (divlength > 0) {
@@ -1492,26 +1558,42 @@
                     var Auto_Schedule = 0;
                     var AutoSechduleType = 0;
                     var TicketTypeID = 0;
+                    var ecfee=0;
+                    var customerfee=0;
+                    var total=0;
                     for (var i = 0; i < divlength; i++) {
 
                         if ($('#id_cost-' + i).css('display') == "block") {
                             TicketPrice = $('#id_cost-' + i).val();
 
-                        }
+                        } else { TicketPrice = 0; }
                         if ($('#id_CusdateCont-' + i).css('display') == "block") {
 
                             Auto_Schedule = 1;
 
-                            if ($('#id_auto_hide_type_0-' + i).is("checked") == true) {
+                            if ($('#id_auto_hide_type_0-' + i).is(":checked") == true) {
+                                AutoSechduleType = 0;
+
+                            }
+                            if ($('#id_auto_hide_type_1-' + i).is(":checked") == true) {
                                 AutoSechduleType = 1;
 
                             }
-                            if ($('#id_auto_hide_type_1-' + i).is("checked") == true) {
-                                AutoSechduleType = 2;
 
-                            }
+                        }else{
+                            Auto_Schedule = 0;
+                        }
+                        if($('#id_include_ticket_fees-'+i).val()==0)
+                        {
+                            customerfee=$('#id_fee-'+i).val();
 
                         }
+                        if($('#id_include_ticket_fees-'+i).val()==1)
+                        {
+                            ecfee=$('#id_fee-'+i).val();
+
+                        }
+                        total=$('#id_total-'+i).val();
                         if ($('#id_Tickettype-' + i).val() == "Free") {
                             TicketTypeID = 1
 
@@ -1522,43 +1604,46 @@
 
                             TicketTypeID = 3
                         }
+                     
+                   var Discount=  $('#id_Discount-' + i).val();
+                     var showdesc=($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
+                      
                         Ticket.push({
                             T_name: $('#id_ticket_type-' + i).val(),
                             Qty_Available: $('#id_quantity_total-' + i).val(),
                             T_Type: $('#id_Tickettype-' + i).val(),
                             Price: TicketPrice,
-                            T_Desc: $('#id_descriptionclass-' + i).val(),
-                            Show_T_Desc: ($('#id_show_description-' + i).is("checked") == true ? 1 : 0),
+                            'T_Desc': $('#id_descriptionclass-' + i).val(),
+                            'Show_T_Desc': parseInt(showdesc),
                             Sale_Start_Date: $('#id_salestart-' + i).val(),
-                            Sale_Start_Time: $('#id_saletimestart-' + i).val(),
+                            Sale_Start_Time: $('#id_hdsaletimestart-' + i).val(),
                             Sale_End_Date: $('#id_saleend-' + i).val(),
-                            Sale_End_Time: $('#id_saletimeend-' + i).val(),
-                            Hide_Ticket: ($('#id_ticketshidden-' + i).is("checked") == true ? 1 : 0),
-                            Auto_Hide_Sche: Auto_Schedule,
-                            T_Hide_Untill: ($('#id_auto_hide_until-' + i).is("checked") == true ? 1 : 0),
-                            Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
-                            Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
-                            T_Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
-                            T_Hide_After: ($('#id_auto_hide_after-' + i).is("checked") == true ? 1 : 0),
-                            Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
-                            Hide_After_Time: $('#id_auto_hide_after_Time-' + i).val(),
-                            Min_T_Qty: $('#id_min_ticket-' + i).val(),
-                            Max_T_Qty: $('#id_max_ticket-' + i).val(),
-                            T_Disable: ($('#id_disableticket-' + i).is("checked") == true ? 1 : 0),
-                            T_Mark_SoldOut: ($('#id_marksoldout-' + i).is("checked") == true ? 1 : 0),
-                            T_No_Show: ($('#id_displayremaining-' + i).is("checked") == true ? 1 : 0),
+                            Sale_End_Time: $('#id_hdsaletimeend-' + i).val(),
+                            'Hide_Ticket': parseInt(($("#id_ticketshidden-"+ i).is(":checked") == true ? '1' : '0')),
+                            Auto_Hide_Sche: parseInt(Auto_Schedule),
+                            Hide_Untill_Date: $('#id_auto_hide_until_Date-'+ i).val(),
+                            Hide_Untill_Time: $('#id_hdautohideuntil-'+ i).val(),
+                            Hide_After_Date: $('#id_auto_hide_after_Date-'+ i).val(),
+                            Hide_After_Time: $('#id_hdautohideafter-'+ i).val(),
+                            Min_T_Qty: $('#id_min_ticket-'+ i).val(),
+                            Max_T_Qty: $('#id_max_ticket-'+ i).val(),
+                            T_Disable:  (($('#id_disableticket-'+ i).is(":checked") == true ? '1' : '0')),
+                            T_Mark_SoldOut: parseInt(($('#id_marksoldout-'+ i).is(":checked") == true ? '1' : '0')),
+                            T_Displayremaining: ($('#id_displayremaining-'+ i).is(":checked") == true ?'1' : '0'),
                             Fees_Type: $('#id_include_ticket_fees-' + i).val(),
-                            T_Discount: $('#id_Discount-' + i).val(),
-                            T_order: $('#id_order-'+i).val(),
+                            'T_Discount': Discount,
+                            T_order: $('#id_order-' + i).val(),
                             TicketTypeID: TicketTypeID,
-                            T_AutoSechduleType: AutoSechduleType
+                            T_AutoSechduleType: AutoSechduleType,
+                            EC_Fee:ecfee,
+                            Customer_Fee:customerfee,
+                            TotalPrice: total
 
                         });
 
                     }
 
                 }
-
 
 
                 //$('#tblAddress tr').each(function () {
@@ -1622,17 +1707,18 @@
                 //}
 
                 // Single Timing
-
-                SingleTiming.push({
-                    'EventStartDate': $("#txtStartDate").val(),
-                    'EventEndDate': $("#txtStartTime").val(),
-                    'EventStartTime': $("#txtEndDate").val(),
-                    'EventEndTime': $("#txtEndTime").val()
-                });
+                if ($("#hdSchType").val() == 'Single') {
+                    SingleTiming.push({
+                        'EventStartDate': $("#txtStartDate").val(),
+                        'EventEndDate': $("#txtStartTime").val(),
+                        'EventStartTime': $("#txtEndDate").val(),
+                        'EventEndTime': $("#txtEndTime").val()
+                    });
+                }
                 // Multiple Schedule
 
 
-                if ($("#dvSingleEvent").css('display') == 'none') {
+                if ($("#hdSchType").val() == 'Multiple') {
 
                     var SchOption = $("#dlSchOption").val();
                     var vWeeklyDay = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
@@ -1708,11 +1794,17 @@
 
 
 
-
-
                 // Basic Event Info
                 //alert($("#edSummer1").code());
                 var vEventDiscription = '';//$("#edSummer1").code();
+                var varDescritpion = '';
+                var optionalvariable = '';
+                if ($("#id_variablecharge").is(":checked"))
+                {
+                    varDescritpion = $('#id_vardesc').val();
+                    optionalvariable = $('#variabletype').val();
+                }
+                
                 //alert(vEventDiscription);
                 var model = {
                     'EventTypeID': $("#EventType").val(),
@@ -1741,9 +1833,17 @@
                     'AddressStatus': $("#hidAddressStatus").val(),
                     'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
                     'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N'),
-                    'Ticket': Ticket
+                    'Ticket': Ticket,
+                    'EventImage': EventImage,
+                    'EventVariable': EventVariable,
+                    'Ticket_DAdress': ($("#id_ticketdeliveryaddr").is(":checked") == true ? 'Y' : 'N'),
+                    'Ticket_showremain': ($("#id_showremaningticket").is(":checked") == true ? 'Y' : 'N'),
+                    'Ticket_showvariable': ($("#id_variablecharge").is(":checked") == true ? 'Y' : 'N'),
+                    'Ticket_variabledesc': varDescritpion,
+                    'Ticket_variabletype': optionalvariable
                 };
-                //if ($("#hdEventId").val() != '') {
+
+                if ($("#hdEventId").val() == '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
                         data: model,
@@ -1753,12 +1853,16 @@
                             $('#divaccsuc').css('display', 'block');
                             $('#diverroacc').css('display', 'none');
                             $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
+                            $("#hdEventId").val(response);
+
                         }
                     });
-                //}
-                //else {
-                //    alert("Event modified successfully.");
-                //}
+                }
+                else {
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                    $('#erraccmsg').html('Event already saved');
+                }
             });
 
 
@@ -2300,11 +2404,7 @@
 
             });
 
-            $(".StartDatemodal").hide();
-            $(".StartDate").click(function () {
-                $(".StartDatemodal").slideToggle("fast");
 
-            });
 
 
             $(".PastLocat").css("display", "none");
@@ -2495,12 +2595,7 @@
                 $('#' + e).removeClass('err-bor');
 
             }
-
-        } else {
-            calculateSum();
-
-
-        }
+        } else { calculateSum(); }
 
 
 
@@ -2542,6 +2637,8 @@
         $("#id_totalqty").html(sum);
     }
     function feechange(e) {
+        var fee = 0;
+        var total = 0;
         var dropval = $('#' + e).val();
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
         var amount = parseFloat($('#id_cost-' + el).val());
@@ -2557,12 +2654,13 @@
 
             var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
 
-            var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "<br />" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "<br />" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
-            $('#id_buyerprice-' + el).html(ccpfinal);
+            var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;       $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+            $('#id_buyerprice-' + el).html("$"+ccpfinal);
 
             $('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(0);
-
+            fee = ccpamount;
+            total = ccpfinal;
 
         }
         if (dropval.trim() == '1') {
@@ -2570,17 +2668,39 @@
             var ccp = $('#id_cc').val();
             var ccpamount = ((amount * ccp) / 100).toFixed(2);
             var ccpfinal = parseFloat(amount).toFixed(2);
-            $('#id_buyerprice-' + el).html(ccpfinal);
-            var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     " + amount + "<br />" + "Fee     &nbsp;&nbsp; &nbsp;       " + ccpamount + "<br />" + "Buyer Total    &nbsp;&nbsp; &nbsp;      " + ccpfinal;
+            $('#id_buyerprice-' + el).html("$"+ccpfinal);
+            var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
             $('#id_tooltip-' + el).html(msg);
             //$('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(1);
+            fee = ccpamount;
+            total = ccpfinal;
 
+        }
 
+        $("#id_fee-" + el).val(fee);
+        $("#id_total-" + el).val(total);
+
+    }
+    function checkprice(id) {
+
+        var code = event.charCode ? event.charCode : event.keyCode;
+        var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        {
+           
+        }
+        else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
+        {
+            $('#' + id).val("");
+          
+               return false;
         }
 
     }
     function changefeetype(event, id) {
+        var fee = 0;
+        var total = 0;
         var code = event.charCode ? event.charCode : event.keyCode;
         var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
         if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
@@ -2591,7 +2711,9 @@
         {
             $('#' + id).val("");
             $('#id_buyerprice-' + el).html("$0.00");
-            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer(s) Total $0.00");
+            total = 0;
+            fee = 0;
+            $('#id_tooltip-' + el).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer(s) Total $0.00");
             //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
             return false;
         }
@@ -2607,7 +2729,9 @@
             $('#id_cost-' + el).addClass('err-bor');
             $('#id_lblprice-' + el).css('display', 'block');
             $('#id_buyerprice-' + el).html("$0.00");
-            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br/> Fee $0.00 <br /> Buyer's Total $0.00 ");
+            $('#id_tooltip-' + el).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer's Total $0.00 ");
+            total = 0;
+            fee = 0;
             return false;
         } else {
 
@@ -2656,9 +2780,10 @@
         }
         if ($('#' + id).val() == "") {
             $('#id_buyerprice-' + el).html("$0.00");
-            $('#id_tooltip-' + el).html("Ticket Price  $0.00 <br/> Fee $0.00 <br /> Buyer's Total $0.00 ");
+            $('#id_tooltip-' + el).html("Ticket Price  &nbsp; &nbsp;&nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer's Total $0.00 ");
             //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
-
+            total = 0;
+            fee = 0;
 
         }
         if ($('#' + id).val() > 0) {
@@ -2675,32 +2800,32 @@
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
 
                 var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee     &nbsp;&nbsp; &nbsp;       $" + ccpamount + "<br/>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br/>" + "Buyer(s) Total   &nbsp;&nbsp; &nbsp;       $" + ccpfinal;
                 $('#id_buyerprice-' + el).html("$" + ccpfinal);
                 $('#id_tooltip-' + el).html(msg);
-
+                total = ccpfinal;
+                fee = ccpamount;
             }
             if (val == 1) {
                 ccp = $('#id_cc').val();
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
                 var ccpfinal = parseFloat(amount).toFixed(2);
                 $('#id_buyerprice-' + el).html("$" + ccpfinal);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee     &nbsp;&nbsp; &nbsp;       $" + ccpamount + "<br/>" + "Buyer Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;     $" + ccpamount + "<br/>" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
                 //$('#id_tooltip-' + el).html(msg);
                 $('#id_tooltip-' + el).html(msg);
+                total = ccpfinal;
+                fee = ccpamount;
             }
 
-            // var tamt= $('#id_totalamt-'+el).val();
-            // var tmsg = $('#id_msg-'+el).val();
-
-            //
-            //$('#id-tooltip-' + el).html(tmsg);
+         
 
 
 
         }
-
-
+        $("#id_fee-" + el).val(ccpamount);
+        $("#id_total-" + el).val(ccpfinal);
+       
     }
     function minimize(e) {
 
@@ -2710,6 +2835,30 @@
         $('#evnt_set-' + el).slideToggle("fast");
 
     }
+    $('.var_chg_btn').click(function () {
+        $("#id_Mainvariable").css('display', 'block');
+        var divlength = $("#id_Mainvariable> div").size();
+        var data = $('#id_clonevariable-n').clone();
+        data.attr('id', 'id_clonevariable-' + divlength);
+        data.removeAttr("style")
+        data.find('*[id]').andSelf().each(function () {
+            //console.log($(this));
+
+            var id = $(this).attr('id');
+            //console.log(id);
+            id1 = id.substr(0, id.indexOf('-'));
+            ////console.log(id);
+            var idn = id1 + "-" + divlength;
+            $(this).attr("id", idn);
+            $(this).val('');
+
+          
+
+        });
+
+
+        $('#id_Mainvariable').append(data);
+    });
     $('.save_btnpaid ').click(function () {
         $(".ticket_panel").show();
         $("#id_ticket_footer").css('display', 'block');
@@ -2717,7 +2866,7 @@
         var data = $('#clonediv-n').clone();
         data.attr('id', 'clonediv-' + divlength);
         data.removeAttr("style")
-        console.log(data.find('input[type=text]'));
+     
         data.find('*[id]').andSelf().each(function () {
             //console.log($(this));
 
@@ -2756,7 +2905,7 @@
         $("#id_feetype-" + divlength).css('display', 'block');
         $("#id_Tickettype-" + divlength).val("Paid");
         $("#id_buyerprice-" + divlength).html('$0.00');
-        $('#id_tooltip-' + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
+        $('#id_tooltip-' + divlength).html('Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;   $0.00 <br /> Buyers Total $0.00');
         //$("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
         $("#id_feemethod").val(0);
         $("#id_salestart-" + divlength).datepicker({
@@ -3026,7 +3175,61 @@
         }
         return randomString;
     }
+    function deletevariable(e)
+    {
+        var x = confirm("Are you sure you want to delete?");
+        if (x) {
+            var divlength = $("#id_Mainvariable> div").size();
 
+            var id = e;
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+            var div = document.getElementById("id_clonevariable-" + el);
+          
+
+
+            div.parentNode.removeChild(div);
+            divlength = $("#id_Mainvariable> div").size();
+
+            var count = 0;
+            $('#id_Mainvariable').children('div').each(function () {
+
+                var id = $(this).attr('id');
+
+                id1 = id.substr(0, id.indexOf('-'));
+                ////console.log(id);
+                var idn = id1 + "-" + (count);
+                $(this).attr("id", idn);
+                $(this).find('*[id]').andSelf().each(function () {
+
+
+                    var id = $(this).attr('id');
+                    //console.log(id);
+                    id1 = id.substr(0, id.indexOf('-'));
+                    ////console.log(id);
+                    var idn = id1 + "-" + (count);
+                    $(this).attr("id", idn);
+                  
+
+                  
+
+                });
+                count = count + 1;
+
+            });
+
+            if (divlength == 0) {
+                $('#id_Mainvariable').css('display', 'none');
+
+            }
+           
+
+            return true;
+        }
+        else
+            return false;
+
+    }
     function deletediv(e) {
 
 
@@ -3198,17 +3401,20 @@
     function checkvalidtime(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
         var al = e.substr(0, e.indexOf('-'));
+        alert($('#' + e).val()  );
         if (al == "id_saletimestart") {
             errorMsg = checkTime(e);
             if (errorMsg != "") {
 
 
-
+                
                 $('#id_saletimestart-' + el).focus();
                 $('#id_saletimestart-' + el).val("7:00pm");
                 $('#id_saletimeend-' + el).val("7:00pm");
 
             } else {
+               
+                $('#id_hdsaletimestart' + el).val($('#' + e).val());
                 $('#id_saletimeend-' + el).val($('#' + e).val());
 
             }
@@ -3220,7 +3426,7 @@
                 $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
 
                 $('#id_saletimeend-' + el).focus();
-
+                $('#id_hdsaletimeend' + el).val($('#' + e).val());
 
             }
         }
@@ -3235,6 +3441,7 @@
                 $('#id_auto_hide_after_Time-' + el).val("7:00pm");
 
             } else {
+                $('#id_hdautohideuntil' + el).val($('#' + e).val());
                 $('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
 
             }
@@ -3247,7 +3454,7 @@
                 $('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
 
                 $('#id_auto_hide_after_Time-' + el).focus();
-
+                $('#id_hdautohideafter' + el).val($('#' + e).val());
 
             }
         }
@@ -3622,15 +3829,21 @@
         var msg = "";
         var count = 0;
         var title = $('#txtEventTitle').val();
-        var type = $("#EventType").val();
-        var cat = $("#ddlEventCategory").val();
+
         if (title == "") {
-            msg = "Please Enter the name of Event";
+            msg = "Please enter the name of event";
 
         }
-        if (type == 0) { msg = "Please select type of event"; }
-        if (cat == 0) { msg = "Please Select category of event";}
+
+        var type = $("#EventType").val();
+        var cat = $("#ddlEventCategory").val();
+        if (type <= 0) { msg += "</br>Please select type of event"; }
+        if (cat <= 0) { msg += "</br>Please select category of event"; }
+
+
+
         var divlength = $("#MasterDiv> div").size();
+       
         if (divlength > 0) {
 
             for (var i = 0; i < divlength; i++) {
@@ -3639,15 +3852,14 @@
                 var ticket_Qty = $('#id_quantity_total-' + i).val();
                 if (ticket_name == "" ) {
                     $('#id_ticket_type-' + i).addClass('err-bor');
-                   
+                  
                     count++;
                 } else {
                     $('#id_ticket_type-' + i).removeClass('err-bor');
                    
                 }
-                if (ticket_Qty == "")
-                {
-                    
+                if (ticket_Qty == "") {
+                   
                     $('#id_quantity_total-' + i).addClass('err-bor');
                     count++;
                 } else {
@@ -3672,13 +3884,43 @@
                 $('#id_vardesc').addClass('err-bor');
                 msg += "<br/> Please enter description for variable charges";
 
+
+
             } else {
                 $('#id_vardesc').removeClass('err-bor');
 
             }
 
         }
+        var divvar = $("#id_Mainvariable>div").size();
+     
+        if (divvar > 0) {
+           
+            for (var i = 0; i < divvar; i++) {
+                var subdesc_name = $('#id_varsubdesc-' + i).val();
+                var subprice_Qty = $('#id_varsubprice-' + i).val();
+            
+                if (subdesc_name == "") {
+                   
+                    $('#id_varsubdesc-' + i).addClass('err-bor');
 
+                    count++;
+                } else {
+                    $('#id_varsubdesc-' + i).removeClass('err-bor');
+
+                }
+                if (subprice_Qty == "") {
+
+                    $('#id_varsubprice-' + i).addClass('err-bor');
+                    count++;
+                } else {
+
+                    $('#id_varsubprice-' + i).removeClass('err-bor');
+                }
+
+            }
+
+        }
         if ($('#chkReqPassword').is(":checked") == true) {
             if ($('#txtReqPassword').val() == "") {
                 $('#txtReqPassword').addClass('err-bor');
