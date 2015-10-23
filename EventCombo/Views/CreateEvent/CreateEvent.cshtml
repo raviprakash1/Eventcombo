@@ -1804,16 +1804,20 @@
                 //    //alert($(this).text() + " : " + $(this).val());
                 //});
 
-
+                var vDefaultOrg = $("#ddlOrgnizers").val();
+                
                 $("#tblOrgnizer tr").each(function () {
                     var Sno = $(this).find("td:first").html();
+
                     // Multiple Address
                     if (Sno != '') {
                         Orgnizer.push({
                             Orgnizer_Name: $("#OrgName_" + Sno).text(),
                             Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                             FBLink: $("#OrgFB_" + Sno).text(),
-                            Twitter: $("#OrgTw_" + Sno).text()
+                            Twitter: $("#OrgTw_" + Sno).text(),
+                            DefaultOrg: (vDefaultOrg==Sno ? 'Y':'N') 
+
                         });
                     }
                 });

@@ -179,9 +179,11 @@
           <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orgnizer_Event_Id" Type="bigint" />
           <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
-          <Property Name="Orgnizer_Desc" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Orgnizer_Desc" Type="nvarchar(max)" />
           <Property Name="FBLink" Type="varchar" MaxLength="100" />
           <Property Name="Twitter" Type="varchar" MaxLength="100" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="DefaultOrg" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -886,10 +888,12 @@
           <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" />
           <Property Name="Orgnizer_Event_Id" Type="Int64" />
           <Property Name="Orgnizer_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Orgnizer_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Orgnizer_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
           <Property Name="FBLink" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Twitter" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultOrg" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="EventCategory">
           <Key>
@@ -1567,6 +1571,8 @@
           <EntitySetMapping Name="Event_Orgnizer_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Event_Orgnizer_Detail">
               <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
+                <ScalarProperty Name="DefaultOrg" ColumnName="DefaultOrg" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Twitter" ColumnName="Twitter" />
                 <ScalarProperty Name="FBLink" ColumnName="FBLink" />
                 <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />

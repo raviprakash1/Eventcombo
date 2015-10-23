@@ -303,6 +303,9 @@ namespace EventCombo.Controllers
                             objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
                             objEOrg.FBLink  = objOr.FBLink;
                             objEOrg.Twitter = objOr.Twitter;
+                            objEOrg.DefaultOrg = objOr.DefaultOrg;
+                            objEOrg.UserId = strUserId;
+
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
                     }
