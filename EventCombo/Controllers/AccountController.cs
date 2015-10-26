@@ -857,7 +857,7 @@ namespace EventCombo.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+       
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             string url = null;
@@ -1167,7 +1167,7 @@ namespace EventCombo.Controllers
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider

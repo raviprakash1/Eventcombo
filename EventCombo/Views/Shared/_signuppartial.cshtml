@@ -10,7 +10,7 @@
 
 @using (Html.BeginForm("Signup", "Home", FormMethod.Post, new { role = "form" ,id="form",@class= "form-horizontal acnt_form"}))
 {
-    @Html.AntiForgeryToken()
+   
     if (ViewData["Message"] != null)
     {<div class="err_main">
     <div class="er_suc_main">

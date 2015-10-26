@@ -60,6 +60,8 @@ namespace EventCombo.Models
         public virtual DbSet<TimeZoneDetail> TimeZoneDetails { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
+        public virtual DbSet<EventFavourite> EventFavourites { get; set; }
+        public virtual DbSet<EventVote> EventVotes { get; set; }
     
         public virtual ObjectResult<GetEventListing_Result> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature)
         {

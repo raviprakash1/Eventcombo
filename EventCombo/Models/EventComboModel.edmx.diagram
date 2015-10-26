@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5a7a146c09b042b1995acea3266691ed" Name="Diagram1">
+      <Diagram DiagramId="12425d637b714bf881b9b44d2ad6156d" Name="Diagram1">
         <EntityTypeShape EntityType="EventComboModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Address" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.AspNetRole" Width="1.5" PointX="7.75" PointY="6.875" IsExpanded="true" />
@@ -52,6 +52,8 @@
         <AssociationConnector Association="EventComboModel.FK__EventSubC__Event__5F141958" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_EventVenue_EventVenue" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EventComboModel.EventFavourite" Width="1.5" PointX="10.375" PointY="17.75" />
+        <EntityTypeShape EntityType="EventComboModel.EventVote" Width="1.5" PointX="16.375" PointY="18.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -17,6 +17,7 @@ namespace EventCombo.Controllers
 {
     public class CreateEventController : Controller
     {
+        EventComboEntities db = new EventComboEntities();
         // GET: Event
         [HttpPost]
         public ActionResult CreateEvent(EventCreation Model)
@@ -303,6 +304,9 @@ namespace EventCombo.Controllers
                             objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
                             objEOrg.FBLink = objOr.FBLink;
                             objEOrg.Twitter = objOr.Twitter;
+                            objEOrg.DefaultOrg = objOr.DefaultOrg;
+                            objEOrg.UserId = strUserId;
+
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
                     }
@@ -396,6 +400,145 @@ namespace EventCombo.Controllers
             return lEventId;
         }
 
+
+        public ActionResult ViewEvent(long EventId)
+        {
+            Session["Fromname"] = "ViewEvent";
+            ViewEvent viewEvent = new ViewEvent();
+            var EventDetail = (from ev in db.Events where ev.EventID == EventId select ev).FirstOrDefault();
+            var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
+            var votecount = (from ev in db.EventVotes where ev.eventId == EventId select ev).Count();
+            viewEvent.Favourite = favCount.ToString();
+            viewEvent.Vote = votecount.ToString();
+            viewEvent.Title = EventDetail.EventTitle;
+            viewEvent.eventId = EventDetail.EventID.ToString();
+            if (Session["AppId"] != null)
+            {
+                var userid = Session["AppId"].ToString();
+               var count = (from r in db.EventFavourites where r.eventId == EventId && r.UserID == userid
+                            select r).Count();
+                if (count > 0)
+                {
+                    viewEvent.hdEventFav = "Y";
+                }
+                else { viewEvent.hdEventFav = "N"; }
+
+
+            }
+            else
+            {
+
+                viewEvent.hdEventFav = "N";
+
+            }
+            if (Session["AppId"] != null)
+            {
+                var userid = Session["AppId"].ToString();
+                var count = (from r in db.EventVotes
+                             where r.eventId == EventId && r.UserID == userid
+                             select r).Count();
+                if (count > 0)
+                {
+                    viewEvent.hdEventvote = "Y";
+                }
+                else { viewEvent.hdEventvote = "N"; }
+
+
+            }
+            else
+            {
+
+                viewEvent.hdEventvote = "N";
+
+            }
+            ViewBag.Images= GetImages(EventId);
+           
+            return View(viewEvent);
+        }
+
+        private List<string> GetImages(long EventId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+
+                return (from myRow in db.EventImages
+                              where myRow.EventID == EventId
+                              select "/Images/events/event_flyers/imagepath/" + myRow.EventImageUrl).ToList();
+               
+
+            }
+               
+
+        }
+        public string savevote(string Eventid)
+        {
+            if (Session["AppId"] != null)
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    EventVote ObjEC = new EventVote();
+                    ObjEC.eventId = long.Parse(Eventid);
+                    ObjEC.UserID = Session["AppId"].ToString();
+                    objEnt.EventVotes.Add(ObjEC);
+                    objEnt.SaveChanges();
+                }
+                var voteCount = (from ev in db.EventVotes where ev.eventId.ToString() == Eventid select ev).Count();
+
+                return voteCount.ToString();
+
+            }
+            else {
+                Session["ReturnUrl"] = Url.Action("ViewEvent", "CreateEvent", new { EventId = Eventid });
+                return "Y";
+
+            }
+        }
+
+        public string savefavourite(string Eventid,string type)
+        {
+
+            if (Session["AppId"] != null)
+            {
+                if(type=="Y")
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        EventFavourite ObjEC = new EventFavourite();
+                        ObjEC.eventId =long.Parse(Eventid);
+                        ObjEC.UserID = Session["AppId"].ToString();
+                        objEnt.EventFavourites.Add(ObjEC);
+                        objEnt.SaveChanges();
+                    }
+                    var favCount = (from ev in db.EventFavourites where ev.eventId.ToString () == Eventid select ev).Count();
+
+                    return favCount.ToString ();
+
+                }
+                else
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        var userid = Session["AppId"].ToString().Trim();
+                        objEnt.Database.ExecuteSqlCommand("Delete from EventFavourite where UserID='" + userid + "' AND eventId="+ Eventid + "");
+                        objEnt.SaveChanges();
+                    }
+                    var favCount = (from ev in db.EventFavourites where ev.eventId.ToString() == Eventid select ev).Count();
+
+                    return favCount.ToString();
+
+
+                }
+
+                
+
+            }
+            else
+            {
+                Session["ReturnUrl"] = Url.Action("ViewEvent", "CreateEvent", new { EventId = Eventid });
+                return "Y";
+
+            }
+        }
 
     }
 }
