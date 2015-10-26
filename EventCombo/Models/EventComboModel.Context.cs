@@ -40,10 +40,12 @@ namespace EventCombo.Models
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Event_Detail> Event_Detail { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        public virtual DbSet<Event_VariableDesc> Event_VariableDesc { get; set; }
         public virtual DbSet<EventCategory> EventCategories { get; set; }
         public virtual DbSet<EventImage> EventImages { get; set; }
         public virtual DbSet<EventOrganizer> EventOrganizers { get; set; }
         public virtual DbSet<EventSubCategory> EventSubCategories { get; set; }
+        public virtual DbSet<EventTempImage> EventTempImages { get; set; }
         public virtual DbSet<EventType> EventTypes { get; set; }
         public virtual DbSet<EventVenue> EventVenues { get; set; }
         public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
@@ -52,31 +54,12 @@ namespace EventCombo.Models
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
+        public virtual DbSet<TimeZoneDetail> TimeZoneDetails { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
-        public virtual DbSet<EventTempImage> EventTempImages { get; set; }
-        public virtual DbSet<TimeZoneDetail> TimeZoneDetails { get; set; }
-        public virtual DbSet<Event_VariableDesc> Event_VariableDesc { get; set; }
-        public virtual DbSet<Ticket> Tickets { get; set; }
-    
-        public virtual ObjectResult<string> GetSetUserRole(string user_Id, string gETSET, string role_Id)
-        {
-            var user_IdParameter = user_Id != null ?
-                new ObjectParameter("user_Id", user_Id) :
-                new ObjectParameter("user_Id", typeof(string));
-    
-            var gETSETParameter = gETSET != null ?
-                new ObjectParameter("GETSET", gETSET) :
-                new ObjectParameter("GETSET", typeof(string));
-    
-            var role_IdParameter = role_Id != null ?
-                new ObjectParameter("Role_Id", role_Id) :
-                new ObjectParameter("Role_Id", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSetUserRole", user_IdParameter, gETSETParameter, role_IdParameter);
-        }
     
         public virtual ObjectResult<GetEventListing_Result> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature)
         {
@@ -101,6 +84,23 @@ namespace EventCombo.Models
                 new ObjectParameter("EventFeature", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventListing_Result>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter);
+        }
+    
+        public virtual ObjectResult<string> GetSetUserRole(string user_Id, string gETSET, string role_Id)
+        {
+            var user_IdParameter = user_Id != null ?
+                new ObjectParameter("user_Id", user_Id) :
+                new ObjectParameter("user_Id", typeof(string));
+    
+            var gETSETParameter = gETSET != null ?
+                new ObjectParameter("GETSET", gETSET) :
+                new ObjectParameter("GETSET", typeof(string));
+    
+            var role_IdParameter = role_Id != null ?
+                new ObjectParameter("Role_Id", role_Id) :
+                new ObjectParameter("Role_Id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSetUserRole", user_IdParameter, gETSETParameter, role_IdParameter);
         }
     }
 }

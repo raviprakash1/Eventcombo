@@ -236,6 +236,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventConfirmation.cs" />
     <Compile Include="Models\EventCreation.cs" />
     <Compile Include="Models\EventImage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>

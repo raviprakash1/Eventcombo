@@ -48,7 +48,7 @@
                     <div class="col-sm-9 text-right no_pad">
                         <div class="form-group mb0 ">
                             <div class="ev_date_icn"></div>
-                            <label class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date</label>
+                            <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date</label>
                             <div class="form-group mb5">
                                 <label class="Timezone label-control evnt_title_timezone mb0">Timezone & date setting</label>
                                 <div class="TmezoneSet col-sm-12 ev_time_zone_model_main">
@@ -522,13 +522,6 @@
                         </div>
                     </div>
                     <div class="col-sm-12 no_pad">
-                        <div class="form-group">
-                            <label class="control-label ev_tickt_lebel pl0 ">
-                                <input id="chkDefaultOrg" type="checkbox">
-                                Set user as event organizer
-                            </label>
-
-                        </div>
                         <div class="form-group mb0">
                             <label class="control-label ev_tickt_lebel pl0 ">
                                 <input id="Incsocial" type="checkbox">
@@ -563,36 +556,41 @@
                         <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn">Add</button>
                     </div>
                     <div class="col-sm-12 mt20 no_pad">
-                        <div class="form-group ">
+                        <div class="form-group">
                             <label class="col-sm-12 control-label ev_tickt_lebel pl0">Added Organizer</label>
-                            <div class="col-sm-8 Orgz_dro_con">
-                                Organizer(s) List
-                                <span class="OrgIcn org_right pull-right">
-                                    <i class="fa fa-angle-down"></i>
-                                </span>
-                            </div>
-                            <div class="OrglistShow col-sm-8 no_pad ">
-                                <div id="dvOrganizer" class="list-group ev_orgz_group">
-                                    <div id="dvOrg_0" class="list-group-item ev_orgz_list">
-                                        <table id="tblOrgnizer"></table>
-                                        @*<div class="col-sm-8 no_pad">Organizer 1</div>
-                                            <div class="col-sm-4 no_pad text-right ev_org_edt_main">
-                                                <a href="#"><i class="fa fa-pencil"></i> </a> |
-                                                <a href="#"><i class="fa fa-trash"></i> </a>
-                                            </div>*@
-                                    </div>
-
+                            @*<div class="col-sm-8 Orgz_dro_con">
+                                    Organizer(s) List
+                                    <span class="OrgIcn org_right pull-right">
+                                        <i class="fa fa-angle-down"></i>
+                                    </span>
+                                </div>*@
+                            <div class="col-sm-12 no_pad">
+                                <div class="col-sm-8 no_pad">
+                                    <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
                                 </div>
-
+                                <div class="col-sm-2">
+                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn">Edit <i class="fa fa-pencil"></i></button>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <button type="button" onclick="DeleteOrgnizer();" class="btn btn-primary ev_add_sub_btn">Delete <i class="fa fa-trash"></i></button>
+                                </div>
+                                <table style="display:none;" id="tblOrgnizer"></table>
                             </div>
+                            @*<div  class="OrglistShow col-sm-8 no_pad ">
+                                            <div id="dvOrganizer" class="list-group ev_orgz_group">
+                                                <div id="dvOrg_0" class="list-group-item ev_orgz_list">
+
+                                                    <div class="col-sm-8 no_pad">Organizer 1</div>
+                                <div class="col-sm-4 no_pad text-right ev_org_edt_main">
+                                    <a href="#"><i class="fa fa-pencil"></i> </a> |
+                                    <a href="#"><i class="fa fa-trash"></i> </a>
+                                </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>*@
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label id="lblOrgOfEvent" class="control-label ev_tickt_lebel pl0 mt10 ">
-                            Organizer of the event : David
-                        </label>
-
                     </div>
 
                 </div>
@@ -758,7 +756,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
-                                                                <input type="hidden" value="0" id="id_hdsaletimeend-n"/>
+                                                                <input type="hidden" value="0" id="id_hdsaletimeend-n" />
                                                                 <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
                                                             </div>
 
@@ -913,59 +911,59 @@
                                 &#10; Variable Charge(s)
                             </label>
                         </div>
-                        
+
 
 
                         <div class="TicketFees col-sm-12 no_pad">
-                                <div class="form-group">
-                                    <div class="col-sm-5 no_pad">
-                                        <label class="col-sm-4 control-label ev_tickt_lebel">Description</label>
-                                        <div class="col-sm-8">
-                                            <input class="form-control evnt_inp_cont" type="text" placeholder="" id="id_vardesc">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-5 no_pad">
-                                        <label class="col-sm-2 control-label ev_tickt_lebel">Type</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control ev_drop_label" id="variabletype">
-                                                <option value="O">Optional</option>
-                                                <option value="R">Required </option>
-                                               
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2 no_pad">
-                                        <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button" >Add</button>
+                            <div class="form-group">
+                                <div class="col-sm-5 no_pad">
+                                    <label class="col-sm-4 control-label ev_tickt_lebel">Description</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="" id="id_vardesc">
                                     </div>
                                 </div>
-                                <div class="col-sm-12 mt20 no_pad">
-                                    <div class="list-group ev_var_chrg_group" id="id_Mainvariable" style="display:none;">
-                                        
+                                <div class="col-sm-5 no_pad">
+                                    <label class="col-sm-2 control-label ev_tickt_lebel">Type</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control ev_drop_label" id="variabletype">
+                                            <option value="O">Optional</option>
+                                            <option value="R">Required </option>
 
-                                        
-
+                                        </select>
                                     </div>
-                                    <div class="col-sm-12 no_pad" id="id_clonevariable-n" style="display:none;">
-                                        <div class="list-group-item ev_var_chrg_list">
-                                            <div class="form-group">
-                                                <div class="col-sm-7 col-xs-7">
-                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256">
-                                                </div>
-                                                <div class="col-sm-4 col-xs-4">
-                                                    <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
-                                                    <div class="col-sm-10 no_pad">
+                                </div>
+                                <div class="col-sm-2 no_pad">
+                                    <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mt20 no_pad">
+                                <div class="list-group ev_var_chrg_group" id="id_Mainvariable" style="display:none;">
+
+
+
+
+                                </div>
+                                <div class="col-sm-12 no_pad" id="id_clonevariable-n" style="display:none;">
+                                    <div class="list-group-item ev_var_chrg_list">
+                                        <div class="form-group">
+                                            <div class="col-sm-7 col-xs-7">
+                                                <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256">
+                                            </div>
+                                            <div class="col-sm-4 col-xs-4">
+                                                <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
+                                                <div class="col-sm-10 no_pad">
                                                     <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeyup="checkprice(this.id);">
-                                                    </div>
-                                                    </div>
-                                                <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
-                                                    <button class="btn" type="button" id="btn_vardelete-n" onclick="deletevariable(this.id)" ><i class="fa fa-times"></i></button>
                                                 </div>
+                                            </div>
+                                            <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
+                                                <button class="btn" type="button" id="btn_vardelete-n" onclick="deletevariable(this.id)"><i class="fa fa-times"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1021,7 +1019,7 @@
                                 <input type="checkbox" id="chkReqPassword">
                                 Require a password to view the event page
                             </label>
-                            <input type="password" id="txtReqPassword" value="" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" readonly="readonly"/>
+                            <input type="password" id="txtReqPassword" readonly="readonly" value="" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />
                         </div>
                     </div>
 
@@ -1103,6 +1101,7 @@
                     <div class="clearfix"></div>
                     <div class="col-sm-12 mt10">
                         <button type="button" id="btAddMore" class="btn btn-primary ev_add_sub_btn">Add More</button>
+                        <button type="button" id="btReset" class="btn btn-primary ev_add_sub_btn">Reset</button>
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12">
@@ -1336,12 +1335,21 @@
         }
 
 
-        function DeleteOrgnizer(Sno) {
+        function DeleteOrgnizer() {
+            var Sno = $("#ddlOrgnizers").val();
             $('#tblOrgnizer tr').each(function () {
                 if (Sno == $(this).find("td:first").html()) {
                      $(this).remove();
                 }
             });
+
+            //$("#dllOrganizer")
+            $("#ddlOrgnizers option").each(function (i) {
+                        if (Sno == $(this).val()) {
+                            $(this).remove();
+                        }
+                    });
+
 
 
             $("#hidOrgnizer").val('');
@@ -1387,9 +1395,9 @@
             //});
 
         }
-        function editOrgnizer(Sno) {
+        function editOrgnizer() {
+            var Sno = $("#ddlOrgnizers").val();
             //alert(Sno);
-            debugger;
             $("#hidOrgnizer").val(Sno);
             var vOrgName = $("#OrgName_" + Sno).text();
             var vOrgDes = $("#OrgDes_" + Sno).text();
@@ -1401,13 +1409,16 @@
             $("#txtOrgFBlink").val(vOrgFB);
             $("#txtOrgTWlink").val(vOrgTw);
 
-
             if (vOrgFB !=''  || vOrgTw !='')
             {
                 $("#Incsocial").prop("checked", true);
                 $("#dvOrgnizerFBTw").show();
             }
-
+            else
+            {
+                $("#Incsocial").prop("checked", false);
+                $("#dvOrgnizerFBTw").hide();
+            }
 
         }
 
@@ -1433,10 +1444,15 @@
 
 
             $("#tblOrgnizer").append(strHTML);
+            strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vOrgName + '</option>';
+
+            $("#ddlOrgnizers").append(strHTML);
+
         }
 
-        function UpdateOrgnizer(Sno) {
-
+        function UpdateOrgnizer() {
+            var Sno = $("#ddlOrgnizers").val();
+        //    alert(Sno);
             vOrgName = $("#txtOrgnizer").val();
             vOrgDes = $("#edOrgDes").code();
             vOrgFB = $("#txtOrgFBlink").val();
@@ -1446,6 +1462,18 @@
             $("#OrgDes_" + Sno).text(vOrgDes);
             $("#OrgFB_" + Sno).text(vOrgFB);
             $("#OrgTw_" + Sno).text(vOrgTw);
+
+
+                $("#ddlOrgnizers option").each(function (i) {
+                    if (Sno == $(this).val()) {
+                        $(this).remove();
+                    }
+                });
+                var addOption = '<option value="' + Sno + '" id="' + Sno + '" >' + $("#txtOrgnizer").val() + '</option>';
+                $("#ddlOrgnizers").append(addOption);
+
+
+
 
         }
 
@@ -1457,11 +1485,11 @@
             });
 
             $("#btSchMultipleEv").click(function () {
-                $("#hdSchType").val('Multiple');
+                //$("#hdSchType").val('Multiple');
             });
 
             $("#btSchSingleEv").click(function () {
-                $("#hdSchType").val('Single');
+                //$("#hdSchType").val('Single');
             });
 
 
@@ -1478,11 +1506,11 @@
 
             });
             $('#chkReqPassword').change(function () {
-               
+
                 if ($('#chkReqPassword').is(":checked") == true) {
-                  
+
                     $('#txtReqPassword').attr('readonly', false);
-                    
+
                 } else {
                     $('#txtReqPassword').attr('readonly', true);
                     $('#txtReqPassword').val('');
@@ -1507,31 +1535,27 @@
                 var EventVariable = [];
                 //var table = $("#tblAddress");
 
+
                 //Variable charges
                 var varlength = $("#id_Mainvariable> div").size();
-                if (varlength > 0)
-                {
+                if (varlength > 0) {
                     for (var i = 0; i < varlength; i++) {
 
                         EventVariable.push({
                             VariableDesc: $('#id_varsubdesc-' + i).val(),
                             Price: $('#id_varsubprice-' + i).val(),
-                         
+
                         });
                     }
 
 
                 }
 
-
-
                 //Image Section
 
-                if ($("#image_count").val() > 0)
-                {
-                    var count=($("#image_count").val());
-                    for (var i = 0; i < count; i++)
-                    {
+                if ($("#image_count").val() > 0) {
+                    var count = ($("#image_count").val());
+                    for (var i = 0; i < count; i++) {
 
                         var image = $("#image_hidden_" + i).val();
                         var res = image.split("####");
@@ -1548,8 +1572,6 @@
                 }
 
 
-
-
                 // Ticket
                 var Ticket = [];
                 var divlength = $("#MasterDiv> div").size();
@@ -1558,9 +1580,9 @@
                     var Auto_Schedule = 0;
                     var AutoSechduleType = 0;
                     var TicketTypeID = 0;
-                    var ecfee=0;
-                    var customerfee=0;
-                    var total=0;
+                    var ecfee = 0;
+                    var customerfee = 0;
+                    var total = 0;
                     for (var i = 0; i < divlength; i++) {
 
                         if ($('#id_cost-' + i).css('display') == "block") {
@@ -1580,20 +1602,18 @@
 
                             }
 
-                        }else{
+                        } else {
                             Auto_Schedule = 0;
                         }
-                        if($('#id_include_ticket_fees-'+i).val()==0)
-                        {
-                            customerfee=$('#id_fee-'+i).val();
+                        if ($('#id_include_ticket_fees-' + i).val() == 0) {
+                            customerfee = $('#id_fee-' + i).val();
 
                         }
-                        if($('#id_include_ticket_fees-'+i).val()==1)
-                        {
-                            ecfee=$('#id_fee-'+i).val();
+                        if ($('#id_include_ticket_fees-' + i).val() == 1) {
+                            ecfee = $('#id_fee-' + i).val();
 
                         }
-                        total=$('#id_total-'+i).val();
+                        total = $('#id_total-' + i).val();
                         if ($('#id_Tickettype-' + i).val() == "Free") {
                             TicketTypeID = 1
 
@@ -1604,10 +1624,10 @@
 
                             TicketTypeID = 3
                         }
-                     
-                   var Discount=  $('#id_Discount-' + i).val();
-                     var showdesc=($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
-                      
+
+                        var Discount = $('#id_Discount-' + i).val();
+                        var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
+
                         Ticket.push({
                             T_name: $('#id_ticket_type-' + i).val(),
                             Qty_Available: $('#id_quantity_total-' + i).val(),
@@ -1619,24 +1639,24 @@
                             Sale_Start_Time: $('#id_hdsaletimestart-' + i).val(),
                             Sale_End_Date: $('#id_saleend-' + i).val(),
                             Sale_End_Time: $('#id_hdsaletimeend-' + i).val(),
-                            'Hide_Ticket': parseInt(($("#id_ticketshidden-"+ i).is(":checked") == true ? '1' : '0')),
+                            'Hide_Ticket': parseInt(($("#id_ticketshidden-" + i).is(":checked") == true ? '1' : '0')),
                             Auto_Hide_Sche: parseInt(Auto_Schedule),
-                            Hide_Untill_Date: $('#id_auto_hide_until_Date-'+ i).val(),
-                            Hide_Untill_Time: $('#id_hdautohideuntil-'+ i).val(),
-                            Hide_After_Date: $('#id_auto_hide_after_Date-'+ i).val(),
-                            Hide_After_Time: $('#id_hdautohideafter-'+ i).val(),
-                            Min_T_Qty: $('#id_min_ticket-'+ i).val(),
-                            Max_T_Qty: $('#id_max_ticket-'+ i).val(),
-                            T_Disable:  (($('#id_disableticket-'+ i).is(":checked") == true ? '1' : '0')),
-                            T_Mark_SoldOut: parseInt(($('#id_marksoldout-'+ i).is(":checked") == true ? '1' : '0')),
-                            T_Displayremaining: ($('#id_displayremaining-'+ i).is(":checked") == true ?'1' : '0'),
+                            Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
+                            Hide_Untill_Time: $('#id_hdautohideuntil-' + i).val(),
+                            Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
+                            Hide_After_Time: $('#id_hdautohideafter-' + i).val(),
+                            Min_T_Qty: $('#id_min_ticket-' + i).val(),
+                            Max_T_Qty: $('#id_max_ticket-' + i).val(),
+                            T_Disable: (($('#id_disableticket-' + i).is(":checked") == true ? '1' : '0')),
+                            T_Mark_SoldOut: parseInt(($('#id_marksoldout-' + i).is(":checked") == true ? '1' : '0')),
+                            T_Displayremaining: ($('#id_displayremaining-' + i).is(":checked") == true ? '1' : '0'),
                             Fees_Type: $('#id_include_ticket_fees-' + i).val(),
                             'T_Discount': Discount,
                             T_order: $('#id_order-' + i).val(),
                             TicketTypeID: TicketTypeID,
                             T_AutoSechduleType: AutoSechduleType,
-                            EC_Fee:ecfee,
-                            Customer_Fee:customerfee,
+                            EC_Fee: ecfee,
+                            Customer_Fee: customerfee,
                             TotalPrice: total
 
                         });
@@ -1797,15 +1817,14 @@
                 // Basic Event Info
                 //alert($("#edSummer1").code());
                 var vEventDiscription = '';//$("#edSummer1").code();
+
                 var varDescritpion = '';
                 var optionalvariable = '';
-                if ($("#id_variablecharge").is(":checked"))
-                {
+                if ($("#id_variablecharge").is(":checked")) {
                     varDescritpion = $('#id_vardesc').val();
                     optionalvariable = $('#variabletype').val();
                 }
-                
-                //alert(vEventDiscription);
+
                 var model = {
                     'EventTypeID': $("#EventType").val(),
                     'EventCategoryID': $("#ddlEventCategory").val(),
@@ -1841,6 +1860,7 @@
                     'Ticket_showvariable': ($("#id_variablecharge").is(":checked") == true ? 'Y' : 'N'),
                     'Ticket_variabledesc': varDescritpion,
                     'Ticket_variabletype': optionalvariable
+
                 };
 
                 if ($("#hdEventId").val() == '') {
@@ -1906,6 +1926,15 @@
 
                 //var data = $("#dvOrg_0").clone();
                 //$("#dvOrganizer").append(data);
+                if ($("#txtOrgnizer").val().trim() == '')
+                {
+                    alert("Please enter valid orgnizer.");
+                    $("#txtOrgnizer").focus();
+                    return false;
+                }
+
+
+
                 if ($("#hidOrgnizer").val() == '')
                     AddOrgnizer();
                 else
@@ -2055,8 +2084,32 @@
 
             });
 
+            $("#btEnterDates").click(function () {
+                //alert($("#hdSchType").val());
+                if ($("#hdSchType").val() == 'Multiple')
+                {
+                    //$(".SchmultiDetail").slideToggle("slow");
+                    $(".SchmultiDetail").show();
+                    $(".SchDivtop").hide();
+                    $(".Schmultisingle").show();
+                }
+                else
+                {
+                    $(".SchDivtop").show();
+                    $(".SchmultiDetail").hide();
+                    $(".Schmultisingle").hide();
+                }
+            });
+
             $("#btnAddSch").click(function () {
                 $("#hidSchLastState").val($("#dlSchOption").val());
+                if ($(".SchmultiDetail").css('display') == 'block') {
+                    $("#hdSchType").val('Multiple');
+                }
+                else
+                {
+                    $("#hdSchType").val('Single');
+                }
             });
 
             if ($("#hidSchLastState").val() == "") {
@@ -2192,10 +2245,18 @@
             function EditRow(TableId, ColumnValue, ColumnName, Sno) {
                 var ColAry = ColumnValue.split('¶');
                 var ColName = ColumnName.split('¶');
-
+                var ConsolidateValue = '';
                 for (i = 0; i <= ColName.length - 1; i++) {
 
                     CtrlId = ColName[i] + Sno.toString();
+
+                    if (i != ColAry.length - 1) {
+                        if (ConsolidateValue == '')
+                            ConsolidateValue = ColAry[i];
+                        else
+                            ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                    }
+
                     //alert(CtrlId);
                     //if (ColName[i] == "CID")
                     //{
@@ -2208,9 +2269,41 @@
 
                     $("#" + CtrlId).val(ColAry[i]);
                 }
+                alert(ConsolidateValue);
+                $("#consolidate" + Sno).text(ConsolidateValue);
 
             }
+            function validateAddress()
+            {
+                if ($("#VenueName").val().trim() == '')
+                {
+                    alert("Please enter valid venue name");
+                    $("#VenueName").focus();
+                    return false;
+                }
+                if ($("#Address1").val().trim() == '') {
+                    alert("Please enter valid address");
+                    $("#Address1").focus();
+                    return false;
+                }
+            }
+
+            $("#btReset").click(function () {
+                $("#VenueName").val("");
+                $("#Address1").val("");
+                $("#Address2").val("");
+                $("#City").val("");
+                $("#State").val("");
+                $("#Zip").val("");
+                $("#hidAddSno").val("");
+                $("#CountryID").val('1');
+                $("#VenueName").focus();
+
+            });
+
             $("#btAddMore").click(function () {
+
+                if (validateAddress() ==false) return false;
 
                 var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID option:selected").text() + "¶" + $("#CountryID").val();
                 var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
@@ -2279,6 +2372,7 @@
 
             $('.date_picker').datepicker({
                 format: "MM/DD/YYYY",
+                minDate: "0"
             })
             .on('changeDate', function (ev) {
                 $('.date_picker').datepicker('hide');
@@ -2440,7 +2534,6 @@
             $(".SchmultiEvnt").click(function () {
                 $(".SchmultiDetail").slideToggle("slow");
                 $(".SchDivtop").hide();
-
             });
 
 
@@ -2655,7 +2748,7 @@
             var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
 
             var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;       $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
-            $('#id_buyerprice-' + el).html("$"+ccpfinal);
+            $('#id_buyerprice-' + el).html("$" + ccpfinal);
 
             $('#id_tooltip-' + el).html(msg);
             $('#id_feetype-' + el).val(0);
@@ -2668,7 +2761,7 @@
             var ccp = $('#id_cc').val();
             var ccpamount = ((amount * ccp) / 100).toFixed(2);
             var ccpfinal = parseFloat(amount).toFixed(2);
-            $('#id_buyerprice-' + el).html("$"+ccpfinal);
+            $('#id_buyerprice-' + el).html("$" + ccpfinal);
             var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
             $('#id_tooltip-' + el).html(msg);
             //$('#id_tooltip-' + el).html(msg);
@@ -2688,13 +2781,13 @@
         var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
         if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
         {
-           
+
         }
         else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
         {
             $('#' + id).val("");
-          
-               return false;
+
+            return false;
         }
 
     }
@@ -2818,14 +2911,14 @@
                 fee = ccpamount;
             }
 
-         
+
 
 
 
         }
         $("#id_fee-" + el).val(ccpamount);
         $("#id_total-" + el).val(ccpfinal);
-       
+
     }
     function minimize(e) {
 
@@ -2852,7 +2945,7 @@
             $(this).attr("id", idn);
             $(this).val('');
 
-          
+
 
         });
 
@@ -2866,7 +2959,7 @@
         var data = $('#clonediv-n').clone();
         data.attr('id', 'clonediv-' + divlength);
         data.removeAttr("style")
-     
+
         data.find('*[id]').andSelf().each(function () {
             //console.log($(this));
 
@@ -3175,8 +3268,7 @@
         }
         return randomString;
     }
-    function deletevariable(e)
-    {
+    function deletevariable(e) {
         var x = confirm("Are you sure you want to delete?");
         if (x) {
             var divlength = $("#id_Mainvariable> div").size();
@@ -3185,7 +3277,7 @@
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
             var div = document.getElementById("id_clonevariable-" + el);
-          
+
 
 
             div.parentNode.removeChild(div);
@@ -3209,9 +3301,9 @@
                     ////console.log(id);
                     var idn = id1 + "-" + (count);
                     $(this).attr("id", idn);
-                  
 
-                  
+
+
 
                 });
                 count = count + 1;
@@ -3222,7 +3314,7 @@
                 $('#id_Mainvariable').css('display', 'none');
 
             }
-           
+
 
             return true;
         }
@@ -3401,19 +3493,19 @@
     function checkvalidtime(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
         var al = e.substr(0, e.indexOf('-'));
-        alert($('#' + e).val()  );
+        alert($('#' + e).val());
         if (al == "id_saletimestart") {
             errorMsg = checkTime(e);
             if (errorMsg != "") {
 
 
-                
+
                 $('#id_saletimestart-' + el).focus();
                 $('#id_saletimestart-' + el).val("7:00pm");
                 $('#id_saletimeend-' + el).val("7:00pm");
 
             } else {
-               
+
                 $('#id_hdsaletimestart' + el).val($('#' + e).val());
                 $('#id_saletimeend-' + el).val($('#' + e).val());
 
@@ -3843,27 +3935,27 @@
 
 
         var divlength = $("#MasterDiv> div").size();
-       
+
         if (divlength > 0) {
 
             for (var i = 0; i < divlength; i++) {
 
                 var ticket_name = $('#id_ticket_type-' + i).val();
                 var ticket_Qty = $('#id_quantity_total-' + i).val();
-                if (ticket_name == "" ) {
+                if (ticket_name == "") {
                     $('#id_ticket_type-' + i).addClass('err-bor');
-                  
+
                     count++;
                 } else {
                     $('#id_ticket_type-' + i).removeClass('err-bor');
-                   
+
                 }
                 if (ticket_Qty == "") {
-                   
+
                     $('#id_quantity_total-' + i).addClass('err-bor');
                     count++;
                 } else {
-                   
+
                     $('#id_quantity_total-' + i).removeClass('err-bor');
                 }
                 if ($('#id_cost-' + i).hasClass('err-bor')) { count++; }
@@ -3893,15 +3985,15 @@
 
         }
         var divvar = $("#id_Mainvariable>div").size();
-     
+
         if (divvar > 0) {
-           
+
             for (var i = 0; i < divvar; i++) {
                 var subdesc_name = $('#id_varsubdesc-' + i).val();
                 var subprice_Qty = $('#id_varsubprice-' + i).val();
-            
+
                 if (subdesc_name == "") {
-                   
+
                     $('#id_varsubdesc-' + i).addClass('err-bor');
 
                     count++;

@@ -31,7 +31,7 @@ namespace EventCombo.Controllers
             {
                 Session["Fromname"] = "events";
                 Session["ReturnUrl"] = null;
-          
+
                 string defaultCountry = "";
                 using (EventComboEntities db = new EventComboEntities())
                 {
@@ -195,6 +195,8 @@ namespace EventCombo.Controllers
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+
+
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     Event ObjEC = new Event();
@@ -225,11 +227,12 @@ namespace EventCombo.Controllers
                     ObjEC.LastLocationAddress = model.LastLocationAddress;
                     ObjEC.AddressStatus = model.AddressStatus;
                     ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
-                    ObjEC.Ticket_DAdress =model.Ticket_DAdress;
+                    ObjEC.Ticket_DAdress = model.Ticket_DAdress;
                     ObjEC.Ticket_showremain = model.Ticket_showremain;
                     ObjEC.Ticket_showvariable = model.Ticket_showvariable;
                     ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
                     ObjEC.Ticket_variabletype = model.Ticket_variabletype;
+
                     objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -298,12 +301,11 @@ namespace EventCombo.Controllers
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
                             objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
                             objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
-                            objEOrg.FBLink  = objOr.FBLink;
+                            objEOrg.FBLink = objOr.FBLink;
                             objEOrg.Twitter = objOr.Twitter;
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
                     }
-
                     // Tickets
 
                     if (model.Ticket != null)
@@ -343,8 +345,8 @@ namespace EventCombo.Controllers
                             ticket.Customer_Fee = tick.Customer_Fee;
                             ticket.TotalPrice = tick.TotalPrice;
                             ticket.T_Discount = tick.T_Discount;
-                           
-                           
+
+
                             objEnt.Tickets.Add(ticket);
                         }
 
@@ -358,7 +360,7 @@ namespace EventCombo.Controllers
                         foreach (EventImage img in model.EventImage)
                         {
                             Image = new EventImage();
-                            Image.EventID= ObjEC.EventID;
+                            Image.EventID = ObjEC.EventID;
                             Image.EventImageUrl = img.EventImageUrl;
                             Image.ImageType = img.ImageType;
                             objEnt.EventImages.Add(Image);
@@ -379,6 +381,9 @@ namespace EventCombo.Controllers
 
                         }
                     }
+
+
+
 
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
