@@ -333,11 +333,14 @@
     <Content Include="Images\slider3.png" />
     <Content Include="Images\slider4.png" />
     <Content Include="Images\slide_mid_bg.png" />
+    <Content Include="Images\succ.png" />
+    <Content Include="Images\sys.png" />
     <Content Include="Images\title_bg_l.png" />
     <Content Include="Images\title_bg_r.png" />
     <Content Include="Images\ui-icons_222222_256x240.png" />
     <Content Include="Images\ui-icons_ef8c08_256x240.png" />
     <Content Include="Images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Images\ui.png" />
     <Content Include="Images\vote-icon.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
