@@ -180,6 +180,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TicketPaymentController.cs" />
     <Compile Include="Controllers\ValidationMessageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -295,6 +296,15 @@
     <Compile Include="Models\TicketType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Ticket_Locked_Detail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ticket_Purchased_Detail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ticket_Quantity_Detail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -308,7 +318,9 @@
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\eventcombo-new.css" />
     <Content Include="Content\eventcombo.css" />
+    <Content Include="Content\flipclock.css" />
     <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Images\ui-icons_222222_256x240.png" />
     <Content Include="Images\ui-icons_ef8c08_256x240.png" />
@@ -563,6 +575,7 @@
     <Content Include="Scripts\fake-element.js" />
     <Content Include="Scripts\filer\jquery.filer.js" />
     <Content Include="Scripts\filer\jquery.filer.min.js" />
+    <Content Include="Scripts\flipclock.js" />
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -587,6 +600,7 @@
     <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-development.css" />
     <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-development.js" />
     <Content Include="Scripts\jquery.ba-bbq.min.js" />
+    <Content Include="Scripts\jquery.countdownTimer.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
     <Content Include="Scripts\jquery.maskedinput.min.js" />
@@ -683,6 +697,7 @@
     <Content Include="Views\Event\EventCreation.cshtml" />
     <Content Include="Views\CreateEvent\CreateEvent.cshtml" />
     <Content Include="Views\EventConfirmation\EventConfirmation.cshtml" />
+    <Content Include="Views\TicketPayment\TicketPayment.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

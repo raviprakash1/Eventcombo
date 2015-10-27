@@ -59,6 +59,9 @@ namespace EventCombo.Models
         public virtual DbSet<EventTempImage> EventTempImages { get; set; }
         public virtual DbSet<Event_VariableDesc> Event_VariableDesc { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
+        public virtual DbSet<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
+        public virtual DbSet<Ticket_Locked_Detail> Ticket_Locked_Detail { get; set; }
     
         public virtual ObjectResult<string> GetSetUserRole(string user_Id, string gETSET, string role_Id)
         {

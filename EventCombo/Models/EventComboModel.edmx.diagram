@@ -51,6 +51,11 @@
         <AssociationConnector Association="EventComboModel.FK_EventImage_Event" />
         <EntityTypeShape EntityType="EventComboModel.Ticket" Width="1.5" PointX="5.25" PointY="8.5" />
         <AssociationConnector Association="EventComboModel.FK_Ticket_Event" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Purchased_Detail" Width="1.5" PointX="16.375" PointY="18.75" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Quantity_Detail" Width="1.5" PointX="7.5" PointY="18.375" />
+        <AssociationConnector Association="EventComboModel.FK_Ticket_Quantity_Info_Ticket" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Locked_Detail" Width="1.5" PointX="10.375" PointY="17.75" />
+        <AssociationConnector Association="EventComboModel.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -381,6 +381,35 @@
           <Property Name="T_Discount" Type="decimal" Precision="9" Scale="2" />
           <Property Name="TotalPrice" Type="decimal" Precision="9" Scale="2" />
         </EntityType>
+        <EntityType Name="Ticket_Locked_Detail">
+          <Key>
+            <PropertyRef Name="TLD_Id" />
+          </Key>
+          <Property Name="TLD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TLD_Ticket_Id" Type="bigint" />
+          <Property Name="TLD_User_Id" Type="nvarchar" MaxLength="256" />
+          <Property Name="TLD_Locked_Qty" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Ticket_Purchased_Detail">
+          <Key>
+            <PropertyRef Name="TPD_Id" />
+          </Key>
+          <Property Name="TPD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TPD_User_Id" Type="nvarchar" MaxLength="256" />
+          <Property Name="TPD_Order_Id" Type="varchar" MaxLength="11" />
+          <Property Name="TPD_Ticket_id" Type="bigint" />
+          <Property Name="TPD_Purchased_Qty" Type="int" />
+        </EntityType>
+        <EntityType Name="Ticket_Quantity_Detail">
+          <Key>
+            <PropertyRef Name="TQD_Id" />
+          </Key>
+          <Property Name="TQD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TQD_Ticket_Id" Type="bigint" />
+          <Property Name="TQD_Quantity" Type="bigint" />
+          <Property Name="TQD_Remaining_Quantity" Type="bigint" />
+          <Property Name="TQD_Event_Id" Type="bigint" />
+        </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
             <PropertyRef Name="TicketDeliveryMethodID" />
@@ -600,6 +629,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
+          <End Role="Ticket_Locked_Detail" Type="Self.Ticket_Locked_Detail" Multiplicity="1" />
+          <End Role="Ticket_Locked_Detail1" Type="Self.Ticket_Locked_Detail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket_Locked_Detail">
+              <PropertyRef Name="TLD_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Locked_Detail1">
+              <PropertyRef Name="TLD_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Quantity_Info_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="Ticket_Quantity_Detail" Type="Self.Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="T_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_Ticket_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="GetSetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
           <Parameter Name="GETSET" Type="varchar" Mode="In" />
@@ -635,6 +688,9 @@
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_Purchased_Detail" EntityType="Self.Ticket_Purchased_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketDeliveryMethod" EntityType="Self.TicketDeliveryMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
@@ -698,6 +754,14 @@
           <AssociationSet Name="FK_Ticket_Event" Association="Self.FK_Ticket_Event">
             <End Role="Event" EntitySet="Event" />
             <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail" Association="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
+            <End Role="Ticket_Locked_Detail" EntitySet="Ticket_Locked_Detail" />
+            <End Role="Ticket_Locked_Detail1" EntitySet="Ticket_Locked_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="Self.FK_Ticket_Quantity_Info_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1283,6 +1347,17 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="Ticket" EntitySet="Tickets" />
           </AssociationSet>
+          <EntitySet Name="Ticket_Purchased_Detail" EntityType="EventComboModel.Ticket_Purchased_Detail" />
+          <EntitySet Name="Ticket_Quantity_Detail" EntityType="EventComboModel.Ticket_Quantity_Detail" />
+          <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="EventComboModel.FK_Ticket_Quantity_Info_Ticket">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
+          <EntitySet Name="Ticket_Locked_Detail" EntityType="EventComboModel.Ticket_Locked_Detail" />
+          <AssociationSet Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail" Association="EventComboModel.FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
+            <End Role="Ticket_Locked_Detail" EntitySet="Ticket_Locked_Detail" />
+            <End Role="Ticket_Locked_Detail1" EntitySet="Ticket_Locked_Detail" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="EventTempImage">
           <Key>
@@ -1379,6 +1454,7 @@
           <Property Name="T_Discount" Type="Decimal" Precision="9" Scale="2" />
           <Property Name="TotalPrice" Type="Decimal" Precision="9" Scale="2" />
           <NavigationProperty Name="Event" Relationship="EventComboModel.FK_Ticket_Event" FromRole="Ticket" ToRole="Event" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="EventComboModel.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket" ToRole="Ticket_Quantity_Detail" />
         </EntityType>
         <Association Name="FK_Ticket_Event">
           <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
@@ -1389,6 +1465,62 @@
             </Principal>
             <Dependent Role="Ticket">
               <PropertyRef Name="E_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Ticket_Purchased_Detail">
+          <Key>
+            <PropertyRef Name="TPD_Id" />
+          </Key>
+          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_Ticket_id" Type="Int64" />
+          <Property Name="TPD_Purchased_Qty" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Ticket_Quantity_Detail">
+          <Key>
+            <PropertyRef Name="TQD_Id" />
+          </Key>
+          <Property Name="TQD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TQD_Ticket_Id" Type="Int64" />
+          <Property Name="TQD_Quantity" Type="Int64" />
+          <Property Name="TQD_Remaining_Quantity" Type="Int64" />
+          <Property Name="TQD_Event_Id" Type="Int64" />
+          <NavigationProperty Name="Ticket" Relationship="EventComboModel.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket_Quantity_Detail" ToRole="Ticket" />
+        </EntityType>
+        <Association Name="FK_Ticket_Quantity_Info_Ticket">
+          <End Type="EventComboModel.Ticket" Role="Ticket" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="T_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_Ticket_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Ticket_Locked_Detail">
+          <Key>
+            <PropertyRef Name="TLD_Id" />
+          </Key>
+          <Property Name="TLD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TLD_Ticket_Id" Type="Int64" />
+          <Property Name="TLD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TLD_Locked_Qty" Type="Int64" />
+          <NavigationProperty Name="Ticket_Locked_Detail1" Relationship="EventComboModel.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail" ToRole="Ticket_Locked_Detail1" />
+          <NavigationProperty Name="Ticket_Locked_Detail2" Relationship="EventComboModel.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail1" ToRole="Ticket_Locked_Detail" />
+        </EntityType>
+        <Association Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
+          <End Type="EventComboModel.Ticket_Locked_Detail" Role="Ticket_Locked_Detail" Multiplicity="1" />
+          <End Type="EventComboModel.Ticket_Locked_Detail" Role="Ticket_Locked_Detail1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket_Locked_Detail">
+              <PropertyRef Name="TLD_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Locked_Detail1">
+              <PropertyRef Name="TLD_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1834,6 +1966,38 @@
                 <ScalarProperty Name="T_name" ColumnName="T_name" />
                 <ScalarProperty Name="E_Id" ColumnName="E_Id" />
                 <ScalarProperty Name="T_Id" ColumnName="T_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Purchased_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
+                <ScalarProperty Name="TPD_Ticket_id" ColumnName="TPD_Ticket_id" />
+                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
+                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
+                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Quantity_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket_Quantity_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Quantity_Detail">
+                <ScalarProperty Name="TQD_Event_Id" ColumnName="TQD_Event_Id" />
+                <ScalarProperty Name="TQD_Remaining_Quantity" ColumnName="TQD_Remaining_Quantity" />
+                <ScalarProperty Name="TQD_Quantity" ColumnName="TQD_Quantity" />
+                <ScalarProperty Name="TQD_Ticket_Id" ColumnName="TQD_Ticket_Id" />
+                <ScalarProperty Name="TQD_Id" ColumnName="TQD_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Locked_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
+                <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />
+                <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
+                <ScalarProperty Name="TLD_Ticket_Id" ColumnName="TLD_Ticket_Id" />
+                <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
