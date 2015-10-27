@@ -248,7 +248,37 @@
 .ev_white{ color: #fff;}
 .ev_white_bg{ background: #fff;}
 
+/*Start event display ticket page*/
+.book_tkt_date{ font-size: 20px;}
+.book_tkt_desc{ font-size: 18px;}
 
+.btn_bg_none{ background: none; color: #fff;  font-size: 1.8em;  border:0px; box-shadow: none; padding: 0px;}
+.btn_fav_act{ color: #00cfff;}
+.ev_fav_count{ position: absolute; margin-top: 10px; margin-left: 5px;}
+
+.tkt_tbl_head {
+    background-color: #8c8c8c;
+    color: #fff; font-size: 1.2em; text-transform: uppercase; table-layout: fixed; overflow: hidden; }
+ .evnt_tkt_list_tbl > thead > tr > th{ font-weight: normal; } 
+.evnt_tkt_list_tbl > tbody > tr > td{ font-size: 1.2em; }    
+.evnt_tkt_list_tbl > tbody > tr:nth-of-type(2n+1) {
+    background-color: #ebebeb;
+}
+.evnt_tkt_list_tbl > tfoot > tr > td{ font-size: 1.2em; } 
+.evnt_tkt_list_tbl > tbody > tr > td.35per{ width: 230px; } 
+
+.ev_payment_lebel {font-size: 1.2em; font-weight: normal; color: #00cfff;}
+.ev_payment_lebel span.ev_pay_span{font-size: 1em;}
+.ev_pay_span a{color: #00cfff; text-decoration: underline;}
+.ev_pay_span a:hover{color: #777;}
+
+.ev_tickt_recp_lebel{font-size: 1.2em; font-weight: normal; color: #000;}
+
+.cap_l{ text-transform: uppercase !important;}
+.ev_live_btn{ background: #00cfff; color: #fff !important;}
+.ev_live_btn:hover{background:#00cfff !important; color: #fff !important;  }
+.ev_live_btn:focus{color: #fff !important;}
+.ev_live_btn:active{background:#00cfff !important;}
 
 /*Favourite button section*/
 
