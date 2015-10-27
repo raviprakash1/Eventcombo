@@ -5,7 +5,7 @@
    @using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
    {
        var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
-            @Html.AntiForgeryToken()
+           
     <div class="col-xs-6">
         <button type="submit" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
        

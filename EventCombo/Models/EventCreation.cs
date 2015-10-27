@@ -28,7 +28,7 @@ namespace EventCombo.Models
         public string EventUrl { get; set; }
         public string PublishOnFB { get; set; }
         public string EventStatus { get; set; }
-        public string IsMultipleEvent  { get; set; }
+        public string IsMultipleEvent { get; set; }
         public string TimeZone { get; set; }
         public string FBUrl { get; set; }
         public string TwitterUrl { get; set; }

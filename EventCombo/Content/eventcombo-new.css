@@ -124,14 +124,6 @@
 }
 .ev_set_del_btn:hover{color: #00cfff;}
 
-.ev_pad_l0{ padding-left: 0px;}
-.ev_pad_r0{ padding-right: 0px;}
-.mt20{ margin-top: 20px;}
-.pt5{ padding-top: 5px !important;}
-.pb0{ padding-bottom: 0px !important;}
-.pb10{ padding-bottom: 10px !important;}
-.pl0{ padding-left: 0px !important;}
-
 
 .StartDatemodal{ display:none;}
 .TmezoneSet { display:none; }
@@ -172,3 +164,130 @@
 .note-editor .note-table{ display: none;}
 .note-editor .note-insert{ display: none;}
 .note-editor .note-help{ display: none;}
+
+
+
+/*Variable charges*/
+.ev_var_chrg_list{ min-height: 55px; border:0px; font-size: 1.2em;}
+.ev_var_chrg_group{ border-radius: 0px ; border:1px solid #aaa; min-height: 44px; max-height: 200px; overflow: auto;}
+
+.var_chrg_edt_main{color:#00cfff; }
+.var_chrg_edt_main a{ color:#00cfff;  }
+.var_chg_btn{ line-height: .8 !important;}
+.var_chrg_edt_main button{ background: none; font-size: 1em;}
+.var_chrg_edt_main button:hover{color:#00cfff;}
+.var_chrg_edt_main button:focus{color:#00cfff; outline: none !important;}
+.var_chrg_edt_main button.focus{color:#00cfff; outline: none !important;}
+.var_chrg_edt_main button.active{ box-shadow: none !important;}
+.var_chrg_edt_main button:active{ box-shadow: none !important;}
+
+
+/*Start event display page*/
+
+.event-slide-container{
+    width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: 600px;}
+
+.carousel {
+  min-height: 560px;
+  margin-bottom: 60px;
+}
+.carousel .item {
+  height: 560px;
+  background-color: #777;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: auto;
+}
+
+.carousel-control.left { background-image: none;}
+.carousel-control.right { background-image: none;}
+
+.navbar-wrapper {
+  position: absolute;
+  margin-top: 0;
+  right: 0;
+  z-index: 99; width: 700px; max-width: 100%; bottom: 10px; 
+  background: url(../images/slide_mid_bg.png) repeat; color: #fff;
+}
+
+.cont-bg{ width: 100%; float: left; }
+.vot_count{ color: #b6ff00; font-size: 1.2em;}
+.ev_date_icn2{ position: relative; display: inline-block; vertical-align: text-bottom; }
+.ev_loc_icn2{ position: relative; display: inline-block; left: -10px; vertical-align: text-bottom; }
+.evnt_title_date2{ font-size: 1.7em;}
+.ev_get_tick_btn{ font-size: 1.5em;}
+
+.date_time_list{ color: #000; font-size: 1.2em; }
+
+.date_time_set_modal{ width: 270px; max-width: 100%; left: -10px; }
+.date_time_modal:after {
+  left: 10% !important; float: left;
+}
+.date_time_list{ font-weight: normal; font-size: 1.2em;}
+.date_time_list a{ color: #3cf;}
+.ev_social_share_btn{ margin-top: 3px;}
+.ev_social_share_btn a{ margin-left: 5px;}
+
+.evnt_details_body2{ width: 100%; float: left; padding: 0px 20px; margin-bottom: 30px; }
+.evnt_desc{ font-size: 1.2em;}
+.inst_karm_box{ border:1px solid #000;}
+.inst_karm_box p{ font-size: 1.2em; margin-bottom: 5px; }
+.inst_karm_box p a{color: #3cf;}
+.inst_karm_box p span.badge{ font-weight: normal; background:#3cf; font-size: 1em; }
+
+.ev_calend_lebel {
+    font-size: 1.4em;
+    font-weight: normal; color: #3cf;
+}
+.ev_calend_lebel a{color: #3cf;}
+
+.ev_white{ color: #fff;}
+.ev_white_bg{ background: #fff;}
+
+
+
+/*Favourite button section*/
+
+.btn_bg_none{ background: none; color: #fff;  font-size: 1.8em;  border:0px; box-shadow: none; padding: 0px;}
+.btn_fav_act{ color: #00cfff;}
+.ev_fav_count{ position: absolute; margin-top: 10px; margin-left: 5px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.ev_pad_l0{ padding-left: 0px;}
+.ev_pad_r0{ padding-right: 0px;}
+.mt20{ margin-top: 20px;}
+.pt5{ padding-top: 5px !important;}
+.pt10{ padding-top: 10px !important;}
+.pb0{ padding-bottom: 0px !important;}
+.pb10{ padding-bottom: 10px !important;}
+.pl0{ padding-left: 0px !important;}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+.evnt_title_xs{ font-size: 1.2em}
+.event-slide-container{ min-height: 240px; height: auto;}
+.carousel {min-height: 240px; height: auto; margin-bottom: 0px;}
+.carousel .item {min-height: 240px; height: auto;}
+.logo-xs{ width: 250px;}
+
+}
+
+@media (min-width: 360px) and (max-width: 640px) {
+.evnt_title_xs{ font-size: 1.2em}
+}

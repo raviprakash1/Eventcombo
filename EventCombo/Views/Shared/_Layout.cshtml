@@ -57,21 +57,45 @@
 
 
     <!-- Header -->
-    <div class="home_fixed_header">
-        <div class="container-fluid headr_main ">
+    <div class="home_fixed_header" id="divmain">
+        <div class="container-fluid headr_main " id="divsecmain">
             <div class="row">
                 <div class="col-sm-5">
                     <a class="logo" href="/Home/Index"><img src=" ~/Images/EventCombo_Red.jpg" /></a>
                 </div>
+                @if (HttpContext.Current.Session["AppId"] != null)
+                {
+                    <div class="col-sm-6 head_left_nav">
+                        <ul class="navbar-right">
 
-                <div class="col-sm-6 head_left_nav">
-                    <ul class="navbar-right">
+                            <li></li>
+                            <li>@Html.Partial("_Logout")</li>
 
-                        <li></li>
-                        <li><a href="#" data-toggle="modal" data-target="#myModal" id="loginPopup">LogIn | SignUp </a>  </li>
 
-                    </ul>
+                        </ul>
 
+                    </div>
+
+                }
+                else
+                {
+                    <div class="col-sm-6 head_left_nav">
+                        <ul class="navbar-right">
+
+                            <li></li>
+                            <li><a href="#" data-toggle="modal" data-target="#myModal" id="loginPopup">LogIn | SignUp </a>  </li>
+
+                        </ul>
+
+                    </div>
+
+                }
+                <div class="Fix_Head" title="Clik to fixed Header">
+                    <label class="switch">
+                       <input type="checkbox" class="switch-input" checked  id="idchecked" onchange="changeheader(this.id);" >
+                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                        <span class="switch-handle"></span>
+                    </label>
                 </div>
                 <div class="col-sm-1 text-right">
                     <div class="social_icn" style="width:40px; margin-top:10px;">
@@ -81,48 +105,64 @@
                 </div>
             </div>
         </div>
-        <!-- Sub Header -->
-        <div class="container-fluid cont_margin2">
-            <div class="row cyan-line-new">
-                <div class="col-sm-3">
-                    <form>
-                        <div class="input-group stylish-input-group">
-                            <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Searh for Event">
-                            <span class="input-group-addon">
-                                <button type="submit">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-sm-2 disc_title_head">
-                    @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
-                    <a href="#" onclick="setsession(this.id);" id='discover'>Discover Events</a>
-                </div>
-                <div class="col-sm-2 disc_title_head"><a href="#" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
-                <div class="col-sm-5">
-                    <div class="psst">
-                        <a href="#" onclick="checksession();">Create Event</a>
+@if (HttpContext.Current.Session["Fromname"].ToString() == "ViewEvent" )
+{
+    <div class="col-sm-12 filter_sep cont_margin">
+        <img src="~/Images/desi-events-logo.gif">
+        <div class="cus_left_kick"><</div>
+    </div>
+}
+else
+{
+      <!-- Sub Header -->
+    <div class="container-fluid cont_margin2" id="divcontmain">
+        <div class="row cyan-line-new">
+            <div class="col-sm-3">
+                <form>
+                    <div class="input-group stylish-input-group">
+                        <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Searh for Event">
+                        <span class="input-group-addon">
+                            <button type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
                     </div>
-                    
-                       @*@Html.ActionLink("Create Event", "EventCreation", "Event", new { id = "Eventclick", onclick = "return checksession();" })*@
-                       @*<div class="psst">
+                </form>
+            </div>
+            <div class="col-sm-2 disc_title_head">
+                @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
+                <a href="#" onclick="setsession(this.id);" id='discover'>Discover Events</a>
+            </div>
+            <div class="col-sm-2 disc_title_head"><a href="#" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
+            <div class="col-sm-5">
+                <div class="psst">
+                    <a href="#" onclick="checksession();">Create Event</a>
+                </div>
+
+                @*@Html.ActionLink("Create Event", "EventCreation", "Event", new { id = "Eventclick", onclick = "return checksession();" })*@
+                @*<div class="psst">
                         <a class="" href="/Home/EventOraganizer">
 
                             <span class="ps_text"> Create Event</span>
                             @*<span class="ev_org">&#160;&#160;Event organizer? Click here!</span>
                         </a>
                     </div>*@
-                </div>
-
             </div>
+
         </div>
+    </div>
         <!-- Body Section -->
+}
+      
     </div>
         <div>
             @RenderBody()
         </div>
+@if (HttpContext.Current.Session["Fromname"].ToString() == "ViewEvent")
+{
+}
+else
+{
         <!--Footer Section-->
         <div class="container-fluid foot_bg">
             <div class="col-sm-12 no-padding">
@@ -153,7 +193,7 @@
                 </div>
             </div>
         </div>
-
+}
         <!-- Dialouge Box Start -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -164,7 +204,55 @@
                     </div>
                     <div class="modal-body">
                         <div class="col-md-12">
-                            @RenderPage("~/Views/Shared/_login1partial.cshtml",new { })
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Session["ReturnUrl"] }, FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
+                            {
+
+                               
+
+                                <div class="err_main">
+                                    <div class="er_UI_main alert-danger" id="diverrologin" style="display :none;width:100%">
+                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
+                                        <div class="er_UI_img"></div>
+                                        <div class="er_suc" id="dverrui">  </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="err_main">
+                                    <div class="er_UI_main alert-danger" id="diverro1login" style="display :none;width:100%">
+                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1login">&#215;</button>
+                                        <div class="er_sys_img"></div>
+                                        <div class="er_suc" id="dverrsys">  </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-sm-5 login_form_bot">
+                                                <input type="text" id="loginemail" name="Email" placeholder="Email" class="form-control login_place"  maxlength="256" />
+                                                @*@Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @class = "form-control login_place", @id = "loginemail", @maxlength = 256 })*@
+                                            </div>
+                                            <div class="col-sm-5 login_form_bot">
+                                                <input type="password" id="loginpassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" />
+
+                                                @*@Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control login_place", @id = "loginpassword", @maxlength = 15 })*@
+                                            </div>
+                                            <div class="col-sm-2 login_form_bot">
+                                                <input type="hidden" id="hderror" />
+                                                <input type="button" value="LOGIN" class="btn btn-primary login_btn_sub" id="btnSavelogin" disabled="disabled" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            }
+
+                            @*@RenderPage("~/Views/Shared/_login1partial.cshtml",new { })*@
                         </div>
                         <div class="col-md-12">
                             @*forgt_pass*@
@@ -176,7 +264,22 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="col-md-12 social-buttons text-center ">
-                            @RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")
+                            @using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+                            {
+                                
+
+                                <div class="col-xs-6">
+                                    <button type="submit" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
+
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <button type="submit" class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
+                                </div>
+
+                            }
+
+                            @*@RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")*@
                         </div>
                     </div>
                 </div>
@@ -188,7 +291,60 @@
                     </div>
                     <div class="modal-body">
                         <div class="col-md-12">
-                            @RenderPage("~/Views/Shared/_signuppartial.cshtml")
+
+@using (Html.BeginForm("Signup", "Home", FormMethod.Post, new { role = "form", id = "form", @class = "form-horizontal acnt_form" }))
+{
+
+    if (ViewData["Message"] != null)
+    {<div class="err_main">
+                                <div class="er_suc_main">
+                                    <div class="er_suc_img"></div>
+                                    <div class="er_suc">ViewData["Message"] </div>
+                                </div>
+                            </div>
+    }
+    <div class="err_main">
+        <div class="er_UI_main alert-danger" id="diverro" style="display :none;width:100%">
+            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro">&#215;</button>
+            <div class="er_UI_img"></div>
+            <div class="er_suc" id="dverrsignui">  </div>
+        </div>
+    </div>
+
+
+        <div class="err_main">
+            <div class="er_UI_main alert-danger" id="diverro1" style="display :none;width:100%">
+                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1">&#215;</button>
+                <div class="er_sys_img"></div>
+                <div class="er_suc" id="dverrsignsys">  </div>
+            </div>
+        </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm-5 login_form_bot">
+                            <input type="text" id="SignupEmail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" />
+
+                            @*@Html.TextBoxFor(m => m.Email, new { @maxlength = 256, @placeholder = "Email", @class = "form-control login_place", @id = "SignupEmail" })*@
+                        </div>
+                        <div class="col-sm-5 login_form_bot">
+                            <input type="password" id="SignupPassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" />
+
+                            @*@Html.PasswordFor(m => m.Password, new { @maxlength = 15, @placeholder = "Password", @class = "form-control login_place", @id = "SignupPassword" })*@
+
+                        </div>
+                        <div class="col-sm-2 login_form_bot">
+                            @*<button type="button" class="btn btn-primary login_btn_sub" id="btnsave">SignUp</button>*@
+                            <input type="button" value="SignUp" class="btn btn-primary login_btn_sub" id="btnsave" disabled="disabled" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+}
+
+
+                            @*@RenderPage("~/Views/Shared/_signuppartial.cshtml")*@
                         </div>
                     </div>
                 </div>
@@ -198,6 +354,20 @@
 </body>
 </html>
 <script type="text/javascript">
+    function changeheader(e)
+    {
+        if ($('#idchecked').is(":checked") == true) {
+            $('#divmain').addClass('home_fixed_header');
+            $('#divcontmain').addClass('cont_margin2');
+            $('#scrollhome').addClass('con_scr0l_home');
+
+        } else
+        {
+            $('#scrollhome').removeClass('con_scr0l_home');
+            $('#divmain').removeClass('home_fixed_header');
+            $('#divcontmain').removeClass('cont_margin2');
+        }
+    }
     function setsession(e) {
         $.ajax({
             url: '@Url.Action("setsessid", "Home")',
@@ -264,7 +434,7 @@
                     url.val('@Url.Action("CreateEvent", "CreateEvent")');
                     return false;
                 } else {
-                    window.location.href = '@Url.Action("EventCreation", "Event")';
+                    window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
                     return true;
                 }
             },
@@ -276,3 +446,445 @@
 
     }
 </script>
+
+
+@*//Login*@
+<script type="text/javascript">
+          $(document).click(function () {
+              $('#diverrologin').css('display', 'none');
+              $('#diverro1login').css('display', 'none');
+
+
+              $("input").removeClass('err-bor');
+          });
+          $('#btndiverrologin').click(function () {
+              $('#diverrologin').css('display', 'none');
+              $('#diverro1login').css('display', 'none');
+
+              $("input").removeClass('err-bor');
+          })
+          $('#btndiverro1login').click(function () {
+              $('#diverrologin').css('display', 'none');
+              $('#diverro1login').css('display', 'none');
+
+              $("input").removeClass('err-bor');
+          })
+          $(window).load(function () {
+              console.log($('#loginemail').val());
+              console.log($('#loginpassword').val());
+              if ($('#loginemail').val().length>0 && $('#loginpassword').val().length>0) {
+                  $('#btnSavelogin').removeAttr("disabled");
+
+              }
+          });
+          $(document).ready(function () {
+              $('#loginemail').removeClass('err-bor');
+              $('#loginpassword').removeClass('err-bor');
+
+              $('#diverro1login').css('display', 'none');
+              $('#diverrologin').css("display", "none");
+
+
+              $('#loginemail').keyup(function () {
+
+                  if ($(this).val() != '' && $('#loginpassword').val()!='')
+                  {
+                      $('#btnSavelogin').removeAttr("disabled");
+
+                  } else {
+
+                      $('#btnSavelogin').attr("disabled", true);
+                  }
+
+              })
+              $('#loginpassword').keyup(function () {
+                  if ($(this).val() != '' && $('#loginemail').val()!='')
+                  {
+
+                      $('#btnSavelogin').removeAttr("disabled");
+
+                  } else {
+
+                      $('#btnSavelogin').attr("disabled", true);
+                  }
+
+              })
+
+
+          });
+
+                function validationLogin()
+                {
+                    var msglogin = "";
+                    var Emaillogin = $("#loginemail").val();
+
+                    var Passowrdlogin = $("#loginpassword").val();
+                    if (!validateEmail(Emaillogin)) {
+                        $('#loginemail').focus();
+                        $('#loginemail').addClass('err-bor');
+                       // $('#loginemail').css("border", "red solid 1px");
+                        //$.ajax({
+                        //    url: "/ValidationMessage/Index",
+                        //    data: { formname: 'Login', errortype: 'LoginEmailValidationUI' },
+                        //    type: 'Post',
+                        //    async: false,
+                        //    success: function (data, textStatus, xhr) {
+                        //        if (data != '') {
+                        //            console.log(data);
+                        //            $('#hderror').val(data);
+
+                        //        }
+                        //    },
+                        //    error: function (xhr, textStatus, errorThrown) {
+                        //        alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                        //    }
+                        //});
+
+
+                        msglogin += "Invalid Email"+ "\n";
+
+
+                    } else {
+
+                        msglogin = "";
+                        $('#loginemail').focus();
+                        $('#loginemail').removeClass('err-bor');
+                    }
+
+                    if (Passowrdlogin.length < 4) {
+                        $('#loginpassword').focus();
+                        $('#loginpassword').addClass('err-bor');
+                       // $('#loginpassword').css("border", "red solid 1px");
+                        //$.ajax({
+                        //    url: "/ValidationMessage/Index",
+                        //    data: { formname: 'Login', errortype: 'LoginPasswordValidationUI' },
+                        //    type: 'Post',
+                        //    async:false,
+                        //    success: function (data, textStatus, xhr) {
+                        //        if (data != '') {
+                        //           console.log(data);
+                        //            $('#hderror').val(data);
+                        //            console.log($('#hderror').val(data)+'asdasdas');
+                        //        }
+                        //    },
+                        //   error: function (xhr, textStatus, errorThrown) {
+                        //            alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                        //        }
+                        //});
+
+                        //alert($('#hderror').val()+'asad');
+                        msglogin += "Invalid Password" + "\n";
+
+                    } else {
+                        if (msglogin == "") {
+                            msglogin = "";
+                        }
+                        $('#loginpassword').focus();
+                        $('#loginpassword').removeClass('err-bor');
+                       // $('#loginpassword').css("border", "black solid 1px");
+
+                    }
+                    return msglogin;
+                }
+                function validateEmail(sEmail) {
+                    var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+
+                    if (filter.test(sEmail)) {
+
+                        return true;
+                    }
+                    else {
+
+
+                        return false;
+                    }
+                }
+
+                $("#btnSavelogin").click(function () {
+                    var msgloginn = validationLogin();
+
+                    var flag1login = true;
+                    if (msgloginn == "") {
+                        $('#diverrologin').css("display", "none");
+                        flag1 = true;
+                    }
+                    else {
+                        $('#diverro1login').css('display', 'none');
+                        $('#dverrui').html(msgloginn);
+                        $('#diverrologin').css("display", "block");
+
+                        return false;
+                    }
+                    if (flag1login) {
+
+                        var flaglogin = false;
+                        var Emaillogin = $("#loginemail").val();
+                        var Emailpassword = $("#loginpassword").val();
+                        //var httpRequest = new XMLHttpRequest();
+
+
+                        //httpRequest.onreadystatechange = function () {
+                        //    console.log(httpRequest);
+                        //    if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                        //       // alert('SUCEESSSSSSS');
+                        //        console.log(httpRequest);
+                        //    }
+                        //}
+                        //httpRequest.open('GET', 'http://localhost:10159/Account/IsValid', true);
+                        //httpRequest.send();
+
+                        $.ajax({
+                            url: "/Home/IsValidID",
+                            data: { Email: Emaillogin, Password: Emailpassword },
+                            dataType: "text",
+                            type: 'Post',
+                            success: function (data, textStatus, xhr) {
+                              if (data != '') {
+                                    if (data =="NotFound")
+                                    {
+                                        $('#loginemail').focus();
+                                        $('#loginemail').addClass('err-bor');
+
+                                        $('#diverrologin').css("display", "none");
+                                        $('#diverro1login').css('display', 'block');
+                                        $('#dverrsys').html('Email Not Found in our Database!');
+
+                                        return false;
+
+                                    } else if (data == "PasswordNotMatch")
+                                    {
+                                        $('#loginemail').focus();
+                                        $('#loginemail').addClass('err-bor');
+                                        $('#loginpassword').addClass('err-bor');
+                                      //  $('#loginemail').css("border", "red solid 1px");
+                                        $('#diverrologin').css("display", "none");
+                                        $('#diverro1login').css('display', 'block');
+                                        $('#dverrsys').html('Password Not Match In Our Database!Use Forget Password!!');
+
+                                    }
+                                    else if (data == "PasswordMatch")
+                                    {
+                                        $('#formlogin').submit();
+
+                                    }
+
+
+                                }
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                            }
+                        });
+
+
+
+                    }
+                });
+</script>
+
+
+    @*//Signup*@
+    <script type="text/javascript">
+    $(document).click(function () {
+        $('#diverro').css('display', 'none');
+        $('#diverro1').css('display', 'none');
+
+
+        $("input").removeClass('err-bor');
+    });
+    $('#btndiverro').click(function () {
+        $('#diverro').css('display', 'none');
+        $('#diverro1').css('display', 'none');
+
+
+        $("input").removeClass('err-bor');
+    })
+    $('#btndiverro1').click(function () {
+        $('#diverro').css('display', 'none');
+        $('#diverro1').css('display', 'none');
+
+
+        $("input").removeClass('err-bor');
+    })
+    $(document).ready(function () {
+
+        $('#SignupEmail').removeClass('err-bor');
+        $('#SignupPassword').removeClass('err-bor');
+
+        $('#diverro1').css('display', 'none');
+        $('#diverro').css("display", "none");
+        $('#SignupEmail').keyup(function () {
+
+            if ($(this).val() != '' && $('#SignupPassword').val() != '') {
+                $('#btnsave').removeAttr("disabled");
+
+            } else {
+
+                $('#btnsave').attr("disabled", true);
+            }
+
+        })
+        $('#SignupPassword').keyup(function () {
+            if ($(this).val() != '' && $('#SignupEmail').val() != '') {
+
+                $('#btnsave').removeAttr("disabled");
+
+            } else {
+
+                $('#btnsave').attr("disabled", true);
+            }
+
+        })
+    });
+
+    </script>
+    <script type="text/javascript">
+
+                function validation()
+                {
+                    var msg = "";
+                    var Email = $("#SignupEmail").val();
+
+                    var Passowrdw = $("#SignupPassword").val();
+
+                    if (!validateEmail(Email)) {
+                        $('#SignupEmail').focus();
+                        $('#SignupEmail').addClass('err-bor');
+                        msg += "Invalid Email!! </br>"
+
+                    } else {
+
+                        msg = "";
+                        $('#SignupEmail').focus();
+                        $('#SignupEmail').removeClass('err-bor');
+                    }
+                    //console.log(Passowrdw.length);
+                    if (Passowrdw.length < 4) {
+                        $('#SignupPassword').focus();
+                        $('#SignupPassword').addClass('err-bor');
+                        msg += "Password Length can't be less than 4!! </br>"
+
+                    } else {
+                        if (msg == "") {
+                            msg = "";
+                        }
+                        $('#SignupPassword').focus();
+                        $('#SignupPassword').removeClass('err-bor');
+
+                    }
+                    return msg;
+                }
+
+
+                $("#btnsave").click(function (event) {
+
+                  var msg = validation();
+                    var flag1 = true;
+                    if (msg == "") {
+                        $('#diverro').css("display", "none");
+                        flag1 = true;
+                    }
+                    else {
+                        $('#diverro1').css('display', 'none');
+                        $('#dverrsignui').html(msg);
+                        $('#diverro').css("display", "block");
+
+                        return false;
+                    }
+                    if (flag1) {
+                        var flag = false;
+                        var Emailsignin = $("#SignupEmail").val();
+
+                        $.ajax({
+                            url: "/Home/IsValid",
+                            data: 'Email='+Emailsignin,
+                            dataType: "text",
+                            success: function (data, textStatus, xhr) {
+
+                               if (data != '') {
+                                    if (data =="NotFound")
+                                                {
+                                                    flag = true;
+
+                                                    $('#form').submit();
+
+                                                } else if (data == "Found")
+                                                {
+                                                    console.log('Enter');
+                                                    $('#SignupEmail').focus();
+                                                    $('#SignupEmail').addClass('err-bor');
+                                                    $('#diverro').css("display", "none");
+                                                    $('#diverro1').css('display', 'block');
+                                                    $('#dverrsignsys').html('Email Already Exist!!!');
+                                                    flag = false;
+                                                    return false;
+                                                }
+                                }
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                            }
+                        });
+                        //alert(Email);
+                        //$.ajax({
+                        //    url: '/Account/IsValid',
+                        //    type: 'Post',
+                        //    data: {"Email": Emailsignin},
+                        //    //cache: false,
+                        //    //contentType: "text/plain",
+                        //    dataType: "text",
+                        //    success: function (data) {
+                        //        alert(data);
+                        //        console.log(data);
+                        //        if (data =="NotFound")
+                        //        {
+                        //            flag = true;
+
+                        //            $('#form').submit();
+
+                        //        } else if (data == "Found")
+                        //        {
+                        //            console.log('Enter');
+                        //            $('#SignupEmail').focus();
+                        //            $('#SignupEmail').css("border", "red solid 1px");
+                        //            $('#diverro').css("display", "none");
+                        //            $('#diverro1').css('display', 'block');
+                        //            $('.er_suc').html('Email Already Exist!!!');
+                        //            flag = false;
+                        //            return false;
+                        //        }
+
+                        //    },
+                        //    error: function (data1) {
+
+                        //        alert('error');
+                        //    }
+                        //});
+
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
+                function validateEmail(sEmail) {
+                    var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+
+                    if (filter.test(sEmail)) {
+
+                        return true;
+                    }
+                    else {
+
+
+                        return false;
+                    }
+                }
+
+    </script>

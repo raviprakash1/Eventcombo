@@ -65,9 +65,9 @@ button:focus { outline: none;}
 .head_left_nav ul li a:hover{ text-decoration: none;}
 .social_icn{ width:20px; float: right;}
 .filter_sep {
-    background-color: #fff;
+       background-color: #fff;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
-    height: 36px;
+    height: 36px; margin-top: 32px !important;
 }
 .cus_left_kick{
     margin-left: 20px;
@@ -210,7 +210,13 @@ button:focus { outline: none;}
 .event_top{ margin-top: 15%;}
 .event-upload{ width: 100%; float: left; } 
 .evnt_title_bg{ width: 650px; max-width: 100%; float: right; background: #575757; padding:10px 15px;}
-.evnt_title_top{ margin-top: 12%;}  
+
+/*.evnt_title_top{ margin-bottom: -6%;}
+
+.aler_container{ margin-top:50px;}*/  
+
+.evnt_title_top{ margin-top: 12%;}
+
 
 .evnt_title_control{ background:none !important; height:auto;  text-align: right; padding: 0px; border: 0px; box-shadow: none; color: #baff00; font-size: 2em; font-weight: bold; } 
 .form-control.evnt_title_control:focus{ border: 0px; box-shadow: none;}

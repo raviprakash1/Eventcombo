@@ -8,7 +8,7 @@
            
             <li><a href="#">Welcome @{Html.RenderAction("UserName", "Home");}!</a> </li>
             <li>
-               @Html.ActionLink("MyAccount", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
+               @Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
             </li>
             <li>
                 <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>

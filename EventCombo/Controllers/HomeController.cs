@@ -94,18 +94,20 @@ namespace EventCombo.Controllers
 
         public ActionResult DiscoverEvents()
         {
-           
+            Session["Fromname"] = "DiscoverEvents";
             return View();
 
         }
         public ActionResult GetBuzz()
         {
+            Session["Fromname"] = "GetBuzz";
             ViewBag.ReturnUrl = "~/Home/GetBuzz";
             return View();
 
         }
         public ActionResult EventOraganizer()
         {
+            Session["Fromname"] = "EventOraganizer";
             return View();
 
         }
@@ -128,6 +130,7 @@ namespace EventCombo.Controllers
 
         public ActionResult Index()
         {
+            Session["Fromname"] = "Home";
             return View();
         }
 
@@ -148,7 +151,8 @@ namespace EventCombo.Controllers
         [AllowAnonymous]
         public ActionResult PasswordReset(string code)
         {
-          if (code == null)
+            Session["Fromname"] = "PasswordReset";
+            if (code == null)
             {
               return  RedirectToAction("Index", "Home");
 
@@ -168,7 +172,7 @@ namespace EventCombo.Controllers
         public async Task<ActionResult> PasswordReset(ResetPasswordViewModel model)
         {
             string code = "";
-          
+            Session["Fromname"] = "PasswordReset";
             if (model.Password!=model .ConfirmPassword)
             {
                 ViewData["Error"] = "Password and confirm password doesn't match!";
@@ -223,12 +227,13 @@ namespace EventCombo.Controllers
         [AllowAnonymous]
        public ActionResult ForgetPassword()
         {
-
+            Session["Fromname"] = "ForgetPassword";
             return View();
         }
         [HttpPost]
         public ActionResult ForgetPassword(ForgetPassword model)
         {
+            Session["Fromname"] = "ForgetPassword";
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -320,9 +325,13 @@ namespace EventCombo.Controllers
 
         }
         public string checkid() {
-            Session["ReturnUrl"] =Url.Action("CreateEvent", "CreateEvent");
+          
+                Session["ReturnUrl"] = Url.Action("CreateEvent", "CreateEvent");
+
+        
             if (Session["AppId"] == null)
             {
+
                 return "Y";
 
             }
@@ -360,7 +369,7 @@ namespace EventCombo.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+       
         public async Task<ActionResult> Signup(LoginViewModel model)
         {
             if (ModelState.IsValid)

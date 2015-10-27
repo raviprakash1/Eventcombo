@@ -201,6 +201,7 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CommanClasses.cs" />
     <Compile Include="Models\Country.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -237,7 +238,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventConfirmation.cs" />
     <Compile Include="Models\EventCreation.cs" />
+    <Compile Include="Models\EventFavourite.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventImage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -256,6 +261,9 @@
     <Compile Include="Models\EventVenue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventVote.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -267,6 +275,9 @@
     </Compile>
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\Fee_Structure.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetEventListing_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -305,12 +316,16 @@
     <Compile Include="Models\Ticket_Quantity_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TimeZoneDetail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Venue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -322,9 +337,21 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />
+    <Content Include="Images\4.png" />
+    <Content Include="Images\fb_btn.png" />
+    <Content Include="Images\go_btn.png" />
+    <Content Include="Images\o_cal.png" />
+    <Content Include="Images\slider1.jpg" />
+    <Content Include="Images\slider2.png" />
+    <Content Include="Images\slider3.png" />
+    <Content Include="Images\slider4.png" />
+    <Content Include="Images\slide_mid_bg.png" />
+    <Content Include="Images\title_bg_l.png" />
+    <Content Include="Images\title_bg_r.png" />
     <Content Include="Images\ui-icons_222222_256x240.png" />
     <Content Include="Images\ui-icons_ef8c08_256x240.png" />
     <Content Include="Images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Images\vote-icon.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
@@ -698,6 +725,7 @@
     <Content Include="Views\CreateEvent\CreateEvent.cshtml" />
     <Content Include="Views\EventConfirmation\EventConfirmation.cshtml" />
     <Content Include="Views\TicketPayment\TicketPayment.cshtml" />
+    <Content Include="Views\CreateEvent\ViewEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

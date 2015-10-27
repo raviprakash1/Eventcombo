@@ -18,8 +18,7 @@ namespace EventCombo.Models
         public Nullable<long> TLD_Ticket_Id { get; set; }
         public string TLD_User_Id { get; set; }
         public Nullable<long> TLD_Locked_Qty { get; set; }
-        public Ticket_Locked_Detail[] TLD_List { get; set; }
-
+        
         public virtual Ticket_Locked_Detail Ticket_Locked_Detail1 { get; set; }
         public virtual Ticket_Locked_Detail Ticket_Locked_Detail2 { get; set; }
     }

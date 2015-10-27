@@ -40,28 +40,56 @@ namespace EventCombo.Models
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Event_Detail> Event_Detail { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        public virtual DbSet<Event_VariableDesc> Event_VariableDesc { get; set; }
         public virtual DbSet<EventCategory> EventCategories { get; set; }
+        public virtual DbSet<EventFavourite> EventFavourites { get; set; }
         public virtual DbSet<EventImage> EventImages { get; set; }
         public virtual DbSet<EventOrganizer> EventOrganizers { get; set; }
         public virtual DbSet<EventSubCategory> EventSubCategories { get; set; }
+        public virtual DbSet<EventTempImage> EventTempImages { get; set; }
         public virtual DbSet<EventType> EventTypes { get; set; }
         public virtual DbSet<EventVenue> EventVenues { get; set; }
+        public virtual DbSet<EventVote> EventVotes { get; set; }
         public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Status> Status { get; set; }
-        public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
-        public virtual DbSet<TicketType> TicketTypes { get; set; }
-        public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
-        public virtual DbSet<Venue> Venues { get; set; }
-        public virtual DbSet<EventTempImage> EventTempImages { get; set; }
-        public virtual DbSet<Event_VariableDesc> Event_VariableDesc { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<Ticket_Locked_Detail> Ticket_Locked_Detail { get; set; }
         public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
         public virtual DbSet<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
-        public virtual DbSet<Ticket_Locked_Detail> Ticket_Locked_Detail { get; set; }
+        public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
+        public virtual DbSet<TicketType> TicketTypes { get; set; }
+        public virtual DbSet<TimeZoneDetail> TimeZoneDetails { get; set; }
+        public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
+        public virtual DbSet<Venue> Venues { get; set; }
+    
+        public virtual ObjectResult<GetEventListing_Result> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature)
+        {
+            var eventTitleParameter = eventTitle != null ?
+                new ObjectParameter("EventTitle", eventTitle) :
+                new ObjectParameter("EventTitle", typeof(string));
+    
+            var eventTypeParameter = eventType != null ?
+                new ObjectParameter("EventType", eventType) :
+                new ObjectParameter("EventType", typeof(string));
+    
+            var eventCatParameter = eventCat != null ?
+                new ObjectParameter("EventCat", eventCat) :
+                new ObjectParameter("EventCat", typeof(string));
+    
+            var eventSubCatParameter = eventSubCat != null ?
+                new ObjectParameter("EventSubCat", eventSubCat) :
+                new ObjectParameter("EventSubCat", typeof(string));
+    
+            var eventFeatureParameter = eventFeature != null ?
+                new ObjectParameter("EventFeature", eventFeature) :
+                new ObjectParameter("EventFeature", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventListing_Result>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter);
+        }
     
         public virtual ObjectResult<string> GetSetUserRole(string user_Id, string gETSET, string role_Id)
         {
