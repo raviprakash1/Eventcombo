@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "TicketPayment";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<link href="~/Content/flipclock.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    <div class="col-sm-12 pt10 bggrey">
+        <div class="Moderor" style="display: none;" id="diverroacc">
+            <div class="er_UI_main">
+                <div class="er_UI_img"></div>
+                <div class="er_suc" id="erraccmsg">
+
+                </div>
+            </div>
+        </div>
+        <div class="Moderor" id="divaccsuc" style="display: none;">
+            <div class="er_suc_main alert-success">
+
+                <div class="er_suc_img"></div>
+                <div class="er_suc" id="succaccmsg"> </div>
+                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="divTime"> </div>
+    </div>
+}
+<script src="~/Scripts/flipclock.js"></script>
+@*<script src="~/Scripts/jquery.countdownTimer.js"></script>*@
+<script>
+    //function afterStop() {
+    //    alert("Time Khatam");
+    //}
+    function ShowMessage(Type, Mess) {
+        if (Type == 'S') {
+            $('#divaccsuc').css('display', 'block');
+            $('#diverroacc').css('display', 'none');
+            $('#succaccmsg').html(Mess);
+        }
+        else {
+            $('#divaccsuc').css('display', 'none');
+            $('#diverroacc').css('display', 'block');
+            $('#erraccmsg').html(Mess);
+
+        }
+    }
+    $(document).ready(function () {
+        //--------------Fire when User Click on Continue in Previous Page ------------------------------------
+
+        @*var TList = [];
+
+        TList.push({
+            'TLD_Ticket_Id': 1,
+            'TLD_Locked_Qty':10
+        });
+        var model = {
+            'TLD_Ticket_Id': '0',
+            'TLD_Locked_Qty': '0',
+            'TLD_List': TList
+        }
+
+
+        $.ajax({
+            url: '@Url.Action("LockTickets", "TicketPayment")',
+            data: model,
+            type: "Post",
+            success: function (response) {
+                alert("chal pya");
+            }
+        });*@
+
+        //*************************Fire when User Click on Continue in Previous Page *****************************************
+
+        var vTicketid = '19,20';
+        clock = $('#divTime').FlipClock(10, {
+            clockFace: 'MinuteCounter',
+            countdown: true,
+            callbacks: {
+                stop: function () {
+                    $.ajax({
+                        url: '@Url.Action("ReleaseTickets", "TicketPayment")',
+                        data: { 'strTTicketIds': vTicketid },
+                        type: "Get",
+                        success: function (response) {
+                          //  alert("Sorry, you took too long and we have to release your order. Please try again.");
+                            ShowMessage('E', 'Sorry, you took too long and we have to release your order. Please try again.');
+                        },
+                        error: function () {
+                            ShowMessage('E', 'Sorry, There is some error.');
+                        }
+                    });
+                }
+            }
+        });
+
+
+        //clock.start(afterStart());
+        //clock.stop(afterStop());
+        //var time = clock.getTime();
+
+        //alert(time);
+
+        //function afterStart() {
+        //    alert("Time Start");
+        //}
+
+
+        //$("#getting-started").countdown("2016/01/01", function(event) {
+        //    $(this).text(event.strftime('%D days %H:%M:%S'));
+        //});
+        //$("#future_date").countdowntimer({
+        //    hours : 0,
+        //    minutes : 0,
+        //    seconds : 10,
+        //    size: "lg"
+        //});
+
+    });
+</script>
