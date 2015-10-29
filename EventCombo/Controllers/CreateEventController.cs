@@ -406,14 +406,20 @@ namespace EventCombo.Controllers
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "ViewEvent";
+            var TopAddress = "";var Topvenue="";
             ViewEvent viewEvent = new ViewEvent();
             var EventDetail = (from ev in db.Events where ev.EventID == EventId select ev).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
           var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
+            if (evAdress != null)
+            {
+                 TopAddress = evAdress.ConsolidateAddress;
+                 Topvenue = evAdress.VenueName;
+
+            }
             
-            var TopAddress = evAdress.ConsolidateAddress;
-            var Topvenue= evAdress.VenueName;
+         
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
             var votecount = (from ev in db.EventVotes where ev.eventId == EventId select ev).Count();
             var eventype= (from ev in db.MultipleEvents where ev.EventID == EventId select ev).Count();
@@ -622,6 +628,7 @@ namespace EventCombo.Controllers
 
             }
         }
+
         public FileResult Calendar(string beginDate, string endDate, string location, string subject, string description)
         {
             using (var stream = new MemoryStream())
@@ -653,5 +660,15 @@ namespace EventCombo.Controllers
                 }
             }
         }
+
+        
+        
+        #region DisplayTickets
+
+
+        #endregion
+
+
+
     }
 }
