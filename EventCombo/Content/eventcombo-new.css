@@ -217,7 +217,7 @@
 .cont-bg{ width: 100%; float: left; }
 .vot_count{ color: #b6ff00; font-size: 1.2em;}
 .ev_date_icn2{ position: relative; display: inline-block; vertical-align: text-bottom; }
-.ev_loc_icn2{ position: relative; display: inline-block; left: -10px; vertical-align: text-bottom; }
+.ev_loc_icn2{ position: absolute; display: inline-block; left: -15px; vertical-align: text-bottom; }
 .evnt_title_date2{ font-size: 1.7em;}
 .ev_get_tick_btn{ font-size: 1.5em;}
 
@@ -279,6 +279,14 @@
 .ev_live_btn:hover{background:#00cfff !important; color: #fff !important;  }
 .ev_live_btn:focus{color: #fff !important;}
 .ev_live_btn:active{background:#00cfff !important;}
+
+.ev_elips{ width:100%; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; }
+
+
+
+
+
+
 
 /*Favourite button section*/
 

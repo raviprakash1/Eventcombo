@@ -32,15 +32,15 @@ namespace EventCombo.Models
         public string Show_T_Desc { get; set; }
         public string Fees_Type { get; set; }
         public Nullable<System.DateTime> Sale_Start_Date { get; set; }
-        public Nullable<System.TimeSpan> Sale_Start_Time { get; set; }
+        public string Sale_Start_Time { get; set; }
         public Nullable<System.DateTime> Sale_End_Date { get; set; }
-        public Nullable<System.TimeSpan> Sale_End_Time { get; set; }
+        public string Sale_End_Time { get; set; }
         public string Hide_Ticket { get; set; }
         public string Auto_Hide_Sche { get; set; }
         public Nullable<System.DateTime> Hide_Untill_Date { get; set; }
-        public Nullable<System.TimeSpan> Hide_Untill_Time { get; set; }
+        public string Hide_Untill_Time { get; set; }
         public Nullable<System.DateTime> Hide_After_Date { get; set; }
-        public Nullable<System.TimeSpan> Hide_After_Time { get; set; }
+        public string Hide_After_Time { get; set; }
         public Nullable<decimal> Min_T_Qty { get; set; }
         public Nullable<decimal> Max_T_Qty { get; set; }
         public string T_Disable { get; set; }

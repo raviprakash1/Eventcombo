@@ -238,6 +238,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventComboModel1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventConfirmation.cs" />
     <Compile Include="Models\EventCreation.cs" />
     <Compile Include="Models\EventFavourite.cs">
@@ -275,6 +280,9 @@
     </Compile>
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\Fee_Structure.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetEventListing_Result.cs">
@@ -363,7 +371,7 @@
     <Content Include="Models\EventComboModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
-      <LastGenOutput>EventComboModel.cs</LastGenOutput>
+      <LastGenOutput>EventComboModel1.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Content\bootstrap.css" />
@@ -631,6 +639,7 @@
     <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-development.js" />
     <Content Include="Scripts\jquery.ba-bbq.min.js" />
     <Content Include="Scripts\jquery.countdownTimer.js" />
+    <Content Include="Scripts\jquery.icalendar.pack.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
     <Content Include="Scripts\jquery.maskedinput.min.js" />

@@ -11,7 +11,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-
+using System.Globalization;
 
 namespace EventCombo.Controllers
 {
@@ -403,15 +403,98 @@ namespace EventCombo.Controllers
 
         public ActionResult ViewEvent(long EventId)
         {
+            string sDate_new = "", eDate_new="";
+            string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "ViewEvent";
             ViewEvent viewEvent = new ViewEvent();
             var EventDetail = (from ev in db.Events where ev.EventID == EventId select ev).FirstOrDefault();
+            var displaystarttime = EventDetail.DisplayStartTime;
+            var displayendtime = EventDetail.DisplayEndTime;
+          var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
+            
+            var TopAddress = evAdress.ConsolidateAddress;
+            var Topvenue= evAdress.VenueName;
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
             var votecount = (from ev in db.EventVotes where ev.eventId == EventId select ev).Count();
+            var eventype= (from ev in db.MultipleEvents where ev.EventID == EventId select ev).Count();
+            var GetEventDate = db.GetEventDateList(EventId).ToList();
+            ViewBag.DateList = GetEventDate;
+            if (eventype > 0) {
+                viewEvent.eventType = "Multiple";
+                var evschdetails = (from ev in db.MultipleEvents where ev.EventID == EventId select ev).FirstOrDefault();
+                var startdate = (evschdetails.StartingFrom);
+                DateTime sDate = new DateTime();
+                sDate = DateTime.Parse(startdate);
+                startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
+               
+                 sDate_new = sDate.ToString("MMM dd yyyy");
+                var enddate = evschdetails.StartingTo;
+
+                DateTime eDate = new DateTime();
+                eDate = DateTime.Parse(enddate);
+                endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString ();
+                 eDate_new = eDate.ToString("MMM dd yyyy");
+
+                 starttime = evschdetails.StartTime;
+                 endtime = evschdetails.EndTime;
+
+               
+
+
+
+            }
+            else {
+                viewEvent.eventType = "single";
+                var evschdetails = (from ev in db.EventVenues where ev.EventID == EventId select ev).FirstOrDefault();
+                var startdate = (evschdetails.EventStartDate);
+                if (startdate != null)
+                {
+                    DateTime sDate = new DateTime();
+                    sDate = DateTime.Parse(startdate.ToString());
+                     startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString ();
+                     sDate_new = sDate.ToString("MMM dd yyyy");
+                }
+                var enddate = evschdetails.EventEndDate;
+                if (enddate != null)
+                {
+                    DateTime eDate = new DateTime();
+                    eDate = DateTime.Parse(enddate.ToString());
+                     endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString ();
+                     eDate_new = eDate.ToString("MMM dd yyyy");
+                }
+
+                 starttime = evschdetails.EventStartTime.ToString();
+                 endtime = evschdetails.EventEndTime.ToString();
+
+
+                
+            }
+
+            if (!string.IsNullOrEmpty(displaystarttime) && (displaystarttime != "N"|| displaystarttime != "n") && !string.IsNullOrEmpty(displayendtime) && (displayendtime != "N"|| displayendtime != "n"))
+            {
+                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + "," + starttime + "-" + endday.ToString() + " " + eDate_new + "," + endtime;
+
+            }
+
+            if (displaystarttime=="N"|| displaystarttime == "n")
+            {
+                viewEvent.DisplaydateRange = endday.ToString() + " " + eDate_new + "," + endtime;
+            }
+
+
+
+            if (displayendtime == "N" || displayendtime == "n")
+            {
+                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + "," + starttime;
+
+            }
+          
+            viewEvent.TopAddress = TopAddress;
             viewEvent.Favourite = favCount.ToString();
             viewEvent.Vote = votecount.ToString();
             viewEvent.Title = EventDetail.EventTitle;
             viewEvent.eventId = EventDetail.EventID.ToString();
+            viewEvent.TopVenue = Topvenue;
             if (Session["AppId"] != null)
             {
                 var userid = Session["AppId"].ToString();
@@ -539,6 +622,36 @@ namespace EventCombo.Controllers
 
             }
         }
+        public FileResult Calendar(string beginDate, string endDate, string location, string subject, string description)
+        {
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(stream) { AutoFlush = true })
+                {
+                    //HEADER
+                    writer.WriteLine("BEGIN:VCALENDAR");
+                    writer.WriteLine("PRODID:-//Bored code");
+                    writer.WriteLine("VERSION:2.0");
+                    writer.WriteLine("METHOD:PUBLISH");
+                    writer.WriteLine("BEGIN:VEVENT");
 
+                    //BODY
+                    //beginDate.ToString("yyyyMMddTHHmmss")
+                    writer.WriteLine("CLASS:PUBLIC");
+                    writer.WriteLine("DTSTART:" + beginDate);
+                    writer.WriteLine("DTEND:" + endDate);
+                    writer.WriteLine("LOCATION:" + location);
+                    writer.WriteLine("DESCRIPTION:" + description);
+                    writer.WriteLine("SUMMARY:" + subject);
+                    writer.WriteLine("UID:mail@boredcode.com");
+
+                    //FOOTER
+                    writer.WriteLine("END:VEVENT");
+                    writer.WriteLine("END:VCALENDAR");
+
+                    return File(stream.ToArray(), "text/calendar", "ical.ics");
+                }
+            }
+        }
     }
 }

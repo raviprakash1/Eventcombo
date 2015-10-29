@@ -10,16 +10,10 @@
 namespace EventCombo.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Ticket_Locked_Detail
+    public partial class func_Split_Result
     {
-        public long TLD_Id { get; set; }
-        public Nullable<long> TLD_Ticket_Id { get; set; }
-        public string TLD_User_Id { get; set; }
-        public Nullable<long> TLD_Locked_Qty { get; set; }
-    
-        public virtual Ticket_Locked_Detail Ticket_Locked_Detail1 { get; set; }
-        public virtual Ticket_Locked_Detail Ticket_Locked_Detail2 { get; set; }
+        public int ElementID { get; set; }
+        public string Element { get; set; }
     }
 }

@@ -19,6 +19,9 @@ namespace EventCombo.Models
         public Nullable<long> TQD_Quantity { get; set; }
         public Nullable<long> TQD_Remaining_Quantity { get; set; }
         public Nullable<long> TQD_Event_Id { get; set; }
+        public Nullable<long> TQD_AddressId { get; set; }
+        public Nullable<long> TQD_MultipleEventId { get; set; }
+        public Nullable<long> TQD_EventVenueId { get; set; }
     
         public virtual Ticket Ticket { get; set; }
     }
