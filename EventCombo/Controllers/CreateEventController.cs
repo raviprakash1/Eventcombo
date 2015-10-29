@@ -407,10 +407,14 @@ namespace EventCombo.Controllers
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "ViewEvent";
             var TopAddress = "";var Topvenue="";
+            string organizername = "", fblink = "", twitterlink = "", organizerid = "";
             ViewEvent viewEvent = new ViewEvent();
             var EventDetail = (from ev in db.Events where ev.EventID == EventId select ev).FirstOrDefault();
+            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
+            var EventDescription = EventDetail.EventDescription;
+            //Address
           var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)
             {
@@ -418,8 +422,16 @@ namespace EventCombo.Controllers
                  Topvenue = evAdress.VenueName;
 
             }
-            
-         
+
+            //Organiser
+            if (OrganiserDetail != null)
+            {
+                organizername = OrganiserDetail.Orgnizer_Name;
+                fblink = OrganiserDetail.FBLink;
+                twitterlink = OrganiserDetail.Twitter;
+                organizerid = OrganiserDetail.Orgnizer_Id.ToString();
+
+            }
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
             var votecount = (from ev in db.EventVotes where ev.eventId == EventId select ev).Count();
             var eventype= (from ev in db.MultipleEvents where ev.EventID == EventId select ev).Count();
@@ -501,6 +513,11 @@ namespace EventCombo.Controllers
             viewEvent.Title = EventDetail.EventTitle;
             viewEvent.eventId = EventDetail.EventID.ToString();
             viewEvent.TopVenue = Topvenue;
+            viewEvent.EventDescription = EventDescription;
+            viewEvent.organizername = organizername;
+            viewEvent.organizerid = organizerid;
+            viewEvent.fblink = fblink;
+            viewEvent.twitterlink = twitterlink;
             if (Session["AppId"] != null)
             {
                 var userid = Session["AppId"].ToString();
@@ -661,7 +678,36 @@ namespace EventCombo.Controllers
             }
         }
 
-        
+        public string saveorganizermsg(OrganizerMessages model)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                Event_OrganizerMessages msg = new Event_OrganizerMessages();
+                msg.Email = model.email;
+                msg.Name = model.name;
+                msg.EventId = long.Parse(model.EventId);
+                msg.OrganizerId = long.Parse(model.organiserid);
+                msg.Message = model.mesasges;
+                if (Session["AppId"] != null)
+                {
+                    msg.Userid = Session["AppId"].ToString();
+                }
+                else
+                {
+                    msg.Userid = "";
+
+                }
+
+                db.Event_OrganizerMessages.Add(msg);
+              int i=  db.SaveChanges();
+                return "saved";
+
+            }
+          
+          
+           
+
+        }
         
         #region DisplayTickets
 

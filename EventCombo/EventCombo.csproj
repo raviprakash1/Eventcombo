@@ -251,9 +251,6 @@
     <Compile Include="Models\EventImage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventOrganizer.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EventSubCategory.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -270,6 +267,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Event_Detail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event_OrganizerMessages.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Event_Orgnizer_Detail.cs">
@@ -297,10 +297,14 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\OrganizerMessages.cs" />
     <Compile Include="Models\Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profile.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Publish_Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Status.cs">
