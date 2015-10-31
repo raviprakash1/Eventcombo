@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -351,6 +351,20 @@
           <Property Name="Merchant" Type="varchar" MaxLength="2" />
           <Property Name="UserStatus" Type="varchar" MaxLength="2" />
         </EntityType>
+        <EntityType Name="Publish_Event_Detail">
+          <Key>
+            <PropertyRef Name="PE_Id" />
+          </Key>
+          <Property Name="PE_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PE_Event_Id" Type="bigint" />
+          <Property Name="PE_Address_Ids" Type="varchar" MaxLength="100" />
+          <Property Name="PE_MultipleVenue_id" Type="bigint" />
+          <Property Name="PE_SingleVenue_Id" Type="bigint" />
+          <Property Name="PE_Tickets_Ids" Type="varchar" MaxLength="100" />
+          <Property Name="PE_Scheduled_Date" Type="varchar" MaxLength="50" />
+          <Property Name="PE_Start_Time" Type="varchar" MaxLength="50" />
+          <Property Name="PE_End_Time" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -374,15 +388,15 @@
           <Property Name="Show_T_Desc" Type="varchar" MaxLength="1" />
           <Property Name="Fees_Type" Type="varchar" MaxLength="50" />
           <Property Name="Sale_Start_Date" Type="date" />
-          <Property Name="Sale_Start_Time" Type="time" Precision="7" />
+          <Property Name="Sale_Start_Time" Type="varchar" MaxLength="50" />
           <Property Name="Sale_End_Date" Type="date" />
-          <Property Name="Sale_End_Time" Type="time" Precision="7" />
+          <Property Name="Sale_End_Time" Type="varchar" MaxLength="50" />
           <Property Name="Hide_Ticket" Type="varchar" MaxLength="1" />
           <Property Name="Auto_Hide_Sche" Type="varchar" MaxLength="1" />
           <Property Name="Hide_Untill_Date" Type="date" />
-          <Property Name="Hide_Untill_Time" Type="time" Precision="7" />
+          <Property Name="Hide_Untill_Time" Type="varchar" MaxLength="50" />
           <Property Name="Hide_After_Date" Type="date" />
-          <Property Name="Hide_After_Time" Type="time" Precision="7" />
+          <Property Name="Hide_After_Time" Type="varchar" MaxLength="50" />
           <Property Name="Min_T_Qty" Type="numeric" Precision="6" Scale="0" />
           <Property Name="Max_T_Qty" Type="numeric" Precision="6" Scale="0" />
           <Property Name="T_Disable" Type="varchar" MaxLength="1" />
@@ -402,9 +416,10 @@
             <PropertyRef Name="TLD_Id" />
           </Key>
           <Property Name="TLD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TLD_Ticket_Id" Type="bigint" />
           <Property Name="TLD_User_Id" Type="nvarchar" MaxLength="256" />
           <Property Name="TLD_Locked_Qty" Type="bigint" />
+          <Property Name="TLD_Event_Id" Type="bigint" />
+          <Property Name="TLD_TQD_Id" Type="bigint" />
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -413,18 +428,23 @@
           <Property Name="TPD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TPD_User_Id" Type="nvarchar" MaxLength="256" />
           <Property Name="TPD_Order_Id" Type="varchar" MaxLength="11" />
-          <Property Name="TPD_Ticket_id" Type="bigint" />
           <Property Name="TPD_Purchased_Qty" Type="int" />
+          <Property Name="TPD_TQD_Id" Type="bigint" />
+          <Property Name="TPD_Event_Id" Type="bigint" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
             <PropertyRef Name="TQD_Id" />
           </Key>
           <Property Name="TQD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TQD_PE_Id" Type="bigint" />
+          <Property Name="TQD_Event_Id" Type="bigint" />
           <Property Name="TQD_Ticket_Id" Type="bigint" />
+          <Property Name="TQD_AddressId" Type="bigint" />
           <Property Name="TQD_Quantity" Type="bigint" />
           <Property Name="TQD_Remaining_Quantity" Type="bigint" />
-          <Property Name="TQD_Event_Id" Type="bigint" />
+          <Property Name="TQD_StartDate" Type="varchar" MaxLength="50" />
+          <Property Name="TQD_StartTime" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -676,6 +696,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="func_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DelimitedString" Type="varchar" Mode="In" />
+          <Parameter Name="Delimiter" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ElementID" Type="int" Nullable="false" />
+                <Property Name="Element" Type="varchar" MaxLength="1000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetEventDateList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetEventListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EventTitle" Type="varchar" Mode="In" />
           <Parameter Name="EventType" Type="varchar" Mode="In" />
@@ -687,6 +722,16 @@
           <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
           <Parameter Name="GETSET" Type="varchar" Mode="In" />
           <Parameter Name="Role_Id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="PublishEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+          <Parameter Name="UserId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ReturnDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="dtDate" Type="datetime" Mode="In" />
         </Function>
         <EntityContainer Name="EventComboModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
@@ -718,6 +763,7 @@
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" Schema="dbo" store:Type="Tables" />
@@ -797,8 +843,7 @@
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventComboModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -957,7 +1002,7 @@
           <NavigationProperty Name="Event_VariableDesc" Relationship="Self.FK_Event_VariableDesc_Event" FromRole="Event" ToRole="Event_VariableDesc" />
           <NavigationProperty Name="EventImages" Relationship="Self.FK_EventImage_Event" FromRole="Event" ToRole="EventImage" />
           <NavigationProperty Name="EventVenues" Relationship="Self.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
-          <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
+          <NavigationProperty Name="Tickets" Relationship="EventComboModel.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1173,79 +1218,6 @@
           <Property Name="StatusID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StatusName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="Ticket">
-          <Key>
-            <PropertyRef Name="T_Id" />
-          </Key>
-          <Property Name="T_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="E_Id" Type="Int64" />
-          <Property Name="T_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Qty_Available" Type="Int64" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="TicketTypeID" Type="Int64" />
-          <Property Name="T_Sold" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Registration_Recorded" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="T_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Show_T_Desc" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Fees_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Sale_Start_Date" Type="DateTime" Precision="0" />
-          <Property Name="Sale_Start_Time" Type="Time" Precision="7" />
-          <Property Name="Sale_End_Date" Type="DateTime" Precision="0" />
-          <Property Name="Sale_End_Time" Type="Time" Precision="7" />
-          <Property Name="Hide_Ticket" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Auto_Hide_Sche" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Hide_Untill_Date" Type="DateTime" Precision="0" />
-          <Property Name="Hide_Untill_Time" Type="Time" Precision="7" />
-          <Property Name="Hide_After_Date" Type="DateTime" Precision="0" />
-          <Property Name="Hide_After_Time" Type="Time" Precision="7" />
-          <Property Name="Min_T_Qty" Type="Decimal" Precision="6" Scale="0" />
-          <Property Name="Max_T_Qty" Type="Decimal" Precision="6" Scale="0" />
-          <Property Name="T_Disable" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="T_Mark_SoldOut" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="T_Sold_Qty" Type="Int64" />
-          <Property Name="T_order" Type="Byte" />
-          <Property Name="EC_Fee" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="Customer_Fee" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="T_Displayremaining" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="T_AutoSechduleType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Additional_Fee" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="T_Discount" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="TotalPrice" Type="Decimal" Precision="9" Scale="2" />
-          <NavigationProperty Name="Event" Relationship="Self.FK_Ticket_Event" FromRole="Ticket" ToRole="Event" />
-          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="Self.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket" ToRole="Ticket_Quantity_Detail" />
-        </EntityType>
-        <EntityType Name="Ticket_Locked_Detail">
-          <Key>
-            <PropertyRef Name="TLD_Id" />
-          </Key>
-          <Property Name="TLD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TLD_Ticket_Id" Type="Int64" />
-          <Property Name="TLD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="TLD_Locked_Qty" Type="Int64" />
-          <NavigationProperty Name="Ticket_Locked_Detail1" Relationship="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail" ToRole="Ticket_Locked_Detail1" />
-          <NavigationProperty Name="Ticket_Locked_Detail2" Relationship="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail1" ToRole="Ticket_Locked_Detail" />
-        </EntityType>
-        <EntityType Name="Ticket_Purchased_Detail">
-          <Key>
-            <PropertyRef Name="TPD_Id" />
-          </Key>
-          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="TPD_Ticket_id" Type="Int64" />
-          <Property Name="TPD_Purchased_Qty" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Ticket_Quantity_Detail">
-          <Key>
-            <PropertyRef Name="TQD_Id" />
-          </Key>
-          <Property Name="TQD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TQD_Ticket_Id" Type="Int64" />
-          <Property Name="TQD_Quantity" Type="Int64" />
-          <Property Name="TQD_Remaining_Quantity" Type="Int64" />
-          <Property Name="TQD_Event_Id" Type="Int64" />
-          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket_Quantity_Detail" ToRole="Ticket" />
-        </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
             <PropertyRef Name="TicketDeliveryMethodID" />
@@ -1409,18 +1381,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Ticket_Event">
-          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="E_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__EventSubC__Event__5F141958">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
@@ -1442,30 +1402,6 @@
             </Principal>
             <Dependent Role="EventVenue1">
               <PropertyRef Name="EventVenueID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ticket_Quantity_Info_Ticket">
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
-          <End Role="Ticket_Quantity_Detail" Type="Self.Ticket_Quantity_Detail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket">
-              <PropertyRef Name="T_Id" />
-            </Principal>
-            <Dependent Role="Ticket_Quantity_Detail">
-              <PropertyRef Name="TQD_Ticket_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
-          <End Role="Ticket_Locked_Detail" Type="Self.Ticket_Locked_Detail" Multiplicity="1" />
-          <End Role="Ticket_Locked_Detail1" Type="Self.Ticket_Locked_Detail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket_Locked_Detail">
-              <PropertyRef Name="TLD_Id" />
-            </Principal>
-            <Dependent Role="Ticket_Locked_Detail1">
-              <PropertyRef Name="TLD_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1503,10 +1439,6 @@
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="Status" EntityType="Self.Status" />
-          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
-          <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" />
-          <EntitySet Name="Ticket_Purchased_Detail" EntityType="Self.Ticket_Purchased_Detail" />
-          <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" />
           <EntitySet Name="TicketDeliveryMethods" EntityType="Self.TicketDeliveryMethod" />
           <EntitySet Name="TicketTypes" EntityType="Self.TicketType" />
           <EntitySet Name="TimeZoneDetails" EntityType="Self.TimeZoneDetail" />
@@ -1552,10 +1484,6 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="EventVenue" EntitySet="EventVenues" />
           </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Event" Association="Self.FK_Ticket_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
           <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
             <End Role="EventCategory" EntitySet="EventCategories" />
             <End Role="EventSubCategory" EntitySet="EventSubCategories" />
@@ -1563,14 +1491,6 @@
           <AssociationSet Name="FK_EventVenue_EventVenue" Association="Self.FK_EventVenue_EventVenue">
             <End Role="EventVenue" EntitySet="EventVenues" />
             <End Role="EventVenue1" EntitySet="EventVenues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="Self.FK_Ticket_Quantity_Info_Ticket">
-            <End Role="Ticket" EntitySet="Tickets" />
-            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail" Association="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
-            <End Role="Ticket_Locked_Detail" EntitySet="Ticket_Locked_Detail" />
-            <End Role="Ticket_Locked_Detail1" EntitySet="Ticket_Locked_Detail" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -1588,6 +1508,37 @@
             <Parameter Name="GETSET" Mode="In" Type="String" />
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Publish_Event_Detail" EntityType="EventComboModel.Publish_Event_Detail" />
+          <EntitySet Name="Ticket_Locked_Detail" EntityType="EventComboModel.Ticket_Locked_Detail" />
+          <EntitySet Name="Ticket_Purchased_Detail" EntityType="EventComboModel.Ticket_Purchased_Detail" />
+          <EntitySet Name="Ticket_Quantity_Detail" EntityType="EventComboModel.Ticket_Quantity_Detail" />
+          <AssociationSet Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail" Association="EventComboModel.FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
+            <End Role="Ticket_Locked_Detail" EntitySet="Ticket_Locked_Detail" />
+            <End Role="Ticket_Locked_Detail1" EntitySet="Ticket_Locked_Detail" />
+          </AssociationSet>
+          <EntitySet Name="Tickets" EntityType="EventComboModel.Ticket" />
+          <AssociationSet Name="FK_Ticket_Event" Association="EventComboModel.FK_Ticket_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="EventComboModel.FK_Ticket_Quantity_Info_Ticket">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
+          <FunctionImport Name="func_Split" IsComposable="true" ReturnType="Collection(EventComboModel.func_Split_Result)">
+            <Parameter Name="DelimitedString" Mode="In" Type="String" />
+            <Parameter Name="Delimiter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetEventDateList" ReturnType="Collection(String)">
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="PublishEvent">
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="UserId" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventListing_Result">
           <Property Type="Int64" Name="EventID" Nullable="false" />
@@ -1599,6 +1550,139 @@
           <Property Type="Int32" Name="Feature" Nullable="false" />
           <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventAddress" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Publish_Event_Detail">
+          <Key>
+            <PropertyRef Name="PE_Id" />
+          </Key>
+          <Property Name="PE_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PE_Event_Id" Type="Int64" />
+          <Property Name="PE_Address_Ids" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PE_MultipleVenue_id" Type="Int64" />
+          <Property Name="PE_SingleVenue_Id" Type="Int64" />
+          <Property Name="PE_Tickets_Ids" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PE_Scheduled_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PE_Start_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PE_End_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Ticket_Locked_Detail">
+          <Key>
+            <PropertyRef Name="TLD_Id" />
+          </Key>
+          <Property Name="TLD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TLD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TLD_Locked_Qty" Type="Int64" />
+          <Property Name="TLD_Event_Id" Type="Int64" />
+          <Property Name="TLD_TQD_Id" Type="Int64" />
+          <NavigationProperty Name="Ticket_Locked_Detail1" Relationship="EventComboModel.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail" ToRole="Ticket_Locked_Detail1" />
+          <NavigationProperty Name="Ticket_Locked_Detail2" Relationship="EventComboModel.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail1" ToRole="Ticket_Locked_Detail" />
+        </EntityType>
+        <EntityType Name="Ticket_Purchased_Detail">
+          <Key>
+            <PropertyRef Name="TPD_Id" />
+          </Key>
+          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_Purchased_Qty" Type="Int32" />
+          <Property Name="TPD_TQD_Id" Type="Int64" />
+          <Property Name="TPD_Event_Id" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Ticket_Quantity_Detail">
+          <Key>
+            <PropertyRef Name="TQD_Id" />
+          </Key>
+          <Property Name="TQD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TQD_PE_Id" Type="Int64" />
+          <Property Name="TQD_Event_Id" Type="Int64" />
+          <Property Name="TQD_Ticket_Id" Type="Int64" />
+          <Property Name="TQD_AddressId" Type="Int64" />
+          <Property Name="TQD_Quantity" Type="Int64" />
+          <Property Name="TQD_Remaining_Quantity" Type="Int64" />
+          <Property Name="TQD_StartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TQD_StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ticket" Relationship="EventComboModel.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket_Quantity_Detail" ToRole="Ticket" />
+        </EntityType>
+        <Association Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
+          <End Type="EventComboModel.Ticket_Locked_Detail" Role="Ticket_Locked_Detail" Multiplicity="1" />
+          <End Type="EventComboModel.Ticket_Locked_Detail" Role="Ticket_Locked_Detail1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket_Locked_Detail">
+              <PropertyRef Name="TLD_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Locked_Detail1">
+              <PropertyRef Name="TLD_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="T_Id" />
+          </Key>
+          <Property Name="T_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="E_Id" Type="Int64" />
+          <Property Name="T_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Qty_Available" Type="Int64" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TicketTypeID" Type="Int64" />
+          <Property Name="T_Sold" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Registration_Recorded" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="T_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Show_T_Desc" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Fees_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sale_Start_Date" Type="DateTime" Precision="0" />
+          <Property Name="Sale_Start_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sale_End_Date" Type="DateTime" Precision="0" />
+          <Property Name="Sale_End_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Hide_Ticket" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Auto_Hide_Sche" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Hide_Untill_Date" Type="DateTime" Precision="0" />
+          <Property Name="Hide_Untill_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Hide_After_Date" Type="DateTime" Precision="0" />
+          <Property Name="Hide_After_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Min_T_Qty" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="Max_T_Qty" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="T_Disable" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="T_Mark_SoldOut" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="T_Sold_Qty" Type="Int64" />
+          <Property Name="T_order" Type="Byte" />
+          <Property Name="EC_Fee" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="Customer_Fee" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="T_Displayremaining" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="T_AutoSechduleType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Additional_Fee" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="T_Discount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="9" Scale="2" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_Ticket_Event" FromRole="Ticket" ToRole="Event" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="EventComboModel.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket" ToRole="Ticket_Quantity_Detail" />
+        </EntityType>
+        <Association Name="FK_Ticket_Event">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="E_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Quantity_Info_Ticket">
+          <End Type="EventComboModel.Ticket" Role="Ticket" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="T_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_Ticket_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="func_Split_Result">
+          <Property Type="Int32" Name="ElementID" Nullable="false" />
+          <Property Type="String" Name="Element" Nullable="true" MaxLength="1000" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1977,78 +2061,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tickets">
-            <EntityTypeMapping TypeName="EventComboModel.Ticket">
-              <MappingFragment StoreEntitySet="Ticket">
-                <ScalarProperty Name="T_Id" ColumnName="T_Id" />
-                <ScalarProperty Name="E_Id" ColumnName="E_Id" />
-                <ScalarProperty Name="T_name" ColumnName="T_name" />
-                <ScalarProperty Name="Qty_Available" ColumnName="Qty_Available" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
-                <ScalarProperty Name="T_Sold" ColumnName="T_Sold" />
-                <ScalarProperty Name="Registration_Recorded" ColumnName="Registration_Recorded" />
-                <ScalarProperty Name="T_Desc" ColumnName="T_Desc" />
-                <ScalarProperty Name="Show_T_Desc" ColumnName="Show_T_Desc" />
-                <ScalarProperty Name="Fees_Type" ColumnName="Fees_Type" />
-                <ScalarProperty Name="Sale_Start_Date" ColumnName="Sale_Start_Date" />
-                <ScalarProperty Name="Sale_Start_Time" ColumnName="Sale_Start_Time" />
-                <ScalarProperty Name="Sale_End_Date" ColumnName="Sale_End_Date" />
-                <ScalarProperty Name="Sale_End_Time" ColumnName="Sale_End_Time" />
-                <ScalarProperty Name="Hide_Ticket" ColumnName="Hide_Ticket" />
-                <ScalarProperty Name="Auto_Hide_Sche" ColumnName="Auto_Hide_Sche" />
-                <ScalarProperty Name="Hide_Untill_Date" ColumnName="Hide_Untill_Date" />
-                <ScalarProperty Name="Hide_Untill_Time" ColumnName="Hide_Untill_Time" />
-                <ScalarProperty Name="Hide_After_Date" ColumnName="Hide_After_Date" />
-                <ScalarProperty Name="Hide_After_Time" ColumnName="Hide_After_Time" />
-                <ScalarProperty Name="Min_T_Qty" ColumnName="Min_T_Qty" />
-                <ScalarProperty Name="Max_T_Qty" ColumnName="Max_T_Qty" />
-                <ScalarProperty Name="T_Disable" ColumnName="T_Disable" />
-                <ScalarProperty Name="T_Mark_SoldOut" ColumnName="T_Mark_SoldOut" />
-                <ScalarProperty Name="T_Sold_Qty" ColumnName="T_Sold_Qty" />
-                <ScalarProperty Name="T_order" ColumnName="T_order" />
-                <ScalarProperty Name="EC_Fee" ColumnName="EC_Fee" />
-                <ScalarProperty Name="Customer_Fee" ColumnName="Customer_Fee" />
-                <ScalarProperty Name="T_Displayremaining" ColumnName="T_Displayremaining" />
-                <ScalarProperty Name="T_AutoSechduleType" ColumnName="T_AutoSechduleType" />
-                <ScalarProperty Name="Additional_Fee" ColumnName="Additional_Fee" />
-                <ScalarProperty Name="T_Discount" ColumnName="T_Discount" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ticket_Locked_Detail">
-            <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
-              <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
-                <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
-                <ScalarProperty Name="TLD_Ticket_Id" ColumnName="TLD_Ticket_Id" />
-                <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
-                <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ticket_Purchased_Detail">
-            <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
-              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
-                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
-                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
-                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
-                <ScalarProperty Name="TPD_Ticket_id" ColumnName="TPD_Ticket_id" />
-                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ticket_Quantity_Detail">
-            <EntityTypeMapping TypeName="EventComboModel.Ticket_Quantity_Detail">
-              <MappingFragment StoreEntitySet="Ticket_Quantity_Detail">
-                <ScalarProperty Name="TQD_Id" ColumnName="TQD_Id" />
-                <ScalarProperty Name="TQD_Ticket_Id" ColumnName="TQD_Ticket_Id" />
-                <ScalarProperty Name="TQD_Quantity" ColumnName="TQD_Quantity" />
-                <ScalarProperty Name="TQD_Remaining_Quantity" ColumnName="TQD_Remaining_Quantity" />
-                <ScalarProperty Name="TQD_Event_Id" ColumnName="TQD_Event_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TicketDeliveryMethods">
             <EntityTypeMapping TypeName="EventComboModel.TicketDeliveryMethod">
               <MappingFragment StoreEntitySet="TicketDeliveryMethod">
@@ -2116,6 +2128,110 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
+          <EntitySetMapping Name="Publish_Event_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Publish_Event_Detail">
+              <MappingFragment StoreEntitySet="Publish_Event_Detail">
+                <ScalarProperty Name="PE_End_Time" ColumnName="PE_End_Time" />
+                <ScalarProperty Name="PE_Start_Time" ColumnName="PE_Start_Time" />
+                <ScalarProperty Name="PE_Scheduled_Date" ColumnName="PE_Scheduled_Date" />
+                <ScalarProperty Name="PE_Tickets_Ids" ColumnName="PE_Tickets_Ids" />
+                <ScalarProperty Name="PE_SingleVenue_Id" ColumnName="PE_SingleVenue_Id" />
+                <ScalarProperty Name="PE_MultipleVenue_id" ColumnName="PE_MultipleVenue_id" />
+                <ScalarProperty Name="PE_Address_Ids" ColumnName="PE_Address_Ids" />
+                <ScalarProperty Name="PE_Event_Id" ColumnName="PE_Event_Id" />
+                <ScalarProperty Name="PE_Id" ColumnName="PE_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Locked_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
+                <ScalarProperty Name="TLD_TQD_Id" ColumnName="TLD_TQD_Id" />
+                <ScalarProperty Name="TLD_Event_Id" ColumnName="TLD_Event_Id" />
+                <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />
+                <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
+                <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Purchased_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TPD_Event_Id" ColumnName="TPD_Event_Id" />
+                <ScalarProperty Name="TPD_TQD_Id" ColumnName="TPD_TQD_Id" />
+                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
+                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
+                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
+                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Quantity_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket_Quantity_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Quantity_Detail">
+                <ScalarProperty Name="TQD_StartTime" ColumnName="TQD_StartTime" />
+                <ScalarProperty Name="TQD_StartDate" ColumnName="TQD_StartDate" />
+                <ScalarProperty Name="TQD_Remaining_Quantity" ColumnName="TQD_Remaining_Quantity" />
+                <ScalarProperty Name="TQD_Quantity" ColumnName="TQD_Quantity" />
+                <ScalarProperty Name="TQD_AddressId" ColumnName="TQD_AddressId" />
+                <ScalarProperty Name="TQD_Ticket_Id" ColumnName="TQD_Ticket_Id" />
+                <ScalarProperty Name="TQD_Event_Id" ColumnName="TQD_Event_Id" />
+                <ScalarProperty Name="TQD_PE_Id" ColumnName="TQD_PE_Id" />
+                <ScalarProperty Name="TQD_Id" ColumnName="TQD_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="T_Discount" ColumnName="T_Discount" />
+                <ScalarProperty Name="Additional_Fee" ColumnName="Additional_Fee" />
+                <ScalarProperty Name="T_AutoSechduleType" ColumnName="T_AutoSechduleType" />
+                <ScalarProperty Name="T_Displayremaining" ColumnName="T_Displayremaining" />
+                <ScalarProperty Name="Customer_Fee" ColumnName="Customer_Fee" />
+                <ScalarProperty Name="EC_Fee" ColumnName="EC_Fee" />
+                <ScalarProperty Name="T_order" ColumnName="T_order" />
+                <ScalarProperty Name="T_Sold_Qty" ColumnName="T_Sold_Qty" />
+                <ScalarProperty Name="T_Mark_SoldOut" ColumnName="T_Mark_SoldOut" />
+                <ScalarProperty Name="T_Disable" ColumnName="T_Disable" />
+                <ScalarProperty Name="Max_T_Qty" ColumnName="Max_T_Qty" />
+                <ScalarProperty Name="Min_T_Qty" ColumnName="Min_T_Qty" />
+                <ScalarProperty Name="Hide_After_Time" ColumnName="Hide_After_Time" />
+                <ScalarProperty Name="Hide_After_Date" ColumnName="Hide_After_Date" />
+                <ScalarProperty Name="Hide_Untill_Time" ColumnName="Hide_Untill_Time" />
+                <ScalarProperty Name="Hide_Untill_Date" ColumnName="Hide_Untill_Date" />
+                <ScalarProperty Name="Auto_Hide_Sche" ColumnName="Auto_Hide_Sche" />
+                <ScalarProperty Name="Hide_Ticket" ColumnName="Hide_Ticket" />
+                <ScalarProperty Name="Sale_End_Time" ColumnName="Sale_End_Time" />
+                <ScalarProperty Name="Sale_End_Date" ColumnName="Sale_End_Date" />
+                <ScalarProperty Name="Sale_Start_Time" ColumnName="Sale_Start_Time" />
+                <ScalarProperty Name="Sale_Start_Date" ColumnName="Sale_Start_Date" />
+                <ScalarProperty Name="Fees_Type" ColumnName="Fees_Type" />
+                <ScalarProperty Name="Show_T_Desc" ColumnName="Show_T_Desc" />
+                <ScalarProperty Name="T_Desc" ColumnName="T_Desc" />
+                <ScalarProperty Name="Registration_Recorded" ColumnName="Registration_Recorded" />
+                <ScalarProperty Name="T_Sold" ColumnName="T_Sold" />
+                <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Qty_Available" ColumnName="Qty_Available" />
+                <ScalarProperty Name="T_name" ColumnName="T_name" />
+                <ScalarProperty Name="E_Id" ColumnName="E_Id" />
+                <ScalarProperty Name="T_Id" ColumnName="T_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="func_Split" FunctionName="EventComboModel.Store.func_Split">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EventComboModel.func_Split_Result">
+                <ScalarProperty Name="ElementID" ColumnName="ElementID" />
+                <ScalarProperty Name="Element" ColumnName="Element" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEventDateList" FunctionName="EventComboModel.Store.GetEventDateList" />
+          <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
+          <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

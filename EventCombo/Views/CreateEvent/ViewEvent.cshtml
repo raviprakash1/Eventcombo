@@ -22,7 +22,7 @@
 </style>
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
-@Html.HiddenFor(m=>m.eventId,new {@id="hdEventid" })
+@Html.HiddenFor(m => m.eventId, new { @id = "hdEventid" })
 @Html.HiddenFor(m => m.hdEventFav, new { @id = "hdEventFav" })
 @Html.HiddenFor(m => m.hdEventvote, new { @id = "hdEventvote" })
 
@@ -37,7 +37,7 @@
                         <div class="col-sm-3 no_pads">
                             <div class="col-sm-6 col-xs-6 no_pad vot_count">
                                 <button type="button" class="btn_bg_none " title="Add this event to your favourites" id="btnfavourite"><i class="fa fa-heart"></i></button>
-                                <span class="ev_fav_count" title="count of people who saved this event" id="spanfav">@Html.DisplayFor(m=>m.Favourite)</span>
+                                <span class="ev_fav_count" title="count of people who saved this event" id="spanfav">@Html.DisplayFor(m => m.Favourite)</span>
                             </div>
                             <div class="col-sm-6 col-xs-6 no_pad vot_count">
                                 <button type="button" class="btn_bg_none" title="Vote this event" id="btnvote">
@@ -50,7 +50,7 @@
                             <div class="form-group mb5">
                                 <!--  <input class="form-control evnt_title_control evnt_placehold" placeholder="Avicii"> -->
                                 <label class="label-control evnt_title_control evnt_title_xs">
-                                   @Html.DisplayFor(m => m.Title)
+                                    @Html.DisplayFor(m => m.Title)
                                 </label>
                             </div>
                         </div>
@@ -119,31 +119,31 @@
                 <div class="carousel-inner" role="listbox" id="lstcarousel">
                     @foreach (var item in (List<string>)ViewBag.Images)
                     {
-                    <div class="item ">
-                        <img class="img-responsive" src="@item" alt="First slide">
+                        <div class="item ">
+                            <img class="img-responsive" src="@item" alt="First slide">
 
-                    </div>
+                        </div>
                     }
                     @*<div class="item active">
-                        <img class="img-responsive" src="~/Images/slider4.png" alt="First slide">
+                            <img class="img-responsive" src="~/Images/slider4.png" alt="First slide">
 
-                    </div>
-                    <div class="item">
-                        <img class="img-responsive" src="~/Images/slider2.png" alt="Second slide">
+                        </div>
+                        <div class="item">
+                            <img class="img-responsive" src="~/Images/slider2.png" alt="Second slide">
 
-                    </div>
-                    <div class="item">
-                        <img class="img-responsive" src="~/Images/slider3.png" alt="Third slide">
+                        </div>
+                        <div class="item">
+                            <img class="img-responsive" src="~/Images/slider3.png" alt="Third slide">
 
-                    </div>
-                    <div class="item">
-                        <img class="img-responsive" src="~/Images/slider4.png" alt="Fouth slide">
+                        </div>
+                        <div class="item">
+                            <img class="img-responsive" src="~/Images/slider4.png" alt="Fouth slide">
 
-                    </div>
-                    <div class="item">
-                        <img class="img-responsive" src="~/Images/slider2.png" alt="Fifth slide">
+                        </div>
+                        <div class="item">
+                            <img class="img-responsive" src="~/Images/slider2.png" alt="Fifth slide">
 
-                    </div>*@
+                        </div>*@
                 </div>
                 <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -203,7 +203,7 @@
             <h2 class="">WHO IS GOING?</h2>
             <div class="evnt_tile_bg_r"></div>
         </div>
-        <div class="evnt_details_body2">
+        <div  class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
                 <label class="label-control evnt_ticket_label">
                     <img src="images/fb_connect.jpg"> to see which of your Facebook friends are going
@@ -219,79 +219,27 @@
         </div>
         <div class="evnt_details_body2">
             <div class="col-sm-12 mt10">
+                <div id="dvTicketInfo" class="table-responsive">
+                    
+                          
+
+
+
+
+
+                </div>
+
                 <div class="table-responsive">
-                    <table class="table table-striped evnt_tkt_list_tbl">
-                        <div class="col-sm-12">
-                            <p class="book_tkt_date">Saturday Aug 17th 2011, 8:30pm</p>
-                            <p class="book_tkt_desc">Club Illusions260 S California Ave, Palo Alto CA</p>
-                        </div>
 
-                        <thead class="tkt_tbl_head">
-                            <tr>
-                                <th style="width:40%">Ticket Type</th>
-                                <th>Sales End</th>
-                                <th>Fee</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="width:40%">Emporibus autem quibusdam et aut officiis. </td>
-                                <td>30 Nov 2015</td>
-                                <td>$30.50</td>
-                                <td>
-                                    <select>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                    </select>
-                                </td>
-                                <td>$160.00</td>
-                            </tr>
 
-                        </tbody>
-
-                    </table>
-                    <table class="table table-striped evnt_tkt_list_tbl">
-                        <div class="col-sm-12">
-                            <p class="book_tkt_date">Saturday Aug 17th 2011, 8:30pm</p>
-                            <p class="book_tkt_desc">Club Illusions260 S California Ave, Palo Alto CA</p>
-                        </div>
-                        <thead class="tkt_tbl_head">
-                            <tr>
-                                <th style="width:40%">Ticket Type</th>
-                                <th>Sales End</th>
-                                <th>Fee</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="width:40%">Emporibus autem quibusdam et aut officiis. </td>
-                                <td>30 Nov 2015</td>
-                                <td>$30.50</td>
-                                <td>
-                                    <select>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                    </select>
-                                </td>
-                                <td>$160.00</td>
-                            </tr>
-
-                        </tbody>
-                    </table>
                     <table class="table evnt_tkt_list_tbl">
                         <tfoot>
                             <tr>
                                 <td colspan="5">
-                                    <div class="col-sm-12 text-right mt10">Subtotal : $0.3333 </div>
-                                    <div class="col-sm-12 text-right mt10"><strong>Order total : $0.3333 </strong></div>
+                                    @*<div class="col-sm-12 text-right mt10">Subtotal : $0.3333 </div>*@
+                                    @*<div id="dvSubTotal" class="col-sm-12 text-right mt10"></div>*@
+                                    <div id="dvOrderTotal" class="col-sm-12 text-right mt10"><strong><span id="spGTotal"></span> </strong></div>
+                                    <input id="hdGTotal" type="hidden" value="0" />
                                 </td>
 
                             </tr>
@@ -299,152 +247,114 @@
                     </table>
                 </div>
                 <div class="col-sm-12 text-right">
-                    <button type="submit" class="btn btn-lg ev_live_btn ev_live_sub_btn">PAYMENT PROCEED > </button>
+                    <button type="button"  id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PAYMENT PROCEED > </button>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-    <div class="modal fade" id="contorganizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Contact Organizer</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="form-group mb10">
-                            <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
-                            <div class="col-sm-8">
-                                <input class="form-control evnt_inp_cont" type="text">
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group mb10">
-                            <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
-                            <div class="col-sm-8">
-                                <input class="form-control evnt_inp_cont" type="text">
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group mb10">
-                            <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
-                            <div class="col-sm-8">
-                                <textarea class="form-control" rows="4"></textarea>
-
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn ">SAVE</button>
-                </div>
-
+<div class="modal fade" id="contorganizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Contact Organizer</h4>
             </div>
-        </div>
-    </div>
-    <div class="modal fade" id="schcalender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Add to Calendar</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="col-sm-6 text-center ev_calend_lebel">
-                        <i class="fa fa-windows"></i> <a href="#">Microsoft Outlook </a>
-                    </div>
-                    <div class="col-sm-6 text-center ev_calend_lebel">
-                        <i class="fa fa-apple"></i> <a href="#">Apple Ical </a>
-                    </div>
-                    <div class="col-sm-6 text-center ev_calend_lebel">
-                        <i class="fa fa-google"></i> <a href="#">Google Calendar </a>
-                    </div>
-                    <div class="col-sm-6 text-center ev_calend_lebel">
-                        <i class="fa fa-yahoo"></i> <a href="#">Yahoo Calendar </a>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group mb10">
+                        <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
+                        <div class="col-sm-8">
+                            <input class="form-control evnt_inp_cont" type="text">
+                        </div>
                     </div>
                     <div class="clearfix"></div>
+                    <div class="form-group mb10">
+                        <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
+                        <div class="col-sm-8">
+                            <input class="form-control evnt_inp_cont" type="text">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group mb10">
+                        <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="4"></textarea>
 
-                </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
 
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn ">SAVE</button>
+            </div>
+
         </div>
     </div>
+</div>
+<div class="modal fade" id="schcalender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Add to Calendar</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-6 text-center ev_calend_lebel">
+                    <i class="fa fa-windows"></i> <a href="#">Microsoft Outlook </a>
+                </div>
+                <div class="col-sm-6 text-center ev_calend_lebel">
+                    <i class="fa fa-apple"></i> <a href="#">Apple Ical </a>
+                </div>
+                <div class="col-sm-6 text-center ev_calend_lebel">
+                    <i class="fa fa-google"></i> <a href="#">Google Calendar </a>
+                </div>
+                <div class="col-sm-6 text-center ev_calend_lebel">
+                    <i class="fa fa-yahoo"></i> <a href="#">Yahoo Calendar </a>
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
-    <script>
-        $(document).ready(function () {
-            var clickfav = $('#hdEventFav').val();
+<script>
+    $(document).ready(function () {
+        var clickfav = $('#hdEventFav').val();
+        var clickvote = $('#hdEventvote').val();
+
+        if (clickfav == "Y") {
+
+            $("#btnfavourite").addClass("btn_fav_act");
+
+        } else {
+            $("#btnfavourite").removeClass("btn_fav_act");
+
+        }
+        if (clickvote == "Y") {
+            $("#btnvote").addClass("btn_fav_act");
+
+        } else {
+            $("#btnvote").removeClass("btn_fav_act");
+
+        }
+        $("#btnvote").click(function () {
             var clickvote = $('#hdEventvote').val();
-          
-            if (clickfav== "Y") {
-                
-                $("#btnfavourite").addClass("btn_fav_act");
-               
-            } else {
-                $("#btnfavourite").removeClass("btn_fav_act");
-               
-            }
+
             if (clickvote == "Y") {
-                $("#btnvote").addClass("btn_fav_act");
-               
+
+                alert('You can only vote once.');
             } else {
-                $("#btnvote").removeClass("btn_fav_act");
-               
-            }
-            $("#btnvote").click(function () {
-                var clickvote = $('#hdEventvote').val();
-                
-                if (clickvote == "Y") {
-
-                    alert('You can only vote once.');
-                } else {
-                    var eid = $('#hdEventid').val();
-                    $.ajax({
-                        url: '@Url.Action("savevote", "CreateEvent")',
-                        data: { Eventid: eid },
-                        type: "Post",
-                        success: function (data) {
-                            if (data == "Y") {
-                                $("#loginPopup").click();
-                                url.val('@Url.Action("ViewEvent", "CreateEvent")');
-                                return false;
-                            } else {
-                                
-                                $("#btnvote").addClass("btn_fav_act");
-                              
-                                $('#hdEventvote').val("Y");
-                                $('#spanvotes').html(data);
-                                alert('Thank you for voting!');
-                            }
-                        },
-                        error: function (data) {
-                            alert("Sorry there is some problem.");
-                            return false
-                        }
-                    });
-                }
-            });
-
-            $("#btnfavourite").click(function () {
-
-                var clickfav = $('#hdEventFav').val();
-                if(clickfav=="Y")
-                {
-                    $('#hdEventFav').val("N");
-                }
-                if (clickfav == "N") {
-                    $('#hdEventFav').val("Y");
-                }
                 var eid = $('#hdEventid').val();
-                var clickid = $('#hdEventFav').val();
                 $.ajax({
-                    url: '@Url.Action("savefavourite", "CreateEvent")',
-                    data: { Eventid: eid, type:clickid },
+                    url: '@Url.Action("savevote", "CreateEvent")',
+                    data: { Eventid: eid },
                     type: "Post",
                     success: function (data) {
                         if (data == "Y") {
@@ -452,18 +362,12 @@
                             url.val('@Url.Action("ViewEvent", "CreateEvent")');
                             return false;
                         } else {
-                            var clickfav = $('#hdEventFav').val();
-                            if (clickfav == "Y") {
-                                $("#btnfavourite").addClass("btn_fav_act");
-                                alert('Your Event have been saved!');
-                            }
-                            if (clickfav == "N") {
-                                alert('Your Event have not been saved!');
-                                $("#btnfavourite").removeClass("btn_fav_act");
-                            }
 
-                            $('#spanfav').html(data);
-                           
+                            $("#btnvote").addClass("btn_fav_act");
+
+                            $('#hdEventvote').val("Y");
+                            $('#spanvotes').html(data);
+                            alert('Thank you for voting!');
                         }
                     },
                     error: function (data) {
@@ -471,29 +375,186 @@
                         return false
                     }
                 });
+            }
+        });
 
+        $("#btnfavourite").click(function () {
+
+            var clickfav = $('#hdEventFav').val();
+            if (clickfav == "Y") {
+                $('#hdEventFav').val("N");
+            }
+            if (clickfav == "N") {
+                $('#hdEventFav').val("Y");
+            }
+            var eid = $('#hdEventid').val();
+            var clickid = $('#hdEventFav').val();
+            $.ajax({
+                url: '@Url.Action("savefavourite", "CreateEvent")',
+                data: { Eventid: eid, type: clickid },
+                type: "Post",
+                success: function (data) {
+                    if (data == "Y") {
+                        $("#loginPopup").click();
+                        url.val('@Url.Action("ViewEvent", "CreateEvent")');
+                        return false;
+                    } else {
+                        var clickfav = $('#hdEventFav').val();
+                        if (clickfav == "Y") {
+                            $("#btnfavourite").addClass("btn_fav_act");
+                            alert('Your Event have been saved!');
+                        }
+                        if (clickfav == "N") {
+                            alert('Your Event have not been saved!');
+                            $("#btnfavourite").removeClass("btn_fav_act");
+                        }
+
+                        $('#spanfav').html(data);
+
+                    }
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                    return false
+                }
             });
-            
-            $("#lstcarousel div:first").addClass("active");
-            $(function () {
-                $(document).tooltip({
-                    track: true
-                });
+
+        });
+
+        $("#lstcarousel div:first").addClass("active");
+        $(function () {
+            $(document).tooltip({
+                track: true
             });
+        });
 
 
+        $(".TmezoneSet").hide();
+        $(".Timezone").click(function () {
+            $(".TmezoneSet").slideToggle("fast");
+
+        });
+
+        $(".closetimemodal").click(function () {
             $(".TmezoneSet").hide();
-            $(".Timezone").click(function () {
-                $(".TmezoneSet").slideToggle("fast");
 
-            });
-
-            $(".closetimemodal").click(function () {
-                $(".TmezoneSet").hide();
-
-            });
+        });
     });
-    </script>
+</script>
+
+
+@*---------------------------------Ticket Info -----------------------------------------*@
+<script>
+    //function validate(e) {
+    //    if (isNaN(this.value + "" + String.fromCharCode(e.charCode))) return false;
+    //}
+    //$('.number-only').keypress(function (e) {
+        
+    //}).on("cut copy paste", function (e) { e.preventDefault(); });
 
 
 
+
+    function checkMore(QtyId)
+    {
+        $("#Sp_" + QtyId.toString()).slideToggle("fast");
+        //$(".TktdescDetl").slideToggle("fast");
+    }
+    function calculateTickTotal() {
+        var IdAry = $("#hdIds").val().split(',');
+        var runningTotal = 0;
+        var vqty = 0;
+        var vPrice = 0;
+        var vDonate = 0;
+        //alert($("#P_8").text());
+
+        for (i = 0; i < IdAry.length; i++) {
+           
+            vqty = parseFloat($("#d_" + IdAry[i].toString()).val());
+            vPrice = parseFloat($("#P_" + IdAry[i].toString()).text());
+            vDonate = parseFloat($("#txtd_" + IdAry[i].toString()).val());
+           
+            if (isNaN(vqty)==true ) vqty = 0;
+            if (isNaN(vPrice) == true) vPrice = 0;
+            if (isNaN(vDonate) == true) vDonate = 0;
+
+            //if (vqty == undefined || vqty == null) vqty = 0;
+            //if (vPrice == undefined || vPrice == null) vPrice = 0;
+            //if (vDonate == undefined || vDonate == null) vDonate = 0;
+
+            //try {
+            //    vqty = parseFloat(vqty);
+            //} catch (e) {
+            //    vqty = 0;
+            //}
+
+            //try {
+            //    vPrice = parseFloat(vPrice);
+            //} catch (e) {
+            //    vPrice = 0;
+            //}
+
+            //try {
+            //    vDonate = parseFloat(vDonate);
+            //} catch (e) {
+            //    vDonate = 0;
+            //}
+            //alert('D :' + vDonate.toString());
+            //alert('P :' + vPrice.toString());
+            //alert('Q :' + vqty.toString());
+
+
+
+            runningTotal = (runningTotal + ((vqty != null ? parseFloat(vqty) : 0) * (vPrice != null ? parseFloat(vPrice) : 0))) + parseFloat(vDonate);
+
+         
+        }
+        // alert(runningTotal);
+        $("#spGTotal").text('Order total : $' + runningTotal.toString());
+        //var CurrentValue = (parseFloat(selectedvalue) * parseFloat(tprice));
+
+        //if (CurrentValue > 0) {
+
+        //    var vGTotal = (($("#hdGTotal").val() != '' ? parseFloat($("#hdGTotal").val()) : 0) + CurrentValue);
+
+        //    $("#hdGTotal").val(vGTotal);
+
+        //    $("#spGTotal").text('Order total : $' + runningTotal.toString());
+        //   // alert(vGTotal);
+        //}
+
+
+    }
+    $(document).ready(function () {
+        //$(".TktdescDetl").css("display", "none");
+        //$(".TktmoreDesc").click(function () {
+        //    alert("chal bhai");
+        //    $(".TktdescDetl").slideToggle("fast");
+        //});
+        //$(".numericOnly").keypress(function (e) {
+        //    alert("test");
+        //    //if (String.fromCharCode(e.keyCode).match(/[^0-9]/g)) return false;
+        //});
+
+        $.ajax({
+            url: '@Url.Action("GetTicketDetail", "CreateEvent")',
+            data: { Eventid: '2' },
+            type: "Post",
+            success: function (data) {
+                $("#dvTicketInfo").append(data);
+            },
+            error: function (data) {
+                alert("Sorry there is some problem.");
+            }
+        });
+
+        $("#btPayment").click(function () {
+            window.location.href = '@Url.Action("TicketPayment", "TicketPayment")';
+        });
+
+
+
+
+
+    });
+</script>

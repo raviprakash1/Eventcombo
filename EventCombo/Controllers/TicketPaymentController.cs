@@ -34,7 +34,7 @@ namespace EventCombo.Controllers
                 foreach (Ticket_Locked_Detail objModel in objTicketIds.TLD_List)
                 {
                     objTLD.TLD_Locked_Qty = objModel.TLD_Locked_Qty;
-                    objTLD.TLD_Ticket_Id = objModel.TLD_Ticket_Id;
+                   // objTLD.TLD_Ticket_Id = objModel.TLD_Ticket_Id;
                     objTLD.TLD_User_Id = strUsers;
                     context.Ticket_Locked_Detail.Add(objTLD);
                 }

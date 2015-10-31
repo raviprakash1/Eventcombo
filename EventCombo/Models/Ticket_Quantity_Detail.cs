@@ -15,10 +15,14 @@ namespace EventCombo.Models
     public partial class Ticket_Quantity_Detail
     {
         public long TQD_Id { get; set; }
+        public Nullable<long> TQD_PE_Id { get; set; }
+        public Nullable<long> TQD_Event_Id { get; set; }
         public Nullable<long> TQD_Ticket_Id { get; set; }
+        public Nullable<long> TQD_AddressId { get; set; }
         public Nullable<long> TQD_Quantity { get; set; }
         public Nullable<long> TQD_Remaining_Quantity { get; set; }
-        public Nullable<long> TQD_Event_Id { get; set; }
+        public string TQD_StartDate { get; set; }
+        public string TQD_StartTime { get; set; }
     
         public virtual Ticket Ticket { get; set; }
     }

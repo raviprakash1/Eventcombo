@@ -277,6 +277,9 @@
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\func_Split_Result.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetEventListing_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -293,6 +296,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profile.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Publish_Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Status.cs">

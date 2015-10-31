@@ -539,10 +539,25 @@ namespace EventCombo.Controllers
 
             }
         }
-        
-        
-        #region DisplayTickets
 
+
+        #region DisplayTickets
+        public string GetTicketDetail(string Eventid)
+        {
+            string strTicket = "";
+                
+            //if (Session["AppId"] != null)
+            //{
+
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    strTicket = objEnt.GetTicketListing(2).Single();
+                }
+             
+
+            //}
+            return strTicket;
+        }
 
         #endregion
 

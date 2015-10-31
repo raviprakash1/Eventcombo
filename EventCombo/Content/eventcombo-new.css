@@ -250,7 +250,9 @@
 
 /*Start event display ticket page*/
 .book_tkt_date{ font-size: 20px;}
-.book_tkt_desc{ font-size: 18px;}
+.book_tkt_desc{ font-size: 16px; padding-bottom: 10px !important;}
+
+.table > thead.tkt_multi_tab_date > tr > td{ border-top: 0px; padding: 0px;}
 
 .btn_bg_none{ background: none; color: #fff;  font-size: 1.8em;  border:0px; box-shadow: none; padding: 0px;}
 .btn_fav_act{ color: #00cfff;}
@@ -259,7 +261,8 @@
 .tkt_tbl_head {
     background-color: #8c8c8c;
     color: #fff; font-size: 1.2em; text-transform: uppercase; table-layout: fixed; overflow: hidden; }
- .evnt_tkt_list_tbl > thead > tr > th{ font-weight: normal; } 
+.evnt_tkt_list_tbl{ margin-bottom:0px;} 
+.evnt_tkt_list_tbl > thead > tr > th{ font-weight: normal; } 
 .evnt_tkt_list_tbl > tbody > tr > td{ font-size: 1.2em; }    
 .evnt_tkt_list_tbl > tbody > tr:nth-of-type(2n+1) {
     background-color: #ebebeb;
@@ -274,11 +277,37 @@
 
 .ev_tickt_recp_lebel{font-size: 1.2em; font-weight: normal; color: #000;}
 
-.cap_l{ text-transform: uppercase !important;}
-.ev_live_btn{ background: #00cfff; color: #fff !important;}
-.ev_live_btn:hover{background:#00cfff !important; color: #fff !important;  }
-.ev_live_btn:focus{color: #fff !important;}
-.ev_live_btn:active{background:#00cfff !important;}
+.ev_bre_cub{ background: none; padding: 0px; margin-bottom: 0px; margin-top: 5px;}
+.ev_bre_cub li{ font-size: 1.2em;}
+.ev_bre_cub li a{ color: #3cf;}
+.ev_bre_cub > li + li::before{content: "> ";}
+
+.strat_timer_cont{ width: 100%; float: left; position: fixed; bottom: 0px; }
+.strt_tim_desc{ font-size: 1.2em;}
+.strt_tim_desc2{font-size: 1.5em;}
+.evnt_timer_margin{ margin-bottom: 90px;}
+.bg-green{background: #8fcf68; }
+.card_list img{ border: 1px solid #aaa;}
+.ev_not_me{ padding-left: 10px; color:#3cf; cursor: pointer; margin-top: 5px; }
+
+
+.evnt_tile_dis_bg_l{background-image: url(../images/dis_title_bg_l.png); width: 19px; height: 34px; float: left; margin-left: -19px; position: absolute; cursor: pointer;  }
+.evnt_tile_dis_bg_r{background-image: url(../images/dis_title_bg_r.png); width: 19px; height: 34px; float: right; margin-right: -19px; margin-right: -19px;
+     top: 6px; position: absolute;right: 0; position: relative; cursor: pointer;  }
+
+.evnt_tile_dis_head{ width: 100%; float: left; background:#a3a3a3; }
+.evnt_tile_dis_head h2{margin:0px 0; padding:5px 20px;}
+.evnt_tile_dis_head h2{ font-size: 1.2em; color: #fff; text-transform: uppercase;}
+.ev_soc_set{ margin-left: 15px;}
+.ev_soc_set a{color: #3cf; font-size: 1.2em;}
+
+.tkt_more_desc{color: #3cf; cursor: pointer; font-weight: normal;}
+
+
+
+
+
+
 
 /*Favourite button section*/
 
@@ -294,9 +323,11 @@
 
 
 
-
-
-
+.cap_l{ text-transform: uppercase !important;}
+.ev_live_btn{ background: #00cfff; color: #fff !important;}
+.ev_live_btn:hover{background:#00cfff !important; color: #fff !important;  }
+.ev_live_btn:focus{color: #fff !important;}
+.ev_live_btn:active{background:#00cfff !important;}
 
 
 .ev_pad_l0{ padding-left: 0px;}

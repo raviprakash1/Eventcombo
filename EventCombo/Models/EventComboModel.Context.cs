@@ -56,15 +56,16 @@ namespace EventCombo.Models
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Status> Status { get; set; }
-        public virtual DbSet<Ticket> Tickets { get; set; }
-        public virtual DbSet<Ticket_Locked_Detail> Ticket_Locked_Detail { get; set; }
-        public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
-        public virtual DbSet<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
         public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
         public virtual DbSet<TimeZoneDetail> TimeZoneDetails { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
+        public virtual DbSet<Publish_Event_Detail> Publish_Event_Detail { get; set; }
+        public virtual DbSet<Ticket_Locked_Detail> Ticket_Locked_Detail { get; set; }
+        public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
+        public virtual DbSet<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
+        public virtual DbSet<Ticket> Tickets { get; set; }
     
         public virtual ObjectResult<GetEventListing_Result> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature)
         {
@@ -106,6 +107,51 @@ namespace EventCombo.Models
                 new ObjectParameter("Role_Id", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSetUserRole", user_IdParameter, gETSETParameter, role_IdParameter);
+        }
+    
+        [DbFunction("EventComboEntities", "func_Split")]
+        public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
+        {
+            var delimitedStringParameter = delimitedString != null ?
+                new ObjectParameter("DelimitedString", delimitedString) :
+                new ObjectParameter("DelimitedString", typeof(string));
+    
+            var delimiterParameter = delimiter != null ?
+                new ObjectParameter("Delimiter", delimiter) :
+                new ObjectParameter("Delimiter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<func_Split_Result>("[EventComboEntities].[func_Split](@DelimitedString, @Delimiter)", delimitedStringParameter, delimiterParameter);
+        }
+    
+        public virtual ObjectResult<string> GetEventDateList(Nullable<long> eventId)
+        {
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("EventId", eventId) :
+                new ObjectParameter("EventId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetEventDateList", eventIdParameter);
+        }
+    
+        public virtual ObjectResult<string> GetTicketListing(Nullable<long> eventId)
+        {
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("EventId", eventId) :
+                new ObjectParameter("EventId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetTicketListing", eventIdParameter);
+        }
+    
+        public virtual int PublishEvent(Nullable<long> eventId, string userId)
+        {
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("EventId", eventId) :
+                new ObjectParameter("EventId", typeof(long));
+    
+            var userIdParameter = userId != null ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishEvent", eventIdParameter, userIdParameter);
         }
     }
 }

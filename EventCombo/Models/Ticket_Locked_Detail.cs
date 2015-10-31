@@ -15,10 +15,11 @@ namespace EventCombo.Models
     public partial class Ticket_Locked_Detail
     {
         public long TLD_Id { get; set; }
-        public Nullable<long> TLD_Ticket_Id { get; set; }
         public string TLD_User_Id { get; set; }
         public Nullable<long> TLD_Locked_Qty { get; set; }
-        
+        public Nullable<long> TLD_Event_Id { get; set; }
+        public Nullable<long> TLD_TQD_Id { get; set; }
+    
         public virtual Ticket_Locked_Detail Ticket_Locked_Detail1 { get; set; }
         public virtual Ticket_Locked_Detail Ticket_Locked_Detail2 { get; set; }
     }

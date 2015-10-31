@@ -10,15 +10,10 @@
 namespace EventCombo.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Ticket_Purchased_Detail
+    public partial class func_Split_Result
     {
-        public long TPD_Id { get; set; }
-        public string TPD_User_Id { get; set; }
-        public string TPD_Order_Id { get; set; }
-        public Nullable<int> TPD_Purchased_Qty { get; set; }
-        public Nullable<long> TPD_TQD_Id { get; set; }
-        public Nullable<long> TPD_Event_Id { get; set; }
+        public int ElementID { get; set; }
+        public string Element { get; set; }
     }
 }

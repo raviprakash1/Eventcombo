@@ -1,14 +1,15 @@
 ﻿
 @{
     ViewBag.Title = "TicketPayment";
-    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    //Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/Content/flipclock.css" rel="stylesheet" />
-
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
-    <div class="col-sm-12 pt10 bggrey">
+    @*<div class="col-sm-12 pt10 bggrey">
         <div class="Moderor" style="display: none;" id="diverroacc">
             <div class="er_UI_main">
                 <div class="er_UI_img"></div>
@@ -25,11 +26,298 @@
                 <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
             </div>
         </div>
+    </div>*@
+
+    
+
+
+    <div class="event_container ">
+        <div class="event_inner_container event_top">
+            <div class="event_detail_container">
+                <div class="evnt_details_body2">
+                    <div class="col-sm-12 no_pad mt10 pt10">
+                        <div class="col-sm-3 pl0">
+                            <img class="ev1" src="images/ev1.jpg">
+                        </div>
+                        <div class="col-sm-9 pl0">
+                            <h2 class="th_tilte">Avicii</h2>
+                            <p class="th_day_time">Saturday Aug 17th 2011,8:30pm </p>
+                            <p class="th_day_time">Club Illusions</p>
+                            <p class="th_day_time">260 S California Ave, Palo Alto CA</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="event_detail_container">
+            <div class="evnt_tile_head">
+                <div class="evnt_tile_bg_l"></div>
+                <div class="col-sm-12 col-xs-12 text-left no_pad">
+                    <h2 class="fb_dis_head pt5">ORDER INFORMATION</h2>
+                </div>
+
+                <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+            </div>
+            <div class="evnt_details_body2">
+                <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+                    <div class="table-responsive">
+                        <table class="table table-striped evnt_tkt_list_tbl">
+
+                            <thead class="tkt_tbl_head">
+                                <tr>
+                                    <th style="width:40%">Ticket Type</th>
+                                    <th>Sales End</th>
+                                    <th>Fee</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="width:40%">Emporibus autem quibusdam et aut officiis. </td>
+                                    <td>30 Nov 2015</td>
+                                    <td>$30.50</td>
+                                    <td>
+                                        <select>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </td>
+                                    <td>$160.00</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                        <table class="table evnt_tkt_list_tbl">
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="col-sm-12 text-right mt10">Subtotal : $0.3333 </div>
+                                        <div class="col-sm-12 text-right mt10">Variable Charge : $5.00</div>
+                                        <div class="col-sm-12 text-right mt10"><strong>Order total : $0.3333 </strong></div>
+                                        <div class="col-sm-12 text-right mt10">
+                                            <div class="form-group">
+                                                <label class="col-md-10 pt5 ">Promo code</label>
+                                                <div class="col-md-2 no_pad">
+                                                    <input class="form-control evnt_inp_cont" placeholder="Promocode" type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 text-right mt10"><strong>Grand total : $0.3333 </strong></div>
+                                    </td>
+
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="event_detail_container">
+            <div class="evnt_tile_head">
+                <div class="evnt_tile_bg_l"></div>
+                <div class="col-sm-12 col-xs-12 text-left no_pad">
+                    <h2 class="fb_dis_head pt5">PAYMENT INFORMATION</h2>
+                </div>
+
+                <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+            </div>
+            <div class="evnt_details_body2 evnt_timer_margin">
+                <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+                    <div class="col-sm-6">
+                        <div class="form-group ">
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                <label class="control-label ev_payment_lebel pl0">
+                                    PLEASE ENTER YOUR ACCOUNT INFORMATION<br>
+                                    <span class="ev_pay_span">Have an account? Please <a href="#">log in </a></span>
+                                </label>
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group ">
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                <label class="control-label ev_payment_lebel pl0">
+                                    <span class="ev_pay_span">Password</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group ">
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                <label class="control-label ev_payment_lebel pl0">
+                                    <span class="ev_pay_span">Confirm Password</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group mt10">
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                <label class="control-label ev_payment_lebel pl0">
+                                    PLEASE ENTER YOUR BILLING ADDRESS<br>
+                                    <input type="checkbox" /> <span class="ev_pay_span">Shipping address is different from billing </span>
+                                    <div class="clearfix"></div>
+
+                                </label>
+                                <label class="control-label ev_payment_lebel pl0">
+                                    <input type="checkbox" /> <span class="ev_pay_span">Enter Delivery Address </span>
+                                </label>
+
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="BILLING PHONE NUMBER">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="CITY">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ZIPCODE">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group mt10">
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                <label class="control-label ev_payment_lebel pl0">
+                                    PLEASE ENTER YOUR CREDIT CARD INFORMATION
+                                </label>
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="CREDIT CARD NUMBER">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad card_list">
+                                <img src="images/visa.png">
+                                <img src="images/mastercard.png">
+                                <img src="images/discover.png">
+                                <img src="images/amr-exp.png">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="EXPIRATION DATE">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group ">
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                <label class="control-label ev_payment_lebel">
+                                    PLEASE ENTER INTENDED TICKET RECEPIENTS<br>(OPTIONAL)
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                <label class="control-label ev_tickt_recp_lebel cap_l">
+                                    Ticket Type Name
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                <div class="col-sm-8 col-xs-8 no_pad">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="NAME OF THE TICKET BEARER">
+
+                                </div>
+                                <label class="control-label ev_tickt_recp_lebel ev_not_me">
+                                    <span class="Notify"> Notify by email</span>
+                                </label>
+                                <div class="Notifybox col-sm-12 col-xs-12 no_pad mt10">
+                                    <div class="col-sm-8 col-xs-8 no_pad mt10">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL OF TICKET BEARER">
+                                    </div>
+                                    <div class="col-sm-12 col-xs-12 no_pad mt10">
+                                        <button class="btn ev_live_btn" type="button">
+                                            ADD TO LIST
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-12 col-xs-12 no_pad mt10">
+                                        <div class="col-sm-8 col-xs-8 no_pad ">
+                                            <select class="form-control evnt_inp_cont ">
+                                                <option>List 1</option>
+                                                <option>List 2</option>
+                                                <option>List 3</option>
+                                                <option>List 4</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2 col-xs-2">
+                                            <button class="btn ev_live_btn" type="button">
+                                                Edit
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-2 col-xs-2">
+                                            <button class="btn ev_live_btn" type="button">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-sm-12 text-right mt10">
+                        <button type="submit" class="btn btn-lg ev_live_btn ev_live_sub_btn">
+                            COMPLTE ORDER >
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="strat_timer_cont">
+        <div>
+            <div id="divTime"> </div>
+        </div>
+        <div class="col-sm-12 no_pad text-center">
+            <p class="bg-green mb0 strt_tim_desc">
+                Please complete this purchase within 10:00 minutes.<br>
+                After 10:00 minutes, the reservation we're holding will be released to others.
+            </p>
+            <p class="bg-green mb0 strt_tim_desc2">00:54</p>
+        </div>
     </div>
 
-    <div>
-        <div id="divTime"> </div>
-    </div>
+
+
 }
 <script src="~/Scripts/flipclock.js"></script>
 @*<script src="~/Scripts/jquery.countdownTimer.js"></script>*@
@@ -51,6 +339,10 @@
         }
     }
     $(document).ready(function () {
+        $(".Notifybox").css("display", "none");
+        $(".Notify").click(function () {
+            $('.Notifybox').slideToggle("fast");
+        });
         //--------------Fire when User Click on Continue in Previous Page ------------------------------------
 
         @*var TList = [];
@@ -78,7 +370,7 @@
         //*************************Fire when User Click on Continue in Previous Page *****************************************
 
         var vTicketid = '19,20';
-        clock = $('#divTime').FlipClock(10, {
+        clock = $('#divTime').FlipClock(60, {
             clockFace: 'MinuteCounter',
             countdown: true,
             callbacks: {

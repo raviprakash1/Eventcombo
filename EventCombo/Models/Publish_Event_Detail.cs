@@ -12,13 +12,16 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Ticket_Purchased_Detail
+    public partial class Publish_Event_Detail
     {
-        public long TPD_Id { get; set; }
-        public string TPD_User_Id { get; set; }
-        public string TPD_Order_Id { get; set; }
-        public Nullable<int> TPD_Purchased_Qty { get; set; }
-        public Nullable<long> TPD_TQD_Id { get; set; }
-        public Nullable<long> TPD_Event_Id { get; set; }
+        public long PE_Id { get; set; }
+        public Nullable<long> PE_Event_Id { get; set; }
+        public string PE_Address_Ids { get; set; }
+        public Nullable<long> PE_MultipleVenue_id { get; set; }
+        public Nullable<long> PE_SingleVenue_Id { get; set; }
+        public string PE_Tickets_Ids { get; set; }
+        public string PE_Scheduled_Date { get; set; }
+        public string PE_Start_Time { get; set; }
+        public string PE_End_Time { get; set; }
     }
 }
