@@ -14,5 +14,14 @@ namespace EventCombo.Models
         public string eventId { get; set; }
         public string hdEventFav { get; set; }
         public string hdEventvote { get; set; }
+        public string TopAddress { get; set; }
+        public string TopVenue { get; set; }
+        public string eventType { get; set; }
+        public string DisplaydateRange { get; set; }
+        public string EventDescription { get; set; }
+        public string organizername { get; set; }
+        public string fblink { get; set; }
+        public string twitterlink { get; set; }
+        public string organizerid { get; set; }
     }
 }

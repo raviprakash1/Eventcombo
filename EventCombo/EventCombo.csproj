@@ -246,9 +246,6 @@
     <Compile Include="Models\EventImage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventOrganizer.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EventSubCategory.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -265,6 +262,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Event_Detail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event_OrganizerMessages.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Event_Orgnizer_Detail.cs">
@@ -292,6 +292,10 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\Order_Detail_T.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrganizerMessages.cs" />
     <Compile Include="Models\Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -637,6 +641,7 @@
     <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-development.js" />
     <Content Include="Scripts\jquery.ba-bbq.min.js" />
     <Content Include="Scripts\jquery.countdownTimer.js" />
+    <Content Include="Scripts\jquery.icalendar.pack.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
     <Content Include="Scripts\jquery.maskedinput.min.js" />

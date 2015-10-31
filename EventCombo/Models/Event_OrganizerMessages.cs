@@ -12,13 +12,14 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EventOrganizer
+    public partial class Event_OrganizerMessages
     {
-        public long EventOrganizerID { get; set; }
-        public long EventID { get; set; }
-        public string UserID { get; set; }
-        public string OrganizerDescription { get; set; }
-        public string FBLink { get; set; }
-        public string TwitterLink { get; set; }
+        public Nullable<long> EventId { get; set; }
+        public Nullable<long> OrganizerId { get; set; }
+        public string Userid { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Message { get; set; }
+        public long MessageId { get; set; }
     }
 }

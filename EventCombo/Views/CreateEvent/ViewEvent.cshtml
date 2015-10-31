@@ -23,10 +23,13 @@
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 @Html.HiddenFor(m => m.eventId, new { @id = "hdEventid" })
+<input type="hidden" id="startdate" />
+<input type="hidden" id="startend" />
 @Html.HiddenFor(m => m.hdEventFav, new { @id = "hdEventFav" })
 @Html.HiddenFor(m => m.hdEventvote, new { @id = "hdEventvote" })
-
-
+@Html.HiddenFor(m => m.eventType, new { @id = "hdEventtype" })
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
 <div class="event_container">
     <div class="event_inner_container event_top">
         <div class="event-slide-container">
@@ -49,7 +52,7 @@
                         <div class="col-sm-9 col-xs-12 text-right">
                             <div class="form-group mb5">
                                 <!--  <input class="form-control evnt_title_control evnt_placehold" placeholder="Avicii"> -->
-                                <label class="label-control evnt_title_control evnt_title_xs">
+                                <label class="label-control evnt_title_control evnt_title_xs" id="evtitle">
                                     @Html.DisplayFor(m => m.Title)
                                 </label>
                             </div>
@@ -59,7 +62,8 @@
                             <div class="form-group mb0">
                                 <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
                                 <label class="label-control evnt_title_date evnt_title_date2 evnt_title_xs" title="see what happening on this date">
-                                    Saturday Aug 17th 2011, 8:30pm - Sunday Aug 18th 2011, 4:30pm
+
+                                    @Html.DisplayFor(m => m.DisplaydateRange)
                                 </label>
                             </div>
                             <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
@@ -74,15 +78,18 @@
                                         <div class="modal-body">
                                             <div class="col-sm-12 no_pad">
                                                 <div class="form-group mb5 ">
-                                                    <label class="col-sm-12 no_pad label-control date_time_list">
-                                                        <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
-                                                    </label>
-                                                    <label class="col-sm-12 no_pad label-control date_time_list ">
-                                                        <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
-                                                    </label>
-                                                    <label class="col-sm-12 no_pad label-control date_time_list">
-                                                        <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
-                                                    </label>
+                                                    @foreach (var item in (List<string>)ViewBag.DateList)
+                                                    {
+
+                                                        <label class="col-sm-12 no_pad label-control date_time_list">
+                                                            <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item" data-toggle="modal">@item</a>
+                                                        </label>
+
+
+                                                    }
+
+
+
                                                 </div>
                                             </div>
 
@@ -96,7 +103,7 @@
                         <div class="clearfix"></div>
                         <div class="col-sm-12 text-right">
                             <label class="label-control evnt_title_date ev_white evnt_title_xs">
-                                Club Illusion
+                                @Html.DisplayFor(m => m.TopVenue)
                             </label>
                         </div>
                         <div class="clearfix"></div>
@@ -107,9 +114,11 @@
                             </div>
                             <div class="col-sm-8 col-xs-6 text-right ">
                                 <div class="form-group mb0">
-                                    <div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs"></div>
-                                    <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs">
-                                        260 S California Ave, Palo Alto CA
+                                    @*<a href="#" data-geo=""></a>*@
+
+                                    <div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" data-geo=""></div>
+                                    <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" title="@Html.DisplayFor(m=>m.TopAddress)">
+                                        @Html.DisplayFor(m => m.TopAddress)
                                     </label>
                                 </div>
                             </div>
@@ -173,23 +182,17 @@
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10">
                 <div class="col-sm-8">
-                    <h3>Instant Karma Presents</h3>
-                    <p class="evnt_desc">
-                        6th Annual Rang de Basanti with Remix King DJ Akbar Sami all the way from India
-                        <br>
-                        King of Remixes DJ Akbar Sami is back on his 8th US tour DJ Akbar Sami will make this Year's India's Independence in USA the most memorable one.
-                        <br> <br>
-                        Bigger than any event in Bay Area this August 17 (Midnight), we are all set to bring you a night to remember as DJ Akbar Sami rocks you all night.
-                    </p>
+                    @Html.DisplayFor(m => m.EventDescription)
                 </div>
                 <div class="col-sm-4 mt20">
                     <div class="col-sm-12 inst_karm_box">
-                        <h4>Instant Karma</h4>
+                        @Html.HiddenFor(m => m.organizerid, new { id = "hdorganiserid" })
+                        <h4>@Html.DisplayFor(m => m.organizername)</h4>
                         <p> <a data-target="#contorganizer" data-toggle="modal" href="#">Contact the Organizer </a></p>
                         <p><a href="#">View organizer profile </a></p>
-                        <p><a href="#"><img src="~/Images/facebook-icon.png"> facebook.com/InstantKarma</a></p>
-                        <p><a href="#"><img src="~/Images/twitter-icon.png"> TimNC7 </a></p>
-                        <p><span class="badge">5</span> Upcoming Event </p>
+                        <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="~/Images/facebook-icon.png">@Html.DisplayFor(m => m.fblink)</a></p>
+                        <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="~/Images/twitter-icon.png">@Html.DisplayFor(m => m.twitterlink) </a></p>
+                        <p><span class="badge">5</span> <a href="#">Upcoming Event(s)</a> </p>
                     </div>
                 </div>
             </div>
@@ -203,7 +206,7 @@
             <h2 class="">WHO IS GOING?</h2>
             <div class="evnt_tile_bg_r"></div>
         </div>
-        <div  class="evnt_details_body2">
+        <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
                 <label class="label-control evnt_ticket_label">
                     <img src="images/fb_connect.jpg"> to see which of your Facebook friends are going
@@ -214,21 +217,16 @@
     <div class="event_detail_container">
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
+
             <h2 class="">Ticket Info</h2>
             <div class="evnt_tile_bg_r"></div>
         </div>
         <div class="evnt_details_body2">
             <div class="col-sm-12 mt10">
                 <div id="dvTicketInfo" class="table-responsive">
-                    
-                          
-
-
-
-
 
                 </div>
-
+                    
                 <div class="table-responsive">
 
 
@@ -246,8 +244,9 @@
                         </tfoot>
                     </table>
                 </div>
+               
                 <div class="col-sm-12 text-right">
-                    <button type="button"  id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PAYMENT PROCEED > </button>
+                    <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PAYMENT PROCEED > </button>
                 </div>
             </div>
         </div>
@@ -263,24 +262,25 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
+                    <div id="orgerror" class="alert-danger" style="display:none;">Please fill out the missing information</div>
                     <div class="form-group mb10">
                         <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
                         <div class="col-sm-8">
-                            <input class="form-control evnt_inp_cont" type="text">
+                            <input class="form-control evnt_inp_cont" type="text" id="id_orgname">
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group mb10">
                         <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
                         <div class="col-sm-8">
-                            <input class="form-control evnt_inp_cont" type="text">
+                            <input class="form-control evnt_inp_cont" type="text" id="id_orgemail">
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group mb10">
                         <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" rows="4"></textarea>
+                            <textarea class="form-control" rows="4" id="id_orgtext"></textarea>
 
                         </div>
                     </div>
@@ -289,7 +289,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn ">SAVE</button>
+                <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
             </div>
 
         </div>
@@ -304,16 +304,16 @@
             </div>
             <div class="modal-body">
                 <div class="col-sm-6 text-center ev_calend_lebel">
-                    <i class="fa fa-windows"></i> <a href="#">Microsoft Outlook </a>
+                    <i class="fa fa-windows"></i> <a href="#" id="ioutlook">Microsoft Outlook </a>
                 </div>
                 <div class="col-sm-6 text-center ev_calend_lebel">
-                    <i class="fa fa-apple"></i> <a href="#">Apple Ical </a>
+                    <i class="fa fa-apple"></i> <a href="#" id="icalender">Apple Ical </a>
                 </div>
                 <div class="col-sm-6 text-center ev_calend_lebel">
-                    <i class="fa fa-google"></i> <a href="#">Google Calendar </a>
+                    <i class="fa fa-google"></i> <a href="#" id="googlecal" target="_blank">Google Calendar </a>
                 </div>
                 <div class="col-sm-6 text-center ev_calend_lebel">
-                    <i class="fa fa-yahoo"></i> <a href="#">Yahoo Calendar </a>
+                    <i class="fa fa-yahoo"></i> <a href="#" target="_blank" id="yahoocal">Yahoo Calendar </a>
                 </div>
                 <div class="clearfix"></div>
 
@@ -323,123 +323,301 @@
     </div>
 </div>
 
-
+@*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 <script>
-    $(document).ready(function () {
-        var clickfav = $('#hdEventFav').val();
-        var clickvote = $('#hdEventvote').val();
+        $(document).ready(function () {
 
-        if (clickfav == "Y") {
+            $('#saveorgaizermsg').click(function () {
 
-            $("#btnfavourite").addClass("btn_fav_act");
+                var errormsg = "";
+                var name = $('#id_orgname').val();
+                var mail = $('#id_orgemail').val();
+                var txt = $('#id_orgtext').val();
 
-        } else {
-            $("#btnfavourite").removeClass("btn_fav_act");
 
-        }
-        if (clickvote == "Y") {
-            $("#btnvote").addClass("btn_fav_act");
 
-        } else {
-            $("#btnvote").removeClass("btn_fav_act");
+                if (name !='') {
+                    $('#id_orgname').removeClass('err-bor');
 
-        }
-        $("#btnvote").click(function () {
-            var clickvote = $('#hdEventvote').val();
+                } else {
 
-            if (clickvote == "Y") {
+                    $('#id_orgname').addClass('err-bor');
+                    errormsg += "fill the details"
+                }
+                if (mail !='') {
+                    $('#id_orgemail').removeClass('err-bor');
 
-                alert('You can only vote once.');
-            } else {
-                var eid = $('#hdEventid').val();
-                $.ajax({
-                    url: '@Url.Action("savevote", "CreateEvent")',
-                    data: { Eventid: eid },
-                    type: "Post",
-                    success: function (data) {
-                        if (data == "Y") {
-                            $("#loginPopup").click();
-                            url.val('@Url.Action("ViewEvent", "CreateEvent")');
-                            return false;
-                        } else {
+                } else {
+                    $('#id_orgemail').addClass('err-bor');
+                    errormsg += "fill the details"
 
-                            $("#btnvote").addClass("btn_fav_act");
+                }
+                if (txt !='') {
+                    $('#id_orgtext').removeClass('err-bor');
 
-                            $('#hdEventvote').val("Y");
-                            $('#spanvotes').html(data);
-                            alert('Thank you for voting!');
-                        }
-                    },
-                    error: function (data) {
-                        alert("Sorry there is some problem.");
-                        return false
-                    }
-                });
-            }
-        });
+                } else {
+                    $('#id_orgtext').addClass('err-bor');
+                    errormsg += "fill the details"
+                }
 
-        $("#btnfavourite").click(function () {
+                if (errormsg != "") {
+                    $('#orgerror').css('display', 'block');
 
-            var clickfav = $('#hdEventFav').val();
-            if (clickfav == "Y") {
-                $('#hdEventFav').val("N");
-            }
-            if (clickfav == "N") {
-                $('#hdEventFav').val("Y");
-            }
-            var eid = $('#hdEventid').val();
-            var clickid = $('#hdEventFav').val();
-            $.ajax({
-                url: '@Url.Action("savefavourite", "CreateEvent")',
-                data: { Eventid: eid, type: clickid },
-                type: "Post",
-                success: function (data) {
-                    if (data == "Y") {
-                        $("#loginPopup").click();
-                        url.val('@Url.Action("ViewEvent", "CreateEvent")');
-                        return false;
-                    } else {
-                        var clickfav = $('#hdEventFav').val();
-                        if (clickfav == "Y") {
-                            $("#btnfavourite").addClass("btn_fav_act");
-                            alert('Your Event have been saved!');
-                        }
-                        if (clickfav == "N") {
-                            alert('Your Event have not been saved!');
-                            $("#btnfavourite").removeClass("btn_fav_act");
-                        }
-
-                        $('#spanfav').html(data);
+                }
+                else
+                {
+                    var organiserid=$('#hdorganiserid').val();
+                    var eventid=$('#hdEventid').val();
+                    var model = {
+                        'email': mail,
+                        'name': name,
+                        'mesasges': txt,
+                        'organiserid': organiserid,
+                        'EventId': eventid
 
                     }
-                },
-                error: function (data) {
-                    alert("Sorry there is some problem.");
-                    return false
+                    $.ajax({
+                        url: '@Url.Action("saveorganizermsg", "CreateEvent")',
+                        data: model,
+                        type: "Post",
+                        success: function (response) {
+                            alert(response);
+
+                        }
+                    });
                 }
             });
 
         });
-
-        $("#lstcarousel div:first").addClass("active");
-        $(function () {
-            $(document).tooltip({
-                track: true
+        @*$('#icalender').click(function () {
+            alert('hello')
+            var date=$('#startdate').val();
+            var date1=new Date(date);
+            $.ajax({
+                url: '@Url.Action("Calendar", "CreateEvent")',
+                data: { beginDate: date1, endDate: date1, location: 'Hello', subject: 'Title', description:'Description' },
+                type: "Post",
+                success: function (data) {
+                }
             });
-        });
 
 
-        $(".TmezoneSet").hide();
-        $(".Timezone").click(function () {
-            $(".TmezoneSet").slideToggle("fast");
 
-        });
+        });*@
+            function showevent(t) {
+                var split = t.split('-');
+                var str = '', format = '';
 
-        $(".closetimemodal").click(function () {
-            $(".TmezoneSet").hide();
+                var Datenew = new Date(split[1]);
 
-        });
+                var date2 = Date.parse(split[1] + split[2] + 'UTC');
+
+                //var time = document.getElementById('txttime').value;
+                var where_is_p = split[2].indexOf('p');
+                var where_is_a = split[2].indexOf('a');
+                if (where_is_p > 0) {
+                    str = split[2].replace('pm', ' ');
+                    format = 'PM';
+
+                }
+                if (where_is_a > 0) {
+
+                    str = split[2].replace('am', ' ');
+                    format = 'AM';
+                }
+                var hrs = Number(str.match(/^(\d+)/)[1]);
+                var mnts = Number(str.match(/:(\d+)/)[1]);
+
+                if (format == "PM" && hrs < 12) hrs = hrs + 12;
+                if (format == "AM" && hrs == 12) hrs = hrs - 12;
+                var hours = hrs.toString();
+                var minutes = mnts.toString();
+                if (hrs < 10) hours = "0" + hours;
+                if (mnts < 10) minutes = "0" + minutes;
+
+                var fullDate = split[1] + " " + hours + ":" + minutes;
+                var fullDateReal = new Date(fullDate);
+                var year = fullDateReal.getUTCFullYear();
+                var month = fullDateReal.getUTCMonth()
+                $('#startdate').val(fullDateReal);
+
+                var isodatestart = (fullDateReal.getUTCFullYear() + ""
+                          + pad(fullDateReal.getUTCMonth() + 1) + ""
+                          + pad(fullDateReal.getUTCDate()) + 'T'
+                          + pad(fullDateReal.getUTCHours()) + ""
+                          + pad(fullDateReal.getUTCMinutes()) + ""
+                          + pad(fullDateReal.getUTCSeconds()) + 'Z');
+
+                var isodateend = (fullDateReal.getUTCFullYear() + ""
+                                 + pad(fullDateReal.getUTCMonth() + 1) + ""
+                                 + pad(fullDateReal.getUTCDate()) + 'T'
+                                 + "00" + ""
+                                 + "00" + ""
+                                 + "00" + 'Z');
+
+
+
+                //console.log(where_is_p);
+                //console.log(where_is_a);
+                var title = $('#evtitle').html().trim();
+                var location = $('#lbltopaddress').html().trim();
+                var variable = fullDateReal;
+                $("#ioutlook").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+                $("#icalender").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+                $("#yahoocal").attr("href", "http://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
+
+                $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
+                var target = $(this).data("target");
+                $(target).show();
+            }
+
+            function pad(n) { return n < 10 ? '0' + n : n };
+            $(document).ready(function () {
+
+                var clickfav = $('#hdEventFav').val();
+                var clickvote = $('#hdEventvote').val();
+
+                if (clickfav == "Y") {
+
+                    $("#btnfavourite").addClass("btn_fav_act");
+
+                } else {
+                    $("#btnfavourite").removeClass("btn_fav_act");
+
+                }
+                if (clickvote == "Y") {
+                    $("#btnvote").addClass("btn_fav_act");
+
+                } else {
+                    $("#btnvote").removeClass("btn_fav_act");
+
+                }
+                $("#btnvote").click(function () {
+                    var clickvote = $('#hdEventvote').val();
+
+                    if (clickvote == "Y") {
+
+                        alert('You can only vote once.');
+                    } else {
+                        var eid = $('#hdEventid').val();
+                        $.ajax({
+                            url: '@Url.Action("savevote", "CreateEvent")',
+                            data: { Eventid: eid },
+                            type: "Post",
+                            success: function (data) {
+                                if (data == "Y") {
+                                    $("#loginPopup").click();
+                                    url.val('@Url.Action("ViewEvent", "CreateEvent")');
+                                    return false;
+                                } else {
+
+                                    $("#btnvote").addClass("btn_fav_act");
+
+                                    $('#hdEventvote').val("Y");
+                                    $('#spanvotes').html(data);
+                                    alert('Thank you for voting!');
+                                }
+                            },
+                            error: function (data) {
+                                alert("Sorry there is some problem.");
+                                return false
+                            }
+                        });
+                    }
+                });
+
+                $("#btnfavourite").click(function () {
+
+                    var clickfav = $('#hdEventFav').val();
+                    if (clickfav == "Y") {
+                        $('#hdEventFav').val("N");
+                    }
+                    if (clickfav == "N") {
+                        $('#hdEventFav').val("Y");
+                    }
+                    var eid = $('#hdEventid').val();
+                    var clickid = $('#hdEventFav').val();
+                    $.ajax({
+                        url: '@Url.Action("savefavourite", "CreateEvent")',
+                        data: { Eventid: eid, type: clickid },
+                        type: "Post",
+                        success: function (data) {
+                            if (data == "Y") {
+                                $("#loginPopup").click();
+                                url.val('@Url.Action("ViewEvent", "CreateEvent")');
+                                return false;
+                            } else {
+                                var clickfav = $('#hdEventFav').val();
+                                if (clickfav == "Y") {
+                                    $("#btnfavourite").addClass("btn_fav_act");
+                                    alert('Your Event have been saved!');
+                                }
+                                if (clickfav == "N") {
+                                    alert('Your Event have not been saved!');
+                                    $("#btnfavourite").removeClass("btn_fav_act");
+                                }
+
+                                $('#spanfav').html(data);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Sorry there is some problem.");
+                            return false
+                        }
+                    });
+
+                });
+
+                $("#lstcarousel div:first").addClass("active");
+                $(function () {
+                    $(document).tooltip({
+                        track: true
+                    });
+                });
+
+
+                $(".TmezoneSet").hide();
+                $(".Timezone").click(function () {
+                    var eventtype = $("#hdEventtype").val();
+                    if (eventtype == "Multiple") {
+                        $(".TmezoneSet").slideToggle("fast");
+                    } else {
+                        $(".TmezoneSet").slideToggle("fast");
+                    }
+                    //
+
+                });
+
+                $(".closetimemodal").click(function () {
+                    $(".TmezoneSet").hide();
+
+                });
+            });
+</script>
+
+
+
+<script>
+  $(function() {
+    $( document ).tooltip({
+      items: "[data-geo], [title]",
+      content: function() {
+        var element = $( this );
+        if ( element.is( "[data-geo]" ) ) {
+            var text = 'USA, Aghapur Road, Sector 41, Noida, Uttar Pradesh, India ';
+          return "<img class='map'  alt='" + text +
+            "' src='http://maps.google.com/maps/api/staticmap?" +
+            "zoom=15&size=250x250&maptype=roadmap&sensor=false&center=" +
+            text + "&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C"+text+"'>";
+        }
+        if ( element.is( "[title]" ) ) {
+          return element.attr( "title" );
+        }
+
+      }
     });
+  });
 </script>
 
 
@@ -449,7 +627,7 @@
     //    if (isNaN(this.value + "" + String.fromCharCode(e.charCode))) return false;
     //}
     //$('.number-only').keypress(function (e) {
-        
+
     //}).on("cut copy paste", function (e) { e.preventDefault(); });
 
 
@@ -469,11 +647,11 @@
         //alert($("#P_8").text());
 
         for (i = 0; i < IdAry.length; i++) {
-           
+
             vqty = parseFloat($("#d_" + IdAry[i].toString()).val());
             vPrice = parseFloat($("#P_" + IdAry[i].toString()).text());
             vDonate = parseFloat($("#txtd_" + IdAry[i].toString()).val());
-           
+
             if (isNaN(vqty)==true ) vqty = 0;
             if (isNaN(vPrice) == true) vPrice = 0;
             if (isNaN(vDonate) == true) vDonate = 0;
@@ -507,7 +685,7 @@
 
             runningTotal = (runningTotal + ((vqty != null ? parseFloat(vqty) : 0) * (vPrice != null ? parseFloat(vPrice) : 0))) + parseFloat(vDonate);
 
-         
+
         }
         // alert(runningTotal);
         $("#spGTotal").text('Order total : $' + runningTotal.toString());
