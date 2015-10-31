@@ -241,19 +241,22 @@ namespace EventCombo.Controllers
                         Address ObjAdd = new Models.Address();
                         foreach (Address objA in model.AddressDetail)
                         {
-                            ObjAdd = new Models.Address();
-                            ObjAdd.EventId = ObjEC.EventID;
-                            ObjAdd.Address1 = objA.Address1;
-                            ObjAdd.Address2 = objA.Address2;
-                            ObjAdd.City = objA.City;
-                            ObjAdd.CountryID = objA.CountryID;
-                            ObjAdd.State = objA.State;
-                            ObjAdd.UserId = strUserId;
-                            ObjAdd.VenueName = objA.VenueName;
-                            ObjAdd.Zip = objA.Zip;
-                            ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
-                            ObjAdd.Name = "";
-                            objEnt.Addresses.Add(ObjAdd);
+                            if (objA.VenueName.Trim() != "")
+                            {
+                                ObjAdd = new Models.Address();
+                                ObjAdd.EventId = ObjEC.EventID;
+                                ObjAdd.Address1 = objA.Address1;
+                                ObjAdd.Address2 = objA.Address2;
+                                ObjAdd.City = objA.City;
+                                ObjAdd.CountryID = objA.CountryID;
+                                ObjAdd.State = objA.State;
+                                ObjAdd.UserId = strUserId;
+                                ObjAdd.VenueName = objA.VenueName;
+                                ObjAdd.Zip = objA.Zip;
+                                ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
+                                ObjAdd.Name = "";
+                                objEnt.Addresses.Add(ObjAdd);
+                            }
 
                         }
                     }
