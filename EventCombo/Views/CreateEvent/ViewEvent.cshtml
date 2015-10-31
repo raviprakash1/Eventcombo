@@ -393,15 +393,15 @@
                
                
                
-                if (name != " ") {
+                if (name !='') {
                     $('#id_orgname').removeClass('err-bor');
                    
                 } else {
-                    
+                   
                     $('#id_orgname').addClass('err-bor');
-                    errormsg = "fill the details"
+                    errormsg += "fill the details"
                 }
-                if (mail != " ") {
+                if (mail !='') {
                     $('#id_orgemail').removeClass('err-bor');
                    
                 } else {
@@ -409,14 +409,14 @@
                     errormsg += "fill the details"
                     
                 }
-                if (txt != " ") {
+                if (txt !='') {
                     $('#id_orgtext').removeClass('err-bor');
                    
                 } else {
                     $('#id_orgtext').addClass('err-bor');
                     errormsg += "fill the details"
                 }
-
+                
                 if (errormsg != "") {
                     $('#orgerror').css('display', 'block');
 
