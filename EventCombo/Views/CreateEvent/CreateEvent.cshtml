@@ -1328,7 +1328,7 @@
                 if (Sno == $(this).find("td:first").html())
                     $(this).remove();
             });
-            
+
             $("#VenueName").val("");
             $("#Address1").val("");
             $("#Address2").val("");
@@ -1503,7 +1503,20 @@
 
             $("#btMakeLive").click(function () {
                 if ($("#hdEventId").val() != '') {
-                    window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation")';
+                    $.ajax({
+                        url: '@Url.Action("PublishEvent", "CreateEvent")',
+                        data: { strEventId: $("#hdEventId").val() },
+                        type: "Post",
+                        success: function (response) {
+                            if (response == 'N') {
+                                $('#divaccsuc').css('display', 'none');
+                                $('#diverroacc').css('display', 'block');
+                                $('#erraccmsg').html('Sorry, There is some problem while publishing event.');
+                                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation")';
+                            }
+                        }
+                    });
+
                 }
                 else {
                     $('#divaccsuc').css('display', 'none');
@@ -1707,17 +1720,18 @@
                 else
                 {
                     $("#tblAddress tr").each(function () {
+
                         var Sno = $(this).find("td:first").html();
                         // Multiple Address
                         if (Sno != '') {
                             SubmitAddress.push({
-                                VenueName: $("#VenueName" + Sno).val(),
-                                Address1: $("#Address1" + Sno).val(),
-                                Address2: $("#Address2" + Sno).val(),
-                                City: $("#City" + Sno).val(),
-                                State: $("#State" + Sno).val(),
-                                Zip: $("#Zip" + Sno).val(),
-                                CountryID: $("#CountryID" + Sno).val(),
+                                VenueName: $("#VenueName" + Sno).val()   ,
+                                Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() :''),
+                                Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
+                                City: ($("#City" + Sno).val() != null ? $("#City" + Sno).val() : ''),
+                                State: ($("#State" + Sno).val() != null ? $("#State" + Sno).val() : ''),
+                                Zip: ($("#Zip" + Sno).val() != null ? $("#Zip" + Sno).val() : ''),
+                                CountryID: ($("#CountryID" + Sno).val() != null ? $("#CountryID" + Sno).val() : ''),
                                 ConsolidateAddress: $("#consolidate" + Sno).text()
                             });
                         }
@@ -1799,7 +1813,7 @@
                                 else vMonthlyWeekDays = vMonthlyWeekDays + ',' + vMonthlyWeekDaysAry[i].toString();
                             }
                         }
-                        
+
                         $("#hidSchLastState").val("Monthly");
                     }
                     else if (SchOption == "Custom") {
@@ -1833,7 +1847,7 @@
                 //});
 
                 var vDefaultOrg = $("#ddlOrgnizers").val();
-                
+
                 $("#tblOrgnizer tr").each(function () {
                     var Sno = $(this).find("td:first").html();
 
@@ -1844,7 +1858,7 @@
                             Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                             FBLink: $("#OrgFB_" + Sno).text(),
                             Twitter: $("#OrgTw_" + Sno).text(),
-                            DefaultOrg: (vDefaultOrg==Sno ? 'Y':'N') 
+                            DefaultOrg: (vDefaultOrg==Sno ? 'Y':'N')
 
                         });
                     }
@@ -1968,7 +1982,7 @@
                 //var data = $("#dvOrg_0").clone();
                 //$("#dvOrganizer").append(data);
                 //alert(parseInt($("#ddlOrgnizers option").length));
-              
+
 
                 if ($("#txtOrgnizer").val().trim() == '')
                 {
@@ -2285,11 +2299,13 @@
                 for (i = 0; i <= ColAry.length - 1; i++) {
                     CellId = ColName[i] + Sno.toString();
                     strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
-                    if (i != ColAry.length - 1) {
-                        if (ConsolidateValue == '')
-                            ConsolidateValue = ColAry[i];
-                        else
-                            ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                    if (ColAry[i] != '') {
+                        if (i != ColAry.length - 1) {
+                            if (ConsolidateValue == '')
+                                ConsolidateValue = ColAry[i];
+                            else
+                                ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                        }
                     }
                     //if (ColName[i].toString() == "CID" || ColName[i].toString() == "CountryID")
                     //    strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
@@ -2313,12 +2329,13 @@
                 for (i = 0; i <= ColName.length - 1; i++) {
 
                     CtrlId = ColName[i] + Sno.toString();
-
-                    if (i != ColAry.length - 1) {
-                        if (ConsolidateValue == '')
-                            ConsolidateValue = ColAry[i];
-                        else
-                            ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                    if (ColAry[i] != '') {
+                        if (i != ColAry.length - 1) {
+                            if (ConsolidateValue == '')
+                                ConsolidateValue = ColAry[i];
+                            else
+                                ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                        }
                     }
 
                     //alert(CtrlId);

@@ -241,18 +241,18 @@ namespace EventCombo.Controllers
                         Address ObjAdd = new Models.Address();
                         foreach (Address objA in model.AddressDetail)
                         {
-                            if (objA.VenueName.Trim() != "")
+                            if (objA.VenueName != null && objA.VenueName.Trim() != "")
                             {
                                 ObjAdd = new Models.Address();
                                 ObjAdd.EventId = ObjEC.EventID;
-                                ObjAdd.Address1 = objA.Address1;
-                                ObjAdd.Address2 = objA.Address2;
-                                ObjAdd.City = objA.City;
-                                ObjAdd.CountryID = objA.CountryID;
-                                ObjAdd.State = objA.State;
+                                ObjAdd.Address1 = objA.Address1 == null ? "": objA.Address1;
+                                ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2; 
+                                ObjAdd.City = objA.City == null ? "" : objA.City;
+                                ObjAdd.CountryID = objA.CountryID; 
+                                ObjAdd.State = objA.State == null ? "" : objA.State; 
                                 ObjAdd.UserId = strUserId;
                                 ObjAdd.VenueName = objA.VenueName;
-                                ObjAdd.Zip = objA.Zip;
+                                ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
                                 ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
                                 ObjAdd.Name = "";
                                 objEnt.Addresses.Add(ObjAdd);
@@ -388,9 +388,6 @@ namespace EventCombo.Controllers
 
                         }
                     }
-
-
-
 
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
@@ -712,7 +709,28 @@ namespace EventCombo.Controllers
            
 
         }
-        
+
+        public string PublishEvent(string EventId)
+        {
+            string strResult = "N";
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                if (strUserId != "")
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        objEnt.PublishEvent(Convert.ToInt64(EventId), strUserId);
+                    }
+                    strResult = "Y";
+                }
+            }
+            catch (Exception)
+            {
+                strResult ="N";
+            }
+            return strResult;
+        }
 
         #region DisplayTickets
         public string GetTicketDetail(string Eventid)

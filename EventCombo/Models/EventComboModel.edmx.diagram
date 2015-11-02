@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="b80f23d8698e4fa9823ca4b31e94ef64" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="EventComboModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Address" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.AspNetRole" Width="1.5" PointX="7.75" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="4.125" IsExpanded="true" />
@@ -44,7 +43,6 @@
         <EntityTypeShape EntityType="EventComboModel.TimeZoneDetail" Width="1.5" PointX="17.75" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.User_Permission_Detail" Width="1.5" PointX="18.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Venue" Width="1.5" PointX="18.75" PointY="9.75" IsExpanded="true" />
-        <AssociationConnector Association="EventComboModel.FK_Address_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Profile_Profile" ManuallyRouted="false" />
@@ -62,6 +60,8 @@
         <AssociationConnector Association="EventComboModel.FK_EventVenue_Event" />
         <AssociationConnector Association="EventComboModel.FK_EventVenue_EventVenue" />
         <AssociationConnector Association="EventComboModel.FK_MultipleEvent_Event" />
+        <EntityTypeShape EntityType="EventComboModel.Address" Width="1.5" PointX="5.25" PointY="1.875" />
+        <AssociationConnector Association="EventComboModel.FK_Address_Event" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

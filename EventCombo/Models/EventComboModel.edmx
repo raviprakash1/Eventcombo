@@ -889,24 +889,6 @@
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="AddressID" />
-          </Key>
-          <Property Name="AddressID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Address1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Address2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CountryID" Type="Byte" Nullable="false" />
-          <Property Name="VenueName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EventId" Type="Int64" />
-          <Property Name="ConsolidateAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Event" Relationship="Self.FK_Address_Event" FromRole="Address" ToRole="Event" />
-        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -1028,7 +1010,6 @@
           <Property Name="Ticket_showvariable" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Ticket_variabledesc" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Ticket_variabletype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_Event" FromRole="Event" ToRole="Address" />
           <NavigationProperty Name="EventType" Relationship="Self.FK_Event_EventType" FromRole="Event" ToRole="EventType" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
           <NavigationProperty Name="Event_VariableDesc" Relationship="Self.FK_Event_VariableDesc_Event" FromRole="Event" ToRole="Event_VariableDesc" />
@@ -1036,6 +1017,7 @@
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <NavigationProperty Name="EventVenues" Relationship="EventComboModel.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
           <NavigationProperty Name="MultipleEvents" Relationship="EventComboModel.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
+          <NavigationProperty Name="Addresses" Relationship="EventComboModel.FK_Address_Event" FromRole="Event" ToRole="Address" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1380,18 +1362,6 @@
           <Property Name="AddressID" Type="Int64" Nullable="false" />
           <Property Name="VenueName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
-        <Association Name="FK_Address_Event">
-          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="EventId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1546,7 +1516,6 @@
         </Association>
         <EntityContainer Name="EventComboEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -1584,10 +1553,6 @@
           <EntitySet Name="TimeZoneDetails" EntityType="Self.TimeZoneDetail" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" />
           <EntitySet Name="Venues" EntityType="Self.Venue" />
-          <AssociationSet Name="FK_Address_Event" Association="Self.FK_Address_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -1679,6 +1644,11 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="MultipleEvent" EntitySet="MultipleEvents" />
           </AssociationSet>
+          <EntitySet Name="Addresses" EntityType="EventComboModel.Address" />
+          <AssociationSet Name="FK_Address_Event" Association="EventComboModel.FK_Address_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventListing_Result">
           <Property Type="Int64" Name="EventID" Nullable="false" />
@@ -1742,6 +1712,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Zip" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CountryID" Type="Byte" Nullable="false" />
+          <Property Name="VenueName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EventId" Type="Int64" />
+          <Property Name="ConsolidateAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_Address_Event" FromRole="Address" ToRole="Event" />
+        </EntityType>
+        <Association Name="FK_Address_Event">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1755,24 +1755,6 @@
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="EventComboModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="EventId" ColumnName="EventId" />
-                <ScalarProperty Name="ConsolidateAddress" ColumnName="ConsolidateAddress" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2299,6 +2281,24 @@
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventVenueID" ColumnName="EventVenueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="EventComboModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="ConsolidateAddress" ColumnName="ConsolidateAddress" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -28,7 +28,6 @@ namespace EventCombo.Models
         }
     
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
@@ -67,6 +66,7 @@ namespace EventCombo.Models
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
         public virtual DbSet<EventVenue> EventVenues { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
