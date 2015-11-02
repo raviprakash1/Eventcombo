@@ -79,7 +79,7 @@ button:focus { outline: none;}
     transform: rotate(0deg); transform-origin: 50% 50% 0px;
 }
 .headr_main{ padding-top:20px; padding-bottom:5px }
-.cont_margin{ margin-top: 15px; margin-bottom: 15px;}
+.cont_margin{ margin-top: 15px; margin-bottom: 0px;}
 .cont_margin2{margin-top: 15px; margin-bottom: 15px;}
 .acnt_form_label{ text-align: left !important; color: #555; font-weight: normal; }
 .acnt_form_name_mini{ font-size: 10px; color: #999999;}
@@ -204,10 +204,10 @@ button:focus { outline: none;}
 
 .event_container{ width: 900px; max-width: 100%; margin: 0 auto;}
 .event-upload-container{
-    width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: 600px;}
+    width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: 600px; position:relative; }
 
 /*.event_top{ margin-top: 62px;}*/
-.event_top{ margin-top: 15%;}
+.event_top{ margin-top: 14%;}
 .event-upload{ width: 100%; float: left; } 
 .evnt_title_bg{ width: 650px; max-width: 100%; float: right; background: #575757; padding:10px 15px;}
 
@@ -732,7 +732,7 @@ span.evnt_toltip{
 .wid_get_buzz{ width: 90% !important; margin-right: 3%;} 
 .home_fixed_header{ width: 100%; float: left; height: auto !important; position: relative !important; top: 0px !important}
 .con_scr0l_home {margin-top:0px !important;}
-.logo img{ width:98%;} 
+
 }
 
 @media (min-width: 360px) and (max-width: 640px) {
