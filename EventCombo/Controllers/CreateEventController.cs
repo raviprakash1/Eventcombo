@@ -409,7 +409,7 @@ namespace EventCombo.Controllers
             var TopAddress = "";var Topvenue="";
             string organizername = "", fblink = "", twitterlink = "", organizerid = "";
             ViewEvent viewEvent = new ViewEvent();
-            var EventDetail = (from ev in db.Events where ev.EventID == EventId select ev).FirstOrDefault();
+            var EventDetail = GetEventdetail(EventId);
             var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
@@ -435,8 +435,10 @@ namespace EventCombo.Controllers
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
             var votecount = (from ev in db.EventVotes where ev.eventId == EventId select ev).Count();
             var eventype= (from ev in db.MultipleEvents where ev.EventID == EventId select ev).Count();
+            //GetDateList
             var GetEventDate = db.GetEventDateList(EventId).ToList();
             ViewBag.DateList = GetEventDate;
+
             if (eventype > 0) {
                 viewEvent.eventType = "Multiple";
                 var evschdetails = (from ev in db.MultipleEvents where ev.EventID == EventId select ev).FirstOrDefault();
@@ -496,17 +498,18 @@ namespace EventCombo.Controllers
 
             if (displaystarttime=="N"|| displaystarttime == "n")
             {
-                viewEvent.DisplaydateRange = endday.ToString() + " " + eDate_new + "," + endtime;
+                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new +  "-" + endday.ToString() + " " + eDate_new + "," + endtime;
+
             }
 
 
 
             if (displayendtime == "N" || displayendtime == "n")
             {
-                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + "," + starttime;
+                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + "," + starttime + "-" + endday.ToString() + " " + eDate_new;
 
             }
-          
+
             viewEvent.TopAddress = TopAddress;
             viewEvent.Favourite = favCount.ToString();
             viewEvent.Vote = votecount.ToString();
@@ -562,7 +565,12 @@ namespace EventCombo.Controllers
             return View(viewEvent);
         }
 
-        private List<string> GetImages(long EventId)
+        public Event GetEventdetail(long eventId)
+        {
+            return ((from ev in db.Events where ev.EventID == eventId select ev).FirstOrDefault());
+        }
+
+        public List<string> GetImages(long EventId)
         {
             using (EventComboEntities db = new EventComboEntities())
             {

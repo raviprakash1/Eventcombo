@@ -9,9 +9,57 @@ namespace EventCombo.Controllers
     public class TicketPaymentController : Controller
     {
         // GET: TicketPayment
-        public ActionResult TicketPayment()
+        public ActionResult TicketPayment(long Eventid)
         {
-            return View();
+            TicketPayment tp = new TicketPayment();
+            string defaultCountry = "";
+            string Fname = "", Lname = "", Phnnumber = "", Adress = "",Email="";
+            CreateEventController cs = new CreateEventController();
+            AccountController AccDetail = new AccountController();
+            tp.Imageurl =  cs.GetImages(Eventid).FirstOrDefault();
+            var eventdetails=cs.GetEventdetail(Eventid);
+            tp.Title = eventdetails.EventTitle;
+            tp.Tickettype = "Paid";
+            ViewData["Type"] = tp.Tickettype;
+            if (Session["AppId"] != null)
+            {
+                string Userid = Session["AppId"].ToString();
+                var accountdetail = AccDetail.GetLoginDetails(Userid);
+                Fname = accountdetail.Firstname;
+                Lname = accountdetail.Lastname;
+                Phnnumber = accountdetail.MainPhone;
+                Adress = accountdetail.StreetAddress1 + "," + accountdetail.StreeAddress2 + "," + accountdetail.City + "," + accountdetail.State + ","+accountdetail.Zip +","+ accountdetail.Country;
+                Email = accountdetail.Email;
+            }
+
+            tp.Email = Email;
+            tp.FName = Fname;
+            tp.LName = Lname;
+            tp.PhnNo = Phnnumber;
+            tp.Address = Adress;
+            tp.EventId = Eventid;
+
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var countryQuery = (from c in db.Countries
+                                    orderby c.Country1 ascending
+                                    select c).Distinct();
+                List<SelectListItem> countryList = new List<SelectListItem>();
+                defaultCountry = "United States";
+
+                foreach (var item in countryQuery)
+                {
+                    countryList.Add(new SelectListItem()
+                    {
+                        Text = item.Country1,
+                        Value = item.CountryID.ToString(),
+                        Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
+                    });
+                }
+                ViewBag.CountryID = countryList;
+            }
+         
+            return View(tp);
         }
 
         public void ReleaseTickets(string strTTicketIds)
@@ -41,5 +89,14 @@ namespace EventCombo.Controllers
                 context.SaveChanges();
             }
         }
+
+
+        public void setsession(string id, long Eventid)
+        {
+
+            Session["ReturnUrl"] = Url.Action("TicketPayment", "TicketPayment", new { Eventid = Eventid });
+
+        }
+
     }
 }

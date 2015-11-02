@@ -61,11 +61,15 @@
                         <div class="col-sm-12 col-xs-12 text-right">
                             <div class="form-group mb0">
                                 <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
-                                <label class="label-control evnt_title_date evnt_title_date2 evnt_title_xs" title="see what happening on this date">
+                              
+                               
+                                    <label class="label-control evnt_title_date evnt_title_date2 evnt_title_xs" title="see what happening on this date">
+                                                               
+                                                                    @Html.DisplayFor(m => m.DisplaydateRange)
+                                           </label>
+                                
 
-                                    @Html.DisplayFor(m => m.DisplaydateRange)
-                                </label>
-                            </div>
+                </div>
                             <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
                                 <div class="ev_time_zone_model date_time_modal">
                                     <div class="modal-content ev_tm_zon_cont">
@@ -78,11 +82,11 @@
                                         <div class="modal-body">
                                             <div class="col-sm-12 no_pad">
                                                 <div class="form-group mb5 ">
-                                                    @foreach (var item in (List<string>)ViewBag.DateList)
+                                                    @foreach(var item in (List<GetEventDateList_Result>)ViewBag.DateList)
                                                     {
 
                                                         <label class="col-sm-12 no_pad label-control date_time_list">
-                                                            <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item" data-toggle="modal">@item</a>
+                                                            <a href = "#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek-@item.Datefrom-@item.Time</a>
                                                         </label>
 
 
@@ -110,8 +114,8 @@
                         <div class="col-sm-12 no_pad">
                             <div class="col-sm-4 col-xs-6">
                                 <button class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" type="submit">GET TICKETS</button>
-                                <img src="~/Images/icon-deal.png">
-                            </div>
+                                <img src = "~/Images/icon-deal.png" >
+                         </div>
                             <div class="col-sm-8 col-xs-6 text-right ">
                                 <div class="form-group mb0">
                                     @*<a href="#" data-geo=""></a>*@
@@ -190,9 +194,18 @@
                         <h4>@Html.DisplayFor(m => m.organizername)</h4>
                         <p> <a data-target="#contorganizer" data-toggle="modal" href="#">Contact the Organizer </a></p>
                         <p><a href="#">View organizer profile </a></p>
-                        <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="~/Images/facebook-icon.png">@Html.DisplayFor(m => m.fblink)</a></p>
+                        @if (Html.DisplayFor(m => m.fblink).ToString() != "")
+                        {
+                            <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="~/Images/facebook-icon.png">@Html.DisplayFor(m => m.fblink)</a></p>
+
+                        }
+@if (Html.DisplayFor(m => m.twitterlink).ToString() != "")
+{
+
                         <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="~/Images/twitter-icon.png">@Html.DisplayFor(m => m.twitterlink) </a></p>
-                        <p><span class="badge">5</span> <a href="#">Upcoming Event(s)</a> </p>
+
+}
+                 <p><span class="badge">5</span> <a href="#">Upcoming Event(s)</a> </p>
                     </div>
                 </div>
             </div>
@@ -362,7 +375,7 @@
 
                 if (errormsg != "") {
                     $('#orgerror').css('display', 'block');
-
+                    return false;
                 }
                 else
                 {
@@ -389,7 +402,7 @@
             });
 
         });
-        @*$('#icalender').click(function () {
+    @*$('#icalender').click(function () {
             alert('hello')
             var date=$('#startdate').val();
             var date1=new Date(date);
@@ -404,6 +417,7 @@
 
 
         });*@
+    
             function showevent(t) {
                 var split = t.split('-');
                 var str = '', format = '';
@@ -599,13 +613,14 @@
 
 
 <script>
-  $(function() {
+    $(function () {
+      var address=  $('#lbltopaddress').val();
     $( document ).tooltip({
       items: "[data-geo], [title]",
       content: function() {
         var element = $( this );
         if ( element.is( "[data-geo]" ) ) {
-            var text = 'USA, Aghapur Road, Sector 41, Noida, Uttar Pradesh, India ';
+            var text = address;
           return "<img class='map'  alt='" + text +
             "' src='http://maps.google.com/maps/api/staticmap?" +
             "zoom=15&size=250x250&maptype=roadmap&sensor=false&center=" +
@@ -725,13 +740,19 @@
                 alert("Sorry there is some problem.");
             }
         });
-
+        var Eventid = $('#hdEventid').val();
         $("#btPayment").click(function () {
-            window.location.href = '@Url.Action("TicketPayment", "TicketPayment")';
+            window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;
         });
 
 
 
+        $(document).click(function () {
+
+            $('#diverroacc').css('display', 'none');
+            $('#divaccsuc').css('display', 'none');
+            $("input").removeClass('err-bor');
+        });
 
 
     });

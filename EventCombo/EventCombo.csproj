@@ -280,6 +280,9 @@
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetEventDateList_Result.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetEventListing_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -314,6 +317,7 @@
     <Compile Include="Models\TicketDeliveryMethod.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TicketPayment.cs" />
     <Compile Include="Models\TicketType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -611,6 +615,7 @@
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
     <None Include="Properties\PublishProfiles\temp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Commonfunction.js" />
     <Content Include="Scripts\dropit.js" />
     <Content Include="Scripts\fake-element.js" />
     <Content Include="Scripts\filer\jquery.filer.js" />

@@ -3529,7 +3529,7 @@
     function checkvalidtime(e) {
         var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
         var al = e.substr(0, e.indexOf('-'));
-        alert($('#' + e).val());
+     
         if (al == "id_saletimestart") {
             errorMsg = checkTime(e);
             if (errorMsg != "") {
@@ -4164,6 +4164,14 @@
     }
 
     $(document).ready(function () {
+
+
+        $(document).click(function () {
+
+            $('#diverroacc').css('display', 'none');
+            $('#divaccsuc').css('display', 'none');
+            $("input").removeClass('err-bor');
+        });
         $('#drag-drop').on('click', function (e) {
             $('#input2').unbind('click');
 

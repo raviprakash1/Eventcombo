@@ -25,5 +25,7 @@ namespace EventCombo.Models
         public string EndTime { get; set; }
         public string MonthlyWeek { get; set; }
         public string MonthlyWeekDays { get; set; }
+    
+        public virtual Event Event { get; set; }
     }
 }

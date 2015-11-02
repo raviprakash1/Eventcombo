@@ -26,7 +26,6 @@
         <EntityTypeShape EntityType="EventComboModel.EventSubCategory" Width="1.5" PointX="17" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventTempImage" Width="1.5" PointX="14.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventType" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.EventVenue" Width="1.5" PointX="5.25" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventVote" Width="1.5" PointX="11.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="13.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Message" Width="1.5" PointX="15.75" PointY="14.75" IsExpanded="true" />
@@ -54,13 +53,15 @@
         <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Event_VariableDesc_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_EventImage_Event" ManuallyRouted="false" />
-        <AssociationConnector Association="EventComboModel.FK_EventVenue_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Ticket_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK__EventSubC__Event__5F141958" ManuallyRouted="false" />
-        <AssociationConnector Association="EventComboModel.FK_EventVenue_EventVenue" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Ticket_Quantity_Info_Ticket" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_MultipleEvent_Event" />
+        <EntityTypeShape EntityType="EventComboModel.EventVenue" Width="1.5" PointX="5.25" PointY="28.125" />
+        <AssociationConnector Association="EventComboModel.FK_EventVenue_Event" />
+        <AssociationConnector Association="EventComboModel.FK_EventVenue_EventVenue" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
