@@ -241,19 +241,22 @@ namespace EventCombo.Controllers
                         Address ObjAdd = new Models.Address();
                         foreach (Address objA in model.AddressDetail)
                         {
-                            ObjAdd = new Models.Address();
-                            ObjAdd.EventId = ObjEC.EventID;
-                            ObjAdd.Address1 = objA.Address1;
-                            ObjAdd.Address2 = objA.Address2;
-                            ObjAdd.City = objA.City;
-                            ObjAdd.CountryID = objA.CountryID;
-                            ObjAdd.State = objA.State;
-                            ObjAdd.UserId = strUserId;
-                            ObjAdd.VenueName = objA.VenueName;
-                            ObjAdd.Zip = objA.Zip;
-                            ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
-                            ObjAdd.Name = "";
-                            objEnt.Addresses.Add(ObjAdd);
+                            if (objA.VenueName != null && objA.VenueName.Trim() != "")
+                            {
+                                ObjAdd = new Models.Address();
+                                ObjAdd.EventId = ObjEC.EventID;
+                                ObjAdd.Address1 = objA.Address1 == null ? "": objA.Address1;
+                                ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2; 
+                                ObjAdd.City = objA.City == null ? "" : objA.City;
+                                ObjAdd.CountryID = objA.CountryID; 
+                                ObjAdd.State = objA.State == null ? "" : objA.State; 
+                                ObjAdd.UserId = strUserId;
+                                ObjAdd.VenueName = objA.VenueName;
+                                ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
+                                ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
+                                ObjAdd.Name = "";
+                                objEnt.Addresses.Add(ObjAdd);
+                            }
 
                         }
                     }
@@ -385,9 +388,6 @@ namespace EventCombo.Controllers
 
                         }
                     }
-
-
-
 
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
@@ -717,23 +717,44 @@ namespace EventCombo.Controllers
            
 
         }
-        
+
+        public string PublishEvent(string strEventId)
+        {
+            string strResult = "N";
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                if (strUserId != "" && strEventId!="")
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        objEnt.PublishEvent(Convert.ToInt64(strEventId), strUserId);
+                    }
+                    strResult = "Y";
+                }
+            }
+            catch (Exception)
+            {
+                strResult ="N";
+            }
+            return strResult;
+        }
 
         #region DisplayTickets
         public string GetTicketDetail(string Eventid)
         {
             string strTicket = "";
                 
-            //if (Session["AppId"] != null)
-            //{
-
-                using (EventComboEntities objEnt = new EventComboEntities())
+           // if (Session["AppId"] != null)
+          //  {
+                if (Eventid.Trim() != "")
                 {
-                    strTicket = objEnt.GetTicketListing(2).Single();
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        strTicket = objEnt.GetTicketListing(Convert.ToInt64(Eventid)).Single();
+                    }
                 }
-             
-
-            //}
+          //  }
             return strTicket;
         }
 

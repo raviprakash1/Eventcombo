@@ -719,6 +719,7 @@
 
     }
     $(document).ready(function () {
+        $("#spGTotal").text('');
         //$(".TktdescDetl").css("display", "none");
         //$(".TktmoreDesc").click(function () {
         //    alert("chal bhai");
@@ -728,18 +729,21 @@
         //    alert("test");
         //    //if (String.fromCharCode(e.keyCode).match(/[^0-9]/g)) return false;
         //});
-
-        $.ajax({
-            url: '@Url.Action("GetTicketDetail", "CreateEvent")',
-            data: { Eventid: '2' },
-            type: "Post",
-            success: function (data) {
-                $("#dvTicketInfo").append(data);
-            },
-            error: function (data) {
-                alert("Sorry there is some problem.");
-            }
-        });
+        var veventId = ($("#hdEventid").val().trim() != '' ? $("#hdEventid").val() :'');
+        if (veventId !='')
+        {
+            $.ajax({
+                url: '@Url.Action("GetTicketDetail", "CreateEvent")',
+                data: { Eventid: veventId },
+                type: "Post",
+                success: function (data) {
+                    $("#dvTicketInfo").append(data);
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                }
+            });
+        }
         var Eventid = $('#hdEventid').val();
         $("#btPayment").click(function () {
             window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;
@@ -747,12 +751,6 @@
 
 
 
-        $(document).click(function () {
-
-            $('#diverroacc').css('display', 'none');
-            $('#divaccsuc').css('display', 'none');
-            $("input").removeClass('err-bor');
-        });
 
 
     });

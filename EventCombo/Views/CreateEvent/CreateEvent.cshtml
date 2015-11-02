@@ -326,7 +326,7 @@
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 <div class="col-sm-12 ev_tic_end no_pad">
-                                                    <label class="label-control lbl_bot_text">Select by day of the month</label>
+                                                    <label id="btDayofMonth" class="label-control lbl_bot_text">Select by day of the month</label>
                                                 </div>
                                             </div>
                                             <div class="evnt_doll_amnt col-sm-12 no_pad mt10">
@@ -334,45 +334,45 @@
                                                     <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">It occurs every</label></div>
                                                     <div class="col-sm-6 no_pad">
                                                         <select id="dllMonth" class="form-control evnt_inp_cont wd200">
-                                                            <option>1st</option>
-                                                            <option>2nd</option>
-                                                            <option>3rd</option>
-                                                            <option>4th</option>
-                                                            <option>5th</option>
-                                                            <option>6st</option>
-                                                            <option>7nd</option>
-                                                            <option>8rd</option>
-                                                            <option>9th</option>
-                                                            <option>10th</option>
-                                                            <option>11st</option>
-                                                            <option>12nd</option>
-                                                            <option>13rd</option>
-                                                            <option>14th</option>
-                                                            <option>15th</option>
-                                                            <option>16st</option>
-                                                            <option>17nd</option>
-                                                            <option>18rd</option>
-                                                            <option>19th</option>
-                                                            <option>20th</option>
-                                                            <option>21st</option>
-                                                            <option>22nd</option>
-                                                            <option>23rd</option>
-                                                            <option>24th</option>
-                                                            <option>25th</option>
-                                                            <option>26st</option>
-                                                            <option>27nd</option>
-                                                            <option>28rd</option>
-                                                            <option>29th</option>
-                                                            <option>30th</option>
-                                                            <option>31th</option>
+                                                            <option value="1" >1st</option>
+                                                            <option value="2">2nd</option>
+                                                            <option value="3">3rd</option>
+                                                            <option value="4">4th</option>
+                                                            <option value="5" >5th</option>
+                                                            <option value="6">6st</option>
+                                                            <option value="7">7nd</option>
+                                                            <option value="8">8rd</option>
+                                                            <option value="9">9th</option>
+                                                            <option value="10">10th</option>
+                                                            <option value="11">11st</option>
+                                                            <option value="12">12nd</option>
+                                                            <option value="13">13rd</option>
+                                                            <option value="14">14th</option>
+                                                            <option value="15">15th</option>
+                                                            <option value="16">16st</option>
+                                                            <option value="17">17nd</option>
+                                                            <option value="18">18rd</option>
+                                                            <option value="19">19th</option>
+                                                            <option value="20">20th</option>
+                                                            <option value="21">21st</option>
+                                                            <option value="22">22nd</option>
+                                                            <option value="23" >23rd</option>
+                                                            <option value="24">24th</option>
+                                                            <option value="25">25th</option>
+                                                            <option value="26">26st</option>
+                                                            <option value="27">27nd</option>
+                                                            <option value="28">28rd</option>
+                                                            <option value="29">29th</option>
+                                                            <option value="30">30th</option>
+                                                            <option value="31">31th</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12 no_pad">
-                                                    <label class="label-control">day of the month.</label>
+                                                    <label  class="label-control">day of the month.</label>
                                                 </div>
                                                 <div class="col-sm-12 no_pad">
-                                                    <label class="ev_by_date label-control lbl_bot_text">Select by day of the week</label>
+                                                    <label id="btDayofWeek" class="ev_by_date label-control lbl_bot_text">Select by day of the week</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -1047,6 +1047,7 @@
                     <input type="hidden" id="hdUniqueguid" value="" />
                     <input type="hidden" id="hddiscount" value="0" />
                     <input type="hidden" id="hdSchType" value="" />
+                    <input type="hidden" id="hdMonthlyType" value="DW" />
 
 
                 </div>
@@ -1327,7 +1328,7 @@
                 if (Sno == $(this).find("td:first").html())
                     $(this).remove();
             });
-            
+
             $("#VenueName").val("");
             $("#Address1").val("");
             $("#Address2").val("");
@@ -1502,7 +1503,24 @@
 
             $("#btMakeLive").click(function () {
                 if ($("#hdEventId").val() != '') {
-                    window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation")';
+                    $.ajax({
+                        url: '@Url.Action("PublishEvent", "CreateEvent")',
+                        data: { strEventId: $("#hdEventId").val() },
+                        type: "Post",
+                        success: function (response) {
+                            if (response == 'N') {
+                                $('#divaccsuc').css('display', 'none');
+                                $('#diverroacc').css('display', 'block');
+                                $('#erraccmsg').html('Sorry, There is some problem while publishing event.');
+                               
+                            }
+                            else
+                            {
+                                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation")';
+                            }
+                        }
+                    });
+
                 }
                 else {
                     $('#divaccsuc').css('display', 'none');
@@ -1523,6 +1541,15 @@
                 }
 
             })
+
+            $("#btDayofMonth").click(function () {
+                $("#hdMonthlyType").val('DM');
+            });
+
+            $("#btDayofWeek").click(function () {
+                $("#hdMonthlyType").val('DW');
+            });
+
 
             $('#btSave').click(function () {
                 var msg = validatemain();
@@ -1697,17 +1724,18 @@
                 else
                 {
                     $("#tblAddress tr").each(function () {
+
                         var Sno = $(this).find("td:first").html();
                         // Multiple Address
                         if (Sno != '') {
                             SubmitAddress.push({
-                                VenueName: $("#VenueName" + Sno).val(),
-                                Address1: $("#Address1" + Sno).val(),
-                                Address2: $("#Address2" + Sno).val(),
-                                City: $("#City" + Sno).val(),
-                                State: $("#State" + Sno).val(),
-                                Zip: $("#Zip" + Sno).val(),
-                                CountryID: $("#CountryID" + Sno).val(),
+                                VenueName: $("#VenueName" + Sno).val()   ,
+                                Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() :''),
+                                Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
+                                City: ($("#City" + Sno).val() != null ? $("#City" + Sno).val() : ''),
+                                State: ($("#State" + Sno).val() != null ? $("#State" + Sno).val() : ''),
+                                Zip: ($("#Zip" + Sno).val() != null ? $("#Zip" + Sno).val() : ''),
+                                CountryID: ($("#CountryID" + Sno).val() != null ? $("#CountryID" + Sno).val() : ''),
                                 ConsolidateAddress: $("#consolidate" + Sno).text()
                             });
                         }
@@ -1731,31 +1759,35 @@
                 //    });
 
                 //}
-
+                debugger;
                 // Single Timing
                 if ($("#hdSchType").val() == 'Single') {
                     SingleTiming.push({
                         'EventStartDate': $("#txtStartDate").val(),
-                        'EventEndDate': $("#txtStartTime").val(),
-                        'EventStartTime': $("#txtEndDate").val(),
+                        'EventEndDate': $("#txtEndDate").val(),
+                        'EventStartTime': $("#txtStartTime").val(),
                         'EventEndTime': $("#txtEndTime").val()
                     });
                 }
+
                 // Multiple Schedule
 
 
                 if ($("#hdSchType").val() == 'Multiple') {
+                    debugger;
 
                     var SchOption = $("#dlSchOption").val();
-                    var vWeeklyDay = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
+                    var vWeeklyDayAry = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
                     var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
                     var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
-                    var vMonthlyWeekDays = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
+                    var vMonthlyWeekDaysAry = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
+
                     var vStartingFrom = $("#txtDateFrom").val();
                     var vStartingTo = $("#txtDateTo").val();
                     var vStartTime = $("#txtTimeStart").val();
                     var vEndTime = $("#txtTimeEnd").val();
-
+                    var vMonthlyWeekDays = '';
+                    var vWeeklyDay = '';
 
                     if (SchOption == "Daily") {
                         vWeeklyDay = '';
@@ -1769,9 +1801,23 @@
                         vMonthlyWeek = '';
                         vMonthlyWeekDays = '';
                         $("#hidSchLastState").val("Weekly");
+                        for (i = 0; i < vWeeklyDayAry.length; i++) {
+                            if (vWeeklyDay == '') vWeeklyDay = vWeeklyDayAry[i].toString();
+                            else vWeeklyDay = vWeeklyDay + ',' + vWeeklyDayAry[i].toString();
+                        }
                     }
                     else if (SchOption == "Monthly") {
                         vWeeklyDay = '';
+                        if ($("#hdMonthlyType").val() == "DM") vMonthlyWeek = ''; vMonthlyWeekDays = '';
+                        if ($("#hdMonthlyType").val() == "DW") {
+                            vMonthlyDay = '';
+                            for (i = 0; i < vMonthlyWeekDaysAry.length; i++)
+                            {
+                                if (vMonthlyWeekDays == '') vMonthlyWeekDays = vMonthlyWeekDaysAry[i].toString();
+                                else vMonthlyWeekDays = vMonthlyWeekDays + ',' + vMonthlyWeekDaysAry[i].toString();
+                            }
+                        }
+
                         $("#hidSchLastState").val("Monthly");
                     }
                     else if (SchOption == "Custom") {
@@ -1805,7 +1851,7 @@
                 //});
 
                 var vDefaultOrg = $("#ddlOrgnizers").val();
-                
+
                 $("#tblOrgnizer tr").each(function () {
                     var Sno = $(this).find("td:first").html();
 
@@ -1816,7 +1862,7 @@
                             Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                             FBLink: $("#OrgFB_" + Sno).text(),
                             Twitter: $("#OrgTw_" + Sno).text(),
-                            DefaultOrg: (vDefaultOrg==Sno ? 'Y':'N') 
+                            DefaultOrg: (vDefaultOrg==Sno ? 'Y':'N')
 
                         });
                     }
@@ -1940,7 +1986,7 @@
                 //var data = $("#dvOrg_0").clone();
                 //$("#dvOrganizer").append(data);
                 //alert(parseInt($("#ddlOrgnizers option").length));
-              
+
 
                 if ($("#txtOrgnizer").val().trim() == '')
                 {
@@ -2257,11 +2303,13 @@
                 for (i = 0; i <= ColAry.length - 1; i++) {
                     CellId = ColName[i] + Sno.toString();
                     strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
-                    if (i != ColAry.length - 1) {
-                        if (ConsolidateValue == '')
-                            ConsolidateValue = ColAry[i];
-                        else
-                            ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                    if (ColAry[i] != '') {
+                        if (i != ColAry.length - 1) {
+                            if (ConsolidateValue == '')
+                                ConsolidateValue = ColAry[i];
+                            else
+                                ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                        }
                     }
                     //if (ColName[i].toString() == "CID" || ColName[i].toString() == "CountryID")
                     //    strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
@@ -2285,12 +2333,13 @@
                 for (i = 0; i <= ColName.length - 1; i++) {
 
                     CtrlId = ColName[i] + Sno.toString();
-
-                    if (i != ColAry.length - 1) {
-                        if (ConsolidateValue == '')
-                            ConsolidateValue = ColAry[i];
-                        else
-                            ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                    if (ColAry[i] != '') {
+                        if (i != ColAry.length - 1) {
+                            if (ConsolidateValue == '')
+                                ConsolidateValue = ColAry[i];
+                            else
+                                ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                        }
                     }
 
                     //alert(CtrlId);

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -871,7 +871,8 @@
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventComboModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1033,9 +1034,9 @@
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
           <NavigationProperty Name="Event_VariableDesc" Relationship="Self.FK_Event_VariableDesc_Event" FromRole="Event" ToRole="Event_VariableDesc" />
           <NavigationProperty Name="EventImages" Relationship="Self.FK_EventImage_Event" FromRole="Event" ToRole="EventImage" />
+          <NavigationProperty Name="EventVenues" Relationship="Self.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
+          <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
-          <NavigationProperty Name="MultipleEvents" Relationship="EventComboModel.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
-          <NavigationProperty Name="EventVenues" Relationship="EventComboModel.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1144,6 +1145,21 @@
           <Property Name="EventType1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="Self.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
         </EntityType>
+        <EntityType Name="EventVenue">
+          <Key>
+            <PropertyRef Name="EventVenueID" />
+          </Key>
+          <Property Name="EventVenueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int64" Nullable="false" />
+          <Property Name="AddressId" Type="Int64" Nullable="false" />
+          <Property Name="EventStartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventEndDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_EventVenue_Event" FromRole="EventVenue" ToRole="Event" />
+          <NavigationProperty Name="EventVenue1" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue" ToRole="EventVenue1" />
+          <NavigationProperty Name="EventVenue2" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
+        </EntityType>
         <EntityType Name="EventVote">
           <Key>
             <PropertyRef Name="VoteId" />
@@ -1184,7 +1200,7 @@
           <Property Name="EndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
         </EntityType>
         <EntityType Name="Order_Detail_T">
           <Key>
@@ -1492,6 +1508,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EventVenue_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="EventVenue" Type="Self.EventVenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="EventVenue">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MultipleEvent_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="MultipleEvent" Type="Self.MultipleEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="MultipleEvent">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Ticket_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
@@ -1513,6 +1553,18 @@
             </Principal>
             <Dependent Role="EventSubCategory">
               <PropertyRef Name="EventCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventVenue_EventVenue">
+          <End Role="EventVenue" Type="Self.EventVenue" Multiplicity="1" />
+          <End Role="EventVenue1" Type="Self.EventVenue" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EventVenue">
+              <PropertyRef Name="EventVenueID" />
+            </Principal>
+            <Dependent Role="EventVenue1">
+              <PropertyRef Name="EventVenueID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1566,6 +1618,7 @@
           <EntitySet Name="EventSubCategories" EntityType="Self.EventSubCategory" />
           <EntitySet Name="EventTempImages" EntityType="Self.EventTempImage" />
           <EntitySet Name="EventTypes" EntityType="Self.EventType" />
+          <EntitySet Name="EventVenues" EntityType="Self.EventVenue" />
           <EntitySet Name="EventVotes" EntityType="Self.EventVote" />
           <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
@@ -1620,6 +1673,14 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="EventImage" EntitySet="EventImages" />
           </AssociationSet>
+          <AssociationSet Name="FK_EventVenue_Event" Association="Self.FK_EventVenue_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventVenue" EntitySet="EventVenues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MultipleEvent_Event" Association="Self.FK_MultipleEvent_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="MultipleEvent" EntitySet="MultipleEvents" />
+          </AssociationSet>
           <AssociationSet Name="FK_Ticket_Event" Association="Self.FK_Ticket_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="Ticket" EntitySet="Tickets" />
@@ -1627,6 +1688,10 @@
           <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
             <End Role="EventCategory" EntitySet="EventCategories" />
             <End Role="EventSubCategory" EntitySet="EventSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventVenue_EventVenue" Association="Self.FK_EventVenue_EventVenue">
+            <End Role="EventVenue" EntitySet="EventVenues" />
+            <End Role="EventVenue1" EntitySet="EventVenues" />
           </AssociationSet>
           <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="Self.FK_Ticket_Quantity_Info_Ticket">
             <End Role="Ticket" EntitySet="Tickets" />
@@ -1645,7 +1710,7 @@
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEventDateList" ReturnType="Collection(EventComboModel.GetEventDateList_Result)">
-          <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
             <Parameter Name="EventTitle" Mode="In" Type="String" />
@@ -1660,26 +1725,19 @@
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
-          <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="PublishEvent">
             <Parameter Name="EventId" Mode="In" Type="Int64" />
             <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
-          <AssociationSet Name="FK_MultipleEvent_Event" Association="EventComboModel.FK_MultipleEvent_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="MultipleEvent" EntitySet="MultipleEvents" />
-          </AssociationSet>
-          <EntitySet Name="EventVenues" EntityType="EventComboModel.EventVenue" />
-          <AssociationSet Name="FK_EventVenue_Event" Association="EventComboModel.FK_EventVenue_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="EventVenue" EntitySet="EventVenues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EventVenue_EventVenue" Association="EventComboModel.FK_EventVenue_EventVenue">
-            <End Role="EventVenue" EntitySet="EventVenues" />
-            <End Role="EventVenue1" EntitySet="EventVenues" />
-          </AssociationSet>
         </EntityContainer>
+        <ComplexType Name="GetEventDateList_Result">
+          <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Datefrom" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="type" Nullable="true" MaxLength="50" />
+        </ComplexType>
         <ComplexType Name="GetEventListing_Result">
           <Property Type="Int64" Name="EventID" Nullable="false" />
           <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
@@ -1691,63 +1749,6 @@
           <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventAddress" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="GetEventDateList_Result">
-          <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Datefrom" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="Time" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="type" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <Association Name="FK_MultipleEvent_Event">
-          <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
-          <End Type="EventComboModel.MultipleEvent" Role="MultipleEvent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="MultipleEvent">
-              <PropertyRef Name="EventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="EventVenue">
-          <Key>
-            <PropertyRef Name="EventVenueID" />
-          </Key>
-          <Property Name="EventVenueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventID" Type="Int64" Nullable="false" />
-          <Property Name="AddressId" Type="Int64" Nullable="false" />
-          <Property Name="EventStartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventEndDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_EventVenue_Event" FromRole="EventVenue" ToRole="Event" />
-          <NavigationProperty Name="EventVenue1" Relationship="EventComboModel.FK_EventVenue_EventVenue" FromRole="EventVenue" ToRole="EventVenue1" />
-          <NavigationProperty Name="EventVenue2" Relationship="EventComboModel.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
-        </EntityType>
-        <Association Name="FK_EventVenue_Event">
-          <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
-          <End Type="EventComboModel.EventVenue" Role="EventVenue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="EventVenue">
-              <PropertyRef Name="EventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EventVenue_EventVenue">
-          <End Type="EventComboModel.EventVenue" Role="EventVenue" Multiplicity="1" />
-          <End Type="EventComboModel.EventVenue" Role="EventVenue1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EventVenue">
-              <PropertyRef Name="EventVenueID" />
-            </Principal>
-            <Dependent Role="EventVenue1">
-              <PropertyRef Name="EventVenueID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2014,6 +2015,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EventVenues">
+            <EntityTypeMapping TypeName="EventComboModel.EventVenue">
+              <MappingFragment StoreEntitySet="EventVenue">
+                <ScalarProperty Name="EventVenueID" ColumnName="EventVenueID" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
+                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
+                <ScalarProperty Name="EventStartTime" ColumnName="EventStartTime" />
+                <ScalarProperty Name="EventEndTime" ColumnName="EventEndTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="EventVotes">
             <EntityTypeMapping TypeName="EventComboModel.EventVote">
               <MappingFragment StoreEntitySet="EventVote">
@@ -2276,7 +2290,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetEventDateList" FunctionName="EventComboModel.Store.GetEventDateList" >
+          <FunctionImportMapping FunctionImportName="GetEventDateList" FunctionName="EventComboModel.Store.GetEventDateList">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EventComboModel.GetEventDateList_Result">
                 <ScalarProperty Name="Dayofweek" ColumnName="Dayofweek" />
@@ -2304,19 +2318,6 @@
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
           <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
           <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
-          <EntitySetMapping Name="EventVenues">
-            <EntityTypeMapping TypeName="EventComboModel.EventVenue">
-              <MappingFragment StoreEntitySet="EventVenue">
-                <ScalarProperty Name="EventEndTime" ColumnName="EventEndTime" />
-                <ScalarProperty Name="EventStartTime" ColumnName="EventStartTime" />
-                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
-                <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="EventVenueID" ColumnName="EventVenueID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
