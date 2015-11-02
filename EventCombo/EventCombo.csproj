@@ -351,7 +351,6 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />
-    <Content Include="Images\4.png" />
     <Content Include="Images\fb_btn.png" />
     <Content Include="Images\go_btn.png" />
     <Content Include="Images\o_cal.png" />
@@ -408,9 +407,6 @@
     <Content Include="ForgotPassword.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\1.png" />
-    <Content Include="Images\2.png" />
-    <Content Include="Images\3.png" />
     <Content Include="Images\391817logo.jpg" />
     <Content Include="Images\affiliate-program_FPO.jpg" />
     <Content Include="Images\AMEX.png" />

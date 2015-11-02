@@ -72,24 +72,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        public void LockTickets(Ticket_Locked_Detail objTicketIds)
-        {
-            //string[] strTIds = strTicketIds.Split(',');
-            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-            using (var context = new EventComboEntities())
-            {
-                Ticket_Locked_Detail objTLD = new Ticket_Locked_Detail();
-                foreach (Ticket_Locked_Detail objModel in objTicketIds.TLD_List)
-                {
-                    objTLD.TLD_Locked_Qty = objModel.TLD_Locked_Qty;
-                   // objTLD.TLD_Ticket_Id = objModel.TLD_Ticket_Id;
-                    objTLD.TLD_User_Id = strUsers;
-                    context.Ticket_Locked_Detail.Add(objTLD);
-                }
-                context.SaveChanges();
-            }
-        }
-
+       
 
         public void setsession(string id, long Eventid)
         {

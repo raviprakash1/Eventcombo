@@ -758,6 +758,30 @@ namespace EventCombo.Controllers
             return strTicket;
         }
 
+        public void LockTickets(Ticket_Locked_Detail objLocked)
+        {
+            string strGuid = Guid.NewGuid().ToString();
+            Session["TicketLockedId"] = strGuid;
+            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+            using (var context = new EventComboEntities())
+            {
+                Ticket_Locked_Detail objTLD = new Ticket_Locked_Detail();
+                foreach (Ticket_Locked_Detail objModel in objLocked.TLD_List)
+                {
+                    objTLD = new Ticket_Locked_Detail();
+                    objTLD.TLD_Locked_Qty = objModel.TLD_Locked_Qty;
+                    objTLD.TLD_TQD_Id  = objModel.TLD_TQD_Id;
+                    objTLD.TLD_Event_Id = objModel.TLD_Event_Id;
+                    objTLD.TLD_User_Id = strUsers;
+                    objTLD.TLD_GUID = strGuid;
+                    objTLD.Locktime = DateTime.Now;
+                    context.Ticket_Locked_Detail.Add(objTLD);
+                }
+                context.SaveChanges();
+            }
+        }
+
+
         #endregion
 
 
