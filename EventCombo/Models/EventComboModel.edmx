@@ -731,6 +731,10 @@
           <Parameter Name="EventSubCat" Type="varchar" Mode="In" />
           <Parameter Name="EventFeature" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GUID" Type="varchar" Mode="In" />
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetSetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
           <Parameter Name="GETSET" Type="varchar" Mode="In" />
@@ -1700,6 +1704,10 @@
             <Parameter Name="EventId" Mode="In" Type="Int64" />
             <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetSelectedTicketListing" ReturnType="Collection(String)">
+            <Parameter Name="GUID" Mode="In" Type="String" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2289,6 +2297,7 @@
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
           <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
           <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
+          <FunctionImportMapping FunctionImportName="GetSelectedTicketListing" FunctionName="EventComboModel.Store.GetSelectedTicketListing" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -81,5 +81,24 @@ namespace EventCombo.Controllers
 
         }
 
+
+        #region LoadTickets
+        public string LoadTickets(string strEvent)
+        {
+            string strGetSelectedTickets = "";
+            string strGuid = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+            if (strGuid != "")
+            {
+                using (var context = new EventComboEntities())
+                {
+                    strGetSelectedTickets = context.GetSelectedTicketListing(strGuid, (strEvent != "" ? Convert.ToInt64(strEvent) : 0)).Single();
+                }
+            }
+            return strGetSelectedTickets;
+        }
+
+
+        #endregion
+
     }
 }

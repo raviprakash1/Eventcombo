@@ -154,5 +154,18 @@ namespace EventCombo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishEvent", eventIdParameter, userIdParameter);
         }
+    
+        public virtual ObjectResult<string> GetSelectedTicketListing(string gUID, Nullable<long> eventId)
+        {
+            var gUIDParameter = gUID != null ?
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(string));
+    
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("EventId", eventId) :
+                new ObjectParameter("EventId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSelectedTicketListing", gUIDParameter, eventIdParameter);
+        }
     }
 }

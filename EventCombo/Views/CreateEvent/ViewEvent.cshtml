@@ -747,7 +747,7 @@
         var Eventid = $('#hdEventid').val();
         $("#btPayment").click(function () {
             var vEntid = $('#hdEventid').val();
-            alert(vEntid);
+           
             var IdAry = $("#hdIds").val().split(',');
 
             var TList = [];
@@ -777,7 +777,6 @@
                 data: model,
                 type: "Post",
                 success: function (response) {
-                    alert("chal pya");
                 }
             });
 

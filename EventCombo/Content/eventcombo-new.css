@@ -248,7 +248,7 @@
 .ev_white{ color: #fff;}
 .ev_white_bg{ background: #fff;}
 
-/*Start event display ticket page*/
+/*Start event display 0 page*/
 .book_tkt_date{ font-size: 20px;}
 .book_tkt_desc{ font-size: 16px; padding-bottom: 10px !important;}
 
@@ -303,6 +303,7 @@
 
 .tkt_more_desc{color: #3cf; cursor: pointer; font-weight: normal;}
 
+.tkt_more_desc i{ font-style:normal;}
 
 
 
