@@ -67,6 +67,10 @@ namespace EventCombo.Models
         public virtual DbSet<TimeZoneDetail> TimeZoneDetails { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
+        public virtual DbSet<BillingAddress> BillingAddresses { get; set; }
+        public virtual DbSet<CardDetail> CardDetails { get; set; }
+        public virtual DbSet<ShippingAddress> ShippingAddresses { get; set; }
+        public virtual DbSet<TicketBearer> TicketBearers { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

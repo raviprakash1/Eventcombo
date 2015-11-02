@@ -98,5 +98,13 @@ namespace EventCombo.Controllers
 
         }
 
+
+        public string SaveDetails(TicketPayment ps)
+        {
+
+            return "";
+
+        }
+
     }
 }

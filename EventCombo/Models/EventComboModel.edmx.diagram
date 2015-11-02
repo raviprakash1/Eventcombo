@@ -62,6 +62,10 @@
         <AssociationConnector Association="EventComboModel.FK_Ticket_Quantity_Info_Ticket" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EventComboModel.BillingAddress" Width="1.5" PointX="19.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EventComboModel.CardDetail" Width="1.5" PointX="18.375" PointY="19.75" />
+        <EntityTypeShape EntityType="EventComboModel.ShippingAddress" Width="1.5" PointX="20.375" PointY="9.75" />
+        <EntityTypeShape EntityType="EventComboModel.TicketBearer" Width="1.5" PointX="12.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

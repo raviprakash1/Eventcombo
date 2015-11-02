@@ -201,6 +201,12 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BillingAddress.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CardDetail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CommanClasses.cs" />
     <Compile Include="Models\Country.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -308,10 +314,16 @@
     <Compile Include="Models\Publish_Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ShippingAddress.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Status.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ticket.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TicketBearer.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketDeliveryMethod.cs">
@@ -351,7 +363,6 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />
-    <Content Include="Images\4.png" />
     <Content Include="Images\fb_btn.png" />
     <Content Include="Images\go_btn.png" />
     <Content Include="Images\o_cal.png" />
@@ -408,9 +419,6 @@
     <Content Include="ForgotPassword.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\1.png" />
-    <Content Include="Images\2.png" />
-    <Content Include="Images\3.png" />
     <Content Include="Images\391817logo.jpg" />
     <Content Include="Images\affiliate-program_FPO.jpg" />
     <Content Include="Images\AMEX.png" />
@@ -646,6 +654,7 @@
     <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-development.js" />
     <Content Include="Scripts\jquery.ba-bbq.min.js" />
     <Content Include="Scripts\jquery.countdownTimer.js" />
+    <Content Include="Scripts\jquery.creditCardValidator.js" />
     <Content Include="Scripts\jquery.icalendar.pack.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />

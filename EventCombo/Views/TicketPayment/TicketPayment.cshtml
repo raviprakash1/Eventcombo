@@ -7,12 +7,13 @@
 }
 
 <link href="~/Content/flipclock.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.creditCardValidator.js"></script>
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
 
     
-
+    <input id="hidTicketbearer" />
     @Html.HiddenFor(m=>m.EventId,new {id="hdEventid" })
     <div class="event_container ">
         <div class="event_inner_container event_top">
@@ -280,16 +281,20 @@
                                 </div>
                                
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad card_list">
-                                    <img src="~/Images/visa.png">
-                                    <img src="~/Images/mastercard.png">
-                                    <img src="~/Images/discover.png">
-                                    <img src="~/Images/amr-exp.png">
+                                    <img src="/Images/visa.png" id="imgcard" style="display:none">
+                                    @*<img src="~/Images/mastercard.png" id="mastercard" style="display:none">
+                                    <img src="~/Images/discover.png" id="discover" style="display:none">
+                                    <img src="~/Images/amr-exp.png" id="amr" style="display:none">*@
                                 </div>
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="EXPIRATION DATE" id="expirationdate">
                                 </div>
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE" >
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE" id="cvvcode"  onkeydown="return checknumber(event);" maxlength="5">
+                                </div>
+                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                    <input type="checkbox" id="chkcarddetails" /> <span class="ev_pay_span">Save billing and payment info for easy ordering </span>
+
                                 </div>
                             </div>
                         
@@ -298,7 +303,7 @@
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <label class="control-label ev_payment_lebel pl0">
                                     PLEASE ENTER YOUR BILLING ADDRESS<br>
-                                    <input type="checkbox" class="billingaddress" /> <span class="ev_pay_span">Shipping address is different from billing </span>
+                                    <input type="checkbox" class="billingaddress" id="shippinginfo"/> <span class="ev_pay_span">Shipping address is different from billing </span>
                                     <div class="clearfix"></div>
 
                                 </label>
@@ -306,40 +311,40 @@
 
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength = 35>
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength = 35 id="billfname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength = 35>
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength = 35 id="billLname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" id="billingphno">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength = 256>
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength = 256 id="billaddress1">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength = 256>
-                            </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256>
-                                </div>
-                                <div class="col-sm-6 col-xs-12 no_pad ">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256>
-                                </div>
-
-
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength = 256 id="billaddress2">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5>
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256 id="billcity" >
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label" })
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256 id="billstate">
+                                </div>
+
+
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <div class="col-sm-6 col-xs-12 pl0">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5 id="billzip">
+                                </div>
+                                <div class="col-sm-6 col-xs-12 no_pad ">
+                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label" ,@id="billcountry" })
 
 
                                 </div>
-
+                                    
 
                             </div>
                         </div>
@@ -355,36 +360,36 @@
 
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength = 35>
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength = 35 id="shipfname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength = 35>
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength = 35 id="shipLname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" id="shippingphnno">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength = 256>
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength = 256 id="shipaddress1">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength = 256>
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength = 256 id="shipaddress2">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256>
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256 id="shipcity">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256>
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256 id="shipstate">
                                 </div>
 
 
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5>
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5 id="shipzip">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label" })
+                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label"  ,@id= "shipcountry" })
 
 
                                 </div>
@@ -400,55 +405,43 @@
                     <div class="col-sm-6">
                         <div class="form-group ">
                             <div class="col-sm-12 col-xs-12 no_pad">
-                                <label class="control-label ev_payment_lebel">
-                                    PLEASE ENTER INTENDED TICKET RECEPIENTS<br>(OPTIONAL)
-                                </label>
-                            </div>
-                            <div class="col-sm-12 col-xs-12 no_pad">
-                                <label class="control-label ev_tickt_recp_lebel cap_l">
-                                    Ticket Type Name
-                                </label>
-                            </div>
-                            <div class="col-sm-12 col-xs-12 no_pad">
                                 <div class="col-sm-8 col-xs-8 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="NAME OF THE TICKET BEARER">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="NAME OF THE TICKET BEARER" id="nameofticket">
 
                                 </div>
                                 <label class="control-label ev_tickt_recp_lebel ev_not_me">
                                     <span class="Notify"> Notify by email</span>
                                 </label>
-                                <div class="Notifybox col-sm-12 col-xs-12 no_pad mt10">
-                                    <div class="col-sm-8 col-xs-8 no_pad mt10">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL OF TICKET BEARER">
+
+                                <div class="col-sm-12 col-xs-12 no_pad mt10">
+                                    <div class="Notifybox col-sm-8 col-xs-8 no_pad mt10 mb10" id="divemail">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL OF TICKET BEARER" id="emailbearer">
                                     </div>
-                                    <div class="col-sm-12 col-xs-12 no_pad mt10">
-                                        <button class="btn ev_live_btn" type="button">
+                                    <div class="col-sm-12 col-xs-12 no_pad">
+                                        <button class="btn ev_live_btn" type="button" id="btAddList">
                                             ADD TO LIST
                                         </button>
-                                    </div>
-                                    <div class="col-sm-12 col-xs-12 no_pad mt10">
+                                    </div> 
+                                    <div class="col-sm-12 col-xs-12 no_pad mt10" id="blocklist" style="display:none;">
                                         <div class="col-sm-8 col-xs-8 no_pad ">
-                                            <select class="form-control evnt_inp_cont ">
-                                                <option>List 1</option>
-                                                <option>List 2</option>
-                                                <option>List 3</option>
-                                                <option>List 4</option>
+                                            <select class="form-control evnt_inp_cont " id="ddlListitem">
+                                              
 
                                             </select>
                                         </div>
                                         <div class="col-sm-2 col-xs-2">
-                                            <button class="btn ev_live_btn" type="button">
+                                            <button class="btn ev_live_btn" type="button" id="editlist"   >
                                                 Edit
                                             </button>
                                         </div>
                                         <div class="col-sm-2 col-xs-2">
-                                            <button class="btn ev_live_btn" type="button">
+                                            <button class="btn ev_live_btn" type="button" id="deletelist"  >
                                                 Delete
                                             </button>
                                         </div>
                                     </div>
                                 </div>
-
+                                <table style="display:none;" id="tblListitem"></table>
                             </div>
 
                         </div>
@@ -564,6 +557,28 @@
             }
         }
 
+        var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
+        if (result.card_type == null) {
+            msglogin += "Invalid Card Number" + "\n";
+            $("#cardno").focus();
+            $("#cardno").addClass('err-bor');
+
+        }
+        if(result.length_valid==false)
+        {
+            msglogin += "Invalid Card Number" + "\n";
+            $("#cardno").focus();
+            $("#cardno").addClass('err-bor');
+
+        }
+        if( result.luhn_valid==false)
+        {
+            msglogin += "Invalid Card Number" + "\n";
+            $("#cardno").focus();
+            $("#cardno").addClass('err-bor');
+
+        }
+      
         return msglogin;
     }
 
@@ -584,7 +599,7 @@
     }
     $(document).ready(function () {
 
-
+        ddlListitem
         $(document).click(function () {
            
             $('#diverroacc').css('display', 'none');
@@ -594,6 +609,7 @@
         $('#completeorder').click(function () {
             var Emaillogin = $("#Email").val();
             var msg = validationpage();
+            var NameList = [];
             if (msg != "") {
                 $('#diverroacc').css('display', 'block');
                 $('#erraccmsg').html(msg);
@@ -637,7 +653,83 @@
               
 
             }
-            alert(msg+"dasd");
+            var confirmemail = "", cardno = "", expirydate = "", cvv = "";
+
+            $("#tblListitem tr").each(function () {
+                var Sno = $(this).find("td:first").html();
+
+                // Multiple Address
+                if (Sno != '') {
+                    NameList.push({
+                        Name: $("#TicketName_" + Sno).text(),
+                        Email: $("#TicketEmail_" + Sno).text(),
+                     
+
+                    });
+                }
+            });
+
+            if($('#chkcarddetails').is(":checked") == true)
+            {
+                cardno=$('#cardno').val();
+                expirydate=$('#expirationdate').val();
+                cvv=$('#cvvcode').val();
+            }
+            if ($('#shippinginfo').is(":checked") == true) {
+
+
+
+            }
+            var model = {
+
+                'AccFname': $('#accfname').val(),
+                'AccLname': $('#accLname').val(),
+                'AccEmail': $('#Email').val(),
+                'AccconfirmEmail': $('#confirmEmail').val(),
+                'Accpassword': $('#password').val(),
+                'Accconfirmpassword': $('#confirmpassword').val(),
+                'Accountphnno': $('#accountphnno').val(),
+                'AccCity': $('#accCity').val(),
+                'AccState': $('#accState').val(),
+                'Acczip': $('#accZip').val(),
+                'Acccountry': $('#accCountry').val(),
+                'cardno': $('#cardno').val(),
+                'expirydate': $('#expirydate').val(),
+                'cvv': $('#cvv').val(),
+                'billfname': $('#billfname').val(),
+                'billLname': $('#billLname').val(),
+                'billingphno': $('#billingphno').val(),
+                'billaddress1': $('#billaddress1').val(),
+                'billaddress2': $('#billaddress2').val(),
+                'billcity': $('#billcity').val(),
+                'billzip': $('#billzip').val(),
+                'billstate': $('#billstate').val(),
+                'billcountry': $('#billcountry').val(),
+                'shipfname': $('#shipfname').val(),
+                'shipLname': $('#shipLname').val(),
+                'shipphno': $('#shippingphnno').val(),
+                'shipaddress1': $('#billaddress1').val(),
+                'shipcity': $('#shipcity').val(),
+                'shipzip': $('#shipzip').val(),
+                'shipstate': $('#shipstate').val(),
+                'shipcountry': $('#shipcountry').val(),
+                'NameList': NameList
+
+            }
+
+            $.ajax({
+                url: '@Url.Action("SaveDetails", "TicketPayment")',
+                data: model,
+                type: "Post",
+                success: function (response) {
+                  
+                    //$('#divaccsuc').css('display', 'block'); $("#hdEventId").val(response);
+                    //$('#diverroacc').css('display', 'none');
+                    //$('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
+                    //$("#hdEventId").val(response);
+
+                }
+            });
 
 
         });
@@ -738,10 +830,178 @@
       
 
     });
+    function checknumber(event) {
+
+        var code = event.charCode ? event.charCode : event.keyCode;
+        
+        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        {
+            return true;
+        }
+        else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
+        {
+           
+            event.preventDefault();
+            return false;
+        }
+
+    }
+
+
+
+    
+    $("#btAddList").click(function () {
+      
+        $('#blocklist').css('display', 'block');
+
+        if ($("#nameofticket").val().trim() == '') {
+            alert("Please enter valid Name.");
+            $("#nameofticket").focus();
+            return false;
+        }
+
+
+
+        if ($("#hidTicketbearer").val() == '') {
+            //if (parseInt($("#ddlOrgnizers option").length) > 24) {
+            //    alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
+            //    return false;
+            //}
+            AddTicket();
+        }
+        else
+            UpdateTicket($("#hidTicketbearer").val());
+
+
+        $("#hidTicketbearer").val('');
+        $("#nameofticket").val('');
+        $("#emailbearer").val('');
+        if ($('.Notifybox').css('display') == 'block')
+        {
+            $('.Notifybox').css('display', 'none');
+        }
+       
+    });
+
+    function AddTicket() {
+        $("#hidTicketbearer").val('');
+
+        var Sno = $("#tblListitem tr").length;
+        var vTicketName = $("#nameofticket").val();
+        var vTicketEmailDes = $("#emailbearer").val();
+       
+        //strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
+
+        var strHTML = '<tr>';
+        strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
+        strHTML = strHTML + '<td width="92%"><label id=TicketName_' + Sno + '>' + vTicketName + '</label></td>';
+        strHTML = strHTML + '<td style="display:none"><label id=TicketEmail_' + Sno + '>' + vTicketEmailDes + '</label></td>';
+         strHTML = strHTML + '</tr>';
+        //                strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
+
+
+        $("#tblListitem").append(strHTML);
+        strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vTicketName + '</option>';
+
+        $("#ddlListitem").append(strHTML);
+      
+    }
+    $("#editlist").click(function () {
+        var Sno = $("#ddlListitem").val();
+      
+        $("#hidTicketbearer").val(Sno);
+        var vOrgName = $("#TicketName_" + Sno).text();
+        var vOrgDes = $("#TicketEmail_" + Sno).text();
+        if (vOrgDes!="")
+        {
+            if ($('.Notifybox').css('display') == 'none') {
+                $('.Notifybox').css('display', 'block');
+            }
+        }
+
+        $("#nameofticket").val(vOrgName);
+        $("#emailbearer").val(vOrgDes);
+    });
+
+    $("#deletelist").click(function () {
+        var Sno = $("#ddlListitem").val();
+        $('#tblListitem tr').each(function () {
+            if (Sno == $(this).find("td:first").html()) {
+                $(this).remove();
+            }
+        });
+
+        //$("#dllOrganizer")
+        $("#ddlListitem option").each(function (i) {
+            if (Sno == $(this).val()) {
+                $(this).remove();
+            }
+        });
+
+
+
+        $("#hidTicketbearer").val('');
+        $("#nameofticket").val('');
+        $("#emailbearer").val('');
+        if ($('#ddlListitem option').length <= 0) {
+            $('#blocklist').css('display', 'none');
+
+        } else {
+            $('#blocklist').css('display', 'block');
+        }
+
+
+    });
+    function UpdateTicket() {
+        var Sno = $("#ddlListitem").val();
+        //    alert(Sno);
+        vOrgName = $("#nameofticket").val();
+        vOrgDes = $("#emailbearer").val();
+        //vOrgFB = $("#txtOrgFBlink").val();
+        //vOrgTw = $("#txtOrgTWlink").val();
+
+        $("#TicketName_" + Sno).text(vOrgName);
+        $("#TicketEmail_" + Sno).text(vOrgDes);
+      
+
+
+        $("#ddlListitem option").each(function (i) {
+            if (Sno == $(this).val()) {
+                $(this).remove();
+            }
+        });
+        var addOption = '<option value="' + Sno + '" id="' + Sno + '" >' + vOrgName + '</option>';
+        $("#ddlListitem").append(addOption);
+
+
+
+
+    }
     jQuery(function ($) {
+        if ($('#ddlListitem option').length <= 0) {
+            $('#blocklist').css('display', 'none');
+
+        } else {
+            $('#blocklist').css('display', 'block');
+        }
+       
+        $("#expirationdate").mask("99/99");
         $("#shippingphnno").mask("999-999-9999");
         $("#billingphno").mask("999-999-9999");
         $("#accountphnno").mask("999-999-9999");
+        $("#cardno").validateCreditCard(function (result) {
+
+            if (result.card_type.name == 'visa' || result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'amex') {
+                $('#imgcard').css('display', 'block');
+                $('#imgcard').attr('src', '/Images/' + result.card_type.name + '.png');
+
+            } else { $('#imgcard').css('display', 'none'); }
+          
+         
+
+            
+        });
+      
 
     });
 </script>
