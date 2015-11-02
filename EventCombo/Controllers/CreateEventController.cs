@@ -710,17 +710,17 @@ namespace EventCombo.Controllers
 
         }
 
-        public string PublishEvent(string EventId)
+        public string PublishEvent(string strEventId)
         {
             string strResult = "N";
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-                if (strUserId != "")
+                if (strUserId != "" && strEventId!="")
                 {
                     using (EventComboEntities objEnt = new EventComboEntities())
                     {
-                        objEnt.PublishEvent(Convert.ToInt64(EventId), strUserId);
+                        objEnt.PublishEvent(Convert.ToInt64(strEventId), strUserId);
                     }
                     strResult = "Y";
                 }
@@ -737,16 +737,16 @@ namespace EventCombo.Controllers
         {
             string strTicket = "";
                 
-            //if (Session["AppId"] != null)
-            //{
-
-                using (EventComboEntities objEnt = new EventComboEntities())
+           // if (Session["AppId"] != null)
+          //  {
+                if (Eventid.Trim() != "")
                 {
-                    strTicket = objEnt.GetTicketListing(2).Single();
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        strTicket = objEnt.GetTicketListing(Convert.ToInt64(Eventid)).Single();
+                    }
                 }
-             
-
-            //}
+          //  }
             return strTicket;
         }
 

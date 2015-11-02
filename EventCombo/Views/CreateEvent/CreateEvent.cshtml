@@ -1512,6 +1512,10 @@
                                 $('#divaccsuc').css('display', 'none');
                                 $('#diverroacc').css('display', 'block');
                                 $('#erraccmsg').html('Sorry, There is some problem while publishing event.');
+                               
+                            }
+                            else
+                            {
                                 window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation")';
                             }
                         }
