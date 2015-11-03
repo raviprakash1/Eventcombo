@@ -129,10 +129,30 @@ namespace EventCombo.Controllers
                         objEntity.SaveChanges();
                     }
                 }
-
+                Session["AppId"] = userid;
 
             }
-            return "";
+            using (EventComboEntities objEntity = new EventComboEntities())
+            {
+                CardDetail card = new CardDetail();
+                card.OrderId =0;
+                card.CardNumber = ps.cardno;
+                card.ExpirationDate = ps.expirydate;
+                card.Cvv = ps.cvv;
+                card.UserId = Session["AppId"].ToString();
+                card.Guid = Session["AppId"].ToString();
+                objEntity.CardDetails .Add(card);
+
+
+                BillingAddress badd = new BillingAddress();
+
+                badd.Fname = ps.billfname;
+                badd.Lname = ps.billLname;
+
+
+                objEntity.SaveChanges();
+            }
+                return "";
         } 
       
 

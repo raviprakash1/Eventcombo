@@ -363,6 +363,12 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />
+    <Content Include="Images\4.png" />
+    <Content Include="Images\deal_img1.jpg" />
+    <Content Include="Images\deal_title_bg_l.png" />
+    <Content Include="Images\deal_title_bg_r.png" />
+    <Content Include="Images\dis_title_bg_l.png" />
+    <Content Include="Images\dis_title_bg_r.png" />
     <Content Include="Images\fb_btn.png" />
     <Content Include="Images\go_btn.png" />
     <Content Include="Images\o_cal.png" />

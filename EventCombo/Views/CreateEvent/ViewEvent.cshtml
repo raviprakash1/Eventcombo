@@ -11,13 +11,11 @@
     }
 
     .ui-tooltip {
-        padding: 5px 15px;
-        color: white;
-        font-size: .9em;
-        border-radius: 3px;
-        color: #000;
-        text-transform: uppercase;
-        box-shadow: 0 0 1px #ccc;
+          padding: 5px 15px;
+          color: white; font-size: .9em;
+          border-radius:3px; color: #000;
+          text-transform: uppercase;
+          box-shadow: 0 0 1px #ccc;
     }
 </style>
 
@@ -216,9 +214,37 @@
     <div class="event_detail_container">
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
-            <h2 class="">WHO IS GOING?</h2>
-            <div class="evnt_tile_bg_r"></div>
+            <div class="col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5">WHO IS GOING?</h2>
+                </div>
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+         </div>
+        <div class="evnt_details_body2">
+            <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
+                <label class="label-control evnt_ticket_label">
+                    <img src="images/fb_connect.jpg"> to see which of your Facebook friends are going
+                </label>
+            </div>
         </div>
+    </div>
+    <div class="event_detail_container">
+
+        <div class="EveDisRib evnt_tile_dis_head">
+            <div class="evnt_tile_dis_bg_l"></div>
+            <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5">Facebook Comment</h2>
+            </div>
+            <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+
+        <div class="EveActRib evnt_tile_head">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5">Facebook Comment</h2>
+            </div>
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
                 <label class="label-control evnt_ticket_label">
@@ -230,10 +256,11 @@
     <div class="event_detail_container">
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
-
-            <h2 class="">Ticket Info</h2>
-            <div class="evnt_tile_bg_r"></div>
-        </div>
+            <div class="col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5">Ticket Info</h2>
+            </div>
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+            </div>
         <div class="evnt_details_body2">
             <div class="col-sm-12 mt10">
                 <div id="dvTicketInfo" class="table-responsive">
@@ -263,6 +290,101 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="event_detail_container">
+        <div class="evnt_tile_head">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="col-sm-4 col-xs-4 ">
+                <h2 class="fb_dis_head fb_dis_head_type pt5"><a href="">Type </a></h2>
+            </div>
+            <div class="col-sm-4 col-xs-4 ">
+                <h2 class="fb_dis_head fb_dis_head_type pt5"><a href="">Category </a></h2>
+            </div>
+            <div class="col-sm-4 col-xs-4 ">
+                <h2 class="fb_dis_head fb_dis_head_type pt5"><a href="">Subcategory</a></h2>
+            </div>
+
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body2">
+
+        </div>
+
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="event_detail_container">
+
+        <div class=" evnt_tile_deal_head">
+            <div class="evnt_tile_deal_bg_l"></div>
+            <div class="col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5">AVAILABLE DEAL</h2>
+            </div>
+            <div class="evnt_tile_deal_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body2">
+            <div class="col-sm-12 ev_white_bg pt10 pb10 mt20">
+                <div class="col-sm-4 no_pad ">
+                    <img class="img-responsive" src="~/Images/deal_img1.jpg" />
+                    <div class="clearfix"></div>
+                    <div class="col-sm-8 no_pad mt10">
+                        <div class="col-sm-2 pl0"><img src="~/Images/icon-location.png"></div>
+                        <div class="col-sm-10 dl_loc_desc">
+                            West Village <br>
+                            314 Bleecker Street<br>
+                            New York, New York 10014<br>
+                            www.bigburger.com
+                        </div>
+                    </div>
+                    <div class="col-sm-4 no_pad mt10">
+                        <img title="stars" src="~/Images/rating-stars.gif"><br>
+                        <span class="dl_str_name">yelp.com</span>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="col-sm-12 no_pad dl_title">A.O.C. L'aile ou la Cuisse – West Village</div>
+                    <div class="col-sm-12 no_pad">
+                        <div class="col-sm-3 no_pad dl_off ">50% off </div>
+                        <div class="col-sm-3 no_pad mt20 dl_val text-center">Value $50 </div>
+                        <div class="col-sm-3 no_pad mt20 dl_save text-center"> You Save $25 </div>
+                        <div class="col-sm-3 no_pad mt20 dl_price text-center">PRICE: $25</div>
+                    </div>
+                    <div class="col-sm-12 no_pad">
+                        <div class="col-sm-6 no_pad dl_title">Upscale French Dinner</div>
+                        <div class="col-sm-2 ">
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 ">
+                            <button class="btn ev_live_btn" type="button">
+                                ADD TO PURCHASE
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 no_pad dl_desc">
+                        Head chef Romain Bonnans brings his family's recipes to A.O.C. L'aile ou la Cuisse, his own slice of France in the West Village. Bonnans lends his authentic touch to recipes both classic and contemporary, from niçoise salad with fresh tuna and string beans to coq au vin, a red-wine chicken stew. Guests dine amid exposed brick, wrought-iron accents, and French-inspired artwork in the main dining room. There, a surrounding wall that effectively cuts diners off from the outside world and gives them free, unabashed rein to try holding their fork in their other hand.
+                    </div>
+                </div>
+                <div class="col-sm-12 no_pad mt20 del_tc">
+                    Expires 90 days after purchase. <br>
+                    Limit 1 per person, may buy 2 additional as gifts. Limit 1 per table. Valid only for option purchased. Reservation required. Dine-in only. Alcohol is not discounted more than 50%. Merchant is solely responsible for all sales and delivery of alcohol. Must provide 21+ ID to receive alcoholic beverages. Not valid on Thanksgiving or other major holidays. Not valid with other offers. See the rules that apply to all deals.
+                </div>
+            </div>
+            <div class="col-sm-12 mt20 ">
+                <div class="col-sm-12 text-right no_pad">
+                    <button type="submit" class="btn btn-lg ev_live_btn ev_live_sub_btn">PAYMENT PROCEED > </button>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 </div>
@@ -590,6 +712,17 @@
                     });
                 });
 
+                $(".EveActRib").css("display", "none");
+                $(".FacdisComm").click(function () {
+                    $(".EveActRib").show();
+                    $(".EveDisRib").hide();
+                });
+
+                $(".FacdactComm").click(function () {
+                    $(".EveActRib").hide();
+                    $(".EveDisRib").show();
+                });
+
 
                 $(".TmezoneSet").hide();
                 $(".Timezone").click(function () {
@@ -746,6 +879,42 @@
         }
         var Eventid = $('#hdEventid').val();
         $("#btPayment").click(function () {
+            var vEntid = $('#hdEventid').val();
+           
+            var IdAry = $("#hdIds").val().split(',');
+
+            var TList = [];
+            var vId=0;
+            var vLockQty=0;
+            for (i = 0; i < IdAry.length; i++) {
+                vId = parseInt(IdAry[i].toString());
+                vLockQty = parseInt($("#d_" + IdAry[i].toString()).val());
+                if (vLockQty > 0) {
+                    TList.push({
+                        'TLD_TQD_Id': vId,
+                        'TLD_Locked_Qty': vLockQty,
+                        'TLD_Event_Id': vEntid
+                    });
+                }
+            }
+
+            var model = {
+                'TLD_TQD_Id': '0',
+                'TLD_Locked_Qty': '0',
+                'TLD_List': TList
+            }
+
+
+            $.ajax({
+                url: '@Url.Action("LockTickets", "CreateEvent")',
+                data: model,
+                type: "Post",
+                success: function (response) {
+                }
+            });
+
+
+           
             window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;
         });
 

@@ -21,8 +21,5 @@ namespace EventCombo.Models
         public Nullable<long> TLD_TQD_Id { get; set; }
         public Nullable<System.DateTime> Locktime { get; set; }
         public string TLD_GUID { get; set; }
-    
-        public virtual Ticket_Locked_Detail Ticket_Locked_Detail1 { get; set; }
-        public virtual Ticket_Locked_Detail Ticket_Locked_Detail2 { get; set; }
     }
 }

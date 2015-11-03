@@ -228,7 +228,7 @@
                                     </button><h4 class="modal-title ev_modal_header_title" id="myModalLabel">Schedule dates</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="SchDivtop col-sm-12">
+                                    <div class="SchDivtop col-sm-12 sch_date_modal_resp">
                                         <div class="form-group">
                                             <div class="col-sm-12 no_pad ev_ven_mod_sch_mul mb10">
                                                 <label class="label-control ev_ven_mod_lebel ">
@@ -237,20 +237,20 @@
                                             </div>
                                             <div class="col-sm-6 no_pad">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">Start</label></div>
-                                                <div class="col-sm-6 no_pad">
+                                                <div class="col-sm-6 no_pad xs_mb10">
                                                     <input id="txtStartDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" onchange="ValEventdate(this.id)" />
                                                 </div>
-                                                <div class="col-sm-6 ">
+                                                <div class="col-sm-6 no_pad_res">
                                                     <input id="txtStartTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)" />
                                                 </div>
 
                                             </div>
                                             <div class="col-sm-6 no_pad">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">End</label></div>
-                                                <div class="col-sm-6 no_pad">
+                                                <div class="col-sm-6 no_pad xs_mb10">
                                                     <input id="txtEndDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" onchange="ValEventdate(this.id)" />
                                                 </div>
-                                                <div class="col-sm-6 ">
+                                                <div class="col-sm-6 no_pad_res">
                                                     <input id="txtEndTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)" />
                                                 </div>
 
@@ -304,7 +304,7 @@
                                             <div class="evt_time evnt_time_cont wd600 mt10">
                                                 <label class="label-control evnt_ticket_label wd600">Repeating every</label>
                                                 <div class="col-sm-12 no_pad">
-                                                    <div class="col-sm-6 no_pad">
+                                                    <div class="col-sm-6 no_pad xs_mb10">
                                                         <select id="dllMonthlyWeek" class="form-control evnt_inp_cont wd200">
                                                             <option>First</option>
                                                             <option>Second</option>
@@ -312,7 +312,7 @@
                                                             <option>Four</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-6 no_pad_res">
                                                         <select id="dllMonthlyWeekDay" class="checkboxName" multiple="multiple">
                                                             <option value="1">Monday</option>
                                                             <option value="2">Tuesday</option>
@@ -425,10 +425,11 @@
             <div class="event_detail_container">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
-                    <h2 class="">
-                        EVENT INFO
-                    </h2>
-                    <div class="evnt_tile_bg_r"></div>
+                     <div class="col-sm-12 col-xs-12 text-left no_pad">
+                         <h2 class="fb_dis_head pt5">EVENT INFO</h2>
+                     </div>
+                   
+                    <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
                 <div class="evnt_details_body">
                     <div class="col-sm-12 row mt20">
@@ -498,9 +499,11 @@
             <div class="event_detail_container">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
-                    <h2>ORGANIZER INFO</h2>
-                    <div class="evnt_tile_bg_r"></div>
-                </div>
+                    <div class="col-sm-12 col-xs-12 text-left no_pad">
+                        <h2 class="fb_dis_head pt5">ORGANIZER INFO</h2>
+                        </div>
+                        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+                    </div>
                 <div class="clearfix"></div>
                 <div class="evnt_details_body">
                     <div class="col-sm-12 no_pad">
@@ -600,7 +603,7 @@
             <div class="event_detail_container">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
-                    <div class="col-sm-6 text-left">
+                    <div class="col-sm-6 text-left no_pad">
                         <h2 class="fb_dis_head pt5">TICKETING INFORMATION</h2>
                     </div>
                     <div class="col-sm-6 text-right">
@@ -972,22 +975,26 @@
             <div class="event_detail_container">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
-                    <h2 class="fb_dis_head">
-                        <label class="ev_fb_lable"><img src="~/Images/fb.png"> ENABLE DISCUSSION <input id="chkAllowFBDis" type="checkbox" /></label>
-                        <label class="ev_fb_lable">PUBLISH EVENT TO FACEBOOK <input id="chkPublishEventOnFB" type="checkbox" /></label>
-                    </h2>
-                    <div class="evnt_tile_bg_r evnt_tile_bg_r_fb"></div>
-                </div>
+                    <div class="col-sm-12 col-xs-12 text-left no_pad">
+                        <h2 class="fb_dis_head ">
+                            <label class="ev_fb_lable"><img src="~/Images/fb.png"> ENABLE DISCUSSION <input id="chkAllowFBDis" type="checkbox" /></label>
+                            <label class="ev_fb_lable">PUBLISH EVENT TO FACEBOOK <input id="chkPublishEventOnFB" type="checkbox" /></label>
+                        </h2>
+                        </div>
+                        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+                    </div>
             </div>
             <div class="clearfix"></div>
             <div class="event_detail_container mt10">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
-                    <h2 class="">
-                        EVENT SETTING
-                    </h2>
-                    <div class="evnt_tile_bg_r"></div>
-                </div>
+                    <div class="col-sm-12 col-xs-12 text-left no_pad">
+                        <h2 class="fb_dis_head pt5">
+                            EVENT SETTING
+                        </h2>
+                        </div>
+                        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+                    </div>
                 <div class="evnt_details_body">
                     <div class="form-group">
                         <div class="col-sm-12 no_pad">

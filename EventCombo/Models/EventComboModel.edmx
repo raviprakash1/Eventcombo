@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -790,6 +790,10 @@
           <Parameter Name="EventSubCat" Type="varchar" Mode="In" />
           <Parameter Name="EventFeature" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GUID" Type="varchar" Mode="In" />
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetSetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
           <Parameter Name="GETSET" Type="varchar" Mode="In" />
@@ -920,7 +924,8 @@
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventComboModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1005,6 +1010,36 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="BillingAddress">
+          <Key>
+            <PropertyRef Name="BillingId" />
+          </Key>
+          <Property Name="BillingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CardDetail">
+          <Key>
+            <PropertyRef Name="CardId" />
+          </Key>
+          <Property Name="CardId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -1318,6 +1353,24 @@
           <Property Name="PE_Start_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PE_End_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="ShippingAddress">
+          <Key>
+            <PropertyRef Name="ShippingId" />
+          </Key>
+          <Property Name="ShippingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -1375,8 +1428,6 @@
           <Property Name="TLD_Locked_Qty" Type="Int64" />
           <Property Name="TLD_Event_Id" Type="Int64" />
           <Property Name="TLD_TQD_Id" Type="Int64" />
-          <NavigationProperty Name="Ticket_Locked_Detail1" Relationship="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail" ToRole="Ticket_Locked_Detail1" />
-          <NavigationProperty Name="Ticket_Locked_Detail2" Relationship="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail1" ToRole="Ticket_Locked_Detail" />
           <Property Name="Locktime" Type="DateTime" Precision="3" />
           <Property Name="TLD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -1406,6 +1457,17 @@
           <Property Name="TQD_StartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TQD_StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket_Quantity_Detail" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="TicketBearer">
+          <Key>
+            <PropertyRef Name="TicketbearerId" />
+          </Key>
+          <Property Name="TicketbearerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -1630,18 +1692,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
-          <End Role="Ticket_Locked_Detail" Type="Self.Ticket_Locked_Detail" Multiplicity="1" />
-          <End Role="Ticket_Locked_Detail1" Type="Self.Ticket_Locked_Detail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket_Locked_Detail">
-              <PropertyRef Name="TLD_Id" />
-            </Principal>
-            <Dependent Role="Ticket_Locked_Detail1">
-              <PropertyRef Name="TLD_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -1653,6 +1703,8 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="BillingAddresses" EntityType="Self.BillingAddress" />
+          <EntitySet Name="CardDetails" EntityType="Self.CardDetail" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
           <EntitySet Name="DeliveryMethods" EntityType="Self.DeliveryMethod" />
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" />
@@ -1677,11 +1729,13 @@
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" />
+          <EntitySet Name="ShippingAddresses" EntityType="Self.ShippingAddress" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Tickets" EntityType="Self.Ticket" />
           <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" />
           <EntitySet Name="Ticket_Purchased_Detail" EntityType="Self.Ticket_Purchased_Detail" />
           <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" />
+          <EntitySet Name="TicketBearers" EntityType="Self.TicketBearer" />
           <EntitySet Name="TicketDeliveryMethods" EntityType="Self.TicketDeliveryMethod" />
           <EntitySet Name="TicketTypes" EntityType="Self.TicketType" />
           <EntitySet Name="TimeZoneDetails" EntityType="Self.TimeZoneDetail" />
@@ -1747,10 +1801,6 @@
             <End Role="Ticket" EntitySet="Tickets" />
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail" Association="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
-            <End Role="Ticket_Locked_Detail" EntitySet="Ticket_Locked_Detail" />
-            <End Role="Ticket_Locked_Detail1" EntitySet="Ticket_Locked_Detail" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1760,7 +1810,7 @@
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEventDateList" ReturnType="Collection(EventComboModel.GetEventDateList_Result)">
-          <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
             <Parameter Name="EventTitle" Mode="In" Type="String" />
@@ -1769,22 +1819,22 @@
             <Parameter Name="EventSubCat" Mode="In" Type="String" />
             <Parameter Name="EventFeature" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetSelectedTicketListing" ReturnType="Collection(String)">
+            <Parameter Name="GUID" Mode="In" Type="String" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
           <FunctionImport Name="GetSetUserRole" ReturnType="Collection(String)">
             <Parameter Name="user_Id" Mode="In" Type="String" />
             <Parameter Name="GETSET" Mode="In" Type="String" />
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
-          <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="PublishEvent">
             <Parameter Name="EventId" Mode="In" Type="Int64" />
             <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="BillingAddresses" EntityType="EventComboModel.BillingAddress" />
-          <EntitySet Name="CardDetails" EntityType="EventComboModel.CardDetail" />
-          <EntitySet Name="ShippingAddresses" EntityType="EventComboModel.ShippingAddress" />
-          <EntitySet Name="TicketBearers" EntityType="EventComboModel.TicketBearer" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1803,65 +1853,6 @@
           <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventAddress" Nullable="true" />
         </ComplexType>
-        <EntityType Name="BillingAddress">
-          <Key>
-            <PropertyRef Name="BillingId" />
-          </Key>
-          <Property Name="BillingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="OrderId" Type="Int64" />
-          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Address2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="CardDetail">
-          <Key>
-            <PropertyRef Name="CardId" />
-          </Key>
-          <Property Name="CardId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="OrderId" Type="Int64" />
-          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="ShippingAddress">
-          <Key>
-            <PropertyRef Name="ShippingId" />
-          </Key>
-          <Property Name="ShippingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="OrderId" Type="Int64" />
-          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Address2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="TicketBearer">
-          <Key>
-            <PropertyRef Name="TicketbearerId" />
-          </Key>
-          <Property Name="TicketbearerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="OrderId" Type="Int64" />
-          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1938,6 +1929,38 @@
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BillingAddresses">
+            <EntityTypeMapping TypeName="EventComboModel.BillingAddress">
+              <MappingFragment StoreEntitySet="BillingAddress">
+                <ScalarProperty Name="BillingId" ColumnName="BillingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CardDetails">
+            <EntityTypeMapping TypeName="EventComboModel.CardDetail">
+              <MappingFragment StoreEntitySet="CardDetails">
+                <ScalarProperty Name="CardId" ColumnName="CardId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="Cvv" ColumnName="Cvv" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2257,6 +2280,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ShippingAddresses">
+            <EntityTypeMapping TypeName="EventComboModel.ShippingAddress">
+              <MappingFragment StoreEntitySet="ShippingAddress">
+                <ScalarProperty Name="ShippingId" ColumnName="ShippingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="EventComboModel.Status">
               <MappingFragment StoreEntitySet="Status">
@@ -2308,13 +2350,13 @@
           <EntitySetMapping Name="Ticket_Locked_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
               <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
-                <ScalarProperty Name="TLD_GUID" ColumnName="TLD_GUID" />
-                <ScalarProperty Name="Locktime" ColumnName="Locktime" />
                 <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
                 <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
                 <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />
                 <ScalarProperty Name="TLD_Event_Id" ColumnName="TLD_Event_Id" />
                 <ScalarProperty Name="TLD_TQD_Id" ColumnName="TLD_TQD_Id" />
+                <ScalarProperty Name="Locktime" ColumnName="Locktime" />
+                <ScalarProperty Name="TLD_GUID" ColumnName="TLD_GUID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2343,6 +2385,18 @@
                 <ScalarProperty Name="TQD_Remaining_Quantity" ColumnName="TQD_Remaining_Quantity" />
                 <ScalarProperty Name="TQD_StartDate" ColumnName="TQD_StartDate" />
                 <ScalarProperty Name="TQD_StartTime" ColumnName="TQD_StartTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketBearers">
+            <EntityTypeMapping TypeName="EventComboModel.TicketBearer">
+              <MappingFragment StoreEntitySet="TicketBearer">
+                <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2430,72 +2484,10 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSelectedTicketListing" FunctionName="EventComboModel.Store.GetSelectedTicketListing" />
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
           <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
           <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
-          <EntitySetMapping Name="BillingAddresses">
-            <EntityTypeMapping TypeName="EventComboModel.BillingAddress">
-              <MappingFragment StoreEntitySet="BillingAddress">
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
-                <ScalarProperty Name="Lname" ColumnName="Lname" />
-                <ScalarProperty Name="Fname" ColumnName="Fname" />
-                <ScalarProperty Name="Guid" ColumnName="Guid" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="BillingId" ColumnName="BillingId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CardDetails">
-            <EntityTypeMapping TypeName="EventComboModel.CardDetail">
-              <MappingFragment StoreEntitySet="CardDetails">
-                <ScalarProperty Name="Cvv" ColumnName="Cvv" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
-                <ScalarProperty Name="Guid" ColumnName="Guid" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CardId" ColumnName="CardId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ShippingAddresses">
-            <EntityTypeMapping TypeName="EventComboModel.ShippingAddress">
-              <MappingFragment StoreEntitySet="ShippingAddress">
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
-                <ScalarProperty Name="Lname" ColumnName="Lname" />
-                <ScalarProperty Name="Fname" ColumnName="Fname" />
-                <ScalarProperty Name="Guid" ColumnName="Guid" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ShippingId" ColumnName="ShippingId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TicketBearers">
-            <EntityTypeMapping TypeName="EventComboModel.TicketBearer">
-              <MappingFragment StoreEntitySet="TicketBearer">
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Guid" ColumnName="Guid" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

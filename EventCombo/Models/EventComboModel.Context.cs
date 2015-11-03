@@ -33,6 +33,8 @@ namespace EventCombo.Models
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<BillingAddress> BillingAddresses { get; set; }
+        public virtual DbSet<CardDetail> CardDetails { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public virtual DbSet<Email_Tag> Email_Tag { get; set; }
@@ -57,20 +59,18 @@ namespace EventCombo.Models
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Publish_Event_Detail> Publish_Event_Detail { get; set; }
+        public virtual DbSet<ShippingAddress> ShippingAddresses { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<Ticket_Locked_Detail> Ticket_Locked_Detail { get; set; }
         public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
         public virtual DbSet<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
+        public virtual DbSet<TicketBearer> TicketBearers { get; set; }
         public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
         public virtual DbSet<TimeZoneDetail> TimeZoneDetails { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
-        public virtual DbSet<BillingAddress> BillingAddresses { get; set; }
-        public virtual DbSet<CardDetail> CardDetails { get; set; }
-        public virtual DbSet<ShippingAddress> ShippingAddresses { get; set; }
-        public virtual DbSet<TicketBearer> TicketBearers { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
@@ -118,6 +118,19 @@ namespace EventCombo.Models
                 new ObjectParameter("EventFeature", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventListing_Result>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter);
+        }
+    
+        public virtual ObjectResult<string> GetSelectedTicketListing(string gUID, Nullable<long> eventId)
+        {
+            var gUIDParameter = gUID != null ?
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(string));
+    
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("EventId", eventId) :
+                new ObjectParameter("EventId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetSelectedTicketListing", gUIDParameter, eventIdParameter);
         }
     
         public virtual ObjectResult<string> GetSetUserRole(string user_Id, string gETSET, string role_Id)
