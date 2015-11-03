@@ -104,61 +104,31 @@
             </div>
             <div class="evnt_details_body2">
                 <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
-                    <div class="table-responsive">
-                        <table class="table table-striped evnt_tkt_list_tbl">
-
-                            <thead class="tkt_tbl_head">
-                                <tr>
-                                    <th style="width:40%">Ticket Type</th>
-                                    <th>Sales End</th>
-                                    <th>Fee</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="width:40%">Emporibus autem quibusdam et aut officiis. </td>
-                                    <td>30 Nov 2015</td>
-                                    <td>$30.50</td>
-                                    <td>
-                                        <select>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                    </td>
-                                    <td>$160.00</td>
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                        <table class="table evnt_tkt_list_tbl">
-                            <tfoot>
-                                <tr>
-                                    <td colspan="5">
-                                        <div class="col-sm-12 text-right mt10">Subtotal : $0.3333 </div>
-                                        <div class="col-sm-12 text-right mt10">Variable Charge : $5.00</div>
-                                        <div class="col-sm-12 text-right mt10"><strong>Order total : $0.3333 </strong></div>
-                                        <div class="col-sm-12 text-right mt10">
-                                            <div class="form-group">
-                                                <label class="col-md-10 pt5 ">Promo code</label>
-                                                <div class="col-md-2 no_pad">
-                                                    <input class="form-control evnt_inp_cont" placeholder="Promocode" type="text">
-                                                </div>
+                    <div id="dvTicketInfo" class="table-responsive">
+                        
+                        
+                    </div>
+                    @*<table class="table evnt_tkt_list_tbl">
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="col-sm-12 text-right mt10">Subtotal : $0.3333 </div>
+                                    <div class="col-sm-12 text-right mt10">Variable Charge : $5.00</div>
+                                    <div class="col-sm-12 text-right mt10"><strong>Order total : $0.3333 </strong></div>
+                                    <div class="col-sm-12 text-right mt10">
+                                        <div class="form-group">
+                                            <label class="col-md-10 pt5 ">Promo code</label>
+                                            <div class="col-md-2 no_pad">
+                                                <input class="form-control evnt_inp_cont" placeholder="Promocode" type="text">
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 text-right mt10"><strong>Grand total : $0.3333 </strong></div>
-                                    </td>
+                                    </div>
+                                    <div class="col-sm-12 text-right mt10"><strong>Grand total : $0.3333 </strong></div>
+                                </td>
 
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-
+                            </tr>
+                        </tfoot>
+                    </table>*@
                 </div>
             </div>
         </div>
@@ -349,10 +319,7 @@
                                 <label class="control-label ev_payment_lebel pl0">
                                    PLEASE ENTER SHIPPING ADDRESS<br>
                                    <div class="clearfix"></div>
-
                                 </label>
-
-
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength = 35>
@@ -711,6 +678,8 @@
             }
         });*@
 
+
+
         $(".Timezone").click(function () {
             
                 $(".TmezoneSet").slideToggle("fast");
@@ -735,7 +704,16 @@
             }
 
         });
-      
+        //------------------------------------------------LoadSelectedTickets--------------------------------------------------      
+        
+        $.ajax({
+            url: '@Url.Action("LoadTickets", "TicketPayment")',
+            data: { 'strEvent': Eventid },
+            type: "Get",
+            success: function (response) {
+                $("#dvTicketInfo").append(response);
+            },
+        });
 
     });
     jQuery(function ($) {

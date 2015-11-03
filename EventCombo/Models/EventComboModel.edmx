@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -430,6 +430,8 @@
           <Property Name="TLD_Locked_Qty" Type="bigint" />
           <Property Name="TLD_Event_Id" Type="bigint" />
           <Property Name="TLD_TQD_Id" Type="bigint" />
+          <Property Name="Locktime" Type="datetime" />
+          <Property Name="TLD_GUID" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -695,18 +697,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
-          <End Role="Ticket_Locked_Detail" Type="Self.Ticket_Locked_Detail" Multiplicity="1" />
-          <End Role="Ticket_Locked_Detail1" Type="Self.Ticket_Locked_Detail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket_Locked_Detail">
-              <PropertyRef Name="TLD_Id" />
-            </Principal>
-            <Dependent Role="Ticket_Locked_Detail1">
-              <PropertyRef Name="TLD_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Ticket_Quantity_Info_Ticket">
           <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
           <End Role="Ticket_Quantity_Detail" Type="Self.Ticket_Quantity_Detail" Multiplicity="*" />
@@ -740,6 +730,10 @@
           <Parameter Name="EventCat" Type="varchar" Mode="In" />
           <Parameter Name="EventSubCat" Type="varchar" Mode="In" />
           <Parameter Name="EventFeature" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GUID" Type="varchar" Mode="In" />
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
         </Function>
         <Function Name="GetSetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
@@ -862,17 +856,12 @@
             <End Role="Event" EntitySet="Event" />
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail" Association="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
-            <End Role="Ticket_Locked_Detail" EntitySet="Ticket_Locked_Detail" />
-            <End Role="Ticket_Locked_Detail1" EntitySet="Ticket_Locked_Detail" />
-          </AssociationSet>
           <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="Self.FK_Ticket_Quantity_Info_Ticket">
             <End Role="Ticket" EntitySet="Ticket" />
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventComboModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1327,8 +1316,8 @@
           <Property Name="TLD_Locked_Qty" Type="Int64" />
           <Property Name="TLD_Event_Id" Type="Int64" />
           <Property Name="TLD_TQD_Id" Type="Int64" />
-          <NavigationProperty Name="Ticket_Locked_Detail1" Relationship="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail" ToRole="Ticket_Locked_Detail1" />
-          <NavigationProperty Name="Ticket_Locked_Detail2" Relationship="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail" FromRole="Ticket_Locked_Detail1" ToRole="Ticket_Locked_Detail" />
+          <Property Name="Locktime" Type="DateTime" Precision="3" />
+          <Property Name="TLD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -1580,18 +1569,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
-          <End Role="Ticket_Locked_Detail" Type="Self.Ticket_Locked_Detail" Multiplicity="1" />
-          <End Role="Ticket_Locked_Detail1" Type="Self.Ticket_Locked_Detail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket_Locked_Detail">
-              <PropertyRef Name="TLD_Id" />
-            </Principal>
-            <Dependent Role="Ticket_Locked_Detail1">
-              <PropertyRef Name="TLD_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -1697,10 +1674,6 @@
             <End Role="Ticket" EntitySet="Tickets" />
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Locked_Detail_Ticket_Locked_Detail" Association="Self.FK_Ticket_Locked_Detail_Ticket_Locked_Detail">
-            <End Role="Ticket_Locked_Detail" EntitySet="Ticket_Locked_Detail" />
-            <End Role="Ticket_Locked_Detail1" EntitySet="Ticket_Locked_Detail" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1710,7 +1683,7 @@
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEventDateList" ReturnType="Collection(EventComboModel.GetEventDateList_Result)">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
             <Parameter Name="EventTitle" Mode="In" Type="String" />
@@ -1725,11 +1698,15 @@
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="PublishEvent">
             <Parameter Name="EventId" Mode="In" Type="Int64" />
             <Parameter Name="UserId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetSelectedTicketListing" ReturnType="Collection(String)">
+            <Parameter Name="GUID" Mode="In" Type="String" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -2195,6 +2172,8 @@
           <EntitySetMapping Name="Ticket_Locked_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
               <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
+                <ScalarProperty Name="TLD_GUID" ColumnName="TLD_GUID" />
+                <ScalarProperty Name="Locktime" ColumnName="Locktime" />
                 <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
                 <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
                 <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />
@@ -2318,6 +2297,7 @@
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
           <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
           <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
+          <FunctionImportMapping FunctionImportName="GetSelectedTicketListing" FunctionName="EventComboModel.Store.GetSelectedTicketListing" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

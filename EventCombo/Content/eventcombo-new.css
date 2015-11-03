@@ -248,7 +248,7 @@
 .ev_white{ color: #fff;}
 .ev_white_bg{ background: #fff;}
 
-/*Start event display ticket page*/
+/*Start event display 0 page*/
 .book_tkt_date{ font-size: 20px;}
 .book_tkt_desc{ font-size: 16px; padding-bottom: 10px !important;}
 
@@ -302,6 +302,7 @@
 .ev_soc_set a{color: #3cf; font-size: 1.2em;}
 .fb_dis_head_type a{color: #fff; }
 .tkt_more_desc{color: #3cf; cursor: pointer; font-weight: normal;}
+.tkt_more_desc i{ font-style:normal;}
 
 .evnt_tile_deal_bg_l{background-image: url(../images/deal_title_bg_l.png); width: 19px; height: 34px; float: left; margin-left: -19px; position: absolute; cursor: pointer;  }
 .evnt_tile_deal_bg_r{background-image: url(../images/deal_title_bg_r.png); width: 19px; height: 34px; float: right; margin-right: -19px; margin-right: -19px;
@@ -322,6 +323,8 @@
 .del_tc{ font-size: 12px;}
 .chek_out_desc p{ font-size: 1.2em; font-weight: normal;}
 .chek_out_desc p label{font-weight: normal;}
+
+
 
 
 

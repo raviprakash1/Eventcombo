@@ -879,6 +879,42 @@
         }
         var Eventid = $('#hdEventid').val();
         $("#btPayment").click(function () {
+            var vEntid = $('#hdEventid').val();
+           
+            var IdAry = $("#hdIds").val().split(',');
+
+            var TList = [];
+            var vId=0;
+            var vLockQty=0;
+            for (i = 0; i < IdAry.length; i++) {
+                vId = parseInt(IdAry[i].toString());
+                vLockQty = parseInt($("#d_" + IdAry[i].toString()).val());
+                if (vLockQty > 0) {
+                    TList.push({
+                        'TLD_TQD_Id': vId,
+                        'TLD_Locked_Qty': vLockQty,
+                        'TLD_Event_Id': vEntid
+                    });
+                }
+            }
+
+            var model = {
+                'TLD_TQD_Id': '0',
+                'TLD_Locked_Qty': '0',
+                'TLD_List': TList
+            }
+
+
+            $.ajax({
+                url: '@Url.Action("LockTickets", "CreateEvent")',
+                data: model,
+                type: "Post",
+                success: function (response) {
+                }
+            });
+
+
+           
             window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;
         });
 
