@@ -11,7 +11,7 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
-    <input type="hidden" id="hdOrderTotal" value="1000" />
+   
     <input type="hidden" id="hdemailexist"  />
     <input id="hidTicketbearer" />
     @Html.HiddenFor(m=>m.EventId,new {id="hdEventid" })
@@ -463,6 +463,7 @@
                         <i class="fa fa-yahoo"></i> <a href="#" target="_blank" id="yahoocal">Yahoo Calendar </a>
                     </div>
                     <div class="clearfix"></div>
+                    
 
                 </div>
 
@@ -478,20 +479,20 @@
     //function afterStop() {
     //    alert("Time Khatam");
     //}
-    $(document).ready(function () {
+    //$(document).ready(function () {
 
       
-        var total = $('#hdOrderTotal').val();
-        if (total > 0) {
+    //    var total = $('#hdOrderTotal').val();
+    //    if (total > 0) {
            
-            $('.divvisible').css('display', 'block');
-        } else {
+    //        $('.divvisible').css('display', 'block');
+    //    } else {
            
-            $('.divvisible').css('display', 'none');
+    //        $('.divvisible').css('display', 'none');
 
-        }
+    //    }
 
-    });
+    //});
    
         
     function validationpage()
@@ -900,7 +901,7 @@
         //*************************Fire when User Click on Continue in Previous Page *****************************************
 
         var vTicketid = '19,20';
-        clock = $('#divTime').FlipClock(60, {
+        clock = $('#divTime').FlipClock(600, {
             clockFace: 'MinuteCounter',
             countdown: true,
             callbacks: {
@@ -955,10 +956,26 @@
             type: "Get",
             success: function (response) {
                 $("#dvTicketInfo").append(response);
+                var total = parseFloat($('#hdOrderTotal').val());
+                if (total > 0) {
+                    $('.divvisible').css('display', 'block');
+                } else {
+
+                    $('.divvisible').css('display', 'none');
+
+                }
             },
         });
 
+
+
+
+
     });
+    function checkMore(QtyId) {
+        $("#Sp_" + QtyId.toString()).slideToggle("fast");
+        //$(".TktdescDetl").slideToggle("fast");
+    }
     function checknumber(event) {
 
         var code = event.charCode ? event.charCode : event.keyCode;
