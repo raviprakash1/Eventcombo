@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
+using Microsoft.AspNet.Identity;
+
 namespace EventCombo.Controllers
 {
     public class TicketPaymentController : Controller
@@ -13,11 +15,11 @@ namespace EventCombo.Controllers
         {
             TicketPayment tp = new TicketPayment();
             string defaultCountry = "";
-            string Fname = "", Lname = "", Phnnumber = "", Adress = "",Email="";
+            string Fname = "", Lname = "", Phnnumber = "", Adress = "", Email = "";
             CreateEventController cs = new CreateEventController();
             AccountController AccDetail = new AccountController();
-            tp.Imageurl =  cs.GetImages(Eventid).FirstOrDefault();
-            var eventdetails=cs.GetEventdetail(Eventid);
+            tp.Imageurl = cs.GetImages(Eventid).FirstOrDefault();
+            var eventdetails = cs.GetEventdetail(Eventid);
             tp.Title = eventdetails.EventTitle;
             tp.Tickettype = "Paid";
             ViewData["Type"] = tp.Tickettype;
@@ -28,7 +30,7 @@ namespace EventCombo.Controllers
                 Fname = accountdetail.Firstname;
                 Lname = accountdetail.Lastname;
                 Phnnumber = accountdetail.MainPhone;
-                Adress = accountdetail.StreetAddress1 + "," + accountdetail.StreeAddress2 + "," + accountdetail.City + "," + accountdetail.State + ","+accountdetail.Zip +","+ accountdetail.Country;
+                Adress = accountdetail.StreetAddress1 + "," + accountdetail.StreeAddress2 + "," + accountdetail.City + "," + accountdetail.State + "," + accountdetail.Zip + "," + accountdetail.Country;
                 Email = accountdetail.Email;
             }
 
@@ -58,7 +60,7 @@ namespace EventCombo.Controllers
                 }
                 ViewBag.CountryID = countryList;
             }
-         
+
             return View(tp);
         }
 
@@ -82,7 +84,7 @@ namespace EventCombo.Controllers
                 foreach (Ticket_Locked_Detail objModel in objTicketIds.TLD_List)
                 {
                     objTLD.TLD_Locked_Qty = objModel.TLD_Locked_Qty;
-                   // objTLD.TLD_Ticket_Id = objModel.TLD_Ticket_Id;
+                    // objTLD.TLD_Ticket_Id = objModel.TLD_Ticket_Id;
                     objTLD.TLD_User_Id = strUsers;
                     context.Ticket_Locked_Detail.Add(objTLD);
                 }
@@ -99,12 +101,40 @@ namespace EventCombo.Controllers
         }
 
 
-        public string SaveDetails(TicketPayment ps)
+        public async System.Threading.Tasks.Task<string> SaveDetails(TicketPayment ps)
         {
+            HomeController hm = new HomeController();
+            if (!string.IsNullOrEmpty(ps.AccconfirmEmail) && !string.IsNullOrEmpty(ps.Accpassword))
+            {
+                var user = new ApplicationUser { UserName = ps.Email, Email = ps.Email };
+                string userid = await hm.saveuser(user, ps.Accpassword);
+                if (!string.IsNullOrEmpty(userid))
+                {
+                    using (EventComboEntities objEntity = new EventComboEntities())
+                    {
 
+
+                        Profile prof = new Profile();
+                        prof.FirstName = ps.AccFname;
+                        prof.LastName = ps.AccLname;
+                        prof.FirstName = ps.AccFname;
+                        prof.MainPhone = ps.Accountphnno;
+                        prof.City = ps.AccCity;
+                        prof.State = ps.AccState;
+                        prof.Zip = ps.Acczip;
+                        prof.CountryID =byte.Parse(ps.Acccountry);
+                        prof.UserID = userid;
+
+                        objEntity.Profiles.Add(prof);
+                        objEntity.SaveChanges();
+                    }
+                }
+
+
+            }
             return "";
-
-        }
+        } 
+      
 
     }
 }
