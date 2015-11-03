@@ -250,7 +250,7 @@
 
 /*Start event display 0 page*/
 .book_tkt_date{ font-size: 20px;}
-.book_tkt_desc{ font-size: 16px; padding-bottom: 10px !important;}
+.book_tkt_desc{ font-size: 16px; padding-bottom: 0px !important;}
 
 .table > thead.tkt_multi_tab_date > tr > td{ border-top: 0px; padding: 0px;}
 
@@ -324,7 +324,7 @@
 .chek_out_desc p{ font-size: 1.2em; font-weight: normal;}
 .chek_out_desc p label{font-weight: normal;}
 
-
+.tbl_white_bg{background:white;border:0;}
 
 
 

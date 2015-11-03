@@ -28,6 +28,7 @@
 @Html.HiddenFor(m => m.eventType, new { @id = "hdEventtype" })
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui.js"></script>
+
 <div class="event_container">
     <div class="event_inner_container event_top">
         <div class="event-slide-container">
@@ -405,10 +406,10 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="form-group mb10">
+                    <div  class="form-group mb10">
                         <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
                         <div class="col-sm-8">
-                            <input class="form-control evnt_inp_cont" type="text" id="id_orgemail">
+                            <input  class="form-control evnt_inp_cont" type="text" id="id_orgemail">
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -416,7 +417,7 @@
                         <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" rows="4" id="id_orgtext"></textarea>
-
+                            
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -424,7 +425,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
+                <button type="button"  class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
             </div>
 
         </div>
@@ -459,7 +460,26 @@
 </div>
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
+
 <script>
+
+    function checknumeric(event) {
+
+        var code = event.charCode ? event.charCode : event.keyCode;
+
+        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        {
+            return true;
+        }
+        else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
+        {
+            event.preventdefault();
+            return false;
+        }
+
+    }
+
+
         $(document).ready(function () {
 
             $('#saveorgaizermsg').click(function () {
@@ -836,7 +856,7 @@
 
         }
         // alert(runningTotal);
-        $("#spGTotal").text('Order total : $' + runningTotal.toString());
+        $("#spGTotal").text('Order total : $' + runningTotal.toFixed(2).toString());
         //var CurrentValue = (parseFloat(selectedvalue) * parseFloat(tprice));
 
         //if (CurrentValue > 0) {

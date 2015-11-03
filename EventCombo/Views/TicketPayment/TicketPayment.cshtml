@@ -98,7 +98,7 @@
             <div class="evnt_tile_head">
                 <div class="evnt_tile_bg_l"></div>
                 <div class="col-sm-12 col-xs-12 text-left no_pad">
-                    <h2 class="fb_dis_head pt5">ORDER INFORMATION</h2>
+                    <h2 class="fb_dis_head pt5">YOUR ORDER INFORMATION</h2>
                 </div>
 
                 <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -427,15 +427,14 @@
     </div>
     <div class="clearfix"></div>
     <div class="strat_timer_cont">
-        <div>
-            <div id="divTime"> </div>
-        </div>
         <div class="col-sm-12 no_pad text-center">
             <p class="bg-green mb0 strt_tim_desc">
                 Please complete this purchase within 10:00 minutes.<br>
                 After 10:00 minutes, the reservation we're holding will be released to others.
             </p>
-            <p class="bg-green mb0 strt_tim_desc2">00:54</p>
+            <div class="col-sm-12 text-center bg-green">
+                <div id="divTime"> </div>
+            </div>
         </div>
     </div>
 
@@ -748,7 +747,7 @@
 
         //*************************Fire when User Click on Continue in Previous Page *****************************************
 
-        @*var vTicketid = '19,20';
+        var vTicketid = '19,20';
         clock = $('#divTime').FlipClock(60, {
             clockFace: 'MinuteCounter',
             countdown: true,
@@ -768,7 +767,7 @@
                     });
                 }
             }
-        });*@
+        });
 
 
 
