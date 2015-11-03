@@ -368,35 +368,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        public async Task<string> saveuser(ApplicationUser user, string password)
-        {
-
-            var result = await UserManager.CreateAsync(user, password);
-            if (result.Succeeded)
-            {
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                var Userid = UserManager.FindByEmail(user.Email);
-                await this.UserManager.AddToRoleAsync(Userid.Id, "Member");
-                using (EventComboEntities objEntity = new EventComboEntities())
-                {
-                    User_Permission_Detail permdetail = new User_Permission_Detail();
-                    for (int i = 1; i < 3; i++)
-                    {
-
-                        permdetail.UP_Permission_Id = i;
-                        permdetail.UP_User_Id = Userid.Id.ToString();
-                        objEntity.User_Permission_Detail.Add(permdetail);
-                        objEntity.SaveChanges();
-                    }
-                }
-                    return Userid.Id;
-            }
-            else
-            {
-                return "";
-
-            }
-        }
+      
 
         [HttpPost]
         [AllowAnonymous]

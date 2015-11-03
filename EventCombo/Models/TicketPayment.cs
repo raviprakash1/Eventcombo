@@ -42,12 +42,17 @@ namespace EventCombo.Models
         public string shipfname { get; set; }
         public string shipLname { get; set; }
         public string shipphno { get; set; }
+        public string shipaddress2 { get; set; }
         public string shipaddress1 { get; set; }
         public string shipcity { get; set; }
         public string shipzip { get; set; }
         public string shipstate { get; set; }
         public string shipcountry { get; set; }
-       public List<TicketBearer> NameList { get; set; }
+        public string Savecarddetail { get; set; }
+        public string Saveshipdetail { get; set; }
+      
+        public List<TicketBearer> NameList { get; set; }
+        public string Ticketname { get; set; }
     }
 
 
@@ -60,4 +65,12 @@ namespace EventCombo.Models
         
 
     }
+
+    public class Cardview
+    {
+        public string value { get; set; }
+        public string text { get; set; }
+    }
+
+
 }

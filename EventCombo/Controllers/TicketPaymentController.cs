@@ -5,11 +5,18 @@ using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System.Threading.Tasks;
 
 namespace EventCombo.Controllers
 {
     public class TicketPaymentController : Controller
     {
+        EventComboEntities db = new EventComboEntities();
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
         // GET: TicketPayment
         public ActionResult TicketPayment(long Eventid)
         {
@@ -23,6 +30,7 @@ namespace EventCombo.Controllers
             tp.Title = eventdetails.EventTitle;
             tp.Tickettype = "Paid";
             ViewData["Type"] = tp.Tickettype;
+            List<Cardview> Detailscard = new List<Cardview>(); 
             if (Session["AppId"] != null)
             {
                 string Userid = Session["AppId"].ToString();
@@ -32,6 +40,8 @@ namespace EventCombo.Controllers
                 Phnnumber = accountdetail.MainPhone;
                 Adress = accountdetail.StreetAddress1 + "," + accountdetail.StreeAddress2 + "," + accountdetail.City + "," + accountdetail.State + "," + accountdetail.Zip + "," + accountdetail.Country;
                 Email = accountdetail.Email;
+
+                
             }
 
             tp.Email = Email;
@@ -59,6 +69,40 @@ namespace EventCombo.Controllers
                     });
                 }
                 ViewBag.CountryID = countryList;
+                Cardview card = new Cardview();
+                card.value = "-1";
+                card.text = "Select a Card";
+                Detailscard.Add(card);
+                if (Session["AppId"] != null)
+                {
+                    var userid = Session["AppId"].ToString();
+                    var carddetails = db.CardDetails.Where(x => x.UserId == userid).ToList();
+                    
+                   if(carddetails!=null)
+                    {
+                        foreach(var item in carddetails)
+                        {
+                            Cardview card1 = new Cardview();
+                            card1.value = item.CardId.ToString();
+                            card1.text = Fname + "-" + item.CardNumber;
+                            Detailscard.Add(card1);
+                            
+
+                        }
+                       
+                    }
+                   
+                }
+                Cardview card2 = new Cardview();
+                card2.value ="A";
+                card2.text = "Add a new Card";
+                Detailscard.Add(card2);
+                
+                Cardview card3 = new Cardview();
+                card3.value = "P";
+                card3.text = "Use Paypal";
+                Detailscard.Add(card3);
+                ViewBag.Detailscard = Detailscard;
             }
 
             return View(tp);
@@ -100,14 +144,74 @@ namespace EventCombo.Controllers
 
         }
 
+        public string returncardetail(string cardid)
+        {
 
-        public async System.Threading.Tasks.Task<string> SaveDetails(TicketPayment ps)
+            var Carddetails = (from ev in db.CardDetails where ev.CardId.ToString() == cardid select ev).FirstOrDefault();
+
+            return Carddetails.CardNumber+"*"+Carddetails.Cvv +"*"+ Carddetails.ExpirationDate;
+
+        } 
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        public async Task<string> saveuser(string Email, string password)
+        {
+
+            var user = new ApplicationUser { UserName = Email, Email = Email };
+            var result = await UserManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                var Userid = UserManager.FindByEmail(user.Email);
+                await this.UserManager.AddToRoleAsync(Userid.Id, "Member");
+                using (EventComboEntities objEntity = new EventComboEntities())
+                {
+                    User_Permission_Detail permdetail = new User_Permission_Detail();
+                    for (int i = 1; i < 3; i++)
+                    {
+
+                        permdetail.UP_Permission_Id = i;
+                        permdetail.UP_User_Id = Userid.Id.ToString();
+                        objEntity.User_Permission_Detail.Add(permdetail);
+                        objEntity.SaveChanges();
+                    }
+                }
+                return Userid.Id;
+            }
+            else
+            {
+                return "";
+
+            }
+        }
+        public async Task<string> SaveDetails(TicketPayment model)
         {
             HomeController hm = new HomeController();
-            if (!string.IsNullOrEmpty(ps.AccconfirmEmail) && !string.IsNullOrEmpty(ps.Accpassword))
+            if (!string.IsNullOrEmpty(model.AccconfirmEmail) && !string.IsNullOrEmpty(model.Accpassword))
             {
-                var user = new ApplicationUser { UserName = ps.Email, Email = ps.Email };
-                string userid = await hm.saveuser(user, ps.Accpassword);
+
+                string userid = await saveuser(model.AccEmail, model.Accpassword);
+                
                 if (!string.IsNullOrEmpty(userid))
                 {
                     using (EventComboEntities objEntity = new EventComboEntities())
@@ -115,14 +219,14 @@ namespace EventCombo.Controllers
 
 
                         Profile prof = new Profile();
-                        prof.FirstName = ps.AccFname;
-                        prof.LastName = ps.AccLname;
-                        prof.FirstName = ps.AccFname;
-                        prof.MainPhone = ps.Accountphnno;
-                        prof.City = ps.AccCity;
-                        prof.State = ps.AccState;
-                        prof.Zip = ps.Acczip;
-                        prof.CountryID =byte.Parse(ps.Acccountry);
+                        prof.FirstName = model.AccFname;
+                        prof.LastName = model.AccLname;
+                        prof.FirstName = model.AccFname;
+                        prof.MainPhone = model.Accountphnno;
+                        prof.City = model.AccCity;
+                        prof.State = model.AccState;
+                        prof.Zip = model.Acczip;
+                        prof.CountryID = byte.Parse(model.Acccountry);
                         prof.UserID = userid;
 
                         objEntity.Profiles.Add(prof);
@@ -132,28 +236,94 @@ namespace EventCombo.Controllers
                 Session["AppId"] = userid;
 
             }
-            using (EventComboEntities objEntity = new EventComboEntities())
-            {
-                CardDetail card = new CardDetail();
-                card.OrderId =0;
-                card.CardNumber = ps.cardno;
-                card.ExpirationDate = ps.expirydate;
-                card.Cvv = ps.cvv;
-                card.UserId = Session["AppId"].ToString();
-                card.Guid = Session["AppId"].ToString();
-                objEntity.CardDetails .Add(card);
+          
+            string Userid = Session["AppId"].ToString();
+                if (!string.IsNullOrEmpty(Userid))
+                {
+                if (model.Ticketname == "Paid")
+                {
+                    using (EventComboEntities objEntity = new EventComboEntities())
+                    {
+                        if (model.Savecarddetail != "N")
+                        {
+                            CardDetail card = new CardDetail();
+                            card.OrderId = 0;
+                            card.CardNumber = model.cardno;
+                            card.ExpirationDate = model.expirydate;
+                            card.Cvv = model.cvv;
+                            card.UserId = Userid;
+                            card.Guid = Userid;
+                            objEntity.CardDetails.Add(card);
+                        }
 
 
-                BillingAddress badd = new BillingAddress();
+                        BillingAddress badd = new BillingAddress();
 
-                badd.Fname = ps.billfname;
-                badd.Lname = ps.billLname;
+                        badd.Fname = model.billfname;
+                        badd.Lname = model.billLname;
+                        badd.Address1 = model.billaddress1;
+                        badd.Address2 = model.billaddress2;
+                        badd.City = model.billcity;
+                        badd.State = model.billstate;
+                        badd.Zip = model.billzip;
+                        badd.Country = model.billcountry;
+                        badd.Phone_Number = model.billingphno;
+                        badd.UserId = Userid;
+                        badd.Guid = Userid;
+                        badd.OrderId = 0;
+                        objEntity.BillingAddresses.Add(badd);
+                        if (model.Saveshipdetail != "N")
+                        {
+                            ShippingAddress shipadd = new ShippingAddress();
+
+                            shipadd.Fname = model.shipfname;
+                            shipadd.Lname = model.shipLname;
+                            shipadd.Address1 = model.shipaddress1;
+                            shipadd.Address2 = model.shipaddress2;
+                            shipadd.City = model.shipcity;
+                            shipadd.State = model.shipstate;
+                            shipadd.Zip = model.shipzip;
+                            shipadd.Country = model.shipcountry;
+                            shipadd.Phone_Number = model.shipphno;
+                            shipadd.UserId = Userid;
+                            shipadd.Guid = Userid;
+                            shipadd.OrderId = 0;
+                            objEntity.ShippingAddresses.Add(shipadd);
+                        }
+                        if (model.NameList != null)
+                        {
+                            TicketBearer ObjAdd = new TicketBearer();
+                            foreach (TicketBearer objA in model.NameList)
+                            {
+
+                                ObjAdd = new TicketBearer();
+                                ObjAdd.UserId = Userid;
+                                ObjAdd.Guid = Userid;
+                                ObjAdd.Email = objA.Email;
+                                ObjAdd.Name = objA.Name;
+                                ObjAdd.OrderId = 0;
+
+                                objEntity.TicketBearers.Add(ObjAdd);
 
 
-                objEntity.SaveChanges();
+                            }
+                        }
+                        objEntity.SaveChanges();
+                    }
+                }
+                
+                return "saved";
             }
-                return "";
+            else
+            {
+                return "Email already present";
+
+            }
+          
         }
+
+
+
         #region LoadTickets
         public string LoadTickets(string strEvent)
         {
