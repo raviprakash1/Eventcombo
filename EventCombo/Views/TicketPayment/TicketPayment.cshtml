@@ -11,8 +11,8 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
-
-    
+    <input type="hidden" id="hdOrderTotal" value="1000" />
+    <input type="hidden" id="hdemailexist"  />
     <input id="hidTicketbearer" />
     @Html.HiddenFor(m=>m.EventId,new {id="hdEventid" })
     <div class="event_container ">
@@ -230,46 +230,50 @@
                            
                         </div>
                       
-                        @if (ViewData["Type"].ToString() == "Paid")
-                        {
-                            <div class="form-group mt10">
+                       
+                            <div class="form-group mt10 divvisible" >
                                 <div class="col-sm-12 col-xs-12 no_pad">
                                     <label class="control-label ev_payment_lebel pl0">
                                         PLEASE ENTER YOUR CREDIT CARD INFORMATION
                                     </label>
                                 </div>
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <select class="form-control ev_drop_label">
-                                        <option>XXXX-XXXX-XXXX-1234 Visa </option>
-                                        <option>XXXX-XXXX-XXXX-1234 Visa</option>
-                                        <option>XXXX-XXXX-XXXX-1234 Visa</option>
-                                        <option>XXXX-XXXX-XXXX-1234 Visa</option>
+
+
+                                   <select class="form-control ev_drop_label" id="selectcard" onchange="showcardetails(this.id)">
+                                       @foreach (var item in (List<Cardview>)ViewBag.Detailscard)
+                                       {
+                                        <option value="@item.value">@item.text</option>
+
+                                       }
                                     </select>
                                 </div>
-                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CREDIT CARD NUMBER" id="cardno">
-                                </div>
-                               
-                                <div class="col-sm-10 col-xs-12 mb10 no_pad card_list">
-                                    <img src="/Images/visa.png" id="imgcard" style="display:none">
-                                    @*<img src="~/Images/mastercard.png" id="mastercard" style="display:none">
-                                    <img src="~/Images/discover.png" id="discover" style="display:none">
-                                    <img src="~/Images/amr-exp.png" id="amr" style="display:none">*@
-                                </div>
-                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="EXPIRATION DATE" id="expirationdate">
-                                </div>
-                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE" id="cvvcode"  onkeydown="return checknumber(event);" maxlength="5">
-                                </div>
-                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input type="checkbox" id="chkcarddetails" /> <span class="ev_pay_span">Save billing and payment info for easy ordering </span>
+                                <div id="cardshow" style="display:none;">
+                                    <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="CREDIT CARD NUMBER" id="cardno" onkeyup="getcardvisa(this.id)">
+                                    </div>
 
+                                    <div class="col-sm-10 col-xs-12 mb10 no_pad card_list">
+                                        <img src="/Images/visa.png" id="imgcard" style="display:none">
+                                        @*<img src="~/Images/mastercard.png" id="mastercard" style="display:none">
+                <img src="~/Images/discover.png" id="discover" style="display:none">
+                <img src="~/Images/amr-exp.png" id="amr" style="display:none">*@
+                                    </div>
+                                    <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="EXPIRATION DATE" id="expirationdate">
+                                    </div>
+                                    <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE" id="cvvcode" onkeydown="return checknumber(event);" maxlength="5">
+                                    </div>
+                                    <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                        <input type="checkbox" id="chkcarddetails" /> <span class="ev_pay_span">Save billing and payment info for easy ordering </span>
+
+                                    </div>
                                 </div>
                             </div>
                         
-                                 <div class="clearfix"></div>
-                        <div class="form-group mt10 ">
+                                 <div class="clearfix divvisible" ></div>
+                        <div class="form-group mt10 divvisible" >
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <label class="control-label ev_payment_lebel pl0">
                                     PLEASE ENTER YOUR BILLING ADDRESS<br>
@@ -318,8 +322,8 @@
 
                             </div>
                         </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group mt10 shippingaddress" style="display:none;">
+                        <div class="clearfix divvisible" ></div>
+                        <div class="form-group mt10 shippingaddress" style="display:none;" >
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <label class="control-label ev_payment_lebel pl0">
                                    PLEASE ENTER SHIPPING ADDRESS<br>
@@ -364,57 +368,57 @@
 
                             </div>
                         </div>
-                        }
+                        
 
                     </div>
-@if (ViewData["Type"].ToString() == "Paid")
-{
-                    <div class="col-sm-6">
+
+                    <div class="col-sm-6 divvisible" >
                         <div class="form-group ">
-                            <div class="col-sm-12 col-xs-12 no_pad">
-                                <div class="col-sm-8 col-xs-8 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="NAME OF THE TICKET BEARER" id="nameofticket">
+                           
+                                <div class="col-sm-12 col-xs-12 no_pad mt20">
+                                    <label class="control-label ev_payment_lebel pl0">
+                                        PLEASE ENTER INTENDED TICKET RECEPIENTS (OPTIONAL)
+                                    </label>
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-8 col-xs-8 no_pad">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="NAME OF THE TICKET BEARER" id="nameofticket">
 
-                                </div>
-                                <label class="control-label ev_tickt_recp_lebel ev_not_me">
-                                    <span class="Notify"> Notify by email</span>
-                                </label>
-
-                                <div class="col-sm-12 col-xs-12 no_pad mt10">
-                                    <div class="Notifybox col-sm-8 col-xs-8 no_pad mt10 mb10" id="divemail">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL OF TICKET BEARER" id="emailbearer">
                                     </div>
-                                    <div class="col-sm-12 col-xs-12 no_pad">
-                                        <button class="btn ev_live_btn" type="button" id="btAddList">
-                                            ADD TO LIST
-                                        </button>
-                                    </div> 
-                                    <div class="col-sm-12 col-xs-12 no_pad mt10" id="blocklist" style="display:none;">
-                                        <div class="col-sm-8 col-xs-8 no_pad ">
-                                            <select class="form-control evnt_inp_cont " id="ddlListitem">
-                                              
+                                    <label class="control-label ev_tickt_recp_lebel ev_not_me">
+                                        <span class="Notify"> Notify by email</span>
+                                    </label>
 
-                                            </select>
+                                    <div class="col-sm-12 col-xs-12 no_pad mt10">
+                                        <div class="Notifybox col-sm-8 col-xs-8 no_pad mt10 mb10" id="divemail">
+                                            <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL OF TICKET BEARER" id="emailbearer">
                                         </div>
-                                        <div class="col-sm-2 col-xs-2">
-                                            <button class="btn ev_live_btn" type="button" id="editlist"   >
-                                                Edit
+                                        <div class="col-sm-12 col-xs-12 no_pad">
+                                            <button class="btn ev_live_btn" type="button" id="btAddList">
+                                                ADD TO LIST
                                             </button>
                                         </div>
-                                        <div class="col-sm-2 col-xs-2">
-                                            <button class="btn ev_live_btn" type="button" id="deletelist"  >
-                                                Delete
-                                            </button>
+                                        <div class="col-sm-12 col-xs-12 no_pad mt10" id="blocklist" style="display:none;">
+                                            <div class="col-sm-8 col-xs-8 no_pad ">
+                                                <select class="form-control evnt_inp_cont " id="ddlListitem"></select>
+                                            </div>
+                                            <div class="col-sm-2 col-xs-2">
+                                                <button class="btn ev_live_btn" type="button" id="editlist">
+                                                    Edit
+                                                </button>
+                                            </div>
+                                            <div class="col-sm-2 col-xs-2">
+                                                <button class="btn ev_live_btn" type="button" id="deletelist">
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <table style="display:none;" id="tblListitem"></table>
                                 </div>
-                                <table style="display:none;" id="tblListitem"></table>
-                            </div>
 
-                        </div>
+</div>
                         <div class="clearfix"></div>
                     </div>
-}
                     <div class="col-sm-12 text-right mt10">
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="completeorder" >
                             COMPLTE ORDER >
@@ -474,7 +478,22 @@
     //function afterStop() {
     //    alert("Time Khatam");
     //}
+    $(document).ready(function () {
+
+      
+        var total = $('#hdOrderTotal').val();
+        if (total > 0) {
+           
+            $('.divvisible').css('display', 'block');
+        } else {
+           
+            $('.divvisible').css('display', 'none');
+
+        }
+
+    });
    
+        
     function validationpage()
     {
         var msglogin = "";
@@ -482,6 +501,12 @@
         var confirmlogin = $("#confirmEmail").val();
         var Passowrdlogin = $("#password").val();
         var confirmpassword = $("#confirmpassword").val();
+
+        var total = $('#hdOrderTotal').val();
+     
+
+         
+        
         if (!validateEmail(Emaillogin)) {
             $('#Email').focus();
             $('#Email').addClass('err-bor');
@@ -522,7 +547,7 @@
 
             }
         }
-
+        if (total > 0) {
         var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
         if (result.card_type == null) {
             msglogin += "Invalid Card Number" + "\n";
@@ -544,7 +569,112 @@
             $("#cardno").addClass('err-bor');
 
         }
-      
+
+        var billfname = $('#billfname').val();
+        var billLname = $('#billLname').val();
+        var billingphno = $('#billingphno').val();
+        var billaddress1 = $('#billaddress1').val();
+
+        var billcity = $('#billcity').val();
+        var billzip = $('#billzip').val();
+        var billstate = $('#billstate').val();
+        var billcountry = $('#billcountry').val();
+
+        if(billfname== "")
+        {
+            msglogin += "Please Enter Billing First name" + "\n";
+            $("#billfname").focus();
+            $("#billfname").addClass('err-bor');
+
+        }
+        if(billingphno== "")
+        {
+            msglogin += "Please Enter Billing Phone number" + "\n";
+            $("#billingphno").focus();
+            $("#billingphno").addClass('err-bor');
+
+        }
+        if(billaddress1== "")
+        {
+            msglogin += "Please Enter Billing Address" + "\n";
+            $("#billaddress1").focus();
+            $("#billaddress1").addClass('err-bor');
+
+        }
+        
+        if(billcity== "")
+        {
+            msglogin += "Please Enter Billing City" + "\n";
+            $("#billcity").focus();
+            $("#billcity").addClass('err-bor');
+
+        }
+        if(billzip== "")
+        {
+            msglogin += "Please Enter Billing Zip" + "\n";
+            $("#billzip").focus();
+            $("#billzip").addClass('err-bor');
+
+        }
+        if (billstate == "") {
+            msglogin += "Please Enter Billing State" + "\n";
+            $("#billstate").focus();
+            $("#billstate").addClass('err-bor');
+
+        }
+        if (billcountry == "") {
+            msglogin += "Please Enter Billing Country" + "\n";
+            $("#billcountry").focus();
+            $("#billcountry").addClass('err-bor');
+
+        }
+        if ($("#shippinginfo").is(":checked")) {
+            if ($('#shipfname').val() == "") {
+                msglogin += "Please Enter Shipping First name" + "\n";
+                $("#shipfname").focus();
+                $("#shipfname").addClass('err-bor');
+
+            }
+            if ($('#shippingphnno').val() == "") {
+                msglogin += "Please Enter Shipping Phone number" + "\n";
+                $("#shippingphnno").focus();
+                $("#shippingphnno").addClass('err-bor');
+
+            }
+            if ($('#shipaddress1').val() == "") {
+                msglogin += "Please Enter Shipping Address" + "\n";
+                $("#shipaddress1").focus();
+                $("#shipaddress1").addClass('err-bor');
+
+            }
+            if ($('#shipcity').val() == "") {
+                msglogin += "Please Enter Shipping City" + "\n";
+                $("#shipcity").focus();
+                $("#shipcity").addClass('err-bor');
+
+            }
+            if ($('#shipzip').val() == "") {
+                msglogin += "Please Enter Shipping Zip" + "\n";
+                $("#shipzip").focus();
+                $("#shipzip").addClass('err-bor');
+
+            }
+            if ($('#shipstate').val() == "") {
+                msglogin += "Please Enter Shipping state" + "\n";
+                $("#shipstate").focus();
+                $("#shipstate").addClass('err-bor');
+
+            }
+            if ($('#shipcountry').val() == "") {
+                msglogin += "Please Enter Shipping country" + "\n";
+                $("#shipcountry").focus();
+                $("#shipcountry").addClass('err-bor');
+
+            }
+        }
+          
+
+        }
         return msglogin;
     }
 
@@ -565,7 +695,7 @@
     }
     $(document).ready(function () {
 
-        ddlListitem
+       
         $(document).click(function () {
            
             $('#diverroacc').css('display', 'none');
@@ -573,8 +703,10 @@
             $("input").removeClass('err-bor');
         });
         $('#completeorder').click(function () {
+            var flag = true;
             var Emaillogin = $("#Email").val();
             var msg = validationpage();
+          
             var NameList = [];
             if (msg != "") {
                 $('#diverroacc').css('display', 'block');
@@ -585,9 +717,10 @@
             else
             {
                 if ($("#confirmEmail").length > 0) {
-
+                   
                     $.ajax({
                         url: "/Home/IsValid",
+                        async:true,
                         data: 'Email=' + Emaillogin,
                         dataType: "text",
                         success: function (data, textStatus, xhr) {
@@ -596,17 +729,17 @@
                                 if (data == "NotFound") {
                                     flag = true;
 
-
+                                    $('#hdemailexist').val(true);
 
                                 } else if (data == "Found") {
-
+                                   
                                     $('#Email').focus();
                                     $("#Email").addClass('err-bor');
                                   
                                     $('#diverroacc').css('display', 'block');
                                     $('#erraccmsg').html('Email already exist,Please use Sign in!!');
-
-                                    return false;
+                                    $('#hdemailexist').val(false);
+                                   
                                 }
                             }
                         },
@@ -619,83 +752,102 @@
               
 
             }
-            var confirmemail = "", cardno = "", expirydate = "", cvv = "";
+          
+              
+                var confirmemail = "", cardno = "", expirydate = "", cvv = "";
+                var type='';
+              
+             
+                $("#tblListitem tr").each(function () {
+                    var Sno = $(this).find("td:first").html();
 
-            $("#tblListitem tr").each(function () {
-                var Sno = $(this).find("td:first").html();
+                    // Multiple Address
+                    if (Sno != '') {
+                        NameList.push({
+                            Name: $("#TicketName_" + Sno).text(),
+                            Email: $("#TicketEmail_" + Sno).text(),
 
-                // Multiple Address
-                if (Sno != '') {
-                    NameList.push({
-                        Name: $("#TicketName_" + Sno).text(),
-                        Email: $("#TicketEmail_" + Sno).text(),
-                     
 
-                    });
+                        });
+                    }
+                });
+
+                if ($('#chkcarddetails').is(":checked") == true) {
+                    cardno = $('#cardno').val();
+                    expirydate = $('#expirationdate').val();
+                    cvv = $('#cvvcode').val();
                 }
-            });
-
-            if($('#chkcarddetails').is(":checked") == true)
-            {
-                cardno=$('#cardno').val();
-                expirydate=$('#expirationdate').val();
-                cvv=$('#cvvcode').val();
-            }
-            if ($('#shippinginfo').is(":checked") == true) {
+                if ($('#shippinginfo').is(":checked") == true) {
 
 
-
-            }
-            var model = {
-
-                'AccFname': $('#accfname').val(),
-                'AccLname': $('#accLname').val(),
-                'AccEmail': $('#Email').val(),
-                'AccconfirmEmail': $('#confirmEmail').val(),
-                'Accpassword': $('#password').val(),
-                'Accconfirmpassword': $('#confirmpassword').val(),
-                'Accountphnno': $('#accountphnno').val(),
-                'AccCity': $('#accCity').val(),
-                'AccState': $('#accState').val(),
-                'Acczip': $('#accZip').val(),
-                'Acccountry': $('#accCountry').val(),
-                'cardno': $('#cardno').val(),
-                'expirydate': $('#expirydate').val(),
-                'cvv': $('#cvv').val(),
-                'billfname': $('#billfname').val(),
-                'billLname': $('#billLname').val(),
-                'billingphno': $('#billingphno').val(),
-                'billaddress1': $('#billaddress1').val(),
-                'billaddress2': $('#billaddress2').val(),
-                'billcity': $('#billcity').val(),
-                'billzip': $('#billzip').val(),
-                'billstate': $('#billstate').val(),
-                'billcountry': $('#billcountry').val(),
-                'shipfname': $('#shipfname').val(),
-                'shipLname': $('#shipLname').val(),
-                'shipphno': $('#shippingphnno').val(),
-                'shipaddress1': $('#billaddress1').val(),
-                'shipcity': $('#shipcity').val(),
-                'shipzip': $('#shipzip').val(),
-                'shipstate': $('#shipstate').val(),
-                'shipcountry': $('#shipcountry').val(),
-                'NameList': NameList
-
-            }
-
-            $.ajax({
-                url: '@Url.Action("SaveDetails", "TicketPayment")',
-                data: model,
-                type: "Post",
-                success: function (response) {
-                  
-                    //$('#divaccsuc').css('display', 'block'); $("#hdEventId").val(response);
-                    //$('#diverroacc').css('display', 'none');
-                    //$('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
-                    //$("#hdEventId").val(response);
 
                 }
-            });
+                var totalorder = $('#hdOrderTotal').val();
+                var type='';
+                if (totalorder > 0) {
+           
+                    type='Paid';
+                } else
+                {
+           
+                    type='Free';
+
+                }
+              
+                var model = {
+
+                    'AccFname': $('#accfname').val(),
+                    'AccLname': $('#accLname').val(),
+                    'AccEmail': $('#Email').val(),
+                    'AccconfirmEmail': $('#confirmEmail').val(),
+                    'Accpassword': $('#password').val(),
+                    'Accconfirmpassword': $('#confirmpassword').val(),
+                    'Accountphnno': $('#accountphnno').val(),
+                    'AccCity': $('#accCity').val(),
+                    'AccState': $('#accState').val(),
+                    'Acczip': $('#accZip').val(),
+                    'Acccountry': $('#accCountry').val(),
+                    'cardno': $('#cardno').val(),
+                    'expirydate': $('#expirationdate').val(),
+                    'cvv': $('#cvvcode').val(),
+                    'billfname': $('#billfname').val(),
+                    'billLname': $('#billLname').val(),
+                    'billingphno': $('#billingphno').val(),
+                    'billaddress1': $('#billaddress1').val(),
+                    'billaddress2': $('#billaddress2').val(),
+                    'billcity': $('#billcity').val(),
+                    'billzip': $('#billzip').val(),
+                    'billstate': $('#billstate').val(),
+                    'billcountry': $('#billcountry').val(),
+                    'shipfname': $('#shipfname').val(),
+                    'shipLname': $('#shipLname').val(),
+                    'shipphno': $('#shippingphnno').val(),
+                    'shipaddress1': $('#shipaddress1').val(),
+                    'shipaddress2': $('#shipaddress2').val(),
+                    'shipcity': $('#shipcity').val(),
+                    'shipzip': $('#shipzip').val(),
+                    'shipstate': $('#shipstate').val(),
+                    'shipcountry': $('#shipcountry').val(),
+                    'NameList': NameList,
+                    'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
+                    'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
+                    'Ticketname': type
+                   
+                   
+
+                }
+
+                $.ajax({
+                    url: '@Url.Action("SaveDetails", "TicketPayment")',
+                    data:model,
+                    type: "Post",
+                    success: function (response) {
+                      
+                      
+
+                    }
+                });
+            
 
 
         });
@@ -899,7 +1051,12 @@
         $("#nameofticket").val(vOrgName);
         $("#emailbearer").val(vOrgDes);
     });
+    var cardlength = $("#cardno").val();
+    if (cardlength == "")
+    {
+        $('#imgcard').css('display', 'none');
 
+    }
     $("#deletelist").click(function () {
         var Sno = $("#ddlListitem").val();
         $('#tblListitem tr').each(function () {
@@ -966,20 +1123,81 @@
         $("#shippingphnno").mask("999-999-9999");
         $("#billingphno").mask("999-999-9999");
         $("#accountphnno").mask("999-999-9999");
-        $("#cardno").validateCreditCard(function (result) {
+    
+        //$("#cardno").validateCreditCard(function (result) {
+          
+        //    //if (result.card_type.name == 'visa' || result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'amex') {
+        //    //    $('#imgcard').css('display', 'block');
+        //    //    $('#imgcard').attr('src', '/Images/' + result.card_type.name + '.png');
+
+        //    //} else {
+
+        //    //    $('#imgcard').css('display', 'none');
+        //    //}
+          
+         
+
+            
+        //});
+      
+
+    });
+    function getcardvisa(e) {
+        if ($("#" + e).val() != '') {
+            var result = $("#" + e).validateCreditCard();
 
             if (result.card_type.name == 'visa' || result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'amex') {
                 $('#imgcard').css('display', 'block');
                 $('#imgcard').attr('src', '/Images/' + result.card_type.name + '.png');
 
-            } else { $('#imgcard').css('display', 'none'); }
+            } else {
+
+                $('#imgcard').css('display', 'none');
+            }
+        } else {
+            $('#imgcard').css('display', 'none');
+
+        }
+
+    }
+  function showcardetails(e)
+    {
+        
+      var selectvalue = $('#' + e).val();
+
+      if(selectvalue=="A")
+      {
+          $('#cardshow').css('display', 'block');
+
+      }
+      else if (selectvalue == "-1") {
+          $('#cardshow').css('display', 'none');
+
+      }
+      else if (selectvalue == "P") {
+          $('#cardshow').css('display', 'none');
+
+      }
+      else {
           
-         
+          $('#cardshow').css('display', 'block');
+          $.ajax({
+              url: '@Url.Action("returncardetail", "TicketPayment")',
+              data: { 'cardid': selectvalue },
+              type: "Get",
+              success: function (response) {
+                  var value = response;
+                 
+                  var res = value.split('*');
+                 
+                  $('#cardno').val(res[0]);
+                  $('#expirationdate').val(res[1]);
+                  $('#cvvcode').val(res[2]);
+              },
+          });
 
-            
-        });
+      }
       
-
-    });
+    }
 </script>
 <script src="~/Scripts/jquery.maskedinput.min.js"></script>

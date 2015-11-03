@@ -23,5 +23,6 @@ namespace EventCombo.Models
         public string fblink { get; set; }
         public string twitterlink { get; set; }
         public string organizerid { get; set; }
+        public string Orderdetail { get; set; }
     }
 }

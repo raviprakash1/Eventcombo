@@ -546,7 +546,7 @@
     <Content Include="Images\guestlist-FPO.jpg" />
     <Content Include="Images\header-bg.png" />
     <Content Include="Images\icon-date.png" />
-    <Content Include="Images\icon-deal.png" />
+    <Content Include="Images\icondeal.png" />
     <Content Include="Images\icon-heart.png" />
     <Content Include="Images\icon-location.png" />
     <Content Include="Images\icon-question.gif" />

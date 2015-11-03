@@ -407,7 +407,7 @@ namespace EventCombo.Controllers
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "ViewEvent";
             var TopAddress = "";var Topvenue="";
-            string organizername = "", fblink = "", twitterlink = "", organizerid = "";
+            string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="";
             ViewEvent viewEvent = new ViewEvent();
             var EventDetail = GetEventdetail(EventId);
             var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
@@ -463,28 +463,32 @@ namespace EventCombo.Controllers
 
 
             }
-            else {
+            else
+            {
                 viewEvent.eventType = "single";
                 var evschdetails = (from ev in db.EventVenues where ev.EventID == EventId select ev).FirstOrDefault();
-                var startdate = (evschdetails.EventStartDate);
-                if (startdate != null)
+                if (evschdetails != null)
                 {
-                    DateTime sDate = new DateTime();
-                    sDate = DateTime.Parse(startdate.ToString());
-                     startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString ();
-                     sDate_new = sDate.ToString("MMM dd yyyy");
-                }
-                var enddate = evschdetails.EventEndDate;
-                if (enddate != null)
-                {
-                    DateTime eDate = new DateTime();
-                    eDate = DateTime.Parse(enddate.ToString());
-                     endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString ();
-                     eDate_new = eDate.ToString("MMM dd yyyy");
-                }
+                    var startdate = (evschdetails.EventStartDate);
+                    if (startdate != null)
+                    {
+                        DateTime sDate = new DateTime();
+                        sDate = DateTime.Parse(startdate.ToString());
+                        startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
+                        sDate_new = sDate.ToString("MMM dd yyyy");
+                    }
+                    var enddate = evschdetails.EventEndDate;
+                    if (enddate != null)
+                    {
+                        DateTime eDate = new DateTime();
+                        eDate = DateTime.Parse(enddate.ToString());
+                        endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
+                        eDate_new = eDate.ToString("MMM dd yyyy");
+                    }
 
-                 starttime = evschdetails.EventStartTime.ToString();
-                 endtime = evschdetails.EventEndTime.ToString();
+                    starttime = evschdetails.EventStartTime.ToString();
+                    endtime = evschdetails.EventEndTime.ToString();
+                }
 
 
                 
@@ -561,7 +565,31 @@ namespace EventCombo.Controllers
 
             }
             ViewBag.Images= GetImages(EventId);
-           
+
+            var ticketsfree = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 1 select r).Count();
+            var ticketsPaid = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 2 select r).Count();
+            var ticketsDonation = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 3 select r).Count();
+            if(ticketsfree>0 && ticketsPaid>0 && ticketsDonation>0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree > 0 && ticketsPaid <= 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Register";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid <= 0 && ticketsDonation > 0)
+            {
+                tickettype = "Donate";
+
+            }
+            viewEvent.Orderdetail = tickettype;
             return View(viewEvent);
         }
 
