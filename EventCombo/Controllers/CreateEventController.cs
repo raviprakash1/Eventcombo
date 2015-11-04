@@ -498,7 +498,7 @@ namespace EventCombo.Controllers
                 
             }
 
-            if (!string.IsNullOrEmpty(displaystarttime) && (displaystarttime == "Y"|| displaystarttime == "y") && !string.IsNullOrEmpty(displayendtime) && (displayendtime == "Y"|| displayendtime == "y"))
+            if ((displaystarttime == "Y"|| displaystarttime == "y") && (displayendtime == "Y"|| displayendtime == "y"))
             {
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new+ "," + starttime + "-" + endday.ToString() + " " + eDate_new + "," + endtime;
 
