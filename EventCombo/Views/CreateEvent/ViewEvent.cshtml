@@ -274,11 +274,11 @@
 
         <div class="evnt_details_body2">
             <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10" id="comments">
-
+                <div class="fb-comments" data-href="http://Facebook.com/eventcombo" data-numposts="5"></div>
 
             </div>
         </div>
-        <div class="fb-comments" data-href="http://Facebook.com/eventcombo" data-numposts="5"></div>
+      
 
 
     </div>
@@ -943,10 +943,30 @@ function pad(n) { return n < 10 ? '0' + n : n };
         $(".EveDisRib").click(function () {
 
             $(".Evenfaccomment").slideToggle("fast");
+            //facebook comments
+         
+           
+            if ($('.fb-comments').length >0) {
+                var scriptText = 'FB.XFBML.parse();';
+                var scriptNode = document.createElement('script');
+                scriptNode.appendChild(document.createTextNode(scriptText));
+               
+                $('#comments').append(scriptNode);
+            }
         });
         $(".EveActRib").click(function () {
 
             $(".Evenfaccomment").slideToggle("fast");
+            //facebook comments
+           
+          
+            if ($('.fb-comments').length > 0) {
+                var scriptText = 'FB.XFBML.parse();';
+                var scriptNode = document.createElement('script');
+                scriptNode.appendChild(document.createTextNode(scriptText));
+               
+                $('#comments').append(scriptNode);
+            }
         });
 
 
