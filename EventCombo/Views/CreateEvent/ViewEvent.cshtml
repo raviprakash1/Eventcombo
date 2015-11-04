@@ -231,14 +231,13 @@
     </div>
     <div class="event_detail_container">
 
-        <div class="EveDisRib evnt_tile_dis_head evnt_cursor">
+        <div class="EveDisRib evnt_tile_head evnt_cursor bg-grey">
             <div class="evnt_tile_dis_bg_l"></div>
-            <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad">
+            <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad ">
                 <h2 class="fb_dis_head pt5"><img src="/Images/fb-dis.png" class="img_top"> Facebook Comment</h2>
             </div>
             <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
         </div>
-
         <div class="EveActRib evnt_tile_head evnt_cursor">
             <div class="evnt_tile_bg_l"></div>
             <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
@@ -249,11 +248,11 @@
 
         <div class="evnt_details_body2">
             <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10" id="comments">
-                <div class="fb-comments" data-href="http://Facebook.com/eventcombo" data-numposts="5"></div>
+                
                
             </div>
         </div>
-
+        <div class="fb-comments" data-href="http://Facebook.com/eventcombo" data-numposts="5"></div>
        
 
     </div>
@@ -828,7 +827,7 @@
             vPrice = parseFloat($("#P_" + IdAry[i].toString()).text());
             vDonate = parseFloat($("#txtd_" + IdAry[i].toString()).val());
 
-            if (isNaN(vqty)==true ) vqty = 0;
+            if (isNaN(vqty) == true) vqty = 0;
             if (isNaN(vPrice) == true) vPrice = 0;
             if (isNaN(vDonate) == true) vDonate = 0;
 
@@ -954,20 +953,24 @@
         var Eventid = $('#hdEventid').val();
         $("#btPayment").click(function () {
             var vEntid = $('#hdEventid').val();
-           
             var IdAry = $("#hdIds").val().split(',');
-
             var TList = [];
             var vId=0;
             var vLockQty=0;
+            var vDonate=0;
             for (i = 0; i < IdAry.length; i++) {
+                debugger;
                 vId = parseInt(IdAry[i].toString());
                 vLockQty = parseInt($("#d_" + IdAry[i].toString()).val());
+                vDonate = parseFloat($("#txtd_" + IdAry[i].toString()).val());
+                if (isNaN(vDonate) == true) vDonate = 0;
+
                 if (vLockQty > 0) {
                     TList.push({
                         'TLD_TQD_Id': vId,
                         'TLD_Locked_Qty': vLockQty,
-                        'TLD_Event_Id': vEntid
+                        'TLD_Event_Id': vEntid,
+                        'TLD_Donate': vDonate
                     });
                 }
             }

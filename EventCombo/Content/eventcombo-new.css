@@ -287,6 +287,7 @@
 .strt_tim_desc2{font-size: 1.5em;}
 .evnt_timer_margin{ margin-bottom: 90px;}
 .bg-green{background: #8fcf68; }
+.bg-grey{background: #a3a3a3; }
 .card_list img{ border: 1px solid #aaa;}
 .ev_not_me{ padding-left: 10px; color:#3cf; cursor: pointer; margin-top: 5px; }
 
@@ -295,9 +296,9 @@
 .evnt_tile_dis_bg_r{background-image: url(../images/dis_title_bg_r.png); width: 19px; height: 34px; float: right; margin-right: -19px; margin-right: -19px;
      top: 6px; position: absolute;right: 0; position: relative; cursor: pointer;  }
 
-.evnt_tile_dis_head{ width: 100%; float: left; background:#a3a3a3; }
+/*.evnt_tile_dis_head{ width: 100%; float: left; background:#a3a3a3; }*/
 .evnt_tile_dis_head h2{ font-size: 1.2em; color: #fff; text-transform: uppercase;}
-.evnt_tile_dis_head h2{ font-size: 1.2em; color: #fff; text-transform: uppercase;}
+
 .ev_soc_set{ margin-left: 15px;}
 .ev_soc_set a{color: #3cf; font-size: 1.2em;}
 .fb_dis_head_type a{color: #fff; }

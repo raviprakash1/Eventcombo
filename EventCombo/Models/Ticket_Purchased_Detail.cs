@@ -21,5 +21,6 @@ namespace EventCombo.Models
         public Nullable<long> TPD_TQD_Id { get; set; }
         public Nullable<long> TPD_Event_Id { get; set; }
         public Nullable<decimal> TPD_Amount { get; set; }
+        public Nullable<decimal> TPD_Donate { get; set; }
     }
 }

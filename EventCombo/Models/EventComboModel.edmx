@@ -480,6 +480,7 @@
           <Property Name="TLD_TQD_Id" Type="bigint" />
           <Property Name="Locktime" Type="datetime" />
           <Property Name="TLD_GUID" Type="varchar" MaxLength="1000" />
+          <Property Name="TLD_Donate" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -492,6 +493,7 @@
           <Property Name="TPD_TQD_Id" Type="bigint" />
           <Property Name="TPD_Event_Id" Type="bigint" />
           <Property Name="TPD_Amount" Type="numeric" Precision="9" Scale="2" />
+          <Property Name="TPD_Donate" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -1429,6 +1431,7 @@
           <Property Name="TLD_TQD_Id" Type="Int64" />
           <Property Name="Locktime" Type="DateTime" Precision="3" />
           <Property Name="TLD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TLD_Donate" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -1441,6 +1444,7 @@
           <Property Name="TPD_TQD_Id" Type="Int64" />
           <Property Name="TPD_Event_Id" Type="Int64" />
           <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -2349,6 +2353,7 @@
           <EntitySetMapping Name="Ticket_Locked_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
               <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
+                <ScalarProperty Name="TLD_Donate" ColumnName="TLD_Donate" />
                 <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
                 <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
                 <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />
@@ -2362,6 +2367,7 @@
           <EntitySetMapping Name="Ticket_Purchased_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
               <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
                 <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
                 <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
                 <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />

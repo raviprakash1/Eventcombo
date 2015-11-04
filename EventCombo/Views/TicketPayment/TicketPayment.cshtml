@@ -900,7 +900,7 @@
 
         //*************************Fire when User Click on Continue in Previous Page *****************************************
 
-        var vTicketid = '19,20';
+       // var vTicketid = '19,20';
         clock = $('#divTime').FlipClock(600, {
             clockFace: 'MinuteCounter',
             countdown: true,
@@ -908,14 +908,14 @@
                 stop: function () {
                     $.ajax({
                         url: '@Url.Action("ReleaseTickets", "TicketPayment")',
-                        data: { 'strTTicketIds': vTicketid },
                         type: "Get",
                         success: function (response) {
-                          //  alert("Sorry, you took too long and we have to release your order. Please try again.");
-                            ShowMessage('E', 'Sorry, you took too long and we have to release your order. Please try again.');
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { EventId = 74 })';
+                            //ShowMessage('E', 'Sorry, you took too long and we have to release your order. Please try again.');
                         },
                         error: function () {
-                            ShowMessage('E', 'Sorry, There is some error.');
+                            //ShowMessage('E', 'Sorry, There is some error.');
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { EventId = 74 })';
                         }
                     });
                 }
@@ -997,8 +997,13 @@
 
 
     $("#btAddList").click(function () {
+<<<<<<< HEAD
         
        
+=======
+
+        $('#blocklist').css('display', 'block');
+>>>>>>> 7209b2ccd9a512c4a9425c4c223d70f60e8b04bd
 
         if ($("#nameofticket").val().trim() == '') {
             alert("Please enter valid Name.");

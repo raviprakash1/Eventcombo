@@ -21,5 +21,6 @@ namespace EventCombo.Models
         public Nullable<long> TLD_TQD_Id { get; set; }
         public Nullable<System.DateTime> Locktime { get; set; }
         public string TLD_GUID { get; set; }
+        public Nullable<decimal> TLD_Donate { get; set; }
     }
 }
