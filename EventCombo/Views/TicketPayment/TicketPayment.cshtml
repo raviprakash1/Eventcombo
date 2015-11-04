@@ -914,12 +914,12 @@
                         url: '@Url.Action("ReleaseTickets", "TicketPayment")',
                         type: "Get",
                         success: function (response) {
-                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { }) ? EventId=' + Eventid;
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?EventId=' + Eventid;
                             //ShowMessage('E', 'Sorry, you took too long and we have to release your order. Please try again.');
                         },
                         error: function () {
                             //ShowMessage('E', 'Sorry, There is some error.');
-                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { }) ? EventId=' + Eventid;
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?EventId=' + Eventid;
                         }
                     });
                 }
