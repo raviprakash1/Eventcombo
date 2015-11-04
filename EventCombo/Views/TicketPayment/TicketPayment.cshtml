@@ -902,8 +902,10 @@
 
         //*************************Fire when User Click on Continue in Previous Page *****************************************
 
-       // var vTicketid = '19,20';
-        clock = $('#divTime').FlipClock(600, {
+        // var vTicketid = '19,20';
+       // var Eid = $('#hdEventid').val();
+
+        clock = $('#divTime').FlipClock(10, {
             clockFace: 'MinuteCounter',
             countdown: true,
             callbacks: {
@@ -912,12 +914,12 @@
                         url: '@Url.Action("ReleaseTickets", "TicketPayment")',
                         type: "Get",
                         success: function (response) {
-                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { EventId = 74 })';
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { }) ? EventId=' + Eventid;
                             //ShowMessage('E', 'Sorry, you took too long and we have to release your order. Please try again.');
                         },
                         error: function () {
                             //ShowMessage('E', 'Sorry, There is some error.');
-                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { EventId = 74 })';
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { }) ? EventId=' + Eventid;
                         }
                     });
                 }
