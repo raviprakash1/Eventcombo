@@ -803,6 +803,7 @@ namespace EventCombo.Controllers
                     objTLD.TLD_User_Id = strUsers;
                     objTLD.TLD_GUID = strGuid;
                     objTLD.Locktime = DateTime.Now;
+                    objTLD.TLD_Donate = objModel.TLD_Donate;
                     context.Ticket_Locked_Detail.Add(objTLD);
                 }
                 context.SaveChanges();
