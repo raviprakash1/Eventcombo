@@ -241,7 +241,7 @@ namespace EventCombo.Controllers
                         Address ObjAdd = new Models.Address();
                         foreach (Address objA in model.AddressDetail)
                         {
-                            if (objA.VenueName != null && objA.VenueName.Trim() != "")
+                            if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress!="")
                             {
                                 ObjAdd = new Models.Address();
                                 ObjAdd.EventId = ObjEC.EventID;
@@ -569,7 +569,10 @@ namespace EventCombo.Controllers
             var ticketsfree = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 1 select r).Count();
             var ticketsPaid = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 2 select r).Count();
             var ticketsDonation = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 3 select r).Count();
-            if(ticketsfree>0 && ticketsPaid>0 && ticketsDonation>0)
+            
+            var itemsremainingInCart = (from o in db.Ticket_Quantity_Detail where o.TQD_Event_Id == EventId select o.TQD_Remaining_Quantity).Sum();
+           
+            if (ticketsfree>0 && ticketsPaid>0 && ticketsDonation>0)
             {
                 tickettype = "Order Now";
 
@@ -587,6 +590,16 @@ namespace EventCombo.Controllers
             if (ticketsfree <= 0 && ticketsPaid <= 0 && ticketsDonation > 0)
             {
                 tickettype = "Donate";
+
+            }
+            if (ticketsfree < 0 && ticketsPaid < 0 && ticketsDonation < 0)
+            {
+                tickettype = "Get Tickets";
+
+            }
+            if(itemsremainingInCart == 0)
+            {
+                tickettype = "Sold Out";
 
             }
             viewEvent.Orderdetail = tickettype;

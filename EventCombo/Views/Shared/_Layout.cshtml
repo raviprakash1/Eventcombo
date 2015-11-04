@@ -105,16 +105,10 @@
                 </div>
             </div>
         </div>
-@if (HttpContext.Current.Session["Fromname"].ToString() == "ViewEvent" )
+
+@if (HttpContext.Current.Session["Fromname"] == null)
 {
-    <div class="col-sm-12 filter_sep cont_margin">
-        <img src="~/Images/desi-events-logo.gif">
-        <div class="cus_left_kick"><</div>
-    </div>
-}
-else
-{
-      <!-- Sub Header -->
+     <!-- Sub Header -->
     <div class="container-fluid cont_margin2" id="divcontmain">
         <div class="row cyan-line-new">
             <div class="col-sm-3">
@@ -153,47 +147,146 @@ else
     </div>
         <!-- Body Section -->
 }
+else
+{
+    if (HttpContext.Current.Session["Fromname"].ToString() == "ViewEvent")
+    {
+
+        <div class="col-sm-12 filter_sep cont_margin">
+            <img src="~/Images/desi-events-logo.gif">
+            <div class="cus_left_kick"><</div>
+        </div>
+
+    }
+    else
+    {
+
+     <!-- Sub Header -->
+        <div class="container-fluid cont_margin2" id="divcontmain">
+            <div class="row cyan-line-new">
+                <div class="col-sm-3">
+                    <form>
+                        <div class="input-group stylish-input-group">
+                            <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Searh for Event">
+                            <span class="input-group-addon">
+                                <button type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-2 disc_title_head">
+                    @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
+                    <a href="#" onclick="setsession(this.id);" id='discover'>Discover Events</a>
+                </div>
+                <div class="col-sm-2 disc_title_head"><a href="#" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
+                <div class="col-sm-5">
+                    <div class="psst">
+                        <a href="#" onclick="checksession();">Create Event</a>
+                    </div>
+
+                    @*@Html.ActionLink("Create Event", "EventCreation", "Event", new { id = "Eventclick", onclick = "return checksession();" })*@
+                    @*<div class="psst">
+                            <a class="" href="/Home/EventOraganizer">
+
+                                <span class="ps_text"> Create Event</span>
+                                @*<span class="ev_org">&#160;&#160;Event organizer? Click here!</span>
+                            </a>
+                        </div>*@
+                </div>
+
+            </div>
+        </div>
+        <!-- Body Section -->
+
+    }
+
+}
+
+
       
     </div>
         <div>
             @RenderBody()
         </div>
-@if (HttpContext.Current.Session["Fromname"].ToString() == "ViewEvent")
-{
-}
-else
-{
-        <!--Footer Section-->
-        <div class="container-fluid foot_bg">
-            <div class="col-sm-12 no-padding">
-                <div class="col-sm-12 foot_logo">
-                    <a class="" href="#"><img src="~/Images/logo_small.png" /></a>
-                </div>
 
-                <div class="row fot_cont">
-                    <div class="col-sm-4">
-                        <a href="#">About Us</a>
-                        <br>
-                        <a href="#">Contact Us</a>
-                        <br>
-                        <a href="#">Terms Of Service</a>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="#">Ticket Purchase FAQ </a>
-                        <br>
-                        <a href="#">Ticket Fulfillment Policy</a>
-                        <br>
-                        <a href="#">Privacy Policy</a>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="#">Facebook</a>
-                        <br>
-                        <a href="#">Twitter</a>
-                    </div>
+@if (HttpContext.Current.Session["Fromname"] == null)
+{
+
+        <!--Footer Section-->
+    <div class="container-fluid foot_bg">
+        <div class="col-sm-12 no-padding">
+            <div class="col-sm-12 foot_logo">
+                <a class="" href="#"><img src="~/Images/logo_small.png" /></a>
+            </div>
+
+            <div class="row fot_cont">
+                <div class="col-sm-4">
+                    <a href="#">About Us</a>
+                    <br>
+                    <a href="#">Contact Us</a>
+                    <br>
+                    <a href="#">Terms Of Service</a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="#">Ticket Purchase FAQ </a>
+                    <br>
+                    <a href="#">Ticket Fulfillment Policy</a>
+                    <br>
+                    <a href="#">Privacy Policy</a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="#">Facebook</a>
+                    <br>
+                    <a href="#">Twitter</a>
                 </div>
             </div>
         </div>
+    </div>
+
 }
+else
+{
+    if (HttpContext.Current.Session["Fromname"].ToString() == "ViewEvent")
+    {
+    }
+    else
+    {
+
+    <div class="container-fluid foot_bg">
+        <div class="col-sm-12 no-padding">
+            <div class="col-sm-12 foot_logo">
+                <a class="" href="#"><img src="~/Images/logo_small.png" /></a>
+            </div>
+
+            <div class="row fot_cont">
+                <div class="col-sm-4">
+                    <a href="#">About Us</a>
+                    <br>
+                    <a href="#">Contact Us</a>
+                    <br>
+                    <a href="#">Terms Of Service</a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="#">Ticket Purchase FAQ </a>
+                    <br>
+                    <a href="#">Ticket Fulfillment Policy</a>
+                    <br>
+                    <a href="#">Privacy Policy</a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="#">Facebook</a>
+                    <br>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    }
+}
+
         <!-- Dialouge Box Start -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">

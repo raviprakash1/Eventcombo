@@ -316,12 +316,17 @@ namespace EventCombo.Controllers
             }
             else
             {
+                Session["AppId"] = null;
                 return "Email already present";
 
             }
           
         }
+        public void Nullsession()
+        {
+            Session["AppId"] = null;
 
+        }
 
 
         #region LoadTickets

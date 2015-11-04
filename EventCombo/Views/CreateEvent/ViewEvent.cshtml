@@ -4,6 +4,17 @@
     ViewBag.Title = "ViewEvent";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
 <style type="text/css">
     .ui-tooltip, .arrow:after {
         background: #fff;
@@ -58,49 +69,31 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="col-sm-12 col-xs-12 text-right">
-                            <div class="form-group mb0">
-                                <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
-                              
-                               
-                                    <label class="label-control evnt_title_date evnt_title_date2 evnt_title_xs" title="see what happening on this date">
-                                                               
-                                                                    @Html.DisplayFor(m => m.DisplaydateRange)
-                                           </label>
-                                
+                            <div class="form-group mb0 pull-right">
+                                <div class="dropdown text-left">
+                                    <img class="evnt_clock evnt_cursor" data-toggle="dropdown" src="/Images/icon-date.png" />
+                                    <span class="evnt_title_date evnt_title_date2 evnt_title_xs" title="see what happening on this date">@Html.DisplayFor(m => m.DisplaydateRange)</span>
+                                    <ul class="dropdown-menu cus-drop-list mt10">
+                                        <span class="caret caret_cus"></span>
+                                        <li class="dropdown-header drop_cus_header">Schedule Date List</li>
+                                        <span class="cus-drop-list_high">
+                                            @foreach (var item in (List<GetEventDateList_Result>)ViewBag.DateList)
+                                            {
+                                                <li>
+                                                    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek-@item.Datefrom-@item.Time</a>
 
-                </div>
-                            <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
-                                <div class="ev_time_zone_model date_time_modal">
-                                    <div class="modal-content ev_tm_zon_cont">
-                                        <div class="modal-header">
-                                            <button class="close closetimemodal" type="button">
-                                                <span>&#215;</span>
-                                            </button>
-                                            <h4 class="modal-title date_time_list">Schedule Date List</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="col-sm-12 no_pad">
-                                                <div class="form-group mb5 ">
-                                                    @foreach(var item in (List<GetEventDateList_Result>)ViewBag.DateList)
-                                                    {
-
-                                                        <label class="col-sm-12 no_pad label-control date_time_list">
-                                                            <a href = "#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek-@item.Datefrom-@item.Time</a>
-                                                        </label>
-
-
-                                                    }
+                                                </li>
 
 
 
-                                                </div>
-                                            </div>
+                                            }
+                                        </span>
 
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
+                                     
+                                    </ul>
                                 </div>
                             </div>
+                          
 
                         </div>
                         <div class="clearfix"></div>
@@ -175,20 +168,25 @@
                 <h2 class="fb_dis_head no_pad pt5">COMPLETE INFO</h2>
             </div>
             <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
-                <a href=""><img src="~/Images/mail.png"></a>
-                <a href="#" onclick="window.open('https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=custom%20share%20text'); return false;"><img src="~/Images/twi.png"></a>
+                <a href=""><img src="/Images/mail.png"></a>
+                <a href="#" id="twittershare" ><img src="/Images/twi.png"></a>
                 <a href="#"
                    onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'facebook-share-dialog',
     'width=626,height=436');
-    return false;"><img src="~/Images/fac.png"></a>
-                <a href=""><img src="~/Images/lin.png"></a>
+    return false;"><img src="/Images/fac.png"></a>
+
+                <a href="#" id="linkshare"><img src="/Images/lin.png"></a>
             </div>
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10">
-                <div class="col-sm-8">
-                    @Html.DisplayFor(m => m.EventDescription)
+                <div class="col-sm-8" >
+                    <label id="eventdesc">
+
+
+                        @Html.DisplayFor(m => m.EventDescription)
+                    </label>
                 </div>
                 <div class="col-sm-4 mt20">
                     <div class="col-sm-12 inst_karm_box">
@@ -198,13 +196,13 @@
                         <p><a href="#">View organizer profile </a></p>
                         @if (Html.DisplayFor(m => m.fblink).ToString() != "")
                         {
-                            <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="~/Images/facebook-icon.png">@Html.DisplayFor(m => m.fblink)</a></p>
+                            <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="/Images/facebook-icon.png">@Html.DisplayFor(m => m.fblink)</a></p>
 
                         }
 @if (Html.DisplayFor(m => m.twitterlink).ToString() != "")
 {
 
-                        <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="~/Images/twitter-icon.png">@Html.DisplayFor(m => m.twitterlink) </a></p>
+                        <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="/Images/twitter-icon.png">@Html.DisplayFor(m => m.twitterlink) </a></p>
 
 }
                  <p><span class="badge">5</span> <a href="#">Upcoming Event(s)</a> </p>
@@ -226,36 +224,38 @@
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
                 <label class="label-control evnt_ticket_label">
-                    <img src="images/fb_connect.jpg"> to see which of your Facebook friends are going
+                    <img src="/images/fb_connect.jpg"> to see which of your Facebook friends are going
                 </label>
             </div>
         </div>
     </div>
     <div class="event_detail_container">
 
-        <div class="EveDisRib evnt_tile_dis_head">
+        <div class="EveDisRib evnt_tile_dis_head evnt_cursor">
             <div class="evnt_tile_dis_bg_l"></div>
             <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad">
-                <h2 class="fb_dis_head pt5">Facebook Comment</h2>
+                <h2 class="fb_dis_head pt5"><img src="/Images/fb-dis.png" class="img_top"> Facebook Comment</h2>
             </div>
             <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
         </div>
 
-        <div class="EveActRib evnt_tile_head">
+        <div class="EveActRib evnt_tile_head evnt_cursor">
             <div class="evnt_tile_bg_l"></div>
             <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
-                <h2 class="fb_dis_head pt5">Facebook Comment</h2>
+                <h2 class="fb_dis_head pt5"><img src="/Images/fb.png" class="img_top"> Facebook Comment</h2>
             </div>
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
 
         <div class="evnt_details_body2">
-            <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
-                <label class="label-control evnt_ticket_label">
-                    <img src="images/fb_connect.jpg"> to see which of your Facebook friends are going
-                </label>
+            <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10" id="comments">
+                <div class="fb-comments" data-href="http://Facebook.com/eventcombo" data-numposts="5"></div>
+               
             </div>
         </div>
+
+       
+
     </div>
     <div class="event_detail_container">
         <div class="evnt_tile_head" id="Ticketinfo">
@@ -332,10 +332,10 @@
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pt10 pb10 mt20">
                 <div class="col-sm-4 no_pad ">
-                    <img class="img-responsive" src="~/Images/deal_img1.jpg" />
+                    <img class="img-responsive" src="/Images/deal_img1.jpg" />
                     <div class="clearfix"></div>
                     <div class="col-sm-8 no_pad mt10">
-                        <div class="col-sm-2 pl0"><img src="~/Images/icon-location.png"></div>
+                        <div class="col-sm-2 pl0"><img src="/Images/icon-location.png"></div>
                         <div class="col-sm-10 dl_loc_desc">
                             West Village <br>
                             314 Bleecker Street<br>
@@ -344,7 +344,7 @@
                         </div>
                     </div>
                     <div class="col-sm-4 no_pad mt10">
-                        <img title="stars" src="~/Images/rating-stars.gif"><br>
+                        <img title="stars" src="/Images/rating-stars.gif"><br>
                         <span class="dl_str_name">yelp.com</span>
                     </div>
                 </div>
@@ -401,7 +401,7 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <div id="orgerror" class="alert-danger" style="display:none;">Please fill out the missing information</div>
+                    <div id="orgerror" class="alert-danger " style="display:none;">Please fill out the missing information</div>
                     <div class="form-group mb10">
                         <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
                         <div class="col-sm-8">
@@ -503,6 +503,14 @@
                     errormsg += "fill the details"
 
                 }
+                if (!validateEmail(mail)) {
+
+                   
+                    $('#id_orgemail').addClass('err-bor');
+                    errormsg += "Invalid Email";
+
+
+                }
                 if (txt !='') {
                     $('#id_orgtext').removeClass('err-bor');
 
@@ -532,7 +540,10 @@
                         data: model,
                         type: "Post",
                         success: function (response) {
-                            alert(response);
+                            $('#orgerror').css('display', 'block');
+                            $('#orgerror').addClass('alert-success');
+                            $('#orgerror').removeClass('alert-error');
+                            $('#orgerror').html("Message has been successfully send!!");
 
                         }
                     });
@@ -763,12 +774,13 @@
 
 <script>
     $(function () {
-      var address=  $('#lbltopaddress').val();
+      var address=  $('#lbltopaddress').html();
     $( document ).tooltip({
       items: "[data-geo], [title]",
       content: function() {
         var element = $( this );
         if ( element.is( "[data-geo]" ) ) {
+          
             var text = address;
           return "<img class='map'  alt='" + text +
             "' src='http://maps.google.com/maps/api/staticmap?" +
@@ -885,6 +897,35 @@
 
     }
     $(document).ready(function () {
+
+        $(".Evenfaccomment").css("display", "none");
+        $(".EveDisRib").click(function () {
+          
+            $(".Evenfaccomment").slideToggle("fast");
+        });
+        $(".EveActRib").click(function () {
+         
+            $(".Evenfaccomment").slideToggle("fast");
+        });
+
+
+        $('#twittershare').click(function () {
+
+            var title = $('#evtitle').html();
+            var desc = $('#eventdesc').html();
+            window.open('https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+        });
+
+        $('#linkshare').click(function () {
+           
+            var title = $('#evtitle').html();
+            var desc = $('#eventdesc').html();
+            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
+            return false;
+        });
         $("#spGTotal").text('');
         //$(".TktdescDetl").css("display", "none");
         //$(".TktmoreDesc").click(function () {

@@ -425,7 +425,7 @@ namespace EventCombo.Controllers
                     var toAddress = new MailAddress(model.Email);
                     const string fromPassword = "Shweta1989";
                     const string address = "shweta.sindhu@kiwitech.com";
-                    const string subject = "Thanku You";
+                    const string subject = "Thank You";
                     const string body = "Confirmation Message";
 
                     var smtp = new SmtpClient

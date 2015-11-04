@@ -151,7 +151,7 @@
                                     PLEASE ENTER YOUR ACCOUNT INFORMATION<br>
                                    @if (HttpContext.Current.Session["AppId"] != null)
                                    {
-                                    <span class="ev_pay_span">Hi, user@email.com. Not you? <a href="">Sign Out</a></span>
+                                    <span class="ev_pay_span">Hi, @Html.DisplayFor(m => m.Email) Not you? <a href="#" onclick="NullSession();" id="nullsession" >Sign Out</a></span>
                                    }
                                    else
                                    {
@@ -481,20 +481,20 @@
     //}
     //$(document).ready(function () {
 
-      
+
     //    var total = $('#hdOrderTotal').val();
     //    if (total > 0) {
-           
+
     //        $('.divvisible').css('display', 'block');
     //    } else {
-           
+
     //        $('.divvisible').css('display', 'none');
 
     //    }
 
     //});
-   
-        
+
+
     function validationpage()
     {
         var msglogin = "";
@@ -504,10 +504,10 @@
         var confirmpassword = $("#confirmpassword").val();
 
         var total = $('#hdOrderTotal').val();
-     
 
-         
-        
+
+
+
         if (!validateEmail(Emaillogin)) {
             $('#Email').focus();
             $('#Email').addClass('err-bor');
@@ -527,7 +527,7 @@
 
             }
 
-            
+
         }
         if ($("#password").length > 0) {
             if (Passowrdlogin.length < 4) {
@@ -602,7 +602,7 @@
             $("#billaddress1").addClass('err-bor');
 
         }
-        
+
         if(billcity== "")
         {
             msglogin += "Please Enter Billing City" + "\n";
@@ -673,14 +673,14 @@
 
             }
         }
-          
+
 
         }
         return msglogin;
     }
 
 
-   
+
     function ShowMessage(Type, Mess) {
         if (Type == 'S') {
             $('#divaccsuc').css('display', 'block');
@@ -696,9 +696,9 @@
     }
     $(document).ready(function () {
 
-       
+
         $(document).click(function () {
-           
+
             $('#diverroacc').css('display', 'none');
             $('#divaccsuc').css('display', 'none');
             $("input").removeClass('err-bor');
@@ -707,7 +707,7 @@
             var flag = true;
             var Emaillogin = $("#Email").val();
             var msg = validationpage();
-          
+
             var NameList = [];
             if (msg != "") {
                 $('#diverroacc').css('display', 'block');
@@ -718,7 +718,7 @@
             else
             {
                 if ($("#confirmEmail").length > 0) {
-                   
+
                     $.ajax({
                         url: "/Home/IsValid",
                         async:true,
@@ -733,14 +733,14 @@
                                     $('#hdemailexist').val(true);
 
                                 } else if (data == "Found") {
-                                   
+
                                     $('#Email').focus();
                                     $("#Email").addClass('err-bor');
-                                  
+
                                     $('#diverroacc').css('display', 'block');
                                     $('#erraccmsg').html('Email already exist,Please use Sign in!!');
                                     $('#hdemailexist').val(false);
-                                   
+
                                 }
                             }
                         },
@@ -750,15 +750,15 @@
                     });
 
                 }
-              
+
 
             }
-          
-              
+
+
                 var confirmemail = "", cardno = "", expirydate = "", cvv = "";
                 var type='';
-              
-             
+
+
                 $("#tblListitem tr").each(function () {
                     var Sno = $(this).find("td:first").html();
 
@@ -786,15 +786,15 @@
                 var totalorder = $('#hdOrderTotal').val();
                 var type='';
                 if (totalorder > 0) {
-           
+
                     type='Paid';
                 } else
                 {
-           
+
                     type='Free';
 
                 }
-              
+
                 var model = {
 
                     'AccFname': $('#accfname').val(),
@@ -833,8 +833,8 @@
                     'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
                     'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
                     'Ticketname': type
-                   
-                   
+
+
 
                 }
 
@@ -843,12 +843,12 @@
                     data:model,
                     type: "Post",
                     success: function (response) {
-                      
-                      
+
+
 
                     }
                 });
-            
+
 
 
         });
@@ -869,7 +869,7 @@
             $("#loginPopup").click();
 
         });
-       
+
         $(".Notifybox").css("display", "none");
         $(".Notify").click(function () {
             $('.Notifybox').slideToggle("fast");
@@ -925,9 +925,9 @@
 
 
         $(".Timezone").click(function () {
-            
+
                 $(".TmezoneSet").slideToggle("fast");
-      
+
             //
 
         });
@@ -935,21 +935,21 @@
             $(".TmezoneSet").hide();
 
         });
-  
+
         $(".billingaddress").change(function () {
 
             if ($(this).is(":checked") == true) {
-               
+
                 $(".shippingaddress").css('display', 'block');
             } else {
-                
+
                 $(".shippingaddress").css('display', 'none');
 
             }
 
         });
-        //------------------------------------------------LoadSelectedTickets--------------------------------------------------      
-        
+        //------------------------------------------------LoadSelectedTickets--------------------------------------------------
+
         $.ajax({
             url: '@Url.Action("LoadTickets", "TicketPayment")',
             data: { 'strEvent': Eventid },
@@ -979,14 +979,14 @@
     function checknumber(event) {
 
         var code = event.charCode ? event.charCode : event.keyCode;
-        
+
         if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
         {
             return true;
         }
         else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
         {
-           
+
             event.preventDefault();
             return false;
         }
@@ -995,18 +995,38 @@
 
 
 
-    
+
     $("#btAddList").click(function () {
-      
-        $('#blocklist').css('display', 'block');
+        
+       
 
         if ($("#nameofticket").val().trim() == '') {
             alert("Please enter valid Name.");
             $("#nameofticket").focus();
             return false;
+        } else {
+            if ($('.Notifybox').css('display') == 'block')
+            {
+                var email = $('#emailbearer').val();
+                if (!validateEmail(email)) {
+
+                    alert("Please enter valid Email.");
+                    $('#blocklist').css('display', 'none');
+                    return false;
+
+
+                } else {
+
+                    $('#blocklist').css('display', 'block');
+                }
+
+            }
+           
         }
-
-
+       
+       
+        
+       
 
         if ($("#hidTicketbearer").val() == '') {
             //if (parseInt($("#ddlOrgnizers option").length) > 24) {
@@ -1026,7 +1046,7 @@
         {
             $('.Notifybox').css('display', 'none');
         }
-       
+
     });
 
     function AddTicket() {
@@ -1035,7 +1055,7 @@
         var Sno = $("#tblListitem tr").length;
         var vTicketName = $("#nameofticket").val();
         var vTicketEmailDes = $("#emailbearer").val();
-       
+
         //strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
 
         var strHTML = '<tr>';
@@ -1050,11 +1070,11 @@
         strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vTicketName + '</option>';
 
         $("#ddlListitem").append(strHTML);
-      
+
     }
     $("#editlist").click(function () {
         var Sno = $("#ddlListitem").val();
-      
+
         $("#hidTicketbearer").val(Sno);
         var vOrgName = $("#TicketName_" + Sno).text();
         var vOrgDes = $("#TicketEmail_" + Sno).text();
@@ -1113,7 +1133,7 @@
 
         $("#TicketName_" + Sno).text(vOrgName);
         $("#TicketEmail_" + Sno).text(vOrgDes);
-      
+
 
 
         $("#ddlListitem option").each(function (i) {
@@ -1135,14 +1155,14 @@
         } else {
             $('#blocklist').css('display', 'block');
         }
-       
+
         $("#expirationdate").mask("99/99");
         $("#shippingphnno").mask("999-999-9999");
         $("#billingphno").mask("999-999-9999");
         $("#accountphnno").mask("999-999-9999");
-    
+
         //$("#cardno").validateCreditCard(function (result) {
-          
+
         //    //if (result.card_type.name == 'visa' || result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'amex') {
         //    //    $('#imgcard').css('display', 'block');
         //    //    $('#imgcard').attr('src', '/Images/' + result.card_type.name + '.png');
@@ -1151,14 +1171,27 @@
 
         //    //    $('#imgcard').css('display', 'none');
         //    //}
-          
-         
 
-            
+
+
+
         //});
-      
+
 
     });
+    function NullSession(e)
+    {
+        $.ajax({
+            url: '@Url.Action("Nullsession", "TicketPayment")',
+            type: "Get",
+            success: function (response) {
+
+            }
+        });
+        var eventid = $('#hdEventid').val();
+        window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + eventid;
+
+    }
     function getcardvisa(e) {
         if ($("#" + e).val() != '') {
             var result = $("#" + e).validateCreditCard();
@@ -1179,7 +1212,7 @@
     }
   function showcardetails(e)
     {
-        
+
       var selectvalue = $('#' + e).val();
 
       if(selectvalue=="A")
@@ -1196,7 +1229,7 @@
 
       }
       else {
-          
+
           $('#cardshow').css('display', 'block');
           $.ajax({
               url: '@Url.Action("returncardetail", "TicketPayment")',
@@ -1204,9 +1237,9 @@
               type: "Get",
               success: function (response) {
                   var value = response;
-                 
+
                   var res = value.split('*');
-                 
+
                   $('#cardno').val(res[0]);
                   $('#expirationdate').val(res[1]);
                   $('#cvvcode').val(res[2]);
@@ -1214,7 +1247,7 @@
           });
 
       }
-      
+
     }
 </script>
 <script src="~/Scripts/jquery.maskedinput.min.js"></script>
