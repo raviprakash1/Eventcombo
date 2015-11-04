@@ -108,13 +108,12 @@ namespace EventCombo.Controllers
             return View(tp);
         }
 
-        public void ReleaseTickets(string strTTicketIds)
+        public void ReleaseTickets()
         {
-            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-
+            string strLockedId = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
             using (var context = new EventComboEntities())
             {
-                context.Database.ExecuteSqlCommand("DELETE FROM Ticket_Locked_Detail WHERE TLD_Id in (" + strTTicketIds + ") and TLD_User_Id ='" + strUsers + "'");
+                context.Database.ExecuteSqlCommand("DELETE FROM Ticket_Locked_Detail WHERE TLD_GUID ='" + strLockedId + "'");
             }
         }
 
