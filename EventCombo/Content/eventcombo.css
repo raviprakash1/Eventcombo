@@ -169,6 +169,7 @@ button:focus { outline: none;}
     margin-top: 0px !important; 
     color: #fff;float: right !important;
     min-width: 300px; 
+    min-height: 34px;
 }
 .psst a{ padding:0 20px; color:#fff; text-align: center;  text-decoration: none; display:block;
     font-size: 1.5em; }

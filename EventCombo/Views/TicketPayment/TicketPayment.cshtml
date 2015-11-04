@@ -13,10 +13,10 @@
 {
    
     <input type="hidden" id="hdemailexist"  />
-    <input id="hidTicketbearer" />
+    <input id="hidTicketbearer" type="hidden" />
     @Html.HiddenFor(m=>m.EventId,new {id="hdEventid" })
     <div class="event_container ">
-        <div class="event_inner_container event_top">
+        <div class="event_inner_container event_top" id="eventtopscoll">
             <div class="col-sm-12 pt10 bggrey">
                 <div class="Moderor" style="display: none;" id="diverroacc">
                     <div class="er_UI_main">
@@ -1003,6 +1003,7 @@
 
 
     $("#btAddList").click(function () {
+
         if ($("#nameofticket").val().trim() == '') {
             alert("Please enter valid Name.");
             $("#nameofticket").focus();

@@ -24,5 +24,10 @@ namespace EventCombo.Models
         public string twitterlink { get; set; }
         public string organizerid { get; set; }
         public string Orderdetail { get; set; }
+        public string Timezone { get; set; }
+        public string showTimezone { get; set; }
+        public string showstarttime { get; set; }
+        public string showendtime { get; set; }
+
     }
 }
