@@ -106,8 +106,10 @@
             <div class="evnt_details_body2">
                 <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
                     <div id="dvTicketInfo" class="table-responsive">
-                        
-                        
+                        <div id="dvAjxLoader">
+                            <img src="~/Images/ajaxloader1.gif" />
+                        </div>
+
                     </div>
                     @*<table class="table evnt_tkt_list_tbl">
                         <tfoot>
@@ -952,6 +954,8 @@
 
         $.ajax({
             url: '@Url.Action("LoadTickets", "TicketPayment")',
+            beforeSend: function () { $('#dvAjxLoader').show(); },
+            complete: function () { $('#dvAjxLoader').hide(); },
             data: { 'strEvent': Eventid },
             type: "Get",
             success: function (response) {
@@ -997,14 +1001,6 @@
 
 
     $("#btAddList").click(function () {
-<<<<<<< HEAD
-        
-       
-=======
-
-        $('#blocklist').css('display', 'block');
->>>>>>> 7209b2ccd9a512c4a9425c4c223d70f60e8b04bd
-
         if ($("#nameofticket").val().trim() == '') {
             alert("Please enter valid Name.");
             $("#nameofticket").focus();

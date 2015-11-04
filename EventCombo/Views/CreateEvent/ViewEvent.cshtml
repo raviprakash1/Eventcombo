@@ -6,13 +6,13 @@
 }
 <div id="fb-root"></div>
 <script>
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
 
 <style type="text/css">
@@ -22,11 +22,13 @@
     }
 
     .ui-tooltip {
-          padding: 5px 15px;
-          color: white; font-size: .9em;
-          border-radius:3px; color: #000;
-          text-transform: uppercase;
-          box-shadow: 0 0 1px #ccc;
+        padding: 5px 15px;
+        color: white;
+        font-size: .9em;
+        border-radius: 3px;
+        color: #000;
+        text-transform: uppercase;
+        box-shadow: 0 0 1px #ccc;
     }
 </style>
 
@@ -89,11 +91,11 @@
                                             }
                                         </span>
 
-                                     
+
                                     </ul>
                                 </div>
                             </div>
-                          
+
 
                         </div>
                         <div class="clearfix"></div>
@@ -105,7 +107,7 @@
                         <div class="clearfix"></div>
                         <div class="col-sm-12 no_pad">
                             <div class="col-sm-4 col-xs-6">
-                                <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" href="#Ticketinfo">@Html.DisplayFor(m=>m.Orderdetail)</a>
+                                <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
                                 <a href="#DealInfo"><img src="/Images/icondeal.png" /></a>
                             </div>
                             <div class="col-sm-8 col-xs-6 text-right ">
@@ -169,7 +171,7 @@
             </div>
             <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
                 <a href=""><img src="/Images/mail.png"></a>
-                <a href="#" id="twittershare" ><img src="/Images/twi.png"></a>
+                <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
                 <a href="#"
                    onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'facebook-share-dialog',
     'width=626,height=436');
@@ -181,7 +183,7 @@
         </div>
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10">
-                <div class="col-sm-8" >
+                <div class="col-sm-8">
                     <label id="eventdesc">
 
 
@@ -199,13 +201,13 @@
                             <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="/Images/facebook-icon.png">@Html.DisplayFor(m => m.fblink)</a></p>
 
                         }
-@if (Html.DisplayFor(m => m.twitterlink).ToString() != "")
-{
+                        @if (Html.DisplayFor(m => m.twitterlink).ToString() != "")
+                        {
 
-                        <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="/Images/twitter-icon.png">@Html.DisplayFor(m => m.twitterlink) </a></p>
+                            <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="/Images/twitter-icon.png">@Html.DisplayFor(m => m.twitterlink) </a></p>
 
-}
-                 <p><span class="badge">5</span> <a href="#">Upcoming Event(s)</a> </p>
+                        }
+                        <p><span class="badge">5</span> <a href="#">Upcoming Event(s)</a> </p>
                     </div>
                 </div>
             </div>
@@ -218,9 +220,9 @@
             <div class="evnt_tile_bg_l"></div>
             <div class="col-sm-12 col-xs-12 text-left no_pad">
                 <h2 class="fb_dis_head pt5">WHO IS GOING?</h2>
-                </div>
+            </div>
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
-         </div>
+        </div>
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
                 <label class="label-control evnt_ticket_label">
@@ -248,12 +250,12 @@
 
         <div class="evnt_details_body2">
             <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10" id="comments">
-                
-               
+
+
             </div>
         </div>
         <div class="fb-comments" data-href="http://Facebook.com/eventcombo" data-numposts="5"></div>
-       
+
 
     </div>
     <div class="event_detail_container">
@@ -263,13 +265,15 @@
                 <h2 class="fb_dis_head pt5">Ticket Info</h2>
             </div>
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
-            </div>
+        </div>
         <div class="evnt_details_body2">
             <div class="col-sm-12 mt10">
                 <div id="dvTicketInfo" class="table-responsive">
-
+                    <div id="dvAjxLoader">
+                        <img src="~/Images/ajaxloader1.gif" />
+                    </div>
                 </div>
-                    
+
                 <div class="table-responsive">
 
 
@@ -287,10 +291,10 @@
                         </tfoot>
                     </table>
                 </div>
-               
+
                 @*<div class="col-sm-12 text-right">
-                    <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PAYMENT PROCEED > </button>
-                </div>*@
+                        <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PAYMENT PROCEED > </button>
+                    </div>*@
             </div>
         </div>
     </div>
@@ -408,10 +412,10 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div  class="form-group mb10">
+                    <div class="form-group mb10">
                         <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
                         <div class="col-sm-8">
-                            <input  class="form-control evnt_inp_cont" type="text" id="id_orgemail">
+                            <input class="form-control evnt_inp_cont" type="text" id="id_orgemail">
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -419,7 +423,7 @@
                         <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" rows="4" id="id_orgtext"></textarea>
-                            
+
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -427,7 +431,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button"  class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
+                <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
             </div>
 
         </div>
@@ -468,88 +472,87 @@
 
 
 
-        $(document).ready(function () {
-            $(document).click(function () {
+    $(document).ready(function () {
+        $(document).click(function () {
 
-                //$('#diverroacc').css('display', 'none');
-                //$('#divaccsuc').css('display', 'none');
-                $('#orgerror').css('display', 'none');
-                $("input").removeClass('err-bor');
-                $("#id_orgtext").removeClass('err-bor');
-            });
-            $('#saveorgaizermsg').click(function () {
+            //$('#diverroacc').css('display', 'none');
+            //$('#divaccsuc').css('display', 'none');
+            $('#orgerror').css('display', 'none');
+            $("input").removeClass('err-bor');
+            $("#id_orgtext").removeClass('err-bor');
+        });
+        $('#saveorgaizermsg').click(function () {
 
-                var errormsg = "";
-                var name = $('#id_orgname').val();
-                var mail = $('#id_orgemail').val();
-                var txt = $('#id_orgtext').val();
+            var errormsg = "";
+            var name = $('#id_orgname').val();
+            var mail = $('#id_orgemail').val();
+            var txt = $('#id_orgtext').val();
 
 
 
-                if (name !='') {
-                    $('#id_orgname').removeClass('err-bor');
+            if (name != '') {
+                $('#id_orgname').removeClass('err-bor');
 
-                } else {
+            } else {
 
-                    $('#id_orgname').addClass('err-bor');
-                    errormsg += "fill the details"
+                $('#id_orgname').addClass('err-bor');
+                errormsg += "fill the details"
+            }
+            if (mail != '') {
+                $('#id_orgemail').removeClass('err-bor');
+
+            } else {
+                $('#id_orgemail').addClass('err-bor');
+                errormsg += "fill the details"
+
+            }
+            if (!validateEmail(mail)) {
+
+
+                $('#id_orgemail').addClass('err-bor');
+                errormsg += "Invalid Email";
+
+
+            }
+            if (txt != '') {
+                $('#id_orgtext').removeClass('err-bor');
+
+            } else {
+                $('#id_orgtext').addClass('err-bor');
+                errormsg += "fill the details"
+            }
+
+            if (errormsg != "") {
+                $('#orgerror').css('display', 'block');
+                return false;
+            }
+            else {
+                var organiserid = $('#hdorganiserid').val();
+                var eventid = $('#hdEventid').val();
+                var model = {
+                    'email': mail,
+                    'name': name,
+                    'mesasges': txt,
+                    'organiserid': organiserid,
+                    'EventId': eventid
+
                 }
-                if (mail !='') {
-                    $('#id_orgemail').removeClass('err-bor');
-
-                } else {
-                    $('#id_orgemail').addClass('err-bor');
-                    errormsg += "fill the details"
-
-                }
-                if (!validateEmail(mail)) {
-
-                   
-                    $('#id_orgemail').addClass('err-bor');
-                    errormsg += "Invalid Email";
-
-
-                }
-                if (txt !='') {
-                    $('#id_orgtext').removeClass('err-bor');
-
-                } else {
-                    $('#id_orgtext').addClass('err-bor');
-                    errormsg += "fill the details"
-                }
-
-                if (errormsg != "") {
-                    $('#orgerror').css('display', 'block');
-                    return false;
-                }
-                else
-                {
-                    var organiserid=$('#hdorganiserid').val();
-                    var eventid=$('#hdEventid').val();
-                    var model = {
-                        'email': mail,
-                        'name': name,
-                        'mesasges': txt,
-                        'organiserid': organiserid,
-                        'EventId': eventid
+                $.ajax({
+                    url: '@Url.Action("saveorganizermsg", "CreateEvent")',
+                    data: model,
+                    type: "Post",
+                    success: function (response) {
+                        $('#orgerror').css('display', 'block');
+                        $('#orgerror').addClass('alert-success');
+                        $('#orgerror').removeClass('alert-error');
+                        $('#orgerror').html("Message has been successfully send!!");
 
                     }
-                    $.ajax({
-                        url: '@Url.Action("saveorganizermsg", "CreateEvent")',
-                        data: model,
-                        type: "Post",
-                        success: function (response) {
-                            $('#orgerror').css('display', 'block');
-                            $('#orgerror').addClass('alert-success');
-                            $('#orgerror').removeClass('alert-error');
-                            $('#orgerror').html("Message has been successfully send!!");
-
-                        }
-                    });
-                }
-            });
-
+                });
+            }
         });
+
+    });
     @*$('#icalender').click(function () {
             alert('hello')
             var date=$('#startdate').val();
@@ -565,234 +568,234 @@
 
 
         });*@
-    
-            function showevent(t) {
-                var split = t.split('-');
-                var str = '', format = '';
 
-                var Datenew = new Date(split[1]);
+    function showevent(t) {
+        var split = t.split('-');
+        var str = '', format = '';
 
-                var date2 = Date.parse(split[1] + split[2] + 'UTC');
+        var Datenew = new Date(split[1]);
 
-                //var time = document.getElementById('txttime').value;
-                var where_is_p = split[2].indexOf('p');
-                var where_is_a = split[2].indexOf('a');
-                if (where_is_p > 0) {
-                    str = split[2].replace('pm', ' ');
-                    format = 'PM';
+        var date2 = Date.parse(split[1] + split[2] + 'UTC');
 
-                }
-                if (where_is_a > 0) {
+        //var time = document.getElementById('txttime').value;
+        var where_is_p = split[2].indexOf('p');
+        var where_is_a = split[2].indexOf('a');
+        if (where_is_p > 0) {
+            str = split[2].replace('pm', ' ');
+            format = 'PM';
 
-                    str = split[2].replace('am', ' ');
-                    format = 'AM';
-                }
-                var hrs = Number(str.match(/^(\d+)/)[1]);
-                var mnts = Number(str.match(/:(\d+)/)[1]);
+        }
+        if (where_is_a > 0) {
 
-                if (format == "PM" && hrs < 12) hrs = hrs + 12;
-                if (format == "AM" && hrs == 12) hrs = hrs - 12;
-                var hours = hrs.toString();
-                var minutes = mnts.toString();
-                if (hrs < 10) hours = "0" + hours;
-                if (mnts < 10) minutes = "0" + minutes;
+            str = split[2].replace('am', ' ');
+            format = 'AM';
+        }
+        var hrs = Number(str.match(/^(\d+)/)[1]);
+        var mnts = Number(str.match(/:(\d+)/)[1]);
 
-                var fullDate = split[1] + " " + hours + ":" + minutes;
-                var fullDateReal = new Date(fullDate);
-                var year = fullDateReal.getUTCFullYear();
-                var month = fullDateReal.getUTCMonth()
-                $('#startdate').val(fullDateReal);
+        if (format == "PM" && hrs < 12) hrs = hrs + 12;
+        if (format == "AM" && hrs == 12) hrs = hrs - 12;
+        var hours = hrs.toString();
+        var minutes = mnts.toString();
+        if (hrs < 10) hours = "0" + hours;
+        if (mnts < 10) minutes = "0" + minutes;
 
-                var isodatestart = (fullDateReal.getUTCFullYear() + ""
-                          + pad(fullDateReal.getUTCMonth() + 1) + ""
-                          + pad(fullDateReal.getUTCDate()) + 'T'
-                          + pad(fullDateReal.getUTCHours()) + ""
-                          + pad(fullDateReal.getUTCMinutes()) + ""
-                          + pad(fullDateReal.getUTCSeconds()) + 'Z');
+        var fullDate = split[1] + " " + hours + ":" + minutes;
+        var fullDateReal = new Date(fullDate);
+        var year = fullDateReal.getUTCFullYear();
+        var month = fullDateReal.getUTCMonth()
+        $('#startdate').val(fullDateReal);
 
-                var isodateend = (fullDateReal.getUTCFullYear() + ""
-                                 + pad(fullDateReal.getUTCMonth() + 1) + ""
-                                 + pad(fullDateReal.getUTCDate()) + 'T'
-                                 + "00" + ""
-                                 + "00" + ""
-                                 + "00" + 'Z');
+        var isodatestart = (fullDateReal.getUTCFullYear() + ""
+                  + pad(fullDateReal.getUTCMonth() + 1) + ""
+                  + pad(fullDateReal.getUTCDate()) + 'T'
+                  + pad(fullDateReal.getUTCHours()) + ""
+                  + pad(fullDateReal.getUTCMinutes()) + ""
+                  + pad(fullDateReal.getUTCSeconds()) + 'Z');
+
+        var isodateend = (fullDateReal.getUTCFullYear() + ""
+                         + pad(fullDateReal.getUTCMonth() + 1) + ""
+                         + pad(fullDateReal.getUTCDate()) + 'T'
+                         + "00" + ""
+                         + "00" + ""
+                         + "00" + 'Z');
 
 
 
-                //console.log(where_is_p);
-                //console.log(where_is_a);
-                var title = $('#evtitle').html().trim();
-                var location = $('#lbltopaddress').html().trim();
-                var variable = fullDateReal;
-                $("#ioutlook").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
-                $("#icalender").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
-                $("#yahoocal").attr("href", "http://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
+        //console.log(where_is_p);
+        //console.log(where_is_a);
+        var title = $('#evtitle').html().trim();
+        var location = $('#lbltopaddress').html().trim();
+        var variable = fullDateReal;
+        $("#ioutlook").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+        $("#icalender").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+        $("#yahoocal").attr("href", "http://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
 
-                $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
-                var target = $(this).data("target");
-                $(target).show();
-            }
+        $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
+        var target = $(this).data("target");
+        $(target).show();
+    }
 
-            function pad(n) { return n < 10 ? '0' + n : n };
-            $(document).ready(function () {
+    function pad(n) { return n < 10 ? '0' + n : n };
+    $(document).ready(function () {
 
-                var clickfav = $('#hdEventFav').val();
-                var clickvote = $('#hdEventvote').val();
+        var clickfav = $('#hdEventFav').val();
+        var clickvote = $('#hdEventvote').val();
 
-                if (clickfav == "Y") {
+        if (clickfav == "Y") {
 
-                    $("#btnfavourite").addClass("btn_fav_act");
+            $("#btnfavourite").addClass("btn_fav_act");
 
-                } else {
-                    $("#btnfavourite").removeClass("btn_fav_act");
+        } else {
+            $("#btnfavourite").removeClass("btn_fav_act");
 
-                }
-                if (clickvote == "Y") {
-                    $("#btnvote").addClass("btn_fav_act");
+        }
+        if (clickvote == "Y") {
+            $("#btnvote").addClass("btn_fav_act");
 
-                } else {
-                    $("#btnvote").removeClass("btn_fav_act");
+        } else {
+            $("#btnvote").removeClass("btn_fav_act");
 
-                }
-                $("#btnvote").click(function () {
-                    var clickvote = $('#hdEventvote').val();
+        }
+        $("#btnvote").click(function () {
+            var clickvote = $('#hdEventvote').val();
 
-                    if (clickvote == "Y") {
+            if (clickvote == "Y") {
 
-                        alert('You can only vote once.');
-                    } else {
-                        var eid = $('#hdEventid').val();
-                        $.ajax({
-                            url: '@Url.Action("savevote", "CreateEvent")',
-                            data: { Eventid: eid },
-                            type: "Post",
-                            success: function (data) {
-                                if (data == "Y") {
-                                    $("#loginPopup").click();
-                                    url.val('@Url.Action("ViewEvent", "CreateEvent")');
-                                    return false;
-                                } else {
+                alert('You can only vote once.');
+            } else {
+                var eid = $('#hdEventid').val();
+                $.ajax({
+                    url: '@Url.Action("savevote", "CreateEvent")',
+                    data: { Eventid: eid },
+                    type: "Post",
+                    success: function (data) {
+                        if (data == "Y") {
+                            $("#loginPopup").click();
+                            url.val('@Url.Action("ViewEvent", "CreateEvent")');
+                            return false;
+                        } else {
 
-                                    $("#btnvote").addClass("btn_fav_act");
+                            $("#btnvote").addClass("btn_fav_act");
 
-                                    $('#hdEventvote').val("Y");
-                                    $('#spanvotes').html(data);
-                                    alert('Thank you for voting!');
-                                }
-                            },
-                            error: function (data) {
-                                alert("Sorry there is some problem.");
-                                return false
-                            }
-                        });
-                    }
-                });
-
-                $("#btnfavourite").click(function () {
-
-                    var clickfav = $('#hdEventFav').val();
-                    if (clickfav == "Y") {
-                        $('#hdEventFav').val("N");
-                    }
-                    if (clickfav == "N") {
-                        $('#hdEventFav').val("Y");
-                    }
-                    var eid = $('#hdEventid').val();
-                    var clickid = $('#hdEventFav').val();
-                    $.ajax({
-                        url: '@Url.Action("savefavourite", "CreateEvent")',
-                        data: { Eventid: eid, type: clickid },
-                        type: "Post",
-                        success: function (data) {
-                            if (data == "Y") {
-                                $("#loginPopup").click();
-                                url.val('@Url.Action("ViewEvent", "CreateEvent")');
-                                return false;
-                            } else {
-                                var clickfav = $('#hdEventFav').val();
-                                if (clickfav == "Y") {
-                                    $("#btnfavourite").addClass("btn_fav_act");
-                                    alert('Your Event have been saved!');
-                                }
-                                if (clickfav == "N") {
-                                    alert('Your Event have not been saved!');
-                                    $("#btnfavourite").removeClass("btn_fav_act");
-                                }
-
-                                $('#spanfav').html(data);
-
-                            }
-                        },
-                        error: function (data) {
-                            alert("Sorry there is some problem.");
-                            return false
+                            $('#hdEventvote').val("Y");
+                            $('#spanvotes').html(data);
+                            alert('Thank you for voting!');
                         }
-                    });
-
-                });
-
-                $("#lstcarousel div:first").addClass("active");
-                $(function () {
-                    $(document).tooltip({
-                        track: true
-                    });
-                });
-
-                $(".EveActRib").css("display", "none");
-                $(".FacdisComm").click(function () {
-                    $(".EveActRib").show();
-                    $(".EveDisRib").hide();
-                });
-
-                $(".FacdactComm").click(function () {
-                    $(".EveActRib").hide();
-                    $(".EveDisRib").show();
-                });
-
-
-                $(".TmezoneSet").hide();
-                $(".Timezone").click(function () {
-                    var eventtype = $("#hdEventtype").val();
-                    if (eventtype == "Multiple") {
-                        $(".TmezoneSet").slideToggle("fast");
-                    } else {
-                        $(".TmezoneSet").slideToggle("fast");
+                    },
+                    error: function (data) {
+                        alert("Sorry there is some problem.");
+                        return false
                     }
-                    //
-
                 });
+            }
+        });
 
-                $(".closetimemodal").click(function () {
-                    $(".TmezoneSet").hide();
+        $("#btnfavourite").click(function () {
 
-                });
+            var clickfav = $('#hdEventFav').val();
+            if (clickfav == "Y") {
+                $('#hdEventFav').val("N");
+            }
+            if (clickfav == "N") {
+                $('#hdEventFav').val("Y");
+            }
+            var eid = $('#hdEventid').val();
+            var clickid = $('#hdEventFav').val();
+            $.ajax({
+                url: '@Url.Action("savefavourite", "CreateEvent")',
+                data: { Eventid: eid, type: clickid },
+                type: "Post",
+                success: function (data) {
+                    if (data == "Y") {
+                        $("#loginPopup").click();
+                        url.val('@Url.Action("ViewEvent", "CreateEvent")');
+                        return false;
+                    } else {
+                        var clickfav = $('#hdEventFav').val();
+                        if (clickfav == "Y") {
+                            $("#btnfavourite").addClass("btn_fav_act");
+                            alert('Your Event have been saved!');
+                        }
+                        if (clickfav == "N") {
+                            alert('Your Event have not been saved!');
+                            $("#btnfavourite").removeClass("btn_fav_act");
+                        }
+
+                        $('#spanfav').html(data);
+
+                    }
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                    return false
+                }
             });
+
+        });
+
+        $("#lstcarousel div:first").addClass("active");
+        $(function () {
+            $(document).tooltip({
+                track: true
+            });
+        });
+
+        $(".EveActRib").css("display", "none");
+        $(".FacdisComm").click(function () {
+            $(".EveActRib").show();
+            $(".EveDisRib").hide();
+        });
+
+        $(".FacdactComm").click(function () {
+            $(".EveActRib").hide();
+            $(".EveDisRib").show();
+        });
+
+
+        $(".TmezoneSet").hide();
+        $(".Timezone").click(function () {
+            var eventtype = $("#hdEventtype").val();
+            if (eventtype == "Multiple") {
+                $(".TmezoneSet").slideToggle("fast");
+            } else {
+                $(".TmezoneSet").slideToggle("fast");
+            }
+            //
+
+        });
+
+        $(".closetimemodal").click(function () {
+            $(".TmezoneSet").hide();
+
+        });
+    });
 </script>
 
 
 
 <script>
     $(function () {
-      var address=  $('#lbltopaddress').html();
-    $( document ).tooltip({
-      items: "[data-geo], [title]",
-      content: function() {
-        var element = $( this );
-        if ( element.is( "[data-geo]" ) ) {
-          
-            var text = address;
-          return "<img class='map'  alt='" + text +
-            "' src='http://maps.google.com/maps/api/staticmap?" +
-            "zoom=15&size=250x250&maptype=roadmap&sensor=false&center=" +
-            text + "&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C"+text+"'>";
-        }
-        if ( element.is( "[title]" ) ) {
-          return element.attr( "title" );
-        }
+        var address = $('#lbltopaddress').html();
+        $(document).tooltip({
+            items: "[data-geo], [title]",
+            content: function () {
+                var element = $(this);
+                if (element.is("[data-geo]")) {
 
-      }
+                    var text = address;
+                    return "<img class='map'  alt='" + text +
+                      "' src='http://maps.google.com/maps/api/staticmap?" +
+                      "zoom=15&size=250x250&maptype=roadmap&sensor=false&center=" +
+                      text + "&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C" + text + "'>";
+                }
+                if (element.is("[title]")) {
+                    return element.attr("title");
+                }
+
+            }
+        });
     });
-  });
 </script>
 
 
@@ -808,8 +811,7 @@
 
 
 
-    function checkMore(QtyId)
-    {
+    function checkMore(QtyId) {
         $("#Sp_" + QtyId.toString()).slideToggle("fast");
         //$(".TktdescDetl").slideToggle("fast");
     }
@@ -879,7 +881,7 @@
 
     }
     function checknumeric(event) {
-        
+
         var code = event.charCode ? event.charCode : event.keyCode;
         //alert(code);
         if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
@@ -899,11 +901,11 @@
 
         $(".Evenfaccomment").css("display", "none");
         $(".EveDisRib").click(function () {
-          
+
             $(".Evenfaccomment").slideToggle("fast");
         });
         $(".EveActRib").click(function () {
-         
+
             $(".Evenfaccomment").slideToggle("fast");
         });
 
@@ -918,7 +920,7 @@
         });
 
         $('#linkshare').click(function () {
-           
+
             var title = $('#evtitle').html();
             var desc = $('#eventdesc').html();
             window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
@@ -935,13 +937,15 @@
         //    alert("test");
         //    //if (String.fromCharCode(e.keyCode).match(/[^0-9]/g)) return false;
         //});
-        var veventId = ($("#hdEventid").val().trim() != '' ? $("#hdEventid").val() :'');
-        if (veventId !='')
-        {
+        var veventId = ($("#hdEventid").val().trim() != '' ? $("#hdEventid").val() : '');
+        if (veventId != '') {
             $.ajax({
                 url: '@Url.Action("GetTicketDetail", "CreateEvent")',
+                beforeSend: function () { $('#dvAjxLoader').show(); },
+                complete: function () { $('#dvAjxLoader').hide(); },
                 data: { Eventid: veventId },
                 type: "Post",
+
                 success: function (data) {
                     $("#dvTicketInfo").append(data);
                 },
@@ -955,9 +959,9 @@
             var vEntid = $('#hdEventid').val();
             var IdAry = $("#hdIds").val().split(',');
             var TList = [];
-            var vId=0;
-            var vLockQty=0;
-            var vDonate=0;
+            var vId = 0;
+            var vLockQty = 0;
+            var vDonate = 0;
             for (i = 0; i < IdAry.length; i++) {
                 debugger;
                 vId = parseInt(IdAry[i].toString());
@@ -991,7 +995,7 @@
             });
 
 
-           
+
             window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;
         });
 
