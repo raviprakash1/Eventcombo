@@ -356,6 +356,8 @@
 .buy_tot_main{ margin-right: 15px; }
 .evnt_clr_blue{ color: #3cf;}
 
+.drop_time_zon{ color:#000; padding:3px 10px; font-size:1.2em;}
+
 .img_top{ vertical-align: top;}
 
 /*Event date css*/
@@ -400,6 +402,7 @@
 .ev_pad_l0{ padding-left: 0px;}
 .ev_pad_r0{ padding-right: 0px;}
 .mt20{ margin-top: 20px;}
+.mt15{ margin-top: 15px;}
 .pt5{ padding-top: 5px !important;}
 .pt10{ padding-top: 10px !important;}
 .pb0{ padding-bottom: 0px !important;}

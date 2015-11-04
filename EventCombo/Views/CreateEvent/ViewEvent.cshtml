@@ -41,7 +41,7 @@
 <script src="~/Scripts/jquery-ui.js"></script>
 
 <div class="event_container">
-    <div class="event_inner_container event_top">
+    <div class="event_inner_container event_top" id="eventtopscoll">
         <div class="event-slide-container">
 
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -77,18 +77,37 @@
                                         <span class="caret caret_cus"></span>
                                         <li class="dropdown-header drop_cus_header">Schedule Date List</li>
                                         <span class="cus-drop-list_high">
-                                            @foreach (var item in (List<GetEventDateList_Result>)ViewBag.DateList)
-                                            {
-                                                <li>
-                                                    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek-@item.Datefrom-@item.Time</a>
+                                          
+                                                @foreach (var item in (List<GetEventDateList_Result>)ViewBag.DateList)
+                                                {
+                                                     <li>
+                                                       @if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
+                                                       {
+                                                         <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek-@item.Datefrom-@item.Time</a>
 
-                                                </li>
+
+                                                         } 
+@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "N" || Html.DisplayFor(m => m.showendtime).ToString() == "n"))
+{
+    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek-@item.Datefrom</a>
+
+}@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "y" || Html.DisplayFor(m => m.showendtime).ToString() == "Y"))
+{
+    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek-@item.Datefrom</a>
+
+}
+                                                       </li>
 
 
 
                                             }
                                         </span>
-
+                                       
+                                        @if (Html.DisplayFor(m => m.showTimezone).ToString() == "Y" || Html.DisplayFor(m => m.showTimezone).ToString() == "y")
+                                        {
+                                            <li class="drop_time_zon"> Time Zone:@Html.DisplayFor(m => m.Timezone)</li>
+                                        }  
+                                        
                                      
                                     </ul>
                                 </div>
@@ -164,7 +183,7 @@
     <div class="event_detail_container">
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
-            <div class="col-sm-6 col-xs-6 text-left">
+            <div class="col-sm-6 col-xs-6 text-left no_pad">
                 <h2 class="fb_dis_head no_pad pt5">COMPLETE INFO</h2>
             </div>
             <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
@@ -196,15 +215,17 @@
                         <p><a href="#">View organizer profile </a></p>
                         @if (Html.DisplayFor(m => m.fblink).ToString() != "")
                         {
-                            <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="/Images/facebook-icon.png">@Html.DisplayFor(m => m.fblink)</a></p>
+                            <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="/Images/facebook-icon.png">&nbsp;@Html.DisplayFor(m => m.fblink)</a></p>
 
                         }
 @if (Html.DisplayFor(m => m.twitterlink).ToString() != "")
 {
 
-                        <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="/Images/twitter-icon.png">@Html.DisplayFor(m => m.twitterlink) </a></p>
+                        <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="/Images/twitter-icon.png">&nbsp;@Html.DisplayFor(m => m.twitterlink) </a></p>
 
 }
+                        <p><a href="#"><img src="~/Images/linkid.png" />&nbsp; Linkedin</a></p>
+
                  <p><span class="badge">5</span> <a href="#">Upcoming Event(s)</a> </p>
                     </div>
                 </div>
@@ -400,7 +421,7 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <div id="orgerror" class="alert-danger " style="display:none;">Please fill out the missing information</div>
+                    <div id="orgerror" class="alert-danger" style="display:none;">Please fill out the missing information</div>
                     <div class="form-group mb10">
                         <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
                         <div class="col-sm-8">
@@ -479,7 +500,7 @@
             });
             $('#saveorgaizermsg').click(function () {
 
-                var errormsg = "";
+                var errormsg = "",erroremail="";
                 var name = $('#id_orgname').val();
                 var mail = $('#id_orgemail').val();
                 var txt = $('#id_orgtext').val();
@@ -492,21 +513,21 @@
                 } else {
 
                     $('#id_orgname').addClass('err-bor');
-                    errormsg += "fill the details"
+                    errormsg = "Fill the missing details\n"
                 }
-                if (mail !='') {
-                    $('#id_orgemail').removeClass('err-bor');
+                //if (mail !='') {
+                //    $('#id_orgemail').removeClass('err-bor');
 
-                } else {
-                    $('#id_orgemail').addClass('err-bor');
-                    errormsg += "fill the details"
+                //} else {
+                //    $('#id_orgemail').addClass('err-bor');
+                //    errormsg = "Fill the missing details\n"
 
-                }
+                //}
                 if (!validateEmail(mail)) {
 
                    
                     $('#id_orgemail').addClass('err-bor');
-                    errormsg += "Invalid Email";
+                    erroremail = "Invalid Email\n";
 
 
                 }
@@ -515,11 +536,17 @@
 
                 } else {
                     $('#id_orgtext').addClass('err-bor');
-                    errormsg += "fill the details"
+                    errormsg = "Fill the missing details\n"
                 }
+                if (erroremail != "")
+                {
+                    errormsg += erroremail;
 
+                }
                 if (errormsg != "") {
+                    
                     $('#orgerror').css('display', 'block');
+                    $('#orgerror').html(errormsg );
                     return false;
                 }
                 else
@@ -541,9 +568,11 @@
                         success: function (response) {
                             $('#orgerror').css('display', 'block');
                             $('#orgerror').addClass('alert-success');
-                            $('#orgerror').removeClass('alert-error');
+                            $('#orgerror').removeClass('alert-danger ');
                             $('#orgerror').html("Message has been successfully send!!");
-
+                            $('#id_orgname').val('');
+                           $('#id_orgemail').val('');
+                           $('#id_orgtext').val('');
                         }
                     });
                 }
@@ -571,33 +600,39 @@
                 var str = '', format = '';
 
                 var Datenew = new Date(split[1]);
-
-                var date2 = Date.parse(split[1] + split[2] + 'UTC');
+                var fullDate = "";
+               
 
                 //var time = document.getElementById('txttime').value;
-                var where_is_p = split[2].indexOf('p');
-                var where_is_a = split[2].indexOf('a');
-                if (where_is_p > 0) {
-                    str = split[2].replace('pm', ' ');
-                    format = 'PM';
+                if (split[2] != null) {
+                    var where_is_p = split[2].indexOf('p');
+                    var where_is_a = split[2].indexOf('a');
+                    if (where_is_p > 0) {
+                        str = split[2].replace('pm', ' ');
+                        format = 'PM';
+
+                    }
+                    if (where_is_a > 0) {
+
+                        str = split[2].replace('am', ' ');
+                        format = 'AM';
+                    }
+                    var hrs = Number(str.match(/^(\d+)/)[1]);
+                    var mnts = Number(str.match(/:(\d+)/)[1]);
+
+                    if (format == "PM" && hrs < 12) hrs = hrs + 12;
+                    if (format == "AM" && hrs == 12) hrs = hrs - 12;
+                    var hours = hrs.toString();
+                    var minutes = mnts.toString();
+                    if (hrs < 10) hours = "0" + hours;
+                    if (mnts < 10) minutes = "0" + minutes;
+                    fullDate = split[1] + " " + hours + ":" + minutes;
+                } else {
+                    fullDate = split[1];
 
                 }
-                if (where_is_a > 0) {
 
-                    str = split[2].replace('am', ' ');
-                    format = 'AM';
-                }
-                var hrs = Number(str.match(/^(\d+)/)[1]);
-                var mnts = Number(str.match(/:(\d+)/)[1]);
-
-                if (format == "PM" && hrs < 12) hrs = hrs + 12;
-                if (format == "AM" && hrs == 12) hrs = hrs - 12;
-                var hours = hrs.toString();
-                var minutes = mnts.toString();
-                if (hrs < 10) hours = "0" + hours;
-                if (mnts < 10) minutes = "0" + minutes;
-
-                var fullDate = split[1] + " " + hours + ":" + minutes;
+               
                 var fullDateReal = new Date(fullDate);
                 var year = fullDateReal.getUTCFullYear();
                 var month = fullDateReal.getUTCMonth()

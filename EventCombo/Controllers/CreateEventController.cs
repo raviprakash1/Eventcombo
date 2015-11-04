@@ -414,6 +414,10 @@ namespace EventCombo.Controllers
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
             var EventDescription = EventDetail.EventDescription;
+            var showtimezone = EventDetail.DisplayTimeZone;
+          viewEvent.showTimezone = showtimezone;
+            var timezone = EventDetail.TimeZone;
+            viewEvent.Timezone = timezone;
             //Address
           var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)
@@ -447,13 +451,13 @@ namespace EventCombo.Controllers
                 sDate = DateTime.Parse(startdate);
                 startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
                
-                 sDate_new = sDate.ToString("MMM dd yyyy");
+                 sDate_new = sDate.ToString("MMM dd, yyyy");
                 var enddate = evschdetails.StartingTo;
 
                 DateTime eDate = new DateTime();
                 eDate = DateTime.Parse(enddate);
                 endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString ();
-                 eDate_new = eDate.ToString("MMM dd yyyy");
+                 eDate_new = eDate.ToString("MMM dd, yyyy");
 
                  starttime = evschdetails.StartTime;
                  endtime = evschdetails.EndTime;
@@ -475,7 +479,7 @@ namespace EventCombo.Controllers
                         DateTime sDate = new DateTime();
                         sDate = DateTime.Parse(startdate.ToString());
                         startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
-                        sDate_new = sDate.ToString("MMM dd yyyy");
+                        sDate_new = sDate.ToString("MMM dd,yyyy");
                     }
                     var enddate = evschdetails.EventEndDate;
                     if (enddate != null)
@@ -483,7 +487,7 @@ namespace EventCombo.Controllers
                         DateTime eDate = new DateTime();
                         eDate = DateTime.Parse(enddate.ToString());
                         endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
-                        eDate_new = eDate.ToString("MMM dd yyyy");
+                        eDate_new = eDate.ToString("MMM dd,yyyy");
                     }
 
                     starttime = evschdetails.EventStartTime.ToString();
@@ -496,24 +500,30 @@ namespace EventCombo.Controllers
 
             if (!string.IsNullOrEmpty(displaystarttime) && (displaystarttime != "N"|| displaystarttime != "n") && !string.IsNullOrEmpty(displayendtime) && (displayendtime != "N"|| displayendtime != "n"))
             {
-                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + "," + starttime + "-" + endday.ToString() + " " + eDate_new + "," + endtime;
+                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new +"-" + endday.ToString() + " " + eDate_new ;
 
             }
 
-            if (displaystarttime=="N"|| displaystarttime == "n")
+            if ((displaystarttime=="N"|| displaystarttime == "n" ) && (displayendtime=="Y" || displayendtime == "Y"))
             {
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new +  "-" + endday.ToString() + " " + eDate_new + "," + endtime;
 
             }
 
+            if ((displaystarttime == "N" || displaystarttime == "n") && (displayendtime == "n" || displayendtime == "N"))
+            {
+                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + "-" + endday.ToString() + " " + eDate_new ;
 
+            }
 
-            if (displayendtime == "N" || displayendtime == "n")
+            if ( (displayendtime == "N" || displayendtime == "n")&& (displaystarttime == "Y" || displaystarttime == "y"))
             {
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + "," + starttime + "-" + endday.ToString() + " " + eDate_new;
 
             }
 
+            viewEvent.showstarttime = displaystarttime;
+            viewEvent.showendtime = displayendtime;
             viewEvent.TopAddress = TopAddress;
             viewEvent.Favourite = favCount.ToString();
             viewEvent.Vote = votecount.ToString();

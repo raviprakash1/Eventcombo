@@ -451,14 +451,18 @@ else
     {
         if ($('#idchecked').is(":checked") == true) {
             $('#divmain').addClass('home_fixed_header');
-            $('#divcontmain').addClass('cont_margin2');
+            $('#eventtopscoll').addClass('event_top');
             $('#scrollhome').addClass('con_scr0l_home');
+            $('#divcontmain').addClass('mt15');
 
         } else
         {
+            $('#eventtopscoll').removeClass('event_top');
             $('#scrollhome').removeClass('con_scr0l_home');
             $('#divmain').removeClass('home_fixed_header');
-            $('#divcontmain').removeClass('cont_margin2');
+          
+            $('#divcontmain').removeClass('mt15');
+            
         }
     }
     function setsession(e) {

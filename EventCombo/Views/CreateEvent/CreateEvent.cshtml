@@ -12,7 +12,7 @@
 
 {
     <div class="event_container">
-        <div class="event_inner_container event_top">
+        <div class="event_inner_container event_top" id="eventtopscoll">
             <div class="col-sm-12 pt10 bggrey">
                 <div class="Moderor" style="display: none;" id="diverroacc">
                     <div class="er_UI_main">
@@ -4019,7 +4019,11 @@
             msg = "Please enter the name of event";
 
         }
+        if ($('#ddlOrgnizers option').length <= 0)
+        {
+            msg = "Please enter organizer name";
 
+        }
         var type = $("#EventType").val();
         var cat = $("#ddlEventCategory").val();
         if (type <= 0) { msg += "</br>Please select type of event"; }
