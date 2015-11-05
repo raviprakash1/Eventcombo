@@ -28,6 +28,7 @@ namespace EventCombo.Models
         public string showTimezone { get; set; }
         public string showstarttime { get; set; }
         public string showendtime { get; set; }
+      
 
     }
 }

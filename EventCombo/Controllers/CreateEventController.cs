@@ -398,7 +398,7 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult ViewEvent(long EventId)
+        public ActionResult ViewEvent(long EventId,string title)
         {
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
@@ -497,13 +497,13 @@ namespace EventCombo.Controllers
 
             if ((displaystarttime == "Y"|| displaystarttime == "y") && (displayendtime == "Y"|| displayendtime == "y"))
             {
-                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new+ "," + starttime + "-" + endday.ToString() + " " + eDate_new + "," + endtime;
+                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new+ " " + starttime + "-" + endday.ToString() + " " + eDate_new + " " + endtime;
 
             }
 
             if ((displaystarttime=="N"|| displaystarttime == "n" ) && (displayendtime=="Y" || displayendtime == "Y"))
             {
-                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new +  "-" + endday.ToString() + " " + eDate_new + "," + endtime;
+                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new +  "-" + endday.ToString() + " " + eDate_new + " " + endtime;
 
             }
 
@@ -515,7 +515,7 @@ namespace EventCombo.Controllers
 
             if ( (displayendtime == "N" || displayendtime == "n")&& (displaystarttime == "Y" || displaystarttime == "y"))
             {
-                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + "," + starttime + "-" + endday.ToString() + " " + eDate_new;
+                viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + " " + starttime + "-" + endday.ToString() + " " + eDate_new;
 
             }
 

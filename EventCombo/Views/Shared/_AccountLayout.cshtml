@@ -33,6 +33,21 @@
     <script src="~/Scripts/jquery.timepicker.js"></script>
     <script src="~/Scripts/bootstrap-multiselect.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>
+    <style type="text/css">
+        .ui-tooltip, .arrow:after {
+            background: #fff;
+            border: 0px;
+        }
+
+        .ui-tooltip {
+            padding: 5px !important;
+            color: white;
+            font-size: .9em;
+            border-radius: 3px;
+            border: 0px !important;
+            color: #000;
+        }
+    </style>
 </head>
 <body>
     @*Header Section*@
@@ -55,7 +70,7 @@
                     @*<a href="#"><img src="~/Images/msg.png" /></a>*@
                 </div>
             </div>
-            <div class="Fix_Head mt10" title="Clik to fixed Header">
+            <div class="Fix_Head mt10" title="Click to fixed Header">
                 <label class="switch">
                     <input type="checkbox" class="switch-input" checked  onchange="changeheader(this.id)" id="idchecked">
                     <span class="switch-label" data-on="On" data-off="Off" ></span>
@@ -179,6 +194,8 @@
             $('#navtop').addClass('affix-top');
             $('#midsection').addClass('midd_cont');
             $('#eventtop').addClass('event_top');
+            $('#eventtopscoll').addClass('event_top');
+            
             $('#divsuccerr').addClass('aler_container');
         } else
         {
@@ -186,6 +203,7 @@
             $('#bodysec').removeClass('cont_margin');
             $('#navtop').removeClass('affix-top');
             $('#midsection').removeClass('midd_cont');
+            $('#eventtopscoll').removeClass('event_top');
             $('#eventtop').removeClass('event_top');
             $('#divsuccerr').removeClass('aler_container');
         }
