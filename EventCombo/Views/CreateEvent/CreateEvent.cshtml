@@ -1893,13 +1893,6 @@
                 }
 
 
-                var EvtDesc = [];
-                EvtDesc.push({
-                    EventDes: $("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "")
-                });
-
-
-
                 var model = {
                     'EventTypeID': $("#EventType").val(),
                     'EventCategoryID': $("#ddlEventCategory").val(),
