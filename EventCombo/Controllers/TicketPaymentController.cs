@@ -108,13 +108,24 @@ namespace EventCombo.Controllers
             return View(tp);
         }
 
-        public void ReleaseTickets()
+        public string ReleaseTickets()
         {
-            string strLockedId = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
-            using (var context = new EventComboEntities())
+            string strResult = "";
+            try
             {
-                context.Database.ExecuteSqlCommand("DELETE FROM Ticket_Locked_Detail WHERE TLD_GUID ='" + strLockedId + "'");
+                string strLockedId = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+                CommanClasses objC = new CommanClasses();
+                using (var context = new EventComboEntities())
+                {
+                    context.Database.ExecuteSqlCommand("DELETE FROM Ticket_Locked_Detail WHERE TLD_GUID ='" + strLockedId + "'");
+                    strResult = objC.GetMessage("TicketPayment", "TenMinWindowExpires");
+                }
             }
+            catch (Exception)
+            {
+                strResult = "There is some Problem.";
+            }
+            return strResult;
         }
 
         public void LockTickets(Ticket_Locked_Detail objTicketIds)
