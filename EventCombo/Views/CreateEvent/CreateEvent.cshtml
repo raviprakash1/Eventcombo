@@ -465,6 +465,7 @@
                             </label>
                             <div class="col-sm-8 no_pad">
                                 <div id="edEventDesc" class="summernote"></div>
+                                <span id="spEvDesc" style="display:block"></span>
                             </div>
                         </div>
                     </div>
@@ -1767,7 +1768,7 @@
                 //    });
 
                 //}
-                debugger;
+                
                 // Single Timing
                 if ($("#hdSchType").val() == 'Single') {
                     SingleTiming.push({
@@ -1782,7 +1783,7 @@
 
 
                 if ($("#hdSchType").val() == 'Multiple') {
-                    debugger;
+                    
 
                     var SchOption = $("#dlSchOption").val();
                     var vWeeklyDayAry = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
@@ -1880,7 +1881,9 @@
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
-                var vEventDiscription = '';//$("#edSummer1").code();
+                debugger;
+                //$("#spEvDesc").text();
+                var vEdesc = ''; //$("#edEventDesc").code();
 
                 var varDescritpion = '';
                 var optionalvariable = '';
@@ -1889,13 +1892,21 @@
                     optionalvariable = $('#variabletype').val();
                 }
 
+
+                var EvtDesc = [];
+                EvtDesc.push({
+                    EventDes: $("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "")
+                });
+
+
+
                 var model = {
                     'EventTypeID': $("#EventType").val(),
                     'EventCategoryID': $("#ddlEventCategory").val(),
                     'EventSubCategoryID': $("#ddlEventSubCategory").val(),
                     'UserID': '',
                     'EventTitle': $("#txtEventTitle").val(),
-                    'EventDescription': vEventDiscription.toString(),
+                    'EventDescription': $("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, ""),
                     'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
                     'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
                     'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
@@ -1924,13 +1935,16 @@
                     'Ticket_showvariable': ($("#id_variablecharge").is(":checked") == true ? 'Y' : 'N'),
                     'Ticket_variabledesc': varDescritpion,
                     'Ticket_variabletype': optionalvariable
-
+                  
                 };
-
+                
+                //var params = 'strEveDec :' + $("#edEventDesc").code();
+                
+                
                 if ($("#hdEventId").val() == '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
-                        data: model,
+                        data: { model  },
                         type: "Post",
                         success: function (response) {
                             $("#hdEventId").val(response);
@@ -2236,7 +2250,7 @@
 
             // ---------------------------------Map Implemetation--------------------------------------------
             var input = document.getElementById('txtEventLocation');
-            debugger;
+        
             var autocomplete = new google.maps.places.Autocomplete(input);
             //autocomplete.bindTo('Hello');
 
