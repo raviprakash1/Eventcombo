@@ -13,8 +13,25 @@
     <!-- Bootstrap core CSS -->
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
  
-    
+
     <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .ui-tooltip, .arrow:after {
+            background: #fff;
+            border: 0px;
+        }
+
+        .ui-tooltip {
+            padding: 5px !important;
+            color: white;
+            font-size: .9em;
+            border-radius: 3px;
+            border: 0px !important;
+            color: #000;
+        }
+    </style>
+
     <!-- Custom styles for this template -->
     <link href="~/Content/eventcombo.css" rel="stylesheet" />
     <!--  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
@@ -28,6 +45,9 @@
     <script src="~/Scripts/main.js"></script>
    
     <script src="~/Scripts/jquery.timepicker.js"></script>
+ 
+
+
 </head>
 
 <body>
@@ -90,7 +110,7 @@
                     </div>
 
                 }
-                <div class="Fix_Head" title="Clik to fixed Header">
+                <div class="Fix_Head" title="Click to fixed Header">
                     <label class="switch">
                        <input type="checkbox" class="switch-input" checked  id="idchecked" onchange="changeheader(this.id);" >
                         <span class="switch-label" data-on="On" data-off="Off"></span>
@@ -447,6 +467,8 @@ else
 </body>
 </html>
 <script type="text/javascript">
+
+
     function changeheader(e)
     {
         if ($('#idchecked').is(":checked") == true) {
@@ -547,7 +569,10 @@ else
 
 @*//Login*@
 <script type="text/javascript">
-          $(document).click(function () {
+    $(document).click(function () {
+
+     
+
               $('#diverrologin').css('display', 'none');
               $('#diverro1login').css('display', 'none');
 
@@ -575,6 +600,8 @@ else
               }
           });
           $(document).ready(function () {
+
+           
               $('#loginemail').removeClass('err-bor');
               $('#loginpassword').removeClass('err-bor');
 
@@ -965,8 +992,7 @@ else
 
 
 
-
-
+            
 
 
 
@@ -983,5 +1009,9 @@ else
                         return false;
                     }
                 }
+
+             
+                   
+            
 
     </script>

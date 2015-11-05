@@ -17,7 +17,7 @@
     @Html.HiddenFor(m=>m.EventId,new {id="hdEventid" })
     <div class="event_container ">
         <div class="event_inner_container event_top" id="eventtopscoll">
-            <div class="col-sm-12 pt10 bggrey">
+            <div class="col-sm-12 bggrey">
                 <div class="Moderor" style="display: none;" id="diverroacc">
                     <div class="er_UI_main">
                         <div class="er_UI_img"></div>
@@ -1010,19 +1010,27 @@
             if ($('.Notifybox').css('display') == 'block')
             {
                 var email = $('#emailbearer').val();
-                if (!validateEmail(email)) {
-
+                if (!validateEmail(email))
+                {
+                   
                     alert("Please enter valid Email.");
-                    $('#blocklist').css('display', 'none');
+                    if ($('#ddlListitem option').length < 0) {
+                        $('#blocklist').css('display', 'none');
+                    }
                     return false;
 
 
-                } else {
-
+             } else {
+                    
                     $('#blocklist').css('display', 'block');
                 }
 
             }
+            else {
+                    
+                    $('#blocklist').css('display', 'block');
+            }
+            
            
         }
        
@@ -1057,7 +1065,13 @@
         var Sno = $("#tblListitem tr").length;
         var vTicketName = $("#nameofticket").val();
         var vTicketEmailDes = $("#emailbearer").val();
+        if ($('.Notifybox').css('display') == 'block') {
+             vTicketEmailDes = $("#emailbearer").val();
+        } else
+        {
 
+            vTicketEmailDes = "";
+        }
         //strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
 
         var strHTML = '<tr>';
