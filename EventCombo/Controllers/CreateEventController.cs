@@ -187,9 +187,6 @@ namespace EventCombo.Controllers
             }
         }
 
-
-
-
         public long SaveEvent(EventCreation model)
         {
             long lEventId = 0;
