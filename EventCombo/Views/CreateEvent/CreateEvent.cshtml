@@ -1732,11 +1732,13 @@
                 }
                 else
                 {
+                    debugger;
                     $("#tblAddress tr").each(function () {
-
+                        
                         var Sno = $(this).find("td:first").html();
+                      //  alert(Sno);
                         // Multiple Address
-                        if (Sno != '') {
+                        if (Sno != '' && Sno !=undefined && Sno !=null) {
                             SubmitAddress.push({
                                 VenueName: $("#VenueName" + Sno).val()   ,
                                 Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() :''),
@@ -1945,7 +1947,7 @@
                             $('#diverroacc').css('display', 'none');
                             $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
                             $("#hdEventId").val(response);
-
+                            alert(response);
                         }
                     });
                 }

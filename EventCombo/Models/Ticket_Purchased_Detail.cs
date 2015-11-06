@@ -17,10 +17,11 @@ namespace EventCombo.Models
         public long TPD_Id { get; set; }
         public string TPD_User_Id { get; set; }
         public string TPD_Order_Id { get; set; }
-        public Nullable<int> TPD_Purchased_Qty { get; set; }
+        public Nullable<long> TPD_Purchased_Qty { get; set; }
         public Nullable<long> TPD_TQD_Id { get; set; }
         public Nullable<long> TPD_Event_Id { get; set; }
         public Nullable<decimal> TPD_Amount { get; set; }
         public Nullable<decimal> TPD_Donate { get; set; }
+        public string TPD_GUID { get; set; }
     }
 }

@@ -216,6 +216,9 @@ namespace EventCombo.Controllers
         }
         public async Task<string> SaveDetails(TicketPayment model)
         {
+            string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
+            ApiLoginID = "";ApiTransactionKey = "";strCardNo = "";strExpDate = "";strCvvCode = "";dAmount = 0;
+
             HomeController hm = new HomeController();
             if (!string.IsNullOrEmpty(model.AccconfirmEmail) && !string.IsNullOrEmpty(model.Accpassword))
             {
@@ -226,7 +229,6 @@ namespace EventCombo.Controllers
                 {
                     using (EventComboEntities objEntity = new EventComboEntities())
                     {
-
 
                         Profile prof = new Profile();
                         prof.FirstName = model.AccFname;
@@ -247,7 +249,7 @@ namespace EventCombo.Controllers
 
             }
           
-            string Userid = Session["AppId"].ToString();
+                string Userid = Session["AppId"].ToString();
                 if (!string.IsNullOrEmpty(Userid))
                 {
                 if (model.Ticketname == "Paid")
@@ -264,6 +266,8 @@ namespace EventCombo.Controllers
                             card.UserId = Userid;
                             card.Guid = Userid;
                             objEntity.CardDetails.Add(card);
+
+                     
                         }
 
 
@@ -312,13 +316,59 @@ namespace EventCombo.Controllers
                                 ObjAdd.Email = objA.Email;
                                 ObjAdd.Name = objA.Name;
                                 ObjAdd.OrderId = 0;
-
                                 objEntity.TicketBearers.Add(ObjAdd);
 
 
                             }
                         }
                         objEntity.SaveChanges();
+                        // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
+                        try
+                        {
+                            Order_Detail_T objOdr = new Order_Detail_T();
+                            objOdr.O_Order_Id = "";
+                            objOdr.O_TotalAmount = 0;
+                            objOdr.O_User_Id = Userid;
+                            objEntity.Order_Detail_T.Add(objOdr);
+                            objEntity.SaveChanges();
+                            string strOrderNo = GetOrderNo();
+
+                            List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
+                            objLockedTic = GetLockTickets();
+                            Ticket_Purchased_Detail  objTPD ;
+                            decimal dAmt = 0;
+                            foreach(Ticket_Locked_Detail TLD in objLockedTic)
+                            {
+                                objTPD = new Ticket_Purchased_Detail();
+                                objTPD.TPD_Amount = dAmt;
+                                objTPD.TPD_Donate = TLD.TLD_Donate;
+                                objTPD.TPD_Event_Id = TLD.TLD_Event_Id;
+                                objTPD.TPD_Order_Id = strOrderNo;
+                                objTPD.TPD_Purchased_Qty = TLD.TLD_Locked_Qty;
+                                objTPD.TPD_TQD_Id = TLD.TLD_TQD_Id;
+                                objTPD.TPD_GUID = TLD.TLD_GUID;
+                                objEntity.Ticket_Purchased_Detail.Add(objTPD);
+                            }
+
+                            ApiLoginID = "354v9ZufxM6";
+                            ApiTransactionKey = "68Et2R3KcV62rJ27";
+                            strCardNo = model.cardno;
+                            strExpDate = model.expirydate;
+                            strCvvCode = model.cvv;
+                            dAmount = 10;
+                            PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+                            objEntity.SaveChanges();
+
+
+                        }
+                        catch (Exception)
+                        {
+
+                            
+                        }
+
+
+                    
                     }
                 }
                 
@@ -331,6 +381,53 @@ namespace EventCombo.Controllers
 
             }
           
+        }
+        public string GetOrderNo()
+        {
+            string strOrderNo = "";
+            if (Session["TicketLockedId"] != null)
+            {
+                using (EventComboEntities objECE = new EventComboEntities())
+                {
+                    long lMax = (from Ord in objECE.Order_Detail_T
+                                  select Ord.O_Id
+                                  ).Max();
+
+                    strOrderNo = (from Ord in objECE.Order_Detail_T
+                                  where Ord.O_Id == lMax
+                                  select Ord.O_Order_Id).SingleOrDefault();
+
+                    
+                }
+            }
+
+
+            return strOrderNo = "";
+
+
+        }
+
+        public List<Ticket_Locked_Detail> GetLockTickets()
+        {
+            string strGuid = "";
+            strGuid = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+            using (EventComboEntities objEntity = new EventComboEntities())
+            {
+                var modelTLD = (from TLD in objEntity.Ticket_Locked_Detail
+                                     where TLD.TLD_GUID == strGuid
+                                     select new Ticket_Locked_Detail
+                                     {
+                                        TLD_Locked_Qty= TLD.TLD_Locked_Qty,
+                                        TLD_Event_Id = TLD.TLD_Event_Id,
+                                         TLD_TQD_Id  = TLD.TLD_TQD_Id,
+                                         Locktime = TLD.Locktime,
+                                         TLD_GUID = TLD.TLD_GUID,
+                                         TLD_Donate = TLD.TLD_Donate
+                                     }
+                                    );
+                return modelTLD.ToList();
+            }
+
         }
         public void Nullsession()
         {
