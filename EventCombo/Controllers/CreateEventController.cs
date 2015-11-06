@@ -521,7 +521,8 @@ namespace EventCombo.Controllers
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + " " + starttime + "-" + endday.ToString() + " " + eDate_new;
 
             }
-
+            viewEvent.typeofEvent = EventDetail.AddressStatus;
+            viewEvent.Shareonfb= EventDetail.Private_ShareOnFB;
             viewEvent.showstarttime = displaystarttime;
             viewEvent.showendtime = displayendtime;
             viewEvent.TopAddress = TopAddress;
@@ -602,7 +603,7 @@ namespace EventCombo.Controllers
                 tickettype = "Donate";
 
             }
-            if (ticketsfree < 0 && ticketsPaid < 0 && ticketsDonation < 0)
+            if (ticketsfree <= 0 && ticketsPaid <= 0 && ticketsDonation <= 0)
             {
                 tickettype = "Get Tickets";
 
