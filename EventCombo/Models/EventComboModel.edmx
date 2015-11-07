@@ -346,6 +346,10 @@
           <Property Name="O_Order_Id" Type="varchar" MaxLength="100" />
           <Property Name="O_User_Id" Type="nvarchar" MaxLength="256" />
           <Property Name="O_TotalAmount" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="O_OrderAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="bigint" />
+          <Property Name="O_VariableAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="bigint" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -1295,6 +1299,10 @@
           <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="Int64" />
+          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="Int64" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -2217,6 +2225,10 @@
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
+                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
+                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
+                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
                 <ScalarProperty Name="O_Id" ColumnName="O_Id" />
                 <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
                 <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />

@@ -331,6 +331,11 @@ namespace EventCombo.Controllers
                             objOdr.O_Order_Id = "";
                             objOdr.O_TotalAmount = 0;
                             objOdr.O_User_Id = Userid;
+                            objOdr.O_OrderAmount = 0;
+                            objOdr.O_VariableId = 0;
+                            objOdr.O_VariableAmount = 0;
+                            objOdr.O_PromoCodeId = 0;
+
                             objEntity.Order_Detail_T.Add(objOdr);
                             objEntity.SaveChanges();
                             string strOrderNo = GetOrderNo();

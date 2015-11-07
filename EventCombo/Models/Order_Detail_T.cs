@@ -18,5 +18,9 @@ namespace EventCombo.Models
         public string O_Order_Id { get; set; }
         public string O_User_Id { get; set; }
         public Nullable<decimal> O_TotalAmount { get; set; }
+        public Nullable<decimal> O_OrderAmount { get; set; }
+        public Nullable<long> O_VariableId { get; set; }
+        public Nullable<decimal> O_VariableAmount { get; set; }
+        public Nullable<long> O_PromoCodeId { get; set; }
     }
 }
