@@ -814,7 +814,11 @@
                 //        });
                 //    }
                 //}
-
+                var vOrderTotal = $("#hdOrderTotal").val();
+                var vGrandTotal = $("#hdGrandTotal").val();
+                var vPromoId = $("#hdPromoId").val();
+                var vVarChanges = $("#hdVarChanges").val();
+                var vVarId = $("#hdVarId").val();
 
                 var model = {
 
@@ -858,7 +862,7 @@
 
                 $.ajax({
                     url: '@Url.Action("SaveDetails", "TicketPayment")',
-                    data:model,
+                    data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId },
                     type: "Post",
                     success: function (response) {
 

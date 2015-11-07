@@ -25,6 +25,35 @@ namespace EventCombo.Models
             }
             return result;
         }
+
+
+        public static decimal ConvertToNumeric(string strNumeric)
+        {
+            decimal dResult = 0;
+            try
+            {
+                dResult = Convert.ToDecimal(strNumeric);
+            }
+            catch (Exception)
+            {
+                dResult = 0;
+            }
+            return dResult;
+        }
+
+        public static long ConvertToLong(string strLong)
+        {
+            long dResult = 0;
+            try
+            {
+                dResult = Convert.ToInt64(strLong);
+            }
+            catch (Exception)
+            {
+                dResult = 0;
+            }
+            return dResult;
+        }
     }
 
 
@@ -32,7 +61,7 @@ namespace EventCombo.Models
     {
         public Ticket_Locked_Detail[] TLD_List { get; set; }
     }
-
+ 
     public class Ticket_Locked_Detail_List
     {
         public long TLD_Id { get; set; }

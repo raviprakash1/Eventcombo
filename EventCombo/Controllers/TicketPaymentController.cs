@@ -214,7 +214,7 @@ namespace EventCombo.Controllers
 
             }
         }
-        public async Task<string> SaveDetails(TicketPayment model)
+        public async Task<string> SaveDetails(TicketPayment model,string strOrderTotal, string strGrandTotal,string strPromId,string strVarChanges,string strVarId)
         {
             string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
             ApiLoginID = "";ApiTransactionKey = "";strCardNo = "";strExpDate = "";strCvvCode = "";dAmount = 0;
@@ -328,13 +328,13 @@ namespace EventCombo.Controllers
                         try
                         {
                             Order_Detail_T objOdr = new Order_Detail_T();
-                            objOdr.O_Order_Id = "";
-                            objOdr.O_TotalAmount = 0;
+                            objOdr.O_Order_Id = "" ;
+                            objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
                             objOdr.O_User_Id = Userid;
-                            objOdr.O_OrderAmount = 0;
-                            objOdr.O_VariableId = 0;
-                            objOdr.O_VariableAmount = 0;
-                            objOdr.O_PromoCodeId = 0;
+                            objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
+                            objOdr.O_VariableId = CommanClasses.ConvertToLong(strVarId);
+                            objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges) ;
+                            objOdr.O_PromoCodeId = CommanClasses.ConvertToLong(strPromId);
 
                             objEntity.Order_Detail_T.Add(objOdr);
                             objEntity.SaveChanges();
@@ -355,17 +355,18 @@ namespace EventCombo.Controllers
                                 objTPD.TPD_Purchased_Qty = TLD.TLD_Locked_Qty;
                                 objTPD.TPD_TQD_Id = TLD.TLD_TQD_Id;
                                 objTPD.TPD_GUID = TLD.TLD_GUID;
+                                objTPD.TPD_User_Id = Userid;
                                 objEntity.Ticket_Purchased_Detail.Add(objTPD);
                             }
-
-                            ApiLoginID = "354v9ZufxM6";
-                            ApiTransactionKey = "68Et2R3KcV62rJ27";
-                            strCardNo = model.cardno;
-                            strExpDate = model.expirydate;
-                            strCvvCode = model.cvv;
-                            dAmount = 10;
-                            PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
                             objEntity.SaveChanges();
+                            //ApiLoginID = "354v9ZufxM6";
+                            //ApiTransactionKey = "68Et2R3KcV62rJ27";
+                            //strCardNo = model.cardno;
+                            //strExpDate = model.expirydate;
+                            //strCvvCode = model.cvv;
+                            //dAmount = 10;
+                            //PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+
 
 
                         }
