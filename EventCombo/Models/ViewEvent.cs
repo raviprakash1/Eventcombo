@@ -28,7 +28,9 @@ namespace EventCombo.Models
         public string showTimezone { get; set; }
         public string showstarttime { get; set; }
         public string showendtime { get; set; }
-      
+        public string Shareonfb { get; set; }
+        public string typeofEvent { get; set; }
+
 
     }
 }

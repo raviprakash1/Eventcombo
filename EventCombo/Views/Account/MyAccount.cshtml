@@ -179,7 +179,7 @@
                     <small class="acnt_form_name_mini">Zip</small>
                 </div>
                 <div class="col-xs-6 add_form_bot">
-                    @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>)
+                    @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new {@class = "form-control" })
                     <small class="acnt_form_name_mini">Country</small>
                 </div>
 

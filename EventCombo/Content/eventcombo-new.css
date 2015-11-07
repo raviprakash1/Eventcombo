@@ -398,6 +398,12 @@
 .ev_live_btn:focus{color: #fff !important;}
 .ev_live_btn:active{background:#00cfff !important;}
 
+.grn_live_btn{ background: #1eff00}
+.grn_live_btn:hover{ background: #1eff00}
+
+.yelw_live_btn{ background: #ffdb00; color: #000 !important}
+.yelw_live_btn:hover{ background: #ffdb00}
+
 
 .ev_pad_l0{ padding-left: 0px;}
 .ev_pad_r0{ padding-right: 0px;}

@@ -455,5 +455,16 @@ namespace EventCombo.Controllers
         #endregion
 
 
+
+        public ActionResult PaymentConfirmation()
+        {
+            Session["Fromname"] = "ViewEvent";
+
+            return View();
+        }
+
+
+
+
     }
 }

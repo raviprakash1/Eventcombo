@@ -16,21 +16,7 @@
 
     <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
 
-    <style type="text/css">
-        .ui-tooltip, .arrow:after {
-            background: #fff;
-            border: 0px;
-        }
-
-        .ui-tooltip {
-            padding: 5px !important;
-            color: white;
-            font-size: .9em;
-            border-radius: 3px;
-            border: 0px !important;
-            color: #000;
-        }
-    </style>
+    
 
     <!-- Custom styles for this template -->
     <link href="~/Content/eventcombo.css" rel="stylesheet" />
@@ -476,13 +462,14 @@ else
             $('#eventtopscoll').addClass('event_top');
             $('#scrollhome').addClass('con_scr0l_home');
             $('#divcontmain').addClass('mt15');
+            $('#buttonscroll').addClass('mt5');
 
         } else
         {
             $('#eventtopscoll').removeClass('event_top');
             $('#scrollhome').removeClass('con_scr0l_home');
             $('#divmain').removeClass('home_fixed_header');
-          
+            $('#buttonscroll').removeClass('mt5');
             $('#divcontmain').removeClass('mt15');
             
         }
