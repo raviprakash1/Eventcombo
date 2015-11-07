@@ -219,6 +219,8 @@ namespace EventCombo.Controllers
             string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
             ApiLoginID = "";ApiTransactionKey = "";strCardNo = "";strExpDate = "";strCvvCode = "";dAmount = 0;
 
+
+
             HomeController hm = new HomeController();
             if (!string.IsNullOrEmpty(model.AccconfirmEmail) && !string.IsNullOrEmpty(model.Accpassword))
             {
@@ -333,11 +335,12 @@ namespace EventCombo.Controllers
                             objEntity.SaveChanges();
                             string strOrderNo = GetOrderNo();
 
-                            List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
+                            //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
+                            List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
                             objLockedTic = GetLockTickets();
                             Ticket_Purchased_Detail  objTPD ;
                             decimal dAmt = 0;
-                            foreach(Ticket_Locked_Detail TLD in objLockedTic)
+                            foreach(Ticket_Locked_Detail_List TLD in objLockedTic)
                             {
                                 objTPD = new Ticket_Purchased_Detail();
                                 objTPD.TPD_Amount = dAmt;
@@ -361,7 +364,7 @@ namespace EventCombo.Controllers
 
 
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
 
                             
@@ -402,31 +405,40 @@ namespace EventCombo.Controllers
             }
 
 
-            return strOrderNo = "";
+            return strOrderNo;
 
 
         }
 
-        public List<Ticket_Locked_Detail> GetLockTickets()
+        public List<Ticket_Locked_Detail_List> GetLockTickets()
         {
+            try
+            {
             string strGuid = "";
             strGuid = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
             using (EventComboEntities objEntity = new EventComboEntities())
             {
                 var modelTLD = (from TLD in objEntity.Ticket_Locked_Detail
                                      where TLD.TLD_GUID == strGuid
-                                     select new Ticket_Locked_Detail
+                                     select new Ticket_Locked_Detail_List
                                      {
-                                        TLD_Locked_Qty= TLD.TLD_Locked_Qty,
+                                        TLD_Locked_Qty = TLD.TLD_Locked_Qty,
                                         TLD_Event_Id = TLD.TLD_Event_Id,
-                                         TLD_TQD_Id  = TLD.TLD_TQD_Id,
-                                         Locktime = TLD.Locktime,
-                                         TLD_GUID = TLD.TLD_GUID,
-                                         TLD_Donate = TLD.TLD_Donate
+                                        TLD_TQD_Id = TLD.TLD_TQD_Id,
+                                        Locktime = TLD.Locktime,
+                                        TLD_GUID = TLD.TLD_GUID,
+                                        TLD_Donate = TLD.TLD_Donate
                                      }
                                     );
                 return modelTLD.ToList();
             }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
 
         }
         public void Nullsession()

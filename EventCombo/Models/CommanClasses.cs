@@ -33,6 +33,18 @@ namespace EventCombo.Models
         public Ticket_Locked_Detail[] TLD_List { get; set; }
     }
 
+    public class Ticket_Locked_Detail_List
+    {
+        public long TLD_Id { get; set; }
+        public string TLD_User_Id { get; set; }
+        public Nullable<long> TLD_Locked_Qty { get; set; }
+        public Nullable<long> TLD_Event_Id { get; set; }
+        public Nullable<long> TLD_TQD_Id { get; set; }
+        public Nullable<System.DateTime> Locktime { get; set; }
+        public string TLD_GUID { get; set; }
+        public Nullable<decimal> TLD_Donate { get; set; }
+    }
+
     //public partial class Ticket_Pub
     //{
     //    public Ticket_Locked_Detail[] TLD_List { get; set; }
