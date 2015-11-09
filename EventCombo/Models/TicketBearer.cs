@@ -16,7 +16,7 @@ namespace EventCombo.Models
     {
         public long TicketbearerId { get; set; }
         public string UserId { get; set; }
-        public Nullable<long> OrderId { get; set; }
+        public string OrderId { get; set; }
         public string Guid { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -89,7 +89,7 @@
           </Key>
           <Property Name="BillingId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nchar" MaxLength="128" />
-          <Property Name="OrderId" Type="bigint" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
           <Property Name="Guid" Type="nchar" MaxLength="128" />
           <Property Name="Fname" Type="varchar" MaxLength="50" />
           <Property Name="Lname" Type="varchar" MaxLength="50" />
@@ -107,7 +107,7 @@
           </Key>
           <Property Name="CardId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nchar" MaxLength="128" />
-          <Property Name="OrderId" Type="bigint" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
           <Property Name="Guid" Type="nchar" MaxLength="128" />
           <Property Name="CardNumber" Type="varchar" MaxLength="50" />
           <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
@@ -415,7 +415,7 @@
           </Key>
           <Property Name="ShippingId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nchar" MaxLength="128" />
-          <Property Name="OrderId" Type="bigint" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
           <Property Name="Guid" Type="nchar" MaxLength="128" />
           <Property Name="Fname" Type="varchar" MaxLength="50" />
           <Property Name="Lname" Type="varchar" MaxLength="50" />
@@ -520,7 +520,7 @@
           </Key>
           <Property Name="TicketbearerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nchar" MaxLength="128" />
-          <Property Name="OrderId" Type="bigint" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
           <Property Name="Guid" Type="nchar" MaxLength="128" />
           <Property Name="Name" Type="nchar" MaxLength="128" />
           <Property Name="Email" Type="nchar" MaxLength="256" />
@@ -931,7 +931,8 @@
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventComboModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1023,7 +1024,7 @@
           </Key>
           <Property Name="BillingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="OrderId" Type="Int64" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1041,7 +1042,7 @@
           </Key>
           <Property Name="CardId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="OrderId" Type="Int64" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1369,7 +1370,7 @@
           </Key>
           <Property Name="ShippingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="OrderId" Type="Int64" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1442,6 +1443,20 @@
           <Property Name="TLD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="TLD_Donate" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="Ticket_Purchased_Detail">
+          <Key>
+            <PropertyRef Name="TPD_Id" />
+          </Key>
+          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_Purchased_Qty" Type="Int64" />
+          <Property Name="TPD_TQD_Id" Type="Int64" />
+          <Property Name="TPD_Event_Id" Type="Int64" />
+          <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
             <PropertyRef Name="TQD_Id" />
@@ -1463,7 +1478,7 @@
           </Key>
           <Property Name="TicketbearerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="OrderId" Type="Int64" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
@@ -1732,6 +1747,7 @@
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Tickets" EntityType="Self.Ticket" />
           <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" />
+          <EntitySet Name="Ticket_Purchased_Detail" EntityType="Self.Ticket_Purchased_Detail" />
           <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" />
           <EntitySet Name="TicketBearers" EntityType="Self.TicketBearer" />
           <EntitySet Name="TicketDeliveryMethods" EntityType="Self.TicketDeliveryMethod" />
@@ -1808,7 +1824,7 @@
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEventDateList" ReturnType="Collection(EventComboModel.GetEventDateList_Result)">
-          <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
             <Parameter Name="EventTitle" Mode="In" Type="String" />
@@ -1827,13 +1843,12 @@
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
-          <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="PublishEvent">
             <Parameter Name="EventId" Mode="In" Type="Int64" />
             <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Ticket_Purchased_Detail" EntityType="EventComboModel.Ticket_Purchased_Detail" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1852,20 +1867,6 @@
           <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventAddress" Nullable="true" />
         </ComplexType>
-        <EntityType Name="Ticket_Purchased_Detail">
-          <Key>
-            <PropertyRef Name="TPD_Id" />
-          </Key>
-          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="TPD_Purchased_Qty" Type="Int64" />
-          <Property Name="TPD_TQD_Id" Type="Int64" />
-          <Property Name="TPD_Event_Id" Type="Int64" />
-          <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2225,14 +2226,14 @@
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
-                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
-                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
-                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
-                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
                 <ScalarProperty Name="O_Id" ColumnName="O_Id" />
                 <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
                 <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
                 <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
+                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
+                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
+                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
+                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2367,7 +2368,6 @@
           <EntitySetMapping Name="Ticket_Locked_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
               <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
-                <ScalarProperty Name="TLD_Donate" ColumnName="TLD_Donate" />
                 <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
                 <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
                 <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />
@@ -2375,6 +2375,22 @@
                 <ScalarProperty Name="TLD_TQD_Id" ColumnName="TLD_TQD_Id" />
                 <ScalarProperty Name="Locktime" ColumnName="Locktime" />
                 <ScalarProperty Name="TLD_GUID" ColumnName="TLD_GUID" />
+                <ScalarProperty Name="TLD_Donate" ColumnName="TLD_Donate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Purchased_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
+                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
+                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
+                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
+                <ScalarProperty Name="TPD_TQD_Id" ColumnName="TPD_TQD_Id" />
+                <ScalarProperty Name="TPD_Event_Id" ColumnName="TPD_Event_Id" />
+                <ScalarProperty Name="TPD_Amount" ColumnName="TPD_Amount" />
+                <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
+                <ScalarProperty Name="TPD_GUID" ColumnName="TPD_GUID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2493,21 +2509,6 @@
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
           <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
           <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
-          <EntitySetMapping Name="Ticket_Purchased_Detail">
-            <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
-              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
-                <ScalarProperty Name="TPD_GUID" ColumnName="TPD_GUID" />
-                <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
-                <ScalarProperty Name="TPD_Amount" ColumnName="TPD_Amount" />
-                <ScalarProperty Name="TPD_Event_Id" ColumnName="TPD_Event_Id" />
-                <ScalarProperty Name="TPD_TQD_Id" ColumnName="TPD_TQD_Id" />
-                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
-                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
-                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
-                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2522,7 +2523,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

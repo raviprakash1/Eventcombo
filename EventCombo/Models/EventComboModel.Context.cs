@@ -63,6 +63,7 @@ namespace EventCombo.Models
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<Ticket_Locked_Detail> Ticket_Locked_Detail { get; set; }
+        public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
         public virtual DbSet<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
         public virtual DbSet<TicketBearer> TicketBearers { get; set; }
         public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
@@ -70,7 +71,6 @@ namespace EventCombo.Models
         public virtual DbSet<TimeZoneDetail> TimeZoneDetails { get; set; }
         public virtual DbSet<User_Permission_Detail> User_Permission_Detail { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
-        public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

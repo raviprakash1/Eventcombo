@@ -2963,18 +2963,20 @@
 
         //}
 
-        //var price = parseFloat(valuenum);
+       var price = parseFloat(valuenum);
 
-        //if (valuenum > 999999.99) {
+       if (price > 999999.99)
+       {
 
-        //    $('#id_cost-' + num).addClass('err-bor');
-        //    $('#id_lblprice-' + num).css('display', 'block');
-        //    $('#id_buyerprice-' + num).html("$0.00");
-        //    $('#id_tooltip-' + num).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 ");
-        //    total = 0;
-        //    fee = 0;
-        //    return false;
-        //} else {
+            $('#id_cost-' + num).addClass('err-bor');
+            $('#id_lblprice-' + num).css('display', 'block');
+            $('#id_buyerprice-' + num).html("$0.00");
+            $('#id_tooltip-' + num).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 ");
+            total = 0;
+            fee = 0;
+            return false;
+        }
+        //else {
 
         //    $('#id_cost-' + num).removeClass('err-bor');
         //    $('#id_lblprice-' + num).css('display', 'none');
