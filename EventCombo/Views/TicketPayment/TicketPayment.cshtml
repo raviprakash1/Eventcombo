@@ -865,6 +865,7 @@
                     data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId },
                     type: "Post",
                     success: function (response) {
+
                         window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
 
 

@@ -82,7 +82,7 @@
 
                 <div class="col-sm-12 no_pad chek_out_desc">
                     <p>Your order has been saved to My E-Tickets </p>
-                    <p>Order T123456789, 7 tickets for $100.00 </p>
+                    <p><span id="spOrderNo"></span></p>
                     <p>Your tickets have been sent to customer-email@domain.com </p>
                     <p>
                         <label><input type="checkbox"> Keep me locked to the latest, Yes, send me curated events every few weeks </label>
@@ -218,3 +218,22 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetOrderDetailForConfirmation", "TicketPayment")',
+            type: "Post",
+            success: function (data) {
+                ary = data.split('~');
+                strOrderDetail = "Order " + ary[0] + " , " + ary[1] + " tickets for $" + ary[2];
+                $("#spOrderNo").text(strOrderDetail);
+            },
+            error: function (data) {
+            }
+        });
+
+    });
+
+</script>
