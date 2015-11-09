@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -345,7 +345,7 @@
           <Property Name="O_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="O_Order_Id" Type="varchar" MaxLength="100" />
           <Property Name="O_User_Id" Type="nvarchar" MaxLength="256" />
-          <Property Name="O_TotalAmount" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="O_TotalAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="O_OrderAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="O_VariableId" Type="bigint" />
           <Property Name="O_VariableAmount" Type="numeric" Precision="18" Scale="2" />
@@ -394,6 +394,7 @@
           <Property Name="Organiser" Type="varchar" MaxLength="2" />
           <Property Name="Merchant" Type="varchar" MaxLength="2" />
           <Property Name="UserStatus" Type="varchar" MaxLength="2" />
+          <Property Name="SendCur_EventDetail" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -931,8 +932,7 @@
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventComboModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1299,7 +1299,7 @@
           <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="O_VariableId" Type="Int64" />
           <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
@@ -1349,6 +1349,7 @@
           <Property Name="Merchant" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="UserStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUsers" />
+          <Property Name="SendCur_EventDetail" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -1824,7 +1825,7 @@
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEventDateList" ReturnType="Collection(EventComboModel.GetEventDateList_Result)">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
             <Parameter Name="EventTitle" Mode="In" Type="String" />
@@ -1843,7 +1844,7 @@
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="PublishEvent">
             <Parameter Name="EventId" Mode="In" Type="Int64" />
@@ -2249,6 +2250,7 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="EventComboModel.Profile">
               <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="SendCur_EventDetail" ColumnName="SendCur_EventDetail" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />

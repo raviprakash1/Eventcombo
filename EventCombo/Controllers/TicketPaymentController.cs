@@ -23,7 +23,7 @@ namespace EventCombo.Controllers
             TicketPayment tp = new TicketPayment();
             string defaultCountry = "";
             string Fname = "", Lname = "", Phnnumber = "", Adress = "", Email = "";
-            var url = Url.Action("TicketPayment", "TicketPayment") + "?Eventid=" + Eventid ;
+            var url = Url.Action("TicketPayment", "TicketPayment") + "?Eventid=" + Eventid;
             Session["ReturnUrl"] = "TicketPayment~" + url;
             CreateEventController cs = new CreateEventController();
             AccountController AccDetail = new AccountController();
@@ -32,7 +32,7 @@ namespace EventCombo.Controllers
             tp.Title = eventdetails.EventTitle;
             tp.Tickettype = "Paid";
             ViewData["Type"] = tp.Tickettype;
-            List<Cardview> Detailscard = new List<Cardview>(); 
+            List<Cardview> Detailscard = new List<Cardview>();
             if (Session["AppId"] != null)
             {
                 string Userid = Session["AppId"].ToString();
@@ -43,7 +43,7 @@ namespace EventCombo.Controllers
                 Adress = accountdetail.StreetAddress1 + "," + accountdetail.StreeAddress2 + "," + accountdetail.City + "," + accountdetail.State + "," + accountdetail.Zip + "," + accountdetail.Country;
                 Email = accountdetail.Email;
 
-                
+
             }
 
             tp.Email = Email;
@@ -79,27 +79,27 @@ namespace EventCombo.Controllers
                 {
                     var userid = Session["AppId"].ToString();
                     var carddetails = db.CardDetails.Where(x => x.UserId == userid).ToList();
-                    
-                   if(carddetails!=null)
+
+                    if (carddetails != null)
                     {
-                        foreach(var item in carddetails)
+                        foreach (var item in carddetails)
                         {
                             Cardview card1 = new Cardview();
                             card1.value = item.CardId.ToString();
                             card1.text = Fname + "-" + item.CardNumber;
                             Detailscard.Add(card1);
-                            
+
 
                         }
-                       
+
                     }
-                   
+
                 }
                 Cardview card2 = new Cardview();
-                card2.value ="A";
+                card2.value = "A";
                 card2.text = "Add a new Card";
                 Detailscard.Add(card2);
-                
+
                 Cardview card3 = new Cardview();
                 card3.value = "P";
                 card3.text = "Use Paypal";
@@ -161,9 +161,9 @@ namespace EventCombo.Controllers
 
             var Carddetails = (from ev in db.CardDetails where ev.CardId.ToString() == cardid select ev).FirstOrDefault();
 
-            return Carddetails.CardNumber+"*"+Carddetails.Cvv +"*"+ Carddetails.ExpirationDate;
+            return Carddetails.CardNumber + "*" + Carddetails.Cvv + "*" + Carddetails.ExpirationDate;
 
-        } 
+        }
         public ApplicationSignInManager SignInManager
         {
             get
@@ -254,7 +254,7 @@ namespace EventCombo.Controllers
                 {
                     Session["AppId"] = null;
                 }
-               
+
 
             }
             if (Session["AppId"] != null)
@@ -375,7 +375,7 @@ namespace EventCombo.Controllers
                         strExpDate = model.expirydate;
                         strCvvCode = model.cvv;
                         dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
-                        PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+                        //  PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
 
 
 
@@ -405,14 +405,14 @@ namespace EventCombo.Controllers
                 using (EventComboEntities objECE = new EventComboEntities())
                 {
                     long lMax = (from Ord in objECE.Order_Detail_T
-                                  select Ord.O_Id
+                                 select Ord.O_Id
                                   ).Max();
 
                     strOrderNo = (from Ord in objECE.Order_Detail_T
                                   where Ord.O_Id == lMax
                                   select Ord.O_Order_Id).SingleOrDefault();
 
-                    
+
                 }
             }
 
@@ -426,24 +426,24 @@ namespace EventCombo.Controllers
         {
             try
             {
-            string strGuid = "";
-            strGuid = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
-            using (EventComboEntities objEntity = new EventComboEntities())
-            {
-                var modelTLD = (from TLD in objEntity.Ticket_Locked_Detail
-                                     where TLD.TLD_GUID == strGuid
-                                     select new Ticket_Locked_Detail_List
-                                     {
+                string strGuid = "";
+                strGuid = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+                using (EventComboEntities objEntity = new EventComboEntities())
+                {
+                    var modelTLD = (from TLD in objEntity.Ticket_Locked_Detail
+                                    where TLD.TLD_GUID == strGuid
+                                    select new Ticket_Locked_Detail_List
+                                    {
                                         TLD_Locked_Qty = TLD.TLD_Locked_Qty,
                                         TLD_Event_Id = TLD.TLD_Event_Id,
                                         TLD_TQD_Id = TLD.TLD_TQD_Id,
                                         Locktime = TLD.Locktime,
                                         TLD_GUID = TLD.TLD_GUID,
                                         TLD_Donate = TLD.TLD_Donate
-                                     }
-                                    );
-                return modelTLD.ToList();
-            }
+                                    }
+                                        );
+                    return modelTLD.ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -481,13 +481,24 @@ namespace EventCombo.Controllers
 
 
         public ActionResult PaymentConfirmation(long Eventid)
+
         {
             Session["Fromname"] = "ViewEvent";
             CreateEventController cs = new CreateEventController();
             PaymentConfirmation ps = new PaymentConfirmation();
-           var Eventdetails= cs.GetEventdetail(Eventid);
+            var Eventdetails = cs.GetEventdetail(Eventid);
             ps.imgurl = cs.GetImages(Eventid).FirstOrDefault();
-            return View();
+            ps.Tilte = Eventdetails.EventTitle;
+            ps.description = Eventdetails.EventDescription;
+            AccountController ac = new AccountController();
+            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+            var acountdedtails = ac.GetLoginDetails(strUsers);
+            ps.sendlatestdetails = acountdedtails.SendLatestdetails;
+            ps.Username = acountdedtails.Firstname + " " + acountdedtails.Lastname;
+            var url = Request.Url;
+            var baseurl = url.GetLeftPart(UriPartial.Authority);
+            ps.url = baseurl+ Url.Action("ViewEvent", "CreateEvent") + "?EventId=" + Eventdetails.EventID + "&eventTitle=a" ;
+            return View(ps);
         }
 
         public string GetOrderDetailForConfirmation()
@@ -499,10 +510,10 @@ namespace EventCombo.Controllers
                 using (var objEnt = new EventComboEntities())
                 {
                     var TicketCount = (from TPD in objEnt.Ticket_Purchased_Detail
-                                    where TPD.TPD_GUID == strGuid  group TPD by new { TPD.TPD_GUID } into TPDgrp
-                                    select new {
-                                        totalOrder = TPDgrp.Sum(s => s.TPD_Purchased_Qty)
-                                    } 
+                                       where TPD.TPD_GUID == strGuid group TPD by new { TPD.TPD_GUID } into TPDgrp
+                                       select new {
+                                           totalOrder = TPDgrp.Sum(s => s.TPD_Purchased_Qty)
+                                       }
                                        ).SingleOrDefault();
 
                     var OrderNo = (from TPD in objEnt.Ticket_Purchased_Detail
@@ -520,11 +531,23 @@ namespace EventCombo.Controllers
                 }
             }
 
-                return strResult;
+            return strResult;
 
         }
 
 
+        public void  getlatestsetting(string get)
+        {
+            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                Profile prof = db.Profiles.Where(x => x.UserID == strUsers).FirstOrDefault();
+                prof.SendCur_EventDetail = get;
+                db.SaveChanges();
+
+            }
+
+        }
 
 
 

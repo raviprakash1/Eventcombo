@@ -810,7 +810,8 @@ namespace EventCombo.Controllers
                                           contentype = pfd.ContentType,
                                           Dateofbirth = pfd.DateofBirth,
                                           Gender = pfd.Gender,
-                                          PreviousEmail = cpd.Email
+                                          PreviousEmail = cpd.Email,
+                                          SendLatestdetails=pfd.SendCur_EventDetail
                                       });
                 return modelmyaccount.FirstOrDefault();
 

@@ -1,4 +1,5 @@
-﻿
+﻿@using EventCombo.Models
+@model PaymentConfirmation
 @{
     ViewBag.Title = "PaymentConfirmation";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,10 +13,10 @@
             <div class="evnt_details_body2">
                 <div class="col-sm-12 no_pad mt10 pt10">
                     <div class="col-sm-3 pl0">
-                        <img class="ev1" src="images/ev1.jpg">
+                        <img class="ev1" src="@Html.DisplayFor(m=>m.imgurl)" >
                     </div>
                     <div class="col-sm-9 pl0">
-                        <h2 class="th_tilte">Avicii</h2>
+                        <h2 class="th_tilte">@Html.DisplayFor(m=>m.Tilte)</h2>
                         <p class="th_day_time">Saturday Aug 17th 2011,8:30pm </p>
                         <p class="th_day_time chk_add_sch_cal"><span class="Timezone">Add schedule to calender</span></p>
                         <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal chk_add_sch_cal_modal">
@@ -69,10 +70,11 @@
                 <h2 class="fb_dis_head pt5">THANK YOU FOR YOUR ORDER</h2>
             </div>
             <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
-                <a href=""><img src="images/1.png"></a>
-                <a href=""><img src="images/2.png"></a>
-                <a href=""><img src="images/3.png"></a>
-                <a href=""><img src="images/4.png"></a>
+                <a href=""><img src="/Images/mail.png"></a>
+                <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
+                <a href="#" id="fbshare"><img src="/Images/fac.png"></a>
+
+                <a href="#" id="linkshare"><img src="/Images/lin.png"></a>
             </div>
 
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -85,7 +87,9 @@
                     <p><span id="spOrderNo"></span></p>
                     <p>Your tickets have been sent to customer-email@domain.com </p>
                     <p>
-                        <label><input type="checkbox"> Keep me locked to the latest, Yes, send me curated events every few weeks </label>
+                        <label>
+                            <input type="checkbox" value="@Html.DisplayFor(m=>m.sendlatestdetails)" @(Html.DisplayFor(m=>m.sendlatestdetails).ToString()=="Y" ? "checked=\"checked\"" : "")  onchange="changesetting(this.id);" id="chkgetlatest"/>
+                        Keep me locked to the latest, Yes, send me curated events every few weeks </label>
                     </p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad ">
@@ -142,9 +146,10 @@
                     <p>Showcase your event to Millions of people on Eventcombo.</p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
-                        <button class="btn ev_live_btn cap_l fs18" type="button">
-                            Go for it!
-                        </button>
+                       
+                            <a href='@Url.Action("CreateEvent","CreateEvent")'  class="btn ev_live_btn cap_l fs18"> Go for it!</a>
+                               
+
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -165,7 +170,7 @@
             <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
 
                 <div class="col-sm-12 no_pad chek_out_desc">
-                    <p>Hi Customer-Name </p>
+                    <p>Hi @Html.DisplayFor(m=>m.Username )</p>
                     <p>Questions about this event?</p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
@@ -221,6 +226,7 @@
 
 
 <script>
+   
     $(document).ready(function () {
         $.ajax({
             url: '@Url.Action("GetOrderDetailForConfirmation", "TicketPayment")',
@@ -236,4 +242,68 @@
 
     });
 
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#fbshare').click(function () {
+            var title='@Html.DisplayFor(m => m.Tilte)';
+            var description='@Html.DisplayFor(m => m.description)';
+            var url='@Html.DisplayFor(m => m.url)';
+
+            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+
+
+        });
+
+        $('#twittershare').click(function () {
+            var title = '@Html.DisplayFor(m => m.Tilte)';
+            var description = '@Html.DisplayFor(m => m.description)';
+            var url = '@Html.DisplayFor(m => m.url)';
+
+
+            window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+        });
+
+        $('#linkshare').click(function () {
+
+            var title = '@Html.DisplayFor(m => m.Tilte)';
+            var description = '@Html.DisplayFor(m => m.description)';
+            var url = '@Html.DisplayFor(m => m.url)';
+
+            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
+            return false;
+        });
+
+    });
+
+    function changesetting(id)
+    {
+        var check = "";
+
+        if ($('#' + id).is(":checked") == true) {
+            check = 'Y';
+        }else
+        {
+            check = 'N';
+
+
+        }
+
+        $.ajax({
+            url: '@Url.Action("getlatestsetting", "TicketPayment")',
+            data: { get: check },
+            type: "Post",
+            success: function (data) {
+
+            },
+            error: function (data) {
+            }
+        });
+    }
 </script>

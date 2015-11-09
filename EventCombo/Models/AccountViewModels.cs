@@ -87,7 +87,7 @@ namespace EventCombo.Models
         public string ImagePresent { get; set; }
        public string userimage { get; set; }
 
-
+        public string SendLatestdetails { get; set; }
 
 
 
