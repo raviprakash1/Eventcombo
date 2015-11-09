@@ -777,6 +777,7 @@
     <Content Include="Views\TicketPayment\TicketPayment.cshtml" />
     <Content Include="Views\CreateEvent\ViewEvent.cshtml" />
     <Content Include="Views\TicketPayment\PaymentConfirmation.cshtml" />
+    <Content Include="Views\CreateEvent\EditEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

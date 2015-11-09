@@ -426,6 +426,9 @@
                             COMPLTE ORDER >
                         </button>
                     </div>
+                    <div id="dvAjxSave" style="display:none">
+                        <img src="~/Images/ajaxloader1.gif" />
+                    </div>
                 </div>
 
             </div>
@@ -697,7 +700,7 @@
         }
     }
     $(document).ready(function () {
-
+       
 
         $(document).click(function () {
             $('#diverroacc').css('display', 'none');
@@ -705,6 +708,7 @@
             $("input").removeClass('err-bor');
         });
         $('#completeorder').click(function () {
+            $("#dvAjxSave").show();
             var flag = true;
             var Emaillogin = $("#Email").val();
             var msg = validationpage();
@@ -860,8 +864,11 @@
                     'Ticketname': type
                 }
                 var Eventid = $('#hdEventid').val();
+              //  alert(Eventid);
                 $.ajax({
                     url: '@Url.Action("SaveDetails", "TicketPayment")',
+                    beforeSend: function () { $('#dvAjxSave').show(); },
+                    complete: function () { $('#dvAjxSave').hide(); },
                     data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId },
                     type: "Post",
                     success: function (response) {
