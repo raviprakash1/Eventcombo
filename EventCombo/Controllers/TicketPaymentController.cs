@@ -382,10 +382,10 @@ namespace EventCombo.Controllers
 
 
 
-
+                        
                     }
 
-                    return "saved";
+                    return strOrderNo;
 
 
                 }
@@ -393,7 +393,7 @@ namespace EventCombo.Controllers
             else
             {
 
-                return "not saved";
+                return "Some Error Comes.";
 
             }
         }
@@ -486,6 +486,44 @@ namespace EventCombo.Controllers
 
             return View();
         }
+
+        public string GetOrderDetailForConfirmation()
+        {
+            string strResult = "";
+            string strGuid = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+            if (strGuid != "")
+            {
+                using (var objEnt = new EventComboEntities())
+                {
+                    var TicketCount = (from TPD in objEnt.Ticket_Purchased_Detail
+                                    where TPD.TPD_GUID == strGuid  group TPD by new { TPD.TPD_GUID } into TPDgrp
+                                    select new {
+                                        totalOrder = TPDgrp.Sum(s => s.TPD_Purchased_Qty)
+                                    } 
+                                       ).SingleOrDefault();
+
+                    var OrderNo = (from TPD in objEnt.Ticket_Purchased_Detail
+                                   where TPD.TPD_GUID == strGuid
+                                   select TPD.TPD_Order_Id
+                                       ).First();
+
+                    var OrderAmt = (from OD in objEnt.Order_Detail_T
+                                    where OD.O_Order_Id == OrderNo
+                                    select OD.O_TotalAmount
+                                    ).SingleOrDefault();
+
+
+                    strResult = OrderNo + "~" + TicketCount.totalOrder + "~" + OrderAmt;
+                }
+            }
+
+                return strResult;
+
+        }
+
+
+
+
 
 
 
