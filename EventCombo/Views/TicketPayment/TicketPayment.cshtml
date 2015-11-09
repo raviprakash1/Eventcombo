@@ -700,7 +700,6 @@
 
 
         $(document).click(function () {
-
             $('#diverroacc').css('display', 'none');
             $('#divaccsuc').css('display', 'none');
             $("input").removeClass('err-bor');
@@ -708,26 +707,23 @@
         $('#completeorder').click(function () {
             var flag = true;
             var Emaillogin = $("#Email").val();
-            var msg = validationpage();
+            var msg = "";// validationpage();
 
             var NameList = [];
             if (msg != "") {
                 $('#diverroacc').css('display', 'block');
                 $('#erraccmsg').html(msg);
-
                 return false;
             }
             else
             {
                 if ($("#confirmEmail").length > 0) {
-
                     $.ajax({
                         url: "/Home/IsValid",
                         async:true,
                         data: 'Email=' + Emaillogin,
                         dataType: "text",
                         success: function (data, textStatus, xhr) {
-
                             if (data != '') {
                                 if (data == "NotFound") {
                                     flag = true;
@@ -750,7 +746,6 @@
                             alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
                         }
                     });
-
                 }
 
 
@@ -779,6 +774,7 @@
                     cardno = $('#cardno').val();
                     expirydate = $('#expirationdate').val();
                     cvv = $('#cvvcode').val();
+
                 }
                 if ($('#shippinginfo').is(":checked") == true) {
 
@@ -796,6 +792,33 @@
                     type='Free';
 
                 }
+
+            //-------------------------------------Saving Payment Detail---------------------------------------
+
+                //var TPurchaseList = [];
+                //var IdAry = $("#hdIds").val().split(',');
+                //var vId = 0;
+                //var vLockQty = 0;
+                //var vDonate = 0;
+                //for (i = 0; i < IdAry.length; i++) {
+                //    vId = parseInt(IdAry[i].toString());
+                //    vLockQty = parseInt($("#d_" + IdAry[i].toString()).val());
+                //    vDonate = parseFloat($("#txtd_" + IdAry[i].toString()).val());
+                //    if (isNaN(vDonate) == true) vDonate = 0;
+                //    if (vLockQty > 0) {
+                //        TPurchaseList.push({
+                //            'TPD_TQD_Id': vId,
+                //            'TPD_Purchased_Qty': vLockQty,
+                //            'TPD_Event_Id': vEntid,
+                //            'TPD_Donate': vDonate
+                //        });
+                //    }
+                //}
+                var vOrderTotal = $("#hdOrderTotal").val();
+                var vGrandTotal = $("#hdGrandTotal").val();
+                var vPromoId = $("#hdPromoId").val();
+                var vVarChanges = $("#hdVarChanges").val();
+                var vVarId = $("#hdVarId").val();
 
                 var model = {
 
@@ -835,14 +858,11 @@
                     'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
                     'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
                     'Ticketname': type
-
-
-
                 }
 
                 $.ajax({
                     url: '@Url.Action("SaveDetails", "TicketPayment")',
-                    data:model,
+                    data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId },
                     type: "Post",
                     success: function (response) {
 

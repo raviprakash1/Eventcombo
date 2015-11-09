@@ -346,6 +346,10 @@
           <Property Name="O_Order_Id" Type="varchar" MaxLength="100" />
           <Property Name="O_User_Id" Type="nvarchar" MaxLength="256" />
           <Property Name="O_TotalAmount" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="O_OrderAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="bigint" />
+          <Property Name="O_VariableAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="bigint" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -489,11 +493,12 @@
           <Property Name="TPD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TPD_User_Id" Type="nvarchar" MaxLength="256" />
           <Property Name="TPD_Order_Id" Type="varchar" MaxLength="11" />
-          <Property Name="TPD_Purchased_Qty" Type="int" />
+          <Property Name="TPD_Purchased_Qty" Type="bigint" />
           <Property Name="TPD_TQD_Id" Type="bigint" />
           <Property Name="TPD_Event_Id" Type="bigint" />
           <Property Name="TPD_Amount" Type="numeric" Precision="9" Scale="2" />
           <Property Name="TPD_Donate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TPD_GUID" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -1294,6 +1299,10 @@
           <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="Int64" />
+          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="Int64" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -1432,19 +1441,6 @@
           <Property Name="Locktime" Type="DateTime" Precision="3" />
           <Property Name="TLD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="TLD_Donate" Type="Decimal" Precision="18" Scale="0" />
-        </EntityType>
-        <EntityType Name="Ticket_Purchased_Detail">
-          <Key>
-            <PropertyRef Name="TPD_Id" />
-          </Key>
-          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="TPD_Purchased_Qty" Type="Int32" />
-          <Property Name="TPD_TQD_Id" Type="Int64" />
-          <Property Name="TPD_Event_Id" Type="Int64" />
-          <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -1736,7 +1732,6 @@
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Tickets" EntityType="Self.Ticket" />
           <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" />
-          <EntitySet Name="Ticket_Purchased_Detail" EntityType="Self.Ticket_Purchased_Detail" />
           <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" />
           <EntitySet Name="TicketBearers" EntityType="Self.TicketBearer" />
           <EntitySet Name="TicketDeliveryMethods" EntityType="Self.TicketDeliveryMethod" />
@@ -1838,6 +1833,7 @@
             <Parameter Name="EventId" Mode="In" Type="Int64" />
             <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Ticket_Purchased_Detail" EntityType="EventComboModel.Ticket_Purchased_Detail" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1856,6 +1852,20 @@
           <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventAddress" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Ticket_Purchased_Detail">
+          <Key>
+            <PropertyRef Name="TPD_Id" />
+          </Key>
+          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_Purchased_Qty" Type="Int64" />
+          <Property Name="TPD_TQD_Id" Type="Int64" />
+          <Property Name="TPD_Event_Id" Type="Int64" />
+          <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2215,6 +2225,10 @@
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
+                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
+                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
+                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
                 <ScalarProperty Name="O_Id" ColumnName="O_Id" />
                 <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
                 <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
@@ -2364,20 +2378,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ticket_Purchased_Detail">
-            <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
-              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
-                <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
-                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
-                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
-                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
-                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
-                <ScalarProperty Name="TPD_TQD_Id" ColumnName="TPD_TQD_Id" />
-                <ScalarProperty Name="TPD_Event_Id" ColumnName="TPD_Event_Id" />
-                <ScalarProperty Name="TPD_Amount" ColumnName="TPD_Amount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Ticket_Quantity_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Quantity_Detail">
               <MappingFragment StoreEntitySet="Ticket_Quantity_Detail">
@@ -2493,6 +2493,21 @@
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
           <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
           <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
+          <EntitySetMapping Name="Ticket_Purchased_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TPD_GUID" ColumnName="TPD_GUID" />
+                <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
+                <ScalarProperty Name="TPD_Amount" ColumnName="TPD_Amount" />
+                <ScalarProperty Name="TPD_Event_Id" ColumnName="TPD_Event_Id" />
+                <ScalarProperty Name="TPD_TQD_Id" ColumnName="TPD_TQD_Id" />
+                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
+                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
+                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
+                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2507,7 +2522,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

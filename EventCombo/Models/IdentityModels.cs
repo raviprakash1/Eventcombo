@@ -23,6 +23,7 @@ namespace EventCombo.Models
         public ApplicationDbContext()
             : base("MyConnection", throwIfV1Schema: false)
         {
+
         }
 
         public static ApplicationDbContext Create()
