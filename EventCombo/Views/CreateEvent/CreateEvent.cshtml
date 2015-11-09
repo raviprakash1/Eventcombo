@@ -685,7 +685,7 @@
                                     <div class="form-group paidticket-n" id="id_paid-n">
                                         <label class="col-sm-4 no_pad control-label ev_tickt_lebel">Price $</label>
                                         <div class="col-sm-8 ">
-                                            <input type="text" class="form-control evnt_inp_cont" id="id_cost-n" onkeyup="changefeetype(event,this.id)" placeholder="0.00" maxlength="9" />
+                                            <input type="text" class="form-control evnt_inp_cont" id="id_cost-n" onkeypress="changefeetype(this,event,this.id)" placeholder="0.00" maxlength="9" />
                                         </div>
 
                                     </div>
@@ -2915,133 +2915,158 @@
         }
 
     }
-    function changefeetype(event, id) {
+    function changefeetype(el, evt,id) {
         var fee = 0;
         var total = 0;
-        var code = event.charCode ? event.charCode : event.keyCode;
-        var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
-        {
+     
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+      
+        var number = el.value.split('.');
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+            evt.preventDefault();
+            return false;
 
         }
-        else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
-        {
-            $('#' + id).val("");
-            $('#id_buyerprice-' + el).html("$0.00");
-            total = 0;
-            fee = 0;
-            $('#id_tooltip-' + el).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer(s) Total $0.00");
-            //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+
+        if (number.length > 1 && charCode == 46) {
+            evt.preventDefault();
             return false;
         }
+        var valuenum = el.value;
+        //$('#' + id).val("");
+        //$('#id_buyerprice-' + el).html("$0.00");
+        //total = 0;
+        //fee = 0;
+        //$('#id_tooltip-' + el).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer(s) Total $0.00");
+        ////$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+        //return false;
+        var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+   
+        //if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        //{
+
+        //}
+        //else if ( code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
+        //{
+        //    $('#' + id).val("");
+        //    $('#id_buyerprice-' + el).html("$0.00");
+        //    total = 0;
+        //    fee = 0;
+        //    $('#id_tooltip-' + el).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer(s) Total $0.00");
+        //    //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+        //    return false;
+        //}
         //if ((code < 48 || code > 57) && (code != 190)) {
 
 
         //}
 
-        var price = parseFloat($('#id_cost-' + el).val());
+        //var price = parseFloat(valuenum);
 
-        if (price > 999999.99) {
+        //if (valuenum > 999999.99) {
 
-            $('#id_cost-' + el).addClass('err-bor');
-            $('#id_lblprice-' + el).css('display', 'block');
-            $('#id_buyerprice-' + el).html("$0.00");
-            $('#id_tooltip-' + el).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 ");
-            total = 0;
-            fee = 0;
-            return false;
-        } else {
+        //    $('#id_cost-' + num).addClass('err-bor');
+        //    $('#id_lblprice-' + num).css('display', 'block');
+        //    $('#id_buyerprice-' + num).html("$0.00");
+        //    $('#id_tooltip-' + num).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 ");
+        //    total = 0;
+        //    fee = 0;
+        //    return false;
+        //} else {
 
-            $('#id_cost-' + el).removeClass('err-bor');
-            $('#id_lblprice-' + el).css('display', 'none');
-        }
-        var discount = parseFloat($('#id_Discount-' + el).val());
+        //    $('#id_cost-' + num).removeClass('err-bor');
+        //    $('#id_lblprice-' + num).css('display', 'none');
+        //}
+        //var discount = parseFloat($('#id_Discount-' + num).val());
 
-        if (!isNaN(price)) {
-            if (price != 0) {
-                if (discount >= price) {
-                    $('#id_Discount-' + el).addClass('err-bor');
+        //if (!isNaN(price)) {
+        //    if (price != 0) {
+        //        if (discount >= price) {
+        //            $('#id_Discount-' + num).addClass('err-bor');
 
-                    $('#hddiscount').val('1');
+        //            $('#hddiscount').val('1');
 
-                } else {
-                    $('#hddiscount').val('0');
-                    $('#id_Discount-' + el).removeClass('err-bor');
+        //        } else {
+        //            $('#hddiscount').val('0');
+        //            $('#id_Discount-' + num).removeClass('err-bor');
 
-                }
+        //        }
 
-            } else {
+        //    } else {
 
-                if (!isNaN(discount)) {
-                    if (discount != 0) {
-                        $('#hddiscount').val('1');
-                        $('#id_Discount-' + el).addClass('err-bor');
-                    }
-                }
-
-
-
-            }
-
-
-        } else {
-
-            if (!isNaN(discount)) {
-                if (discount != 0) {
-                    $('#hddiscount').val('1');
-                    $('#id_Discount-' + el).addClass('err-bor');
-                }
-            }
-
-
-        }
-        if ($('#' + id).val() == "") {
-            $('#id_buyerprice-' + el).html("$0.00");
-            $('#id_tooltip-' + el).html("Ticket Price  &nbsp; &nbsp;&nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer's Total $0.00 ");
-            //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
-            total = 0;
-            fee = 0;
-
-        }
-        if ($('#' + id).val() > 0) {
-            $('#id_feestruct-' + el).css('display', 'block');
-            var amount = parseFloat($('#' + id).val()).toFixed(2);
-
-            var val = $("#id_feetype-0").val();
-            var fee = 0;
-
-
-            if (val == 0) {
-                ccp = parseFloat($('#id_cc').val()).toFixed(2);
-
-                var ccpamount = ((amount * ccp) / 100).toFixed(2);
-
-                var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br/>" + "Buyer(s) Total   &nbsp;&nbsp; &nbsp;       $" + ccpfinal;
-                $('#id_buyerprice-' + el).html("$" + ccpfinal);
-                $('#id_tooltip-' + el).html(msg);
-                total = ccpfinal;
-                fee = ccpamount;
-            }
-            if (val == 1) {
-                ccp = $('#id_cc').val();
-                var ccpamount = ((amount * ccp) / 100).toFixed(2);
-                var ccpfinal = parseFloat(amount).toFixed(2);
-                $('#id_buyerprice-' + el).html("$" + ccpfinal);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;     $" + ccpamount + "<br/>" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
-                //$('#id_tooltip-' + el).html(msg);
-                $('#id_tooltip-' + el).html(msg);
-                total = ccpfinal;
-                fee = ccpamount;
-            }
+        //        if (!isNaN(discount)) {
+        //            if (discount != 0) {
+        //                $('#hddiscount').val('1');
+        //                $('#id_Discount-' + num).addClass('err-bor');
+        //            }
+        //        }
 
 
 
+        //    }
 
 
-        }
-        $("#id_fee-" + el).val(ccpamount);
-        $("#id_total-" + el).val(ccpfinal);
+        //} else {
+
+        //    if (!isNaN(discount)) {
+        //        if (discount != 0) {
+        //            $('#hddiscount').val('1');
+        //            $('#id_Discount-' + num).addClass('err-bor');
+        //        }
+        //    }
+
+
+        //}
+        //if ($('#' + id).val() == "") {
+        //    $('#id_buyerprice-' + num).html("$0.00");
+        //    $('#id_tooltip-' + num).html("Ticket Price  &nbsp; &nbsp;&nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer's Total $0.00 ");
+        //    //$('#id_tooltip-' + el).html("Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00 ");
+        //    total = 0;
+        //    fee = 0;
+
+        //}
+        //if ($('#' + id).val() > 0)
+        //{
+        //    $('#id_feestruct-' + num).css('display', 'block');
+        //    var amount = parseFloat($('#' + id).val()).toFixed(2);
+
+        //    var val = $("#id_feetype-0").val();
+        //    var fee = 0;
+
+
+        //    if (val == 0) {
+        //        ccp = parseFloat($('#id_cc').val()).toFixed(2);
+
+        //        var ccpamount = ((amount * ccp) / 100).toFixed(2);
+
+        //        var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
+        //        var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br/>" + "Buyer(s) Total   &nbsp;&nbsp; &nbsp;       $" + ccpfinal;
+        //        $('#id_buyerprice-' + num).html("$" + ccpfinal);
+        //        $('#id_tooltip-' + num).html(msg);
+        //        total = ccpfinal;
+        //        fee = ccpamount;
+        //    }
+        //    if (val == 1) {
+        //        ccp = $('#id_cc').val();
+        //        var ccpamount = ((amount * ccp) / 100).toFixed(2);
+        //        var ccpfinal = parseFloat(amount).toFixed(2);
+        //        $('#id_buyerprice-' + num).html("$" + ccpfinal);
+        //        var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;     $" + ccpamount + "<br/>" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+        //        //$('#id_tooltip-' + el).html(msg);
+        //        $('#id_tooltip-' + num).html(msg);
+        //        total = ccpfinal;
+        //        fee = ccpamount;
+        //    }
+
+
+
+
+
+        //}
+        ////alert(amount);
+        //$('#' + id).val(amount);
+        //$("#id_fee-" + num).val(ccpamount);
+        //$("#id_total-" + num).val(ccpfinal);
 
     }
     function minimize(e) {

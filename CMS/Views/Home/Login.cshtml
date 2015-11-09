@@ -73,7 +73,7 @@
 {
     <div class="alert alert-micro alert-border-left alert-danger pastel alert-dismissable mn mb5" id="diverrorsys">
         @*<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>*@
-        <i class="fa fa-info pr10"></i> <span id="spanid"> @Html.ValidationMessage("")</span>
+        <i class="fa fa-info pr10"></i> <span > @Html.ValidationMessage("")</span>
     </div>
 }
                                 <div class="alert alert-micro alert-border-left alert-danger pastel alert-dismissable mn mb5" style="display:none;" id="diverror">
@@ -158,6 +158,12 @@
     <!-- Page Javascript -->
     <script type="text/javascript">
         $(document).ready(function () {
+            $(document).click(function () {
+                $('#diverror').css('display', 'none');
+                $('#diverrorsys').css('display', 'none');
+            
+                $("input").removeClass('err-bor');
+            });
 
             $('#Email').keyup(function () {
              
@@ -213,7 +219,7 @@
                     $('#Password').removeClass('err-bor');
 
                 }
-                console.log(msglogin);
+              
                 if (msglogin != "")
                 {
                     $('#diverror').css("display", "block");
@@ -224,7 +230,7 @@
                  
                 }
                 else {
-
+                    $('#diverrorsys').css("display", "none");
                     $('#diverror').css("display", "none");
                     return true;
                   

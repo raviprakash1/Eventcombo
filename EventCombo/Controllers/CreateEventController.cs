@@ -31,7 +31,8 @@ namespace EventCombo.Controllers
             if ((Session["AppId"] != null))
             {
                 Session["Fromname"] = "events";
-                Session["ReturnUrl"] = null;
+                var url = Url.Action("CreateEvent", "CreateEvent");
+               Session["ReturnUrl"] = "CreateEvent~"+ url;
 
                 string defaultCountry = "";
                 using (EventComboEntities db = new EventComboEntities())
@@ -398,11 +399,13 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult ViewEvent(long EventId,string title)
+        public ActionResult ViewEvent(long EventId,string eventTitle)
         {
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "ViewEvent";
+            var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
+            Session["ReturnUrl"] = "ViewEvent~" + url;
             var TopAddress = "";var Topvenue="";
             string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="";
             ViewEvent viewEvent = new ViewEvent();

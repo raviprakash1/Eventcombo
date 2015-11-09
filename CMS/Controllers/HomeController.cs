@@ -190,7 +190,7 @@ namespace CMS.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError("", "You not authorized user");
+                            ModelState.AddModelError("", "You are not an authorized user!!");
                             return View(model);
                         }
                       

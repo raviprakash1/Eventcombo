@@ -23,6 +23,8 @@ namespace EventCombo.Controllers
             TicketPayment tp = new TicketPayment();
             string defaultCountry = "";
             string Fname = "", Lname = "", Phnnumber = "", Adress = "", Email = "";
+            var url = Url.Action("TicketPayment", "TicketPayment") + "?Eventid=" + Eventid ;
+            Session["ReturnUrl"] = "TicketPayment~" + url;
             CreateEventController cs = new CreateEventController();
             AccountController AccDetail = new AccountController();
             tp.Imageurl = cs.GetImages(Eventid).FirstOrDefault();

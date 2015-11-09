@@ -365,6 +365,7 @@ namespace EventCombo.Controllers
             if (Session["AppId"] != null)
             {
                 Random rnd = new Random();
+                var pathnew = "";
                 var rndnumber = rnd.Next(1, 7);
                 //string Name = Request.Form[1];
                 //if (Request.Files.Count > 0)
@@ -402,15 +403,15 @@ namespace EventCombo.Controllers
                             var path = string.Format("{0}\\{1}", pathString, file.FileName);
                             var imageformat = getImageFormat(path);
                             var NFilename = Userid.Trim() + "_ProfImage" + rndnumber + "." + imageformat;
-                            var pathnew = string.Format("{0}\\{1}", pathString, NFilename);
-                            using (EventComboEntities objEntity = new EventComboEntities())
-                            {
-                                Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
-                                profile.UserProfileImage = NFilename;
-                                //profile.UserProfileImage = fName;
-                                profile.ContentType = content_type;
-                                objEntity.SaveChanges();
-                            }
+                             pathnew = string.Format("{0}\\{1}", pathString, NFilename);
+                            //using (EventComboEntities objEntity = new EventComboEntities())
+                            //{
+                            //    Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
+                            //    profile.UserProfileImage = NFilename;
+                            //    //profile.UserProfileImage = fName;
+                            //    profile.ContentType = content_type;
+                            //    objEntity.SaveChanges();
+                            //}
                             // file.SaveAs(path);
                             HandleImageUpload(file, pathnew);
                         }
@@ -426,7 +427,7 @@ namespace EventCombo.Controllers
 
                 if (isSavedSuccessfully)
                 {
-                    return Json(new { Message = fName });
+                    return Json(new { image_name = fName, image_type = content_type, image_path = pathnew });
                 }
                 else
                 {
@@ -588,7 +589,8 @@ namespace EventCombo.Controllers
 
                     }
                 }
-
+                var userimage = model.userimage;
+               
                 if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.ConfirmEmail))
                 {
                     if (model.PreviousEmail != model.Email)
@@ -612,6 +614,23 @@ namespace EventCombo.Controllers
                         //var profile = from b in objEntity.Profiles
                         //            where b.UserID== Userid
                         //              select b;
+                        if (userimage != null)
+                        {
+                            string[] images = userimage.Split('¶');
+                            profile.UserProfileImage = images[0];
+                            profile.ContentType = images[1];
+                            model.UserProfileImage = images[0];
+                            model.contentype = images[1];
+                            model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + images[0];
+                            model.editsave = "Edit";
+                        }
+                        else
+                        {
+                            model.editsave = "Save";
+                            model.UserProfileImage = "image-drop2.gif";
+                            profile.UserProfileImage = "";
+                            profile.ContentType = "";
+                        }
                         profile.FirstName = model.Firstname;
                         profile.LastName = model.Lastname;
                         profile.StreetAddressLine1 = model.StreetAddress1;
@@ -624,10 +643,10 @@ namespace EventCombo.Controllers
                         profile.SecondPhone = model.SecondPhone;
                         profile.WorkPhone = model.WorkPhone;
                         profile.WebsiteURL = model.WebsiteURL;
-                        if (imagepresent == "NO")
-                        {
-                            profile.UserProfileImage = "";
-                        }
+                        //if (imagepresent == "NO")
+                        //{
+                        //    profile.UserProfileImage = "";
+                        //}
 
                         profile.Gender = model.Gender;
                         profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
@@ -703,19 +722,19 @@ namespace EventCombo.Controllers
                     }
                     ViewBag.Country = countryList;
 
-                    if (string.IsNullOrEmpty(accountdetail.UserProfileImage))
-                    {
-                        model.editsave = "Save";
-                        model.UserProfileImage = "image-drop2.gif";
-                    }
-                    else
-                    {
-                        model.UserProfileImage = accountdetail.UserProfileImage;
-                        model.contentype = accountdetail.contentype;
-                        model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + accountdetail.UserProfileImage;
-                        model.editsave = "Edit";
+                    //if (string.IsNullOrEmpty(accountdetail.UserProfileImage))
+                    //{
+                    //    model.editsave = "Save";
+                    //    model.UserProfileImage = "image-drop2.gif";
+                    //}
+                    //else
+                    //{
+                    //    model.UserProfileImage = accountdetail.UserProfileImage;
+                    //    model.contentype = accountdetail.contentype;
+                    //    model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + accountdetail.UserProfileImage;
+                    //    model.editsave = "Edit";
 
-                    }
+                    //}
                     ViewData["Message"] = "Updated Successfully!!!!!";
                     return View(model);
 
@@ -864,6 +883,11 @@ namespace EventCombo.Controllers
         if(Session["ReturnUrl"]!=null)
             {
                 url = Session["ReturnUrl"].ToString();
+                if(url.Contains("~"))
+                {
+                    string[] urlnew = url.Split('~');
+                    url = urlnew[1];
+                }
             }
             if (!ModelState.IsValid)
             {

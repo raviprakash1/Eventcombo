@@ -26,6 +26,7 @@ namespace EventCombo.Models
         public string Picturename { get; set; }
         public string Pictureurl { get; set; }
         public string WorkPhone { get; set; }
+        public string userimage { get; set; }
 
     }
 }

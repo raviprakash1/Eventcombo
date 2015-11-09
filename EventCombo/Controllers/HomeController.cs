@@ -375,6 +375,17 @@ namespace EventCombo.Controllers
        
         public async Task<ActionResult> Signup(LoginViewModel model)
         {
+           
+            string url = null;
+            if (Session["ReturnUrl"] != null)
+            {
+                url = Session["ReturnUrl"].ToString();
+                if (url.Contains("~"))
+                {
+                    string[] urlnew = url.Split('~');
+                    url = urlnew[1];
+                }
+            }
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -449,12 +460,22 @@ namespace EventCombo.Controllers
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToLocal(url);
 
                 }
                 AddErrors(result);
             }
            
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
             return RedirectToAction("Index", "Home");
         }
         private void AddErrors(IdentityResult result)
