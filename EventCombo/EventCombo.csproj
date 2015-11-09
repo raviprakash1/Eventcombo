@@ -309,6 +309,7 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrganizerMessages.cs" />
+    <Compile Include="Models\PaymentConfirmation.cs" />
     <Compile Include="Models\PaymentProcess.cs" />
     <Compile Include="Models\Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>

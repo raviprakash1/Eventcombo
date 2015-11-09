@@ -480,10 +480,13 @@ namespace EventCombo.Controllers
 
 
 
-        public ActionResult PaymentConfirmation()
+        public ActionResult PaymentConfirmation(long Eventid)
         {
             Session["Fromname"] = "ViewEvent";
-
+            CreateEventController cs = new CreateEventController();
+            PaymentConfirmation ps = new PaymentConfirmation();
+           var Eventdetails= cs.GetEventdetail(Eventid);
+            ps.imgurl = cs.GetImages(Eventid).FirstOrDefault();
             return View();
         }
 
