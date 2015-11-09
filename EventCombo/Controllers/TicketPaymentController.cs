@@ -369,20 +369,20 @@ namespace EventCombo.Controllers
                         // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
 
 
-                        //ApiLoginID = "354v9ZufxM6";
-                        //ApiTransactionKey = "68Et2R3KcV62rJ27";
-                        //strCardNo = model.cardno;
-                        //strExpDate = model.expirydate;
-                        //strCvvCode = model.cvv;
-                        //dAmount = 10;
-                        //PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+                        ApiLoginID = "354v9ZufxM6";
+                        ApiTransactionKey = "68Et2R3KcV62rJ27";
+                        strCardNo = model.cardno;
+                        strExpDate = model.expirydate;
+                        strCvvCode = model.cvv;
+                        dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
+                        PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
 
 
 
 
 
 
-                        
+
                     }
 
                     return strOrderNo;

@@ -381,7 +381,6 @@
     <Content Include="Images\gmap.png" />
     <Content Include="Images\go.png" />
     <Content Include="Images\go_btn.png" />
-    <Content Include="Images\icon-deal.png" />
     <Content Include="Images\info_icn.png" />
     <Content Include="Images\lin.png" />
     <Content Include="Images\logo_small.png" />
