@@ -787,8 +787,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
-    <Folder Include="Views\Validate\" />
-    <Folder Include="Views\ValidationMessage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

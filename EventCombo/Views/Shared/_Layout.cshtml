@@ -38,28 +38,6 @@
 
 <body>
 
-    @*<div id="login2" style="display: none; width: 600px;" class="login_popup">
-
-            <p</p>
-            Use your social network login below or
-            <a href="#login3" class="nyroModal"><span class="btn1 log_sub">Sign Up</span></a>
-            <br />
-            <br />
-            <div class="social_login">
-
-
-            </div>
-        </div>*@
-
-
-
-
-    @*<div class="login_popup" id="login3" style="display: none; width: 600px;">
-            <h2>Sign-up</h2>
-
-
-        </div>*@
-
 
 
     <!-- Header -->
@@ -139,14 +117,7 @@
                     <a href="#" onclick="checksession();">Create Event</a>
                 </div>
 
-                @*@Html.ActionLink("Create Event", "EventCreation", "Event", new { id = "Eventclick", onclick = "return checksession();" })*@
-                @*<div class="psst">
-                        <a class="" href="/Home/EventOraganizer">
-
-                            <span class="ps_text"> Create Event</span>
-                            @*<span class="ev_org">&#160;&#160;Event organizer? Click here!</span>
-                        </a>
-                    </div>*@
+            
             </div>
 
         </div>
@@ -192,14 +163,7 @@ else
                         <a href="#" onclick="checksession();">Create Event</a>
                     </div>
 
-                    @*@Html.ActionLink("Create Event", "EventCreation", "Event", new { id = "Eventclick", onclick = "return checksession();" })*@
-                    @*<div class="psst">
-                            <a class="" href="/Home/EventOraganizer">
-
-                                <span class="ps_text"> Create Event</span>
-                                @*<span class="ev_org">&#160;&#160;Event organizer? Click here!</span>
-                            </a>
-                        </div>*@
+                   
                 </div>
 
             </div>
@@ -523,11 +487,7 @@ else
       $("#sign_up").css({"display":"none"});
 
     });
-    //$("#Eventclick").on('click', function () {
-
-
-
-    //});
+   
     function checksession()
     {
         $.ajax({
@@ -633,28 +593,9 @@ else
                     if (!validateEmail(Emaillogin)) {
                         $('#loginemail').focus();
                         $('#loginemail').addClass('err-bor');
-                       // $('#loginemail').css("border", "red solid 1px");
-                        //$.ajax({
-                        //    url: "/ValidationMessage/Index",
-                        //    data: { formname: 'Login', errortype: 'LoginEmailValidationUI' },
-                        //    type: 'Post',
-                        //    async: false,
-                        //    success: function (data, textStatus, xhr) {
-                        //        if (data != '') {
-                        //            console.log(data);
-                        //            $('#hderror').val(data);
-
-                        //        }
-                        //    },
-                        //    error: function (xhr, textStatus, errorThrown) {
-                        //        alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
-                        //    }
-                        //});
-
-
-                        msglogin += "Invalid Email"+ "\n";
-
-
+                        msglogin += ajaxsetup('Login', 'LoginEmailValidationUI');
+                       
+                     
                     } else {
 
                         msglogin = "";
@@ -665,26 +606,8 @@ else
                     if (Passowrdlogin.length < 4) {
                         $('#loginpassword').focus();
                         $('#loginpassword').addClass('err-bor');
-                       // $('#loginpassword').css("border", "red solid 1px");
-                        //$.ajax({
-                        //    url: "/ValidationMessage/Index",
-                        //    data: { formname: 'Login', errortype: 'LoginPasswordValidationUI' },
-                        //    type: 'Post',
-                        //    async:false,
-                        //    success: function (data, textStatus, xhr) {
-                        //        if (data != '') {
-                        //           console.log(data);
-                        //            $('#hderror').val(data);
-                        //            console.log($('#hderror').val(data)+'asdasdas');
-                        //        }
-                        //    },
-                        //   error: function (xhr, textStatus, errorThrown) {
-                        //            alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
-                        //        }
-                        //});
-
-                        //alert($('#hderror').val()+'asad');
-                        msglogin += "Invalid Password" + "\n";
+                        msglogin += "<br />" + ajaxsetup('Login', 'LoginPasswordValidationUI');
+                       
 
                     } else {
                         if (msglogin == "") {
@@ -692,10 +615,29 @@ else
                         }
                         $('#loginpassword').focus();
                         $('#loginpassword').removeClass('err-bor');
-                       // $('#loginpassword').css("border", "black solid 1px");
+                       
 
                     }
                     return msglogin;
+                }
+                function ajaxsetup(strname, strFormTag)
+                {
+                    var msgnew = "";
+
+                    var request = $.ajax({
+                        url: "/ValidationMessage/Index",
+                        async: false,
+                        data: { strFormName: strname, strFormTag: strFormTag },
+                        type: 'Post'
+                    });
+                    request.done(function (msg) {
+                        msgnew += msg;
+                    });
+
+                    request.fail(function (jqXHR, textStatus) {
+                        msgnew += "Some Error occur!!";
+                    });
+                    return msgnew;
                 }
                 function validateEmail(sEmail) {
                     var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
@@ -731,18 +673,7 @@ else
                         var flaglogin = false;
                         var Emaillogin = $("#loginemail").val();
                         var Emailpassword = $("#loginpassword").val();
-                        //var httpRequest = new XMLHttpRequest();
-
-
-                        //httpRequest.onreadystatechange = function () {
-                        //    console.log(httpRequest);
-                        //    if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-                        //       // alert('SUCEESSSSSSS');
-                        //        console.log(httpRequest);
-                        //    }
-                        //}
-                        //httpRequest.open('GET', 'http://localhost:10159/Account/IsValid', true);
-                        //httpRequest.send();
+                      
 
                         $.ajax({
                             url: "/Home/IsValidID",
@@ -758,7 +689,8 @@ else
 
                                         $('#diverrologin').css("display", "none");
                                         $('#diverro1login').css('display', 'block');
-                                        $('#dverrsys').html('Email Not Found in our Database!');
+                                       var msg= ajaxsetup('Login', 'LoginEmailNotExistSy');
+                                       $('#dverrsys').html(msg);
 
                                         return false;
 
@@ -767,10 +699,11 @@ else
                                         $('#loginemail').focus();
                                         $('#loginemail').addClass('err-bor');
                                         $('#loginpassword').addClass('err-bor');
-                                      //  $('#loginemail').css("border", "red solid 1px");
+                                     
                                         $('#diverrologin').css("display", "none");
                                         $('#diverro1login').css('display', 'block');
-                                        $('#dverrsys').html('Password Not Match In Our Database!Use Forget Password!!');
+                                        var msg = ajaxsetup('Login', 'LoginPwdNotExistSy');
+                                        $('#dverrsys').html(msg);
 
                                     }
                                     else if (data == "PasswordMatch")
@@ -861,7 +794,9 @@ else
                     if (!validateEmail(Email)) {
                         $('#SignupEmail').focus();
                         $('#SignupEmail').addClass('err-bor');
-                        msg += "Invalid Email!! </br>"
+                        
+                        msg += ajaxsetup('Signup', 'SignupEmailValidationUI');
+                        
 
                     } else {
 
@@ -873,7 +808,8 @@ else
                     if (Passowrdw.length < 4) {
                         $('#SignupPassword').focus();
                         $('#SignupPassword').addClass('err-bor');
-                        msg += "Password Length can't be less than 4!! </br>"
+                        msg += "</br>" + ajaxsetup('Signup', 'SignupPasswordValidationUI');
+                       
 
                     } else {
                         if (msg == "") {
@@ -926,14 +862,17 @@ else
                                                     $('#SignupEmail').addClass('err-bor');
                                                     $('#diverro').css("display", "none");
                                                     $('#diverro1').css('display', 'block');
-                                                    $('#dverrsignsys').html('Email Already Exist!!!');
+                                                    var msg = ajaxsetup('Signup', 'SignupEmailAlreadyExistSY');
+                                                    $('#dverrsignsys').html(msg);
                                                     flag = false;
                                                     return false;
                                                 }
                                 }
                             },
                             error: function (xhr, textStatus, errorThrown) {
-                                alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                                $('#diverro').css("display", "none");
+                                $('#diverro1').css('display', 'block');
+                                $('#dverrsignsys').html("Some Problem in system contact your admin!!");
                             }
                         });
                         //alert(Email);

@@ -11,31 +11,31 @@ namespace EventCombo.Controllers
     {
         // GET: ValidationMessage
        
-        public ActionResult Index(string formname,string errortype)
+        public string Index(string strFormName, string strFormTag)
        {
-            string result = geterrorMessage(formname, errortype);
-            return Content(result);
+            string result = geterrorMessage(strFormName, strFormTag);
+            return result;
         }
 
         private string geterrorMessage(string formname, string errortype)
         {
             string message = "";
-            using (EventComboEntities db = new EventComboEntities())
+            try
             {
-                  message = (from cpd in db.Messages  where cpd.Form_Name.Trim().ToLower()  == formname.Trim().ToLower() && cpd.Form_Tag.Trim().ToLower() == errortype.Trim().ToLower()
-                             select cpd.Message1 ).SingleOrDefault(); 
-            //    if (modelmyaccount.FirstOrDefault() != null)
-            //    {
-            //        return true;
-            //    }
-            //    else
-            //    {
-            //        return false;
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    message = (from cpd in db.Messages where cpd.Form_Name.Trim().ToLower() == formname.Trim().ToLower() && cpd.Form_Tag.Trim().ToLower() == errortype.Trim().ToLower()
+                               select cpd.Message1).FirstOrDefault();
 
-                                      //    }
 
+                }
+                return message;
             }
-            return message;
+            catch(Exception ex)
+            {
+                message = "There is some error.Please contact system administrator";
+                return message;
+            }
 
         }
     }

@@ -548,23 +548,28 @@ namespace EventCombo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> MyAccount(myAccount model, HttpPostedFileBase file)
         {
-            string msg = "", errormessage = "";
+            string msg = "", errormessage = "",successmsg="";
+            var validationresult = "";
             if (Session["AppId"] != null)
             {
                 string Userid = Session["AppId"].ToString();
                 string imagepresent = model.ImagePresent;
+
+                ValidationMessageController vmc = new ValidationMessageController();
+                 validationresult = vmc.Index("", "");
                 var accountdetail = GetLoginDetails(Userid);
                 if (string.IsNullOrEmpty(model.Firstname))
                 {
-
-                    ModelState.AddModelError("Error", "Please provide first name and last name!");
+                    validationresult = vmc.Index("MyAccount", "MyAccountFnameRequiredUI");
+                    ModelState.AddModelError("Error", validationresult);
 
                 }
                 if (!string.IsNullOrEmpty(model.ConfirmEmail))
                 {
                     if (model.Email != model.ConfirmEmail)
                     {
-                        ModelState.AddModelError("Error", "Email and email verification doesn't match!");
+                        validationresult = vmc.Index("MyAccount", "MyAccountEmailmatchValidationSy");
+                        ModelState.AddModelError("Error", validationresult);
 
                     }
                 }
@@ -572,7 +577,8 @@ namespace EventCombo.Controllers
                 {
                     if (model.NewPassword != model.ConfirmPassword)
                     {
-                        ModelState.AddModelError("Error", "New password and confirm new password doesn't match!");
+                        validationresult = vmc.Index("MyAccount", "MyAccountPwdmatchValidationSy");
+                        ModelState.AddModelError("Error", validationresult);
 
 
                     }
@@ -585,7 +591,8 @@ namespace EventCombo.Controllers
                     var result = UserManager.PasswordHasher.VerifyHashedPassword(user12.PasswordHash, model.Password);
                     if (result.ToString() != "Success")
                     {
-                        ModelState.AddModelError("Error", "Invalid current password!");
+                        validationresult = vmc.Index("MyAccount", "MyAccountPwdValidationSys");
+                        ModelState.AddModelError("Error", validationresult);
 
                     }
                 }
@@ -598,8 +605,8 @@ namespace EventCombo.Controllers
                         var user = UserManager.FindByEmail(model.Email);
                         if (user != null)
                         {
-                            ModelState.AddModelError("Error", "Confirm email already exist!");
-                            //errormessage += "Confirm email already exist!! </br>";
+                            validationresult = vmc.Index("MyAccount", "MyAccountEmailAlreadyExistSY");
+                            ModelState.AddModelError("Error", validationresult);
                         }
                     }
                 }
@@ -611,9 +618,7 @@ namespace EventCombo.Controllers
                     {
                         var ApplicationUser = objEntity.AspNetUsers.Find(Userid);
                         Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
-                        //var profile = from b in objEntity.Profiles
-                        //            where b.UserID== Userid
-                        //              select b;
+                  
                         if (userimage != null)
                         {
                             string[] images = userimage.Split('¶');
@@ -643,10 +648,7 @@ namespace EventCombo.Controllers
                         profile.SecondPhone = model.SecondPhone;
                         profile.WorkPhone = model.WorkPhone;
                         profile.WebsiteURL = model.WebsiteURL;
-                        //if (imagepresent == "NO")
-                        //{
-                        //    profile.UserProfileImage = "";
-                        //}
+                      
 
                         profile.Gender = model.Gender;
                         profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
@@ -655,7 +657,9 @@ namespace EventCombo.Controllers
                             if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
                             {
                                 profile.Email = model.Email;
-
+                                
+                                successmsg = vmc.Index("MyAccount", "MyAccountSuccessEmailSY");
+                               
                             }
                         }
                         try
@@ -679,9 +683,7 @@ namespace EventCombo.Controllers
                                 aspuser.Email = model.Email;
                                 aspuser.UserName = model.Email;
 
-
-
-                                //   objEntity.AspNetUsers.Attach(aspuser);
+                                
                                 try
                                 {
                                     objEntity.SaveChanges();
@@ -702,6 +704,7 @@ namespace EventCombo.Controllers
                         var token = await UserManager.GeneratePasswordResetTokenAsync(Userid);
 
                         var result = await UserManager.ResetPasswordAsync(Userid, token, model.NewPassword);
+                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessPasswordSY") + successmsg;
 
                     }
 
@@ -722,20 +725,16 @@ namespace EventCombo.Controllers
                     }
                     ViewBag.Country = countryList;
 
-                    //if (string.IsNullOrEmpty(accountdetail.UserProfileImage))
-                    //{
-                    //    model.editsave = "Save";
-                    //    model.UserProfileImage = "image-drop2.gif";
-                    //}
-                    //else
-                    //{
-                    //    model.UserProfileImage = accountdetail.UserProfileImage;
-                    //    model.contentype = accountdetail.contentype;
-                    //    model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + accountdetail.UserProfileImage;
-                    //    model.editsave = "Edit";
-
-                    //}
-                    ViewData["Message"] = "Updated Successfully!!!!!";
+                    if(successmsg!="")
+                    {
+                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY") +","+ successmsg;
+                    }
+                    else
+                    {
+                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY");
+                    }
+                 
+                    ViewData["Message"] = successmsg;
                     return View(model);
 
                 }

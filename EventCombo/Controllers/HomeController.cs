@@ -172,11 +172,15 @@ namespace EventCombo.Controllers
         public async Task<ActionResult> PasswordReset(ResetPasswordViewModel model)
         {
             string code = "";
+            var error = "";
+            var success = "";
             Session["Fromname"] = "PasswordReset";
+            ValidationMessageController vmc = new ValidationMessageController();
             if (model.Password!=model .ConfirmPassword)
             {
-                ViewData["Error"] = "Password and confirm password doesn't match!";
-                ModelState.AddModelError("Error", "Password and confirm password doesn't match!");
+                error = vmc.Index("PwdReset", "PwdResetPwdValidationSys");
+                ViewData["Error"] = error;
+                ModelState.AddModelError("Error", error);
 
             }
             if (!ModelState.IsValid)
@@ -217,7 +221,8 @@ namespace EventCombo.Controllers
            // var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                ViewData["Message"] = "Password reset successfully.";
+                success = vmc.Index("PwdReset", "PwdResetSuccessInitSY");
+                ViewData["Message"] = success;
                 return View();
             }
             AddErrors(result);
@@ -245,15 +250,19 @@ namespace EventCombo.Controllers
             {
                 readFile = reader.ReadToEnd();
             }
-        
+            var url = Request.Url;
+            var baseurl = url.GetLeftPart(UriPartial.Authority);
+           string url1 = baseurl + Url.Action("PasswordReset", "Home") + "?code=" + id +" ";
+
             string myString = "";
             myString = readFile;
             myString = myString.Replace("$$Email$$", model.Email);
-            myString = myString.Replace("$$Website$$", "http://eventcombo.kiwireader.com/Home/PasswordReset?code=" + id + "'");
+            myString = myString.Replace("$$Website$$", url1);
 
             SendMail(model.Email, myString.ToString(), "The Eventcombo Team");
-
-            ViewData["Message"] = "Please check your email for password set link!!";
+            ValidationMessageController vmc = new ValidationMessageController();
+           var msg= vmc.Index("ForgotPwd", "ForgotPwdSuccessInitSY");
+            ViewData["Message"] = msg;
             return View();
         }
 
