@@ -179,8 +179,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
+    <Compile Include="Controllers\EditEventController.cs" />
     <Compile Include="Controllers\EventConfirmationController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\EventListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -777,7 +779,8 @@
     <Content Include="Views\TicketPayment\TicketPayment.cshtml" />
     <Content Include="Views\CreateEvent\ViewEvent.cshtml" />
     <Content Include="Views\TicketPayment\PaymentConfirmation.cshtml" />
-    <Content Include="Views\CreateEvent\EditEvent.cshtml" />
+    <Content Include="Views\EditEvent\EditEvent.cshtml" />
+    <Content Include="Views\EventList\EventList.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

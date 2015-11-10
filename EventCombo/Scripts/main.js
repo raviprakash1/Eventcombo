@@ -27,3 +27,28 @@ function setIconOpened(activePanel) {
     $(activePanel).find('b').addClass('opened').removeClass('closed'); 
   }
 }
+
+
+
+// Manage events search box code below
+// This code for when u click on search input the button bg/color chagne
+$(function () {
+    $("body").on("input propertychange", ".search-label-form-group", function (e) {
+        $(this).toggleClass("search-label-form-group-with-value", !!$(e.target).val());
+    }).on("focus", ".search-label-form-group", function () {
+        $(this).addClass("search-label-form-group-with-focus");
+    }).on("blur", ".search-label-form-group", function () {
+        $(this).removeClass("search-label-form-group-with-focus");
+    });
+});
+
+
+// Manage events tab panel code below
+// This funtion for change tab panel
+$(document).ready(function () {
+    $("#myTab a").click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+});
+
