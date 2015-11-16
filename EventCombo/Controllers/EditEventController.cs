@@ -141,9 +141,10 @@ namespace EventCombo.Controllers
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var vEC = (from myEvent in objEnt.Events
-                         where myEvent.EventID == lEventId
-                         select new EventCreation
-                        {
+                           where myEvent.EventID == lEventId
+                           select new EventCreation
+                           {
+                             EventID = myEvent.EventID,
                              EventTypeID = myEvent.EventTypeID,
                              EventCategoryID = myEvent.EventCategoryID,
                              EventSubCategoryID = myEvent.EventSubCategoryID,
@@ -174,6 +175,11 @@ namespace EventCombo.Controllers
                              Ticket_variabletype = myEvent.Ticket_variabletype
                           }
                         ).FirstOrDefault();
+                EventVenue Ev = new EventVenue();
+                Ev = (from myEvent in objEnt.EventVenues
+                      where myEvent.EventID == lEventId
+                      select myEvent).FirstOrDefault();
+                vEC.EventVenue.SetValue(Ev, 0);
                 return vEC;
             }
 
@@ -220,7 +226,7 @@ namespace EventCombo.Controllers
 
         }
 
-        public string GetSubCat(long lECatId)
+        public string GetSubCat(long lECatId,long lSubCat)
         {
 
             StringBuilder strHtml = new StringBuilder();
@@ -235,8 +241,12 @@ namespace EventCombo.Controllers
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
                     strHtml.Append("<option value=0>Select</option>");
                     foreach (var item in EventCat)
-                        strHtml.Append("<option value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
-
+                    {
+                        if (lSubCat == item.EventSubCategoryID)
+                            strHtml.Append("<option selected='selected' value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
+                        else
+                            strHtml.Append("<option value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
+                    }
                     return strHtml.ToString();
                 }
             }
@@ -248,6 +258,8 @@ namespace EventCombo.Controllers
 
 
         }
+
+     
 
         public string CheckEventUrl(string strUserUrl)
         {
@@ -483,7 +495,66 @@ namespace EventCombo.Controllers
             return lEventId;
         }
 
+        public string GetOrgnizerDetail(long lEventId)
+        {
+            StringBuilder strHTML = new StringBuilder();
+            string strtemp;
+            StringBuilder strDropDown = new StringBuilder();
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                var EventOrg = (from Org in objEnt.Event_Orgnizer_Detail
+                                where Org.Orgnizer_Event_Id == lEventId
+                                select Org).ToList();
 
+                int i = 0;
+                foreach (Event_Orgnizer_Detail EOD in EventOrg)
+                {
+                    i = i + 1;
+                    strHTML.Append("<tr>");
+                    strHTML.Append("<td style='display: none' width='92%'>");
+                    strHTML.Append(i);
+                    strHTML.Append("</td>");
+
+                    strHTML.Append("<td width='92 %'><label id=OrgName_");
+                    strHTML.Append(i);
+                    strHTML.Append(">");
+                    strHTML.Append(EOD.Orgnizer_Name);
+                    strHTML.Append("</label></td>");
+
+                    strHTML.Append("<td style='display: none'><label id=OrgDes_");
+                    strHTML.Append(i);
+                    strHTML.Append(">");
+                    strHTML.Append(EOD.Orgnizer_Desc);
+                    strHTML.Append("</label></td>");
+
+                    strHTML.Append("<td style='display: none'><label id=OrgFB_");
+                    strHTML.Append(i);
+                    strHTML.Append(">");
+                    strHTML.Append(EOD.FBLink);
+                    strHTML.Append("</label></td>");
+
+
+                    strHTML.Append("<td style='display: none'><label id=OrgTw_");
+                    strHTML.Append(i);
+                    strHTML.Append(">");
+                    strHTML.Append(EOD.Twitter);
+                    strHTML.Append("</label></td>");
+                    strtemp = "<td align='right'><i onclick='editOrgnizer(" + i + ")'; class='fa fa-pencil'></i> | <i onclick='DeleteOrgnizer(" + i + ");' class='fa fa-trash'></i></td>";
+                    strHTML.Append(strtemp);
+                    strHTML.Append("</tr>");
+
+                    if (EOD.DefaultOrg == "Y")
+                        strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                    else
+                        strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+
+
+                }
+            }
+
+            return strHTML.ToString() + "¶" + strDropDown.ToString();
+            
+        }
 
 
 

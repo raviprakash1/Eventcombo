@@ -519,7 +519,10 @@
                             <div class="form-group">
                                 <label class="col-sm-5 control-label ev_tickt_lebel no_pad">Sub Category</label>
                                 <div class="col-sm-7 no_pad">
-                                    <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                                    <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600">
+                                        
+                                    </select>
+                                    <input type="hidden" id="hidSubCat" value="@Model.EventSubCategoryID"  />
                                 </div>
                             </div>
                         </div>
@@ -1140,7 +1143,7 @@
                             </label>
                             <div class="clearfix"></div>
                             <label class="label-control label_private ev_tickt_lebel">
-                                @if (Model.Private_Password.Length > 0)
+                                @if (Model.Private_Password != null && Model.Private_Password.Length > 0)
                                 {
                                     <input type="checkbox" checked="checked" id="chkReqPassword">
                                 }
@@ -1150,7 +1153,7 @@
                                 }
                                     Require a password to view the event page
                                 </label>
-                                    <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />
+                                <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />                                    
 
                         </div>
                     </div>
@@ -1172,7 +1175,7 @@
                     <input type="hidden" id="hidSchLastState" value="" />
                     <input type="hidden" id="hidOrgnizer" value="" />
                     <input type="hidden" id="hidAddressStatus" value="" />
-                    <input type="hidden" id="hdEventId" value="" />
+                    <input type="hidden" id="hdEventId" value="@Model.EventID" />
 
                     <input id="imageeror" type="hidden" value="0" />
                     <input id="image_count" type="hidden" />
@@ -1508,16 +1511,16 @@
             var Sno = $("#ddlOrgnizers").val();
             $('#tblOrgnizer tr').each(function () {
                 if (Sno == $(this).find("td:first").html()) {
-                     $(this).remove();
+                    $(this).remove();
                 }
             });
 
             //$("#dllOrganizer")
             $("#ddlOrgnizers option").each(function (i) {
-                        if (Sno == $(this).val()) {
-                            $(this).remove();
-                        }
-                    });
+                if (Sno == $(this).val()) {
+                    $(this).remove();
+                }
+            });
 
 
 
@@ -1565,8 +1568,10 @@
 
         }
         function editOrgnizer() {
+            
             var Sno = $("#ddlOrgnizers").val();
-            //alert(Sno);
+           // alert(Sno);
+         //   debugger;
             $("#hidOrgnizer").val(Sno);
             var vOrgName = $("#OrgName_" + Sno).text();
             var vOrgDes = $("#OrgDes_" + Sno).text();
@@ -1578,13 +1583,11 @@
             $("#txtOrgFBlink").val(vOrgFB);
             $("#txtOrgTWlink").val(vOrgTw);
 
-            if (vOrgFB !=''  || vOrgTw !='')
-            {
+            if (vOrgFB != '' || vOrgTw != '') {
                 $("#Incsocial").prop("checked", true);
                 $("#dvOrgnizerFBTw").show();
             }
-            else
-            {
+            else {
                 $("#Incsocial").prop("checked", false);
                 $("#dvOrgnizerFBTw").hide();
             }
@@ -1621,7 +1624,7 @@
 
         function UpdateOrgnizer() {
             var Sno = $("#ddlOrgnizers").val();
-        //    alert(Sno);
+            //    alert(Sno);
             vOrgName = $("#txtOrgnizer").val();
             vOrgDes = $("#edOrgDes").code();
             vOrgFB = $("#txtOrgFBlink").val();
@@ -1633,13 +1636,13 @@
             $("#OrgTw_" + Sno).text(vOrgTw);
 
 
-                $("#ddlOrgnizers option").each(function (i) {
-                    if (Sno == $(this).val()) {
-                        $(this).remove();
-                    }
-                });
-                var addOption = '<option value="' + Sno + '" id="' + Sno + '" >' + $("#txtOrgnizer").val() + '</option>';
-                $("#ddlOrgnizers").append(addOption);
+            $("#ddlOrgnizers option").each(function (i) {
+                if (Sno == $(this).val()) {
+                    $(this).remove();
+                }
+            });
+            var addOption = '<option value="' + Sno + '" id="' + Sno + '" >' + $("#txtOrgnizer").val() + '</option>';
+            $("#ddlOrgnizers").append(addOption);
 
 
 
@@ -1647,6 +1650,42 @@
         }
 
         $(document).ready(function () {
+            var vCatId = $("#ddlEventCategory").val();
+            var vSubCatId = $("#hidSubCat").val();
+            $.ajax({
+                url: '@Url.Action("GetSubCat", "EditEvent")',
+                data: { lECatId: vCatId, lSubCat: vSubCatId },
+                type: "Post",
+                success: function (data) {
+                    //$.each(data, function () {
+                    // debugger;
+                    //                   alert(data.length);
+                    $("#ddlEventSubCategory").html(data);
+                    // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                    //});
+                },
+                error: function (data) {
+                    //alert("Sorry there is some problem.");
+                }
+            });
+
+            $.ajax({
+                url: '@Url.Action("GetOrgnizerDetail", "EditEvent")',
+                data: { lEventId: $("#hdEventId").val() },
+                type: "Get",
+                success: function (data) {
+                    var getHtml = data.split('¶');
+                    $("#tblOrgnizer").append(getHtml[0]);
+                    $("#ddlOrgnizers").append(getHtml[1]);
+                },
+                error: function (data) {
+                }
+            });
+
+
+
+
+
             $(".StartDatemodal").hide();
             $(".StartDate").click(function () {
                 $(".StartDatemodal").slideToggle("fast");
@@ -1676,13 +1715,12 @@
                                 $('#erraccmsg').html('Sorry, There is some problem while publishing event.');
 
                             }
-                            else
-                            {
-                                var hid= $("#hdEventId").val();
-                                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId='+hid+'';
-                                                   }
+                            else {
+                                var hid = $("#hdEventId").val();
+                                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + hid + '';
+                            }
                         }
-                                });
+                    });
 
                 }
                 else {
@@ -1868,9 +1906,8 @@
                 //});
 
 
-              //  alert($("#tblAddress tr").length);
-                if ($("#tblAddress tr").length <= 1)
-                {
+                //  alert($("#tblAddress tr").length);
+                if ($("#tblAddress tr").length <= 1) {
                     if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
                         SubmitAddress.push({
                             VenueName: ' ',
@@ -1884,18 +1921,17 @@
                         })
                     }
                 }
-                else
-                {
+                else {
                     debugger;
                     $("#tblAddress tr").each(function () {
 
                         var Sno = $(this).find("td:first").html();
-                      //  alert(Sno);
+                        //  alert(Sno);
                         // Multiple Address
-                        if (Sno != '' && Sno !=undefined && Sno !=null) {
+                        if (Sno != '' && Sno != undefined && Sno != null) {
                             SubmitAddress.push({
-                                VenueName: $("#VenueName" + Sno).val()   ,
-                                Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() :''),
+                                VenueName: $("#VenueName" + Sno).val(),
+                                Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() : ''),
                                 Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
                                 City: ($("#City" + Sno).val() != null ? $("#City" + Sno).val() : ''),
                                 State: ($("#State" + Sno).val() != null ? $("#State" + Sno).val() : ''),
@@ -1976,8 +2012,7 @@
                         if ($("#hdMonthlyType").val() == "DM") vMonthlyWeek = ''; vMonthlyWeekDays = '';
                         if ($("#hdMonthlyType").val() == "DW") {
                             vMonthlyDay = '';
-                            for (i = 0; i < vMonthlyWeekDaysAry.length; i++)
-                            {
+                            for (i = 0; i < vMonthlyWeekDaysAry.length; i++) {
                                 if (vMonthlyWeekDays == '') vMonthlyWeekDays = vMonthlyWeekDaysAry[i].toString();
                                 else vMonthlyWeekDays = vMonthlyWeekDays + ',' + vMonthlyWeekDaysAry[i].toString();
                             }
@@ -2027,7 +2062,7 @@
                             Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                             FBLink: $("#OrgFB_" + Sno).text(),
                             Twitter: $("#OrgTw_" + Sno).text(),
-                            DefaultOrg: (vDefaultOrg==Sno ? 'Y':'N')
+                            DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
 
                         });
                     }
@@ -2093,7 +2128,7 @@
                 if ($("#hdEventId").val() == '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
-                        data: { model  },
+                        data: { model },
                         type: "Post",
                         success: function (response) {
                             $("#hdEventId").val(response);
@@ -2145,7 +2180,7 @@
 
 
             $("#btAddOrg").click(function () {
-              //  alert("Test");
+                //  alert("Test");
                 //  alert($('#dllOrganizer option').length);
                 //    if (parseInt($('#dllOrganizer option').length) < 25) {
                 //if ($("#hidOrgnizer").val() == "") {
@@ -2159,8 +2194,7 @@
                 //alert(parseInt($("#ddlOrgnizers option").length));
 
 
-                if ($("#txtOrgnizer").val().trim() == '')
-                {
+                if ($("#txtOrgnizer").val().trim() == '') {
                     alert("Please enter valid organizer.");
                     $("#txtOrgnizer").focus();
                     return false;
@@ -2179,7 +2213,7 @@
                     UpdateOrgnizer($("#hidOrgnizer").val());
 
 
-                $("#hidOrgnizer").val('') ;
+                $("#hidOrgnizer").val('');
                 $("#txtOrgnizer").val('');
                 $("#edOrgDes").code('');
                 $("#txtOrgFBlink").val('');
@@ -2249,8 +2283,8 @@
 
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
-                    event.preventDefault();
-                    return false;
+                event.preventDefault();
+                return false;
             });
 
             $("#txtEventUrl").focusout(function () {
@@ -2284,7 +2318,7 @@
                 var vCatId = $("#ddlEventCategory").val();
                 $.ajax({
                     url: '@Url.Action("GetSubCat", "CreateEvent")',
-                    data: { lECatId: vCatId },
+                    data: { lECatId: vCatId, lSubCat: "0" },
                     type: "Post",
                     success: function (data) {
                         //$.each(data, function () {
@@ -2340,15 +2374,13 @@
 
             $("#btEnterDates").click(function () {
                 //alert($("#hdSchType").val());
-                if ($("#hdSchType").val() == 'Multiple')
-                {
+                if ($("#hdSchType").val() == 'Multiple') {
                     //$(".SchmultiDetail").slideToggle("slow");
                     $(".SchmultiDetail").show();
                     $(".SchDivtop").hide();
                     $(".Schmultisingle").show();
                 }
-                else
-                {
+                else {
                     $(".SchDivtop").show();
                     $(".SchmultiDetail").hide();
                     $(".Schmultisingle").hide();
@@ -2360,8 +2392,7 @@
                 if ($(".SchmultiDetail").css('display') == 'block') {
                     $("#hdSchType").val('Multiple');
                 }
-                else
-                {
+                else {
                     $("#hdSchType").val('Single');
                 }
             });
@@ -2386,7 +2417,7 @@
 
                 $.ajax({
                     url: '@Url.Action("GetPreviousAddress", "CreateEvent")',
-                    data: { "lPreAddId" : $("#hdPastLId").val() },
+                    data: { "lPreAddId": $("#hdPastLId").val() },
                     type: "Post",
                     success: function (data) {
                         $("#dllPastLocation").html(data);
@@ -2529,14 +2560,12 @@
 
                     $("#" + CtrlId).val(ColAry[i]);
                 }
-             //   alert(ConsolidateValue);
+                //   alert(ConsolidateValue);
                 $("#consolidate" + Sno).text(ConsolidateValue);
 
             }
-            function validateAddress()
-            {
-                if ($("#VenueName").val().trim() == '')
-                {
+            function validateAddress() {
+                if ($("#VenueName").val().trim() == '') {
                     alert("Please enter valid venue name");
                     $("#VenueName").focus();
                     return false;
@@ -2563,7 +2592,7 @@
 
             $("#btAddMore").click(function () {
 
-                if (validateAddress() ==false) return false;
+                if (validateAddress() == false) return false;
 
                 var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID option:selected").text() + "¶" + $("#CountryID").val();
                 var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
