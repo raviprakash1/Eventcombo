@@ -58,6 +58,8 @@ namespace EventCombo.Models
         public string Ticket_showvariable { get; set; }
         public string Ticket_variabledesc { get; set; }
         public string Ticket_variabletype { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> ModifyDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }

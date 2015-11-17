@@ -294,11 +294,11 @@ else
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-sm-5 login_form_bot">
-                                                <input type="text" id="loginemail" name="Email" placeholder="Email" class="form-control login_place"  maxlength="256" />
+                                                <input type="text" id="loginemail" name="Email" placeholder="Email" class="form-control login_place"  maxlength="256" autocomplete="off" />
                                                 @*@Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @class = "form-control login_place", @id = "loginemail", @maxlength = 256 })*@
                                             </div>
                                             <div class="col-sm-5 login_form_bot">
-                                                <input type="password" id="loginpassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" />
+                                                <input type="password" id="loginpassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
 
                                                 @*@Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control login_place", @id = "loginpassword", @maxlength = 15 })*@
                                             </div>
@@ -327,23 +327,25 @@ else
                         </div>
                         <div class="clearfix"></div>
                         <div class="col-md-12 social-buttons text-center ">
-                            @using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
-                            {
-                                
+                            <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
+                                @*@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+                                {*@
+                                    <input type="hidden" id="provider" name="provider" />
+                                    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
 
-                                <div class="col-xs-6">
-                                    <button type="submit" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
+                                    <div class="col-xs-6">
+                                        <button type="submit" onclick="$('#provider').attr('value', 'Facebook'); $('#login-launch').submit();" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
 
-                                </div>
+                                    </div>
 
-                                <div class="col-xs-6">
-                                    <button type="submit" class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
-                                </div>
+                                    <div class="col-xs-6">
+                                        <button type="submit" onclick="$('#provider').attr('value', 'Google'); $('#login-launch').submit(); " class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
+                                    </div>
 
-                            }
-
-                            @*@RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")*@
-                        </div>
+                                @*}*@
+                                </form>
+                                @*@RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")*@
+</div>
                     </div>
                 </div>
 
@@ -387,12 +389,12 @@ else
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-sm-5 login_form_bot">
-                            <input type="text" id="SignupEmail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" />
+                            <input type="text" id="SignupEmail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256"  autocomplete="off"/>
 
                             @*@Html.TextBoxFor(m => m.Email, new { @maxlength = 256, @placeholder = "Email", @class = "form-control login_place", @id = "SignupEmail" })*@
                         </div>
                         <div class="col-sm-5 login_form_bot">
-                            <input type="password" id="SignupPassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" />
+                            <input type="password" id="SignupPassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15"  autocomplete="off"/>
 
                             @*@Html.PasswordFor(m => m.Password, new { @maxlength = 15, @placeholder = "Password", @class = "form-control login_place", @id = "SignupPassword" })*@
 
@@ -417,7 +419,30 @@ else
 </body>
 </html>
 <script type="text/javascript">
-
+    function invokeLogin() {
+        var chrome = 100;
+        var width = 500;
+        var height = 500;
+        var left = (screen.width - width) / 2;
+        var top = (screen.height - height - chrome) / 2;
+        var options = "status=0,toolbar=0,location=1,resizable=1,scrollbars=1,left=" + left + ",top=" + top + ",width=" + width + ",height=" + height;
+        window.open("about:blank", "login-popup", options);
+    }
+</script>
+<script type="text/javascript">
+    function loginCallback(success, returnUrl) {
+      
+        if (returnUrl) {
+            window.location.href = returnUrl;
+        } else {
+            @*$.ajax({
+                url: '@Url.Action("LoginPartial", "Account")',
+                success: function (result) {
+                    $('#login').html(result);
+                }
+            });*@
+        }
+    }
 
     function changeheader(e)
     {
@@ -516,6 +541,8 @@ else
 
 @*//Login*@
 <script type="text/javascript">
+
+    
     $(document).click(function () {
 
      
@@ -539,12 +566,24 @@ else
               $("input").removeClass('err-bor');
           })
           $(window).load(function () {
+             
               console.log($('#loginemail').val());
               console.log($('#loginpassword').val());
-              if ($('#loginemail').val().length>0 && $('#loginpassword').val().length>0) {
+              var loginemail = $('#loginemail').val();
+              var loginpwd = $('#loginpassword').val();
+              var signupemail = $('#SignupEmail').val();
+              var signuppwd = $('#SignupPassword').val();
+           
+              if (loginemail != '' || loginpwd!='') {
                   $('#btnSavelogin').removeAttr("disabled");
 
               }
+              if (signupemail != ' ' || signuppwd!=' ') {
+                  $('#btnsave').removeAttr("disabled");
+
+              }
+          
+           
           });
           $(document).ready(function () {
 

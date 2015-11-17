@@ -352,7 +352,21 @@ namespace EventCombo.Controllers
             }
                 }
 
+        public List<Email_Tag> getTag()
+        {
+            var EmailTag = db.Email_Tag.ToList();
+            return EmailTag;
 
+        }
+        public Email_Template getEmail(string template)
+        {
+           
+            var userEmail = db.Email_Template.Where(x => x.Template_Name == template).SingleOrDefault();
+            
+                return userEmail;
+            
+
+        }
 
         private string getusername()
         {
@@ -407,7 +421,7 @@ namespace EventCombo.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     await this.UserManager.AddToRoleAsync(user.Id,"Member");
-                  
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -419,7 +433,7 @@ namespace EventCombo.Controllers
                         User_Permission_Detail permdetail = new User_Permission_Detail();
                         for (int i = 1; i < 3; i++)
                         {
-                           
+
                             permdetail.UP_Permission_Id = i;
                             permdetail.UP_User_Id = Userid.Id.ToString();
                             objEntity.User_Permission_Detail.Add(permdetail);
@@ -429,45 +443,124 @@ namespace EventCombo.Controllers
                         Profile prof = new Profile();
 
                         prof.Email = model.Email;
-                     
+
                         prof.UserID = Userid.Id.ToString();
 
                         objEntity.Profiles.Add(prof);
+
+
+                        AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == Userid.Id.ToString());
+                        aspuser.LoginStatus = "Y";
+
                         objEntity.SaveChanges();
 
+
+                        Session["AppId"] = Userid.Id;
+
+
+
+
+
+                        /// to send email////
+                        /// 
+                        string to = "", from ="",cc="",bcc="",subjectn="";
+                        var bodyn = "";
+                        List<Email_Tag> EmailTag = new List<Email_Tag>();
+                         EmailTag = getTag();
+                       
+                        var Emailtemplate = getEmail("email_welcome");
+                        if (!string.IsNullOrEmpty(Emailtemplate.To))
+                        {
+
+
+                            to = Emailtemplate.To;
+                            if (to.Contains("$$UserEmailID$$"))
+                            {
+                                to = to.Replace("$$UserEmailID$$", model.Email);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                         {
+                            from = Emailtemplate.From;
+                            if (from.Contains("$$UserEmailID$$"))
+                            {
+                                from = from.Replace("$$UserEmailID$$", model.Email);
+
+                            }
+                        }
+                        else
+                        {
+                            from = "shweta.sindhu@kiwitech.com";
+
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                        {
+
+
+                            subjectn = Emailtemplate.Subject;
+
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (subjectn.Contains("$$" + EmailTag[i].Tag_Name.Trim() + "$$"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        subjectn.Replace("$$UserEmailID$$", model.Email);
+
+                                    }
+
+                                }
+
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                        {
+                            bodyn =new  MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (bodyn.Contains("$$" + EmailTag[i].Tag_Name.Trim() + "$$"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        bodyn= bodyn.Replace("$$UserEmailID$$", model.Email);
+
+                                    }
+
+                                }
+
+                            }
+                        }
+                        var fromAddress = new MailAddress(from, "Eventcombo");
+                        var toAddress = new MailAddress(to);
+                        const string fromPassword = "Shweta1989";
+                        const string address = "shweta.sindhu@kiwitech.com";
+                         string subject = subjectn;
+                         string body = bodyn;
+
+                        var smtp = new SmtpClient
+                        {
+                            Host = "smtp.gmail.com",
+                            Port = 587,
+                            EnableSsl = true,
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            UseDefaultCredentials = false,
+                            Credentials = new NetworkCredential(address, fromPassword)
+                        };
+                        using (var message = new MailMessage(fromAddress, toAddress)
+                        {
+                            Subject = subject,
+                            Body = body
+                        })
+                        {
+                            smtp.Send(message);
+                        }
                     }
-                    Session["AppId"] = Userid.Id;
-
-
-                    /// to send email////
-                    /// 
-                    var fromAddress = new MailAddress("shweta.sindhu@kiwitech.com", "Eventcombo");
-                    var toAddress = new MailAddress(model.Email);
-                    const string fromPassword = "Shweta1989";
-                    const string address = "shweta.sindhu@kiwitech.com";
-                    const string subject = "Thank You";
-                    const string body = "Confirmation Message";
-
-                    var smtp = new SmtpClient
-                    {
-                        Host = "smtp.gmail.com",
-                        Port = 587,
-                        EnableSsl = true,
-                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                        UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential(address, fromPassword)
-                    };
-                    using (var message = new MailMessage(fromAddress, toAddress)
-                    {
-                        Subject = subject,
-                        Body = body
-                    })
-                    {
-                        smtp.Send(message);
-                    }
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                  //  await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToLocal(url);
 
@@ -478,6 +571,7 @@ namespace EventCombo.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        
 
         private ActionResult RedirectToLocal(string returnUrl)
         {

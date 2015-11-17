@@ -908,7 +908,14 @@ namespace EventCombo.Controllers
                     {
                         Session["AppId"] = User.Id;
 
-                        return RedirectToLocal(url);
+                        using (EventComboEntities db = new EventComboEntities())
+                        {
+                            AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
+                            aspuser.LoginStatus = "Y";
+                            db.SaveChanges();
+
+                        }
+                            return RedirectToLocal(url);
                     }
                     else
                     {
@@ -1242,14 +1249,22 @@ namespace EventCombo.Controllers
             string firstname = "", Lastnmae = "", Email = "";
             if (loginInfo == null)
             {
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
+                return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index","Home")));
             }
+            //return RedirectToAction("Index", "Home");
+            
 
             // var info = await AuthenticationManager.GetExternalLoginInfoAsync();
             string url = null;
             if (Session["ReturnUrl"] != null)
             {
                 url = Session["ReturnUrl"].ToString();
+            }
+            else
+            {
+
+                url = Url.Action("Index", "Home");
             }
 
             var user = UserManager.FindByEmail(loginInfo.Email);
@@ -1327,17 +1342,23 @@ namespace EventCombo.Controllers
                             }
 
                         }
-                        return RedirectToLocal(url);
+                       // return View("LoginResult", new LoginResultViewModel(true, url));
+
+                       return RedirectToLocal(url);
                     }
                     else
                     {
+                       // return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index", "Home")));
+
                         return RedirectToAction("Index", "Home");
 
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index", "Home")));
+
+                  // return RedirectToAction("Index", "Home");
 
                 }
 
@@ -1421,8 +1442,9 @@ namespace EventCombo.Controllers
                 }
                 var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
                 Session["AppId"] = user.Id;
+               return View("LoginResult", new LoginResultViewModel(true, url));
 
-                       return RedirectToLocal(url);
+              // return RedirectToLocal(url);
                 //if (result == SignInStatus.Success)
                 //{
                 //    //var User = UserManager.FindByEmail(model.Email.ToString());
@@ -1572,6 +1594,14 @@ namespace EventCombo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            var userid = Session["AppId"].ToString();
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == userid);
+                aspuser.LoginStatus = "N";
+                db.SaveChanges();
+
+            }
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             Session["Fromname"] = null;
             Session["AppId"] = null;

@@ -42,12 +42,20 @@
                         <div class="list-group list-group-links">
                             <div class="list-group-header"> Tags </div>
                             <ul id="contactList" class="list-group">
+                                @{ int i = 0;
+
+                               foreach (var item in (List<string>)ViewBag.EmailTags)
+                               {
                                 <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        UserEmailID
+                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact=i draggable="true" tabindex=i ondragstart="drag(event)" id="draggable">
+                                       @item
                                     </div>
                                 </li>
-                                <li class="list-group-item em_bor_bot">
+                                        i = i + 1;
+                                    }
+                                    }
+
+                                @*<li class="list-group-item em_bor_bot">
                                     <div class="contact h-card ui-widget-content ui-draggable" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable" >
                                         UserFirstNameID
                                     </div>
@@ -101,7 +109,7 @@
                                     <div class="contact h-card ui-widget-content ui-draggable" data-contact="10" draggable="true" tabindex="0"  ondragstart="drag(event)" id="draggable">
                                         DealOrderNumberID
                                     </div>
-                                </li>
+                                </li>*@
                             </ul>
                             @*<ul id="allfields" class="list-group">
                                 <li class="list-group-item em_bor_bot">
@@ -214,7 +222,7 @@
                                 <br>
 
                                @Html.HiddenFor(m => m.emailtag , new { id = "emailtag" })
-                           <button class="btn btn-primary col-sm-3" type="button" id="btnsave">Save</button>
+                           <button class="btn btn-primary col-sm-3" type="submit" id="btnsave">Save</button>
 
 
 
@@ -339,6 +347,8 @@
        
         if ((target.id == "To" || target.id == "From" || target.id == "CC" || target.id == "Bcc") && data.trim() == "UserEmailID")
         {
+
+           
             console.log(target.id);
             var value = $('#' + target.id).val();
            
@@ -349,6 +359,7 @@
         }
         else if (target.id == "Subject")
         {
+           
             var value = $('#' + target.id).val();
 
             //var str1 = val.substring(0, range1);
@@ -369,7 +380,8 @@
 
         if (!event) event = window.event;
         var target = event.target || event.srcElement;
-        var content = target.innerText|| target.textContent;
+        var content = target.innerText || target.textContent;
+
         event.dataTransfer.setData("text", content);
         console.log(target.innerText || target.textContent);
         
@@ -484,7 +496,7 @@
             if (tomail.indexOf('$$') > -1)
             {
                 var toReplace = tomail.replace('$$', '');
-                toReplace = tomail.replace('$$', '');
+                toReplace = toReplace.replace('$$', '');
                 console.log(toReplace)
                 if (toReplace.trim() != "UserEmailID")
                 {
@@ -630,7 +642,7 @@
                             //var bccsplit = res[i].split('$$');
                             console.log(res[i].lastIndexOf('$$'))
                             var ccReplace = res[i].replace('$$', '');
-                            ccReplace = bccReplace.replace('$$', '');
+                            ccReplace = ccReplace.replace('$$', '');
                             console.log(ccReplace)
                             if (ccReplace.trim() != "UserEmailID") {
                                 emailmsg += "Wrong Tag Inserted in CC" + "\n";
@@ -690,11 +702,6 @@
 
         
 
-            //if (!validateEmail(tomail)) {
-            //    emailmsg += tomail;
-            //    flag = true;
-
-            //}
 
             var invalid = "Invalid E-mail Id:\n";
             if (emailmsg != "")
@@ -703,14 +710,14 @@
                 msg += "\n" + emailmsg;
                 flag = true;
             }
+
             if (flag) {
                 $('#divError').css('display', 'block');
                 $('#spanid').html(msg);
-               // setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                //alert(msg);
+            
                 return false;
             }
-            return false;
+          
         })
     });
     function validateEmail(sEmail) {
@@ -768,104 +775,145 @@
 </script>*@
 
 <script>
-		'use strict';
+    'use strict';
+   
+    var CONTACTS = [];
+    var array = @Html.Raw(Json.Encode(@ViewBag.EmailTags));
+    for(var i =0; i<array.length;i++){
+        
+        CONTACTS.push({name:array[i]});
+    }
 
-		var CONTACTS = [
-			{ name: 'UserFirstNameID' },
-			{ name: 'UserLastNameID' },
-			{ name: 'EventNameID' },
-			{ name: 'EventStartDateID '},
-			{ name: 'EventEndDateID' },
-			{ name: 'EventStartTimeID' },
-			{ name: 'EventEndTimeID'},
-			{ name: 'EventVenueID' },
-            {name:'EventAddressID'},
-            {name:'TicketOrderNumberID'},
-            {name:'DealOrderNumberID'}
+   
+    console.log(CONTACTS);
 
-		];
+    @*var CONTACTS =@Html.Raw(
+      Json.Encode(
+          ((IEnumerable<string>)ViewBag.EmailTags).Select(x => new
+          {
+              name = x,
 
-		CKEDITOR.disableAutoInline = true;
+          })
+      )
+    );*@
+ 
+ 
 
-		// Implements a simple widget that represents contact details (see http://microformats.org/wiki/h-card).
-		CKEDITOR.plugins.add( 'hcard', {
-			requires: 'widget',
 
-			init: function( editor ) {
-				editor.widgets.add( 'hcard', {
-					allowedContent: 'span(!h-card); a[href](!u-email,!p-name); span(!p-tel)',
-					requiredContent: 'span(h-card)',
-					pathName: 'hcard',
 
-					upcast: function( el ) {
-						return el.name == 'span' && el.hasClass( 'h-card' );
-					}
-				} );
 
-				// This feature does not have a button, so it needs to be registered manually.
-				editor.addFeature( editor.widgets.registered.hcard );
 
-				// Handle dropping a contact by transforming the contact object into HTML.
-				// Note: All pasted and dropped content is handled in one event - editor#paste.
-				editor.on( 'paste', function( evt ) {
-					var contact = evt.data.dataTransfer.getData( 'contact' );
-					if ( !contact ) {
-						return;
-					}
+    //var CONTACTS = [
+    //    { name: 'UserEmailID' },
+    //	{ name: 'UserFirstNameID' },
+    //	{ name: 'UserLastNameID' },
+    //	{ name: 'EventNameID' },
+    //	{ name: 'EventStartDateID '},
+    //	{ name: 'EventEndDateID' },
+    //	{ name: 'EventStartTimeID' },
+    //	{ name: 'EventEndTimeID'},
+    //	{ name: 'EventVenueID' },
+    //    {name:'EventAddressID'},
+    //    {name:'TicketOrderNumberID'},
+    //    {name:'DealOrderNumberID'}
 
-					evt.data.dataValue =
-						'' +
-							'$$' + contact.name + '$$' +
-						'';
-				} );
-			}
-		} );
+    //];
 
-		// When an item in the contact list is dragged, copy its data into drag and drop data transfer.
-		// This data is later read by the editor#paste listener in the hcard plugin defined above.
-		CKEDITOR.document.getById( 'contactList' ).on( 'dragstart', function( evt ) {
-			// The target may be some element inside the draggable div (e.g. the image), so get the div.h-card.
-			var target = evt.data.getTarget().getAscendant( 'div', true );
+    CKEDITOR.disableAutoInline = false;
 
-			// Initialization of CKEditor data transfer facade is a necessary step to extend and unify native
-			// browser capabilities. For instance, Internet Explorer does not support any other data type than 'text' and 'URL'.
-			// Note: evt is an instance of CKEDITOR.dom.event, not a native event.
-			CKEDITOR.plugins.clipboard.initDragDataTransfer( evt );
+    // Implements a simple widget that represents contact details (see http://microformats.org/wiki/h-card).
+    CKEDITOR.plugins.add( 'hcard', {
+        requires: 'widget',
 
-			var dataTransfer = evt.data.dataTransfer;
+        init: function( editor ) {
+            editor.widgets.add( 'hcard', {
+                allowedContent: 'span(!h-card); a[href](!u-email,!p-name); span(!p-tel)',
+                requiredContent: 'span(h-card)',
+                pathName: 'hcard',
 
-			// Pass an object with contact details. Based on it, the editor#paste listener in the hcard plugin
-			// will create HTML to be inserted into the editor. We could set text/html here as well, but:
-			// * It is a more elegant and logical solution that this logic is kept in the hcard plugin.
-			// * We do not know now where the content will be dropped and the HTML to be inserted
-			// might vary depending on the drop target.
-			dataTransfer.setData( 'contact', CONTACTS[ target.data( 'contact' ) ] );
+                upcast: function( el ) {
+                    return el.name == 'span' && el.hasClass( 'h-card' );
+                }
+            } );
 
-			// We need to set some normal data types to backup values for two reasons:
-			// * In some browsers this is necessary to enable drag and drop into text in editor.
-			// * The content may be dropped in another place than the editor.
-			dataTransfer.setData( 'text/html', target.getText() );
+            // This feature does not have a button, so it needs to be registered manually.
+            editor.addFeature( editor.widgets.registered.hcard );
 
-			// You can still access and use the native dataTransfer - e.g. to set the drag image.
-			// Note: IEs do not support this method... :(.
-			//if ( dataTransfer.$.setDragImage ) {
-			//	dataTransfer.$.setDragImage( target.findOne( 'i' ).$, 0, 0 );
-			//}
-		} );
+            // Handle dropping a contact by transforming the contact object into HTML.
+            // Note: All pasted and dropped content is handled in one event - editor#paste.
+            editor.on( 'paste', function( evt ) {
+              
+                var contact = evt.data.dataValue;
+              
+                if ( !contact ) {
+                    return;
+                }
+                if(array.indexOf(contact) > -1)
+                {
+                    evt.data.dataValue =
+                   '' +'  $$' + contact + '$$  ' +'';
 
-		// Initialize the editor with the hcard plugin.
-		CKEDITOR.inline( 'editor1', {
-		    extraPlugins: 'hcard,sourcedialog,justify'
-            
-		});
-		
-	//	CKEDITOR.replace('editor1', {
-    //    height: 210,
-    //    on: {
-    //        instanceReady: function (evt) {
-    //            $('.cke').addClass('admin-skin cke-hide-bottom');
-    //        }
-    //    },
+                }else{
+
+                    return;
+                }
+              
+               
+            } );
+        }
+    } );
+
+    // When an item in the contact list is dragged, copy its data into drag and drop data transfer.
+    // This data is later read by the editor#paste listener in the hcard plugin defined above.
+    CKEDITOR.document.getById( 'contactList' ).on( 'dragstart', function( evt ) {
+        // The target may be some element inside the draggable div (e.g. the image), so get the div.h-card.
+        var target = evt.data.getTarget().getAscendant( 'div', true );
+
+        // Initialization of CKEditor data transfer facade is a necessary step to extend and unify native
+        // browser capabilities. For instance, Internet Explorer does not support any other data type than 'text' and 'URL'.
+        // Note: evt is an instance of CKEDITOR.dom.event, not a native event.
+        CKEDITOR.plugins.clipboard.initDragDataTransfer( evt );
+
+        var dataTransfer = evt.data.dataTransfer;
+
+        // Pass an object with contact details. Based on it, the editor#paste listener in the hcard plugin
+        // will create HTML to be inserted into the editor. We could set text/html here as well, but:
+        // * It is a more elegant and logical solution that this logic is kept in the hcard plugin.
+        // * We do not know now where the content will be dropped and the HTML to be inserted
+        // might vary depending on the drop target.
+        dataTransfer.setData( 'contact', CONTACTS[ target.data( 'contact' ) ] );
+
+        // We need to set some normal data types to backup values for two reasons:
+        // * In some browsers this is necessary to enable drag and drop into text in editor.
+        // * The content may be dropped in another place than the editor.
+        dataTransfer.setData( 'text/html', target.getText() );
+
+        // You can still access and use the native dataTransfer - e.g. to set the drag image.
+        // Note: IEs do not support this method... :(.
+        //if ( dataTransfer.$.setDragImage ) {
+        //	dataTransfer.$.setDragImage( target.findOne( 'i' ).$, 0, 0 );
+        //}
+    } );
+
+    // Initialize the editor with the hcard plugin.
+    //CKEDITOR.inline( 'editor1', {
+    //    extraPlugins: 'hcard,sourcedialog,justify'
+
     //});
+
+    	CKEDITOR.replace('editor1', {
+    	    height: 510,
+            width:510,
+        on: {
+            instanceReady: function (evt) {
+                $('.cke').addClass('admin-skin cke-hide-bottom');
+            }
+        },
+    
+        extraPlugins: 'hcard,sourcedialog,justify',
+        contentsCss: [ 'http://cdn.ckeditor.com/4.5.5/standard-all/contents.css', 'http://sdk.ckeditor.com/samples/assets/css/classic.css' ]
+
+    	
+    });
 
 </script>
