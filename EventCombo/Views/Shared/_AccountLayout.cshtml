@@ -120,7 +120,12 @@
                                         </div>
                                         <div id="collapse2" class="panel-collapse collapse">
                                             <div class="panel-body no-padding">
-                                                <p>@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")</p>
+                                                <p>
+                                                    <a href="#" onclick="checkPermission('1');">
+                                                        <span class="fa fa-user"></span>
+                                                        <span class="sidebar-title">Create Event</span>
+                                                    </a>
+                                               </p>
                                                 <p>@Html.ActionLink("Live Events", "LiveEvents", "Account")</p>
                                                 <p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>
                                                 <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
@@ -172,6 +177,37 @@
     </div>
 
     <script type="text/javascript">
+
+        function checkPermission(PermisionId) {
+            $.ajax({
+                url: '@Url.Action("GetPermission", "Permission")',
+                data: { iPermissionId: PermisionId },
+                async: false,
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    if (response != "Y") {
+                        alert("Access Denied !!!");
+                        return false;
+                        //  $('#spanid').html("Record Updated.");
+                        // $('#divError').css('display', 'block');
+                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                    }
+                    else {
+                        //  alert(vPerm);
+                        if (PermisionId == "1")
+                            window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
+                    }
+                }
+            });
+
+
+
+        }
+
+
+
+
     function changeheader(e)
     {
         if ($('#idchecked').is(":checked") == true) {
