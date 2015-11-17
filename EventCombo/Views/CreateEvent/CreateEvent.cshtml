@@ -2782,6 +2782,33 @@
 
     }
     $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetPermission", "Permission")',
+            data: { iPermissionId: '1' },
+            async: false,
+            datatype: "Text",
+            type: "Post",
+            success: function (response) {
+                if (response != "Y") {
+                    alert("Access Denied !!!");
+                    window.self.close();
+                    //window.location.href = document.referrer + '' + $(this).attr('href'); 
+                    history.back();
+                    return false;
+                    //  $('#spanid').html("Record Updated.");
+                    // $('#divError').css('display', 'block');
+                    ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                }
+                else {
+                    //alert("Have Per");
+                    //  alert(vPerm);
+                    //if (PermisionId == "1")
+                        //window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
+                }
+            }
+        });
+
+
 
         $('#id_variablecharge').change(function () {
             if ($(this).is(":checked")) {

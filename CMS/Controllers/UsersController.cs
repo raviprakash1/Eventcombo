@@ -44,13 +44,29 @@ namespace CMS.Controllers
 
         }
 
-        public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
+        public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
+            
+            List<SelectListItem> PageFilter = new List<SelectListItem>();
+            PageFilter.Add(new SelectListItem()
+            {
+                Text = "1 - 5",
+                Value = "5",
+                Selected = true
+            });
+            PageFilter.Add(new SelectListItem()
+            {
+                Text = "5 - 10",
+                Value = "10",
+                Selected = true
+            });
 
-
+            ViewBag.PageF = PageFilter;
 
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
-
+            int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
+            if (iCount>0)
+                objuser = objuser.GetRange(iCount - 5, 5);
             // List<Permissions> objPerm = GetPermission("APP");
             // UsersTemplate objU = new UsersTemplate();
             //  objU.objPermissions = GetPermission("APP");
