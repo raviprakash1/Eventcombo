@@ -541,10 +541,10 @@
                         drop: "Drop file here to Upload",
                         removeConfirmation: "Are you sure you want to remove this file?",
                         errors: {
-                            filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
-                            filesType: "Only files with extension .jpg,.png,.jpeg are allowed to be uploaded.",
-                            filesSize: "Image is too large! Please upload file up to {{fi-maxSize}} MB.",
-                            filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                            filesLimit: ajaxsetup('MyAccount', 'MyAccountImageCountValidationUI'),
+                            filesType: ajaxsetup('MyAccount', 'MyAccountImagestypeValidationUI'),
+                            filesSize: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI'),
+                            filesSizeAll: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI')
                         }
                     }
 
@@ -682,10 +682,10 @@
                         errors: {
                            
 
-                            filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
-                            filesType: "Only files with extension jpg,.png,.jpeg are allowed to be uploaded.",
-                            filesSize: "Image is too large! Please upload file up to {{fi-maxSize}} MB.",
-                            filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                            filesLimit: ajaxsetup('MyAccount', 'MyAccountImageCountValidationUI'),
+                            filesType: ajaxsetup('MyAccount', 'MyAccountImagestypeValidationUI'),
+                            filesSize: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI'),
+                            filesSizeAll: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI')
                         }
                     },
                     files: [{

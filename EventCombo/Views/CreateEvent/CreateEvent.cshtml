@@ -11,6 +11,7 @@
 @using (Html.BeginForm())
 
 {
+    <input type="hidden" name="MAX_FILE_SIZE" value="2000000" id="MAX_FILE_SIZE" />
     <div class="event_container">
         <div class="event_inner_container event_top" id="eventtopscoll">
             <div class="col-sm-12 pt10 bggrey">
@@ -3867,7 +3868,6 @@
 
             $('#input2').filer({
                 limit: 5,
-                maxSize: null,
                 extensions: ['jpg', 'jpeg', 'png'],
                 changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drop Images here to upload or click here</h3></br><h4>Upto 5 Images,900X600</h4> </div></div></div>',
                 showThumbs: true,
@@ -3918,7 +3918,40 @@
                     data: { 'Uniqueid': $('#hdUniqueguid').val() },
                     type: 'POST',
                     enctype: 'multipart/form-data',
-                    beforeSend: function () { },
+                    beforeSend: function (el) {
+                        console.log(el[0].className);
+                        var x = el[0].parentElement;
+                        var len=el[0].parentElement.childNodes.length;
+                      
+
+                        var input = document.getElementById("input2");
+                       
+                       
+                        if (input.files && input.files.length == 1) {
+                            if (input.files[0].size > 2097152) {
+                                alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
+                            
+                               
+                               // if (len==1)
+                               //{
+                                   
+                               //   var div=  document.getElementById("drag-drop");
+                               //   console.log(el[0].parentElement.parentElement.parentElement);
+                               //   var u = document.getElementsByClassName("jFiler-items");
+                               //   var y = document.getElementsByClassName("jFiler-input-inner");
+                               //  console.log( el[0].parentElement.parentElement.parentElement.childNodes[0].style.display="block");
+                               //  console.log(  el[0].parentElement.parentElement.parentElement.childNodes[0])
+                               //   console.log(y);
+                                 
+                                
+                                   
+                               // }
+                                x.removeChild(el[0]);
+                                return false;
+                            }
+                        }
+
+                    },
                     success: function (data, el) {
                         console.log(data);
                         var parent = el.find(".jFiler-jProgressBar").parent();
@@ -3950,13 +3983,17 @@
 
 
                     },
+                   
                     error: function (el) {
+                     
+                        
                         var parent = el.find(".jFiler-jProgressBar").parent();
+                      
                         el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
                             $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
                         });
                     },
-                    statusCode: {},
+                    statusCode:{},
                     onProgress: function () { },
                 },
                 dragDrop: {
@@ -3991,9 +4028,13 @@
 
                 },
                 onEmpty: function (el) {
-
+                    var x = el[0].childNodes[1].childNodes[1].childNodes.length;
+                    
+                    var len = el[0].parentElement.childNodes.length;
+                    alert(x);
+                    alert($(".jFiler-items ul li").length);
                     if ($("#imageeror").val() == 0) {
-                        if ($(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                        if (x<1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
                     }
                 },
                 captions: {
