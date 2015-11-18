@@ -16,6 +16,7 @@ namespace CMS.Controllers
             {
                 templatename = "Welcome";
             }
+            ViewBag.EmailTags = db.Email_Tag.Select(x => x.Tag_Name).ToList();
             EmailTemplate obj = new EmailTemplate();
             obj = EmailData(templatetag);
             if(obj!=null)
@@ -32,14 +33,14 @@ namespace CMS.Controllers
                 return View(obj1);
 
             }
-           
+            
         }
         [HttpPost, ValidateInput(false)]
         public ActionResult Index(EmailTemplate model)
         {
             if (ModelState.IsValid)
             {
-
+                ViewBag.EmailTags = db.Email_Tag.Select(x=>x.Tag_Name).ToList();
                 EmailTemplate obj = new EmailTemplate();
                 obj = EmailData(model.emailtag);
                 if (obj != null)
@@ -54,9 +55,10 @@ namespace CMS.Controllers
                         //email.Template_Name = model.emailtag;
                         email.Subject = model.Subject;
                         email.To = model.To;
+                        email.From = model.From;
                         email.CC = model.CC;
                         email.Bcc = model.Bcc;
-                        email.TemplateHtml = model.ckeditor1;
+                        email.TemplateHtml =model.ckeditor1;
 
 
                         objEntity.SaveChanges();

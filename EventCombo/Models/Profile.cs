@@ -45,6 +45,7 @@ namespace EventCombo.Models
         public string Organiser { get; set; }
         public string Merchant { get; set; }
         public string UserStatus { get; set; }
+        public string SendCur_EventDetail { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

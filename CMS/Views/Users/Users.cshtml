@@ -98,7 +98,7 @@
                                     <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="5">
                                         <thead class="bg_white">
                                             <tr>
-                                                <th>#</th>
+                                                <th>Sno.</th>
                                                 <th>Name</th>
                                                 <th>Role</th>
                                                 <th>Email Id</th>
@@ -108,8 +108,8 @@
                                                 <th>Organiser</th>
                                                 <th>Merchant</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
-                                                <th>Online</th>
+                                                <td>Action</td>
+                                                <td>Online</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -120,7 +120,7 @@
                                                     i = i + 1;
                                                     <tr>
 
-                                                        <td>@i.ToString()</td>
+                                                        <td>@i</td>
                                                         <td class="eml-ellps" title="@obj.FirstName @obj.LastName">
 
                                                             @obj.FirstName  @obj.LastName

@@ -21,7 +21,7 @@ namespace EventCombo.Models
             }
             catch (Exception)
             {
-                result = "There some error comes.Please contact system administrator";
+                result = "There is some error.Please contact system administrator";
             }
             return result;
         }

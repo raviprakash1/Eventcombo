@@ -39,7 +39,7 @@
     @Html.AntiForgeryToken()
     if (ViewData["Message"] != null)
                             {
-        <div class="er_suc_main alert-success" id="divaccsuc">
+        <div class="er_suc_main alert-success" id="divaccsuc" tabindex="-1">
             <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
             <div class="er_suc_img"></div>
             <div class="er_suc">@ViewData["Message"] </div>
@@ -49,7 +49,7 @@
     if (!ViewData.ModelState.IsValid)
     {
         
-        <div class="er_UI_main alert-danger" id="diverro1acc">
+        <div class="er_UI_main alert-danger" id="diverro1acc" tabindex="-1">
             <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1acc">&#215;</button>
             <div class="er_sys_img"></div>
             <div class="er_suc" id="erraccsucc">@Html.ValidationMessage("Error")</div>
@@ -62,7 +62,7 @@
             <div class="er_suc">@ViewData["Error"]</div>
         </div>
    }*@
-        <div class="er_UI_main alert-danger" id="diverroacc" style="display :none;">
+        <div class="er_UI_main alert-danger" id="diverroacc" style="display :none;" tabindex="-1">
             
             @*<div class="alert alert-danger alert-dismissable">*@
                 <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverroacc">&#215;</button>
@@ -306,18 +306,27 @@
             $('#diverroacc').css('display', 'none');
             $('#divaccsuc').css('display', 'none');
             $("input").removeClass('err-bor');
+            $("#month").removeClass('err-bor');
+            $("#day").removeClass('err-bor');
+            $("#year").removeClass('err-bor');
         });
         $('#btndivaccsuc').click(function () {
             $('#diverro1acc').css('display', 'none');
             $('#diverroacc').css('display', 'none');
             $('#divaccsuc').css('display', 'none');
             $("input").removeClass('err-bor');
+            $("#month").removeClass('err-bor');
+            $("#day").removeClass('err-bor');
+            $("#year").removeClass('err-bor');
 
         })
         $('#btndiverro1acc').click(function () {
             $('#diverro1acc').css('display', 'none');
             $('#diverroacc').css('display', 'none');
             $("input").removeClass('err-bor');
+            $("#month").removeClass('err-bor');
+            $("#day").removeClass('err-bor');
+            $("#year").removeClass('err-bor');
 
         })
         $('#btndiverroacc').click(function () {
@@ -325,6 +334,10 @@
             $('#diverro1acc').css('display', 'none');
             $('#diverroacc').css('display', 'none');
             $("input").removeClass('err-bor');
+            $("#month").removeClass('err-bor');
+            $("#day").removeClass('err-bor');
+            $("#year").removeClass('err-bor');
+            
            
         })
 
@@ -378,10 +391,25 @@
 
         });
         var Model = "@Html.Raw(Model.editsave)";
-        console.log(Model)
+      
         var files1 = '@(MvcHtmlString.Create(Json.Encode(ViewData["results"])))';
-        console.log(files1)
+      
         $(document).ready(function () {
+            //$('#WebsiteURL').bind('keypress', function (event) {
+            //    var regex = new RegExp("^[a-zA-Z0-9]+$");
+            //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            //    if (!regex.test(key)) {
+            //        event.preventDefault();
+            //        return false;
+            //    }
+            //});
+
+
+            //$('#WebsiteURL').bind('cut copy paste', function (event) {
+            //    event.preventDefault();
+            //    return false;
+            //});
+
 
             if (Model == "Save") {
                 $('#input2').filer({
@@ -513,10 +541,10 @@
                         drop: "Drop file here to Upload",
                         removeConfirmation: "Are you sure you want to remove this file?",
                         errors: {
-                            filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
-                            filesType: "Only files with extension .jpg,.png,.jpeg are allowed to be uploaded.",
-                            filesSize: "Image is too large! Please upload file up to {{fi-maxSize}} MB.",
-                            filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                            filesLimit: ajaxsetup('MyAccount', 'MyAccountImageCountValidationUI'),
+                            filesType: ajaxsetup('MyAccount', 'MyAccountImagestypeValidationUI'),
+                            filesSize: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI'),
+                            filesSizeAll: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI')
                         }
                     }
 
@@ -654,10 +682,10 @@
                         errors: {
                            
 
-                            filesLimit: "Only {{fi-limit}} photos are allowed to be uploaded.",
-                            filesType: "Only files with extension jpg,.png,.jpeg are allowed to be uploaded.",
-                            filesSize: "Image is too large! Please upload file up to {{fi-maxSize}} MB.",
-                            filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                            filesLimit: ajaxsetup('MyAccount', 'MyAccountImageCountValidationUI'),
+                            filesType: ajaxsetup('MyAccount', 'MyAccountImagestypeValidationUI'),
+                            filesSize: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI'),
+                            filesSizeAll: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI')
                         }
                     },
                     files: [{
@@ -700,7 +728,7 @@
         $('#btnsave').click(function () {
             var msg = "";
             var firstnmae = $("#Firstname").val();
-           
+            var emailcount = 0, pwdcount = 0;;
             var lastname = $("#Lastname").val();
             var ConfirmPassword = $("#ConfirmPassword").val();
 
@@ -722,7 +750,7 @@
             {
               
                 if (day > 29 && month == 2) {
-                    msg += "Invalid Date\n";
+                    msg += ajaxsetup('MyAccount', 'MyAccountDateValidationUI');
                  
                     $('#month').addClass('err-bor');
                     $('#year').addClass('err-bor');
@@ -733,7 +761,7 @@
             else {
                 if (day > 28 && month == 2) {
                     
-                    msg += "Invalid Date\n";
+                    msg += ajaxsetup('MyAccount', 'MyAccountDateValidationUI');
                     $('#month').addClass('err-bor');
                     $('#year').addClass('err-bor');
                     $('#day').addClass('err-bor');
@@ -742,42 +770,34 @@
             if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
             {
                 
-                msg += "Invalid Date\n";
+                msg += ajaxsetup('MyAccount', 'MyAccountDateValidationUI');
                 $('#month').addClass('err-bor');
                 $('#year').addClass('err-bor');
                 $('#day').addClass('err-bor');
 
             }
           
-            if (firstnmae.trim() == " ") {
-                msg += "Please Enter First name! </br>"
-                $('#Firstname').focus();
+            if (firstnmae=="") {
+                msg = ajaxsetup('MyAccount', 'MyAccountFnameRequiredUI');
+               
                 $('#Firstname').addClass('err-bor');
             } else {
                
                 $('#Firstname').removeClass('err-bor');
             }
-            if (lastname.trim() == " ") {
-                msg += "Please Enter Last name! </br>"
-                $('#Lastname').focus();
-                $('#Lastname').addClass('err-bor');
-            } else {
-                $('#Lastname').removeClass('err-bor');
-              
-            }
+         
 
 
 
             if (Email != "") {
                 if (!validateEmail(Email)) {
-                    $('#Email').focus();
+                    emailcount += 1;
                     $('#Email').addClass('err-bor');
-                    msg += "Invalid Email! </br>"
+                  
 
                 } else {
-
-                   
-                    $('#Email').focus();
+                    
+                  
                     $('#Email').removeClass('err-bor');
                 }
             }
@@ -785,9 +805,9 @@
             if (ConfirmEmail != "") {
 
                 if (!validateEmail(ConfirmEmail)) {
-                    $('#ConfirmEmail').focus();
+                    emailcount += 1;
                     $('#ConfirmEmail').addClass('err-bor');
-                    msg += "Invalid Confirm Email! </br>"
+                  
 
                 } else {
                     $('#ConfirmEmail').removeClass('err-bor');
@@ -798,9 +818,9 @@
             }
             if (Password != "") {
                 if (Password.length < 4) {
-                    $('#Password').focus();
+                    pwdcount += 1;
                     $('#Password').addClass('err-bor');
-                    msg += "Password cannot be less than 4!! </br>"
+                    
 
                 }
             }
@@ -808,9 +828,9 @@
             {
                 if (NewPassword.length < 4)
                 {
-                    $('#NewPassword').focus();
-                    $('#NewPassword').removeClass('err-bor');
-                    msg += "New Password length cannot be less than 4!</br>"
+                    pwdcount += 1;
+                    $('#NewPassword').addClass('err-bor');
+                    
 
                 }
                
@@ -818,26 +838,24 @@
             }
             if (ConfirmPassword != "") {
                 if (ConfirmPassword.length < 4) {
-                    $('#ConfirmPassword').focus();
+                    pwdcount += 1;
                     $('#ConfirmPassword').addClass('err-bor');
-                    msg += "Confirm Password length cannot be less than 4! </br>"
-
+                   
                 }
 
 
             }
-            //if (Email.Trim() == ConfirmEmail.Trim()) {
-            //    alert('equal')
+          
+            if (emailcount > 0)
+            {
+                msg += ajaxsetup('MyAccount', 'MyAccountEmailValidationUI') ;
 
-            //}
-            //else {
-            //    $('#ConfirmEmail').focus();
-            //    $('#ConfirmEmail').css("border", "red solid 1px");
-            //    msg += "Confirm Email doesnot match Email!! </br>"
-            //    alert('unequal')
+            }
+            if (pwdcount > 0)
+            {
+                msg = ajaxsetup('MyAccount', 'MyAccountPasswordValidationUI') ;
 
-            //}
-
+            }
             if (msg == "") {
                 $('#diverroacc').css("display", "none");
                 $("#imageeror").val('0');
@@ -850,6 +868,8 @@
                 $('#divaccsuc').css("display", "none");
                 
                 $('#diverroacc').css("display", "block");
+                
+                $('#diverroacc').focus();
                 return false;
             }
         });
@@ -872,7 +892,7 @@
         var val1, val2;
         $('#Zip').change(function () {
             var country = $("#Country option:selected").text().trim();
-            console.log(country);
+           
             var city = "";
             var state = "";
 
@@ -934,15 +954,40 @@
 
 
                     else {
-                       
-                        $('#erraccmsg').html('Invalid Zip/Pin Code');
+                        var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                        $('#erraccmsg').html(msg);
+                        $('#diverro1acc').css("display", "none");
+                        $('#divaccsuc').css("display", "none");
+
                         $('#diverroacc').css("display", "block");
+
+                        $('#diverroacc').focus();
+                      
                         $('#Zip').addClass('err-bor');
                         return false;
                     }
                 }
             });
         });
+
+        function ajaxsetup(strname, strFormTag) {
+            var msgnew = "";
+
+            var request = $.ajax({
+                url: "/ValidationMessage/Index",
+                async: false,
+                data: { strFormName: strname, strFormTag: strFormTag },
+                type: 'Post'
+            });
+            request.done(function (msg) {
+                msgnew += msg;
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+                msgnew += "Some Error occur!!";
+            });
+            return msgnew;
+        }
     </script>
     <script src="~/Scripts/jquery.maskedinput.min.js"></script>
 

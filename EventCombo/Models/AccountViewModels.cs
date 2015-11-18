@@ -9,6 +9,18 @@ namespace EventCombo.Models
         public LoginViewModel LoginViewModel { get; set; }
         public RegisterViewModel RegisterViewModel { get; set; }
     }
+    public class LoginResultViewModel
+    {
+        public LoginResultViewModel(bool success, string returnUrl)
+        {
+            Success = success;
+            ReturnUrl = returnUrl;
+        }
+
+        public bool Success { get; set; }
+        public string ReturnUrl { get; set; }
+
+    }
     public class ForgetPassword
     {
         public string Email { get; set; }
@@ -87,7 +99,7 @@ namespace EventCombo.Models
         public string ImagePresent { get; set; }
        public string userimage { get; set; }
 
-
+        public string SendLatestdetails { get; set; }
 
 
 

@@ -360,6 +360,242 @@ namespace EventCombo.Controllers
             }
 
         }
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> MyAccount(myAccount model, HttpPostedFileBase file)
+        {
+            string msg = "", errormessage = "", successmsg = "";
+            var validationresult = "";
+            if (Session["AppId"] != null)
+            {
+                string Userid = Session["AppId"].ToString();
+                string imagepresent = model.ImagePresent;
+
+                ValidationMessageController vmc = new ValidationMessageController();
+                validationresult = vmc.Index("", "");
+                var accountdetail = GetLoginDetails(Userid);
+                if (string.IsNullOrEmpty(model.Firstname))
+                {
+                    validationresult = vmc.Index("MyAccount", "MyAccountFnameRequiredUI");
+                    ModelState.AddModelError("Error", validationresult);
+
+                }
+                if (!string.IsNullOrEmpty(model.ConfirmEmail))
+                {
+                    if (model.Email != model.ConfirmEmail)
+                    {
+                        validationresult = vmc.Index("MyAccount", "MyAccountEmailmatchValidationSy");
+                        ModelState.AddModelError("Error", validationresult);
+
+                    }
+                }
+                if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
+                {
+                    if (model.NewPassword != model.ConfirmPassword)
+                    {
+                        validationresult = vmc.Index("MyAccount", "MyAccountPwdmatchValidationSy");
+                        ModelState.AddModelError("Error", validationresult);
+
+
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(model.Password))
+                {
+
+                    var user12 = UserManager.FindByEmail(accountdetail.PreviousEmail);
+                    var result = UserManager.PasswordHasher.VerifyHashedPassword(user12.PasswordHash, model.Password);
+                    if (result.ToString() != "Success")
+                    {
+                        validationresult = vmc.Index("MyAccount", "MyAccountPwdValidationSys");
+                        ModelState.AddModelError("Error", validationresult);
+
+                    }
+                }
+                var userimage = model.userimage;
+
+                if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.ConfirmEmail))
+                {
+                    if (model.PreviousEmail != model.Email)
+                    {
+                        var user = UserManager.FindByEmail(model.Email);
+                        if (user != null)
+                        {
+                            validationresult = vmc.Index("MyAccount", "MyAccountEmailAlreadyExistSY");
+                            ModelState.AddModelError("Error", validationresult);
+                        }
+                    }
+                }
+
+                if (ModelState.IsValid)
+                {
+
+                    using (EventComboEntities objEntity = new EventComboEntities())
+                    {
+                        var ApplicationUser = objEntity.AspNetUsers.Find(Userid);
+                        Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
+
+                        if (userimage != null)
+                        {
+                            string[] images = userimage.Split('¶');
+                            profile.UserProfileImage = images[0];
+                            profile.ContentType = images[1];
+                            model.UserProfileImage = images[0];
+                            model.contentype = images[1];
+                            model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + images[0];
+                            model.editsave = "Edit";
+                        }
+                        else
+                        {
+                            model.editsave = "Save";
+                            model.UserProfileImage = "image-drop2.gif";
+                            profile.UserProfileImage = "";
+                            profile.ContentType = "";
+                        }
+                        profile.FirstName = model.Firstname;
+                        profile.LastName = model.Lastname;
+                        profile.StreetAddressLine1 = model.StreetAddress1;
+                        profile.StreetAddressLine2 = model.StreeAddress2;
+                        profile.City = model.City;
+                        profile.State = model.State;
+                        profile.Zip = model.Zip;
+                        profile.CountryID = byte.Parse(model.Country);
+                        profile.MainPhone = model.MainPhone;
+                        profile.SecondPhone = model.SecondPhone;
+                        profile.WorkPhone = model.WorkPhone;
+                        profile.WebsiteURL = model.WebsiteURL;
+
+
+                        profile.Gender = model.Gender;
+                        profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
+                        if (!checkexternallogin(Userid))
+                        {
+                            if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
+                            {
+                                profile.Email = model.Email;
+
+                                successmsg = vmc.Index("MyAccount", "MyAccountSuccessEmailSY");
+
+                            }
+                        }
+                        try
+                        {
+                            objEntity.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
+
+                        }
+
+                    }
+                    using (EventComboEntities objEntity = new EventComboEntities())
+                    {
+                        AspNetUser aspuser = objEntity.AspNetUsers.First(i => i.Id == Userid);
+                        if (!checkexternallogin(Userid))
+                        {
+                            if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
+                            {
+                                aspuser.Email = model.Email;
+                                aspuser.UserName = model.Email;
+
+
+                                try
+                                {
+                                    objEntity.SaveChanges();
+                                }
+                                catch (Exception ex)
+                                {
+                                    string message = ex.Message;
+
+                                }
+                            }
+                        }
+                    }
+
+
+
+                    if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
+                    {
+                        var token = await UserManager.GeneratePasswordResetTokenAsync(Userid);
+
+                        var result = await UserManager.ResetPasswordAsync(Userid, token, model.NewPassword);
+                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessPasswordSY") + successmsg;
+
+                    }
+
+
+                    var countryQuery = (from c in db.Countries
+                                        orderby c.Country1 ascending
+                                        select c).Distinct();
+                    List<SelectListItem> countryList = new List<SelectListItem>();
+                    string defaultCountry = model.Country;
+                    foreach (var item in countryQuery)
+                    {
+                        countryList.Add(new SelectListItem()
+                        {
+                            Text = item.Country1,
+                            Value = item.CountryID.ToString(),
+                            Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
+                        });
+                    }
+                    ViewBag.Country = countryList;
+
+                    if (successmsg != "")
+                    {
+                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY") + "," + successmsg;
+                    }
+                    else
+                    {
+                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY");
+                    }
+
+                    ViewData["Message"] = successmsg;
+                    return View(model);
+
+                }
+
+
+
+                var countryQuery12 = (from c in db.Countries
+                                      orderby c.Country1 ascending
+                                      select c).Distinct();
+                List<SelectListItem> countryList12 = new List<SelectListItem>();
+                string defaultCountry12 = model.Country;
+                foreach (var item in countryQuery12)
+                {
+                    countryList12.Add(new SelectListItem()
+                    {
+                        Text = item.Country1,
+                        Value = item.CountryID.ToString(),
+                        Selected = (item.CountryID.ToString().Trim() == defaultCountry12.Trim() ? true : false)
+                    });
+                }
+                ViewBag.Country = countryList12;
+                if (string.IsNullOrEmpty(accountdetail.UserProfileImage))
+                {
+                    model.editsave = "Save";
+                    model.UserProfileImage = "image-drop2.gif";
+                }
+                else
+                {
+                    model.UserProfileImage = accountdetail.UserProfileImage;
+                    model.contentype = accountdetail.contentype;
+                    model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + accountdetail.UserProfileImage;
+                    model.editsave = "Edit";
+
+                }
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
+
+        }
         public ActionResult SaveUploadedFile()
         {
             if (Session["AppId"] != null)
@@ -543,243 +779,7 @@ namespace EventCombo.Controllers
             string path = file.FileName;
             img.Save(path1, getImageFormat(path));
         }
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> MyAccount(myAccount model, HttpPostedFileBase file)
-        {
-            string msg = "", errormessage = "";
-            if (Session["AppId"] != null)
-            {
-                string Userid = Session["AppId"].ToString();
-                string imagepresent = model.ImagePresent;
-                var accountdetail = GetLoginDetails(Userid);
-                if (string.IsNullOrEmpty(model.Firstname))
-                {
-
-                    ModelState.AddModelError("Error", "Please provide first name and last name!");
-
-                }
-                if (!string.IsNullOrEmpty(model.ConfirmEmail))
-                {
-                    if (model.Email != model.ConfirmEmail)
-                    {
-                        ModelState.AddModelError("Error", "Email and email verification doesn't match!");
-
-                    }
-                }
-                if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
-                {
-                    if (model.NewPassword != model.ConfirmPassword)
-                    {
-                        ModelState.AddModelError("Error", "New password and confirm new password doesn't match!");
-
-
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(model.Password))
-                {
-
-                    var user12 = UserManager.FindByEmail(accountdetail.PreviousEmail);
-                    var result = UserManager.PasswordHasher.VerifyHashedPassword(user12.PasswordHash, model.Password);
-                    if (result.ToString() != "Success")
-                    {
-                        ModelState.AddModelError("Error", "Invalid current password!");
-
-                    }
-                }
-                var userimage = model.userimage;
-               
-                if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.ConfirmEmail))
-                {
-                    if (model.PreviousEmail != model.Email)
-                    {
-                        var user = UserManager.FindByEmail(model.Email);
-                        if (user != null)
-                        {
-                            ModelState.AddModelError("Error", "Confirm email already exist!");
-                            //errormessage += "Confirm email already exist!! </br>";
-                        }
-                    }
-                }
-
-                if (ModelState.IsValid)
-                {
-
-                    using (EventComboEntities objEntity = new EventComboEntities())
-                    {
-                        var ApplicationUser = objEntity.AspNetUsers.Find(Userid);
-                        Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
-                        //var profile = from b in objEntity.Profiles
-                        //            where b.UserID== Userid
-                        //              select b;
-                        if (userimage != null)
-                        {
-                            string[] images = userimage.Split('¶');
-                            profile.UserProfileImage = images[0];
-                            profile.ContentType = images[1];
-                            model.UserProfileImage = images[0];
-                            model.contentype = images[1];
-                            model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + images[0];
-                            model.editsave = "Edit";
-                        }
-                        else
-                        {
-                            model.editsave = "Save";
-                            model.UserProfileImage = "image-drop2.gif";
-                            profile.UserProfileImage = "";
-                            profile.ContentType = "";
-                        }
-                        profile.FirstName = model.Firstname;
-                        profile.LastName = model.Lastname;
-                        profile.StreetAddressLine1 = model.StreetAddress1;
-                        profile.StreetAddressLine2 = model.StreeAddress2;
-                        profile.City = model.City;
-                        profile.State = model.State;
-                        profile.Zip = model.Zip;
-                        profile.CountryID = byte.Parse(model.Country);
-                        profile.MainPhone = model.MainPhone;
-                        profile.SecondPhone = model.SecondPhone;
-                        profile.WorkPhone = model.WorkPhone;
-                        profile.WebsiteURL = model.WebsiteURL;
-                        //if (imagepresent == "NO")
-                        //{
-                        //    profile.UserProfileImage = "";
-                        //}
-
-                        profile.Gender = model.Gender;
-                        profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
-                        if (!checkexternallogin(Userid))
-                        {
-                            if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
-                            {
-                                profile.Email = model.Email;
-
-                            }
-                        }
-                        try
-                        {
-                            objEntity.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            string message = ex.Message;
-
-                        }
-
-                    }
-                    using (EventComboEntities objEntity = new EventComboEntities())
-                    {
-                        AspNetUser aspuser = objEntity.AspNetUsers.First(i => i.Id == Userid);
-                        if (!checkexternallogin(Userid))
-                        {
-                            if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
-                            {
-                                aspuser.Email = model.Email;
-                                aspuser.UserName = model.Email;
-
-
-
-                                //   objEntity.AspNetUsers.Attach(aspuser);
-                                try
-                                {
-                                    objEntity.SaveChanges();
-                                }
-                                catch (Exception ex)
-                                {
-                                    string message = ex.Message;
-
-                                }
-                            }
-                        }
-                    }
-
-
-
-                    if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
-                    {
-                        var token = await UserManager.GeneratePasswordResetTokenAsync(Userid);
-
-                        var result = await UserManager.ResetPasswordAsync(Userid, token, model.NewPassword);
-
-                    }
-
-
-                    var countryQuery = (from c in db.Countries
-                                        orderby c.Country1 ascending
-                                        select c).Distinct();
-                    List<SelectListItem> countryList = new List<SelectListItem>();
-                    string defaultCountry = model.Country;
-                    foreach (var item in countryQuery)
-                    {
-                        countryList.Add(new SelectListItem()
-                        {
-                            Text = item.Country1,
-                            Value = item.CountryID.ToString(),
-                            Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
-                        });
-                    }
-                    ViewBag.Country = countryList;
-
-                    //if (string.IsNullOrEmpty(accountdetail.UserProfileImage))
-                    //{
-                    //    model.editsave = "Save";
-                    //    model.UserProfileImage = "image-drop2.gif";
-                    //}
-                    //else
-                    //{
-                    //    model.UserProfileImage = accountdetail.UserProfileImage;
-                    //    model.contentype = accountdetail.contentype;
-                    //    model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + accountdetail.UserProfileImage;
-                    //    model.editsave = "Edit";
-
-                    //}
-                    ViewData["Message"] = "Updated Successfully!!!!!";
-                    return View(model);
-
-                }
-
-
-
-                var countryQuery12 = (from c in db.Countries
-                                      orderby c.Country1 ascending
-                                      select c).Distinct();
-                List<SelectListItem> countryList12 = new List<SelectListItem>();
-                string defaultCountry12 = model.Country;
-                foreach (var item in countryQuery12)
-                {
-                    countryList12.Add(new SelectListItem()
-                    {
-                        Text = item.Country1,
-                        Value = item.CountryID.ToString(),
-                        Selected = (item.CountryID.ToString().Trim() == defaultCountry12.Trim() ? true : false)
-                    });
-                }
-                ViewBag.Country = countryList12;
-                if (string.IsNullOrEmpty(accountdetail.UserProfileImage))
-                {
-                    model.editsave = "Save";
-                    model.UserProfileImage = "image-drop2.gif";
-                }
-                else
-                {
-                    model.UserProfileImage = accountdetail.UserProfileImage;
-                    model.contentype = accountdetail.contentype;
-                    model.ImagePath = "/Images/Profile/Profile_Images/imagepath/" + accountdetail.UserProfileImage;
-                    model.editsave = "Edit";
-
-                }
-
-                return View(model);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-
-            }
-
-        }
+      
 
         public myAccount GetLoginDetails(string userid)
         {
@@ -810,7 +810,8 @@ namespace EventCombo.Controllers
                                           contentype = pfd.ContentType,
                                           Dateofbirth = pfd.DateofBirth,
                                           Gender = pfd.Gender,
-                                          PreviousEmail = cpd.Email
+                                          PreviousEmail = cpd.Email,
+                                          SendLatestdetails=pfd.SendCur_EventDetail
                                       });
                 return modelmyaccount.FirstOrDefault();
 
@@ -908,7 +909,14 @@ namespace EventCombo.Controllers
                     {
                         Session["AppId"] = User.Id;
 
-                        return RedirectToLocal(url);
+                        using (EventComboEntities db = new EventComboEntities())
+                        {
+                            AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
+                            aspuser.LoginStatus = "Y";
+                            db.SaveChanges();
+
+                        }
+                            return RedirectToLocal(url);
                     }
                     else
                     {
@@ -1242,14 +1250,22 @@ namespace EventCombo.Controllers
             string firstname = "", Lastnmae = "", Email = "";
             if (loginInfo == null)
             {
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
+                return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index","Home")));
             }
+            //return RedirectToAction("Index", "Home");
+            
 
             // var info = await AuthenticationManager.GetExternalLoginInfoAsync();
             string url = null;
             if (Session["ReturnUrl"] != null)
             {
                 url = Session["ReturnUrl"].ToString();
+            }
+            else
+            {
+
+                url = Url.Action("Index", "Home");
             }
 
             var user = UserManager.FindByEmail(loginInfo.Email);
@@ -1327,17 +1343,23 @@ namespace EventCombo.Controllers
                             }
 
                         }
-                        return RedirectToLocal(url);
+                       // return View("LoginResult", new LoginResultViewModel(true, url));
+
+                       return RedirectToLocal(url);
                     }
                     else
                     {
+                       // return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index", "Home")));
+
                         return RedirectToAction("Index", "Home");
 
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index", "Home")));
+
+                  // return RedirectToAction("Index", "Home");
 
                 }
 
@@ -1421,8 +1443,9 @@ namespace EventCombo.Controllers
                 }
                 var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
                 Session["AppId"] = user.Id;
+               return View("LoginResult", new LoginResultViewModel(true, url));
 
-                       return RedirectToLocal(url);
+              // return RedirectToLocal(url);
                 //if (result == SignInStatus.Success)
                 //{
                 //    //var User = UserManager.FindByEmail(model.Email.ToString());
@@ -1572,6 +1595,17 @@ namespace EventCombo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            var userid = Session["AppId"].ToString();
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                AspNetUser aspuser = db.AspNetUsers.FirstOrDefault(i => i.Id == userid);
+                if (aspuser != null)
+                {
+                    aspuser.LoginStatus = "N";
+                    db.SaveChanges();
+                }
+
+            }
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             Session["Fromname"] = null;
             Session["AppId"] = null;

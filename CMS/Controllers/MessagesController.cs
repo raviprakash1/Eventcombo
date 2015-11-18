@@ -37,6 +37,10 @@ namespace CMS.Controllers
             //lstmsg = MessageData(Form);
             List<MessageTemplate> lstmsg = new List<MessageTemplate>();
             lstmsg = MessageData(form_name);
+
+            ValidationMessageController vmc = new ValidationMessageController();
+            var successmsg = vmc.Index("Messages", "MessageSuccSY");
+            ViewData["Saved"] = successmsg;
             return View(lstmsg);
         }
 

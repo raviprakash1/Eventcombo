@@ -823,7 +823,7 @@
                 var vPromoId = $("#hdPromoId").val();
                 var vVarChanges = $("#hdVarChanges").val();
                 var vVarId = $("#hdVarId").val();
-
+                debugger;
                 var model = {
 
                     'AccFname': $('#accfname').val(),
@@ -863,8 +863,10 @@
                     'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
                     'Ticketname': type
                 }
+
                 var Eventid = $('#hdEventid').val();
               //  alert(Eventid);
+
                 $.ajax({
                     url: '@Url.Action("SaveDetails", "TicketPayment")',
                     beforeSend: function () { $('#dvAjxSave').show(); },
@@ -872,7 +874,7 @@
                     data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId },
                     type: "Post",
                     success: function (response) {
-
+                        var Eventid = $('#hdEventid').val();
                         window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment",new{ })?Eventid='+Eventid;
 
 

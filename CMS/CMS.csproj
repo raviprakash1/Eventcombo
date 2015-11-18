@@ -178,6 +178,7 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\ValidationMessageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1025,6 +1026,7 @@
     <Folder Include="Ckeditor\plugins\" />
     <Folder Include="Ckeditor\skins\" />
     <Folder Include="Views\Permission\" />
+    <Folder Include="Views\ValidationMessage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
