@@ -46,27 +46,79 @@ namespace CMS.Controllers
 
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
-            
+            List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+            int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
             List<SelectListItem> PageFilter = new List<SelectListItem>();
+             
             PageFilter.Add(new SelectListItem()
             {
-                Text = "1 - 5",
-                Value = "5",
-                Selected = true
+                Text = "Select",
+                Value = "0",
+                Selected = (iCount == 0 ? true : false)
             });
-            PageFilter.Add(new SelectListItem()
+
+            int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 5;
+            string strText = "";
+            if (iUcount > iGapValue)
             {
-                Text = "5 - 10",
-                Value = "10",
-                Selected = true
-            });
+                for (i = 0; i < iUcount; i++)
+                {
+                    strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                    PageFilter.Add(new SelectListItem()
+                    {
+                        Text = strText,
+                        Value = (z+ iGapValue).ToString(),
+                        Selected = (iCount == z ? true : false)
+                    });
+                    z = z + iGapValue;
+                    iUcount = iUcount - iGapValue;
+                    if (iUcount < iGapValue)
+                    {
+                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                        PageFilter.Add(new SelectListItem()
+                        {
+                            Text = strText,
+                            Value = (z + iGapValue).ToString(),
+                            Selected = (iCount == z ? true : false)
+                        });
+                    }
+                }
+            }
+            else
+            {
+                PageFilter.Add(new SelectListItem()
+                {
+                    Text = "0 - 50",
+                    Value = "50",
+                    Selected = (iCount == 50 ? true : false)
+                });
+
+            }
+
+            //PageFilter.Add(new SelectListItem()
+            //{
+            //    Text = "1 - 5",
+            //    Value = "5",
+            //    Selected = (iCount == 5 ? true : false)
+            //});
+            //PageFilter.Add(new SelectListItem()
+            //{
+            //    Text = "5 - 10",
+            //    Value = "10",
+            //    Selected = (iCount == 10 ? true : false)
+            //});
 
             ViewBag.PageF = PageFilter;
 
-            List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
-            int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
-            if (iCount>0)
-                objuser = objuser.GetRange(iCount - 5, 5);
+
+
+            if (iCount > 0)
+            {
+                if (iCount <objuser.Count)
+                    objuser = objuser.GetRange(iCount - 5, 5);
+                else
+                    objuser = objuser.GetRange(iCount - 5, ((iCount- objuser.Count) +1));
+            }
             // List<Permissions> objPerm = GetPermission("APP");
             // UsersTemplate objU = new UsersTemplate();
             //  objU.objPermissions = GetPermission("APP");

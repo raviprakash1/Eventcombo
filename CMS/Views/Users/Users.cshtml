@@ -357,7 +357,7 @@
                         </div>
                         <div class="panel-footer text-right" id="dvSave">
                            
-                            <button class="btn btn-primary"  id="btSave" type="button">Save</button>
+                            <button class="btn btn-primary close-mg"  id="btSave" type="button">Save</button>                            
                         </div>
                         @Html.Hidden("hdCurrentUserRole")
                     </div>
@@ -380,6 +380,10 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
+            $('.close-mg').on('click', function (e) {
+                $.magnificPopup.close();
+            });
+
             $.ajax({
                 url: '@Url.Action("CurrentUserRole", "Permission")',
                 datatype: "Text",
