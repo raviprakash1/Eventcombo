@@ -201,6 +201,24 @@
                                     <span class="sidebar-title">Sign Up Form</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7C');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title">Forget Password Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7D');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title">Reset Password Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7E');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title">Create Event Form</span>
+                                </a>
+                            </li>
                          </ul>   
                     </li>
                    
@@ -250,7 +268,7 @@
             var vPerm = PermisionId;
           //  alert(vPerm);
 
-            if (PermisionId == "7A" || PermisionId == "7B")
+            if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E")
             {
                 PermisionId = "7";
             }
@@ -282,6 +300,12 @@
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Login" })';
                         else if (vPerm == "7B")
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Signup" })';
+                        else if (vPerm == "7C")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgotPwd" })';
+                        else if (vPerm == "7D")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "PwdReset" })';
+                        else if (vPerm == "7E")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "CreateEvent" })';
                         else if (vPerm == "4")
                             window.location.href = '@Url.Action("Index", "ManageEvent")';
                     }
@@ -292,7 +316,7 @@
 
         }
 
-
+    
 
         jQuery(document).ready(function () {
 

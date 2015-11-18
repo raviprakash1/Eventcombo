@@ -335,7 +335,7 @@
         data = ev.dataTransfer.getData("text");
         console.log(ev);
         var dropText;
-        dropText = "$$" + data.trim() + "$$";
+        dropText = "¶¶" + data.trim() + "¶¶";
         console.log(dropText);
         var target = ev.target || ev.srcElement;
         //var idtarget = document.getElementById($('#' + ev.target.id));
@@ -403,7 +403,7 @@
     //$("span.dbclickcss").dblclick(function () {
     //    alert($(this).text());
     //    var text = $('input.Insertinto').val();
-    //    text += "   $$" + $(this).text() + "$$";
+    //    text += "   ¶¶" + $(this).text() + "¶¶";
     //    $('input.Insertinto').val(text);
     //})
                 // Replace the <textarea id="editor1"> with a CKEditor
@@ -445,13 +445,13 @@
     //            {
                    
     //                 c = a.replace(b, '');
-    //                 c = '$$' + c + '$$';
+    //                 c = '¶¶' + c + '¶¶';
     //                 e.data.$.target.innerHTML = b + c;
 
     //            } else
     //            {
     //                console.log('asdasdasd');
-    //                c = '$$' + a + '$$';
+    //                c = '¶¶' + a + '$$';
     //                e.data.$.target.innerHTML = "<p>"+c+"</p>";
     //            }
 
@@ -493,10 +493,10 @@
 
             }
 
-            if (tomail.indexOf('$$') > -1)
+            if (tomail.indexOf('¶¶') > -1)
             {
-                var toReplace = tomail.replace('$$', '');
-                toReplace = toReplace.replace('$$', '');
+                var toReplace = tomail.replace('¶¶', '');
+                toReplace = toReplace.replace('¶¶', '');
                 console.log(toReplace)
                 if (toReplace.trim() != "UserEmailID")
                 {
@@ -526,9 +526,9 @@
 
             
 
-                if (frommail.indexOf('$$') > -1) {
-                    var fromReplace = frommail.replace('$$', '');
-                    fromReplace = fromReplace.replace('$$', '');
+                if (frommail.indexOf('¶¶') > -1) {
+                    var fromReplace = frommail.replace('¶¶', '');
+                    fromReplace = fromReplace.replace('¶¶', '');
                     console.log(fromReplace)
                     if (fromReplace.trim() != "UserEmailID") {
                         emailmsg += "Wrong Tag Inserted in from" + "\n";
@@ -565,12 +565,12 @@
                     for (i = 0; i < res.length; i++)
                     {
                    
-                        if (res[i].indexOf('$$') != -1 && res[i].lastIndexOf('$$')!=-1) {
+                        if (res[i].indexOf('¶¶') != -1 && res[i].lastIndexOf('¶¶')!=-1) {
                            
                            
-                            console.log(res[i].lastIndexOf('$$'))
-                            var bccReplace = res[i].replace('$$', '');
-                            bccReplace = bccReplace.replace('$$', '');
+                            console.log(res[i].lastIndexOf('¶¶'))
+                            var bccReplace = res[i].replace('¶¶', '');
+                            bccReplace = bccReplace.replace('¶¶', '');
                             console.log(bccReplace)
                             if (bccReplace.trim() != "UserEmailID") {
                                 emailmsg += "Wrong Tag Inserted in BCC" + "\n";
@@ -601,12 +601,12 @@
                     
                     }
                 }
-                else if (bccmail.indexOf('$$') > -1) 
+                else if (bccmail.indexOf('¶¶') > -1) 
                 {
-                    var bccssplit = bccmail.split('$$');
+                    var bccssplit = bccmail.split('¶¶');
                     console.log(bccssplit)
-                    var bccReplace = res[i].replace('$$', '');
-                    bccReplace = bccReplace.replace('$$', '');
+                    var bccReplace = res[i].replace('¶¶', '');
+                    bccReplace = bccReplace.replace('¶¶', '');
                     console.log(bccReplace)
                     if (bccReplace.trim() != "UserEmailID") 
                     {
@@ -638,11 +638,11 @@
                 if (cc.indexOf(",") > -1) {
                     var res = cc.split(",");
                     for (i = 0; i < res.length; i++) {
-                        if (res[i].indexOf('$$') > -1 && res[i].lastIndexOf('$$') > -1) {
-                            //var bccsplit = res[i].split('$$');
-                            console.log(res[i].lastIndexOf('$$'))
-                            var ccReplace = res[i].replace('$$', '');
-                            ccReplace = ccReplace.replace('$$', '');
+                        if (res[i].indexOf('¶¶') > -1 && res[i].lastIndexOf('¶¶') > -1) {
+                            //var bccsplit = res[i].split('¶¶');
+                            console.log(res[i].lastIndexOf('¶¶'))
+                            var ccReplace = res[i].replace('¶¶', '');
+                            ccReplace = ccReplace.replace('¶¶', '');
                             console.log(ccReplace)
                             if (ccReplace.trim() != "UserEmailID") {
                                 emailmsg += "Wrong Tag Inserted in CC" + "\n";
@@ -670,11 +670,11 @@
 
                     }
                 }
-                else if (cc.indexOf('$$') > -1) {
-                    var ccssplit = bccmail.split('$$');
+                else if (cc.indexOf('¶¶') > -1) {
+                    var ccssplit = bccmail.split('¶¶');
                     console.log(bccssplit)
-                    var ccReplace = res[i].replace('$$', '');
-                    ccReplace = ccReplace.replace('$$', '');
+                    var ccReplace = res[i].replace('¶¶', '');
+                    ccReplace = ccReplace.replace('¶¶', '');
                     console.log(ccReplace)
                     if (ccReplace.trim() != "UserEmailID") {
                         emailmsg += "Wrong Tag Inserted in BCC" + "\n";
@@ -756,7 +756,7 @@
                     console.log($this);
                     var tempid = ui.draggable.text();
                     var dropText;
-                    dropText = "$$" + tempid + "$$";
+                    dropText = "¶¶" + tempid + "¶¶";
                     var ids = $this.attr('id');
                     var droparea = document.getElementById(ids);
                     var range1 = droparea.selectionStart;
@@ -851,7 +851,7 @@
                 if(array.indexOf(contact) > -1)
                 {
                     evt.data.dataValue =
-                   '' +'  $$' + contact + '$$  ' +'';
+                   '' +'  ¶¶' + contact + '¶¶  ' +'';
 
                 }else{
 

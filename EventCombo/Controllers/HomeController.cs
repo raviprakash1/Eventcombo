@@ -244,22 +244,119 @@ namespace EventCombo.Controllers
                 return View(model);
             }
             var user = UserManager.FindByEmail(model.Email);
+            var username = "";
             string id = user.Id;
-            string readFile = "";
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/ForgotPassword.html")))
+            var profile = db.Profiles.Where(x => x.UserID == id).FirstOrDefault();
+            if(profile!=null)
             {
-                readFile = reader.ReadToEnd();
+                username = !string.IsNullOrEmpty(profile.FirstName)? profile.FirstName : "";
+
             }
-            var url = Request.Url;
+          
+            //string readFile = "";
+           // using (StreamReader reader = new StreamReader(Server.MapPath("~/ForgotPassword.html")))
+           // {
+           //     readFile = reader.ReadToEnd();
+           // }
+           var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
            string url1 = baseurl + Url.Action("PasswordReset", "Home") + "?code=" + id +" ";
 
-            string myString = "";
-            myString = readFile;
-            myString = myString.Replace("$$Email$$", model.Email);
-            myString = myString.Replace("$$Website$$", url1);
+           // string myString = "";
+           // myString = readFile;
+           // myString = myString.Replace("¶¶Email¶¶", model.Email);
+           // myString = myString.Replace("¶¶Website¶¶", url1);
 
-            SendMail(model.Email, myString.ToString(), "The Eventcombo Team");
+           // SendMail(model.Email, myString.ToString(), "The Eventcombo Team");
+
+            /// to send email////
+            /// 
+            string to = "", from = "", cc = "", bcc = "", subjectn = "";
+            var bodyn = "";
+            List<Email_Tag> EmailTag = new List<Email_Tag>();
+            EmailTag = getTag();
+
+            var Emailtemplate = getEmail("email_lost_pwd");
+            if (!string.IsNullOrEmpty(Emailtemplate.To))
+            {
+
+
+                to = Emailtemplate.To;
+                if (to.Contains("¶¶UserEmailID¶¶"))
+                {
+                    to = to.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                }
+            }
+            if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+            {
+                from = Emailtemplate.From;
+                if (from.Contains("¶¶UserEmailID¶¶"))
+                {
+                    from = from.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                }
+            }
+            else
+            {
+                from = "shweta.sindhu@kiwitech.com";
+
+            }
+            if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+            {
+
+
+                subjectn = Emailtemplate.Subject;
+
+                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                {
+
+                    if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                    {
+                        if (EmailTag[i].Tag_Name == "UserEmailID")
+                        {
+                            subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                        }
+                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                        {
+                            subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                        }
+
+                    }
+
+                }
+            }
+            if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+            {
+                bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                {
+
+                    if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                    {
+                        if (EmailTag[i].Tag_Name == "UserEmailID")
+                        {
+                            bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                        }
+                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                        {
+                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                        }
+                        if (EmailTag[i].Tag_Name == "ResetPwdUrl")
+                        {
+                            bodyn = bodyn.Replace("¶¶ResetPwdUrl¶¶", url1);
+
+                        }
+
+                    }
+
+                }
+            }
+            SendHtmlFormattedEmail(to, from, subjectn, bodyn);
             ValidationMessageController vmc = new ValidationMessageController();
            var msg= vmc.Index("ForgotPwd", "ForgotPwdSuccessInitSY");
             ViewData["Message"] = msg;
@@ -474,18 +571,18 @@ namespace EventCombo.Controllers
 
 
                             to = Emailtemplate.To;
-                            if (to.Contains("$$UserEmailID$$"))
+                            if (to.Contains("¶¶UserEmailID¶¶"))
                             {
-                                to = to.Replace("$$UserEmailID$$", model.Email);
+                                to = to.Replace("¶¶UserEmailID¶¶", model.Email);
 
                             }
                         }
                         if (!(string.IsNullOrEmpty(Emailtemplate.From)))
                          {
                             from = Emailtemplate.From;
-                            if (from.Contains("$$UserEmailID$$"))
+                            if (from.Contains("¶¶UserEmailID¶¶"))
                             {
-                                from = from.Replace("$$UserEmailID$$", model.Email);
+                                from = from.Replace("¶¶UserEmailID¶¶", model.Email);
 
                             }
                         }
@@ -503,11 +600,11 @@ namespace EventCombo.Controllers
                             for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
                             {
 
-                                if (subjectn.Contains("$$" + EmailTag[i].Tag_Name.Trim() + "$$"))
+                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
                                 {
                                     if (EmailTag[i].Tag_Name == "UserEmailID")
                                     {
-                                        subjectn.Replace("$$UserEmailID$$", model.Email);
+                                        subjectn= subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
 
                                     }
 
@@ -517,15 +614,15 @@ namespace EventCombo.Controllers
                         }
                         if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
                         {
-                            bodyn =new  MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                            bodyn =  new  MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
                             for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
                             {
 
-                                if (bodyn.Contains("$$" + EmailTag[i].Tag_Name.Trim() + "$$"))
+                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
                                 {
                                     if (EmailTag[i].Tag_Name == "UserEmailID")
                                     {
-                                        bodyn= bodyn.Replace("$$UserEmailID$$", model.Email);
+                                        bodyn= bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
 
                                     }
 
@@ -533,30 +630,9 @@ namespace EventCombo.Controllers
 
                             }
                         }
-                        var fromAddress = new MailAddress(from, "Eventcombo");
-                        var toAddress = new MailAddress(to);
-                        const string fromPassword = "Shweta1989";
-                        const string address = "shweta.sindhu@kiwitech.com";
-                         string subject = subjectn;
-                         string body = bodyn;
+                        SendHtmlFormattedEmail(to, from, subjectn, bodyn);
 
-                        var smtp = new SmtpClient
-                        {
-                            Host = "smtp.gmail.com",
-                            Port = 587,
-                            EnableSsl = true,
-                            DeliveryMethod = SmtpDeliveryMethod.Network,
-                            UseDefaultCredentials = false,
-                            Credentials = new NetworkCredential(address, fromPassword)
-                        };
-                        using (var message = new MailMessage(fromAddress, toAddress)
-                        {
-                            Subject = subject,
-                            Body = body
-                        })
-                        {
-                            smtp.Send(message);
-                        }
+
                     }
                     //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -571,7 +647,27 @@ namespace EventCombo.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        
+        public void SendHtmlFormattedEmail(string To,string from, string subject, string body)
+        {
+            using (MailMessage mailMessage = new MailMessage())
+            {
+                mailMessage.From = new MailAddress(from,"Eventcombo");
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.IsBodyHtml = true;
+                mailMessage.To.Add(new MailAddress(To));
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = ConfigurationManager.AppSettings["Host"];
+                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
+                NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
+                smtp.Send(mailMessage);
+            }
+        }
 
         private ActionResult RedirectToLocal(string returnUrl)
         {

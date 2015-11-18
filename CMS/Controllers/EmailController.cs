@@ -58,7 +58,7 @@ namespace CMS.Controllers
                         email.From = model.From;
                         email.CC = model.CC;
                         email.Bcc = model.Bcc;
-                        email.TemplateHtml = model.ckeditor1;
+                        email.TemplateHtml =model.ckeditor1;
 
 
                         objEntity.SaveChanges();
