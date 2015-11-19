@@ -294,14 +294,21 @@
                             window.location.href = '@Url.Action("Users", "Users")';
                         else if (vPerm == "6")
                             window.location.href='@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
-                        else if (vPerm == "7")
+                        else if (vPerm == "7") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "MyAccount" })';
-                        else if (vPerm == "7A")
+                          
+                        }
+                        else if (vPerm == "7A") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Login" })';
-                        else if (vPerm == "7B")
+                            
+                        }
+                        else if (vPerm == "7B") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Signup" })';
-                        else if (vPerm == "7C")
+                           
+                        }
+                        else if (vPerm == "7C") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgotPwd" })';
+                        }
                         else if (vPerm == "7D")
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "PwdReset" })';
                         else if (vPerm == "7E")
@@ -319,7 +326,7 @@
     
 
         jQuery(document).ready(function () {
-
+           
 
 
 
@@ -398,9 +405,16 @@
 
 
         jQuery(document).ready(function () {
-            jQuery(".panel-heading .panel-controls").prepend('<a class="srh_filter" href="#">Search</a>');
-        });
 
+            $('.sub-nav > li a').click(function () {
+                $('.accordion-toggle').addClass('menu-open');
+                //$(this).parent().find('ul').toggle();
+            });
+            jQuery(".panel-heading .panel-controls").prepend('<a class="srh_filter" href="#">Search</a>');
+
+         
+        });
+       
     </script>
     <!-- END: PAGE SCRIPTS -->
 
