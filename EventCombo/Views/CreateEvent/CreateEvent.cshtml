@@ -76,7 +76,7 @@
                             <div class="ev_date_icn"></div>
                             <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date</label>
                             <div class="form-group mb5">
-                                <label class="Timezone label-control evnt_title_timezone mb0">Timezone & date setting</label>
+                                <label class="Timezone label-control evnt_title_timezone mb0" id="lblTimeZone">Timezone & date setting</label>
                                 <div class="TmezoneSet col-sm-12 ev_time_zone_model_main">
                                     <div class="ev_time_zone_model">
                                         <div class="modal-content ev_tm_zon_cont">
@@ -198,7 +198,7 @@
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="modal-footer">
-                                                <button type="button" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>
+                                                <button type="button" id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1597,6 +1597,15 @@
         }
 
         $(document).ready(function () {
+            $("#btSaveTimeZone").click(function () {
+                var vval = $("#dllTimeZone").val();
+                if (vval == null || vval == '')
+                    vval = "Timezone & date setting";
+                
+                $("#lblTimeZone").text(vval);
+
+            });
+
 
             $('#btndiverrsuc').click(function () {
 
@@ -2348,8 +2357,36 @@
                 $("#hidSchLastState").val($("#dlSchOption").val());
                 if ($(".SchmultiDetail").css('display') == 'block') {
                     $("#hdSchType").val('Multiple');
+                    vSelecttextDates = "Click here to enter the start and end date";
+                    if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null)
+                    {
+                        if ($("#dlSchOption").val() =="Daily")
+                        {
+                            vSelecttextDates = "Daily : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        }
+                        else if($("#dlSchOption").val() =="Weekly")
+                        {
+                            vSelecttextDates = "Weekly : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+
+                        }
+                        else if ($("#dlSchOption").val() == "Monthly") {
+                            vSelecttextDates = "Monthly : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+
+                        }
+                        else if ($("#dlSchOption").val() == "Custom") {
+                            vSelecttextDates = "Custom : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+
+                        }
+
+                    }
+                        $("#btEnterDates").text(vSelecttextDates);
                 }
                 else {
+                    vSelecttextDates = "Click here to enter the start and end date";
+                    if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
+                        vSelecttextDates = "From : " +  $("#txtStartDate").val() +  " " + $("#txtStartTime").val() + " To " +  $("#txtEndDate").val() +  " " + $("#txtEndTime").val()
+                    $("#btEnterDates").text(vSelecttextDates);
+
                     $("#hdSchType").val('Single');
                 }
             });
