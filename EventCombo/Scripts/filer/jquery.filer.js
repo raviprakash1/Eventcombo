@@ -230,8 +230,12 @@
                                 $('#diverroacc').css('display', 'block');
                                 $('#diverro1acc').css('display', 'none');
                                 $('#divsuccerr').css('display', 'block');
-                                //alert(f._assets.textParse(n.captions.errors.filesSize, m));
-                               // $('#diverroacc').html()
+                                $("#imageeror").val('1');
+                           
+                                setTimeout(function () {
+                                    // $('#diverroacc').fadeOut();
+                                    $("#imageeror").val('0');
+                                }, 200)
                                 $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesSize, m));
                                 return false;
                                 break
@@ -251,6 +255,12 @@
                             $('#diverro1acc').css('display', 'none');
                             $('#divsuccerr').css('display', 'block');
                             $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesSizeAll));
+                            $("#imageeror").val('1');
+
+                            setTimeout(function () {
+                                // $('#diverroacc').fadeOut();
+                                $("#imageeror").val('0');
+                            }, 200)
                             return false
                         } else
                         {
