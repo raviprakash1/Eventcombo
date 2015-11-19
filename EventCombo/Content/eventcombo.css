@@ -874,3 +874,98 @@ span.evnt_toltip{
   background: #4fb845;
 }
 
+
+
+
+
+/*Start NOV 10 -- 3 Tab Screen*/
+.fullw{width: 100%; float: left;position: relative;}
+.search-events{padding-top: 35px;}
+.w-33{width: 33%;}
+.input-group.custom .form-control {
+    height: 40px;
+    font-size: 16px;
+    border-right: 0px;
+}
+
+
+.input-group.custom .input-group-addon {
+    font-size: 20px;
+    background-color: transparent;
+    padding: 0px 0px;
+}
+.search-icon{padding: 0px 2px;}
+.search-icon .fa-search {
+    border-width: 0px;
+    background-color: transparent;
+    width: 40px;
+    padding: 11px 0px;
+    min-height: 38px;
+    line-height: 15px;
+}
+
+.search-label-form-group-with-focus{
+    border: 1px solid #00CAFD;
+    border-radius: 4px;
+}
+.search-label-form-group-with-focus .search-icon{
+    background-color: #00CAFD;
+    color: #fff;
+}
+.pt20{padding-top: 20px;}
+.fs20{font-size: 18px;}
+.fs18{font-size: 18px;}
+.fs16{font-size: 18px;}
+
+.nav-tabs.custom > li.active > a,
+.nav-tabs.custom > li.active > a:hover,
+.nav-tabs.custom > li.active > a:focus {
+    color: #000;
+    cursor: default;
+    background-color: transparent;
+    border: 0px solid #ddd;
+    border-bottom-color: #00CAFD;
+    border-bottom-width: 3px;
+}
+.nav-tabs.custom > li > a {
+    opacity: 0.7;
+    border: 0px solid #ddd;
+    border-bottom-color: transparent;
+    border-bottom-width: 3px;
+}
+.nav-tabs.custom > li > a:hover {
+    border-color: transparent;
+    background-color: transparent;
+    color: #000;
+}
+.mt10{margin-top: 10px;}
+.tab-pane.custom{float: left;width: 100%;position: relative;}
+
+.tab-mid-content{
+    background: rgba(241, 241, 241, 0.54);
+    padding: 10px 0px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+.event-btn-action{display: inline-block;}
+.event-btn-action .btn-link {
+    display: inline-block;
+    font-size: 16px;
+    vertical-align: middle;
+    text-decoration: none;
+    color: #00CAFD;
+    margin-right: 15px;
+}
+.event-btn-action .btn-link:last-child{margin-right: 0px;}
+.event-btn-action .btn-link:focus,
+.event-btn-action .btn-link:hover,
+.event-btn-action .btn-link:active{opacity: 0.8;}
+
+.event-btn-action .btn-link .icon {
+    display: inline-block;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+/*Close NOV 10 -- 3 Tab Screen*/
+

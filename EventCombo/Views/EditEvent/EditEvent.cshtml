@@ -1,7 +1,8 @@
 ﻿@model EventCombo.Models.EventCreation
 @{
-    ViewBag.Title = "CreateEvent";
+    ViewBag.Title = "EditEvent";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
+
 }
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/summernote.css" rel="stylesheet" />
@@ -9,9 +10,7 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 
 @using (Html.BeginForm())
-
 {
-    <input type="hidden" name="MAX_FILE_SIZE" value="2000000" id="MAX_FILE_SIZE" />
     <div class="event_container">
         <div class="event_inner_container event_top" id="eventtopscoll">
             <div class="col-sm-12 pt10 bggrey">
@@ -19,9 +18,8 @@
                     <div class="er_UI_main">
                         <div class="er_UI_img"></div>
                         <div class="er_suc" id="erraccmsg">
-                           
+
                         </div>
-                        <button class="close closebtn" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>
                     </div>
                 </div>
                 <div class="Moderor" id="divaccsuc" style="display: none;">
@@ -29,7 +27,7 @@
 
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg"> </div>
-                        <button class="close closebtn" aria-hidden="true"  type="button" id="btndivaccsuc">&#215;</button>
+                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
                     </div>
                 </div>
             </div>
@@ -61,17 +59,28 @@
             </div>
 
             <div class="event-upload-container">
-                <input type="file" name="image" id="input2" multiple data-jfiler-maxSize="2">
+                <input type="file" name="image" id="input2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
-                        
-                        @*@Html.TextBox("EventTitle")*@
 
-                        <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold" placeholder="Click here to enter the name of the event" value="" />
+                        
+
+                        <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold" placeholder="Click here to enter the name of the event" value="@Model.EventTitle" />
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
                         <div class="form-group mb0">
-                            <label class="label-control evnt_title_date evnt_title_online fs24"><input id="btOnlineEvent" type="checkbox"> Online Event</label>
+                            <label class="label-control evnt_title_date evnt_title_online fs24">
+                                @if (Model.AddressStatus == "Online")
+                                {
+                                    <input id="btOnlineEvent" checked="checked" type="checkbox" />
+                                }
+                                else
+                                {
+                                    <input id="btOnlineEvent" type="checkbox" />
+                                }
+                            Online Event
+                            </label>
+
                         </div>
                     </div>
                     <div class="col-sm-9 text-right no_pad">
@@ -175,10 +184,6 @@
                                                             <option>(GMT+12:00) Auckland, Wellington													 </option>
                                                             <option>(GMT+12:00) Fiji, Kamchatka, Marshall Is.											 </option>
                                                             <option>(GMT+13:00) Nukualofa																 </option>
-
-
-
-
                                                         </select>
                                                     </div>
                                                     <div class="clearfix"></div>
@@ -187,15 +192,39 @@
                                                     </div>
                                                     <div class="form-group mb5 ">
                                                         <label class="col-sm-12 no_pad label-control ev_timezone_lebel">
-                                                            <input id="chkDisplayStartTime" type="checkbox" /> Display start time on event page
+                                                            @if (Model.DisplayStartTime == "Y")
+                                                            { 
+                                                                <input id="chkDisplayStartTime" checked="checked" type="checkbox" /> 
+                                                               }
+                                                            else
+                                                            {
+                                                                <input id="chkDisplayStartTime" type="checkbox" /> 
+                                                            }
+                                                            Display start time on event page
                                                         </label>
                                                         <label class="col-sm-12 no_pad label-control ev_timezone_lebel">
-                                                            <input id="chkDisplayEndTime" type="checkbox" /> Display end time on event page
+                                                            @if (Model.DisplayEndTime == "Y")
+                                                            {
+                                                                <input id="chkDisplayEndTime" checked="checked" type="checkbox" />
+                                                                       }
+                                                            else
+                                                            {
+                                                                <input id="chkDisplayEndTime" type="checkbox" /> 
+                                                            }
+                                                            Display end time on event page
                                                         </label>
                                                         <label class="col-sm-12 no_pad label-control ev_timezone_lebel">
-                                                            <input id="chkTimeZone" type="checkbox" />  Display time zone on event page
-                                                        </label>
-                                                    </div>
+                                                            @if (Model.DisplayEndTime == "Y")
+                                                            {
+                                                                <input id="chkTimeZone" checked="checked" type="checkbox" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <input id="chkTimeZone" type="checkbox" />
+                                                            }
+                                                                Display time zone on event page
+                                                          </label>
+                                                      </div>
                                                 </div>
 
                                             </div>
@@ -220,6 +249,7 @@
                                         <div class="ev_loc_icn"></div>
                                         <div class="col-sm-10 pull-right mb10 no_pad">
                                             <select id="dllPastLocation" class="form-control evnt_inp_cont "></select>
+                                            <input type="hidden" id="hdPastLId" value="@Model.LastLocationAddress" />
                                         </div>
                                         <div class="clearfix"></div>
 
@@ -239,16 +269,23 @@
                                         Show map on event page
                                     </label>
                                     <label class="label-control evnt_title_multi pl0">
-                                        <input id="UsepastLoc" class="" type="checkbox">
-                                        Use Past Location
-                                    </label>
+                                        @if (Model.LastLocationAddress > 0)
+                                        {
+                                            <input id="UsepastLoc" checked="checked" class="" type="checkbox">
+                                        }
+                                        else
+                                        {
+                                            <input id="UsepastLoc" class="" type="checkbox">
+                                        }
+                                            Use Past Location
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
+
+
                         </div>
-
-
-                    </div>
-                    <div class="StartDatemodal col-sm-12 ev_time_zone_model_main ev_date_time_model">
+                        <div class="StartDatemodal col-sm-12 ev_time_zone_model_main ev_date_time_model">
                         <div class="ev_time_zone_model">
                             <div class="modal-content ev_tm_zon_cont">
                                 <div class="modal-header">
@@ -482,7 +519,10 @@
                             <div class="form-group">
                                 <label class="col-sm-5 control-label ev_tickt_lebel no_pad">Sub Category</label>
                                 <div class="col-sm-7 no_pad">
-                                    <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                                    <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600">
+                                        
+                                    </select>
+                                    <input type="hidden" id="hidSubCat" value="@Model.EventSubCategoryID"  />
                                 </div>
                             </div>
                         </div>
@@ -508,9 +548,8 @@
                             </div>
                             <div class="clearfix"></div>
                             <div class="url-width">
-
                                 <span class="url-filed">
-                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" placeholder="enter url name">
+                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" value="@Model.EventUrl" placeholder="enter url name">
                                 </span>
                                 <span class="url-name">.eventcombo.com</span>
                             </div>
@@ -1007,8 +1046,30 @@
                     <div class="evnt_tile_bg_l"></div>
                     <div class="col-sm-12 col-xs-12 text-left no_pad">
                         <h2 class="fb_dis_head ">
-                            <label class="ev_fb_lable"><img src="~/Images/fb.png"> ENABLE DISCUSSION <input id="chkAllowFBDis" type="checkbox" /></label>
-                            <label class="ev_fb_lable">PUBLISH EVENT TO FACEBOOK <input id="chkPublishEventOnFB" type="checkbox" /></label>
+                            <label class="ev_fb_lable"><img src="~/Images/fb.png"> ENABLE DISCUSSION 
+                            @if (Model.EnableFBDiscussion == "Y")
+                            {
+                                <input id="chkAllowFBDis" checked="checked" type="checkbox" />
+                            }
+                            else
+                            {
+                                <input id="chkAllowFBDis" type="checkbox" />
+                            }
+
+
+                            </label>
+
+                            <label class="ev_fb_lable">PUBLISH EVENT TO FACEBOOK 
+                            @if (Model.PublishOnFB == "Y")
+                            {
+                                <input id="chkPublishEventOnFB" checked="checked" type="checkbox" />
+                            }
+                            else
+                            {
+                                <input id="chkPublishEventOnFB" type="checkbox" />
+                            }
+
+                            </label>
                         </h2>
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -1029,34 +1090,71 @@
                     <div class="form-group">
                         <div class="col-sm-12 no_pad">
                             <label class="Pubpage label-control ev_tickt_lebel pl0">
-                                <input type="radio" checked="checked" name="rdPr" id="rdPublic" />
-                                Public
-                            </label>
-                        </div>
-                        <div class="clearfix"></div>
+                                @if (Model.EventPrivacy == "Private")
+                                {
+                                    <input type="radio" name="rdPr" id="rdPublic" />
+                                }
+                                else
+                                {
+                                    <input type="radio" checked="checked" name="rdPr" id="rdPublic" />
+                                }
+                                    Public
+                                </label>
+                            </div>
+                            <div class="clearfix"></div>
                         <div class="col-sm-12 no_pad">
                             <label class="Prvpage label-control ev_tickt_lebel pl0">
-                                <input type="radio" name="rdPr" id="rdPrivate" />
-                                Private
-                            </label>
-                        </div>
-                        <div class="clearfix"></div>
+                                    @if (Model.EventPrivacy == "Private")
+                                    {
+                                        <input type="radio" checked="checked" name="rdPr" id="rdPrivate" />
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" name="rdPr" id="rdPrivate" />
+                                    }
+                                        Private
+                                    </label>
+                                </div>
+                                <div class="clearfix"></div>
                         <div class="priv_cont">
                             <label class="label-control label_private ev_tickt_lebel">
+                            @if (Model.Private_ShareOnFB == "Y")
+                            {
+                                <input type="checkbox" checked="checked" id="chkShareOnFB">
+                            }
+                            else
+                            {
                                 <input type="checkbox" id="chkShareOnFB">
+
+                            }
                                 Attendees can share this event on Facebook, Twitter, and LinkedIn
                             </label>
                             <div class="clearfix"></div>
                             <label class="label-control label_private ev_tickt_lebel">
-                                <input type="checkbox" id="chkGuestonly">
-                                This event is by Invite-Only
+                                @if (Model.Private_GuestOnly == "Y")
+                                {
+                                    <input type="checkbox" checked="checked" id="chkGuestonly">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" id="chkGuestonly">
+                                }
+                                    This event is by Invite-Only
                             </label>
                             <div class="clearfix"></div>
                             <label class="label-control label_private ev_tickt_lebel">
-                                <input type="checkbox" id="chkReqPassword">
-                                Require a password to view the event page
-                            </label>
-                            <input type="password" id="txtReqPassword" readonly="readonly" value="" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />
+                                @if (Model.Private_Password != null && Model.Private_Password.Length > 0)
+                                {
+                                    <input type="checkbox" checked="checked" id="chkReqPassword">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" id="chkReqPassword">
+                                }
+                                    Require a password to view the event page
+                                </label>
+                                <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />                                    
+
                         </div>
                     </div>
 
@@ -1077,7 +1175,7 @@
                     <input type="hidden" id="hidSchLastState" value="" />
                     <input type="hidden" id="hidOrgnizer" value="" />
                     <input type="hidden" id="hidAddressStatus" value="" />
-                    <input type="hidden" id="hdEventId" value="" />
+                    <input type="hidden" id="hdEventId" value="@Model.EventID" />
 
                     <input id="imageeror" type="hidden" value="0" />
                     <input id="image_count" type="hidden" />
@@ -1102,16 +1200,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Add Venue</h4>
                 </div>
-                <div  id="diverrorvenue" style="display:none;">
-                    <div class="er_UI_main">
-                        <div class="er_UI_img"></div>
-                        <div class="er_suc" id="erraccmsgvenue">
-
-                        </div>
-                    </div>
-                </div>
                 <div class="modal-body">
-                    
                     <div class="col-sm-6">
                         <div class="form-group">
                             <input id="VenueName" class="form-control evnt_inp_cont" placeholder="Enter the Venue Name" />
@@ -1479,8 +1568,10 @@
 
         }
         function editOrgnizer() {
+            
             var Sno = $("#ddlOrgnizers").val();
-            //alert(Sno);
+           // alert(Sno);
+         //   debugger;
             $("#hidOrgnizer").val(Sno);
             var vOrgName = $("#OrgName_" + Sno).text();
             var vOrgDes = $("#OrgDes_" + Sno).text();
@@ -1559,6 +1650,42 @@
         }
 
         $(document).ready(function () {
+            var vCatId = $("#ddlEventCategory").val();
+            var vSubCatId = $("#hidSubCat").val();
+            $.ajax({
+                url: '@Url.Action("GetSubCat", "EditEvent")',
+                data: { lECatId: vCatId, lSubCat: vSubCatId },
+                type: "Post",
+                success: function (data) {
+                    //$.each(data, function () {
+                    // debugger;
+                    //                   alert(data.length);
+                    $("#ddlEventSubCategory").html(data);
+                    // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                    //});
+                },
+                error: function (data) {
+                    //alert("Sorry there is some problem.");
+                }
+            });
+
+            $.ajax({
+                url: '@Url.Action("GetOrgnizerDetail", "EditEvent")',
+                data: { lEventId: $("#hdEventId").val() },
+                type: "Get",
+                success: function (data) {
+                    var getHtml = data.split('¶');
+                    $("#tblOrgnizer").append(getHtml[0]);
+                    $("#ddlOrgnizers").append(getHtml[1]);
+                },
+                error: function (data) {
+                }
+            });
+
+
+
+
+
             $(".StartDatemodal").hide();
             $(".StartDate").click(function () {
                 $(".StartDatemodal").slideToggle("fast");
@@ -2171,8 +2298,7 @@
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
-                                var msg = ajaxsetup('CreateEvent','CreateEventurlexistUI');
-                                $('#erraccmsg').html(msg);
+                                $('#erraccmsg').html("Event Url already exists.");
 
                                 $("#txtEventUrl").val('');
                                 $("#txtEventUrl").focus();
@@ -2192,7 +2318,7 @@
                 var vCatId = $("#ddlEventCategory").val();
                 $.ajax({
                     url: '@Url.Action("GetSubCat", "CreateEvent")',
-                    data: { lECatId: vCatId },
+                    data: { lECatId: vCatId, lSubCat: "0" },
                     type: "Post",
                     success: function (data) {
                         //$.each(data, function () {
@@ -2291,6 +2417,7 @@
 
                 $.ajax({
                     url: '@Url.Action("GetPreviousAddress", "CreateEvent")',
+                    data: { "lPreAddId": $("#hdPastLId").val() },
                     type: "Post",
                     success: function (data) {
                         $("#dllPastLocation").html(data);
@@ -2437,19 +2564,9 @@
                 $("#consolidate" + Sno).text(ConsolidateValue);
 
             }
-            $(document).click(function () {
-                $('#diverrorvenue').css('display', 'none');
-             
-                $("input").removeClass('err-bor');
-               
-            });
             function validateAddress() {
                 if ($("#VenueName").val().trim() == '') {
-                    $('#diverrorvenue').css('display', 'block');
-                    $("#VenueName").addClass('err-bor');
-                    var msg = ajaxsetup('CreateEvent', 'CreateEventValidatevenueUI');
-                    $('#erraccmsgvenue  ').html(msg);
-                    //alert("Please enter valid venue name");
+                    alert("Please enter valid venue name");
                     $("#VenueName").focus();
                     return false;
                 }
@@ -2749,1135 +2866,1122 @@
     //Ticket Section Starts
     <script>
 
-        function changetext(e) {
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var al = e.substr(0, e.indexOf('-'));
+    function changetext(e) {
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        var al = e.substr(0, e.indexOf('-'));
 
-            var errorMsg = checkDate(e);
+        var errorMsg = checkDate(e);
 
-            if (al == "id_auto_hide_until_Date") {
+        if (al == "id_auto_hide_until_Date") {
 
-                if (errorMsg != "") {
+            if (errorMsg != "") {
 
 
 
-                    $('#id_auto_hide_until_Date-' + el).focus();
-                    $('#id_auto_hide_until_Date-' + el).val("");
-                    $('#id_auto_hide_after_Date-' + el).val("");
+                $('#id_auto_hide_until_Date-' + el).focus();
+                $('#id_auto_hide_until_Date-' + el).val("");
+                $('#id_auto_hide_after_Date-' + el).val("");
 
-                } else {
-                    $('#id_auto_hide_after_Date-' + el).val($('#' + e).val());
-                }
-
+            } else {
+                $('#id_auto_hide_after_Date-' + el).val($('#' + e).val());
             }
-            if (al == "id_salestart") {
-                if (errorMsg != "") {
-                    $('#id_salestart-' + el).focus();
-                    $('#id_salestart-' + el).val("");
-                    $('#id_saleend-' + el).val("");
-                } else {
-                    $('#id_saleend-' + el).val($('#' + e).val());
-                }
-
-
-            }
-
-
-
-
-
 
         }
-        $(document).ready(function () {
-            $.ajax({
-                url: '@Url.Action("GetPermission", "Permission")',
-                data: { iPermissionId: '1' },
-                async: false,
-                datatype: "Text",
-                type: "Post",
-                success: function (response) {
-                    if (response != "Y") {
-                        alert("Access Denied !!!");
-                        window.self.close();
-                        //window.location.href = document.referrer + '' + $(this).attr('href'); 
-                        history.back();
-                        return false;
-                        //  $('#spanid').html("Record Updated.");
-                        // $('#divError').css('display', 'block');
-                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                    }
-                    else {
-                        //alert("Have Per");
-                        //  alert(vPerm);
-                        //if (PermisionId == "1")
-                        //window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
-                    }
-                }
-            });
+        if (al == "id_salestart") {
+            if (errorMsg != "") {
+
+
+
+                $('#id_salestart-' + el).focus();
+                $('#id_salestart-' + el).val("");
+                $('#id_saleend-' + el).val("");
+
+            } else {
+                $('#id_saleend-' + el).val($('#' + e).val());
+            }
+
+        }
 
 
 
 
-            $('#id_variablecharge').change(function () {
-                if ($(this).is(":checked")) {
-                    $('.TicketFees').show();
-                } else {
-                    $('.TicketFees').hide();
-                }
-            });
-            $.ajax({
-                url: '@Url.Action("returnfees", "Event")',
-                success: function (data) {
-
-                    for (var i = 0; i < data.length; ++i) {
-                        if (data[i].FeeType == "Customer Fee") {
-
-                            $('#id_cc').val(data[i].FeeAmount);
 
 
+    }
+    $(document).ready(function () {
 
-                        }
+        $('#id_variablecharge').change(function () {
+            if ($(this).is(":checked")) {
+                $('.TicketFees').show();
+            } else {
+                $('.TicketFees').hide();
+            }
+        });
+        $.ajax({
+            url: '@Url.Action("returnfees", "Event")',
+            success: function (data) {
 
-                        if (data[i].FeeType == "EC Fee") {
+                for (var i = 0; i < data.length; ++i) {
+                    if (data[i].FeeType == "Customer Fee") {
 
-                            $('#id_ec').val(data[i].FeeAmount);
+                        $('#id_cc').val(data[i].FeeAmount);
 
-                        }
 
 
                     }
+
+                    if (data[i].FeeType == "EC Fee") {
+
+                        $('#id_ec').val(data[i].FeeAmount);
+
+                    }
+
+
                 }
-            });
-            $(".txtsum").each(function () {
+            }
+        });
+        $(".txtsum").each(function () {
 
-                $(this).keyup(function () {
-                    calculateSum();
-                });
+            $(this).keyup(function () {
+                calculateSum();
             });
-            $('#id_totalqty').html(0);
+        });
+        $('#id_totalqty').html(0);
 
-            calculateSum();
+        calculateSum();
+
+    });
+    $(".ticket_panel").hide();
+    //$(".save_btn").click(function () {
+    //    $(".ticket_panel").slideDown();
+
+    //});
+    function changeqty(e) {
+        var dropval = $('#' + e).val();
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        if (dropval != '') {
+            if ($.isNumeric(dropval) === false) {
+
+                $('#' + e).addClass('err-bor');
+                $('#id_lbl_quantity-' + el).css('display', 'block');
+                $('#id_lbl_quantity-' + el).html('Please enter a number');
+            } else {
+                var qty = $('#id_totalqty').html();
+
+                $('#id_lbl_quantity-' + el).css('display', 'none');
+                calculateSum();
+
+                // var total = parseInt(qty) + parseInt(dropval);
+
+                // $('#id_totalqty').html(total);
+                $('#' + e).removeClass('err-bor');
+
+            }
+        } else { calculateSum(); }
+
+
+
+
+    }
+    function checkminum(e) {
+
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+
+        var minamt = parseInt($('#id_min_ticket-' + el).val());
+        var maxamt = parseInt($('#id_max_ticket-' + el).val());
+
+        if (maxamt < minamt) {
+            $('#hddiscount').val('1');
+            $('#id_max_ticket-' + el).addClass('err-bor');
+            $('#id_lblmax-' + el).css('display', 'block');
+
+
+        } else {
+            $('#hddiscount').val('0');
+            $('#id_max_ticket-' + el).removeClass('err-bor');
+            $('#id_lblmax-' + el).css('display', 'none');
+        }
+    }
+    function calculateSum() {
+
+        var sum = 0;
+        //iterate through each textboxes and add the values
+        $(".txtsum").each(function () {
+
+            //add only if the value is number
+            if (!isNaN(this.value) && this.value.length != 0) {
+                sum += parseFloat(this.value);
+            }
 
         });
-        $(".ticket_panel").hide();
-        //$(".save_btn").click(function () {
-        //    $(".ticket_panel").slideDown();
-
-        //});
-        function changeqty(e) {
-            var dropval = $('#' + e).val();
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            if (dropval != '') {
-                if ($.isNumeric(dropval) === false) {
-
-                    $('#' + e).addClass('err-bor');
-                    $('#id_lbl_quantity-' + el).css('display', 'block');
-                    $('#id_lbl_quantity-' + el).html('Please enter a number');
-                } else {
-                    var qty = $('#id_totalqty').html();
-
-                    $('#id_lbl_quantity-' + el).css('display', 'none');
-                    calculateSum();
-
-                    // var total = parseInt(qty) + parseInt(dropval);
-
-                    // $('#id_totalqty').html(total);
-                    $('#' + e).removeClass('err-bor');
-
-                }
-            } else { calculateSum(); }
-
-
+        //.toFixed() method will roundoff the final sum to 2 decimal places
+        $("#id_totalqty").html(sum);
+    }
+    function feechange(e) {
+        var fee = 0;
+        var total = 0;
+        var dropval = $('#' + e).val();
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        var amount = parseFloat($('#id_cost-' + el).val());
+        if (amount > 999999.99) {
 
 
         }
-        function checkminum(e) {
+        if (dropval.trim() == '0') {
 
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var ccp = $('#id_cc').val();
 
+            var ccpamount = ((amount * ccp) / 100).toFixed(2);
 
-            var minamt = parseInt($('#id_min_ticket-' + el).val());
-            var maxamt = parseInt($('#id_max_ticket-' + el).val());
+            var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
 
-            if (maxamt < minamt) {
-                $('#hddiscount').val('1');
-                $('#id_max_ticket-' + el).addClass('err-bor');
-                $('#id_lblmax-' + el).css('display', 'block');
+            var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;       $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+            $('#id_buyerprice-' + el).html("$" + ccpfinal);
 
-
-            } else {
-                $('#hddiscount').val('0');
-                $('#id_max_ticket-' + el).removeClass('err-bor');
-                $('#id_lblmax-' + el).css('display', 'none');
-            }
-        }
-        function calculateSum() {
-
-            var sum = 0;
-            //iterate through each textboxes and add the values
-            $(".txtsum").each(function () {
-
-                //add only if the value is number
-                if (!isNaN(this.value) && this.value.length != 0) {
-                    sum += parseFloat(this.value);
-                }
-
-            });
-            //.toFixed() method will roundoff the final sum to 2 decimal places
-            $("#id_totalqty").html(sum);
-        }
-        function feechange(e) {
-            var fee = 0;
-            var total = 0;
-            var dropval = $('#' + e).val();
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var amount = parseFloat($('#id_cost-' + el).val());
-            if (amount > 999999.99) {
-
-
-            }
-            if (dropval.trim() == '0') {
-
-                var ccp = $('#id_cc').val();
-
-                var ccpamount = ((amount * ccp) / 100).toFixed(2);
-
-                var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
-
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;       $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
-                $('#id_buyerprice-' + el).html("$" + ccpfinal);
-
-                $('#id_tooltip-' + el).html(msg);
-                $('#id_feetype-' + el).val(0);
-                fee = ccpamount;
-                total = ccpfinal;
-
-            }
-            if (dropval.trim() == '1') {
-
-                var ccp = $('#id_cc').val();
-                var ccpamount = ((amount * ccp) / 100).toFixed(2);
-                var ccpfinal = parseFloat(amount).toFixed(2);
-                $('#id_buyerprice-' + el).html("$" + ccpfinal);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
-                $('#id_tooltip-' + el).html(msg);
-                //$('#id_tooltip-' + el).html(msg);
-                $('#id_feetype-' + el).val(1);
-                fee = ccpamount;
-                total = ccpfinal;
-
-            }
-
-            $("#id_fee-" + el).val(fee);
-            $("#id_total-" + el).val(total);
+            $('#id_tooltip-' + el).html(msg);
+            $('#id_feetype-' + el).val(0);
+            fee = ccpamount;
+            total = ccpfinal;
 
         }
-        function checkprice(id) {
+        if (dropval.trim() == '1') {
 
-            var code = event.charCode ? event.charCode : event.keyCode;
-            var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-            if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+            var ccp = $('#id_cc').val();
+            var ccpamount = ((amount * ccp) / 100).toFixed(2);
+            var ccpfinal = parseFloat(amount).toFixed(2);
+            $('#id_buyerprice-' + el).html("$" + ccpfinal);
+            var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+            $('#id_tooltip-' + el).html(msg);
+            //$('#id_tooltip-' + el).html(msg);
+            $('#id_feetype-' + el).val(1);
+            fee = ccpamount;
+            total = ccpfinal;
+
+        }
+
+        $("#id_fee-" + el).val(fee);
+        $("#id_total-" + el).val(total);
+
+    }
+    function checkprice(id) {
+
+        var code = event.charCode ? event.charCode : event.keyCode;
+        var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        {
+
+        }
+        else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
+        {
+            $('#' + id).val("");
+
+            return false;
+        }
+
+    }
+    function validateforzero(id,evt)
+    {
+        var price = parseFloat($('#' + id).val()).toFixed(2);
+        var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+        var discount = parseFloat($('#id_Discount-' + num).val()).toFixed(2);
+        if (price == 0) {
+
+            $('#id_cost-' + num).addClass('err-bor');
+            $('#id_lblprice-' + num).css('display', 'block');
+            $('#id_buyerprice-' + num).html("$0.00");
+            $('#id_tooltip-' + num).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 ");
+            total = 0;
+            fee = 0;
+            return false;
+
+        } else {
+
+            $('#id_cost-' + num).removeClass('err-bor');
+            $('#id_lblprice-' + num).css('display', 'none');
+
+        }
+        if (price > 999999.99) {
+
+            $('#id_cost-' + num).addClass('err-bor');
+            $('#id_lblprice-' + num).css('display', 'block');
+            $('#id_buyerprice-' + num).html("$0.00");
+            $('#id_tooltip-' + num).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 ");
+            total = 0;
+            fee = 0;
+            return false;
+        } else {
+
+            $('#id_cost-' + num).removeClass('err-bor');
+            $('#id_lblprice-' + num).css('display', 'none');
+
+        }
+
+
+        //Discount section
+        if (!isNaN(price) && !isNaN(discount))
+        {
+            if (price != 0 && discount != 0)
             {
 
-            }
-            else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
-            {
-                $('#' + id).val("");
+                if (parseFloat(discount)>=parseFloat(price))
+                {
 
-                return false;
-            }
-
-        }
-        function validateforzero(id, evt) {
-            var price = parseFloat($('#' + id).val()).toFixed(2);
-            var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-            var discount = parseFloat($('#id_Discount-' + num).val()).toFixed(2);
-            if (price == 0) {
-
-                $('#id_cost-' + num).addClass('err-bor');
-                $('#id_lblprice-' + num).css('display', 'block');
-                $('#id_buyerprice-' + num).html("$0.00");
-                $('#id_tooltip-' + num).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 ");
-                total = 0;
-                fee = 0;
-                return false;
-
-            } else {
-
-                $('#id_cost-' + num).removeClass('err-bor');
-                $('#id_lblprice-' + num).css('display', 'none');
-
-            }
-            if (price > 999999.99) {
-
-                $('#id_cost-' + num).addClass('err-bor');
-                $('#id_lblprice-' + num).css('display', 'block');
-                $('#id_buyerprice-' + num).html("$0.00");
-                $('#id_tooltip-' + num).html("Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 ");
-                total = 0;
-                fee = 0;
-                return false;
-            } else {
-
-                $('#id_cost-' + num).removeClass('err-bor');
-                $('#id_lblprice-' + num).css('display', 'none');
-
-            }
-
-
-            //Discount section
-            if (!isNaN(price) && !isNaN(discount)) {
-                if (price != 0 && discount != 0) {
-
-                    if (parseFloat(discount) >= parseFloat(price)) {
-
-                        $('#id_Discount-' + num).addClass('err-bor');
-
-                        $('#hddiscount').val('1');
-
-                    }
-                    else {
-
-                        $('#hddiscount').val('0');
-                        $('#id_Discount-' + num).removeClass('err-bor');
-
-                    }
-
-                }
-                else if (price == 0 && discount != 0) {
+                    $('#id_Discount-' + num).addClass('err-bor');
 
                     $('#hddiscount').val('1');
-                    $('#id_Discount-' + num).addClass('err-bor');
+
+                }
+                else {
+
+                    $('#hddiscount').val('0');
+                    $('#id_Discount-' + num).removeClass('err-bor');
+
                 }
 
             }
-            else if (isNaN(price) && !isNaN(discount)) {
+            else if (price == 0 && discount != 0)
+            {
 
                 $('#hddiscount').val('1');
                 $('#id_Discount-' + num).addClass('err-bor');
             }
 
-            if (isNaN(price)) {
+        }
+        else if (isNaN(price) && !isNaN(discount))
+        {
 
-                $('#id_buyerprice-' + num).html("$0.00");
-                $('#id_tooltip-' + num).html("Ticket Price  &nbsp; &nbsp;&nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer's Total $0.00 ");
-                total = 0;
-                fee = 0;
-
-            }
-            else if (price > 0) {
-                var ccpamount = 0;
-                var ccpfinal = 0;
-                $('#id_feestruct-' + num).css('display', 'block');
-                var val = $("#id_feetype-0").val();
-                var fee = 0;
-
-                if (val == 0) {
-                    ccp = parseFloat($('#id_cc').val()).toFixed(2);
-
-                    ccpamount = ((price * ccp) / 100).toFixed(2);
-
-                    ccpfinal = (parseFloat(ccpamount) + parseFloat(price)).toFixed(2);
-                    var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + price + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br/>" + "Buyer(s) Total   &nbsp;&nbsp; &nbsp;       $" + ccpfinal;
-                    $('#id_buyerprice-' + num).html("$" + ccpfinal);
-                    $('#id_tooltip-' + num).html(msg);
-                    total = ccpfinal;
-                    fee = ccpamount;
-                }
-                if (val == 1) {
-                    ccp = $('#id_cc').val();
-                    ccpamount = ((price * ccp) / 100).toFixed(2);
-                    ccpfinal = price;
-                    $('#id_buyerprice-' + num).html("$" + ccpfinal);
-                    var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + price + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;     $" + ccpamount + "<br/>" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
-
-                    $('#id_tooltip-' + num).html(msg);
-                    total = ccpfinal;
-                    fee = ccpamount;
-                }
-                $("#id_fee-" + num).val(ccpamount);
-                $("#id_total-" + num).val(ccpfinal);
-                $('#' + id).val(price)
-            }
-
-
+            $('#hddiscount').val('1');
+            $('#id_Discount-' + num).addClass('err-bor');
         }
 
-        function changefeetype(el, evt, id) {
+        if (isNaN(price))
+        {
+
+            $('#id_buyerprice-' + num).html("$0.00");
+            $('#id_tooltip-' + num).html("Ticket Price  &nbsp; &nbsp;&nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer's Total $0.00 ");
+            total = 0;
+            fee = 0;
+
+        }
+        else if (price > 0)
+        {
+            var ccpamount = 0;
+            var ccpfinal = 0;
+            $('#id_feestruct-' + num).css('display', 'block');
+            var val = $("#id_feetype-0").val();
             var fee = 0;
-            var total = 0;
 
-            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (val == 0) {
+                ccp = parseFloat($('#id_cc').val()).toFixed(2);
 
-            var number = el.value.split('.');
-            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
-                evt.preventDefault();
-                return false;
+                 ccpamount = ((price * ccp) / 100).toFixed(2);
 
+                 ccpfinal = (parseFloat(ccpamount) + parseFloat(price)).toFixed(2);
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + price + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br/>" + "Buyer(s) Total   &nbsp;&nbsp; &nbsp;       $" + ccpfinal;
+                $('#id_buyerprice-' + num).html("$" + ccpfinal);
+                $('#id_tooltip-' + num).html(msg);
+                total = ccpfinal;
+                fee = ccpamount;
             }
+            if (val == 1) {
+                ccp = $('#id_cc').val();
+                 ccpamount = ((price * ccp) / 100).toFixed(2);
+                 ccpfinal = price;
+                $('#id_buyerprice-' + num).html("$" + ccpfinal);
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + price + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;     $" + ccpamount + "<br/>" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
 
-            if (number.length > 1 && charCode == 46) {
-                evt.preventDefault();
-                return false;
+                $('#id_tooltip-' + num).html(msg);
+                total = ccpfinal;
+                fee = ccpamount;
             }
+            $("#id_fee-" + num).val(ccpamount);
+            $("#id_total-" + num).val(ccpfinal);
+            $('#' + id).val(price)
+        }
 
 
+    }
+
+    function changefeetype(el, evt,id) {
+        var fee = 0;
+        var total = 0;
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+
+        var number = el.value.split('.');
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+            evt.preventDefault();
+            return false;
 
         }
-        function minimize(e) {
 
-            var id = e;
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-
-            $('#evnt_set-' + el).slideToggle("fast");
-
+        if (number.length > 1 && charCode == 46) {
+            evt.preventDefault();
+            return false;
         }
-        $('.var_chg_btn').click(function () {
-            $("#id_Mainvariable").css('display', 'block');
+
+
+
+    }
+    function minimize(e) {
+
+        var id = e;
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+        $('#evnt_set-' + el).slideToggle("fast");
+
+    }
+    $('.var_chg_btn').click(function () {
+        $("#id_Mainvariable").css('display', 'block');
+        var divlength = $("#id_Mainvariable> div").size();
+        var data = $('#id_clonevariable-n').clone();
+        data.attr('id', 'id_clonevariable-' + divlength);
+        data.removeAttr("style")
+        data.find('*[id]').andSelf().each(function () {
+            //console.log($(this));
+
+            var id = $(this).attr('id');
+            //console.log(id);
+            id1 = id.substr(0, id.indexOf('-'));
+            ////console.log(id);
+            var idn = id1 + "-" + divlength;
+            $(this).attr("id", idn);
+            $(this).val('');
+
+
+
+        });
+
+
+        $('#id_Mainvariable').append(data);
+    });
+    $('.save_btnpaid ').click(function () {
+        $(".ticket_panel").show();
+        $("#id_ticket_footer").css('display', 'block');
+        var divlength = $("#MasterDiv> div").size();
+        var data = $('#clonediv-n').clone();
+        data.attr('id', 'clonediv-' + divlength);
+        data.removeAttr("style")
+
+        data.find('*[id]').andSelf().each(function () {
+            //console.log($(this));
+
+            var id = $(this).attr('id');
+            //console.log(id);
+            id1 = id.substr(0, id.indexOf('-'));
+            ////console.log(id);
+            var idn = id1 + "-" + divlength;
+            $(this).attr("id", idn);
+            $(this).val('');
+
+            if ($(this).hasClass("paidticket-n")) {
+                $(this).removeClass('paidticket-n');
+                $(this).addClass('paidticket-' + divlength + '');
+            }
+            if ($(this).hasClass("normalticket-n")) {
+                $(this).removeClass('normalticket-n');
+                $(this).addClass('normalticket-' + divlength + '');
+            }
+
+        });
+
+
+        $('#MasterDiv').append(data);
+
+        $(".normalticket-" + divlength).css('display', 'none');
+        $(".paidticket-" + divlength).css('display', 'block');
+        $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
+        $("#id_ticket_type-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
+        //$("#id_paymenttype-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
+        //$("#id_paymenttype-" + divlength).attr("placeholder", "Early Bird, RSVP...");
+        $("#id_Discount-" + divlength).prop("readonly", false);
+        var randomValue = randomString(4);
+        $("#id_ticket_id-" + divlength).val(randomValue);
+        $("#id_order-" + divlength).val(divlength);
+        $("#id_feetype-" + divlength).css('display', 'block');
+        $("#id_Tickettype-" + divlength).val("Paid");
+        $("#id_buyerprice-" + divlength).html('$0.00');
+        $('#id_tooltip-' + divlength).html('Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;   $0.00 <br /> Buyer(s) Total $0.00');
+        //$("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
+        $("#id_feemethod").val(0);
+        $("#id_salestart-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_salestart-" + divlength).datepicker('hide');
+        });
+        $("#id_saleend-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_saleend-" + divlength).datepicker('hide');
+        });
+
+        $("#id_auto_hide_until_Date-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
+        });
+        $("#id_auto_hide_after_Date-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
+        });
+
+        $("#id_saletimestart-" + divlength).timepicker();
+
+        $("#id_saletimeend-" + divlength).timepicker();
+        $("#id_auto_hide_until_time-" + divlength).timepicker();
+        $("#id_auto_hide_until_time-" + divlength).timepicker();
+        $("#id_auto_hide_after_Time-" + divlength).timepicker();
+        $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
+        $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
+        $("#id_saletimestart-" + divlength).val("7:00pm");
+        $("#id_saletimeend-" + divlength).val("7:00pm");
+
+
+    });
+    $('.save_btndonation').click(function () {
+        $(".ticket_panel").show();
+        $("#id_ticket_footer").css('display', 'block');
+        var divlength = $("#MasterDiv> div").size();
+
+        var data = $('#clonediv-n').clone();
+        data.attr('id', 'clonediv-' + divlength);
+        data.removeAttr("style")
+        console.log(data.find('input[type=text]'));
+        data.find('*[id]').andSelf().each(function () {
+            //console.log($(this));
+
+            var id = $(this).attr('id');
+            //console.log(id);
+            id1 = id.substr(0, id.indexOf('-'));
+            ////console.log(id);
+            var idn = id1 + "-" + divlength;
+            $(this).attr("id", idn);
+            $(this).val('');
+
+            if ($(this).hasClass("paidticket-n")) {
+                $(this).removeClass('paidticket-n');
+                $(this).addClass('paidticket-' + divlength + '');
+            }
+            if ($(this).hasClass("normalticket-n")) {
+                $(this).removeClass('normalticket-n');
+                $(this).addClass('normalticket-' + divlength + '');
+            }
+
+        });
+
+
+        $(data).appendTo('#MasterDiv');
+        $(".normalticket-" + divlength).css('display', 'block');
+        $(".paidticket-" + divlength).css('display', 'none');
+        $("#id_feetype-" + divlength).css('display', 'block');
+        $("#id_paymenttype-" + divlength).text("Donation");
+        $("#id_ticket_type-" + divlength).attr("placeholder", "Donation");
+        $("#id_ticket_type-" + divlength).attr("title", "Donation");
+        $("#id_Discount-" + divlength).prop("readonly", true);
+        var randomValue = randomString(4);
+        $("#id_ticket_id-" + divlength).val(randomValue);
+
+        $("#id_order-" + divlength).val(divlength);
+        $("#id_Tickettype-" + divlength).val("Donation");
+
+        $("#id_feemethod").val(0);
+        $("#id_salestart-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_salestart-" + divlength).datepicker('hide');
+        });
+        $("#id_saleend-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_saleend-" + divlength).datepicker('hide');
+        });
+
+        $("#id_auto_hide_until_Date-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
+        });
+        $("#id_auto_hide_after_Date-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
+        });
+
+        $("#id_saletimestart-" + divlength).timepicker();
+
+        $("#id_saletimeend-" + divlength).timepicker();
+        $("#id_auto_hide_until_time-" + divlength).timepicker();
+        $("#id_auto_hide_until_time-" + divlength).timepicker();
+        $("#id_auto_hide_after_Time-" + divlength).timepicker();
+        $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
+        $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
+        $("#id_saletimestart-" + divlength).val("7:00pm");
+        $("#id_saletimeend-" + divlength).val("7:00pm");
+
+    });
+    $('.save_btnfree').click(function () {
+
+        $(".ticket_panel").show();
+        $("#id_ticket_footer").css('display', 'block');
+        var divlength = $("#MasterDiv> div").size();
+        var data = $('#clonediv-n').clone();
+        data.attr('id', 'clonediv-' + divlength);
+        data.removeAttr("style");
+        data.find('*[id]').andSelf().each(function () {
+
+
+            var id = $(this).attr('id');
+            //console.log(id);
+            id1 = id.substr(0, id.indexOf('-'));
+            ////console.log(id);
+            var idn = id1 + "-" + divlength;
+            $(this).attr("id", idn);
+            $(this).val('');
+
+            if ($(this).hasClass("paidticket-n")) {
+                $(this).removeClass('paidticket-n');
+                $(this).addClass('paidticket-' + divlength + '');
+            }
+            if ($(this).hasClass("normalticket-n")) {
+                $(this).removeClass('normalticket-n');
+                $(this).addClass('normalticket-' + divlength + '');
+            }
+
+        });
+
+        //data.append('<span class="RemoveMoreHub" style="width:80%;"><a href="javascript:void(0);" style="float:right;color:#CE0009;font-size:13px;text-decoration:none;margin-right:5%;" >- Remove</a></span>');
+        $('#MasterDiv').append(data);
+
+        $(".normalticket-" + divlength).css('display', 'block');
+        $(".paidticket-" + divlength).css('display', 'none');
+
+        $("#id_paymenttype-" + divlength).text("Free");
+        $("#id_ticket_type-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
+        $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
+        $("#id_Discount-" + divlength).prop("readonly", true);
+        var randomValue = randomString(4);
+        $("#id_ticket_id-" + divlength).val(randomValue);
+        $("#id_order-" + divlength).val(divlength);
+        //$("#id_feetype-" + divlength).css('display', 'none');
+        $("#id_Tickettype-" + divlength).val("Free");
+        //$("clonediv-" + divlength).css('display', 'block');
+
+        $("#id_feemethod").val(0);
+        $("#id_salestart-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_salestart-" + divlength).datepicker('hide');
+        });
+        $("#id_saleend-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_saleend-" + divlength).datepicker('hide');
+        });
+
+        $("#id_auto_hide_until_Date-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
+        });
+        $("#id_auto_hide_after_Date-" + divlength).datepicker({
+            format: "mm/dd/yyyy",
+            minDate: "0",
+            onSelect: function () {
+
+                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+            }
+        }).on('changeDate', function (ev) {
+            $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
+        });
+
+        $("#id_saletimestart-" + divlength).timepicker();
+
+        $("#id_saletimeend-" + divlength).timepicker();
+        $("#id_auto_hide_until_time-" + divlength).timepicker();
+        $("#id_auto_hide_until_time-" + divlength).timepicker();
+        $("#id_auto_hide_after_Time-" + divlength).timepicker();
+        $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
+        $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
+        $("#id_saletimestart-" + divlength).val("7:00pm");
+        $("#id_saletimeend-" + divlength).val("7:00pm");
+
+    });
+    function randomString(len, charSet) {
+        charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var randomString = '';
+        for (var i = 0; i < len; i++) {
+            var randomPoz = Math.floor(Math.random() * charSet.length);
+            randomString += charSet.substring(randomPoz, randomPoz + 1);
+        }
+        return randomString;
+    }
+    function deletevariable(e) {
+        var x = confirm("Are you sure you want to delete?");
+        if (x) {
             var divlength = $("#id_Mainvariable> div").size();
-            var data = $('#id_clonevariable-n').clone();
-            data.attr('id', 'id_clonevariable-' + divlength);
-            data.removeAttr("style")
-            data.find('*[id]').andSelf().each(function () {
-                //console.log($(this));
 
-                var id = $(this).attr('id');
-                //console.log(id);
-                id1 = id.substr(0, id.indexOf('-'));
-                ////console.log(id);
-                var idn = id1 + "-" + divlength;
-                $(this).attr("id", idn);
-                $(this).val('');
-
-
-
-            });
-
-
-            $('#id_Mainvariable').append(data);
-        });
-        $('.save_btnpaid ').click(function () {
-            $(".ticket_panel").show();
-            $("#id_ticket_footer").css('display', 'block');
-            var divlength = $("#MasterDiv> div").size();
-            var data = $('#clonediv-n').clone();
-            data.attr('id', 'clonediv-' + divlength);
-            data.removeAttr("style")
-
-            data.find('*[id]').andSelf().each(function () {
-                //console.log($(this));
-
-                var id = $(this).attr('id');
-                //console.log(id);
-                id1 = id.substr(0, id.indexOf('-'));
-                ////console.log(id);
-                var idn = id1 + "-" + divlength;
-                $(this).attr("id", idn);
-                $(this).val('');
-
-                if ($(this).hasClass("paidticket-n")) {
-                    $(this).removeClass('paidticket-n');
-                    $(this).addClass('paidticket-' + divlength + '');
-                }
-                if ($(this).hasClass("normalticket-n")) {
-                    $(this).removeClass('normalticket-n');
-                    $(this).addClass('normalticket-' + divlength + '');
-                }
-
-            });
-
-
-            $('#MasterDiv').append(data);
-
-            $(".normalticket-" + divlength).css('display', 'none');
-            $(".paidticket-" + divlength).css('display', 'block');
-            $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
-            $("#id_ticket_type-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
-            //$("#id_paymenttype-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
-            //$("#id_paymenttype-" + divlength).attr("placeholder", "Early Bird, RSVP...");
-            $("#id_Discount-" + divlength).prop("readonly", false);
-            var randomValue = randomString(4);
-            $("#id_ticket_id-" + divlength).val(randomValue);
-            $("#id_order-" + divlength).val(divlength);
-            $("#id_feetype-" + divlength).css('display', 'block');
-            $("#id_Tickettype-" + divlength).val("Paid");
-            $("#id_buyerprice-" + divlength).html('$0.00');
-            $('#id_tooltip-' + divlength).html('Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;   $0.00 <br /> Buyer(s) Total $0.00');
-            //$("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
-            $("#id_feemethod").val(0);
-            $("#id_salestart-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_salestart-" + divlength).datepicker('hide');
-            });
-            $("#id_saleend-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_saleend-" + divlength).datepicker('hide');
-            });
-
-            $("#id_auto_hide_until_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            });
-            $("#id_auto_hide_after_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            });
-
-            $("#id_saletimestart-" + divlength).timepicker();
-
-            $("#id_saletimeend-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
-            $("#id_auto_hide_after_Time-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
-
-
-        });
-        $('.save_btndonation').click(function () {
-            $(".ticket_panel").show();
-            $("#id_ticket_footer").css('display', 'block');
-            var divlength = $("#MasterDiv> div").size();
-
-            var data = $('#clonediv-n').clone();
-            data.attr('id', 'clonediv-' + divlength);
-            data.removeAttr("style")
-            console.log(data.find('input[type=text]'));
-            data.find('*[id]').andSelf().each(function () {
-                //console.log($(this));
-
-                var id = $(this).attr('id');
-                //console.log(id);
-                id1 = id.substr(0, id.indexOf('-'));
-                ////console.log(id);
-                var idn = id1 + "-" + divlength;
-                $(this).attr("id", idn);
-                $(this).val('');
-
-                if ($(this).hasClass("paidticket-n")) {
-                    $(this).removeClass('paidticket-n');
-                    $(this).addClass('paidticket-' + divlength + '');
-                }
-                if ($(this).hasClass("normalticket-n")) {
-                    $(this).removeClass('normalticket-n');
-                    $(this).addClass('normalticket-' + divlength + '');
-                }
-
-            });
-
-
-            $(data).appendTo('#MasterDiv');
-            $(".normalticket-" + divlength).css('display', 'block');
-            $(".paidticket-" + divlength).css('display', 'none');
-            $("#id_feetype-" + divlength).css('display', 'block');
-            $("#id_paymenttype-" + divlength).text("Donation");
-            $("#id_ticket_type-" + divlength).attr("placeholder", "Donation");
-            $("#id_ticket_type-" + divlength).attr("title", "Donation");
-            $("#id_Discount-" + divlength).prop("readonly", true);
-            var randomValue = randomString(4);
-            $("#id_ticket_id-" + divlength).val(randomValue);
-
-            $("#id_order-" + divlength).val(divlength);
-            $("#id_Tickettype-" + divlength).val("Donation");
-
-            $("#id_feemethod").val(0);
-            $("#id_salestart-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_salestart-" + divlength).datepicker('hide');
-            });
-            $("#id_saleend-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_saleend-" + divlength).datepicker('hide');
-            });
-
-            $("#id_auto_hide_until_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            });
-            $("#id_auto_hide_after_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            });
-
-            $("#id_saletimestart-" + divlength).timepicker();
-
-            $("#id_saletimeend-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
-            $("#id_auto_hide_after_Time-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
-
-        });
-        $('.save_btnfree').click(function () {
-
-            $(".ticket_panel").show();
-            $("#id_ticket_footer").css('display', 'block');
-            var divlength = $("#MasterDiv> div").size();
-            var data = $('#clonediv-n').clone();
-            data.attr('id', 'clonediv-' + divlength);
-            data.removeAttr("style");
-            data.find('*[id]').andSelf().each(function () {
-
-
-                var id = $(this).attr('id');
-                //console.log(id);
-                id1 = id.substr(0, id.indexOf('-'));
-                ////console.log(id);
-                var idn = id1 + "-" + divlength;
-                $(this).attr("id", idn);
-                $(this).val('');
-
-                if ($(this).hasClass("paidticket-n")) {
-                    $(this).removeClass('paidticket-n');
-                    $(this).addClass('paidticket-' + divlength + '');
-                }
-                if ($(this).hasClass("normalticket-n")) {
-                    $(this).removeClass('normalticket-n');
-                    $(this).addClass('normalticket-' + divlength + '');
-                }
-
-            });
-
-            //data.append('<span class="RemoveMoreHub" style="width:80%;"><a href="javascript:void(0);" style="float:right;color:#CE0009;font-size:13px;text-decoration:none;margin-right:5%;" >- Remove</a></span>');
-            $('#MasterDiv').append(data);
-
-            $(".normalticket-" + divlength).css('display', 'block');
-            $(".paidticket-" + divlength).css('display', 'none');
-
-            $("#id_paymenttype-" + divlength).text("Free");
-            $("#id_ticket_type-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
-            $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
-            $("#id_Discount-" + divlength).prop("readonly", true);
-            var randomValue = randomString(4);
-            $("#id_ticket_id-" + divlength).val(randomValue);
-            $("#id_order-" + divlength).val(divlength);
-            //$("#id_feetype-" + divlength).css('display', 'none');
-            $("#id_Tickettype-" + divlength).val("Free");
-            //$("clonediv-" + divlength).css('display', 'block');
-
-            $("#id_feemethod").val(0);
-            $("#id_salestart-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_salestart-" + divlength).datepicker('hide');
-            });
-            $("#id_saleend-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_saleend-" + divlength).datepicker('hide');
-            });
-
-            $("#id_auto_hide_until_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            });
-            $("#id_auto_hide_after_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            });
-
-            $("#id_saletimestart-" + divlength).timepicker();
-
-            $("#id_saletimeend-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
-            $("#id_auto_hide_after_Time-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
-
-        });
-        function randomString(len, charSet) {
-            charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            var randomString = '';
-            for (var i = 0; i < len; i++) {
-                var randomPoz = Math.floor(Math.random() * charSet.length);
-                randomString += charSet.substring(randomPoz, randomPoz + 1);
-            }
-            return randomString;
-        }
-        function deletevariable(e) {
-            var x = confirm("Are you sure you want to delete?");
-            if (x) {
-                var divlength = $("#id_Mainvariable> div").size();
-
-                var id = e;
-                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-
-                var div = document.getElementById("id_clonevariable-" + el);
-
-
-
-                div.parentNode.removeChild(div);
-                divlength = $("#id_Mainvariable> div").size();
-
-                var count = 0;
-                $('#id_Mainvariable').children('div').each(function () {
-
-                    var id = $(this).attr('id');
-
-                    id1 = id.substr(0, id.indexOf('-'));
-                    ////console.log(id);
-                    var idn = id1 + "-" + (count);
-                    $(this).attr("id", idn);
-                    $(this).find('*[id]').andSelf().each(function () {
-
-
-                        var id = $(this).attr('id');
-                        //console.log(id);
-                        id1 = id.substr(0, id.indexOf('-'));
-                        ////console.log(id);
-                        var idn = id1 + "-" + (count);
-                        $(this).attr("id", idn);
-
-
-
-
-                    });
-                    count = count + 1;
-
-                });
-
-                if (divlength == 0) {
-                    $('#id_Mainvariable').css('display', 'none');
-
-                }
-
-
-                return true;
-            }
-            else
-                return false;
-
-        }
-        function deletediv(e) {
-
-
-            var x = confirm("Are you sure you want to delete?");
-            if (x) {
-                var divlength = $("#MasterDiv> div").size();
-
-                var id = e;
-                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-
-                var div = document.getElementById("clonediv-" + el);
-                // var div = document.getElementById("clonediv-0");
-                var toatlqty = $("#id_totalqty").html();
-                var qty = $("#id_quantity_total-" + el).val();
-                var leftqty = parseInt(toatlqty) - parseInt(qty);
-                if (!isNaN(leftqty)) {
-                    $("#id_totalqty").html(leftqty);
-                } else {
-
-                    $("#id_totalqty").html(0);
-                }
-
-
-                div.parentNode.removeChild(div);
-                divlength = $("#MasterDiv> div").size();
-
-                var count = 0;
-                $('#MasterDiv').children('div').each(function () {
-
-                    var id = $(this).attr('id');
-
-                    id1 = id.substr(0, id.indexOf('-'));
-                    ////console.log(id);
-                    var idn = id1 + "-" + (count);
-                    $(this).attr("id", idn);
-                    $(this).find('*[id]').andSelf().each(function () {
-
-
-                        var id = $(this).attr('id');
-                        //console.log(id);
-                        id1 = id.substr(0, id.indexOf('-'));
-                        ////console.log(id);
-                        var idn = id1 + "-" + (count);
-                        $(this).attr("id", idn);
-                        var al = $(this).attr("id").substr(0, e.indexOf('-'));
-
-                        if (al == "id_order-") {
-
-                            $(this).val(count + 1);
-                        }
-
-                        if ($(this).hasClass("paidticket-" + (count + 1))) {
-                            $(this).removeClass('paidticket-' + (count + 1));
-                            $(this).addClass('paidticket-' + (count) + '');
-                        }
-                        if ($(this).hasClass("normalticket-" + (count + 1))) {
-                            $(this).removeClass('normalticket-' + (count + 1));
-                            $(this).addClass('normalticket-' + (count) + '');
-                        }
-
-                    });
-                    count = count + 1;
-
-                });
-
-                if (divlength == 0) {
-                    $('#id_ticket_footer').css('display', 'none');
-
-                }
-                calculateSum();
-
-                return true;
-            }
-            else
-                return false;
-
-        }
-        $(".tab-content").hide();
-        function showsettingdiv(e) {
             var id = e;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
-            $('#evnt_set-' + el).slideToggle("fast");
-            //if ($('#evnt_set-' + el).css('display') == 'none') {
-            //    $('#evnt_set-' + el).slideToggle("fast");
-
-            //} else {
-
-            //    $('#evnt_set-' + el).css('display', 'none');
-
-            //}
+            var div = document.getElementById("id_clonevariable-" + el);
 
 
+
+            div.parentNode.removeChild(div);
+            divlength = $("#id_Mainvariable> div").size();
+
+            var count = 0;
+            $('#id_Mainvariable').children('div').each(function () {
+
+                var id = $(this).attr('id');
+
+                id1 = id.substr(0, id.indexOf('-'));
+                ////console.log(id);
+                var idn = id1 + "-" + (count);
+                $(this).attr("id", idn);
+                $(this).find('*[id]').andSelf().each(function () {
+
+
+                    var id = $(this).attr('id');
+                    //console.log(id);
+                    id1 = id.substr(0, id.indexOf('-'));
+                    ////console.log(id);
+                    var idn = id1 + "-" + (count);
+                    $(this).attr("id", idn);
+
+
+
+
+                });
+                count = count + 1;
+
+            });
+
+            if (divlength == 0) {
+                $('#id_Mainvariable').css('display', 'none');
+
+            }
+
+
+            return true;
         }
+        else
+            return false;
+
+    }
+    function deletediv(e) {
 
 
+        var x = confirm("Are you sure you want to delete?");
+        if (x) {
+            var divlength = $("#MasterDiv> div").size();
 
-        $(".evnt_doll_amnt").hide();
-        $(".ev_tic_end").click(function () {
-            $(".evt_time").css("display", "none");
-            $(".evnt_doll_amnt").css("display", "block");
-        });
-        $(".ev_by_date").click(function () {
-            $(".evnt_doll_amnt").css("display", "none");
-            $(".evt_time").css("display", "block");
-        });
-        function checkdiscount(e) {
+            var id = e;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var price = parseFloat($('#id_cost-' + el).val()).toFixed(2);
-            var discount = parseFloat($('#' + e).val()).toFixed(2);
 
-            if (!isNaN(price) && !isNaN(discount)) {
-                if (price != 0 && discount != 0) {
-                    if (discount >= price) {
-                        $('#' + e).addClass('err-bor');
+            var div = document.getElementById("clonediv-" + el);
+            // var div = document.getElementById("clonediv-0");
+            var toatlqty = $("#id_totalqty").html();
+            var qty = $("#id_quantity_total-" + el).val();
+            var leftqty = parseInt(toatlqty) - parseInt(qty);
+            if (!isNaN(leftqty)) {
+                $("#id_totalqty").html(leftqty);
+            } else {
 
-                        $('#hddiscount').val('1');
-                        return false;
+                $("#id_totalqty").html(0);
+            }
 
-                    } else {
-                        $('#' + e).val(discount);
-                        $('#hddiscount').val('0');
-                        $('#' + e).removeClass('err-bor');
 
+            div.parentNode.removeChild(div);
+            divlength = $("#MasterDiv> div").size();
+
+            var count = 0;
+            $('#MasterDiv').children('div').each(function () {
+
+                var id = $(this).attr('id');
+
+                id1 = id.substr(0, id.indexOf('-'));
+                ////console.log(id);
+                var idn = id1 + "-" + (count);
+                $(this).attr("id", idn);
+                $(this).find('*[id]').andSelf().each(function () {
+
+
+                    var id = $(this).attr('id');
+                    //console.log(id);
+                    id1 = id.substr(0, id.indexOf('-'));
+                    ////console.log(id);
+                    var idn = id1 + "-" + (count);
+                    $(this).attr("id", idn);
+                    var al = $(this).attr("id").substr(0, e.indexOf('-'));
+
+                    if (al == "id_order-") {
+
+                        $(this).val(count + 1);
                     }
-                }
-                else if (price == 0 && discount != 0) {
+
+                    if ($(this).hasClass("paidticket-" + (count + 1))) {
+                        $(this).removeClass('paidticket-' + (count + 1));
+                        $(this).addClass('paidticket-' + (count) + '');
+                    }
+                    if ($(this).hasClass("normalticket-" + (count + 1))) {
+                        $(this).removeClass('normalticket-' + (count + 1));
+                        $(this).addClass('normalticket-' + (count) + '');
+                    }
+
+                });
+                count = count + 1;
+
+            });
+
+            if (divlength == 0) {
+                $('#id_ticket_footer').css('display', 'none');
+
+            }
+            calculateSum();
+
+            return true;
+        }
+        else
+            return false;
+
+    }
+    $(".tab-content").hide();
+    function showsettingdiv(e) {
+        var id = e;
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+        $('#evnt_set-' + el).slideToggle("fast");
+        //if ($('#evnt_set-' + el).css('display') == 'none') {
+        //    $('#evnt_set-' + el).slideToggle("fast");
+
+        //} else {
+
+        //    $('#evnt_set-' + el).css('display', 'none');
+
+        //}
+
+
+    }
+
+
+
+    $(".evnt_doll_amnt").hide();
+    $(".ev_tic_end").click(function () {
+        $(".evt_time").css("display", "none");
+        $(".evnt_doll_amnt").css("display", "block");
+    });
+    $(".ev_by_date").click(function () {
+        $(".evnt_doll_amnt").css("display", "none");
+        $(".evt_time").css("display", "block");
+    });
+    function checkdiscount(e) {
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        var price = parseFloat($('#id_cost-' + el).val()).toFixed(2);
+        var discount = parseFloat($('#' + e).val()).toFixed(2);
+
+        if (!isNaN(price) && !isNaN(discount))
+        {
+            if (price != 0 && discount != 0)
+            {
+                if (discount >= price) {
                     $('#' + e).addClass('err-bor');
 
                     $('#hddiscount').val('1');
                     return false;
-                }
 
-            } else if (isNaN(price) && !isNaN(discount)) {
+                } else {
+                    $('#' + e).val(discount);
+                    $('#hddiscount').val('0');
+                    $('#' + e).removeClass('err-bor');
+
+                }
+            }
+            else if (price == 0 && discount != 0) {
                 $('#' + e).addClass('err-bor');
 
                 $('#hddiscount').val('1');
                 return false;
-
-            } else if (isNaN(discount)) {
-                $('#hddiscount').val('0');
-                $('#' + e).removeClass('err-bor');
             }
 
+        } else if (isNaN(price) && !isNaN(discount))
+        {
+            $('#' + e).addClass('err-bor');
 
+            $('#hddiscount').val('1');
+            return false;
 
-
-        }
-        function checkvalidtime(e) {
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var al = e.substr(0, e.indexOf('-'));
-
-            if (al == "id_saletimestart") {
-                errorMsg = checkTime(e);
-                if (errorMsg != "") {
-
-
-
-                    $('#id_saletimestart-' + el).focus();
-                    $('#id_saletimestart-' + el).val("7:00pm");
-                    $('#id_saletimeend-' + el).val("7:00pm");
-
-                } else {
-
-                    $('#id_hdsaletimestart' + el).val($('#' + e).val());
-                    $('#id_saletimeend-' + el).val($('#' + e).val());
-
-                }
-            }
-            if (al == "id_saletimeend") {
-                errorMsg = checkTime(e);
-                if (errorMsg != "") {
-
-                    $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
-
-                    $('#id_saletimeend-' + el).focus();
-                    $('#id_hdsaletimeend' + el).val($('#' + e).val());
-
-                }
-            }
-            if (al == "id_auto_hide_until_time") {
-                errorMsg = checkTime(e);
-                if (errorMsg != "") {
-
-
-
-                    $('#id_auto_hide_until_time-' + el).focus();
-                    $('#id_auto_hide_until_time-' + el).val("7:00pm");
-                    $('#id_auto_hide_after_Time-' + el).val("7:00pm");
-
-                } else {
-                    $('#id_hdautohideuntil' + el).val($('#' + e).val());
-                    $('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
-
-                }
-
-            }
-            if (al == "id_auto_hide_after_Time") {
-                errorMsg = checkTime(e);
-                if (errorMsg != "") {
-
-                    $('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
-
-                    $('#id_auto_hide_after_Time-' + el).focus();
-                    $('#id_hdautohideafter' + el).val($('#' + e).val());
-
-                }
-            }
-
-
-        }
-        function checkvalidDate(e) {
-
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var al = e.substr(0, e.indexOf('-'));
-
-            var errorMsg = checkDate(e);
-            if (al == "id_saleend") {
-                var enddate = $('#id_saleend-' + el).val();
-                var startdate = $('#id_salestart-' + el).val();
-                if (errorMsg != "") {
-
-
-
-                    $('#id_saleend-' + el).focus();
-                    $('#id_saleend-' + el).val(startdate);
-
-
-                }
-
-                errorMsg = compare(startdate, enddate);
-
-                if (errorMsg != "") {
-
-
-
-                    $('#id_saleend-' + el).focus();
-                    $('#id_saleend-' + el).val(startdate);
-                    // field.value = "";
-
-
-                }
-            }
-            if (al == "id_auto_hide_after_Date") {
-                var startdate = $('#id_auto_hide_until_Date-' + el).val();
-                var enddate = $('#id_auto_hide_after_Date-' + el).val();
-                if (errorMsg != "") {
-
-
-
-                    $('#id_auto_hide_after_Date-' + el).focus();
-                    $('#id_auto_hide_after_Date-' + el).val(startdate);
-
-
-                }
-
-                errorMsg = compare(startdate, enddate);
-
-                if (errorMsg != "") {
-
-
-
-                    $('#id_auto_hide_after_Date-' + el).focus();
-                    $('#id_auto_hide_after_Date-' + el).val(startdate);
-                    // field.value = "";
-
-
-                }
-
-
-            }
-            return true;
-
-        }
-        function allownumber(event, id) {
-            var code = event.charCode ? event.charCode : event.keyCode;
-            if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
-            {
-
-            }
-            else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9) // not esc, del, left or right
-            {
-                $('#' + id).val("");
-                return false;
-            }
-
-
-
+        } else if (isNaN(discount))
+        {
+            $('#hddiscount').val('0');
+            $('#' + e).removeClass('err-bor');
         }
 
 
-        function hideunhide(e) {
 
 
-            var id = e;
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var al = e.substr(0, e.indexOf('-'));
+    }
+    function checkvalidtime(e) {
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        var al = e.substr(0, e.indexOf('-'));
 
-            var divlength = $("#MasterDiv> div").size();
-            if (al == "id_EvaddTkt") {
+        if (al == "id_saletimestart") {
+            errorMsg = checkTime(e);
+            if (errorMsg != "") {
 
-                $("#id_RemvTkt-" + el).css("display", "block");
-                $("#id_EvaddTkt-" + el).css("display", "none");
-                $("#id_CusdateCont-" + el).css("display", "block");
-                $("#id_auto_hide_type_0-" + el).prop('checked', true);
-                $("#id_auto_hide_until_Date-" + el).datepicker({
-                    format: "mm/dd/yyyy",
-                    minDate: "0",
-                    onSelect: function () {
 
-                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                    }
-                }).on('changeDate', function (ev) {
-                    $("#id_auto_hide_until_Date-" + el).datepicker('hide');
-                });
-                $("#id_auto_hide_after_Date-" + el).datepicker({
-                    format: "mm/dd/yyyy",
-                    minDate: "0",
-                    onSelect: function () {
 
-                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                    }
-                }).on('changeDate', function (ev) {
-                    $("#id_auto_hide_after_Date-" + el).datepicker('hide');
-                });
-            }
-            if (al == "id_RemvTkt") {
-                $("#id_RemvTkt-" + el).css("display", "none");
-                $("#id_EvaddTkt-" + el).css("display", "block");
-                $("#id_CusdateCont-" + el).css("display", "none");
+                $('#id_saletimestart-' + el).focus();
+                $('#id_saletimestart-' + el).val("7:00pm");
+                $('#id_saletimeend-' + el).val("7:00pm");
+
+            } else {
+
+                $('#id_hdsaletimestart' + el).val($('#' + e).val());
+                $('#id_saletimeend-' + el).val($('#' + e).val());
 
             }
-            if (al == "id_CusdateTime") {
-                $("#id_HideuntDiv-" + el).css("display", "block");
-                $("#id_auto_hide_type_0-" + el).prop('checked', false);
+        }
+        if (al == "id_saletimeend") {
+            errorMsg = checkTime(e);
+            if (errorMsg != "") {
+
+                $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
+
+                $('#id_saletimeend-' + el).focus();
+                $('#id_hdsaletimeend' + el).val($('#' + e).val());
+
             }
-            if (al == "id_TktnotSale") {
-                $("#id_HideuntDiv-" + el).css("display", "none");
-                $("#id_auto_hide_type_1-" + el).prop('checked', false);
+        }
+        if (al == "id_auto_hide_until_time") {
+            errorMsg = checkTime(e);
+            if (errorMsg != "") {
+
+
+
+                $('#id_auto_hide_until_time-' + el).focus();
+                $('#id_auto_hide_until_time-' + el).val("7:00pm");
+                $('#id_auto_hide_after_Time-' + el).val("7:00pm");
+
+            } else {
+                $('#id_hdautohideuntil' + el).val($('#' + e).val());
+                $('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
 
             }
 
         }
-        function randomString(len, charSet) {
-            charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            var randomString = '';
-            for (var i = 0; i < len; i++) {
-                var randomPoz = Math.floor(Math.random() * charSet.length);
-                randomString += charSet.substring(randomPoz, randomPoz + 1);
+        if (al == "id_auto_hide_after_Time") {
+            errorMsg = checkTime(e);
+            if (errorMsg != "") {
+
+                $('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
+
+                $('#id_auto_hide_after_Time-' + el).focus();
+                $('#id_hdautohideafter' + el).val($('#' + e).val());
+
             }
-            return randomString;
         }
+
+
+    }
+    function checkvalidDate(e) {
+
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        var al = e.substr(0, e.indexOf('-'));
+
+        var errorMsg = checkDate(e);
+        if (al == "id_saleend") {
+            var enddate = $('#id_saleend-' + el).val();
+            var startdate = $('#id_salestart-' + el).val();
+            if (errorMsg != "") {
+
+
+
+                $('#id_saleend-' + el).focus();
+                $('#id_saleend-' + el).val(startdate);
+
+
+            }
+
+            errorMsg = compare(startdate, enddate);
+
+            if (errorMsg != "") {
+
+
+
+                $('#id_saleend-' + el).focus();
+                $('#id_saleend-' + el).val(startdate);
+                // field.value = "";
+
+
+            }
+        }
+        if (al == "id_auto_hide_after_Date") {
+            var startdate = $('#id_auto_hide_until_Date-' + el).val();
+            var enddate = $('#id_auto_hide_after_Date-' + el).val();
+            if (errorMsg != "") {
+
+
+
+                $('#id_auto_hide_after_Date-' + el).focus();
+                $('#id_auto_hide_after_Date-' + el).val(startdate);
+
+
+            }
+
+            errorMsg = compare(startdate, enddate);
+
+            if (errorMsg != "") {
+
+
+
+                $('#id_auto_hide_after_Date-' + el).focus();
+                $('#id_auto_hide_after_Date-' + el).val(startdate);
+                // field.value = "";
+
+
+            }
+
+
+        }
+        return true;
+
+    }
+    function allownumber(event, id) {
+        var code = event.charCode ? event.charCode : event.keyCode;
+        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+        {
+
+        }
+        else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9) // not esc, del, left or right
+        {
+            $('#' + id).val("");
+            return false;
+        }
+
+
+
+    }
+
+
+    function hideunhide(e) {
+
+
+        var id = e;
+        var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+        var al = e.substr(0, e.indexOf('-'));
+
+        var divlength = $("#MasterDiv> div").size();
+        if (al == "id_EvaddTkt") {
+
+            $("#id_RemvTkt-" + el).css("display", "block");
+            $("#id_EvaddTkt-" + el).css("display", "none");
+            $("#id_CusdateCont-" + el).css("display", "block");
+            $("#id_auto_hide_type_0-" + el).prop('checked', true);
+            $("#id_auto_hide_until_Date-" + el).datepicker({
+                format: "mm/dd/yyyy",
+                minDate: "0",
+                onSelect: function () {
+
+                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                }
+            }).on('changeDate', function (ev) {
+                $("#id_auto_hide_until_Date-" + el).datepicker('hide');
+            });
+            $("#id_auto_hide_after_Date-" + el).datepicker({
+                format: "mm/dd/yyyy",
+                minDate: "0",
+                onSelect: function () {
+
+                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                }
+            }).on('changeDate', function (ev) {
+                $("#id_auto_hide_after_Date-" + el).datepicker('hide');
+            });
+        }
+        if (al == "id_RemvTkt") {
+            $("#id_RemvTkt-" + el).css("display", "none");
+            $("#id_EvaddTkt-" + el).css("display", "block");
+            $("#id_CusdateCont-" + el).css("display", "none");
+
+        }
+        if (al == "id_CusdateTime") {
+            $("#id_HideuntDiv-" + el).css("display", "block");
+            $("#id_auto_hide_type_0-" + el).prop('checked', false);
+        }
+        if (al == "id_TktnotSale") {
+            $("#id_HideuntDiv-" + el).css("display", "none");
+            $("#id_auto_hide_type_1-" + el).prop('checked', false);
+
+        }
+
+    }
+    function randomString(len, charSet) {
+        charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var randomString = '';
+        for (var i = 0; i < len; i++) {
+            var randomPoz = Math.floor(Math.random() * charSet.length);
+            randomString += charSet.substring(randomPoz, randomPoz + 1);
+        }
+        return randomString;
+    }
     </script>
 
     @*Image Section*@
@@ -3888,67 +3992,55 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            function uuid() {
-                var chars = '0123456789abcdef'.split('');
+    $(document).ready(function () {
+        function uuid() {
+            var chars = '0123456789abcdef'.split('');
 
-                var uuid = [], rnd = Math.random, r;
-                uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
-                uuid[14] = '4'; // version 4
+            var uuid = [], rnd = Math.random, r;
+            uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+            uuid[14] = '4'; // version 4
 
-                for (var i = 0; i < 36; i++) {
-                    if (!uuid[i]) {
-                        r = 0 | rnd() * 16;
+            for (var i = 0; i < 36; i++) {
+                if (!uuid[i]) {
+                    r = 0 | rnd() * 16;
 
-                        uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r & 0xf];
-                    }
+                    uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r & 0xf];
                 }
-
-                return uuid.join('');
             }
 
-            $(function () {
-                $("#MasterDiv").sortable({
-                    update: function () {
-                        var strItems = "";
+            return uuid.join('');
+        }
 
-                        $("#MasterDiv").children().each(function (i) {
-                            var li = $(this).attr("id");
-                            var el = li.substr(li.indexOf('-') + 1, li.length - li.indexOf('-'));
-                            //alert(li);
-                            $('#id_order-' + el).val(i);
+        $(function () {
+            $("#MasterDiv").sortable({
+                update: function () {
+                    var strItems = "";
 
-                        });
-                    }
-                });
-                //$("#MasterDiv").disableSelection();
+                    $("#MasterDiv").children().each(function (i) {
+                        var li = $(this).attr("id");
+                        var el = li.substr(li.indexOf('-') + 1, li.length - li.indexOf('-'));
+                        //alert(li);
+                        $('#id_order-' + el).val(i);
+
+                    });
+                }
             });
-            $('#hdUniqueguid').val(uuid());
-            //$('#input2').change(function () {
-                
-             
-              
-              
-            //    if (this.files[0].size > 2097152) {
-            //        $("#imageeror").val(1);
-            //            alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
-                      
-            //            return false;
-            //        }
-                
+            //$("#MasterDiv").disableSelection();
+        });
+        $('#hdUniqueguid').val(uuid());
 
-            //});
-            $('#input2').filer({
-                limit: 5,
-                extensions: ['jpg', 'jpeg', 'png'],
-                changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drop Images here to upload or click here</h3></br><h4>Upto 5 Images,900X600</h4> </div></div></div>',
-                showThumbs: true,
-                appendTo: "#drag-drop",
-                theme: "dragdropbox",
-                templates: {
-                    box: '<ul class="jFiler-item-list clearfix"></ul>',
+        $('#input2').filer({
+            limit: 5,
+            maxSize: null,
+            extensions: ['jpg', 'jpeg', 'png'],
+            changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drop Images here to upload or click here</h3></br><h4>Upto 5 Images,900X600</h4> </div></div></div>',
+            showThumbs: true,
+            appendTo: "#drag-drop",
+            theme: "dragdropbox",
+            templates: {
+                box: '<ul class="jFiler-item-list clearfix"></ul>',
 
-                    item: '<li class="jFiler-item">\
+                item: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <div class="jFiler-item-container">\
@@ -3967,7 +4059,7 @@
                                        </div>\
                         </li>',
 
-                    itemAppend: '<li class="jFiler-item">\
+                itemAppend: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <button class="btn  jFiler-item-trash-action can_btn" type="button">\
@@ -3975,408 +4067,347 @@
                                              </button>\
                                        </div>\
                         </li>',
-                    progressBar: '<div class="bar"></div>',
-                    itemAppendToEnd: true,
-                    removeConfirmation: false,
-                    _selectors: {
-                        list: '.jFiler-item-list',
-                        item: '.jFiler-item',
-                        progressBar: '.bar',
-                        remove: '.jFiler-item-trash-action',
-                    }
-                },
-                uploadFile: {
-                    url: "/Event/SaveUploadedFile",
-                    data: { 'Uniqueid': $('#hdUniqueguid').val() },
-                    type: 'POST',
-                    enctype: 'multipart/form-data',
-                    beforeSend:function(){},
-                        //console.log(el[0].className);
-                        //var x = el[0].parentElement;
-                        //var len=el[0].parentElement.childNodes.length;
-                      
+                progressBar: '<div class="bar"></div>',
+                itemAppendToEnd: false,
+                removeConfirmation: false,
+                _selectors: {
+                    list: '.jFiler-item-list',
+                    item: '.jFiler-item',
+                    progressBar: '.bar',
+                    remove: '.jFiler-item-trash-action',
+                }
+            },
+            uploadFile: {
+                url: "/Event/SaveUploadedFile",
+                data: { 'Uniqueid': $('#hdUniqueguid').val() },
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                beforeSend: function () { },
+                success: function (data, el) {
+                    console.log(data);
+                    var parent = el.find(".jFiler-jProgressBar").parent();
+                    el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                        $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                    });
 
-                        //var input = document.getElementById("input2");
-                       
-                       
-                        //if (input.files && input.files.length == 1) {
-                        //    if (input.files[0].size > 2097152) {
-                        //        alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
-                            
-                        //        var dragdrop = document.getElementById("drag-drop");
-                        //        var filer = dragdrop.find($(".jFiler-items"));
-                        //        dragdrop.remove(el[0]);
-                        //        console.log(filer);
-                        //       // if (len==1)
-                        //       //{
-                                   
-                        //       //   var div=  document.getElementById("drag-drop");
-                        //       //   console.log(el[0].parentElement.parentElement.parentElement);
-                        //       //   var u = document.getElementsByClassName("jFiler-items");
-                        //       //   var y = document.getElementsByClassName("jFiler-input-inner");
-                        //       //  console.log( el[0].parentElement.parentElement.parentElement.childNodes[0].style.display="block");
-                        //       //  console.log(  el[0].parentElement.parentElement.parentElement.childNodes[0])
-                        //       //   console.log(y);
-                                 
-                                
-                                   
-                        //       // }
-                        //        x.removeChild(el[0]);
-                        //        return false;
-                      
-
-                   
-                    success: function (data, el) {
-                        console.log(data);
-                        var parent = el.find(".jFiler-jProgressBar").parent();
-                        el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
-                            $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
-                        });
-
-                        var image_count = $("#image_count").val();
-                        var imagejson = jQuery.parseJSON(JSON.stringify(data));
-                        var imgdata = imagejson.image_name + '####' + imagejson.image_type;
-
-                        $("#image_count").val(el[0].jfiler_id)
-                        $('<input>').attr({
-                            type: 'hidden',
-                            id: 'image_hidden_' + el[0].jfiler_id,
-                            name: 'Eventpicture[' + imgdata + ']',
-                            value: imgdata
-                        }).appendTo('form');
-
-                        $('#ImagePresent').val("Yes");
-
-                        if ($.trim(image_count) == '') {
-                            $("#image_count").val('1');
-                        } else {
-                            image_count = parseInt(image_count) + 1;
-                            $("#image_count").val(image_count);
-                        }
-
-
-
-                    },
-                   
-                    error: function (el) {
-                        var input = document.getElementById("input2");
-                        
-                        var parent = el.find(".jFiler-jProgressBar").parent();
-                      
-                        el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
-                            $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
-                        });
-                    },
-                    statusCode:{},
-                    onProgress: function () { },
-                },
-                dragDrop: {
-                    dragEnter: function () { },
-                    dragLeave: function () { },
-                    drop: function () { },
-                },
-                addMore: true,
-                clipBoardPaste: true,
-                excludeName: null,
-                beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
-                onSelect: function () { $(".jFiler-input-inner").hide(); },
-                afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
-
-                onRemove: function (el) {
                     var image_count = $("#image_count").val();
-                    image_count = parseInt(image_count) - 1;
-                    var id_div = el[0].jfiler_id;
-                    var hidden_image_element = 'image_hidden_' + id_div;
-                    if (image_count == 0) {
-                        $("#image_count").val('');
+                    var imagejson = jQuery.parseJSON(JSON.stringify(data));
+                    var imgdata = imagejson.image_name + '####' + imagejson.image_type;
+
+                    $("#image_count").val(el[0].jfiler_id)
+                    $('<input>').attr({
+                        type: 'hidden',
+                        id: 'image_hidden_' + el[0].jfiler_id,
+                        name: 'Eventpicture[' + imgdata + ']',
+                        value: imgdata
+                    }).appendTo('form');
+
+                    $('#ImagePresent').val("Yes");
+
+                    if ($.trim(image_count) == '') {
+                        $("#image_count").val('1');
                     } else {
+                        image_count = parseInt(image_count) + 1;
                         $("#image_count").val(image_count);
                     }
-                    $("#" + hidden_image_element).remove();
-                    $('#input2').click(function (e) {
-                        e.preventDefault();
 
-                    })
-                    $('#ImagePresent').val("NO");
 
 
                 },
-                onEmpty: function (el) {
-                 
-                  
-                    if ($("#imageeror").val() == 0) {
-                        if ($(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
-                    }
+                error: function (el) {
+                    var parent = el.find(".jFiler-jProgressBar").parent();
+                    el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                        $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                    });
                 },
-                captions: {
-                    button: "Choose Files",
-                    feedback: "Choose files To Upload",
-                    feedback2: "files were chosen",
-                    drop: "Drop file here to Upload",
-                    removeConfirmation: "Are you sure you want to remove this file?",
-                    errors: {
-                        filesLimit: ajaxsetup('CreateEvent', 'CreateEventImagecountUI'),
-                        filesType: ajaxsetup('CreateEvent', 'CreateEventImageTypeUI'),
-                        filesSize: ajaxsetup('CreateEvent', 'CreateEventImageSizeUI'),
-                        filesSizeAll: ajaxsetup('CreateEvent', 'CreateEventImageSizeUI')
-                    }
+                statusCode: {},
+                onProgress: function () { },
+            },
+            dragDrop: {
+                dragEnter: function () { },
+                dragLeave: function () { },
+                drop: function () { },
+            },
+            addMore: true,
+            clipBoardPaste: true,
+            excludeName: null,
+            beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
+            onSelect: function () { $(".jFiler-input-inner").hide(); },
+            afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
+
+            onRemove: function (el) {
+                var image_count = $("#image_count").val();
+                image_count = parseInt(image_count) - 1;
+                var id_div = el[0].jfiler_id;
+                var hidden_image_element = 'image_hidden_' + id_div;
+                if (image_count == 0) {
+                    $("#image_count").val('');
+                } else {
+                    $("#image_count").val(image_count);
                 }
-            });
+                $("#" + hidden_image_element).remove();
+                $('#input2').click(function (e) {
+                    e.preventDefault();
+
+                })
+                $('#ImagePresent').val("NO");
+
+
+            },
+            onEmpty: function (el) {
+
+                if ($("#imageeror").val() == 0) {
+                    if ($(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                }
+            },
+            captions: {
+                button: "Choose Files",
+                feedback: "Choose files To Upload",
+                feedback2: "files were chosen",
+                drop: "Drop file here to Upload",
+                removeConfirmation: "Are you sure you want to remove this file?",
+                errors: {
+                    filesLimit: "Only {{fi-limit}} files are allowed to be uploaded.",
+                    filesType: "Only Images are allowed to be uploaded.",
+                    filesSize: "{{fi-name}} is too large! Please upload file up to {{fi-maxSize}} MB.",
+                    filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                }
+            }
         });
+    });
     </script>
 
     //DateTime
     <script>
-        function ajaxsetup(strname, strFormTag) {
-            var msgnew = "";
 
-            var request = $.ajax({
-                url: "/ValidationMessage/Index",
-                async: false,
-                data: { strFormName: strname, strFormTag: strFormTag },
-                type: 'Post'
-            });
-            request.done(function (msg) {
-                msgnew += msg;
-            });
+    function validatemain() {
+        var msg = "";
+        var count = 0;
+        var title = $('#txtEventTitle').val();
 
-            request.fail(function (jqXHR, textStatus) {
-                msgnew += "Some Error occur!!";
-            });
-            return msgnew;
+        if (title == "") {
+            msg = "Please enter the name of event";
+
         }
-        function validatemain() {
-            var msg = "";
-            var count = 0;
-            var title = $('#txtEventTitle').val();
+        if ($('#ddlOrgnizers option').length <= 0)
+        {
+            msg = "Please enter organizer name";
 
-            if (title == "") {
-                msg += ajaxsetup("CreateEvent", "CreateEventTitileUI");
-
-            }
-            if ($('#ddlOrgnizers option').length <= 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI");
-
-
-            }
-            var type = $("#EventType").val();
-            var cat = $("#ddlEventCategory").val();
-            if (type <= 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventtypeUI");
-            }
-            if (cat <= 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventCategoryUI");
-            }
+        }
+        var type = $("#EventType").val();
+        var cat = $("#ddlEventCategory").val();
+        if (type <= 0) { msg += "</br>Please select type of event"; }
+        if (cat <= 0) { msg += "</br>Please select category of event"; }
 
 
 
-            var divlength = $("#MasterDiv> div").size();
+        var divlength = $("#MasterDiv> div").size();
 
-            if (divlength > 0) {
+        if (divlength > 0) {
 
-                for (var i = 0; i < divlength; i++) {
+            for (var i = 0; i < divlength; i++) {
 
-                    var ticket_name = $('#id_ticket_type-' + i).val();
-                    var ticket_Qty = $('#id_quantity_total-' + i).val();
-                    if (ticket_name == "") {
-                        $('#id_ticket_type-' + i).addClass('err-bor');
+                var ticket_name = $('#id_ticket_type-' + i).val();
+                var ticket_Qty = $('#id_quantity_total-' + i).val();
+                if (ticket_name == "") {
+                    $('#id_ticket_type-' + i).addClass('err-bor');
 
-                        count++;
-                    } else {
-                        $('#id_ticket_type-' + i).removeClass('err-bor');
-
-                    }
-                    if (ticket_Qty == "") {
-
-                        $('#id_quantity_total-' + i).addClass('err-bor');
-                        count++;
-                    } else {
-
-                        $('#id_quantity_total-' + i).removeClass('err-bor');
-                    }
-                    if ($('#id_cost-' + i).hasClass('err-bor')) { count++; }
-
-                }
-
-
-            }
-            if ($('#hddiscount').val() == 1) {
-                count++;
-
-            }
-            if (count > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI");
-            }
-            if ($('#id_variablecharge').is(":checked") == true) {
-                if ($('#id_vardesc').val() == "") {
-                    $('#id_vardesc').addClass('err-bor');
-                    msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI");
-
-
-
+                    count++;
                 } else {
-                    $('#id_vardesc').removeClass('err-bor');
+                    $('#id_ticket_type-' + i).removeClass('err-bor');
 
                 }
+                if (ticket_Qty == "") {
 
-            }
-            var divvar = $("#id_Mainvariable>div").size();
-
-            if (divvar > 0) {
-
-                for (var i = 0; i < divvar; i++) {
-                    var subdesc_name = $('#id_varsubdesc-' + i).val();
-                    var subprice_Qty = $('#id_varsubprice-' + i).val();
-
-                    if (subdesc_name == "") {
-
-                        $('#id_varsubdesc-' + i).addClass('err-bor');
-
-                        count++;
-                    } else {
-                        $('#id_varsubdesc-' + i).removeClass('err-bor');
-
-                    }
-                    if (subprice_Qty == "") {
-
-                        $('#id_varsubprice-' + i).addClass('err-bor');
-                        count++;
-                    } else {
-
-                        $('#id_varsubprice-' + i).removeClass('err-bor');
-                    }
-
-                }
-
-            }
-            if ($('#chkReqPassword').is(":checked") == true) {
-                if ($('#txtReqPassword').val() == "") {
-                    $('#txtReqPassword').addClass('err-bor');
-                    msg += ajaxsetup("CreateEvent", "CreateEventPwdUI");
-
+                    $('#id_quantity_total-' + i).addClass('err-bor');
+                    count++;
                 } else {
-                    $('#txtReqPassword').removeClass('err-bor');
+
+                    $('#id_quantity_total-' + i).removeClass('err-bor');
+                }
+                if ($('#id_cost-' + i).hasClass('err-bor')) { count++; }
+
+            }
+
+
+        }
+        if ($('#hddiscount').val() == 1) {
+            count++;
+
+        }
+        if (count > 0) {
+            msg += "<br/>Please fix the highlighted fields";
+        }
+        if ($('#id_variablecharge').is(":checked") == true) {
+            if ($('#id_vardesc').val() == "") {
+                $('#id_vardesc').addClass('err-bor');
+                msg += "<br/> Please enter description for variable charges";
+
+
+
+            } else {
+                $('#id_vardesc').removeClass('err-bor');
+
+            }
+
+        }
+        var divvar = $("#id_Mainvariable>div").size();
+
+        if (divvar > 0) {
+
+            for (var i = 0; i < divvar; i++) {
+                var subdesc_name = $('#id_varsubdesc-' + i).val();
+                var subprice_Qty = $('#id_varsubprice-' + i).val();
+
+                if (subdesc_name == "") {
+
+                    $('#id_varsubdesc-' + i).addClass('err-bor');
+
+                    count++;
+                } else {
+                    $('#id_varsubdesc-' + i).removeClass('err-bor');
+
+                }
+                if (subprice_Qty == "") {
+
+                    $('#id_varsubprice-' + i).addClass('err-bor');
+                    count++;
+                } else {
+
+                    $('#id_varsubprice-' + i).removeClass('err-bor');
                 }
 
             }
-            return msg;
-        }
-        function compare(DateA, DateB) {
-            var errorMsg = "";
-            var a = new Date(DateA);
-            var b = new Date(DateB);
-
-            var msDateA = Date.UTC(a.getFullYear(), a.getMonth() + 1, a.getDate());
-            var msDateB = Date.UTC(b.getFullYear(), b.getMonth() + 1, b.getDate());
-
-            if (parseFloat(msDateA) < parseFloat(msDateB))
-                return errorMsg = "";  // less than
-            else if (parseFloat(msDateA) == parseFloat(msDateB))
-                return errorMsg = "";  // equal
-            else if (parseFloat(msDateA) > parseFloat(msDateB))
-                return errorMsg = ajaxsetup("CreateEvent", "CreateEventCompareDateUI");  // greater than
-            else
-                return null;  // error
-
 
         }
-        function checkTime(field) {
-            var errorMsg = "";
+        if ($('#chkReqPassword').is(":checked") == true) {
+            if ($('#txtReqPassword').val() == "") {
+                $('#txtReqPassword').addClass('err-bor');
+                msg += "<br/> Please enter password for view event";
 
-            // regular expression to match required time format
-            re = /^(\d{1,2}):(\d{2})(:00)?([ap]m)?$/;
-            var value = $("#" + field).val();
-            if (value != '') {
-                if (regs = value.match(re)) {
-                    if (regs[4]) {
-                        // 12-hour time format with am/pm
-                        if (regs[1] < 1 || regs[1] > 12) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI");
-                        }
-                    } else {
-                        // 24-hour time format
-                        if (regs[1] > 23) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI");
-                        }
-                    }
-                    if (!errorMsg && regs[2] > 59) {
-                        errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI");
+            } else {
+                $('#txtReqPassword').removeClass('err-bor');
+            }
+
+        }
+        return msg;
+    }
+    function compare(DateA, DateB) {
+        var errorMsg = "";
+        var a = new Date(DateA);
+        var b = new Date(DateB);
+
+        var msDateA = Date.UTC(a.getFullYear(), a.getMonth() + 1, a.getDate());
+        var msDateB = Date.UTC(b.getFullYear(), b.getMonth() + 1, b.getDate());
+
+        if (parseFloat(msDateA) < parseFloat(msDateB))
+            return errorMsg = "";  // less than
+        else if (parseFloat(msDateA) == parseFloat(msDateB))
+            return errorMsg = "";  // equal
+        else if (parseFloat(msDateA) > parseFloat(msDateB))
+            return errorMsg = "Start Date can not be greater than End Date";  // greater than
+        else
+            return null;  // error
+
+
+    }
+    function checkTime(field) {
+        var errorMsg = "";
+
+        // regular expression to match required time format
+        re = /^(\d{1,2}):(\d{2})(:00)?([ap]m)?$/;
+        var value = $("#" + field).val();
+        if (value != '') {
+            if (regs = value.match(re)) {
+                if (regs[4]) {
+                    // 12-hour time format with am/pm
+                    if (regs[1] < 1 || regs[1] > 12) {
+                        errorMsg = "Invalid value for hours: " + regs[1];
                     }
                 } else {
-                    errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI");
-                }
-            }
-
-            return errorMsg;
-        }
-        function checkDate(field) {
-            var allowBlank = true;
-            var minYear = (new Date()).getFullYear();
-            var maxYear = (new Date()).getFullYear() + 10;
-            var d = new Date();
-
-            var errorMsg = "";
-            var value = $("#" + field).val();
-            var datelast = new Date(value);
-
-            var msDateA = Date.UTC(d.getFullYear(), d.getMonth() + 1, d.getDate());
-            var msDateB = Date.UTC(datelast.getFullYear(), datelast.getMonth() + 1, datelast.getDate());
-
-
-
-            // regular expression to match required date format
-            re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
-
-            if (value != '') {
-                if (regs = value.match(re)) {
-                    if (regs[2] != '' && regs[2] != '' && regs[3] != '') {
-                        if (regs[2] < 1 || regs[2] > 31) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
-                        } else if (regs[1] < 1 || regs[1] > 12) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
-                        } else if (regs[3] < minYear || regs[3] > maxYear) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
-                        }
+                    // 24-hour time format
+                    if (regs[1] > 23) {
+                        errorMsg = "Invalid value for hours: " + regs[1];
                     }
-                } else {
-                    errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
                 }
-            } else if (!allowBlank) {
-                errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
+                if (!errorMsg && regs[2] > 59) {
+                    errorMsg = "Invalid value for minutes: " + regs[2];
+                }
+            } else {
+                errorMsg = "Invalid time format: " + value;
             }
-
-            if (parseFloat(msDateB) < parseFloat(msDateA)) {
-
-                errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
-            }
-            return errorMsg;
-
-            //if (errorMsg != "") {
-            //    return errorMsg;
-
-
-            //    field.focus();
-            //    field.value = "";
-
-            //}
-
-            //return true;
         }
 
-        $(document).ready(function () {
+        return errorMsg;
+    }
+    function checkDate(field) {
+        var allowBlank = true;
+        var minYear = (new Date()).getFullYear();
+        var maxYear = (new Date()).getFullYear() + 10;
+        var d = new Date();
+
+        var errorMsg = "";
+        var value = $("#" + field).val();
+        var datelast = new Date(value);
+
+        var msDateA = Date.UTC(d.getFullYear(), d.getMonth() + 1, d.getDate());
+        var msDateB = Date.UTC(datelast.getFullYear(), datelast.getMonth() + 1, datelast.getDate());
 
 
-            //$(document).click(function () {
 
-            //    $('#diverroacc').css('display', 'none');
-            //    $('#divaccsuc').css('display', 'none');
-            //    $("input").removeClass('err-bor');
-            //});
-            $('#drag-drop').on('click', function (e) {
-                $('#input2').unbind('click');
+        // regular expression to match required date format
+        re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
 
-            });
+        if (value != '') {
+            if (regs = value.match(re)) {
+                if (regs[2] != '' && regs[2] != '' && regs[3] != '') {
+                    if (regs[2] < 1 || regs[2] > 31) {
+                        errorMsg = "Invalid value for day: " + regs[2];
+                    } else if (regs[1] < 1 || regs[1] > 12) {
+                        errorMsg = "Invalid value for month: " + regs[1];
+                    } else if (regs[3] < minYear || regs[3] > maxYear) {
+                        errorMsg = "Invalid value for year: " + regs[3] + " - must be between " + minYear + " and " + maxYear;
+                    }
+                }
+            } else {
+                errorMsg = "Invalid date format: " + field.value;
+            }
+        } else if (!allowBlank) {
+            errorMsg = "Empty date not allowed!";
+        }
+
+        if (parseFloat(msDateB) < parseFloat(msDateA)) {
+
+            errorMsg = "Invalid date format: " + field.value;
+        }
+        return errorMsg;
+
+        //if (errorMsg != "") {
+        //    return errorMsg;
+
+
+        //    field.focus();
+        //    field.value = "";
+
+        //}
+
+        //return true;
+    }
+
+    $(document).ready(function () {
+
+
+        //$(document).click(function () {
+
+        //    $('#diverroacc').css('display', 'none');
+        //    $('#divaccsuc').css('display', 'none');
+        //    $("input").removeClass('err-bor');
+        //});
+        $('#drag-drop').on('click', function (e) {
+            $('#input2').unbind('click');
+
         });
+    });
 
     </script>
 

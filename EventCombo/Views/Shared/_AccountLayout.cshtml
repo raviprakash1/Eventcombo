@@ -125,7 +125,8 @@
                                                 <p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>
                                                 <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
                                                 <p>@Html.ActionLink("Organizer Profile", "OrganizerProfile", "Account")</p>
-                                                <p>@Html.ActionLink("Test", "TicketPayment", "TicketPayment")</p>
+                                                <p>@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")</p>
+                                                <p>@Html.ActionLink("Manage Event", "EventList", "EventList")</p>
                                             </div>
                                         </div>
                                     </div>
@@ -171,6 +172,37 @@
     </div>
 
     <script type="text/javascript">
+
+        function checkPermission(PermisionId) {
+            @*$.ajax({
+                url: '@Url.Action("GetPermission", "Permission")',
+                data: { iPermissionId: PermisionId },
+                async: false,
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    if (response != "Y") {
+                        alert("Access Denied !!!");
+                        return false;
+                        //  $('#spanid').html("Record Updated.");
+                        // $('#divError').css('display', 'block');
+                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                    }
+                    else {
+                        //  alert(vPerm);
+                        if (PermisionId == "1")
+                            window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
+                    }
+                }
+            });*@
+
+
+
+        }
+
+
+
+
     function changeheader(e)
     {
         if ($('#idchecked').is(":checked") == true) {

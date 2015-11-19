@@ -17,13 +17,7 @@ namespace EventCombo.Controllers
     public class EventController : Controller
     {
         // GET: Event
-        [HttpPost]
-        public ActionResult EventCreation(EventCreation model)
-        {
-           
-            return View();
-        }
-
+      
         public ActionResult EventCreation()
         {
             if ((Session["AppId"] != null))

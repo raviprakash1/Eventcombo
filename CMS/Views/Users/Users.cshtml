@@ -50,12 +50,14 @@
                                             <span class="view_evnt fs26 col-sm-6">  Users</span>
                                             
                                             <label class="field select admin-form col-sm-4 text-right srh-by-no">
-                                                <select>
+                                                @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })
+
+                                                @*<select>
                                                     <option value="0">Select</option>
                                                     <option value="0">01 - 50</option>
                                                     <option value="1">51 - 100</option>
                                                     <option value="2">101 - 150</option>
-                                                </select>
+                                                </select>*@
                                                 <i class="arrow double"></i>
                                             </label>
                                         </div>
@@ -93,10 +95,10 @@
 
                                 <div class="col-md-12">
 
-                                    <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="50">
+                                    <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="5">
                                         <thead class="bg_white">
                                             <tr>
-                                                <th>#</th>
+                                                <th>Sno.</th>
                                                 <th>Name</th>
                                                 <th>Role</th>
                                                 <th>Email Id</th>
@@ -106,8 +108,8 @@
                                                 <th>Organiser</th>
                                                 <th>Merchant</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
-                                                <th>Online</th>
+                                                <td>Action</td>
+                                                <td>Online</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -118,7 +120,7 @@
                                                     i = i + 1;
                                                     <tr>
 
-                                                        <td>@i.ToString()</td>
+                                                        <td>@i</td>
                                                         <td class="eml-ellps" title="@obj.FirstName @obj.LastName">
 
                                                             @obj.FirstName  @obj.LastName
@@ -355,7 +357,7 @@
                         </div>
                         <div class="panel-footer text-right" id="dvSave">
                            
-                            <button class="btn btn-primary" id="btSave" type="button">Save</button>
+                            <button class="btn btn-primary close-mg"  id="btSave" type="button">Save</button>                            
                         </div>
                         @Html.Hidden("hdCurrentUserRole")
                     </div>
@@ -378,6 +380,10 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
+            $('.close-mg').on('click', function (e) {
+                $.magnificPopup.close();
+            });
+
             $.ajax({
                 url: '@Url.Action("CurrentUserRole", "Permission")',
                 datatype: "Text",
@@ -504,7 +510,7 @@
                     type: "Post",
                     success: function (response) {
                         if (response == "Y") {
-                            alert("Record Updated.");
+                           // alert("Record Updated.");
                             //  $('#spanid').html("Record Updated.");
                             // $('#divError').css('display', 'block');
                             ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
