@@ -19,8 +19,9 @@
                     <div class="er_UI_main">
                         <div class="er_UI_img"></div>
                         <div class="er_suc" id="erraccmsg">
-
+                           
                         </div>
+                        <button class="close closebtn" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>
                     </div>
                 </div>
                 <div class="Moderor" id="divaccsuc" style="display: none;">
@@ -28,7 +29,7 @@
 
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg"> </div>
-                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+                        <button class="close closebtn" aria-hidden="true"  type="button" id="btndivaccsuc">&#215;</button>
                     </div>
                 </div>
             </div>
@@ -60,7 +61,7 @@
             </div>
 
             <div class="event-upload-container">
-                <input type="file" name="image" id="input2">
+                <input type="file" name="image" id="input2" multiple data-jfiler-maxSize="2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
                         
@@ -3923,7 +3924,20 @@
                 //$("#MasterDiv").disableSelection();
             });
             $('#hdUniqueguid').val(uuid());
+            //$('#input2').change(function () {
+                
+             
+              
+              
+            //    if (this.files[0].size > 2097152) {
+            //        $("#imageeror").val(1);
+            //            alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
+                      
+            //            return false;
+            //        }
+                
 
+            //});
             $('#input2').filer({
                 limit: 5,
                 extensions: ['jpg', 'jpeg', 'png'],
@@ -3962,7 +3976,7 @@
                                        </div>\
                         </li>',
                     progressBar: '<div class="bar"></div>',
-                    itemAppendToEnd: false,
+                    itemAppendToEnd: true,
                     removeConfirmation: false,
                     _selectors: {
                         list: '.jFiler-item-list',
@@ -3976,40 +3990,42 @@
                     data: { 'Uniqueid': $('#hdUniqueguid').val() },
                     type: 'POST',
                     enctype: 'multipart/form-data',
-                    beforeSend: function (el) {
-                        console.log(el[0].className);
-                        var x = el[0].parentElement;
-                        var len=el[0].parentElement.childNodes.length;
+                    beforeSend:function(){},
+                        //console.log(el[0].className);
+                        //var x = el[0].parentElement;
+                        //var len=el[0].parentElement.childNodes.length;
                       
 
-                        var input = document.getElementById("input2");
+                        //var input = document.getElementById("input2");
                        
                        
-                        if (input.files && input.files.length == 1) {
-                            if (input.files[0].size > 2097152) {
-                                alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
+                        //if (input.files && input.files.length == 1) {
+                        //    if (input.files[0].size > 2097152) {
+                        //        alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
                             
-                               
-                               // if (len==1)
-                               //{
+                        //        var dragdrop = document.getElementById("drag-drop");
+                        //        var filer = dragdrop.find($(".jFiler-items"));
+                        //        dragdrop.remove(el[0]);
+                        //        console.log(filer);
+                        //       // if (len==1)
+                        //       //{
                                    
-                               //   var div=  document.getElementById("drag-drop");
-                               //   console.log(el[0].parentElement.parentElement.parentElement);
-                               //   var u = document.getElementsByClassName("jFiler-items");
-                               //   var y = document.getElementsByClassName("jFiler-input-inner");
-                               //  console.log( el[0].parentElement.parentElement.parentElement.childNodes[0].style.display="block");
-                               //  console.log(  el[0].parentElement.parentElement.parentElement.childNodes[0])
-                               //   console.log(y);
+                        //       //   var div=  document.getElementById("drag-drop");
+                        //       //   console.log(el[0].parentElement.parentElement.parentElement);
+                        //       //   var u = document.getElementsByClassName("jFiler-items");
+                        //       //   var y = document.getElementsByClassName("jFiler-input-inner");
+                        //       //  console.log( el[0].parentElement.parentElement.parentElement.childNodes[0].style.display="block");
+                        //       //  console.log(  el[0].parentElement.parentElement.parentElement.childNodes[0])
+                        //       //   console.log(y);
                                  
                                 
                                    
-                               // }
-                                x.removeChild(el[0]);
-                                return false;
-                            }
-                        }
+                        //       // }
+                        //        x.removeChild(el[0]);
+                        //        return false;
+                      
 
-                    },
+                   
                     success: function (data, el) {
                         console.log(data);
                         var parent = el.find(".jFiler-jProgressBar").parent();
@@ -4043,7 +4059,7 @@
                     },
                    
                     error: function (el) {
-                     
+                        var input = document.getElementById("input2");
                         
                         var parent = el.find(".jFiler-jProgressBar").parent();
                       
@@ -4086,13 +4102,10 @@
 
                 },
                 onEmpty: function (el) {
-                    var x = el[0].childNodes[1].childNodes[1].childNodes.length;
-                    
-                    var len = el[0].parentElement.childNodes.length;
-                    alert(x);
-                    alert($(".jFiler-items ul li").length);
+                 
+                  
                     if ($("#imageeror").val() == 0) {
-                        if (x<1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                        if ($(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
                     }
                 },
                 captions: {
@@ -4102,10 +4115,10 @@
                     drop: "Drop file here to Upload",
                     removeConfirmation: "Are you sure you want to remove this file?",
                     errors: {
-                        filesLimit: "Only {{fi-limit}} files are allowed to be uploaded.",
-                        filesType: "Only Images are allowed to be uploaded.",
-                        filesSize: "{{fi-name}} is too large! Please upload file up to {{fi-maxSize}} MB.",
-                        filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
+                        filesLimit: ajaxsetup('CreateEvent', 'CreateEventImagecountUI'),
+                        filesType: ajaxsetup('CreateEvent', 'CreateEventImageTypeUI'),
+                        filesSize: ajaxsetup('CreateEvent', 'CreateEventImageSizeUI'),
+                        filesSizeAll: ajaxsetup('CreateEvent', 'CreateEventImageSizeUI')
                     }
                 }
             });
