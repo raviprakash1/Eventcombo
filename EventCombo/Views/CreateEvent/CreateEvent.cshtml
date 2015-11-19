@@ -18,10 +18,9 @@
                 <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
                     <div class="er_UI_main" >
                         <div class="er_UI_img"></div>
-                        <div class="er_suc" id="erraccmsg">
-                           
-                        </div>
-                        <button class="close closebtn" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>
+                        <div class="er_suc" id="erraccmsg"></div>
+                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrsuc">&#215;</button>
+                       
                     </div>
                 </div>
                 <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
@@ -29,14 +28,15 @@
 
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg"> </div>
-                        <button class="close closebtn" aria-hidden="true"  type="button" id="btndivaccsuc">&#215;</button>
+                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+             
                     </div>
                 </div>
             </div>
 
             <div class="col-sm-12 pt10 bggrey" >
-                <div class="col-sm-3 col-xs-6 pt10 text-left no_pad" style="display:none;" id="dvdraft">
-                    <label class="btn ev_live_sub_btn yelw_live_btn"> DRAFT </label>
+                <div class="col-sm-3 col-xs-6 pt10 text-left no_pad" >
+                    <label class="btn ev_live_sub_btn yelw_live_btn"  style="display:none;" id="dvdraft"> DRAFT </label>
 
 
                 </div>
@@ -725,12 +725,14 @@
                                     <div class="nav evnt_setting">
                                         <span class="evnt_set ev_set_more" id="id_setting-n" onclick="showsettingdiv(this.id);"> Detail </span>
                                         <!--  <a href="#evnt_set" class="evnt_set">More </a> -->
-                                        <button class="btn ev_set_del_btn evnt_set" id="btndelete-n" type="button" onclick="deletediv(this.id);"><i class="fa fa-trash"></i></button>
+                                        @*<button class="btn ev_set_del_btn evnt_set" id="btndelete-n" type="button" onclick="deletediv(this.id);"><i class="fa fa-trash"></i></button>*@
+                                        <a class="btn ev_set_del_btn evnt_set" id="btndelete-n" type="button" href="#cnfrmdelete-n" data-toggle="modal">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                            @*<a href=""><i class="fa fa-trash"></i></a>*@
 
-                                        @*<a href=""><i class="fa fa-trash"></i></a>*@
 
-
-                                    </div>
+</div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <!-- Event Setting Start  -->
@@ -908,7 +910,25 @@
                                     <!-- Event Setting End  -->
                                 </div>
                                 <div class="clearfix"></div>
+                                <div class="modal fade" id="cnfrmdelete-n" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                                        <div class="modal-content">
+                                            <!-- <div class="modal-header custom">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div> -->
+                                            <form id="contactForm" class="fullw1 add">
+                                                <div class="modal-body text-center pv50 txt-msg">
+                                                    <h4 class="msg" >Are you sure you want to delete?</h4>
+                                                </div>
+                                                <div class="modal-footer msg-action-btn ok">
+                                                    <button type="button" class="btn btn-primary yes ok" id="btnyes-n" onclick="deletediv(this.id);" data-dismiss="modal">Yes</button>
+                                                    <button type="button" class="btn btn-primary no" data-dismiss="modal">No</button>
 
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- confirm-msg -->
+                                </div>
 
                             </div>
                             @*<div class="clearfix"></div>*@
@@ -986,9 +1006,31 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
-                                                <button class="btn" type="button" id="btn_vardelete-n" onclick="deletevariable(this.id)"><i class="fa fa-times"></i></button>
+                                                <a class="btn" id="btn_vardelete-n"  href="#cnfrmdeletevariable-n" data-toggle="modal">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                                @*<button class="btn" type="button" id="btn_vardelete-n" onclick="deletevariable(this.id)"><i class="fa fa-times"></i></button>*@
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="modal fade" id="cnfrmdeletevariable-n" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                                            <div class="modal-content">
+                                                <!-- <div class="modal-header custom">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div> -->
+                                                <form id="contactForm" class="fullw1 add">
+                                                    <div class="modal-body text-center pv50 txt-msg">
+                                                        <h4 class="msg">Are you sure you want to delete?</h4>
+                                                    </div>
+                                                    <div class="modal-footer msg-action-btn ok">
+                                                        <button type="button" class="btn btn-primary yes ok" id="btnyesvariable-n" onclick="deletevariable(this.id)" data-dismiss="modal">Yes</button>
+                                                        <button type="button" class="btn btn-primary no" data-dismiss="modal">No</button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div><!-- confirm-msg -->
                                     </div>
                                 </div>
                             </div>
@@ -1194,12 +1236,41 @@
         </div>
     </div>
 
-
+       <!-- Confirm Msg OK Modal Box -->
+    <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
+                <!-- <div class="modal-header custom">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div> -->
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+                        <h4 class="msg">Are you sure you want to delete?</h4>
+                    </div>
+                    <div class="modal-footer msg-action-btn ok">
+                        <button type="button" class="btn btn-primary yes ok">Yes</button>
+                         <button type="button" class="btn btn-primary no" data-dismiss="modal">No</button> 
+                        
+                    </div>
+                </form>
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
+        <!-- Confirm Msg OK Modal Box -->
 
     // ---------------------Event Creation Script -------------------
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script>
+        $(window).load(function () {
+
+            var numbers = ajaxsetup('CreateEvent', 'CreateEventEnternumberUI');
+            var deletemsg = ajaxsetup('CreateEvent', 'CreateEventDeleteUI');
+            $('#id_lblprice-n').html(numbers);
+            $('#id_lblmax-n').html(numbers);
+            $('.msg').html(deletemsg);
+
+        });
         function ValEventdate(e) {
             if (e.trim() == "txtDateFrom") {
 
@@ -1527,7 +1598,23 @@
 
         $(document).ready(function () {
 
+            $('#btndiverrsuc').click(function () {
 
+                $('#diverroacc').css('display', 'none');
+
+                $('#btndiverrsuc').css('display', 'none');
+                $('input').removeClass('err-bor');
+
+            });
+            $('#btndivaccsuc').click(function () {
+
+                $('#diverroacc').css('display', 'none');
+
+                $('#btndiverrsuc').css('display', 'none');
+                $('input').removeClass('err-bor');
+
+
+            });
            
             $(".StartDatemodal").hide();
             $(".StartDate").click(function () {
@@ -1981,9 +2068,10 @@
                             $('#divaccsuc').css('display', 'block');
                             $('#divaccsuc').focus();
                             $('#diverroacc').css('display', 'none');
-                            $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
+                            $('#succaccmsg').html(ajaxsetup('CreateEvent', 'CreateEventsavedsucc'));
                             $("#hdEventId").val(response);
                             alert(response);
+                            $('#dvdraft').css('display', 'block');
                         }
                     });
                 }
@@ -2043,8 +2131,15 @@
 
 
                 if ($("#txtOrgnizer").val().trim() == '') {
-                    alert("Please enter valid organizer.");
-                    $("#txtOrgnizer").focus();
+                  
+                    //alert("Please enter valid organizer.");
+                  
+                    var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html(msg);
+                    //$("#txtOrgnizer").focus();
                     return false;
                 }
 
@@ -2052,7 +2147,12 @@
 
                 if ($("#hidOrgnizer").val() == '') {
                     if (parseInt($("#ddlOrgnizers option").length) > 24) {
-                        alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
+                        var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
+                        $('#divaccsuc').css('display', 'none');
+                        $('#diverroacc').css('display', 'block');
+                        $('#diverroacc').focus();
+                        $('#erraccmsg').html(msg);
+                        //alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
                         return false;
                     }
                     AddOrgnizer();
@@ -2155,7 +2255,12 @@
                             }
                         },
                         error: function (data) {
-                            alert("Sorry there is some problem.");
+                            
+                            $('#divaccsuc').css('display', 'none');
+                            $('#diverroacc').css('display', 'block');
+                            $('#diverroacc').focus();
+                            $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
+                            //alert("Sorry there is some problem.");
                         }
                     });
                 }
@@ -2178,7 +2283,10 @@
                         //});
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        $('#divaccsuc').css('display', 'none');
+                        $('#diverroacc').css('display', 'block');
+                        $('#diverroacc').focus();
+                        $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                     }
                 });
             });
@@ -2271,7 +2379,10 @@
                         $("#dllPastLocation").html(data);
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        $('#divaccsuc').css('display', 'none');
+                        $('#diverroacc').css('display', 'block');
+                        $('#diverroacc').focus();
+                        $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                     }
                 });
 
@@ -2414,8 +2525,9 @@
             }
             $(document).click(function () {
                 $('#diverrorvenue').css('display', 'none');
-             
-                $("input").removeClass('err-bor');
+                if ($('#diverrorvenue').css('display') == 'block') {
+                    $("input").removeClass('err-bor');
+                }
                
             });
             function validateAddress() {
@@ -2423,7 +2535,7 @@
                     $('#diverrorvenue').css('display', 'block');
                     $("#VenueName").addClass('err-bor');
                     var msg = ajaxsetup('CreateEvent', 'CreateEventValidatevenueUI');
-                    $('#erraccmsgvenue  ').html(msg);
+                    $('#erraccmsgvenue').html(msg);
                     //alert("Please enter valid venue name");
                     $("#VenueName").focus();
                     return false;
@@ -2816,13 +2928,14 @@
         //});
         function changeqty(e) {
             var dropval = $('#' + e).val();
+            var numbermsg = ajaxsetup('CreateEvent', 'CreateEventEnternumberUI');
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
             if (dropval != '') {
                 if ($.isNumeric(dropval) === false) {
 
                     $('#' + e).addClass('err-bor');
                     $('#id_lbl_quantity-' + el).css('display', 'block');
-                    $('#id_lbl_quantity-' + el).html('Please enter a number');
+                    $('#id_lbl_quantity-' + el).html(numbermsg);
                 } else {
                     var qty = $('#id_totalqty').html();
 
@@ -3105,6 +3218,7 @@
 
 
             $('#id_Mainvariable').append(data);
+            $('#btn_vardelete-' + divlength).attr('href', '#cnfrmdeletevariable-' + divlength);
         });
         $('.save_btnpaid ').click(function () {
             $(".ticket_panel").show();
@@ -3198,7 +3312,7 @@
             });
 
             $("#id_saletimestart-" + divlength).timepicker();
-
+            $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("#id_saletimeend-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).timepicker();
@@ -3300,7 +3414,7 @@
             });
 
             $("#id_saletimestart-" + divlength).timepicker();
-
+            $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("#id_saletimeend-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).timepicker();
@@ -3343,7 +3457,7 @@
 
             //data.append('<span class="RemoveMoreHub" style="width:80%;"><a href="javascript:void(0);" style="float:right;color:#CE0009;font-size:13px;text-decoration:none;margin-right:5%;" >- Remove</a></span>');
             $('#MasterDiv').append(data);
-
+            $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $(".normalticket-" + divlength).css('display', 'block');
             $(".paidticket-" + divlength).css('display', 'none');
 
@@ -3423,8 +3537,7 @@
             return randomString;
         }
         function deletevariable(e) {
-            var x = confirm("Are you sure you want to delete?");
-            if (x) {
+      
                 var divlength = $("#id_Mainvariable> div").size();
 
                 var id = e;
@@ -3452,11 +3565,14 @@
                         var id = $(this).attr('id');
                         //console.log(id);
                         id1 = id.substr(0, id.indexOf('-'));
-                        ////console.log(id);
+                        console.log(id1);
                         var idn = id1 + "-" + (count);
                         $(this).attr("id", idn);
 
-
+                        if(id1=="btn_vardelete")
+                        {
+                            $(this).attr("href", "#cnfrmdeletevariable-" + count);
+                        }
 
 
                     });
@@ -3470,17 +3586,13 @@
                 }
 
 
-                return true;
-            }
-            else
-                return false;
+            
 
         }
         function deletediv(e) {
 
-
-            var x = confirm("Are you sure you want to delete?");
-            if (x) {
+            {
+               
                 var divlength = $("#MasterDiv> div").size();
 
                 var id = e;
@@ -3517,16 +3629,22 @@
                         var id = $(this).attr('id');
                         //console.log(id);
                         id1 = id.substr(0, id.indexOf('-'));
-                        ////console.log(id);
+                       // console.log(id);
                         var idn = id1 + "-" + (count);
                         $(this).attr("id", idn);
-                        var al = $(this).attr("id").substr(0, e.indexOf('-'));
+                        var al = $(this).attr("id").substr(0, id.indexOf('-'));
+                        console.log(al);
+                        if (al == "id_order") {
 
-                        if (al == "id_order-") {
-
-                            $(this).val(count + 1);
+                            $(this).val(count);
                         }
+                     
+                        if (al == "btndelete")
+                        {
+                           
+                            $(this).attr('href', '#cnfrmdelete-' + (count));
 
+                        }
                         if ($(this).hasClass("paidticket-" + (count + 1))) {
                             $(this).removeClass('paidticket-' + (count + 1));
                             $(this).addClass('paidticket-' + (count) + '');
@@ -3549,8 +3667,7 @@
 
                 return true;
             }
-            else
-                return false;
+          
 
         }
         $(".tab-content").hide();
@@ -4081,7 +4198,7 @@
             var msgnew = "";
 
             var request = $.ajax({
-                url: "/ValidationMessage/Index",
+                url:'@Url.Action("Index", "ValidationMessage")',
                 async: false,
                 data: { strFormName: strname, strFormTag: strFormTag },
                 type: 'Post'
@@ -4315,7 +4432,9 @@
 
         $(document).ready(function () {
 
-
+            $('.close-model').on('click', function (e) {
+                $.modal.close();
+            });
             //$(document).click(function () {
 
             //    $('#diverroacc').css('display', 'none');

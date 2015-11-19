@@ -2708,12 +2708,13 @@ return false;
                             $(this).addClass('err-bor');
                             if (elid.trim() == "id_cost") {
                                 $('#id_lbl_price-' + el).css('display', 'block');
-                                $('#id_lbl_price-' + el).html('Please Enter Number');
+
+                                $('#id_lbl_price-' + el).html(ajaxsetup('CreateEvent', 'CreateEventEnternumberUI'));
 
                             }
                             if (elid.trim() == "id_Discount") {
                                 $('#id_lbl_discount-' + el).css('display', 'block');
-                                $('#id_lbl_discount-' + el).html('Please Enter Number');
+                                $('#id_lbl_discount-' + el).html(ajaxsetup('CreateEvent', 'CreateEventEnternumberUI'));
                             }
 
                         }

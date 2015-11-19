@@ -542,10 +542,10 @@ else
 @*//Login*@
 <script type="text/javascript">
 
-    
+
     $(document).click(function () {
 
-     
+
 
               $('#diverrologin').css('display', 'none');
               $('#diverro1login').css('display', 'none');
@@ -566,14 +566,14 @@ else
               $("input").removeClass('err-bor');
           })
           $(window).load(function () {
-             
+
               console.log($('#loginemail').val());
               console.log($('#loginpassword').val());
               var loginemail = $('#loginemail').val();
               var loginpwd = $('#loginpassword').val();
               var signupemail = $('#SignupEmail').val();
               var signuppwd = $('#SignupPassword').val();
-           
+
               if (loginemail != '' || loginpwd!='') {
                   $('#btnSavelogin').removeAttr("disabled");
 
@@ -582,12 +582,12 @@ else
                   $('#btnsave').removeAttr("disabled");
 
               }
-          
-           
+
+
           });
           $(document).ready(function () {
 
-           
+
               $('#loginemail').removeClass('err-bor');
               $('#loginpassword').removeClass('err-bor');
 
@@ -596,7 +596,7 @@ else
 
 
               $('#loginemail').keyup(function () {
-                
+
                   if ($(this).val() != '' && $('#loginpassword').val()!='')
                   {
                       $('#btnSavelogin').removeAttr("disabled");
@@ -633,8 +633,8 @@ else
                         $('#loginemail').focus();
                         $('#loginemail').addClass('err-bor');
                         msglogin += ajaxsetup('Login', 'LoginEmailValidationUI');
-                       
-                     
+
+
                     } else {
 
                         msglogin = "";
@@ -646,7 +646,7 @@ else
                         $('#loginpassword').focus();
                         $('#loginpassword').addClass('err-bor');
                         msglogin += "<br />" + ajaxsetup('Login', 'LoginPasswordValidationUI');
-                       
+
 
                     } else {
                         if (msglogin == "") {
@@ -654,7 +654,7 @@ else
                         }
                         $('#loginpassword').focus();
                         $('#loginpassword').removeClass('err-bor');
-                       
+
 
                     }
                     return msglogin;
@@ -664,7 +664,7 @@ else
                     var msgnew = "";
 
                     var request = $.ajax({
-                        url: "/ValidationMessage/Index",
+                        url: '@Url.Action("Index", "ValidationMessage")',
                         async: false,
                         data: { strFormName: strname, strFormTag: strFormTag },
                         type: 'Post'
@@ -712,7 +712,7 @@ else
                         var flaglogin = false;
                         var Emaillogin = $("#loginemail").val();
                         var Emailpassword = $("#loginpassword").val();
-                      
+
 
                         $.ajax({
                             url: "/Home/IsValidID",
@@ -738,7 +738,7 @@ else
                                         $('#loginemail').focus();
                                         $('#loginemail').addClass('err-bor');
                                         $('#loginpassword').addClass('err-bor');
-                                     
+
                                         $('#diverrologin').css("display", "none");
                                         $('#diverro1login').css('display', 'block');
                                         var msg = ajaxsetup('Login', 'LoginPwdNotExistSy');

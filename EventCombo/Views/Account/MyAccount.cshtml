@@ -974,7 +974,7 @@
             var msgnew = "";
 
             var request = $.ajax({
-                url: "/ValidationMessage/Index",
+                url: '@Url.Action("Index", "ValidationMessage")',
                 async: false,
                 data: { strFormName: strname, strFormTag: strFormTag },
                 type: 'Post'

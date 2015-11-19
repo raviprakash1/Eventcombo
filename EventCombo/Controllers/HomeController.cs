@@ -178,7 +178,7 @@ namespace EventCombo.Controllers
             ValidationMessageController vmc = new ValidationMessageController();
             if (model.Password!=model .ConfirmPassword)
             {
-                error = vmc.Index("PwdReset", "PwdResetPwdValidationSys");
+                error = vmc.Index("ResetPassword", "PwdResetPwdValidationSys");
                 ViewData["Error"] = error;
                 ModelState.AddModelError("Error", error);
 
@@ -221,7 +221,7 @@ namespace EventCombo.Controllers
            // var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                success = vmc.Index("PwdReset", "PwdResetSuccessInitSY");
+                success = vmc.Index("ResetPassword", "PwdResetSuccessInitSY");
                 ViewData["Message"] = success;
                 return View();
             }
@@ -358,7 +358,7 @@ namespace EventCombo.Controllers
             }
             SendHtmlFormattedEmail(to, from, subjectn, bodyn);
             ValidationMessageController vmc = new ValidationMessageController();
-           var msg= vmc.Index("ForgotPwd", "ForgotPwdSuccessInitSY");
+           var msg= vmc.Index("ForgetPassword", "ForgotPwdSuccessInitSY");
             ViewData["Message"] = msg;
             return View();
         }
