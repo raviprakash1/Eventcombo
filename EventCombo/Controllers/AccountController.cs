@@ -522,6 +522,90 @@ namespace EventCombo.Controllers
 
                         var result = await UserManager.ResetPasswordAsync(Userid, token, model.NewPassword);
                         successmsg = vmc.Index("MyAccount", "MyAccountSuccessPasswordSY") + successmsg;
+                        string to = "", from = "", cc = "", bcc = "", subjectn = "";
+                        var bodyn = "";
+                        List<Email_Tag> EmailTag = new List<Email_Tag>();
+                        HomeController hmc = new HomeController();
+                        EmailTag = hmc.getTag();
+
+                        var Emailtemplate = hmc.getEmail("acc_pwd_set");
+                        if (!string.IsNullOrEmpty(Emailtemplate.To))
+                        {
+
+
+                            to = Emailtemplate.To;
+                            if (to.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                to = to.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                        {
+                            from = Emailtemplate.From;
+                            if (from.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                from = from.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                            }
+                        }
+                        else
+                        {
+                            from = "shweta.sindhu@kiwitech.com";
+
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                        {
+
+
+                            subjectn = Emailtemplate.Subject;
+
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+
+                                    }
+
+                                }
+
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                        {
+                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+
+                                    }
+                                 
+
+                                }
+
+                            }
+                        }
+                        hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn);
+
 
                     }
 

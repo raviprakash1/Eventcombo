@@ -11,12 +11,12 @@
 @using (Html.BeginForm())
 
 {
-    <input type="hidden" name="MAX_FILE_SIZE" value="2000000" id="MAX_FILE_SIZE" />
+
     <div class="event_container">
         <div class="event_inner_container event_top" id="eventtopscoll">
             <div class="col-sm-12 pt10 bggrey">
-                <div class="Moderor" style="display: none;" id="diverroacc">
-                    <div class="er_UI_main">
+                <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+                    <div class="er_UI_main" >
                         <div class="er_UI_img"></div>
                         <div class="er_suc" id="erraccmsg">
                            
@@ -24,7 +24,7 @@
                         <button class="close closebtn" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>
                     </div>
                 </div>
-                <div class="Moderor" id="divaccsuc" style="display: none;">
+                <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
                     <div class="er_suc_main alert-success">
 
                         <div class="er_suc_img"></div>
@@ -34,8 +34,8 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 pt10 bggrey">
-                <div class="col-sm-3 col-xs-6 pt10 text-left no_pad">
+            <div class="col-sm-12 pt10 bggrey" >
+                <div class="col-sm-3 col-xs-6 pt10 text-left no_pad" style="display:none;" id="dvdraft">
                     <label class="btn ev_live_sub_btn yelw_live_btn"> DRAFT </label>
 
 
@@ -64,9 +64,6 @@
                 <input type="file" name="image" id="input2" multiple data-jfiler-maxSize="2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
-                        
-                        @*@Html.TextBox("EventTitle")*@
-
                         <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold" placeholder="Click here to enter the name of the event" value="" />
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
@@ -1199,40 +1196,10 @@
 
 
 
-
+    // ---------------------Event Creation Script -------------------
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    // ---------------------Event Creation Script -------------------
     <script>
-        $(document).ready(function () {
-            @*var vurl = '@Url.Action("GetEventData", "CreateEvent")';
-            $.getJSON({
-                url:vurl,
-                function (response) {
-                    debugger;
-                    alert(response.EventDescription);
-                }
-            });*@
-
-
-            $.ajax({
-                url: '@Url.Action("GetEventData", "CreateEvent")',
-                datatype: "json",
-                type: "GET",
-                contentType: "application/json;charset=utf-8",
-                success: function (response) {
-                    debugger;
-                    alert(response.EventDescription);
-                }
-            });
-
-        });
-
-    </script>
-
-    // ---------------------Event Creation Script -------------------
-    <script>
-
         function ValEventdate(e) {
             if (e.trim() == "txtDateFrom") {
 
@@ -1559,6 +1526,9 @@
         }
 
         $(document).ready(function () {
+
+
+           
             $(".StartDatemodal").hide();
             $(".StartDate").click(function () {
                 $(".StartDatemodal").slideToggle("fast");
@@ -1585,6 +1555,7 @@
                             if (response == 'N') {
                                 $('#divaccsuc').css('display', 'none');
                                 $('#diverroacc').css('display', 'block');
+                                $('#diverroacc').focus();
                                 $('#erraccmsg').html('Sorry, There is some problem while publishing event.');
 
                             }
@@ -1599,6 +1570,7 @@
                 else {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
                     $('#erraccmsg').html('Please first save an event');
                 }
 
@@ -1629,6 +1601,7 @@
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
                     $('#erraccmsg').html(msg);
                     return false;
 
@@ -2006,6 +1979,7 @@
                         success: function (response) {
                             $("#hdEventId").val(response);
                             $('#divaccsuc').css('display', 'block');
+                            $('#divaccsuc').focus();
                             $('#diverroacc').css('display', 'none');
                             $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
                             $("#hdEventId").val(response);
@@ -2016,6 +1990,7 @@
                 else {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
                     $('#erraccmsg').html('Event already saved');
                 }
             });
@@ -2772,13 +2747,16 @@
             }
             if (al == "id_salestart") {
                 if (errorMsg != "") {
+
+
+
                     $('#id_salestart-' + el).focus();
                     $('#id_salestart-' + el).val("");
                     $('#id_saleend-' + el).val("");
+
                 } else {
                     $('#id_saleend-' + el).val($('#' + e).val());
                 }
-
 
             }
 
@@ -2789,34 +2767,6 @@
 
         }
         $(document).ready(function () {
-            $.ajax({
-                url: '@Url.Action("GetPermission", "Permission")',
-                data: { iPermissionId: '1' },
-                async: false,
-                datatype: "Text",
-                type: "Post",
-                success: function (response) {
-                    if (response != "Y") {
-                        alert("Access Denied !!!");
-                        window.self.close();
-                        //window.location.href = document.referrer + '' + $(this).attr('href'); 
-                        history.back();
-                        return false;
-                        //  $('#spanid').html("Record Updated.");
-                        // $('#divError').css('display', 'block');
-                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                    }
-                    else {
-                        //alert("Have Per");
-                        //  alert(vPerm);
-                        //if (PermisionId == "1")
-                        //window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
-                    }
-                }
-            });
-
-
-
 
             $('#id_variablecharge').change(function () {
                 if ($(this).is(":checked")) {
@@ -4151,21 +4101,21 @@
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
-                msg += ajaxsetup("CreateEvent", "CreateEventTitileUI");
+                msg += ajaxsetup("CreateEvent", "CreateEventTitileUI")+"<br/>";
 
             }
             if ($('#ddlOrgnizers option').length <= 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI");
+                msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI") + "<br/>";;
 
 
             }
             var type = $("#EventType").val();
             var cat = $("#ddlEventCategory").val();
             if (type <= 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventtypeUI");
+                msg += ajaxsetup("CreateEvent", "CreateEventtypeUI") + "<br/>";;
             }
             if (cat <= 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventCategoryUI");
+                msg += ajaxsetup("CreateEvent", "CreateEventCategoryUI") + "<br/>";;
             }
 
 
@@ -4205,12 +4155,12 @@
 
             }
             if (count > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI");
+                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
             }
             if ($('#id_variablecharge').is(":checked") == true) {
                 if ($('#id_vardesc').val() == "") {
                     $('#id_vardesc').addClass('err-bor');
-                    msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI");
+                    msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI") + "<br/>";;
 
 
 
@@ -4252,7 +4202,7 @@
             if ($('#chkReqPassword').is(":checked") == true) {
                 if ($('#txtReqPassword').val() == "") {
                     $('#txtReqPassword').addClass('err-bor');
-                    msg += ajaxsetup("CreateEvent", "CreateEventPwdUI");
+                    msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
 
                 } else {
                     $('#txtReqPassword').removeClass('err-bor');
@@ -4274,7 +4224,7 @@
             else if (parseFloat(msDateA) == parseFloat(msDateB))
                 return errorMsg = "";  // equal
             else if (parseFloat(msDateA) > parseFloat(msDateB))
-                return errorMsg = ajaxsetup("CreateEvent", "CreateEventCompareDateUI");  // greater than
+                return errorMsg =  ajaxsetup("CreateEvent", "CreateEventCompareDateUI") +"<br/>"; // greater than
             else
                 return null;  // error
 
@@ -4291,19 +4241,19 @@
                     if (regs[4]) {
                         // 12-hour time format with am/pm
                         if (regs[1] < 1 || regs[1] > 12) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI");
+                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI") +"<br/>";;
                         }
                     } else {
                         // 24-hour time format
                         if (regs[1] > 23) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI");
+                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI")+"<br/>";;
                         }
                     }
                     if (!errorMsg && regs[2] > 59) {
-                        errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI");
+                        errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI")+"<br/>";;
                     }
                 } else {
-                    errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI");
+                    errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidTimeUI")+"<br/>";;
                 }
             }
 
@@ -4331,23 +4281,23 @@
                 if (regs = value.match(re)) {
                     if (regs[2] != '' && regs[2] != '' && regs[3] != '') {
                         if (regs[2] < 1 || regs[2] > 31) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
+                            errorMsg = "<br/>" + ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
                         } else if (regs[1] < 1 || regs[1] > 12) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
+                            errorMsg = "<br/>" + ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
                         } else if (regs[3] < minYear || regs[3] > maxYear) {
-                            errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
+                            errorMsg = "<br/>" + ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
                         }
                     }
                 } else {
-                    errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
+                    errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI")+"<br/>" ;
                 }
             } else if (!allowBlank) {
-                errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
+                errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI") + "<br/>";
             }
 
             if (parseFloat(msDateB) < parseFloat(msDateA)) {
 
-                errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI");
+                errorMsg = ajaxsetup("CreateEvent", "CreateEventInvalidDateUI") + "<br/>";
             }
             return errorMsg;
 
