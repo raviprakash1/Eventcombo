@@ -189,6 +189,7 @@
                         var s = 0;
                         if (n.limit && f.files.length + f._itFl.length > n.limit) {
                             $('#diverroacc').css('display', 'block');
+                            $('#diverroacc').focus();
                             $('#diverro1acc').css('display', 'none');
                             $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesLimit));
                             $("#imageeror").val('1');
@@ -215,6 +216,7 @@
                                 };
                             if (n.extensions != null && $.inArray(x, n.extensions) == -1) {
                                 $('#diverroacc').css('display', 'block');
+                                $('#diverroacc').focus();
                                 $('#diverro1acc').css('display', 'none');
                                   $('#divsuccerr').css('display', 'block');
                                 $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesType, m));
@@ -228,6 +230,7 @@
                             if (n.maxSize != null && f.files[t].size > n.maxSize * 1048576) {
                                
                                 $('#diverroacc').css('display', 'block');
+                                $('#diverroacc').focus();
                                 $('#diverro1acc').css('display', 'none');
                                 $('#divsuccerr').css('display', 'block');
                                 $("#imageeror").val('1');
@@ -252,6 +255,7 @@
                         if (n.maxSize != null && s >= Math.round(n.maxSize * 1048576)) {
                             
                             $('#diverroacc').css('display', 'block');
+                            $('#diverroacc').focus();
                             $('#diverro1acc').css('display', 'none');
                             $('#divsuccerr').css('display', 'block');
                             $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesSizeAll));

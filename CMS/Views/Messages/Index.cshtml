@@ -103,7 +103,7 @@
         var msgnew = "";
 
         var request = $.ajax({
-            url: "/ValidationMessage/Index",
+            url: '@Url.Action("Index", "ValidationMessage")',
             async: false,
             data: { strFormName: strname, strFormTag: strFormTag },
             type: 'Post'
@@ -117,8 +117,28 @@
         });
         return msgnew;
     }
-    $(document).ready(function () {
+    $(window).load(function () {
+        $('.accordion-toggle').addClass('menu-open');
+        var span = $('.act');
+        $(span).each(function () {
+           var html=$(this).html();
+           var tag = $('.panel-title').html();
+          var tag1= html.trim().toLowerCase().replace(" ", "").replace(" ", "");
+          var tag2=tag.trim().toLowerCase().replace(" ", "").replace(" ", "");
+           $(this).parent().parent().attr('class', '');
+           if (tag1 == tag2)
+           {
+               $(this).parent().parent().attr('class', 'active');
+           }
+           //console.log();
+        });
 
+    });
+    $(document).ready(function () {
+       
+          
+
+      
         $("#btnclose").click(function () {
 
             $('#dvalertdanger').css('display', 'none');
@@ -151,16 +171,16 @@
                 $('#dvalertdanger').css('display', 'block');
                 $('#dvalertsucc').css('display', 'none');
                 var text = ajaxsetup('Messages', 'MessageReqUI');
-              
+
                 $('#spantext').html(text);
                 $('#dvalertdanger').focus();
                 return false;
             }
-          
-            
+
+
 
         });
-        
+
 
 
     });

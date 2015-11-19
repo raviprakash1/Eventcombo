@@ -186,37 +186,49 @@
                            <li>
                             <a href="#" onclick="checkPermission('7');">
                                 <span class="fa fa-circle-o"></span>
-                                <span class="sidebar-title">My Account Form</span>
+                                <span class="sidebar-title act">My Account Form</span>
                             </a>
                            </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7A');" >
                                     <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title">Login Form</span>
+                                    <span class="sidebar-title act">Login Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7B');">
                                     <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title">Sign Up Form</span>
+                                    <span class="sidebar-title act">Sign Up Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7C');">
                                     <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title">Forget Password Form</span>
+                                    <span class="sidebar-title act">Forget Password Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7D');">
                                     <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title">Reset Password Form</span>
+                                    <span class="sidebar-title act">Reset Password Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7E');">
                                     <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title">Create Event Form</span>
+                                    <span class="sidebar-title act">Create Event Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7F');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">CMSUsers Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7G');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">Messages Form</span>
                                 </a>
                             </li>
                          </ul>   
@@ -268,11 +280,11 @@
             var vPerm = PermisionId;
           //  alert(vPerm);
 
-            if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E")
+            if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G")
             {
                 PermisionId = "7";
             }
-                
+
 
             $.ajax({
                 url: '@Url.Action("GetPermission", "Permission")',
@@ -294,18 +306,30 @@
                             window.location.href = '@Url.Action("Users", "Users")';
                         else if (vPerm == "6")
                             window.location.href='@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
-                        else if (vPerm == "7")
+                        else if (vPerm == "7") {
+
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "MyAccount" })';
-                        else if (vPerm == "7A")
+
+                        }
+                        else if (vPerm == "7A") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Login" })';
-                        else if (vPerm == "7B")
+
+                        }
+                        else if (vPerm == "7B") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Signup" })';
-                        else if (vPerm == "7C")
-                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgotPwd" })';
+
+                        }
+                        else if (vPerm == "7C") {
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgetPassword" })';
+                        }
                         else if (vPerm == "7D")
-                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "PwdReset" })';
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "ResetPassword" })';
                         else if (vPerm == "7E")
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "CreateEvent" })';
+                        else if (vPerm == "7F")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "CMSUsers" })';
+                        else if (vPerm == "7G")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
                         else if (vPerm == "4")
                             window.location.href = '@Url.Action("Index", "ManageEvent")';
                     }
@@ -316,7 +340,7 @@
 
         }
 
-    
+
 
         jQuery(document).ready(function () {
 
@@ -398,7 +422,14 @@
 
 
         jQuery(document).ready(function () {
+
+            $('.sub-nav > li a').click(function () {
+                $('.accordion-toggle').addClass('menu-open');
+
+            });
             jQuery(".panel-heading .panel-controls").prepend('<a class="srh_filter" href="#">Search</a>');
+
+
         });
 
     </script>
