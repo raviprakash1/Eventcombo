@@ -5,33 +5,123 @@
 
  }
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
-<div class="event_container">
+
+
+<div class="event_container ">
     <div class="event_inner_container event_top">
         <div class="event_detail_container">
-            <div class="col-sm-12 no_pad mt10 mb10">
-               <div class="col-sm-3">
-                   <img class="ev1" src="@Html.DisplayFor(m=>m.Imageurl)">
-                </div>
-                <div class="col-sm-9">
-                    <h2 class="th_tilte">@Html.DisplayFor(m=>m.Title)</h2>
-                    @*<p class="th_day_time">Saturday Aug 17th 2011,8:30pm </p>
-                    <p class="th_day_time">Club Illusions</p>
-                    <p class="th_day_time">260 S California Ave, Palo Alto CA</p>*@
-                </div>
-            </div>
-            <div class="evnt_tile_head">
-                <div class="evnt_tile_bg_l"></div>
-                <h2 class="">
-                    EVENT CONFIRMATION MESSAGE
-                </h2>
-                <div class="evnt_tile_bg_r"></div>
-            </div>
-            <div class="evnt_details_body th_min_height">
-                <div class="col-sm-12 text-center mt20">
-                    <label class="label-control ev_tickt_lebel cong_text">Congratulations, your event is on Eventcombo!</label>
+            <div class="evnt_details_body2">
+                <div class="col-sm-12 no_pad mt10 pt10">
+                    <div class="col-sm-3 pl0">
+                        <img class="ev1" src="@Html.DisplayFor(m=>m.Imageurl)">
+                    </div>
+                    <div class="col-sm-9 pl0">
+                        <h2 class="th_tilte">@Html.DisplayFor(m => m.Title)</h2>
+                        <p class="th_day_time">@Html.DisplayFor(m => m.Startdate)</p>
+        <p class="th_day_time">@Html.DisplayFor(m => m.Address)</p>
+       
+                        <div class="clearfix"></div>
 
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
+
+
+    <div class="event_detail_container">
+        <div class="evnt_tile_head">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="col-sm-6 col-xs-6 text-left no_pad">
+                <h2 class="fb_dis_head pt5"> YOUR EVENT IS LIVE</h2>
+            </div>
+
+
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body2">
+            <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+
+                <div class="col-sm-12 no_pad chek_out_desc">
+                   <label id="lbltext" >COngratulation Your Event is Live now </label>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="event_detail_container">
+        <div class="evnt_tile_head">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5">LET YOUR FIRENDS KNOW!</h2>
+            </div>
+
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body2">
+            <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+
+                <div class="col-sm-12 no_pad chek_out_desc">
+                    <p>Events are better when your friends are there too. So, who's coming with you?</p>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 col-xs-12 no_pad">
+                        <button class="btn ev_live_btn fs18" type="button" id="fbshare">
+                            SHARE ON FACEBOOK
+                        </button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+    </div>
+
+    
 </div>
+
+
+<script>
+    $(window).load(function () {
+
+        var msg = ajaxsetup('EventConfirmation', 'Evtconfirmsucc');
+       
+        $('#lbltext').html(msg);
+    
+
+    });
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+    $(document).ready(function () {
+        $('#fbshare').click(function () {
+            var title = '@Html.DisplayFor(m => m.Title)';
+            var description = '@Html.DisplayFor(m => m.Descritption).ToString().Trim()';
+            var url = '@Html.DisplayFor(m => m.url)';
+
+            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+
+
+        });
+
+    });
+   
+</script>

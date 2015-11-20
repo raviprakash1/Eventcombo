@@ -13,6 +13,8 @@ namespace EventCombo.Models
         public string Title { get; set; }
         public string Venuename { get; set; }
         public string Address { get; set; }
+        public string url { get; set; }
+        public string Descritption { get; set; }
 
 
     }
