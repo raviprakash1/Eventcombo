@@ -13,10 +13,68 @@ namespace CMS.Controllers
     {
         // GET: ManageEvent
         [HttpPost]
-        public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory,string Features)
+        public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory,string Features, string PageF)
         {
+            List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features);
+            int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
+            List<SelectListItem> PageFilter = new List<SelectListItem>();
+            int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
+            string strText = "";
+            PageFilter.Add(new SelectListItem()
+            {
+                Text = "Select",
+                Value = "0",
+                Selected = (iCount == 0 ? true : false)
+            });
+            if (iUcount > iGapValue)
+            {
+                for (i = 0; i < iUcount; i++)
+                {
+                    strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                    PageFilter.Add(new SelectListItem()
+                    {
+                        Text = strText,
+                        Value = (z + iGapValue).ToString(),
+                        Selected = (iCount == z ? true : false)
+                    });
+                    z = z + iGapValue;
+                    iUcount = iUcount - iGapValue;
+                    if (iUcount < iGapValue)
+                    {
+                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                        PageFilter.Add(new SelectListItem()
+                        {
+                            Text = strText,
+                            Value = (z + iGapValue).ToString(),
+                            Selected = (iCount == z ? true : false)
+                        });
+                    }
+                }
+            }
+            else
+            {
+                PageFilter.Add(new SelectListItem()
+                {
+                    Text = "0 - 25",
+                    Value = "25",
+                    Selected = (iCount == 25 ? true : false)
+                });
 
-            return View(GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features));
+            }
+
+            ViewBag.PageF = PageFilter;
+
+
+
+            if (iCount > 0)
+            {
+                if (iCount < objlst.Count)
+                    objlst = objlst.GetRange(iCount - iGapValue, iGapValue);
+                else
+                    objlst = objlst.GetRange(iCount - iGapValue, ((iCount - objlst.Count) + 1));
+            }
+
+            return View(objlst);
 
         }
 
@@ -25,8 +83,56 @@ namespace CMS.Controllers
 
         public ActionResult Index()
         {
+            List<EventCreation> objlst = GetAllEvents("", "", "", "", "");
+            int iCount = 0;
+            List<SelectListItem> PageFilter = new List<SelectListItem>();
+            int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
+            string strText = "";
+            PageFilter.Add(new SelectListItem()
+            {
+                Text = "Select",
+                Value = "0",
+                Selected = (iCount == 0 ? true : false)
+            });
+            if (iUcount > iGapValue)
+            {
+                for (i = 0; i < iUcount; i++)
+                {
+                    strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                    PageFilter.Add(new SelectListItem()
+                    {
+                        Text = strText,
+                        Value = (z + iGapValue).ToString(),
+                        Selected = (iCount == z ? true : false)
+                    });
+                    z = z + iGapValue;
+                    iUcount = iUcount - iGapValue;
+                    if (iUcount < iGapValue)
+                    {
+                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                        PageFilter.Add(new SelectListItem()
+                        {
+                            Text = strText,
+                            Value = (z + iGapValue).ToString(),
+                            Selected = (iCount == z ? true : false)
+                        });
+                        iUcount = 0;
+                    }
+                }
+            }
+            else
+            {
+                PageFilter.Add(new SelectListItem()
+                {
+                    Text = "0 - 25",
+                    Value = "25",
+                    Selected = (iCount == 25 ? true : false)
+                });
 
-            return View(GetAllEvents("", "", "", "",""));
+            }
+
+            ViewBag.PageF = PageFilter;
+            return View(objlst);
         }
         public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory,string strFeature)
         {
@@ -38,8 +144,6 @@ namespace CMS.Controllers
 
             using (EmsEntities objEntity = new EmsEntities())
             {
-
-
                  var rows = (from myRow in objEntity.EventTypes
                             select myRow).ToList();
                 List<SelectListItem> EventType = new List<SelectListItem>();
@@ -119,16 +223,9 @@ namespace CMS.Controllers
                 List<EventCreation> objEv = new List<EventCreation>();
                 objEv = objEntity.GetEventListing(SearchStringEventTitle, iEventType, iEventCategory, iEventSubCategory,strFeature).ToList();
 
-                //var modelEvent = (from Ev in objEntity.Events
-                //                  join EType in objEntity.EventTypes on Ev.EventTypeID equals EType.EventTypeID
-                //                  select new Event
-                //                  {
-                //                      EventTitle = Ev.EventTitle,
-                //                      EventCategoryID = Ev.EventCategoryID,
-                //                      EventSubCategoryID = Ev.EventSubCategoryID,
-                //                     // EventTypeName = EType.EventType1
-                //                  }
-                //                    );
+
+
+
                 return objEv;
             }
             //if (!SearchStringFirstName.Equals(string.Empty))

@@ -55,7 +55,7 @@ namespace CMS.Controllers
                 Selected = (iCount == 0 ? true : false)
             });
 
-            int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 5;
+            int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
             string strText = "";
             if (iUcount > iGapValue)
             {
@@ -113,9 +113,9 @@ namespace CMS.Controllers
             if (iCount > 0)
             {
                 if (iCount <objuser.Count)
-                    objuser = objuser.GetRange(iCount - 5, 5);
+                    objuser = objuser.GetRange(iCount - iGapValue, iGapValue);
                 else
-                    objuser = objuser.GetRange(iCount - 5, ((iCount- objuser.Count) +1));
+                    objuser = objuser.GetRange(iCount - iGapValue, ((iCount- objuser.Count) +1));
             }
             // List<Permissions> objPerm = GetPermission("APP");
             // UsersTemplate objU = new UsersTemplate();

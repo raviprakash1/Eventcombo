@@ -51,12 +51,13 @@
                                     <div class="panel-heading panel_loader">
                                         <span class="view_evnt fs26 col-sm-6">  View Event</span>
                                         <label class="field select admin-form col-sm-4 text-right srh-by-no">
-                                            <select >
+                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })
+                                            @*<select >
                                                 <option value="0">Select</option>
                                                 <option value="0">01 - 50</option>
                                                 <option value="1">51 - 100</option>
                                                 <option value="2">101 - 150</option>
-                                            </select>
+                                            </select>*@
                                             <i class="arrow double"></i>
                                         </label>
                                     </div>
@@ -113,7 +114,7 @@
 
                             </div>
                             <div class="col-md-12">
-                                <table class="table footable" data-page-navigation=".pagination" data-page-size="6">
+                                <table class="table footable" data-page-navigation=".pagination" data-page-size="25">
                                     <thead class="bg_white">
                                         <tr class="bg_white">
                                             <th>Sno.</th>
