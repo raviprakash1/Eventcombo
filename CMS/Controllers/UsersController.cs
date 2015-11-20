@@ -17,9 +17,7 @@ namespace CMS.Controllers
         {
             try
             {
-                //User_Permission_Detail userper = db.User_Permission_Detail.Where(i => i.UP_User_Id.Trim() == userid.Trim()).FirstOrDefault();
-                //db.User_Permission_Detail.Remove(userper);
-                //db.SaveChanges();
+
                 db.Database.ExecuteSqlCommand("Delete from User_Permission_Detail where UP_User_Id='" + userid + "'");
                 Profile prof = db.Profiles.Where(i => i.UserID == userid).FirstOrDefault();
                 db.Profiles.Remove(prof);
@@ -268,5 +266,44 @@ namespace CMS.Controllers
             }
             return strResult.ToString();
         }
+
+        public string GetUserEvents(string strUserId)
+        {
+            StringBuilder strHtml = new StringBuilder();
+            using (EmsEntities objEntity = new EmsEntities())
+            {
+                var modelPerm = (from uEvt in objEntity.Events
+                                 where uEvt.UserID.Equals(strUserId)
+                                 select uEvt).ToList();
+                int i = 0;
+                if (modelPerm.Count > 0)
+                {
+                    foreach (Event obj in modelPerm)
+                    {
+                        i = i + 1;
+                        strHtml.Append("<tr>");
+                        strHtml.Append("<td align='left'>");
+                        strHtml.Append(i.ToString());
+                        strHtml.Append(" . </td>");
+                        strHtml.Append("<td align='left'>");
+                        strHtml.Append(obj.EventTitle);
+                        strHtml.Append("</td>");
+                        strHtml.Append("</tr>");
+                    }
+                }
+                else
+                {
+                    strHtml.Append("<tr>");
+                    strHtml.Append("<td align='left'>");
+                    strHtml.Append("No event history for this user.");
+                    strHtml.Append("</td>");
+                    strHtml.Append("</tr>");
+
+                }
+                return strHtml.ToString();
+            }
+
+        }
+
     }
 }
