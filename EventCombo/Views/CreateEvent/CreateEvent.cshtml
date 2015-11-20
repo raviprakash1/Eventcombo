@@ -679,7 +679,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label ev_tickt_lebel">Qty</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control evnt_inp_cont txtsum" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeyup="allownumber(event,this.id)" />
+                                            <input type="text" class="form-control evnt_inp_cont txtsum numbers" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
                                         </div>
                                     </div>
                                 </div>
@@ -687,7 +687,7 @@
                                     <div class="form-group paidticket-n" id="id_paid-n">
                                         <label class="col-sm-4 no_pad control-label ev_tickt_lebel">Price $</label>
                                         <div class="col-sm-8 ">
-                                            <input type="text" class="form-control evnt_inp_cont" id="id_cost-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="validateforzero(this.id, event)" placeholder="0.00" maxlength="9" />
+                                            <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="validateforzero(this.id, event)" placeholder="0.00" maxlength="9" />
                                         </div>
 
                                     </div>
@@ -716,7 +716,7 @@
                                     <div class="form-group paidticket-n" id="id_Disc-n">
                                         <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control evnt_inp_cont" placeholder="0" id="id_Discount-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="checkdiscount(this.id)" />
+                                            <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="checkdiscount(this.id)" />
 
                                         </div>
                                     </div>
@@ -855,13 +855,13 @@
                                                     <div class="form-group">
                                                         <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
                                                         <div class="evnt_time_cont wd280 mr5_p">
-                                                            <input class="form-control evnt_inp_cont wd240 " placeholder="0" id="id_min_ticket-n" onblur="checkminum(this.id);" onkeyup="allownumber(event,this.id)" maxlength="6" />
+                                                            <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onblur="checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
                                                             <label class="label-control lbl_bot_minim ">Minimum</label>
 
                                                         </div>
                                                         <div class="evnt_time_cont wd280">
-                                                            <input class="form-control evnt_inp_cont wd240" placeholder="0" id="id_max_ticket-n" onblur="checkminum(this.id);" onkeyup="allownumber(event,this.id)" maxlength="6" />
-                                                            <label class="label-control lbl_bot_minim">Maximum</label>
+                                                            <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onblur="checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                            <label class="label-control lbl_bot_minim ">Maximum</label>
                                                             <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
 
                                                         </div>
@@ -2936,7 +2936,12 @@
 
         }
         $(document).ready(function () {
-
+            //$("#id_cost-n").each(function () {
+            //    $(this).format({ format: "#,###", locale: "us" });
+            //});
+            //$("#id_Discount-n").each(function () {
+            //    $(this).format({ format: "#,###", locale: "us" });
+            //});
             $('#id_variablecharge').change(function () {
                 if ($(this).is(":checked")) {
                     $('.TicketFees').show();
@@ -3088,7 +3093,7 @@
 
             }
 
-            $("#id_fee-" + el).val(fee);
+            $("#id_fee-" + el).val(fee); 
             $("#id_total-" + el).val(total);
 
         }
@@ -3096,11 +3101,11 @@
 
             var code = event.charCode ? event.charCode : event.keyCode;
             var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-            if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+            if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105)) && code == 44) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
             {
 
             }
-            else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left or right
+            else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && code != 190) //id_Discount-n not esc, del, left or right
             {
                 $('#' + id).val("");
 
@@ -3219,7 +3224,7 @@
                 $("#id_total-" + num).val(ccpfinal);
                 $('#' + id).val(price)
             }
-
+          
 
         }
 
@@ -3230,7 +3235,7 @@
             var charCode = (evt.which) ? evt.which : event.keyCode;
 
             var number = el.value.split('.');
-            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 44) {
                 evt.preventDefault();
                 return false;
 
@@ -3240,7 +3245,7 @@
                 evt.preventDefault();
                 return false;
             }
-
+           
 
 
         }
@@ -3582,6 +3587,8 @@
             $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
+           
+
 
         });
         function randomString(len, charSet) {
@@ -3924,19 +3931,47 @@
             return true;
 
         }
-        function allownumber(event, id) {
-            var code = event.charCode ? event.charCode : event.keyCode;
-            if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
-            {
+        function allownumber(el,evt, id) {
 
-            }
-            else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9) // not esc, del, left or right
+          
+
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+           
+            if ((charCode < 48 || charCode > 57) && charCode > 31 && charCode != 44)
             {
-                $('#' + id).val("");
+               
+                evt.preventDefault();
                 return false;
             }
+            //if (charCode == 46 && charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 188) {
+            //    evt.preventDefault();
+            //    return false;
 
+            //}
 
+            //if (number.length > 1 && charCode == 46) {
+            //    evt.preventDefault();
+            //    return false;
+            //}
+
+            //var code = event.charCode ? event.charCode : event.keyCode;
+
+            ////  if (charCode == 46 && charCode > 31 && (charCode < 48 || charCode > 57) && charcode!=188) {
+            ////      evt.preventDefault();
+            ////    return false;
+
+            ////}
+            //if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt
+            //{
+
+            //}
+            //else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9) // not esc, del, left or right
+            //{
+            //    event.preventDefault();
+            //    return false;
+            //}
+
+        
 
         }
 
@@ -4013,6 +4048,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+          
             function uuid() {
                 var chars = '0123456789abcdef'.split('');
 
@@ -4488,7 +4524,19 @@
         }
 
         $(document).ready(function () {
+            $('input.number').keyup(function (event) {
 
+                // skip for arrow keys
+             
+
+                // format number
+                $(this).val(function (index, value) {
+                    return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    ;
+                });
+            });
             $('.close-model').on('click', function (e) {
                 $.modal.close();
             });
