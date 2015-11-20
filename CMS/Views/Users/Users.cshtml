@@ -263,7 +263,16 @@
                                                         </a>
                                                         
                                                     </td>
-                                                    <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
+                                                    <td>
+@if (obj.Online == "Y")
+{
+                                                    <span class="fa fa-circle text-success fs14" title="online"></span>
+}
+else 
+{
+    <span class="fa fa-circle  text-danger fs14" title="online"></span>
+}
+                                                    </td>
                                                 </tr>
                                             }
                                         }
@@ -330,13 +339,14 @@
 
                                     <div id="dvMemLimited">
                                         <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" class="chkPermission" checked="" id="chk_2">
-                                            <label for="chk_2">Deals</label>
-                                        </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
                                             <input type="checkbox" class="chkPermission" checked="" id="chk_1">
                                             <label for="chk_1">Events</label>
                                         </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                            <input type="checkbox" class="chkPermission" checked="" id="chk_2">
+                                            <label for="chk_2">Deals</label>
+                                        </div>
+                                      
                                     </div>
 
                                     <div id="dvAdmin">
@@ -566,7 +576,8 @@
             var UserId = $("#hdUName").val();
             var Permisions = ""; var URole;
             for (i = 1; i <= 7; i++) {
-                if ($("#chk_" + i).is(":checked") == true) {
+                if ($("#chk_" + i).is(":checked") == true)
+                {
                     if (Permisions == "")
                         Permisions = i;
                     else
@@ -747,7 +758,7 @@
                 if (AryResult[AryResult.length - 1].toString() == "2") {
                     if ($("#hdCurrentUserRole").val().toString() != "1") $("#btSave").prop("disabled", true);
 
-                    $("#rdAdmin").is(":checked") = true;
+                    $("#rdAdmin").prop("checked", true);
                     $("#dvMemLimited").hide();
                     $("#dvAdmin").show();
 

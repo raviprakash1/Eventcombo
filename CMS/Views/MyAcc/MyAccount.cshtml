@@ -66,7 +66,7 @@
                             {
                                 <div class="alert alert-micro alert-border-left alert-danger pastel alert-dismissable mn mb5" id="diverrorsys">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                    <i class="fa fa-info pr10"></i> <span id="spanid"> @Html.ValidationMessage("")</span>
+                                    <i class="fa fa-info pr10"></i> <span id="spanid"> @Html.ValidationMessage("Error")</span>
                                 </div>
                             }
                             <div class="col-md-12" style="display:none;" id="divError">
@@ -139,7 +139,7 @@
                                             <div class="form-group">
                                                 <label class="col-lg-12">Country</label>
                                                 <div class="col-lg-12">
-                                                   @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>)
+                                                   @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                         </div>
@@ -157,26 +157,29 @@
                                             <div class="form-group">
                                                 <label class="col-lg-12">Current Password</label>
                                                 <div class="col-lg-12">
-                                                    <input type="password" class="form-control" readonly="readonly" placeholder="Current Password">
+                                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 15 })
+                                                    @*<input type="password" class="form-control" placeholder="Current Password">*@
                                                 </div>
                                             </div>
                                         </div>
-                                        @*<div class="col-md-6">
+                                        <div class="col-md-6 noadmin">
                                             <div class="form-group">
                                                 <label class="col-lg-12">New Password</label>
                                                 <div class="col-lg-12">
-                                                    <input type="text" class="form-control" readonly="readonly" placeholder="New Password">
+                                                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @maxlength = 15 })
+                                                    @*<input type="password" class="form-control"  placeholder="New Password">*@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 noadmin">
                                             <div class="form-group">
                                                 <label class="col-lg-12">Confirm Password</label>
                                                 <div class="col-lg-12">
-                                                    <input type="text" class="form-control" readonly="readonly" placeholder="Confirm Password">
+                                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @maxlength = 15 })
+                                                    @*<input type="password" class="form-control"  placeholder="Confirm Password">*@
                                                 </div>
                                             </div>
-                                        </div>*@
+                                        </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-lg-12">Website</label>
@@ -208,6 +211,16 @@
                                                 <label class="col-lg-12 mb5">Work Number</label>
                                                 <div class="col-lg-6 mb5">
                                                     @Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 noadmin">
+                                            <div class="form-group">
+                                                <label class="col-lg-12">Designation</label>
+                                                <div class="col-lg-12">
+                                                    @Html.DisplayFor(m => m.Designation, new { @class = "form-control" })
+                                                    @*@Html.DropDownList("Designation", ViewBag.Desig as List<SelectListItem>, new { @class = "form-control" })*@
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -262,6 +275,7 @@
                 });
           
             if (iUserId != 'Y') {
+                $(".noadmin").css('display', 'none');
                 $.ajax({
                     url: '@Url.Action("GetUserRole","Permission")',
                     async: false,
@@ -275,6 +289,8 @@
                         }
                     }
                 });
+            } else {
+                $(".noadmin").css('display', 'block');
             }
             
         });
@@ -360,7 +376,7 @@
                 if (!validateEmail(Email)) {
                     $('#Email').focus();
                     $('#Email').addClass('err-bor');
-                    msg += "Invalid Email! </br>"
+                    msg += ajaxsetup('MyAccount', 'MyAccountEmailValidationUI') + " </br>";
 
                 } else {
 
@@ -409,7 +425,24 @@
 
         });
 
+        function ajaxsetup(strname, strFormTag) {
+            var msgnew = "";
 
+            var request = $.ajax({
+                url: '@Url.Action("Index", "ValidationMessage")',
+                async: false,
+                data: { strFormName: strname, strFormTag: strFormTag },
+                type: 'Post'
+            });
+            request.done(function (msg) {
+                msgnew += msg;
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+                msgnew += "Some Error occur!!";
+            });
+            return msgnew;
+        }
     </script>
 
 </body>

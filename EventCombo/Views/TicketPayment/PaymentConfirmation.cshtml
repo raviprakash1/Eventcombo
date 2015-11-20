@@ -246,6 +246,28 @@
 
 <script>
     $(document).ready(function () {
+        $(function () {
+            $(document).tooltip({
+                track: true
+            });
+        });
+
+        $(".Notifybox").css("display", "none");
+        $(".Notify").click(function () {
+            $('.Notifybox').slideToggle("fast");
+        });
+
+        $(".TmezoneSet").css("display", "none");
+        $(".Timezone").click(function () {
+            $(".TmezoneSet").slideToggle("fast");
+
+        });
+        $(".closetimemodal").click(function () {
+            $(".TmezoneSet").hide();
+
+        });
+
+
         $('#fbshare').click(function () {
             var title='@Html.DisplayFor(m => m.Tilte)';
             var description='@Html.DisplayFor(m => m.description)';

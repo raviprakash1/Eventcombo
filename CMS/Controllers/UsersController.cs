@@ -145,7 +145,8 @@ namespace CMS.Controllers
                                          Merchant = Pr.Merchant.Trim(),
                                          UserStatus = Pr.UserStatus.Trim(),
                                          FirstName = Pr.FirstName,
-                                         LastName = Pr.LastName
+                                         LastName = Pr.LastName,
+                                         Online= UserTemp.LoginStatus
                                      }
                                     );
                 //return modelUserTemp.ToList();

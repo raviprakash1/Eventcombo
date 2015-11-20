@@ -11,16 +11,9 @@ namespace CMS.Models
 {
     using System;
     
-    public partial class GetEventListing_Result
+    public partial class func_Split_Result
     {
-        public long EventID { get; set; }
-        public string EventTitle { get; set; }
-        public string EventType { get; set; }
-        public string EventCategory { get; set; }
-        public string EventSubCategory { get; set; }
-        public string EventTiming { get; set; }
-        public int Feature { get; set; }
-        public string Orgnizer_Name { get; set; }
-        public string EventAddress { get; set; }
+        public int ElementID { get; set; }
+        public string Element { get; set; }
     }
 }

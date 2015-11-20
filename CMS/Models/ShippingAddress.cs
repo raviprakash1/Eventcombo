@@ -12,17 +12,20 @@ namespace CMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Event_Orgnizer_Detail
+    public partial class ShippingAddress
     {
-        public long Orgnizer_Id { get; set; }
-        public Nullable<long> Orgnizer_Event_Id { get; set; }
-        public string Orgnizer_Name { get; set; }
-        public string Orgnizer_Desc { get; set; }
-        public string FBLink { get; set; }
-        public string Twitter { get; set; }
+        public long ShippingId { get; set; }
         public string UserId { get; set; }
-        public string DefaultOrg { get; set; }
-    
-        public virtual Event Event { get; set; }
+        public string OrderId { get; set; }
+        public string Guid { get; set; }
+        public string Fname { get; set; }
+        public string Lname { get; set; }
+        public string Phone_Number { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
+        public string Country { get; set; }
     }
 }

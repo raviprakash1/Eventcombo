@@ -468,8 +468,11 @@ namespace EventCombo.Controllers
 
 
                         profile.Gender = model.Gender;
-                        profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
-                        if (!checkexternallogin(Userid))
+                        if (!string.IsNullOrEmpty(model.day.ToString()) && !string.IsNullOrEmpty(model.month.ToString()) && !string.IsNullOrEmpty(model.year.ToString()))
+                        {
+                            profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
+                        }
+                    if (!checkexternallogin(Userid))
                         {
                             if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
                             {

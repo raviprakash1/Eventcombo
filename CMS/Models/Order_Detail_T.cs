@@ -12,13 +12,15 @@ namespace CMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EventImage
+    public partial class Order_Detail_T
     {
-        public long EventImageID { get; set; }
-        public long EventID { get; set; }
-        public string EventImageUrl { get; set; }
-        public string ImageType { get; set; }
-    
-        public virtual Event Event { get; set; }
+        public long O_Id { get; set; }
+        public string O_Order_Id { get; set; }
+        public string O_User_Id { get; set; }
+        public Nullable<decimal> O_TotalAmount { get; set; }
+        public Nullable<decimal> O_OrderAmount { get; set; }
+        public Nullable<long> O_VariableId { get; set; }
+        public Nullable<decimal> O_VariableAmount { get; set; }
+        public Nullable<long> O_PromoCodeId { get; set; }
     }
 }

@@ -12,13 +12,16 @@ namespace CMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EventImage
+    public partial class Ticket_Purchased_Detail
     {
-        public long EventImageID { get; set; }
-        public long EventID { get; set; }
-        public string EventImageUrl { get; set; }
-        public string ImageType { get; set; }
-    
-        public virtual Event Event { get; set; }
+        public long TPD_Id { get; set; }
+        public string TPD_User_Id { get; set; }
+        public string TPD_Order_Id { get; set; }
+        public Nullable<long> TPD_Purchased_Qty { get; set; }
+        public Nullable<long> TPD_TQD_Id { get; set; }
+        public Nullable<long> TPD_Event_Id { get; set; }
+        public Nullable<decimal> TPD_Amount { get; set; }
+        public Nullable<decimal> TPD_Donate { get; set; }
+        public string TPD_GUID { get; set; }
     }
 }
