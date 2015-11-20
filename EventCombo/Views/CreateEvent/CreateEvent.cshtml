@@ -1229,7 +1229,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="modal-footer no_pad">
-                    <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
+                    <button type="button" id="btSaveAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
                 </div>
 
             </div>
@@ -1597,6 +1597,16 @@
         }
 
         $(document).ready(function () {
+            $("#btSaveAddress").click(function () {
+                //$("#txtEventLocation").val("Click here to enter venue address");
+                $("#tblAddress tr").each(function () {
+                    var Sno = $(this).find("td:first").html();
+                    if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
+                        $("#txtEventLocation").val($("#consolidate" + Sno).text());
+                    }
+                });
+            });
+
             $("#btSaveTimeZone").click(function () {
                 var vval = $("#dllTimeZone").val();
                 if (vval == null || vval == '')
@@ -2094,7 +2104,17 @@
 
 
             $("#btMultiVenue").click(function () {
-                $("#txtEventLocation").val('');
+                //$("#txtEventLocation").val('');
+                if ($("#tblAddress tr").length <= 1) {
+                    if ($("#txtEventLocation").val().trim() != '') {
+                        $("#VenueName").val($("#txtEventLocation").val());
+                        var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + '' + "¶" + '';
+                        var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
+                        AddRow("tblAddress", vCols, vColName, "Y");
+                        $("#VenueName").val("");
+                        $("#hidAddSno").val("");
+                    }
+                }
             });
 
             $("#btOnlineEvent").click(function () {
