@@ -53,7 +53,7 @@ namespace EventCombo
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 4,
+                RequiredLength = 4
                 //RequireNonLetterOrDigit = true,
                 //RequireDigit = true,
                 //RequireLowercase = true,

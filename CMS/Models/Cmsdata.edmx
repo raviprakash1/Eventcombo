@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Cmsdata.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Cmsdata.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -82,6 +82,37 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="LoginStatus" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="BillingAddress">
+          <Key>
+            <PropertyRef Name="BillingId" />
+          </Key>
+          <Property Name="BillingId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nchar" MaxLength="128" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
+          <Property Name="Guid" Type="nchar" MaxLength="128" />
+          <Property Name="Fname" Type="varchar" MaxLength="50" />
+          <Property Name="Lname" Type="varchar" MaxLength="50" />
+          <Property Name="Phone_Number" Type="varchar" MaxLength="50" />
+          <Property Name="Address1" Type="varchar" MaxLength="256" />
+          <Property Name="Address2" Type="varchar" MaxLength="256" />
+          <Property Name="City" Type="varchar" MaxLength="256" />
+          <Property Name="State" Type="varchar" MaxLength="256" />
+          <Property Name="Zip" Type="varchar" MaxLength="256" />
+          <Property Name="Country" Type="varchar" MaxLength="26" />
+        </EntityType>
+        <EntityType Name="CardDetails">
+          <Key>
+            <PropertyRef Name="CardId" />
+          </Key>
+          <Property Name="CardId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nchar" MaxLength="128" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
+          <Property Name="Guid" Type="nchar" MaxLength="128" />
+          <Property Name="CardNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
+          <Property Name="Cvv" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -148,6 +179,13 @@
           <Property Name="LastLocationAddress" Type="bigint" />
           <Property Name="EnableFBDiscussion" Type="varchar" MaxLength="1" />
           <Property Name="Feature" Type="int" />
+          <Property Name="Ticket_DAdress" Type="varchar" MaxLength="1" />
+          <Property Name="Ticket_showremain" Type="varchar" MaxLength="1" />
+          <Property Name="Ticket_showvariable" Type="varchar" MaxLength="1" />
+          <Property Name="Ticket_variabledesc" Type="varchar" MaxLength="256" />
+          <Property Name="Ticket_variabletype" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ModifyDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -167,6 +205,18 @@
           <Property Name="E_GuestOnly" Type="varchar" MaxLength="1" />
           <Property Name="E_Password" Type="nchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="Event_OrganizerMessages">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="EventId" Type="bigint" />
+          <Property Name="OrganizerId" Type="bigint" />
+          <Property Name="Userid" Type="varchar" MaxLength="150" />
+          <Property Name="Name" Type="varchar" MaxLength="256" />
+          <Property Name="Email" Type="varchar" MaxLength="256" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="MessageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
             <PropertyRef Name="Orgnizer_Id" />
@@ -174,9 +224,20 @@
           <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orgnizer_Event_Id" Type="bigint" />
           <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
-          <Property Name="Orgnizer_Desc" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Orgnizer_Desc" Type="nvarchar(max)" />
           <Property Name="FBLink" Type="varchar" MaxLength="100" />
           <Property Name="Twitter" Type="varchar" MaxLength="100" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="DefaultOrg" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Event_VariableDesc">
+          <Key>
+            <PropertyRef Name="Variable_Id" />
+          </Key>
+          <Property Name="VariableDesc" Type="nvarchar" MaxLength="256" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Event_Id" Type="bigint" />
+          <Property Name="Variable_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="EventCategory">
           <Key>
@@ -184,6 +245,14 @@
           </Key>
           <Property Name="EventCategoryID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventCategory" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventFavourite">
+          <Key>
+            <PropertyRef Name="FavId" />
+          </Key>
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="eventId" Type="bigint" />
+          <Property Name="FavId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="EventImage">
           <Key>
@@ -193,17 +262,6 @@
           <Property Name="EventID" Type="bigint" Nullable="false" />
           <Property Name="EventImageUrl" Type="varchar" MaxLength="200" />
           <Property Name="ImageType" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="EventOrganizer">
-          <Key>
-            <PropertyRef Name="EventOrganizerID" />
-          </Key>
-          <Property Name="EventOrganizerID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EventID" Type="bigint" Nullable="false" />
-          <Property Name="UserID" Type="nvarchar" MaxLength="256" />
-          <Property Name="OrganizerDescription" Type="nvarchar(max)" />
-          <Property Name="FBLink" Type="nvarchar" MaxLength="1000" />
-          <Property Name="TwitterLink" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="EventSubCategory">
           <Key>
@@ -237,10 +295,18 @@
           <Property Name="EventVenueID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="bigint" Nullable="false" />
           <Property Name="AddressId" Type="bigint" Nullable="false" />
-          <Property Name="EventStartDate" Type="date" />
-          <Property Name="EventEndDate" Type="date" />
-          <Property Name="EventStartTime" Type="time" Precision="7" />
-          <Property Name="EventEndTime" Type="time" Precision="7" />
+          <Property Name="EventStartDate" Type="varchar" MaxLength="50" />
+          <Property Name="EventEndDate" Type="varchar" MaxLength="50" />
+          <Property Name="EventStartTime" Type="varchar" MaxLength="50" />
+          <Property Name="EventEndTime" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EventVote">
+          <Key>
+            <PropertyRef Name="VoteId" />
+          </Key>
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="eventId" Type="bigint" />
+          <Property Name="VoteId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Fee_Structure">
           <Key>
@@ -274,6 +340,19 @@
           <Property Name="EndTime" Type="varchar" MaxLength="50" />
           <Property Name="MonthlyWeek" Type="varchar" MaxLength="10" />
           <Property Name="MonthlyWeekDays" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Order_Detail_T">
+          <Key>
+            <PropertyRef Name="O_Id" />
+          </Key>
+          <Property Name="O_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="O_Order_Id" Type="varchar" MaxLength="100" />
+          <Property Name="O_User_Id" Type="nvarchar" MaxLength="256" />
+          <Property Name="O_TotalAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="O_OrderAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="bigint" />
+          <Property Name="O_VariableAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="bigint" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -318,6 +397,39 @@
           <Property Name="Organiser" Type="varchar" MaxLength="2" />
           <Property Name="Merchant" Type="varchar" MaxLength="2" />
           <Property Name="UserStatus" Type="varchar" MaxLength="2" />
+          <Property Name="SendCur_EventDetail" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Publish_Event_Detail">
+          <Key>
+            <PropertyRef Name="PE_Id" />
+          </Key>
+          <Property Name="PE_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PE_Event_Id" Type="bigint" />
+          <Property Name="PE_Address_Ids" Type="varchar" MaxLength="100" />
+          <Property Name="PE_MultipleVenue_id" Type="bigint" />
+          <Property Name="PE_SingleVenue_Id" Type="bigint" />
+          <Property Name="PE_Tickets_Ids" Type="varchar" MaxLength="100" />
+          <Property Name="PE_Scheduled_Date" Type="varchar" MaxLength="50" />
+          <Property Name="PE_Start_Time" Type="varchar" MaxLength="50" />
+          <Property Name="PE_End_Time" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ShippingAddress">
+          <Key>
+            <PropertyRef Name="ShippingId" />
+          </Key>
+          <Property Name="ShippingId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nchar" MaxLength="128" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
+          <Property Name="Guid" Type="nchar" MaxLength="128" />
+          <Property Name="Fname" Type="varchar" MaxLength="50" />
+          <Property Name="Lname" Type="varchar" MaxLength="50" />
+          <Property Name="Phone_Number" Type="varchar" MaxLength="50" />
+          <Property Name="Address1" Type="varchar" MaxLength="256" />
+          <Property Name="Address2" Type="varchar" MaxLength="256" />
+          <Property Name="City" Type="varchar" MaxLength="256" />
+          <Property Name="State" Type="varchar" MaxLength="256" />
+          <Property Name="Zip" Type="varchar" MaxLength="256" />
+          <Property Name="Country" Type="varchar" MaxLength="26" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -334,42 +446,88 @@
           <Property Name="E_Id" Type="bigint" />
           <Property Name="T_name" Type="nvarchar" MaxLength="256" />
           <Property Name="Qty_Available" Type="bigint" Nullable="false" />
-          <Property Name="Price" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="Price" Type="decimal" Precision="9" Scale="2" />
           <Property Name="TicketTypeID" Type="bigint" />
-          <Property Name="T_Sold" Type="bit" />
-          <Property Name="Registration_Recorded" Type="bit" />
+          <Property Name="T_Sold" Type="varchar" MaxLength="1" />
+          <Property Name="Registration_Recorded" Type="varchar" MaxLength="1" />
           <Property Name="T_Desc" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Show_T_Desc" Type="bit" />
+          <Property Name="Show_T_Desc" Type="varchar" MaxLength="1" />
           <Property Name="Fees_Type" Type="varchar" MaxLength="50" />
           <Property Name="Sale_Start_Date" Type="date" />
-          <Property Name="Sale_Start_Time" Type="time" Precision="7" />
+          <Property Name="Sale_Start_Time" Type="varchar" MaxLength="50" />
           <Property Name="Sale_End_Date" Type="date" />
-          <Property Name="Sale_End_Time" Type="time" Precision="7" />
-          <Property Name="Hide_Ticket" Type="bit" />
-          <Property Name="Auto_Hide_Sche" Type="bit" />
-          <Property Name="Hide_Untill" Type="bit" />
+          <Property Name="Sale_End_Time" Type="varchar" MaxLength="50" />
+          <Property Name="Hide_Ticket" Type="varchar" MaxLength="1" />
+          <Property Name="Auto_Hide_Sche" Type="varchar" MaxLength="1" />
           <Property Name="Hide_Untill_Date" Type="date" />
-          <Property Name="Hide_Untill_Time" Type="time" Precision="7" />
-          <Property Name="Hide_After" Type="bit" />
+          <Property Name="Hide_Untill_Time" Type="varchar" MaxLength="50" />
           <Property Name="Hide_After_Date" Type="date" />
-          <Property Name="Hide_After_Time" Type="time" Precision="7" />
+          <Property Name="Hide_After_Time" Type="varchar" MaxLength="50" />
           <Property Name="Min_T_Qty" Type="numeric" Precision="6" Scale="0" />
           <Property Name="Max_T_Qty" Type="numeric" Precision="6" Scale="0" />
-          <Property Name="T_Disable" Type="bit" />
-          <Property Name="T_Mark_SoldOut" Type="bit" />
+          <Property Name="T_Disable" Type="varchar" MaxLength="1" />
+          <Property Name="T_Mark_SoldOut" Type="varchar" MaxLength="1" />
           <Property Name="T_Sold_Qty" Type="bigint" />
           <Property Name="T_order" Type="tinyint" />
-          <Property Name="T_Sale_By" Type="varchar" MaxLength="50" />
-          <Property Name="T_Saleby_End" Type="bigint" />
-          <Property Name="T_No_Show" Type="bit" />
-          <Property Name="EC_Fee" Type="decimal" Precision="6" Scale="2" />
-          <Property Name="Customer_Fee" Type="decimal" Precision="6" Scale="2" />
-          <Property Name="T_DeliveryAdd" Type="bit" />
-          <Property Name="T_WillCall" Type="bit" />
-          <Property Name="T_Seated" Type="bit" />
-          <Property Name="T_AutoSechduleType" Type="int" />
-          <Property Name="Additional_Fee" Type="decimal" Precision="6" Scale="2" />
-          <Property Name="T_Discount" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="EC_Fee" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="Customer_Fee" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="T_Displayremaining" Type="varchar" MaxLength="50" />
+          <Property Name="T_AutoSechduleType" Type="varchar" MaxLength="1" />
+          <Property Name="Additional_Fee" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="T_Discount" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="TotalPrice" Type="decimal" Precision="9" Scale="2" />
+        </EntityType>
+        <EntityType Name="Ticket_Locked_Detail">
+          <Key>
+            <PropertyRef Name="TLD_Id" />
+          </Key>
+          <Property Name="TLD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TLD_User_Id" Type="nvarchar" MaxLength="256" />
+          <Property Name="TLD_Locked_Qty" Type="bigint" />
+          <Property Name="TLD_Event_Id" Type="bigint" />
+          <Property Name="TLD_TQD_Id" Type="bigint" />
+          <Property Name="Locktime" Type="datetime" />
+          <Property Name="TLD_GUID" Type="varchar" MaxLength="1000" />
+          <Property Name="TLD_Donate" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Ticket_Purchased_Detail">
+          <Key>
+            <PropertyRef Name="TPD_Id" />
+          </Key>
+          <Property Name="TPD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TPD_User_Id" Type="nvarchar" MaxLength="256" />
+          <Property Name="TPD_Order_Id" Type="varchar" MaxLength="11" />
+          <Property Name="TPD_Purchased_Qty" Type="bigint" />
+          <Property Name="TPD_TQD_Id" Type="bigint" />
+          <Property Name="TPD_Event_Id" Type="bigint" />
+          <Property Name="TPD_Amount" Type="numeric" Precision="9" Scale="2" />
+          <Property Name="TPD_Donate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TPD_GUID" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Ticket_Quantity_Detail">
+          <Key>
+            <PropertyRef Name="TQD_Id" />
+          </Key>
+          <Property Name="TQD_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TQD_PE_Id" Type="bigint" />
+          <Property Name="TQD_Event_Id" Type="bigint" />
+          <Property Name="TQD_Ticket_Id" Type="bigint" />
+          <Property Name="TQD_AddressId" Type="bigint" />
+          <Property Name="TQD_Quantity" Type="bigint" />
+          <Property Name="TQD_Remaining_Quantity" Type="bigint" />
+          <Property Name="TQD_StartDate" Type="varchar" MaxLength="50" />
+          <Property Name="TQD_StartTime" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TicketBearer">
+          <Key>
+            <PropertyRef Name="TicketbearerId" />
+          </Key>
+          <Property Name="TicketbearerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nchar" MaxLength="128" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
+          <Property Name="Guid" Type="nchar" MaxLength="128" />
+          <Property Name="Name" Type="nchar" MaxLength="128" />
+          <Property Name="Email" Type="nchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -384,6 +542,13 @@
           </Key>
           <Property Name="TicketTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TicketType" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeZoneDetail">
+          <Key>
+            <PropertyRef Name="TimeZone_Id" />
+          </Key>
+          <Property Name="TimeZone_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimeZone_Name" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="User_Permission_Detail">
           <Key>
@@ -518,6 +683,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Event_VariableDesc_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Event_VariableDesc" Type="Self.Event_VariableDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_VariableDesc">
+              <PropertyRef Name="Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventImage_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="EventImage" Type="Self.EventImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="EventImage">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EventVenue_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
           <End Role="EventVenue" Type="Self.EventVenue" Multiplicity="*" />
@@ -539,6 +728,18 @@
             </Principal>
             <Dependent Role="EventVenue1">
               <PropertyRef Name="EventVenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MultipleEvent_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="MultipleEvent" Type="Self.MultipleEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="MultipleEvent">
+              <PropertyRef Name="EventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -566,6 +767,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Ticket_Quantity_Info_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="Ticket_Quantity_Detail" Type="Self.Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="T_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_Ticket_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="func_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DelimitedString" Type="varchar" Mode="In" />
+          <Parameter Name="Delimiter" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ElementID" Type="int" Nullable="false" />
+                <Property Name="Element" Type="varchar" MaxLength="1000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetEventDateList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetEventListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EventTitle" Type="varchar" Mode="In" />
           <Parameter Name="EventType" Type="varchar" Mode="In" />
@@ -573,10 +801,24 @@
           <Parameter Name="EventSubCat" Type="varchar" Mode="In" />
           <Parameter Name="EventFeature" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GUID" Type="varchar" Mode="In" />
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetSetUserRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_Id" Type="nvarchar" Mode="In" />
           <Parameter Name="GETSET" Type="varchar" Mode="In" />
           <Parameter Name="Role_Id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="PublishEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+          <Parameter Name="UserId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ReturnDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="dtDate" Type="datetime" Mode="In" />
         </Function>
         <EntityContainer Name="CmsdataStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
@@ -586,29 +828,42 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BillingAddress" EntityType="Self.BillingAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryMethod" EntityType="Self.DeliveryMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Detail" EntityType="Self.Event_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event_VariableDesc" EntityType="Self.Event_VariableDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventCategory" EntityType="Self.EventCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventFavourite" EntityType="Self.EventFavourite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventImage" EntityType="Self.EventImage" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EventOrganizer" EntityType="Self.EventOrganizer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventSubCategory" EntityType="Self.EventSubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventTempImage" EntityType="Self.EventTempImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVenue" EntityType="Self.EventVenue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventVote" EntityType="Self.EventVote" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShippingAddress" EntityType="Self.ShippingAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_Purchased_Detail" EntityType="Self.Ticket_Purchased_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketBearer" EntityType="Self.TicketBearer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketDeliveryMethod" EntityType="Self.TicketDeliveryMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
@@ -647,6 +902,14 @@
             <End Role="Event" EntitySet="Event" />
             <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
           </AssociationSet>
+          <AssociationSet Name="FK_Event_VariableDesc_Event" Association="Self.FK_Event_VariableDesc_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Event_VariableDesc" EntitySet="Event_VariableDesc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventImage_Event" Association="Self.FK_EventImage_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="EventImage" EntitySet="EventImage" />
+          </AssociationSet>
           <AssociationSet Name="FK_EventVenue_Event" Association="Self.FK_EventVenue_Event">
             <End Role="Event" EntitySet="Event" />
             <End Role="EventVenue" EntitySet="EventVenue" />
@@ -654,6 +917,10 @@
           <AssociationSet Name="FK_EventVenue_EventVenue" Association="Self.FK_EventVenue_EventVenue">
             <End Role="EventVenue" EntitySet="EventVenue" />
             <End Role="EventVenue1" EntitySet="EventVenue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MultipleEvent_Event" Association="Self.FK_MultipleEvent_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="MultipleEvent" EntitySet="MultipleEvent" />
           </AssociationSet>
           <AssociationSet Name="FK_Profile_Profile" Association="Self.FK_Profile_Profile">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -663,11 +930,20 @@
             <End Role="Event" EntitySet="Event" />
             <End Role="Ticket" EntitySet="Ticket" />
           </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="Self.FK_Ticket_Quantity_Info_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Cmsdata" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="func_Split_Result">
+          <Property Name="ElementID" Type="Int32" Nullable="false" />
+          <Property Name="Element" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </ComplexType>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -677,6 +953,24 @@
           <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryID" Type="Byte" Nullable="false" />
+          <Property Name="VenueName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EventId" Type="Int64" />
+          <Property Name="ConsolidateAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Address_Event" FromRole="Address" ToRole="Event" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -723,10 +1017,41 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoginStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="BillingAddress">
+          <Key>
+            <PropertyRef Name="BillingId" />
+          </Key>
+          <Property Name="BillingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CardDetail">
+          <Key>
+            <PropertyRef Name="CardId" />
+          </Key>
+          <Property Name="CardId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -734,6 +1059,14 @@
           </Key>
           <Property Name="CountryID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Country1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryMethod">
+          <Key>
+            <PropertyRef Name="DeliveryMethodID" />
+          </Key>
+          <Property Name="DeliveryMethodID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryMethod1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TicketDeliveryMethods" Relationship="Self.FK__TicketDel__Deliv__1A69E950" FromRole="DeliveryMethod" ToRole="TicketDeliveryMethod" />
         </EntityType>
         <EntityType Name="Email_Tag">
           <Key>
@@ -755,6 +1088,191 @@
           <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventTypeID" Type="Int64" Nullable="false" />
+          <Property Name="EventCategoryID" Type="Int64" Nullable="false" />
+          <Property Name="EventSubCategoryID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EventTitle" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayStartTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayEndTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayTimeZone" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="EventDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EventPrivacy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Private_ShareOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Private_GuestOnly" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Private_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventUrl" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PublishOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="EventStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdateOn" Type="DateTime" Precision="3" />
+          <Property Name="IsMultipleEvent" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="FBUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TwitterUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="AddressStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastLocationAddress" Type="Int64" />
+          <Property Name="EnableFBDiscussion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Feature" Type="Int32" />
+          <Property Name="Ticket_DAdress" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Ticket_showremain" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Ticket_showvariable" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Ticket_variabledesc" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Ticket_variabletype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_Event" FromRole="Event" ToRole="Address" />
+          <NavigationProperty Name="EventType" Relationship="Self.FK_Event_EventType" FromRole="Event" ToRole="EventType" />
+          <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
+          <NavigationProperty Name="Event_VariableDesc" Relationship="Self.FK_Event_VariableDesc_Event" FromRole="Event" ToRole="Event_VariableDesc" />
+          <NavigationProperty Name="EventImages" Relationship="Self.FK_EventImage_Event" FromRole="Event" ToRole="EventImage" />
+          <NavigationProperty Name="EventVenues" Relationship="Self.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
+          <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Event_Detail">
+          <Key>
+            <PropertyRef Name="E_Id" />
+          </Key>
+          <Property Name="E_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="E_Title" Type="String" MaxLength="520" FixedLength="false" Unicode="true" />
+          <Property Name="E_StartDate" Type="DateTime" Precision="0" />
+          <Property Name="E_StartTime" Type="Time" Precision="7" />
+          <Property Name="E_EndDate" Type="DateTime" Precision="0" />
+          <Property Name="E_EndTime" Type="Time" Precision="7" />
+          <Property Name="E_DisplayStartTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="E_DisplayEndTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="E_DisplayTimeZone" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="E_EventPrivacy" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="E_ShareOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="E_GuestOnly" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="E_Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Event_OrganizerMessages">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="EventId" Type="Int64" />
+          <Property Name="OrganizerId" Type="Int64" />
+          <Property Name="Userid" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MessageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Event_Orgnizer_Detail">
+          <Key>
+            <PropertyRef Name="Orgnizer_Id" />
+          </Key>
+          <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orgnizer_Event_Id" Type="Int64" />
+          <Property Name="Orgnizer_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Orgnizer_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FBLink" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Twitter" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultOrg" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Event_VariableDesc">
+          <Key>
+            <PropertyRef Name="Variable_Id" />
+          </Key>
+          <Property Name="VariableDesc" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Event_Id" Type="Int64" />
+          <Property Name="Variable_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Event_VariableDesc_Event" FromRole="Event_VariableDesc" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="EventCategory">
+          <Key>
+            <PropertyRef Name="EventCategoryID" />
+          </Key>
+          <Property Name="EventCategoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventCategory1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EventSubCategories" Relationship="Self.FK__EventSubC__Event__5F141958" FromRole="EventCategory" ToRole="EventSubCategory" />
+        </EntityType>
+        <EntityType Name="EventFavourite">
+          <Key>
+            <PropertyRef Name="FavId" />
+          </Key>
+          <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="eventId" Type="Int64" />
+          <Property Name="FavId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="EventImage">
+          <Key>
+            <PropertyRef Name="EventImageID" />
+          </Key>
+          <Property Name="EventImageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int64" Nullable="false" />
+          <Property Name="EventImageUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_EventImage_Event" FromRole="EventImage" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="EventSubCategory">
+          <Key>
+            <PropertyRef Name="EventSubCategoryID" />
+          </Key>
+          <Property Name="EventSubCategoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventCategoryID" Type="Int64" Nullable="false" />
+          <Property Name="EventSubCategory1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EventCategory" Relationship="Self.FK__EventSubC__Event__5F141958" FromRole="EventSubCategory" ToRole="EventCategory" />
+        </EntityType>
+        <EntityType Name="EventTempImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EvenUniqueid" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EventImageUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="EventTypeID" />
+          </Key>
+          <Property Name="EventTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventType1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="EventVenue">
+          <Key>
+            <PropertyRef Name="EventVenueID" />
+          </Key>
+          <Property Name="EventVenueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int64" Nullable="false" />
+          <Property Name="AddressId" Type="Int64" Nullable="false" />
+          <Property Name="EventStartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventEndDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_EventVenue_Event" FromRole="EventVenue" ToRole="Event" />
+          <NavigationProperty Name="EventVenue1" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue" ToRole="EventVenue1" />
+          <NavigationProperty Name="EventVenue2" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
+        </EntityType>
+        <EntityType Name="EventVote">
+          <Key>
+            <PropertyRef Name="VoteId" />
+          </Key>
+          <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="eventId" Type="Int64" />
+          <Property Name="VoteId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Fee_Structure">
+          <Key>
+            <PropertyRef Name="FeeId" />
+          </Key>
+          <Property Name="FeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FeeAmount" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
         <EntityType Name="Message">
           <Key>
             <PropertyRef Name="Id" />
@@ -763,6 +1281,36 @@
           <Property Name="Form_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Form_Tag" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Message1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MultipleEvent">
+          <Key>
+            <PropertyRef Name="MultipleEventID" />
+          </Key>
+          <Property Name="MultipleEventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int64" Nullable="false" />
+          <Property Name="Frequency" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartingFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartingTo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WeeklyDay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MonthlyDay" Type="Int32" />
+          <Property Name="StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Order_Detail_T">
+          <Key>
+            <PropertyRef Name="O_Id" />
+          </Key>
+          <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="Int64" />
+          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="Int64" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -804,10 +1352,43 @@
           <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateofBirth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUsers" />
           <Property Name="Organiser" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Merchant" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="UserStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SendCur_EventDetail" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="Publish_Event_Detail">
+          <Key>
+            <PropertyRef Name="PE_Id" />
+          </Key>
+          <Property Name="PE_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PE_Event_Id" Type="Int64" />
+          <Property Name="PE_Address_Ids" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PE_MultipleVenue_id" Type="Int64" />
+          <Property Name="PE_SingleVenue_Id" Type="Int64" />
+          <Property Name="PE_Tickets_Ids" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PE_Scheduled_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PE_Start_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PE_End_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ShippingAddress">
+          <Key>
+            <PropertyRef Name="ShippingId" />
+          </Key>
+          <Property Name="ShippingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -815,6 +1396,122 @@
           </Key>
           <Property Name="StatusID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StatusName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="T_Id" />
+          </Key>
+          <Property Name="T_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="E_Id" Type="Int64" />
+          <Property Name="T_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Qty_Available" Type="Int64" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TicketTypeID" Type="Int64" />
+          <Property Name="T_Sold" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Registration_Recorded" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="T_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Show_T_Desc" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Fees_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sale_Start_Date" Type="DateTime" Precision="0" />
+          <Property Name="Sale_Start_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sale_End_Date" Type="DateTime" Precision="0" />
+          <Property Name="Sale_End_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Hide_Ticket" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Auto_Hide_Sche" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Hide_Untill_Date" Type="DateTime" Precision="0" />
+          <Property Name="Hide_Untill_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Hide_After_Date" Type="DateTime" Precision="0" />
+          <Property Name="Hide_After_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Min_T_Qty" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="Max_T_Qty" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="T_Disable" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="T_Mark_SoldOut" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="T_Sold_Qty" Type="Int64" />
+          <Property Name="T_order" Type="Byte" />
+          <Property Name="EC_Fee" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="Customer_Fee" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="T_Displayremaining" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="T_AutoSechduleType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Additional_Fee" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="T_Discount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="9" Scale="2" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Ticket_Event" FromRole="Ticket" ToRole="Event" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="Self.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket" ToRole="Ticket_Quantity_Detail" />
+        </EntityType>
+        <EntityType Name="Ticket_Locked_Detail">
+          <Key>
+            <PropertyRef Name="TLD_Id" />
+          </Key>
+          <Property Name="TLD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TLD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TLD_Locked_Qty" Type="Int64" />
+          <Property Name="TLD_Event_Id" Type="Int64" />
+          <Property Name="TLD_TQD_Id" Type="Int64" />
+          <Property Name="Locktime" Type="DateTime" Precision="3" />
+          <Property Name="TLD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TLD_Donate" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Ticket_Purchased_Detail">
+          <Key>
+            <PropertyRef Name="TPD_Id" />
+          </Key>
+          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_Purchased_Qty" Type="Int64" />
+          <Property Name="TPD_TQD_Id" Type="Int64" />
+          <Property Name="TPD_Event_Id" Type="Int64" />
+          <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Ticket_Quantity_Detail">
+          <Key>
+            <PropertyRef Name="TQD_Id" />
+          </Key>
+          <Property Name="TQD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TQD_PE_Id" Type="Int64" />
+          <Property Name="TQD_Event_Id" Type="Int64" />
+          <Property Name="TQD_Ticket_Id" Type="Int64" />
+          <Property Name="TQD_AddressId" Type="Int64" />
+          <Property Name="TQD_Quantity" Type="Int64" />
+          <Property Name="TQD_Remaining_Quantity" Type="Int64" />
+          <Property Name="TQD_StartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TQD_StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket_Quantity_Detail" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="TicketBearer">
+          <Key>
+            <PropertyRef Name="TicketbearerId" />
+          </Key>
+          <Property Name="TicketbearerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TicketDeliveryMethod">
+          <Key>
+            <PropertyRef Name="TicketDeliveryMethodID" />
+          </Key>
+          <Property Name="TicketDeliveryMethodID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryMethodID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="DeliveryMethod" Relationship="Self.FK__TicketDel__Deliv__1A69E950" FromRole="TicketDeliveryMethod" ToRole="DeliveryMethod" />
+        </EntityType>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="TicketTypeID" />
+          </Key>
+          <Property Name="TicketTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketType1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeZoneDetail">
+          <Key>
+            <PropertyRef Name="TimeZone_Id" />
+          </Key>
+          <Property Name="TimeZone_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeZone_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User_Permission_Detail">
           <Key>
@@ -825,6 +1522,26 @@
           <Property Name="UP_Permission_Id" Type="Int32" Nullable="false" />
           <Property Name="UP_Flag" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
         </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="VenueID" />
+          </Key>
+          <Property Name="VenueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressID" Type="Int64" Nullable="false" />
+          <Property Name="VenueName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Address_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -865,24 +1582,191 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__TicketDel__Deliv__1A69E950">
+          <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
+          <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryMethod">
+              <PropertyRef Name="DeliveryMethodID" />
+            </Principal>
+            <Dependent Role="TicketDeliveryMethod">
+              <PropertyRef Name="DeliveryMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_EventType">
+          <End Role="EventType" Type="Self.EventType" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="EventTypeID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EventTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Orgnizer_Detail_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Event_Orgnizer_Detail" Type="Self.Event_Orgnizer_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_Orgnizer_Detail">
+              <PropertyRef Name="Orgnizer_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_VariableDesc_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Event_VariableDesc" Type="Self.Event_VariableDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_VariableDesc">
+              <PropertyRef Name="Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventImage_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="EventImage" Type="Self.EventImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="EventImage">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventVenue_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="EventVenue" Type="Self.EventVenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="EventVenue">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MultipleEvent_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="MultipleEvent" Type="Self.MultipleEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="MultipleEvent">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="E_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EventSubC__Event__5F141958">
+          <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
+          <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventCategory">
+              <PropertyRef Name="EventCategoryID" />
+            </Principal>
+            <Dependent Role="EventSubCategory">
+              <PropertyRef Name="EventCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventVenue_EventVenue">
+          <End Role="EventVenue" Type="Self.EventVenue" Multiplicity="1" />
+          <End Role="EventVenue1" Type="Self.EventVenue" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EventVenue">
+              <PropertyRef Name="EventVenueID" />
+            </Principal>
+            <Dependent Role="EventVenue1">
+              <PropertyRef Name="EventVenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Quantity_Info_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="Ticket_Quantity_Detail" Type="Self.Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="T_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_Ticket_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
         <EntityContainer Name="EmsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="BillingAddresses" EntityType="Self.BillingAddress" />
+          <EntitySet Name="CardDetails" EntityType="Self.CardDetail" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="DeliveryMethods" EntityType="Self.DeliveryMethod" />
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Event_Detail" EntityType="Self.Event_Detail" />
+          <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" />
+          <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" />
+          <EntitySet Name="Event_VariableDesc" EntityType="Self.Event_VariableDesc" />
+          <EntitySet Name="EventCategories" EntityType="Self.EventCategory" />
+          <EntitySet Name="EventFavourites" EntityType="Self.EventFavourite" />
+          <EntitySet Name="EventImages" EntityType="Self.EventImage" />
+          <EntitySet Name="EventSubCategories" EntityType="Self.EventSubCategory" />
+          <EntitySet Name="EventTempImages" EntityType="Self.EventTempImage" />
+          <EntitySet Name="EventTypes" EntityType="Self.EventType" />
+          <EntitySet Name="EventVenues" EntityType="Self.EventVenue" />
+          <EntitySet Name="EventVotes" EntityType="Self.EventVote" />
+          <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="MultipleEvents" EntityType="Self.MultipleEvent" />
+          <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
+          <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" />
+          <EntitySet Name="ShippingAddresses" EntityType="Self.ShippingAddress" />
           <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+          <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" />
+          <EntitySet Name="Ticket_Purchased_Detail" EntityType="Self.Ticket_Purchased_Detail" />
+          <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" />
+          <EntitySet Name="TicketBearers" EntityType="Self.TicketBearer" />
+          <EntitySet Name="TicketDeliveryMethods" EntityType="Self.TicketDeliveryMethod" />
+          <EntitySet Name="TicketTypes" EntityType="Self.TicketType" />
+          <EntitySet Name="TimeZoneDetails" EntityType="Self.TimeZoneDetail" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" />
+          <EntitySet Name="Venues" EntityType="Self.Venue" />
+          <AssociationSet Name="FK_Address_Event" Association="Self.FK_Address_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -895,439 +1779,113 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
+          <AssociationSet Name="FK__TicketDel__Deliv__1A69E950" Association="Self.FK__TicketDel__Deliv__1A69E950">
+            <End Role="DeliveryMethod" EntitySet="DeliveryMethods" />
+            <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventType" Association="Self.FK_Event_EventType">
+            <End Role="EventType" EntitySet="EventTypes" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Self.FK_Event_Orgnizer_Detail_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_VariableDesc_Event" Association="Self.FK_Event_VariableDesc_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Event_VariableDesc" EntitySet="Event_VariableDesc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventImage_Event" Association="Self.FK_EventImage_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventImage" EntitySet="EventImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventVenue_Event" Association="Self.FK_EventVenue_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventVenue" EntitySet="EventVenues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MultipleEvent_Event" Association="Self.FK_MultipleEvent_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="MultipleEvent" EntitySet="MultipleEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Event" Association="Self.FK_Ticket_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
+            <End Role="EventCategory" EntitySet="EventCategories" />
+            <End Role="EventSubCategory" EntitySet="EventSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventVenue_EventVenue" Association="Self.FK_EventVenue_EventVenue">
+            <End Role="EventVenue" EntitySet="EventVenues" />
+            <End Role="EventVenue1" EntitySet="EventVenues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="Self.FK_Ticket_Quantity_Info_Ticket">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <FunctionImport Name="GetSetUserRole" ReturnType="Collection(String)">
-            <Parameter Name="user_Id" Mode="In" Type="String" />
-            <Parameter Name="GETSET" Mode="In" Type="String" />
-            <Parameter Name="Role_Id" Mode="In" Type="String" />
+          <FunctionImport Name="func_Split" IsComposable="true" ReturnType="Collection(Cmsdata.func_Split_Result)">
+            <Parameter Name="DelimitedString" Mode="In" Type="String" />
+            <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Addresses" EntityType="Cmsdata.Address" />
-          <EntitySet Name="DeliveryMethods" EntityType="Cmsdata.DeliveryMethod" />
-          <EntitySet Name="Events" EntityType="Cmsdata.Event" />
-          <EntitySet Name="Event_Orgnizer_Detail" EntityType="Cmsdata.Event_Orgnizer_Detail" />
-          <EntitySet Name="EventCategories" EntityType="Cmsdata.EventCategory" />
-          <EntitySet Name="EventImages" EntityType="Cmsdata.EventImage" />
-          <EntitySet Name="EventOrganizers" EntityType="Cmsdata.EventOrganizer" />
-          <EntitySet Name="EventSubCategories" EntityType="Cmsdata.EventSubCategory" />
-          <EntitySet Name="EventTempImages" EntityType="Cmsdata.EventTempImage" />
-          <EntitySet Name="EventTypes" EntityType="Cmsdata.EventType" />
-          <EntitySet Name="EventVenues" EntityType="Cmsdata.EventVenue" />
-          <EntitySet Name="Fee_Structure" EntityType="Cmsdata.Fee_Structure" />
-          <EntitySet Name="MultipleEvents" EntityType="Cmsdata.MultipleEvent" />
-          <EntitySet Name="Tickets" EntityType="Cmsdata.Ticket" />
-          <EntitySet Name="TicketDeliveryMethods" EntityType="Cmsdata.TicketDeliveryMethod" />
-          <EntitySet Name="TicketTypes" EntityType="Cmsdata.TicketType" />
-          <EntitySet Name="Venues" EntityType="Cmsdata.Venue" />
-          <AssociationSet Name="FK__TicketDel__Deliv__1A69E950" Association="Cmsdata.FK__TicketDel__Deliv__1A69E950">
-            <End Role="DeliveryMethod" EntitySet="DeliveryMethods" />
-            <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethods" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Event_EventType" Association="Cmsdata.FK_Event_EventType">
-            <End Role="EventType" EntitySet="EventTypes" />
-            <End Role="Event" EntitySet="Events" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Cmsdata.FK_Event_Orgnizer_Detail_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EventVenue_Event" Association="Cmsdata.FK_EventVenue_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="EventVenue" EntitySet="EventVenues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Event" Association="Cmsdata.FK_Ticket_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Cmsdata.FK__EventSubC__Event__5F141958">
-            <End Role="EventCategory" EntitySet="EventCategories" />
-            <End Role="EventSubCategory" EntitySet="EventSubCategories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EventVenue_EventVenue" Association="Cmsdata.FK_EventVenue_EventVenue">
-            <End Role="EventVenue" EntitySet="EventVenues" />
-            <End Role="EventVenue1" EntitySet="EventVenues" />
-          </AssociationSet>
-          <EntitySet Name="Event_Detail" EntityType="Cmsdata.Event_Detail" />
-          <FunctionImport Name="GetEventListing" ReturnType="Collection(Cmsdata.EventCreation)" >
+          <FunctionImport Name="GetEventDateList" ReturnType="Collection(Cmsdata.GetEventDateList_Result)">
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="GetEventListing" ReturnType="Collection(Cmsdata.EventCreation)">
             <Parameter Name="EventTitle" Mode="In" Type="String" />
             <Parameter Name="EventType" Mode="In" Type="String" />
             <Parameter Name="EventCat" Mode="In" Type="String" />
             <Parameter Name="EventSubCat" Mode="In" Type="String" />
             <Parameter Name="EventFeature" Mode="In" Type="String" />
           </FunctionImport>
-          <AssociationSet Name="FK_Address_Event" Association="Cmsdata.FK_Address_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
+          <FunctionImport Name="GetSelectedTicketListing" ReturnType="Collection(String)">
+            <Parameter Name="GUID" Mode="In" Type="String" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="GetSetUserRole" ReturnType="Collection(String)">
+            <Parameter Name="user_Id" Mode="In" Type="String" />
+            <Parameter Name="GETSET" Mode="In" Type="String" />
+            <Parameter Name="Role_Id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="PublishEvent">
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="UserId" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="AddressID" />
-          </Key>
-          <Property Name="AddressID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Address1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Address2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Zip" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="CountryID" Type="Byte" Nullable="false" />
-          <Property Name="VenueName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EventId" Type="Int64" />
-          <Property Name="ConsolidateAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Event" Relationship="Cmsdata.FK_Address_Event" FromRole="Address" ToRole="Event" />
-        </EntityType>
-        <EntityType Name="DeliveryMethod">
-          <Key>
-            <PropertyRef Name="DeliveryMethodID" />
-          </Key>
-          <Property Name="DeliveryMethodID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DeliveryMethod1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TicketDeliveryMethods" Relationship="Cmsdata.FK__TicketDel__Deliv__1A69E950" FromRole="DeliveryMethod" ToRole="TicketDeliveryMethod" />
-        </EntityType>
-        <EntityType Name="Event">
-          <Key>
-            <PropertyRef Name="EventID" />
-          </Key>
-          <Property Name="EventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventTypeID" Type="Int64" Nullable="false" />
-          <Property Name="EventCategoryID" Type="Int64" Nullable="false" />
-          <Property Name="EventSubCategoryID" Type="Int64" Nullable="false" />
-          <Property Name="UserID" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EventTitle" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
-          <Property Name="DisplayStartTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="DisplayEndTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="DisplayTimeZone" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="EventDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EventPrivacy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Private_ShareOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Private_GuestOnly" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Private_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventUrl" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="PublishOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="EventStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="AddedOn" Type="DateTime" Precision="3" />
-          <Property Name="UpdateOn" Type="DateTime" Precision="3" />
-          <Property Name="IsMultipleEvent" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="TimeZone" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="FBUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="TwitterUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AddressStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LastLocationAddress" Type="Int64" />
-          <Property Name="EnableFBDiscussion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EventType" Relationship="Cmsdata.FK_Event_EventType" FromRole="Event" ToRole="EventType" />
-          <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Cmsdata.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
-          <NavigationProperty Name="EventVenues" Relationship="Cmsdata.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
-          <NavigationProperty Name="Tickets" Relationship="Cmsdata.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
-          <Property Name="Feature" Type="Int32" />
-          <NavigationProperty Name="Addresses" Relationship="Cmsdata.FK_Address_Event" FromRole="Event" ToRole="Address" />
-        </EntityType>
-        <EntityType Name="Event_Orgnizer_Detail">
-          <Key>
-            <PropertyRef Name="Orgnizer_Id" />
-          </Key>
-          <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" />
-          <Property Name="Orgnizer_Event_Id" Type="Int64" />
-          <Property Name="Orgnizer_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Orgnizer_Desc" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FBLink" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Twitter" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Event" Relationship="Cmsdata.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
-        </EntityType>
-        <EntityType Name="EventCategory">
-          <Key>
-            <PropertyRef Name="EventCategoryID" />
-          </Key>
-          <Property Name="EventCategoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventCategory1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EventSubCategories" Relationship="Cmsdata.FK__EventSubC__Event__5F141958" FromRole="EventCategory" ToRole="EventSubCategory" />
-        </EntityType>
-        <EntityType Name="EventImage">
-          <Key>
-            <PropertyRef Name="EventImageID" />
-          </Key>
-          <Property Name="EventImageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventID" Type="Int64" Nullable="false" />
-          <Property Name="EventImageUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="EventOrganizer">
-          <Key>
-            <PropertyRef Name="EventOrganizerID" />
-          </Key>
-          <Property Name="EventOrganizerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventID" Type="Int64" Nullable="false" />
-          <Property Name="UserID" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="OrganizerDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FBLink" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="TwitterLink" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="EventSubCategory">
-          <Key>
-            <PropertyRef Name="EventSubCategoryID" />
-          </Key>
-          <Property Name="EventSubCategoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventCategoryID" Type="Int64" Nullable="false" />
-          <Property Name="EventSubCategory1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EventCategory" Relationship="Cmsdata.FK__EventSubC__Event__5F141958" FromRole="EventSubCategory" ToRole="EventCategory" />
-        </EntityType>
-        <EntityType Name="EventTempImage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="EvenUniqueid" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="EventImageUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="EventType">
-          <Key>
-            <PropertyRef Name="EventTypeID" />
-          </Key>
-          <Property Name="EventTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventType1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Events" Relationship="Cmsdata.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
-        </EntityType>
-        <EntityType Name="EventVenue">
-          <Key>
-            <PropertyRef Name="EventVenueID" />
-          </Key>
-          <Property Name="EventVenueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventID" Type="Int64" Nullable="false" />
-          <Property Name="AddressId" Type="Int64" Nullable="false" />
-          <Property Name="EventStartDate" Type="DateTime" Precision="0" />
-          <Property Name="EventEndDate" Type="DateTime" Precision="0" />
-          <Property Name="EventStartTime" Type="Time" Precision="7" />
-          <Property Name="EventEndTime" Type="Time" Precision="7" />
-          <NavigationProperty Name="Event" Relationship="Cmsdata.FK_EventVenue_Event" FromRole="EventVenue" ToRole="Event" />
-          <NavigationProperty Name="EventVenue1" Relationship="Cmsdata.FK_EventVenue_EventVenue" FromRole="EventVenue" ToRole="EventVenue1" />
-          <NavigationProperty Name="EventVenue2" Relationship="Cmsdata.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
-        </EntityType>
-        <EntityType Name="Fee_Structure">
-          <Key>
-            <PropertyRef Name="FeeId" />
-          </Key>
-          <Property Name="FeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FeeAmount" Type="Decimal" Precision="18" Scale="0" />
-        </EntityType>
-        <EntityType Name="MultipleEvent">
-          <Key>
-            <PropertyRef Name="MultipleEventID" />
-          </Key>
-          <Property Name="MultipleEventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventID" Type="Int64" Nullable="false" />
-          <Property Name="Frequency" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="StartingFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="StartingTo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="WeeklyDay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="MonthlyDay" Type="Int32" />
-          <Property Name="StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Ticket">
-          <Key>
-            <PropertyRef Name="T_Id" />
-          </Key>
-          <Property Name="T_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="E_Id" Type="Int64" />
-          <Property Name="T_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Qty_Available" Type="Int64" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="TicketTypeID" Type="Int64" />
-          <Property Name="T_Sold" Type="Boolean" />
-          <Property Name="Registration_Recorded" Type="Boolean" />
-          <Property Name="T_Desc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Show_T_Desc" Type="Boolean" />
-          <Property Name="Fees_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Sale_Start_Date" Type="DateTime" Precision="0" />
-          <Property Name="Sale_Start_Time" Type="Time" Precision="7" />
-          <Property Name="Sale_End_Date" Type="DateTime" Precision="0" />
-          <Property Name="Sale_End_Time" Type="Time" Precision="7" />
-          <Property Name="Hide_Ticket" Type="Boolean" />
-          <Property Name="Auto_Hide_Sche" Type="Boolean" />
-          <Property Name="Hide_Untill" Type="Boolean" />
-          <Property Name="Hide_Untill_Date" Type="DateTime" Precision="0" />
-          <Property Name="Hide_Untill_Time" Type="Time" Precision="7" />
-          <Property Name="Hide_After" Type="Boolean" />
-          <Property Name="Hide_After_Date" Type="DateTime" Precision="0" />
-          <Property Name="Hide_After_Time" Type="Time" Precision="7" />
-          <Property Name="Min_T_Qty" Type="Decimal" Precision="6" Scale="0" />
-          <Property Name="Max_T_Qty" Type="Decimal" Precision="6" Scale="0" />
-          <Property Name="T_Disable" Type="Boolean" />
-          <Property Name="T_Mark_SoldOut" Type="Boolean" />
-          <Property Name="T_Sold_Qty" Type="Int64" />
-          <Property Name="T_order" Type="Byte" />
-          <Property Name="T_Sale_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="T_Saleby_End" Type="Int64" />
-          <Property Name="T_No_Show" Type="Boolean" />
-          <Property Name="EC_Fee" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="Customer_Fee" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="T_DeliveryAdd" Type="Boolean" />
-          <Property Name="T_WillCall" Type="Boolean" />
-          <Property Name="T_Seated" Type="Boolean" />
-          <Property Name="T_AutoSechduleType" Type="Int32" />
-          <Property Name="Additional_Fee" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="T_Discount" Type="Decimal" Precision="6" Scale="2" />
-          <NavigationProperty Name="Event" Relationship="Cmsdata.FK_Ticket_Event" FromRole="Ticket" ToRole="Event" />
-        </EntityType>
-        <EntityType Name="TicketDeliveryMethod">
-          <Key>
-            <PropertyRef Name="TicketDeliveryMethodID" />
-          </Key>
-          <Property Name="TicketDeliveryMethodID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DeliveryMethodID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="DeliveryMethod" Relationship="Cmsdata.FK__TicketDel__Deliv__1A69E950" FromRole="TicketDeliveryMethod" ToRole="DeliveryMethod" />
-        </EntityType>
-        <EntityType Name="TicketType">
-          <Key>
-            <PropertyRef Name="TicketTypeID" />
-          </Key>
-          <Property Name="TicketTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TicketType1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Venue">
-          <Key>
-            <PropertyRef Name="VenueID" />
-          </Key>
-          <Property Name="VenueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AddressID" Type="Int64" Nullable="false" />
-          <Property Name="VenueName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK__TicketDel__Deliv__1A69E950">
-          <End Type="Cmsdata.DeliveryMethod" Role="DeliveryMethod" Multiplicity="1" />
-          <End Type="Cmsdata.TicketDeliveryMethod" Role="TicketDeliveryMethod" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DeliveryMethod">
-              <PropertyRef Name="DeliveryMethodID" />
-            </Principal>
-            <Dependent Role="TicketDeliveryMethod">
-              <PropertyRef Name="DeliveryMethodID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Event_EventType">
-          <End Type="Cmsdata.EventType" Role="EventType" Multiplicity="1" />
-          <End Type="Cmsdata.Event" Role="Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EventType">
-              <PropertyRef Name="EventTypeID" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="EventTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Event_Orgnizer_Detail_Event">
-          <End Type="Cmsdata.Event" Role="Event" Multiplicity="0..1" />
-          <End Type="Cmsdata.Event_Orgnizer_Detail" Role="Event_Orgnizer_Detail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="Event_Orgnizer_Detail">
-              <PropertyRef Name="Orgnizer_Event_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EventVenue_Event">
-          <End Type="Cmsdata.Event" Role="Event" Multiplicity="1" />
-          <End Type="Cmsdata.EventVenue" Role="EventVenue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="EventVenue">
-              <PropertyRef Name="EventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ticket_Event">
-          <End Type="Cmsdata.Event" Role="Event" Multiplicity="0..1" />
-          <End Type="Cmsdata.Ticket" Role="Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="E_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__EventSubC__Event__5F141958">
-          <End Type="Cmsdata.EventCategory" Role="EventCategory" Multiplicity="1" />
-          <End Type="Cmsdata.EventSubCategory" Role="EventSubCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EventCategory">
-              <PropertyRef Name="EventCategoryID" />
-            </Principal>
-            <Dependent Role="EventSubCategory">
-              <PropertyRef Name="EventCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EventVenue_EventVenue">
-          <End Type="Cmsdata.EventVenue" Role="EventVenue" Multiplicity="1" />
-          <End Type="Cmsdata.EventVenue" Role="EventVenue1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EventVenue">
-              <PropertyRef Name="EventVenueID" />
-            </Principal>
-            <Dependent Role="EventVenue1">
-              <PropertyRef Name="EventVenueID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Event_Detail">
-          <Key>
-            <PropertyRef Name="E_Id" />
-          </Key>
-          <Property Name="E_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="E_Title" Type="String" MaxLength="520" FixedLength="false" Unicode="true" />
-          <Property Name="E_StartDate" Type="DateTime" Precision="0" />
-          <Property Name="E_StartTime" Type="Time" Precision="7" />
-          <Property Name="E_EndDate" Type="DateTime" Precision="0" />
-          <Property Name="E_EndTime" Type="Time" Precision="7" />
-          <Property Name="E_DisplayStartTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_DisplayEndTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_DisplayTimeZone" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_EventPrivacy" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="E_ShareOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_GuestOnly" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
-        <ComplexType Name="GetEventListing_Result">
-          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
+        <ComplexType Name="GetEventDateList_Result">
+          <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Datefrom" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Time" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="type" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="EventCreation">
+        <ComplexType Name="GetEventListing_Result">
+          <Property Type="Int64" Name="EventID" Nullable="false" />
           <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
           <Property Type="String" Name="EventType" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventCategory" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="135" />
-          <Property Type="Int64" Name="EventID" Nullable="false" />
           <Property Type="Int32" Name="Feature" Nullable="false" />
           <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventAddress" Nullable="true" MaxLength="1320" />
+          <Property Type="String" Name="EventAddress" Nullable="true" />
         </ComplexType>
-        <Association Name="FK_Address_Event">
-          <End Type="Cmsdata.Event" Role="Event" Multiplicity="0..1" />
-          <End Type="Cmsdata.Address" Role="Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="EventId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <ComplexType Name="EventCreation">
+          <Property Type="Int64" Name="EventID" Nullable="false" />
+          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
+          <Property Type="String" Name="EventType" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventCategory" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="135" />
+          <Property Type="Int32" Name="Feature" Nullable="false" />
+          <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventAddress" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1341,6 +1899,24 @@
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="Cmsdata.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="ConsolidateAddress" ColumnName="ConsolidateAddress" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1386,6 +1962,39 @@
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoginStatus" ColumnName="LoginStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BillingAddresses">
+            <EntityTypeMapping TypeName="Cmsdata.BillingAddress">
+              <MappingFragment StoreEntitySet="BillingAddress">
+                <ScalarProperty Name="BillingId" ColumnName="BillingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CardDetails">
+            <EntityTypeMapping TypeName="Cmsdata.CardDetail">
+              <MappingFragment StoreEntitySet="CardDetails">
+                <ScalarProperty Name="CardId" ColumnName="CardId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="Cvv" ColumnName="Cvv" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1394,6 +2003,14 @@
               <MappingFragment StoreEntitySet="Country">
                 <ScalarProperty Name="CountryID" ColumnName="CountryID" />
                 <ScalarProperty Name="Country1" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryMethods">
+            <EntityTypeMapping TypeName="Cmsdata.DeliveryMethod">
+              <MappingFragment StoreEntitySet="DeliveryMethod">
+                <ScalarProperty Name="DeliveryMethodID" ColumnName="DeliveryMethodID" />
+                <ScalarProperty Name="DeliveryMethod1" ColumnName="DeliveryMethod" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1419,6 +2036,188 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="Cmsdata.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
+                <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
+                <ScalarProperty Name="EventSubCategoryID" ColumnName="EventSubCategoryID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="DisplayStartTime" ColumnName="DisplayStartTime" />
+                <ScalarProperty Name="DisplayEndTime" ColumnName="DisplayEndTime" />
+                <ScalarProperty Name="DisplayTimeZone" ColumnName="DisplayTimeZone" />
+                <ScalarProperty Name="EventDescription" ColumnName="EventDescription" />
+                <ScalarProperty Name="EventPrivacy" ColumnName="EventPrivacy" />
+                <ScalarProperty Name="Private_ShareOnFB" ColumnName="Private_ShareOnFB" />
+                <ScalarProperty Name="Private_GuestOnly" ColumnName="Private_GuestOnly" />
+                <ScalarProperty Name="Private_Password" ColumnName="Private_Password" />
+                <ScalarProperty Name="EventUrl" ColumnName="EventUrl" />
+                <ScalarProperty Name="PublishOnFB" ColumnName="PublishOnFB" />
+                <ScalarProperty Name="EventStatus" ColumnName="EventStatus" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
+                <ScalarProperty Name="IsMultipleEvent" ColumnName="IsMultipleEvent" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="FBUrl" ColumnName="FBUrl" />
+                <ScalarProperty Name="TwitterUrl" ColumnName="TwitterUrl" />
+                <ScalarProperty Name="AddressStatus" ColumnName="AddressStatus" />
+                <ScalarProperty Name="LastLocationAddress" ColumnName="LastLocationAddress" />
+                <ScalarProperty Name="EnableFBDiscussion" ColumnName="EnableFBDiscussion" />
+                <ScalarProperty Name="Feature" ColumnName="Feature" />
+                <ScalarProperty Name="Ticket_DAdress" ColumnName="Ticket_DAdress" />
+                <ScalarProperty Name="Ticket_showremain" ColumnName="Ticket_showremain" />
+                <ScalarProperty Name="Ticket_showvariable" ColumnName="Ticket_showvariable" />
+                <ScalarProperty Name="Ticket_variabledesc" ColumnName="Ticket_variabledesc" />
+                <ScalarProperty Name="Ticket_variabletype" ColumnName="Ticket_variabletype" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event_Detail">
+            <EntityTypeMapping TypeName="Cmsdata.Event_Detail">
+              <MappingFragment StoreEntitySet="Event_Detail">
+                <ScalarProperty Name="E_Id" ColumnName="E_Id" />
+                <ScalarProperty Name="E_Title" ColumnName="E_Title" />
+                <ScalarProperty Name="E_StartDate" ColumnName="E_StartDate" />
+                <ScalarProperty Name="E_StartTime" ColumnName="E_StartTime" />
+                <ScalarProperty Name="E_EndDate" ColumnName="E_EndDate" />
+                <ScalarProperty Name="E_EndTime" ColumnName="E_EndTime" />
+                <ScalarProperty Name="E_DisplayStartTime" ColumnName="E_DisplayStartTime" />
+                <ScalarProperty Name="E_DisplayEndTime" ColumnName="E_DisplayEndTime" />
+                <ScalarProperty Name="E_DisplayTimeZone" ColumnName="E_DisplayTimeZone" />
+                <ScalarProperty Name="E_EventPrivacy" ColumnName="E_EventPrivacy" />
+                <ScalarProperty Name="E_ShareOnFB" ColumnName="E_ShareOnFB" />
+                <ScalarProperty Name="E_GuestOnly" ColumnName="E_GuestOnly" />
+                <ScalarProperty Name="E_Password" ColumnName="E_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event_OrganizerMessages">
+            <EntityTypeMapping TypeName="Cmsdata.Event_OrganizerMessages">
+              <MappingFragment StoreEntitySet="Event_OrganizerMessages">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="OrganizerId" ColumnName="OrganizerId" />
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event_Orgnizer_Detail">
+            <EntityTypeMapping TypeName="Cmsdata.Event_Orgnizer_Detail">
+              <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
+                <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
+                <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
+                <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
+                <ScalarProperty Name="Orgnizer_Desc" ColumnName="Orgnizer_Desc" />
+                <ScalarProperty Name="FBLink" ColumnName="FBLink" />
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DefaultOrg" ColumnName="DefaultOrg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event_VariableDesc">
+            <EntityTypeMapping TypeName="Cmsdata.Event_VariableDesc">
+              <MappingFragment StoreEntitySet="Event_VariableDesc">
+                <ScalarProperty Name="VariableDesc" ColumnName="VariableDesc" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Event_Id" ColumnName="Event_Id" />
+                <ScalarProperty Name="Variable_Id" ColumnName="Variable_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventCategories">
+            <EntityTypeMapping TypeName="Cmsdata.EventCategory">
+              <MappingFragment StoreEntitySet="EventCategory">
+                <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
+                <ScalarProperty Name="EventCategory1" ColumnName="EventCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventFavourites">
+            <EntityTypeMapping TypeName="Cmsdata.EventFavourite">
+              <MappingFragment StoreEntitySet="EventFavourite">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="eventId" ColumnName="eventId" />
+                <ScalarProperty Name="FavId" ColumnName="FavId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventImages">
+            <EntityTypeMapping TypeName="Cmsdata.EventImage">
+              <MappingFragment StoreEntitySet="EventImage">
+                <ScalarProperty Name="EventImageID" ColumnName="EventImageID" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventImageUrl" ColumnName="EventImageUrl" />
+                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventSubCategories">
+            <EntityTypeMapping TypeName="Cmsdata.EventSubCategory">
+              <MappingFragment StoreEntitySet="EventSubCategory">
+                <ScalarProperty Name="EventSubCategoryID" ColumnName="EventSubCategoryID" />
+                <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
+                <ScalarProperty Name="EventSubCategory1" ColumnName="EventSubCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTempImages">
+            <EntityTypeMapping TypeName="Cmsdata.EventTempImage">
+              <MappingFragment StoreEntitySet="EventTempImage">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="EvenUniqueid" ColumnName="EvenUniqueid" />
+                <ScalarProperty Name="EventImageUrl" ColumnName="EventImageUrl" />
+                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="Cmsdata.EventType">
+              <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
+                <ScalarProperty Name="EventType1" ColumnName="EventType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventVenues">
+            <EntityTypeMapping TypeName="Cmsdata.EventVenue">
+              <MappingFragment StoreEntitySet="EventVenue">
+                <ScalarProperty Name="EventVenueID" ColumnName="EventVenueID" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
+                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
+                <ScalarProperty Name="EventStartTime" ColumnName="EventStartTime" />
+                <ScalarProperty Name="EventEndTime" ColumnName="EventEndTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventVotes">
+            <EntityTypeMapping TypeName="Cmsdata.EventVote">
+              <MappingFragment StoreEntitySet="EventVote">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="eventId" ColumnName="eventId" />
+                <ScalarProperty Name="VoteId" ColumnName="VoteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fee_Structure">
+            <EntityTypeMapping TypeName="Cmsdata.Fee_Structure">
+              <MappingFragment StoreEntitySet="Fee_Structure">
+                <ScalarProperty Name="FeeId" ColumnName="FeeId" />
+                <ScalarProperty Name="FeeType" ColumnName="FeeType" />
+                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="Cmsdata.Message">
               <MappingFragment StoreEntitySet="Messages">
@@ -1426,6 +2225,37 @@
                 <ScalarProperty Name="Form_Name" ColumnName="Form_Name" />
                 <ScalarProperty Name="Form_Tag" ColumnName="Form_Tag" />
                 <ScalarProperty Name="Message1" ColumnName="Message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MultipleEvents">
+            <EntityTypeMapping TypeName="Cmsdata.MultipleEvent">
+              <MappingFragment StoreEntitySet="MultipleEvent">
+                <ScalarProperty Name="MultipleEventID" ColumnName="MultipleEventID" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
+                <ScalarProperty Name="StartingTo" ColumnName="StartingTo" />
+                <ScalarProperty Name="WeeklyDay" ColumnName="WeeklyDay" />
+                <ScalarProperty Name="MonthlyDay" ColumnName="MonthlyDay" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="MonthlyWeek" ColumnName="MonthlyWeek" />
+                <ScalarProperty Name="MonthlyWeekDays" ColumnName="MonthlyWeekDays" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Detail_T">
+            <EntityTypeMapping TypeName="Cmsdata.Order_Detail_T">
+              <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
+                <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
+                <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
+                <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
+                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
+                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
+                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
+                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1441,9 +2271,6 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="Cmsdata.Profile">
               <MappingFragment StoreEntitySet="Profile">
-                <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
-                <ScalarProperty Name="Merchant" ColumnName="Merchant" />
-                <ScalarProperty Name="Organiser" ColumnName="Organiser" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -1472,6 +2299,44 @@
                 <ScalarProperty Name="ContentType" ColumnName="ContentType" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+                <ScalarProperty Name="Organiser" ColumnName="Organiser" />
+                <ScalarProperty Name="Merchant" ColumnName="Merchant" />
+                <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
+                <ScalarProperty Name="SendCur_EventDetail" ColumnName="SendCur_EventDetail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publish_Event_Detail">
+            <EntityTypeMapping TypeName="Cmsdata.Publish_Event_Detail">
+              <MappingFragment StoreEntitySet="Publish_Event_Detail">
+                <ScalarProperty Name="PE_Id" ColumnName="PE_Id" />
+                <ScalarProperty Name="PE_Event_Id" ColumnName="PE_Event_Id" />
+                <ScalarProperty Name="PE_Address_Ids" ColumnName="PE_Address_Ids" />
+                <ScalarProperty Name="PE_MultipleVenue_id" ColumnName="PE_MultipleVenue_id" />
+                <ScalarProperty Name="PE_SingleVenue_Id" ColumnName="PE_SingleVenue_Id" />
+                <ScalarProperty Name="PE_Tickets_Ids" ColumnName="PE_Tickets_Ids" />
+                <ScalarProperty Name="PE_Scheduled_Date" ColumnName="PE_Scheduled_Date" />
+                <ScalarProperty Name="PE_Start_Time" ColumnName="PE_Start_Time" />
+                <ScalarProperty Name="PE_End_Time" ColumnName="PE_End_Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingAddresses">
+            <EntityTypeMapping TypeName="Cmsdata.ShippingAddress">
+              <MappingFragment StoreEntitySet="ShippingAddress">
+                <ScalarProperty Name="ShippingId" ColumnName="ShippingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1480,6 +2345,126 @@
               <MappingFragment StoreEntitySet="Status">
                 <ScalarProperty Name="StatusID" ColumnName="StatusID" />
                 <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="Cmsdata.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="T_Id" ColumnName="T_Id" />
+                <ScalarProperty Name="E_Id" ColumnName="E_Id" />
+                <ScalarProperty Name="T_name" ColumnName="T_name" />
+                <ScalarProperty Name="Qty_Available" ColumnName="Qty_Available" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
+                <ScalarProperty Name="T_Sold" ColumnName="T_Sold" />
+                <ScalarProperty Name="Registration_Recorded" ColumnName="Registration_Recorded" />
+                <ScalarProperty Name="T_Desc" ColumnName="T_Desc" />
+                <ScalarProperty Name="Show_T_Desc" ColumnName="Show_T_Desc" />
+                <ScalarProperty Name="Fees_Type" ColumnName="Fees_Type" />
+                <ScalarProperty Name="Sale_Start_Date" ColumnName="Sale_Start_Date" />
+                <ScalarProperty Name="Sale_Start_Time" ColumnName="Sale_Start_Time" />
+                <ScalarProperty Name="Sale_End_Date" ColumnName="Sale_End_Date" />
+                <ScalarProperty Name="Sale_End_Time" ColumnName="Sale_End_Time" />
+                <ScalarProperty Name="Hide_Ticket" ColumnName="Hide_Ticket" />
+                <ScalarProperty Name="Auto_Hide_Sche" ColumnName="Auto_Hide_Sche" />
+                <ScalarProperty Name="Hide_Untill_Date" ColumnName="Hide_Untill_Date" />
+                <ScalarProperty Name="Hide_Untill_Time" ColumnName="Hide_Untill_Time" />
+                <ScalarProperty Name="Hide_After_Date" ColumnName="Hide_After_Date" />
+                <ScalarProperty Name="Hide_After_Time" ColumnName="Hide_After_Time" />
+                <ScalarProperty Name="Min_T_Qty" ColumnName="Min_T_Qty" />
+                <ScalarProperty Name="Max_T_Qty" ColumnName="Max_T_Qty" />
+                <ScalarProperty Name="T_Disable" ColumnName="T_Disable" />
+                <ScalarProperty Name="T_Mark_SoldOut" ColumnName="T_Mark_SoldOut" />
+                <ScalarProperty Name="T_Sold_Qty" ColumnName="T_Sold_Qty" />
+                <ScalarProperty Name="T_order" ColumnName="T_order" />
+                <ScalarProperty Name="EC_Fee" ColumnName="EC_Fee" />
+                <ScalarProperty Name="Customer_Fee" ColumnName="Customer_Fee" />
+                <ScalarProperty Name="T_Displayremaining" ColumnName="T_Displayremaining" />
+                <ScalarProperty Name="T_AutoSechduleType" ColumnName="T_AutoSechduleType" />
+                <ScalarProperty Name="Additional_Fee" ColumnName="Additional_Fee" />
+                <ScalarProperty Name="T_Discount" ColumnName="T_Discount" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Locked_Detail">
+            <EntityTypeMapping TypeName="Cmsdata.Ticket_Locked_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
+                <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
+                <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
+                <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />
+                <ScalarProperty Name="TLD_Event_Id" ColumnName="TLD_Event_Id" />
+                <ScalarProperty Name="TLD_TQD_Id" ColumnName="TLD_TQD_Id" />
+                <ScalarProperty Name="Locktime" ColumnName="Locktime" />
+                <ScalarProperty Name="TLD_GUID" ColumnName="TLD_GUID" />
+                <ScalarProperty Name="TLD_Donate" ColumnName="TLD_Donate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Purchased_Detail">
+            <EntityTypeMapping TypeName="Cmsdata.Ticket_Purchased_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
+                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
+                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
+                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
+                <ScalarProperty Name="TPD_TQD_Id" ColumnName="TPD_TQD_Id" />
+                <ScalarProperty Name="TPD_Event_Id" ColumnName="TPD_Event_Id" />
+                <ScalarProperty Name="TPD_Amount" ColumnName="TPD_Amount" />
+                <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
+                <ScalarProperty Name="TPD_GUID" ColumnName="TPD_GUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Quantity_Detail">
+            <EntityTypeMapping TypeName="Cmsdata.Ticket_Quantity_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Quantity_Detail">
+                <ScalarProperty Name="TQD_Id" ColumnName="TQD_Id" />
+                <ScalarProperty Name="TQD_PE_Id" ColumnName="TQD_PE_Id" />
+                <ScalarProperty Name="TQD_Event_Id" ColumnName="TQD_Event_Id" />
+                <ScalarProperty Name="TQD_Ticket_Id" ColumnName="TQD_Ticket_Id" />
+                <ScalarProperty Name="TQD_AddressId" ColumnName="TQD_AddressId" />
+                <ScalarProperty Name="TQD_Quantity" ColumnName="TQD_Quantity" />
+                <ScalarProperty Name="TQD_Remaining_Quantity" ColumnName="TQD_Remaining_Quantity" />
+                <ScalarProperty Name="TQD_StartDate" ColumnName="TQD_StartDate" />
+                <ScalarProperty Name="TQD_StartTime" ColumnName="TQD_StartTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketBearers">
+            <EntityTypeMapping TypeName="Cmsdata.TicketBearer">
+              <MappingFragment StoreEntitySet="TicketBearer">
+                <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketDeliveryMethods">
+            <EntityTypeMapping TypeName="Cmsdata.TicketDeliveryMethod">
+              <MappingFragment StoreEntitySet="TicketDeliveryMethod">
+                <ScalarProperty Name="TicketDeliveryMethodID" ColumnName="TicketDeliveryMethodID" />
+                <ScalarProperty Name="DeliveryMethodID" ColumnName="DeliveryMethodID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketTypes">
+            <EntityTypeMapping TypeName="Cmsdata.TicketType">
+              <MappingFragment StoreEntitySet="TicketType">
+                <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
+                <ScalarProperty Name="TicketType1" ColumnName="TicketType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeZoneDetails">
+            <EntityTypeMapping TypeName="Cmsdata.TimeZoneDetail">
+              <MappingFragment StoreEntitySet="TimeZoneDetail">
+                <ScalarProperty Name="TimeZone_Id" ColumnName="TimeZone_Id" />
+                <ScalarProperty Name="TimeZone_Name" ColumnName="TimeZone_Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1493,6 +2478,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Venues">
+            <EntityTypeMapping TypeName="Cmsdata.Venue">
+              <MappingFragment StoreEntitySet="Venue">
+                <ScalarProperty Name="VenueID" ColumnName="VenueID" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="Cmsdata.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
@@ -1501,280 +2495,43 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="Cmsdata.Store.GetSetUserRole" />
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="Cmsdata.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="ConsolidateAddress" ColumnName="ConsolidateAddress" />
-                <ScalarProperty Name="EventId" ColumnName="EventId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
-                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DeliveryMethods">
-            <EntityTypeMapping TypeName="Cmsdata.DeliveryMethod">
-              <MappingFragment StoreEntitySet="DeliveryMethod">
-                <ScalarProperty Name="DeliveryMethod1" ColumnName="DeliveryMethod" />
-                <ScalarProperty Name="DeliveryMethodID" ColumnName="DeliveryMethodID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="Cmsdata.Event">
-              <MappingFragment StoreEntitySet="Event">
-                <ScalarProperty Name="Feature" ColumnName="Feature" />
-                <ScalarProperty Name="EnableFBDiscussion" ColumnName="EnableFBDiscussion" />
-                <ScalarProperty Name="LastLocationAddress" ColumnName="LastLocationAddress" />
-                <ScalarProperty Name="AddressStatus" ColumnName="AddressStatus" />
-                <ScalarProperty Name="TwitterUrl" ColumnName="TwitterUrl" />
-                <ScalarProperty Name="FBUrl" ColumnName="FBUrl" />
-                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
-                <ScalarProperty Name="IsMultipleEvent" ColumnName="IsMultipleEvent" />
-                <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
-                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
-                <ScalarProperty Name="EventStatus" ColumnName="EventStatus" />
-                <ScalarProperty Name="PublishOnFB" ColumnName="PublishOnFB" />
-                <ScalarProperty Name="EventUrl" ColumnName="EventUrl" />
-                <ScalarProperty Name="Private_Password" ColumnName="Private_Password" />
-                <ScalarProperty Name="Private_GuestOnly" ColumnName="Private_GuestOnly" />
-                <ScalarProperty Name="Private_ShareOnFB" ColumnName="Private_ShareOnFB" />
-                <ScalarProperty Name="EventPrivacy" ColumnName="EventPrivacy" />
-                <ScalarProperty Name="EventDescription" ColumnName="EventDescription" />
-                <ScalarProperty Name="DisplayTimeZone" ColumnName="DisplayTimeZone" />
-                <ScalarProperty Name="DisplayEndTime" ColumnName="DisplayEndTime" />
-                <ScalarProperty Name="DisplayStartTime" ColumnName="DisplayStartTime" />
-                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="EventSubCategoryID" ColumnName="EventSubCategoryID" />
-                <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
-                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Event_Orgnizer_Detail">
-            <EntityTypeMapping TypeName="Cmsdata.Event_Orgnizer_Detail">
-              <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
-                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
-                <ScalarProperty Name="FBLink" ColumnName="FBLink" />
-                <ScalarProperty Name="Orgnizer_Desc" ColumnName="Orgnizer_Desc" />
-                <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
-                <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
-                <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventCategories">
-            <EntityTypeMapping TypeName="Cmsdata.EventCategory">
-              <MappingFragment StoreEntitySet="EventCategory">
-                <ScalarProperty Name="EventCategory1" ColumnName="EventCategory" />
-                <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventImages">
-            <EntityTypeMapping TypeName="Cmsdata.EventImage">
-              <MappingFragment StoreEntitySet="EventImage">
-                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
-                <ScalarProperty Name="EventImageUrl" ColumnName="EventImageUrl" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="EventImageID" ColumnName="EventImageID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventOrganizers">
-            <EntityTypeMapping TypeName="Cmsdata.EventOrganizer">
-              <MappingFragment StoreEntitySet="EventOrganizer">
-                <ScalarProperty Name="TwitterLink" ColumnName="TwitterLink" />
-                <ScalarProperty Name="FBLink" ColumnName="FBLink" />
-                <ScalarProperty Name="OrganizerDescription" ColumnName="OrganizerDescription" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="EventOrganizerID" ColumnName="EventOrganizerID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventSubCategories">
-            <EntityTypeMapping TypeName="Cmsdata.EventSubCategory">
-              <MappingFragment StoreEntitySet="EventSubCategory">
-                <ScalarProperty Name="EventSubCategory1" ColumnName="EventSubCategory" />
-                <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
-                <ScalarProperty Name="EventSubCategoryID" ColumnName="EventSubCategoryID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventTempImages">
-            <EntityTypeMapping TypeName="Cmsdata.EventTempImage">
-              <MappingFragment StoreEntitySet="EventTempImage">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
-                <ScalarProperty Name="EventImageUrl" ColumnName="EventImageUrl" />
-                <ScalarProperty Name="EvenUniqueid" ColumnName="EvenUniqueid" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventTypes">
-            <EntityTypeMapping TypeName="Cmsdata.EventType">
-              <MappingFragment StoreEntitySet="EventType">
-                <ScalarProperty Name="EventType1" ColumnName="EventType" />
-                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventVenues">
-            <EntityTypeMapping TypeName="Cmsdata.EventVenue">
-              <MappingFragment StoreEntitySet="EventVenue">
-                <ScalarProperty Name="EventEndTime" ColumnName="EventEndTime" />
-                <ScalarProperty Name="EventStartTime" ColumnName="EventStartTime" />
-                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
-                <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="EventVenueID" ColumnName="EventVenueID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Fee_Structure">
-            <EntityTypeMapping TypeName="Cmsdata.Fee_Structure">
-              <MappingFragment StoreEntitySet="Fee_Structure">
-                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
-                <ScalarProperty Name="FeeType" ColumnName="FeeType" />
-                <ScalarProperty Name="FeeId" ColumnName="FeeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MultipleEvents">
-            <EntityTypeMapping TypeName="Cmsdata.MultipleEvent">
-              <MappingFragment StoreEntitySet="MultipleEvent">
-                <ScalarProperty Name="MonthlyWeekDays" ColumnName="MonthlyWeekDays" />
-                <ScalarProperty Name="MonthlyWeek" ColumnName="MonthlyWeek" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="MonthlyDay" ColumnName="MonthlyDay" />
-                <ScalarProperty Name="WeeklyDay" ColumnName="WeeklyDay" />
-                <ScalarProperty Name="StartingTo" ColumnName="StartingTo" />
-                <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="MultipleEventID" ColumnName="MultipleEventID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tickets">
-            <EntityTypeMapping TypeName="Cmsdata.Ticket">
-              <MappingFragment StoreEntitySet="Ticket">
-                <ScalarProperty Name="T_Discount" ColumnName="T_Discount" />
-                <ScalarProperty Name="Additional_Fee" ColumnName="Additional_Fee" />
-                <ScalarProperty Name="T_AutoSechduleType" ColumnName="T_AutoSechduleType" />
-                <ScalarProperty Name="T_Seated" ColumnName="T_Seated" />
-                <ScalarProperty Name="T_WillCall" ColumnName="T_WillCall" />
-                <ScalarProperty Name="T_DeliveryAdd" ColumnName="T_DeliveryAdd" />
-                <ScalarProperty Name="Customer_Fee" ColumnName="Customer_Fee" />
-                <ScalarProperty Name="EC_Fee" ColumnName="EC_Fee" />
-                <ScalarProperty Name="T_No_Show" ColumnName="T_No_Show" />
-                <ScalarProperty Name="T_Saleby_End" ColumnName="T_Saleby_End" />
-                <ScalarProperty Name="T_Sale_By" ColumnName="T_Sale_By" />
-                <ScalarProperty Name="T_order" ColumnName="T_order" />
-                <ScalarProperty Name="T_Sold_Qty" ColumnName="T_Sold_Qty" />
-                <ScalarProperty Name="T_Mark_SoldOut" ColumnName="T_Mark_SoldOut" />
-                <ScalarProperty Name="T_Disable" ColumnName="T_Disable" />
-                <ScalarProperty Name="Max_T_Qty" ColumnName="Max_T_Qty" />
-                <ScalarProperty Name="Min_T_Qty" ColumnName="Min_T_Qty" />
-                <ScalarProperty Name="Hide_After_Time" ColumnName="Hide_After_Time" />
-                <ScalarProperty Name="Hide_After_Date" ColumnName="Hide_After_Date" />
-                <ScalarProperty Name="Hide_After" ColumnName="Hide_After" />
-                <ScalarProperty Name="Hide_Untill_Time" ColumnName="Hide_Untill_Time" />
-                <ScalarProperty Name="Hide_Untill_Date" ColumnName="Hide_Untill_Date" />
-                <ScalarProperty Name="Hide_Untill" ColumnName="Hide_Untill" />
-                <ScalarProperty Name="Auto_Hide_Sche" ColumnName="Auto_Hide_Sche" />
-                <ScalarProperty Name="Hide_Ticket" ColumnName="Hide_Ticket" />
-                <ScalarProperty Name="Sale_End_Time" ColumnName="Sale_End_Time" />
-                <ScalarProperty Name="Sale_End_Date" ColumnName="Sale_End_Date" />
-                <ScalarProperty Name="Sale_Start_Time" ColumnName="Sale_Start_Time" />
-                <ScalarProperty Name="Sale_Start_Date" ColumnName="Sale_Start_Date" />
-                <ScalarProperty Name="Fees_Type" ColumnName="Fees_Type" />
-                <ScalarProperty Name="Show_T_Desc" ColumnName="Show_T_Desc" />
-                <ScalarProperty Name="T_Desc" ColumnName="T_Desc" />
-                <ScalarProperty Name="Registration_Recorded" ColumnName="Registration_Recorded" />
-                <ScalarProperty Name="T_Sold" ColumnName="T_Sold" />
-                <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Qty_Available" ColumnName="Qty_Available" />
-                <ScalarProperty Name="T_name" ColumnName="T_name" />
-                <ScalarProperty Name="E_Id" ColumnName="E_Id" />
-                <ScalarProperty Name="T_Id" ColumnName="T_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TicketDeliveryMethods">
-            <EntityTypeMapping TypeName="Cmsdata.TicketDeliveryMethod">
-              <MappingFragment StoreEntitySet="TicketDeliveryMethod">
-                <ScalarProperty Name="DeliveryMethodID" ColumnName="DeliveryMethodID" />
-                <ScalarProperty Name="TicketDeliveryMethodID" ColumnName="TicketDeliveryMethodID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TicketTypes">
-            <EntityTypeMapping TypeName="Cmsdata.TicketType">
-              <MappingFragment StoreEntitySet="TicketType">
-                <ScalarProperty Name="TicketType1" ColumnName="TicketType" />
-                <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Venues">
-            <EntityTypeMapping TypeName="Cmsdata.Venue">
-              <MappingFragment StoreEntitySet="Venue">
-                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-                <ScalarProperty Name="VenueID" ColumnName="VenueID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Event_Detail">
-            <EntityTypeMapping TypeName="Cmsdata.Event_Detail">
-              <MappingFragment StoreEntitySet="Event_Detail">
-                <ScalarProperty Name="E_Password" ColumnName="E_Password" />
-                <ScalarProperty Name="E_GuestOnly" ColumnName="E_GuestOnly" />
-                <ScalarProperty Name="E_ShareOnFB" ColumnName="E_ShareOnFB" />
-                <ScalarProperty Name="E_EventPrivacy" ColumnName="E_EventPrivacy" />
-                <ScalarProperty Name="E_DisplayTimeZone" ColumnName="E_DisplayTimeZone" />
-                <ScalarProperty Name="E_DisplayEndTime" ColumnName="E_DisplayEndTime" />
-                <ScalarProperty Name="E_DisplayStartTime" ColumnName="E_DisplayStartTime" />
-                <ScalarProperty Name="E_EndTime" ColumnName="E_EndTime" />
-                <ScalarProperty Name="E_EndDate" ColumnName="E_EndDate" />
-                <ScalarProperty Name="E_StartTime" ColumnName="E_StartTime" />
-                <ScalarProperty Name="E_StartDate" ColumnName="E_StartDate" />
-                <ScalarProperty Name="E_Title" ColumnName="E_Title" />
-                <ScalarProperty Name="E_Id" ColumnName="E_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetEventListing" FunctionName="Cmsdata.Store.GetEventListing" >
+          <FunctionImportMapping FunctionName="Cmsdata.Store.func_Split" FunctionImportName="func_Split">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Cmsdata.func_Split_Result">
+                <ScalarProperty Name="ElementID" ColumnName="ElementID" />
+                <ScalarProperty Name="Element" ColumnName="Element" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEventDateList" FunctionName="Cmsdata.Store.GetEventDateList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Cmsdata.GetEventDateList_Result">
+                <ScalarProperty Name="Dayofweek" ColumnName="Dayofweek" />
+                <ScalarProperty Name="Datefrom" ColumnName="Datefrom" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEventListing" FunctionName="Cmsdata.Store.GetEventListing">
           <ResultMapping>
               <ComplexTypeMapping TypeName="Cmsdata.EventCreation">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
                 <ScalarProperty Name="EventType" ColumnName="EventType" />
                 <ScalarProperty Name="EventCategory" ColumnName="EventCategory" />
                 <ScalarProperty Name="EventSubCategory" ColumnName="EventSubCategory" />
                 <ScalarProperty Name="EventTiming" ColumnName="EventTiming" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="Feature" ColumnName="Feature" />
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
                 <ScalarProperty Name="EventAddress" ColumnName="EventAddress" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSelectedTicketListing" FunctionName="Cmsdata.Store.GetSelectedTicketListing" />
+          <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="Cmsdata.Store.GetSetUserRole" />
+          <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="Cmsdata.Store.GetTicketListing" />
+          <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="Cmsdata.Store.PublishEvent" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -10,17 +10,15 @@
 namespace CMS.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class GetEventListing_Result
+    public partial class Event_VariableDesc
     {
-        public long EventID { get; set; }
-        public string EventTitle { get; set; }
-        public string EventType { get; set; }
-        public string EventCategory { get; set; }
-        public string EventSubCategory { get; set; }
-        public string EventTiming { get; set; }
-        public int Feature { get; set; }
-        public string Orgnizer_Name { get; set; }
-        public string EventAddress { get; set; }
+        public string VariableDesc { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<long> Event_Id { get; set; }
+        public long Variable_Id { get; set; }
+    
+        public virtual Event Event { get; set; }
     }
 }

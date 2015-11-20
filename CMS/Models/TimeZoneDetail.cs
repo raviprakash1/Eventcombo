@@ -10,17 +10,11 @@
 namespace CMS.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class GetEventListing_Result
+    public partial class TimeZoneDetail
     {
-        public long EventID { get; set; }
-        public string EventTitle { get; set; }
-        public string EventType { get; set; }
-        public string EventCategory { get; set; }
-        public string EventSubCategory { get; set; }
-        public string EventTiming { get; set; }
-        public int Feature { get; set; }
-        public string Orgnizer_Name { get; set; }
-        public string EventAddress { get; set; }
+        public int TimeZone_Id { get; set; }
+        public string TimeZone_Name { get; set; }
     }
 }

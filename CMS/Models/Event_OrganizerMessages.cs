@@ -10,17 +10,16 @@
 namespace CMS.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class GetEventListing_Result
+    public partial class Event_OrganizerMessages
     {
-        public long EventID { get; set; }
-        public string EventTitle { get; set; }
-        public string EventType { get; set; }
-        public string EventCategory { get; set; }
-        public string EventSubCategory { get; set; }
-        public string EventTiming { get; set; }
-        public int Feature { get; set; }
-        public string Orgnizer_Name { get; set; }
-        public string EventAddress { get; set; }
+        public Nullable<long> EventId { get; set; }
+        public Nullable<long> OrganizerId { get; set; }
+        public string Userid { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Message { get; set; }
+        public long MessageId { get; set; }
     }
 }

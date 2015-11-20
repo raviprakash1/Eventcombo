@@ -12,13 +12,16 @@ namespace CMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EventImage
+    public partial class Publish_Event_Detail
     {
-        public long EventImageID { get; set; }
-        public long EventID { get; set; }
-        public string EventImageUrl { get; set; }
-        public string ImageType { get; set; }
-    
-        public virtual Event Event { get; set; }
+        public long PE_Id { get; set; }
+        public Nullable<long> PE_Event_Id { get; set; }
+        public string PE_Address_Ids { get; set; }
+        public Nullable<long> PE_MultipleVenue_id { get; set; }
+        public Nullable<long> PE_SingleVenue_Id { get; set; }
+        public string PE_Tickets_Ids { get; set; }
+        public string PE_Scheduled_Date { get; set; }
+        public string PE_Start_Time { get; set; }
+        public string PE_End_Time { get; set; }
     }
 }

@@ -12,13 +12,15 @@ namespace CMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EventImage
+    public partial class Ticket_Locked_Detail
     {
-        public long EventImageID { get; set; }
-        public long EventID { get; set; }
-        public string EventImageUrl { get; set; }
-        public string ImageType { get; set; }
-    
-        public virtual Event Event { get; set; }
+        public long TLD_Id { get; set; }
+        public string TLD_User_Id { get; set; }
+        public Nullable<long> TLD_Locked_Qty { get; set; }
+        public Nullable<long> TLD_Event_Id { get; set; }
+        public Nullable<long> TLD_TQD_Id { get; set; }
+        public Nullable<System.DateTime> Locktime { get; set; }
+        public string TLD_GUID { get; set; }
+        public Nullable<decimal> TLD_Donate { get; set; }
     }
 }
