@@ -563,7 +563,8 @@ namespace EventCombo.Controllers
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             Session["Fromname"] = "ViewEvent";
-            var url = Url.Action("ViewEvent", "CreateEvent") + "?EventId=" + EventId + "&eventTitle=" + eventTitle.Trim();
+           
+            var url = Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim()+ "౼" + EventId+ "౼N";
             Session["ReturnUrl"] = "ViewEvent~" + url;
             var TopAddress = ""; var Topvenue = "";
             string organizername = "", fblink = "", twitterlink = "", organizerid = "", tickettype = "";

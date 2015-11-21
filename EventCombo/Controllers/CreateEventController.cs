@@ -410,7 +410,8 @@ namespace EventCombo.Controllers
 
         public ActionResult ViewEvent(string strUrlData)
         {
-            string[] str = strUrlData.Split('ϼ');
+            ValidationMessageController vmc = new ValidationMessageController();
+            string[] str = strUrlData.Split('౼');
             string strForView = "";
             string eventTitle = str[0].ToString();
             long EventId = Convert.ToInt64(str[1]);
@@ -428,22 +429,27 @@ namespace EventCombo.Controllers
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "ViewEvent";
-            var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
+            var url= Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
+           // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
             Session["ReturnUrl"] = "ViewEvent~" + url;
             var TopAddress = "";var Topvenue="";
-            string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="";
+            string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="",enablediscussion="";
             ViewEvent viewEvent = new ViewEvent();
+            //EventDetails
             var EventDetail = GetEventdetail(EventId);
+
             var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
             var EventDescription = EventDetail.EventDescription;
             var showtimezone = EventDetail.DisplayTimeZone;
+            enablediscussion = EventDetail.EnableFBDiscussion;
           viewEvent.showTimezone = showtimezone;
             var timezone = EventDetail.TimeZone;
             viewEvent.Timezone = timezone;
+            viewEvent.enablediscussion = enablediscussion;
             //Address
-          var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
+            var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)
             {
                  TopAddress = evAdress.ConsolidateAddress;
@@ -544,6 +550,15 @@ namespace EventCombo.Controllers
             {
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + " " + starttime + "-" + endday.ToString() + " " + eDate_new;
 
+            }
+
+            var enday =DateTime.Parse(eDate_new);
+            var now = DateTime.Now;
+            if(enday< now)
+            {
+               
+                TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy"); 
+                TempData["ForViewOnly"] = "Y";
             }
             viewEvent.typeofEvent = EventDetail.AddressStatus;
             viewEvent.Shareonfb= EventDetail.Private_ShareOnFB;

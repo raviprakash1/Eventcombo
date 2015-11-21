@@ -19,16 +19,16 @@
                     <div class="er_UI_main" >
                         <div class="er_UI_img"></div>
                         <div class="er_suc" id="erraccmsg"></div>
-                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrsuc">&#215;</button>
+                        <button class="close" type="button" id="btndiverrsuc">&#215;</button>
                        
                     </div>
                 </div>
                 <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
-                    <div class="er_suc_main alert-success">
+                    <div class="er_suc_main">
 
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg"> </div>
-                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+                        <button class="close" type="button" id="btndivaccsuc">&#215;</button>
              
                     </div>
                 </div>
@@ -1620,8 +1620,8 @@
             $('#btndiverrsuc').click(function () {
 
                 $('#diverroacc').css('display', 'none');
-
-                $('#btndiverrsuc').css('display', 'none');
+                $('#divaccsuc').css('display', 'none');
+             
                 $('input').removeClass('err-bor');
 
             });
@@ -1629,7 +1629,7 @@
 
                 $('#diverroacc').css('display', 'none');
 
-                $('#btndiverrsuc').css('display', 'none');
+                $('#divaccsuc').css('display', 'none');
                 $('input').removeClass('err-bor');
 
 
