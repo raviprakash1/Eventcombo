@@ -120,7 +120,7 @@
                     <p>Events are better when your friends are there too. So, who's coming with you?</p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
-                        <button class="btn ev_live_btn fs18" type="button">
+                        <button class="btn ev_live_btn fs18" type="button" id="shareonfb">
                             SHARE ON FACEBOOK
                         </button>
                     </div>
@@ -175,9 +175,10 @@
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
                         <div class="col-sm-2 col-xs-5 no_pad">
-                            <button class="btn ev_live_btn cap_l fs18 col-sm-12 col-xs-12" type="button">
+                            <a data-target="#contorganizer" data-toggle="modal" href="#" class="btn ev_live_btn cap_l fs18 col-sm-12 col-xs-12">Contact Us</a>
+                            @*<button class="btn ev_live_btn cap_l fs18 col-sm-12 col-xs-12" type="button">
                                 Contact Us
-                            </button>
+                            </button>*@
                         </div>
                         <div class="col-sm-1 col-xs-2 text-center mt5 fs18">Or</div>
                         <div class="col-sm-9 col-xs-5 no_pad">
@@ -222,12 +223,131 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="contorganizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Contact Organizer</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div id="orgerror" class="alert-danger" style="display:none;">Please fill out the missing information</div>
+                        <div class="form-group mb10">
+                            <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
+                            <div class="col-sm-8">
+                                <input class="form-control evnt_inp_cont" type="text" id="id_orgname">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group mb10">
+                            <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
+                            <div class="col-sm-8">
+                                <input class="form-control evnt_inp_cont" type="text" id="id_orgemail">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group mb10">
+                            <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" rows="4" id="id_orgtext"></textarea>
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <script>
    
     $(document).ready(function () {
+
+        $('#saveorgaizermsg').click(function () {
+
+
+            var errormsg = "", erroremail = "";
+            var name = $('#id_orgname').val();
+            var mail = $('#id_orgemail').val();
+            var txt = $('#id_orgtext').val();
+
+
+
+            if (name != '') {
+                $('#id_orgname').removeClass('err-bor');
+
+            } else {
+
+
+                $('#id_orgname').addClass('err-bor');
+                errormsg = "Fill the missing details\n"
+            }
+
+
+
+            if (!validateEmail(mail)) {
+                $('#id_orgemail').addClass('err-bor');
+                errormsg += "Invalid Email";
+            }
+
+
+
+            if (txt != '') {
+                $('#id_orgtext').removeClass('err-bor');
+
+            } else {
+                $('#id_orgtext').addClass('err-bor');
+                errormsg += "fill the details"
+            }
+            if (erroremail != "") {
+                errormsg += erroremail;
+
+            }
+            if (errormsg != "") {
+
+                $('#orgerror').css('display', 'block');
+                $('#orgerror').html(errormsg);
+                return false;
+            }
+            else {
+                @*var organiserid = $('#hdorganiserid').val();
+                var eventid = $('#hdEventid').val();
+                var model = {
+                    'email': mail,
+                    'name': name,
+                    'mesasges': txt,
+                    'organiserid': organiserid,
+                    'EventId': eventid
+
+                }
+                $.ajax({
+                    url: '@Url.Action("saveorganizermsg", "CreateEvent")',
+                    data: model,
+                    type: "Post",
+                    success: function (response) {
+                        $('#orgerror').css('display', 'block');
+                        $('#orgerror').addClass('alert-success');
+                        $('#orgerror').removeClass('alert-danger ');
+                        $('#orgerror').html("Message has been successfully send!!");
+                        $('#id_orgname').val('');
+                        $('#id_orgemail').val('');
+                        $('#id_orgtext').val('');
+                    }
+                });*@
+            }
+
+
+        });
+  
         $.ajax({
             url: '@Url.Action("GetOrderDetailForConfirmation", "TicketPayment")',
             type: "Post",
@@ -267,11 +387,19 @@
 
         });
 
+        $('#shareonfb').click(function () {
+            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
+            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
 
+            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+        });
         $('#fbshare').click(function () {
-            var title='@Html.DisplayFor(m => m.Tilte)';
-            var description='@Html.DisplayFor(m => m.description)';
-            var url='@Html.DisplayFor(m => m.url)';
+            var title='@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+            var description='@Html.DisplayFor(m => m.description).ToString().Trim()';
+            var url='@Html.DisplayFor(m => m.url).ToString().Trim()';
 
             window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
@@ -281,9 +409,9 @@
         });
 
         $('#twittershare').click(function () {
-            var title = '@Html.DisplayFor(m => m.Tilte)';
-            var description = '@Html.DisplayFor(m => m.description)';
-            var url = '@Html.DisplayFor(m => m.url)';
+            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
+            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
 
 
             window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
@@ -293,9 +421,9 @@
 
         $('#linkshare').click(function () {
 
-            var title = '@Html.DisplayFor(m => m.Tilte)';
-            var description = '@Html.DisplayFor(m => m.description)';
-            var url = '@Html.DisplayFor(m => m.url)';
+            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
+            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
 
             window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
