@@ -415,19 +415,23 @@ namespace EventCombo.Controllers
             var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
             Session["ReturnUrl"] = "ViewEvent~" + url;
             var TopAddress = "";var Topvenue="";
-            string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="";
+            string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="",enablediscussion="";
             ViewEvent viewEvent = new ViewEvent();
+            //EventDetails
             var EventDetail = GetEventdetail(EventId);
+
             var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
             var EventDescription = EventDetail.EventDescription;
             var showtimezone = EventDetail.DisplayTimeZone;
+            enablediscussion = EventDetail.EnableFBDiscussion;
           viewEvent.showTimezone = showtimezone;
             var timezone = EventDetail.TimeZone;
             viewEvent.Timezone = timezone;
+            viewEvent.enablediscussion = enablediscussion;
             //Address
-          var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
+            var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)
             {
                  TopAddress = evAdress.ConsolidateAddress;

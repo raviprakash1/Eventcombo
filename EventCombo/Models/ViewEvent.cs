@@ -30,6 +30,7 @@ namespace EventCombo.Models
         public string showendtime { get; set; }
         public string Shareonfb { get; set; }
         public string typeofEvent { get; set; }
+        public string enablediscussion { get; set; }
 
 
     }
