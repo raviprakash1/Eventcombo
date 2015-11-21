@@ -527,7 +527,7 @@ span.evnt_toltip{
  border: 1px solid green;
     width: 100%;
     float: left;height: 50px; display: table;}
-.er_suc {width: 1000px;display: table-cell; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: center; }
+/*.er_suc {width: 1000px;display: table-cell; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: center; }*/
 
 .er_UI_main{border: 1px solid red;
     width: 100%;

@@ -30,7 +30,7 @@ namespace EventCombo.Controllers
             cms.Address = evAdress.ConsolidateAddress;
             var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
-            cms.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?EventId=" + EventId + "&eventTitle=" + cms.Title;
+            cms.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + cms.Title.Trim() + "­౼" + EventId + "౼N";
             cms.Descritption = Eventdetails.EventDescription;
             return View(cms);
         }

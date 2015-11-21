@@ -42,16 +42,16 @@
                             <img class="ev1" src="@Html.DisplayFor(m=>m.Imageurl)">
                         </div>
                         <div class="col-sm-9 pl0">
-                            <h2 class="th_tilte">@Html.DisplayFor(m=>m.Title )</h2>
+                            <h2 class="th_tilte" id="h2tag">@Html.DisplayFor(m=>m.Title )</h2>
 
                             <div class="col-sm-12 col-xs-12 text-left">
-                                <div class="form-group mb0">
+                                @*<div class="form-group mb0">
                                     <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
                                     <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
 
                                        Add Schedule to calendar
                                     </label>
-                                </div>
+                                </div>*@
                                 <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
                                     <div class="ev_time_zone_model date_time_modal">
                                         <div class="modal-content ev_tm_zon_cont">
@@ -529,10 +529,27 @@
 
     //});
 
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
 
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
     function validationpage()
     {
-        var msglogin = "";
+        var msglogin = "",emailerr="";
         var Emaillogin = $("#Email").val();
         var confirmlogin = $("#confirmEmail").val();
         var Passowrdlogin = $("#password").val();
@@ -546,22 +563,27 @@
         if (!validateEmail(Emaillogin)) {
             $('#Email').focus();
             $('#Email').addClass('err-bor');
-            msglogin += "Invalid Email" + "\n";
+            emailerr += "Invalid Email" + "\n";
         }
         if ($("#confirmEmail").length > 0) {
             if (!validateEmail(confirmlogin)) {
                 $('#confirmEmail').focus();
                 $('#confirmEmail').addClass('err-bor');
-                msglogin += "Invalid Confirm Email" + "\n";
+                emailerr += "Invalid Confirm Email" + "\n";
             }
 
             if (confirmlogin != Emaillogin) {
                 $('#confirmEmail').focus();
                 $('#confirmEmail').addClass('err-bor');
-                msglogin += "Invalid Confirm Email" + "\n";
+                msglogin += ajaxsetup('TicketPayment','TPayValidateConfirmMatchEmailUI') + "\n";
 
             }
 
+
+        }
+        if (emailerr != "")
+        {
+            msglogin += ajaxsetup('TicketPayment', 'TPayValidateEmailUI') + "\n";
 
         }
         if ($("#password").length > 0) {
@@ -730,7 +752,7 @@
         }
     }
     $(document).ready(function () {
-       
+
 
         $(document).click(function () {
             $('#diverroacc').css('display', 'none');
@@ -964,7 +986,7 @@
 
         // var vTicketid = '19,20';
        // var Eid = $('#hdEventid').val();
-
+        var title = $('#h2tag').html();
         clock = $('#divTime').FlipClock(600, {
             clockFace: 'MinuteCounter',
             countdown: true,
@@ -974,12 +996,13 @@
                         url: '@Url.Action("ReleaseTickets", "TicketPayment")',
                         type: "Get",
                         success: function (response) {
-                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?EventId=' + Eventid;
+
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid+ '౼N';
                             //ShowMessage('E', 'Sorry, you took too long and we have to release your order. Please try again.');
                         },
                         error: function () {
                             //ShowMessage('E', 'Sorry, There is some error.');
-                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?EventId=' + Eventid;
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid+ '౼N';
                         }
                     });
                 }
@@ -1074,7 +1097,7 @@
                 var email = $('#emailbearer').val();
                 if (!validateEmail(email))
                 {
-                   
+
                     alert("Please enter valid Email.");
                     if ($('#ddlListitem option').length < 0) {
                         $('#blocklist').css('display', 'none');
@@ -1083,22 +1106,22 @@
 
 
              } else {
-                    
+
                     $('#blocklist').css('display', 'block');
                 }
 
             }
             else {
-                    
+
                     $('#blocklist').css('display', 'block');
             }
-            
-           
+
+
         }
-       
-       
-        
-       
+
+
+
+
 
         if ($("#hidTicketbearer").val() == '') {
             //if (parseInt($("#ddlOrgnizers option").length) > 24) {

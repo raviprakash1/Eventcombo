@@ -39,20 +39,22 @@
     @Html.AntiForgeryToken()
     if (ViewData["Message"] != null)
                             {
-        <div class="er_suc_main alert-success" id="divaccsuc" tabindex="-1">
-            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+        <div class="er_suc_main " id="divaccsuc" tabindex="-1">
+            
             <div class="er_suc_img"></div>
             <div class="er_suc">@ViewData["Message"] </div>
+            <button class="close" type="button" id="btndivaccsuc">&#215;</button>
         </div>
 
     }
     if (!ViewData.ModelState.IsValid)
     {
         
-        <div class="er_UI_main alert-danger" id="diverro1acc" tabindex="-1">
-            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1acc">&#215;</button>
+        <div class="er_UI_main" id="diverro1acc" tabindex="-1">
+           
             <div class="er_sys_img"></div>
             <div class="er_suc" id="erraccsucc">@Html.ValidationMessage("Error")</div>
+            <button class="close" type="button" id="btndiverro1acc">&#215;</button>
         </div>
     }
     @*if (ViewData["Error"]!=null)
@@ -62,12 +64,13 @@
             <div class="er_suc">@ViewData["Error"]</div>
         </div>
    }*@
-        <div class="er_UI_main alert-danger" id="diverroacc" style="display :none;" tabindex="-1">
+        <div class="er_UI_main" id="diverroacc" style="display :none;" tabindex="-1">
             
             @*<div class="alert alert-danger alert-dismissable">*@
-                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverroacc">&#215;</button>
+              
                 <div class="er_UI_img"></div>
                 <div class="er_suc" id="erraccmsg">  </div>
+            <button class="close" type="button" id="btndiverroacc">&#215;</button>
             @*</div>*@
        
            

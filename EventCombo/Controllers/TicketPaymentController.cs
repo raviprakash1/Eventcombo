@@ -497,7 +497,7 @@ namespace EventCombo.Controllers
             ps.Username = acountdedtails.Firstname + " " + acountdedtails.Lastname;
             var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
-            ps.url = baseurl+ Url.Action("ViewEvent", "CreateEvent") + "?EventId=" + Eventdetails.EventID + "&eventTitle=a" ;
+            ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
             return View(ps);
         }
 

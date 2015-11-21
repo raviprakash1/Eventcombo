@@ -410,7 +410,8 @@ namespace EventCombo.Controllers
 
         public ActionResult ViewEvent(string strUrlData)
         {
-            string[] str = strUrlData.Split('ϼ');
+            ValidationMessageController vmc = new ValidationMessageController();
+            string[] str = strUrlData.Split('౼');
             string strForView = "";
             string eventTitle = str[0].ToString();
             long EventId = Convert.ToInt64(str[1]);
@@ -428,7 +429,8 @@ namespace EventCombo.Controllers
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "ViewEvent";
-            var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
+            var url= Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
+           // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
             Session["ReturnUrl"] = "ViewEvent~" + url;
             var TopAddress = "";var Topvenue="";
             string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="",enablediscussion="";
@@ -548,6 +550,15 @@ namespace EventCombo.Controllers
             {
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + " " + starttime + "-" + endday.ToString() + " " + eDate_new;
 
+            }
+
+            var enday =DateTime.Parse(eDate_new);
+            var now = DateTime.Now;
+            if(enday< now)
+            {
+               
+                TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy"); 
+                TempData["ForViewOnly"] = "Y";
             }
             viewEvent.typeofEvent = EventDetail.AddressStatus;
             viewEvent.Shareonfb= EventDetail.Private_ShareOnFB;
