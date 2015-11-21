@@ -41,15 +41,15 @@
 
                 </div>
                 <div class="col-sm-9 col-xs-6 pt10 text-right no_pad">
-                    <button class="btn ev_live_sub_btn mb5" type="button">
+                    <button class="cbtSave btn ev_live_sub_btn mb5"  type="button">
                         SAVE &#10;
                         <span> > </span>
                     </button>
-                    <button class="btn ev_live_sub_btn mb5" type="button">
+                    <button id="btPreview" class="btn ev_live_sub_btn mb5" type="button">
                         PREVIEW &#10;
                         <span> > </span>
                     </button>
-                    <button class="btn ev_live_sub_btn mb5 grn_live_btn" type="button">
+                    <button class="cbtMakeLive btn ev_live_sub_btn mb5 grn_live_btn" type="button">
                         MAKE EVENT LIVE NOW&#10;
                         <span> > </span>
                     </button>
@@ -1103,11 +1103,11 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-right mb10 make_live_btn">
-                    <button type="button" id="btSave" class="btn ev_live_sub_btn ">
+                    <button type="button" id="btSave" class="cbtSave btn ev_live_sub_btn ">
                         SAVE
                         <span> > </span>
                     </button>
-                    <button type="button" id="btMakeLive" class="btn ev_live_sub_btn grn_live_btn">
+                    <button type="button" id="btMakeLive" class="cbtMakeLive btn ev_live_sub_btn grn_live_btn">
                         MAKE YOUR EVENT LIVE
                         <span> > </span>
                     </button>
@@ -1611,7 +1611,7 @@
                 var vval = $("#dllTimeZone").val();
                 if (vval == null || vval == '')
                     vval = "Timezone & date setting";
-                
+
                 $("#lblTimeZone").text(vval);
 
             });
@@ -1634,7 +1634,7 @@
 
 
             });
-           
+
             $(".StartDatemodal").hide();
             $(".StartDate").click(function () {
                 $(".StartDatemodal").slideToggle("fast");
@@ -1649,12 +1649,25 @@
                 //$("#hdSchType").val('Single');
             });
 
+            $("#btPreview").click(function () {
+                if ($("#hdEventId").val() != '') {
+                    //var veventid = $("#hdEventId").val();
+                    var vUrl = "aϼ" + $("#hdEventId").val() + "ϼY";
+                    window.location = '@Url.Action("ViewEvent", "CreateEvent",new { })?strUrlData=' + vUrl;
+                }
+                else
+                {
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html('Please first save an event');
+                }
+            });
 
-
-            $("#btMakeLive").click(function () {
+            $(".cbtMakeLive").click(function () {
                 if ($("#hdEventId").val() != '') {
                     $.ajax({
-                        url: '@Url.Action("PublishEvent", "CreateEvent")',
+                        url: '@Url.Action("UpdateEventStatus", "CreateEvent")',
                         data: { strEventId: $("#hdEventId").val() },
                         type: "Post",
                         success: function (response) {
@@ -1703,7 +1716,7 @@
             });
 
 
-            $('#btSave').click(function () {
+            $('.cbtSave').click(function () {
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
@@ -2160,9 +2173,9 @@
 
 
                 if ($("#txtOrgnizer").val().trim() == '') {
-                  
+
                     //alert("Please enter valid organizer.");
-                  
+
                     var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
@@ -2275,7 +2288,7 @@
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
-                                var msg = ajaxsetup('CreateEvent','CreateEventurlexistUI');
+                                var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
                                 $('#erraccmsg').html(msg);
 
                                 $("#txtEventUrl").val('');
@@ -2284,7 +2297,7 @@
                             }
                         },
                         error: function (data) {
-                            
+
                             $('#divaccsuc').css('display', 'none');
                             $('#diverroacc').css('display', 'block');
                             $('#diverroacc').focus();
@@ -2378,14 +2391,11 @@
                 if ($(".SchmultiDetail").css('display') == 'block') {
                     $("#hdSchType").val('Multiple');
                     vSelecttextDates = "Click here to enter the start and end date";
-                    if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null)
-                    {
-                        if ($("#dlSchOption").val() =="Daily")
-                        {
+                    if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
+                        if ($("#dlSchOption").val() == "Daily") {
                             vSelecttextDates = "Daily : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
                         }
-                        else if($("#dlSchOption").val() =="Weekly")
-                        {
+                        else if ($("#dlSchOption").val() == "Weekly") {
                             vSelecttextDates = "Weekly : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
                         }
@@ -2399,12 +2409,12 @@
                         }
 
                     }
-                        $("#btEnterDates").text(vSelecttextDates);
+                    $("#btEnterDates").text(vSelecttextDates);
                 }
                 else {
                     vSelecttextDates = "Click here to enter the start and end date";
                     if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
-                        vSelecttextDates = "From : " +  $("#txtStartDate").val() +  " " + $("#txtStartTime").val() + " To " +  $("#txtEndDate").val() +  " " + $("#txtEndTime").val()
+                        vSelecttextDates = "From : " + $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
                     $("#btEnterDates").text(vSelecttextDates);
 
                     $("#hdSchType").val('Single');
@@ -2585,7 +2595,7 @@
                 if ($('#diverrorvenue').css('display') == 'block') {
                     $("input").removeClass('err-bor');
                 }
-               
+
             });
             function validateAddress() {
                 if ($("#VenueName").val().trim() == '') {

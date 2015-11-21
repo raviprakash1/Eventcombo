@@ -394,6 +394,7 @@ namespace EventCombo.Controllers
 
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
+                    PublishEvent(lEventId);
                 }
             }
             catch (Exception ex)
@@ -407,8 +408,23 @@ namespace EventCombo.Controllers
 
 
 
-        public ActionResult ViewEvent(long EventId,string eventTitle)
+        public ActionResult ViewEvent(string strUrlData)
         {
+            string[] str = strUrlData.Split('ϼ');
+            string strForView = "";
+            string eventTitle = str[0].ToString();
+            long EventId = Convert.ToInt64(str[1]);
+            try
+            {
+                strForView = str[2].ToString();
+            }
+            catch (Exception)
+            {
+                strForView = "N";
+            }
+
+            TempData["ForViewOnly"] = strForView;
+
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "ViewEvent";
@@ -782,17 +798,17 @@ namespace EventCombo.Controllers
 
         }
 
-        public string PublishEvent(string strEventId)
+        public string PublishEvent(long lEventId)
         {
             string strResult = "N";
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-                if (strUserId != "" && strEventId!="")
+                if (strUserId != "" && lEventId >0)
                 {
                     using (EventComboEntities objEnt = new EventComboEntities())
                     {
-                        objEnt.PublishEvent(Convert.ToInt64(strEventId), strUserId);
+                        objEnt.PublishEvent(lEventId, strUserId);
                     }
                     strResult = "Y";
                 }
@@ -803,7 +819,30 @@ namespace EventCombo.Controllers
             }
             return strResult;
         }
+        public string UpdateEventStatus(string strEventId)
+        {
+            string strResult = "N";
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                if (strUserId != "" && strEventId != "")
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        Event objEvt = objEnt.Events.First(i => i.EventID == Convert.ToInt64(strEventId));
+                        objEvt.EventStatus = "Live";
 
+                        objEnt.SaveChanges();
+                    }
+                    strResult = "Y";
+                }
+            }
+            catch (Exception)
+            {
+                strResult = "N";
+            }
+            return strResult;
+        }
         #region DisplayTickets
         public string GetTicketDetail(string Eventid)
         {

@@ -50,23 +50,23 @@
     <div class="event_inner_container event_top" id="eventtopscoll">
         <div class="col-sm-12 mt10 bggrey" id="buttonscroll">
             <div class="col-sm-3 col-xs-6 pt10 text-left no_pad">
-                <label class="btn ev_live_sub_btn  grn_live_btn"> LIVE </label>
+                @*<label class="btn ev_live_sub_btn  grn_live_btn"> LIVE </label>*@
 
 
             </div>
             <div class="col-sm-9 col-xs-6 pt10 text-right no_pad">
-                <button class="btn ev_live_sub_btn mb5" type="button">
+                @*<button class="btn ev_live_sub_btn mb5" type="button">
                     SAVE &#10;
                     <span> > </span>
                 </button>
                 <button class="btn ev_live_sub_btn mb5" type="button">
                     PREVIEW &#10;
                     <span> > </span>
-                </button>
+                </button>*@
 
                 <div class="clearfix"></div>
                 <div class="col-sm-12 ">
-                    ( Last saved at MM/DD/YYYY 00:00pm )
+                    @*( Last saved at MM/DD/YYYY 00:00pm )*@
                 </div>
             </div>
         </div>
@@ -452,7 +452,15 @@
             </div>
             <div class="col-sm-12 mt20 ">
                 <div class="col-sm-12 text-right no_pad">
-                    <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+                    @if (TempData["ForViewOnly"].ToString() == "Y")
+                    {
+                        <button type="submit" id="btPayment" style="display:none;" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+                    }
+                    else
+                    {
+                        <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+
+                    }
 
                 </div>
             </div>
