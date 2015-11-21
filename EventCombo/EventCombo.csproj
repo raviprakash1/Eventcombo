@@ -781,12 +781,9 @@
     <Content Include="Views\TicketPayment\TicketPayment.cshtml" />
     <Content Include="Views\CreateEvent\ViewEvent.cshtml" />
     <Content Include="Views\TicketPayment\PaymentConfirmation.cshtml" />
-
     <Content Include="Views\EditEvent\EditEvent.cshtml" />
     <Content Include="Views\EventList\EventList.cshtml" />
-
     <Content Include="Views\Account\Loginresult.cshtml" />
-
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -797,11 +794,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
-
     <Folder Include="Views\Permission\" />
     <Folder Include="Views\Validate\" />
     <Folder Include="Views\ValidationMessage\" />
-
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
