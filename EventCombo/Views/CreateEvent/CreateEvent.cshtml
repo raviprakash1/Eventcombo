@@ -687,7 +687,7 @@
                                     <div class="form-group paidticket-n" id="id_paid-n">
                                         <label class="col-sm-4 no_pad control-label ev_tickt_lebel">Price $</label>
                                         <div class="col-sm-8 ">
-                                            <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="validateforzero(this.id, event)" placeholder="0.00" maxlength="9" />
+                                            <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="validateforzero(this.id, event)"  onblur="" placeholder="0.00" maxlength="9" />
                                         </div>
 
                                     </div>
@@ -3232,7 +3232,7 @@
                 }
                 $("#id_fee-" + num).val(ccpamount);
                 $("#id_total-" + num).val(ccpfinal);
-                $('#' + id).val(price)
+                //$('#' + id).val(price)
             }
           
 

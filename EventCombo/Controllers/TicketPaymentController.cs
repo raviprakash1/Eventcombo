@@ -29,6 +29,7 @@ namespace EventCombo.Controllers
             AccountController AccDetail = new AccountController();
             tp.Imageurl = cs.GetImages(Eventid).FirstOrDefault();
             var eventdetails = cs.GetEventdetail(Eventid);
+            tp.Ticketdeliveraddress = eventdetails.Ticket_DAdress;
             tp.Title = eventdetails.EventTitle;
             tp.Tickettype = "Paid";
             ViewData["Type"] = tp.Tickettype;
@@ -348,6 +349,23 @@ namespace EventCombo.Controllers
                             shipadd.OrderId = strOrderNo;
                             objEntity.ShippingAddresses.Add(shipadd);
                         }
+                        if(model.sameshipbilldetail=="Y")
+                        {
+                            ShippingAddress shipadd = new ShippingAddress();
+                            shipadd.Fname = model.billfname;
+                            shipadd.Lname = model.billLname;
+                            shipadd.Address1 = model.billaddress1;
+                            shipadd.Address2 = model.billaddress2;
+                            shipadd.City = model.billcity;
+                            shipadd.State = model.billstate;
+                            shipadd.Zip = model.billzip;
+                            shipadd.Country = model.billcountry;
+                            shipadd.Phone_Number = model.billingphno;
+                            shipadd.UserId = Userid;
+                            shipadd.Guid = guid;
+                            shipadd.OrderId = strOrderNo;
+                            objEntity.ShippingAddresses.Add(shipadd);
+                        }
                         if (model.NameList != null)
                         {
                             TicketBearer ObjAdd = new TicketBearer();
@@ -384,7 +402,149 @@ namespace EventCombo.Controllers
 
 
                     }
+                    //SendMail
 
+                    var userdetail = db.AspNetUsers.First(i => i.Id == Userid);
+                    var profiledetail = db.Profiles.FirstOrDefault(i => i.UserID == Userid);
+
+                    var email = userdetail.Email;
+                    var username = profiledetail.FirstName;
+
+                    var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == guid).ToList();
+                    foreach(var item in TicketPurchasedDetail)
+                    {
+                       var tQntydetail= db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
+
+                        var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
+                        var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
+                        var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
+
+                        string to = "", from = "", cc = "", bcc = "", subjectn = "";
+                        var bodyn = "";
+                        HomeController hmc = new HomeController();
+                        List<Email_Tag> EmailTag = new List<Email_Tag>();
+                        EmailTag = hmc.getTag();
+
+                        var Emailtemplate = hmc.getEmail("eticket");
+                        if (!string.IsNullOrEmpty(Emailtemplate.To))
+                        {
+
+
+                            to = Emailtemplate.To;
+                            if (to.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                to = to.Replace("¶¶UserEmailID¶¶", email);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                        {
+                            from = Emailtemplate.From;
+                            if (from.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                from = from.Replace("¶¶UserEmailID¶¶", email);
+
+                            }
+                        }
+                        else
+                        {
+                            from = "shweta.sindhu@kiwitech.com";
+
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                        {
+
+
+                            subjectn = Emailtemplate.Subject;
+
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserEmailID¶¶", email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                                    }
+
+                                }
+
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                        {
+                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserEmailID¶¶", email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventOrderNO")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", strOrderNo);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventBarcodeId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", strOrderNo);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventTitleId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventStartDateID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventStartDateID¶¶", tQntydetail.TQD_StartDate);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventVenueID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventVenueID¶¶", address.ConsolidateAddress);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "Tickettype")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶Tickettype¶¶", tickets.T_name);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶",DateTime.Now.ToString());
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventImageId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventImageId¶¶", "");
+
+                                    }
+
+                                }
+
+                            }
+                        }
+                        hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn);
+                    }
+                  
+                  
+                  
                     return strOrderNo;
 
 
@@ -490,6 +650,7 @@ namespace EventCombo.Controllers
             ps.imgurl = cs.GetImages(Eventid).FirstOrDefault();
             ps.Tilte = Eventdetails.EventTitle;
             ps.description = Eventdetails.EventDescription;
+           var guid= Session["TicketLockedId"].ToString();
             AccountController ac = new AccountController();
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
             var acountdedtails = ac.GetLoginDetails(strUsers);

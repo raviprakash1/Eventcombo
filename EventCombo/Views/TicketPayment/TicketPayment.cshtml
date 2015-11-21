@@ -323,12 +323,15 @@
                             </div>
                         </div>
                         <div class="clearfix divvisible" ></div>
-                        <div class="form-group mt10">
+                        @if (Html.DisplayFor(x => x.Ticketdeliveraddress).ToString() == "Y")
+                        {
+                        <div class="form-group mt10 divvisible">
                             <input type="checkbox" class="billingaddress" id="shippinginfo" /> <span class="ev_pay_span">Enter Delivery Address</span>
                             <div class="clearfix"></div>
                             <input type="checkbox" id="sameshipping" /> <span class="ev_pay_span">Delivery Address Same as Billing Address</span>
 
                      </div>
+                        }
 
                         <div class="form-group mt10 shippingaddress" style="display:none;" >
                             <div class="col-sm-12 col-xs-12 no_pad">
@@ -770,7 +773,13 @@
         }
     }
     $(document).ready(function () {
+        $('#sameshipping').click(function () {
+            $(".billingaddress").attr('checked', false);
+            //$(".billingaddress").is(":checked") = false;
+            $(".shippingaddress").css('display', 'none');
+            
 
+        });
 
         $(document).click(function () {
             $('#diverroacc').css('display', 'none');
@@ -934,6 +943,7 @@
                     'NameList': NameList,
                     'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
                     'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
+                    'sameshipbilldetail': ($("#sameshipping").is(":checked") == true ? "Y" : "N"),
                     'Ticketname': type
                 }
 
@@ -1044,7 +1054,7 @@
         });
 
         $(".billingaddress").change(function () {
-
+            $("#sameshipping").attr('checked', false);
             if ($(this).is(":checked") == true) {
 
                 $(".shippingaddress").css('display', 'block');
