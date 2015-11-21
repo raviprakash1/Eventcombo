@@ -479,14 +479,14 @@ else
             datatype: "Text",
             type: "Get",
             success: function (response) {
-                if ($.trim(response) != 1) {
+               // if ($.trim(response) != 1) {
                     //alert(response);
                     $("#hdCurrentUserRole").val($.trim(response));
 
                     //   alert($("#hdCurrentUserRole").val());
                     //$("#rdAdmin").prop("disabled", true);
                     //$("#dvAdmin").prop("disabled", true);
-                }
+              //  }
                 //
             }
         });

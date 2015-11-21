@@ -365,28 +365,29 @@ namespace EventCombo.Controllers
 
                             }
                         }
-                        objEntity.SaveChanges();
+                      
                         // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
 
 
-                        ApiLoginID = "354v9ZufxM6";
-                        ApiTransactionKey = "68Et2R3KcV62rJ27";
-                        strCardNo = model.cardno;
-                        strExpDate = model.expirydate;
-                        strCvvCode = model.cvv;
-                        dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
+                        //ApiLoginID = "354v9ZufxM6";
+                        //ApiTransactionKey = "68Et2R3KcV62rJ27";
+                        //strCardNo = model.cardno;
+                        //strExpDate = model.expirydate;
+                        //strCvvCode = model.cvv;
+                        //dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
                         //  PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
-
-
-
-
-
-
 
                     }
 
+                    ApiLoginID = "354v9ZufxM6";
+                    ApiTransactionKey = "68Et2R3KcV62rJ27";
+                    strCardNo = model.cardno;
+                    strExpDate = model.expirydate;
+                    strCvvCode = model.cvv;
+                    dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
+                    //PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+                    objEntity.SaveChanges();
                     return strOrderNo;
-
 
                 }
             }
@@ -519,7 +520,7 @@ namespace EventCombo.Controllers
                     var OrderNo = (from TPD in objEnt.Ticket_Purchased_Detail
                                    where TPD.TPD_GUID == strGuid
                                    select TPD.TPD_Order_Id
-                                       ).First();
+                                       ).FirstOrDefault();
 
                     var OrderAmt = (from OD in objEnt.Order_Detail_T
                                     where OD.O_Order_Id == OrderNo
