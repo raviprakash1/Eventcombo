@@ -425,6 +425,9 @@
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="completeorder" >
                             COMPLTE ORDER >
                         </button>
+                        <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
+
+                        </a>
                     </div>
                     <div id="dvAjxSave" style="display:none">
                         <img src="~/Images/ajaxloader1.gif" />
@@ -477,34 +480,23 @@
     </div>
 
 
-    <div class="modal fade" id="schcalender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+    
+
+
+    <div class="modal fade" id="dvProgress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom wd-4 tdclickmodal">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Add to Calendar</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="col-sm-6 text-center ev_calend_lebel">
-                        <i class="fa fa-windows"></i> <a href="#" id="ioutlook">Microsoft Outlook </a>
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+                        <h4 class="msg"><img src="~/Images/ajaxloader1.gif" />Please wait, Preparing your order.</h4>
                     </div>
-                    <div class="col-sm-6 text-center ev_calend_lebel">
-                        <i class="fa fa-apple"></i> <a href="#" id="icalender">Apple Ical </a>
-                    </div>
-                    <div class="col-sm-6 text-center ev_calend_lebel">
-                        <i class="fa fa-google"></i> <a href="#" id="googlecal" target="_blank">Google Calendar </a>
-                    </div>
-                    <div class="col-sm-6 text-center ev_calend_lebel">
-                        <i class="fa fa-yahoo"></i> <a href="#" target="_blank" id="yahoocal">Yahoo Calendar </a>
-                    </div>
-                    <div class="clearfix"></div>
-
-                </div>
-
+                    @*<div class="modal-footer msg-action-btn ok">
+                        <button type="button" class="btn btn-primary yes ok" data-dismiss="modal">OK</button>
+                    </div>*@
+                </form>
             </div>
-        </div>
+        </div><!-- confirm-msg -->
     </div>
-
 
 }
 <script src="~/Scripts/Commonfunction.js"></script>
@@ -760,7 +752,8 @@
             $("input").removeClass('err-bor');
         });
         $('#completeorder').click(function () {
-            $("#dvAjxSave").show();
+            // $("#dvAjxSave").show();
+           
             var flag = true;
             var Emaillogin = $("#Email").val();
             var msg = validationpage();
@@ -921,8 +914,7 @@
 
                 $.ajax({
                     url: '@Url.Action("SaveDetails", "TicketPayment")',
-                    beforeSend: function () { $('#dvAjxSave').show(); },
-                    complete: function () { $('#dvAjxSave').hide(); },
+                    beforeSend: function () { $("#btOk").click(); },
                     data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId },
                     type: "Post",
                     success: function (response) {
