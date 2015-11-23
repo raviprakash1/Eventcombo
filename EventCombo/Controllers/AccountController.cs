@@ -642,89 +642,90 @@ namespace EventCombo.Controllers
                     else
                     {
                         successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY");
-                    }
+
+                        EmailTag = hmc.getTag();
+
+                        Emailtemplate = hmc.getEmail("acc_info_update");
+                        if (Emailtemplate != null)
+                        {
+                            if (!string.IsNullOrEmpty(Emailtemplate.To))
+                            {
+
+
+                                to = Emailtemplate.To;
+                                if (to.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    to = to.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                            {
+                                from = Emailtemplate.From;
+                                if (from.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    from = from.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                }
+                            }
+                            else
+                            {
+                                from = "shweta.sindhu@kiwitech.com";
+
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                            {
+
+
+                                subjectn = Emailtemplate.Subject;
+
+                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                                {
+
+                                    if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                    {
+                                        if (EmailTag[i].Tag_Name == "UserEmailID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+
+                                        }
+
+                                    }
+
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                            {
+                                bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                                {
+
+                                    if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                    {
+                                        if (EmailTag[i].Tag_Name == "UserEmailID")
+                                        {
+                                            bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                        {
+                                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+
+                                        }
+
+
+                                    }
+
+                                }
+                            }
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn);
+                        }
               
-                    EmailTag = hmc.getTag();
-
-                     Emailtemplate = hmc.getEmail("acc_info_update");
-                    if (Emailtemplate != null)
-                    {
-                        if (!string.IsNullOrEmpty(Emailtemplate.To))
-                        {
-
-
-                            to = Emailtemplate.To;
-                            if (to.Contains("¶¶UserEmailID¶¶"))
-                            {
-                                to = to.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                            }
-                        }
-                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
-                        {
-                            from = Emailtemplate.From;
-                            if (from.Contains("¶¶UserEmailID¶¶"))
-                            {
-                                from = from.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                            }
-                        }
-                        else
-                        {
-                            from = "shweta.sindhu@kiwitech.com";
-
-                        }
-                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
-                        {
-
-
-                            subjectn = Emailtemplate.Subject;
-
-                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                            {
-
-                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                {
-                                    if (EmailTag[i].Tag_Name == "UserEmailID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
-
-                                    }
-
-                                }
-
-                            }
-                        }
-                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
-                        {
-                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                            {
-
-                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                {
-                                    if (EmailTag[i].Tag_Name == "UserEmailID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
-
-                                    }
-
-
-                                }
-
-                            }
-                        }
-                        hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn);
                     }
                     ViewData["Message"] = successmsg;
                     return View(model);
