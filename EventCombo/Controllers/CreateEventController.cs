@@ -624,13 +624,19 @@ namespace EventCombo.Controllers
             var ticketsDonation = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 3 select r).Count();
             
             var itemsremainingInCart = (from o in db.Ticket_Quantity_Detail where o.TQD_Event_Id == EventId select o.TQD_Remaining_Quantity).Sum();
-           
+
+
             if (ticketsfree>0 && ticketsPaid>0 && ticketsDonation>0)
             {
                 tickettype = "Order Now";
 
             }
             if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree > 0 && ticketsPaid > 0 && ticketsDonation <= 0)
             {
                 tickettype = "Order Now";
 
