@@ -318,16 +318,16 @@ else
                                 <div class="col-md-12">
                                     <h3 class="mt5"> Select Role</h3>
 
-                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                    <div class="radio-custom radio-primary mt5 fl-lft mr10">
                                         <input id="rdAdmin" type="radio" name="Permission">
                                         <label for="rdAdmin">Admin</label>
 
                                     </div>
-                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                    <div class="radio-custom radio-primary mt5 fl-lft mr10">
                                         <input id="rdMemberLimit" type="radio" class="Permission" name="Permission">
                                         <label for="rdMemberLimit">Member Limited</label>
                                     </div>
-                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                    <div class="radio-custom radio-primary mt5 fl-lft mr10">
                                         <input id="rdMember" type="radio" class="Permission" name="Permission">
                                         <label for="rdMember">Member</label>
                                     </div>
@@ -338,11 +338,11 @@ else
                                 <div class="col-md-12">
 
                                     <div id="dvMemLimited">
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" class="chkPermission" checked="" id="chk_1">
                                             <label for="chk_1">Events</label>
                                         </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" class="chkPermission" checked="" id="chk_2">
                                             <label for="chk_2">Deals</label>
                                         </div>
@@ -350,23 +350,21 @@ else
                                     </div>
 
                                     <div id="dvAdmin">
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" checked="" id="chk_3">
-                                            <label for="chk_3">Users</label>
-                                        </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_4">
                                             <label for="chk_4">Events</label>
                                         </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_5">
                                             <label for="chk_5">Tickets</label>
                                         </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_6">
                                             <label for="chk_6">Emails</label>
                                         </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_7">
                                             <label for="chk_7">Messages</label>
                                         </div>
@@ -750,8 +748,9 @@ else
             datatype: "Text",
             type: "Post",
             success: function (response) {
+                debugger;
                 var AryResult = response.split("^");
-                for (i = 0; i < AryResult.length ; i++) {
+                for (i = 0; i < AryResult.length-1 ; i++) {
                     $("#chk_" + AryResult[i]).prop("checked", true);
                 }
                 //alert(AryResult[AryResult.length - 1].toString());
