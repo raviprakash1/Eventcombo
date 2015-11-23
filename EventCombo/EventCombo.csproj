@@ -687,6 +687,7 @@
     <Content Include="Scripts\jquery.maskedinput.min.js" />
     <Content Include="Scripts\jquery.maskMoney.js" />
     <Content Include="Scripts\jquery.mousewheel.js" />
+    <Content Include="Scripts\jquery.numberformatter-1.2.4.jsmin.js" />
     <Content Include="Scripts\jquery.nyroModal-ie6.js" />
     <Content Include="Scripts\jquery.nyroModal-ie6.min.js" />
     <Content Include="Scripts\jquery.nyroModal.custom.js" />
