@@ -16,9 +16,9 @@
                         <img class="ev1" src="@Html.DisplayFor(m=>m.imgurl)" >
                     </div>
                     <div class="col-sm-9 pl0">
-                        <h2 class="th_tilte">@Html.DisplayFor(m=>m.Tilte)</h2>
-                        <p class="th_day_time">Saturday Aug 17th 2011,8:30pm </p>
-                        <p class="th_day_time chk_add_sch_cal"><span class="Timezone">Add schedule to calender</span></p>
+                        <h2 class="th_tilte" id="title">@Html.DisplayFor(m=>m.Tilte)</h2>
+                        @*<p class="th_day_time">Saturday Aug 17th 2011,8:30pm </p>*@
+                        <p class="th_day_time chk_add_sch_cal"><span class="Timezone"><img class="evnt_clock evnt_cursor" src="/Images/icon-date.png" /> Add schedule to calender</span></p>
                         <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal chk_add_sch_cal_modal">
                             <div class="ev_time_zone_model date_time_modal">
                                 <div class="modal-content ev_tm_zon_cont">
@@ -26,23 +26,30 @@
                                         <button class="close closetimemodal" type="button">
                                             <span>&#215;</span>
                                         </button>
-                                        <h4 class="modal-title date_time_list">Schedule Date List</h4>
+                                        <h4 class="modal-title date_time_list"> Schedule Date List</h4>
                                     </div>
                                     <div class="modal-body">
                                         <div class="col-sm-12 no_pad">
-                                            <div class="form-group mb5 ">
+                                         
+                                            <div class="form-group mb5 cal_scrol ">
+                                              
+@foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
+{
+    <div class="col-sm-12 no_pad date_time_list ">
+        <a href="#" data-target="#schcalender" data-toggle="modal" id="@item.id" onclick="showevent(this.id)">@item.Datetime </a>
+        <br />@item.Address
+        @*<span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>*@
+    </div>
+}
+                                             
+                                                @*<label class="col-sm-12 no_pad label-control date_time_list ">
+                                                    <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
+                                                    <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
+                                                </label>
                                                 <label class="col-sm-12 no_pad label-control date_time_list">
                                                     <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
                                                     <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
-                                                </label>
-                                                <label class="col-sm-12 no_pad label-control date_time_list ">
-                                                    <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
-                                                    <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
-                                                </label>
-                                                <label class="col-sm-12 no_pad label-control date_time_list">
-                                                    <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
-                                                    <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
-                                                </label>
+                                                </label>*@
                                             </div>
                                         </div>
 
@@ -51,8 +58,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="th_day_time">Club Illusions</p>
-                        <p class="th_day_time">260 S California Ave, Palo Alto CA</p>
+                        @*<p class="th_day_time">Club Illusions</p>
+                        <p class="th_day_time">260 S California Ave, Palo Alto CA</p>*@
                         <div class="clearfix"></div>
 
                     </div>
@@ -204,16 +211,16 @@
                 <div class="modal-body">
                     <div class="col-md-12 no_pad">
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-windows"></i> <a href="#">Microsoft Outlook </a>
+                            <i class="fa fa-windows"></i> <a href="#" id="ioutlook">Microsoft Outlook </a>
                         </div>
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-apple"></i> <a href="#">Apple Ical </a>
+                            <i class="fa fa-apple"></i> <a href="#" id="icalender">Apple Ical </a>
                         </div>
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-google"></i> <a href="#">Google Calendar </a>
+                            <i class="fa fa-google"></i> <a href="#" id="googlecal"  target="_blank" >Google Calendar </a>
                         </div>
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-yahoo"></i> <a href="#">Yahoo Calendar </a>
+                            <i class="fa fa-yahoo"></i> <a href="#" id="yahoocal"  target="_blank" >Yahoo Calendar </a>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -456,4 +463,86 @@
             }
         });
     }
+
+
+    function showevent(t) {
+        var split = t.split('~');
+        console.log(split);
+        var title = $('#title').html().trim();
+        var str = '', format = '';
+        var fullDate = "";
+        var Datenew = new Date(split[1]);
+
+        if (split[2] != null) {
+
+            //var time = document.getElementById('txttime').value;
+            var where_is_p = split[2].indexOf('p');
+            var where_is_a = split[2].indexOf('a');
+            if (where_is_p > 0) {
+                str = split[2].replace('pm', ' ');
+                format = 'PM';
+
+            }
+            if (where_is_a > 0) {
+
+                str = split[2].replace('am', ' ');
+                format = 'AM';
+            }
+            var hrs = Number(str.match(/^(\d+)/)[1]);
+            var mnts = Number(str.match(/:(\d+)/)[1]);
+
+            if (format == "PM" && hrs < 12) hrs = hrs + 12;
+            if (format == "AM" && hrs == 12) hrs = hrs - 12;
+            var hours = hrs.toString();
+            var minutes = mnts.toString();
+            if (hrs < 10) hours = "0" + hours;
+            if (mnts < 10) minutes = "0" + minutes;
+
+            var fullDate = split[1] + " " + hours + ":" + minutes;
+        }
+        else {
+
+            fullDate = split[1];
+        }
+        var fullDateReal = new Date(fullDate);
+        var year = fullDateReal.getUTCFullYear();
+        var month = fullDateReal.getUTCMonth()
+        $('#startdate').val(fullDateReal);
+
+        var isodatestart = (fullDateReal.getUTCFullYear() + ""
+                  + pad(fullDateReal.getUTCMonth() + 1) + ""
+                  + pad(fullDateReal.getUTCDate()) + 'T'
+                  + pad(fullDateReal.getUTCHours()) + ""
+                  + pad(fullDateReal.getUTCMinutes()) + ""
+                  + pad(fullDateReal.getUTCSeconds()) + 'Z');
+
+        var isodateend = (fullDateReal.getUTCFullYear() + ""
+                         + pad(fullDateReal.getUTCMonth() + 1) + ""
+                         + pad(fullDateReal.getUTCDate()) + 'T'
+                         + "00" + ""
+                         + "00" + ""
+                         + "00" + 'Z');
+
+
+
+        //console.log(where_is_p);
+        //console.log(where_is_a);
+        var title = title;
+        var location = "";
+        if (split[3] != null) {
+            var location = split[3].trim();
+        } else {
+            location = "";
+        }
+        var variable = fullDateReal;
+        $("#ioutlook").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+        $("#icalender").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+        $("#yahoocal").attr("href", "http://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
+
+        $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
+        var target = $(this).data("target");
+        $(target).show();
+    }
+    function pad(n) { return n < 10 ? '0' + n : n };
+
 </script>

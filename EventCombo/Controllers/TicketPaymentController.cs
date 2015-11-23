@@ -654,19 +654,20 @@ namespace EventCombo.Controllers
 
         #endregion
 
-
+       
 
         public ActionResult PaymentConfirmation(long Eventid)
 
         {
             Session["Fromname"] = "ViewEvent";
+            List<paymentdate> Dateofevent=new List<paymentdate>();
             CreateEventController cs = new CreateEventController();
             PaymentConfirmation ps = new PaymentConfirmation();
             var Eventdetails = cs.GetEventdetail(Eventid);
             ps.imgurl = cs.GetImages(Eventid).FirstOrDefault();
             ps.Tilte = Eventdetails.EventTitle;
             ps.description = Eventdetails.EventDescription;
-           var guid= Session["TicketLockedId"].ToString();
+           var guid = Session["TicketLockedId"].ToString();
             AccountController ac = new AccountController();
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
             var acountdedtails = ac.GetLoginDetails(strUsers);
@@ -675,7 +676,31 @@ namespace EventCombo.Controllers
             var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
             ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
-            return View(ps);
+            var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == guid).ToList();
+            foreach (var item in TicketPurchasedDetail)
+            {
+                paymentdate pdate = new paymentdate();
+                var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
+
+                var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
+                var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
+                var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
+
+                var datetime =DateTime.Parse( tQntydetail.TQD_StartDate);
+                var day = datetime.DayOfWeek;
+                var Sdate= datetime.ToString("MMM dd, yyyy");
+                var time = tQntydetail.TQD_StartTime;
+               
+                var addresslist = (!string.IsNullOrEmpty(address.ConsolidateAddress)) ? address.ConsolidateAddress : "";
+                var timefinal = day.ToString() + "~" + Sdate.ToString() + "~" + time+"~"+ addresslist;
+                pdate.id = timefinal;
+                pdate.Address = addresslist;
+                pdate.Datetime = day.ToString() + Sdate.ToString() + time;
+                Dateofevent.Add(pdate);
+
+            }
+            ViewBag.Timecal = Dateofevent;
+                return View(ps);
         }
 
         public string GetOrderDetailForConfirmation()
@@ -732,4 +757,6 @@ namespace EventCombo.Controllers
 
 
     }
+
+   
 }

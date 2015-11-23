@@ -14,4 +14,11 @@ namespace EventCombo.Models
         public string url { get; set; }
         public string description { get; set; }
     }
+
+    public class paymentdate
+    {
+        public string Address { get; set; }
+        public string Datetime { get; set; }
+        public string id { get; set; }
+    }
 }
