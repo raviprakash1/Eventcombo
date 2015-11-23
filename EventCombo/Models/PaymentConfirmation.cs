@@ -13,5 +13,13 @@ namespace EventCombo.Models
         public string sendlatestdetails { get; set; }
         public string url { get; set; }
         public string description { get; set; }
+        public string Email { get; set; }
+    }
+
+    public class paymentdate
+    {
+        public string Address { get; set; }
+        public string Datetime { get; set; }
+        public string id { get; set; }
     }
 }

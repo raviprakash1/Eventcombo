@@ -15,7 +15,7 @@
 
 
     @*<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
-    <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">*@
+        <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">*@
 
 
     <!-- Theme CSS -->
@@ -58,31 +58,31 @@
                     <input type="text" class="form-control" placeholder="Search..." value="Search...">
                 </div>
             </form>
-@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
 {
 
-            <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right">
 
-                <li class="dropdown menu-merge">
-                    <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
-                       
-                     
-                        @*<img src="@{Html.RenderAction("UserImage", "Home");}" alt="avatar" class="mw30 br64">*@
-                        <span class="hidden-xs pl15 ">@{Html.RenderAction("UserName", "Home");}</span>
-                        <span class="caret caret-tp hidden-xs"></span>
-                    </a>
-                    <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
+                    <li class="dropdown menu-merge">
+                        <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
 
-                        <li class="dropdown-footer">
 
-                            <a href="javascript:document.getElementById('logoutForm').submit()" class="">
-                                <span class="fa fa-power-off pr5"></span> Logout
-                            </a>
+                            @*<img src="@{Html.RenderAction("UserImage", "Home");}" alt="avatar" class="mw30 br64">*@
+                            <span class="hidden-xs pl15 ">@{Html.RenderAction("UserName", "Home");}</span>
+                            <span class="caret caret-tp hidden-xs"></span>
+                        </a>
+                        <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
 
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+                            <li class="dropdown-footer">
+
+                                <a href="javascript:document.getElementById('logoutForm').submit()" class="">
+                                    <span class="fa fa-power-off pr5"></span> Logout
+                                </a>
+
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 }
         </header>
 
@@ -94,8 +94,8 @@
 
                 <!-- Start: Sidebar Header -->
                 <header class="sidebar-header">
-@*@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutidForm" }))
-{*@
+                    @*@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutidForm" }))
+                        {*@
                     <!-- Sidebar Widget - Author -->
                     <div class="sidebar-widget author-widget">
                         <div class="media">
@@ -106,7 +106,7 @@
                             <div class="media-body">
                                 <div class="media-links">
 
-                                    <a href="#" class="sidebar-menu-toggle">User Menu</a> 
+                                    <a href="#" class="sidebar-menu-toggle">User Menu</a>
 
                                     @*<a href="javascript:document.getElementById('logoutidForm').submit()">Logout</a>*@
 
@@ -116,7 +116,7 @@
 
                         </div>
                     </div>
-@*//}*@
+                    @*//}*@
 
                     <!-- Sidebar Widget - Menu (slidedown) -->
                     <!-- Sidebar Widget - Search (hidden) -->
@@ -149,10 +149,10 @@
                             <span class="sidebar-title">User</span>
 
                         </a>
-                     </li>
-                    
+                    </li>
+
                     <li>
-                        <a  href="#" onclick="checkPermission('4');">
+                        <a href="#" onclick="checkPermission('4');">
                             <span class="fa fa-lemon-o"></span>
                             <span class="sidebar-title">Event</span>
                         </a>
@@ -166,12 +166,26 @@
 
                     </li>
 
+                    <li>                        
+                        <a href="@Url.Action("EventType", "EventType")">
+                            <span class="fa fa-ticket"></span>
+                            <span class="sidebar-title">Event Type</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="@Url.Action("EventCategory", "EventCategory")">
+                            <span class="fa fa-ticket"></span>
+                            <span class="sidebar-title">Event Category</span>
+                        </a>
+
+                    </li>
 
                     <li class="sidebar-label pt20">Systems</li>
 
                     <li>
-                      
-                        <a  href="#" onclick="checkPermission('6');">
+
+                        <a href="#" onclick="checkPermission('6');">
                             <span class="fa fa-envelope-o"></span>
                             <span class="sidebar-title">Email Content Management</span>
                         </a>
@@ -183,14 +197,15 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="nav sub-nav" style="">
-                           <li>
-                            <a href="#" onclick="checkPermission('7');">
-                                <span class="fa fa-circle-o"></span>
-                                <span class="sidebar-title act">My Account Form</span>
-                            </a>
-                           </li>
+
                             <li>
-                                <a href="#" onclick="checkPermission('7A');" >
+                                <a href="#" onclick="checkPermission('7');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title">My Account Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7A');">
                                     <span class="fa fa-circle-o"></span>
                                     <span class="sidebar-title act">Login Form</span>
                                 </a>
@@ -231,10 +246,10 @@
                                     <span class="sidebar-title act">Messages Form</span>
                                 </a>
                             </li>
-                         </ul>   
+                        </ul>
                     </li>
-                   
-                    
+
+
 
                 </ul>
                 <!-- End: Sidebar Menu -->
@@ -253,7 +268,7 @@
         <!-- End: Sidebar Left -->
         <!-- Start: Content-Wrapper -->
         @RenderBody()
-             </div>
+    </div>
     <!-- End: Main -->
     <!-- BEGIN: PAGE SCRIPTS -->
     <!-- jQuery -->
@@ -267,7 +282,7 @@
     <script src="~/assets/js/utility/utility.js"></script>
     <script src="~/assets/js/demo/demo.js"></script>
     <script src="~/assets/js/main.js"></script>
-    
+
     <!-- Widget Javascript -->
     <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>
 
@@ -276,12 +291,14 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>
     <script type="text/javascript">
         function checkPermission(PermisionId) {
-
+            debugger;
             var vPerm = PermisionId;
-          //  alert(vPerm);
+            //  alert(vPerm);
+
 
             if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G")
             {
+
                 PermisionId = "7";
             }
 
@@ -289,7 +306,7 @@
             $.ajax({
                 url: '@Url.Action("GetPermission", "Permission")',
                 data: { iPermissionId: PermisionId },
-                async:false,
+                async: false,
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
@@ -301,11 +318,13 @@
                         ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
                     }
                     else {
-                      //  alert(vPerm);
+                        //  alert(vPerm);
                         if (vPerm == "3")
                             window.location.href = '@Url.Action("Users", "Users")';
                         else if (vPerm == "6")
-                            window.location.href='@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
+
+                            window.location.href = '@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
+
                         else if (vPerm == "7") {
 
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "MyAccount" })';
@@ -332,6 +351,8 @@
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
                         else if (vPerm == "4")
                             window.location.href = '@Url.Action("Index", "ManageEvent")';
+
+
                     }
                 }
             });

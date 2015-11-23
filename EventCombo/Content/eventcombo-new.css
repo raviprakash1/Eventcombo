@@ -376,7 +376,7 @@
 .cus-drop-list li.drop_cus_header{ font-size: 1.3em; color: #000; padding: 0 10px; line-height: 2em; border-bottom: 1px solid #ccc;}
 .cus-drop-list_high{width: 100%; float: left; min-height: 50px; max-height:200px; overflow: auto; padding: 3px 10px;}
 
-
+.cal_scrol{ width:100%; float:left; min-height:50px; max-height:200px; overflow:hidden; overflow-y:scroll; }
 
 /*Favourite button section*/
 

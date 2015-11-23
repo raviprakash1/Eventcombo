@@ -1,0 +1,140 @@
+﻿@model CMS.Models.EventCategory
+@{
+    ViewBag.Title = "EventCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div  id="content" class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12"> 
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">fdgfd jjj j</span>
+                </div>
+                <div class="panel-body admin-form">                    
+                </div>
+                </div>
+
+
+                </div>
+            </div>
+        </div>
+
+            <section id="content_wrapper">
+                @using (Html.BeginForm())
+                {
+                    <h2>Event Category</h2>
+
+
+                    if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label class="col-md-2 control-label acnt_form_label ">Event Category</label>
+                        <div class="col-md-10">
+                            @*@Html.DropDownList("EventCategory", new SelectList(ViewBag.EventCategory), new { @class = "form-control" })*@
+                            @Html.TextBoxFor(m => m.EventCategory1, new { @maxlength = 35, @class = "form-control" })
+
+
+                        </div>
+
+                        <label class="col-md-2 control-label acnt_form_label " id="lblSubCat">Event Sub Category</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.EventSubCategory1, new { @maxlength = 35, @class = "form-control" })
+                            @*@Html.TextBox("EventSubCategory1", new { @maxlength = 35, @class = "form-control" })*@
+                            <button type="button" name="submit" value="Add Sub Category" class="btn btn-info col-md-offset-3 acnt_btn" id="btnAddSub">Add Sub Category</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group select_types-edit">
+
+                        <div class="col-md-9">
+                            <label class="col-md-2 control-label acnt_form_label " id="lblSubCatList">Event Sub Category List</label>
+                            @Html.ListBox("EventSubCategoryListBox", new SelectList(""), new { @class = "form-control" })
+                            @Html.Hidden("hdESCat")
+                            <button type="submit" name="submit" value="Create" class="btn btn-info acnt_btn" id="btnCreate">Create</button>
+                            <button type="button" name="submit" value="Reset" class="btn btn-info acnt_btn" id="btnReset">Reset</button>
+                            <div>
+                                <label class="col-md-2 control-label acnt_form_label " id="lblCatList">Event Category List</label>
+                            </div>
+                            @Html.ListBox("EventCategoryListBox", new SelectList(ViewBag.EventCategory), new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
+            </section>
+
+            <script type="text/javascript">
+
+                $(window).load(function () {
+                    $("#EventSubCategoryListBox").hide();
+                    $("#lblSubCatList").hide();
+                    $("#btnReset").hide();
+                });
+
+                $(document).ready(function () {
+
+                    $('#btnReset').click(function () {                        
+                        $("#btnCreate").show();
+                        $("#btnAddSub").show();
+                        $("#lblSubCat").show();
+                        $("#EventSubCategory1").show();
+                        $("#EventSubCategoryListBox").hide();
+                        $("#lblSubCatList").hide();
+                        $("#EventCategory1").val('');
+                        $("#btnReset").hide();
+                        
+                    });
+
+                    $('#btnAddSub').click(function () {                        
+                        $("#EventSubCategoryListBox").show();
+                        var newListValue = $('#EventSubCategory1').val();
+                        if ($.trim(newListValue) != '') {
+                            $('#EventSubCategoryListBox').append('<option>' + newListValue + '</option>');
+                            vval = $("#hdESCat").val();
+                            if (vval == "")
+                                $("#hdESCat").val(newListValue);
+                            else
+                                $("#hdESCat").val(vval + ',' + newListValue);
+                        }
+                    });
+
+                    $("#EventCategoryListBox option").click(function () {
+                        $("#EventSubCategoryListBox").show();
+                        $("#lblSubCatList").show();
+                        $("#EventSubCategory1").hide();
+                        $("#btnAddSub").hide();
+                        $("#lblSubCat").hide();
+                        $("#btnCreate").hide();
+                        $("#btnReset").show();
+
+                        var _this = $(this);
+                        $("#EventCategory1").val($(_this).text());
+                        $("#EventSubCategoryListBox").empty();
+                        var eid = $('#EventCategory1').val();
+                        $.ajax({
+                            url: '@Url.Action("GetSubCategories", "EventCategory")',
+                            data: { EvntCtgry: eid },
+                            type: "Post",
+                            success: function (data) {
+                                var strary = data.split(',');
+                                for (var i = 0; i < strary.length; i++) {
+                                    $('#EventSubCategoryListBox').append('<option>' + strary[i] + '</option>');
+                                }
+
+                            },
+                            error: function (data) {
+                                alert("Sorry there is some problem.");
+                                return false
+                            }
+                        });
+
+                    });
+                  
+                });
+            </script>
+

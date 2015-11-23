@@ -171,6 +171,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\EventCategoryController.cs" />
+    <Compile Include="Controllers\EventTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
@@ -1063,6 +1065,8 @@
     <Content Include="Views\Messages\Index.cshtml" />
     <Content Include="Views\Shared\_Logout.cshtml" />
     <Content Include="Views\ManageEvent\Index.cshtml" />
+    <Content Include="Views\EventType\EventType.cshtml" />
+    <Content Include="Views\EventCategory\EventCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
