@@ -55,7 +55,7 @@ namespace CMS.Controllers
                 Selected = (iCount == 0 ? true : false)
             });
 
-            int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 5;
+            int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
             string strText = "";
             if (iUcount > iGapValue)
             {

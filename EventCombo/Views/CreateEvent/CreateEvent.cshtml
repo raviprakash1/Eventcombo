@@ -54,9 +54,9 @@
                         <span> > </span>
                     </button>
                     <div class="clearfix"></div>
-                    <div class="col-sm-12 ">
+                    @*<div class="col-sm-12 ">
                         ( Last saved at MM/DD/YYYY 00:00pm )
-                    </div>
+                    </div>*@
                 </div>
             </div>
 
@@ -1237,7 +1237,7 @@
     </div>
 
        <!-- Confirm Msg OK Modal Box -->
-    <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    @*<div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
             <div class="modal-content">
                 <!-- <div class="modal-header custom">
@@ -1255,8 +1255,31 @@
                 </form>
             </div>
         </div><!-- confirm-msg -->
-    </div>
+    </div>*@
         <!-- Confirm Msg OK Modal Box -->
+
+<div class="modal fade" id="AccessDenied" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+        <div class="modal-content">
+            <!-- <div class="modal-header custom">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div> -->
+            <form id="contactForm" class="fullw1 add">
+                <div class="modal-body text-center pv50 txt-msg">
+                    <h4>Access Denied !!! </h4>
+                </div>
+                <div class="modal-footer msg-action-btn ok">
+                    <button type="button" id="btOKAccess" class="btn btn-primary yes ok">OK</button>
+                </div>
+            </form>
+        </div>
+    </div><!-- confirm-msg -->
+</div>
+<div>
+    <a class="td-btn" id="btOkAc" type="button" href="#AccessDenied" data-toggle="modal" style="display:none">
+
+    </a>
+</div>
 
     // ---------------------Event Creation Script -------------------
 
@@ -1269,7 +1292,7 @@
             $('#id_lblprice-n').html(numbers);
             $('#id_lblmax-n').html(numbers);
             $('.msg').html(deletemsg);
-
+            
         });
         function ValEventdate(e) {
             if (e.trim() == "txtDateFrom") {
@@ -1597,6 +1620,26 @@
         }
 
         $(document).ready(function () {
+            $("#btOKAccess").click(function () {
+                history.back();
+            });
+            $.ajax({
+                url: '@Url.Action("GetPermission", "Permission")',
+                data: { iPermissionId: 1 },
+                async: false,
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    if (response != "Y") {
+                        $("#btOkAc").click();
+                        
+                       
+                    }
+                }
+            });
+
+
+
             $("#btSaveAddress").click(function () {
                 //$("#txtEventLocation").val("Click here to enter venue address");
                 $("#tblAddress tr").each(function () {
