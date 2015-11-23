@@ -81,6 +81,18 @@ namespace CMS.Controllers
                         });
                     }
                 }
+                if (iCount > 0)
+                {
+                    if (iCount < objuser.Count)
+                        objuser = objuser.GetRange(iCount - iGapValue, iGapValue);
+                    else
+                    {
+                        //objuser = objuser.GetRange(iCount - iGapValue, ((iCount - (objuser.Count + 1))));
+                        int iGap = (iCount - iGapValue);
+                        objuser = objuser.GetRange(iGap, (objuser.Count-iGap));
+                        //objlst = objlst.GetRange(iGap, (objlst.Count - iGap));
+                    }
+                }
             }
             else
             {
@@ -90,6 +102,8 @@ namespace CMS.Controllers
                     Value = "50",
                     Selected = (iCount == 50 ? true : false)
                 });
+
+             
 
             }
 
@@ -110,13 +124,7 @@ namespace CMS.Controllers
 
 
 
-            if (iCount > 0)
-            {
-                if (iCount <objuser.Count)
-                    objuser = objuser.GetRange(iCount - iGapValue, iGapValue);
-                else
-                    objuser = objuser.GetRange(iCount - iGapValue, ((iCount- objuser.Count) +1));
-            }
+           
             // List<Permissions> objPerm = GetPermission("APP");
             // UsersTemplate objU = new UsersTemplate();
             //  objU.objPermissions = GetPermission("APP");

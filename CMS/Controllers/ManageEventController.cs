@@ -50,6 +50,16 @@ namespace CMS.Controllers
                         });
                     }
                 }
+                if (iCount > 0)
+                {
+                    if (iCount < objlst.Count)
+                        objlst = objlst.GetRange(iCount - iGapValue, iGapValue);
+                    else
+                    {
+                        int iGap = (iCount - iGapValue);
+                        objlst = objlst.GetRange(iGap, (objlst.Count -iGap) );
+                    }
+                }
             }
             else
             {
@@ -66,13 +76,7 @@ namespace CMS.Controllers
 
 
 
-            if (iCount > 0)
-            {
-                if (iCount < objlst.Count)
-                    objlst = objlst.GetRange(iCount - iGapValue, iGapValue);
-                else
-                    objlst = objlst.GetRange(iCount - iGapValue, ((iCount - objlst.Count) + 1));
-            }
+           
 
             return View(objlst);
 
