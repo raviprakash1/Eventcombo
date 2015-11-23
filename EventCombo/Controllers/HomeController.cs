@@ -277,86 +277,89 @@ namespace EventCombo.Controllers
             EmailTag = getTag();
 
             var Emailtemplate = getEmail("email_lost_pwd");
-            if (!string.IsNullOrEmpty(Emailtemplate.To))
+            if (Emailtemplate != null)
             {
-
-
-                to = Emailtemplate.To;
-                if (to.Contains("¶¶UserEmailID¶¶"))
-                {
-                    to = to.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                }
-            }
-            if (!(string.IsNullOrEmpty(Emailtemplate.From)))
-            {
-                from = Emailtemplate.From;
-                if (from.Contains("¶¶UserEmailID¶¶"))
-                {
-                    from = from.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                }
-            }
-            else
-            {
-                from = "shweta.sindhu@kiwitech.com";
-
-            }
-            if (!string.IsNullOrEmpty(Emailtemplate.Subject))
-            {
-
-
-                subjectn = Emailtemplate.Subject;
-
-                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                if (!string.IsNullOrEmpty(Emailtemplate.To))
                 {
 
-                    if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+
+                    to = Emailtemplate.To;
+                    if (to.Contains("¶¶UserEmailID¶¶"))
                     {
-                        if (EmailTag[i].Tag_Name == "UserEmailID")
-                        {
-                            subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
+                        to = to.Replace("¶¶UserEmailID¶¶", model.Email);
 
-                        }
-                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                    }
+                }
+                if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                {
+                    from = Emailtemplate.From;
+                    if (from.Contains("¶¶UserEmailID¶¶"))
+                    {
+                        from = from.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                    }
+                }
+                else
+                {
+                    from = "shweta.sindhu@kiwitech.com";
+
+                }
+                if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                {
+
+
+                    subjectn = Emailtemplate.Subject;
+
+                    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                    {
+
+                        if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
                         {
-                            subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
+                            if (EmailTag[i].Tag_Name == "UserEmailID")
+                            {
+                                subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                            }
+                            if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                            {
+                                subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                            }
 
                         }
 
                     }
-
                 }
-            }
-            if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
-            {
-                bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
                 {
-
-                    if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                    bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
                     {
-                        if (EmailTag[i].Tag_Name == "UserEmailID")
-                        {
-                            bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
 
-                        }
-                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                        if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
                         {
-                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
+                            if (EmailTag[i].Tag_Name == "UserEmailID")
+                            {
+                                bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
 
-                        }
-                        if (EmailTag[i].Tag_Name == "ResetPwdUrl")
-                        {
-                            bodyn = bodyn.Replace("¶¶ResetPwdUrl¶¶", url1);
+                            }
+                            if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                            {
+                                bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                            }
+                            if (EmailTag[i].Tag_Name == "ResetPwdUrl")
+                            {
+                                bodyn = bodyn.Replace("¶¶ResetPwdUrl¶¶", url1);
+
+                            }
 
                         }
 
                     }
-
                 }
+                SendHtmlFormattedEmail(to, from, subjectn, bodyn);
             }
-            SendHtmlFormattedEmail(to, from, subjectn, bodyn);
             ValidationMessageController vmc = new ValidationMessageController();
            var msg= vmc.Index("ForgetPassword", "ForgotPwdSuccessInitSY");
             ViewData["Message"] = msg;
