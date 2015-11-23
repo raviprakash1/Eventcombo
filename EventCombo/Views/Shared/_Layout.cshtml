@@ -431,7 +431,11 @@ else
 </script>
 <script type="text/javascript">
     function loginCallback(success, returnUrl) {
-      
+        if (returnUrl.indexOf('~') > -1)
+        {
+            urlarray = returnUrl.split('~');
+            returnUrl = urlarray[1];
+        }
         if (returnUrl) {
             window.location.href = returnUrl;
         } else {

@@ -1770,16 +1770,21 @@ namespace EventCombo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            var userid = Session["AppId"].ToString();
-            using (EventComboEntities db = new EventComboEntities())
+           
+            if (Session["AppId"] != null)
             {
-                AspNetUser aspuser = db.AspNetUsers.FirstOrDefault(i => i.Id == userid);
-                if (aspuser != null)
-                {
-                    aspuser.LoginStatus = "N";
-                    db.SaveChanges();
-                }
 
+                var userid = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.FirstOrDefault(i => i.Id == userid);
+                    if (aspuser != null)
+                    {
+                        aspuser.LoginStatus = "N";
+                        db.SaveChanges();
+                    }
+
+                }
             }
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             Session["Fromname"] = null;
