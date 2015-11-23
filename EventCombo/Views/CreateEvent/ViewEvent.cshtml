@@ -567,14 +567,24 @@
 
 
     $(document).ready(function () {
-        $(document).click(function () {
 
-            //$('#diverroacc').css('display', 'none');
-            //$('#divaccsuc').css('display', 'none');
+        $(document).click(function () {
             $('#orgerror').css('display', 'none');
-            $("input").removeClass('err-bor');
-            $("#id_orgtext").removeClass('err-bor');
+
+            if ($('#orgerror').css('display') == 'block') {
+                $('input').removeClass('err-bor');
+                $("#id_orgtext").removeClass('err-bor');
+            }
+            $('#id_orgtext').removeClass('err-bor');
         });
+        //$(document).click(function () {
+
+        //    //$('#diverroacc').css('display', 'none');
+        //    //$('#divaccsuc').css('display', 'none');
+        //    $('#orgerror').css('display', 'none');
+        //    $("input").removeClass('err-bor');
+        //    $("#id_orgtext").removeClass('err-bor');
+        //});
 
         $('#saveorgaizermsg').click(function () {
 
@@ -584,23 +594,23 @@
             var mail = $('#id_orgemail').val();
             var txt = $('#id_orgtext').val();
 
-
+            var count = 0;
 
             if (name != '') {
                 $('#id_orgname').removeClass('err-bor');
 
             } else {
 
-
+                count++;
                 $('#id_orgname').addClass('err-bor');
-                errormsg = "Fill the missing details\n"
+               
             }
 
 
 
             if (!validateEmail(mail)) {
                 $('#id_orgemail').addClass('err-bor');
-                errormsg += "Invalid Email";
+                errormsg += "Invalid Email</br>";
             }
 
 
@@ -609,12 +619,17 @@
                 $('#id_orgtext').removeClass('err-bor');
 
             } else {
+                count++;
                 $('#id_orgtext').addClass('err-bor');
-                errormsg += "fill the details"
+               
             }
             if (erroremail != "") {
                 errormsg += erroremail;
 
+            }
+            if (count > 0)
+            {
+                errormsg = "Fill the missing details"
             }
             if (errormsg != "") {
 
