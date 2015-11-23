@@ -193,7 +193,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        public long SaveEvent(EventCreation model)
+        public long SaveEvent(EventCreation model,string strIsLive)
         {
             long lEventId = 0;
             try
@@ -395,6 +395,9 @@ namespace EventCombo.Controllers
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
                     PublishEvent(lEventId);
+                    if (strIsLive == "Y")
+                        UpdateEventStatus(lEventId.ToString());
+
                 }
             }
             catch (Exception ex)
