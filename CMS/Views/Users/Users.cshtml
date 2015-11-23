@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
 
 
+
 @using (Html.BeginForm("Users", "Users", FormMethod.Post,new { id="formuser",cssClass= "admin-form" }))
 {
     <!-- Start: Content-Wrapper -->
@@ -96,7 +97,7 @@
                                     <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="50">
                                         <thead class="bg_white">
                                             <tr>
-                                                <th>#</th>
+                                                <th data-column-id="id" data-type="numeric" data-identifier="true">#</th>
                                                 <th>Name</th>
                                                 <th>Role</th>
                                                 <th>Email Id</th>
@@ -296,16 +297,16 @@
                                 <div class="col-md-12">
                                     <h3 class="mt5"> Select Role</h3>
 
-                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                    <div class="radio-custom radio-primary mt5 fl-lft mr10">
                                         <input id="rdAdmin" type="radio" name="Permission">
                                         <label for="rdAdmin">Admin</label>
 
                                     </div>
-                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                    <div class="radio-custom radio-primary mt5 fl-lft mr10">
                                         <input id="rdMemberLimit" type="radio" class="Permission" name="Permission">
                                         <label for="rdMemberLimit">Member Limited</label>
                                     </div>
-                                    <div class="radio-custom radio-primary mt5 fl-lft">
+                                    <div class="radio-custom radio-primary mt5 fl-lft mr10">
                                         <input id="rdMember" type="radio" class="Permission" name="Permission">
                                         <label for="rdMember">Member</label>
                                     </div>
@@ -647,4 +648,6 @@
        
 
     </script>
+
+
     <!-- END: PAGE SCRIPTS -->

@@ -11,7 +11,7 @@ namespace CMS.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class EventCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,10 +19,11 @@ namespace CMS.Models
         {
             this.EventSubCategories = new HashSet<EventSubCategory>();
         }
-    
+
         public long EventCategoryID { get; set; }
         public string EventCategory1 { get; set; }
-    
+        //public string[] EventSubCategory1 { get; set; }
+        public EventSubCategory[] EventSubCategory1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventSubCategory> EventSubCategories { get; set; }
     }
