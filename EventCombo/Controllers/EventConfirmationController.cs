@@ -27,7 +27,7 @@ namespace EventCombo.Controllers
            
             var GetEventDate = db.GetEventDateList(evid).FirstOrDefault();
             cms.Startdate = GetEventDate.Dayofweek + " " + GetEventDate.Datefrom + "," + GetEventDate.Time;
-            cms.Address = evAdress.ConsolidateAddress;
+            cms.Address = (evAdress!=null ? evAdress.ConsolidateAddress : "");
             var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
             cms.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + cms.Title.Trim() + "­౼" + EventId + "౼N";

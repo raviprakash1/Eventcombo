@@ -217,6 +217,7 @@ namespace EventCombo.Controllers
 
             }
         }
+
         public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId)
         {
             string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
@@ -349,7 +350,7 @@ namespace EventCombo.Controllers
                             shipadd.OrderId = strOrderNo;
                             objEntity.ShippingAddresses.Add(shipadd);
                         }
-                        if(model.sameshipbilldetail=="Y")
+                        if (model.sameshipbilldetail == "Y")
                         {
                             ShippingAddress shipadd = new ShippingAddress();
                             shipadd.Fname = model.billfname;
@@ -383,12 +384,13 @@ namespace EventCombo.Controllers
 
                             }
                         }
-                       
+
+
                         // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
 
 
-                     
-                       
+
+
 
 
 
@@ -416,9 +418,9 @@ namespace EventCombo.Controllers
                     var username = profiledetail.FirstName;
 
                     var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == guid).ToList();
-                    foreach(var item in TicketPurchasedDetail)
+                    foreach (var item in TicketPurchasedDetail)
                     {
-                       var tQntydetail= db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
+                        var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
 
                         var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
                         var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
@@ -488,8 +490,14 @@ namespace EventCombo.Controllers
                             {
                                 bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
                                 for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                                {
+                                 {
 
+
+                                    if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
+
+                                    }
                                     if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
                                     {
                                         if (EmailTag[i].Tag_Name == "UserEmailID")
@@ -550,9 +558,9 @@ namespace EventCombo.Controllers
                             hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn);
                         }
                     }
-                  
-                  
-                  
+
+
+
                     return strOrderNo;
 
 
@@ -688,7 +696,7 @@ namespace EventCombo.Controllers
                     var OrderNo = (from TPD in objEnt.Ticket_Purchased_Detail
                                    where TPD.TPD_GUID == strGuid
                                    select TPD.TPD_Order_Id
-                                       ).First();
+                                       ).FirstOrDefault();
 
                     var OrderAmt = (from OD in objEnt.Order_Detail_T
                                     where OD.O_Order_Id == OrderNo

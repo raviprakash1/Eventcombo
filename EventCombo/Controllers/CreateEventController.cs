@@ -840,7 +840,8 @@ namespace EventCombo.Controllers
                 {
                     using (EventComboEntities objEnt = new EventComboEntities())
                     {
-                        Event objEvt = objEnt.Events.First(i => i.EventID == Convert.ToInt64(strEventId));
+                        long lEvent = Convert.ToInt64(strEventId);
+                        Event objEvt = objEnt.Events.First(i => i.EventID == lEvent);
                         objEvt.EventStatus = "Live";
 
                         objEnt.SaveChanges();
@@ -848,7 +849,7 @@ namespace EventCombo.Controllers
                     strResult = "Y";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 strResult = "N";
             }
@@ -891,7 +892,12 @@ namespace EventCombo.Controllers
                     objTLD.Locktime = DateTime.Now;
                     objTLD.TLD_Donate = objModel.TLD_Donate;
                     context.Ticket_Locked_Detail.Add(objTLD);
+
+
                 }
+
+
+
                 context.SaveChanges();
             }
         }
