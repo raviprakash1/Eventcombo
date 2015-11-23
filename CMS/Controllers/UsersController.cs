@@ -293,7 +293,7 @@ namespace CMS.Controllers
                         strHtml.Append("<tr>");
                         strHtml.Append("<td align='left'>");
                         strHtml.Append(i.ToString());
-                        strHtml.Append(" . </td>");
+                        strHtml.Append(". </td>");
                         strHtml.Append("<td align='left'>");
                         strHtml.Append(obj.EventTitle);
                         strHtml.Append("</td>");
