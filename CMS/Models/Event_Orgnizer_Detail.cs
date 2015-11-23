@@ -20,6 +20,8 @@ namespace CMS.Models
         public string Orgnizer_Desc { get; set; }
         public string FBLink { get; set; }
         public string Twitter { get; set; }
+        public string UserId { get; set; }
+        public string DefaultOrg { get; set; }
     
         public virtual Event Event { get; set; }
     }

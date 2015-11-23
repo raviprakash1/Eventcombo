@@ -18,5 +18,7 @@ namespace CMS.Models
         public long EventID { get; set; }
         public string EventImageUrl { get; set; }
         public string ImageType { get; set; }
+    
+        public virtual Event Event { get; set; }
     }
 }

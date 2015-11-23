@@ -18,20 +18,20 @@
     <div class="event_container ">
         <div class="event_inner_container event_top" id="eventtopscoll">
             <div class="col-sm-12 bggrey">
-                <div class="Moderor" style="display: none;" id="diverroacc">
-                    <div class="er_UI_main">
+                <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+                    <div class="er_UI_main" >
                         <div class="er_UI_img"></div>
                         <div class="er_suc" id="erraccmsg">
-
+                         <button class="close" type="button" id="btndivaccerr">&#215;</button>
                         </div>
                     </div>
                 </div>
-                <div class="Moderor" id="divaccsuc" style="display: none;">
-                    <div class="er_suc_main alert-success">
-
+                <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
+                    <div class="er_suc_main">
+                        
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg"> </div>
-                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+                        <button class="close"  type="button" id="btndivaccsuc">&#215;</button>
                     </div>
                 </div>
             </div>
@@ -42,16 +42,16 @@
                             <img class="ev1" src="@Html.DisplayFor(m=>m.Imageurl)">
                         </div>
                         <div class="col-sm-9 pl0">
-                            <h2 class="th_tilte">@Html.DisplayFor(m=>m.Title )</h2>
+                            <h2 class="th_tilte" id="h2tag">@Html.DisplayFor(m=>m.Title )</h2>
 
                             <div class="col-sm-12 col-xs-12 text-left">
-                                <div class="form-group mb0">
+                                @*<div class="form-group mb0">
                                     <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
                                     <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
 
                                        Add Schedule to calendar
                                     </label>
-                                </div>
+                                </div>*@
                                 <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
                                     <div class="ev_time_zone_model date_time_modal">
                                         <div class="modal-content ev_tm_zon_cont">
@@ -279,10 +279,8 @@
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <label class="control-label ev_payment_lebel pl0">
                                     PLEASE ENTER YOUR BILLING ADDRESS<br>
-                                    <input type="checkbox" class="billingaddress" id="shippinginfo"/> <span class="ev_pay_span">Shipping address is different from billing </span>
-                                    <div class="clearfix"></div>
-
-                                </label>
+                                   
+                                 </label>
                                 
 
                             </div>
@@ -325,10 +323,20 @@
                             </div>
                         </div>
                         <div class="clearfix divvisible" ></div>
+                        @if (Html.DisplayFor(x => x.Ticketdeliveraddress).ToString() == "Y")
+                        {
+                        <div class="form-group mt10 divvisible">
+                            <input type="checkbox" class="billingaddress" id="shippinginfo" /> <span class="ev_pay_span">Enter Delivery Address</span>
+                            <div class="clearfix"></div>
+                            <input type="checkbox" id="sameshipping" /> <span class="ev_pay_span">Delivery Address Same as Billing Address</span>
+
+                     </div>
+                        }
+
                         <div class="form-group mt10 shippingaddress" style="display:none;" >
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <label class="control-label ev_payment_lebel pl0">
-                                   PLEASE ENTER SHIPPING ADDRESS<br>
+                                   PLEASE ENTER DELIVERY ADDRESS<br>
                                    <div class="clearfix"></div>
                                 </label>
                             </div>
@@ -425,6 +433,12 @@
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="completeorder" >
                             COMPLTE ORDER >
                         </button>
+                        <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
+
+                        </a>
+                    </div>
+                    <div id="dvAjxSave" style="display:none">
+                        <img src="~/Images/ajaxloader1.gif" />
                     </div>
                 </div>
 
@@ -473,6 +487,49 @@
         </div>
     </div>
 
+
+    
+
+
+    <div class="modal fade" id="dvProgress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom wd-4 tdclickmodal">
+            <div class="modal-content">
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+                        <h4 class="msg"><img src="~/Images/ajaxloader1.gif" />Please wait, Preparing your order.</h4>
+                    </div>
+                    @*<div class="modal-footer msg-action-btn ok">
+                        <button type="button" class="btn btn-primary yes ok" data-dismiss="modal">OK</button>
+                    </div>*@
+                </form>
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
+
+
+<div class="modal fade" id="SessionExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+        <div class="modal-content">
+
+            <form id="contactForm" class="fullw1 add">
+                <div class="modal-body text-center pv50 txt-msg">
+
+                    <h4 class="msg" id="hId">Sorry, you took too long and we have to release your order. Please try again.</h4>
+                </div>
+                <div class="modal-footer msg-action-btn ok">
+                    <button type="button" class="btn btn-primary yes ok" id="btMessOk" data-dismiss="modal">OK</button>
+                </div>
+            </form>
+            <input type="hidden" id="hdUserId" value="" />
+        </div>
+    </div><!-- confirm-msg -->
+</div>
+<div>
+    <a class="td-btn" id="btOkMes" type="button" href="#SessionExp" data-toggle="modal" style="display:none">
+
+    </a>
+</div>
+
 }
 <script src="~/Scripts/Commonfunction.js"></script>
 <script src="~/Scripts/flipclock.js"></script>
@@ -496,10 +553,27 @@
 
     //});
 
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
 
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
     function validationpage()
     {
-        var msglogin = "";
+        var msglogin = "",emailerr="",pasword="";
         var Emaillogin = $("#Email").val();
         var confirmlogin = $("#confirmEmail").val();
         var Passowrdlogin = $("#password").val();
@@ -513,66 +587,82 @@
         if (!validateEmail(Emaillogin)) {
             $('#Email').focus();
             $('#Email').addClass('err-bor');
-            msglogin += "Invalid Email" + "\n";
+            emailerr += "Invalid Email" + "\n";
         }
         if ($("#confirmEmail").length > 0) {
             if (!validateEmail(confirmlogin)) {
                 $('#confirmEmail').focus();
                 $('#confirmEmail').addClass('err-bor');
-                msglogin += "Invalid Confirm Email" + "\n";
+                emailerr += "Invalid Confirm Email" + "\n";
             }
 
             if (confirmlogin != Emaillogin) {
                 $('#confirmEmail').focus();
                 $('#confirmEmail').addClass('err-bor');
-                msglogin += "Invalid Confirm Email" + "\n";
+                msglogin += ajaxsetup('TicketPayment', 'TPayValidateConfirmMatchEmailUI') + "</br>";
 
             }
 
+
+        }
+        if (emailerr != "")
+        {
+            msglogin += ajaxsetup('TicketPayment', 'TPayValidateEmailUI') + "</br>";
 
         }
         if ($("#password").length > 0) {
             if (Passowrdlogin.length < 4) {
                 $("#password").focus();
                 $('#password').addClass('err-bor');
-                msglogin += "Invalid Password" + "\n";
+                pasword += "Invalid Password" + "\n";
             }
 
             if (confirmpassword.length < 4) {
                 $("#confirmpassword").focus();
                 $('#confirmpassword').addClass('err-bor');
-                msglogin += "Invalid Confirm Password" + "\n";
+                pasword += "Invalid Confirm Password" + "\n";
             }
             if (Passowrdlogin != confirmpassword) {
                 $("#confirmpassword").focus();
                 $('#confirmpassword').addClass('err-bor');
-                msglogin += "Invalid Confirm Password" + "\n";
+                msglogin += ajaxsetup('TicketPayment', 'TPayValidatePwdUI') + "</br>";
 
             }
         }
+     
+        if (pasword != "")
+        {
+            msglogin += ajaxsetup('TicketPayment', 'TPayValidatePwdUI') + "</br>";
+           
+        }
+        var resultvar = "";
         if (total > 0) {
         var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
         if (result.card_type == null) {
-            msglogin += "Invalid Card Number" + "\n";
+            resultvar += "Invalid Card Number" + "\n";
             $("#cardno").focus();
             $("#cardno").addClass('err-bor');
 
         }
         if(result.length_valid==false)
         {
-            msglogin += "Invalid Card Number" + "\n";
+            resultvar += "Invalid Card Number" + "\n";
             $("#cardno").focus();
             $("#cardno").addClass('err-bor');
 
         }
         if( result.luhn_valid==false)
         {
-            msglogin += "Invalid Card Number" + "\n";
+            resultvar += "Invalid Card Number" + "\n";
             $("#cardno").focus();
             $("#cardno").addClass('err-bor');
 
         }
-
+        if (resultvar != "")
+        {
+            msglogin += ajaxsetup('TicketPayment', 'TPayCardValidationUI') + "</br>";
+        }
+        var billerr = "";
         var billfname = $('#billfname').val();
         var billLname = $('#billLname').val();
         var billingphno = $('#billingphno').val();
@@ -585,21 +675,21 @@
 
         if(billfname== "")
         {
-            msglogin += "Please Enter Billing First name" + "\n";
+            billerr += "Please Enter Billing First name" + "\n";
             $("#billfname").focus();
             $("#billfname").addClass('err-bor');
 
         }
         if(billingphno== "")
         {
-            msglogin += "Please Enter Billing Phone number" + "\n";
+            billerr += "Please Enter Billing Phone number" + "\n";
             $("#billingphno").focus();
             $("#billingphno").addClass('err-bor');
 
         }
         if(billaddress1== "")
         {
-            msglogin += "Please Enter Billing Address" + "\n";
+            billerr += "Please Enter Billing Address" + "\n";
             $("#billaddress1").focus();
             $("#billaddress1").addClass('err-bor');
 
@@ -607,75 +697,83 @@
 
         if(billcity== "")
         {
-            msglogin += "Please Enter Billing City" + "\n";
+            billerr += "Please Enter Billing City" + "\n";
             $("#billcity").focus();
             $("#billcity").addClass('err-bor');
 
         }
         if(billzip== "")
         {
-            msglogin += "Please Enter Billing Zip" + "\n";
+            billerr += "Please Enter Billing Zip" + "\n";
             $("#billzip").focus();
             $("#billzip").addClass('err-bor');
 
         }
         if (billstate == "") {
-            msglogin += "Please Enter Billing State" + "\n";
+            billerr += "Please Enter Billing State" + "\n";
             $("#billstate").focus();
             $("#billstate").addClass('err-bor');
 
         }
         if (billcountry == "") {
-            msglogin += "Please Enter Billing Country" + "\n";
+            billerr += "Please Enter Billing Country" + "\n";
             $("#billcountry").focus();
             $("#billcountry").addClass('err-bor');
 
         }
+        if (billerr!="")
+        {
+            msglogin += ajaxsetup('TicketPayment', 'TPayValidateBillingAddressUI') + "</br>";
+        }
+        var shippingerr = "";
         if ($("#shippinginfo").is(":checked")) {
             if ($('#shipfname').val() == "") {
-                msglogin += "Please Enter Shipping First name" + "\n";
+                shippingerr += "Please Enter Shipping First name" + "\n";
                 $("#shipfname").focus();
                 $("#shipfname").addClass('err-bor');
 
             }
             if ($('#shippingphnno').val() == "") {
-                msglogin += "Please Enter Shipping Phone number" + "\n";
+                shippingerr += "Please Enter Shipping Phone number" + "\n";
                 $("#shippingphnno").focus();
                 $("#shippingphnno").addClass('err-bor');
 
             }
             if ($('#shipaddress1').val() == "") {
-                msglogin += "Please Enter Shipping Address" + "\n";
+                shippingerr += "Please Enter Shipping Address" + "\n";
                 $("#shipaddress1").focus();
                 $("#shipaddress1").addClass('err-bor');
 
             }
             if ($('#shipcity').val() == "") {
-                msglogin += "Please Enter Shipping City" + "\n";
+                shippingerr += "Please Enter Shipping City" + "\n";
                 $("#shipcity").focus();
                 $("#shipcity").addClass('err-bor');
 
             }
             if ($('#shipzip').val() == "") {
-                msglogin += "Please Enter Shipping Zip" + "\n";
+                shippingerr += "Please Enter Shipping Zip" + "\n";
                 $("#shipzip").focus();
                 $("#shipzip").addClass('err-bor');
 
             }
             if ($('#shipstate').val() == "") {
-                msglogin += "Please Enter Shipping state" + "\n";
+                shippingerr += "Please Enter Shipping state" + "\n";
                 $("#shipstate").focus();
                 $("#shipstate").addClass('err-bor');
 
             }
             if ($('#shipcountry').val() == "") {
-                msglogin += "Please Enter Shipping country" + "\n";
+                shippingerr += "Please Enter Shipping country" + "\n";
                 $("#shipcountry").focus();
                 $("#shipcountry").addClass('err-bor');
 
             }
         }
-
+        if(shippingerr!="")
+        {
+            msglogin += ajaxsetup('TicketPayment', 'TPayValidateShippingAddressUI') + "</br>";
+        }
 
         }
         return msglogin;
@@ -686,18 +784,26 @@
     function ShowMessage(Type, Mess) {
         if (Type == 'S') {
             $('#divaccsuc').css('display', 'block');
+            $('#divaccsuc').focus();
             $('#diverroacc').css('display', 'none');
             $('#succaccmsg').html(Mess);
         }
         else {
             $('#divaccsuc').css('display', 'none');
             $('#diverroacc').css('display', 'block');
+            $('#diverroacc').focus();
             $('#erraccmsg').html(Mess);
 
         }
     }
     $(document).ready(function () {
+        $('#sameshipping').click(function () {
+            $(".billingaddress").attr('checked', false);
+            //$(".billingaddress").is(":checked") = false;
+            $(".shippingaddress").css('display', 'none');
+            
 
+        });
 
         $(document).click(function () {
             $('#diverroacc').css('display', 'none');
@@ -705,14 +811,17 @@
             $("input").removeClass('err-bor');
         });
         $('#completeorder').click(function () {
+            // $("#dvAjxSave").show();
+           
             var flag = true;
             var Emaillogin = $("#Email").val();
             var msg = validationpage();
 
             var NameList = [];
             if (msg != "") {
-                $('#diverroacc').css('display', 'block');
-                $('#erraccmsg').html(msg);
+                ShowMessage('E', msg)
+                //$('#diverroacc').css('display', 'block');
+                //$('#erraccmsg').html(msg);
                 return false;
             }
             else
@@ -735,8 +844,9 @@
                                     $('#Email').focus();
                                     $("#Email").addClass('err-bor');
 
-                                    $('#diverroacc').css('display', 'block');
-                                    $('#erraccmsg').html('Email already exist,Please use Sign in!!');
+                                  
+                                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateEmailSy'))
+                                
                                     $('#hdemailexist').val(false);
 
                                 }
@@ -857,11 +967,16 @@
                     'NameList': NameList,
                     'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
                     'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
+                    'sameshipbilldetail': ($("#sameshipping").is(":checked") == true ? "Y" : "N"),
                     'Ticketname': type
                 }
-               
+
+                var Eventid = $('#hdEventid').val();
+              //  alert(Eventid);
+
                 $.ajax({
                     url: '@Url.Action("SaveDetails", "TicketPayment")',
+                    beforeSend: function () { $("#btOk").click(); },
                     data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId },
                     type: "Post",
                     success: function (response) {
@@ -898,6 +1013,12 @@
             $('.Notifybox').slideToggle("fast");
         });
         //--------------Fire when User Click on Continue in Previous Page ------------------------------------
+        $("#btMessOk").click(function () {
+            var title = $('#h2tag').html();
+            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';
+        });
+        
+        //
 
         @*var TList = [];
 
@@ -925,7 +1046,7 @@
 
         // var vTicketid = '19,20';
        // var Eid = $('#hdEventid').val();
-
+        
         clock = $('#divTime').FlipClock(600, {
             clockFace: 'MinuteCounter',
             countdown: true,
@@ -935,12 +1056,12 @@
                         url: '@Url.Action("ReleaseTickets", "TicketPayment")',
                         type: "Get",
                         success: function (response) {
-                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?EventId=' + Eventid;
-                            //ShowMessage('E', 'Sorry, you took too long and we have to release your order. Please try again.');
+                            $("#btOkMes").click();
+                            //window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid+ '౼N';
                         },
                         error: function () {
                             //ShowMessage('E', 'Sorry, There is some error.');
-                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?EventId=' + Eventid;
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid+ '౼N';
                         }
                     });
                 }
@@ -962,7 +1083,7 @@
         });
 
         $(".billingaddress").change(function () {
-
+            $("#sameshipping").attr('checked', false);
             if ($(this).is(":checked") == true) {
 
                 $(".shippingaddress").css('display', 'block');
@@ -1026,8 +1147,9 @@
     $("#btAddList").click(function () {
 
         if ($("#nameofticket").val().trim() == '') {
-            alert("Please enter valid Name.");
-            $("#nameofticket").focus();
+            ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebearernameUI'));
+            $("#nameofticket").addClass('err-bor');
+            
             return false;
         } else {
             if ($('.Notifybox').css('display') == 'block')
@@ -1035,8 +1157,9 @@
                 var email = $('#emailbearer').val();
                 if (!validateEmail(email))
                 {
-                   
-                    alert("Please enter valid Email.");
+                    $('#emailbearer').addClass('err-bor');
+                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebeareremailUI'));
+                    //alert("Please enter valid Email.");
                     if ($('#ddlListitem option').length < 0) {
                         $('#blocklist').css('display', 'none');
                     }
@@ -1044,22 +1167,22 @@
 
 
              } else {
-                    
+
                     $('#blocklist').css('display', 'block');
                 }
 
             }
             else {
-                    
+
                     $('#blocklist').css('display', 'block');
             }
-            
-           
+
+
         }
-       
-       
-        
-       
+
+
+
+
 
         if ($("#hidTicketbearer").val() == '') {
             //if (parseInt($("#ddlOrgnizers option").length) > 24) {

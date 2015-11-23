@@ -30,11 +30,11 @@ namespace EventCombo.Controllers
         {
             if ((Session["AppId"] != null))
             {
-                Session["Fromname"] = "events";
-                var url = Url.Action("CreateEvent", "CreateEvent");
+               Session["Fromname"] = "events";
+               var url = Url.Action("CreateEvent", "CreateEvent");
                Session["ReturnUrl"] = "CreateEvent~"+ url;
 
-                string defaultCountry = "";
+               string defaultCountry = "";
                 using (EventComboEntities db = new EventComboEntities())
                 {
                     var countryQuery = (from c in db.Countries
@@ -96,6 +96,11 @@ namespace EventCombo.Controllers
                     ViewBag.ddlEventCategory = EventCategory;
 
                 }
+
+                //EventCreation ObjEV = new EventCreation();
+                //ObjEV.EventTitle = "Form Editing";
+
+
                 return View();
             }
             else
@@ -188,7 +193,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        public long SaveEvent(EventCreation model)
+        public long SaveEvent(EventCreation model,string strIsLive)
         {
             long lEventId = 0;
             try
@@ -389,6 +394,10 @@ namespace EventCombo.Controllers
 
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
+                    PublishEvent(lEventId);
+                    if (strIsLive == "Y")
+                        UpdateEventStatus(lEventId.ToString());
+
                 }
             }
             catch (Exception ex)
@@ -399,27 +408,51 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult ViewEvent(long EventId,string eventTitle)
+
+
+
+        public ActionResult ViewEvent(string strUrlData)
         {
+            ValidationMessageController vmc = new ValidationMessageController();
+            string[] str = strUrlData.Split('౼');
+            string strForView = "";
+            string eventTitle = str[0].ToString();
+            long EventId = Convert.ToInt64(str[1]);
+            try
+            {
+                strForView = str[2].ToString();
+            }
+            catch (Exception)
+            {
+                strForView = "N";
+            }
+
+            TempData["ForViewOnly"] = strForView;
+
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "ViewEvent";
-            var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
+            var url= Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
+           // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
             Session["ReturnUrl"] = "ViewEvent~" + url;
             var TopAddress = "";var Topvenue="";
-            string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="";
+            string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="",enablediscussion="";
             ViewEvent viewEvent = new ViewEvent();
+            //EventDetails
             var EventDetail = GetEventdetail(EventId);
+
             var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
             var EventDescription = EventDetail.EventDescription;
             var showtimezone = EventDetail.DisplayTimeZone;
+            enablediscussion = EventDetail.EnableFBDiscussion;
           viewEvent.showTimezone = showtimezone;
             var timezone = EventDetail.TimeZone;
             viewEvent.Timezone = timezone;
+            viewEvent.enablediscussion = enablediscussion;
             //Address
-          var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
+            var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)
             {
                  TopAddress = evAdress.ConsolidateAddress;
@@ -520,6 +553,15 @@ namespace EventCombo.Controllers
             {
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + " " + starttime + "-" + endday.ToString() + " " + eDate_new;
 
+            }
+
+            var enday =DateTime.Parse(eDate_new);
+            var now = DateTime.Now;
+            if(enday< now)
+            {
+               
+                TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy"); 
+                TempData["ForViewOnly"] = "Y";
             }
             viewEvent.typeofEvent = EventDetail.AddressStatus;
             viewEvent.Shareonfb= EventDetail.Private_ShareOnFB;
@@ -770,17 +812,17 @@ namespace EventCombo.Controllers
 
         }
 
-        public string PublishEvent(string strEventId)
+        public string PublishEvent(long lEventId)
         {
             string strResult = "N";
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-                if (strUserId != "" && strEventId!="")
+                if (strUserId != "" && lEventId >0)
                 {
                     using (EventComboEntities objEnt = new EventComboEntities())
                     {
-                        objEnt.PublishEvent(Convert.ToInt64(strEventId), strUserId);
+                        objEnt.PublishEvent(lEventId, strUserId);
                     }
                     strResult = "Y";
                 }
@@ -791,7 +833,31 @@ namespace EventCombo.Controllers
             }
             return strResult;
         }
+        public string UpdateEventStatus(string strEventId)
+        {
+            string strResult = "N";
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                if (strUserId != "" && strEventId != "")
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        long lEvent = Convert.ToInt64(strEventId);
+                        Event objEvt = objEnt.Events.First(i => i.EventID == lEvent);
+                        objEvt.EventStatus = "Live";
 
+                        objEnt.SaveChanges();
+                    }
+                    strResult = "Y";
+                }
+            }
+            catch (Exception ex)
+            {
+                strResult = "N";
+            }
+            return strResult;
+        }
         #region DisplayTickets
         public string GetTicketDetail(string Eventid)
         {
@@ -829,7 +895,12 @@ namespace EventCombo.Controllers
                     objTLD.Locktime = DateTime.Now;
                     objTLD.TLD_Donate = objModel.TLD_Donate;
                     context.Ticket_Locked_Detail.Add(objTLD);
+
+
                 }
+
+
+
                 context.SaveChanges();
             }
         }
@@ -837,6 +908,8 @@ namespace EventCombo.Controllers
 
         #endregion
 
+
+        
 
 
     }

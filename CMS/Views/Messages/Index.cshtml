@@ -38,21 +38,26 @@
                         <span class="panel-title">@TempData["FormName"]  Form</span>
                     </div>
                     <div class="panel-body admin-form">
-                        <!-- <div class="col-md-12">
-                          <div class="alert alert-success alert-dismissable">
-                            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">&#215;</button>
+                         <div class="col-md-12"  id="divmainerror" >
+                          <div class="alert alert-danger alert-dismissable" id="dvalertdanger" style="display:none;" tabindex="-1">
+                            <button class="close" aria-hidden="true"  id="btnclose" type="button">&#215;</button>
                             <i class="fa fa-info pr10"></i>
-                            <strong>Oh snap!</strong>
-                            You need to&#10;
-                            <a class="alert-link" href="#">Change a few things up</a>
-                            and try again.&#10;
+                           <span id="spantext"></span>
                           </div>
-                        </div> -->
+                             @if (ViewData["Saved"] != null)
+                             { 
+                             <div class="alert alert-success alert-dismissable" id="dvalertsucc" >
+                                 <button class="close" aria-hidden="true" id="btnclosesucc" type="button">&#215;</button>
+                                 <i class="fa fa-info pr10"></i>
+                                 <span id="spantext">@ViewData["Saved"]</span>
+                             </div>
+                             }
+                        </div> 
                         <div class="col-md-12">
 
                                @for (var i = 0; i < Model.Count; i++)
                                {
-                                <div class="row">
+                                <div class="row" id="divrow">
                                     <div class="col-md-4">
                                         <div class="section">
                                             @Html.TextBoxFor(x => x[i].Form_Tag,new  { @class = "field form-control", @readonly = "readonly" })
@@ -62,7 +67,7 @@
                                     <div class="col-md-8">
                                         <div class="section">
                                             <label class="field">
-                                             @Html.TextBoxFor(x => x[i].Message, new { @class = "gui-input", id = "from", placeholder = "Message",@maxlength = 256 })
+                                             @Html.TextBoxFor(x => x[i].Message, new { @class = "gui-input messagereq", id = "from", placeholder = "Message",@maxlength = 256 })
                                                 @*<input type="text" name="from" id="from" class="gui-input" placeholder="Message">*@
                                             </label>
                                         </div>
@@ -71,7 +76,7 @@
                                 }
                          
                                 <div class="col-md-12 text-center">
-                                    <button class="btn btn-primary btn-lg" type="submit">Save Message</button>
+                                    <button class="btn btn-primary btn-lg" type="submit" id="btnsave">Save Message</button>
                                 </div>
 
                    
@@ -92,3 +97,91 @@
 
 </section>
 }
+<script type="text/javascript" >
+
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+    $(window).load(function () {
+        $('.accordion-toggle').addClass('menu-open');
+        var span = $('.act');
+        $(span).each(function () {
+           var html=$(this).html();
+           var tag = $('.panel-title').html();
+          var tag1= html.trim().toLowerCase().replace(" ", "").replace(" ", "");
+          var tag2=tag.trim().toLowerCase().replace(" ", "").replace(" ", "");
+           $(this).parent().parent().attr('class', '');
+           if (tag1 == tag2)
+           {
+               $(this).parent().parent().attr('class', 'active');
+           }
+           //console.log();
+        });
+
+    });
+    $(document).ready(function () {
+       
+          
+
+      
+        $("#btnclose").click(function () {
+
+            $('#dvalertdanger').css('display', 'none');
+            $('#dvalertsucc').css('display', 'none');
+            $('input').removeClass('err-bor');
+        });
+        $("#btnclosesucc").click(function () {
+
+            $('#dvalertdanger').css('display', 'none');
+            $('#dvalertsucc').css('display', 'none');
+            $('input').removeClass('err-bor');
+        });
+        $("#btnsave").click(function () {
+            var count = 0;
+
+            $(".messagereq").each(function () {
+                var $el = $(this);
+                var n = $el.val();
+                console.log(n.length);
+                if (n.length <= 0) {
+
+                    count++;
+                    $(this).addClass('err-bor');
+
+                }
+            });
+
+            if (count > 0) {
+                $('#divmainerror').css('display', 'block');
+                $('#dvalertdanger').css('display', 'block');
+                $('#dvalertsucc').css('display', 'none');
+                var text = ajaxsetup('Messages', 'MessageReqUI');
+
+                $('#spantext').html(text);
+                $('#dvalertdanger').focus();
+                return false;
+            }
+
+
+
+        });
+
+
+
+    });
+</script>

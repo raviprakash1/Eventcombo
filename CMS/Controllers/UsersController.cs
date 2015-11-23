@@ -17,9 +17,7 @@ namespace CMS.Controllers
         {
             try
             {
-                //User_Permission_Detail userper = db.User_Permission_Detail.Where(i => i.UP_User_Id.Trim() == userid.Trim()).FirstOrDefault();
-                //db.User_Permission_Detail.Remove(userper);
-                //db.SaveChanges();
+
                 db.Database.ExecuteSqlCommand("Delete from User_Permission_Detail where UP_User_Id='" + userid + "'");
                 Profile prof = db.Profiles.Where(i => i.UserID == userid).FirstOrDefault();
                 db.Profiles.Remove(prof);
@@ -44,13 +42,89 @@ namespace CMS.Controllers
 
         }
 
-        public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
+        public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
-
-
-
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+            int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
+            List<SelectListItem> PageFilter = new List<SelectListItem>();
+             
+            PageFilter.Add(new SelectListItem()
+            {
+                Text = "Select",
+                Value = "0",
+                Selected = (iCount == 0 ? true : false)
+            });
 
+            int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
+            string strText = "";
+            if (iUcount > iGapValue)
+            {
+                for (i = 0; i < iUcount; i++)
+                {
+                    strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                    PageFilter.Add(new SelectListItem()
+                    {
+                        Text = strText,
+                        Value = (z+ iGapValue).ToString(),
+                        Selected = (iCount == z ? true : false)
+                    });
+                    z = z + iGapValue;
+                    iUcount = iUcount - iGapValue;
+                    if (iUcount < iGapValue)
+                    {
+                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                        PageFilter.Add(new SelectListItem()
+                        {
+                            Text = strText,
+                            Value = (z + iGapValue).ToString(),
+                            Selected = (iCount == z ? true : false)
+                        });
+                    }
+                }
+                if (iCount > 0)
+                {
+                    if (iCount < objuser.Count)
+                        objuser = objuser.GetRange(iCount - iGapValue, iGapValue);
+                    else
+                    {
+                        //objuser = objuser.GetRange(iCount - iGapValue, ((iCount - (objuser.Count + 1))));
+                        int iGap = (iCount - iGapValue);
+                        objuser = objuser.GetRange(iGap, (objuser.Count-iGap));
+                        //objlst = objlst.GetRange(iGap, (objlst.Count - iGap));
+                    }
+                }
+            }
+            else
+            {
+                PageFilter.Add(new SelectListItem()
+                {
+                    Text = "0 - 50",
+                    Value = "50",
+                    Selected = (iCount == 50 ? true : false)
+                });
+
+             
+
+            }
+
+            //PageFilter.Add(new SelectListItem()
+            //{
+            //    Text = "1 - 5",
+            //    Value = "5",
+            //    Selected = (iCount == 5 ? true : false)
+            //});
+            //PageFilter.Add(new SelectListItem()
+            //{
+            //    Text = "5 - 10",
+            //    Value = "10",
+            //    Selected = (iCount == 10 ? true : false)
+            //});
+
+            ViewBag.PageF = PageFilter;
+
+
+
+           
             // List<Permissions> objPerm = GetPermission("APP");
             // UsersTemplate objU = new UsersTemplate();
             //  objU.objPermissions = GetPermission("APP");
@@ -79,7 +153,8 @@ namespace CMS.Controllers
                                          Merchant = Pr.Merchant.Trim(),
                                          UserStatus = Pr.UserStatus.Trim(),
                                          FirstName = Pr.FirstName,
-                                         LastName = Pr.LastName
+                                         LastName = Pr.LastName,
+                                         Online= UserTemp.LoginStatus
                                      }
                                     );
                 //return modelUserTemp.ToList();
@@ -200,5 +275,44 @@ namespace CMS.Controllers
             }
             return strResult.ToString();
         }
+
+        public string GetUserEvents(string strUserId)
+        {
+            StringBuilder strHtml = new StringBuilder();
+            using (EmsEntities objEntity = new EmsEntities())
+            {
+                var modelPerm = (from uEvt in objEntity.Events
+                                 where uEvt.UserID.Equals(strUserId)
+                                 select uEvt).ToList();
+                int i = 0;
+                if (modelPerm.Count > 0)
+                {
+                    foreach (Event obj in modelPerm)
+                    {
+                        i = i + 1;
+                        strHtml.Append("<tr>");
+                        strHtml.Append("<td align='left'>");
+                        strHtml.Append(i.ToString());
+                        strHtml.Append(" . </td>");
+                        strHtml.Append("<td align='left'>");
+                        strHtml.Append(obj.EventTitle);
+                        strHtml.Append("</td>");
+                        strHtml.Append("</tr>");
+                    }
+                }
+                else
+                {
+                    strHtml.Append("<tr>");
+                    strHtml.Append("<td align='left'>");
+                    strHtml.Append("No event history for this user.");
+                    strHtml.Append("</td>");
+                    strHtml.Append("</tr>");
+
+                }
+                return strHtml.ToString();
+            }
+
+        }
+
     }
 }

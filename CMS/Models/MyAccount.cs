@@ -53,11 +53,9 @@ namespace CMS.Models
         public int? month { get; set; }
         public int? year { get; set; }
 
-        [Display(Name = "Confirm password")]
-        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
+          public string ConfirmPassword { get; set; }
+        public string Designation { get; set; }
+    
         public string Password { get; set; }
     }
 }

@@ -180,6 +180,7 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\ValidationMessageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -199,49 +200,12 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DeliveryMethod.cs">
+    <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Event.cs">
+    <Compile Include="Models\CardDetail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventCategory.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventCreation.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventImage.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventOrganizer.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventSubCategory.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventTempImage.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventType.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventVenue.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Event_Detail.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Event_Orgnizer_Detail.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Fee_Structure.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GetEventListing_Result.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ManageEvent.cs" />
     <Compile Include="Models\Cmsdata.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -263,13 +227,71 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmailTemplate.cs" />
+    <Compile Include="Models\DeliveryMethod.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Email_Tag.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Email_Template.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Event.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventCategory.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventCreation.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventFavourite.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventImage.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventSubCategory.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventTempImage.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventType.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventVenue.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventVote.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event_Detail.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event_OrganizerMessages.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event_Orgnizer_Detail.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event_VariableDesc.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Fee_Structure.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\func_Split_Result.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetEventDateList_Result.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetEventListing_Result.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ManageEvent.cs" />
+    <Compile Include="Models\EmailTemplate.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs">
@@ -279,12 +301,21 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\Order_Detail_T.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Permissions.cs" />
     <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\Permission_Detail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profile.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Publish_Event_Detail.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ShippingAddress.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SQLConnection.cs" />
@@ -294,10 +325,25 @@
     <Compile Include="Models\Ticket.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TicketBearer.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TicketDeliveryMethod.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketType.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ticket_Locked_Detail.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ticket_Purchased_Detail.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ticket_Quantity_Detail.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TimeZoneDetail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UsersContext.cs" />
@@ -947,6 +993,7 @@
     <Content Include="plugins\footable\css\fonts\footable.eot" />
     <Content Include="plugins\footable\css\fonts\footable.ttf" />
     <Content Include="plugins\footable\css\fonts\footable.woff" />
+    <Content Include="Ckeditor\CHANGES.md" />
     <EntityDeploy Include="Models\Cmsdata.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Cmsdata.Designer.cs</LastGenOutput>
@@ -954,7 +1001,6 @@
     <Content Include="Models\Cmsdata.edmx.diagram">
       <DependentUpon>Cmsdata.edmx</DependentUpon>
     </Content>
-    <Content Include="Ckeditor\CHANGES.md" />
     <None Include="Properties\PublishProfiles\CMSPublish.pubxml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -1029,6 +1075,7 @@
     <Folder Include="Ckeditor\plugins\" />
     <Folder Include="Ckeditor\skins\" />
     <Folder Include="Views\Permission\" />
+    <Folder Include="Views\ValidationMessage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1040,6 +1087,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

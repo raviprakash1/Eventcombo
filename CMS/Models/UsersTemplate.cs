@@ -22,6 +22,7 @@ namespace CMS.Models
         public string UserStatus { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Online { get; set; }
 
 
 

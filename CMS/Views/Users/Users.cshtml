@@ -6,14 +6,13 @@
 }
 
 
-    <!-- Meta, title, CSS, favicons, etc. -->
-  
-    <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
-    <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
+<!-- Meta, title, CSS, favicons, etc. -->
+
+<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+<link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
 
 
-
-@using (Html.BeginForm("Users", "Users", FormMethod.Post,new { id="formuser",cssClass= "admin-form" }))
+@using (Html.BeginForm("Users", "Users", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
 {
     <!-- Start: Content-Wrapper -->
     <section id="content_wrapper">
@@ -37,241 +36,263 @@
         </header>
         <!-- End: Topbar -->
         <!-- Begin: Content -->
-        
+
         <div id="content" class="animated fadeIn">
             <div class="row" id="modal-content">
                 <div class="col-md-12">
 
                     <div class="admin-panels ">
-                        
-                            <div class="row">
-                                <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
-                                    <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
-                                        <div class="panel-heading panel_loader">
-                                            <span class="view_evnt fs26 col-sm-6">  Users</span>
-                                            
-                                            <label class="field select admin-form col-sm-4 text-right srh-by-no">
-                                                <select>
+
+                        <div class="row">
+                            <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
+                                <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
+                                    <div class="panel-heading panel_loader">
+                                        <span class="view_evnt fs26 col-sm-6">  Users</span>
+
+                                        <label class="field select admin-form col-sm-4 text-right srh-by-no">
+                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })
+
+                                            @*<select>
                                                     <option value="0">Select</option>
                                                     <option value="0">01 - 50</option>
                                                     <option value="1">51 - 100</option>
                                                     <option value="2">101 - 150</option>
-                                                </select>
-                                                <i class="arrow double"></i>
-                                            </label>
+                                                </select>*@
+                                            <i class="arrow double"></i>
+                                        </label>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <!--  <hr class="short alt"> -->
+
+                                        <div class="col-md-3">
+                                            @Html.TextBox("SearchStringFirstName", "", new { cssClass = "form-control", placeholder = "First Name" })
+
+
                                         </div>
 
-                                        <div class="panel-body">
-                                            <!--  <hr class="short alt"> -->
+                                        <div class="col-md-3">
 
-                                            <div class="col-md-3">
-                                                @Html.TextBox("SearchStringFirstName","",new { cssClass= "form-control", placeholder = "First Name" })
-                                                     
-                                                
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                
-                                                 @Html.TextBox("SearchStringLastName", "", new { cssClass = "form-control", placeholder = "Last Name" })
-                                                
-                                            </div>
-                                            <div class="col-md-3">
-                                                
-                                                   @Html.TextBox("SearchStringEmail","",new { cssClass= "form-control", placeholder = "Email Id" })
-                                                
-                                            </div>
-
-
-                                            <div class="col-md-3">
-                                                <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
-                                            </div>
+                                            @Html.TextBox("SearchStringLastName", "", new { cssClass = "form-control", placeholder = "Last Name" })
 
                                         </div>
-                                     
+                                        <div class="col-md-3">
+
+                                            @Html.TextBox("SearchStringEmail", "", new { cssClass = "form-control", placeholder = "Email Id" })
+
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
+                                        </div>
+
                                     </div>
 
                                 </div>
 
-                                <div class="col-md-12">
-
-                                    <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="50">
-                                        <thead class="bg_white">
-                                            <tr>
-                                                <th data-column-id="id" data-type="numeric" data-identifier="true">#</th>
-                                                <th>Name</th>
-                                                <th>Role</th>
-                                                <th>Email Id</th>
-                                                <th>Event</th>
-                                                <th>Deals</th>
-                                                <th>Location</th>
-                                                <th>Organiser</th>
-                                                <th>Merchant</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                                <th>Online</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            @{ int i = 0;
-                                                foreach (var obj in Model)
-                                                {
-                                                    i = i + 1;
-                                                    <tr>
-
-                                                        <td>@i.ToString()</td>
-                                                        <td class="eml-ellps" title="@obj.FirstName @obj.LastName">
-
-                                                            @obj.FirstName  @obj.LastName
-
-                                                        </td>
-                                                        <td>
-                                                            <a class="holder-active animation-switcher" href="#modal-panel">
-                                                                <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" type="button">Manage</button>
-                                                                @*<input type="button" class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" value="Manage" />*@
-                                                                
-
-                                                                @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
-                                                            </a>
-                                                        </td>
-                                                        <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
-                                                        <td>0</td>
-                                                        <td>0</td>
-                                                        <td>India</td>
-                                                        <td>
-                                                            <div class="section">
-                                                                <label class="field select">
-                                                                    @if (obj.Organiser == "Y")
-                                                        {
-                                                                        <select id="dlOrgnizer"  onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                            <option value="0">Select</option>
-                                                                            <option selected="selected" value="1">Yes</option>
-                                                                            <option value="2">No</option>
-                                                                        </select>
-                                                                        <i class="arrow double"></i>
-                                                                    }
-                                                                    else if (obj.Organiser == "N")
-                                                                    {
-                                                                        <select id="dlOrgnizer" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                            <option value="0">Select</option>
-                                                                            <option  value="1">Yes</option>
-                                                                            <option selected="selected" value="2">No</option>
-                                                                        </select>
-                                                                        <i class="arrow double"></i>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <select id="dlOrgnizer" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                            <option value="0">Select</option>
-                                                                            <option value="1">Yes</option>
-                                                                            <option value="2">No</option>
-                                                                        </select>
-                                                                        <i class="arrow double"></i>
-                                                                    }
-
-
-                                                                </label>
-                                                            </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <div class="section">
-                                                                <label class="field select">
-                                                                    @if (obj.Merchant == "Y")
-                                                                    {
-                                                                        <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                            <option value="0">Select</option>
-                                                                            <option selected="selected" value="1">Yes</option>
-                                                                            <option value="2">No</option>
-                                                                        </select>
-                                                                    }
-                                                                    else if (obj.Merchant == "N")
-                                                                    {
-                                                                        <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                            <option value="0">Select</option>
-                                                                            <option value="1">Yes</option>
-                                                                            <option selected="selected" value="2">No</option>
-                                                                        </select>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                            <option value="0">Select</option>
-                                                                            <option value="1">Yes</option>
-                                                                            <option value="2">No</option>
-                                                                        </select>
-                                                                    }
-
-                                                                    <i class="arrow double"></i>
-                                                                </label>
-                                                            </div>
-
-                                                        </td>
-                                                        <td>
-                                                            <div class="section">
-                                                                <label class="field select">
-                                                                    @if (obj.UserStatus == "Y")
-                                                                    {
-                                                                        <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                            <option value="0">Select</option>
-                                                                            <option value="1" selected="selected">Active</option>
-                                                                            <option value="2">Deactive</option>
-                                                                        </select>
-                                                                    }
-                                                                    else if (obj.UserStatus == "N")
-                                                                    {
-                                                                        <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                            <option value="0">Select</option>
-                                                                            <option value="1">Active</option>
-                                                                            <option value="2" selected="selected">Deactive</option>
-                                                                        </select>
-                                                                    }
-
-                                                                    else
-                                                                    {
-                                                                        <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                            <option value="0">Select</option>
-                                                                            <option value="1">Active</option>
-                                                                            <option value="2">Deactive</option>
-                                                                        </select>
-                                                                    }
-                                                                    <i class="arrow double"></i>
-                                                                </label>
-                                                            </div>
-
-                                                        </td>
-                                                        @*<td>
-                                    <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                    @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
-                                    <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                </td>*@
-                                                        <td>
-                                                            <a href="~/MyAcc/MyAccount?UserId=@obj.Id" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                                            @*@Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)*@
-                                                            @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
-                                                            <button class="btn btn-danger br2 btn-xs fs12" id="btnManage" onclick="ConfirmDelete('@obj.Id')"><i class="fa fa-remove"></i></button>
-                                                        </td>
-                                                        <td><span class="fa fa-circle text-success fs14" title="online"></span></td>
-                                                    </tr>
-                                                }
-                                            }
-                                        </tbody>
-                                        <tfoot class="footer-menu">
-                                            <tr>
-                                                <td colspan="12">
-                                                    <nav class="text-right">
-                                                        <ul class="pagination hide-if-no-paging"></ul>
-                                                    </nav>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-
-                                    </table>
-
-                                </div>
                             </div>
-                       
-                        
+
+                            <div class="col-md-12">
+
+                                <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="50">
+                                    <thead class="bg_white">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric" data-identifier="true">Sno.</th>
+                                            <th>Name</th>
+                                            <th>Role</th>
+                                            <th>Email Id</th>
+                                            <th>Event</th>
+                                            <th>Deals</th>
+                                            <th>Location</th>
+                                            <th>Organiser</th>
+                                            <th>Merchant</th>
+                                            <th>Status</th>
+                                            <td>Action</td>
+                                            <td>Online</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @{ int i = 0;
+                                            foreach (var obj in Model)
+                                            {
+                                                i = i + 1;
+                                                <tr>
+
+                                                    <td>@i</td>
+                                                    <td class="eml-ellps" title="@obj.FirstName @obj.LastName">
+
+                                                        @obj.FirstName  @obj.LastName
+
+                                                    </td>
+                                                    <td>
+                                                        <a class="holder-active animation-switcher" href="#modal-panel">
+                                                            <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" type="button">Manage</button>
+                                                            @*<input type="button" class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" value="Manage" />*@
+
+
+                                                            @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
+                                                        </a>
+                                                    </td>
+                                                    <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
+                                                    <td>
+                                                        <div class="tdModel">
+                                                            <a class="td-btn" id="btEvent" onclick="GetEvents('@obj.Id');"  type="button" href="#dvEvents" data-toggle="modal">
+                                                                Click here
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td>0</td>
+                                                    <td>India</td>
+                                                    <td>
+                                                        <div class="section">
+                                                            <label class="field select">
+                                                                @if (obj.Organiser == "Y")
+                                                                {
+                                                                    <select id="dlOrgnizer"   onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
+                                                                        <option  value="0">Select</option>
+                                                                        <option  selected="selected" value="1">Yes</option>
+                                                                        <option value="2">No</option>
+                                                                    </select>
+                                                                        <i class="arrow double"></i>
+                                                                }
+                                                                else if (obj.Organiser == "N")
+                                                                {
+                                                                    <select id="dlOrgnizer"  onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
+                                                                        <option value="0">Select</option>
+                                                                        <option  value="1">Yes</option>
+                                                                        <option selected="selected" value="2">No</option>
+                                                                    </select>
+                                                                        <i class="arrow double"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <select id="dlOrgnizer"   onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
+                                                                        <option value="0">Select</option>
+                                                                        <option value="1">Yes</option>
+                                                                        <option value="2">No</option>
+                                                                    </select>
+                                                                        <i class="arrow double"></i>
+                                                                }
+
+
+                                                            </label>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="section">
+                                                            <label class="field select">
+                                                                @if (obj.Merchant == "Y")
+                                                                {
+                                                                    <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
+                                                                        <option value="0">Select</option>
+                                                                        <option selected="selected" value="1">Yes</option>
+                                                                        <option value="2">No</option>
+                                                                    </select>
+                                                                }
+                                                                else if (obj.Merchant == "N")
+                                                                {
+                                                                    <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
+                                                                        <option value="0">Select</option>
+                                                                        <option value="1">Yes</option>
+                                                                        <option selected="selected" value="2">No</option>
+                                                                    </select>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
+                                                                        <option value="0">Select</option>
+                                                                        <option value="1">Yes</option>
+                                                                        <option value="2">No</option>
+                                                                    </select>
+                                                                }
+
+                                                                <i class="arrow double"></i>
+                                                            </label>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="section">
+                                                            <label class="field select">
+                                                                @if (obj.UserStatus == "Y")
+                                                                {
+                                                                    <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
+                                                                        <option value="0">Select</option>
+                                                                        <option value="1" selected="selected">Active</option>
+                                                                        <option value="2">Deactive</option>
+                                                                    </select>
+                                                                }
+                                                                else if (obj.UserStatus == "N")
+                                                                {
+                                                                    <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
+                                                                        <option value="0">Select</option>
+                                                                        <option value="1">Active</option>
+                                                                        <option value="2" selected="selected">Deactive</option>
+                                                                    </select>
+                                                                }
+
+                                                                else
+                                                                {
+                                                                    <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
+                                                                        <option value="0">Select</option>
+                                                                        <option value="1">Active</option>
+                                                                        <option value="2">Deactive</option>
+                                                                    </select>
+                                                                }
+                                                                <i class="arrow double"></i>
+                                                            </label>
+                                                        </div>
+
+                                                    </td>
+                                                    @*<td>
+                                                            <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                            @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
+                                                            <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                        </td>*@
+                                                    <td>
+                                                        <a href="~/MyAcc/MyAccount?UserId=@obj.Id" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                        @*@Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)*@
+                                                        @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
+                                                        @*<button class="btn btn-danger br2 btn-xs fs12" id="btnManage" onclick="ConfirmDelete('@obj.Id')"></button>*@
+
+                                                        <a class="td-btn" onclick="ConfirmDelete('@obj.Id');" type="button" href="#confirm-delete-ok" data-toggle="modal">
+                                                            <i class="fa fa-remove"></i>
+                                                        </a>
+                                                        
+                                                    </td>
+                                                    <td>
+@if (obj.Online == "Y")
+{
+                                                    <span class="fa fa-circle text-success fs14" title="online"></span>
+}
+else 
+{
+    <span class="fa fa-circle  text-danger fs14" title="online"></span>
+}
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot class="footer-menu">
+                                        <tr>
+                                            <td colspan="12">
+                                                <nav class="text-right">
+                                                    <ul class="pagination hide-if-no-paging"></ul>
+                                                </nav>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+
+                                </table>
+
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>
@@ -317,34 +338,33 @@
                                 <div class="col-md-12">
 
                                     <div id="dvMemLimited">
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" class="chkPermission" checked="" id="chk_2">
-                                            <label for="chk_2">Deals</label>
-                                        </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" class="chkPermission" checked="" id="chk_1">
                                             <label for="chk_1">Events</label>
                                         </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
+                                            <input type="checkbox" class="chkPermission" checked="" id="chk_2">
+                                            <label for="chk_2">Deals</label>
+                                        </div>
+                                      
                                     </div>
 
                                     <div id="dvAdmin">
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
-                                            <input type="checkbox" checked="" id="chk_3">
-                                            <label for="chk_3">Users</label>
-                                        </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_4">
                                             <label for="chk_4">Events</label>
                                         </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_5">
                                             <label for="chk_5">Tickets</label>
                                         </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_6">
                                             <label for="chk_6">Emails</label>
                                         </div>
-                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft">
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_7">
                                             <label for="chk_7">Messages</label>
                                         </div>
@@ -355,8 +375,8 @@
 
                         </div>
                         <div class="panel-footer text-right" id="dvSave">
-                           
-                            <button class="btn btn-primary" id="btSave" type="button">Save</button>
+
+                            <button class="btn btn-primary close-mg" id="btSave" type="button">Save</button>
                         </div>
                         @Html.Hidden("hdCurrentUserRole")
                     </div>
@@ -366,224 +386,220 @@
             </div>
         </div>
         <!-- End: Content -->
-        
+        @*MOdel for Event Info*@
+
+        <div class="modal fade" id="dvEvents" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm confirm-msg ok-msg custom wd-4 tdclickmodal">
+                <div class="modal-content">
+                    <!-- <div class="modal-header custom">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div> -->
+                    <form id="contactForm" class="fullw1 add">
+                        <div class="modal-body text-center pv50 txt-msg">
+                            <table id="tbEvent"></table>
+                            @*<h4 class="msg">Please click OK to Continue.</h4>*@
+                        </div>
+                        <div class="modal-footer msg-action-btn ok">
+                            <!-- <button type="button" class="btn btn-primary no" data-dismiss="modal">No</button> -->
+                            <button type="button" class="btn btn-primary yes ok" data-dismiss="modal">OK</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- confirm-msg -->
+        </div>
+
+
+
+        <!-- Confirm Msg OK Modal Box -->
+        <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                <div class="modal-content">
+                   
+                    <form id="contactForm" class="fullw1 add">
+                        <div class="modal-body text-center pv50 txt-msg">
+                          
+                            <h4 class="msg" id="hId" ></h4>
+                        </div>
+                        <div class="modal-footer msg-action-btn ok">
+                            <button type="submit" id="btnYes" class="btn btn-primary no"  data-dismiss="modal">Yes</button> 
+                            <button type="button" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
+                            <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button> 
+                        </div>
+                    </form>
+                    <input type="hidden" id="hdUserId" value="" />
+                </div>
+            </div><!-- confirm-msg -->
+        </div>
+        <div>
+            <a class="td-btn" id="btOk" type="button" href="#confirm-delete-ok" data-toggle="modal" style="display:none">
+                
+            </a>
+        </div>
+        <!-- Confirm Msg OK Modal Box -->
     </section>
 
-  }
+                                            }
 
-   @*// <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>*@
+@*// <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>*@
 
-    <!-- FooTable Addon -->
-    @*<script src="~/plugins/footable/js/footable.all.min.js"></script>
+<!-- FooTable Addon -->
+@*<script src="~/plugins/footable/js/footable.all.min.js"></script>
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>*@
 
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            $.ajax({
-                url: '@Url.Action("CurrentUserRole", "Permission")',
-                datatype: "Text",
-                type: "Get",
-                success: function (response) {
-                    if ($.trim(response) != 1)
-                    {
-                        //alert(response);
-                        $("#hdCurrentUserRole").val($.trim(response));
-                        
-                     //   alert($("#hdCurrentUserRole").val());
-                        //$("#rdAdmin").prop("disabled", true);
-                        //$("#dvAdmin").prop("disabled", true);
-                    }
-                    //
-                }
-            });
-           
-            
+<script type="text/javascript">
+    function GetEvents(vUserId)
+    {
+        $.ajax({
+            url: '@Url.Action("GetUserEvents", "Users")',
+            data:{strUserId:vUserId},
+            datatype: "Text",
+            type: "Get",
+            success: function (response) {
+                $("#tbEvent").empty();
+                $("#tbEvent").append(response);
 
-            //"use strict";
-
-            //// Init Theme Core
-            //Core.init();
-
-            //// Init Demo JS
-            //Demo.init();
-
-            //$('.footable').footable();
-
-            //var modalContent = $('#modal-content');
-
-            //function findActive() {
-            //    var activeModal = modalContent.find('.holder-active').attr('href');
-            //    return activeModal;
-            //};
-
-            //// Form Skin Switcher
-            //$('.animation-switcher button').on('click', function () {
-            //    $('.animation-switcher').find('button').removeClass('active-animation');
-            //    $(this).addClass('active-animation item-checked');
-
-            //    // Inline Admin-Form example
-            //    $.magnificPopup.open({
-            //        removalDelay: 500, //delay removal by X to allow out-animation,
-            //        items: {
-            //            src: findActive()
-            //        },
-            //        // overflowY: 'hidden', //
-            //        callbacks: {
-            //            beforeOpen: function (e) {
-            //                var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
-            //                this.st.mainClass = Animation;
-            //            }
-            //        },
-            //        midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
-            //    });
-
-            //});
-
-            //$('.admin-panels').adminpanel({
-            //    onFinish: function() {
-            //        $('.admin-panels').addClass('animated fadeIn').removeClass('fade-onload');
-            //    },
-     
-            //});
-           
-            // Page code starts here
-            $(".chkPermission").click(function () {
-                if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
-                    $("#rdMember").prop("checked", true);
-                else
-                    $("#rdMemberLimit").prop("checked", true);
-            });
-
-            $("#btnRoles").click(function () {
-                $("#hdUName").val()
-            });
-
-            $("#rdAdmin").click(function () {
-                $("#dvMemLimited").hide();
-                $("#dvAdmin").show();
-            })
-
-
-
-            $("#rdMemberLimit").click(function () {
-                $("#dvMemLimited").show();
-                $("#dvAdmin").hide();
-            })
-
-            $("#rdMember").click(function () {
-                $("#dvMemLimited").show();
-                $("#dvAdmin").hide();
-            })
-
-
-
-            $("#btSave").click(function () {
-                debugger;
-                var UserId = $("#hdUName").val();
-                var Permisions = ""; var URole;
-                for (i = 1; i <= 7; i++) {
-                    if ($("#chk_" + i).is(":checked") == true) {
-                        if (Permisions == "")
-                            Permisions = i;
-                        else
-                            Permisions = Permisions + "#" + i.toString();
-                    }
-                }
-
-
-
-                if ($("#rdAdmin").is(":checked") == true)
-                    URole = 2;
-                else
-                    URole = 3;
-
-
-                $.ajax({
-                    url: '@Url.Action("SavePermisions","Users")',
-                    data: { strUserId: UserId, strPermission: Permisions, strRole: URole },
-                    datatype: "Text",
-                    type: "Post",
-                    success: function (response) {
-                        if (response == "Y") {
-                            alert("Record Updated.");
-                            //  $('#spanid').html("Record Updated.");
-                            // $('#divError').css('display', 'block');
-                            ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                        }
-                        else {
-                            alert("Some error occur while saving.");
-                            //$('#spanid').html("Some error occur while saving.");
-                            //  $('#divError').css('display', 'block');
-                            //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                        }
-                    }
-                });
-            })
-
-
-
-
-
+            }
         });
 
-    
+    }
+    jQuery(document).ready(function () {
+        $('.close-mg').on('click', function (e) {
+            $.magnificPopup.close();
+        });
+        $('.close-model').on('click', function (e) {
+            $.modal.close();
+        });
 
 
 
+        $.ajax({
+            url: '@Url.Action("CurrentUserRole", "Permission")',
+            datatype: "Text",
+            type: "Get",
+            success: function (response) {
+               // if ($.trim(response) != 1) {
+                    //alert(response);
+                    $("#hdCurrentUserRole").val($.trim(response));
 
-        function ConfirmDelete(userId) {
-            console.log(userId);
-            var x = confirm("Are you sure you want to delete?");
-            if (x) {
-
-                $.ajax({
-                    url:'@Url.Action("Deleteuser","Users")',
-                    data: { userid: userId },
-                    datatype: "Text",
-                    type: "Post",
-                    success: function (response) {
-                        if (response == "Deleted")
-                            alert("Record Deleted Successfully.");
-                        else
-                            alert("Some error occur while Deleting");
-                    }
-                });
-                return true;
+                    //   alert($("#hdCurrentUserRole").val());
+                    //$("#rdAdmin").prop("disabled", true);
+                    //$("#dvAdmin").prop("disabled", true);
+              //  }
+                //
             }
+        });
+
+
+
+        //"use strict";
+
+        //// Init Theme Core
+        //Core.init();
+
+        //// Init Demo JS
+        //Demo.init();
+
+        //$('.footable').footable();
+
+        //var modalContent = $('#modal-content');
+
+        //function findActive() {
+        //    var activeModal = modalContent.find('.holder-active').attr('href');
+        //    return activeModal;
+        //};
+
+        //// Form Skin Switcher
+        //$('.animation-switcher button').on('click', function () {
+        //    $('.animation-switcher').find('button').removeClass('active-animation');
+        //    $(this).addClass('active-animation item-checked');
+
+        //    // Inline Admin-Form example
+        //    $.magnificPopup.open({
+        //        removalDelay: 500, //delay removal by X to allow out-animation,
+        //        items: {
+        //            src: findActive()
+        //        },
+        //        // overflowY: 'hidden', //
+        //        callbacks: {
+        //            beforeOpen: function (e) {
+        //                var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
+        //                this.st.mainClass = Animation;
+        //            }
+        //        },
+        //        midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+        //    });
+
+        //});
+
+        //$('.admin-panels').adminpanel({
+        //    onFinish: function() {
+        //        $('.admin-panels').addClass('animated fadeIn').removeClass('fade-onload');
+        //    },
+
+        //});
+
+        // Page code starts here
+        $(".chkPermission").click(function () {
+            if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
+                $("#rdMember").prop("checked", true);
             else
-                return false;
+                $("#rdMemberLimit").prop("checked", true);
+        });
 
-        }
+        $("#btnRoles").click(function () {
+            $("#hdUName").val()
+        });
 
-        function SaveFields(UserId, strId, dlValue) {
+        $("#rdAdmin").click(function () {
+            $("#dvMemLimited").hide();
+            $("#dvAdmin").show();
+        })
 
-            var vvalue = '';
-            var sFields = '';
-            if (strId == "dlStatus") {
-                sFields = "UserStatus";
+
+
+        $("#rdMemberLimit").click(function () {
+            $("#dvMemLimited").show();
+            $("#dvAdmin").hide();
+        })
+
+        $("#rdMember").click(function () {
+            $("#dvMemLimited").show();
+            $("#dvAdmin").hide();
+        })
+
+
+
+        $("#btSave").click(function () {
+            debugger;
+            var UserId = $("#hdUName").val();
+            var Permisions = ""; var URole;
+            for (i = 1; i <= 7; i++) {
+                if ($("#chk_" + i).is(":checked") == true)
+                {
+                    if (Permisions == "")
+                        Permisions = i;
+                    else
+                        Permisions = Permisions + "#" + i.toString();
+                }
             }
 
-            else if (strId == "dlMerchant") {
-                sFields = "Merchant";
-            }
 
-            else if (strId == "dlOrgnizer") {
-                sFields = "Organiser";
-            }
 
-            if (dlValue == "1")
-                vvalue = 'Y';
+            if ($("#rdAdmin").is(":checked") == true)
+                URole = 2;
             else
-                vvalue = 'N';
+                URole = 3;
+
 
             $.ajax({
-                url: '@Url.Action("SaveOtherInfo","Users")',
-                data: { strField: sFields, strvalue: vvalue, strUserId: UserId },
+                url: '@Url.Action("SavePermisions","Users")',
+                data: { strUserId: UserId, strPermission: Permisions, strRole: URole },
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
                     if (response == "Y") {
-                        alert("Record Updated.");
+                        //alert("Record Updated.");
+
                         //  $('#spanid').html("Record Updated.");
                         // $('#divError').css('display', 'block');
                         ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
@@ -596,58 +612,176 @@
                     }
                 }
             });
-        }
-        function AssignUserId(userId) {
-            document.getElementById("hdUName").value = userId;
+        })
 
-            for (i = 1; i <= 7 ; i++) {
-                $("#chk_" + i.toString()).prop("checked", false);
+
+
+
+
+    });
+
+
+    $("#btnYes").click(function () {
+        $.ajax({
+            url: '@Url.Action("Deleteuser","Users")',
+            data: { userid: $("#hdUserId").val() },
+            datatype: "Text",
+            type: "Post",
+            success: function (response) {
+                $("#formuser").submit();
+                //$.post("Users\Users");
+               // if (response == "Deleted")
+                   // alert("Record Deleted Successfully.");
+                    //$("#hId").text(GetMess("CMSUsers", "UsersDeleteSuccUI"));
+                    
+                //else
+                //    alert("Some error occur while Deleting");
             }
-            $("#rdAdmin").prop("checked", true);
-            $("#dvMemLimited").hide();
-            $("#dvAdmin").show();
-
-            $.ajax({
-                url: '@Url.Action("GetUserPermission","Users")',
-                data: { strUserId: userId },
-                datatype: "Text",
-                type: "Post",
-                success: function (response) {
-                        var AryResult = response.split("^");
-                        for (i = 0; i < AryResult.length ; i++) {
-                            $("#chk_" + AryResult[i]).prop("checked", true);
-                        }
-                        //alert(AryResult[AryResult.length - 1].toString());
-                        if (AryResult[AryResult.length - 1].toString() == "2") {
-                            if ($("#hdCurrentUserRole").val().toString() != "1") $("#btSave").prop("disabled", true);
-                            
-                            $("#rdAdmin").is(":checked") = true;
-                            $("#dvMemLimited").hide();
-                            $("#dvAdmin").show();
-                          
-                        }
-                        else {
-                            if ($("#hdCurrentUserRole").val() != "1") {
-                                $("#rdAdmin").prop("disabled", true);
-                                $("#dvAdmin").prop("disabled", true);
-                                $("#btSave").prop("disabled", false);
-                            }
-                            $("#dvMemLimited").show();
-                            $("#dvAdmin").hide();
-                            if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
-                                $("#rdMember").prop("checked", true);
-                            else
-                                $("#rdMemberLimit").prop("checked", true);
-                        }
-                    }
-            });
+        });
+    });
 
 
+    function ConfirmDelete(userId) {
+        $("#hdUserId").val(userId);
+        $("#btnYes").show();
+        $("#btnNo").show();
+        $("#btMesOk").hide();
+
+       // $("#btOk").click();
+
+        $("#hId").text(GetMess("CMSUsers", "UsersDeleteUI"));
+        
+        //var x = confirm("Are you sure you want to delete?");
+
+        //if (x) {
+
+
+        //    return true;
+        //}
+        //else
+          return false;
+
+    }
+    function GetMess(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+    function SaveFields(UserId, strId, dlValue) {
+
+        var vvalue = '';
+        var sFields = '';
+        if (strId == "dlStatus") {
+            sFields = "UserStatus";
         }
 
-       
+        else if (strId == "dlMerchant") {
+            sFields = "Merchant";
+        }
 
-    </script>
+        else if (strId == "dlOrgnizer") {
+            sFields = "Organiser";
+        }
+
+        if (dlValue == "1")
+            vvalue = 'Y';
+        else
+            vvalue = 'N';
+
+        $.ajax({
+            url: '@Url.Action("SaveOtherInfo","Users")',
+            data: { strField: sFields, strvalue: vvalue, strUserId: UserId },
+            datatype: "Text",
+            type: "Post",
+            success: function (response) {
+                if (response == "Y") {
+                    $("#btnYes").hide();
+                    $("#btnNo").hide();
+                    $("#btMesOk").show();
+                    $("#btOk").click();
+
+                    $("#hId").text(GetMess("CMSUsers", "UsersOrgMerStatusSucc"));
+                    //href="#dvEvents" ="modal"
+                    //$(this).prop(href,"#dvEvents");
+                    //$(this).prop(data-toggle, "modal");
+                    //$("#confirm-delete-ok").show();
+                   // alert("Record Updated.");
+                    //  $('#spanid').html("Record Updated.");
+                    // $('#divError').css('display', 'block');
+                    ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                }
+                else {
+                    alert("Some error occur while saving.");
+                    //$('#spanid').html("Some error occur while saving.");
+                    //  $('#divError').css('display', 'block');
+                    //setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                }
+            }
+        });
+    }
+    function AssignUserId(userId) {
+        document.getElementById("hdUName").value = userId;
+
+        for (i = 1; i <= 7 ; i++) {
+            $("#chk_" + i.toString()).prop("checked", false);
+        }
+        $("#rdAdmin").prop("checked", true);
+        $("#dvMemLimited").hide();
+        $("#dvAdmin").show();
+
+        $.ajax({
+            url: '@Url.Action("GetUserPermission","Users")',
+            data: { strUserId: userId },
+            datatype: "Text",
+            type: "Post",
+            success: function (response) {
+                debugger;
+                var AryResult = response.split("^");
+                for (i = 0; i < AryResult.length-1 ; i++) {
+                    $("#chk_" + AryResult[i]).prop("checked", true);
+                }
+                //alert(AryResult[AryResult.length - 1].toString());
+                if (AryResult[AryResult.length - 1].toString() == "2") {
+                    if ($("#hdCurrentUserRole").val().toString() != "1") $("#btSave").prop("disabled", true);
+
+                    $("#rdAdmin").prop("checked", true);
+                    $("#dvMemLimited").hide();
+                    $("#dvAdmin").show();
+
+                }
+                else {
+                    if ($("#hdCurrentUserRole").val() != "1") {
+                        $("#rdAdmin").prop("disabled", true);
+                        $("#dvAdmin").prop("disabled", true);
+                        $("#btSave").prop("disabled", false);
+                    }
+                    $("#dvMemLimited").show();
+                    $("#dvAdmin").hide();
+                    if ($("#chk_2".toString()).is(":checked") == true && $("#chk_1".toString()).is(":checked") == true)
+                        $("#rdMember").prop("checked", true);
+                    else
+                        $("#rdMemberLimit").prop("checked", true);
+                }
+            }
+        });
 
 
-    <!-- END: PAGE SCRIPTS -->
+    }
+
+
+
+</script>
+<!-- END: PAGE SCRIPTS -->

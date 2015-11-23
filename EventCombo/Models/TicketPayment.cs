@@ -50,6 +50,8 @@ namespace EventCombo.Models
         public string shipcountry { get; set; }
         public string Savecarddetail { get; set; }
         public string Saveshipdetail { get; set; }
+        public string sameshipbilldetail { get; set; }
+        public string Ticketdeliveraddress { get; set; }
         public List<Ticket_Purchased_Detail> TPurchaseList { get; set; }
 
         public List<TicketBearer> NameList { get; set; }

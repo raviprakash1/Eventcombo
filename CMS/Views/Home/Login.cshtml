@@ -157,6 +157,20 @@
 
     <!-- Page Javascript -->
     <script type="text/javascript">
+        $(window).load(function () {
+
+
+            var loginemail = $('#Email').val();
+            var loginpwd = $('#Password').val();
+           
+            if (loginemail != '' || loginpwd != '') {
+                $('#btnsave').removeAttr("disabled");
+
+            }
+
+
+
+        });
         $(document).ready(function () {
             $(document).click(function () {
                 $('#diverror').css('display', 'none');

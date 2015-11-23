@@ -4,50 +4,67 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2a992e352ecf442abb6225d3c8a9362d" Name="Diagram1">
+      <Diagram DiagramId="607b8d9cb3484e1198fad08c1d058e16" Name="Diagram1">
         <EntityTypeShape EntityType="Cmsdata.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.AspNetRole" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.AspNetUser" Width="1.875" PointX="3" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.Country" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.Email_Tag" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.Email_Template" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.Message" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.Permission_Detail" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.Profile" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.Status" Width="1.5" PointX="9.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.User_Permission_Detail" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Address" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.AspNetRole" Width="1.5" PointX="7.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.AspNetUser" Width="1.5" PointX="10" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.BillingAddress" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.CardDetail" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Country" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.DeliveryMethod" Width="1.5" PointX="14.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Email_Tag" Width="1.5" PointX="7.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Email_Template" Width="1.5" PointX="7.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Event" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Event_Detail" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Event_OrganizerMessages" Width="1.5" PointX="14.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Event_Orgnizer_Detail" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Event_VariableDesc" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.EventCategory" Width="1.5" PointX="14.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.EventFavourite" Width="1.5" PointX="9.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.EventImage" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.EventSubCategory" Width="1.5" PointX="17" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.EventTempImage" Width="1.5" PointX="11.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.EventType" Width="1.5" PointX="0.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.EventVenue" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.EventVote" Width="1.5" PointX="13.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Fee_Structure" Width="1.5" PointX="15.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Message" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.MultipleEvent" Width="1.5" PointX="5.25" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Order_Detail_T" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Permission_Detail" Width="1.5" PointX="17.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Profile" Width="1.5" PointX="12.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Publish_Event_Detail" Width="1.5" PointX="17.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.ShippingAddress" Width="1.5" PointX="18.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Status" Width="1.5" PointX="7.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Ticket" Width="1.5" PointX="5.25" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Ticket_Locked_Detail" Width="1.5" PointX="9.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Ticket_Purchased_Detail" Width="1.5" PointX="11.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Ticket_Quantity_Detail" Width="1.5" PointX="7.5" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.TicketBearer" Width="1.5" PointX="13.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.TicketDeliveryMethod" Width="1.5" PointX="17" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.TicketType" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.TimeZoneDetail" Width="1.5" PointX="19.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.User_Permission_Detail" Width="1.5" PointX="19.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cmsdata.Venue" Width="1.5" PointX="19.75" PointY="14.75" IsExpanded="true" />
+        <AssociationConnector Association="Cmsdata.FK_Address_Event" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.FK_Profile_Profile" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK__TicketDel__Deliv__1A69E950" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK_Event_EventType" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK_Event_Orgnizer_Detail_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK_Event_VariableDesc_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK_EventImage_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK_EventVenue_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK_MultipleEvent_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK_Ticket_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK__EventSubC__Event__5F141958" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK_EventVenue_EventVenue" ManuallyRouted="false" />
+        <AssociationConnector Association="Cmsdata.FK_Ticket_Quantity_Info_Ticket" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Cmsdata.Address" Width="1.5" PointX="12.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Cmsdata.DeliveryMethod" Width="1.5" PointX="7.375" PointY="12.875" />
-        <EntityTypeShape EntityType="Cmsdata.Event" Width="1.5" PointX="14.625" PointY="6.125" />
-        <EntityTypeShape EntityType="Cmsdata.Event_Orgnizer_Detail" Width="1.5" PointX="16.875" PointY="1.625" />
-        <EntityTypeShape EntityType="Cmsdata.EventCategory" Width="1.5" PointX="3.375" PointY="16" />
-        <EntityTypeShape EntityType="Cmsdata.EventImage" Width="1.5" PointX="12.375" PointY="13.75" />
-        <EntityTypeShape EntityType="Cmsdata.EventOrganizer" Width="1.5" PointX="8.375" PointY="15.75" />
-        <EntityTypeShape EntityType="Cmsdata.EventSubCategory" Width="1.5" PointX="5.625" PointY="15.875" />
-        <EntityTypeShape EntityType="Cmsdata.EventTempImage" Width="1.5" PointX="10.375" PointY="16.75" />
-        <EntityTypeShape EntityType="Cmsdata.EventType" Width="1.5" PointX="12.375" PointY="8.625" />
-        <EntityTypeShape EntityType="Cmsdata.EventVenue" Width="1.5" PointX="16.875" PointY="4.75" />
-        <EntityTypeShape EntityType="Cmsdata.Fee_Structure" Width="1.5" PointX="12.375" PointY="16.75" />
-        <EntityTypeShape EntityType="Cmsdata.MultipleEvent" Width="1.5" PointX="3.375" PointY="18.75" />
-        <EntityTypeShape EntityType="Cmsdata.Ticket" Width="1.5" PointX="16.875" PointY="8.375" />
-        <EntityTypeShape EntityType="Cmsdata.TicketDeliveryMethod" Width="1.5" PointX="9.625" PointY="12.875" />
-        <EntityTypeShape EntityType="Cmsdata.TicketType" Width="1.5" PointX="5.375" PointY="18.75" />
-        <EntityTypeShape EntityType="Cmsdata.Venue" Width="1.5" PointX="7.375" PointY="18.75" />
-        <AssociationConnector Association="Cmsdata.FK__TicketDel__Deliv__1A69E950" />
-        <AssociationConnector Association="Cmsdata.FK_Event_EventType" />
-        <AssociationConnector Association="Cmsdata.FK_Event_Orgnizer_Detail_Event" />
-        <AssociationConnector Association="Cmsdata.FK_EventVenue_Event" />
-        <AssociationConnector Association="Cmsdata.FK_Ticket_Event" />
-        <AssociationConnector Association="Cmsdata.FK__EventSubC__Event__5F141958" />
-        <AssociationConnector Association="Cmsdata.FK_EventVenue_EventVenue" />
-        <EntityTypeShape EntityType="Cmsdata.Event_Detail" Width="1.5" PointX="0.75" PointY="10.75" />
-        <AssociationConnector Association="Cmsdata.FK_Address_Event" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

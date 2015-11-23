@@ -20,6 +20,8 @@ using System.Web.Security;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using System.Configuration;
+
 namespace CMS.Controllers
 {
     public class MyAccController : Controller
@@ -113,6 +115,26 @@ namespace CMS.Controllers
 
 
                     }
+                   
+                  var ans=  db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0",userid).FirstOrDefault();
+                    if(ans=="2")
+                    {
+                        myacc.Designation = "Admin";
+                    }
+                  
+                    if (ans == "3")
+                    {
+                        var countperrm = db.Permission_Detail.Where(i => i.Permission_Category == "APP").Count();
+                        var countuserperm = db.User_Permission_Detail.Where(i => i.UP_User_Id == userid).Count();
+
+                        if(countuserperm < countperrm)
+                        {
+                            myacc.Designation = "Member-Limited";
+                        }else
+                        {
+                            myacc.Designation = "Member";
+                        }
+                    }
 
                     if (string.IsNullOrEmpty(accountdetail.City))
                     {
@@ -205,7 +227,29 @@ namespace CMS.Controllers
                     });
                 }
                 ViewBag.Country = countryList;
+                //var DesignQuery = (from c in db.AspNetRoles
+                //                   where c.Id!="1"
+                //                    orderby c.Id ascending
+                //                    select c ).Distinct();
+                //List<SelectListItem> DesignationList = new List<SelectListItem>();
+                //foreach (var item in DesignQuery)
+                //{
+                //    DesignationList.Add(new SelectListItem()
+                //    {
+                //        Text = item.Name,
+                //        Value = item.Id ,
+                //        Selected=(item.Id==myacc.Designation? true :false)
+                //    });
 
+                //}
+                //DesignationList.Add(new SelectListItem()
+                //{
+                //    Text = "Memeber-Limited",
+                //    Value = "4",
+                //    Selected = ("4" == myacc.Designation ? true : false)
+
+                //});
+                //ViewBag.Desig = DesignationList;
                 return View(myacc);
 
 
@@ -246,30 +290,35 @@ namespace CMS.Controllers
                                           Gender = pfd.Gender,
                                           PreviousEmail = cpd.Email,
                                           Email = cpd.Email,
-                                          WorkPhone = pfd.WorkPhone
+                                          WorkPhone = pfd.WorkPhone,
+                                          Password=cpd.PasswordHash
                                       });
                 return modelmyaccount.FirstOrDefault();
             }
         }
         [HttpPost]
-        public ActionResult MyAccount(MyAccount model)
+        public async Task<ActionResult> MyAccount(MyAccount model)
         {
-            string msg = "", errormessage = "";
+            string msg = "", errormessage = "", successmsg = "";
             //if (Session["AppId"] != null)
             //{
+            ValidationMessageController vmc = new ValidationMessageController();
+            var validationresult = "";
             string Userid = model.Id;
             var accountdetail = GetLoginDetails(Userid);
-            if (string.IsNullOrEmpty(model.Firstname) && string.IsNullOrEmpty(model.Lastname))
+            if (string.IsNullOrEmpty(model.Firstname) )
             {
 
-                ModelState.AddModelError("", "Please provide first name and last name!");
+                validationresult = vmc.Index("MyAccount", "MyAccountFnameRequiredUI");
+                ModelState.AddModelError("Error", validationresult);
 
             }
             if (!string.IsNullOrEmpty(model.ConfirmEmail))
             {
                 if (model.Email != model.ConfirmEmail)
                 {
-                    ModelState.AddModelError("", "Email and email verification doesn't match!");
+                    validationresult = vmc.Index("MyAccount", "MyAccountEmailmatchValidationSy");
+                    ModelState.AddModelError("Error", validationresult);
 
                 }
             }
@@ -277,7 +326,8 @@ namespace CMS.Controllers
             {
                 if (model.NewPassword != model.ConfirmPassword)
                 {
-                    ModelState.AddModelError("", "New password and confirm new password doesn't match!");
+                    validationresult = vmc.Index("MyAccount", "MyAccountPwdmatchValidationSy");
+                    ModelState.AddModelError("Error", validationresult);
 
 
                 }
@@ -286,21 +336,22 @@ namespace CMS.Controllers
             if (!string.IsNullOrEmpty(model.Password))
             {
 
-                //var user12 = UserManager.FindByEmail(accountdetail.PreviousEmail);
-                //var result = UserManager.PasswordHasher.VerifyHashedPassword(user12.PasswordHash, model.Password);
-                //if (result.ToString() != "Success")
-                //{
-                //    ModelState.AddModelError("Error", "Invalid current password!");
+                var user12 = UserManager.FindByEmail(accountdetail.PreviousEmail);
+                var result = UserManager.PasswordHasher.VerifyHashedPassword(user12.PasswordHash, model.Password);
+                if (result.ToString() != "Success")
+                {
+                    validationresult = vmc.Index("MyAccount", "MyAccountPwdValidationSys");
+                    ModelState.AddModelError("Error", validationresult);
 
-                //}
+                }
             }
             if (model.PreviousEmail != model.Email)
             {
                 var user = UserManager.FindByEmail(model.Email);
                 if (user != null)
                 {
-                    ModelState.AddModelError("", "Email already exist!");
-                    //errormessage += "Confirm email already exist!! </br>";
+                    validationresult = vmc.Index("MyAccount", "MyAccountEmailAlreadyExistSY");
+                    ModelState.AddModelError("Error", validationresult);
                 }
             }
 
@@ -326,8 +377,12 @@ namespace CMS.Controllers
                     profile.WorkPhone = model.WorkPhone;
                     profile.WebsiteURL = model.WebsiteURL;
                     //profile.UserProfileImage = model.UserProfileImage;
-                    profile.Gender = model.Gender;
-                    profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
+                    //profile.Gender = model.Gender;
+                    //if(!string.IsNullOrEmpty(model.day.ToString ()) && !string.IsNullOrEmpty(model.month.ToString()) && !string.IsNullOrEmpty(model.year.ToString()))
+                    //{
+                    //    profile.DateofBirth = model.day.ToString() + "-" + model.month.ToString() + "-" + model.year.ToString();
+                    //}
+                       
                     if (!checkexternallogin(Userid))
                     {
                         if (!string.IsNullOrEmpty(model.Email) && model.PreviousEmail != model.Email)
@@ -356,10 +411,96 @@ namespace CMS.Controllers
 
                 if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
                 {
-                    //var token = await UserManager.GeneratePasswordResetTokenAsync(Userid);
+                    var token = await UserManager.GeneratePasswordResetTokenAsync(model.Id);
 
-                    //var result = await UserManager.ResetPasswordAsync(Userid, token, model.NewPassword);
+                    var result = await UserManager.ResetPasswordAsync(model.Id, token, model.NewPassword);
+                    successmsg = vmc.Index("MyAccount", "MyAccountSuccessPasswordSY") + successmsg;
+                    string to = "", from = "", cc = "", bcc = "", subjectn = "";
+                    var bodyn = "";
+                    List<Email_Tag> EmailTag = new List<Email_Tag>();
+                    HomeController hmc = new HomeController();
+                    EmailTag = getTag();
 
+                    var Emailtemplate =getEmail("acc_pwd_set");
+                    if (Emailtemplate != null)
+                    {
+                        if (!string.IsNullOrEmpty(Emailtemplate.To))
+                        {
+
+
+                            to = Emailtemplate.To;
+                            if (to.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                to = to.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                        {
+                            from = Emailtemplate.From;
+                            if (from.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                from = from.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                            }
+                        }
+                        else
+                        {
+                            from = "shweta.sindhu@kiwitech.com";
+
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                        {
+
+
+                            subjectn = Emailtemplate.Subject;
+
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+
+                                    }
+
+                                }
+
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                        {
+                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+
+                                    }
+
+
+                                }
+
+                            }
+                        }
+                        SendHtmlFormattedEmail(to, from, subjectn, bodyn);
+                    }
                 }
 
 
@@ -392,7 +533,15 @@ namespace CMS.Controllers
                 //    model.editsave = "Edit";
 
                 //}
-                TempData["SuccessMessage"] = "Updated Successfully!!";
+                if (successmsg != "")
+                {
+                    successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY") + "," + successmsg;
+                }
+                else
+                {
+                    successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY");
+                }
+                TempData["SuccessMessage"] = successmsg;
                 return View(model);
 
             }
@@ -460,9 +609,43 @@ namespace CMS.Controllers
             }
 
         }
+        public List<Email_Tag> getTag()
+        {
+            var EmailTag = db.Email_Tag.ToList();
+            return EmailTag;
+
+        }
+        public Email_Template getEmail(string template)
+        {
+
+            var userEmail = db.Email_Template.Where(x => x.Template_Name == template).SingleOrDefault();
+
+            return userEmail;
 
 
-       
+        }
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body)
+        {
+            using (MailMessage mailMessage = new MailMessage())
+            {
+                mailMessage.From = new MailAddress(from, "Eventcombo");
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.IsBodyHtml = true;
+                mailMessage.To.Add(new MailAddress(To));
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = ConfigurationManager.AppSettings["Host"];
+                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
+                NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
+                smtp.Send(mailMessage);
+            }
+        }
+
 
     }
 }

@@ -16,9 +16,9 @@
                         <img class="ev1" src="@Html.DisplayFor(m=>m.imgurl)" >
                     </div>
                     <div class="col-sm-9 pl0">
-                        <h2 class="th_tilte">@Html.DisplayFor(m=>m.Tilte)</h2>
-                        <p class="th_day_time">Saturday Aug 17th 2011,8:30pm </p>
-                        <p class="th_day_time chk_add_sch_cal"><span class="Timezone">Add schedule to calender</span></p>
+                        <h2 class="th_tilte" id="title">@Html.DisplayFor(m=>m.Tilte)</h2>
+                        @*<p class="th_day_time">Saturday Aug 17th 2011,8:30pm </p>*@
+                        <p class="th_day_time chk_add_sch_cal"><span class="Timezone"><img class="evnt_clock evnt_cursor" src="/Images/icon-date.png" /> Add schedule to calender</span></p>
                         <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal chk_add_sch_cal_modal">
                             <div class="ev_time_zone_model date_time_modal">
                                 <div class="modal-content ev_tm_zon_cont">
@@ -26,23 +26,30 @@
                                         <button class="close closetimemodal" type="button">
                                             <span>&#215;</span>
                                         </button>
-                                        <h4 class="modal-title date_time_list">Schedule Date List</h4>
+                                        <h4 class="modal-title date_time_list"> Schedule Date List</h4>
                                     </div>
                                     <div class="modal-body">
                                         <div class="col-sm-12 no_pad">
-                                            <div class="form-group mb5 ">
+                                         
+                                            <div class="form-group mb5 cal_scrol ">
+                                              
+@foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
+{
+    <div class="col-sm-12 no_pad date_time_list ">
+        <a href="#" data-target="#schcalender" data-toggle="modal" id="@item.id" onclick="showevent(this.id)">@item.Datetime </a>
+        <br />@item.Address
+        @*<span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>*@
+    </div>
+}
+                                             
+                                                @*<label class="col-sm-12 no_pad label-control date_time_list ">
+                                                    <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
+                                                    <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
+                                                </label>
                                                 <label class="col-sm-12 no_pad label-control date_time_list">
                                                     <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
                                                     <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
-                                                </label>
-                                                <label class="col-sm-12 no_pad label-control date_time_list ">
-                                                    <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
-                                                    <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
-                                                </label>
-                                                <label class="col-sm-12 no_pad label-control date_time_list">
-                                                    <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
-                                                    <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
-                                                </label>
+                                                </label>*@
                                             </div>
                                         </div>
 
@@ -51,8 +58,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="th_day_time">Club Illusions</p>
-                        <p class="th_day_time">260 S California Ave, Palo Alto CA</p>
+                        @*<p class="th_day_time">Club Illusions</p>
+                        <p class="th_day_time">260 S California Ave, Palo Alto CA</p>*@
                         <div class="clearfix"></div>
 
                     </div>
@@ -83,9 +90,9 @@
             <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
 
                 <div class="col-sm-12 no_pad chek_out_desc">
-                    <p>Your order has been saved to My E-Tickets </p>
+                    <p id="ordertag">Your order has been saved to My E-Tickets </p>
                     <p><span id="spOrderNo"></span></p>
-                    <p>Your tickets have been sent to customer-email@domain.com </p>
+                    <p>Your tickets have been sent to @Html.DisplayFor(x=>x.Email) </p>
                     <p>
                         <label>
                             <input type="checkbox" value="@Html.DisplayFor(m=>m.sendlatestdetails)" @(Html.DisplayFor(m=>m.sendlatestdetails).ToString()=="Y" ? "checked=\"checked\"" : "")  onchange="changesetting(this.id);" id="chkgetlatest"/>
@@ -120,7 +127,7 @@
                     <p>Events are better when your friends are there too. So, who's coming with you?</p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
-                        <button class="btn ev_live_btn fs18" type="button">
+                        <button class="btn ev_live_btn fs18" type="button" id="shareonfb">
                             SHARE ON FACEBOOK
                         </button>
                     </div>
@@ -161,7 +168,7 @@
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
             <div class="col-sm-12 col-xs-12 text-left no_pad">
-                <h2 class="fb_dis_head pt5">Info Box </h2>
+                <h2 class="fb_dis_head pt5">Contact Info Box </h2>
             </div>
 
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -170,14 +177,15 @@
             <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
 
                 <div class="col-sm-12 no_pad chek_out_desc">
-                    <p>Hi @Html.DisplayFor(m=>m.Username )</p>
+                    <p>Hi @Html.DisplayFor(m=>m.Username ), See you at the Event &#9786;</p>
                     <p>Questions about this event?</p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
                         <div class="col-sm-2 col-xs-5 no_pad">
-                            <button class="btn ev_live_btn cap_l fs18 col-sm-12 col-xs-12" type="button">
+                            <a data-target="#contorganizer" data-toggle="modal" href="#" class="btn ev_live_btn cap_l fs18 col-sm-12 col-xs-12">Contact Us</a>
+                            @*<button class="btn ev_live_btn cap_l fs18 col-sm-12 col-xs-12" type="button">
                                 Contact Us
-                            </button>
+                            </button>*@
                         </div>
                         <div class="col-sm-1 col-xs-2 text-center mt5 fs18">Or</div>
                         <div class="col-sm-9 col-xs-5 no_pad">
@@ -203,20 +211,62 @@
                 <div class="modal-body">
                     <div class="col-md-12 no_pad">
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-windows"></i> <a href="#">Microsoft Outlook </a>
+                            <i class="fa fa-windows"></i> <a href="#" id="ioutlook">Microsoft Outlook </a>
                         </div>
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-apple"></i> <a href="#">Apple Ical </a>
+                            <i class="fa fa-apple"></i> <a href="#" id="icalender">Apple Ical </a>
                         </div>
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-google"></i> <a href="#">Google Calendar </a>
+                            <i class="fa fa-google"></i> <a href="#" id="googlecal"  target="_blank" >Google Calendar </a>
                         </div>
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-yahoo"></i> <a href="#">Yahoo Calendar </a>
+                            <i class="fa fa-yahoo"></i> <a href="#" id="yahoocal"  target="_blank" >Yahoo Calendar </a>
                         </div>
                     </div>
                     <div class="clearfix"></div>
 
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="contorganizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Contact Organizer</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div id="orgerror" class="alert-danger" style="display:none;">Please fill out the missing information</div>
+                        <div class="form-group mb10">
+                            <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
+                            <div class="col-sm-8">
+                                <input class="form-control evnt_inp_cont" type="text" id="id_orgname">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group mb10">
+                            <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
+                            <div class="col-sm-8">
+                                <input class="form-control evnt_inp_cont" type="text" id="id_orgemail">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group mb10">
+                            <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" rows="4" id="id_orgtext"></textarea>
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
                 </div>
 
             </div>
@@ -228,6 +278,83 @@
 <script>
    
     $(document).ready(function () {
+
+        $('#saveorgaizermsg').click(function () {
+
+
+            var errormsg = "", erroremail = "";
+            var name = $('#id_orgname').val();
+            var mail = $('#id_orgemail').val();
+            var txt = $('#id_orgtext').val();
+
+
+
+            if (name != '') {
+                $('#id_orgname').removeClass('err-bor');
+
+            } else {
+
+
+                $('#id_orgname').addClass('err-bor');
+                errormsg = "Fill the missing details\n"
+            }
+
+
+
+            if (!validateEmail(mail)) {
+                $('#id_orgemail').addClass('err-bor');
+                errormsg += "Invalid Email";
+            }
+
+
+
+            if (txt != '') {
+                $('#id_orgtext').removeClass('err-bor');
+
+            } else {
+                $('#id_orgtext').addClass('err-bor');
+                errormsg += "fill the details"
+            }
+            if (erroremail != "") {
+                errormsg += erroremail;
+
+            }
+            if (errormsg != "") {
+
+                $('#orgerror').css('display', 'block');
+                $('#orgerror').html(errormsg);
+                return false;
+            }
+            else {
+                @*var organiserid = $('#hdorganiserid').val();
+                var eventid = $('#hdEventid').val();
+                var model = {
+                    'email': mail,
+                    'name': name,
+                    'mesasges': txt,
+                    'organiserid': organiserid,
+                    'EventId': eventid
+
+                }
+                $.ajax({
+                    url: '@Url.Action("saveorganizermsg", "CreateEvent")',
+                    data: model,
+                    type: "Post",
+                    success: function (response) {
+                        $('#orgerror').css('display', 'block');
+                        $('#orgerror').addClass('alert-success');
+                        $('#orgerror').removeClass('alert-danger ');
+                        $('#orgerror').html("Message has been successfully send!!");
+                        $('#id_orgname').val('');
+                        $('#id_orgemail').val('');
+                        $('#id_orgtext').val('');
+                    }
+                });*@
+            }
+
+
+        });
+  
         $.ajax({
             url: '@Url.Action("GetOrderDetailForConfirmation", "TicketPayment")',
             type: "Post",
@@ -246,10 +373,40 @@
 
 <script>
     $(document).ready(function () {
+        $(function () {
+            $(document).tooltip({
+                track: true
+            });
+        });
+
+        $(".Notifybox").css("display", "none");
+        $(".Notify").click(function () {
+            $('.Notifybox').slideToggle("fast");
+        });
+
+        $(".TmezoneSet").css("display", "none");
+        $(".Timezone").click(function () {
+            $(".TmezoneSet").slideToggle("fast");
+
+        });
+        $(".closetimemodal").click(function () {
+            $(".TmezoneSet").hide();
+
+        });
+
+        $('#shareonfb').click(function () {
+            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
+            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
+
+            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+        });
         $('#fbshare').click(function () {
-            var title='@Html.DisplayFor(m => m.Tilte)';
-            var description='@Html.DisplayFor(m => m.description)';
-            var url='@Html.DisplayFor(m => m.url)';
+            var title='@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+            var description='@Html.DisplayFor(m => m.description).ToString().Trim()';
+            var url='@Html.DisplayFor(m => m.url).ToString().Trim()';
 
             window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
@@ -259,9 +416,9 @@
         });
 
         $('#twittershare').click(function () {
-            var title = '@Html.DisplayFor(m => m.Tilte)';
-            var description = '@Html.DisplayFor(m => m.description)';
-            var url = '@Html.DisplayFor(m => m.url)';
+            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
+            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
 
 
             window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
@@ -271,9 +428,9 @@
 
         $('#linkshare').click(function () {
 
-            var title = '@Html.DisplayFor(m => m.Tilte)';
-            var description = '@Html.DisplayFor(m => m.description)';
-            var url = '@Html.DisplayFor(m => m.url)';
+            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
+            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
 
             window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
@@ -306,4 +463,86 @@
             }
         });
     }
+
+
+    function showevent(t) {
+        var split = t.split('~');
+        console.log(split);
+        var title = $('#title').html().trim();
+        var str = '', format = '';
+        var fullDate = "";
+        var Datenew = new Date(split[1]);
+
+        if (split[2] != null) {
+
+            //var time = document.getElementById('txttime').value;
+            var where_is_p = split[2].indexOf('p');
+            var where_is_a = split[2].indexOf('a');
+            if (where_is_p > 0) {
+                str = split[2].replace('pm', ' ');
+                format = 'PM';
+
+            }
+            if (where_is_a > 0) {
+
+                str = split[2].replace('am', ' ');
+                format = 'AM';
+            }
+            var hrs = Number(str.match(/^(\d+)/)[1]);
+            var mnts = Number(str.match(/:(\d+)/)[1]);
+
+            if (format == "PM" && hrs < 12) hrs = hrs + 12;
+            if (format == "AM" && hrs == 12) hrs = hrs - 12;
+            var hours = hrs.toString();
+            var minutes = mnts.toString();
+            if (hrs < 10) hours = "0" + hours;
+            if (mnts < 10) minutes = "0" + minutes;
+
+            var fullDate = split[1] + " " + hours + ":" + minutes;
+        }
+        else {
+
+            fullDate = split[1];
+        }
+        var fullDateReal = new Date(fullDate);
+        var year = fullDateReal.getUTCFullYear();
+        var month = fullDateReal.getUTCMonth()
+        $('#startdate').val(fullDateReal);
+
+        var isodatestart = (fullDateReal.getUTCFullYear() + ""
+                  + pad(fullDateReal.getUTCMonth() + 1) + ""
+                  + pad(fullDateReal.getUTCDate()) + 'T'
+                  + pad(fullDateReal.getUTCHours()) + ""
+                  + pad(fullDateReal.getUTCMinutes()) + ""
+                  + pad(fullDateReal.getUTCSeconds()) + 'Z');
+
+        var isodateend = (fullDateReal.getUTCFullYear() + ""
+                         + pad(fullDateReal.getUTCMonth() + 1) + ""
+                         + pad(fullDateReal.getUTCDate()) + 'T'
+                         + "00" + ""
+                         + "00" + ""
+                         + "00" + 'Z');
+
+
+
+        //console.log(where_is_p);
+        //console.log(where_is_a);
+        var title = title;
+        var location = "";
+        if (split[3] != null) {
+            var location = split[3].trim();
+        } else {
+            location = "";
+        }
+        var variable = fullDateReal;
+        $("#ioutlook").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+        $("#icalender").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+        $("#yahoocal").attr("href", "http://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
+
+        $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
+        var target = $(this).data("target");
+        $(target).show();
+    }
+    function pad(n) { return n < 10 ? '0' + n : n };
+
 </script>
