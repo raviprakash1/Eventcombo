@@ -7,6 +7,9 @@
 
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+
+@Html.HiddenFor(m => m.Eventid, new { @id = "hdEventid" })
+@Html.HiddenFor(m => m.Organiserid, new { @id = "hdorganiserid" })
 <div class="event_container ">
     <div class="event_inner_container event_top">
         <div class="event_detail_container">
@@ -278,7 +281,16 @@
 <script>
    
     $(document).ready(function () {
+        $(document).click(function () {
+            $('#orgerror').css('display', 'none');
 
+            if( $('#orgerror').css('display')=='block')
+            {
+                $('input').removeClass('err-bor');
+                $("#id_orgtext").removeClass('err-bor');
+            }
+
+        });
         $('#saveorgaizermsg').click(function () {
 
 
@@ -326,7 +338,7 @@
                 return false;
             }
             else {
-                @*var organiserid = $('#hdorganiserid').val();
+                var organiserid = $('#hdorganiserid').val();
                 var eventid = $('#hdEventid').val();
                 var model = {
                     'email': mail,
@@ -349,7 +361,7 @@
                         $('#id_orgemail').val('');
                         $('#id_orgtext').val('');
                     }
-                });*@
+                });
             }
 
 

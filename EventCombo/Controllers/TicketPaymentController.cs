@@ -667,7 +667,12 @@ namespace EventCombo.Controllers
             ps.imgurl = cs.GetImages(Eventid).FirstOrDefault();
             ps.Tilte = Eventdetails.EventTitle;
             ps.description = Eventdetails.EventDescription;
-           var guid = Session["TicketLockedId"].ToString();
+            ps.Eventid = Eventdetails.EventID.ToString();
+
+            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
+
+            ps.Organiserid = OrganiserDetail.Orgnizer_Id.ToString();
+            var guid = Session["TicketLockedId"].ToString();
             AccountController ac = new AccountController();
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
             var acountdedtails = ac.GetLoginDetails(strUsers);
