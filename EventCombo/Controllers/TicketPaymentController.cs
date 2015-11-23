@@ -673,6 +673,7 @@ namespace EventCombo.Controllers
             var acountdedtails = ac.GetLoginDetails(strUsers);
             ps.sendlatestdetails = acountdedtails.SendLatestdetails;
             ps.Username = acountdedtails.Firstname + " " + acountdedtails.Lastname;
+            ps.Email = acountdedtails.Email;
             var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
             ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
@@ -695,7 +696,7 @@ namespace EventCombo.Controllers
                 var timefinal = day.ToString() + "~" + Sdate.ToString() + "~" + time+"~"+ addresslist;
                 pdate.id = timefinal;
                 pdate.Address = addresslist;
-                pdate.Datetime = day.ToString() + Sdate.ToString() + time;
+                pdate.Datetime = day.ToString() +" "+ Sdate.ToString() +" " + time;
                 Dateofevent.Add(pdate);
 
             }

@@ -90,9 +90,9 @@
             <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
 
                 <div class="col-sm-12 no_pad chek_out_desc">
-                    <p>Your order has been saved to My E-Tickets </p>
+                    <p id="ordertag">Your order has been saved to My E-Tickets </p>
                     <p><span id="spOrderNo"></span></p>
-                    <p>Your tickets have been sent to customer-email@domain.com </p>
+                    <p>Your tickets have been sent to @Html.DisplayFor(x=>x.Email) </p>
                     <p>
                         <label>
                             <input type="checkbox" value="@Html.DisplayFor(m=>m.sendlatestdetails)" @(Html.DisplayFor(m=>m.sendlatestdetails).ToString()=="Y" ? "checked=\"checked\"" : "")  onchange="changesetting(this.id);" id="chkgetlatest"/>
@@ -168,7 +168,7 @@
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
             <div class="col-sm-12 col-xs-12 text-left no_pad">
-                <h2 class="fb_dis_head pt5">Info Box </h2>
+                <h2 class="fb_dis_head pt5">Contact Info Box </h2>
             </div>
 
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -177,7 +177,7 @@
             <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
 
                 <div class="col-sm-12 no_pad chek_out_desc">
-                    <p>Hi @Html.DisplayFor(m=>m.Username )</p>
+                    <p>Hi @Html.DisplayFor(m=>m.Username ), See you at the Event &#9786;</p>
                     <p>Questions about this event?</p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
