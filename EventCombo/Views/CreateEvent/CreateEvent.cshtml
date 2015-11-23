@@ -7,7 +7,7 @@
 <link href="~/Content/summernote.css" rel="stylesheet" />
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.numberformatter-1.2.4.jsmin.js"></script>
+@*<script src="~/Scripts/jquery.numberformatter-1.2.4.jsmin.js"></script>*@
 @using (Html.BeginForm())
 
 {
@@ -3125,14 +3125,22 @@
         }
         function tofixed(id)
         {
-            if (!isNaN($('#' + id).val())) {
-                var price = parseFloat($('#' + id).val()).toFixed(2);
-                $('#' + id).val(price);
-              
-                //number = $.parseNumber(price, { format: "#,###.00", locale: "us" });
-                //$('#' + id).val(number);
-                //$(this).formatNumber({ format: "#,###.00", locale: "us" });
+            var price = $('#' + id).val();
+            var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+            if (id == "") {
+
+            } else
+            {
+               
+                var price = parseFloat(price).toFixed(2);
+             
+                if (!isNaN(price)) {
+                    document.getElementById(id).value = price;
+                }
+
             }
+         
+            
         }
         function validateforzero(id, evt) {
             var price = parseFloat($('#' + id).val()).toFixed(2);
