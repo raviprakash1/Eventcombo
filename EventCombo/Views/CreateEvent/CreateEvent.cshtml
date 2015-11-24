@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-sm-9 text-right no_pad">
                         <div class="form-group mb0 ">
-                            <div class="ev_date_icn"></div>
+                            <div class="ev_date_icn StartDate"></div>
                             <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date</label>
                             <div class="form-group mb5">
                                 <label class="Timezone label-control evnt_title_timezone mb0" id="lblTimeZone">Timezone & date setting</label>
@@ -1660,29 +1660,7 @@
             });
 
 
-            $('#btndiverrsuc').click(function () {
-
-                $('#diverroacc').css('display', 'none');
-                $('#divaccsuc').css('display', 'none');
-             
-                $('input').removeClass('err-bor');
-
-            });
-            $('#btndivaccsuc').click(function () {
-
-                $('#diverroacc').css('display', 'none');
-
-                $('#divaccsuc').css('display', 'none');
-                $('input').removeClass('err-bor');
-
-
-            });
-
-            $(".StartDatemodal").hide();
-            $(".StartDate").click(function () {
-                $(".StartDatemodal").slideToggle("fast");
-
-            });
+            
 
             $("#btSchMultipleEv").click(function () {
                 //$("#hdSchType").val('Multiple');
@@ -2748,15 +2726,7 @@
             });
 
 
-            $(".closemodal").click(function () {
-                $(".StartDatemodal").hide();
-
-            });
-
-            $(".closetimemodal").click(function () {
-                $(".TmezoneSet").hide();
-
-            });
+           
             // ------------------------------------Multiple schedule-----------------------------------
             $("#txtStartTime").val("7:00pm");
             $("#txtEndTime").val("7:00pm");
@@ -3075,219 +3045,7 @@
 
 
 
-            $('.summernote').summernote({
-                height: 70,   //set editable area's height
-            });
-
-            $(".ticket_panel").hide();
-            $(".save_btn").click(function () {
-                $(".ticket_panel").slideDown();
-
-            });
-
-            $(".ShowdateList").hide();
-            $(".DateList").click(function () {
-                $(".ShowdateList").toggle(500);
-            });
-
-
-            $('#AddMore').click(function () {
-                var data = $('#CloneDiv').clone();
-                data.attr('id', '');
-                //data.append('<span class="RemoveMoreHub" style="width:80%;"><a href="javascript:void(0);" style="float:right;color:#CE0009;font-size:13px;text-decoration:none;margin-right:5%;" >- Remove</a></span>');
-                $('#MasterDiv').append(data);
-            });
-
-            $(".tab-content").hide();
-            $(".evnt_set").click(function () {
-
-                $(".tab-content").slideToggle("fast");
-            });
-
-
-            // $('.date_picker').datepicker({
-            //     format: "MM/DD/YYYY",
-
-            // });
-
-            $('.date_picker').datepicker({
-                format: "MM/DD/YYYY",
-                minDate: "0"
-            })
-            .on('changeDate', function (ev) {
-                $('.date_picker').datepicker('hide');
-            });
-
-            $(function () {
-                $('.time_picker').timepicker();
-            });
-
-            $(".evnt_doll_amnt").hide();
-            $(".ev_tic_end").click(function () {
-                $(".evt_time").css("display", "none");
-                $(".evnt_doll_amnt").css("display", "block");
-            });
-            $(".ev_by_date").click(function () {
-                $(".evnt_doll_amnt").css("display", "none");
-                $(".evt_time").css("display", "block");
-            });
-
-            $(".CusdateCont").hide();
-            $(".EvaddTkt").click(function () {
-                $(".CusdateCont").css("display", "block");
-            });
-
-            $(".RemvTkt").hide();
-            $(".EvaddTkt").click(function () {
-                $(".RemvTkt").css("display", "block");
-                $(".EvaddTkt").css("display", "none");
-            });
-            $(".RemvTkt").click(function () {
-                $(".EvaddTkt").css("display", "block");
-                $(".CusdateCont").css("display", "none");
-                $(".RemvTkt").css("display", "none");
-            });
-
-            $(".HideuntDiv").hide();
-            $(".CusdateTime").click(function () {
-                $(".HideuntDiv").css("display", "block");
-            });
-            $(".TktnotSale").click(function () {
-                $(".HideuntDiv").css("display", "none");
-            });
-            // $('#multiselect2').multiselect({
-            // includeSelectAllOption: true
-            // });
-            $('.checkboxName').multiselect({
-                checkboxName: 'multiselect[]'
-            });
-
-            $(".can_org_cont").hide();
-            $(".EditOrg").click(function () {
-                $(".can_org_cont").css("display", "block");
-                $(".edit_org_cont").css("display", "none");
-                $(".Moderor").css("display", "block");
-
-            });
-            $(".AddOrg").click(function () {
-                $(".can_org_cont").css("display", "block");
-                $(".edit_org_cont").css("display", "none");
-                $(".Moderor").css("display", "none");
-
-            });
-            $(".CanOrg").click(function () {
-                $(".edit_org_cont").css("display", "block");
-                $(".can_org_cont").css("display", "none");
-
-            });
-
-
-            $(".AddSocial").css("display", "none");
-            $('#Incsocial').change(function () {
-                if ($(this).is(":checked")) {
-                    $('.AddSocial').show();
-                } else {
-                    $('.AddSocial').hide();
-                }
-            });
-
-            $(".priv_cont").hide();
-            $(".Prvpage").click(function () {
-                $(".priv_cont").css("display", "block");
-            });
-            $(".Pubpage").click(function () {
-                $(".priv_cont").css("display", "none");
-            });
-
-            $(".online_main_cont").hide();
-            $(".OnlineEvent").click(function () {
-                $(".online_main_cont").css("display", "block");
-                $(".EnterAdd").css("display", "none");
-            });
-
-            $(".AddLocatondiv").click(function () {
-                $(".EnterAdd").css("display", "block");
-                $(".online_main_cont").css("display", "none");
-
-            });
-
-
-            $(".PastLocatMain").hide();
-            $(".UsePast").click(function () {
-                $(".PastLocatMain").css("display", "block");
-                $(".EvntLocatTitle").css("display", "none");
-                $(".EnterAdd").css("display", "none");
-            });
-
-            $(".RetunEvent").click(function () {
-                $(".EnterAdd").css("display", "block");
-                $(".EvntLocatTitle").css("display", "block");
-                $(".PastLocatMain").css("display", "none");
-
-            });
-
-            $(".OrglistShow").hide();
-            $(".OrgIcn").click(function () {
-
-                $(".OrglistShow").slideToggle("fast");
-            });
-
-            $(".TmezoneSet").hide();
-            $(".Timezone").click(function () {
-                $(".TmezoneSet").slideToggle("fast");
-
-            });
-
-
-
-
-            $(".PastLocat").css("display", "none");
-            $('#UsepastLoc').change(function () {
-                if ($(this).is(":checked")) {
-                    $('.PastLocat').show();
-                    $('.EntVenAdd').hide();
-                } else {
-                    $('.PastLocat').hide();
-                    $('.EntVenAdd').show();
-                }
-            });
-
-            $(".FindNewVen").click(function () {
-                $(".EntVenAdd").show();
-                $(".PastLocat").hide();
-
-            });
-
-            $(".TicketFees").css("display", "none");
-            $('#VarCharg').change(function () {
-                if ($(this).is(":checked")) {
-                    $('.TicketFees').show();
-                } else {
-                    $('.TicketFees').hide();
-                }
-            });
-
-
-
-            $(".SchmultiDetail").hide();
-            $(".Schmultisingle").hide();
-            $(".SchmultiEvnt").click(function () {
-                $(".SchmultiDetail").slideToggle("slow");
-                $(".SchDivtop").hide();
-            });
-
-
-            $(".SchmultiEvnt").click(function () {
-                $(".SchDivtop").hide();
-                $(".Schmultisingle").show();
-            });
-
-
-            $(".Schmultisingle").click(function () {
-                $(".SchDivtop").show();
-                $(".SchmultiDetail").hide();
-                $(".Schmultisingle").hide();
-            });
+            
 
 
 
@@ -5005,6 +4763,261 @@
             });
         });
 
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.summernote').summernote({
+                height: 70,   //set editable area's height
+            });
+
+            $(".ticket_panel").hide();
+            $(".save_btn").click(function () {
+                $(".ticket_panel").slideDown();
+
+            });
+
+            $(".ShowdateList").hide();
+            $(".DateList").click(function () {
+                $(".ShowdateList").toggle(500);
+            });
+
+
+            $('#AddMore').click(function () {
+                var data = $('#CloneDiv').clone();
+                data.attr('id', '');
+                //data.append('<span class="RemoveMoreHub" style="width:80%;"><a href="javascript:void(0);" style="float:right;color:#CE0009;font-size:13px;text-decoration:none;margin-right:5%;" >- Remove</a></span>');
+                $('#MasterDiv').append(data);
+            });
+
+            $(".tab-content").hide();
+            $(".evnt_set").click(function () {
+
+                $(".tab-content").slideToggle("fast");
+            });
+
+
+            // $('.date_picker').datepicker({
+            //     format: "MM/DD/YYYY",
+
+            // });
+
+            $('.date_picker').datepicker({
+                format: "MM/DD/YYYY",
+                minDate: "0"
+            })
+            .on('changeDate', function (ev) {
+                $('.date_picker').datepicker('hide');
+            });
+
+            $(function () {
+                $('.time_picker').timepicker();
+            });
+
+            $(".evnt_doll_amnt").hide();
+            $(".ev_tic_end").click(function () {
+                $(".evt_time").css("display", "none");
+                $(".evnt_doll_amnt").css("display", "block");
+            });
+            $(".ev_by_date").click(function () {
+                $(".evnt_doll_amnt").css("display", "none");
+                $(".evt_time").css("display", "block");
+            });
+
+            $(".CusdateCont").hide();
+            $(".EvaddTkt").click(function () {
+                $(".CusdateCont").css("display", "block");
+            });
+
+            $(".RemvTkt").hide();
+            $(".EvaddTkt").click(function () {
+                $(".RemvTkt").css("display", "block");
+                $(".EvaddTkt").css("display", "none");
+            });
+            $(".RemvTkt").click(function () {
+                $(".EvaddTkt").css("display", "block");
+                $(".CusdateCont").css("display", "none");
+                $(".RemvTkt").css("display", "none");
+            });
+
+            $(".HideuntDiv").hide();
+            $(".CusdateTime").click(function () {
+                $(".HideuntDiv").css("display", "block");
+            });
+            $(".TktnotSale").click(function () {
+                $(".HideuntDiv").css("display", "none");
+            });
+            // $('#multiselect2').multiselect({
+            // includeSelectAllOption: true
+            // });
+            $('.checkboxName').multiselect({
+                checkboxName: 'multiselect[]'
+            });
+
+            $(".can_org_cont").hide();
+            $(".EditOrg").click(function () {
+                $(".can_org_cont").css("display", "block");
+                $(".edit_org_cont").css("display", "none");
+                $(".Moderor").css("display", "block");
+
+            });
+            $(".AddOrg").click(function () {
+                $(".can_org_cont").css("display", "block");
+                $(".edit_org_cont").css("display", "none");
+                $(".Moderor").css("display", "none");
+
+            });
+            $(".CanOrg").click(function () {
+                $(".edit_org_cont").css("display", "block");
+                $(".can_org_cont").css("display", "none");
+
+            });
+
+
+            $(".AddSocial").css("display", "none");
+            $('#Incsocial').change(function () {
+                if ($(this).is(":checked")) {
+                    $('.AddSocial').show();
+                } else {
+                    $('.AddSocial').hide();
+                }
+            });
+
+            $(".priv_cont").hide();
+            $(".Prvpage").click(function () {
+                $(".priv_cont").css("display", "block");
+            });
+            $(".Pubpage").click(function () {
+                $(".priv_cont").css("display", "none");
+            });
+
+            $(".online_main_cont").hide();
+            $(".OnlineEvent").click(function () {
+                $(".online_main_cont").css("display", "block");
+                $(".EnterAdd").css("display", "none");
+            });
+
+            $(".AddLocatondiv").click(function () {
+                $(".EnterAdd").css("display", "block");
+                $(".online_main_cont").css("display", "none");
+
+            });
+
+
+            $(".PastLocatMain").hide();
+            $(".UsePast").click(function () {
+                $(".PastLocatMain").css("display", "block");
+                $(".EvntLocatTitle").css("display", "none");
+                $(".EnterAdd").css("display", "none");
+            });
+
+            $(".RetunEvent").click(function () {
+                $(".EnterAdd").css("display", "block");
+                $(".EvntLocatTitle").css("display", "block");
+                $(".PastLocatMain").css("display", "none");
+
+            });
+
+            $(".OrglistShow").hide();
+            $(".OrgIcn").click(function () {
+
+                $(".OrglistShow").slideToggle("fast");
+            });
+
+            $('#btndiverrsuc').click(function () {
+
+                $('#diverroacc').css('display', 'none');
+                $('#divaccsuc').css('display', 'none');
+
+                $('input').removeClass('err-bor');
+
+            });
+            $('#btndivaccsuc').click(function () {
+
+                $('#diverroacc').css('display', 'none');
+
+                $('#divaccsuc').css('display', 'none');
+                $('input').removeClass('err-bor');
+
+
+            });
+
+            $(".StartDatemodal").hide();
+            $(".StartDate").click(function () {
+                $(".StartDatemodal").slideToggle("fast");
+
+            });
+
+
+
+
+            $(".PastLocat").css("display", "none");
+            $('#UsepastLoc').change(function () {
+                if ($(this).is(":checked")) {
+                    $('.PastLocat').show();
+                    $('.EntVenAdd').hide();
+                } else {
+                    $('.PastLocat').hide();
+                    $('.EntVenAdd').show();
+                }
+            });
+
+            $(".FindNewVen").click(function () {
+                $(".EntVenAdd").show();
+                $(".PastLocat").hide();
+
+            });
+
+            $(".TicketFees").css("display", "none");
+            $('#VarCharg').change(function () {
+                if ($(this).is(":checked")) {
+                    $('.TicketFees').show();
+                } else {
+                    $('.TicketFees').hide();
+                }
+            });
+
+
+
+            $(".SchmultiDetail").hide();
+            $(".Schmultisingle").hide();
+            $(".SchmultiEvnt").click(function () {
+                $(".SchmultiDetail").slideToggle("slow");
+                $(".SchDivtop").hide();
+            });
+
+
+            $(".SchmultiEvnt").click(function () {
+                $(".SchDivtop").hide();
+                $(".Schmultisingle").show();
+            });
+
+
+            $(".Schmultisingle").click(function () {
+                $(".SchDivtop").show();
+                $(".SchmultiDetail").hide();
+                $(".Schmultisingle").hide();
+            });
+
+            $(".TmezoneSet").hide();
+            $(".Timezone").click(function () {
+                $(".TmezoneSet").slideToggle("fast");
+
+            });
+
+            $(".closemodal").click(function () {
+                $(".StartDatemodal").hide();
+
+            });
+
+            $(".closetimemodal").click(function () {
+                $(".TmezoneSet").hide();
+
+            });
+
+        });
+        
     </script>
 
 }
