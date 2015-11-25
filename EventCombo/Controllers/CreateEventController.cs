@@ -236,6 +236,7 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_showvariable = model.Ticket_showvariable;
                     ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
                     ObjEC.Ticket_variabletype = model.Ticket_variabletype;
+                    ObjEC.ShowMap = model.ShowMap;
 
                     objEnt.Events.Add(ObjEC);
                     // Address info
@@ -451,6 +452,7 @@ namespace EventCombo.Controllers
             var timezone = EventDetail.TimeZone;
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
+            viewEvent.showmaponevent = EventDetail.ShowMap;
             //Address
             var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)

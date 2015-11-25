@@ -31,6 +31,7 @@ namespace EventCombo.Models
         public string Shareonfb { get; set; }
         public string typeofEvent { get; set; }
         public string enablediscussion { get; set; }
+        public string showmaponevent { get; set; }
 
 
     }
