@@ -1514,20 +1514,35 @@ namespace EventCombo.Controllers
 
 
                                 objEntity.Profiles.Add(prof);
-                                objEntity.SaveChanges();
+
+                             objEntity.SaveChanges();
+
+                               
+                           
+                               
+
+                                
+
+                            }
+
+                            using (EventComboEntities db = new EventComboEntities())
+                            {
+                                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user1.Id);
+                                aspuser.LoginStatus = "Y";
+                                db.SaveChanges();
 
                             }
 
                         }
-                       // return View("LoginResult", new LoginResultViewModel(true, url));
+                       return View("LoginResult", new LoginResultViewModel(true, url));
 
-                       return RedirectToLocal(url);
+                       //return RedirectToLocal(url);
                     }
                     else
                     {
-                       // return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index", "Home")));
+                       return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index", "Home")));
 
-                        return RedirectToAction("Index", "Home");
+                       // return RedirectToAction("Index", "Home");
 
                     }
                 }
@@ -1619,7 +1634,14 @@ namespace EventCombo.Controllers
                 }
                 var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
                 Session["AppId"] = user.Id;
-               return View("LoginResult", new LoginResultViewModel(true, url));
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user.Id);
+                    aspuser.LoginStatus = "Y";
+                    db.SaveChanges();
+
+                }
+                return View("LoginResult", new LoginResultViewModel(true, url));
 
               // return RedirectToLocal(url);
                 //if (result == SignInStatus.Success)
