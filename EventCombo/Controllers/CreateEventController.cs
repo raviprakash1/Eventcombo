@@ -912,10 +912,30 @@ namespace EventCombo.Controllers
         }
 
 
+        public void GetSelectedTickets(Ticket_Locked_Detail objLocked)
+        {
+
+            string strGuid = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+            StringBuilder strIds = new StringBuilder();
+            if (strGuid == "")
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var LockTicket = (from LT in objEnt.Ticket_Locked_Detail
+                                      where LT.TLD_GUID == strGuid
+                                      select LT);
+                    foreach (Ticket_Locked_Detail TLD in LockTicket)
+                    {
+                        strIds.Append(TLD.TLD_TQD_Id.ToString() + ",");
+                    }
+                }
+            }
+        }
+
         #endregion
 
 
-        
+
 
 
     }
