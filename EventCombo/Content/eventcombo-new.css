@@ -455,5 +455,8 @@
 
 @media (width: 768px) {
 .event-upload-container .jFiler-item-thumb-image{width: 100px;  height: 75px;}
+.jFiler .jFiler-input-dragDrop{width: 140px !important;}
+
+
 
 }

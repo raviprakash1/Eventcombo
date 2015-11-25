@@ -8,6 +8,7 @@
 /*-------------------------
 	Input
 -------------------------*/
+
 .jFiler-input-dragDrop {
     display: block;
     width: 343px;
@@ -189,4 +190,11 @@
     color: #fff;
     filter: alpha(opacity=87);
     opacity: 0.87;
+}
+
+@media (width: 768px) {
+.jFiler .jFiler-input-dragDrop{width: 140px !important;}
+
+
+
 }
