@@ -492,8 +492,8 @@ namespace EventCombo.Controllers
                 endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString ();
                  eDate_new = eDate.ToString("MMM dd, yyyy");
 
-                 starttime = evschdetails.StartTime;
-                 endtime = evschdetails.EndTime;
+                 starttime = evschdetails.StartTime.ToUpper();
+                 endtime = evschdetails.EndTime.ToUpper();
 
                
 
