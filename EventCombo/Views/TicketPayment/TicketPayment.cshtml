@@ -430,6 +430,9 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="col-sm-12 text-right mt10">
+                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="btBack">
+                            < Back
+                        </button>   
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="completeorder" >
                             COMPLTE ORDER >
                         </button>
@@ -448,9 +451,7 @@
     <div class="clearfix"></div>
     <div class="strat_timer_cont">
         <div class="col-sm-12 no_pad text-center">
-            <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="btBack">
-                < Back 
-            </button>   
+        
             <p class="bg-green mb0 strt_tim_desc">
                 Please complete this purchase within 10:00 minutes.<br>
                 After 10:00 minutes, the reservation we're holding will be released to others.
@@ -536,6 +537,7 @@
 }
 <script src="~/Scripts/Commonfunction.js"></script>
 <script src="~/Scripts/flipclock.js"></script>
+<script src="~/Scripts/jquery.cookie.js"></script>
 @*<script src="~/Scripts/jquery.countdownTimer.js"></script>*@
 <script>
     //function afterStop() {
@@ -805,9 +807,27 @@
         }
     }
     $(document).ready(function () {
-        $('#btBack').click(function () {
-            history.back();
+        $(window).unload(function () {
+            $.ajax({
+                url: '@Url.Action("ReleaseTickets", "TicketPayment")',
+                type: "Post",
+                success: function (response) {
+                }
+            });
+        });
 
+        //history.pushState(null, null, 'TicketPayment');
+        //window.addEventListener('popstate', function (event) {
+        //    history.pushState(null, null, 'TicketPayment');
+        //});
+        $('#btBack').click(function () {
+            $.ajax({
+                url: '@Url.Action("ReleaseTickets", "TicketPayment")',
+                type: "Post",
+                success: function (response) {
+                    history.back();
+                }
+            });
         });
         $('#sameshipping').click(function () {
             $(".billingaddress").attr('checked', false);

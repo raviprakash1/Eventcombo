@@ -882,8 +882,9 @@ namespace EventCombo.Controllers
             return strTicket;
         }
 
-        public void LockTickets(Ticket_Locked_Detail objLocked)
+        public string LockTickets(Ticket_Locked_Detail objLocked)
         {
+            string strResult = "Y";
             string strGuid = Guid.NewGuid().ToString();
             Session["TicketLockedId"] = strGuid;
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
@@ -892,6 +893,15 @@ namespace EventCombo.Controllers
                 Ticket_Locked_Detail objTLD = new Ticket_Locked_Detail();
                 foreach (Ticket_Locked_Detail objModel in objLocked.TLD_List)
                 {
+                    var vRemQty = (from PQty in context.Ticket_Quantity_Detail where PQty.TQD_Id == objModel.TLD_TQD_Id select PQty.TQD_Remaining_Quantity).SingleOrDefault();
+                    var vLockQty = (from PQty in context.Ticket_Locked_Detail where PQty.TLD_TQD_Id == objModel.TLD_TQD_Id select PQty.TLD_Locked_Qty).SingleOrDefault();
+                    vLockQty = (vLockQty != null ? vLockQty : 0);
+                    if (vRemQty < (vLockQty + objModel.TLD_Locked_Qty))
+                    {
+                        strResult = "N";
+                        break;
+                    }
+
                     objTLD = new Ticket_Locked_Detail();
                     objTLD.TLD_Locked_Qty = objModel.TLD_Locked_Qty;
                     objTLD.TLD_TQD_Id  = objModel.TLD_TQD_Id;
@@ -906,13 +916,15 @@ namespace EventCombo.Controllers
                 }
 
 
-
-                context.SaveChanges();
+                if (strResult == "Y")
+                    context.SaveChanges();
+                
             }
+            return strResult;
         }
 
 
-        public void GetSelectedTickets(Ticket_Locked_Detail objLocked)
+        public string GetSelectedTickets(Ticket_Locked_Detail objLocked)
         {
 
             string strGuid = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
@@ -930,6 +942,7 @@ namespace EventCombo.Controllers
                     }
                 }
             }
+            return strIds.ToString();
         }
 
         #endregion
