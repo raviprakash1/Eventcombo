@@ -4519,6 +4519,8 @@
         function validatemain() {
             var msg = "";
             var count = 0;
+            var countqty = 0;
+            var countdesc = 0;
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
@@ -4552,7 +4554,7 @@
                     if (ticket_name == "") {
                         $('#id_ticket_type-' + i).addClass('err-bor');
 
-                        count++;
+                        countdesc++;
                     } else {
                         $('#id_ticket_type-' + i).removeClass('err-bor');
 
@@ -4560,10 +4562,16 @@
                     if (ticket_Qty == "") {
 
                         $('#id_quantity_total-' + i).addClass('err-bor');
-                        count++;
-                    } else {
+                        countqty++;
+                    } else
+                    {
+                        if (ticket_Qty <= 0) {
+                            $('#id_quantity_total-' + i).addClass('err-bor');
+                            countqty++;
 
-                        $('#id_quantity_total-' + i).removeClass('err-bor');
+                        } else {
+                            $('#id_quantity_total-' + i).removeClass('err-bor');
+                        }
                     }
                     if ($('#id_cost-' + i).hasClass('err-bor')) { count++; }
 
@@ -4575,9 +4583,15 @@
                 count++;
 
             }
-            if (count > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
+            if (countqty > 0) {
+                msg += ajaxsetup("CreateEvent", "CreateEventQtyValidateUI") + "<br/>";
             }
+            if (countdesc > 0)
+            {
+                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
+
+            }
+          
             if ($('#id_variablecharge').is(":checked") == true) {
                 if ($('#id_vardesc').val() == "") {
                     $('#id_vardesc').addClass('err-bor');

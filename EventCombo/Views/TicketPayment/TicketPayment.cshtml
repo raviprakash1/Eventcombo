@@ -576,7 +576,8 @@
     }
     function validationpage()
     {
-        var msglogin = "",emailerr="",pasword="";
+        var msglogin = "", emailerr = "", pasword = "";
+        var accfname = $("#accfname").val();
         var Emaillogin = $("#Email").val();
         var confirmlogin = $("#confirmEmail").val();
         var Passowrdlogin = $("#password").val();
@@ -585,7 +586,11 @@
         var total = $('#hdOrderTotal').val();
 
 
-
+        if (accfname == '')
+        {
+            $("#accfname").addClass('err-bor');
+            msglogin += ajaxsetup('TicketPayment', 'TPayFnameValidateUI') + "</br>";
+        }
 
         if (!validateEmail(Emaillogin)) {
             $('#Email').focus();
