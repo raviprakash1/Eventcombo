@@ -281,6 +281,10 @@
 <script>
    
     $(document).ready(function () {
+        history.pushState(null, null, 'PaymentConfirmation');
+        window.addEventListener('popstate', function (event) {
+            history.pushState(null, null, 'PaymentConfirmation');
+        });
         $(document).click(function () {
             $('#orgerror').css('display', 'none');
 
