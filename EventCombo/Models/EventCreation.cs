@@ -47,5 +47,8 @@ namespace EventCombo.Models
         public Ticket[] Ticket { get; set; }
         public EventImage[] EventImage { get; set; }
         public Event_VariableDesc[] EventVariable { get; set; }
+
+        public string ShowMap { get; set; }
+
     }
 }
