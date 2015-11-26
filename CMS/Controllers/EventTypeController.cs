@@ -154,10 +154,7 @@ namespace CMS.Controllers
                         break;
                     default:
                         throw new Exception();                        
-                }
-
-      
-      
+                }                
                 return View(objET);
             }
             else

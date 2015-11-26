@@ -4,29 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div  id="content" class="animated fadeIn">
-    <div class="row">
-        <div class="col-md-12"> 
 
-            <div class="panel">
-                <div class="panel-heading">
-                    <span class="panel-title">fdgfd jjj j</span>
-                </div>
-                <div class="panel-body admin-form">                    
-                </div>
-                </div>
-
-
-                </div>
-            </div>
-        </div>
 
             <section id="content_wrapper">
                 @using (Html.BeginForm())
                 {
-                    <h2>Event Category</h2>
-
-
                     if (TempData["SuccessMessage"] != null)
                     {
                         <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
@@ -34,37 +16,88 @@
                             <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
                         </div>
                     }
-                    <div class="form-group">
-                        <label class="col-md-2 control-label acnt_form_label ">Event Category</label>
-                        <div class="col-md-10">
-                            @*@Html.DropDownList("EventCategory", new SelectList(ViewBag.EventCategory), new { @class = "form-control" })*@
-                            @Html.TextBoxFor(m => m.EventCategory1, new { @maxlength = 35, @class = "form-control" })
+                    <div class="row" id="modal-content">
+                        <div class="col-md-12 mt10">
+                            <div class="panel ">                              
+                                    <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <span class="view_evnt fs26">Event Category</span>
+                                            </div>
 
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
 
-                        </div>
+                                                    <div class="col-md-8">
+                                                        <form class="form-horizontal" role="form">
 
-                        <label class="col-md-2 control-label acnt_form_label " id="lblSubCat">Event Sub Category</label>
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.EventSubCategory1, new { @maxlength = 35, @class = "form-control" })
-                            @*@Html.TextBox("EventSubCategory1", new { @maxlength = 35, @class = "form-control" })*@
-                            <button type="button" name="submit" value="Add Sub Category" class="btn btn-info col-md-offset-3 acnt_btn" id="btnAddSub">Add Sub Category</button>
-                        </div>
-                    </div>
+                                                            <div class="col-md-12 row">
+                                                                <div class="form-group">
+                                                                    <label class="col-lg-12">Event Category</label>
+                                                                    <div class="col-lg-6">
+                                                                        @*<input type="text" id="inputStandard" class="form-control">*@
+                                                                        @Html.TextBoxFor(m => m.EventCategory1, new { @maxlength = 35, @class = "form-control" })                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 row mt10">
+                                                                <div class="form-group">
+                                                                    @*<label class="col-lg-12">Event Sub Category</label>*@
+                                                                    <label class="col-lg-12" id="lblSubCat">Event Sub Category</label>
+                                                                    <div class="col-lg-6">
+                                                                        @*<input type="text" class="form-control">*@
+                                                                        @Html.TextBoxFor(m => m.EventSubCategory1, new { @maxlength = 35, @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 mt10">
+                                                                @*<button class="btn btn-primary col-sm-3" type="submit">Add Sub Category</button>*@
+                                                                <button type="button" name="submit" value="Add Sub Category" class="btn btn-primary col-sm-3" id="btnAddSub">Add Sub Category</button>
+                                                            </div>
+                                                            <div class="col-md-12 row mt10">
+                                                                <div class="form-group">
+                                                                   
+                                                                    <label class="col-lg-12" id="lblSubCatList">Event Sub Category List</label>
+                                                                    <div class="col-lg-6">
+                                                                        @Html.ListBox("EventSubCategoryListBox", new SelectList(""), new { @class = "form-control" })
+                                                                        @Html.Hidden("hdESCat")
+                                                                    </div>
+                                                                    </div>                                                                    
+                                                                   
+                                                            </div>
 
-                    <div class="form-group select_types-edit">
+                                                            <div class="col-md-12 mt10">
+                                                                @*<button class="btn btn-primary col-sm-3" type="submit">Add Sub Category</button>*@
+                                                                @*<button type="button" name="submit" value="y" class="btn btn-primary col-sm-3" id="btnAddSub">Add Sub Category</button>*@
+                                                                <div class="col-md-12 row">
+                                                                    <button type="submit" name="submit" value="Create" class="btn btn-primary col-sm-6" id="btnCreate">Create</button>
+                                                                </div>
+                                                                <div class="col-md-10 row">
+                                                                    <div class="col-md-6 row"><button type="button" name="submit" value="Reset" class="btn btn-primary col-sm-4" id="btnReset">Reset</button></div>
+                                                                    <div class="col-md-6 row"><button type="submit" name="submit" value="Edit" class="btn btn-primary col-sm-4" id="btnEdit">Edit</button></div>
+                                                                 </div>
+                                                                    
+                                                                    
+                                                                </div>
+                                                            <div class="col-md-12 row mt10">
+                                                                <div class="form-group">
 
-                        <div class="col-md-9">
-                            <label class="col-md-2 control-label acnt_form_label " id="lblSubCatList">Event Sub Category List</label>
-                            @Html.ListBox("EventSubCategoryListBox", new SelectList(""), new { @class = "form-control" })
-                            @Html.Hidden("hdESCat")
-                            <button type="submit" name="submit" value="Create" class="btn btn-info acnt_btn" id="btnCreate">Create</button>
-                            <button type="button" name="submit" value="Reset" class="btn btn-info acnt_btn" id="btnReset">Reset</button>
-                            <div>
-                                <label class="col-md-2 control-label acnt_form_label " id="lblCatList">Event Category List</label>
+                                                                    <label class="col-lg-12" id="lblSubCatList">Event  Category List</label>
+                                                                    <div class="col-lg-6">
+                                                                        @Html.ListBox("EventCategoryListBox", new SelectList(ViewBag.EventCategory), new { @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+                                                           </div>
+</form>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>   
                             </div>
-                            @Html.ListBox("EventCategoryListBox", new SelectList(ViewBag.EventCategory), new { @class = "form-control" })
                         </div>
-                    </div>
+                    </div>                    
                 }
             </section>
 
@@ -74,10 +107,10 @@
                     $("#EventSubCategoryListBox").hide();
                     $("#lblSubCatList").hide();
                     $("#btnReset").hide();
+                    $("#btnEdit").hide();
                 });
 
-                $(document).ready(function () {
-
+                $(document).ready(function () {                    
                     $('#btnReset').click(function () {                        
                         $("#btnCreate").show();
                         $("#btnAddSub").show();
@@ -87,11 +120,14 @@
                         $("#lblSubCatList").hide();
                         $("#EventCategory1").val('');
                         $("#btnReset").hide();
+                        $("#btnEdit").hide();
+                        $("#EventSubCategoryListBox").empty();
                         
                     });
 
                     $('#btnAddSub').click(function () {                        
                         $("#EventSubCategoryListBox").show();
+                        $("#lblSubCatList").show();
                         var newListValue = $('#EventSubCategory1').val();
                         if ($.trim(newListValue) != '') {
                             $('#EventSubCategoryListBox').append('<option>' + newListValue + '</option>');
@@ -103,7 +139,15 @@
                         }
                     });
 
-                    $("#EventCategoryListBox option").click(function () {
+                    $('#EventSubCategoryListBox option').click(function () {
+                        debugger;
+                        $("#lblSubCat").show();
+                        $("#EventSubCategory1").show();
+                        var _this = $(this);
+                        $("#EventSubCategory1").val($(_this).text());
+                    });
+
+                    $("#EventCategoryListBox option").click(function () {                        
                         $("#EventSubCategoryListBox").show();
                         $("#lblSubCatList").show();
                         $("#EventSubCategory1").hide();
@@ -111,7 +155,8 @@
                         $("#lblSubCat").hide();
                         $("#btnCreate").hide();
                         $("#btnReset").show();
-
+                        $("#btnEdit").show();
+                        $("#divsuccc").hide();
                         var _this = $(this);
                         $("#EventCategory1").val($(_this).text());
                         $("#EventSubCategoryListBox").empty();
@@ -128,13 +173,12 @@
 
                             },
                             error: function (data) {
-                                alert("Sorry there is some problem.");
+                                alert("Sorry! there is some problem.");
                                 return false
                             }
                         });
 
-                    });
-                  
+                    });                                      
                 });
             </script>
 
