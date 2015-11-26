@@ -236,6 +236,7 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_showvariable = model.Ticket_showvariable;
                     ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
                     ObjEC.Ticket_variabletype = model.Ticket_variabletype;
+                    ObjEC.ShowMap = model.ShowMap;
 
                     objEnt.Events.Add(ObjEC);
                     // Address info
@@ -451,6 +452,7 @@ namespace EventCombo.Controllers
             var timezone = EventDetail.TimeZone;
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
+            viewEvent.showmaponevent = EventDetail.ShowMap;
             //Address
             var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)
@@ -492,8 +494,8 @@ namespace EventCombo.Controllers
                 endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString ();
                  eDate_new = eDate.ToString("MMM dd, yyyy");
 
-                 starttime = evschdetails.StartTime;
-                 endtime = evschdetails.EndTime;
+                 starttime = evschdetails.StartTime.ToUpper();
+                 endtime = evschdetails.EndTime.ToUpper();
 
                
 
@@ -624,13 +626,19 @@ namespace EventCombo.Controllers
             var ticketsDonation = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 3 select r).Count();
             
             var itemsremainingInCart = (from o in db.Ticket_Quantity_Detail where o.TQD_Event_Id == EventId select o.TQD_Remaining_Quantity).Sum();
-           
+
+
             if (ticketsfree>0 && ticketsPaid>0 && ticketsDonation>0)
             {
                 tickettype = "Order Now";
 
             }
             if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree > 0 && ticketsPaid > 0 && ticketsDonation <= 0)
             {
                 tickettype = "Order Now";
 
@@ -876,8 +884,9 @@ namespace EventCombo.Controllers
             return strTicket;
         }
 
-        public void LockTickets(Ticket_Locked_Detail objLocked)
+        public string LockTickets(Ticket_Locked_Detail objLocked)
         {
+            string strResult = "Y";
             string strGuid = Guid.NewGuid().ToString();
             Session["TicketLockedId"] = strGuid;
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
@@ -886,6 +895,15 @@ namespace EventCombo.Controllers
                 Ticket_Locked_Detail objTLD = new Ticket_Locked_Detail();
                 foreach (Ticket_Locked_Detail objModel in objLocked.TLD_List)
                 {
+                    var vRemQty = (from PQty in context.Ticket_Quantity_Detail where PQty.TQD_Id == objModel.TLD_TQD_Id select PQty.TQD_Remaining_Quantity).SingleOrDefault();
+                    var vLockQty = (from PQty in context.Ticket_Locked_Detail where PQty.TLD_TQD_Id == objModel.TLD_TQD_Id select PQty.TLD_Locked_Qty).SingleOrDefault();
+                    vLockQty = (vLockQty != null ? vLockQty : 0);
+                    if (vRemQty < (vLockQty + objModel.TLD_Locked_Qty))
+                    {
+                        strResult = "N";
+                        break;
+                    }
+
                     objTLD = new Ticket_Locked_Detail();
                     objTLD.TLD_Locked_Qty = objModel.TLD_Locked_Qty;
                     objTLD.TLD_TQD_Id  = objModel.TLD_TQD_Id;
@@ -900,16 +918,39 @@ namespace EventCombo.Controllers
                 }
 
 
-
-                context.SaveChanges();
+                if (strResult == "Y")
+                    context.SaveChanges();
+                
             }
+            return strResult;
         }
 
+
+        public string GetSelectedTickets(Ticket_Locked_Detail objLocked)
+        {
+
+            string strGuid = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+            StringBuilder strIds = new StringBuilder();
+            if (strGuid == "")
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var LockTicket = (from LT in objEnt.Ticket_Locked_Detail
+                                      where LT.TLD_GUID == strGuid
+                                      select LT);
+                    foreach (Ticket_Locked_Detail TLD in LockTicket)
+                    {
+                        strIds.Append(TLD.TLD_TQD_Id.ToString() + ",");
+                    }
+                }
+            }
+            return strIds.ToString();
+        }
 
         #endregion
 
 
-        
+
 
 
     }

@@ -679,6 +679,7 @@
     <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-development.css" />
     <Content Include="Scripts\jquery.appendGrid\jquery.appendGrid-development.js" />
     <Content Include="Scripts\jquery.ba-bbq.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.countdownTimer.js" />
     <Content Include="Scripts\jquery.creditCardValidator.js" />
     <Content Include="Scripts\jquery.icalendar.pack.js" />

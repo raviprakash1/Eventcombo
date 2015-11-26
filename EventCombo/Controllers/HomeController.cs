@@ -361,7 +361,7 @@ namespace EventCombo.Controllers
                 SendHtmlFormattedEmail(to, from, subjectn, bodyn);
             }
             ValidationMessageController vmc = new ValidationMessageController();
-           var msg= vmc.Index("ForgetPassword", "ForgotPwdSuccessInitSY");
+           var msg= vmc.Index("ForgotPassword", "ForgotPwdSuccessInitSY");
             ViewData["Message"] = msg;
             return View();
         }

@@ -6,6 +6,7 @@
 
 body{font-family:"Abel",Arial,sans-serif;}
 a:focus { outline: none; text-decoration: none; }
+
 button:focus { outline: none;}
 .form-control:focus{ border:1px solid #ccc; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;}
 
@@ -291,7 +292,7 @@ button:focus { outline: none;}
 .fb{ color:#3d5a98;}
 .tw{ color:#5ea9dd;}
 .Moderor{ width:100%; float: left; max-width: 100%;
-          margin-top:23px; 
+          margin-top:23px; outline:none; 
 }
 
 
@@ -519,27 +520,27 @@ span.evnt_toltip{
 .er_war_main{
     border: 1px solid #ffdb00;
     width: 100%;
-    float: left;height: 50px; display: table;}
+    float: left;height: 50px; display: table; position:relative; }
 .er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; }
 .er_war_img{ background: #ffdb00 url(../images/info_icn.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
-
+.er_war_main button{ position:absolute; right:2px; top:0px; padding:2px 5px;}
 .er_suc_main{
  border: 1px solid green;
     width: 100%;
-    float: left;height: 50px; display: table;}
-.er_suc {width: 1000px;display: table-cell; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align:left;text-transform:none; }
+    float: left;height: 50px; display: table; position:relative; }
+.er_suc {width: 100%; padding-left:5px; display: table-cell; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align:left;text-transform:none; }
 
 .er_UI_main{border: 1px solid red;
     width: 100%;
     float: left;height: 50px; display: table;
-    margin-bottom :10px;
+    margin-bottom :10px; position:relative; 
 }
+.er_UI_main button{ position:absolute; right:2px; top:0px; padding:2px 5px;}
+.er_UI_img{ background: red url(../Images/ui.png) no-repeat; width: 50px; height: 100%; float: left; position: absolute; background-position: center; }
 
-.er_UI_img{ background: red url(../Images/ui.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px; }
-
-.er_sys_img{background: red url(../Images/sys.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
+.er_sys_img{background: red url(../Images/sys.png) no-repeat; width: 50px; height: 100%; float: left; position: absolute; background-position: center;}
   
-.er_suc_img{ background: green url(../Images/succ.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
+.er_suc_img{ background: green url(../Images/succ.png) no-repeat; width: 50px; height: 100%; float: left; position: absolute; background-position: center;}
 
 
 
@@ -726,6 +727,8 @@ span.evnt_toltip{
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+.logo img{ width: 295px;}
+.headr_main { padding-top:0px;}
 .fix_head{ position: relative;}
 .affix-top {position:relative; top: 0px;}
 .midd_cont {top: 0px;}
@@ -737,6 +740,7 @@ span.evnt_toltip{
 }
 
 @media (min-width: 360px) and (max-width: 640px) {
+.headr_main { padding-top:0px;}
 .fix_head{ position: relative;}
 .affix-top {position:relative; top: 0px;}
 .midd_cont {top: 0px;}

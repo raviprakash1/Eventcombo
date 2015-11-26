@@ -238,8 +238,8 @@ namespace EventCombo.Controllers
 
                         Profile prof = new Profile();
                         prof.FirstName = model.AccFname;
+                        prof.Email = model.AccEmail;
                         prof.LastName = model.AccLname;
-                        prof.FirstName = model.AccFname;
                         prof.MainPhone = model.Accountphnno;
                         prof.City = model.AccCity;
                         prof.State = model.AccState;
@@ -265,6 +265,34 @@ namespace EventCombo.Controllers
                 string guid = Session["TicketLockedId"].ToString();
                 using (EventComboEntities objEntity = new EventComboEntities())
                 {
+                    Profile prof = objEntity.Profiles.First(i => i.UserID == Userid); 
+                    prof.FirstName = model.AccFname;
+                    if (!string.IsNullOrEmpty(model.AccLname))
+                    {
+                        prof.LastName = model.AccLname;
+                    }
+                    if (!string.IsNullOrEmpty(model.Accountphnno))
+                    {
+                        prof.MainPhone = model.Accountphnno;
+                    }
+                    if (!string.IsNullOrEmpty(model.AccCity))
+                    {
+                        prof.City = model.AccCity;
+                    }
+                    if (!string.IsNullOrEmpty(model.AccState))
+                    {
+                        prof.State = model.AccState;
+                    }
+                    if (!string.IsNullOrEmpty(model.Acczip))
+                    {
+                        prof.Zip = model.Acczip;
+                    }
+                   
+                    prof.CountryID = byte.Parse(model.Acccountry);
+                 
+
+                  
+              
 
                     Order_Detail_T objOdr = new Order_Detail_T();
                     objOdr.O_Order_Id = "";
@@ -667,7 +695,12 @@ namespace EventCombo.Controllers
             ps.imgurl = cs.GetImages(Eventid).FirstOrDefault();
             ps.Tilte = Eventdetails.EventTitle;
             ps.description = Eventdetails.EventDescription;
-           var guid = Session["TicketLockedId"].ToString();
+            ps.Eventid = Eventdetails.EventID.ToString();
+
+            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
+
+            ps.Organiserid = OrganiserDetail.Orgnizer_Id.ToString();
+            var guid = Session["TicketLockedId"].ToString();
             AccountController ac = new AccountController();
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
             var acountdedtails = ac.GetLoginDetails(strUsers);

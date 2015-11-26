@@ -14,6 +14,8 @@ namespace EventCombo.Models
         public string url { get; set; }
         public string description { get; set; }
         public string Email { get; set; }
+        public string Eventid { get; set; }
+        public string Organiserid { get; set; }
     }
 
     public class paymentdate

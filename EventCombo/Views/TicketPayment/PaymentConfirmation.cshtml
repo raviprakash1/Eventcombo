@@ -7,6 +7,9 @@
 
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+
+@Html.HiddenFor(m => m.Eventid, new { @id = "hdEventid" })
+@Html.HiddenFor(m => m.Organiserid, new { @id = "hdorganiserid" })
 <div class="event_container ">
     <div class="event_inner_container event_top">
         <div class="event_detail_container">
@@ -278,7 +281,20 @@
 <script>
    
     $(document).ready(function () {
+        history.pushState(null, null, 'PaymentConfirmation');
+        window.addEventListener('popstate', function (event) {
+            history.pushState(null, null, 'PaymentConfirmation');
+        });
+        $(document).click(function () {
+            $('#orgerror').css('display', 'none');
 
+            if( $('#orgerror').css('display')=='block')
+            {
+                $('input').removeClass('err-bor');
+                $('#id_orgtext').removeClass('err-bor');
+            }
+            $('#id_orgtext').removeClass('err-bor');
+        });
         $('#saveorgaizermsg').click(function () {
 
 
@@ -286,7 +302,7 @@
             var name = $('#id_orgname').val();
             var mail = $('#id_orgemail').val();
             var txt = $('#id_orgtext').val();
-
+            var count = 0;
 
 
             if (name != '') {
@@ -294,16 +310,16 @@
 
             } else {
 
-
+                count++;
                 $('#id_orgname').addClass('err-bor');
-                errormsg = "Fill the missing details\n"
+             
             }
 
 
 
             if (!validateEmail(mail)) {
                 $('#id_orgemail').addClass('err-bor');
-                errormsg += "Invalid Email";
+                errormsg += "Invalid Email</br>";
             }
 
 
@@ -312,12 +328,17 @@
                 $('#id_orgtext').removeClass('err-bor');
 
             } else {
+                count++;
                 $('#id_orgtext').addClass('err-bor');
-                errormsg += "fill the details"
+                
             }
             if (erroremail != "") {
                 errormsg += erroremail;
 
+            }
+            if (count > 0)
+            {
+                errormsg += "Fill the details</br>";
             }
             if (errormsg != "") {
 
@@ -326,7 +347,7 @@
                 return false;
             }
             else {
-                @*var organiserid = $('#hdorganiserid').val();
+                var organiserid = $('#hdorganiserid').val();
                 var eventid = $('#hdEventid').val();
                 var model = {
                     'email': mail,
@@ -349,7 +370,7 @@
                         $('#id_orgemail').val('');
                         $('#id_orgtext').val('');
                     }
-                });*@
+                });
             }
 
 

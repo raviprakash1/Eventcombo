@@ -31,7 +31,8 @@
     <script src="~/Scripts/main.js"></script>
    
     <script src="~/Scripts/jquery.timepicker.js"></script>
- 
+
+    <script src="~/Scripts/jquery.cookie.js"></script>
 
 
 </head>
@@ -351,7 +352,7 @@ else
 
                 <div id="sign_up" class="modal-content login_pop sign_up" style="display:none;">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close closefrgt" data-dismiss="modal" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
                         <h3 class="modal-title ">Sign-up</h3>
                     </div>
                     <div class="modal-body">
@@ -403,7 +404,14 @@ else
                             @*<button type="button" class="btn btn-primary login_btn_sub" id="btnsave">SignUp</button>*@
                             <input type="button" value="SignUp" class="btn btn-primary login_btn_sub" id="btnsave" disabled="disabled" />
                         </div>
+
+                   
                     </div>
+                </div>
+                <div class="col-md-12" style="display:none" id="divsignupfrgt">
+                 
+                    @Html.ActionLink("forgot password?", "ForgetPassword", "Home",null, new { id="ASignupfrgt"})
+
                 </div>
             </div>
 }
@@ -431,7 +439,11 @@ else
 </script>
 <script type="text/javascript">
     function loginCallback(success, returnUrl) {
-      
+        if (returnUrl.indexOf('~') > -1)
+        {
+            urlarray = returnUrl.split('~');
+            returnUrl = urlarray[1];
+        }
         if (returnUrl) {
             window.location.href = returnUrl;
         } else {
@@ -499,7 +511,8 @@ else
         $('#diverro1').css('display', 'none');
         $('#diverro').css("display", "none");
       $("#login_up").css({"display":"none"});
-      $("#sign_up").css({"display":"block"});
+      $("#sign_up").css({ "display": "block" });
+      $('#divsignupfrgt').css({"display":"none"});
 
     });
 
@@ -544,8 +557,8 @@ else
 
 
     $(document).click(function () {
-
-
+       
+     
 
               $('#diverrologin').css('display', 'none');
               $('#diverro1login').css('display', 'none');
@@ -567,8 +580,7 @@ else
           })
           $(window).load(function () {
 
-              console.log($('#loginemail').val());
-              console.log($('#loginpassword').val());
+           
               var loginemail = $('#loginemail').val();
               var loginpwd = $('#loginpassword').val();
               var signupemail = $('#SignupEmail').val();
@@ -580,13 +592,27 @@ else
               }
               if (signupemail != ' ' || signuppwd!=' ') {
                   $('#btnsave').removeAttr("disabled");
-
+                 
               }
-
+              
 
           });
+   
           $(document).ready(function () {
+              var loginemail = $('#loginemail').val();
+              var loginpwd = $('#loginpassword').val();
+              var signupemail = $('#SignupEmail').val();
+              var signuppwd = $('#SignupPassword').val();
 
+              if (loginemail != '' || loginpwd != '') {
+                  $('#btnSavelogin').removeAttr("disabled");
+
+              }
+              if (signupemail != ' ' || signuppwd != ' ') {
+                  $('#btnsave').removeAttr("disabled");
+                 
+              }
+             
 
               $('#loginemail').removeClass('err-bor');
               $('#loginpassword').removeClass('err-bor');
@@ -800,23 +826,24 @@ else
 
             if ($(this).val() != '' && $('#SignupPassword').val() != '') {
                 $('#btnsave').removeAttr("disabled");
-
-            } else {
-
+                
+            } else { 
                 $('#btnsave').attr("disabled", true);
             }
-
+            if ($(this).val() == '' && $('#SignupPassword').val() == '')
+            { $('#divsignupfrgt').css('display', 'none'); }
         })
         $('#SignupPassword').keyup(function () {
             if ($(this).val() != '' && $('#SignupEmail').val() != '') {
 
                 $('#btnsave').removeAttr("disabled");
-
+               
             } else {
-
+              
                 $('#btnsave').attr("disabled", true);
             }
-
+            if ($(this).val() == '' && $('#SignupEmail').val() == '')
+            { $('#divsignupfrgt').css('display', 'none'); }
         })
     });
 
@@ -891,18 +918,20 @@ else
                                     if (data =="NotFound")
                                                 {
                                                     flag = true;
-
+                                                    $('#divsignupfrgt').css('display', 'none');
                                                     $('#form').submit();
 
                                                 } else if (data == "Found")
                                                 {
-                                                    console.log('Enter');
+                                                    
                                                     $('#SignupEmail').focus();
                                                     $('#SignupEmail').addClass('err-bor');
                                                     $('#diverro').css("display", "none");
                                                     $('#diverro1').css('display', 'block');
                                                     var msg = ajaxsetup('Signup', 'SignupEmailAlreadyExistSY');
+                                                 
                                                     $('#dverrsignsys').html(msg);
+                                                    $('#divsignupfrgt').css('display', 'block');
                                                     flag = false;
                                                     return false;
                                                 }
@@ -914,41 +943,7 @@ else
                                 $('#dverrsignsys').html("Some Problem in system contact your admin!!");
                             }
                         });
-                        //alert(Email);
-                        //$.ajax({
-                        //    url: '/Account/IsValid',
-                        //    type: 'Post',
-                        //    data: {"Email": Emailsignin},
-                        //    //cache: false,
-                        //    //contentType: "text/plain",
-                        //    dataType: "text",
-                        //    success: function (data) {
-                        //        alert(data);
-                        //        console.log(data);
-                        //        if (data =="NotFound")
-                        //        {
-                        //            flag = true;
-
-                        //            $('#form').submit();
-
-                        //        } else if (data == "Found")
-                        //        {
-                        //            console.log('Enter');
-                        //            $('#SignupEmail').focus();
-                        //            $('#SignupEmail').css("border", "red solid 1px");
-                        //            $('#diverro').css("display", "none");
-                        //            $('#diverro1').css('display', 'block');
-                        //            $('.er_suc').html('Email Already Exist!!!');
-                        //            flag = false;
-                        //            return false;
-                        //        }
-
-                        //    },
-                        //    error: function (data1) {
-
-                        //        alert('error');
-                        //    }
-                        //});
+                     
 
 
                     }
@@ -957,7 +952,10 @@ else
 
 
 
-            
+                $('.closefrgt').click(function () {
+                    $('#divsignupfrgt').css('display', 'none');
+
+                });
 
 
 

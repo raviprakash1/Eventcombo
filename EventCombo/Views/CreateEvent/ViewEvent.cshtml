@@ -33,7 +33,11 @@
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(document, 'script', 'facebook-jssdk'));
+
+
+
+</script>
 
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
@@ -45,6 +49,7 @@
 @Html.HiddenFor(m => m.eventType, new { @id = "hdEventtype" })
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui.js"></script>
+
 
 <div class="event_container">
     <div class="event_inner_container event_top" id="eventtopscoll">
@@ -130,17 +135,17 @@
                                                      <li>
                                                        @if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
                                                        {
-                                                         <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek-@item.Datefrom-@item.Time</a>
+                                                         <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
 
 
                                                          } 
 @if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "N" || Html.DisplayFor(m => m.showendtime).ToString() == "n"))
 {
-    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek-@item.Datefrom</a>
+    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
 
 }@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "y" || Html.DisplayFor(m => m.showendtime).ToString() == "Y"))
 {
-    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek-@item.Datefrom</a>
+    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
 
 }
                                                        </li>
@@ -558,23 +563,58 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="Overselling" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">One of your selected ticket has been already sold. </h4>
+            </div>
+            <div class="modal-footer msg-action-btn ok">
+                <button  type="submit" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a class="td-btn" id="btOk" type="button" href="#Overselling" data-toggle="modal" style="display:none">
+
+    </a>
+</div>
+
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
-
+@*<script src="~/Scripts/jquery.cookie.js"></script>*@
 <script>
 
 
 
 
     $(document).ready(function () {
-        $(document).click(function () {
 
-            //$('#diverroacc').css('display', 'none');
-            //$('#divaccsuc').css('display', 'none');
+        //history.pushState(null, null, 'ViewEvent');
+        //window.addEventListener('popstate', function (event) {
+        //    history.pushState(null, null, 'ViewEvent');
+        //});
+
+        $(document).click(function () {
             $('#orgerror').css('display', 'none');
-            $("input").removeClass('err-bor');
-            $("#id_orgtext").removeClass('err-bor');
+
+            if ($('#orgerror').css('display') == 'block') {
+                $('input').removeClass('err-bor');
+                $("#id_orgtext").removeClass('err-bor');
+            }
+            $('#id_orgtext').removeClass('err-bor');
         });
+        //$(document).click(function () {
+
+        //    //$('#diverroacc').css('display', 'none');
+        //    //$('#divaccsuc').css('display', 'none');
+        //    $('#orgerror').css('display', 'none');
+        //    $("input").removeClass('err-bor');
+        //    $("#id_orgtext").removeClass('err-bor');
+        //});
 
         $('#saveorgaizermsg').click(function () {
 
@@ -584,23 +624,23 @@
             var mail = $('#id_orgemail').val();
             var txt = $('#id_orgtext').val();
 
-
+            var count = 0;
 
             if (name != '') {
                 $('#id_orgname').removeClass('err-bor');
 
             } else {
 
-
+                count++;
                 $('#id_orgname').addClass('err-bor');
-                errormsg = "Fill the missing details\n"
+               
             }
 
 
 
             if (!validateEmail(mail)) {
                 $('#id_orgemail').addClass('err-bor');
-                errormsg += "Invalid Email";
+                errormsg += "Invalid Email</br>";
             }
 
 
@@ -609,12 +649,17 @@
                 $('#id_orgtext').removeClass('err-bor');
 
             } else {
+                count++;
                 $('#id_orgtext').addClass('err-bor');
-                errormsg += "fill the details"
+               
             }
             if (erroremail != "") {
                 errormsg += erroremail;
 
+            }
+            if (count > 0)
+            {
+                errormsg = "Fill the missing details"
             }
             if (errormsg != "") {
 
@@ -1004,6 +1049,9 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
     }
     $(document).ready(function () {
+     
+
+
 
         $(".Evenfaccomment").css("display", "none");
         $(".EveDisRib").click(function () {
@@ -1076,6 +1124,27 @@ function pad(n) { return n < 10 ? '0' + n : n };
         //    alert("test");
         //    //if (String.fromCharCode(e.keyCode).match(/[^0-9]/g)) return false;
         //});
+        
+        $("#btMesOk").click(function () {
+            $("#dvTicketInfo").empty();
+            var veventId = ($("#hdEventid").val().trim() != '' ? $("#hdEventid").val() : '');
+            if (veventId != '') {
+                $.ajax({
+                    url: '@Url.Action("GetTicketDetail", "CreateEvent")',
+                    beforeSend: function () { $('#dvAjxLoader').show(); },
+                    complete: function () { $('#dvAjxLoader').hide(); },
+                    data: { Eventid: veventId },
+                    type: "Post",
+                    success: function (data) {
+                        $("#dvTicketInfo").append(data);
+                        $.removeCookie("Selection");
+                    },
+                    error: function (data) {
+                        alert("Sorry there is some problem.");
+                    }
+                });
+            }
+        });
         var veventId = ($("#hdEventid").val().trim() != '' ? $("#hdEventid").val() : '');
         if (veventId != '') {
             $.ajax({
@@ -1086,6 +1155,17 @@ function pad(n) { return n < 10 ? '0' + n : n };
                 type: "Post",
                 success: function (data) {
                     $("#dvTicketInfo").append(data);
+                    if ($.cookie("Selection") != undefined && $.cookie("Selection") != null && $.cookie("Selection") != '') {
+                        var vSelection = $.cookie("Selection")
+                        var vRow = vSelection.split('¶');
+                        for (i = 0; i <= vRow.length - 1; i++) {
+                            var vColm = vRow[i].split('~');
+                            vId = vColm[0].toString();
+                            $("#d_" + vId.toString()).val(vColm[1].toString());
+                            $("#txtd_" + vId.toString()).val(vColm[2].toString());
+                        }
+                        $.removeCookie("Selection");
+                    }
                 },
                 error: function (data) {
                     alert("Sorry there is some problem.");
@@ -1101,6 +1181,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
             var vLockQty = 0;
             var vDonate = 0;
             var vflag = 0;
+            var vSelection = "";
             for (i = 0; i < IdAry.length; i++) {
                 debugger;
                 vId = parseInt(IdAry[i].toString());
@@ -1108,7 +1189,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
                 vDonate = parseFloat($("#txtd_" + IdAry[i].toString()).val());
                 if (isNaN(vDonate) == true) vDonate = 0;
 
-                if (vLockQty > 0) {
+                if (vLockQty > 0 || vDonate >0) {
                     vflag = 1;
                     TList.push({
                         'TLD_TQD_Id': vId,
@@ -1116,7 +1197,12 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         'TLD_Event_Id': vEntid,
                         'TLD_Donate': vDonate
                     });
+                    if (vSelection == "")
+                        vSelection = vId + "~" + vLockQty + "~" + vDonate;
+                    else
+                        vSelection = vSelection + "¶" + (vId + "~" + vLockQty + "~" + vDonate);
                 }
+
             }
 
             var model = {
@@ -1127,18 +1213,27 @@ function pad(n) { return n < 10 ? '0' + n : n };
             if (vflag > 0) {
 
 
+               
 
                 $.ajax({
                     url: '@Url.Action("LockTickets", "CreateEvent")',
                     data: model,
                     type: "Post",
                     success: function (response) {
+                        if (response == "N") {
+                            $("#btOk").click();
+                            $.removeCookie("Selection");
+                        }
+                        else {
+                            $.cookie("Selection", vSelection, { expire: 1 });
+                            window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;
+                        }
                     }
                 });
 
 
 
-                window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;
+                
             } else
             {
                 $('#diverroacc').css('display', 'block');

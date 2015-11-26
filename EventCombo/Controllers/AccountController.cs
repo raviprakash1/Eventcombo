@@ -642,89 +642,90 @@ namespace EventCombo.Controllers
                     else
                     {
                         successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY");
-                    }
+
+                        EmailTag = hmc.getTag();
+
+                        Emailtemplate = hmc.getEmail("acc_info_update");
+                        if (Emailtemplate != null)
+                        {
+                            if (!string.IsNullOrEmpty(Emailtemplate.To))
+                            {
+
+
+                                to = Emailtemplate.To;
+                                if (to.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    to = to.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                            {
+                                from = Emailtemplate.From;
+                                if (from.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    from = from.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                }
+                            }
+                            else
+                            {
+                                from = "shweta.sindhu@kiwitech.com";
+
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                            {
+
+
+                                subjectn = Emailtemplate.Subject;
+
+                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                                {
+
+                                    if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                    {
+                                        if (EmailTag[i].Tag_Name == "UserEmailID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+
+                                        }
+
+                                    }
+
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                            {
+                                bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                                {
+
+                                    if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                    {
+                                        if (EmailTag[i].Tag_Name == "UserEmailID")
+                                        {
+                                            bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                        {
+                                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+
+                                        }
+
+
+                                    }
+
+                                }
+                            }
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn);
+                        }
               
-                    EmailTag = hmc.getTag();
-
-                     Emailtemplate = hmc.getEmail("acc_info_update");
-                    if (Emailtemplate != null)
-                    {
-                        if (!string.IsNullOrEmpty(Emailtemplate.To))
-                        {
-
-
-                            to = Emailtemplate.To;
-                            if (to.Contains("¶¶UserEmailID¶¶"))
-                            {
-                                to = to.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                            }
-                        }
-                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
-                        {
-                            from = Emailtemplate.From;
-                            if (from.Contains("¶¶UserEmailID¶¶"))
-                            {
-                                from = from.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                            }
-                        }
-                        else
-                        {
-                            from = "shweta.sindhu@kiwitech.com";
-
-                        }
-                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
-                        {
-
-
-                            subjectn = Emailtemplate.Subject;
-
-                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                            {
-
-                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                {
-                                    if (EmailTag[i].Tag_Name == "UserEmailID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
-
-                                    }
-
-                                }
-
-                            }
-                        }
-                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
-                        {
-                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                            {
-
-                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                {
-                                    if (EmailTag[i].Tag_Name == "UserEmailID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
-
-                                    }
-
-
-                                }
-
-                            }
-                        }
-                        hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn);
                     }
                     ViewData["Message"] = successmsg;
                     return View(model);
@@ -1513,20 +1514,35 @@ namespace EventCombo.Controllers
 
 
                                 objEntity.Profiles.Add(prof);
-                                objEntity.SaveChanges();
+
+                             objEntity.SaveChanges();
+
+                               
+                           
+                               
+
+                                
+
+                            }
+
+                            using (EventComboEntities db = new EventComboEntities())
+                            {
+                                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user1.Id);
+                                aspuser.LoginStatus = "Y";
+                                db.SaveChanges();
 
                             }
 
                         }
-                       // return View("LoginResult", new LoginResultViewModel(true, url));
+                       return View("LoginResult", new LoginResultViewModel(true, url));
 
-                       return RedirectToLocal(url);
+                       //return RedirectToLocal(url);
                     }
                     else
                     {
-                       // return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index", "Home")));
+                       return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index", "Home")));
 
-                        return RedirectToAction("Index", "Home");
+                       // return RedirectToAction("Index", "Home");
 
                     }
                 }
@@ -1618,7 +1634,14 @@ namespace EventCombo.Controllers
                 }
                 var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
                 Session["AppId"] = user.Id;
-               return View("LoginResult", new LoginResultViewModel(true, url));
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user.Id);
+                    aspuser.LoginStatus = "Y";
+                    db.SaveChanges();
+
+                }
+                return View("LoginResult", new LoginResultViewModel(true, url));
 
               // return RedirectToLocal(url);
                 //if (result == SignInStatus.Success)
@@ -1770,22 +1793,37 @@ namespace EventCombo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            var userid = Session["AppId"].ToString();
-            using (EventComboEntities db = new EventComboEntities())
-            {
-                AspNetUser aspuser = db.AspNetUsers.FirstOrDefault(i => i.Id == userid);
-                if (aspuser != null)
+            try {
+                if (Session["AppId"] != null)
                 {
-                    aspuser.LoginStatus = "N";
-                    db.SaveChanges();
+
+                    var userid = Session["AppId"].ToString();
+                    using (EventComboEntities db = new EventComboEntities())
+                    {
+                        AspNetUser aspuser = db.AspNetUsers.FirstOrDefault(i => i.Id == userid);
+                        if (aspuser != null)
+                        {
+                            aspuser.LoginStatus = "N";
+                            db.SaveChanges();
+                        }
+
+                    }
                 }
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                Session["Fromname"] = null;
+                Session["AppId"] = null;
+                Session["ReturnUrl"] = null;
+                Session.Abandon();
+                Session.Clear();
+                return RedirectToAction("Index", "Home");
+            }
+            catch(Exception exe)
+            {
+                Session.Abandon();
+                Session.Clear();
+                return RedirectToAction("Index", "Home");
 
             }
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            Session["Fromname"] = null;
-            Session["AppId"] = null;
-            Session["ReturnUrl"] = null;
-            return RedirectToAction("Index", "Home");
         }
 
         //
