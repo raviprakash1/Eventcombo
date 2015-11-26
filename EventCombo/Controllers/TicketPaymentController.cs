@@ -311,11 +311,11 @@ namespace EventCombo.Controllers
                     List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
                     objLockedTic = GetLockTickets();
                     Ticket_Purchased_Detail objTPD;
-                    decimal dAmt = 0;
+                  
                     foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
                     {
                         objTPD = new Ticket_Purchased_Detail();
-                        objTPD.TPD_Amount = dAmt;
+                        objTPD.TPD_Amount = TLD.TicketAmount;
                         objTPD.TPD_Donate = TLD.TLD_Donate;
                         objTPD.TPD_Event_Id = TLD.TLD_Event_Id;
                         objTPD.TPD_Order_Id = strOrderNo;
@@ -643,7 +643,8 @@ namespace EventCombo.Controllers
                                         TLD_TQD_Id = TLD.TLD_TQD_Id,
                                         Locktime = TLD.Locktime,
                                         TLD_GUID = TLD.TLD_GUID,
-                                        TLD_Donate = TLD.TLD_Donate
+                                        TLD_Donate = TLD.TLD_Donate,
+                                        TicketAmount = TLD.TicketAmount
                                     }
                                         );
                     return modelTLD.ToList();
@@ -752,6 +753,7 @@ namespace EventCombo.Controllers
                                        }
                                        ).SingleOrDefault();
 
+
                     var OrderNo = (from TPD in objEnt.Ticket_Purchased_Detail
                                    where TPD.TPD_GUID == strGuid
                                    select TPD.TPD_Order_Id
@@ -762,7 +764,11 @@ namespace EventCombo.Controllers
                                     select OD.O_TotalAmount
                                     ).SingleOrDefault();
 
+                    //if (OrderAmt>0 && TicketCount>0)
+                    //{
 
+
+                    //}
                     strResult = OrderNo + "~" + TicketCount.totalOrder + "~" + OrderAmt;
                 }
             }
