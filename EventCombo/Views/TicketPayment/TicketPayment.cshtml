@@ -525,6 +525,7 @@
                 </div>
             </form>
             <input type="hidden" id="hdUserId" value="" />
+            <input type="hidden" id="hdIsPostBack" value="" />
         </div>
     </div><!-- confirm-msg -->
 </div>
@@ -809,14 +810,19 @@
     $(document).ready(function () {
       
         $(window).unload(function () {
-            $.ajax({
-                url: '@Url.Action("ReleaseTickets", "TicketPayment")',
-                type: "Post",
-                success: function (response) {
-                }
-            });
+            if ($("#hdIsPostBack").val() != "Y") {
+                $("#hdIsPostBack").val("N");
+                $.ajax({
+                    url: '@Url.Action("ReleaseTickets", "TicketPayment")',
+                    type: "Post",
+                    success: function (response) {
+                    }
+                });
+            }
         });
-
+        $("#login").click(function () {
+            $("#hdIsPostBack").val("Y");
+        });
         //history.pushState(null, null, 'TicketPayment');
         //window.addEventListener('popstate', function (event) {
         //    history.pushState(null, null, 'TicketPayment');
@@ -1085,6 +1091,7 @@
             countdown: true,
             callbacks: {
                 stop: function () {
+                    
                     $.ajax({
                         url: '@Url.Action("ReleaseTickets", "TicketPayment")',
                         type: "Get",
@@ -1133,7 +1140,7 @@
             url: '@Url.Action("LoadTickets", "TicketPayment")',
             beforeSend: function () { $('#dvAjxLoader').show(); },
             complete: function () { $('#dvAjxLoader').hide(); },
-            data: { 'strEvent': Eventid },
+            data: { 'strEvent': $('#hdEventid').val() },
             type: "Get",
             success: function (response) {
                 $("#dvTicketInfo").append(response);
