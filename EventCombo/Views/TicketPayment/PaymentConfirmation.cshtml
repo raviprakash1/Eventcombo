@@ -380,9 +380,9 @@
             url: '@Url.Action("GetOrderDetailForConfirmation", "TicketPayment")',
             type: "Post",
             success: function (data) {
-                ary = data.split('~');
-                strOrderDetail = "Order " + ary[0] + " , " + ary[1] + " tickets for $" + ary[2];
-                $("#spOrderNo").text(strOrderDetail);
+                //ary = data.split('~');
+                //strOrderDetail = "Order " + ary[0] + " , " + ary[1] + " tickets for $" + ary[2];
+                $("#spOrderNo").text(data);
             },
             error: function (data) {
             }
