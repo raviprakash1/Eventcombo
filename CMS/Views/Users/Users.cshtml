@@ -127,12 +127,14 @@
 
                                                     </td>
                                                     <td>
-                                                        <a class="holder-active animation-switcher" href="#modal-panel">
+                                                        <a class="holder-active animation-switcher" href="#modal-panel" id="aRoles-@i">
                                                             <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" type="button">Manage</button>
                                                             @*<input type="button" class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" value="Manage" />*@
 
 
                                                             @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
+                                                            <input type="hidden" id="HdRole-@i" value="@obj.Role"/>
+                                                          
                                                         </a>
                                                     </td>
                                                     <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
@@ -147,7 +149,7 @@
                                                     <td>India</td>
                                                     <td>
                                                         <div class="section">
-                                                            <label class="field select">
+                                                            <label class="field select" id="lblorganiser-@i">
                                                                 @if (obj.Organiser == "Y")
                                                                 {
                                                                     <select id="dlOrgnizer"   onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
@@ -183,7 +185,7 @@
                                                     </td>
                                                     <td>
                                                         <div class="section">
-                                                            <label class="field select">
+                                                            <label class="field select" id="lblmerchant-@i">
                                                                 @if (obj.Merchant == "Y")
                                                                 {
                                                                     <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
@@ -216,7 +218,7 @@
                                                     </td>
                                                     <td>
                                                         <div class="section">
-                                                            <label class="field select">
+                                                            <label class="field select" id="lblstatus-@i">
                                                                 @if (obj.UserStatus == "Y")
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
@@ -258,7 +260,7 @@
                                                         @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
                                                         @*<button class="btn btn-danger br2 btn-xs fs12" id="btnManage" onclick="ConfirmDelete('@obj.Id')"></button>*@
 
-                                                        <a class="td-btn" onclick="ConfirmDelete('@obj.Id');" type="button" href="#confirm-delete-ok" data-toggle="modal">
+                                                        <a class="td-btn" onclick="ConfirmDelete('@obj.Id');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="adelete'@i'">
                                                             <i class="fa fa-remove"></i>
                                                         </a>
                                                         
@@ -463,6 +465,33 @@ else
 
     }
     jQuery(document).ready(function () {
+        var i = 1;
+        $("#tblMain tr").each(function () {
+
+            
+            var $tr = $(this);
+         
+
+          
+
+          
+                var j =  i 
+                var role = $("#HdRole-"+j).val();
+              
+            if (role == 1)
+            {
+                $('#aRoles-'+j).prop('disabled', true);
+                $('#dlOrgnizer-'+j).prop('disabled', true);
+                $('#dlMerchant-'+j).prop('disabled', true);
+                $('#dlStatus-'+j).prop('disabled', true);
+                $('adelete-'+j).prop('disabled', true);
+
+
+            }
+            i++;
+        });
+      
+
         $('.close-mg').on('click', function (e) {
             $.magnificPopup.close();
         });
@@ -481,7 +510,7 @@ else
                     //alert(response);
                     $("#hdCurrentUserRole").val($.trim(response));
 
-                    //   alert($("#hdCurrentUserRole").val());
+                  
                     //$("#rdAdmin").prop("disabled", true);
                     //$("#dvAdmin").prop("disabled", true);
               //  }
@@ -732,6 +761,8 @@ else
             }
         });
     }
+
+
     function AssignUserId(userId) {
         document.getElementById("hdUName").value = userId;
 
