@@ -158,6 +158,16 @@
                    
                     <div class="panel-body" id="cart">
                         <div class="panel-heading">
+                            @if (ViewData["Success"] != null)
+                            {
+                            <div class="col-md-12"  id="divsuccess">
+                                <div class="alert alert-success alert-dismissable">
+                                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">&#215;</button>
+                                    <i class="fa fa-info pr10"></i>
+                                    <span id="spanid">@ViewData["Success"]</span>
+                                </div>
+                            </div>
+                            }
                             <div class="col-md-12" style="display:none;" id="divError">
                                 <div class="alert alert-danger alert-dismissable"  >
                                     <button class="close" aria-hidden="true" data-dismiss="alert" type="button">&#215;</button>
@@ -222,6 +232,7 @@
                                 <br>
 
                                @Html.HiddenFor(m => m.emailtag , new { id = "emailtag" })
+                        @Html.HiddenFor(m => m.Template_Name, new { id = "Template_Name" })
                            <button class="btn btn-primary col-sm-3" type="submit" id="btnsave">Save</button>
 
 
@@ -722,7 +733,7 @@
             if (flag) {
                 $('#divError').css('display', 'block');
                 $('#spanid').html(msg);
-            
+                $('#divsuccess').css('display','none');
                 return false;
             }
           

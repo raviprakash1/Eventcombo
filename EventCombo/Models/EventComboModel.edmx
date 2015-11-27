@@ -147,6 +147,7 @@
           <Property Name="Subject" Type="varchar" MaxLength="300" />
           <Property Name="TemplateHtml" Type="nvarchar(max)" />
           <Property Name="From" Type="varchar" MaxLength="300" />
+          <Property Name="Template_Tag" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -490,6 +491,7 @@
           <Property Name="Locktime" Type="datetime" />
           <Property Name="TLD_GUID" Type="varchar" MaxLength="1000" />
           <Property Name="TLD_Donate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TicketAmount" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -1065,6 +1067,7 @@
           <Property Name="Subject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Template_Tag" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -1429,6 +1432,7 @@
           <Property Name="Locktime" Type="DateTime" Precision="3" />
           <Property Name="TLD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="TLD_Donate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TicketAmount" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -1996,6 +2000,7 @@
           <EntitySetMapping Name="Email_Template">
             <EntityTypeMapping TypeName="EventComboModel.Email_Template">
               <MappingFragment StoreEntitySet="Email_Template">
+                <ScalarProperty Name="Template_Tag" ColumnName="Template_Tag" />
                 <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
                 <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
                 <ScalarProperty Name="To" ColumnName="To" />
@@ -2363,6 +2368,7 @@
           <EntitySetMapping Name="Ticket_Locked_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
               <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
+                <ScalarProperty Name="TicketAmount" ColumnName="TicketAmount" />
                 <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
                 <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
                 <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />

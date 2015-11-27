@@ -21,14 +21,14 @@ namespace CMS.Controllers
             obj = EmailData(templatetag);
             if(obj!=null)
             {
-                obj.Template_Name = templatename + "Template";
+                obj.Template_Name = templatename + " Template";
                 obj.emailtag = templatetag;
                 return View(obj);
 
             }else
             {
                 EmailTemplate obj1 = new EmailTemplate();
-                obj1.Template_Name = templatename + "Template";
+                obj1.Template_Name = templatename + " Template";
                 obj1.emailtag = templatetag;
                 return View(obj1);
 
@@ -38,10 +38,12 @@ namespace CMS.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult Index(EmailTemplate model)
         {
+            EmailTemplate obj = new EmailTemplate();
+            var msg = "";
             if (ModelState.IsValid)
             {
                 ViewBag.EmailTags = db.Email_Tag.Select(x=>x.Tag_Name).ToList();
-                EmailTemplate obj = new EmailTemplate();
+             
                 obj = EmailData(model.emailtag);
                 if (obj != null)
                 {
@@ -50,9 +52,10 @@ namespace CMS.Controllers
                     using (EmsEntities objEntity = new EmsEntities())
                     {
 
-                        Email_Template email = objEntity.Email_Template.First(i => i.Template_Name == model.emailtag);
+                        Email_Template email = objEntity.Email_Template.First(i => i.Template_Tag == model.emailtag);
 
-                        //email.Template_Name = model.emailtag;
+                        email.Template_Name = model.Template_Name;
+                        email.Template_Tag = model.emailtag;
                         email.Subject = model.Subject;
                         email.To = model.To;
                         email.From = model.From;
@@ -72,7 +75,7 @@ namespace CMS.Controllers
                     {
                         Email_Template email = new Email_Template();
 
-                        email.Template_Name = model.emailtag;
+                        email.Template_Name = model.Template_Name;
                         email.Subject = model.Subject;
                         email.To = model.To;
                         email.CC = model.CC;
@@ -80,17 +83,24 @@ namespace CMS.Controllers
                         email.From = model.From;
                         email.TemplateHtml = model.ckeditor1;
                         email.TemplateId = Guid.NewGuid().ToString ();
+                        email.Template_Name = model.Template_Name;
+                        email.Template_Tag = model.emailtag;
                         objEntity.Email_Template.Add(email);
                         objEntity.SaveChanges();
                     }
 
 
                 }
-                ModelState.Clear();
-                return View();
+                obj = EmailData(model.emailtag);
+                ValidationMessageController vmc = new ValidationMessageController();
+                msg= vmc.Index("Email", "EmailSuccessSy");
+                ViewData["Success"] = msg;
+                return View(obj);
+
             }
-            ModelState.Clear();
-            return View();
+            obj = EmailData(model.emailtag);
+            return View(obj);
+
         }
         public EmailTemplate EmailData(string templatename)
         {
@@ -98,7 +108,7 @@ namespace CMS.Controllers
             using (EmsEntities objEntity = new EmsEntities())
             {
                 var modelmyemail = (from cpd in objEntity.Email_Template
-                                    where cpd.Template_Name.Equals(templatename)
+                                    where cpd.Template_Tag.Equals(templatename)
                                     select new EmailTemplate
                                     {
                                         To = cpd.To,

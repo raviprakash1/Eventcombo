@@ -304,6 +304,24 @@ namespace EventCombo.Controllers
                     from = "shweta.sindhu@kiwitech.com";
 
                 }
+                if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                {
+                    cc = Emailtemplate.CC;
+                    if (cc.Contains("¶¶UserEmailID¶¶"))
+                    {
+                        cc = cc.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                    }
+                }
+                if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                {
+                    bcc = Emailtemplate.Bcc;
+                    if (bcc.Contains("¶¶UserEmailID¶¶"))
+                    {
+                        bcc = bcc.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                    }
+                }
                 if (!string.IsNullOrEmpty(Emailtemplate.Subject))
                 {
 
@@ -358,7 +376,7 @@ namespace EventCombo.Controllers
 
                     }
                 }
-                SendHtmlFormattedEmail(to, from, subjectn, bodyn);
+                SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc);
             }
             ValidationMessageController vmc = new ValidationMessageController();
            var msg= vmc.Index("ForgotPassword", "ForgotPwdSuccessInitSY");
@@ -460,7 +478,7 @@ namespace EventCombo.Controllers
         public Email_Template getEmail(string template)
         {
            
-            var userEmail = db.Email_Template.Where(x => x.Template_Name == template).SingleOrDefault();
+            var userEmail = db.Email_Template.Where(x => x.Template_Tag == template).SingleOrDefault();
             
                 return userEmail;
             
@@ -548,14 +566,21 @@ namespace EventCombo.Controllers
                         objEntity.Profiles.Add(prof);
 
 
-                        AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == Userid.Id.ToString());
-                        aspuser.LoginStatus = "Y";
+                     
 
                         objEntity.SaveChanges();
 
 
-                        Session["AppId"] = Userid.Id;
+                        using (EventComboEntities db = new EventComboEntities())
+                        {
+                            AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == Userid.Id);
 
+                            aspuser.LoginStatus = "Y";
+                         
+                            db.SaveChanges();
+
+                        }
+                        Session["AppId"] = Userid.Id;
 
 
 
@@ -592,6 +617,27 @@ namespace EventCombo.Controllers
                         {
                             from = "shweta.sindhu@kiwitech.com";
 
+                        }
+
+
+                        if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                        {
+                            cc = Emailtemplate.CC;
+                            if (cc.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                cc = cc.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                            }
+                        }
+
+                        if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                        {
+                            bcc = Emailtemplate.Bcc;
+                            if (bcc.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                bcc = bcc.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                            }
                         }
                         if (!string.IsNullOrEmpty(Emailtemplate.Subject))
                         {
@@ -632,7 +678,7 @@ namespace EventCombo.Controllers
 
                             }
                         }
-                        SendHtmlFormattedEmail(to, from, subjectn, bodyn);
+                        SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc);
 
 
                     }
@@ -649,13 +695,15 @@ namespace EventCombo.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public void SendHtmlFormattedEmail(string To,string from, string subject, string body)
+        public void SendHtmlFormattedEmail(string To,string from, string subject, string body,string cc,string bcc)
         {
             using (MailMessage mailMessage = new MailMessage())
             {
-                mailMessage.From = new MailAddress(from,"Eventcombo");
+                mailMessage.From = new MailAddress(from, from);
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
+                mailMessage.CC.Add ( cc);
+                mailMessage.Bcc.Add( bcc);
                 mailMessage.IsBodyHtml = true;
                 mailMessage.To.Add(new MailAddress(To));
                 SmtpClient smtp = new SmtpClient();
