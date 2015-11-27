@@ -193,7 +193,7 @@
 }
 
 @media (width: 768px) {
-.jFiler .jFiler-input-dragDrop{width: 140px !important;}
+.form-horizontal .jFiler .jFiler-input-dragDrop{width: 140px !important;}
 
 
 

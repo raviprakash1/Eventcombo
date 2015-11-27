@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section id="content_wrapper">    
+<section id="content_wrapper">        
     @using (Html.BeginForm())
     {
         <div class="col-sm-12">
@@ -78,8 +78,8 @@
         $("#btnReset").hide();
     });
 
-    $(document).ready(function () {
-      
+    $(document).ready(function () {        
+        window.history.forward();
         
         //$('#btnCreate').click(function () {
         //    var newListValue = $('#EventType1').val();

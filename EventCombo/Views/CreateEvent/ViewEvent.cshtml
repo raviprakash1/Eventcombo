@@ -52,8 +52,8 @@
 
 
 <div class="event_container">
-    <div class="event_inner_container event_top" id="eventtopscoll">
-        <div class="col-sm-12 mt10 bggrey" id="buttonscroll">
+    <div class="event_inner_container event_top view_evnt_top" id="eventtopscoll">
+        <div class="col-sm-12 mt10 bggrey clearfix" id="buttonscroll">
     @if (TempData["ExpiredEvent"] != null)
     {
         <div class="Moderor"  id="diverroacc" tabindex="-1">
@@ -186,7 +186,11 @@
                                 <div class="form-group mb0">
                                     @*<a href="#" data-geo=""></a>*@
 
+                                   @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
+                                   {
+
                                     <div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" data-geo=""></div>
+                                   }
                                     <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" title="@Html.DisplayFor(m => m.TopAddress)">
                                         @Html.DisplayFor(m => m.TopAddress)
                                     </label>
