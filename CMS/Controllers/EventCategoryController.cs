@@ -29,55 +29,96 @@ namespace CMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult EventCategory(EventCategory ec,string hdESCat)
+        public ActionResult EventCategory(EventCategory ec, string hdESCat, string submit, string EventCategory1,string EventCategoryListBox)
         {
-            using (EmsEntities objEntity = new EmsEntities())
+            EventSubCategory objESC = new EventSubCategory();
+            switch (submit)
             {
-
-                bool IsEventCatExists = false;
-                try
-                {
-                    string[] strAry = hdESCat.Split(',');
-                    EventSubCategory objESC = new EventSubCategory();
-
-                    var query = from EventCategory in objEntity.EventCategories
-                                where EventCategory.EventCategory1 == ec.EventCategory1
-                                select EventCategory;
-
-                    foreach (EventCategory evntcat in query)
+                case "Create":
+                    using (EmsEntities objEntity = new EmsEntities())
                     {
-                        IsEventCatExists = true;
-                        TempData["SuccessMessage"] = "Event Category Already Exists.";
 
-                    }
-                    if (IsEventCatExists != true)
-                    {                        
-                        objEntity.EventCategories.Add(ec);                        
-                        foreach (string str in strAry)
+                        bool IsEventCatExists = false;
+                        try
                         {
-                            objESC = new EventSubCategory();
-                            objESC.EventCategoryID = ec.EventCategoryID;
-                            objESC.EventSubCategory1 = str;
-                            objEntity.EventSubCategories.Add(objESC);
+                            string[] strAry = hdESCat.Split(',');
+
+                            var query = from EventCategory in objEntity.EventCategories
+                                        where EventCategory.EventCategory1 == ec.EventCategory1
+                                        select EventCategory;
+
+                            foreach (EventCategory evntcat in query)
+                            {
+                                IsEventCatExists = true;
+                                TempData["SuccessMessage"] = "Event Category Already Exists.";
+
+                            }
+                            if (IsEventCatExists != true)
+                            {
+                                objEntity.EventCategories.Add(ec);
+                                foreach (string str in strAry)
+                                {
+                                    objESC = new EventSubCategory();
+                                    objESC.EventCategoryID = ec.EventCategoryID;
+                                    objESC.EventSubCategory1 = str;
+                                    objEntity.EventSubCategories.Add(objESC);
+                                }
+                                objEntity.SaveChanges();
+                                TempData["SuccessMessage"] = "Event Category Created.";
+                            }
                         }
-                        objEntity.SaveChanges();
-                    }                    
-                }
-                catch (Exception ex)
-                {
-                    string message = ex.Message;
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
 
-                }
-                var modelPerm = (from EventCategory in objEntity.EventCategories
-                                 select EventCategory).ToList();
+                        }
+                        var modelPerm = (from EventCategory in objEntity.EventCategories
+                                         select EventCategory).ToList();
 
-                List<string> EventCategoryList = new List<string>();
-                foreach (var item in modelPerm)
-                {
-                    EventCategoryList.Add(item.EventCategory1);
-                }
-                ViewBag.EventCategory = EventCategoryList;
+                        List<string> EventCategoryList = new List<string>();
+                        foreach (var item in modelPerm)
+                        {
+                            EventCategoryList.Add(item.EventCategory1);
+                        }
+                        ViewBag.EventCategory = EventCategoryList;
+                    }
+                    break;
+                case "Edit":
+                    using (EmsEntities objEntity = new EmsEntities())
+                    {
+                        var query = from EventCategory in objEntity.EventCategories
+                                    where EventCategory.EventCategory1 == EventCategoryListBox.Trim()
+                                    select EventCategory;
 
+                        foreach (EventCategory evntcat in query)
+                        {
+                            evntcat.EventCategory1 = ec.EventCategory1;
+                        }
+
+                        try
+                        {
+                            objEntity.SaveChanges();
+                            TempData["SuccessMessage"] = "Event Category Edited.";
+                        }
+
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
+
+                        }
+                        var modelPerm = (from EventCategory in objEntity.EventCategories
+                                         select EventCategory).ToList();
+
+                        List<string> EventCatList = new List<string>();
+                        foreach (var item in modelPerm)
+                        {
+                            EventCatList.Add(item.EventCategory1);
+                        }
+                        ViewBag.EventCategory = EventCatList;                        
+                    }
+                    break;
+                default:
+                    throw new Exception();
             }
             return View(ec);
         }
@@ -100,12 +141,12 @@ namespace CMS.Controllers
                     {
                         EventSubCategoryList.Add(item1.EventSubCategory1);
 
-                        returnval = item1.EventSubCategory1  + "," + returnval;
+                        returnval = item1.EventSubCategory1 + "," + returnval;
                     }
                 }
                 ViewBag.EventSubCategory = EventSubCategoryList;
             }
             return returnval;
-        }
+        }    
     }
 }

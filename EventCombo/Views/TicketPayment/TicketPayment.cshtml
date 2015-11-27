@@ -430,6 +430,9 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="col-sm-12 text-right mt10">
+                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="btBack">
+                            < Back
+                        </button>   
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="completeorder" >
                             COMPLTE ORDER >
                         </button>
@@ -448,6 +451,7 @@
     <div class="clearfix"></div>
     <div class="strat_timer_cont">
         <div class="col-sm-12 no_pad text-center">
+        
             <p class="bg-green mb0 strt_tim_desc">
                 Please complete this purchase within 10:00 minutes.<br>
                 After 10:00 minutes, the reservation we're holding will be released to others.
@@ -533,6 +537,7 @@
 }
 <script src="~/Scripts/Commonfunction.js"></script>
 <script src="~/Scripts/flipclock.js"></script>
+<script src="~/Scripts/jquery.cookie.js"></script>
 @*<script src="~/Scripts/jquery.countdownTimer.js"></script>*@
 <script>
     //function afterStop() {
@@ -573,7 +578,8 @@
     }
     function validationpage()
     {
-        var msglogin = "",emailerr="",pasword="";
+        var msglogin = "", emailerr = "", pasword = "";
+        var accfname = $("#accfname").val();
         var Emaillogin = $("#Email").val();
         var confirmlogin = $("#confirmEmail").val();
         var Passowrdlogin = $("#password").val();
@@ -582,7 +588,11 @@
         var total = $('#hdOrderTotal').val();
 
 
-
+        if (accfname == '')
+        {
+            $("#accfname").addClass('err-bor');
+            msglogin += ajaxsetup('TicketPayment', 'TPayFnameValidateUI') + "</br>";
+        }
 
         if (!validateEmail(Emaillogin)) {
             $('#Email').focus();
@@ -797,6 +807,29 @@
         }
     }
     $(document).ready(function () {
+      
+        $(window).unload(function () {
+            $.ajax({
+                url: '@Url.Action("ReleaseTickets", "TicketPayment")',
+                type: "Post",
+                success: function (response) {
+                }
+            });
+        });
+
+        //history.pushState(null, null, 'TicketPayment');
+        //window.addEventListener('popstate', function (event) {
+        //    history.pushState(null, null, 'TicketPayment');
+        //});
+        $('#btBack').click(function () {
+            $.ajax({
+                url: '@Url.Action("ReleaseTickets", "TicketPayment")',
+                type: "Post",
+                success: function (response) {
+                    history.back();
+                }
+            });
+        });
         $('#sameshipping').click(function () {
             $(".billingaddress").attr('checked', false);
             //$(".billingaddress").is(":checked") = false;
@@ -1410,6 +1443,372 @@
 
       }
 
-    }
+  }
+
+
+    $("#accCountry").change(function () {
+        $("#accZip").val("");
+        $("#accState").val("");
+        $("#accCity").val("");
+
+
+    });
+    $('#accZip').change(function () {
+        var country = $("#accCountry option:selected").text().trim();
+
+        var city = "";
+        var state = "";
+
+        var pincode = $(this).val();
+
+
+        $.ajax({
+            url: 'http://maps.googleapis.com/maps/api/geocode/json',
+            data: '&address=' + pincode + '&sensor=true',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+
+
+                if (data.status == 'OK') {
+
+                    for (var i = 0; i < data.results[0].address_components.length; i++) {
+                        var obj = data.results[0].address_components[i];
+
+                        var obj2 = obj['types'];
+
+                        for (var j = 0; j < obj2.length; j++) {
+                            if (obj2[j] == 'locality') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'postal_town') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_1') {
+                                state = obj['long_name'];
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_2') {
+                                state = obj['long_name'];
+
+                            }
+
+
+                            if (obj2[j] == 'country') {
+                                if (obj['long_name'] == country) {
+
+
+                                    $('#accCity').val(city);
+                                    $('#accState').val(state);
+                                } else {
+                                    $('#accCity').val('');
+                                    $('#accState').val('');
+                                }
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+
+                else {
+                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                    $("#accState").val("");
+                    $("#accCity").val("");
+                    $('#accZip').addClass('err-bor');
+                    ShowMessage('E', msg)
+
+                    return false;
+                }
+            },
+            error: function (data) { alert(data) }
+        });
+
+
+    });
+
+    $("#accCountry").change(function () {
+        $("#accZip").val("");
+        $("#accState").val("");
+        $("#accCity").val("");
+
+
+    });
+    $('#accZip').change(function () {
+        var country = $("#accCountry option:selected").text().trim();
+
+        var city = "";
+        var state = "";
+
+        var pincode = $(this).val();
+
+
+        $.ajax({
+            url: 'http://maps.googleapis.com/maps/api/geocode/json',
+            data: '&address=' + pincode + '&sensor=true',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+
+
+                if (data.status == 'OK') {
+
+                    for (var i = 0; i < data.results[0].address_components.length; i++) {
+                        var obj = data.results[0].address_components[i];
+
+                        var obj2 = obj['types'];
+
+                        for (var j = 0; j < obj2.length; j++) {
+                            if (obj2[j] == 'locality') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'postal_town') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_1') {
+                                state = obj['long_name'];
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_2') {
+                                state = obj['long_name'];
+
+                            }
+
+
+                            if (obj2[j] == 'country') {
+                                if (obj['long_name'] == country) {
+
+
+                                    $('#accCity').val(city);
+                                    $('#accState').val(state);
+                                } else {
+                                    $('#accCity').val('');
+                                    $('#accState').val('');
+                                }
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+
+                else {
+                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                    $("#accState").val("");
+                    $("#accCity").val("");
+                    $('#accZip').val("");
+                    $('#accZip').addClass('err-bor');
+                    ShowMessage('E', msg)
+
+                    return false;
+                }
+            },
+            error: function (data) { alert(data) }
+        });
+
+
+    });
+    $("#billcountry").change(function () {
+        $("#billzip").val("");
+        $("#billstate").val("");
+        $("#billcity").val("");
+
+
+    });
+    $('#billzip').change(function () {
+        var country = $("#billcountry option:selected").text().trim();
+
+        var city = "";
+        var state = "";
+
+        var pincode = $(this).val();
+
+
+        $.ajax({
+            url: 'http://maps.googleapis.com/maps/api/geocode/json',
+            data: '&address=' + pincode + '&sensor=true',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+
+
+                if (data.status == 'OK') {
+
+                    for (var i = 0; i < data.results[0].address_components.length; i++) {
+                        var obj = data.results[0].address_components[i];
+
+                        var obj2 = obj['types'];
+
+                        for (var j = 0; j < obj2.length; j++) {
+                            if (obj2[j] == 'locality') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'postal_town') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_1') {
+                                state = obj['long_name'];
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_2') {
+                                state = obj['long_name'];
+
+                            }
+
+
+                            if (obj2[j] == 'country') {
+                                if (obj['long_name'] == country) {
+
+
+                                    $('#billcity').val(city);
+                                    $('#billstate').val(state);
+                                } else {
+                                    $('#billcity').val('');
+                                    $('#billstate').val('');
+                                }
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+
+                else {
+                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                    $("#billstate").val("");
+                    $("#billcity").val("");
+                    $('#billzip').val("");
+                    $('#billzip').addClass('err-bor');
+                    ShowMessage('E', msg)
+
+                    return false;
+                }
+            },
+            error: function (data) { alert(data) }
+        });
+
+
+    });
+    $("#shipcountry").change(function () {
+        $("#shipzip").val("");
+        $("#shipstate").val("");
+        $("#shipcity").val("");
+
+
+    });
+    $('#shipzip').change(function () {
+        var country = $("#shipcountry option:selected").text().trim();
+
+        var city = "";
+        var state = "";
+
+        var pincode = $(this).val();
+
+
+        $.ajax({
+            url: 'http://maps.googleapis.com/maps/api/geocode/json',
+            data: '&address=' + pincode + '&sensor=true',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+
+
+                if (data.status == 'OK') {
+
+                    for (var i = 0; i < data.results[0].address_components.length; i++) {
+                        var obj = data.results[0].address_components[i];
+
+                        var obj2 = obj['types'];
+
+                        for (var j = 0; j < obj2.length; j++) {
+                            if (obj2[j] == 'locality') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'postal_town') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_1') {
+                                state = obj['long_name'];
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_2') {
+                                state = obj['long_name'];
+
+                            }
+
+
+                            if (obj2[j] == 'country') {
+                                if (obj['long_name'] == country) {
+
+
+                                    $('#shipcity').val(city);
+                                    $('#shipstate').val(state);
+                                } else {
+                                    $('#shipcity').val('');
+                                    $('#shipstate').val('');
+                                }
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+
+                else {
+                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                    $("#shipstate").val("");
+                    $("#shipcity").val("");
+                    $('#shipzip').val("");
+                    $('#shipzip').addClass('err-bor');
+                    ShowMessage('E', msg)
+
+                    return false;
+                }
+            },
+            error: function (data) { alert(data) }
+        });
+
+
+    });
 </script>
 <script src="~/Scripts/jquery.maskedinput.min.js"></script>

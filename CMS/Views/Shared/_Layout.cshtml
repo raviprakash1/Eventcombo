@@ -219,7 +219,7 @@
                             <li>
                                 <a href="#" onclick="checkPermission('7C');">
                                     <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title act">Forget Password Form</span>
+                                    <span class="sidebar-title act">Forgot Password Form</span>
                                 </a>
                             </li>
                             <li>
@@ -339,7 +339,7 @@
 
                         }
                         else if (vPerm == "7C") {
-                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgetPassword" })';
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgotPassword" })';
                         }
                         else if (vPerm == "7D")
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "ResetPassword" })';
