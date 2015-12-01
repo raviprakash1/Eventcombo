@@ -85,6 +85,7 @@
 
                                         <div class="col-md-3">
                                             <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
+                                            Total No. of users:@ViewData["Userscount"]
                                         </div>
 
                                     </div>
@@ -128,12 +129,13 @@
                                                     </td>
                                                     <td>
                                                         <a class="holder-active animation-switcher" href="#modal-panel" id="aRoles-@i">
-                                                            <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" type="button">Manage</button>
+                                                            <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)',@i)" type="button">@obj.RoleType</button>
                                                             @*<input type="button" class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" value="Manage" />*@
 
 
                                                             @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
                                                             <input type="hidden" id="HdRole-@i" value="@obj.Role"/>
+                                                            <input type="hidden" id="HdId"  />
                                                           
                                                         </a>
                                                     </td>
@@ -146,7 +148,7 @@
                                                         </div>
                                                     </td>
                                                     <td>0</td>
-                                                    <td>India</td>
+                                                    <td>@obj.State</td>
                                                     <td>
                                                         <div class="section" id="dvorganiser-@i">
                                                             <label class="field select" >
@@ -223,16 +225,16 @@
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
                                                                         @*<option value="0">Select</option>*@
-                                                                        <option value="1" selected="selected">Active</option>
-                                                                        <option value="2">Deactive</option>
+                                                                        <option value="1" selected="selected">Enable</option>
+                                                                        <option value="2">Disable</option>
                                                                     </select>
                                                                 }
                                                                 else if (obj.UserStatus == "N")
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
                                                                         @*<option value="0">Select</option>*@
-                                                                        <option value="1">Active</option>
-                                                                        <option value="2" selected="selected">Deactive</option>
+                                                                        <option value="1" >Enable</option>
+                                                                        <option value="2" selected="selected">Disable</option>
                                                                     </select>
                                                                 }
 
@@ -240,8 +242,8 @@
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
                                                                         @*<option value="0">Select</option>*@
-                                                                        <option value="1">Active</option>
-                                                                        <option selected="selected" value="2">Deactive</option>
+                                                                        <option value="1" selected="selected">Enable</option>
+                                                                        <option selected="selected" value="2">Disable</option>
                                                                     </select>
                                                                 }
                                                                 <i class="arrow double"></i>
@@ -259,11 +261,13 @@
                                                         @*@Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)*@
                                                         @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
                                                         @*<button class="btn btn-danger br2 btn-xs fs12" id="btnManage" onclick="ConfirmDelete('@obj.Id')"></button>*@
-
+                                                        @if (obj.TicketPurchased <= 0)
+                                                        {
                                                         <a class="td-btn" onclick="ConfirmDelete('@obj.Id');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
                                                             <i class="fa fa-remove"></i>
                                                         </a>
-                                                        
+                                                        }
+
                                                     </td>
                                                     <td>
 @if (obj.Online == "Y")
@@ -622,8 +626,10 @@ else
 
 
         $("#btSave").click(function () {
-            debugger;
-            var UserId = $("#hdUName").val();
+         
+           var UserId = $("#hdUName").val();
+           var id = $("#HdId").val();
+           var roletype = "";
             var Permisions = ""; var URole;
             for (i = 1; i <= 7; i++) {
                 if ($("#chk_" + i).is(":checked") == true)
@@ -637,12 +643,20 @@ else
 
 
 
-            if ($("#rdAdmin").is(":checked") == true)
+            if ($("#rdAdmin").is(":checked") == true) {
                 URole = 2;
+                roletype = "Admin";
+            }
             else
                 URole = 3;
 
-
+            if ($("#rdMemberLimit").is(":checked") == true)
+            {
+                roletype = "Member-Limited";
+            }
+            if ($("#rdMember").is(":checked") == true) {
+                roletype = "Member";
+            }
             $.ajax({
                 url: '@Url.Action("SavePermisions","Users")',
                 data: { strUserId: UserId, strPermission: Permisions, strRole: URole },
@@ -664,11 +678,15 @@ else
                     }
                 }
             });
+            console.log($('#aRoles-' + id).find(":button").attr('value', 'zero'));
+            //$('#aRoles-' + id).find(":button").attr('value', 'zero');
+            $('#aRoles-' + id).find(":button").html(roletype);
+          
         })
 
 
 
-
+      
 
     });
 
@@ -786,8 +804,9 @@ else
     }
 
 
-    function AssignUserId(userId) {
+    function AssignUserId(userId,id) {
         document.getElementById("hdUName").value = userId;
+        document.getElementById("HdId").value = id;
 
         for (i = 1; i <= 7 ; i++) {
             $("#chk_" + i.toString()).prop("checked", false);
