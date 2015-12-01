@@ -1294,6 +1294,7 @@
     // ---------------------Event Creation Script -------------------
     <script>
         $(document).ready(function () {
+            alert("Chal pya");
             $.getJSON('@Url.Action("GetEventChildData", "EditEvent")',
                 function (data) {
                     if ($("#MultipleSchTime").val() == "S") {
@@ -1306,7 +1307,9 @@
                     else
                     {
                         $(".SchmultiEvnt").click();
+                       
                         $("#dlSchOption").val(data.Frequency);
+
                         $("#dlSchOption").change();
                         $("#txtTimeStart").val(data.StartTime);
                         $("#txtTimeEnd").val(data.EndTime);
@@ -1337,26 +1340,8 @@
                     $("#btSaveTimeZone").click();
                     $("#hdEventId").val(data.EventID);
                     $("#tblAddress").append(data.Addresses);
-
-
-
                 }
             );
-
-           // alert("chal pya");
-
-            @*$.ajax({
-                url: '@Url.Action("GetEventData", "CreateEvent")',
-                datatype: "json",
-                type: "GET",
-                contentType: "application/json;charset=utf-8",
-                success: function (response) {
-
-                    //debugger;
-                    //alert(response.EventDescription);
-                }
-            });*@
-
         });
 
       
@@ -4475,13 +4460,6 @@
 
     $(document).ready(function () {
 
-
-        //$(document).click(function () {
-
-        //    $('#diverroacc').css('display', 'none');
-        //    $('#divaccsuc').css('display', 'none');
-        //    $("input").removeClass('err-bor');
-        //});
         $('#drag-drop').on('click', function (e) {
             $('#input2').unbind('click');
 

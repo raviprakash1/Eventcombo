@@ -237,7 +237,7 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
                     ObjEC.Ticket_variabletype = model.Ticket_variabletype;
                     ObjEC.ShowMap = model.ShowMap;
-
+                    
                     objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -399,6 +399,12 @@ namespace EventCombo.Controllers
                     if (strIsLive == "Y")
                         UpdateEventStatus(lEventId.ToString());
 
+
+                    if (model.DuplicateEvent == "Y")
+                        objEnt.SaveChanges();
+
+                    
+                    
                 }
             }
             catch (Exception ex)
