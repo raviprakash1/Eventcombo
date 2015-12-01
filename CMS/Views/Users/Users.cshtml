@@ -85,7 +85,7 @@
 
                                         <div class="col-md-3">
                                             <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
-                                            Total No. of users:@ViewData["Userscount"]
+                                            Total no. of members:@ViewData["Userscount"]
                                         </div>
 
                                     </div>
@@ -95,207 +95,213 @@
                             </div>
 
                             <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="50">
+                                        <thead class="bg_white">
+                                            <tr>
+                                                <th data-column-id="id" data-type="numeric" data-identifier="true">Sno.</th>
+                                                <th>Name</th>
+                                                <th>Role</th>
+                                                <th>Email Id</th>
+                                                <th>Event</th>
+                                                <th>Deals</th>
+                                                <th>Location</th>
+                                                <th>Tickets Purchased</th>
+                                                <th>Deals purchased</th>
+                                                <th>Organiser</th>
+                                                <th>Merchant</th>
+                                                <th>Status</th>
+                                                <td>Action</td>
+                                                <td>Online</td>
 
-                                <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="50">
-                                    <thead class="bg_white">
-                                        <tr>
-                                            <th data-column-id="id" data-type="numeric" data-identifier="true">Sno.</th>
-                                            <th>Name</th>
-                                            <th>Role</th>
-                                            <th>Email Id</th>
-                                            <th>Event</th>
-                                            <th>Deals</th>
-                                            <th>Location</th>
-                                            <th>Organiser</th>
-                                            <th>Merchant</th>
-                                            <th>Status</th>
-                                            <td>Action</td>
-                                            <td>Online</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        @{ int i = 0;
-                                            foreach (var obj in Model)
-                                            {
-                                                i = i + 1;
-                                                <tr>
+                                            @{ int i = 0;
+                                                foreach (var obj in Model)
+                                                {
+                                                    i = i + 1;
+                                                    <tr>
 
-                                                    <td>@i</td>
-                                                    <td class="eml-ellps" title="@obj.FirstName @obj.LastName">
+                                                        <td>@i</td>
+                                                        <td class="eml-ellps" title="@obj.FirstName @obj.LastName">
 
-                                                        @obj.FirstName  @obj.LastName
+                                                            @obj.FirstName  @obj.LastName
 
-                                                    </td>
-                                                    <td>
-                                                        <a class="holder-active animation-switcher" href="#modal-panel" id="aRoles-@i">
-                                                            <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)',@i)" type="button">@obj.RoleType</button>
-                                                            @*<input type="button" class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" value="Manage" />*@
+                                                        </td>
+                                                        <td>
+                                                            <a class="holder-active animation-switcher" href="#modal-panel" id="aRoles-@i">
+                                                                <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)',@i)" type="button">@obj.RoleType</button>
+                                                                @*<input type="button" class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" value="Manage" />*@
 
 
-                                                            @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
-                                                            <input type="hidden" id="HdRole-@i" value="@obj.Role"/>
-                                                            <input type="hidden" id="HdId"  />
-                                                          
-                                                        </a>
-                                                    </td>
-                                                    <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
-                                                    <td>
-                                                        <div class="tdModel">
-                                                            <a class="td-btn" id="btEvent" onclick="GetEvents('@obj.Id');"  type="button" href="#dvEvents" data-toggle="modal">
-                                                               @obj.EventCount
+                                                                @Html.HiddenFor(x => obj.Id, new { id = "hdUName" })
+                                                                <input type="hidden" id="HdRole-@i" value="@obj.Role" />
+                                                                <input type="hidden" id="HdId" />
+
                                                             </a>
-                                                        </div>
-                                                    </td>
-                                                    <td>0</td>
-                                                    <td>@obj.State</td>
-                                                    <td>
-                                                        <div class="section" id="dvorganiser-@i">
-                                                            <label class="field select" >
-                                                                @if (obj.Organiser == "Y")
-                                                                {
-                                                                    <select id="dlOrgnizer"   onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                        @*<option  value="0">Select</option>*@
-                                                                        <option  selected="selected" value="1">Yes</option>
-                                                                        <option value="2">No</option>
-                                                                    </select>
+                                                        </td>
+                                                        <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
+                                                        <td>
+                                                            <div class="tdModel">
+                                                                <a class="td-btn" id="btEvent" onclick="GetEvents('@obj.Id');" type="button" href="#dvEvents" data-toggle="modal">
+                                                                    @obj.EventCount
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>0</td>
+                                                        <td>@obj.State</td>
+                                                        <td>@obj.TicketPurchased</td>
+                                                        <td>0</td>
+                                                        <td>
+                                                            <div class="section" id="dvorganiser-@i">
+                                                                <label class="field select">
+                                                                    @if (obj.Organiser == "Y")
+                                                                    {
+                                                                        <select id="dlOrgnizer" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
+                                                                            @*<option  value="0">Select</option>*@
+                                                                            <option selected="selected" value="1">Yes</option>
+                                                                            <option value="2">No</option>
+                                                                        </select>
                                                                         <i class="arrow double"></i>
-                                                                }
-                                                                else if (obj.Organiser == "N")
-                                                                {
-                                                                    <select id="dlOrgnizer"  onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                        @*<option value="0">Select</option>*@
-                                                                        <option  value="1">Yes</option>
-                                                                        <option selected="selected" value="2">No</option>
-                                                                    </select>
+                                                                    }
+                                                                    else if (obj.Organiser == "N")
+                                                                    {
+                                                                        <select id="dlOrgnizer" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
+                                                                            @*<option value="0">Select</option>*@
+                                                                            <option value="1">Yes</option>
+                                                                            <option selected="selected" value="2">No</option>
+                                                                        </select>
                                                                         <i class="arrow double"></i>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <select id="dlOrgnizer"   onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                        @*<option value="0">Select</option>*@
-                                                                        <option value="1">Yes</option>
-                                                                        <option  selected="selected" value="2">No</option>
-                                                                    </select>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <select id="dlOrgnizer" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
+                                                                            @*<option value="0">Select</option>*@
+                                                                            <option value="1">Yes</option>
+                                                                            <option selected="selected" value="2">No</option>
+                                                                        </select>
                                                                         <i class="arrow double"></i>
-                                                                }
+                                                                    }
 
 
-                                                            </label>
-                                                        </div>
+                                                                </label>
+                                                            </div>
 
-                                                    </td>
-                                                    <td>
-                                                        <div class="section" id="dvmerchant-@i">
-                                                            <label class="field select" >
-                                                                @if (obj.Merchant == "Y")
-                                                                {
-                                                                    <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                        @*<option value="0">Select</option>*@
-                                                                        <option selected="selected" value="1">Yes</option>
-                                                                        <option value="2">No</option>
-                                                                    </select>
-                                                                }
-                                                                else if (obj.Merchant == "N")
-                                                                {
-                                                                    <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                        @*<option value="0">Select</option>*@
-                                                                        <option value="1">Yes</option>
-                                                                        <option selected="selected" value="2">No</option>
-                                                                    </select>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                        @*<option value="0">Select</option>*@
-                                                                        <option value="1">Yes</option>
-                                                                        <option selected="selected" value="2">No</option>
-                                                                    </select>
-                                                                }
+                                                        </td>
+                                                        <td>
+                                                            <div class="section" id="dvmerchant-@i">
+                                                                <label class="field select">
+                                                                    @if (obj.Merchant == "Y")
+                                                                    {
+                                                                        <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
+                                                                            @*<option value="0">Select</option>*@
+                                                                            <option selected="selected" value="1">Yes</option>
+                                                                            <option value="2">No</option>
+                                                                        </select>
+                                                                    }
+                                                                    else if (obj.Merchant == "N")
+                                                                    {
+                                                                        <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
+                                                                            @*<option value="0">Select</option>*@
+                                                                            <option value="1">Yes</option>
+                                                                            <option selected="selected" value="2">No</option>
+                                                                        </select>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
+                                                                            @*<option value="0">Select</option>*@
+                                                                            <option value="1">Yes</option>
+                                                                            <option selected="selected" value="2">No</option>
+                                                                        </select>
+                                                                    }
 
-                                                                <i class="arrow double"></i>
-                                                            </label>
-                                                        </div>
+                                                                    <i class="arrow double"></i>
+                                                                </label>
+                                                            </div>
 
-                                                    </td>
-                                                    <td>
-                                                        <div class="section" id="dvstatus-@i">
-                                                            <label class="field select">
-                                                                @if (obj.UserStatus == "Y")
-                                                                {
-                                                                    <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                        @*<option value="0">Select</option>*@
-                                                                        <option value="1" selected="selected">Enable</option>
-                                                                        <option value="2">Disable</option>
-                                                                    </select>
-                                                                }
-                                                                else if (obj.UserStatus == "N")
-                                                                {
-                                                                    <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                        @*<option value="0">Select</option>*@
-                                                                        <option value="1" >Enable</option>
-                                                                        <option value="2" selected="selected">Disable</option>
-                                                                    </select>
-                                                                }
+                                                        </td>
+                                                        <td>
+                                                            <div class="section" id="dvstatus-@i">
+                                                                <label class="field select">
+                                                                    @if (obj.UserStatus == "Y")
+                                                                    {
+                                                                        <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
+                                                                            @*<option value="0">Select</option>*@
+                                                                            <option value="1" selected="selected">Enable</option>
+                                                                            <option value="2">Disable</option>
+                                                                        </select>
+                                                                    }
+                                                                    else if (obj.UserStatus == "N")
+                                                                    {
+                                                                        <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
+                                                                            @*<option value="0">Select</option>*@
+                                                                            <option value="1">Enable</option>
+                                                                            <option value="2" selected="selected">Disable</option>
+                                                                        </select>
+                                                                    }
 
-                                                                else
-                                                                {
-                                                                    <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                        @*<option value="0">Select</option>*@
-                                                                        <option value="1" selected="selected">Enable</option>
-                                                                        <option selected="selected" value="2">Disable</option>
-                                                                    </select>
-                                                                }
-                                                                <i class="arrow double"></i>
-                                                            </label>
-                                                        </div>
+                                                                    else
+                                                                    {
+                                                                        <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
+                                                                            @*<option value="0">Select</option>*@
+                                                                            <option value="1" selected="selected">Enable</option>
+                                                                            <option selected="selected" value="2">Disable</option>
+                                                                        </select>
+                                                                    }
+                                                                    <i class="arrow double"></i>
+                                                                </label>
+                                                            </div>
 
-                                                    </td>
-                                                    @*<td>
-                                                            <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                                            @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
-                                                            <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                        </td>*@
-                                                    <td>
-                                                        <a href="~/MyAcc/MyAccount?UserId=@obj.Id" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                                        @*@Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)*@
-                                                        @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
-                                                        @*<button class="btn btn-danger br2 btn-xs fs12" id="btnManage" onclick="ConfirmDelete('@obj.Id')"></button>*@
-                                                        @if (obj.TicketPurchased <= 0)
-                                                        {
-                                                        <a class="td-btn" onclick="ConfirmDelete('@obj.Id');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
-                                                            <i class="fa fa-remove"></i>
-                                                        </a>
-                                                        }
+                                                        </td>
+                                                        @*<td>
+                                    <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                    @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
+                                    <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                </td>*@
+                                                        <td>
+                                                            <a href="~/MyAcc/MyAccount?UserId=@obj.Id" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                            @*@Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)*@
+                                                            @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
+                                                            @*<button class="btn btn-danger br2 btn-xs fs12" id="btnManage" onclick="ConfirmDelete('@obj.Id')"></button>*@
+                                                            @if (obj.TicketPurchased <= 0)
+                                                            {
+                                                                <a class="td-btn" onclick="ConfirmDelete('@obj.Id');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
+                                                                    <i class="fa fa-remove"></i>
+                                                                </a>
+                                                            }
 
-                                                    </td>
-                                                    <td>
-@if (obj.Online == "Y")
-{
-                                                    <span class="fa fa-circle text-success fs14" title="online"></span>
-}
-else 
-{
-    <span class="fa fa-circle  text-danger fs14" title="online"></span>
-}
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td>
+                                                            @if (obj.Online == "Y")
+                                                            {
+                                                                <span class="fa fa-circle text-success fs14" title="online"></span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="fa fa-circle  text-danger fs14" title="online"></span>
+                                                            }
+                                                        </td>
+
+                                                    </tr>
+                                                }
                                             }
-                                        }
-                                    </tbody>
-                                    <tfoot class="footer-menu">
-                                        <tr>
-                                            <td colspan="12">
-                                                <nav class="text-right">
-                                                    <ul class="pagination hide-if-no-paging"></ul>
-                                                </nav>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
+                                        </tbody>
+                                        <tfoot class="footer-menu">
+                                            <tr>
+                                                <td colspan="12">
+                                                    <nav class="text-right">
+                                                        <ul class="pagination hide-if-no-paging"></ul>
+                                                    </nav>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
 
-                                </table>
-
-                            </div>
+                                    </table>
+                                 </div>
+                                </div>
                         </div>
 
 
