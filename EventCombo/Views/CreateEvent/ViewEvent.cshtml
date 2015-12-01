@@ -52,7 +52,7 @@
 
 
 <div class="event_container">
-    <div class="event_inner_container event_top view_evnt_top" id="eventtopscoll">
+    <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
         <div class="col-sm-12 mt10 bggrey clearfix" id="buttonscroll">
     @if (TempData["ExpiredEvent"] != null)
     {
@@ -97,7 +97,7 @@
         <div class="event-slide-container">
 
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <div class="navbar-wrapper pt10 pb10">
+                <div class="navbar-wrapper">
                     <div class="col-sm-12">
                         <div class="col-sm-3 no_pads">
                             <div class="col-sm-6 col-xs-6 no_pad vot_count">
@@ -1013,7 +1013,9 @@ function pad(n) { return n < 10 ? '0' + n : n };
             //alert('P :' + vPrice.toString());
             //alert('Q :' + vqty.toString());
 
-
+            var Gtotal = ((vqty != null ? parseFloat(vqty) : 0) * (vPrice != null ? parseFloat(vPrice) : 0));
+            if (isNaN(Gtotal) == true) Gtotal = 0;
+            $("#hid_" + IdAry[i].toString()).val(Gtotal);
 
             runningTotal = (runningTotal + ((vqty != null ? parseFloat(vqty) : 0) * (vPrice != null ? parseFloat(vPrice) : 0))) + parseFloat(vDonate);
 
@@ -1169,6 +1171,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
                             $("#txtd_" + vId.toString()).val(vColm[2].toString());
                         }
                         $.removeCookie("Selection");
+                        calculateTickTotal();
                     }
                 },
                 error: function (data) {
@@ -1191,7 +1194,9 @@ function pad(n) { return n < 10 ? '0' + n : n };
                 vId = parseInt(IdAry[i].toString());
                 vLockQty = parseInt($("#d_" + IdAry[i].toString()).val());
                 vDonate = parseFloat($("#txtd_" + IdAry[i].toString()).val());
+                vTAmt = parseFloat($("#hid_" + IdAry[i].toString()).val());
                 if (isNaN(vDonate) == true) vDonate = 0;
+                if (isNaN(vTAmt) == true) vTAmt = 0;
 
                 if (vLockQty > 0 || vDonate >0) {
                     vflag = 1;
@@ -1199,7 +1204,8 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         'TLD_TQD_Id': vId,
                         'TLD_Locked_Qty': vLockQty,
                         'TLD_Event_Id': vEntid,
-                        'TLD_Donate': vDonate
+                        'TLD_Donate': vDonate,
+                        'TicketAmount': vTAmt
                     });
                     if (vSelection == "")
                         vSelection = vId + "~" + vLockQty + "~" + vDonate;

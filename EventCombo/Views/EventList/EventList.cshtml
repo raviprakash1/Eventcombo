@@ -3,11 +3,15 @@
     ViewBag.Title = "EventList";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+<div class="col-sm-12">
+    <h3 class="acnt_title">Manage Event</h3>
+</div>
+<div class="clearfix"></div>
 <div class="col-sm-12 mange-events">
     <!-- -- Search box open -->
     <div class="search-events fullw">
-        <div class="fullw">
-            <form class="fullw w-33">
+        <div class="col-sm-6 no_pad">
+            <form>
                 <div class="input-group custom search-label-form-group">
                     <input type="text" class="form-control" placeholder="Search for events and attendees">
                     <div class="input-group-addon">
@@ -22,29 +26,29 @@
     <!-- Search box close -- -->
     <!-- -- 3 tabs open -->
     <div class="event-tabs fullw pt20">
-        <ul class="nav nav-tabs custom fs18" id="myTab">
-            <li class="active">
+        <div class="nav nav-tabs custom fs18" id="myTab">
+            <div class="col-sm-4 col-xs-4 active">
                 <a href="#sectionA">Events A</a>
-            </li>
-            <li>
+            </div>
+            <div class="col-sm-4 col-xs-4">
                 <a href="#sectionB">Events B</a>
-            </li>
-            <li>
+            </div>
+            <div class="col-sm-4 col-xs-4 text-center">
                 <a href="#sectionC">Events C</a>
-            </li>
-        </ul>
-        <div class="tab-content content-tab fullw mt10">
-            <div id="sectionA" class="event-1 tab-pane custom fade in active">
-                <div class="col-sm-12 main-sec">
+            </div>
+        </div>
+        <div class="tab-content">
+            <div id="sectionA" class="tab-pane active">
+                <div class="col-sm-12">
                     <div class="row">
-                        <div class="fullw tab-mid-content rows">
-                            <div class="col-sm-6 event-name text-left fs20">
-                                <span>Event name</span>
+                        <div class="col-sm-12 tab-mid-content rows">
+                            <div class="col-sm-4 col-xs-4 event-name fs20">
+                                <span>Event name 1</span>
                             </div>
-                            <div class="col-sm-2 event-date text-center fs16">
+                            <div class="col-sm-4 col-xs-4 event-date fs16">
                                 <span>Event Date</span>
                             </div>
-                            <div class="col-sm-4 event-action text-right">
+                            <div class="col-sm-4 col-xs-4 event-action text-center">
                                 <div class="event-btn-action">
                                     <a href="" class="btn-link manage">
                                         <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
@@ -58,14 +62,14 @@
                                 </div>
                             </div>
                         </div><!-- tab-mid-content rows-->
-                        <div class="fullw tab-mid-content rows">
-                            <div class="col-sm-6 event-name text-left fs20">
+                        <div class="col-sm-12 tab-mid-content rows">
+                            <div class="col-sm-4 col-xs-4 event-name fs20">
                                 <span>Event name</span>
                             </div>
-                            <div class="col-sm-2 event-date text-center fs16">
+                            <div class="col-sm-4 col-xs-4 event-date fs16">
                                 <span>Event Date</span>
                             </div>
-                            <div class="col-sm-4 event-action text-right">
+                            <div class="col-sm-4 col-xs-4 event-action text-center">
                                 <div class="event-btn-action">
                                     <a href="" class="btn-link manage">
                                         <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
@@ -79,14 +83,83 @@
                                 </div>
                             </div>
                         </div><!-- tab-mid-content rows-->
-                        <div class="fullw tab-mid-content rows">
-                            <div class="col-sm-6 event-name text-left fs20">
+                        <div class="col-sm-12 tab-mid-content rows">
+                            <div class="col-sm-4 col-xs-4 event-name fs20">
                                 <span>Event name</span>
                             </div>
-                            <div class="col-sm-2 event-date text-center fs16">
+                            <div class="col-sm-4 col-xs-4 event-date fs16">
                                 <span>Event Date</span>
                             </div>
-                            <div class="col-sm-4 event-action text-right">
+                            <div class="col-sm-4 col-xs-4 event-action text-center">
+                                <div class="event-btn-action">
+                                    <a href="" class="btn-link manage">
+                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
+                                    </a>
+                                    <a href="" class="btn-link edit">
+                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
+                                    </a>
+                                    <a href="" class="btn-link view">
+                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!-- tab-mid-content rows-->
+                    </div>
+                </div><!-- main-sec --> 
+            </div>
+            <div id="sectionB" class="tab-pane">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12 tab-mid-content rows">
+                            <div class="col-sm-4 col-xs-4 event-name fs20">
+                                <span>Event name 2</span>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 event-date fs16">
+                                <span>Event Date</span>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 event-action text-center">
+                                <div class="event-btn-action">
+                                    <a href="" class="btn-link manage">
+                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
+                                    </a>
+                                    <a href="" class="btn-link edit">
+                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
+                                    </a>
+                                    <a href="" class="btn-link view">
+                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!-- tab-mid-content rows-->
+                        <div class="col-sm-12 tab-mid-content rows">
+                            <div class="col-sm-4 col-xs-4 event-name fs20">
+                                <span>Event name</span>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 event-date fs16">
+                                <span>Event Date</span>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 event-action text-center">
+                                <div class="event-btn-action">
+                                    <a href="" class="btn-link manage">
+                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
+                                    </a>
+                                    <a href="" class="btn-link edit">
+                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
+                                    </a>
+                                    <a href="" class="btn-link view">
+                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!-- tab-mid-content rows-->
+                        <div class="col-sm-12 tab-mid-content rows">
+                            <div class="col-sm-4 col-xs-4 event-name fs20">
+                                <span>Event name</span>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 event-date fs16">
+                                <span>Event Date</span>
+                            </div>
+                            <div class="col-sm-4 col-xs-4 event-action text-center">
                                 <div class="event-btn-action">
                                     <a href="" class="btn-link manage">
                                         <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
@@ -103,17 +176,17 @@
                     </div>
                 </div><!-- main-sec -->
             </div>
-            <div id="sectionB" class="event-2 tab-pane custom fade">
-                <div class="col-sm-12 main-sec">
+            <div id="sectionC" class="tab-pane">
+                <div class="col-sm-12">
                     <div class="row">
-                        <div class="fullw tab-mid-content rows">
-                            <div class="col-sm-6 event-name text-left fs20">
-                                <span>Event name</span>
+                        <div class="col-sm-12 tab-mid-content rows">
+                            <div class="col-sm-4 col-xs-4 event-name fs20">
+                                <span>Event name 3</span>
                             </div>
-                            <div class="col-sm-2 event-date text-center fs16">
+                            <div class="col-sm-4 col-xs-4 event-date fs16">
                                 <span>Event Date</span>
                             </div>
-                            <div class="col-sm-4 event-action text-right">
+                            <div class="col-sm-4 col-xs-4 event-action text-center">
                                 <div class="event-btn-action">
                                     <a href="" class="btn-link manage">
                                         <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
@@ -127,14 +200,14 @@
                                 </div>
                             </div>
                         </div><!-- tab-mid-content rows-->
-                        <div class="fullw tab-mid-content rows">
-                            <div class="col-sm-6 event-name text-left fs20">
+                        <div class="col-sm-12 tab-mid-content rows">
+                            <div class="col-sm-4 col-xs-4 event-name fs20">
                                 <span>Event name</span>
                             </div>
-                            <div class="col-sm-2 event-date text-center fs16">
+                            <div class="col-sm-4 col-xs-4 event-date fs16">
                                 <span>Event Date</span>
                             </div>
-                            <div class="col-sm-4 event-action text-right">
+                            <div class="col-sm-4 col-xs-4 event-action text-center">
                                 <div class="event-btn-action">
                                     <a href="" class="btn-link manage">
                                         <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
@@ -148,83 +221,14 @@
                                 </div>
                             </div>
                         </div><!-- tab-mid-content rows-->
-                        <div class="fullw tab-mid-content rows">
-                            <div class="col-sm-6 event-name text-left fs20">
+                        <div class="col-sm-12 tab-mid-content rows">
+                            <div class="col-sm-4 col-xs-4 event-name fs20">
                                 <span>Event name</span>
                             </div>
-                            <div class="col-sm-2 event-date text-center fs16">
+                            <div class="col-sm-4 col-xs-4 event-date fs16">
                                 <span>Event Date</span>
                             </div>
-                            <div class="col-sm-4 event-action text-right">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                    </div>
-                </div><!-- main-sec -->
-            </div>
-            <div id="sectionC" class="event-3 tab-pane custom fade">
-                <div class="col-sm-12 main-sec">
-                    <div class="row">
-                        <div class="fullw tab-mid-content rows">
-                            <div class="col-sm-6 event-name text-left fs20">
-                                <span>Event name</span>
-                            </div>
-                            <div class="col-sm-2 event-date text-center fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 event-action text-right">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                        <div class="fullw tab-mid-content rows">
-                            <div class="col-sm-6 event-name text-left fs20">
-                                <span>Event name</span>
-                            </div>
-                            <div class="col-sm-2 event-date text-center fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 event-action text-right">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                        <div class="fullw tab-mid-content rows">
-                            <div class="col-sm-6 event-name text-left fs20">
-                                <span>Event name</span>
-                            </div>
-                            <div class="col-sm-2 event-date text-center fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 event-action text-right">
+                            <div class="col-sm-4 col-xs-4 event-action text-center">
                                 <div class="event-btn-action">
                                     <a href="" class="btn-link manage">
                                         <i class="icon manage glyphicon glyphicon-pencil"></i> Manage

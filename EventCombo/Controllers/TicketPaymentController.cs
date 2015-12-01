@@ -228,9 +228,7 @@ namespace EventCombo.Controllers
             HomeController hm = new HomeController();
             if (!string.IsNullOrEmpty(model.AccconfirmEmail) && !string.IsNullOrEmpty(model.Accpassword))
             {
-
                 string userid = await saveuser(model.AccEmail, model.Accpassword);
-
                 if (!string.IsNullOrEmpty(userid))
                 {
                     using (EventComboEntities objEntity = new EventComboEntities())
@@ -311,11 +309,11 @@ namespace EventCombo.Controllers
                     List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
                     objLockedTic = GetLockTickets();
                     Ticket_Purchased_Detail objTPD;
-                    decimal dAmt = 0;
+                  
                     foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
                     {
                         objTPD = new Ticket_Purchased_Detail();
-                        objTPD.TPD_Amount = dAmt;
+                        objTPD.TPD_Amount = TLD.TicketAmount;
                         objTPD.TPD_Donate = TLD.TLD_Donate;
                         objTPD.TPD_Event_Id = TLD.TLD_Event_Id;
                         objTPD.TPD_Order_Id = strOrderNo;
@@ -661,7 +659,8 @@ namespace EventCombo.Controllers
                                         TLD_TQD_Id = TLD.TLD_TQD_Id,
                                         Locktime = TLD.Locktime,
                                         TLD_GUID = TLD.TLD_GUID,
-                                        TLD_Donate = TLD.TLD_Donate
+                                        TLD_Donate = TLD.TLD_Donate,
+                                        TicketAmount = TLD.TicketAmount
                                     }
                                         );
                     return modelTLD.ToList();
@@ -770,6 +769,26 @@ namespace EventCombo.Controllers
                                        }
                                        ).SingleOrDefault();
 
+                    var PurchaseDetail = (from TPD in objEnt.Ticket_Purchased_Detail
+                                       where TPD.TPD_GUID == strGuid
+                                       select TPD                                 
+                                      ).ToList();
+                  
+                    long? iPaidCount = 0; long? iFreeCount = 0;
+                    foreach (Ticket_Purchased_Detail TPD in PurchaseDetail)
+                    {
+                        var vTId = (from TQD in objEnt.Ticket_Quantity_Detail
+                                    where TQD.TQD_Id == TPD.TPD_TQD_Id
+                                    select TQD.TQD_Ticket_Id).SingleOrDefault();
+                        var vTType = (from Tkt in objEnt.Tickets 
+                                      where Tkt.T_Id  == vTId
+                                      select Tkt.TicketTypeID).SingleOrDefault();
+                        
+                        if (vTType == 2) iPaidCount = iPaidCount + TPD.TPD_Purchased_Qty;
+                        if (vTType == 1) iFreeCount = iFreeCount + TPD.TPD_Purchased_Qty;
+                    }
+
+
                     var OrderNo = (from TPD in objEnt.Ticket_Purchased_Detail
                                    where TPD.TPD_GUID == strGuid
                                    select TPD.TPD_Order_Id
@@ -780,8 +799,30 @@ namespace EventCombo.Controllers
                                     select OD.O_TotalAmount
                                     ).SingleOrDefault();
 
+                    if (iPaidCount==1)
+                    {
+                        strResult = "Order " + OrderNo.ToString() + " , " + TicketCount.totalOrder.ToString() + " ticket for $" + OrderAmt.ToString();
+                    }
+                    else if (iPaidCount>1)
+                    {
+                        strResult = "Order " + OrderNo.ToString() + " , " + TicketCount.totalOrder.ToString() + " tickets for $" + OrderAmt.ToString();
+                    }
+                    else if (iFreeCount ==1)
+                    {
+                        strResult = "Order " + OrderNo.ToString() + " , " + TicketCount.totalOrder.ToString() + " ticket";
+                    }
+                    else if (iFreeCount > 1)
+                    {
+                        strResult = "Order " + OrderNo.ToString() + " , " + TicketCount.totalOrder.ToString() + " tickets";
+                    }
+                    else
+                    {
+                        OrderAmt = (OrderAmt != null ? OrderAmt : 0);
+                        strResult = "Order " + OrderNo.ToString() + " , " + TicketCount.totalOrder.ToString() + " ticket for $" + OrderAmt.ToString();
+                    } 
 
-                    strResult = OrderNo + "~" + TicketCount.totalOrder + "~" + OrderAmt;
+
+                    //strResult = OrderNo + "~" + TicketCount.totalOrder + "~" + OrderAmt;
                 }
             }
 
