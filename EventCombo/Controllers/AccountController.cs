@@ -1119,16 +1119,28 @@ namespace EventCombo.Controllers
                     var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
                     if (users.Find(x => x.Id == User.Id) != null)
                     {
-                        Session["AppId"] = User.Id;
-
-                        using (EventComboEntities db = new EventComboEntities())
+                      var status=  db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
+                        if (status == "Y" || status == "y")
                         {
-                            AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
-                            aspuser.LoginStatus = "Y";
-                            db.SaveChanges();
+
+
+                            Session["AppId"] = User.Id;
+
+                            using (EventComboEntities db = new EventComboEntities())
+                            {
+                                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
+                                aspuser.LoginStatus = "Y";
+                                db.SaveChanges();
+
+                            }
+                            return RedirectToLocal(url);
+                        }else
+
+                        {
+                            ModelState.AddModelError("", "You not authorized user");
+                            return RedirectToAction("Index", "Home");
 
                         }
-                            return RedirectToLocal(url);
                     }
                     else
                     {

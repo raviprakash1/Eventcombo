@@ -44,7 +44,6 @@ namespace CMS.Controllers
 
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
-          
 
 
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
@@ -91,15 +90,15 @@ namespace CMS.Controllers
                 Value = "0",
                 Selected = (iCount == 0 ? true : false)
             });
-            List<UsersTemplate> objuser1 = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
-            foreach (var item in objuser1)
-            {
-                var ans = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
-                item.EventCount = ans;
+            //List<UsersTemplate> objuser1 = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+            //foreach (var item in objuser1)
+            //{
+            //    var ans = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
+            //    item.EventCount = ans;
 
 
-            }
-            int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
+            //}
+           int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
             string strText = "";
             if (iUcount > iGapValue)
             {
@@ -173,7 +172,7 @@ namespace CMS.Controllers
             // UsersTemplate objU = new UsersTemplate();
             //  objU.objPermissions = GetPermission("APP");
             // objuser.Add(objU);
-            return View(objuser1);
+            return View(objuser);
         }
         public List<UsersTemplate> GetAllUsers(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {

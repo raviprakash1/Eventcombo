@@ -702,8 +702,14 @@ namespace EventCombo.Controllers
                 mailMessage.From = new MailAddress(from, from);
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
-                mailMessage.CC.Add ( cc);
-                mailMessage.Bcc.Add( bcc);
+                if (!string.IsNullOrEmpty(cc))
+                {
+                    mailMessage.CC.Add(cc);
+                }
+                if (!string.IsNullOrEmpty(bcc))
+                {
+                    mailMessage.Bcc.Add(bcc);
+                }
                 mailMessage.IsBodyHtml = true;
                 mailMessage.To.Add(new MailAddress(To));
                 SmtpClient smtp = new SmtpClient();
