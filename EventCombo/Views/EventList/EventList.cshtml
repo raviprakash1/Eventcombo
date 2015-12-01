@@ -9,11 +9,10 @@
 <div class="clearfix"></div>
 <div class="col-sm-12 mange-events">
     <!-- -- Search box open -->
-    <div class="search-events fullw">
         <div class="col-sm-6 no_pad">
             <form>
-                <div class="input-group custom search-label-form-group">
-                    <input type="text" class="form-control" placeholder="Search for events and attendees">
+                <div class="input-group custom ">
+                    <input type="text" class="form-control mng-evnt-search" placeholder="Search for events and guests">
                     <div class="input-group-addon">
                         <div class="search-icon">
                             <button class="fa fa-search" type="submit"></button>
@@ -22,231 +21,220 @@
                 </div>
             </form>
         </div>
-    </div><!-- search-events -->
+   
     <!-- Search box close -- -->
     <!-- -- 3 tabs open -->
-    <div class="event-tabs fullw pt20">
-        <div class="nav nav-tabs custom fs18" id="myTab">
-            <div class="col-sm-4 col-xs-4 active">
-                <a href="#sectionA">Events A</a>
-            </div>
-            <div class="col-sm-4 col-xs-4">
-                <a href="#sectionB">Events B</a>
-            </div>
-            <div class="col-sm-4 col-xs-4 text-center">
-                <a href="#sectionC">Events C</a>
-            </div>
+    <div class="col-sm-12 row">
+        <div class="col-sm-12 no_pad mb10">
+            <h3 class="acnt_title">Events</h3>
         </div>
-        <div class="tab-content">
-            <div id="sectionA" class="tab-pane active">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-12 tab-mid-content rows">
-                            <div class="col-sm-4 col-xs-4 event-name fs20">
-                                <span>Event name 1</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-date fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-action text-center">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                        <div class="col-sm-12 tab-mid-content rows">
-                            <div class="col-sm-4 col-xs-4 event-name fs20">
-                                <span>Event name</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-date fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-action text-center">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                        <div class="col-sm-12 tab-mid-content rows">
-                            <div class="col-sm-4 col-xs-4 event-name fs20">
-                                <span>Event name</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-date fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-action text-center">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
+        <div class="col-sm-12  custom fs18 no_pad" id="myTab">
+            <ul class="nav nav-tabs evnt-mng-tab">
+                <li class="active">
+                    <a href="#sectionA">Live Events (2)</a>
+                </li>
+                <li class="">
+                    <a href="#sectionB">Saved Drafts (3)</a>
+                </li>
+                <li class="">
+                    <a href="#sectionC">Past Events (4)</a>
+                </li>
+           </ul>
+        </div>
+        
+            <div class="tab-content mt10">
+                <div id="sectionA" class="tab-pane active">
+                  
+                        <table class="table fs20 mb0">
+                            <thead>
+                                <tr>
+                                    <th class="evnt_mng_tit_200">Event Title</th>
+                                    <th>Event Date /Time</th>
+                                    <th>Ticket Sold / Total No.</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="evnt_mng_tit_200">Event Title</td>
+                                    <td>10th Aug 2015 / 10:00am</td>
+                                    <td>24/100</td>
+                                    <td class="text-center">
+                                        <div class="event-btn-action">
+                                            <a href="" class="btn-link manage">
+                                               Manage
+                                            </a>
+                                            <a href="" class="btn-link edit">
+                                               Edit
+                                            </a>
+                                            <a href="" class="btn-link view">
+                                               View
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    
+                    <!-- main-sec -->
+
+                </div>
+                <div id="sectionB" class="tab-pane">
+                    <table class="table fs20 mb0">
+                            <thead>
+                                <tr>
+                                    <th class="evnt_mng_tit_200">Event Title</th>
+                                    <th>Event Date /Time</th>
+                                    <th>Ticket Sold / Total No.</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="evnt_mng_tit_200">Event Title</td>
+                                    <td>10th Aug 2015 / 10:00am</td>
+                                    <td>24/100</td>
+                                    <td class="text-center">
+                                        <div class="event-btn-action">
+                                            <a href="" class="btn-link manage">
+                                                Manage
+                                            </a>
+                                            <a href="" class="btn-link edit">
+                                                Edit
+                                            </a>
+                                            <a href="" class="btn-link view">
+                                                View
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="evnt_mng_tit_200">Event Title</td>
+                                    <td>10th Aug 2015 / 10:00am</td>
+                                    <td>24/100</td>
+                                    <td class="text-center">
+                                        <div class="event-btn-action">
+                                            <a href="" class="btn-link manage">
+                                                Manage
+                                            </a>
+                                            <a href="" class="btn-link edit">
+                                                Edit
+                                            </a>
+                                            <a href="" class="btn-link view">
+                                                View
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table><!-- main-sec -->
+                </div>
+                <div id="sectionC" class="tab-pane">
+                    <table class="table fs20 mb0">
+                            <thead>
+                                <tr>
+                                    <th class="evnt_mng_tit_200">Event Title</th>
+                                    <th>Event Date /Time</th>
+                                    <th>Ticket Sold / Total No.</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="evnt_mng_tit_200">Event Title</td>
+                                    <td>10th Aug 2015 / 10:00am</td>
+                                    <td>24/100</td>
+                                    <td class="text-center">
+                                        <div class="event-btn-action">
+                                            <a href="" class="btn-link manage">
+                                                Manage
+                                            </a>
+                                            <a href="" class="btn-link edit">
+                                                Edit
+                                            </a>
+                                            <a href="" class="btn-link view">
+                                                View
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="evnt_mng_tit_200">Event Title</td>
+                                    <td>10th Aug 2015 / 10:00am</td>
+                                    <td>24/100</td>
+                                    <td class="text-center">
+                                        <div class="event-btn-action">
+                                            <a href="" class="btn-link manage">
+                                                Manage
+                                            </a>
+                                            <a href="" class="btn-link edit">
+                                                Edit
+                                            </a>
+                                            <a href="" class="btn-link view">
+                                                View
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="evnt_mng_tit_200">Event Title</td>
+                                    <td>10th Aug 2015 / 10:00am</td>
+                                    <td>24/100</td>
+                                    <td class="text-center">
+                                        <div class="event-btn-action">
+                                            <a href="" class="btn-link manage">
+                                                Manage
+                                            </a>
+                                            <a href="" class="btn-link edit">
+                                                Edit
+                                            </a>
+                                            <a href="" class="btn-link view">
+                                                View
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table><!-- main-sec -->
+                </div>
+                
+                <!-- tab-content content-tab 2 -->
+                
+            </div><!-- tab-content content-tab 1 -->
+    
+            <div class="col-sm-12 no_pad mt10">
+                <div class="col-sm-12 no_pad mb5">
+                    <h3 class="acnt_title">Guests</h3>
+                </div>
+                <div class="col-sm-12 row">
+                    <div class="table-responsive">
+                    <table class="table fs20">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Event Name</th>
+                                <th>Date-Time</th>
+                                <th>Order Number</th>
+                                <th>Ticket Type / Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>User Name</td>
+                                <td>abc@xyz.com</td>
+                                <td>Event Name</td>
+                                <td>10th Aug 2015 10:00am</td>
+                                <td>289373737823</td>
+                                <td>Free / 100</td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
                     </div>
-                </div><!-- main-sec --> 
+                </div>
             </div>
-            <div id="sectionB" class="tab-pane">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-12 tab-mid-content rows">
-                            <div class="col-sm-4 col-xs-4 event-name fs20">
-                                <span>Event name 2</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-date fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-action text-center">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                        <div class="col-sm-12 tab-mid-content rows">
-                            <div class="col-sm-4 col-xs-4 event-name fs20">
-                                <span>Event name</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-date fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-action text-center">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                        <div class="col-sm-12 tab-mid-content rows">
-                            <div class="col-sm-4 col-xs-4 event-name fs20">
-                                <span>Event name</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-date fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-action text-center">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                    </div>
-                </div><!-- main-sec -->
-            </div>
-            <div id="sectionC" class="tab-pane">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-12 tab-mid-content rows">
-                            <div class="col-sm-4 col-xs-4 event-name fs20">
-                                <span>Event name 3</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-date fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-action text-center">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                        <div class="col-sm-12 tab-mid-content rows">
-                            <div class="col-sm-4 col-xs-4 event-name fs20">
-                                <span>Event name</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-date fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-action text-center">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                        <div class="col-sm-12 tab-mid-content rows">
-                            <div class="col-sm-4 col-xs-4 event-name fs20">
-                                <span>Event name</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-date fs16">
-                                <span>Event Date</span>
-                            </div>
-                            <div class="col-sm-4 col-xs-4 event-action text-center">
-                                <div class="event-btn-action">
-                                    <a href="" class="btn-link manage">
-                                        <i class="icon manage glyphicon glyphicon-pencil"></i> Manage
-                                    </a>
-                                    <a href="" class="btn-link edit">
-                                        <i class="icon edit glyphicon glyphicon-pencil"></i> Edit
-                                    </a>
-                                    <a href="" class="btn-link view">
-                                        <i class="icon view glyphicon glyphicon-pencil"></i> View
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- tab-mid-content rows-->
-                    </div>
-                </div><!-- main-sec -->
-            </div>
-        </div><!-- tab-content content-tab -->
-    </div><!-- event-tabs -->
+        </div><!-- event-tabs -->
     <!-- 3 tabs close -- -->
 </div>
 
