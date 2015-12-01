@@ -24,7 +24,7 @@ namespace CMS.Models
         public string LastName { get; set; }
         public string Online { get; set; }
         public string Role { get; set; }
-
+        public int EventCount { get; set; }
 
 
     }

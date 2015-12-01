@@ -141,19 +141,19 @@
                                                     <td>
                                                         <div class="tdModel">
                                                             <a class="td-btn" id="btEvent" onclick="GetEvents('@obj.Id');"  type="button" href="#dvEvents" data-toggle="modal">
-                                                                Click here
+                                                               @obj.EventCount
                                                             </a>
                                                         </div>
                                                     </td>
                                                     <td>0</td>
                                                     <td>India</td>
                                                     <td>
-                                                        <div class="section">
-                                                            <label class="field select" id="lblorganiser-@i">
+                                                        <div class="section" id="dvorganiser-@i">
+                                                            <label class="field select" >
                                                                 @if (obj.Organiser == "Y")
                                                                 {
                                                                     <select id="dlOrgnizer"   onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                        <option  value="0">Select</option>
+                                                                        @*<option  value="0">Select</option>*@
                                                                         <option  selected="selected" value="1">Yes</option>
                                                                         <option value="2">No</option>
                                                                     </select>
@@ -162,7 +162,7 @@
                                                                 else if (obj.Organiser == "N")
                                                                 {
                                                                     <select id="dlOrgnizer"  onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option  value="1">Yes</option>
                                                                         <option selected="selected" value="2">No</option>
                                                                     </select>
@@ -171,9 +171,9 @@
                                                                 else
                                                                 {
                                                                     <select id="dlOrgnizer"   onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Yes</option>
-                                                                        <option value="2">No</option>
+                                                                        <option  selected="selected" value="2">No</option>
                                                                     </select>
                                                                         <i class="arrow double"></i>
                                                                 }
@@ -184,12 +184,12 @@
 
                                                     </td>
                                                     <td>
-                                                        <div class="section">
-                                                            <label class="field select" id="lblmerchant-@i">
+                                                        <div class="section" id="dvmerchant-@i">
+                                                            <label class="field select" >
                                                                 @if (obj.Merchant == "Y")
                                                                 {
                                                                     <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option selected="selected" value="1">Yes</option>
                                                                         <option value="2">No</option>
                                                                     </select>
@@ -197,7 +197,7 @@
                                                                 else if (obj.Merchant == "N")
                                                                 {
                                                                     <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Yes</option>
                                                                         <option selected="selected" value="2">No</option>
                                                                     </select>
@@ -205,9 +205,9 @@
                                                                 else
                                                                 {
                                                                     <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Yes</option>
-                                                                        <option value="2">No</option>
+                                                                        <option selected="selected" value="2">No</option>
                                                                     </select>
                                                                 }
 
@@ -217,12 +217,12 @@
 
                                                     </td>
                                                     <td>
-                                                        <div class="section">
-                                                            <label class="field select" id="lblstatus-@i">
+                                                        <div class="section" id="dvstatus-@i">
+                                                            <label class="field select">
                                                                 @if (obj.UserStatus == "Y")
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1" selected="selected">Active</option>
                                                                         <option value="2">Deactive</option>
                                                                     </select>
@@ -230,7 +230,7 @@
                                                                 else if (obj.UserStatus == "N")
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Active</option>
                                                                         <option value="2" selected="selected">Deactive</option>
                                                                     </select>
@@ -239,9 +239,9 @@
                                                                 else
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Active</option>
-                                                                        <option value="2">Deactive</option>
+                                                                        <option selected="selected" value="2">Deactive</option>
                                                                     </select>
                                                                 }
                                                                 <i class="arrow double"></i>
@@ -260,7 +260,7 @@
                                                         @*<a href="~/Users/MyAccount?UserId=@obj.Id" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i> </a>*@
                                                         @*<button class="btn btn-danger br2 btn-xs fs12" id="btnManage" onclick="ConfirmDelete('@obj.Id')"></button>*@
 
-                                                        <a class="td-btn" onclick="ConfirmDelete('@obj.Id');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="adelete'@i'">
+                                                        <a class="td-btn" onclick="ConfirmDelete('@obj.Id');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
                                                             <i class="fa fa-remove"></i>
                                                         </a>
                                                         
@@ -391,13 +391,13 @@ else
         @*MOdel for Event Info*@
 
         <div class="modal fade" id="dvEvents" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm confirm-msg ok-msg custom wd-4 tdclickmodal">
+            <div class="modal-dialog modal-sm text-center">
                 <div class="modal-content">
-                    <!-- <div class="modal-header custom">
+                   @*<div class="modal-header custom">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div> -->
-                    <form id="contactForm" class="fullw1 add">
-                        <div class="modal-body text-center pv50 txt-msg">
+                </div>*@
+                    <form id="contactForm" class="fullw1 add ">
+                        <div class="modal-body pre-scrollable">
                             <table id="tbEvent"></table>
                             @*<h4 class="msg">Please click OK to Continue.</h4>*@
                         </div>
@@ -465,31 +465,54 @@ else
 
     }
     jQuery(document).ready(function () {
-        var i = 1;
-        $("#tblMain tr").each(function () {
+        //var i = 1;
+        var rowCount = $('#tblMain tr').length;
+
+        for (var i = 1; i < rowCount; i++)
+        {
+            var role = parseInt( $("#HdRole-" + i).val());
+
+            if (role == 1)
+            {
+               //console.log( $("#HdRole-" + i).parent().parent().parent());
+                $("#HdRole-" + i).parent().parent().parent().addClass('info');
+                    //('background-color', 'blue');
+                $('#aRoles-' + i).attr("disabled", "disabled");
+                $('#aRoles-' + i).children().attr("disabled", "disabled");
+                $('#aRoles-' + i).removeAttr("href");
+                $('#adelete-' + i).attr("disabled", "disabled");
+                $('#adelete-' + i).removeAttr("href");
+                $("#dvorganiser-" + i).children().children().prop('disabled', true);
+                $("#dvstatus-" + i).children().children().prop('disabled', true);
+                $("#dvmerchant-" + i).children().children().prop('disabled', true);
+     
+                    }
+
+        }
+        //$("#tblMain tr").each(function () {
 
             
-            var $tr = $(this);
+        //    var $tr = $(this);
          
 
           
 
           
-                var j =  i 
-                var role = $("#HdRole-"+j).val();
+        //        var j =  i 
+        //        var role = $("#HdRole-"+j).val();
               
-            if (role == 1)
-            {
-                $('#aRoles-'+j).prop('disabled', true);
-                $('#dlOrgnizer-'+j).prop('disabled', true);
-                $('#dlMerchant-'+j).prop('disabled', true);
-                $('#dlStatus-'+j).prop('disabled', true);
-                $('adelete-'+j).prop('disabled', true);
+        //    if (role == 1)
+        //    {
+        //        $('#aRoles-'+j).prop('disabled', true);
+        //        $('#dlOrgnizer-'+j).prop('disabled', true);
+        //        $('#dlMerchant-'+j).prop('disabled', true);
+        //        $('#dlStatus-'+j).prop('disabled', true);
+        //        $('adelete-'+j).prop('disabled', true);
 
 
-            }
-            i++;
-        });
+        //    }
+        //    i++;
+        //});
       
 
         $('.close-mg').on('click', function (e) {

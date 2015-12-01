@@ -49,7 +49,8 @@ namespace CMS.Controllers
             {
                 var ans = db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0", item.Id).FirstOrDefault();
                 item.Role = ans;
-
+                var evtcount = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
+                item.EventCount = evtcount;
 
             }
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
