@@ -48,6 +48,40 @@ namespace CMS.Controllers
 
 
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+            foreach(var item in objuser)
+            {
+                var ans = db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0", item.Id).FirstOrDefault();
+              
+                if(int.Parse(ans)==1)
+                {
+                    item.RoleType = "Super Admin";
+                }
+                if (int.Parse(ans) == 2)
+                {
+                    item.RoleType = "Admin";
+                }
+                if (int.Parse(ans) == 3)
+                {
+                    var countperrm = db.Permission_Detail.Where(x => x.Permission_Category == "APP").Count();
+                    var countuserperm = db.User_Permission_Detail.Where(x => x.UP_User_Id == item.Id).Count();
+
+                    if (countuserperm < countperrm)
+                    {
+                        item.RoleType = "Member-Limited";
+                      
+                        ans = "4";
+                    }
+                    else
+                    {
+                        item.RoleType = "Member";
+                    }
+                }
+                item.Role = ans;
+                var evtcount = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
+                item.EventCount = evtcount;
+                var ticketpurchased= db.Database.SqlQuery<Int32>("select count(*) from Ticket_Purchased_Detail  where TPD_User_Id=@p0", item.Id).FirstOrDefault();
+                item.TicketPurchased = ticketpurchased;
+            }
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
             List<SelectListItem> PageFilter = new List<SelectListItem>();
              
@@ -132,9 +166,9 @@ namespace CMS.Controllers
 
             ViewBag.PageF = PageFilter;
 
+            ViewData["Userscount"] = db.AspNetUsers.Count();
 
 
-           
             // List<Permissions> objPerm = GetPermission("APP");
             // UsersTemplate objU = new UsersTemplate();
             //  objU.objPermissions = GetPermission("APP");
@@ -164,7 +198,9 @@ namespace CMS.Controllers
                                          UserStatus = Pr.UserStatus.Trim(),
                                          FirstName = Pr.FirstName,
                                          LastName = Pr.LastName,
-                                         Online= UserTemp.LoginStatus,                                         
+                                         Online= UserTemp.LoginStatus,
+                                         Role="",
+                                         State=!string.IsNullOrEmpty(Pr.State)? Pr.State:""
                                      }
                                     );
 

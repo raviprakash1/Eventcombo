@@ -57,5 +57,7 @@ namespace CMS.Models
         public string Designation { get; set; }
     
         public string Password { get; set; }
+
+        public string role { get; set; }
     }
 }

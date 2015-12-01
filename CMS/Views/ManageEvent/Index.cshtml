@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CMS.Models.EventCreation>
 @using CMS.Models;
 @{
-    ViewBag.Title = "Users";
+    ViewBag.Title = "Event";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using (Html.BeginForm("Index", "ManageEvent", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
@@ -49,7 +49,7 @@
                             <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
                                 <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
                                     <div class="panel-heading panel_loader">
-                                        <span class="view_evnt fs26 col-sm-6">  View Event</span>
+                                        <span class="view_evnt fs26 col-sm-6"> Event</span>
                                         <label class="field select admin-form col-sm-4 text-right srh-by-no">
                                             @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })
                                             @*<select >

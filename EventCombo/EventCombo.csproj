@@ -307,6 +307,7 @@
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetEventData.cs" />
     <Compile Include="Models\GetEventDateList_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
