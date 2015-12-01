@@ -15,8 +15,9 @@ namespace CMS
 
             routes.MapRoute(
                 name: "Default",
+                namespaces: new[] { "CMS.Controllers" },
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional }              
             );
         }
     }

@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
-
+<script src="~/Scripts/jquery.masked.js"></script>
 <link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
 <script src="~/Scripts/filer/jquery.filer.js"></script>
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
@@ -910,7 +910,7 @@
                                     <div class="form-group paidticket-n" id="id_Disc-n">
                                         <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="checkdiscount(this.id)" onblur="tofixed(this.id)"/>
+                                            <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="checkdiscount(this.id)" onblur="tofixed(this.id)" maxlength="9"/>
 
                                         </div>
                                     </div>
@@ -1485,8 +1485,9 @@
             var deletemsg = ajaxsetup('CreateEvent', 'CreateEventDeleteUI');
             $('#id_lblprice-n').html(numbers);
             $('#id_lblmax-n').html(numbers);
-            $('.msg').html(deletemsg);
-            
+            $('.msg').html(deletemsg);            
+
+         
         });
         function ValEventdate(e) {
             if (e.trim() == "txtDateFrom") {
@@ -3689,6 +3690,7 @@
             $('#btn_vardelete-' + divlength).attr('href', '#cnfrmdeletevariable-' + divlength);
         });
         $('.save_btnpaid ').click(function () {
+            
             $(".ticket_panel").show();
             $("#id_ticket_footer").css('display', 'block');
             var divlength = $("#MasterDiv> div").size();
@@ -3720,7 +3722,6 @@
 
 
             $('#MasterDiv').append(data);
-
             $(".normalticket-" + divlength).css('display', 'none');
             $(".paidticket-" + divlength).css('display', 'block');
             $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
@@ -3789,7 +3790,8 @@
             $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
-
+            $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
+            $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
 
         });
         $('.save_btndonation').click(function () {

@@ -44,14 +44,43 @@ namespace CMS.Controllers
 
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
+          
+
+
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
             foreach(var item in objuser)
             {
                 var ans = db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0", item.Id).FirstOrDefault();
+              
+                if(int.Parse(ans)==1)
+                {
+                    item.RoleType = "Super Admin";
+                }
+                if (int.Parse(ans) == 2)
+                {
+                    item.RoleType = "Admin";
+                }
+                if (int.Parse(ans) == 3)
+                {
+                    var countperrm = db.Permission_Detail.Where(x => x.Permission_Category == "APP").Count();
+                    var countuserperm = db.User_Permission_Detail.Where(x => x.UP_User_Id == item.Id).Count();
+
+                    if (countuserperm < countperrm)
+                    {
+                        item.RoleType = "Member-Limited";
+                      
+                        ans = "4";
+                    }
+                    else
+                    {
+                        item.RoleType = "Member";
+                    }
+                }
                 item.Role = ans;
                 var evtcount = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
                 item.EventCount = evtcount;
-
+                var ticketpurchased= db.Database.SqlQuery<Int32>("select count(*) from Ticket_Purchased_Detail  where TPD_User_Id=@p0", item.Id).FirstOrDefault();
+                item.TicketPurchased = ticketpurchased;
             }
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
             List<SelectListItem> PageFilter = new List<SelectListItem>();
@@ -62,7 +91,14 @@ namespace CMS.Controllers
                 Value = "0",
                 Selected = (iCount == 0 ? true : false)
             });
+            List<UsersTemplate> objuser1 = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+            foreach (var item in objuser1)
+            {
+                var ans = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
+                item.EventCount = ans;
 
+
+            }
             int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
             string strText = "";
             if (iUcount > iGapValue)
@@ -130,14 +166,14 @@ namespace CMS.Controllers
 
             ViewBag.PageF = PageFilter;
 
+            ViewData["Userscount"] = db.AspNetUsers.Count();
 
 
-           
             // List<Permissions> objPerm = GetPermission("APP");
             // UsersTemplate objU = new UsersTemplate();
             //  objU.objPermissions = GetPermission("APP");
             // objuser.Add(objU);
-            return View(objuser);
+            return View(objuser1);
         }
         public List<UsersTemplate> GetAllUsers(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {
@@ -163,11 +199,12 @@ namespace CMS.Controllers
                                          FirstName = Pr.FirstName,
                                          LastName = Pr.LastName,
                                          Online= UserTemp.LoginStatus,
-                                         Role=""
-                                         
-
+                                         Role="",
+                                         State=!string.IsNullOrEmpty(Pr.State)? Pr.State:""
                                      }
                                     );
+
+                
                 //return modelUserTemp.ToList();
                 if (!SearchStringFirstName.Equals(string.Empty) || !SearchStringLastName.Equals(string.Empty) || !SearchStringEmail.Equals(string.Empty))
                     return modelUserTemp.Where(us => us.FirstName.ToLower().Contains(SearchStringFirstName.ToLower()) || us.LastName.ToLower().Contains(SearchStringLastName.ToLower())
@@ -321,6 +358,18 @@ namespace CMS.Controllers
 
                 }
                 return strHtml.ToString();
+            }
+
+        }
+        public string GetUserEventsCounter(string strUserId)
+        {
+            StringBuilder strHtml = new StringBuilder();
+            using (EmsEntities objEntity = new EmsEntities())
+            {
+                var modelPerm = (from uEvt in objEntity.Events
+                                 where uEvt.UserID.Equals(strUserId)
+                                 select uEvt).ToList();                                
+                return modelPerm.Count.ToString();
             }
 
         }

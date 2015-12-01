@@ -497,11 +497,12 @@ span.evnt_toltip{
 .fess_online p{ color: #979898; font-size: 1.1em; margin-bottom: 0px; }
 
 
+.evnt-mng-tab > li > a{ padding:10px !important; color:#555;  }
+.evnt_mng_bor{ border-bottom:1px dashed #000;}
+.mng-evnt-search{ box-shadow:none; }
 
-
-
-
-
+.evnt-mng-tab > li.active > a, .evnt-mng-tab > li.active > a:hover, .evnt-mng-tab > li.active > a:focus {color:#00cafd;  }
+.evnt_mng_tit_200{ min-width:200px; }
 
 
 
@@ -762,8 +763,8 @@ span.evnt_toltip{
 
 }
 @media (width: 480px){
-#navtop.affix-top {top:108px !important;}
-#midsection.midd_cont {top:109px !important;}
+#navtop.affix-top {top:118px !important;}
+#midsection.midd_cont {top:116px !important;}
 #scrollhome.con_scr0l_home{margin-top:205px !important;}
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:142px !important;}
