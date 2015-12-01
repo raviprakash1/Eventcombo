@@ -257,10 +257,10 @@
 
                                                         </td>
                                                         @*<td>
-                                    <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
-                                    @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
-                                    <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                </td>*@
+                                                                <a href="~/Views/MyAcc/MyAccount.cshtml" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                                @Html.ActionLink("Update", "MyAccount", "MyAcc", new { UserId = obj.Id }, null)
+                                                                <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                            </td>*@
                                                         <td>
                                                             <a href="~/MyAcc/MyAccount?UserId=@obj.Id" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
                                                             @*@Html.ActionLink("Update", "MyAccount","MyAcc",new {UserId=obj.Id },null)*@
@@ -300,8 +300,8 @@
                                         </tfoot>
 
                                     </table>
-                                 </div>
                                 </div>
+                            </div>
                         </div>
 
 
@@ -358,11 +358,11 @@
                                             <input type="checkbox" class="chkPermission" checked="" id="chk_2">
                                             <label for="chk_2">Deals</label>
                                         </div>
-                                      
+
                                     </div>
 
                                     <div id="dvAdmin">
-                                        
+
 
                                         <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_4">
@@ -403,9 +403,9 @@
         <div class="modal fade" id="dvEvents" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm text-center">
                 <div class="modal-content">
-                   @*<div class="modal-header custom">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>*@
+                    @*<div class="modal-header custom">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>*@
                     <form id="contactForm" class="fullw1 add ">
                         <div class="modal-body pre-scrollable">
                             <table id="tbEvent"></table>
@@ -426,16 +426,16 @@
         <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
                 <div class="modal-content">
-                   
+
                     <form id="contactForm" class="fullw1 add">
                         <div class="modal-body text-center pv50 txt-msg">
-                          
-                            <h4 class="msg" id="hId" ></h4>
+
+                            <h4 class="msg" id="hId"></h4>
                         </div>
                         <div class="modal-footer msg-action-btn ok">
-                            <button type="submit" id="btnYes" class="btn btn-primary no"  data-dismiss="modal">Yes</button> 
+                            <button type="submit" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
                             <button type="button" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
-                            <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button> 
+                            <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
                         </div>
                     </form>
                     <input type="hidden" id="hdUserId" value="" />
@@ -444,13 +444,13 @@
         </div>
         <div>
             <a class="td-btn" id="btOk" type="button" href="#confirm-delete-ok" data-toggle="modal" style="display:none">
-                
+
             </a>
         </div>
         <!-- Confirm Msg OK Modal Box -->
     </section>
 
-                                            }
+                                                }
 
 @*// <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>*@
 
@@ -495,22 +495,22 @@
                 $("#dvorganiser-" + i).children().children().prop('disabled', true);
                 $("#dvstatus-" + i).children().children().prop('disabled', true);
                 $("#dvmerchant-" + i).children().children().prop('disabled', true);
-     
+
                     }
 
         }
         //$("#tblMain tr").each(function () {
 
-            
+
         //    var $tr = $(this);
-         
 
-          
 
-          
-        //        var j =  i 
+
+
+
+        //        var j =  i
         //        var role = $("#HdRole-"+j).val();
-              
+
         //    if (role == 1)
         //    {
         //        $('#aRoles-'+j).prop('disabled', true);
@@ -523,7 +523,7 @@
         //    }
         //    i++;
         //});
-      
+
 
         $('.close-mg').on('click', function (e) {
             $.magnificPopup.close();
@@ -543,7 +543,7 @@
                     //alert(response);
                     $("#hdCurrentUserRole").val($.trim(response));
 
-                  
+
                     //$("#rdAdmin").prop("disabled", true);
                     //$("#dvAdmin").prop("disabled", true);
               //  }
@@ -632,7 +632,7 @@
 
 
         $("#btSave").click(function () {
-         
+
            var UserId = $("#hdUName").val();
            var id = $("#HdId").val();
            var roletype = "";
@@ -687,12 +687,12 @@
             console.log($('#aRoles-' + id).find(":button").attr('value', 'zero'));
             //$('#aRoles-' + id).find(":button").attr('value', 'zero');
             $('#aRoles-' + id).find(":button").html(roletype);
-          
+
         })
 
 
 
-      
+
 
     });
 
@@ -709,7 +709,7 @@
                // if (response == "Deleted")
                    // alert("Record Deleted Successfully.");
                     //$("#hId").text(GetMess("CMSUsers", "UsersDeleteSuccUI"));
-                    
+
                 //else
                 //    alert("Some error occur while Deleting");
             }
@@ -726,7 +726,7 @@
        // $("#btOk").click();
 
         $("#hId").text(GetMess("CMSUsers", "UsersDeleteUI"));
-        
+
         //var x = confirm("Are you sure you want to delete?");
 
         //if (x) {

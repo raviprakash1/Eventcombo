@@ -75,6 +75,7 @@
                                                                 <div class="col-md-10 row">
                                                                     <div class="col-md-6 row"><button type="button" name="submit" value="Reset" class="btn btn-primary col-sm-4" id="btnReset">Reset</button></div>
                                                                     <div class="col-md-6 row"><button type="submit" name="submit" value="Edit" class="btn btn-primary col-sm-4" id="btnEdit">Edit</button></div>
+                                                                    <div class="col-md-6 row"><button type="submit" name="submit" value="Delete" class="btn btn-primary col-sm-4" id="btnDelete">Delete</button></div>
                                                                  </div>
                                                                     
                                                                     
@@ -100,14 +101,16 @@
                     </div>                    
                 }
             </section>
-
+<script src="~/Scripts/jquery.masked.js"></script>
             <script type="text/javascript">
 
                 $(window).load(function () {
+                    debugger;
                     $("#EventSubCategoryListBox").hide();
                     $("#lblSubCatList").hide();
                     $("#btnReset").hide();
                     $("#btnEdit").hide();
+                    $("#btnDelete").hide();
                 });
 
                 $(document).ready(function () {                    
@@ -121,6 +124,7 @@
                         $("#EventCategory1").val('');
                         $("#btnReset").hide();
                         $("#btnEdit").hide();
+                        $("#btnDelete").hide();                        
                         $("#EventSubCategoryListBox").empty();
                         
                     });
@@ -139,13 +143,26 @@
                         }
                     });
 
-                    $('#EventSubCategoryListBox option').click(function () {
-                        debugger;
-                        $("#lblSubCat").show();
-                        $("#EventSubCategory1").show();
-                        var _this = $(this);
-                        $("#EventSubCategory1").val($(_this).text());
-                    });
+                    //$('#EventSubCategoryListBox option').live('click',function () {
+                    //    alert('hi');
+                    //    //$("#lblSubCat").show();
+                    //    //$("#EventSubCategory1").show();
+                    //    //var _this = $(this);
+                    //    //$("#EventSubCategory1").val($(_this).text());
+                    //});
+                    //$('#EventSubCategoryListBox option').on('dblclick', function () {
+                    //    debugger;
+                    //    alert('HI');
+                    //})
+
+
+                    
+
+                    //$('#EventSubCategoryListBox').find('option').each(function () {
+                    //    $(this).live('click', function () {
+                    //           alert('HI');
+                    //    });
+                    //});
 
                     $("#EventCategoryListBox option").click(function () {                        
                         $("#EventSubCategoryListBox").show();
@@ -156,6 +173,7 @@
                         $("#btnCreate").hide();
                         $("#btnReset").show();
                         $("#btnEdit").show();
+                        $("#btnDelete").show();
                         $("#divsuccc").hide();
                         var _this = $(this);
                         $("#EventCategory1").val($(_this).text());
@@ -169,8 +187,15 @@
                                 var strary = data.split(',');
                                 for (var i = 0; i < strary.length; i++) {
                                     $('#EventSubCategoryListBox').append('<option>' + strary[i] + '</option>');
+                                    
                                 }
-
+                                $("#EventSubCategoryListBox option").click(function () {
+                                    $("#lblSubCat").show();
+                                        $("#EventSubCategory1").show();
+                                        var _this = $(this);
+                                        $("#EventSubCategory1").val($(_this).text());
+                                    
+                                });
                             },
                             error: function (data) {
                                 alert("Sorry! there is some problem.");

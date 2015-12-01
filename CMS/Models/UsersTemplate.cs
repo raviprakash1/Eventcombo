@@ -16,7 +16,6 @@ namespace CMS.Models
         public string UserName { get; set; }
         public string EMail { get; set; }
         public List<Permissions> objPermissions { get; set; }
-
         public string Organiser { get; set; }
         public string Merchant { get; set; }
         public string UserStatus { get; set; }
@@ -29,6 +28,7 @@ namespace CMS.Models
         public string State { get; set; }
         public string Usercount { get; set; }
         public int TicketPurchased { get; set; }
+
     }
 
 
