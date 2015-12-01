@@ -443,7 +443,7 @@ namespace EventCombo.Controllers
         
         public EventCreation GetEventData()
         {
-            long lEventId = 163;
+            long lEventId = 164;
             //EventCreation objEC = new EventCreation();
 
             using (EventComboEntities objEnt = new EventComboEntities())
@@ -570,7 +570,7 @@ namespace EventCombo.Controllers
 
         public long EditEventInfo(EventCreation model)
         {
-            long lEventId = 160;
+            long lEventId = 164;
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
@@ -616,6 +616,7 @@ namespace EventCombo.Controllers
                     if (model.AddressDetail != null)
                     {
                         Address ObjAdd = new Models.Address();
+                        objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
                         foreach (Address objA in model.AddressDetail)
                         {
                             if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
