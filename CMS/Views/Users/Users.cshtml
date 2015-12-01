@@ -116,7 +116,7 @@
 
                                         @{ int i = 0;
                                             foreach (var obj in Model)
-                                            {
+                                            {                                                                                           
                                                 i = i + 1;
                                                 <tr>
 
@@ -138,10 +138,12 @@
                                                     <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
                                                     <td>
                                                         <div class="tdModel">
-                                                            <a class="td-btn" id="btEvent" onclick="GetEvents('@obj.Id');"  type="button" href="#dvEvents" data-toggle="modal">
-                                                                Click here
-                                                            </a>
-                                                        </div>
+                                                            
+                                                            
+                                                            <a class="td-btn" id="btEvent" onclick="GetEvents('@obj.Id');" type="button" href="#dvEvents" data-toggle="modal">
+                                                              @obj.EventCount
+                                                            </a>                                                            
+                                                        </div>                                                        
                                                     </td>
                                                     <td>0</td>
                                                     <td>India</td>
@@ -151,7 +153,7 @@
                                                                 @if (obj.Organiser == "Y")
                                                                 {
                                                                     <select id="dlOrgnizer"   onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                        <option  value="0">Select</option>
+                                                                        @*<option  value="0">Select</option>*@
                                                                         <option  selected="selected" value="1">Yes</option>
                                                                         <option value="2">No</option>
                                                                     </select>
@@ -160,7 +162,7 @@
                                                                 else if (obj.Organiser == "N")
                                                                 {
                                                                     <select id="dlOrgnizer"  onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option  value="1">Yes</option>
                                                                         <option selected="selected" value="2">No</option>
                                                                     </select>
@@ -169,9 +171,9 @@
                                                                 else
                                                                 {
                                                                     <select id="dlOrgnizer"   onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Yes</option>
-                                                                        <option value="2">No</option>
+                                                                        <option selected="selected" value="2">No</option>
                                                                     </select>
                                                                         <i class="arrow double"></i>
                                                                 }
@@ -187,7 +189,7 @@
                                                                 @if (obj.Merchant == "Y")
                                                                 {
                                                                     <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option selected="selected" value="1">Yes</option>
                                                                         <option value="2">No</option>
                                                                     </select>
@@ -195,7 +197,7 @@
                                                                 else if (obj.Merchant == "N")
                                                                 {
                                                                     <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Yes</option>
                                                                         <option selected="selected" value="2">No</option>
                                                                     </select>
@@ -203,9 +205,9 @@
                                                                 else
                                                                 {
                                                                     <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Yes</option>
-                                                                        <option value="2">No</option>
+                                                                        <option selected="selected" value="2">No</option>
                                                                     </select>
                                                                 }
 
@@ -220,7 +222,7 @@
                                                                 @if (obj.UserStatus == "Y")
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1" selected="selected">Active</option>
                                                                         <option value="2">Deactive</option>
                                                                     </select>
@@ -228,7 +230,7 @@
                                                                 else if (obj.UserStatus == "N")
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Active</option>
                                                                         <option value="2" selected="selected">Deactive</option>
                                                                     </select>
@@ -237,9 +239,9 @@
                                                                 else
                                                                 {
                                                                     <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
-                                                                        <option value="0">Select</option>
+                                                                        @*<option value="0">Select</option>*@
                                                                         <option value="1">Active</option>
-                                                                        <option value="2">Deactive</option>
+                                                                        <option selected="selected" value="2">Deactive</option>
                                                                     </select>
                                                                 }
                                                                 <i class="arrow double"></i>
@@ -447,6 +449,21 @@ else
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>*@
 
 <script type="text/javascript">
+   
+    function GetEventsCounter(vUserId) {
+        debugger;
+        $.ajax({
+                url: '@Url.Action("GetUserEventsCounter", "Users")',
+                data: { strUserId: vUserId },
+                datatype: "Text",
+                type: "Get",
+                success: function (response) {
+                    // $("#btEvent").val(response);
+                    $("#btEvent").text(response)
+
+                }
+            });
+    }
     function GetEvents(vUserId)
     {
         $.ajax({
@@ -633,7 +650,7 @@ else
                // if (response == "Deleted")
                    // alert("Record Deleted Successfully.");
                     //$("#hId").text(GetMess("CMSUsers", "UsersDeleteSuccUI"));
-                    
+
                 //else
                 //    alert("Some error occur while Deleting");
             }
@@ -650,7 +667,7 @@ else
        // $("#btOk").click();
 
         $("#hId").text(GetMess("CMSUsers", "UsersDeleteUI"));
-        
+
         //var x = confirm("Are you sure you want to delete?");
 
         //if (x) {

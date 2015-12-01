@@ -15,8 +15,10 @@ namespace EventCombo
 
             routes.MapRoute(
                 name: "Default",
+                namespaces: new[] { "EventCombo.Controllers" },
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                
             );
         }
     }
