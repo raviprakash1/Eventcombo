@@ -44,6 +44,7 @@ namespace CMS.Controllers
 
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
+
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
             foreach(var item in objuser)
             {
