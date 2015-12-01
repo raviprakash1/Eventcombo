@@ -98,7 +98,7 @@ namespace CMS.Controllers
 
 
             //}
-            int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
+           int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
             string strText = "";
             if (iUcount > iGapValue)
             {
