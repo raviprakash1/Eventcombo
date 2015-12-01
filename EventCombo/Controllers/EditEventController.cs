@@ -443,7 +443,7 @@ namespace EventCombo.Controllers
         
         public EventCreation GetEventData()
         {
-            long lEventId = 160;
+            long lEventId = 163;
             //EventCreation objEC = new EventCreation();
 
             using (EventComboEntities objEnt = new EventComboEntities())
@@ -491,7 +491,7 @@ namespace EventCombo.Controllers
         [HttpGet]
         public ActionResult GetEventChildData()
         {
-            long lEventId = 160;
+            long lEventId = 163;
             GetEventData objJson = new GetEventData();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
@@ -531,6 +531,39 @@ namespace EventCombo.Controllers
                     objJson.EndTime = Mv.EndTime;
                     objJson.MultipleSchTime = "M";
                 }
+
+
+                var Addr = (from myEvent in objEnt.Addresses
+                          where myEvent.EventId == lEventId
+                          select myEvent).ToList();
+                StringBuilder strHTML = new StringBuilder();
+                int i = 0;
+                foreach (Address objAdd in Addr)
+                {
+                    i = i + 1;
+                    strHTML.Append("<tr>");
+                    strHTML.Append("<td style='display: none'>");
+                    strHTML.Append(i);
+                    strHTML.Append("</td>");
+
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=VenueName" + i.ToString() + " style='width: 100px;'  value=" + objAdd.VenueName + " /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address1" + i.ToString() + " style='width: 100px;'  value=" + objAdd.Address1 + " /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address2" + i.ToString() + " style='width: 100px;'  value=" + objAdd.Address2 + " /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=City" + i.ToString() + " style='width: 100px;'  value=" + objAdd.City + " /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=State" + i.ToString() + " style='width: 100px;'  value=" + objAdd.State + " /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Zip" + i.ToString() + " style='width: 100px;'  value=" + objAdd.Zip + " /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=CountryID" + i.ToString() + " style='width: 100px;'  value=" + objAdd.CountryID + " /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=CID" + i.ToString() + " style='width: 100px;'  value=" + objAdd.CountryID + " /></td>");
+                    strHTML.Append("<td align='left'><label id=consolidate" + i.ToString() + ">" + objAdd.ConsolidateAddress +  "</label></td>");
+                    strHTML.Append("<td><div class='trigger mt5 ent_add'><a href = '#' onclick='editRow("+i.ToString()+");'><i class='fa fa-map-marker'></i> Edit</a><a href = '#' id='btAddDelete' onclick='DeleteTableRow("+i.ToString()+")'>Delete</a> </div> </td>");
+                    strHTML.Append("</tr>");
+
+                    //strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
+                }
+
+                objJson.Addresses = strHTML.ToString();  
+
+
             }
             return Json(objJson, JsonRequestBehavior.AllowGet);
         }

@@ -1294,8 +1294,6 @@
     // ---------------------Event Creation Script -------------------
     <script>
         $(document).ready(function () {
-
-
             $.getJSON('@Url.Action("GetEventChildData", "EditEvent")',
                 function (data) {
                     if ($("#MultipleSchTime").val() == "S") {
@@ -1307,7 +1305,6 @@
                     }
                     else
                     {
-                       // alert(data.StartingFrom);
                         $(".SchmultiEvnt").click();
                         $("#dlSchOption").val(data.Frequency);
                         $("#dlSchOption").change();
@@ -1323,8 +1320,6 @@
                             $("#hdMonthlyType").val('DW');
                             $("#dllMonthlyWeek").val(data.MonthlyWeek);
                         }
-                       
-
                     }
 
                     if (data.AddressStatus == "Online")
@@ -1337,12 +1332,14 @@
                         $("#dvAddress").show();
                         $("#hidAddressStatus").val('');
                     }
-                   
-
                     $("#UsepastLoc").change();
                     $("#btnAddSch").click();
                     $("#btSaveTimeZone").click();
                     $("#hdEventId").val(data.EventID);
+                    $("#tblAddress").append(data.Addresses);
+
+
+
                 }
             );
 
@@ -1361,6 +1358,10 @@
             });*@
 
         });
+
+      
+
+
 
     </script>
 
@@ -1981,7 +1982,7 @@
                                 City: ($("#City" + Sno).val() != null ? $("#City" + Sno).val() : ''),
                                 State: ($("#State" + Sno).val() != null ? $("#State" + Sno).val() : ''),
                                 Zip: ($("#Zip" + Sno).val() != null ? $("#Zip" + Sno).val() : ''),
-                                CountryID: ($("#CountryID" + Sno).val() != null ? $("#CountryID" + Sno).val() : ''),
+                                CountryID: ($("#CID" + Sno).val() != null ? $("#CID" + Sno).val() : ''),
                                 ConsolidateAddress: $("#consolidate" + Sno).text()
                             });
                         }
