@@ -240,10 +240,12 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        @if (Html.DisplayFor(x => x.role).ToString() != "1")
+                                        {
                                         <div class="col-md-12">
                                             <button class="btn btn-primary col-sm-3" type="submit" id="btnsave" >Update</button>
                                         </div>
+                                        }
                                     </form>
                                 </div>
                                 <div class="col-md-4"></div>

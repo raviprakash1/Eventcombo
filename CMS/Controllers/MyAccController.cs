@@ -117,11 +117,15 @@ namespace CMS.Controllers
                     }
                    
                   var ans=  db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0",userid).FirstOrDefault();
+                  
                     if(ans=="2")
                     {
                         myacc.Designation = "Admin";
                     }
-                  
+                    if (ans == "1")
+                    {
+                        myacc.Designation = "Super Admin";
+                    }
                     if (ans == "3")
                     {
                         var countperrm = db.Permission_Detail.Where(i => i.Permission_Category == "APP").Count();
@@ -130,12 +134,14 @@ namespace CMS.Controllers
                         if(countuserperm < countperrm)
                         {
                             myacc.Designation = "Member-Limited";
-                        }else
+                            ans = "4";
+                        }
+                        else
                         {
                             myacc.Designation = "Member";
                         }
                     }
-
+                    myacc.role = ans;
                     if (string.IsNullOrEmpty(accountdetail.City))
                     {
                         myacc.City = "";
@@ -256,7 +262,9 @@ namespace CMS.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                Session.Abandon();
+                Session.Clear();
+                return RedirectToActionPermanent("Login", "Home");
             }
 
         }

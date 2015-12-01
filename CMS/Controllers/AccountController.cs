@@ -391,7 +391,20 @@ namespace CMS.Controllers
       
         public ActionResult LogOff()
         {
+            using (EmsEntities db = new EmsEntities())
+            {
+                if (Session["AppId"] != null)
+                {
+                    var user = Session["AppId"].ToString();
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user);
+                    aspuser.LoginStatus = "Y";
+                    db.SaveChanges();
+                }
+
+            }
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Abandon();
+            Session.Clear();
             return RedirectToAction("Login", "Home");
         }
 

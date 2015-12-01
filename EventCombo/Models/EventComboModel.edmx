@@ -147,6 +147,7 @@
           <Property Name="Subject" Type="varchar" MaxLength="300" />
           <Property Name="TemplateHtml" Type="nvarchar(max)" />
           <Property Name="From" Type="varchar" MaxLength="300" />
+          <Property Name="Template_Tag" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -1066,6 +1067,7 @@
           <Property Name="Subject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Template_Tag" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -1998,6 +2000,7 @@
           <EntitySetMapping Name="Email_Template">
             <EntityTypeMapping TypeName="EventComboModel.Email_Template">
               <MappingFragment StoreEntitySet="Email_Template">
+                <ScalarProperty Name="Template_Tag" ColumnName="Template_Tag" />
                 <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
                 <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
                 <ScalarProperty Name="To" ColumnName="To" />

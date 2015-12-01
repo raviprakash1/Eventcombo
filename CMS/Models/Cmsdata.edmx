@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Cmsdata.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Cmsdata.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -147,6 +147,7 @@
           <Property Name="Subject" Type="varchar" MaxLength="300" />
           <Property Name="TemplateHtml" Type="nvarchar(max)" />
           <Property Name="From" Type="varchar" MaxLength="300" />
+          <Property Name="Template_Tag" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -186,6 +187,7 @@
           <Property Name="Ticket_variabletype" Type="varchar" MaxLength="50" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="ShowMap" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -489,6 +491,7 @@
           <Property Name="Locktime" Type="datetime" />
           <Property Name="TLD_GUID" Type="varchar" MaxLength="1000" />
           <Property Name="TLD_Donate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TicketAmount" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -935,8 +938,7 @@
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Cmsdata" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1087,6 +1089,7 @@
           <Property Name="Subject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Template_Tag" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -1134,6 +1137,7 @@
           <NavigationProperty Name="EventVenues" Relationship="Self.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
           <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
+          <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1450,6 +1454,7 @@
           <Property Name="Locktime" Type="DateTime" Precision="3" />
           <Property Name="TLD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="TLD_Donate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TicketAmount" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -1832,7 +1837,7 @@
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEventDateList" ReturnType="Collection(Cmsdata.GetEventDateList_Result)">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetEventListing" ReturnType="Collection(Cmsdata.EventCreation)">
             <Parameter Name="EventTitle" Mode="In" Type="String" />
@@ -1851,7 +1856,7 @@
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="PublishEvent">
             <Parameter Name="EventId" Mode="In" Type="Int64" />
@@ -2025,6 +2030,7 @@
           <EntitySetMapping Name="Email_Template">
             <EntityTypeMapping TypeName="Cmsdata.Email_Template">
               <MappingFragment StoreEntitySet="Email_Template">
+                <ScalarProperty Name="Template_Tag" ColumnName="Template_Tag" />
                 <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
                 <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
                 <ScalarProperty Name="To" ColumnName="To" />
@@ -2039,6 +2045,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="Cmsdata.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="ShowMap" ColumnName="ShowMap" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
@@ -2391,6 +2398,7 @@
           <EntitySetMapping Name="Ticket_Locked_Detail">
             <EntityTypeMapping TypeName="Cmsdata.Ticket_Locked_Detail">
               <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
+                <ScalarProperty Name="TicketAmount" ColumnName="TicketAmount" />
                 <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
                 <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
                 <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />

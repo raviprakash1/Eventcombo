@@ -45,6 +45,14 @@ namespace CMS.Controllers
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+            foreach(var item in objuser)
+            {
+                var ans = db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0", item.Id).FirstOrDefault();
+                item.Role = ans;
+                var evtcount = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
+                item.EventCount = evtcount;
+
+            }
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
             List<SelectListItem> PageFilter = new List<SelectListItem>();
              
@@ -154,7 +162,10 @@ namespace CMS.Controllers
                                          UserStatus = Pr.UserStatus.Trim(),
                                          FirstName = Pr.FirstName,
                                          LastName = Pr.LastName,
-                                         Online= UserTemp.LoginStatus
+                                         Online= UserTemp.LoginStatus,
+                                         Role=""
+                                         
+
                                      }
                                     );
                 //return modelUserTemp.ToList();
