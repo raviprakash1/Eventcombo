@@ -175,7 +175,13 @@ namespace CMS.Controllers
                     if (users.Find(x => x.Id == User.Id ) != null)
                     {
                         Session["AppId"] = User.Id;
-                     
+                        using (EmsEntities db = new EmsEntities())
+                        {
+                            AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
+                            aspuser.LoginStatus = "Y";
+                            db.SaveChanges();
+
+                        }
                         return RedirectToAction("Dashboard");
                     }
                     else
@@ -184,8 +190,14 @@ namespace CMS.Controllers
                         var usersAdmin = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleAdmin.Id)).ToList();
                         if (usersAdmin.Find(x => x.Id == User.Id) != null)
                         {
-                            Session["AppId"] = User.Id; 
-                                    
+                            Session["AppId"] = User.Id;
+                            using (EmsEntities db = new EmsEntities())
+                            {
+                                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
+                                aspuser.LoginStatus = "Y";
+                                db.SaveChanges();
+
+                            }
                             return RedirectToAction("Dashboard");
                         }
                         else

@@ -562,6 +562,24 @@ namespace EventCombo.Controllers
                                 from = "shweta.sindhu@kiwitech.com";
 
                             }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                            {
+                                cc = Emailtemplate.CC;
+                                if (cc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    cc = from.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                            {
+                                bcc = Emailtemplate.Bcc;
+                                if (bcc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    bcc = from.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                }
+                            }
                             if (!string.IsNullOrEmpty(Emailtemplate.Subject))
                             {
 
@@ -612,7 +630,7 @@ namespace EventCombo.Controllers
 
                                 }
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc);
                         }
 
 
@@ -673,6 +691,24 @@ namespace EventCombo.Controllers
                                 from = "shweta.sindhu@kiwitech.com";
 
                             }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                            {
+                                cc = Emailtemplate.CC;
+                                if (cc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    cc = cc.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                            {
+                                bcc = Emailtemplate.Bcc;
+                                if (bcc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    bcc = bcc.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                }
+                            }
                             if (!string.IsNullOrEmpty(Emailtemplate.Subject))
                             {
 
@@ -723,7 +759,7 @@ namespace EventCombo.Controllers
 
                                 }
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc);
                         }
               
                     }
