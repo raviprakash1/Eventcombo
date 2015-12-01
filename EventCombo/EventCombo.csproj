@@ -294,6 +294,7 @@
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetEventData.cs" />
     <Compile Include="Models\GetEventDateList_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -786,7 +787,6 @@
     <Content Include="Views\EditEvent\EditEvent.cshtml" />
     <Content Include="Views\EventList\EventList.cshtml" />
     <Content Include="Views\Account\Loginresult.cshtml" />
-    <Content Include="Views\CreateEvent\EditEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

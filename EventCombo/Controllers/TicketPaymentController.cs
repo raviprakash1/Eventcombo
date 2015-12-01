@@ -228,9 +228,7 @@ namespace EventCombo.Controllers
             HomeController hm = new HomeController();
             if (!string.IsNullOrEmpty(model.AccconfirmEmail) && !string.IsNullOrEmpty(model.Accpassword))
             {
-
                 string userid = await saveuser(model.AccEmail, model.Accpassword);
-
                 if (!string.IsNullOrEmpty(userid))
                 {
                     using (EventComboEntities objEntity = new EventComboEntities())

@@ -88,7 +88,7 @@
                             <div class="ev_date_icn"></div>
                             <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date</label>
                             <div class="form-group mb5">
-                                <label class="Timezone label-control evnt_title_timezone mb0">Timezone & date setting</label>
+                                <label class="Timezone label-control evnt_title_timezone mb0" id="lblTimeZone">Timezone & date setting</label>
                                 <div class="TmezoneSet col-sm-12 ev_time_zone_model_main">
                                     <div class="ev_time_zone_model">
                                         <div class="modal-content ev_tm_zon_cont">
@@ -230,7 +230,7 @@
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="modal-footer">
-                                                <button type="button" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>
+                                                <button type="button"  id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1294,26 +1294,71 @@
     // ---------------------Event Creation Script -------------------
     <script>
         $(document).ready(function () {
-            @*var vurl = '@Url.Action("GetEventData", "CreateEvent")';
-            $.getJSON({
-                url:vurl,
-                function (response) {
-                    debugger;
-                    alert(response.EventDescription);
+
+
+            $.getJSON('@Url.Action("GetEventChildData", "EditEvent")',
+                function (data) {
+                    if ($("#MultipleSchTime").val() == "S") {
+                        $("#txtStartDate").val(data.EventStartDate);
+                        $("#txtStartTime").val(data.EventStartTime);
+                        $("#txtEndDate").val(data.EventEndDate);
+                        $("#txtEndTime").val(data.EventEndTime);
+                        $("#hdSchType").val('Single');
+                    }
+                    else
+                    {
+                       // alert(data.StartingFrom);
+                        $(".SchmultiEvnt").click();
+                        $("#dlSchOption").val(data.Frequency);
+                        $("#dlSchOption").change();
+                        $("#txtTimeStart").val(data.StartTime);
+                        $("#txtTimeEnd").val(data.EndTime);
+                        $("#txtDateFrom").val(data.StartingFrom);
+                        $("#txtDateTo").val(data.StartingTo);
+                        $(".multiselect-selected-text").val();
+                        if (data.MonthlyDay > 0) {
+                            $("#hdMonthlyType").val('DM');
+                        }
+                        else {
+                            $("#hdMonthlyType").val('DW');
+                            $("#dllMonthlyWeek").val(data.MonthlyWeek);
+                        }
+                       
+
+                    }
+
+                    if (data.AddressStatus == "Online")
+                    {
+                        $("#dvAddress").hide();
+                        $("#hidAddressStatus").val('Online');
+                    }
+                    else
+                    {
+                        $("#dvAddress").show();
+                        $("#hidAddressStatus").val('');
+                    }
+                   
+
+                    $("#UsepastLoc").change();
+                    $("#btnAddSch").click();
+                    $("#btSaveTimeZone").click();
+                    $("#hdEventId").val(data.EventID);
                 }
-            });*@
+            );
 
+           // alert("chal pya");
 
-            $.ajax({
+            @*$.ajax({
                 url: '@Url.Action("GetEventData", "CreateEvent")',
                 datatype: "json",
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
                 success: function (response) {
-                    debugger;
-                    alert(response.EventDescription);
+
+                    //debugger;
+                    //alert(response.EventDescription);
                 }
-            });
+            });*@
 
         });
 
@@ -2072,7 +2117,7 @@
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
-                debugger;
+                //debugger;
                 //$("#spEvDesc").text();
                 var vEdesc = ''; //$("#edEventDesc").code();
 
@@ -2083,8 +2128,8 @@
                     optionalvariable = $('#variabletype').val();
                 }
 
-
                 var model = {
+                    'EventID': $("#hdEventId").val(),
                     'EventTypeID': $("#EventType").val(),
                     'EventCategoryID': $("#ddlEventCategory").val(),
                     'EventSubCategoryID': $("#ddlEventSubCategory").val(),
@@ -2125,9 +2170,10 @@
                 //var params = 'strEveDec :' + $("#edEventDesc").code();
 
 
-                if ($("#hdEventId").val() == '') {
+                if ($("#hdEventId").val() != '') {
+
                     $.ajax({
-                        url: '@Url.Action("SaveEvent", "CreateEvent")',
+                        url: '@Url.Action("EditEventInfo", "EditEvent")',
                         data: { model },
                         type: "Post",
                         success: function (response) {
@@ -2143,7 +2189,7 @@
                 else {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                    $('#erraccmsg').html('Event already saved');
+                    $('#erraccmsg').html('There some problem occurs, Please check after some time.');
                 }
             });
 
@@ -2387,12 +2433,44 @@
                 }
             });
 
+            $("#btSaveTimeZone").click(function () {
+                var vval = $("#dllTimeZone").val();
+                if (vval == null || vval == '')
+                    vval = "Timezone & date setting";
+
+                $("#lblTimeZone").text(vval);
+
+            });
+
             $("#btnAddSch").click(function () {
                 $("#hidSchLastState").val($("#dlSchOption").val());
                 if ($(".SchmultiDetail").css('display') == 'block') {
                     $("#hdSchType").val('Multiple');
+                    vSelecttextDates = "Click here to enter the start and end date";
+                    if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
+                        if ($("#dlSchOption").val() == "Daily") {
+                            vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        }
+                        else if ($("#dlSchOption").val() == "Weekly") {
+                            vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+
+                        }
+                        else if ($("#dlSchOption").val() == "Monthly") {
+                            vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+
+                        }
+                        else if ($("#dlSchOption").val() == "Custom") {
+                            vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+
+                        }
+                    }
+                    $("#btEnterDates").text(vSelecttextDates);
                 }
                 else {
+                    vSelecttextDates = "Click here to enter the start and end date";
+                    if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
+                        vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
+                    $("#btEnterDates").text(vSelecttextDates);
                     $("#hdSchType").val('Single');
                 }
             });
