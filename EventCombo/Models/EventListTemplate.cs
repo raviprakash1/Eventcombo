@@ -11,6 +11,7 @@ namespace EventCombo.Models
 {[Table("Event")]
     public class EventListTemplate
     {
+        public long EventID { get; set; }
         public string EventTitle { get; set; }
         public string EventDate { get; set; }
         public string EventTime { get; set; }
