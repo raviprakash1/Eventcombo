@@ -22,7 +22,8 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
         public ActionResult EditEvent()
         {
-            EventCreation objCr = GetEventDataEditing();
+            //  EventCreation objCr = GetEventDataEditing();
+            EventCreation objCr = new EventCreation();
             if ((Session["AppId"] != null))
             {
                 Session["Fromname"] = "events";
@@ -133,9 +134,10 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult ModifyEvent()
+        public ActionResult ModifyEvent(long Eventid)
         {
-            EventCreation objCr = GetEventDataEditing();
+
+            EventCreation objCr = GetEventDataEditing(Eventid);
             if ((Session["AppId"] != null))
             {
                 Session["Fromname"] = "events";
@@ -228,7 +230,7 @@ namespace EventCombo.Controllers
                     ViewBag.CountryID = countryList;
                     ViewBag.EventType = EventType;
                     ViewBag.ddlEventCategory = EventCategory;
-
+                   
                 }
 
 
@@ -551,9 +553,8 @@ namespace EventCombo.Controllers
         #region EditingEvent
 
         
-        public EventCreation GetEventDataEditing()
+        public EventCreation GetEventDataEditing(long lEventId)
         {
-            long lEventId = 165;
             //EventCreation objEC = new EventCreation();
 
             using (EventComboEntities objEnt = new EventComboEntities())
@@ -590,7 +591,8 @@ namespace EventCombo.Controllers
                                Ticket_showremain = myEvent.Ticket_showremain,
                                Ticket_showvariable = myEvent.Ticket_showvariable,
                                Ticket_variabledesc = myEvent.Ticket_variabledesc,
-                               Ticket_variabletype = myEvent.Ticket_variabletype
+                               Ticket_variabletype = myEvent.Ticket_variabletype,
+                               ModifyDate = "(Last Saved at " + myEvent.ModifyDate.ToString() + ")" //"(Last saved at " + myEvent.ModifyDate.Value.ToString("MMM dd,yyyy") + " " + myEvent.ModifyDate.Value.ToString("hh:mm tt") + ")"
                            }
                         ).FirstOrDefault();
 
@@ -599,9 +601,8 @@ namespace EventCombo.Controllers
             }
         }
         [HttpGet]
-        public ActionResult GetEventChildData()
+        public ActionResult GetEventChildData(long lEventId)
         {
-            long lEventId = 165;
             GetEventData objJson = new GetEventData();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
@@ -672,16 +673,15 @@ namespace EventCombo.Controllers
                     //strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
                 }
 
-                objJson.Addresses = strHTML.ToString();  
-
-
+                objJson.Addresses = strHTML.ToString();
+                objJson.EventDescription = Event.EventDescription;
             }
             return Json(objJson, JsonRequestBehavior.AllowGet);
         }
 
         public long EditEventInfo(EventCreation model)
         {
-            long lEventId = 165;
+            long lEventId = model.EventID;
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
@@ -724,7 +724,11 @@ namespace EventCombo.Controllers
                     ObjEC.ModifyDate = DateTime.Now;
                     
                     // Address info
-                    if (model.AddressDetail != null)
+                    if (model.AddressStatus == "Online")
+                    {
+                        objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                    }
+                    else if (model.AddressDetail != null)
                     {
                         Address ObjAdd = new Models.Address();
                         objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));

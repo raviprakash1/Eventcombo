@@ -1485,9 +1485,9 @@
             var deletemsg = ajaxsetup('CreateEvent', 'CreateEventDeleteUI');
             $('#id_lblprice-n').html(numbers);
             $('#id_lblmax-n').html(numbers);
-            $('.msg').html(deletemsg);            
+            $('.msg').html(deletemsg);
 
-         
+
         });
         function ValEventdate(e) {
             if (e.trim() == "txtDateFrom") {
@@ -1827,8 +1827,8 @@
                 success: function (response) {
                     if (response != "Y") {
                         $("#btOkAc").click();
-                        
-                       
+
+
                     }
                 }
             });
@@ -1855,7 +1855,7 @@
             });
 
 
-            
+
 
             $("#btSchMultipleEv").click(function () {
                 //$("#hdSchType").val('Multiple');
@@ -1881,7 +1881,7 @@
             });
 
             $(".cbtMakeLive").click(function () {
-                // ---------------------------------------------FIRST SAVE EVENT-------------------------------------------------------------   
+                // ---------------------------------------------FIRST SAVE EVENT-------------------------------------------------------------
                 if ($("#hdEventId").val() == '') {
                     var msg = validatemain();
                     if (msg != "") {
@@ -2197,7 +2197,7 @@
                     var optionalvariable = '';
                     if ($("#id_variablecharge").is(":checked")) {
                         varDescritpion = $('#id_vardesc').val();
-                        optionalvariable = $('#variabletype').val() 
+                        optionalvariable = $('#variabletype').val()
                     }
 
 
@@ -2287,7 +2287,7 @@
                         }
                     });
                 }
-             
+
                 //else {
                 //    $('#divaccsuc').css('display', 'none');
                 //    $('#diverroacc').css('display', 'block');
@@ -2342,7 +2342,7 @@
                 if (varlength > 0) {
                     for (var i = 0; i < varlength; i++) {
                         var varprice = $('#id_varsubprice-' + i).val().replace(',', '')
-                    
+
                         EventVariable.push({
                             VariableDesc: $('#id_varsubdesc-' + i).val(),
                             Price: varprice,
@@ -2490,7 +2490,7 @@
                     }
                 }
                 else {
-                   
+
                     $("#tblAddress tr").each(function () {
 
                         var Sno = $(this).find("td:first").html();
@@ -2513,7 +2513,7 @@
 
                 }
 
-     
+
 
                 // Single Timing
                 if ($("#hdSchType").val() == 'Single') {
@@ -2695,6 +2695,8 @@
                             $("#hdEventId").val(response);
                             alert(response);
                             $('#dvdraft').css('display', 'block');
+                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+
                         }
                     });
                 }
@@ -2925,7 +2927,7 @@
             });
 
 
-           
+
             // ------------------------------------Multiple schedule-----------------------------------
             $("#txtStartTime").val("7:00pm");
             $("#txtEndTime").val("7:00pm");
@@ -2976,18 +2978,18 @@
                     vSelecttextDates = "Click here to enter the start and end date";
                     if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
                         if ($("#dlSchOption").val() == "Daily") {
-                            vSelecttextDates = "Daily : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                            vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
                         }
                         else if ($("#dlSchOption").val() == "Weekly") {
-                            vSelecttextDates = "Weekly : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                            vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
                         }
                         else if ($("#dlSchOption").val() == "Monthly") {
-                            vSelecttextDates = "Monthly : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                            vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
                         }
                         else if ($("#dlSchOption").val() == "Custom") {
-                            vSelecttextDates = "Custom : From " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                            vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
                         }
 
@@ -2997,7 +2999,7 @@
                 else {
                     vSelecttextDates = "Click here to enter the start and end date";
                     if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
-                        vSelecttextDates = "From : " + $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
+                        vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
                     $("#btEnterDates").text(vSelecttextDates);
 
                     $("#hdSchType").val('Single');
@@ -3244,7 +3246,7 @@
 
 
 
-            
+
 
 
 

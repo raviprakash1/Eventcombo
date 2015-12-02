@@ -33,6 +33,6 @@ namespace EventCombo.Models
         public string Addresses { get; set; }
         public string FirstAddress { get; set; }
 
-
+        public string EventDescription { get; set; }
     }
 }

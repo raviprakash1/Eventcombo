@@ -39,21 +39,21 @@
 
                 </div>
                 <div class="col-sm-9 col-xs-6 pt10 text-right no_pad">
-                    <button class="btn ev_live_sub_btn mb5" type="button">
+                    <button class="cbtSave btn ev_live_sub_btn mb5"  type="button">
                         SAVE &#10;
                         <span> > </span>
                     </button>
-                    <button class="btn ev_live_sub_btn mb5" type="button">
+                    <button class="cbtPreview btn ev_live_sub_btn mb5" type="button">
                         PREVIEW &#10;
                         <span> > </span>
                     </button>
-                    <button class="btn ev_live_sub_btn mb5 grn_live_btn" type="button">
+                    <button class="cbtMakeElive btn ev_live_sub_btn mb5 grn_live_btn" type="button">
                         MAKE EVENT LIVE NOW&#10;
                         <span> > </span>
                     </button>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 ">
-                        ( Last saved at MM/DD/YYYY 00:00pm )
+                        <span id="spLastSaved">@Model.ModifyDate</span> 
                     </div>
                 </div>
             </div>
@@ -1162,14 +1162,29 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-right mb10 make_live_btn">
-                    <button type="button" id="btSave" class="btn ev_live_sub_btn ">
+                    @*<button type="button" id="btSave" class="btn ev_live_sub_btn ">
                         SAVE
                         <span> > </span>
                     </button>
                     <button type="button" id="btMakeLive" class="btn ev_live_sub_btn grn_live_btn">
                         MAKE YOUR EVENT LIVE
                         <span> > </span>
+                    </button>*@
+
+
+                    <button  id="btSave" class="cbtSave btn ev_live_sub_btn mb5" type="button">
+                        SAVE &#10;
+                        <span> > </span>
                     </button>
+                    <button class="cbtPreview btn ev_live_sub_btn mb5" type="button">
+                        PREVIEW &#10;
+                        <span> > </span>
+                    </button>
+                    <button id="btMakeLive" class="cbtMakeElive btn ev_live_sub_btn mb5 grn_live_btn" type="button">
+                        MAKE EVENT LIVE NOW&#10;
+                        <span> > </span>
+                    </button>
+
 
                     <input type="hidden" id="hidAddSno" value="" />
                     <input type="hidden" id="hidSchLastState" value="" />
@@ -1295,9 +1310,18 @@
     <script>
         $(document).ready(function () {
            // alert("Chal pya");
-            $.getJSON('@Url.Action("GetEventChildData", "EditEvent")',
+            $.getJSON('@Url.Action("GetEventChildData", "EditEvent")', { lEventId: $("#hdEventId").val()},
                 function (data) {
-                    if ($("#MultipleSchTime").val() == "S") {
+                    if (data.EventStatus == "Live")
+                    {
+                        $(".cbtMakeElive").hide();
+                    }
+                    else
+                    {
+                        $(".cbtMakeElive").show();
+                    }
+
+                    if (data.MultipleSchTime == "S") {
                         $("#txtStartDate").val(data.EventStartDate);
                         $("#txtStartTime").val(data.EventStartTime);
                         $("#txtEndDate").val(data.EventEndDate);
@@ -1307,13 +1331,10 @@
                     else
                     {
                         $(".SchmultiEvnt").click();
-
                         $("#dlSchOption").val(data.Frequency);
                         $("#dlSchOption").change();
                         if (data.WeeklyDay != null) {
-                            alert(data.WeeklyDay);
                             $("dllWeeklyDayChk").val(data.WeeklyDay);
-
                         }
                         $("#txtTimeStart").val(data.StartTime);
                         $("#txtTimeEnd").val(data.EndTime);
@@ -1342,6 +1363,7 @@
                         $("#dvAddress").show();
                         $("#hidAddressStatus").val('');
                     }
+                    $("#edEventDesc").code(data.EventDescription);
                     $("#UsepastLoc").change();
                     $("#btnAddSch").click();
                     $("#btSaveTimeZone").click();
@@ -1739,33 +1761,21 @@
                 //$("#hdSchType").val('Single');
             });
 
-
-
-            $("#btMakeLive").click(function () {
+            $(".cbtMakeElive").click(function () {
                 if ($("#hdEventId").val() != '') {
                     $.ajax({
-                        url: '@Url.Action("PublishEvent", "CreateEvent")',
+                        url: '@Url.Action("UpdateEventStatus", "CreateEvent")',
                         data: { strEventId: $("#hdEventId").val() },
                         type: "Post",
                         success: function (response) {
-                            if (response == 'N') {
-                                $('#divaccsuc').css('display', 'none');
-                                $('#diverroacc').css('display', 'block');
-                                $('#erraccmsg').html('Sorry, There is some problem while publishing event.');
-
-                            }
-                            else {
-                                var hid = $("#hdEventId").val();
-                                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + hid + '';
-                            }
+                            window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + $("#hdEventId").val() + '';
                         }
                     });
-
                 }
                 else {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                    $('#erraccmsg').html('Please first save an event');
+                    $('#erraccmsg').html('There some erroe occurs, please try again');
                 }
 
             });
@@ -1791,7 +1801,7 @@
             });
 
 
-            $('#btSave').click(function () {
+            $('.cbtSave').click(function () {
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
@@ -2174,9 +2184,9 @@
                             $("#hdEventId").val(response);
                             $('#divaccsuc').css('display', 'block');
                             $('#diverroacc').css('display', 'none');
-                            $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
+                            $('#succaccmsg').html('Your event is updated!');
                             $("#hdEventId").val(response);
-                            alert(response);
+                           // window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
                         }
                     });
                 }
