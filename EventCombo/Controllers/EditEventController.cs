@@ -502,7 +502,7 @@ namespace EventCombo.Controllers
                 if (ev != null)
                 {
                     objJson.EventID = Event.EventID;
-                    objJson.EventStartDate = ev.EventStartDate;
+                    objJson.EventStartDate =  Convert.ToString(ev.EventStartDate);
                     objJson.EventStartTime = ev.EventStartTime;
                     objJson.EventEndDate = ev.EventEndDate;
                     objJson.EventEndTime = ev.EventEndTime;
