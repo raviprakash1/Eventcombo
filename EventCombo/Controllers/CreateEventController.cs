@@ -402,8 +402,6 @@ namespace EventCombo.Controllers
 
                     if (model.DuplicateEvent == "Y")
                         objEnt.SaveChanges();
-
-                    
                     
                 }
             }
