@@ -592,11 +592,9 @@ namespace EventCombo.Controllers
                                Ticket_showvariable = myEvent.Ticket_showvariable,
                                Ticket_variabledesc = myEvent.Ticket_variabledesc,
                                Ticket_variabletype = myEvent.Ticket_variabletype,
-                               ModifyDate = "(Last Saved at " + myEvent.ModifyDate.ToString() + ")" //"(Last saved at " + myEvent.ModifyDate.Value.ToString("MMM dd,yyyy") + " " + myEvent.ModifyDate.Value.ToString("hh:mm tt") + ")"
+                               ModifyDate =  "(Last Saved at " + (myEvent.ModifyDate.ToString().Trim() != "" ? myEvent.ModifyDate.ToString().Trim() : myEvent.CreateDate.ToString().Trim()) + ")" 
                            }
                         ).FirstOrDefault();
-
-            
                 return vEC;
             }
         }

@@ -1,13 +1,13 @@
 ﻿@using EventCombo.Models
 @model ViewEvent
 @{
-    ViewBag.Title = "ViewEvent";
+    ViewBag.Title = "ViewCreateEvent";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div id="fb-root"></div>
 <meta property="og:type" content="article" />
 <meta property="og:title" content=@Html.DisplayFor(m => m.Title) />
-<meta property="og:description" content=@Html.DisplayFor(m => m.EventDescription)/>
+<meta property="og:description" content=@Html.DisplayFor(m => m.EventDescription) />
 <style type="text/css">
     .ui-tooltip, .arrow:after {
         background: #fff;
@@ -16,7 +16,7 @@
 
     .ui-tooltip {
         padding: 5px !important;
-        color: white;       
+        color: white;
         font-size: .9em;
         border-radius: 3px;
         border: 0px !important;
@@ -53,30 +53,47 @@
 
 <div class="event_container">
 
-    
+    <div class="col-sm-9 col-xs-6 pt10 text-right no_pad">
+        <button id="btClosePrev" class="btn ev_live_sub_btn mb5" type="button">
+            CLOSE PREVIEW &#10;
+            <span> > </span>
+        </button>
+        <button id="btEdit" class="cbtPreview btn ev_live_sub_btn mb5" type="button">
+            EDIT &#10;
+            <span> > </span>
+        </button>
+        <button id="btMakeLive" class="btn ev_live_sub_btn mb5 grn_live_btn" type="button">
+            MAKE EVENT LIVE NOW&#10;
+            <span> > </span>
+        </button>
+        <div class="clearfix"></div>
+        @*<div class="col-sm-12 ">
+                ( Last saved at MM/DD/YYYY 00:00pm )
+            </div>*@
+    </div>
 
 
     <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
         <div class="col-sm-12 mt10 bggrey clearfix" id="buttonscroll">
-    @if (TempData["ExpiredEvent"] != null)
-    {
-        <div class="Moderor"  id="diverroacc" tabindex="-1">
-        <div class="er_war_main">
-            <div class="er_war_img"></div>
-            <div class="er_war" id="erraccmsg">@TempData["ExpiredEvent"]</div>
-            <button class="close" aria-hidden="true"  type="button" id="btndiverrsuc">&#215;</button>
+            @if (TempData["ExpiredEvent"] != null)
+            {
+                <div class="Moderor" id="diverroacc" tabindex="-1">
+                    <div class="er_war_main">
+                        <div class="er_war_img"></div>
+                        <div class="er_war" id="erraccmsg">@TempData["ExpiredEvent"]</div>
+                        <button class="close" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>
 
-        </div>
-    </div>
-    }
+                    </div>
+                </div>
+            }
             <div class="Moderor" id="diverroacc" tabindex="-1" style="display:none;">
                 <div class="er_UI_main">
                     <div class="er_UI_img"></div>
                     <div class="er_suc" id="erraccmsg"></div>
-                    <button class="close"  type="button" id="btndiverrsuc">&#215;</button>
+                    <button class="close" type="button" id="btndiverrsuc">&#215;</button>
 
                 </div>
-            </div>           
+            </div>
             <div class="col-sm-3 col-xs-6 pt10 text-left no_pad">
                 @*<label class="btn ev_live_sub_btn  grn_live_btn"> LIVE </label>*@
 
@@ -84,13 +101,13 @@
             </div>
             <div class="col-sm-9 col-xs-6 pt10 text-right no_pad">
                 @*<button class="btn ev_live_sub_btn mb5" type="button">
-                    SAVE &#10;
-                    <span> > </span>
-                </button>
-                <button class="btn ev_live_sub_btn mb5" type="button">
-                    PREVIEW &#10;
-                    <span> > </span>
-                </button>*@
+                        SAVE &#10;
+                        <span> > </span>
+                    </button>
+                    <button class="btn ev_live_sub_btn mb5" type="button">
+                        PREVIEW &#10;
+                        <span> > </span>
+                    </button>*@
 
                 <div class="clearfix"></div>
                 <div class="col-sm-12 ">
@@ -133,38 +150,38 @@
                                         <span class="caret caret_cus"></span>
                                         <li class="dropdown-header drop_cus_header">Schedule Date List</li>
                                         <span class="cus-drop-list_high">
-                                          
-                                                @foreach (var item in (List<GetEventDateList_Result>)ViewBag.DateList)
-                                                {
-                                                     <li>
-                                                       @if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
-                                                       {
-                                                         <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
+
+                                            @foreach (var item in (List<GetEventDateList_Result>)ViewBag.DateList)
+                                            {
+                                                <li>
+                                                    @if ((Html.DisplayFor(m => m.showstarttime).ToString() == "Y" || Html.DisplayFor(m => m.showstarttime).ToString() == "y") && (Html.DisplayFor(m => m.showendtime).ToString() == "Y" || Html.DisplayFor(m => m.showendtime).ToString() == "y"))
+                                                    {
+                                                        <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
 
 
-                                                         } 
-@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "N" || Html.DisplayFor(m => m.showendtime).ToString() == "n"))
-{
-    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
+                                                    }
+                                                    @if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "N" || Html.DisplayFor(m => m.showendtime).ToString() == "n"))
+                                                    {
+                                                        <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
 
-}@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "y" || Html.DisplayFor(m => m.showendtime).ToString() == "Y"))
-{
-    <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
+                                                    }@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "y" || Html.DisplayFor(m => m.showendtime).ToString() == "Y"))
+                                                    {
+                                                        <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
 
-}
-                                                       </li>
+                                                    }
+                                                </li>
 
 
 
                                             }
                                         </span>
 
-                                       
+
                                         @if (Html.DisplayFor(m => m.showTimezone).ToString() == "Y" || Html.DisplayFor(m => m.showTimezone).ToString() == "y")
                                         {
                                             <li class="drop_time_zon"> Time Zone:@Html.DisplayFor(m => m.Timezone)</li>
-                                        }  
-                                        
+                                        }
+
 
                                     </ul>
                                 </div>
@@ -186,20 +203,20 @@
                             </div>
                             @if (Html.DisplayFor(m => m.typeofEvent).ToString().Trim().ToLower() != "online")
                             {
-                            <div class="col-sm-8 col-xs-6 text-right ">
-                                <div class="form-group mb0">
-                                    @*<a href="#" data-geo=""></a>*@
+                                <div class="col-sm-8 col-xs-6 text-right ">
+                                    <div class="form-group mb0">
+                                        @*<a href="#" data-geo=""></a>*@
 
-                                   @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
-                                   {
+                                        @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
+                                        {
 
-                                    <div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" data-geo=""></div>
-                                   }
-                                    <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" title="@Html.DisplayFor(m => m.TopAddress)">
-                                        @Html.DisplayFor(m => m.TopAddress)
-                                    </label>
+                                            <div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" data-geo=""></div>
+                                        }
+                                        <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" title="@Html.DisplayFor(m => m.TopAddress)">
+                                            @Html.DisplayFor(m => m.TopAddress)
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
                             }
                         </div>
                     </div>
@@ -252,13 +269,13 @@
             </div>
             @if (Html.DisplayFor(m => m.Shareonfb).ToString() == "y" || Html.DisplayFor(m => m.Shareonfb).ToString() == "Y")
             {
-              <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
-                <a href=""><img src="/Images/mail.png"></a>
-                <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
-                <a href="#" id="fbshare"><img src="/Images/fac.png"></a>
+                <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
+                    <a href=""><img src="/Images/mail.png"></a>
+                    <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
+                    <a href="#" id="fbshare"><img src="/Images/fac.png"></a>
 
-                <a href="#" id="linkshare"><img src="/Images/lin.png"></a>
-            </div>
+                    <a href="#" id="linkshare"><img src="/Images/lin.png"></a>
+                </div>
             }
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
@@ -286,12 +303,12 @@
                         {
 
 
-                        <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="/Images/twitter-icon.png">&nbsp;@Html.DisplayFor(m => m.twitterlink) </a></p>
+                            <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="/Images/twitter-icon.png">&nbsp;@Html.DisplayFor(m => m.twitterlink) </a></p>
 
-}
+                        }
                         <p><a href="#"><img src="~/Images/linkid.png" />&nbsp; Linkedin</a></p>
 
-                 <p><span class="badge">5</span> <a href="#">&nbsp;Upcoming Event(s)</a> </p>
+                        <p><span class="badge">5</span> <a href="#">&nbsp;Upcoming Event(s)</a> </p>
 
                     </div>
                 </div>
@@ -319,27 +336,27 @@
     <div class="event_detail_container">
         @if (@Html.DisplayFor(m => m.enablediscussion).ToString() == "y" || @Html.DisplayFor(m => m.enablediscussion).ToString() == "Y")
         {
-        <div class="EveDisRib evnt_tile_head evnt_cursor bg-grey">
-            <div class="evnt_tile_dis_bg_l"></div>
-            <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad ">
-                <h2 class="fb_dis_head pt5"><img src="/Images/fb-dis.png" class="img_top"> <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
+            <div class="EveDisRib evnt_tile_head evnt_cursor bg-grey">
+                <div class="evnt_tile_dis_bg_l"></div>
+                <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad ">
+                    <h2 class="fb_dis_head pt5"><img src="/Images/fb-dis.png" class="img_top"> <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
+                </div>
+                <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
             </div>
-            <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
-        </div>
-        <div class="EveActRib evnt_tile_head evnt_cursor">
-            <div class="evnt_tile_bg_l"></div>
-            <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
-                <h2 class="fb_dis_head pt5"><img src="/Images/fb.png" class="img_top"> <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
+            <div class="EveActRib evnt_tile_head evnt_cursor">
+                <div class="evnt_tile_bg_l"></div>
+                <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
+                    <h2 class="fb_dis_head pt5"><img src="/Images/fb.png" class="img_top"> <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
+                </div>
+                <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
             </div>
-            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
-        </div>
 
-        <div class="evnt_details_body2">
-            <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10" id="comments">
-                <div class="fb-comments" data-href="https://www.facebook.com/Eventcombo" data-numposts="5"></div>
+            <div class="evnt_details_body2">
+                <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10" id="comments">
+                    <div class="fb-comments" data-href="https://www.facebook.com/Eventcombo" data-numposts="5"></div>
 
+                </div>
             </div>
-        </div>
         }
         else
         {
@@ -350,7 +367,7 @@
                 </div>
                 <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
             </div>
-          
+
         }
 
 
@@ -579,7 +596,7 @@
                 <h4 class="modal-title ev_modal_header_title" id="myModalLabel">One of your selected ticket has been already sold. </h4>
             </div>
             <div class="modal-footer msg-action-btn ok">
-                <button  type="submit" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
+                <button type="submit" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>
@@ -600,7 +617,18 @@
 
 
     $(document).ready(function () {
-       
+        $("#btEdit").click(function () {
+            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + $('#hdEventid').val();
+        });
+
+        $("#btMakeLive").click(function () {
+           window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + $("#hdEventId").val() + '';
+        });
+
+        $("#btClosePrev").click(function () {
+            history.back();
+        });
+
 
         //history.pushState(null, null, 'ViewEvent');
         //window.addEventListener('popstate', function (event) {
@@ -1060,7 +1088,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
     }
     $(document).ready(function () {
-     
+
 
 
 
@@ -1069,13 +1097,13 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
             $(".Evenfaccomment").slideToggle("fast");
             //facebook comments
-         
-           
+
+
             if ($('.fb-comments').length >0) {
                 var scriptText = 'FB.XFBML.parse();';
                 var scriptNode = document.createElement('script');
                 scriptNode.appendChild(document.createTextNode(scriptText));
-               
+
                 $('#comments').append(scriptNode);
             }
         });
@@ -1083,13 +1111,13 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
             $(".Evenfaccomment").slideToggle("fast");
             //facebook comments
-           
-          
+
+
             if ($('.fb-comments').length > 0) {
                 var scriptText = 'FB.XFBML.parse();';
                 var scriptNode = document.createElement('script');
                 scriptNode.appendChild(document.createTextNode(scriptText));
-               
+
                 $('#comments').append(scriptNode);
             }
         });
@@ -1135,7 +1163,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
         //    alert("test");
         //    //if (String.fromCharCode(e.keyCode).match(/[^0-9]/g)) return false;
         //});
-        
+
         $("#btMesOk").click(function () {
             $("#dvTicketInfo").empty();
             var veventId = ($("#hdEventid").val().trim() != '' ? $("#hdEventid").val() : '');
@@ -1228,7 +1256,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
             if (vflag > 0) {
 
 
-               
+
 
                 $.ajax({
                     url: '@Url.Action("LockTickets", "CreateEvent")',
@@ -1248,7 +1276,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
 
 
-                
+
             } else
             {
                 $('#diverroacc').css('display', 'block');

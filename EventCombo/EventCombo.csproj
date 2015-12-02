@@ -818,6 +818,7 @@
     <Content Include="Views\EventList\EventList.cshtml" />
     <Content Include="Views\Account\Loginresult.cshtml" />
     <Content Include="Views\EditEvent\ModifyEvent.cshtml" />
+    <Content Include="Views\CreateEvent\ViewCreateEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
