@@ -95,31 +95,6 @@ namespace EventCombo.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventDateList_Result>("GetEventDateList", eventIdParameter);
         }
     
-        public virtual ObjectResult<GetEventListing_Result> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature)
-        {
-            var eventTitleParameter = eventTitle != null ?
-                new ObjectParameter("EventTitle", eventTitle) :
-                new ObjectParameter("EventTitle", typeof(string));
-    
-            var eventTypeParameter = eventType != null ?
-                new ObjectParameter("EventType", eventType) :
-                new ObjectParameter("EventType", typeof(string));
-    
-            var eventCatParameter = eventCat != null ?
-                new ObjectParameter("EventCat", eventCat) :
-                new ObjectParameter("EventCat", typeof(string));
-    
-            var eventSubCatParameter = eventSubCat != null ?
-                new ObjectParameter("EventSubCat", eventSubCat) :
-                new ObjectParameter("EventSubCat", typeof(string));
-    
-            var eventFeatureParameter = eventFeature != null ?
-                new ObjectParameter("EventFeature", eventFeature) :
-                new ObjectParameter("EventFeature", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventListing_Result>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter);
-        }
-    
         public virtual ObjectResult<string> GetSelectedTicketListing(string gUID, Nullable<long> eventId)
         {
             var gUIDParameter = gUID != null ?
@@ -170,6 +145,31 @@ namespace EventCombo.Models
                 new ObjectParameter("UserId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishEvent", eventIdParameter, userIdParameter);
+        }
+    
+        public virtual ObjectResult<GetEventListing_Result> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature)
+        {
+            var eventTitleParameter = eventTitle != null ?
+                new ObjectParameter("EventTitle", eventTitle) :
+                new ObjectParameter("EventTitle", typeof(string));
+    
+            var eventTypeParameter = eventType != null ?
+                new ObjectParameter("EventType", eventType) :
+                new ObjectParameter("EventType", typeof(string));
+    
+            var eventCatParameter = eventCat != null ?
+                new ObjectParameter("EventCat", eventCat) :
+                new ObjectParameter("EventCat", typeof(string));
+    
+            var eventSubCatParameter = eventSubCat != null ?
+                new ObjectParameter("EventSubCat", eventSubCat) :
+                new ObjectParameter("EventSubCat", typeof(string));
+    
+            var eventFeatureParameter = eventFeature != null ?
+                new ObjectParameter("EventFeature", eventFeature) :
+                new ObjectParameter("EventFeature", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventListing_Result>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter);
         }
     }
 }

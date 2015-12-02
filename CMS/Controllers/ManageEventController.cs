@@ -11,11 +11,12 @@ namespace CMS.Controllers
 {
     public class ManageEventController : Controller
     {
+        EmsEntities db = new EmsEntities();
         // GET: ManageEvent
         [HttpPost]
-        public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory,string Features, string PageF)
+        public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory,string Features, string PageF,string Events, string Tickets)
         {
-            List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features);
+            List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events,Tickets);
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
             List<SelectListItem> PageFilter = new List<SelectListItem>();
             int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
@@ -87,7 +88,7 @@ namespace CMS.Controllers
 
         public ActionResult Index()
         {
-            List<EventCreation> objlst = GetAllEvents("", "", "", "", "");
+            List<EventCreation> objlst = GetAllEvents("", "", "", "", "","","");
             int iCount = 0;
             List<SelectListItem> PageFilter = new List<SelectListItem>();
             int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
@@ -138,7 +139,7 @@ namespace CMS.Controllers
             ViewBag.PageF = PageFilter;
             return View(objlst);
         }
-        public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory,string strFeature)
+        public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory,string strFeature,string Events,string tickets)
         {
             string user = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
 
@@ -184,7 +185,45 @@ namespace CMS.Controllers
                         Value = item.EventCategoryID.ToString(),
                     });
                 }
-                                                            
+                List<SelectListItem> TagEvents = new List<SelectListItem>();
+                TagEvents.Add(new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "0",
+                    Selected = true
+                });
+                TagEvents.Add(new SelectListItem()
+                {
+                    Text = "Upcoming Events",
+                    Value = "1",
+                    Selected = true
+                });
+                TagEvents.Add(new SelectListItem()
+                {
+                    Text = "Expired Events",
+                    Value = "2",
+                    Selected = true
+                });
+
+                List<SelectListItem> Tickets = new List<SelectListItem>();
+                Tickets.Add(new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "0",
+                    Selected = true
+                });
+                Tickets.Add(new SelectListItem()
+                {
+                    Text = "No Sales",
+                    Value = "1",
+                    Selected = true
+                });
+                Tickets.Add(new SelectListItem()
+                {
+                    Text = "Sold Tickets",
+                    Value = "2",
+                    Selected = true
+                });
                 List <SelectListItem> Features = new List<SelectListItem>();
                 Features.Add(new SelectListItem()
                 {
@@ -221,13 +260,15 @@ namespace CMS.Controllers
                 ViewBag.EventType = EventType;
                 ViewBag.ddlEventCategory = EventCategory;
                 ViewBag.Features = Features;
+                ViewBag.Tickets = Tickets;
+                ViewBag.Events = TagEvents;
 
 
-
+                GetEventListing_Result obj = new GetEventListing_Result();
                 List<EventCreation> objEv = new List<EventCreation>();
-                objEv = objEntity.GetEventListing(SearchStringEventTitle, iEventType, iEventCategory, iEventSubCategory,strFeature).ToList();
+                objEv = objEntity.GetEventListing(SearchStringEventTitle, iEventType, iEventCategory, iEventSubCategory,strFeature, Events,tickets).ToList();
 
-
+                
 
 
                 return objEv;
@@ -242,7 +283,32 @@ namespace CMS.Controllers
 
 
         }
+        public ActionResult Deleteevent(string Eventid)
+        {
+            try
+            {
 
+                db.Database.ExecuteSqlCommand("Delete from Event_Orgnizer_Detail where Orgnizer_Event_Id='" + Eventid + "'");
+                db.Database.ExecuteSqlCommand("Delete from Event_VariableDesc where Event_Id='" + Eventid + "'");
+                db.Database.ExecuteSqlCommand("Delete from Ticket where E_Id='" + Eventid + "'");
+                db.Database.ExecuteSqlCommand("Delete from Address where EventId='" + Eventid + "'");
+                db.Database.ExecuteSqlCommand("Delete from MultipleEvent where EventID='" + Eventid + "'");
+                db.Database.ExecuteSqlCommand("Delete from EventVenue where EventID='" + Eventid + "'");
+                db.Database.ExecuteSqlCommand("Delete from Event where EventID='" + Eventid + "'");
+
+
+
+
+                return Content("Deleted");
+
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+
+            }
+
+        }
         public string UpdateEventFeature(int iFid, long lEventId)
         {
             string strResult = "";
