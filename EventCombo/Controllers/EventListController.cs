@@ -21,21 +21,21 @@ namespace EventCombo.Controllers
             {
                 item.TicketSold = "0";
                 item.TotalTicket = "0";
-                var liveevtcount = db.Database.SqlQuery<Int32>("SELECT  COUNT(*) FROM Event ev LEFT OUTER JOIN EventVenue evn ON ev.EventID=evn.EventID LEFT OUTER JOIN MultipleEvent mvn ON ev.EventID=mvn.EventID WHERE UPPER(ev.EventStatus)='LIVE' ").FirstOrDefault();                
+                var liveevtcount = db.Database.SqlQuery<Int32>("SELECT COUNT(*) from (SELECT ev.EventID,ev.EventTitle, evn.EventStartDate as EventDate,evn.EventStartTime as EventTime FROM Event ev inner JOIN EventVenue evn ON ev.EventID=evn.EventID  WHERE UPPER(ev.EventStatus)='LIVE' Union SELECT ev.EventID,ev.EventTitle,mevn.StartingFrom as EventDate,mevn.StartTime as EventTime FROM Event ev inner JOIN MultipleEvent mevn ON ev.EventID=mevn.EventID  WHERE UPPER(ev.EventStatus)='LIVE') as LiveEvntCnt ").FirstOrDefault();                
                 TempData["LiveEvents"] = liveevtcount;
             }
             foreach (var item in objSavedEventList)
             {
                 item.TicketSold = "0";
                 item.TotalTicket = "0";
-                var savedevtcount = db.Database.SqlQuery<Int32>("SELECT  COUNT(*) FROM Event ev LEFT OUTER JOIN EventVenue evn ON ev.EventID=evn.EventID LEFT OUTER JOIN MultipleEvent mvn ON ev.EventID=mvn.EventID WHERE UPPER(ev.EventStatus)='SAVE' ").FirstOrDefault();                
+                var savedevtcount = db.Database.SqlQuery<Int32>("SELECT COUNT(*) from (SELECT ev.EventID,ev.EventTitle, evn.EventStartDate as EventDate,evn.EventStartTime as EventTime FROM Event ev inner JOIN EventVenue evn ON ev.EventID=evn.EventID  WHERE UPPER(ev.EventStatus)='SAVE' Union SELECT ev.EventID,ev.EventTitle,mevn.StartingFrom as EventDate,mevn.StartTime as EventTime FROM Event ev inner JOIN MultipleEvent mevn ON ev.EventID=mevn.EventID  WHERE UPPER(ev.EventStatus)='SAVE') as SavedEvntCnt ").FirstOrDefault();                
                 TempData["SavedEvents"] = savedevtcount;
             }
             foreach (var item in objPastEventList)
             {
                 item.TicketSold = "0";
                 item.TotalTicket = "0";
-                var pastevtcount = db.Database.SqlQuery<Int32>("select  count(*) from Event ev left outer join EventVenue evn on ev.EventID=evn.EventID where evn.EventStartDate<GETDATE()  ").FirstOrDefault();                
+                var pastevtcount = db.Database.SqlQuery<Int32>("Select count(*) from (select  ev.EventID,ev.EventTitle, evn.EventStartDate as EventDate,evn.EventStartTime as EventTime from Event ev left outer join EventVenue evn on ev.EventID=evn.EventID where evn.EventStartDate<GETDATE() union select  ev.EventID,ev.EventTitle,mevn.StartingFrom as EventDate,mevn.StartTime as EventTime from Event ev left outer join MultipleEvent mevn on ev.EventID=mevn.EventID where CONVERT(varchar,mevn.StartingFrom,101)<GETDATE()) as PastEvntCnt  ").FirstOrDefault();                
                 TempData["PastEvents"] = pastevtcount;
             }
             return View();
@@ -44,36 +44,38 @@ namespace EventCombo.Controllers
         {
             using (EventComboEntities db = new EventComboEntities())
             {
-                var savedevnt = db.Database.SqlQuery<EventListTemplate>("SELECT  * FROM Event ev LEFT OUTER JOIN EventVenue evn ON ev.EventID=evn.EventID LEFT OUTER JOIN MultipleEvent mvn ON ev.EventID=mvn.EventID WHERE UPPER(ev.EventStatus)='LIVE' ").ToList();
-                //var modelEventTemp = (from Ev in db.Events
-                //                     join Even in db.EventVenues on Ev.EventID equals Even.EventID                                      
-                //                     where Ev.EventStatus =="Live"
-                //                     select new EventListTemplate
-                //                     {
-                //                        EventTitle = Ev.EventTitle,
-                //                        EventDate = Even.EventStartDate,
-                //                        EventTime = Even.EventStartTime                                         
-                //                     }
+                var liveevnt = db.Database.SqlQuery<EventListTemplate>("SELECT ev.EventID,ev.EventTitle, evn.EventStartDate as EventDate,evn.EventStartTime as EventTime FROM Event ev inner JOIN EventVenue evn ON ev.EventID=evn.EventID  WHERE UPPER(ev.EventStatus)='LIVE' Union SELECT ev.EventID,ev.EventTitle,mevn.StartingFrom as EventDate,mevn.StartTime as EventTime FROM Event ev inner JOIN MultipleEvent mevn ON ev.EventID=mevn.EventID  WHERE UPPER(ev.EventStatus)='LIVE' ").ToList();
+                //var savedevnt = (from Ev in db.Events
+                //                 join Even in db.EventVenues on Ev.EventID equals Even.EventID
+                //                 where Ev.EventStatus == "Live"
+                //                 select new EventListTemplate
+                //                 {
+                //                     EventID = Ev.EventID,
+                //                     EventTitle = Ev.EventTitle,
+                //                     EventDate = Even.EventStartDate,
+                //                     EventTime = Even.EventStartTime
+                //                 }
                 //                    );
-                ViewBag.LiveEvent= savedevnt.ToList();
-                return savedevnt.ToList();
+                ViewBag.LiveEvent= liveevnt.ToList();
+                return liveevnt.ToList();
             }            
         }
         public List<EventListTemplate> GetSavedEvents()
         {
             using (EventComboEntities db = new EventComboEntities())
             {
-                var savedevnt = db.Database.SqlQuery<EventListTemplate>("SELECT  * FROM Event ev LEFT OUTER JOIN EventVenue evn ON ev.EventID=evn.EventID LEFT OUTER JOIN MultipleEvent mvn ON ev.EventID=mvn.EventID WHERE UPPER(ev.EventStatus)='SAVE' ").ToList();
-                //var modelEventTemp = (from Ev in db.Events
-                //                      join Even in db.EventVenues on Ev.EventID equals Even.EventID
-                //                      where Ev.EventStatus == "Save"
-                //                      select new EventListTemplate
-                //                      {
-                //                          EventTitle = Ev.EventTitle,
-                //                          EventDate = Even.EventStartDate,
-                //                          EventTime = Even.EventStartTime
-                //                      }
-                //                    );
+                var savedevnt = db.Database.SqlQuery<EventListTemplate>("SELECT ev.EventID,ev.EventTitle, evn.EventStartDate as EventDate,evn.EventStartTime as EventTime FROM Event ev inner JOIN EventVenue evn ON ev.EventID=evn.EventID  WHERE UPPER(ev.EventStatus)='SAVE' Union SELECT ev.EventID,ev.EventTitle,mevn.StartingFrom as EventDate,mevn.StartTime as EventTime FROM Event ev inner JOIN MultipleEvent mevn ON ev.EventID=mevn.EventID  WHERE UPPER(ev.EventStatus)='SAVE' ").ToList();
+                //var savedevnt = (from Ev in db.Events
+                //                 join Even in db.EventVenues on Ev.EventID equals Even.EventID
+                //                 where Ev.EventStatus == "Save"
+                //                 select new EventListTemplate
+                //                 {
+                //                     EventID = Ev.EventID,
+                //                     EventTitle = Ev.EventTitle,
+                //                     EventDate = Even.EventStartDate,
+                //                     EventTime = Even.EventStartTime
+                //                 }
+                //                );
                 ViewBag.SavedEvent = savedevnt.ToList();
                 return savedevnt.ToList();
             }
@@ -82,7 +84,7 @@ namespace EventCombo.Controllers
         {
             using (EventComboEntities db = new EventComboEntities())
             {                
-                var pastevnt = db.Database.SqlQuery<EventListTemplate>("select  * from Event ev left outer join EventVenue evn on ev.EventID=evn.EventID where evn.EventStartDate<GETDATE() ").ToList();             
+                var pastevnt = db.Database.SqlQuery<EventListTemplate>("select  ev.EventID,ev.EventTitle, evn.EventStartDate as EventDate,evn.EventStartTime as EventTime from Event ev left outer join EventVenue evn on ev.EventID=evn.EventID where evn.EventStartDate<GETDATE() union select  ev.EventID,ev.EventTitle,mevn.StartingFrom as EventDate,mevn.StartTime as EventTime from Event ev left outer join MultipleEvent mevn on ev.EventID=mevn.EventID where CONVERT(varchar,mevn.StartingFrom,101)<GETDATE() ").ToList();             
                 ViewBag.PastEvent = pastevnt.ToList();
                 return pastevnt.ToList();
             }

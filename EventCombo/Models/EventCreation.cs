@@ -52,5 +52,6 @@ namespace EventCombo.Models
 
         public string DuplicateEvent { get; set; }
 
+        public string ModifyDate { get; set; }
     }
 }

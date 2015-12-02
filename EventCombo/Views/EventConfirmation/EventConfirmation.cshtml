@@ -21,12 +21,13 @@
         <p class="th_day_time">@Html.DisplayFor(m => m.Address)</p>
        
                         <div class="clearfix"></div>
-
+                        <input type="hidden" id="hidVUrl" value="@Model.Title౼@Model.EventId౼N" />
                     </div>
                 </div>
             </div>
 
         </div>
+     
     </div>
 
 
@@ -77,8 +78,12 @@
 
         </div>
     </div>
-
-    
+    <div class="event_detail_container">
+        <button class="btn ev_live_sub_btn mb5" id="btPreview" type="button">
+            PREVIEW &#10;
+            <span> > </span>
+        </button>
+    </div>
 </div>
 
 
@@ -86,9 +91,9 @@
     $(window).load(function () {
 
         var msg = ajaxsetup('EventConfirmation', 'Evtconfirmsucc');
-       
+
         $('#lbltext').html(msg);
-    
+
 
     });
     function ajaxsetup(strname, strFormTag) {
@@ -110,7 +115,10 @@
         return msgnew;
     }
     $(document).ready(function () {
-     
+        $("#btPreview").click(function () {
+            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + $("#hidVUrl").val();
+            
+        });
         $('#fbshare').click(function () {
             var title = '@Html.DisplayFor(m => m.Title)';
             var description = '@Html.DisplayFor(m => m.Descritption).ToString().Trim()';
@@ -124,5 +132,5 @@
         });
 
     });
-   
+
 </script>

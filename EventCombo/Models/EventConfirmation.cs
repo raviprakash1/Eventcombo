@@ -16,6 +16,6 @@ namespace EventCombo.Models
         public string url { get; set; }
         public string Descritption { get; set; }
 
-
+        public string EventId { get; set; }
     }
 }

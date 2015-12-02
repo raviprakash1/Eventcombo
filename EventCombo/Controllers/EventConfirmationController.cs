@@ -32,6 +32,7 @@ namespace EventCombo.Controllers
             var baseurl = url.GetLeftPart(UriPartial.Authority);
             cms.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + cms.Title.Trim() + "­౼" + EventId + "౼N";
             cms.Descritption = Eventdetails.EventDescription;
+            cms.EventId = EventId;
             return View(cms);
         }
     }
