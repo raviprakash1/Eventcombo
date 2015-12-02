@@ -823,6 +823,7 @@ namespace EventCombo.Controllers
                 string Userid = Session["AppId"].ToString();
                 bool isSavedSuccessfully = true;
                 string fName = "";
+                var NFilename = "";
                 string content_type = "";
                 try
                 {
@@ -850,7 +851,7 @@ namespace EventCombo.Controllers
 
                             var path = string.Format("{0}\\{1}", pathString, file.FileName);
                             var imageformat = getImageFormat(path);
-                            var NFilename = Userid.Trim() + "_ProfImage" + rndnumber + "." + imageformat;
+                             NFilename = Userid.Trim() + "_ProfImage" + rndnumber + "." + imageformat;
                              pathnew = string.Format("{0}\\{1}", pathString, NFilename);
                             //using (EventComboEntities objEntity = new EventComboEntities())
                             //{
@@ -875,7 +876,7 @@ namespace EventCombo.Controllers
 
                 if (isSavedSuccessfully)
                 {
-                    return Json(new { image_name = fName, image_type = content_type, image_path = pathnew });
+                    return Json(new { image_name = NFilename, image_type = content_type, image_path = pathnew });
                 }
                 else
                 {

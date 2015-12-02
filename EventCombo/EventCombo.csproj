@@ -52,6 +52,10 @@
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.8.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.8\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -197,6 +201,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
@@ -314,6 +319,7 @@
     <Compile Include="Models\GetEventListing_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs">
@@ -740,6 +746,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="ticketpdf.html" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -819,6 +826,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
+    <Folder Include="Views\Html2Pdf\" />
     <Folder Include="Views\Permission\" />
     <Folder Include="Views\Validate\" />
     <Folder Include="Views\ValidationMessage\" />
