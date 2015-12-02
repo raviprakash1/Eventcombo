@@ -675,6 +675,7 @@ namespace EventCombo.Controllers
 
                 objJson.Addresses = strHTML.ToString();
                 objJson.EventDescription = Event.EventDescription;
+                objJson.EventStatus = Event.EventStatus;
             }
             return Json(objJson, JsonRequestBehavior.AllowGet);
         }

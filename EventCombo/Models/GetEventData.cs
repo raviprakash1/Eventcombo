@@ -34,5 +34,7 @@ namespace EventCombo.Models
         public string FirstAddress { get; set; }
 
         public string EventDescription { get; set; }
+
+        public string EventStatus { get; set; }
     }
 }
