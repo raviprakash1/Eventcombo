@@ -45,6 +45,10 @@ namespace CMS.Controllers
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
 
+            if ((Session["AppId"] != null))
+            {
+               
+          
 
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
             foreach(var item in objuser)
@@ -84,12 +88,12 @@ namespace CMS.Controllers
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
             List<SelectListItem> PageFilter = new List<SelectListItem>();
              
-            PageFilter.Add(new SelectListItem()
-            {
-                Text = "Select",
-                Value = "0",
-                Selected = (iCount == 0 ? true : false)
-            });
+            //PageFilter.Add(new SelectListItem()
+            //{
+            //    Text = "Select",
+            //    Value = "0",
+            //    Selected = (iCount == 0 ? true : false)
+            //});
             //List<UsersTemplate> objuser1 = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
             //foreach (var item in objuser1)
             //{
@@ -164,8 +168,8 @@ namespace CMS.Controllers
             //});
 
             ViewBag.PageF = PageFilter;
-
-            ViewData["Userscount"] = db.AspNetUsers.Count();
+                var userid = Session["AppId"].ToString();
+            ViewData["Userscount"] = db.AspNetUsers.Where(x=>x.Id!= userid).Count();
 
 
             // List<Permissions> objPerm = GetPermission("APP");
@@ -173,6 +177,12 @@ namespace CMS.Controllers
             //  objU.objPermissions = GetPermission("APP");
             // objuser.Add(objU);
             return View(objuser);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+
+            }
         }
         public List<UsersTemplate> GetAllUsers(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {

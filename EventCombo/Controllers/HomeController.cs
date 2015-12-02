@@ -701,7 +701,7 @@ namespace EventCombo.Controllers
             {
                 mailMessage.From = new MailAddress(from, from);
                 mailMessage.Subject = subject;
-                mailMessage.Body = body;
+                mailMessage.Body = body;    
                 if (!string.IsNullOrEmpty(cc))
                 {
                     mailMessage.CC.Add(cc);
