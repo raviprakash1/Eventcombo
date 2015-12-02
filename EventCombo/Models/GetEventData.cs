@@ -31,6 +31,7 @@ namespace EventCombo.Models
         public string MultipleSchTime { get; set; }
 
         public string Addresses { get; set; }
+        public string FirstAddress { get; set; }
 
 
     }

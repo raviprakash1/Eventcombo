@@ -63,7 +63,7 @@
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
 
-                        
+
 
                         <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold" placeholder="Click here to enter the name of the event" value="@Model.EventTitle" />
                     </div>
@@ -78,7 +78,7 @@
                                 {
                                     <input id="btOnlineEvent" type="checkbox" />
                                 }
-                            Online Event
+                                Online Event
                             </label>
 
                         </div>
@@ -193,12 +193,12 @@
                                                     <div class="form-group mb5 ">
                                                         <label class="col-sm-12 no_pad label-control ev_timezone_lebel">
                                                             @if (Model.DisplayStartTime == "Y")
-                                                            { 
-                                                                <input id="chkDisplayStartTime" checked="checked" type="checkbox" /> 
-                                                               }
+                                                            {
+                                                                <input id="chkDisplayStartTime" checked="checked" type="checkbox" />
+                                                            }
                                                             else
                                                             {
-                                                                <input id="chkDisplayStartTime" type="checkbox" /> 
+                                                                <input id="chkDisplayStartTime" type="checkbox" />
                                                             }
                                                             Display start time on event page
                                                         </label>
@@ -206,10 +206,10 @@
                                                             @if (Model.DisplayEndTime == "Y")
                                                             {
                                                                 <input id="chkDisplayEndTime" checked="checked" type="checkbox" />
-                                                                       }
+                                                            }
                                                             else
                                                             {
-                                                                <input id="chkDisplayEndTime" type="checkbox" /> 
+                                                                <input id="chkDisplayEndTime" type="checkbox" />
                                                             }
                                                             Display end time on event page
                                                         </label>
@@ -222,15 +222,15 @@
                                                             {
                                                                 <input id="chkTimeZone" type="checkbox" />
                                                             }
-                                                                Display time zone on event page
-                                                          </label>
-                                                      </div>
+                                                            Display time zone on event page
+                                                        </label>
+                                                    </div>
                                                 </div>
 
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="modal-footer">
-                                                <button type="button"  id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>
+                                                <button type="button" id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -277,15 +277,15 @@
                                         {
                                             <input id="UsepastLoc" class="" type="checkbox">
                                         }
-                                            Use Past Location
-                                        </label>
-                                    </div>
+                                        Use Past Location
+                                    </label>
                                 </div>
                             </div>
-
-
                         </div>
-                        <div class="StartDatemodal col-sm-12 ev_time_zone_model_main ev_date_time_model">
+
+
+                    </div>
+                    <div class="StartDatemodal col-sm-12 ev_time_zone_model_main ev_date_time_model">
                         <div class="ev_time_zone_model">
                             <div class="modal-content ev_tm_zon_cont">
                                 <div class="modal-header">
@@ -519,10 +519,8 @@
                             <div class="form-group">
                                 <label class="col-sm-5 control-label ev_tickt_lebel no_pad">Sub Category</label>
                                 <div class="col-sm-7 no_pad">
-                                    <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600">
-                                        
-                                    </select>
-                                    <input type="hidden" id="hidSubCat" value="@Model.EventSubCategoryID"  />
+                                    <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                                    <input type="hidden" id="hidSubCat" value="@Model.EventSubCategoryID" />
                                 </div>
                             </div>
                         </div>
@@ -1046,28 +1044,30 @@
                     <div class="evnt_tile_bg_l"></div>
                     <div class="col-sm-12 col-xs-12 text-left no_pad">
                         <h2 class="fb_dis_head ">
-                            <label class="ev_fb_lable"><img src="~/Images/fb.png"> ENABLE DISCUSSION 
-                            @if (Model.EnableFBDiscussion == "Y")
-                            {
-                                <input id="chkAllowFBDis" checked="checked" type="checkbox" />
-                            }
-                            else
-                            {
-                                <input id="chkAllowFBDis" type="checkbox" />
-                            }
+                            <label class="ev_fb_lable">
+                                <img src="~/Images/fb.png"> ENABLE DISCUSSION
+                                @if (Model.EnableFBDiscussion == "Y")
+                                {
+                                    <input id="chkAllowFBDis" checked="checked" type="checkbox" />
+                                }
+                                else
+                                {
+                                    <input id="chkAllowFBDis" type="checkbox" />
+                                }
 
 
                             </label>
 
-                            <label class="ev_fb_lable">PUBLISH EVENT TO FACEBOOK 
-                            @if (Model.PublishOnFB == "Y")
-                            {
-                                <input id="chkPublishEventOnFB" checked="checked" type="checkbox" />
-                            }
-                            else
-                            {
-                                <input id="chkPublishEventOnFB" type="checkbox" />
-                            }
+                            <label class="ev_fb_lable">
+                                PUBLISH EVENT TO FACEBOOK
+                                @if (Model.PublishOnFB == "Y")
+                                {
+                                    <input id="chkPublishEventOnFB" checked="checked" type="checkbox" />
+                                }
+                                else
+                                {
+                                    <input id="chkPublishEventOnFB" type="checkbox" />
+                                }
 
                             </label>
                         </h2>
@@ -1098,35 +1098,35 @@
                                 {
                                     <input type="radio" checked="checked" name="rdPr" id="rdPublic" />
                                 }
-                                    Public
-                                </label>
-                            </div>
-                            <div class="clearfix"></div>
+                                Public
+                            </label>
+                        </div>
+                        <div class="clearfix"></div>
                         <div class="col-sm-12 no_pad">
                             <label class="Prvpage label-control ev_tickt_lebel pl0">
-                                    @if (Model.EventPrivacy == "Private")
-                                    {
-                                        <input type="radio" checked="checked" name="rdPr" id="rdPrivate" />
-                                    }
-                                    else
-                                    {
-                                        <input type="radio" name="rdPr" id="rdPrivate" />
-                                    }
-                                        Private
-                                    </label>
-                                </div>
-                                <div class="clearfix"></div>
+                                @if (Model.EventPrivacy == "Private")
+                                {
+                                    <input type="radio" checked="checked" name="rdPr" id="rdPrivate" />
+                                }
+                                else
+                                {
+                                    <input type="radio" name="rdPr" id="rdPrivate" />
+                                }
+                                Private
+                            </label>
+                        </div>
+                        <div class="clearfix"></div>
                         <div class="priv_cont">
                             <label class="label-control label_private ev_tickt_lebel">
-                            @if (Model.Private_ShareOnFB == "Y")
-                            {
-                                <input type="checkbox" checked="checked" id="chkShareOnFB">
-                            }
-                            else
-                            {
-                                <input type="checkbox" id="chkShareOnFB">
+                                @if (Model.Private_ShareOnFB == "Y")
+                                {
+                                    <input type="checkbox" checked="checked" id="chkShareOnFB">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" id="chkShareOnFB">
 
-                            }
+                                }
                                 Attendees can share this event on Facebook, Twitter, and LinkedIn
                             </label>
                             <div class="clearfix"></div>
@@ -1139,7 +1139,7 @@
                                 {
                                     <input type="checkbox" id="chkGuestonly">
                                 }
-                                    This event is by Invite-Only
+                                This event is by Invite-Only
                             </label>
                             <div class="clearfix"></div>
                             <label class="label-control label_private ev_tickt_lebel">
@@ -1151,9 +1151,9 @@
                                 {
                                     <input type="checkbox" id="chkReqPassword">
                                 }
-                                    Require a password to view the event page
-                                </label>
-                                <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />                                    
+                                Require a password to view the event page
+                            </label>
+                            <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />
 
                         </div>
                     </div>
@@ -1279,7 +1279,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="modal-footer no_pad">
-                    <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
+                    <button type="button" id="btSaveAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
                 </div>
 
             </div>
@@ -1294,7 +1294,7 @@
     // ---------------------Event Creation Script -------------------
     <script>
         $(document).ready(function () {
-            alert("Chal pya");
+           // alert("Chal pya");
             $.getJSON('@Url.Action("GetEventChildData", "EditEvent")',
                 function (data) {
                     if ($("#MultipleSchTime").val() == "S") {
@@ -1307,10 +1307,14 @@
                     else
                     {
                         $(".SchmultiEvnt").click();
-                       
-                        $("#dlSchOption").val(data.Frequency);
 
+                        $("#dlSchOption").val(data.Frequency);
                         $("#dlSchOption").change();
+                        if (data.WeeklyDay != null) {
+                            alert(data.WeeklyDay);
+                            $("dllWeeklyDayChk").val(data.WeeklyDay);
+
+                        }
                         $("#txtTimeStart").val(data.StartTime);
                         $("#txtTimeEnd").val(data.EndTime);
                         $("#txtDateFrom").val(data.StartingFrom);
@@ -1318,9 +1322,12 @@
                         $(".multiselect-selected-text").val();
                         if (data.MonthlyDay > 0) {
                             $("#hdMonthlyType").val('DM');
+                            $("#btDayofMonth").click();
+                            $("#dllMonth").val(data.MonthlyDay);
                         }
                         else {
                             $("#hdMonthlyType").val('DW');
+                            $("#btDayofWeek").click();
                             $("#dllMonthlyWeek").val(data.MonthlyWeek);
                         }
                     }
@@ -1340,11 +1347,12 @@
                     $("#btSaveTimeZone").click();
                     $("#hdEventId").val(data.EventID);
                     $("#tblAddress").append(data.Addresses);
+                    $("#txtEventLocation").val(data.FirstAddress);
                 }
             );
         });
 
-      
+
 
 
 
@@ -1599,7 +1607,7 @@
 
         }
         function editOrgnizer() {
-            
+
             var Sno = $("#ddlOrgnizers").val();
            // alert(Sno);
          //   debugger;
@@ -2181,7 +2189,17 @@
 
 
             $("#btMultiVenue").click(function () {
-                $("#txtEventLocation").val('');
+                //$("#txtEventLocation").val('');
+                if ($("#tblAddress tr").length <= 1) {
+                    if ($("#txtEventLocation").val().trim() != '') {
+                        $("#VenueName").val($("#txtEventLocation").val());
+                        var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + '' + "¶" + '';
+                        var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
+                        AddRow("tblAddress", vCols, vColName, "Y");
+                        $("#VenueName").val("");
+                        $("#hidAddSno").val("");
+                    }
+                }
             });
 
             $("#btOnlineEvent").click(function () {
@@ -2418,7 +2436,15 @@
                     $(".Schmultisingle").hide();
                 }
             });
-
+            $("#btSaveAddress").click(function () {
+                //$("#txtEventLocation").val("Click here to enter venue address");
+                $("#tblAddress tr").each(function () {
+                    var Sno = $(this).find("td:first").html();
+                    if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
+                        $("#txtEventLocation").val($("#consolidate" + Sno).text());
+                    }
+                });
+            });
             $("#btSaveTimeZone").click(function () {
                 var vval = $("#dllTimeZone").val();
                 if (vval == null || vval == '')
@@ -4469,3 +4495,4 @@
     </script>
 
 }
+

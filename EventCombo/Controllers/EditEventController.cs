@@ -22,7 +22,7 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
         public ActionResult EditEvent()
         {
-            EventCreation objCr = GetEventData();
+            EventCreation objCr = GetEventDataEditing();
             if ((Session["AppId"] != null))
             {
                 Session["Fromname"] = "events";
@@ -133,8 +133,118 @@ namespace EventCombo.Controllers
         }
 
 
-       
-       
+        public ActionResult ModifyEvent()
+        {
+            EventCreation objCr = GetEventDataEditing();
+            if ((Session["AppId"] != null))
+            {
+                Session["Fromname"] = "events";
+                var url = Url.Action("CreateEvent", "CreateEvent");
+                Session["ReturnUrl"] = "CreateEvent~" + url;
+
+                string defaultCountry = "";
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    var countryQuery = (from c in db.Countries
+                                        orderby c.Country1 ascending
+                                        select c).Distinct();
+                    List<SelectListItem> countryList = new List<SelectListItem>();
+                    defaultCountry = "United States";
+
+                    foreach (var item in countryQuery)
+                    {
+                        countryList.Add(new SelectListItem()
+                        {
+                            Text = item.Country1,
+                            Value = item.CountryID.ToString(),
+                            Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
+                        });
+                    }
+
+                    var rows = (from myRow in db.EventTypes
+                                select myRow).ToList();
+                    List<SelectListItem> EventType = new List<SelectListItem>();
+                    EventType.Add(new SelectListItem()
+                    {
+                        Text = "Select",
+                        Value = "0",
+                        Selected = true
+                    });
+                    foreach (var item in rows)
+                    {
+                        if (objCr.EventTypeID == item.EventTypeID)
+                        {
+                            EventType.Add(new SelectListItem()
+                            {
+                                Text = item.EventType1,
+                                Value = item.EventTypeID.ToString(),
+                                Selected = true
+
+                            });
+                        }
+                        else
+                        {
+                            EventType.Add(new SelectListItem()
+                            {
+                                Text = item.EventType1,
+                                Value = item.EventTypeID.ToString()
+                            });
+                        }
+                    }
+
+
+                    var EventCat = (from myRow in db.EventCategories
+                                    select myRow).ToList();
+                    List<SelectListItem> EventCategory = new List<SelectListItem>();
+                    EventCategory.Add(new SelectListItem()
+                    {
+                        Text = "Select",
+                        Value = "0",
+                        Selected = true
+                    });
+                    foreach (var item in EventCat)
+                    {
+                        if (item.EventCategoryID == objCr.EventCategoryID)
+                        {
+                            EventCategory.Add(new SelectListItem()
+                            {
+                                Text = item.EventCategory1,
+                                Value = item.EventCategoryID.ToString(),
+                                Selected = true
+                            });
+                        }
+                        else
+                        {
+                            EventCategory.Add(new SelectListItem()
+                            {
+                                Text = item.EventCategory1,
+                                Value = item.EventCategoryID.ToString()
+
+                            });
+                        }
+                    }
+
+
+                    ViewBag.CountryID = countryList;
+                    ViewBag.EventType = EventType;
+                    ViewBag.ddlEventCategory = EventCategory;
+
+                }
+
+
+                EventCreation ObjEV = new EventCreation();
+                ObjEV.EventTitle = "Form Editing";
+
+
+                return View(objCr);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
+        }
+
 
         public string GetPreviousAddress(long lPreAddId)
         {
@@ -441,9 +551,9 @@ namespace EventCombo.Controllers
         #region EditingEvent
 
         
-        public EventCreation GetEventData()
+        public EventCreation GetEventDataEditing()
         {
-            long lEventId = 163;
+            long lEventId = 165;
             //EventCreation objEC = new EventCreation();
 
             using (EventComboEntities objEnt = new EventComboEntities())
@@ -491,7 +601,7 @@ namespace EventCombo.Controllers
         [HttpGet]
         public ActionResult GetEventChildData()
         {
-            long lEventId = 163;
+            long lEventId = 165;
             GetEventData objJson = new GetEventData();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
@@ -502,7 +612,7 @@ namespace EventCombo.Controllers
                 if (ev != null)
                 {
                     objJson.EventID = Event.EventID;
-                    objJson.EventStartDate = ev.EventStartDate;
+                    objJson.EventStartDate =  Convert.ToString(ev.EventStartDate);
                     objJson.EventStartTime = ev.EventStartTime;
                     objJson.EventEndDate = ev.EventEndDate;
                     objJson.EventEndTime = ev.EventEndTime;
@@ -541,19 +651,20 @@ namespace EventCombo.Controllers
                 foreach (Address objAdd in Addr)
                 {
                     i = i + 1;
+                    if (i == 1) { objJson.FirstAddress = objAdd.ConsolidateAddress; }
                     strHTML.Append("<tr>");
                     strHTML.Append("<td style='display: none'>");
                     strHTML.Append(i);
                     strHTML.Append("</td>");
 
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=VenueName" + i.ToString() + " style='width: 100px;'  value=" + objAdd.VenueName + " /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address1" + i.ToString() + " style='width: 100px;'  value=" + objAdd.Address1 + " /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address2" + i.ToString() + " style='width: 100px;'  value=" + objAdd.Address2 + " /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=City" + i.ToString() + " style='width: 100px;'  value=" + objAdd.City + " /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=State" + i.ToString() + " style='width: 100px;'  value=" + objAdd.State + " /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Zip" + i.ToString() + " style='width: 100px;'  value=" + objAdd.Zip + " /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=CountryID" + i.ToString() + " style='width: 100px;'  value=" + objAdd.CountryID + " /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=CID" + i.ToString() + " style='width: 100px;'  value=" + objAdd.CountryID + " /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=VenueName" + i.ToString() + " style='width: 100px;'  value='" + objAdd.VenueName + "' /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address1" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Address1 + "' /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address2" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Address2 + "' /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=City" + i.ToString() + " style='width: 100px;'  value='" + objAdd.City + "' /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=State" + i.ToString() + " style='width: 100px;'  value='" + objAdd.State + "' /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Zip" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Zip + "' /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=CountryID" + i.ToString() + " style='width: 100px;'  value='" + objAdd.CountryID + "' /></td>");
+                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=CID" + i.ToString() + " style='width: 100px;'  value='" + objAdd.CountryID + "' /></td>");
                     strHTML.Append("<td align='left'><label id=consolidate" + i.ToString() + ">" + objAdd.ConsolidateAddress +  "</label></td>");
                     strHTML.Append("<td><div class='trigger mt5 ent_add'><a href = '#' onclick='editRow("+i.ToString()+");'><i class='fa fa-map-marker'></i> Edit</a><a href = '#' id='btAddDelete' onclick='DeleteTableRow("+i.ToString()+")'>Delete</a> </div> </td>");
                     strHTML.Append("</tr>");
@@ -570,7 +681,7 @@ namespace EventCombo.Controllers
 
         public long EditEventInfo(EventCreation model)
         {
-            long lEventId = 160;
+            long lEventId = 165;
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
@@ -616,10 +727,12 @@ namespace EventCombo.Controllers
                     if (model.AddressDetail != null)
                     {
                         Address ObjAdd = new Models.Address();
+                        objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
                         foreach (Address objA in model.AddressDetail)
                         {
                             if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
                             {
+                                ObjAdd = new Models.Address();
                                 ObjAdd.EventId = ObjEC.EventID;
                                 ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
                                 ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;

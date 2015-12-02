@@ -278,6 +278,7 @@
     <Compile Include="Models\EventImage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventListTemplate.cs" />
     <Compile Include="Models\EventSubCategory.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -816,6 +817,7 @@
     </Content>
     <Content Include="Views\EventList\EventList.cshtml" />
     <Content Include="Views\Account\Loginresult.cshtml" />
+    <Content Include="Views\EditEvent\ModifyEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
