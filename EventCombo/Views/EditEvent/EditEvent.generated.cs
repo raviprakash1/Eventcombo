@@ -4424,7 +4424,7 @@ WriteLiteral("\r\n\r\n\r\n            $.ajax({\r\n                url: \'");
 
             
             #line 1308 "..\..\Views\EditEvent\EditEvent.cshtml"
-                 Write(Url.Action("GetEventData", "CreateEvent"));
+                 
 
             
             #line default

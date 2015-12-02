@@ -44,8 +44,11 @@ namespace CMS.Controllers
 
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
-          
 
+            if ((Session["AppId"] != null))
+            {
+               
+          
 
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
             foreach(var item in objuser)
@@ -85,21 +88,21 @@ namespace CMS.Controllers
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
             List<SelectListItem> PageFilter = new List<SelectListItem>();
              
-            PageFilter.Add(new SelectListItem()
-            {
-                Text = "Select",
-                Value = "0",
-                Selected = (iCount == 0 ? true : false)
-            });
-            List<UsersTemplate> objuser1 = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
-            foreach (var item in objuser1)
-            {
-                var ans = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
-                item.EventCount = ans;
+            //PageFilter.Add(new SelectListItem()
+            //{
+            //    Text = "Select",
+            //    Value = "0",
+            //    Selected = (iCount == 0 ? true : false)
+            //});
+            //List<UsersTemplate> objuser1 = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+            //foreach (var item in objuser1)
+            //{
+            //    var ans = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
+            //    item.EventCount = ans;
 
 
-            }
-            int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
+            //}
+           int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
             string strText = "";
             if (iUcount > iGapValue)
             {
@@ -165,15 +168,21 @@ namespace CMS.Controllers
             //});
 
             ViewBag.PageF = PageFilter;
-
-            ViewData["Userscount"] = db.AspNetUsers.Count();
+                var userid = Session["AppId"].ToString();
+            ViewData["Userscount"] = db.AspNetUsers.Where(x=>x.Id!= userid).Count();
 
 
             // List<Permissions> objPerm = GetPermission("APP");
             // UsersTemplate objU = new UsersTemplate();
             //  objU.objPermissions = GetPermission("APP");
             // objuser.Add(objU);
-            return View(objuser1);
+            return View(objuser);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+
+            }
         }
         public List<UsersTemplate> GetAllUsers(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {
