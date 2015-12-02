@@ -3439,7 +3439,7 @@
             var total = 0;
             var dropval = $('#' + e).val();
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var amount = parseFloat($('#id_cost-' + el).val());
+            var amount = parseFloat($('#id_cost-' + el).val().replace(',',''));
             if (amount > 999999.99) {
 
 
@@ -3452,8 +3452,8 @@
 
                 var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
 
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;       $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
-                $('#id_buyerprice-' + el).html("$" + ccpfinal);
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Fee      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;       $" + ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                $('#id_buyerprice-' + el).html("$" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
                 $('#id_tooltip-' + el).html(msg);
                 $('#id_feetype-' + el).val(0);
@@ -3466,8 +3466,8 @@
                 var ccp = $('#id_cc').val();
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
                 var ccpfinal = parseFloat(amount).toFixed(2);
-                $('#id_buyerprice-' + el).html("$" + ccpfinal);
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount + "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal;
+                $('#id_buyerprice-' + el).html("$" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 $('#id_tooltip-' + el).html(msg);
                 //$('#id_tooltip-' + el).html(msg);
                 $('#id_feetype-' + el).val(1);
@@ -3501,14 +3501,14 @@
         }
         function tofixed(id)
         {
-            var price = $('#' + id).val();
+            var price = $('#' + id).val().replace(',','');
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
             if (id == "") {
 
             } else
             {
                
-                var price = parseFloat(price).toFixed(2);
+                var price = parseFloat(price).toFixed(2);   
              
                 if (!isNaN(price)) {
                    
@@ -3592,7 +3592,7 @@
             if (isNaN(price)) {
 
                 $('#id_buyerprice-' + num).html("$0.00");
-                $('#id_tooltip-' + num).html("Ticket Price  &nbsp; &nbsp;&nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer's Total $0.00 ");
+                $('#id_tooltip-' + num).html("Ticket Price  &nbsp; &nbsp;&nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer(s) Total $0.00 ");
                 total = 0;
                 fee = 0;
 
@@ -4544,6 +4544,7 @@
 
             }
             if ($('#ddlOrgnizers option').length <= 0) {
+                $('#ddlOrgnizers').addClass('err-bor');
                 msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI") + "<br/>";;
 
 
@@ -4551,16 +4552,18 @@
             var type = $("#EventType").val();
             var cat = $("#ddlEventCategory").val();
             if (type <= 0) {
+                $('#EventType').addClass('err-bor');
                 msg += ajaxsetup("CreateEvent", "CreateEventtypeUI") + "<br/>";;
             }
             if (cat <= 0) {
+                $('#ddlEventCategory').addClass('err-bor');
                 msg += ajaxsetup("CreateEvent", "CreateEventCategoryUI") + "<br/>";;
             }
 
 
 
             var divlength = $("#MasterDiv> div").size();
-
+                    
             if (divlength > 0) {
 
                 for (var i = 0; i < divlength; i++) {
@@ -4959,14 +4962,14 @@
 
                 $('#diverroacc').css('display', 'none');
                 $('#divaccsuc').css('display', 'none');
-
+                $('select').removeClass('err-bor');
                 $('input').removeClass('err-bor');
 
             });
             $('#btndivaccsuc').click(function () {
 
                 $('#diverroacc').css('display', 'none');
-
+                $('select').removeClass('err-bor');
                 $('#divaccsuc').css('display', 'none');
                 $('input').removeClass('err-bor');
 
