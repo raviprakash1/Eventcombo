@@ -88,12 +88,12 @@ namespace CMS.Controllers
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
             List<SelectListItem> PageFilter = new List<SelectListItem>();
              
-            PageFilter.Add(new SelectListItem()
-            {
-                Text = "Select",
-                Value = "0",
-                Selected = (iCount == 0 ? true : false)
-            });
+            //PageFilter.Add(new SelectListItem()
+            //{
+            //    Text = "Select",
+            //    Value = "0",
+            //    Selected = (iCount == 0 ? true : false)
+            //});
             //List<UsersTemplate> objuser1 = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
             //foreach (var item in objuser1)
             //{
