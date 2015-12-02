@@ -14,6 +14,7 @@ namespace EventCombo.Controllers
     {
         // GET: Html2Pdf
         public ActionResult Index()
+
         {
             GenerateHTML2PDF("", "", "", "", "", "");
             return View();
@@ -29,25 +30,54 @@ namespace EventCombo.Controllers
                 readFile = reader.ReadToEnd();
             }
             iTextSharp.text.html.simpleparser.StyleSheet styles = new iTextSharp.text.html.simpleparser.StyleSheet();
-            styles.LoadStyle("evnt-tkt-container", "width", "800px");
-            string myString = "";       
-            myString = readFile;        
+
+
+            string myString = "";
+            myString = readFile;
             //myString = myString.Replace("¶¶Email¶¶", model.Email);
             //myString = myString.Replace("¶¶Website¶¶", url1);
             System.Text.StringBuilder str = new System.Text.StringBuilder();
 
-            //string mystring = "<div><table border='5'><tr><th rowspan = '4';></th><th>" + strDateTime + "Narrow down the road at Luxx </th><th rowspan = '2' ></th ></tr><tr><td>sda</td></tr><tr><td> Order #462744270. Ordered by bubs jones on October 10, 2015 9:17 PM</td><td>QR Code</td></tr><tr><td>This is a free ticket registration</td><td>QR Code</td></tr></table></ div >";
-            str.Append(myString);
-            Response.ContentType = "application/pdf";
+            string mystring = "<div style='width: 800px; float: left; background:#d9d9d9; font-family: arial;'>" +
+            " <div style='width:80px;float:left;background:#fff;margin:10px;'>" +
+            " </div>" +
+               "<div style='width:480px;float:left;margin:10px 10px 0 10px;>" +
+               "<div style='width:460px;float:left; background:#fff;padding:10px;margin-bottom:10px;'>" +
+                "<div style='width:100%;float:left;font-size:18px;color: #555;'>Event</div>" +
+                "<h1 style='margin:5px 0;font-size:30px;font-weight:normal;'> Narrow down the road at Luxx down the road at Luxx</h1></div>" +
+                "<div style='width:480px;float:left;margin-bottom:10px;'>" +
+                 "<div style='width:215px;float:left;background:#fff;padding:10px;margin-right:10px;'>" +
+                 "<div style='width: 100%;float:left;font-size:18px;color:#555;'>Date + Time</div>" +
+                  "<div style='width: 100%;float:left;font-size:20px;color:#000;margin-top:5px;'> " +
+                  "Tuesday, November 17, 2015 from 7:00 PM to 10:00 PM(CST) </div> </div> " +
+                  " <div style='width:215px;float:left;background:#fff;padding:10px;'>" +
+                  "<div style='width:100%;float:left;font-size:18px;color:#555;'>Location</div> " +
+                  "<div style='width:100%;float:left;font-size:20px;color:#000;margin-top:5px;'>Luxy Lashes & Skin 5885 San Felipe Street #Ste 475 Hoston, TX 77057</div> "+
+                   "</div></div><div style='width: 460px; float: left; background:#fff; padding:10px; margin-bottom:10px;'>"+
+                   "<div style='width: 100%;float: left;font-size:18px;color:#555;'>Event Order</div>"+
+                   "<div style='width: 100%;float:left;font-size:20px;color:#000;margin-top: 5px;'>Order # 463464. Ordered by jones on October 10, 2015 9:17PM</div>"+
+               " </div ><div style= 'width: 460px; float: left; background:#fff; padding:10px; margin-bottom:10px;' >"+
+               " < div style = 'width: 100%; float: left; font-size: 18px; color: #555;' > Type </ div >"+
+                "< div  style = 'width: 100%; float: left; font-size: 20px; color: #000; margin-top: 5px;text-align: right;' > This is Free Ticket registration</ div >"+
+                 " </ div ></ div >< div style = 'width: 170px; float: left; margin: 10px 0 0 0;' > < div style = 'width: 100%; float: left;  background:#fff; padding: 10px;'>"+
+                 ""+
+                  "  <div style = 'width: 100%; float: left; font-size: 18px; color: #555; min-height: 210px; position: relative; ' >"+
+                   "     < div style='position: absolute; bottom: 0;left: 0;'>Payment Status"+
+                  "<div  style= 'width: 100%; float: left; font-size: 20px; color: #000; margin-top: 5px;text-align: center;'> Free Order</div>"+
+                   "</div> </div></div> <div style = 'width: 100%; float: left; background:#fff; text-align: center; padding: 10px;  margin-top: 10px;' >"+
+                    ""+
+                " </ div ></ div ></ div > ";
+            str.Append(mystring);
+        Response.ContentType = "application/pdf";
             Response.AddHeader("content-disposition", "attachment;filename=Panel.pdf");
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             StringWriter sw = new StringWriter(str);
-            //HtmlTextWriter hw = new HtmlTextWriter(sw);
-            //pnlPerson.RenderControl(hw);
-            StringReader sr = new StringReader(sw.ToString());
-            Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
-            HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
-            PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+        //HtmlTextWriter hw = new HtmlTextWriter(sw);
+        //pnlPerson.RenderControl(hw);
+        StringReader sr = new StringReader(sw.ToString());
+        Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+        HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+        PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
             pdfDoc.Open();
             htmlparser.Parse(sr);
             pdfDoc.Close();
@@ -55,5 +85,5 @@ namespace EventCombo.Controllers
             Response.End();
 
         }
-    }
+}
 }
