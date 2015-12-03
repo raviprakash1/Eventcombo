@@ -16,7 +16,7 @@
 
     .ui-tooltip {
         padding: 5px !important;
-        color: white;
+        color: white;       
         font-size: .9em;
         border-radius: 3px;
         border: 0px !important;
@@ -52,6 +52,10 @@
 
 
 <div class="event_container">
+
+    
+
+
     <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
         <div class="col-sm-12 mt10 bggrey clearfix" id="buttonscroll">
     @if (TempData["ExpiredEvent"] != null)
@@ -246,8 +250,7 @@
             <div class="col-sm-6 col-xs-6 text-left no_pad">
                 <h2 class="fb_dis_head no_pad pt5">COMPLETE INFO</h2>
             </div>
-            @if (Html.DisplayFor(m => m.Shareonfb).ToString() == "y" || Html.DisplayFor(m => m.Shareonfb).ToString() == "Y")
-            {
+         
               <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
                 <a href=""><img src="/Images/mail.png"></a>
                 <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
@@ -255,7 +258,7 @@
 
                 <a href="#" id="linkshare"><img src="/Images/lin.png"></a>
             </div>
-            }
+            
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
         <div class="evnt_details_body2">
@@ -596,6 +599,7 @@
 
 
     $(document).ready(function () {
+       
 
         //history.pushState(null, null, 'ViewEvent');
         //window.addEventListener('popstate', function (event) {
@@ -637,7 +641,7 @@
 
                 count++;
                 $('#id_orgname').addClass('err-bor');
-               
+
             }
 
 
@@ -655,7 +659,7 @@
             } else {
                 count++;
                 $('#id_orgtext').addClass('err-bor');
-               
+
             }
             if (erroremail != "") {
                 errormsg += erroremail;
@@ -701,7 +705,7 @@
 
         });
     });
-     
+
     @*$('#icalender').click(function () {
             alert('hello')
             var date=$('#startdate').val();
@@ -792,7 +796,7 @@
                     $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
                     var target = $(this).data("target");
                     $(target).show();
-                }              
+                }
 function pad(n) { return n < 10 ? '0' + n : n };
 
 
@@ -894,7 +898,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
         });
 
         $("#lstcarousel div:first").addClass("active");
-       
+
 
         $(".EveActRib").css("display", "none");
         $(".FacdisComm").click(function () {

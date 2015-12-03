@@ -1,7 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(EventCombo.Startup))]
+[assembly: OwinStartup("EventComboStartup", typeof(EventCombo.Startup))]
+//[assembly: OwinStartupAttribute(typeof(EventCombo.Startup))]
 namespace EventCombo
 {
     public partial class Startup

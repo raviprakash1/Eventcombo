@@ -24,7 +24,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-
+    @*<script src="~/Scripts/jquery.masked.js"></script>*@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/main.js"></script>
@@ -124,7 +124,8 @@
                                                 <p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>
                                                 <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
                                                 <p>@Html.ActionLink("Organizer Profile", "OrganizerProfile", "Account")</p>
-                                                <p>@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")</p>
+                                                @*<p>@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")</p>*@
+                                                <p>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = 169 }, null)</p>
                                                 <p>@Html.ActionLink("Manage Event", "EventList", "EventList")</p>
                                             </div>
                                         </div>

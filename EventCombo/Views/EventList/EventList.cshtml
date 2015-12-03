@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<EventCombo.Models.EventListTemplate>
+@using EventCombo.Models;
 @{
     ViewBag.Title = "EventList";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
@@ -31,13 +32,13 @@
         <div class="col-sm-12  custom fs18 no_pad" id="myTab">
             <ul class="nav nav-tabs evnt-mng-tab">
                 <li class="active">
-                    <a href="#sectionA">Live Events (2)</a>
+                    <a href="#sectionA">Live Events (@TempData["LiveEvents"])</a>
                 </li>
                 <li class="">
-                    <a href="#sectionB">Saved Drafts (3)</a>
+                    <a href="#sectionB">Saved Drafts (@TempData["SavedEvents"])</a>
                 </li>
                 <li class="">
-                    <a href="#sectionC">Past Events (4)</a>
+                    <a href="#sectionC">Past Events (@TempData["PastEvents"])</a>
                 </li>
            </ul>
         </div>
@@ -55,24 +56,30 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{ 
+                                    foreach (var item in (List<EventListTemplate>)ViewBag.LiveEvent)
+                                    {
+                                        //}
+                                        //foreach (var obj in Model)
+                                        //{
+
                                 <tr>
-                                    <td class="evnt_mng_tit_200">Event Title</td>
-                                    <td>10th Aug 2015 / 10:00am</td>
-                                    <td>24/100</td>
+                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
+                                    <td>@item.EventDate / @item.EventTime</td>
+                                    <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
-                                        <div class="event-btn-action">
-                                            <a href="" class="btn-link manage">
-                                               Manage
-                                            </a>
-                                            <a href="" class="btn-link edit">
-                                               Edit
-                                            </a>
-                                            <a href="" class="btn-link view">
+                                        <div class="event-btn-action">                                            
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
+                                            <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid =item.EventID},null)</p>                                            
+                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
+                                            @*<a href="" class="btn-link view">
                                                View
-                                            </a>
+                                            </a>*@
                                         </div>
                                     </td>
                                 </tr>
+                                    }
+                                    }
                             </tbody>
                         </table>
                     
@@ -90,42 +97,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+@{ 
+    foreach (var item in (List<EventListTemplate>)ViewBag.SavedEvent)
+    {
                                 <tr>
-                                    <td class="evnt_mng_tit_200">Event Title</td>
-                                    <td>10th Aug 2015 / 10:00am</td>
-                                    <td>24/100</td>
+                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
+                                    <td>@item.EventDate / @item.EventTime</td>
+                                    <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
                                         <div class="event-btn-action">
-                                            <a href="" class="btn-link manage">
-                                                Manage
-                                            </a>
-                                            <a href="" class="btn-link edit">
-                                                Edit
-                                            </a>
-                                            <a href="" class="btn-link view">
-                                                View
-                                            </a>
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
+                                            <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>   
+                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="evnt_mng_tit_200">Event Title</td>
-                                    <td>10th Aug 2015 / 10:00am</td>
-                                    <td>24/100</td>
-                                    <td class="text-center">
-                                        <div class="event-btn-action">
-                                            <a href="" class="btn-link manage">
-                                                Manage
-                                            </a>
-                                            <a href="" class="btn-link edit">
-                                                Edit
-                                            </a>
-                                            <a href="" class="btn-link view">
-                                                View
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+    }
+    }
                             </tbody>
                         </table><!-- main-sec -->
                 </div>
@@ -140,60 +128,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+@{
+    foreach (var item in (List<EventListTemplate>)ViewBag.PastEvent)
+    {
                                 <tr>
-                                    <td class="evnt_mng_tit_200">Event Title</td>
-                                    <td>10th Aug 2015 / 10:00am</td>
-                                    <td>24/100</td>
+                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
+                                    <td>@item.EventDate/ @item.EventTime</td>
+                                    <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
-                                        <div class="event-btn-action">
-                                            <a href="" class="btn-link manage">
-                                                Manage
-                                            </a>
-                                            <a href="" class="btn-link edit">
-                                                Edit
-                                            </a>
-                                            <a href="" class="btn-link view">
-                                                View
-                                            </a>
+                                        <div class="event-btn-action">                                            
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
+                                            <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>   
+                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="evnt_mng_tit_200">Event Title</td>
-                                    <td>10th Aug 2015 / 10:00am</td>
-                                    <td>24/100</td>
-                                    <td class="text-center">
-                                        <div class="event-btn-action">
-                                            <a href="" class="btn-link manage">
-                                                Manage
-                                            </a>
-                                            <a href="" class="btn-link edit">
-                                                Edit
-                                            </a>
-                                            <a href="" class="btn-link view">
-                                                View
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="evnt_mng_tit_200">Event Title</td>
-                                    <td>10th Aug 2015 / 10:00am</td>
-                                    <td>24/100</td>
-                                    <td class="text-center">
-                                        <div class="event-btn-action">
-                                            <a href="" class="btn-link manage">
-                                                Manage
-                                            </a>
-                                            <a href="" class="btn-link edit">
-                                                Edit
-                                            </a>
-                                            <a href="" class="btn-link view">
-                                                View
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+        }
+    }
                             </tbody>
                         </table><!-- main-sec -->
                 </div>

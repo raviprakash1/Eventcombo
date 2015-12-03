@@ -803,6 +803,8 @@
           <Parameter Name="EventCat" Type="varchar" Mode="In" />
           <Parameter Name="EventSubCat" Type="varchar" Mode="In" />
           <Parameter Name="EventFeature" Type="varchar" Mode="In" />
+          <Parameter Name="EventStartdate" Type="varchar" Mode="In" />
+          <Parameter Name="EventTicket" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GUID" Type="varchar" Mode="In" />
@@ -1845,6 +1847,8 @@
             <Parameter Name="EventCat" Mode="In" Type="String" />
             <Parameter Name="EventSubCat" Mode="In" Type="String" />
             <Parameter Name="EventFeature" Mode="In" Type="String" />
+            <Parameter Name="EventStartdate" Mode="In" Type="String" />
+            <Parameter Name="EventTicket" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetSelectedTicketListing" ReturnType="Collection(String)">
             <Parameter Name="GUID" Mode="In" Type="String" />
@@ -1886,10 +1890,15 @@
           <Property Type="String" Name="EventType" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventCategory" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="135" />
+          <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="123" />
           <Property Type="Int32" Name="Feature" Nullable="false" />
           <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventAddress" Nullable="true" />
+          <Property Type="String" Name="Venuename" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="StartingFrom" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="Purchasedqty" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2533,6 +2542,11 @@
                 <ScalarProperty Name="Feature" ColumnName="Feature" />
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
                 <ScalarProperty Name="EventAddress" ColumnName="EventAddress" />
+                <ScalarProperty Name="Venuename" ColumnName="Venuename" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TicketDetail" ColumnName="TicketDetail" />
+                <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
+                <ScalarProperty Name="Purchasedqty" ColumnName="Purchasedqty" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

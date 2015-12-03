@@ -9,6 +9,8 @@
 
 @using (Html.BeginForm("Index", "ManageEvent", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
 {
+
+
     <section id="content_wrapper">
 
         <!-- Start: Topbar -->
@@ -93,7 +95,9 @@
                                            
                                            
                                             <div class="col-md-2 col-sm-2 mt10">
+                                                <label> Feature </label>
                                                 <div class="section">
+                                                  
                                                     @Html.DropDownList("Features", ViewBag.Features as List<SelectListItem>, new { @class = "form-control" })
                                                     @*<label class="field select">
                                                         <select id="strFeature" class="form-control">
@@ -108,6 +112,20 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-sm-2 mt10">
+                                                <label> Any Event </label>
+                                                <div class="section">
+                                                    @Html.DropDownList("Events", ViewBag.Events as List<SelectListItem>, new { @class = "form-control" })
+                                                  
+                                    </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2 mt10">
+                                                <label> Any Ticket Sales </label>
+                                                <div class="section">
+                                                    @Html.DropDownList("Tickets", ViewBag.Tickets as List<SelectListItem>, new { @class = "form-control" })
+                                    </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2 mt10">
+                                                <label> &nbsp;  </label>
                                                 <button class="btn btn-info br2 col-md-12 fs15">Search</button>
                                             </div>
                                         </form>
@@ -121,13 +139,13 @@
                                     <thead class="bg_white">
                                         <tr class="bg_white">
                                             <th data-column-id="id" data-type="numeric" data-identifier="true">Sno.</th>
-                                            <th>Event Title</th>
-                                            <th>Event Type</th>
-                                            <th>Event Category</th>
-                                            <th>Event SubCategory</th>
-                                            <th>Event Date(s)</th>
+                                            <th>Title</th>
+                                            <th>Type</th>
+                                            <th>Category-SubCategory</th>
+                                            <th>Date(s)</th>
                                             <th>Organizer Name & Email</th>
                                             <th>Venue name & address</th>
+                                            <th>Action</th>
                                             <th>Manage Ticketing</th>
                                             <th>Tickets Sold</th>
                                             <th>Feature </th>
@@ -139,16 +157,25 @@
                                             {
                                                 i = i + 1;
                                                 <tr>
-                                                    <td>@i.ToString()</td>
+                                                    <td>@i.ToString()</td>  
                                                     <td>@obj.EventTitle</td>
                                                     <td>@obj.EventType</td>
-                                                    <td>@obj.EventCategory</td>
-                                                    <td>@obj.EventSubCategory</td>
+                                                    <td>@obj.EventCategory-@obj.EventSubCategory</td>
                                                     <td>@obj.EventTiming</td>
-                                                    <td>@obj.Orgnizer_Name </td>
+                                                    <td>@obj.Orgnizer_Name -@obj.Email</td>
                                                     <td>@obj.EventAddress</td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                        @if (obj.Purchasedqty <= 0)
+                                                        {
+                                                        <a class="td-btn" type="button" onclick="ConfirmDelete('@obj.EventID');" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
+                                                            <i class="fa fa-remove"></i>
+                                                        </a>
+                                                        }
+                                                        @*@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")/*@
+                                                    </td>
+                                                    <td>Manage Ticketing</td>
+                                                    <td>@obj.TicketDetail</td>
                                                     <td>
                                                         <div class="view_sel_wid">
                                                             @if (obj.Feature == 1)
@@ -205,13 +232,7 @@
 
                                                         </div>
                                                     </td>
-                                                    <td>
-                                                        @*<button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                            <a id="" class="holder-active animation-switcher" href="#modal-panel">
-                                                                <button class="btn btn-danger br2 btn-xs fs12" data-effect="mfp-flipInY"><i class="fa fa-remove"></i></button>
-                                                            </a>*@
-
-                                                    </td>
+                                                  
 
 
 
@@ -239,7 +260,33 @@
 
 
                 </div>
+                <!-- Confirm Msg OK Modal Box -->
+                <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                        <div class="modal-content">
 
+                            <form id="contactForm" class="fullw1 add">
+                                <div class="modal-body text-center pv50 txt-msg">
+
+                                    <h4 class="msg" id="hId"></h4>
+                                </div>
+                                <div class="modal-footer msg-action-btn ok">
+                                    <button type="submit" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
+                                    <button type="button" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
+                                    <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
+                                </div>
+                            </form>
+                            <input type="hidden" id="hdUserId" value="" />
+                        </div>
+                    </div><!-- confirm-msg -->
+                </div>
+                <div>
+                    <a class="td-btn" id="btOk" type="button" href="#confirm-delete-ok" data-toggle="modal" style="display:none">
+
+                    </a>
+                </div>
+                <input type="hidden" id="hdUserId" value="" />
+                <!-- Confirm Msg OK Modal Box -->
                 <!--  <div id="modal-text" class="popup-basic p25 popup-lg mfp-with-anim mfp-hide">
                      <div class="row">
                        <div class="col-md-12"><h3>Select Role</h3></div>
@@ -286,6 +333,47 @@
         </div>
         <!-- End: Content -->
         <script>
+
+            function ConfirmDelete(userId) {
+                $("#hdUserId").val(userId);
+                $("#btnYes").show();
+                $("#btnNo").show();
+                $("#btMesOk").hide();
+
+                // $("#btOk").click();
+
+                $("#hId").text(GetMess("CMSUsers", "UsersDeleteUI"));
+
+                //var x = confirm("Are you sure you want to delete?");
+
+                //if (x) {
+
+
+                //    return true;
+                //}
+                //else
+                return false;
+
+            }
+
+            function GetMess(strname, strFormTag) {
+                var msgnew = "";
+
+                var request = $.ajax({
+                    url: '@Url.Action("Index", "ValidationMessage")',
+                    async: false,
+                    data: { strFormName: strname, strFormTag: strFormTag },
+                    type: 'Post'
+                });
+                request.done(function (msg) {
+                    msgnew += msg;
+                });
+
+                request.fail(function (jqXHR, textStatus) {
+                    msgnew += "Some Error occur!!";
+                });
+                return msgnew;
+            }
             function SaveFeature(EventId,vValue)
             {
                 $.ajax({
@@ -307,6 +395,26 @@
             }
             $(document).ready(function () {
 
+
+
+             $("#btnYes").click(function () {
+        $.ajax({
+            url: '@Url.Action("Deleteevent","ManageEvent")',
+            data: { Eventid: $("#hdUserId").val() },
+            datatype: "Text",
+            type: "Post",
+            success: function (response) {
+                $("#formuser").submit();
+                //$.post("Users\Users");
+               // if (response == "Deleted")
+                   // alert("Record Deleted Successfully.");
+                    //$("#hId").text(GetMess("CMSUsers", "UsersDeleteSuccUI"));
+
+                //else
+                //    alert("Some error occur while Deleting");
+            }
+        });
+    });
                 $("#ddlEventCategory").change(function () {
                     //alert("change Fires");
                     var vCatId = $("#ddlEventCategory").val();

@@ -823,6 +823,7 @@ namespace EventCombo.Controllers
                 string Userid = Session["AppId"].ToString();
                 bool isSavedSuccessfully = true;
                 string fName = "";
+                var NFilename = "";
                 string content_type = "";
                 try
                 {
@@ -850,7 +851,7 @@ namespace EventCombo.Controllers
 
                             var path = string.Format("{0}\\{1}", pathString, file.FileName);
                             var imageformat = getImageFormat(path);
-                            var NFilename = Userid.Trim() + "_ProfImage" + rndnumber + "." + imageformat;
+                             NFilename = Userid.Trim() + "_ProfImage" + rndnumber + "." + imageformat;
                              pathnew = string.Format("{0}\\{1}", pathString, NFilename);
                             //using (EventComboEntities objEntity = new EventComboEntities())
                             //{
@@ -875,7 +876,7 @@ namespace EventCombo.Controllers
 
                 if (isSavedSuccessfully)
                 {
-                    return Json(new { image_name = fName, image_type = content_type, image_path = pathnew });
+                    return Json(new { image_name = NFilename, image_type = content_type, image_path = pathnew });
                 }
                 else
                 {
@@ -1119,16 +1120,28 @@ namespace EventCombo.Controllers
                     var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
                     if (users.Find(x => x.Id == User.Id) != null)
                     {
-                        Session["AppId"] = User.Id;
-
-                        using (EventComboEntities db = new EventComboEntities())
+                      var status=  db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
+                        if (status == "Y" || status == "y")
                         {
-                            AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
-                            aspuser.LoginStatus = "Y";
-                            db.SaveChanges();
+
+
+                            Session["AppId"] = User.Id;
+
+                            using (EventComboEntities db = new EventComboEntities())
+                            {
+                                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
+                                aspuser.LoginStatus = "Y";
+                                db.SaveChanges();
+
+                            }
+                            return RedirectToLocal(url);
+                        }else
+
+                        {
+                            ModelState.AddModelError("", "You not authorized user");
+                            return RedirectToAction("Index", "Home");
 
                         }
-                            return RedirectToLocal(url);
                     }
                     else
                     {

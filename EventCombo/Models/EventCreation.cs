@@ -50,5 +50,8 @@ namespace EventCombo.Models
 
         public string ShowMap { get; set; }
 
+        public string DuplicateEvent { get; set; }
+
+        public string ModifyDate { get; set; }
     }
 }
