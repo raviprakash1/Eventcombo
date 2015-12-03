@@ -1377,7 +1377,10 @@
 
 
 
-
+        $(".cbtPreview").click(function () {
+            var vUrl = $('#txtEventTitle').val() + "౼" + $("#hdEventId").val() + "౼Y";
+            window.location = '@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl;
+        });
 
     </script>
 

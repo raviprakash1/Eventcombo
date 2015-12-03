@@ -430,6 +430,7 @@
                                         Show map on event page
                                     </label>
                                     <label class="label-control evnt_title_multi pl0">
+
                                         <input id="UsepastLoc" class="" type="checkbox">
                                         Use Past Location
                                     </label>
@@ -2248,7 +2249,7 @@
                 }
                 else {
                     var vUrl = $('#txtEventTitle').val() + "౼" + $("#hdEventId").val() + "౼Y";
-                    window.location = '@Url.Action("ViewEvent", "CreateEvent",new { })?strUrlData=' + vUrl;
+                    window.location = '@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl;
                 }
 
                 @*if ($("#hdEventId").val() != '') {
@@ -3430,9 +3431,10 @@
 
             // ---------------------------------Map Implemetation--------------------------------------------
             var input = document.getElementById('txtEventLocation');
-
+           // var inputVenu = document.getElementById('VenueName');
+           // var autocompleteEL = new google.maps.places.Autocomplete(input);
             var autocomplete = new google.maps.places.Autocomplete(input);
-            //autocomplete.bindTo('Hello');
+           
 
             google.maps.event.addListener(autocomplete, 'place_changed', function () {
                 var mapOptions = {
