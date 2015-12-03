@@ -4,6 +4,9 @@
     ViewBag.Title = "Event";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+
 @using (Html.BeginForm("Index", "ManageEvent", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
 {
     <section id="content_wrapper">
@@ -117,7 +120,7 @@
                                 <table class="table footable" data-page-navigation=".pagination" data-page-size="25">
                                     <thead class="bg_white">
                                         <tr class="bg_white">
-                                            <th>Sno.</th>
+                                            <th data-column-id="id" data-type="numeric" data-identifier="true">Sno.</th>
                                             <th>Event Title</th>
                                             <th>Event Type</th>
                                             <th>Event Category</th>
