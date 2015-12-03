@@ -1756,13 +1756,6 @@
           <FunctionImport Name="GetEventDateList" ReturnType="Collection(EventComboModel.GetEventDateList_Result)">
           <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
-            <Parameter Name="EventTitle" Mode="In" Type="String" />
-            <Parameter Name="EventType" Mode="In" Type="String" />
-            <Parameter Name="EventCat" Mode="In" Type="String" />
-            <Parameter Name="EventSubCat" Mode="In" Type="String" />
-            <Parameter Name="EventFeature" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="GetSelectedTicketListing" ReturnType="Collection(String)">
             <Parameter Name="GUID" Mode="In" Type="String" />
             <Parameter Name="EventId" Mode="In" Type="Int64" />
@@ -1796,23 +1789,19 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
+            <Parameter Name="EventTitle" Mode="In" Type="String" />
+            <Parameter Name="EventType" Mode="In" Type="String" />
+            <Parameter Name="EventCat" Mode="In" Type="String" />
+            <Parameter Name="EventSubCat" Mode="In" Type="String" />
+            <Parameter Name="EventFeature" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Datefrom" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="Time" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="type" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="GetEventListing_Result">
-          <Property Type="Int64" Name="EventID" Nullable="false" />
-          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
-          <Property Type="String" Name="EventType" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventCategory" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="135" />
-          <Property Type="Int32" Name="Feature" Nullable="false" />
-          <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventAddress" Nullable="true" />
         </ComplexType>
         <EntityType Name="AspNetUser">
           <Key>
@@ -1880,6 +1869,20 @@
           <End Type="EventComboModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <ComplexType Name="GetEventListing_Result">
+          <Property Type="Int64" Name="EventID" Nullable="false" />
+          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
+          <Property Type="String" Name="EventType" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventCategory" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="127" />
+          <Property Type="Int32" Name="Feature" Nullable="false" />
+          <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventAddress" Nullable="true" />
+          <Property Type="String" Name="Venuename" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="3" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2483,21 +2486,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetEventListing" FunctionName="EventComboModel.Store.GetEventListing">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="EventComboModel.GetEventListing_Result">
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
-                <ScalarProperty Name="EventType" ColumnName="EventType" />
-                <ScalarProperty Name="EventCategory" ColumnName="EventCategory" />
-                <ScalarProperty Name="EventSubCategory" ColumnName="EventSubCategory" />
-                <ScalarProperty Name="EventTiming" ColumnName="EventTiming" />
-                <ScalarProperty Name="Feature" ColumnName="Feature" />
-                <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
-                <ScalarProperty Name="EventAddress" ColumnName="EventAddress" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetSelectedTicketListing" FunctionName="EventComboModel.Store.GetSelectedTicketListing" />
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
           <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
@@ -2529,6 +2517,24 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="GetEventListing" FunctionName="EventComboModel.Store.GetEventListing">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EventComboModel.GetEventListing_Result">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="EventCategory" ColumnName="EventCategory" />
+                <ScalarProperty Name="EventSubCategory" ColumnName="EventSubCategory" />
+                <ScalarProperty Name="EventTiming" ColumnName="EventTiming" />
+                <ScalarProperty Name="Feature" ColumnName="Feature" />
+                <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
+                <ScalarProperty Name="EventAddress" ColumnName="EventAddress" />
+                <ScalarProperty Name="Venuename" ColumnName="Venuename" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TicketDetail" ColumnName="TicketDetail" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

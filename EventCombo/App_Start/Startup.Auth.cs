@@ -98,22 +98,14 @@ namespace EventCombo
 
                         var gender = userDetail.Value<string>("gender");
                         context.Identity.AddClaim(new Claim(ClaimTypes.Gender, gender));
-
-                        //var picture = userDetail.Value<string>("picture");
-                        //context.Identity.AddClaim(new Claim("picture", picture));
-
-                        return Task.FromResult(0);
+                     return Task.FromResult(0);
                     },
                 },
             };
             googleOptions.Scope.Add("https://www.googleapis.com/auth/plus.login");
             googleOptions.Scope.Add("https://www.googleapis.com/auth/userinfo.email");
             app.UseGoogleAuthentication(googleOptions);
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "626183259569-cl5n7nrdlnapj9a6g4u2ish8fakr41fo.apps.googleusercontent.com",
-            //    ClientSecret = "BACAx6NA6qVHJ-4nywYEBW7-"
-            //});
+       
         }
     }
 }

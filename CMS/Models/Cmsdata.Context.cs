@@ -95,7 +95,7 @@ namespace CMS.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventDateList_Result>("GetEventDateList", eventIdParameter);
         }
     
-        public virtual ObjectResult<EventCreation> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature)
+        public virtual ObjectResult<EventCreation> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature, string eventStartdate, string eventTicket)
         {
             var eventTitleParameter = eventTitle != null ?
                 new ObjectParameter("EventTitle", eventTitle) :
@@ -117,7 +117,15 @@ namespace CMS.Models
                 new ObjectParameter("EventFeature", eventFeature) :
                 new ObjectParameter("EventFeature", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter);
+            var eventStartdateParameter = eventStartdate != null ?
+                new ObjectParameter("EventStartdate", eventStartdate) :
+                new ObjectParameter("EventStartdate", typeof(string));
+    
+            var eventTicketParameter = eventTicket != null ?
+                new ObjectParameter("EventTicket", eventTicket) :
+                new ObjectParameter("EventTicket", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter, eventStartdateParameter, eventTicketParameter);
         }
     
         public virtual ObjectResult<string> GetSelectedTicketListing(string gUID, Nullable<long> eventId)

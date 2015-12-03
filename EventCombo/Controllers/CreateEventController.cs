@@ -418,6 +418,11 @@ namespace EventCombo.Controllers
 
         public ActionResult ViewEvent(string strUrlData)
         {
+            if(!strUrlData.Contains('౼'))
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
             ValidationMessageController vmc = new ValidationMessageController();
             string[] str = strUrlData.Split('౼');
             string strForView = "";

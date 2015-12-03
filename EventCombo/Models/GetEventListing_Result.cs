@@ -22,5 +22,8 @@ namespace EventCombo.Models
         public int Feature { get; set; }
         public string Orgnizer_Name { get; set; }
         public string EventAddress { get; set; }
+        public string Venuename { get; set; }
+        public string Email { get; set; }
+        public string TicketDetail { get; set; }
     }
 }
