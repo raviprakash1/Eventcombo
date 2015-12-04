@@ -50,7 +50,7 @@
                                         <span class="view_evnt fs26 col-sm-6">  Users</span>
 
                                         <label class="field select admin-form col-sm-4 text-right srh-by-no">
-                                            Total no. of members:@ViewData["Userscount"]  
+                                            Total no. of members : @ViewData["Userscount"] &nbsp; &nbsp; &nbsp; &nbsp;
                                             @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })
 
                                             @*<select>
@@ -288,7 +288,7 @@
                                                     </tr>
                                                 }
                                             }
-                                        </tbody>
+                                        </tbody>                                        
                                         <tfoot class="footer-menu">
                                             <tr>
                                                 <td colspan="12">
@@ -300,6 +300,11 @@
                                         </tfoot>
 
                                     </table>
+                                    @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"]!=null)
+                                    {
+                                       <span>No Result Found.</span> 
+                                    }
+                                    
                                 </div>
                             </div>
                         </div>
