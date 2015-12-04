@@ -39,6 +39,7 @@ namespace EventCombo.Models
 
         public string Ticket { get; set; }
         public long capacity { get; set; }
+        public string Image { get; set; }
 
     }
 }

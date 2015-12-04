@@ -12,7 +12,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
-
+using System.Web.Script.Serialization;
 
 namespace EventCombo.Controllers
 {
@@ -230,7 +230,38 @@ namespace EventCombo.Controllers
                     ViewBag.CountryID = countryList;
                     ViewBag.EventType = EventType;
                     ViewBag.ddlEventCategory = EventCategory;
-                   
+
+                    var Images = (from myEvent in db.EventImages
+                                  where myEvent.EventID == Eventid
+                                  select myEvent).ToList();
+            
+                    List<image> eList = new List<image>();
+                    if (Images != null)
+                    {
+                        int count = Images.Count;
+                        int k = 0;
+                       
+                        foreach (EventImage Objimg in Images)
+                        {
+                          
+                            var path = "/Images/events/event_flyers/imagepath/" + Objimg.EventImageUrl;
+                            image img = new image();
+                            img.type = Objimg.ImageType;
+                            img.name = Objimg.EventImageUrl;
+                            img.file = path;
+                            eList.Add(img);
+
+
+                        }
+                       
+                    }
+                    var javaScriptSerializer = new
+    System.Web.Script.Serialization.JavaScriptSerializer();
+                    string jsonString = javaScriptSerializer.Serialize(eList);
+                 
+                    ViewData["Image"] = jsonString.ToString();
+
+
                 }
 
 
@@ -1078,6 +1109,7 @@ namespace EventCombo.Controllers
                 }
 
                 objJson.Ticket = strticketHtml.ToString();
+             
                 objJson.capacity = capacity;
 
             }
@@ -1258,7 +1290,7 @@ namespace EventCombo.Controllers
 
 
                     }
-
+                    objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
 
                     if (model.EventImage != null)
                     {
@@ -1736,5 +1768,10 @@ namespace EventCombo.Controllers
 
 
         }
+    }
+    public class image{
+        public string type { get; set; }
+        public string name { get; set; }
+        public string file { get; set; }
     }
 }

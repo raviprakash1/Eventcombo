@@ -14,198 +14,11 @@
 <link href="~/Content/summernote.css" rel="stylesheet" />
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
-<script>
-    $(document).ready(function () {
 
-        $('#input2').filer({
-            limit: 5,
-            extensions: ['jpg', 'jpeg', 'png'],
-            changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drop Images here to upload or click here</h3></br><h4>Upto 5 Images,900X600</h4> </div></div></div>',
-            showThumbs: true,
-            appendTo: "#drag-drop",
-            theme: "dragdropbox",
-            templates: {
-                box: '<ul class="jFiler-item-list clearfix"></ul>',
-
-                item: '<li class="jFiler-item">\
-                                    <div class="">\
-                                            {{fi-image}}\
-                                             <div class="jFiler-item-container">\
-                                <div class="jFiler-item-inner">\
-                                     <div class="jFiler-item-assets jFiler-row">\
-                                        <ul class="list-inline pull-left">\
-                                            <li>{{fi-progressBar}}</li>\
-                                        </ul>\
-                                    </div>\
-                                    </div>\
-                            </div>\
-                                            <span></span>\
-                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
-                                                <i class="glyphicon glyphicon-remove-circle"></i>\
-                                             </button>\
-                                       </div>\
-                        </li>',
-
-                itemAppend: '<li class="jFiler-item">\
-                                    <div class="">\
-                                            {{fi-image}}\
-                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
-                                                <i class="glyphicon glyphicon-remove-circle"></i>\
-                                             </button>\
-                                       </div>\
-                        </li>',
-                progressBar: '<div class="bar"></div>',
-                itemAppendToEnd: true,
-                removeConfirmation: false,
-                _selectors: {
-                    list: '.jFiler-item-list',
-                    item: '.jFiler-item',
-                    progressBar: '.bar',
-                    remove: '.jFiler-item-trash-action',
-                }
-            },
-            uploadFile: {
-                url: "/Event/SaveUploadedFile",
-                data: { 'Uniqueid': $('#hdUniqueguid').val() },
-                type: 'POST',
-                enctype: 'multipart/form-data',
-                beforeSend: function () { },
-                //console.log(el[0].className);
-                //var x = el[0].parentElement;
-                //var len=el[0].parentElement.childNodes.length;
-
-
-                //var input = document.getElementById("input2");
-
-
-                //if (input.files && input.files.length == 1) {
-                //    if (input.files[0].size > 2097152) {
-                //        alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
-
-                //        var dragdrop = document.getElementById("drag-drop");
-                //        var filer = dragdrop.find($(".jFiler-items"));
-                //        dragdrop.remove(el[0]);
-                //        console.log(filer);
-                //       // if (len==1)
-                //       //{
-
-                //       //   var div=  document.getElementById("drag-drop");
-                //       //   console.log(el[0].parentElement.parentElement.parentElement);
-                //       //   var u = document.getElementsByClassName("jFiler-items");
-                //       //   var y = document.getElementsByClassName("jFiler-input-inner");
-                //       //  console.log( el[0].parentElement.parentElement.parentElement.childNodes[0].style.display="block");
-                //       //  console.log(  el[0].parentElement.parentElement.parentElement.childNodes[0])
-                //       //   console.log(y);
-
-
-
-                //       // }
-                //        x.removeChild(el[0]);
-                //        return false;
-
-
-
-                success: function (data, el) {
-                    console.log(data);
-                    var parent = el.find(".jFiler-jProgressBar").parent();
-                    el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
-                        $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
-                    });
-
-                    var image_count = $("#image_count").val();
-                    var imagejson = jQuery.parseJSON(JSON.stringify(data));
-                    var imgdata = imagejson.image_name + '####' + imagejson.image_type;
-
-                    $("#image_count").val(el[0].jfiler_id)
-                    $('<input>').attr({
-                        type: 'hidden',
-                        id: 'image_hidden_' + el[0].jfiler_id,
-                        name: 'Eventpicture[' + imgdata + ']',
-                        value: imgdata
-                    }).appendTo('form');
-
-                    $('#ImagePresent').val("Yes");
-
-                    if ($.trim(image_count) == '') {
-                        $("#image_count").val('1');
-                    } else {
-                        image_count = parseInt(image_count) + 1;
-                        $("#image_count").val(image_count);
-                    }
-
-
-
-                },
-
-                error: function (el) {
-                    var input = document.getElementById("input2");
-
-                    var parent = el.find(".jFiler-jProgressBar").parent();
-
-                    el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
-                        $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
-                    });
-                },
-                statusCode: {},
-                onProgress: function () { },
-            },
-            dragDrop: {
-                dragEnter: function () { },
-                dragLeave: function () { },
-                drop: function () { },
-            },
-            addMore: true,
-            clipBoardPaste: true,
-            excludeName: null,
-            beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
-            onSelect: function () { $(".jFiler-input-inner").hide(); },
-            afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
-
-            onRemove: function (el) {
-                var image_count = $("#image_count").val();
-                image_count = parseInt(image_count) - 1;
-                var id_div = el[0].jfiler_id;
-                var hidden_image_element = 'image_hidden_' + id_div;
-                if (image_count == 0) {
-                    $("#image_count").val('');
-                } else {
-                    $("#image_count").val(image_count);
-                }
-                $("#" + hidden_image_element).remove();
-                $('#input2').click(function (e) {
-                    e.preventDefault();
-
-                })
-                $('#ImagePresent').val("NO");
-
-
-            },
-            onEmpty: function (el) {
-
-
-                if ($("#imageeror").val() == 0) {
-                    if ($(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
-                }
-            },
-            captions: {
-                button: "Choose Files",
-                feedback: "Choose files To Upload",
-                feedback2: "files were chosen",
-                drop: "Drop file here to Upload",
-                removeConfirmation: "Are you sure you want to remove this file?",
-                errors: {
-                    filesLimit: ajaxsetup('CreateEvent', 'CreateEventImagecountUI'),
-                    filesType: ajaxsetup('CreateEvent', 'CreateEventImageTypeUI'),
-                    filesSize: ajaxsetup('CreateEvent', 'CreateEventImageSizeUI'),
-                    filesSizeAll: ajaxsetup('CreateEvent', 'CreateEventImageSizeUI')
-                }
-            }
-        });
-    });
-</script>
 
 @using (Html.BeginForm())
 {
+    <input type="hidden" id="hdimage" />
     <div class="event_container">
         <div class="event_inner_container event_top" id="eventtopscoll">
             <div class="col-sm-12 pt10 bggrey">
@@ -1411,9 +1224,28 @@
                     <input type="hidden" id="hddiscount" value="0" />
                     <input type="hidden" id="hdSchType" value="" />
                     <input type="hidden" id="hdMonthlyType" value="DW" />
+                    <input type="hidden" id="status" />
+                    <a class="btn ev_set_del_btn evnt_set" id="anodelete" type="button" href="#nodelete" style="display:none" data-toggle="modal"></a>    
+                        <div class="modal fade" id="nodelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                                <div class="modal-content">
+                                    <!-- <div class="modal-header custom">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div> -->
+                                    <form id="contactForm" class="fullw1 add">
+                                        <div class="modal-body text-center pv50 txt-msg">
+                                            <h4 class="msg" id="nodelete">You cannot delete the last ticket while your event is live. Add another ticket or unpublish this event first</h4>
+                                        </div>
+                                        <div class="modal-footer msg-action-btn ok">
+                                          
+                                            <button type="button" class="btn btn-primary no" data-dismiss="modal">OK</button>
 
-
-                </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div><!-- confirm-msg -->
+                        </div>
+</div>
             </div>
 
         </div>
@@ -1528,6 +1360,7 @@
                    
                     if (data.EventStatus == "Live")
                     {
+
                         $(".cbtMakeElive").hide();
                         $("#lblDft").hide();
                     }
@@ -1536,7 +1369,7 @@
                         $(".cbtMakeElive").show();
                         $("#lblDft").show();
                     }
-
+                    $('#status').val(data.EventStatus);
                     if (data.MultipleSchTime == "S") {
                         $("#txtStartDate").val(data.EventStartDate);
                         $("#txtStartTime").val(data.EventStartTime);
@@ -1591,7 +1424,7 @@
                     //
                     if(data.Ticket!='') 
                     {
-                        console.log(data.Ticket);
+                      
                         $(".ticket_panel").show();
                         //$(".tab-content").hide();
                         $('#MasterDiv').append(data.Ticket);
@@ -1648,10 +1481,15 @@
                     }
 
                     $('#id_totalqty').html(data.capacity);
+                    if (data.Image != null)
+                    {
+                        $('#hdimage').val(data.Image);
+                                        }
 
                 }
             );
         });
+
 
         $(".cbtPreview").click(function () {
             var vUrl = $('#txtEventTitle').val() + "౼" + $("#hdEventId").val() + "౼Y";
@@ -3602,8 +3440,7 @@
                     fee = ccpamount;
                 }
 
-                console.log(ccpamount);
-                console.log(ccpfinal);
+            
                 $("#id_fee-" + num).val(ccpamount.replace(',',''));
                 $("#id_total-" + num).val(ccpfinal.replace(',', ''));
                 //$('#' + id).val(price)
@@ -4042,7 +3879,16 @@
             {
               
                 var divlength = $("#MasterDiv> div").size();
-
+                var status = $('#status').val();
+                if (divlength == 1)
+                {
+                    $('#anodelete').click();
+                    $(".tab-content").hide();
+                    //  alert('You cannot delete the last ticket while your event is live. Add another ticket or unpublish this event first');
+                    return false;
+                }
+               
+               
                 var id = e;
                 var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
@@ -4752,5 +4598,218 @@
         });
 
     </script>
+
+    <script>
+        $(document).ready(function () {
+        
+        var image="";
+        var j= @Html.Raw(ViewData["Image"]);
+          
+       
+        $('#input2').filer({
+            limit: 5,
+            extensions: ['jpg', 'jpeg', 'png'],
+            changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drop Images here to upload or click here</h3></br><h4>Upto 5 Images,900X600</h4> </div></div></div>',
+            showThumbs: true,
+            appendTo: "#drag-drop",
+            theme: "dragdropbox",
+            templates: {
+                box: '<ul class="jFiler-item-list clearfix"></ul>',
+
+                item: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <div class="jFiler-item-container">\
+                                <div class="jFiler-item-inner">\
+                                     <div class="jFiler-item-assets jFiler-row">\
+                                        <ul class="list-inline pull-left">\
+                                            <li>{{fi-progressBar}}</li>\
+                                        </ul>\
+                                    </div>\
+                                    </div>\
+                            </div>\
+                                            <span></span>\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+
+                itemAppend: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+                progressBar: '<div class="bar"></div>',
+                itemAppendToEnd: true,
+                removeConfirmation: false,
+                _selectors: {
+                    list: '.jFiler-item-list',
+                    item: '.jFiler-item',
+                    progressBar: '.bar',
+                    remove: '.jFiler-item-trash-action',
+                }
+            },
+            uploadFile: {
+                url: "/Event/SaveUploadedFile",
+                data: { 'Uniqueid': $('#hdUniqueguid').val() },
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                beforeSend: function () { },
+                //console.log(el[0].className);
+                //var x = el[0].parentElement;
+                //var len=el[0].parentElement.childNodes.length;
+
+
+                //var input = document.getElementById("input2");
+
+
+                //if (input.files && input.files.length == 1) {
+                //    if (input.files[0].size > 2097152) {
+                //        alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
+
+                //        var dragdrop = document.getElementById("drag-drop");
+                //        var filer = dragdrop.find($(".jFiler-items"));
+                //        dragdrop.remove(el[0]);
+                //        console.log(filer);
+                //       // if (len==1)
+                //       //{
+
+                //       //   var div=  document.getElementById("drag-drop");
+                //       //   console.log(el[0].parentElement.parentElement.parentElement);
+                //       //   var u = document.getElementsByClassName("jFiler-items");
+                //       //   var y = document.getElementsByClassName("jFiler-input-inner");
+                //       //  console.log( el[0].parentElement.parentElement.parentElement.childNodes[0].style.display="block");
+                //       //  console.log(  el[0].parentElement.parentElement.parentElement.childNodes[0])
+                //       //   console.log(y);
+
+
+
+                //       // }
+                //        x.removeChild(el[0]);
+                //        return false;
+
+
+
+                success: function (data, el) {
+                    console.log(data);
+                    var parent = el.find(".jFiler-jProgressBar").parent();
+                    el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                        $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                    });
+
+                    var image_count = $("#image_count").val();
+                    var imagejson = jQuery.parseJSON(JSON.stringify(data));
+                    var imgdata = imagejson.image_name + '####' + imagejson.image_type;
+
+                    $("#image_count").val(el[0].jfiler_id)
+                    $('<input>').attr({
+                        type: 'hidden',
+                        id: 'image_hidden_' + el[0].jfiler_id,
+                        name: 'Eventpicture[' + imgdata + ']',
+                        value: imgdata
+                    }).appendTo('form');
+
+                    $('#ImagePresent').val("Yes");
+
+                    if ($.trim(image_count) == '') {
+                        $("#image_count").val('1');
+                    } else {
+                        image_count = parseInt(image_count) + 1;
+                        $("#image_count").val(image_count);
+                    }
+
+
+
+                },
+
+                error: function (el) {
+                    var input = document.getElementById("input2");
+
+                    var parent = el.find(".jFiler-jProgressBar").parent();
+
+                    el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                        $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                    });
+                },
+                statusCode: {},
+                onProgress: function () { },
+            },
+            dragDrop: {
+                dragEnter: function () { },
+                dragLeave: function () { },
+                drop: function () { },
+            },
+            addMore: true,
+            clipBoardPaste: true,
+            excludeName: null,
+            beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
+            onSelect: function () { $(".jFiler-input-inner").hide(); },
+            afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
+
+            onRemove: function (el) {
+                var image_count = $("#image_count").val();
+                image_count = parseInt(image_count) - 1;
+                var id_div = el[0].jfiler_id;
+                alert(id_div);
+                var hidden_image_element = 'image_hidden_' + id_div;
+                if (image_count == 0) {
+                    $("#image_count").val('');
+                } else {
+                    $("#image_count").val(image_count);
+                }
+                $("#" + hidden_image_element).remove();
+                $('#input2').click(function (e) {
+                    e.preventDefault();
+
+                })
+                $('#ImagePresent').val("NO");
+
+
+            },
+            onEmpty: function (el) {
+
+
+                if ($("#imageeror").val() == 0) {
+                    if ($(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                }
+            },
+            captions: {
+                button: "Choose Files",
+                feedback: "Choose files To Upload",
+                feedback2: "files were chosen",
+                drop: "Drop file here to Upload",
+                removeConfirmation: "Are you sure you want to remove this file?",
+                errors: {
+                    filesLimit: ajaxsetup('CreateEvent', 'CreateEventImagecountUI'),
+                    filesType: ajaxsetup('CreateEvent', 'CreateEventImageTypeUI'),
+                    filesSize: ajaxsetup('CreateEvent', 'CreateEventImageSizeUI'),
+                    filesSizeAll: ajaxsetup('CreateEvent', 'CreateEventImageSizeUI')
+                }
+            },
+            files: j
+        });
+
+
+
+            if(j!='')
+            { 
+                $('#image_count').val(j.length);
+                for(var i=0;i<j.length;i++)
+                {
+                    var type=j[i].type;
+                    var img=j[i].name;
+                    var imgdata = img + '####' + type;
+ $('<input>').attr({type: 'hidden',id:'image_hidden_'+i,name: 'Eventpicture[' + imgdata + ']', value:imgdata}).appendTo('form');
+
+                }
+                
+            }
+    });
+    </script>
+
 }
 

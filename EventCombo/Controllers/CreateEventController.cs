@@ -200,209 +200,203 @@ namespace EventCombo.Controllers
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
 
-
-                using (EventComboEntities objEnt = new EventComboEntities())
-                {
-                    Event ObjEC = new Event();
-
-                    ObjEC.EventTypeID = model.EventTypeID;
-                    ObjEC.EventCategoryID = model.EventCategoryID;
-                    ObjEC.EventSubCategoryID = model.EventSubCategoryID;
-                    ObjEC.UserID = strUserId;
-                    ObjEC.EventTitle = model.EventTitle;
-                    ObjEC.DisplayStartTime = model.DisplayStartTime;
-                    ObjEC.DisplayEndTime = model.DisplayEndTime;
-                    ObjEC.DisplayTimeZone = model.DisplayTimeZone;
-                    ObjEC.EventDescription = model.EventDescription;
-                    ObjEC.EventPrivacy = model.EventPrivacy;
-                    ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
-                    ObjEC.Private_GuestOnly = model.Private_GuestOnly;
-                    ObjEC.Private_Password = model.Private_Password;
-                    ObjEC.EventUrl = model.EventUrl;
-                    ObjEC.PublishOnFB = model.PublishOnFB;
-                    ObjEC.EventStatus = model.EventStatus;
-                    ObjEC.IsMultipleEvent = model.IsMultipleEvent;
-                    ObjEC.TimeZone = model.TimeZone;
-                    ObjEC.DisplayStartTime = model.DisplayStartTime;
-                    ObjEC.DisplayEndTime = model.DisplayEndTime;
-                    ObjEC.DisplayTimeZone = model.DisplayTimeZone;
-                    ObjEC.FBUrl = model.FBUrl;
-                    ObjEC.TwitterUrl = model.TwitterUrl;
-                    ObjEC.LastLocationAddress = model.LastLocationAddress;
-                    ObjEC.AddressStatus = model.AddressStatus;
-                    ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
-                    ObjEC.Ticket_DAdress = model.Ticket_DAdress;
-                    ObjEC.Ticket_showremain = model.Ticket_showremain;
-                    ObjEC.Ticket_showvariable = model.Ticket_showvariable;
-                    ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
-                    ObjEC.Ticket_variabletype = model.Ticket_variabletype;
-                    ObjEC.ShowMap = model.ShowMap;
-                    ObjEC.CreateDate = DateTime.Now;
-                    objEnt.Events.Add(ObjEC);
-                    // Address info
-                    if (model.AddressDetail != null)
+                EventComboEntities objEntDup = new EventComboEntities();
+                    using (EventComboEntities objEnt = new EventComboEntities())
                     {
-                        Address ObjAdd = new Models.Address();
-                        foreach (Address objA in model.AddressDetail)
+                        Event ObjEC = new Event();
+
+                        ObjEC.EventTypeID = model.EventTypeID;
+                        ObjEC.EventCategoryID = model.EventCategoryID;
+                        ObjEC.EventSubCategoryID = model.EventSubCategoryID;
+                        ObjEC.UserID = strUserId;
+                        ObjEC.EventTitle = model.EventTitle;
+                        ObjEC.DisplayStartTime = model.DisplayStartTime;
+                        ObjEC.DisplayEndTime = model.DisplayEndTime;
+                        ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                        ObjEC.EventDescription = model.EventDescription;
+                        ObjEC.EventPrivacy = model.EventPrivacy;
+                        ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
+                        ObjEC.Private_GuestOnly = model.Private_GuestOnly;
+                        ObjEC.Private_Password = model.Private_Password;
+                        ObjEC.EventUrl = model.EventUrl;
+                        ObjEC.PublishOnFB = model.PublishOnFB;
+                        ObjEC.EventStatus = model.EventStatus;
+                        ObjEC.IsMultipleEvent = model.IsMultipleEvent;
+                        ObjEC.TimeZone = model.TimeZone;
+                        ObjEC.DisplayStartTime = model.DisplayStartTime;
+                        ObjEC.DisplayEndTime = model.DisplayEndTime;
+                        ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                        ObjEC.FBUrl = model.FBUrl;
+                        ObjEC.TwitterUrl = model.TwitterUrl;
+                        ObjEC.LastLocationAddress = model.LastLocationAddress;
+                        ObjEC.AddressStatus = model.AddressStatus;
+                        ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
+                        ObjEC.Ticket_DAdress = model.Ticket_DAdress;
+                        ObjEC.Ticket_showremain = model.Ticket_showremain;
+                        ObjEC.Ticket_showvariable = model.Ticket_showvariable;
+                        ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
+                        ObjEC.Ticket_variabletype = model.Ticket_variabletype;
+                        ObjEC.ShowMap = model.ShowMap;
+                        ObjEC.CreateDate = DateTime.Now;
+                        objEnt.Events.Add(ObjEC);
+                        // Address info
+                        if (model.AddressDetail != null)
                         {
-                            if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress!="")
+                            Address ObjAdd = new Models.Address();
+                            foreach (Address objA in model.AddressDetail)
                             {
-                                ObjAdd = new Models.Address();
-                                ObjAdd.EventId = ObjEC.EventID;
-                                ObjAdd.Address1 = objA.Address1 == null ? "": objA.Address1;
-                                ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2; 
-                                ObjAdd.City = objA.City == null ? "" : objA.City;
-                                ObjAdd.CountryID = objA.CountryID; 
-                                ObjAdd.State = objA.State == null ? "" : objA.State; 
-                                ObjAdd.UserId = strUserId;
-                                ObjAdd.VenueName = objA.VenueName;
-                                ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
-                                ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
-                                ObjAdd.Name = "";
-                                objEnt.Addresses.Add(ObjAdd);
+                                if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
+                                {
+                                    ObjAdd = new Models.Address();
+                                    ObjAdd.EventId = ObjEC.EventID;
+                                    ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
+                                    ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
+                                    ObjAdd.City = objA.City == null ? "" : objA.City;
+                                    ObjAdd.CountryID = objA.CountryID;
+                                    ObjAdd.State = objA.State == null ? "" : objA.State;
+                                    ObjAdd.UserId = strUserId;
+                                    ObjAdd.VenueName = objA.VenueName;
+                                    ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
+                                    ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
+                                    ObjAdd.Name = "";
+                                    objEnt.Addresses.Add(ObjAdd);
+                                }
+                            }
+                        }
+                        // Event on Single Timing 
+                        if (model.EventVenue != null)
+                        {
+                            EventVenue objEVenue = new EventVenue();
+                            foreach (EventVenue objEv in model.EventVenue)
+                            {
+                                objEVenue = new EventVenue();
+                                objEVenue.EventID = ObjEC.EventID;
+                                objEVenue.EventStartDate = objEv.EventStartDate;
+                                objEVenue.EventEndDate = objEv.EventEndDate;
+                                objEVenue.EventStartTime = objEv.EventStartTime;
+                                objEVenue.EventEndTime = objEv.EventEndTime;
+                                objEnt.EventVenues.Add(objEVenue);
+                            }
+                        }
+                        // Event on Multiple timing 
+                        if (model.MultipleEvents != null)
+                        {
+                            MultipleEvent objMEvents = new MultipleEvent();
+                            foreach (MultipleEvent objME in model.MultipleEvents)
+                            {
+                                objMEvents = new MultipleEvent();
+                                objMEvents.EventID = ObjEC.EventID;
+                                objMEvents.Frequency = objME.Frequency;
+                                objMEvents.WeeklyDay = objME.WeeklyDay;
+                                objMEvents.MonthlyDay = objME.MonthlyDay;
+                                objMEvents.MonthlyWeek = objME.MonthlyWeek;
+                                objMEvents.MonthlyWeekDays = objME.MonthlyWeekDays;
+                                objMEvents.StartingFrom = objME.StartingFrom;
+                                objMEvents.StartingTo = objME.StartingTo;
+                                objMEvents.StartTime = objME.StartTime;
+                                objMEvents.EndTime = objME.EndTime;
+                                objEnt.MultipleEvents.Add(objMEvents);
+                            }
+                        }
+                        // Orgnizer
+                        if (model.Orgnizer != null)
+                        {
+                            Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
+                            foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
+                            {
+                                objEOrg = new Event_Orgnizer_Detail();
+                                objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                                objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
+                                objEOrg.FBLink = objOr.FBLink;
+                                objEOrg.Twitter = objOr.Twitter;
+                                objEOrg.DefaultOrg = objOr.DefaultOrg;
+                                objEOrg.UserId = strUserId;
+                                objEnt.Event_Orgnizer_Detail.Add(objEOrg);
+                            }
+                        }
+                        // Tickets
+
+                        if (model.Ticket != null)
+                        {
+                            Ticket ticket = new Ticket();
+                            foreach (Ticket tick in model.Ticket)
+                            {
+                                ticket = new Ticket();
+
+                                ticket.E_Id = ObjEC.EventID;
+
+                                ticket.TicketTypeID = tick.TicketTypeID;
+                                ticket.T_name = tick.T_name;
+                                ticket.Qty_Available = tick.Qty_Available;
+                                ticket.Price = tick.Price;
+                                ticket.T_Desc = tick.T_Desc;
+                                ticket.TicketTypeID = tick.TicketTypeID;
+                                ticket.T_order = tick.T_order;
+                                ticket.Show_T_Desc = tick.Show_T_Desc;
+                                ticket.Fees_Type = tick.Fees_Type;
+                                ticket.Sale_Start_Date = tick.Sale_Start_Date;
+                                ticket.Sale_Start_Time = tick.Sale_Start_Time;
+                                ticket.Sale_End_Date = tick.Sale_End_Date;
+                                ticket.Sale_End_Time = tick.Sale_End_Time;
+                                ticket.Hide_Ticket = tick.Hide_Ticket;
+                                ticket.Auto_Hide_Sche = tick.Auto_Hide_Sche;
+                                ticket.T_AutoSechduleType = tick.T_AutoSechduleType;
+                                ticket.Hide_Untill_Date = tick.Hide_Untill_Date;
+                                ticket.Hide_Untill_Time = tick.Hide_Untill_Time;
+                                ticket.Hide_After_Date = tick.Hide_After_Date;
+                                ticket.Hide_After_Time = tick.Hide_After_Time;
+                                ticket.Min_T_Qty = tick.Min_T_Qty;
+                                ticket.Max_T_Qty = tick.Max_T_Qty;
+                                ticket.T_Disable = tick.T_Disable;
+                                ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
+                                ticket.EC_Fee = tick.EC_Fee;
+                                ticket.Customer_Fee = tick.Customer_Fee;
+                                ticket.TotalPrice = tick.TotalPrice;
+                                ticket.T_Discount = tick.T_Discount;
+                                objEnt.Tickets.Add(ticket);
                             }
 
+
                         }
-                    }
-                    // Event on Single Timing 
-                    if (model.EventVenue != null)
-                    {
-                        EventVenue objEVenue = new EventVenue();
-                        foreach (EventVenue objEv in model.EventVenue)
+
+
+                        if (model.EventImage != null)
                         {
-                            objEVenue = new EventVenue();
-                            objEVenue.EventID = ObjEC.EventID;
-                            objEVenue.EventStartDate = objEv.EventStartDate;
-                            objEVenue.EventEndDate = objEv.EventEndDate;
-                            objEVenue.EventStartTime = objEv.EventStartTime;
-                            objEVenue.EventEndTime = objEv.EventEndTime;
-                            objEnt.EventVenues.Add(objEVenue);
+                            EventImage Image = new EventImage();
+                            foreach (EventImage img in model.EventImage)
+                            {
+                                Image = new EventImage();
+                                Image.EventID = ObjEC.EventID;
+                                Image.EventImageUrl = img.EventImageUrl;
+                                Image.ImageType = img.ImageType;
+                                objEnt.EventImages.Add(Image);
+                            }
                         }
-                    }
-                    // Event on Multiple timing 
-                    if (model.MultipleEvents != null)
-                    {
-                        MultipleEvent objMEvents = new MultipleEvent();
-                        foreach (MultipleEvent objME in model.MultipleEvents)
+
+                        if (model.EventVariable != null)
                         {
-                            objMEvents = new MultipleEvent();
-                            objMEvents.EventID = ObjEC.EventID;
-                            objMEvents.Frequency = objME.Frequency;
-                            objMEvents.WeeklyDay = objME.WeeklyDay;
-                            objMEvents.MonthlyDay = objME.MonthlyDay;
-                            objMEvents.MonthlyWeek = objME.MonthlyWeek;
-                            objMEvents.MonthlyWeekDays = objME.MonthlyWeekDays;
-                            objMEvents.StartingFrom = objME.StartingFrom;
-                            objMEvents.StartingTo = objME.StartingTo;
-                            objMEvents.StartTime = objME.StartTime;
-                            objMEvents.EndTime = objME.EndTime;
-                            objEnt.MultipleEvents.Add(objMEvents);
-                        }
-                    }
-                    // Orgnizer
-                    if (model.Orgnizer != null)
-                    {
-                        Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
-                        foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
-                        {
-                            objEOrg = new Event_Orgnizer_Detail();
-                            objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                            objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
-                            objEOrg.FBLink = objOr.FBLink;
-                            objEOrg.Twitter = objOr.Twitter;
-                            objEOrg.DefaultOrg = objOr.DefaultOrg;
-                            objEOrg.UserId = strUserId;
-
-                            objEnt.Event_Orgnizer_Detail.Add(objEOrg);
-                        }
-                    }
-                    // Tickets
-
-                    if (model.Ticket != null)
-                    {
-                        Ticket ticket = new Ticket();
-                        foreach (Ticket tick in model.Ticket)
-                        {
-                            ticket = new Ticket();
-
-                            ticket.E_Id = ObjEC.EventID;
-
-                            ticket.TicketTypeID = tick.TicketTypeID;
-                            ticket.T_name = tick.T_name;
-                            ticket.Qty_Available = tick.Qty_Available;
-                            ticket.Price = tick.Price;
-                            ticket.T_Desc = tick.T_Desc;
-                            ticket.TicketTypeID = tick.TicketTypeID;
-                            ticket.T_order = tick.T_order;
-                            ticket.Show_T_Desc = tick.Show_T_Desc;
-                            ticket.Fees_Type = tick.Fees_Type;
-                            ticket.Sale_Start_Date = tick.Sale_Start_Date;
-                            ticket.Sale_Start_Time = tick.Sale_Start_Time;
-                            ticket.Sale_End_Date = tick.Sale_End_Date;
-                            ticket.Sale_End_Time = tick.Sale_End_Time;
-                            ticket.Hide_Ticket = tick.Hide_Ticket;
-                            ticket.Auto_Hide_Sche = tick.Auto_Hide_Sche;
-                            ticket.T_AutoSechduleType = tick.T_AutoSechduleType;
-                            ticket.Hide_Untill_Date = tick.Hide_Untill_Date;
-                            ticket.Hide_Untill_Time = tick.Hide_Untill_Time;
-                            ticket.Hide_After_Date = tick.Hide_After_Date;
-                            ticket.Hide_After_Time = tick.Hide_After_Time;
-                            ticket.Min_T_Qty = tick.Min_T_Qty;
-                            ticket.Max_T_Qty = tick.Max_T_Qty;
-                            ticket.T_Disable = tick.T_Disable;
-                            ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
-                            ticket.EC_Fee = tick.EC_Fee;
-                            ticket.Customer_Fee = tick.Customer_Fee;
-                            ticket.TotalPrice = tick.TotalPrice;
-                            ticket.T_Discount = tick.T_Discount;
-
-
-                            objEnt.Tickets.Add(ticket);
+                            Event_VariableDesc var = new Event_VariableDesc();
+                            foreach (Event_VariableDesc variable in model.EventVariable)
+                            {
+                                var = new Event_VariableDesc();
+                                var.Event_Id = ObjEC.EventID;
+                                var.VariableDesc = variable.VariableDesc;
+                                var.Price = variable.Price;
+                                objEnt.Event_VariableDesc.Add(var);
+                            }
                         }
 
-
-                    }
-
-
-                    if (model.EventImage != null)
-                    {
-                        EventImage Image = new EventImage();
-                        foreach (EventImage img in model.EventImage)
-                        {
-                            Image = new EventImage();
-                            Image.EventID = ObjEC.EventID;
-                            Image.EventImageUrl = img.EventImageUrl;
-                            Image.ImageType = img.ImageType;
-                            objEnt.EventImages.Add(Image);
-
-                        }
-                    }
-
-                    if (model.EventVariable != null)
-                    {
-                        Event_VariableDesc var = new Event_VariableDesc();
-                        foreach (Event_VariableDesc variable in model.EventVariable)
-                        {
-                            var = new Event_VariableDesc();
-                            var.Event_Id = ObjEC.EventID;
-                            var.VariableDesc = variable.VariableDesc;
-                            var.Price = variable.Price;
-                            objEnt.Event_VariableDesc.Add(var);
-
-                        }
-                    }
-
-                    objEnt.SaveChanges();
-                    lEventId = ObjEC.EventID;
-                    PublishEvent(lEventId);
-                    if (strIsLive == "Y")
-                        UpdateEventStatus(lEventId.ToString());
-
-
-                    if (model.DuplicateEvent == "Y")
                         objEnt.SaveChanges();
-                    
+                        lEventId = ObjEC.EventID;
+                        PublishEvent(lEventId);
+                        if (strIsLive == "Y")
+                            UpdateEventStatus(lEventId.ToString());
+                    }
+                if (model.DuplicateEvent == "Y")
+                {
+                    model.DuplicateEvent = "N";
+                    SaveEvent(model, strIsLive);
                 }
             }
             catch (Exception ex)
