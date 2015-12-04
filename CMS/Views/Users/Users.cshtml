@@ -47,9 +47,11 @@
                             <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
                                 <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
                                     <div class="panel-heading panel_loader">
-                                        <span class="view_evnt fs26 col-sm-6">  Users</span>
 
-                                        <label class="field select admin-form col-sm-4 text-right srh-by-no">
+                                        <span class="view_evnt fs26 col-sm-4">  Users</span>
+                                        <span class="view_evnt fs15 col-sm-4 text-right">Total no. of members:@ViewData["Userscount"] </span>
+                                        <label class="field select admin-form col-sm-2 text-right srh-by-no">
+
                                             @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })
 
                                             @*<select>
@@ -66,26 +68,28 @@
                                         <!--  <hr class="short alt"> -->
 
                                         <div class="col-md-3">
-                                            @Html.TextBox("SearchStringFirstName", "", new { cssClass = "form-control", placeholder = "First Name" })
+
+                                            @Html.TextBox("SearchStringFirstName", "", new { Class = "form-control", placeholder = "First Name" })
 
 
                                         </div>
 
                                         <div class="col-md-3">
 
-                                            @Html.TextBox("SearchStringLastName", "", new { cssClass = "form-control", placeholder = "Last Name" })
+                                            @Html.TextBox("SearchStringLastName", "", new { Class = "form-control", placeholder = "Last Name" })
 
                                         </div>
                                         <div class="col-md-3">
 
-                                            @Html.TextBox("SearchStringEmail", "", new { cssClass = "form-control", placeholder = "Email Id" })
+                                            @Html.TextBox("SearchStringEmail", "", new { Class = "form-control", placeholder = "Email Id" })
 
                                         </div>
 
 
                                         <div class="col-md-3">
-                                            <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
-                                            Total no. of members:@ViewData["Userscount"]
+
+                                            <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />                                            
+
                                         </div>
 
                                     </div>
@@ -108,9 +112,9 @@
                                                 <th>Location</th>
                                                 <th>Tickets Purchased</th>  
                                                 <th>Deals purchased</th>
-                                                <th data-column-id="org" data-type="string" data-identifier="true">Organiser</th>
-                                                <th data-column-id="mer" data-type="string" data-identifier="true">Merchant</th>
-                                                <th data-column-id="st" data-type="string" data-identifier="true">Status</th>
+                                                <th>Organiser</th>
+                                                <th>Merchant</th>
+                                                <th data-column-id="status" data-order="desc" data-identifier="true">Status</th>
                                                 <td>Action</td>
                                                 <td>Online</td>
                                                     
@@ -288,7 +292,7 @@
                                                     </tr>
                                                 }
                                             }
-                                        </tbody>
+                                        </tbody>                                        
                                         <tfoot class="footer-menu">
                                             <tr>
                                                 <td colspan="12">
@@ -300,6 +304,11 @@
                                         </tfoot>
 
                                     </table>
+                                    @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"]!=null)
+                                    {
+                                       <span>No Result Found.</span> 
+                                    }
+                                    
                                 </div>
                             </div>
                         </div>
@@ -400,14 +409,14 @@
         <!-- End: Content -->
         @*MOdel for Event Info*@
 
-        <div class="modal fade" id="dvEvents" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm text-center">
-                <div class="modal-content">
+        <div class="modal fade cont-modal-cus" id="dvEvents" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm ">
+                <div class="modal-content text-center">
                     @*<div class="modal-header custom">
                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>*@
-                    <form id="contactForm" class="fullw1 add ">
-                        <div class="modal-body pre-scrollable">
+                    <form id="contactForm">
+                        <div class="modal-body cont-scrol">
                             <table id="tbEvent"></table>
                             @*<h4 class="msg">Please click OK to Continue.</h4>*@
                         </div>

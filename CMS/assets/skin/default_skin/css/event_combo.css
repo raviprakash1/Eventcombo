@@ -47,3 +47,6 @@ top: 40%; left: 30%; border:1px solid #e2e2e2; display: none; }
 .add-cat-nav > li > a:hover, .add-cat-nav > li > a:focus{ background: none !important; }
 .add-cat-nav .open > a, .add-cat-nav .open > a:hover, .add-cat-nav .open > a:focus { background: none !important; }
 .dropdown-menu-cus{ box-shadow: none !important;position: relative !important; }
+
+.modal-open .cont-modal-cus{ overflow-y:hidden; }
+.cont-scrol{ min-height:100px; max-height:150px; overflow:auto; }

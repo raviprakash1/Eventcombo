@@ -15,8 +15,8 @@ namespace EventCombo.Models
         public string EventTitle { get; set; }
         public string EventDate { get; set; }
         public string EventTime { get; set; }
-        public string TicketSold { get; set; }
-        public string TotalTicket { get; set; }
+        public Int64 TicketSold { get; set; }
+        public Int64 TotalTicket { get; set; }
         public int EventCount { get; set; }
     }
 }
