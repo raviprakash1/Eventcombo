@@ -25,21 +25,10 @@ namespace EventCombo.Controllers
             List<GetEventsListByStatus1_Result> objSavedEventList = GetSavedEvents(SearchStringEventTitle);
             List <GetEventsListByStatus1_Result> objPastEventList = GetPastEvents(SearchStringEventTitle);
             List<GetEventsListByStatus1_Result> objGuestEventList = GetGuestsList(SearchStringEventTitle);
-            foreach (var item in objLiveEventList)
-            {                
-                var liveevtcount = db.Database.SqlQuery<Int32>("SELECT COUNT(*) from (SELECT ev.EventID,ev.EventTitle, evn.EventStartDate as EventDate,evn.EventStartTime as EventTime FROM Event ev inner JOIN EventVenue evn ON ev.EventID=evn.EventID  WHERE ev.UserID='"+UserId+"' AND UPPER(ev.EventStatus)='LIVE' and EventTitle like '%" + SearchStringEventTitle + "%' Union SELECT ev.EventID,ev.EventTitle,mevn.StartingFrom as EventDate,mevn.StartTime as EventTime FROM Event ev inner JOIN MultipleEvent mevn ON ev.EventID=mevn.EventID  WHERE  ev.UserID='"+UserId+"' AND UPPER(ev.EventStatus)='LIVE' and EventTitle like '%" + SearchStringEventTitle + "%')  as LiveEvntCnt ").FirstOrDefault();                
-                TempData["LiveEvents"] = liveevtcount;
-            }
-            foreach (var item in objSavedEventList)
-            {                
-                var savedevtcount = db.Database.SqlQuery<Int32>("SELECT COUNT(*) from (SELECT ev.EventID,ev.EventTitle, evn.EventStartDate as EventDate,evn.EventStartTime as EventTime FROM Event ev inner JOIN EventVenue evn ON ev.EventID=evn.EventID  WHERE ev.UserID='" + UserId + "' AND UPPER(ev.EventStatus)='SAVE' and EventTitle like '%" + SearchStringEventTitle + "%' Union SELECT ev.EventID,ev.EventTitle,mevn.StartingFrom as EventDate,mevn.StartTime as EventTime FROM Event ev inner JOIN MultipleEvent mevn ON ev.EventID=mevn.EventID  WHERE ev.UserID='" + UserId + "' AND UPPER(ev.EventStatus)='SAVE' and EventTitle like '%" + SearchStringEventTitle + "%') as SavedEvntCnt ").FirstOrDefault();                
-                TempData["SavedEvents"] = savedevtcount;
-            }
-            foreach (var item in objPastEventList)
-            {                
-                var pastevtcount = db.Database.SqlQuery<Int32>("Select count(*) from (select  ev.EventID,ev.EventTitle, evn.EventStartDate as EventDate,evn.EventStartTime as EventTime from Event ev left outer join EventVenue evn on ev.EventID=evn.EventID where ev.UserID='" + UserId + "' AND evn.EventStartDate<GETDATE() and EventTitle like '%" + SearchStringEventTitle + "%' union select  ev.EventID,ev.EventTitle,mevn.StartingFrom as EventDate,mevn.StartTime as EventTime from Event ev left outer join MultipleEvent mevn on ev.EventID=mevn.EventID where ev.UserID='" + UserId + "' AND CONVERT(varchar,mevn.StartingFrom,101)<GETDATE() and EventTitle like '%" + SearchStringEventTitle+"%') as PastEvntCnt  ").FirstOrDefault();                
-                TempData["PastEvents"] = pastevtcount;
-            }
+            TempData["LiveEvents"] = objLiveEventList.Count;
+            TempData["SavedEvents"] = objSavedEventList.Count;
+            TempData["PastEvents"] = objPastEventList.Count;
+            
             int iCount = 0;
             List<SelectListItem> PageFilter = new List<SelectListItem>();
             int i = 0; int z = 0; int iUcount = objLiveEventList.Count; int iGapValue = 3;
