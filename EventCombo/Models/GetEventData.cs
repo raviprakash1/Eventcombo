@@ -36,5 +36,9 @@ namespace EventCombo.Models
         public string EventDescription { get; set; }
 
         public string EventStatus { get; set; }
+
+        public string Ticket { get; set; }
+        public long capacity { get; set; }
+
     }
 }
