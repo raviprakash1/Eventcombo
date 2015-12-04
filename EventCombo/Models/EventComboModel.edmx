@@ -803,6 +803,13 @@
           <Parameter Name="EventCat" Type="varchar" Mode="In" />
           <Parameter Name="EventSubCat" Type="varchar" Mode="In" />
           <Parameter Name="EventFeature" Type="varchar" Mode="In" />
+          <Parameter Name="EventStartdate" Type="varchar" Mode="In" />
+          <Parameter Name="EventTicket" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetEventsListByStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="EventStatus" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GUID" Type="varchar" Mode="In" />
@@ -1795,6 +1802,17 @@
             <Parameter Name="EventCat" Mode="In" Type="String" />
             <Parameter Name="EventSubCat" Mode="In" Type="String" />
             <Parameter Name="EventFeature" Mode="In" Type="String" />
+            <Parameter Name="EventStartdate" Mode="In" Type="String" />
+            <Parameter Name="EventTicket" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetEventsListByStatus">
+            <Parameter Name="EventTitle" Mode="In" Type="String" />
+            <Parameter Name="EventStatus" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetEventsListByStatus1" ReturnType="Collection(EventComboModel.GetEventsListByStatus1_Result)">
+            <Parameter Name="EventTitle" Mode="In" Type="String" />
+            <Parameter Name="EventStatus" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -1882,6 +1900,20 @@
           <Property Type="String" Name="Venuename" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
           <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="3" />
+        </ComplexType>
+        <ComplexType Name="GetEventsListByStatus1_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="EMail" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Date_Time" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="TicketType" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="TicketPurchased" Nullable="false"/>
+          <Property Type="String" Name="OrderId" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="EventID" Nullable="false" />
+          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
+          <Property Type="String" Name="EventDate" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EventTime" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="TotalTicket" Nullable="false" />
+          <Property Type="Int64" Name="TicketSold" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2532,6 +2564,24 @@
                 <ScalarProperty Name="Venuename" ColumnName="Venuename" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="TicketDetail" ColumnName="TicketDetail" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEventsListByStatus1" FunctionName="EventComboModel.Store.GetEventsListByStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EventComboModel.GetEventsListByStatus1_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
+                <ScalarProperty Name="TicketType" ColumnName="TicketType" />
+                <ScalarProperty Name="TicketPurchased" ColumnName="TicketPurchased" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+                <ScalarProperty Name="TotalTicket" ColumnName="TotalTicket" />
+                <ScalarProperty Name="TicketSold" ColumnName="TicketSold" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

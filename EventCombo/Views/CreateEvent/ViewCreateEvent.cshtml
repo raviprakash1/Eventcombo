@@ -626,7 +626,7 @@
         });
 
         $("#btClosePrev").click(function () {
-            history.back();
+            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + $('#hdEventid').val();
         });
 
 

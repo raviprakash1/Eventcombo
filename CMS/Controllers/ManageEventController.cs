@@ -91,6 +91,7 @@ namespace CMS.Controllers
             List<EventCreation> objlst = GetAllEvents("", "", "", "", "","","");
             int iCount = 0;
             List<SelectListItem> PageFilter = new List<SelectListItem>();
+            ViewData["Eventscount"] = objlst.Count;
             int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
             string strText = "";
             PageFilter.Add(new SelectListItem()

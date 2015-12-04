@@ -51,7 +51,9 @@ namespace CMS.Controllers
           
 
             List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
-            foreach(var item in objuser)
+                if (objuser.Count == 0)
+                    ViewData["SearchedUser"] = 0;
+            foreach (var item in objuser)
             {
                 var ans = db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0", item.Id).FirstOrDefault();
               
