@@ -50,6 +50,7 @@
                                         <span class="view_evnt fs26 col-sm-6">  Users</span>
 
                                         <label class="field select admin-form col-sm-4 text-right srh-by-no">
+                                            Total no. of members:@ViewData["Userscount"]  
                                             @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })
 
                                             @*<select>
@@ -84,8 +85,7 @@
 
 
                                         <div class="col-md-3">
-                                            <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
-                                            Total no. of members:@ViewData["Userscount"]
+                                            <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />                                            
                                         </div>
 
                                     </div>

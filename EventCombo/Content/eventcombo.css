@@ -504,7 +504,8 @@ span.evnt_toltip{
 .evnt-mng-tab > li.active > a, .evnt-mng-tab > li.active > a:hover, .evnt-mng-tab > li.active > a:focus {color:#00cafd;  }
 .evnt_mng_tit_200{ min-width:200px; }
 
-
+.evnt-list-pagination{ margin:0px; }
+.evnt-list-pagination > .active > a, .evnt-list-pagination > .active > span, .evnt-list-pagination > .active > a:hover, .evnt-list-pagination > .active > span:hover, .evnt-list-pagination > .active > a:focus, .evnt-list-pagination > .active > span:focus{     background-color: #3cf; border-color:#3cf;}
 
 /************Event Upload Image**********************/
 .evnt_upload_cont{ width: 100%; float: left;}
