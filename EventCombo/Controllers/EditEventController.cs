@@ -26,6 +26,13 @@ namespace EventCombo.Controllers
             EventCreation objCr = new EventCreation();
             if ((Session["AppId"] != null))
             {
+                HomeController hmc = new HomeController();
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
                 Session["Fromname"] = "events";
                 var url = Url.Action("CreateEvent", "CreateEvent");
                 Session["ReturnUrl"] = "CreateEvent~" + url;
@@ -140,6 +147,13 @@ namespace EventCombo.Controllers
             EventCreation objCr = GetEventDataEditing(Eventid);
             if ((Session["AppId"] != null))
             {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
                 Session["Fromname"] = "events";
                 var url = Url.Action("CreateEvent", "CreateEvent");
                 Session["ReturnUrl"] = "CreateEvent~" + url;

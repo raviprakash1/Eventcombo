@@ -1776,12 +1776,13 @@
 
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
-            var Sno = $("#tblOrgnizer tr").length;
+            var Sno = $("#tblOrgnizer tr").length+1;
+            //alert(Sno);
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
             var vOrgTw = $("#txtOrgTWlink").val();
-
+            //alert(Sno);
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
@@ -2218,10 +2219,10 @@
                 //});
 
                 var vDefaultOrg = $("#ddlOrgnizers").val();
-
+                console.log( $("#tblOrgnizer"));
                 $("#tblOrgnizer tr").each(function () {
                     var Sno = $(this).find("td:first").html();
-
+                    //alert(Sno);
                     // Multiple Address
                     if (Sno != '') {
                         Orgnizer.push({
@@ -2235,7 +2236,7 @@
                     }
                 });
 
-
+                console.log(Orgnizer);
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
@@ -2370,19 +2371,35 @@
                 //var data = $("#dvOrg_0").clone();
                 //$("#dvOrganizer").append(data);
                 //alert(parseInt($("#ddlOrgnizers option").length));
-
-
                 if ($("#txtOrgnizer").val().trim() == '') {
-                    alert("Please enter valid organizer.");
-                    $("#txtOrgnizer").focus();
+
+                    //alert("Please enter valid organizer.");
+
+                    var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html(msg);
+                    //$("#txtOrgnizer").focus();
                     return false;
                 }
+
+                //if ($("#txtOrgnizer").val().trim() == '') {
+                //    alert("Please enter valid organizer.");
+                //    $("#txtOrgnizer").focus();
+                //    return false;
+                //}
 
 
 
                 if ($("#hidOrgnizer").val() == '') {
                     if (parseInt($("#ddlOrgnizers option").length) > 24) {
-                        alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
+                        var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
+                        $('#divaccsuc').css('display', 'none');
+                        $('#diverroacc').css('display', 'block');
+                        $('#diverroacc').focus();
+                        $('#erraccmsg').html(msg);
+                        //alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
                         return false;
                     }
                     AddOrgnizer();
@@ -2570,6 +2587,10 @@
                     var Sno = $(this).find("td:first").html();
                     if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
                         $("#txtEventLocation").val($("#consolidate" + Sno).text());
+                    }
+                    else {
+                        $("#txtEventLocation").attr("placeholder", "Click here to enter venue address");
+                        $("#txtEventLocation").val("");
                     }
                 });
             });

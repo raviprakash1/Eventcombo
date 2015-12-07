@@ -28,9 +28,17 @@ namespace EventCombo.Controllers
 
         public ActionResult CreateEvent()
         {
+          
             if ((Session["AppId"] != null))
             {
-               Session["Fromname"] = "events";
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                Session["Fromname"] = "events";
                var url = Url.Action("CreateEvent", "CreateEvent");
                Session["ReturnUrl"] = "CreateEvent~"+ url;
 
@@ -412,7 +420,24 @@ namespace EventCombo.Controllers
 
         public ActionResult ViewEvent(string strUrlData)
         {
-            if(!strUrlData.Contains('౼'))
+            //HomeController hmc = new HomeController();
+            //hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+            //string usernme = hmc.getusername();
+            //if (string.IsNullOrEmpty(usernme))
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+                if (!strUrlData.Contains('౼'))
             {
                 return RedirectToAction("Index", "Home");
 
@@ -689,6 +714,7 @@ namespace EventCombo.Controllers
 
         public ActionResult ViewCreateEvent(string strUrlData)
         {
+            
             ValidationMessageController vmc = new ValidationMessageController();
             string[] str = strUrlData.Split('౼');
             string strForView = "";

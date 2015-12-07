@@ -1769,6 +1769,7 @@
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
             var Sno = $("#tblOrgnizer tr").length;
+            alert()
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
@@ -1844,12 +1845,19 @@
 
             $("#btSaveAddress").click(function () {
                 //$("#txtEventLocation").val("Click here to enter venue address");
-                $("#tblAddress tr").each(function () {
-                    var Sno = $(this).find("td:first").html();
-                    if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
-                        $("#txtEventLocation").val($("#consolidate" + Sno).text());
-                    }
-                });
+               
+
+                    $("#tblAddress tr").each(function () {
+                        var Sno = $(this).find("td:first").html();
+                        console.log(Sno);
+                        if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
+                            $("#txtEventLocation").val($("#consolidate" + Sno).text());
+                        } else {
+                            $("#txtEventLocation").attr("placeholder", "Click here to enter venue address");
+                            $("#txtEventLocation").val("");
+                        }
+                    });
+                
             });
 
             $("#btSaveTimeZone").click(function () {

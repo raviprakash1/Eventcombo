@@ -177,11 +177,20 @@
                             <label class="label-control evnt_title_date ev_white evnt_title_xs">
                                 @Html.DisplayFor(m => m.TopVenue)
                             </label>
-                        </div>
+                        </div>  
                         <div class="clearfix"></div>
                         <div class="col-sm-12 no_pad">
                             <div class="col-sm-4 col-xs-6">
-                                <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
+                                @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
+                                {
+                                    <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" >@Html.DisplayFor(m => m.Orderdetail)</a>
+
+                                }
+                                else
+                                {
+                                    <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
+
+                                }
                                 <a href="#DealInfo"><img src="/Images/icondeal.png" /></a>
                             </div>
                             @if (Html.DisplayFor(m => m.typeofEvent).ToString().Trim().ToLower() != "online")
@@ -476,15 +485,22 @@
             </div>
             <div class="col-sm-12 mt20 ">
                 <div class="col-sm-12 text-right no_pad">
-                    @if (TempData["ForViewOnly"].ToString() == "Y")
-                    {
-                        <button type="submit" id="btPayment" style="display:none;" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
-                    }
-                    else
-                    {
-                        <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+@if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
+{
+    <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn" style="display:none;">PROCEED TO PAYMENT  > </button>
+}
+else
+{
+    if (TempData["ForViewOnly"].ToString() == "Y")
+    {
+        <button type="submit" id="btPayment" style="display:none;" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+    }
+    else
+    {
+        <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
 
-                    }
+    }
+}
 
                 </div>
             </div>

@@ -94,12 +94,32 @@ namespace EventCombo.Controllers
 
         public ActionResult DiscoverEvents()
         {
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             Session["Fromname"] = "DiscoverEvents";
             return View();
 
         }
         public ActionResult GetBuzz()
         {
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             Session["Fromname"] = "GetBuzz";
             ViewBag.ReturnUrl = "~/Home/GetBuzz";
             return View();
@@ -107,6 +127,16 @@ namespace EventCombo.Controllers
         }
         public ActionResult EventOraganizer()
         {
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             Session["Fromname"] = "EventOraganizer";
             return View();
 
@@ -131,6 +161,15 @@ namespace EventCombo.Controllers
         public ActionResult Index()
         {
             Session["Fromname"] = "Home";
+            if(Session["AppId"]!=null)
+            {
+              string var=  getusername();
+                if(string.IsNullOrEmpty(var))
+                {
+                    Session["AppId"] = null;
+                }
+
+            }
             return View();
         }
 
@@ -428,6 +467,9 @@ namespace EventCombo.Controllers
         public ActionResult UserName()
         {
             string result = getusername();
+
+            if(string.IsNullOrEmpty (result))
+            { Session["AppId"] = null; }
             return Content(result);
         }
         public void setsessid(string id)
@@ -485,7 +527,7 @@ namespace EventCombo.Controllers
 
         }
 
-        private string getusername()
+        public string getusername()
         {
             if ((Session["AppId"] != null))
             {
@@ -497,12 +539,14 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
+                  
                     return "";
                 }
 
             }
             else
             {
+                
                 return "";
 
             }
@@ -562,6 +606,7 @@ namespace EventCombo.Controllers
                         prof.Email = model.Email;
 
                         prof.UserID = Userid.Id.ToString();
+                        prof.UserStatus = "Y";
 
                         objEntity.Profiles.Add(prof);
 
@@ -726,8 +771,8 @@ namespace EventCombo.Controllers
         }
         public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment)
         {
-            using (MailMessage mailMessage = new MailMessage())
-            {
+            MailMessage mailMessage = new MailMessage();
+            
                 mailMessage.From = new MailAddress(from, from);
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
@@ -758,7 +803,7 @@ namespace EventCombo.Controllers
                 smtp.Credentials = NetworkCred;
                 smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
                 smtp.Send(mailMessage);
-            }
+            
         }
         private ActionResult RedirectToLocal(string returnUrl)
         {

@@ -15,7 +15,21 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
         // GET: EventList
         public ActionResult EventList(string SearchStringEventTitle)
-        {            
+        {
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (string.IsNullOrEmpty(SearchStringEventTitle))
                 SearchStringEventTitle = "";            
             List<GetEventsListByStatus1_Result> objLiveEventList = GetLiveEvents(SearchStringEventTitle);

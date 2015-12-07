@@ -161,15 +161,48 @@ namespace EventCombo.Controllers
 
             return View();
         }
+
+        public string getusername()
+        {
+            if ((Session["AppId"] != null))
+            {
+                string userid = Session["AppId"].ToString();
+                var userEmail = db.AspNetUsers.Where(x => x.Id == userid).Select(y => y.Email).SingleOrDefault();
+                if (userEmail != null)
+                {
+                    return userEmail.Substring(0, userEmail.IndexOf("@") + 1);
+                }
+                else
+                {
+
+                    return "";
+                }
+
+            }
+            else
+            {
+
+                return "";
+
+            }
+        }
         [HttpGet]
         [Authorize]
         public ActionResult MyAccount()
         {
             string defaultCountry = "";
+            HomeController hmc = new HomeController();
+            hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
             Session["Fromname"] = "account";
             string city = "", state = "", zipcode = "", country = "";
             if ((Session["AppId"] != null))
             {
+              string usernme=  hmc.getusername();
+                if(string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
                 try {
                     using (WebClient client = new WebClient())
                     {
