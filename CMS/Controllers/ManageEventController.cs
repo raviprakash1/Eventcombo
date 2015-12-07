@@ -18,29 +18,33 @@ namespace CMS.Controllers
         {
             List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events,Tickets);
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
+            ViewData["Eventscount"] = objlst.Count;
             List<SelectListItem> PageFilter = new List<SelectListItem>();
             int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
             string strText = "";
-            PageFilter.Add(new SelectListItem()
-            {
-                Text = "Select",
-                Value = "0",
-                Selected = (iCount == 0 ? true : false)
-            });
+            //PageFilter.Add(new SelectListItem()
+            //{
+            //    Text = "Select",
+            //    Value = "0",
+            //    Selected = (iCount == 0 ? true : false)
+            //});
             if (iUcount > iGapValue)
             {
                 for (i = 0; i < iUcount; i++)
                 {
-                    strText = z.ToString() + " - " + (z + iGapValue).ToString();
-                    PageFilter.Add(new SelectListItem()
+                    if (strText != z.ToString() + " - " + (z + iGapValue).ToString())
                     {
-                        Text = strText,
-                        Value = (z + iGapValue).ToString(),
-                        Selected = (iCount == z ? true : false)
-                    });
+                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                        PageFilter.Add(new SelectListItem()
+                        {
+                            Text = strText,
+                            Value = (z + iGapValue).ToString(),
+                            Selected = (iCount == z ? true : false)
+                        });
+                    }
                     z = z + iGapValue;
                     iUcount = iUcount - iGapValue;
-                    if (iUcount < iGapValue)
+                    if (iUcount < iGapValue && iUcount>0)
                     {
                         strText = z.ToString() + " - " + (z + iGapValue).ToString();
                         PageFilter.Add(new SelectListItem()
@@ -53,13 +57,14 @@ namespace CMS.Controllers
                 }
                 if (iCount > 0)
                 {
-                    if (iCount < objlst.Count)
-                        objlst = objlst.GetRange(iCount - iGapValue, iGapValue);
-                    else
-                    {
-                        int iGap = (iCount - iGapValue);
-                        objlst = objlst.GetRange(iGap, (objlst.Count -iGap) );
-                    }
+                    //if (iCount < objlst.Count)
+                    //    objlst = objlst.GetRange(iCount - iGapValue, iGapValue);
+                    //else
+                    //{
+                    //    int iGap = (iCount - iGapValue);
+                    //    if(iGap< objlst.Count)
+                    //        objlst = objlst.GetRange(iGap, (objlst.Count -iGap) );
+                    //}
                 }
             }
             else
@@ -94,12 +99,12 @@ namespace CMS.Controllers
             ViewData["Eventscount"] = objlst.Count;
             int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
             string strText = "";
-            PageFilter.Add(new SelectListItem()
-            {
-                Text = "Select",
-                Value = "0",
-                Selected = (iCount == 0 ? true : false)
-            });
+            //PageFilter.Add(new SelectListItem()
+            //{
+            //    Text = "Select",
+            //    Value = "0",
+            //    Selected = (iCount == 0 ? true : false)
+            //});
             if (iUcount > iGapValue)
             {
                 for (i = 0; i < iUcount; i++)

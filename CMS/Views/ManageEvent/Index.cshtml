@@ -57,7 +57,7 @@
                                         <span class="view_evnt fs26 col-sm-6"> Event</span>
                                         <label class="field select admin-form col-sm-4 text-right srh-by-no">
                                             Total no. of Events : @ViewData["Eventscount"] &nbsp; &nbsp; &nbsp; &nbsp;
-                                            @*@Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })*@
+                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })
                                             @*<select >
                                                 <option value="0">Select</option>
                                                 <option value="0">01 - 50</option>
