@@ -15,6 +15,7 @@ namespace CMS.Controllers
             using (EmsEntities objEntity = new EmsEntities())
             {
                 var modelPerm = (from EventType in objEntity.EventTypes
+                                 orderby EventType.EventType1 ascending
                                  select EventType).ToList();
                 
                 List<string> EventTypeList = new List<string>();
@@ -58,7 +59,7 @@ namespace CMS.Controllers
                                 {
                                     objEntity.EventTypes.Add(et);
                                     objEntity.SaveChanges();
-                                    TempData["SuccessMessage"] = "Event Type Created";
+                                    TempData["SuccessMessage"] = "Event Type Created";                                    
                                 }
                             }
                             catch (Exception ex)
@@ -66,7 +67,7 @@ namespace CMS.Controllers
                                 string message = ex.Message;
 
                             }
-                            var modelPerm = (from EventType in objEntity.EventTypes
+                            var modelPerm = (from EventType in objEntity.EventTypes orderby EventType.EventType1 ascending
                                              select EventType).ToList();
 
                             List<string> EventTypeList = new List<string>();
@@ -75,7 +76,8 @@ namespace CMS.Controllers
                                 EventTypeList.Add(item.EventType1);
                             }
                             ViewBag.EventType = EventTypeList;
-                            
+                            ModelState.Clear();
+                            et = new Models.EventType();                          
                         }                        
                         break;
 
@@ -102,6 +104,7 @@ namespace CMS.Controllers
 
                             }
                             var modelPerm = (from EventType in objEntity.EventTypes
+                                             orderby EventType.EventType1 ascending
                                              select EventType).ToList();
 
                             List<string> EventTypeList = new List<string>();
@@ -111,6 +114,8 @@ namespace CMS.Controllers
                             }
                             ViewBag.EventType = EventTypeList;
                             TempData["SuccessMessage"] = "Event Type Edited.";
+                            ModelState.Clear();
+                            et = new Models.EventType();
                         }
                         break;
 
@@ -127,6 +132,7 @@ namespace CMS.Controllers
                                 TempData["SuccessMessage"] ="This Event Type is Already in Use.";                                
                             }
                             var modelPerm = (from EventType in objEntity.EventTypes
+                                             orderby EventType.EventType1 ascending
                                              select EventType).ToList();
 
                             List<string> EventTypeList = new List<string>();
@@ -135,13 +141,15 @@ namespace CMS.Controllers
                                 EventTypeList.Add(item.EventType1);
                             }
                             ViewBag.EventType = EventTypeList;
-                            
+                            ModelState.Clear();
+                            et = new Models.EventType();
                         }
                         break;                        
                     case "Reset":
                         using (EmsEntities objEntity = new EmsEntities())
                         {                                                      
                             var modelPerm = (from EventType in objEntity.EventTypes
+                                             orderby EventType.EventType1 ascending
                                              select EventType).ToList();
 
                             List<string> EventTypeList = new List<string>();
@@ -155,7 +163,7 @@ namespace CMS.Controllers
                     default:
                         throw new Exception();                        
                 }                
-                return View(objET);
+                return View(et);
             }
             else
             {
@@ -163,6 +171,6 @@ namespace CMS.Controllers
                 return View();
             }
 
-        }
+        }   
     }
 }

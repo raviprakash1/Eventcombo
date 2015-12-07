@@ -384,8 +384,9 @@
 .btn_fav_act{ color: #00cfff;}
 .ev_fav_count{ position: absolute; margin-top: 10px; margin-left: 5px;}
 
-
-
+.catg_pad{ padding-left:0px !important;}
+.catgtype1{ margin-bottom:5px; margin-top:5px; padding-top:5px; padding-bottom:5px;}
+.catgbg1{ background:#e8e6e6; }
 
 
 

@@ -51,7 +51,8 @@
             <div class="form-group event-type">
                 <label class="col-md-2 control-label acnt_form_label ">Event Type</label>
                 <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.EventType1, new { @maxlength = 35, @class = "form-control" })
+                    @Html.TextBoxFor(m => m.EventType1, new { @maxlength = 35, @class = "form-control" })                    
+                    
                 </div>
                 <div class="button_type-event">
                     <button type="submit" name="submit" value="Create" class="btn btn-info col-md-offset-3 acnt_btn" id="btnCreate">Create</button>
@@ -78,9 +79,9 @@
         $("#btnReset").hide();
     });
 
-    $(document).ready(function () {        
+    $(document).ready(function () {
         window.history.forward();
-        
+
         //$('#btnCreate').click(function () {
         //    var newListValue = $('#EventType1').val();
         //    if ($.trim(newListValue) != '') {
@@ -104,5 +105,14 @@
             $("#btnEdit").hide();
             $("#btnDelete").hide();
         });
+        $('#btnCreate').click(function () {
+            debugger;
+            var reqval = $("#EventType1").val();
+            if (reqval == "") {
+                alert("Please Enter Event Type.");                
+                return false;
+            }
+            else { return true; }
+        });        
     });
 </script>
