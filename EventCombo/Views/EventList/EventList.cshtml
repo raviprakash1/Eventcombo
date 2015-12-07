@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<EventCombo.Models.GetEventsListByStatus1_Result>
-@using PagedList.Mvc;
 @using EventCombo.Models;
 @{
     ViewBag.Title = "EventList";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+<link href="~/plugins/footable.core.min.css" rel="stylesheet" />
 <div class="col-sm-12">
     <h3 class="acnt_title">Manage Event</h3>
 </div>
@@ -28,7 +28,7 @@
     <!-- Search box close -- -->
     <!-- -- 3 tabs open -->
     <div class="col-sm-12 row">
-        <div class="col-sm-12 no_pad mb10">
+        @*<div class="col-sm-12 no_pad mb10">
             <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Events</h3> </div>
             <div class="col-sm-6 text-right no_pad">
                 <ul class="pagination evnt-list-pagination">
@@ -41,7 +41,7 @@
                     <li><a href="#">>></a></li>
                 </ul>
             </div>
-        </div>
+        </div>*@
         <div class="col-sm-12  custom fs18 no_pad" id="myTab">
             <ul class="nav nav-tabs evnt-mng-tab">
                 <li class="active">
@@ -58,7 +58,7 @@
         
             <div class="tab-content mt10">
                 <div id="sectionA" class="tab-pane active">                  
-                    <table class="table fs20 mb0">
+                    <table class="table fs20 mb0" data-page-navigation=".pagination" data-page-size="3">
                         @*<table class="table fs20 mb0">*@
                         <thead>
                             <tr>
@@ -94,6 +94,15 @@
                                 }
                             }
                         </tbody>
+                        <tfoot class="footer-menu">
+                            <tr>
+                                <td colspan="13">
+                                    <nav class="text-right">
+                                        <ul class="pagination hide-if-no-paging"></ul>
+                                    </nav>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>                    
                    
                     
@@ -169,7 +178,7 @@
             </div><!-- tab-content content-tab 1 -->
     
             <div class="col-sm-12 no_pad mt10">
-                <div class="col-sm-12 no_pad mb5">
+                @*<div class="col-sm-12 no_pad mb5">
                     <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Guests</h3> </div>
                     <div class="col-sm-6 text-right no_pad">
                         <ul class="pagination evnt-list-pagination">
@@ -183,7 +192,7 @@
                         </ul>
                     </div>
                   
-                </div>
+                </div>*@
                 <div class="col-sm-12 row">
                     <div class="table-responsive">
                     <table class="table fs20">
