@@ -13,7 +13,7 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using System.Xml.Linq;
-using NReco.PdfGenerator;
+//using NReco.PdfGenerator;
 
 namespace EventCombo.Controllers
 {

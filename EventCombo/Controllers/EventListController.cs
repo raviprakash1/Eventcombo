@@ -14,7 +14,7 @@ namespace EventCombo.Controllers
         string UserId = string.Empty;
         EventComboEntities db = new EventComboEntities();
         // GET: EventList
-        public ActionResult EventList(string SearchStringEventTitle,int ?page)
+        public ActionResult EventList(string SearchStringEventTitle)
         {            
             if (string.IsNullOrEmpty(SearchStringEventTitle))
                 SearchStringEventTitle = "";            
@@ -24,10 +24,8 @@ namespace EventCombo.Controllers
             List<GetEventsListByStatus1_Result> objGuestEventList = GetGuestsList(SearchStringEventTitle);
             TempData["LiveEvents"] = objLiveEventList.Count;
             TempData["SavedEvents"] = objSavedEventList.Count;
-            TempData["PastEvents"] = objPastEventList.Count;
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);            
-            return View(objLiveEventList.ToPagedList(pageNumber, pageSize));           
+            TempData["PastEvents"] = objPastEventList.Count;            
+            return View();           
         }
         public List<GetEventsListByStatus1_Result> GetLiveEvents(string SearchStringEventTitle)
         {
