@@ -14,7 +14,7 @@ namespace EventCombo.Controllers
         string UserId = string.Empty;
         EventComboEntities db = new EventComboEntities();
         // GET: EventList
-        public ActionResult EventList(string SearchStringEventTitle)
+        public ActionResult EventList(string SearchStringEventTitle,int ?page)
         {            
             if (string.IsNullOrEmpty(SearchStringEventTitle))
                 SearchStringEventTitle = "";            
@@ -25,57 +25,9 @@ namespace EventCombo.Controllers
             TempData["LiveEvents"] = objLiveEventList.Count;
             TempData["SavedEvents"] = objSavedEventList.Count;
             TempData["PastEvents"] = objPastEventList.Count;
-            
-            int iCount = 0;
-            List<SelectListItem> PageFilter = new List<SelectListItem>();
-            int i = 0; int z = 0; int iUcount = objLiveEventList.Count; int iGapValue = 3;
-            string strText = "";
-            PageFilter.Add(new SelectListItem()
-            {
-                Text = "Select",
-                Value = "0",
-                Selected = (iCount == 0 ? true : false)
-            });
-            if (iUcount > iGapValue)
-            {
-                for (i = 0; i < iUcount; i++)
-                {
-                    strText = z.ToString() + " - " + (z + iGapValue).ToString();
-                    PageFilter.Add(new SelectListItem()
-                    {
-                        Text = strText,
-                        Value = (z + iGapValue).ToString(),
-                        Selected = (iCount == z ? true : false)
-                    });
-                    z = z + iGapValue;
-                    iUcount = iUcount - iGapValue;
-                    if (iUcount < iGapValue)
-                    {
-                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
-                        PageFilter.Add(new SelectListItem()
-                        {
-                            Text = strText,
-                            Value = (z + iGapValue).ToString(),
-                            Selected = (iCount == z ? true : false)
-                        });
-                        iUcount = 0;
-                    }
-                }
-            }
-            else
-            {
-                PageFilter.Add(new SelectListItem()
-                {
-                    Text = "0 - 3",
-                    Value = "3",
-                    Selected = (iCount == 10 ? true : false)
-                });
-
-            }
-
-            ViewBag.PageF = PageFilter;
-
-            return View();
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);            
+            return View(objLiveEventList.ToPagedList(pageNumber, pageSize));           
         }
         public List<GetEventsListByStatus1_Result> GetLiveEvents(string SearchStringEventTitle)
         {
