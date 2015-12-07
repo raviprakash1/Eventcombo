@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
 using System.Data;
-using PagedList;
 
 namespace EventCombo.Controllers
 {
