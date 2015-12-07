@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <div class="col-sm-12">
-    <h3 class="acnt_title">Manage Event</h3>
+    <h3 class="acnt_title">My Events</h3>
 </div>
 <div class="clearfix"></div>
 <div class="col-sm-12 mange-events">
@@ -27,7 +27,7 @@
     <!-- Search box close -- -->
     <!-- -- 3 tabs open -->
     <div class="col-sm-12 row">
-        @*<div class="col-sm-12 no_pad mb10">
+        <div class="col-sm-12 no_pad mb10">
             <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Events</h3> </div>
             <div class="col-sm-6 text-right no_pad">
                 <ul class="pagination evnt-list-pagination">
@@ -40,144 +40,125 @@
                     <li><a href="#">>></a></li>
                 </ul>
             </div>
-        </div>*@
+        </div>      
         <div class="col-sm-12  custom fs18 no_pad" id="myTab">
-            <ul class="nav nav-tabs evnt-mng-tab">
-                <li class="active">
-                    <a href="#sectionA">Live Events (@TempData["LiveEvents"])</a>
-                </li>
-                <li class="">
-                    <a href="#sectionB">Saved Drafts (@TempData["SavedEvents"])</a>
-                </li>
-                <li class="">
-                    <a href="#sectionC">Past Events (@TempData["PastEvents"])</a>
-                </li>
-           </ul>
-        </div>
-        
-            <div class="tab-content mt10">
-                <div id="sectionA" class="tab-pane active">                  
-                    <table class="table fs20 mb0" data-page-navigation=".pagination" data-page-size="3">
-                        @*<table class="table fs20 mb0">*@
-                        <thead>
-                            <tr>
-                                <th class="evnt_mng_tit_200">Event Title</th>
-                                <th>Event Date /Time</th>
-                                <th>Ticket Sold / Total No.</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
-                                {
-                                    //}
-                                    //foreach (var obj in Model)
-                                    //{
+                <ul class="nav nav-tabs evnt-mng-tab">
+                    <li class="active">
+                        <a href="#sectionA" aria-controls="home" role="tab" data-toggle="tab">Live Events (@TempData["LiveEvents"])</a>
+                    </li>
+                    <li class="">
+                        <a href="#sectionB" aria-controls="home" role="tab" data-toggle="tab">Saved Events (@TempData["SavedEvents"])</a>
+                    </li>
+                    <li class="">
+                        <a href="#sectionC" aria-controls="home" role="tab" data-toggle="tab">Past Events (@TempData["PastEvents"])</a>
+                    </li>
+               </ul>
+            </div>
 
+                <div class="tab-content mt10">
+                    <div id="sectionA" class="tab-pane active">
+                        <table class="table fs20 mb0" data-page-navigation=".pagination" data-page-size="3">
+                            <thead>
+                                <tr>
+                                    <th class="evnt_mng_tit_200">Event Title</th>
+                                    <th>Event Date /Time</th>
+                                    <th>Ticket Sold / Total No.</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
+                                    {
+
+                                        <tr>
+                                            <td class="evnt_mng_tit_200">@item.EventTitle</td>
+                                            <td>@item.EventDate / @item.EventTime</td>
+                                            <td>@item.TicketSold/@item.TotalTicket</td>
+                                            <td class="text-center">
+                                                <div class="event-btn-action">
+                                                    <p class="btn-link manage"><a href="#">Manage</a></p>
+                                                    <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
+                                                    <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>                        
+                        </table>
+                        <!-- main-sec -->
+                    </div>
+                    <div id="sectionB" class="tab-pane">
+                        <table class="table fs20 mb0">
+                                <thead>
+                                    <tr>
+                                        <th class="evnt_mng_tit_200">Event Title</th>
+                                        <th>Event Date /Time</th>
+                                        <th>Ticket Sold / Total No.</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+    @{
+        foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
+        {
                                     <tr>
                                         <td class="evnt_mng_tit_200">@item.EventTitle</td>
                                         <td>@item.EventDate / @item.EventTime</td>
                                         <td>@item.TicketSold/@item.TotalTicket</td>
                                         <td class="text-center">
-                                            <div class="event-btn-action">                                                
-                                                <p class="btn-link manage"><a href="#">Manage</a></p>
+                                            <div class="event-btn-action">
+                                                <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
                                                 <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
                                                 <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
-                                                @*<a href="" class="btn-link view">
-                                       View
-                                    </a>*@
                                             </div>
                                         </td>
                                     </tr>
-                                }
-                            }
-                        </tbody>
-                        <tfoot class="footer-menu">
-                            <tr>
-                                <td colspan="13">
-                                    <nav class="text-right">
-                                        <ul class="pagination hide-if-no-paging"></ul>
-                                    </nav>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>                    
-                   
-                    
-                    
-                    <!-- main-sec -->
+        }
+        }
+                                </tbody>
+                            </table><!-- main-sec -->
+                    </div>
+                    <div id="sectionC" class="tab-pane">
+                        <table class="table fs20 mb0">
+                                <thead>
+                                    <tr>
+                                        <th class="evnt_mng_tit_200">Event Title</th>
+                                        <th>Event Date /Time</th>
+                                        <th>Ticket Sold / Total No.</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+    @{
+        foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
+        {
+                                    <tr>
+                                        <td class="evnt_mng_tit_200">@item.EventTitle</td>
+                                        <td>@item.EventDate/ @item.EventTime</td>
+                                        <td>@item.TicketSold/@item.TotalTicket</td>
+                                        <td class="text-center">
+                                            <div class="event-btn-action">
+                                                <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
+                                                <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
+                                                <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+        }
+        }
+                                </tbody>
+                            </table><!-- main-sec -->
+                    </div>
 
-                </div>
-                <div id="sectionB" class="tab-pane">
-                    <table class="table fs20 mb0">
-                            <thead>
-                                <tr>
-                                    <th class="evnt_mng_tit_200">Event Title</th>
-                                    <th>Event Date /Time</th>
-                                    <th>Ticket Sold / Total No.</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-@{ 
-    foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
-    {
-                                <tr>
-                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
-                                    <td>@item.EventDate / @item.EventTime</td>
-                                    <td>@item.TicketSold/@item.TotalTicket</td>
-                                    <td class="text-center">
-                                        <div class="event-btn-action">
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
-                                            <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>   
-                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
-                                        </div>
-                                    </td>
-                                </tr>
-    }
-    }
-                            </tbody>
-                        </table><!-- main-sec -->
-                </div>
-                <div id="sectionC" class="tab-pane">
-                    <table class="table fs20 mb0">
-                            <thead>
-                                <tr>
-                                    <th class="evnt_mng_tit_200">Event Title</th>
-                                    <th>Event Date /Time</th>
-                                    <th>Ticket Sold / Total No.</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-@{
-    foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
-    {
-                                <tr>
-                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
-                                    <td>@item.EventDate/ @item.EventTime</td>
-                                    <td>@item.TicketSold/@item.TotalTicket</td>
-                                    <td class="text-center">
-                                        <div class="event-btn-action">                                            
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
-                                            <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>   
-                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
-                                        </div>
-                                    </td>
-                                </tr>
-    }
-    }
-                            </tbody>
-                        </table><!-- main-sec -->
-                </div>
-                
-                <!-- tab-content content-tab 2 -->
-                
-            </div><!-- tab-content content-tab 1 -->
+                    <!-- tab-content content-tab 2 -->
+
+                </div>  <!-- tab-content content-tab 1 -->
     
             <div class="col-sm-12 no_pad mt10">
-                @*<div class="col-sm-12 no_pad mb5">
+                <div class="col-sm-12 no_pad mb5">
                     <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Guests</h3> </div>
                     <div class="col-sm-6 text-right no_pad">
                         <ul class="pagination evnt-list-pagination">
@@ -191,7 +172,7 @@
                         </ul>
                     </div>
                   
-                </div>*@
+                </div>
                 <div class="col-sm-12 row">
                     <div class="table-responsive">
                     <table class="table fs20">
@@ -229,3 +210,8 @@
     <!-- 3 tabs close -- -->
 </div>
 
+@*<script type="text/javascript" >
+    $(document).ready(function () {
+        $('#myTab').tab('show')
+    });
+    </script>*@
