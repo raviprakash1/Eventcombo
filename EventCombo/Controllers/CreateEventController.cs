@@ -560,12 +560,20 @@ namespace EventCombo.Controllers
 
             }
 
-            var enday =DateTime.Parse(eDate_new);
-            var now = DateTime.Now;
-            if(enday< now)
+            if (!string.IsNullOrEmpty(eDate_new))
             {
-               
-                TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy"); 
+                var enday = DateTime.Parse(eDate_new);
+                var now = DateTime.Now;
+                if (enday < now)
+                {
+
+                    TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy");
+                    TempData["ForViewOnly"] = "Y";
+                }
+            }
+            else
+            {
+                TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy");
                 TempData["ForViewOnly"] = "Y";
             }
             viewEvent.typeofEvent = EventDetail.AddressStatus;

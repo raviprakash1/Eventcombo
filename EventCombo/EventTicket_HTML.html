@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="file:///C:/Users/kiwitech/AppData/Roaming/favicon.ico">
+
+    <title>eventcombo</title>
+    <style type="text/css">
+        .evnt-tkt-container{ width: 800px; float: left; background:#d9d9d9; font-family: arial;   }
+        .evnt-cont1{ width: 80px; float: left; background:#fff; margin: 10px; }
+        .evnt-cont2{ width: 480px; float: left; margin: 10px 10px 0 10px;  }
+        .evnt-cont3{ width: 170px; float: left; margin: 10px 0 0 0; }
+
+        .evnt-cont3-top{ width: 100%; float: left;  background:#fff; padding: 10px; }
+        .evnt-cont3-bot{ width: 100%; float: left; background:#fff; text-align: center; padding: 10px;  margin-top: 10px; }
+
+        .evntpdf-title{ width: 100%; float: left; font-size: 18px; color: #555;  }
+        .evnt-mid-top1{ width: 460px; float: left; background:#fff; padding:10px; margin-bottom:10px; }
+        .evnt-tit-head{ margin: 5px 0; font-size: 30px; font-weight: normal;  }
+
+        .evnt-mid-top2{ width: 480px; float: left; margin-bottom:10px; }
+        .evnt-mid-top-left{ width: 215px; float: left; background:#fff; padding:10px; margin-right: 10px; }
+        .evnt-mid-top-right{ width: 215px; float: left; background:#fff; padding:10px; }
+        .evnt-desc{width: 100%; float: left; font-size: 20px; color: #000; margin-top: 5px; }
+        .text-right{ text-align: right; }
+        .evntpdf-paymnet{ min-height: 210px; position: relative;  }
+        .evntpdf-logo{ margin-top: 20px; width:inherit; }   
+        .evntpdf-align-bot {position: absolute; bottom: 0;left: 0;}
+        .text-center{ text-align: center; }
+        .rotate90 { -webkit-transform: rotate(90deg);-moz-transform: rotate(90deg);-o-transform: rotate(90deg);-ms-transform: rotate(90deg);transform: rotate(90deg);
+}
+        
+    </style>
+
+	</head>
+
+	 <body>
+	 	<div class="evnt-tkt-container">
+            <div class="evnt-cont1 rotate90">
+                ¶¶EventBarcodeId¶¶
+               
+            </div>
+            <div class="evnt-cont2">
+                <div class="evnt-mid-top1">
+                    <div class="evntpdf-title">Event</div>
+                    <h1 class="evnt-tit-head">¶¶EventTitleId¶¶</h1>
+                </div>
+                <div class="evnt-mid-top2">
+                    <div class="evnt-mid-top-left">
+                        <div class="evntpdf-title">Date + Time</div>
+                        <div class="evnt-desc">
+                            ¶¶EventStartDateID¶¶ , ¶¶EventStartTimeID¶¶  ( ¶¶EventTimeZone¶¶ )
+                        </div>
+                    </div>
+                    <div class="evnt-mid-top-right">
+                        <div class="evntpdf-title">Location</div>
+                        <div class="evnt-desc">¶¶EventVenueID¶¶</div>
+                    </div>
+                </div>
+                <div class="evnt-mid-top1">
+                    <div class="evntpdf-title">Event Order</div>
+                    <div class="evnt-desc">Order ¶¶EventOrderNO¶¶  Ordered by ¶¶UserFirstNameID¶¶ on ¶¶TicketOrderDateId¶¶</div>
+                </div>
+                <div class="evnt-mid-top1">
+                    <div class="evntpdf-title">Type</div>
+                     <div class="evnt-desc text-right">¶¶Ticketname¶¶</div>
+                </div>
+            </div>
+            <div class="evnt-cont3">
+                <div class="evnt-cont3-top">
+                    <img class="evntpdf-logo" src="http://eventcombo.kiwireader.com/Images/EventCombo_Red.jpg">
+                    <div class="evntpdf-title evntpdf-paymnet">
+                        <div class="evntpdf-align-bot">Payment Status 
+                             <div class="evnt-desc text-center">¶¶Tickettype¶¶ Order </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="evnt-cont3-bot">
+                    ¶¶EventQrCode¶¶
+                </div>
+            </div>
+        </div>
+	 
+</body></html>

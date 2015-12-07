@@ -724,7 +724,42 @@ namespace EventCombo.Controllers
                 smtp.Send(mailMessage);
             }
         }
-
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment)
+        {
+            using (MailMessage mailMessage = new MailMessage())
+            {
+                mailMessage.From = new MailAddress(from, from);
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                if (!string.IsNullOrEmpty(cc))
+                {
+                    mailMessage.CC.Add(cc);
+                }
+                if (!string.IsNullOrEmpty(bcc))
+                {
+                    mailMessage.Bcc.Add(bcc);
+                }
+                if (attachment.Length != 0)
+                {
+                    System.Net.Mime.ContentType ct = new System.Net.Mime.ContentType(System.Net.Mime.MediaTypeNames.Application.Pdf);
+                    System.Net.Mail.Attachment attach = new System.Net.Mail.Attachment(attachment, ct);
+                    attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
+                    mailMessage.Attachments.Add(attach);
+                }
+                mailMessage.IsBodyHtml = true;
+                mailMessage.To.Add(new MailAddress(To));
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = ConfigurationManager.AppSettings["Host"];
+                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+                System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
+                NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
+                smtp.Send(mailMessage);
+            }
+        }
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))

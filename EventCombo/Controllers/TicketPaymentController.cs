@@ -9,6 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Threading.Tasks;
+using System.IO;
+using System.Net;
+using System.Xml;
+using System.Xml.Linq;
+using NReco.PdfGenerator;
 
 namespace EventCombo.Controllers
 {
@@ -451,13 +456,49 @@ namespace EventCombo.Controllers
                         var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
                         var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
                         var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
+                       var barcode="<img src =https://www.barcodesinc.com/generator/image.php?code="+strOrderNo+"&style=196&type=C128B&width=219&height=50&xres=1&font=3 alt = 'BarCode' >";
+                           
 
-                        string to = "", from = "", cc = "", bcc = "", subjectn = "";
+                                 string to = "", from = "", cc = "", bcc = "", subjectn = "";
                         var bodyn = "";
+                        var ticketP = "";
                         HomeController hmc = new HomeController();
                         List<Email_Tag> EmailTag = new List<Email_Tag>();
                         EmailTag = hmc.getTag();
+                        var tickettype = "";
+                        var fee = "";
+                        if(tickets.TicketTypeID==1)
+                        {
+                            tickettype = "Free";
+                            ticketP = "";
+                            fee = "";
+                        }
+                        if (tickets.TicketTypeID == 2)
+                        {
+                           var  ticketprice = item.TPD_Purchased_Qty * tickets.TotalPrice;
+                            ticketP = "$" + ticketprice.ToString();
+                            tickettype = "Paid";
+                            if(tickets.Fees_Type=="1")
+                            {
+                                fee = tickets.EC_Fee.ToString();
+                            }else
+                            {
+                                fee = tickets.Customer_Fee.ToString();
+                            }
+                          
+                        }
+                        if (tickets.TicketTypeID == 3)
+                        {
+                            ticketP = "$" + item.TPD_Donate.ToString();
+                            tickettype = "Donate";
+                            fee = "";
+                        }
+                        string xel = createxml(strOrderNo, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, address.ConsolidateAddress, "", "");
 
+                        var Qrcode = "<img style = 'width:100px;height:100px' src =http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl="+xel.ToString()+"  alt = 'QR Code' />";
+                        Byte[] attach = new Byte[16 * 1024];
+                        attach = generateTicketPDF(email, username, DateTime.Now.ToString(), strOrderNo, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode);
+                        MemoryStream attachment = new MemoryStream(attach);
                         var Emailtemplate = hmc.getEmail("eticket");
                         if (Emailtemplate != null)
                         {
@@ -525,6 +566,16 @@ namespace EventCombo.Controllers
                                             subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
 
                                         }
+                                        if (EmailTag[i].Tag_Name == "EventTitleId")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "EventOrderNO")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", strOrderNo);
+
+                                        }
 
                                     }
 
@@ -559,9 +610,10 @@ namespace EventCombo.Controllers
                                             bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", strOrderNo);
 
                                         }
+                                      
                                         if (EmailTag[i].Tag_Name == "EventBarcodeId")
                                         {
-                                            bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", strOrderNo);
+                                            bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcode);
 
                                         }
                                         if (EmailTag[i].Tag_Name == "EventTitleId")
@@ -594,16 +646,27 @@ namespace EventCombo.Controllers
                                             bodyn = bodyn.Replace("¶¶EventImageId¶¶", "");
 
                                         }
+                                        if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                                        {
+                                            bodyn = bodyn.Replace("¶¶EventStartTimeID¶¶", tQntydetail.TQD_StartTime);
 
+                                        }
+                                        if (EmailTag[i].Tag_Name == "TicketPrice")
+                                        {
+                                            bodyn = bodyn.Replace("¶¶TicketPrice¶¶", ticketP);
+
+                                        }
+                                        
                                     }
 
                                 }
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, attachment);
                         }
                     }
 
-
+                    Session["AppId"] = Userid;
+                    Session["TicketLockedId"]= guid;
 
                     return strOrderNo;
 
@@ -616,6 +679,81 @@ namespace EventCombo.Controllers
                 return "Some Error Comes.";
 
             }
+        }
+
+        private string createxml(string Orderno,string ticketname,string tqty,string tprice,string fee,string discount,string tickettype,string customername,string eventname,string eventdate,string eventime,string venue,string organisername,string organiseremail)
+        {
+            XElement Ticketinfo = new XElement("Ticketinfo",
+  new XElement("UniqueOrderNumber", Orderno),
+  new XElement("TicketTypeName", ticketname),
+  new XElement("TotalTicketQuantityPerOrder", tqty),
+ new XElement("TicketPrice", tprice),
+      new XElement("TicketFeeAmount", fee),
+        new XElement("TicketDiscountAmount", discount),
+        new XElement("TicketType", tickettype),
+              new XElement("CustomerName", customername),
+               new XElement("EventName", eventname),
+                new XElement("EventStartDate", eventdate),
+                 new XElement("EventVenueName", venue)
+               
+);
+
+
+            var str = "BEGIN:VCARD\nVERSION:3.0\n";
+            str += "UniqueOrderNumber:" + Orderno + "\n";
+            str += "TicketTypeName:" + ticketname + "\n";
+            str += "TotalTicketQuantityPerOrder:" + tprice + "\n";
+            str += "TicketPrice:" + Orderno + "\n";
+            str += "TicketDiscountAmount:" + discount + "\n";
+            str += "TicketType:" + tickettype + "\n";
+            str += "CustomerName:" + customername + "\n";
+            str += "EventName:" + eventname + "\n";
+            str += "EventStartDate:" + eventdate + "\n";
+            str += "EventVenueName:" + venue + "\n";
+
+            return str;
+
+        }
+
+        public Byte[] generateTicketPDF(string email, string username, string TicketOrderdate, string OrderNo, string EventTitle, string TQD_StartDate, string ConsolidateAddress, string T_name, string tickettype, string TimeZone, string TQD_StartTime,string barcode,string qrcode)
+        {
+            WebClient wc = new WebClient();
+            string htmlPath = Server.MapPath("..");
+            string htmlText = wc.DownloadString(htmlPath + "/EventTicket_HTML.html");
+            htmlText = htmlText.Replace("¶¶Email¶¶", email);
+            htmlText = htmlText.Replace("¶¶EventTitleId¶¶", EventTitle);
+            htmlText = htmlText.Replace("¶¶EventStartDateID¶¶", TQD_StartDate);
+            htmlText = htmlText.Replace("¶¶EventVenueID¶¶", ConsolidateAddress);
+            htmlText = htmlText.Replace("¶¶EventOrderNO¶¶", OrderNo);
+            htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", username);
+            htmlText = htmlText.Replace("¶¶TicketOrderDateId¶¶", TicketOrderdate);
+            htmlText = htmlText.Replace("¶¶EventStartTimeID¶¶", TQD_StartTime);
+            htmlText = htmlText.Replace("¶¶EventTimeZone¶¶", TimeZone);
+            htmlText = htmlText.Replace("¶¶EventTimeZone¶¶", TimeZone);
+            htmlText = htmlText.Replace("¶¶Ticketname¶¶", T_name);
+            htmlText = htmlText.Replace("¶¶Tickettype¶¶", tickettype);
+            htmlText = htmlText.Replace("¶¶EventBarcodeId¶¶", barcode);
+            htmlText = htmlText.Replace("¶¶EventQrCode¶¶", qrcode);
+            Byte[] res = null;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                //HtmlToPdfConverter nRecohtmltoPdfObj = new HtmlToPdfConverter();
+                //nRecohtmltoPdfObj.Orientation = PageOrientation.Portrait;
+                ////nRecohtmltoPdfObj.PageFooterHtml = CreatePDFFooter();
+
+                //res= nRecohtmltoPdfObj.GeneratePdf(htmlText);
+
+                var pdf = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.GeneratePdf(htmlText, PdfSharp.PageSize.A4);
+                pdf.Save(ms);
+                res = ms.ToArray();
+            }
+            return res;
+
+            //var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+            //var pdfBytes = htmlToPdf.GeneratePdf(htmlText);
+            //MemoryStream mms = new MemoryStream(pdfBytes);
+            //return mms;
+           
         }
         public string GetOrderNo()
         {
