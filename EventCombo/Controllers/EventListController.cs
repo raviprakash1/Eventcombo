@@ -14,11 +14,8 @@ namespace EventCombo.Controllers
         string UserId = string.Empty;
         EventComboEntities db = new EventComboEntities();
         // GET: EventList
-        public ActionResult EventList(string SearchStringEventTitle,int? page)
-        {
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-                        
+        public ActionResult EventList(string SearchStringEventTitle)
+        {            
             if (string.IsNullOrEmpty(SearchStringEventTitle))
                 SearchStringEventTitle = "";            
             List<GetEventsListByStatus1_Result> objLiveEventList = GetLiveEvents(SearchStringEventTitle);
