@@ -95,12 +95,13 @@
                             <div id="sidebar" class="nav nav-stacked">
                                 <div id="accordion" class="panel-group">
                                     <div class="panel panel-default menu_list">
-                                        <div class="panel-heading">
-                                            <a class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                                 Account <b class="closed"></b>
+                                        <a class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                            <div class="panel-heading">
 
-                                            </a>
-                                        </div>
+                                                Account <b class="closed"></b>
+                                            </div>
+                                        </a>
+                                        
                                         <div id="collapse1" class="panel-collapse collapse">
                                             <div class="panel-body no-padding">
                                                 <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
@@ -111,12 +112,13 @@
                                         </div>
                                     </div>
                                     <div class="panel panel-default menu_list">
-                                        <div class="panel-heading">
+                                        
                                             <a class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                                                Manage Events <b class="closed"></b>
-
+                                                <div class="panel-heading">
+                                                    Manage Events <b class="closed"></b>
+                                                </div>
                                             </a>
-                                        </div>
+                                        
                                         <div id="collapse2" class="panel-collapse collapse">
                                             <div class="panel-body no-padding">
                                                 <p>@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")</p>
@@ -132,12 +134,13 @@
                                         </div>
                                     </div>
                                     <div class="panel panel-default menu_list">
-                                        <div class="panel-heading">
+                                        
                                             <a class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                                                Manage Deals <b class="closed"></b>
-
+                                                <div class="panel-heading">
+                                                    Manage Deals <b class="closed"></b>
+                                                </div>
                                             </a>
-                                        </div>
+                                        
                                         <div id="collapse3" class="panel-collapse collapse">
                                             <div class="panel-body no-padding">
                                                 <p>Create Deal</p>
