@@ -1162,10 +1162,11 @@ namespace EventCombo.Controllers
                     strvariableHtml.Append("<div class='col-sm-7 col-xs-7'>");
                     strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='Description' id='id_varsubdesc-" + k + "' maxlength='256' value='" + Objvardesc.VariableDesc + "'>");
                     strvariableHtml.Append(" </div><div class='col-sm-4 col-xs-4'><label class='col-sm-1 control-label ev_tickt_lebel'>$</label> <div class='col-sm-10 no_pad'>");
-                    strvariableHtml.Append("<input class='form -control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9' onkeyup='checkprice(this.id);' value='"+ PRICE + "'>");
+                    strvariableHtml.Append("<input class='form -control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id)' value='"+ PRICE + "'>");
                     strvariableHtml.Append("</div> </div><div class='col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main'> <button class='btn' type='button' id='btn_vardelete-" + k + "' onclick='deletevariable(this.id)'><i class='fa fa-times'></i></button>");
                     strvariableHtml.Append("</div> </div></div> </div>");
 
+                    k = k + 1;
                 }
 
                 objJson.Variabledesc = strvariableHtml.ToString();

@@ -1098,7 +1098,7 @@ else
                                             <div class="col-sm-4 col-xs-4">
                                                 <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
                                                 <div class="col-sm-10 no_pad">
-                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeyup="checkprice(this.id);">
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="changefeetype(this, event, this.id);" onblur="tofixed(this.id)" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
@@ -1536,9 +1536,9 @@ else
                     {
                         $('#hdimage').val(data.Image);
                     }
+                  
 
-
-                    if(data.Variabledesc!=null)
+                    if(data.Variabledesc!='')
                     {
                         $('.TicketFees').show();
                         $('#id_Mainvariable').css('display','block');
@@ -1546,6 +1546,11 @@ else
                         $("input[id^='id_varsubprice']").mask('000,000.00', { reverse: true });
 
 
+                    }else
+                    {
+
+                        $('.TicketFees').hide();
+                        $('#id_Mainvariable').css('display','none');
                     }
 
                 }
@@ -1575,7 +1580,7 @@ else
             var varlength = $("#id_Mainvariable> div").size();
             if (varlength > 0) {
                 for (var i = 0; i < varlength; i++) {
-                    var varprice = $('#id_varsubprice-' + i).val().replace(',', '');
+                    var varprice = $('#id_varsubprice-' + i).val().replace(',', ' ');
                     EventVariable.push({
 
                         VariableDesc: $('#id_varsubdesc-' + i).val(),
@@ -2402,7 +2407,9 @@ else
                 var varlength = $("#id_Mainvariable> div").size();
                 if (varlength > 0) {
                     for (var i = 0; i < varlength; i++) {
+                        //alert($('#id_varsubprice-' + i).val());
                         var varprice = $('#id_varsubprice-' + i).val().replace(',', '');
+                        //alert(varprice);
                         EventVariable.push({
 
                             VariableDesc: $('#id_varsubdesc-' + i).val(),
