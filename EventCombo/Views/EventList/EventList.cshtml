@@ -71,8 +71,8 @@
                             <tbody>
                                 @{
                                     //foreach (var item in Model)
-                                    //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)                                    
-                                    foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
+                                    foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)                                    
+                                    //foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
                                     {
 
                                         <tr>
@@ -93,8 +93,12 @@
                             </tbody>                        
                         </table>
                         <!-- main-sec -->
+                        @if (Convert.ToInt32(ViewData["LiveEvntCnt"]) == 0 && ViewData["LiveEvntCnt"] != null)
+                        {
+                            <span>You don't have any live events.</span>
+                        }
                     </div> 
-                    @if (ViewBag.LiveEvent.PageCount > 1)
+                    @*@if (ViewBag.LiveEvent.PageCount > 1)
                     {
                         <div class="pager">
                          
@@ -104,7 +108,7 @@
                               page
                           }))
                         </div>
-                    }                  
+                    }*@                  
                     <div id="sectionB" class="tab-pane">
                         <table class="table fs20 mb0">
                                 <thead>
@@ -117,8 +121,9 @@
                                 </thead>
                                 <tbody>
     @{
-        foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
-        {
+        foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
+            //foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
+            {
                                     <tr>
                                         <td class="evnt_mng_tit_200">@item.EventTitle</td>
                                         <td>@item.EventDate / @item.EventTime</td>
@@ -135,8 +140,12 @@
         }
                                 </tbody>
                             </table><!-- main-sec -->
+                        @if (Convert.ToInt32(ViewData["SavedEvntCnt"]) == 0 && ViewData["SavedEvntCnt"] != null)
+                        {
+                            <span>You don't have any events drafts.</span>
+                        }
                     </div>      
-                    @if (ViewBag.SavedEvent.PageCount > 1)
+                    @*@if (ViewBag.SavedEvent.PageCount > 1)
                     {
                         <div class="pager">
 
@@ -146,7 +155,7 @@
                            page
                        }))
                         </div>
-                    }           
+                    }*@           
                     <div id="sectionC" class="tab-pane">
                         <table class="table fs20 mb0">
                                 <thead>
@@ -159,7 +168,8 @@
                                 </thead>
                                 <tbody>
     @{
-        foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
+        foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
+        //foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
         {
                                     <tr>
                                         <td class="evnt_mng_tit_200">@item.EventTitle</td>
@@ -177,8 +187,12 @@
         }
                                 </tbody>
                             </table><!-- main-sec -->
+                        @if (Convert.ToInt32(ViewData["PastEvntCnt"]) == 0 && ViewData["PastEvntCnt"] != null)
+                        {
+                            <span>You don't have any past events.</span>
+                        }
                     </div>
-                    @if (ViewBag.PastEvent.PageCount > 1)
+                    @*@if (ViewBag.PastEvent.PageCount > 1)
                     {
                         <div class="pager">
 
@@ -188,7 +202,7 @@
                            page
                        }))
                         </div>
-                    }
+                    }*@
                     <!-- tab-content content-tab 2 -->
 
                 </div>  <!-- tab-content content-tab 1 -->

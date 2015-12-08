@@ -39,7 +39,13 @@ namespace EventCombo.Controllers
             
             TempData["LiveEvents"] = objLiveEventList.Count;
             TempData["SavedEvents"] = objSavedEventList.Count;
-            TempData["PastEvents"] = objPastEventList.Count;                      
+            TempData["PastEvents"] = objPastEventList.Count;
+            if (objLiveEventList.Count == 0)
+                ViewData["LiveEvntCnt"] = 0;
+            if (objSavedEventList.Count == 0)
+                ViewData["SavedEvntCnt"] = 0;
+            if (objPastEventList.Count == 0)
+                ViewData["PastEvntCnt"] = 0;
             return View();
         }
         [HttpPost]
