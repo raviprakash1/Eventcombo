@@ -107,7 +107,8 @@
                                             <div class="modal-body">
                                                 <div class="col-sm-12 no_pad">
                                                     <div class="form-group mb5 ">
-                                                        <select id="dllTimeZone" class="form-control evnt_inp_cont wd600">
+                                                        @Html.DropDownList("dllTimeZone", ViewBag.Timezonelist as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                                        @*<select id="dllTimeZone" class="form-control evnt_inp_cont wd600">
                                                             <option>(GMT-12:00) International Date Line West                                             </option>
                                                             <option>(GMT-11:00) Midway Island, Samoa													 </option>
                                                             <option>(GMT-10:00) Hawaii																	 </option>
@@ -190,7 +191,7 @@
                                                             <option>(GMT+12:00) Auckland, Wellington													 </option>
                                                             <option>(GMT+12:00) Fiji, Kamchatka, Marshall Is.											 </option>
                                                             <option>(GMT+13:00) Nukualofa																 </option>
-                                                        </select>
+                                                        </select>*@
                                                     </div>
                                                     <div class="clearfix"></div>
                                                     <div class="form-group mb5 ">
@@ -3054,7 +3055,7 @@ else
                 });
             });
             $("#btSaveTimeZone").click(function () {
-                var vval = $("#dllTimeZone").val();
+                var vval = $("#dllTimeZone option:selected").text();
                 if (vval == null || vval == '')
                     vval = "Timezone & date setting";
 
@@ -5297,4 +5298,7 @@ else
     </script>
 
 }
+
+
+
 
