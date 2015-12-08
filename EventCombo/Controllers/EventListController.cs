@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
 using System.Data;
+using PagedList;
 
 namespace EventCombo.Controllers
 {
@@ -35,10 +36,16 @@ namespace EventCombo.Controllers
             List<GetEventsListByStatus1_Result> objSavedEventList = GetSavedEvents(SearchStringEventTitle);
             List <GetEventsListByStatus1_Result> objPastEventList = GetPastEvents(SearchStringEventTitle);
             List<GetEventsListByStatus1_Result> objGuestEventList = GetGuestsList(SearchStringEventTitle);
+            
             TempData["LiveEvents"] = objLiveEventList.Count;
             TempData["SavedEvents"] = objSavedEventList.Count;
-            TempData["PastEvents"] = objPastEventList.Count;            
-            return View();           
+            TempData["PastEvents"] = objPastEventList.Count;                      
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EventList()
+        {
+            return View();
         }
         public List<GetEventsListByStatus1_Result> GetLiveEvents(string SearchStringEventTitle)
         {

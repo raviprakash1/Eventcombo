@@ -478,13 +478,13 @@
 
                                             </div>
                                             <div class="col-sm-12 no_pad mt10 ">
-                                                <label id="btSchMultipleEv" class="SchmultiEvnt label-control lbl_bot_text">Schedule multiple events</label>
+                                                <label id="btSchMultipleEv" class="SchmultiEvnt label-control lbl_bot_text" draggable="false">Schedule multiple events</label>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="col-sm-12 mt10 ">
-                                        <label id="btSchSingleEv" class="Schmultisingle label-control lbl_bot_text">Schedule single event</label>
+                                        <label id="btSchSingleEv" class="Schmultisingle label-control lbl_bot_text" draggable="false">Schedule single event</label>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="SchmultiDetail col-sm-12 mt10">
@@ -3028,7 +3028,7 @@
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
-                debugger;
+               
                 //$("#spEvDesc").text();
                 var vEdesc = ''; //$("#edEventDesc").code();
 
@@ -3095,7 +3095,7 @@
                             //$('#diverroacc').css('display', 'none');
                             //$('#succaccmsg').html(ajaxsetup('CreateEvent', 'CreateEventsavedsucc'));
                             $("#hdEventId").val(response);
-                            alert(response);
+                           
                             $('#dvdraft').css('display', 'block');
                             window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
 

@@ -17,6 +17,8 @@ namespace CMS.Controllers
         public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory,string Features, string PageF,string Events, string Tickets)
         {
             List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events,Tickets);
+            if (objlst.Count == 0)
+                ViewData["SearchedUser"] = 0;
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
             ViewData["Eventscount"] = objlst.Count;
             List<SelectListItem> PageFilter = new List<SelectListItem>();
@@ -94,7 +96,7 @@ namespace CMS.Controllers
         public ActionResult Index()
         {
             List<EventCreation> objlst = GetAllEvents("", "", "", "", "","","");
-            int iCount = 0;
+            int iCount = 0;            
             List<SelectListItem> PageFilter = new List<SelectListItem>();
             ViewData["Eventscount"] = objlst.Count;
             int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;

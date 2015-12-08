@@ -1381,7 +1381,7 @@ namespace EventCombo.Controllers
                     }
 
                     objEnt.SaveChanges();
-                   // lEventId = ObjEC.EventID;
+                  
                 }
             }
             catch (Exception ex)
