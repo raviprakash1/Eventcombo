@@ -1769,7 +1769,7 @@
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
             var Sno = $("#tblOrgnizer tr").length;
-          
+
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
@@ -1845,19 +1845,19 @@
 
             $("#btSaveAddress").click(function () {
                 //$("#txtEventLocation").val("Click here to enter venue address");
-               
 
-                    $("#tblAddress tr").each(function () {
-                        var Sno = $(this).find("td:first").html();
-                        console.log(Sno);
-                        if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
-                            $("#txtEventLocation").val($("#consolidate" + Sno).text());
-                        } else {
-                            $("#txtEventLocation").attr("placeholder", "Click here to enter venue address");
-                            $("#txtEventLocation").val("");
-                        }
-                    });
-                
+
+                $("#tblAddress tr").each(function () {
+                    var Sno = $(this).find("td:first").html();
+                    console.log(Sno);
+                    if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
+                        $("#txtEventLocation").val($("#consolidate" + Sno).text());
+                    } else {
+                        $("#txtEventLocation").attr("placeholder", "Click here to enter venue address");
+                        $("#txtEventLocation").val("");
+                    }
+                });
+
             });
 
             $("#btSaveTimeZone").click(function () {
@@ -2251,13 +2251,15 @@
                         success: function (response) {
                             $("#hdEventId").val(response);
                             var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
-                            window.location = '@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl;
+                            window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
+                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
                         }
                     });
                 }
                 else {
                     var vUrl = $('#txtEventTitle').val() + "౼" + $("#hdEventId").val() + "౼Y";
-                    window.location = '@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl;
+                    window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
+                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + $("#hdEventId").val();
                 }
 
                 @*if ($("#hdEventId").val() != '') {
@@ -2607,7 +2609,7 @@
                         'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
                         'Private_Password': $("#txtReqPassword").val(),
                         'EventUrl': $("#txtEventUrl").val().trim(),
-                        'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked")== true ? 'Y' : 'N'),
+                        'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
                         'EventStatus': 'Save',
                         'AddressDetail': SubmitAddress,
                         'EventVenue': SingleTiming,
@@ -2641,7 +2643,7 @@
                     if ($("#hdEventId").val() == '') {
                         $.ajax({
                             url: '@Url.Action("SaveEvent", "CreateEvent")',
-                            data: { model, strIsLive:"Y" },
+                            data: { model, strIsLive: "Y" },
                             type: "Post",
                             success: function (response) {
                                 $("#hdEventId").val(response);
@@ -2661,7 +2663,7 @@
                 }
 
                 else {
-// --------------------------------------------END SAVE EVENT---------------------------------------------------------------
+                    // --------------------------------------------END SAVE EVENT---------------------------------------------------------------
                     $.ajax({
                         url: '@Url.Action("UpdateEventStatus", "CreateEvent")',
                         data: { strEventId: $("#hdEventId").val() },
@@ -2782,7 +2784,7 @@
                     for (var i = 0; i < divlength; i++) {
 
                         if ($('#id_cost-' + i).css('display') == "block") {
-                            TicketPrice = $('#id_cost-' + i).val().replace(',','');
+                            TicketPrice = $('#id_cost-' + i).val().replace(',', '');
 
                         } else { TicketPrice = 0; }
                         if ($('#id_CusdateCont-' + i).css('display') == "block") {
@@ -2821,7 +2823,7 @@
                             TicketTypeID = 3
                         }
 
-                        var Discount = $('#id_Discount-' + i).val().replace(',','');
+                        var Discount = $('#id_Discount-' + i).val().replace(',', '');
                         var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
 
                         Ticket.push({
@@ -3082,10 +3084,10 @@
                         type: "Post",
                         success: function (response) {
                             $("#hdEventId").val(response);
-                            $('#divaccsuc').css('display', 'block');
-                            $('#divaccsuc').focus();
-                            $('#diverroacc').css('display', 'none');
-                            $('#succaccmsg').html(ajaxsetup('CreateEvent', 'CreateEventsavedsucc'));
+                            //$('#divaccsuc').css('display', 'block');
+                            //$('#divaccsuc').focus();
+                            //$('#diverroacc').css('display', 'none');
+                            //$('#succaccmsg').html(ajaxsetup('CreateEvent', 'CreateEventsavedsucc'));
                             $("#hdEventId").val(response);
                             alert(response);
                             $('#dvdraft').css('display', 'block');
@@ -3115,6 +3117,8 @@
                         $("#hidAddSno").val("");
                     }
                 }
+                //var inputVenu = document.getElementById('VenueName');
+                //var autocomplete = new google.maps.places.Autocomplete(inputVenu);
             });
 
             $("#btOnlineEvent").click(function () {
@@ -3436,7 +3440,7 @@
                     $("#hidAddressStatus").val('');
 
 
-                
+
 
                 //$("#dllPastLocation")
             });
@@ -3449,7 +3453,7 @@
 
             var inputVenu = document.getElementById('VenueName');
             var autocomplete = new google.maps.places.Autocomplete(inputVenu);
-           
+            //map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputVenu);
 
             google.maps.event.addListener(autocomplete, 'place_changed', function () {
                 var mapOptions = {

@@ -58,14 +58,14 @@
             CLOSE PREVIEW &#10;
             <span> > </span>
         </button>
-        <button id="btEdit" class="cbtPreview btn ev_live_sub_btn mb5" type="button">
+        @*<button id="btEdit" class="cbtPreview btn ev_live_sub_btn mb5" type="button">
             EDIT &#10;
             <span> > </span>
         </button>
         <button id="btMakeLive" class="btn ev_live_sub_btn mb5 grn_live_btn" type="button">
             MAKE EVENT LIVE NOW&#10;
             <span> > </span>
-        </button>
+        </button>*@
         <div class="clearfix"></div>
         @*<div class="col-sm-12 ">
                 ( Last saved at MM/DD/YYYY 00:00pm )
@@ -626,7 +626,7 @@
         });
 
         $("#btClosePrev").click(function () {
-            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + $('#hdEventid').val();
+            window.close();
         });
 
 
