@@ -147,6 +147,7 @@ namespace EventCombo.Controllers
 
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
                     //strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+                    strHtml.Append("<option value='0'>Select Past Location</option>");
                     foreach (var item in PrevAdd)
                     {
                         if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
@@ -174,15 +175,25 @@ namespace EventCombo.Controllers
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     var PrevAdd = (from myRow in objEnt.Addresses
-                                   where myRow.UserId == strUsers && myRow.EventId != lEid
+                                   where myRow.UserId == strUsers
                                    select myRow).ToList();
+
+                    var PrevAddID = (from myRow in objEnt.Events
+                                   where myRow.EventID == lEid
+                                   select myRow.LastLocationAddress).FirstOrDefault();
 
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
                     //strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+                    strHtml.Append("<option value='0'>Select Past Location</option>");
                     foreach (var item in PrevAdd)
                     {
                         if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
-                            strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                        {
+                            if (PrevAddID == item.AddressID)
+                                strHtml.Append("<option selected='selected' value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                            else
+                                strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                        }
                     }
                     return strHtml.ToString();
                 }
