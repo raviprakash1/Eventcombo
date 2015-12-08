@@ -1,4 +1,4 @@
-﻿@model EventCombo.Models.EventCreation
+﻿Time@model EventCombo.Models.EventCreation
 @{
     ViewBag.Title = "CreateEvent";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
@@ -283,7 +283,8 @@
                                             <div class="modal-body">
                                                 <div class="col-sm-12 no_pad">
                                                     <div class="form-group mb5 ">
-                                                        <select id="dllTimeZone" class="form-control evnt_inp_cont wd600">
+                                                        @Html.DropDownList("dllTimeZone", ViewBag.Timezonelist as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                                        @*<select id="dllTimeZone" class="form-control evnt_inp_cont wd600">
                                                             <option>(GMT-12:00) International Date Line West                                             </option>
                                                             <option>(GMT-11:00) Midway Island, Samoa													 </option>
                                                             <option>(GMT-10:00) Hawaii																	 </option>
@@ -370,7 +371,7 @@
 
 
 
-                                                        </select>
+                                                        </select>*@
                                                     </div>
                                                     <div class="clearfix"></div>
                                                     <div class="form-group mb5 ">
@@ -429,7 +430,7 @@
                                         <input class="" id="chkShowMap" type="checkbox">
                                         Show map on event page
                                     </label>
-                                    <label class="label-control evnt_title_multi pl0">
+                                    <label class="label-control evnt_title_multi pl0" id="lblusePast">
 
                                         <input id="UsepastLoc" class="" type="checkbox">
                                         Use Past Location
@@ -477,13 +478,13 @@
 
                                             </div>
                                             <div class="col-sm-12 no_pad mt10 ">
-                                                <label id="btSchMultipleEv" class="SchmultiEvnt label-control lbl_bot_text">Schedule multiple events</label>
+                                                <label id="btSchMultipleEv" class="SchmultiEvnt label-control lbl_bot_text" draggable="false">Schedule multiple events</label>
                                             </div>
                                         </div>
 
                                     </div>
                                     <div class="col-sm-12 mt10 ">
-                                        <label id="btSchSingleEv" class="Schmultisingle label-control lbl_bot_text">Schedule single event</label>
+                                        <label id="btSchSingleEv" class="Schmultisingle label-control lbl_bot_text" draggable="false">Schedule single event</label>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="SchmultiDetail col-sm-12 mt10">
@@ -829,7 +830,7 @@
                         <h2 class="fb_dis_head pt5">TICKETING INFORMATION</h2>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <label class="ev_fb_lable">Will Call <input type="radio" id="id_willcall" name="seating" checked="checked"></label>
+                        <label class="ev_fb_lable">Will Call <input type="radio" id="id_willcall" name="seating" checked="checked" /></label>
                         <label class="ev_fb_lable">Seating <input type="radio" id="id_reservedseating" name="seating"></label>
                     </div>
 
@@ -1768,7 +1769,8 @@
 
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
-            var Sno = $("#tblOrgnizer tr").length;
+            var Sno = $("#tblOrgnizer tr").length +1;
+
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
@@ -1844,16 +1846,28 @@
 
             $("#btSaveAddress").click(function () {
                 //$("#txtEventLocation").val("Click here to enter venue address");
+
+
                 $("#tblAddress tr").each(function () {
                     var Sno = $(this).find("td:first").html();
+                    console.log(Sno);
                     if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
                         $("#txtEventLocation").val($("#consolidate" + Sno).text());
+                    } else {
+                        $("#txtEventLocation").attr("placeholder", "Click here to enter venue address");
+                        $("#txtEventLocation").val("");
                     }
                 });
+
             });
 
             $("#btSaveTimeZone").click(function () {
-                var vval = $("#dllTimeZone").val();
+
+
+                var vval = $("#dllTimeZone option:selected").text();
+
+
+                //var vval = $("#dllTimeZone").text();
                 if (vval == null || vval == '')
                     vval = "Timezone & date setting";
 
@@ -2204,7 +2218,7 @@
                     'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
                     'Private_Password': $("#txtReqPassword").val(),
                     'EventUrl': $("#txtEventUrl").val().trim(),
-                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") != true ? 'Y' : 'N'),
+                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
                     'EventStatus': 'Save',
                     'AddressDetail': SubmitAddress,
                     'EventVenue': SingleTiming,
@@ -2218,7 +2232,7 @@
                     'Orgnizer': Orgnizer,
                     'AddressStatus': $("#hidAddressStatus").val(),
                     'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
-                    'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N'),
+                    'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") == true ? 'Y' : 'N'),
                     'Ticket': Ticket,
                     'EventImage': EventImage,
                     'EventVariable': EventVariable,
@@ -2243,13 +2257,15 @@
                         success: function (response) {
                             $("#hdEventId").val(response);
                             var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
-                            window.location = '@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl;
+                            window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
+                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
                         }
                     });
                 }
                 else {
                     var vUrl = $('#txtEventTitle').val() + "౼" + $("#hdEventId").val() + "౼Y";
-                    window.location = '@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl;
+                    window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
+                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + $("#hdEventId").val();
                 }
 
                 @*if ($("#hdEventId").val() != '') {
@@ -2599,7 +2615,7 @@
                         'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
                         'Private_Password': $("#txtReqPassword").val(),
                         'EventUrl': $("#txtEventUrl").val().trim(),
-                        'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") != true ? 'Y' : 'N'),
+                        'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
                         'EventStatus': 'Save',
                         'AddressDetail': SubmitAddress,
                         'EventVenue': SingleTiming,
@@ -2613,7 +2629,7 @@
                         'Orgnizer': Orgnizer,
                         'AddressStatus': $("#hidAddressStatus").val(),
                         'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
-                        'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N'),
+                        'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") == true ? 'Y' : 'N'),
                         'Ticket': Ticket,
                         'EventImage': EventImage,
                         'EventVariable': EventVariable,
@@ -2633,7 +2649,7 @@
                     if ($("#hdEventId").val() == '') {
                         $.ajax({
                             url: '@Url.Action("SaveEvent", "CreateEvent")',
-                            data: { model, strIsLive:"Y" },
+                            data: { model, strIsLive: "Y" },
                             type: "Post",
                             success: function (response) {
                                 $("#hdEventId").val(response);
@@ -2653,7 +2669,7 @@
                 }
 
                 else {
-// --------------------------------------------END SAVE EVENT---------------------------------------------------------------
+                    // --------------------------------------------END SAVE EVENT---------------------------------------------------------------
                     $.ajax({
                         url: '@Url.Action("UpdateEventStatus", "CreateEvent")',
                         data: { strEventId: $("#hdEventId").val() },
@@ -2774,7 +2790,7 @@
                     for (var i = 0; i < divlength; i++) {
 
                         if ($('#id_cost-' + i).css('display') == "block") {
-                            TicketPrice = $('#id_cost-' + i).val().replace(',','');
+                            TicketPrice = $('#id_cost-' + i).val().replace(',', '');
 
                         } else { TicketPrice = 0; }
                         if ($('#id_CusdateCont-' + i).css('display') == "block") {
@@ -2813,7 +2829,7 @@
                             TicketTypeID = 3
                         }
 
-                        var Discount = $('#id_Discount-' + i).val().replace(',','');
+                        var Discount = $('#id_Discount-' + i).val().replace(',', '');
                         var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
 
                         Ticket.push({
@@ -3012,7 +3028,7 @@
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
-                debugger;
+               
                 //$("#spEvDesc").text();
                 var vEdesc = ''; //$("#edEventDesc").code();
 
@@ -3036,7 +3052,7 @@
                     'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
                     'Private_Password': $("#txtReqPassword").val(),
                     'EventUrl': $("#txtEventUrl").val().trim(),
-                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") != true ? 'Y' : 'N'),
+                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
                     'EventStatus': 'Save',
                     'AddressDetail': SubmitAddress,
                     'EventVenue': SingleTiming,
@@ -3074,12 +3090,12 @@
                         type: "Post",
                         success: function (response) {
                             $("#hdEventId").val(response);
-                            $('#divaccsuc').css('display', 'block');
-                            $('#divaccsuc').focus();
-                            $('#diverroacc').css('display', 'none');
-                            $('#succaccmsg').html(ajaxsetup('CreateEvent', 'CreateEventsavedsucc'));
+                            //$('#divaccsuc').css('display', 'block');
+                            //$('#divaccsuc').focus();
+                            //$('#diverroacc').css('display', 'none');
+                            //$('#succaccmsg').html(ajaxsetup('CreateEvent', 'CreateEventsavedsucc'));
                             $("#hdEventId").val(response);
-                            alert(response);
+                           
                             $('#dvdraft').css('display', 'block');
                             window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
 
@@ -3107,6 +3123,8 @@
                         $("#hidAddSno").val("");
                     }
                 }
+                //var inputVenu = document.getElementById('VenueName');
+                //var autocomplete = new google.maps.places.Autocomplete(inputVenu);
             });
 
             $("#btOnlineEvent").click(function () {
@@ -3402,6 +3420,24 @@
 
 
             // ------------------------------------End Multiple schedule-----------------------------------
+            $.ajax({
+                url: '@Url.Action("GetPreviousAddress", "CreateEvent")',
+                type: "Post",
+                success: function (data) {
+                    if (data != "")
+                        $("#dllPastLocation").html(data);
+                    else {
+                        $("#UsepastLoc").hide();
+                        $("#lblusePast").hide();
+                    }
+                },
+                error: function (data) {
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
+                }
+            });
 
             $("#UsepastLoc").click(function () {
                 if ($("#UsepastLoc").is(":checked") == true)
@@ -3410,19 +3446,7 @@
                     $("#hidAddressStatus").val('');
 
 
-                $.ajax({
-                    url: '@Url.Action("GetPreviousAddress", "CreateEvent")',
-                    type: "Post",
-                    success: function (data) {
-                        $("#dllPastLocation").html(data);
-                    },
-                    error: function (data) {
-                        $('#divaccsuc').css('display', 'none');
-                        $('#diverroacc').css('display', 'block');
-                        $('#diverroacc').focus();
-                        $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
-                    }
-                });
+
 
                 //$("#dllPastLocation")
             });
@@ -3431,10 +3455,11 @@
 
             // ---------------------------------Map Implemetation--------------------------------------------
             var input = document.getElementById('txtEventLocation');
-           // var inputVenu = document.getElementById('VenueName');
-           // var autocompleteEL = new google.maps.places.Autocomplete(input);
-            var autocomplete = new google.maps.places.Autocomplete(input);
-           
+            var autocompleteEL = new google.maps.places.Autocomplete(input);
+
+            var inputVenu = document.getElementById('VenueName');
+            var autocomplete = new google.maps.places.Autocomplete(inputVenu);
+            //map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputVenu);
 
             google.maps.event.addListener(autocomplete, 'place_changed', function () {
                 var mapOptions = {
@@ -3719,6 +3744,19 @@
                     $('.TicketFees').hide();
                 }
             });
+
+            $.ajax({
+                url: '@Url.Action("GetOrgnizerDetailbyUser", "CreateEvent")',
+                type: "Get",
+                success: function (data) {
+                    var getHtml = data.split('¶');
+                    $("#tblOrgnizer").append(getHtml[0]);
+                    $("#ddlOrgnizers").append(getHtml[1]);
+                },
+                error: function (data) {
+                }
+            });
+
             $.ajax({
                 url: '@Url.Action("returnfees", "Event")',
                 success: function (data) {
@@ -3826,7 +3864,7 @@
             var total = 0;
             var dropval = $('#' + e).val();
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var amount = parseFloat($('#id_cost-' + el).val().replace(',',''));
+            var amount = parseFloat($('#id_cost-' + el).val().replace(',', ''));
             if (amount > 999999.99) {
 
 
@@ -3854,7 +3892,7 @@
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
                 var ccpfinal = parseFloat(amount).toFixed(2);
                 $('#id_buyerprice-' + el).html("$" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 $('#id_tooltip-' + el).html(msg);
                 //$('#id_tooltip-' + el).html(msg);
                 $('#id_feetype-' + el).val(1);
@@ -3863,13 +3901,13 @@
 
             }
 
-            $("#id_fee-" + el).val(fee); 
+            $("#id_fee-" + el).val(fee);
             $("#id_total-" + el).val(total);
 
         }
         function checkprice(el, evt, id) {
 
-         
+
 
             var charCode = (evt.which) ? evt.which : event.keyCode;
 
@@ -3886,31 +3924,29 @@
             }
 
         }
-        function tofixed(id)
-        {
-            var price = $('#' + id).val().replace(',','');
+        function tofixed(id) {
+            var price = $('#' + id).val().replace(',', '');
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
             if (id == "") {
 
-            } else
-            {
-               
-                var price = parseFloat(price).toFixed(2);   
-             
+            } else {
+
+                var price = parseFloat(price).toFixed(2);
+
                 if (!isNaN(price)) {
-                   
-                    price= price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                    price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     document.getElementById(id).value = price;
                 }
 
             }
-         
-            
+
+
         }
         function validateforzero(id, evt) {
-            var price = parseFloat($('#' + id).val().replace(',','')).toFixed(2);
+            var price = parseFloat($('#' + id).val().replace(',', '')).toFixed(2);
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-            var discount = parseFloat($('#id_Discount-' + num).val().replace(',','')).toFixed(2);
+            var discount = parseFloat($('#id_Discount-' + num).val().replace(',', '')).toFixed(2);
             if (price == 0) {
 
                 $('#id_cost-' + num).addClass('err-bor');
@@ -4021,11 +4057,11 @@
 
                 console.log(ccpamount);
                 console.log(ccpfinal);
-                $("#id_fee-" + num).val(ccpamount.replace(',',''));
+                $("#id_fee-" + num).val(ccpamount.replace(',', ''));
                 $("#id_total-" + num).val(ccpfinal.replace(',', ''));
                 //$('#' + id).val(price)
             }
-          
+
 
         }
 
@@ -4046,7 +4082,7 @@
                 evt.preventDefault();
                 return false;
             }
-           
+
 
 
         }
@@ -4084,7 +4120,7 @@
             $('#btn_vardelete-' + divlength).attr('href', '#cnfrmdeletevariable-' + divlength);
         });
         $('.save_btnpaid ').click(function () {
-            
+
             $(".ticket_panel").show();
             $("#id_ticket_footer").css('display', 'block');
             var divlength = $("#MasterDiv> div").size();
@@ -4389,7 +4425,7 @@
             $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
-           
+
 
 
         });
@@ -4403,62 +4439,61 @@
             return randomString;
         }
         function deletevariable(e) {
-      
-                var divlength = $("#id_Mainvariable> div").size();
 
-                var id = e;
-                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var divlength = $("#id_Mainvariable> div").size();
 
-                var div = document.getElementById("id_clonevariable-" + el);
+            var id = e;
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+            var div = document.getElementById("id_clonevariable-" + el);
 
 
 
-                div.parentNode.removeChild(div);
-                divlength = $("#id_Mainvariable> div").size();
+            div.parentNode.removeChild(div);
+            divlength = $("#id_Mainvariable> div").size();
 
-                var count = 0;
-                $('#id_Mainvariable').children('div').each(function () {
+            var count = 0;
+            $('#id_Mainvariable').children('div').each(function () {
+
+                var id = $(this).attr('id');
+
+                id1 = id.substr(0, id.indexOf('-'));
+                ////console.log(id);
+                var idn = id1 + "-" + (count);
+                $(this).attr("id", idn);
+                $(this).find('*[id]').andSelf().each(function () {
+
 
                     var id = $(this).attr('id');
-
+                    //console.log(id);
                     id1 = id.substr(0, id.indexOf('-'));
-                    ////console.log(id);
+                    console.log(id1);
                     var idn = id1 + "-" + (count);
                     $(this).attr("id", idn);
-                    $(this).find('*[id]').andSelf().each(function () {
 
+                    if (id1 == "btn_vardelete") {
+                        $(this).attr("href", "#cnfrmdeletevariable-" + count);
+                    }
 
-                        var id = $(this).attr('id');
-                        //console.log(id);
-                        id1 = id.substr(0, id.indexOf('-'));
-                        console.log(id1);
-                        var idn = id1 + "-" + (count);
-                        $(this).attr("id", idn);
-
-                        if(id1=="btn_vardelete")
-                        {
-                            $(this).attr("href", "#cnfrmdeletevariable-" + count);
-                        }
-
-
-                    });
-                    count = count + 1;
 
                 });
+                count = count + 1;
 
-                if (divlength == 0) {
-                    $('#id_Mainvariable').css('display', 'none');
+            });
 
-                }
+            if (divlength == 0) {
+                $('#id_Mainvariable').css('display', 'none');
+
+            }
 
 
-            
+
 
         }
         function deletediv(e) {
 
             {
-               
+
                 var divlength = $("#MasterDiv> div").size();
 
                 var id = e;
@@ -4495,7 +4530,7 @@
                         var id = $(this).attr('id');
                         //console.log(id);
                         id1 = id.substr(0, id.indexOf('-'));
-                       // console.log(id);
+                        // console.log(id);
                         var idn = id1 + "-" + (count);
                         $(this).attr("id", idn);
                         var al = $(this).attr("id").substr(0, id.indexOf('-'));
@@ -4504,10 +4539,9 @@
 
                             $(this).val(count);
                         }
-                     
-                        if (al == "btndelete")
-                        {
-                           
+
+                        if (al == "btndelete") {
+
                             $(this).attr('href', '#cnfrmdelete-' + (count));
 
                         }
@@ -4533,7 +4567,7 @@
 
                 return true;
             }
-          
+
 
         }
         $(".tab-content").hide();
@@ -4572,7 +4606,7 @@
 
             if (!isNaN(price) && !isNaN(discount)) {
                 if (price != 0 && discount != 0) {
-                  
+
                     if (discount >= price) {
                         $('#' + e).addClass('err-bor');
 
@@ -4734,15 +4768,14 @@
             return true;
 
         }
-        function allownumber(el,evt, id) {
+        function allownumber(el, evt, id) {
 
-          
+
 
             var charCode = (evt.which) ? evt.which : event.keyCode;
-           
-            if ((charCode < 48 || charCode > 57) && charCode > 31 && charCode != 44)
-            {
-               
+
+            if ((charCode < 48 || charCode > 57) && charCode > 31 && charCode != 44) {
+
                 evt.preventDefault();
                 return false;
             }
@@ -4774,7 +4807,7 @@
             //    return false;
             //}
 
-        
+
 
         }
 

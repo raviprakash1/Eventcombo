@@ -70,7 +70,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NReco.PdfGenerator">
-      <HintPath>C:\Users\user\Desktop\NReco.PdfGenerator.dll</HintPath>
+      <HintPath>C:\Users\kiwitech\AppData\Roaming\Skype\My Skype Received Files\NReco.PdfGenerator.dll</HintPath>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -475,12 +475,6 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
-    <Content Include="plugins\footable.core.css" />
-    <Content Include="plugins\footable.core.min.css" />
-    <Content Include="plugins\footable.metro.css" />
-    <Content Include="plugins\footable.metro.min.css" />
-    <Content Include="plugins\footable.standalone.css" />
-    <Content Include="plugins\footable.standalone.min.css" />
     <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
