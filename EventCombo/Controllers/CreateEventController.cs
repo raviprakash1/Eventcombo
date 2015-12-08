@@ -744,7 +744,74 @@ namespace EventCombo.Controllers
         }
 
 
+        public string GetOrgnizerDetailbyUser()
+        {
+            StringBuilder strHTML = new StringBuilder();
+            string strtemp;
+            string strUserId = Session["AppId"] != null ? Session["AppId"].ToString() : "";
+            StringBuilder strDropDown = new StringBuilder();
+            if (strUserId != "")
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var MaxEventId = (from Org in objEnt.Event_Orgnizer_Detail
+                                      where Org.UserId == strUserId
+                                      select Org.Orgnizer_Event_Id).Max();
 
+                    var EventOrg = (from Org in objEnt.Event_Orgnizer_Detail
+                                    where Org.Orgnizer_Event_Id == MaxEventId
+                                    select Org).ToList();
+
+                    int i = 0;
+                    foreach (Event_Orgnizer_Detail EOD in EventOrg)
+                    {
+                        i = i + 1;
+                        strHTML.Append("<tr>");
+                        strHTML.Append("<td style='display: none' width='92%'>");
+                        strHTML.Append(i);
+                        strHTML.Append("</td>");
+
+                        strHTML.Append("<td width='92 %'><label id=OrgName_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Orgnizer_Name);
+                        strHTML.Append("</label></td>");
+
+                        strHTML.Append("<td style='display: none'><label id=OrgDes_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Orgnizer_Desc);
+                        strHTML.Append("</label></td>");
+
+                        strHTML.Append("<td style='display: none'><label id=OrgFB_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.FBLink);
+                        strHTML.Append("</label></td>");
+
+
+                        strHTML.Append("<td style='display: none'><label id=OrgTw_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Twitter);
+                        strHTML.Append("</label></td>");
+                        strtemp = "<td align='right'><i onclick='editOrgnizer(" + i + ")'; class='fa fa-pencil'></i> | <i onclick='DeleteOrgnizer(" + i + ");' class='fa fa-trash'></i></td>";
+                        strHTML.Append(strtemp);
+                        strHTML.Append("</tr>");
+
+                        if (EOD.DefaultOrg == "Y")
+                            strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                        else
+                            strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+
+
+                    }
+                }
+            }
+
+            return strHTML.ToString() + "¶" + strDropDown.ToString();
+
+        }
 
         public ActionResult ViewCreateEvent(string strUrlData)
         {

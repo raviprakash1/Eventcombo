@@ -829,7 +829,7 @@
                         <h2 class="fb_dis_head pt5">TICKETING INFORMATION</h2>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <label class="ev_fb_lable">Will Call <input type="radio" id="id_willcall" name="seating" checked="checked"></label>
+                        <label class="ev_fb_lable">Will Call <input type="radio" id="id_willcall" name="seating" checked="checked" /></label>
                         <label class="ev_fb_lable">Seating <input type="radio" id="id_reservedseating" name="seating"></label>
                     </div>
 
@@ -1768,7 +1768,7 @@
 
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
-            var Sno = $("#tblOrgnizer tr").length;
+            var Sno = $("#tblOrgnizer tr").length +1;
 
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
@@ -3738,6 +3738,19 @@
                     $('.TicketFees').hide();
                 }
             });
+
+            $.ajax({
+                url: '@Url.Action("GetOrgnizerDetailbyUser", "CreateEvent")',
+                type: "Get",
+                success: function (data) {
+                    var getHtml = data.split('¶');
+                    $("#tblOrgnizer").append(getHtml[0]);
+                    $("#ddlOrgnizers").append(getHtml[1]);
+                },
+                error: function (data) {
+                }
+            });
+
             $.ajax({
                 url: '@Url.Action("returnfees", "Event")',
                 success: function (data) {
@@ -3845,7 +3858,7 @@
             var total = 0;
             var dropval = $('#' + e).val();
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var amount = parseFloat($('#id_cost-' + el).val().replace(',',''));
+            var amount = parseFloat($('#id_cost-' + el).val().replace(',', ''));
             if (amount > 999999.99) {
 
 
@@ -3873,7 +3886,7 @@
                 var ccpamount = ((amount * ccp) / 100).toFixed(2);
                 var ccpfinal = parseFloat(amount).toFixed(2);
                 $('#id_buyerprice-' + el).html("$" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 $('#id_tooltip-' + el).html(msg);
                 //$('#id_tooltip-' + el).html(msg);
                 $('#id_feetype-' + el).val(1);
@@ -3882,13 +3895,13 @@
 
             }
 
-            $("#id_fee-" + el).val(fee); 
+            $("#id_fee-" + el).val(fee);
             $("#id_total-" + el).val(total);
 
         }
         function checkprice(el, evt, id) {
 
-         
+
 
             var charCode = (evt.which) ? evt.which : event.keyCode;
 
@@ -3905,31 +3918,29 @@
             }
 
         }
-        function tofixed(id)
-        {
-            var price = $('#' + id).val().replace(',','');
+        function tofixed(id) {
+            var price = $('#' + id).val().replace(',', '');
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
             if (id == "") {
 
-            } else
-            {
-               
-                var price = parseFloat(price).toFixed(2);   
-             
+            } else {
+
+                var price = parseFloat(price).toFixed(2);
+
                 if (!isNaN(price)) {
-                   
-                    price= price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                    price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     document.getElementById(id).value = price;
                 }
 
             }
-         
-            
+
+
         }
         function validateforzero(id, evt) {
-            var price = parseFloat($('#' + id).val().replace(',','')).toFixed(2);
+            var price = parseFloat($('#' + id).val().replace(',', '')).toFixed(2);
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-            var discount = parseFloat($('#id_Discount-' + num).val().replace(',','')).toFixed(2);
+            var discount = parseFloat($('#id_Discount-' + num).val().replace(',', '')).toFixed(2);
             if (price == 0) {
 
                 $('#id_cost-' + num).addClass('err-bor');
@@ -4040,11 +4051,11 @@
 
                 console.log(ccpamount);
                 console.log(ccpfinal);
-                $("#id_fee-" + num).val(ccpamount.replace(',',''));
+                $("#id_fee-" + num).val(ccpamount.replace(',', ''));
                 $("#id_total-" + num).val(ccpfinal.replace(',', ''));
                 //$('#' + id).val(price)
             }
-          
+
 
         }
 
@@ -4065,7 +4076,7 @@
                 evt.preventDefault();
                 return false;
             }
-           
+
 
 
         }
@@ -4103,7 +4114,7 @@
             $('#btn_vardelete-' + divlength).attr('href', '#cnfrmdeletevariable-' + divlength);
         });
         $('.save_btnpaid ').click(function () {
-            
+
             $(".ticket_panel").show();
             $("#id_ticket_footer").css('display', 'block');
             var divlength = $("#MasterDiv> div").size();
@@ -4408,7 +4419,7 @@
             $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
-           
+
 
 
         });
@@ -4422,62 +4433,61 @@
             return randomString;
         }
         function deletevariable(e) {
-      
-                var divlength = $("#id_Mainvariable> div").size();
 
-                var id = e;
-                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var divlength = $("#id_Mainvariable> div").size();
 
-                var div = document.getElementById("id_clonevariable-" + el);
+            var id = e;
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+            var div = document.getElementById("id_clonevariable-" + el);
 
 
 
-                div.parentNode.removeChild(div);
-                divlength = $("#id_Mainvariable> div").size();
+            div.parentNode.removeChild(div);
+            divlength = $("#id_Mainvariable> div").size();
 
-                var count = 0;
-                $('#id_Mainvariable').children('div').each(function () {
+            var count = 0;
+            $('#id_Mainvariable').children('div').each(function () {
+
+                var id = $(this).attr('id');
+
+                id1 = id.substr(0, id.indexOf('-'));
+                ////console.log(id);
+                var idn = id1 + "-" + (count);
+                $(this).attr("id", idn);
+                $(this).find('*[id]').andSelf().each(function () {
+
 
                     var id = $(this).attr('id');
-
+                    //console.log(id);
                     id1 = id.substr(0, id.indexOf('-'));
-                    ////console.log(id);
+                    console.log(id1);
                     var idn = id1 + "-" + (count);
                     $(this).attr("id", idn);
-                    $(this).find('*[id]').andSelf().each(function () {
 
+                    if (id1 == "btn_vardelete") {
+                        $(this).attr("href", "#cnfrmdeletevariable-" + count);
+                    }
 
-                        var id = $(this).attr('id');
-                        //console.log(id);
-                        id1 = id.substr(0, id.indexOf('-'));
-                        console.log(id1);
-                        var idn = id1 + "-" + (count);
-                        $(this).attr("id", idn);
-
-                        if(id1=="btn_vardelete")
-                        {
-                            $(this).attr("href", "#cnfrmdeletevariable-" + count);
-                        }
-
-
-                    });
-                    count = count + 1;
 
                 });
+                count = count + 1;
 
-                if (divlength == 0) {
-                    $('#id_Mainvariable').css('display', 'none');
+            });
 
-                }
+            if (divlength == 0) {
+                $('#id_Mainvariable').css('display', 'none');
+
+            }
 
 
-            
+
 
         }
         function deletediv(e) {
 
             {
-               
+
                 var divlength = $("#MasterDiv> div").size();
 
                 var id = e;
@@ -4514,7 +4524,7 @@
                         var id = $(this).attr('id');
                         //console.log(id);
                         id1 = id.substr(0, id.indexOf('-'));
-                       // console.log(id);
+                        // console.log(id);
                         var idn = id1 + "-" + (count);
                         $(this).attr("id", idn);
                         var al = $(this).attr("id").substr(0, id.indexOf('-'));
@@ -4523,10 +4533,9 @@
 
                             $(this).val(count);
                         }
-                     
-                        if (al == "btndelete")
-                        {
-                           
+
+                        if (al == "btndelete") {
+
                             $(this).attr('href', '#cnfrmdelete-' + (count));
 
                         }
@@ -4552,7 +4561,7 @@
 
                 return true;
             }
-          
+
 
         }
         $(".tab-content").hide();
@@ -4591,7 +4600,7 @@
 
             if (!isNaN(price) && !isNaN(discount)) {
                 if (price != 0 && discount != 0) {
-                  
+
                     if (discount >= price) {
                         $('#' + e).addClass('err-bor');
 
@@ -4753,15 +4762,14 @@
             return true;
 
         }
-        function allownumber(el,evt, id) {
+        function allownumber(el, evt, id) {
 
-          
+
 
             var charCode = (evt.which) ? evt.which : event.keyCode;
-           
-            if ((charCode < 48 || charCode > 57) && charCode > 31 && charCode != 44)
-            {
-               
+
+            if ((charCode < 48 || charCode > 57) && charCode > 31 && charCode != 44) {
+
                 evt.preventDefault();
                 return false;
             }
@@ -4793,7 +4801,7 @@
             //    return false;
             //}
 
-        
+
 
         }
 
