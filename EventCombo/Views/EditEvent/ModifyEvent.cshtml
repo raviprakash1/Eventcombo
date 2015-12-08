@@ -274,7 +274,7 @@
                                         <input class="" id="chkShowMap" type="checkbox">
                                         Show map on event page
                                     </label>
-                                    <label class="label-control evnt_title_multi pl0">
+                                    <label class="label-control evnt_title_multi pl0" id="lblusePast">
                                         @if (Model.LastLocationAddress > 0)
                                         {
                                             <input id="UsepastLoc" checked="checked" class="" type="checkbox">
@@ -2646,7 +2646,22 @@
 
 
             // ------------------------------------End Multiple schedule-----------------------------------
-
+            $.ajax({
+                url: '@Url.Action("GetPreviousAddressForEditing", "CreateEvent")',
+                data: { "lEid": $("#hdEventId").val() },
+                type: "Post",
+                success: function (data) {
+                    if (data != "")
+                        $("#dllPastLocation").html(data);
+                    else {
+                        $("#UsepastLoc").hide();
+                        $("#lblusePast").hide();
+                    }
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                }
+            });
             $("#UsepastLoc").click(function () {
                 if ($("#UsepastLoc").is(":checked") == true)
                     $("#hidAddressStatus").val('PastLocation');
@@ -2654,17 +2669,7 @@
                     $("#hidAddressStatus").val('');
 
 
-                $.ajax({
-                    url: '@Url.Action("GetPreviousAddress", "CreateEvent")',
-                    data: { "lPreAddId": $("#hdPastLId").val() },
-                    type: "Post",
-                    success: function (data) {
-                        $("#dllPastLocation").html(data);
-                    },
-                    error: function (data) {
-                        alert("Sorry there is some problem.");
-                    }
-                });
+  
 
                 //$("#dllPastLocation")
             });
