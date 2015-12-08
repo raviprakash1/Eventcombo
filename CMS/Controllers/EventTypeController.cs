@@ -145,21 +145,21 @@ namespace CMS.Controllers
                             et = new Models.EventType();
                         }
                         break;                        
-                    case "Reset":
-                        using (EmsEntities objEntity = new EmsEntities())
-                        {                                                      
-                            var modelPerm = (from EventType in objEntity.EventTypes
-                                             orderby EventType.EventType1 ascending
-                                             select EventType).ToList();
+                    //case "Reset":
+                    //    using (EmsEntities objEntity = new EmsEntities())
+                    //    {                                                      
+                    //        var modelPerm = (from EventType in objEntity.EventTypes
+                    //                         orderby EventType.EventType1 ascending
+                    //                         select EventType).ToList();
 
-                            List<string> EventTypeList = new List<string>();
-                            foreach (var item in modelPerm)
-                            {
-                                EventTypeList.Add(item.EventType1);
-                            }
-                            ViewBag.EventType = EventTypeList;
-                        }
-                        break;
+                    //        List<string> EventTypeList = new List<string>();
+                    //        foreach (var item in modelPerm)
+                    //        {
+                    //            EventTypeList.Add(item.EventType1);
+                    //        }
+                    //        ViewBag.EventType = EventTypeList;
+                    //    }
+                    //    break;
                     default:
                         throw new Exception();                        
                 }                

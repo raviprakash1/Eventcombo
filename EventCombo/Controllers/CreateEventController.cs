@@ -716,6 +716,12 @@ namespace EventCombo.Controllers
             ViewEvent viewEvent = new ViewEvent();
             //EventDetails
             var EventDetail = GetEventdetail(EventId);
+            TempData["EventType"] = EventDetail.EventType.EventType1;
+
+            var EvntCtgry = (from ev in db.EventCategories where ev.EventCategoryID == EventDetail.EventCategoryID select ev.EventCategory1).FirstOrDefault();
+            var EvntSubCtgry = (from ev in db.EventSubCategories where ev.EventCategoryID == EventDetail.EventCategoryID && ev.EventSubCategoryID == EventDetail.EventSubCategoryID select ev.EventSubCategory1).FirstOrDefault();
+            TempData["EventCategory"] = EvntCtgry;
+            TempData["EventSubCategory"] = EvntSubCtgry;
 
             var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;

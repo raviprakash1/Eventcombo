@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
 using System.Data;
+using PagedList;
 
 namespace EventCombo.Controllers
 {
@@ -12,19 +13,32 @@ namespace EventCombo.Controllers
     {
         string UserId = string.Empty;
         EventComboEntities db = new EventComboEntities();
-        // GET: EventList
-        public ActionResult EventList(string SearchStringEventTitle)
-        {            
+        // GET: EventList        
+        public ActionResult EventList(string SearchStringEventTitle, string submit,int page=1,int pageSize=10)
+        {
+            page = page > 0 ? page : 1;
+            pageSize = pageSize > 0 ? pageSize : 10;
             if (string.IsNullOrEmpty(SearchStringEventTitle))
                 SearchStringEventTitle = "";            
             List<GetEventsListByStatus1_Result> objLiveEventList = GetLiveEvents(SearchStringEventTitle);
             List<GetEventsListByStatus1_Result> objSavedEventList = GetSavedEvents(SearchStringEventTitle);
             List <GetEventsListByStatus1_Result> objPastEventList = GetPastEvents(SearchStringEventTitle);
             List<GetEventsListByStatus1_Result> objGuestEventList = GetGuestsList(SearchStringEventTitle);
+            
             TempData["LiveEvents"] = objLiveEventList.Count;
             TempData["SavedEvents"] = objSavedEventList.Count;
             TempData["PastEvents"] = objPastEventList.Count;            
-            return View();           
+
+            ViewBag.LiveEvent = objLiveEventList.ToPagedList(page, pageSize);
+            ViewBag.SavedEvent = objSavedEventList.ToPagedList(page, pageSize);            
+            ViewBag.PastEvent = objPastEventList.ToPagedList(page, pageSize);
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EventList()
+        {
+            return View();
         }
         public List<GetEventsListByStatus1_Result> GetLiveEvents(string SearchStringEventTitle)
         {
