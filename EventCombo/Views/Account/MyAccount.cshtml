@@ -555,7 +555,10 @@
                 });
             }
             else if (Model == "Edit") {
+                $("#image_count").val("1");
+                var imgdata =@Model.UserProfileImage+ '¶' + @Model.contentype;
               
+                $('#userimage').val(imgdata);
                 $('#input2').filer({
                     limit: '1',
                     maxSize: '2',

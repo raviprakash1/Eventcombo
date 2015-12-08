@@ -1058,6 +1058,7 @@ namespace EventCombo.Controllers
                                           Gender = pfd.Gender,
                                           PreviousEmail = cpd.Email,
                                           SendLatestdetails=pfd.SendCur_EventDetail
+                                       
                                       });
                 return modelmyaccount.FirstOrDefault();
 
