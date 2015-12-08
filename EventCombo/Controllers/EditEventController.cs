@@ -159,8 +159,23 @@ namespace EventCombo.Controllers
                 Session["ReturnUrl"] = "CreateEvent~" + url;
 
                 string defaultCountry = "";
+                string timezone = objCr.TimeZone;
                 using (EventComboEntities db = new EventComboEntities())
                 {
+                    var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
+                    List<SelectListItem> Timezonelist = new List<SelectListItem>();
+                  foreach(var item in Timezone)
+                    {
+                        Timezonelist.Add(new SelectListItem()
+                        {
+                            Text = item.TimeZone_Name.ToString(),
+                            Value = item.TimeZone_Id.ToString(),
+                            Selected = (item.TimeZone_Id.ToString().Trim() == timezone.Trim() ? true : false)
+
+                        });
+
+                    }
+
                     var countryQuery = (from c in db.Countries
                                         orderby c.Country1 ascending
                                         select c).Distinct();
@@ -244,7 +259,7 @@ namespace EventCombo.Controllers
                     ViewBag.CountryID = countryList;
                     ViewBag.EventType = EventType;
                     ViewBag.ddlEventCategory = EventCategory;
-
+                    ViewBag.Timezonelist = Timezonelist;
                     var Images = (from myEvent in db.EventImages
                                   where myEvent.EventID == Eventid
                                   select myEvent).ToList();

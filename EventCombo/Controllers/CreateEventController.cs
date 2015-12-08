@@ -97,7 +97,20 @@ namespace EventCombo.Controllers
                             Value = item.EventCategoryID.ToString(),
                         });
                     }
+                    var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
+                    List<SelectListItem> Timezonelist = new List<SelectListItem>();
+                    foreach (var item in Timezone)
+                    {
+                        Timezonelist.Add(new SelectListItem()
+                        {
+                            Text = item.TimeZone_Name.ToString(),
+                            Value = item.TimeZone_Id.ToString()
+                            //Selected = (item.TimeZone_Id.ToString().Trim() == timezone.Trim() ? true : false)
 
+                        });
+
+                    }
+                    ViewBag.Timezonelist = Timezonelist;
 
                     ViewBag.CountryID = countryList;
                     ViewBag.EventType = EventType;
