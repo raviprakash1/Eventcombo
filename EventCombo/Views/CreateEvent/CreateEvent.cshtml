@@ -429,7 +429,7 @@
                                         <input class="" id="chkShowMap" type="checkbox">
                                         Show map on event page
                                     </label>
-                                    <label class="label-control evnt_title_multi pl0">
+                                    <label class="label-control evnt_title_multi pl0" id="lblusePast">
 
                                         <input id="UsepastLoc" class="" type="checkbox">
                                         Use Past Location
@@ -3410,6 +3410,24 @@
 
 
             // ------------------------------------End Multiple schedule-----------------------------------
+            $.ajax({
+                url: '@Url.Action("GetPreviousAddress", "CreateEvent")',
+                type: "Post",
+                success: function (data) {
+                    if (data != "")
+                        $("#dllPastLocation").html(data);
+                    else {
+                        $("#UsepastLoc").hide();
+                        $("#lblusePast").hide();
+                    }
+                },
+                error: function (data) {
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
+                }
+            });
 
             $("#UsepastLoc").click(function () {
                 if ($("#UsepastLoc").is(":checked") == true)
@@ -3418,19 +3436,7 @@
                     $("#hidAddressStatus").val('');
 
 
-                $.ajax({
-                    url: '@Url.Action("GetPreviousAddress", "CreateEvent")',
-                    type: "Post",
-                    success: function (data) {
-                        $("#dllPastLocation").html(data);
-                    },
-                    error: function (data) {
-                        $('#divaccsuc').css('display', 'none');
-                        $('#diverroacc').css('display', 'block');
-                        $('#diverroacc').focus();
-                        $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
-                    }
-                });
+                
 
                 //$("#dllPastLocation")
             });
@@ -3439,9 +3445,10 @@
 
             // ---------------------------------Map Implemetation--------------------------------------------
             var input = document.getElementById('txtEventLocation');
-           // var inputVenu = document.getElementById('VenueName');
-           // var autocompleteEL = new google.maps.places.Autocomplete(input);
-            var autocomplete = new google.maps.places.Autocomplete(input);
+            var autocompleteEL = new google.maps.places.Autocomplete(input);
+
+            var inputVenu = document.getElementById('VenueName');
+            var autocomplete = new google.maps.places.Autocomplete(inputVenu);
            
 
             google.maps.event.addListener(autocomplete, 'place_changed', function () {

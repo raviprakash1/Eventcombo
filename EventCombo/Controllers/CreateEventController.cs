@@ -133,9 +133,12 @@ namespace EventCombo.Controllers
                                    select myRow).ToList();
 
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    //strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
                     foreach (var item in PrevAdd)
-                        strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
-
+                    {
+                        if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
+                            strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                    }
                     return strHtml.ToString();
                 }
             }
@@ -148,6 +151,37 @@ namespace EventCombo.Controllers
 
         }
 
+        public string GetPreviousAddressForEditing(long lEid)
+        {
+            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+
+            StringBuilder strHtml = new StringBuilder();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var PrevAdd = (from myRow in objEnt.Addresses
+                                   where myRow.UserId == strUsers && myRow.EventId != lEid
+                                   select myRow).ToList();
+
+                    //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    //strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+                    foreach (var item in PrevAdd)
+                    {
+                        if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
+                            strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                    }
+                    return strHtml.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return strHtml.ToString();
+
+            }
+
+
+        }
         public string GetSubCat(long lECatId)
         {
 
