@@ -587,6 +587,42 @@ namespace EventCombo.Controllers
                                             subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", strOrderNo);
 
                                         }
+                                        if (EmailTag[i].Tag_Name == "EventStartDateID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventStartDateID¶¶", tQntydetail.TQD_StartDate);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "EventVenueID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventVenueID¶¶", address.ConsolidateAddress);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "Tickettype")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶Tickettype¶¶", tickets.T_name);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "EventImageId")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventImageId¶¶", "");
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", tQntydetail.TQD_StartTime);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "TicketPrice")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶TicketPrice¶¶", ticketP);
+
+                                        }
+
 
                                     }
 

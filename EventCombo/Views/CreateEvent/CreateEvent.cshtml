@@ -1769,7 +1769,7 @@
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
             var Sno = $("#tblOrgnizer tr").length;
-            alert()
+          
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
@@ -2212,7 +2212,7 @@
                     'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
                     'Private_Password': $("#txtReqPassword").val(),
                     'EventUrl': $("#txtEventUrl").val().trim(),
-                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") != true ? 'Y' : 'N'),
+                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
                     'EventStatus': 'Save',
                     'AddressDetail': SubmitAddress,
                     'EventVenue': SingleTiming,
@@ -2226,7 +2226,7 @@
                     'Orgnizer': Orgnizer,
                     'AddressStatus': $("#hidAddressStatus").val(),
                     'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
-                    'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N'),
+                    'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") == true ? 'Y' : 'N'),
                     'Ticket': Ticket,
                     'EventImage': EventImage,
                     'EventVariable': EventVariable,
@@ -2607,7 +2607,7 @@
                         'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
                         'Private_Password': $("#txtReqPassword").val(),
                         'EventUrl': $("#txtEventUrl").val().trim(),
-                        'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") != true ? 'Y' : 'N'),
+                        'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked")== true ? 'Y' : 'N'),
                         'EventStatus': 'Save',
                         'AddressDetail': SubmitAddress,
                         'EventVenue': SingleTiming,
@@ -2621,7 +2621,7 @@
                         'Orgnizer': Orgnizer,
                         'AddressStatus': $("#hidAddressStatus").val(),
                         'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
-                        'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") != true ? 'Y' : 'N'),
+                        'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") == true ? 'Y' : 'N'),
                         'Ticket': Ticket,
                         'EventImage': EventImage,
                         'EventVariable': EventVariable,
@@ -3044,7 +3044,7 @@
                     'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
                     'Private_Password': $("#txtReqPassword").val(),
                     'EventUrl': $("#txtEventUrl").val().trim(),
-                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") != true ? 'Y' : 'N'),
+                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
                     'EventStatus': 'Save',
                     'AddressDetail': SubmitAddress,
                     'EventVenue': SingleTiming,
