@@ -13,11 +13,23 @@ namespace EventCombo.Controllers
     {
         string UserId = string.Empty;
         EventComboEntities db = new EventComboEntities();
-        // GET: EventList        
-        public ActionResult EventList(string SearchStringEventTitle, string submit,int page=1,int pageSize=10)
+        // GET: EventList
+        public ActionResult EventList(string SearchStringEventTitle)
         {
-            page = page > 0 ? page : 1;
-            pageSize = pageSize > 0 ? pageSize : 10;
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (string.IsNullOrEmpty(SearchStringEventTitle))
                 SearchStringEventTitle = "";            
             List<GetEventsListByStatus1_Result> objLiveEventList = GetLiveEvents(SearchStringEventTitle);
@@ -27,12 +39,7 @@ namespace EventCombo.Controllers
             
             TempData["LiveEvents"] = objLiveEventList.Count;
             TempData["SavedEvents"] = objSavedEventList.Count;
-            TempData["PastEvents"] = objPastEventList.Count;            
-
-            ViewBag.LiveEvent = objLiveEventList.ToPagedList(page, pageSize);
-            ViewBag.SavedEvent = objSavedEventList.ToPagedList(page, pageSize);            
-            ViewBag.PastEvent = objPastEventList.ToPagedList(page, pageSize);
-
+            TempData["PastEvents"] = objPastEventList.Count;                      
             return View();
         }
         [HttpPost]

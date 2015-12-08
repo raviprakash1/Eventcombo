@@ -82,9 +82,9 @@ namespace CMS.Controllers
 
             ViewBag.PageF = PageFilter;
 
+            List<EventCreation> objlst1 = GetAllEvents("", "", "", "", "", "", "");
+            ViewData["Eventscount"] = objlst1.Count;
 
-
-           
 
             return View(objlst);
 

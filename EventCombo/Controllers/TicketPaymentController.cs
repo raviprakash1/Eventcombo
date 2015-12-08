@@ -13,7 +13,7 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using System.Xml.Linq;
-//using NReco.PdfGenerator;
+using NReco.PdfGenerator;
 
 namespace EventCombo.Controllers
 {
@@ -25,6 +25,16 @@ namespace EventCombo.Controllers
         // GET: TicketPayment
         public ActionResult TicketPayment(long Eventid)
         {
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             TicketPayment tp = new TicketPayment();
             string defaultCountry = "";
             string Fname = "", Lname = "", Phnnumber = "", Adress = "", Email = "";
@@ -231,6 +241,7 @@ namespace EventCombo.Controllers
 
 
             HomeController hm = new HomeController();
+            hm.ControllerContext = new ControllerContext(this.Request.RequestContext, hm);
             if (!string.IsNullOrEmpty(model.AccconfirmEmail) && !string.IsNullOrEmpty(model.Accpassword))
             {
                 string userid = await saveuser(model.AccEmail, model.Accpassword);
@@ -496,9 +507,9 @@ namespace EventCombo.Controllers
                         string xel = createxml(strOrderNo, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, address.ConsolidateAddress, "", "");
 
                         var Qrcode = "<img style = 'width:100px;height:100px' src =http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl="+xel.ToString()+"  alt = 'QR Code' />";
-                        Byte[] attach = new Byte[16 * 1024];
-                        attach = generateTicketPDF(email, username, DateTime.Now.ToString(), strOrderNo, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode);
-                        MemoryStream attachment = new MemoryStream(attach);
+                        //Byte[] attach = new Byte[16 * 1024];
+                        MemoryStream attachment = generateTicketPDF(email, username, DateTime.Now.ToString(), strOrderNo, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode);
+                       // MemoryStream attachment = new MemoryStream(attach);
                         var Emailtemplate = hmc.getEmail("eticket");
                         if (Emailtemplate != null)
                         {
@@ -576,6 +587,42 @@ namespace EventCombo.Controllers
                                             subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", strOrderNo);
 
                                         }
+                                        if (EmailTag[i].Tag_Name == "EventStartDateID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventStartDateID¶¶", tQntydetail.TQD_StartDate);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "EventVenueID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventVenueID¶¶", address.ConsolidateAddress);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "Tickettype")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶Tickettype¶¶", tickets.T_name);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "EventImageId")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventImageId¶¶", "");
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", tQntydetail.TQD_StartTime);
+
+                                        }
+                                        if (EmailTag[i].Tag_Name == "TicketPrice")
+                                        {
+                                            subjectn = subjectn.Replace("¶¶TicketPrice¶¶", ticketP);
+
+                                        }
+
 
                                     }
 
@@ -715,7 +762,7 @@ namespace EventCombo.Controllers
 
         }
 
-        public Byte[] generateTicketPDF(string email, string username, string TicketOrderdate, string OrderNo, string EventTitle, string TQD_StartDate, string ConsolidateAddress, string T_name, string tickettype, string TimeZone, string TQD_StartTime,string barcode,string qrcode)
+        public MemoryStream generateTicketPDF(string email, string username, string TicketOrderdate, string OrderNo, string EventTitle, string TQD_StartDate, string ConsolidateAddress, string T_name, string tickettype, string TimeZone, string TQD_StartTime,string barcode,string qrcode)
         {
             WebClient wc = new WebClient();
             string htmlPath = Server.MapPath("..");
@@ -734,26 +781,26 @@ namespace EventCombo.Controllers
             htmlText = htmlText.Replace("¶¶Tickettype¶¶", tickettype);
             htmlText = htmlText.Replace("¶¶EventBarcodeId¶¶", barcode);
             htmlText = htmlText.Replace("¶¶EventQrCode¶¶", qrcode);
-            Byte[] res = null;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                //HtmlToPdfConverter nRecohtmltoPdfObj = new HtmlToPdfConverter();
-                //nRecohtmltoPdfObj.Orientation = PageOrientation.Portrait;
-                ////nRecohtmltoPdfObj.PageFooterHtml = CreatePDFFooter();
+            //Byte[] res = null;
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    HtmlToPdfConverter nRecohtmltoPdfObj = new HtmlToPdfConverter();
+            //    nRecohtmltoPdfObj.Orientation = PageOrientation.Portrait;
+            //    //nRecohtmltoPdfObj.PageFooterHtml = CreatePDFFooter();
 
-                //res= nRecohtmltoPdfObj.GeneratePdf(htmlText);
+            //    res = nRecohtmltoPdfObj.GeneratePdf(htmlText);
 
-                var pdf = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.GeneratePdf(htmlText, PdfSharp.PageSize.A4);
-                pdf.Save(ms);
-                res = ms.ToArray();
-            }
-            return res;
+            //    //var pdf = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.GeneratePdf(htmlText, PdfSharp.PageSize.A4);
+            //    //pdf.Save(ms);
+            //    //res = ms.ToArray();
+            //}
+            //return res;
 
-            //var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
-            //var pdfBytes = htmlToPdf.GeneratePdf(htmlText);
-            //MemoryStream mms = new MemoryStream(pdfBytes);
-            //return mms;
-           
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlText);
+            MemoryStream mms = new MemoryStream(pdfBytes);
+            return mms;
+
         }
         public string GetOrderNo()
         {
@@ -842,54 +889,68 @@ namespace EventCombo.Controllers
         public ActionResult PaymentConfirmation(long Eventid)
 
         {
-            Session["Fromname"] = "ViewEvent";
-            List<paymentdate> Dateofevent=new List<paymentdate>();
-            CreateEventController cs = new CreateEventController();
-            PaymentConfirmation ps = new PaymentConfirmation();
-            var Eventdetails = cs.GetEventdetail(Eventid);
-            ps.imgurl = cs.GetImages(Eventid).FirstOrDefault();
-            ps.Tilte = Eventdetails.EventTitle;
-            ps.description = Eventdetails.EventDescription;
-            ps.Eventid = Eventdetails.EventID.ToString();
-
-            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
-
-            ps.Organiserid = OrganiserDetail.Orgnizer_Id.ToString();
-            var guid = Session["TicketLockedId"].ToString();
-            AccountController ac = new AccountController();
-            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-            var acountdedtails = ac.GetLoginDetails(strUsers);
-            ps.sendlatestdetails = acountdedtails.SendLatestdetails;
-            ps.Username = acountdedtails.Firstname + " " + acountdedtails.Lastname;
-            ps.Email = acountdedtails.Email;
-            var url = Request.Url;
-            var baseurl = url.GetLeftPart(UriPartial.Authority);
-            ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
-            var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == guid).ToList();
-            foreach (var item in TicketPurchasedDetail)
+            if (Session["AppId"] != null)
             {
-                paymentdate pdate = new paymentdate();
-                var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                Session["Fromname"] = "ViewEvent";
+                List<paymentdate> Dateofevent = new List<paymentdate>();
+                CreateEventController cs = new CreateEventController();
+                PaymentConfirmation ps = new PaymentConfirmation();
+                var Eventdetails = cs.GetEventdetail(Eventid);
+                ps.imgurl = cs.GetImages(Eventid).FirstOrDefault();
+                ps.Tilte = Eventdetails.EventTitle;
+                ps.description = Eventdetails.EventDescription;
+                ps.Eventid = Eventdetails.EventID.ToString();
 
-                var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
-                var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
-                var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
+                var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
 
-                var datetime =DateTime.Parse( tQntydetail.TQD_StartDate);
-                var day = datetime.DayOfWeek;
-                var Sdate= datetime.ToString("MMM dd, yyyy");
-                var time = tQntydetail.TQD_StartTime;
-               
-                var addresslist = (!string.IsNullOrEmpty(address.ConsolidateAddress)) ? address.ConsolidateAddress : "";
-                var timefinal = day.ToString() + "~" + Sdate.ToString() + "~" + time+"~"+ addresslist;
-                pdate.id = timefinal;
-                pdate.Address = addresslist;
-                pdate.Datetime = day.ToString() +" "+ Sdate.ToString() +" " + time;
-                Dateofevent.Add(pdate);
+                ps.Organiserid = OrganiserDetail.Orgnizer_Id.ToString();
+                var guid = Session["TicketLockedId"].ToString();
+                AccountController ac = new AccountController();
+                string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                var acountdedtails = ac.GetLoginDetails(strUsers);
+                ps.sendlatestdetails = acountdedtails.SendLatestdetails;
+                ps.Username = acountdedtails.Firstname + " " + acountdedtails.Lastname;
+                ps.Email = acountdedtails.Email;
+                var url = Request.Url;
+                var baseurl = url.GetLeftPart(UriPartial.Authority);
+                ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
+                var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == guid).ToList();
+                foreach (var item in TicketPurchasedDetail)
+                {
+                    paymentdate pdate = new paymentdate();
+                    var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
 
-            }
-            ViewBag.Timecal = Dateofevent;
+                    var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
+                    var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
+                    var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
+
+                    var datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
+                    var day = datetime.DayOfWeek;
+                    var Sdate = datetime.ToString("MMM dd, yyyy");
+                    var time = tQntydetail.TQD_StartTime;
+
+                    var addresslist = (!string.IsNullOrEmpty(address.ConsolidateAddress)) ? address.ConsolidateAddress : "";
+                    var timefinal = day.ToString() + "~" + Sdate.ToString() + "~" + time + "~" + addresslist;
+                    pdate.id = timefinal;
+                    pdate.Address = addresslist;
+                    pdate.Datetime = day.ToString() + " " + Sdate.ToString() + " " + time;
+                    Dateofevent.Add(pdate);
+
+                }
+                ViewBag.Timecal = Dateofevent;
                 return View(ps);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public string GetOrderDetailForConfirmation()

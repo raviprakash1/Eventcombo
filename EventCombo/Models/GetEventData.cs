@@ -40,6 +40,8 @@ namespace EventCombo.Models
         public string Ticket { get; set; }
         public long capacity { get; set; }
         public string Image { get; set; }
+        public string Variabledesc { get; set; }
 
+        public string timezone { get; set; }
     }
 }

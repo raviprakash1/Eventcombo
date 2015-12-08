@@ -28,9 +28,17 @@ namespace EventCombo.Controllers
 
         public ActionResult CreateEvent()
         {
+          
             if ((Session["AppId"] != null))
             {
-               Session["Fromname"] = "events";
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                Session["Fromname"] = "events";
                var url = Url.Action("CreateEvent", "CreateEvent");
                Session["ReturnUrl"] = "CreateEvent~"+ url;
 
@@ -89,7 +97,20 @@ namespace EventCombo.Controllers
                             Value = item.EventCategoryID.ToString(),
                         });
                     }
+                    var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
+                    List<SelectListItem> Timezonelist = new List<SelectListItem>();
+                    foreach (var item in Timezone)
+                    {
+                        Timezonelist.Add(new SelectListItem()
+                        {
+                            Text = item.TimeZone_Name.ToString(),
+                            Value = item.TimeZone_Id.ToString()
+                            //Selected = (item.TimeZone_Id.ToString().Trim() == timezone.Trim() ? true : false)
 
+                        });
+
+                    }
+                    ViewBag.Timezonelist = Timezonelist;
 
                     ViewBag.CountryID = countryList;
                     ViewBag.EventType = EventType;
@@ -125,9 +146,12 @@ namespace EventCombo.Controllers
                                    select myRow).ToList();
 
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    //strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
                     foreach (var item in PrevAdd)
-                        strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
-
+                    {
+                        if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
+                            strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                    }
                     return strHtml.ToString();
                 }
             }
@@ -140,6 +164,37 @@ namespace EventCombo.Controllers
 
         }
 
+        public string GetPreviousAddressForEditing(long lEid)
+        {
+            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+
+            StringBuilder strHtml = new StringBuilder();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var PrevAdd = (from myRow in objEnt.Addresses
+                                   where myRow.UserId == strUsers && myRow.EventId != lEid
+                                   select myRow).ToList();
+
+                    //strHtml.Append("< option value =0 selected=true>Select</ option > ");
+                    //strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+                    foreach (var item in PrevAdd)
+                    {
+                        if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
+                            strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                    }
+                    return strHtml.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return strHtml.ToString();
+
+            }
+
+
+        }
         public string GetSubCat(long lECatId)
         {
 
@@ -412,7 +467,24 @@ namespace EventCombo.Controllers
 
         public ActionResult ViewEvent(string strUrlData)
         {
-            if(!strUrlData.Contains('౼'))
+            //HomeController hmc = new HomeController();
+            //hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+            //string usernme = hmc.getusername();
+            //if (string.IsNullOrEmpty(usernme))
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+                if (!strUrlData.Contains('౼'))
             {
                 return RedirectToAction("Index", "Home");
 
@@ -458,7 +530,13 @@ namespace EventCombo.Controllers
             var showtimezone = EventDetail.DisplayTimeZone;
             enablediscussion = EventDetail.EnableFBDiscussion;
             viewEvent.showTimezone = showtimezone;
-            var timezone = EventDetail.TimeZone;
+            var timezone = "";
+            var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
+            if (Timezonedetail != null)
+            {
+                 timezone = Timezonedetail.TimeZone_Name;
+             
+            }
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
             viewEvent.showmaponevent = EventDetail.ShowMap;
@@ -685,10 +763,78 @@ namespace EventCombo.Controllers
         }
 
 
+        public string GetOrgnizerDetailbyUser()
+        {
+            StringBuilder strHTML = new StringBuilder();
+            string strtemp;
+            string strUserId = Session["AppId"] != null ? Session["AppId"].ToString() : "";
+            StringBuilder strDropDown = new StringBuilder();
+            if (strUserId != "")
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var MaxEventId = (from Org in objEnt.Event_Orgnizer_Detail
+                                      where Org.UserId == strUserId
+                                      select Org.Orgnizer_Event_Id).Max();
 
+                    var EventOrg = (from Org in objEnt.Event_Orgnizer_Detail
+                                    where Org.Orgnizer_Event_Id == MaxEventId
+                                    select Org).ToList();
+
+                    int i = 0;
+                    foreach (Event_Orgnizer_Detail EOD in EventOrg)
+                    {
+                        i = i + 1;
+                        strHTML.Append("<tr>");
+                        strHTML.Append("<td style='display: none' width='92%'>");
+                        strHTML.Append(i);
+                        strHTML.Append("</td>");
+
+                        strHTML.Append("<td width='92 %'><label id=OrgName_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Orgnizer_Name);
+                        strHTML.Append("</label></td>");
+
+                        strHTML.Append("<td style='display: none'><label id=OrgDes_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Orgnizer_Desc);
+                        strHTML.Append("</label></td>");
+
+                        strHTML.Append("<td style='display: none'><label id=OrgFB_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.FBLink);
+                        strHTML.Append("</label></td>");
+
+
+                        strHTML.Append("<td style='display: none'><label id=OrgTw_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Twitter);
+                        strHTML.Append("</label></td>");
+                        strtemp = "<td align='right'><i onclick='editOrgnizer(" + i + ")'; class='fa fa-pencil'></i> | <i onclick='DeleteOrgnizer(" + i + ");' class='fa fa-trash'></i></td>";
+                        strHTML.Append(strtemp);
+                        strHTML.Append("</tr>");
+
+                        if (EOD.DefaultOrg == "Y")
+                            strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                        else
+                            strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+
+
+                    }
+                }
+            }
+
+            return strHTML.ToString() + "¶" + strDropDown.ToString();
+
+        }
 
         public ActionResult ViewCreateEvent(string strUrlData)
         {
+            
             ValidationMessageController vmc = new ValidationMessageController();
             string[] str = strUrlData.Split('౼');
             string strForView = "";
@@ -730,10 +876,17 @@ namespace EventCombo.Controllers
             var showtimezone = EventDetail.DisplayTimeZone;
             enablediscussion = EventDetail.EnableFBDiscussion;
             viewEvent.showTimezone = showtimezone;
-            var timezone = EventDetail.TimeZone;
+            var timezone = "";
+            var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
+            if (Timezonedetail != null)
+            {
+                timezone = Timezonedetail.TimeZone_Name;
+
+            }
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
             viewEvent.showmaponevent = EventDetail.ShowMap;
+            viewEvent.eventId = EventId.ToString();
             //Address
             var evAdress = (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)
