@@ -530,7 +530,13 @@ namespace EventCombo.Controllers
             var showtimezone = EventDetail.DisplayTimeZone;
             enablediscussion = EventDetail.EnableFBDiscussion;
             viewEvent.showTimezone = showtimezone;
-            var timezone = EventDetail.TimeZone;
+            var timezone = "";
+            var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
+            if (Timezonedetail != null)
+            {
+                 timezone = Timezonedetail.TimeZone_Name;
+             
+            }
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
             viewEvent.showmaponevent = EventDetail.ShowMap;
@@ -797,7 +803,13 @@ namespace EventCombo.Controllers
             var showtimezone = EventDetail.DisplayTimeZone;
             enablediscussion = EventDetail.EnableFBDiscussion;
             viewEvent.showTimezone = showtimezone;
-            var timezone = EventDetail.TimeZone;
+            var timezone = "";
+            var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
+            if (Timezonedetail != null)
+            {
+                timezone = Timezonedetail.TimeZone_Name;
+
+            }
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
             viewEvent.showmaponevent = EventDetail.ShowMap;
