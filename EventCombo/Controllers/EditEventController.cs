@@ -1223,6 +1223,7 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_showvariable = model.Ticket_showvariable;
                     ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
                     ObjEC.Ticket_variabletype = model.Ticket_variabletype;
+                    ObjEC.ShowMap = model.ShowMap;
                     ObjEC.ModifyDate = DateTime.Now;
                     
                     // Address info

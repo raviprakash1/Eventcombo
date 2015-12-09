@@ -1931,7 +1931,8 @@ else
                 'Ticket_showremain': ($("#id_showremaningticket").is(":checked") == true ? 'Y' : 'N'),
                 'Ticket_showvariable': ($("#id_variablecharge").is(":checked") == true ? 'Y' : 'N'),
                 'Ticket_variabledesc': varDescritpion,
-                'Ticket_variabletype': optionalvariable
+                'Ticket_variabletype': optionalvariable,
+                'ShowMap': ($("#chkShowMap").is(":checked") == true ? 'Y' : 'N')
 
             };
 
@@ -2762,7 +2763,8 @@ else
                     'Ticket_showremain': ($("#id_showremaningticket").is(":checked") == true ? 'Y' : 'N'),
                     'Ticket_showvariable': ($("#id_variablecharge").is(":checked") == true ? 'Y' : 'N'),
                     'Ticket_variabledesc': varDescritpion,
-                    'Ticket_variabletype': optionalvariable
+                    'Ticket_variabletype': optionalvariable,
+                    'ShowMap': ($("#chkShowMap").is(":checked") == true ? 'Y' : 'N')
 
                 };
 
@@ -4855,7 +4857,7 @@ else
 
             }
             if ($('#ddlOrgnizers option').length <= 0) {
-                $('#ddlOrgnizers').addClass('err-bor');
+                $('#txtOrgnizer').addClass('err-bor');
                 msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI") + "<br/>";;
 
 
