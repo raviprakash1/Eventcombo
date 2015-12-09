@@ -518,7 +518,7 @@ namespace EventCombo.Controllers
 
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
-            Session["Fromname"] = "ViewEvent";
+            Session["Fromname"] = "events";
             var url= Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
            // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
             Session["ReturnUrl"] = "ViewEvent~" + url;
@@ -859,12 +859,12 @@ namespace EventCombo.Controllers
             {
                 strForView = "N";
             }
-
+            //Session["Fromname"] = "events";
             TempData["ForViewOnly"] = strForView;
 
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
-            Session["Fromname"] = "ViewEvent";
+            Session["Fromname"] = "events";
             var url = Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
             // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
             Session["ReturnUrl"] = "ViewEvent~" + url;
