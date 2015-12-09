@@ -4995,11 +4995,14 @@
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
+                $('#txtEventTitle').addClass('err-bor');
+                
                 msg += ajaxsetup("CreateEvent", "CreateEventTitileUI")+"<br/>";
 
             }
+
             if ($('#ddlOrgnizers option').length <= 0) {
-                $('#ddlOrgnizers').addClass('err-bor');
+                $('#txtOrgnizer').addClass('err-bor');
                 msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI") + "<br/>";;
 
 
