@@ -137,9 +137,11 @@
                                                 @foreach (var item in (List<GetEventDateList_Result>)ViewBag.DateList)
                                                 {
                                                      <li>
-                                                       @if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
-                                                       {
+
                                                          <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
+
+                                                       @*@if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
+                                                       {
 
 
                                                          } 
@@ -151,7 +153,7 @@
 {
     <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
 
-}
+}*@
                                                        </li>
 
 
@@ -401,13 +403,13 @@
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
             <div class="col-sm-4 col-xs-4 ">
-                <h2 class="fb_dis_head fb_dis_head_type pt5 catg_pad"><a href="#">Type </a></h2>
+                <h2 class="fb_dis_head fb_dis_head_type pt5 catg_pad">Type</h2>
             </div>
             <div class="col-sm-4 col-xs-4 ">
-                <h2 class="fb_dis_head fb_dis_head_type pt5 catg_pad"><a href="#">Category </a></h2>
+                <h2 class="fb_dis_head fb_dis_head_type pt5 catg_pad">Category</h2>
             </div>
             <div class="col-sm-4 col-xs-4 ">
-                <h2 class="fb_dis_head fb_dis_head_type pt5 catg_pad"><a href="#">Subcategory</a></h2>
+                <h2 class="fb_dis_head fb_dis_head_type pt5 catg_pad">Subcategory</h2>
             </div>
 
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>

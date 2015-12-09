@@ -1455,6 +1455,7 @@ else
                         else {
                             $("#hdMonthlyType").val('DW');
                             $("#btDayofWeek").click();
+                            console.log(data.MonthlyWeek);
                             $("#dllMonthlyWeek").val(data.MonthlyWeek);
                         }
                     }
@@ -1795,6 +1796,7 @@ else
                 var vWeeklyDayAry = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
                 var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
                 var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
+               
                 var vMonthlyWeekDaysAry = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
 
                 var vStartingFrom = $("#txtDateFrom").val();

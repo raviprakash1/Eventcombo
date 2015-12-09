@@ -515,6 +515,9 @@ else
     });
 
     $("#loginPopup").on('click', function () {
+        if (loginemail != '' || loginpwd != '') {
+            $('#btnSavelogin').removeAttr("disabled");
+        }
         $('#loginemail').css("border", "black solid 1px");
         $('#loginpassword').css("border", "black solid 1px");
         $('#diverro1login').css('display', 'none');

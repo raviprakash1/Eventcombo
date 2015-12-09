@@ -12,205 +12,205 @@
 <div class="clearfix"></div>
 <div class="col-sm-12 mange-events">
     <!-- -- Search box open -->
-        <div class="col-sm-6 no_pad">
-            <form>
-                <div class="input-group custom ">                                                
-                    @*<input id="txtSearchEvents" type="text" class="form-control mng-evnt-search" placeholder="Search for events and guests">*@
-                    @Html.TextBox("SearchStringEventTitle", "", new { Class = "form-control mng-evnt-search", placeholder = "Search for events and guests" })
-                    <div class="input-group-addon">
-                        <div class="search-icon">
-                            <button class="fa fa-search" type="submit"></button>
-                        </div>
+    <div class="col-sm-6 no_pad">
+        <form>
+            <div class="input-group custom ">
+                @*<input id="txtSearchEvents" type="text" class="form-control mng-evnt-search" placeholder="Search for events and guests">*@
+                @Html.TextBox("SearchStringEventTitle", "", new { Class = "form-control mng-evnt-search", placeholder = "Search for events and guests" })
+                <div class="input-group-addon">
+                    <div class="search-icon">
+                        <button class="fa fa-search" type="submit"></button>
                     </div>
-                </div>                        
-            </form>
-        </div>
-   
+                </div>
+            </div>
+        </form>
+    </div>
+
     <!-- Search box close -- -->
     <!-- -- 3 tabs open -->
     <div class="col-sm-12 row">
         <div class="col-sm-12 no_pad mb10">
             <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Events</h3> </div>
             @*<div class="col-sm-6 text-right no_pad">
-                <ul class="pagination evnt-list-pagination">
-                    <li><a href="#"><<</a></li>
-                    <li><a href="#"><</a></li>
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">></a></li>
-                    <li><a href="#">>></a></li>
-                </ul>
-            </div>*@
-        </div>      
+                    <ul class="pagination evnt-list-pagination">
+                        <li><a href="#"><<</a></li>
+                        <li><a href="#"><</a></li>
+                        <li><a href="#">1</a></li>
+                        <li class="active"><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">></a></li>
+                        <li><a href="#">>></a></li>
+                    </ul>
+                </div>*@
+        </div>
         <div class="col-sm-12  custom fs18 no_pad" id="myTab">
-                <ul class="nav nav-tabs evnt-mng-tab">
-                    <li class="active">                        
-                        <a href="#sectionA" id="tabLive" name="submit"  aria-controls="home" role="tab" data-toggle="tab">Live Events (@TempData["LiveEvents"])</a>
-                    </li>
-                    <li class="">
-                        <a href="#sectionB" id="tabSaved" name="submit"  aria-controls="home" role="tab" data-toggle="tab">Saved Events (@TempData["SavedEvents"])</a>
-                    </li>
-                    <li class="">
-                        <a href="#sectionC" id="tabPast" name="submit"  aria-controls="home" role="tab" data-toggle="tab">Past Events (@TempData["PastEvents"])</a>
-                    </li>
-               </ul>
-            </div>        
-                <div class="tab-content mt10">
-                    <div id="sectionA" class="tab-pane active">
-                        <table class="table fs20 mb0">
-                            <thead>
+            <ul class="nav nav-tabs evnt-mng-tab">
+                <li class="active">
+                    <a href="#sectionA" id="tabLive" name="submit" aria-controls="home" role="tab" data-toggle="tab">Live Events (@TempData["LiveEvents"])</a>
+                </li>
+                <li class="">
+                    <a href="#sectionB" id="tabSaved" name="submit" aria-controls="home" role="tab" data-toggle="tab">Saved Events (@TempData["SavedEvents"])</a>
+                </li>
+                <li class="">
+                    <a href="#sectionC" id="tabPast" name="submit" aria-controls="home" role="tab" data-toggle="tab">Past Events (@TempData["PastEvents"])</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content mt10">
+            <div id="sectionA" class="tab-pane active">
+                <table class="table fs20 mb0">
+                    <thead>
+                        <tr>
+                            <th class="evnt_mng_tit_200">Event Title</th>
+                            <th>Event Date /Time</th>
+                            <th>Ticket Sold / Total No.</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            //foreach (var item in Model)
+                            foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
+                            //foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
+                            {
+
+
                                 <tr>
-                                    <th class="evnt_mng_tit_200">Event Title</th>
-                                    <th>Event Date /Time</th>
-                                    <th>Ticket Sold / Total No.</th>
-                                    <th class="text-center">Action</th>
+                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
+                                    <td>@item.EventDate / @item.EventTime</td>
+                                    <td>@item.TicketSold/@item.TotalTicket</td>
+                                    <td class="text-center">
+                                        <div class="event-btn-action">
+                                            <p class="btn-link manage"><a href="#">Manage</a></p>
+                                            <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
+                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
+
+                                        </div>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    //foreach (var item in Model)
-                                    //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)                                    
-                                    foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
-                                    {
-
-
-                                        <tr>
-                                            <td class="evnt_mng_tit_200">@item.EventTitle</td>
-                                            <td>@item.EventDate / @item.EventTime</td>
-                                            <td>@item.TicketSold/@item.TotalTicket</td>
-                                            <td class="text-center">
-                                                <div class="event-btn-action">
-                                                    <p class="btn-link manage"><a href="#">Manage</a></p>
-                                                    <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
-                                                    <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
-
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>                        
-                        </table>
-                        <!-- main-sec -->
-                        @if (ViewData["LiveEvntCnt"] != null && Convert.ToInt32(ViewData["LiveEvntCnt"]) == 0  )
-                        {
-                            <span>You don't have any live events.</span>
+                            }
                         }
-                    </div> 
-                    @if (ViewBag.LiveEvent.PageCount > 1)
-                    {
-                        <div class="pager">
-                         
-                            Page @(ViewBag.LiveEvent.PageCount < ViewBag.LiveEvent.PageNumber ? 0 : ViewBag.LiveEvent.PageNumber) of @ViewBag.LiveEvent.PageCount                            
-                            @Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent, page => Url.Action("EventList", new
-                          {
-                              page
-                          }))
-                        </div>
-                    }                  
-                    <div id="sectionB" class="tab-pane">
-                        <table class="table fs20 mb0">
-                                <thead>
-                                    <tr>
-                                        <th class="evnt_mng_tit_200">Event Title</th>
-                                        <th>Event Date /Time</th>
-                                        <th>Ticket Sold / Total No.</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-    @{
-        //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
-           foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
-            {
-                                    <tr>
-                                        <td class="evnt_mng_tit_200">@item.EventTitle</td>
-                                        <td>@item.EventDate / @item.EventTime</td>
-                                        <td>@item.TicketSold/@item.TotalTicket</td>
-                                        <td class="text-center">
-                                            <div class="event-btn-action">
-                                                <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
-                                                <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
-                                                <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-        }
-        }
-                                </tbody>
-                            </table><!-- main-sec -->
-                        @if (ViewData["SavedEvntCnt"] != null && Convert.ToInt32(ViewData["SavedEvntCnt"]) == 0)
-                        {
-                            <span>You don't have any event drafts.</span>
-                        }
-                    </div>      
-                    @if (ViewBag.SavedEvent.PageCount > 1)
-                    {
-                        <div class="pager">
+                    </tbody>
+                </table>
+                <!-- main-sec -->
+                @if (ViewData["LiveEvntCnt"] != null && Convert.ToInt32(ViewData["LiveEvntCnt"]) == 0)
+                {
+                    <span>You don't have any live events.</span>
+                }
+            </div>
+            @*@if (ViewBag.LiveEvent.PageCount > 1)
+                {
+                    <div class="pager">
 
-                            Page @(ViewBag.SavedEvent.PageCount < ViewBag.SavedEvent.PageNumber ? 0 : ViewBag.SavedEvent.PageNumber) of @ViewBag.SavedEvent.PageCount
-                            @Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent, page => Url.Action("EventList", new
-                       {
-                           page
-                       }))
-                        </div>
-                    }           
-                    <div id="sectionC" class="tab-pane">
-                        <table class="table fs20 mb0">
-                                <thead>
-                                    <tr>
-                                        <th class="evnt_mng_tit_200">Event Title</th>
-                                        <th>Event Date /Time</th>
-                                        <th>Ticket Sold / Total No.</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-    @{
-        //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
-        foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
-        {
-                                    <tr>
-                                        <td class="evnt_mng_tit_200">@item.EventTitle</td>
-                                        <td>@item.EventDate/ @item.EventTime</td>
-                                        <td>@item.TicketSold/@item.TotalTicket</td>
-                                        <td class="text-center">
-                                            <div class="event-btn-action">
-                                                <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
-                                                <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
-                                                <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-        }
-        }
-                                </tbody>
-                            </table><!-- main-sec -->
-                        @if (ViewData["PastEvntCnt"] != null && Convert.ToInt32(ViewData["PastEvntCnt"]) == 0)
-                        {
-                            <span>You don't have any past event </span>
-                        }
+                        Page @(ViewBag.LiveEvent.PageCount < ViewBag.LiveEvent.PageNumber ? 0 : ViewBag.LiveEvent.PageNumber) of @ViewBag.LiveEvent.PageCount
+                        @Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent, page => Url.Action("EventList", new
+                      {
+                          page
+                      }))
                     </div>
-                    @if (ViewBag.PastEvent.PageCount > 1)
-                    {
-                        <div class="pager">
+                }*@
+            <div id="sectionB" class="tab-pane">
+                <table class="table fs20 mb0">
+                    <thead>
+                        <tr>
+                            <th class="evnt_mng_tit_200">Event Title</th>
+                            <th>Event Date /Time</th>
+                            <th>Ticket Sold / Total No.</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
+                            //foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
+                            {
+                                <tr>
+                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
+                                    <td>@item.EventDate / @item.EventTime</td>
+                                    <td>@item.TicketSold/@item.TotalTicket</td>
+                                    <td class="text-center">
+                                        <div class="event-btn-action">
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
+                                            <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
+                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table><!-- main-sec -->
+                @if (ViewData["SavedEvntCnt"] != null && Convert.ToInt32(ViewData["SavedEvntCnt"]) == 0)
+                {
+                    <span>You don't have any event drafts.</span>
+                }
+            </div>
+            @*@if (ViewBag.SavedEvent.PageCount > 1)
+                {
+                    <div class="pager">
 
-                            Page @(ViewBag.PastEvent.PageCount < ViewBag.PastEvent.PageNumber ? 0 : ViewBag.PastEvent.PageNumber) of @ViewBag.PastEvent.PageCount
-                            @Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent, page => Url.Action("EventList", new
-                       {
-                           page
-                       }))
-                        </div>
-                    }
-                    <!-- tab-content content-tab 2 -->
+                        Page @(ViewBag.SavedEvent.PageCount < ViewBag.SavedEvent.PageNumber ? 0 : ViewBag.SavedEvent.PageNumber) of @ViewBag.SavedEvent.PageCount
+                        @Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent, page => Url.Action("EventList", new
+                   {
+                       page
+                   }))
+                    </div>
+                }*@
+            <div id="sectionC" class="tab-pane">
+                <table class="table fs20 mb0">
+                    <thead>
+                        <tr>
+                            <th class="evnt_mng_tit_200">Event Title</th>
+                            <th>Event Date /Time</th>
+                            <th>Ticket Sold / Total No.</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
+                            //foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
+                            {
+                                <tr>
+                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
+                                    <td>@item.EventDate/ @item.EventTime</td>
+                                    <td>@item.TicketSold/@item.TotalTicket</td>
+                                    <td class="text-center">
+                                        <div class="event-btn-action">
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
+                                            <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
+                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table><!-- main-sec -->
+                @if (ViewData["PastEvntCnt"] != null && Convert.ToInt32(ViewData["PastEvntCnt"]) == 0)
+                {
+                    <span>You don't have any past event </span>
+                }
+            </div>
+            @*@if (ViewBag.PastEvent.PageCount > 1)
+                {
+                    <div class="pager">
 
-                </div>  <!-- tab-content content-tab 1 -->
-    
-            <div class="col-sm-12 no_pad mt10">
-                <div class="col-sm-12 no_pad mb5">
-                    <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Guests</h3> </div>
-                    @*<div class="col-sm-6 text-right no_pad">
+                        Page @(ViewBag.PastEvent.PageCount < ViewBag.PastEvent.PageNumber ? 0 : ViewBag.PastEvent.PageNumber) of @ViewBag.PastEvent.PageCount
+                        @Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent, page => Url.Action("EventList", new
+                   {
+                       page
+                   }))
+                    </div>
+                }*@
+            <!-- tab-content content-tab 2 -->
+
+        </div>  <!-- tab-content content-tab 1 -->
+
+        <div class="col-sm-12 no_pad mt10">
+            <div class="col-sm-12 no_pad mb5">
+                <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Guests</h3> </div>
+                @*<div class="col-sm-6 text-right no_pad">
                         <ul class="pagination evnt-list-pagination">
                             <li><a href="#"><<</a></li>
                             <li><a href="#"><</a></li>
@@ -221,10 +221,10 @@
                             <li><a href="#">>></a></li>
                         </ul>
                     </div>*@
-                  
-                </div>
-                <div class="col-sm-12 row">
-                    <div class="table-responsive">
+
+            </div>
+            <div class="col-sm-12 row">
+                <div class="table-responsive">
                     <table class="table fs20">
                         <thead>
                             <tr>
@@ -237,26 +237,26 @@
                             </tr>
                         </thead>
                         <tbody>
-@{
-    foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.GuestList)
-    {
-                            <tr>                                
-                                <td>@item.Name</td>
-                                <td>@item.EMail</td>
-                                <td>@item.EventTitle</td>
-                                <td>@item.Date_Time</td>
-                                <td>@item.OrderId</td>
-                                <td>@item.TicketType/@item.TicketPurchased</td>
-                                
-                            </tr>
-        }
-    }
+                            @{
+                                foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.GuestList)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.EMail</td>
+                                        <td>@item.EventTitle</td>
+                                        <td>@item.Date_Time</td>
+                                        <td>@item.OrderId</td>
+                                        <td>@item.TicketType/@item.TicketPurchased</td>
+
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
-                    </div>
                 </div>
             </div>
-        </div><!-- event-tabs -->
+        </div>
+    </div><!-- event-tabs -->
     <!-- 3 tabs close -- -->
 </div>
 
