@@ -906,7 +906,7 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<span class='buyer_tot'>Buyer(s) total: </span>");
                     if (ObjTick.TicketTypeID == 2)
                     {
-                        strticketHtml.Append("<span class='buyer_price' id='id_buyerprice-" + j + "' >$" + Price + "</span>");
+                        strticketHtml.Append("<span class='buyer_price' id='id_buyerprice-" + j + "' >$" + totaoln + "</span>");
                     }
                     else
                     {
@@ -1272,7 +1272,7 @@ namespace EventCombo.Controllers
                     // Event on Multiple timing 
                     if (model.MultipleEvents != null)
                     {
-                        MultipleEvent objMEvents = objEnt.MultipleEvents.First(Ev => Ev.EventID == lEventId);
+                        MultipleEvent objMEvents = objEnt.MultipleEvents.FirstOrDefault(Ev => Ev.EventID == lEventId);
                         foreach (MultipleEvent objME in model.MultipleEvents)
                         {
                           
