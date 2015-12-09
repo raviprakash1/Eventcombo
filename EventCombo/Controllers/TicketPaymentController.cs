@@ -15,6 +15,8 @@ using System.Xml;
 using System.Xml.Linq;
 using NReco.PdfGenerator;
 using System.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace EventCombo.Controllers
 {
@@ -468,7 +470,7 @@ namespace EventCombo.Controllers
                         var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
                         var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
                         var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
-                        var barcode="<img src =https://www.barcodesinc.com/generator/image.php?code="+strOrderNo+"&style=196&type=C128B&width=219&height=50&xres=1&font=3 alt = 'BarCode' >";
+                      string barcode1="<img src =https://www.barcodesinc.com/generator/image.php?code="+strOrderNo+"&style=196&type=C128B&width=219&height=50&xres=1&font=3 alt = 'BarCode' >";
                            
 
                         string to = "", from = "", cc = "", bcc = "", subjectn = "";
@@ -506,10 +508,14 @@ namespace EventCombo.Controllers
                             fee = "";
                         }
                         string xel = createxml(strOrderNo, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, address.ConsolidateAddress, "", "");
-                        
-                        var Qrcode = "<img style = 'width:100px;height:100px' src =http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl="+xel.ToString()+"  alt = 'QR Code' />";
-                        //Byte[] attach = new Byte[16 * 1024];
-                        MemoryStream attachment = generateTicketPDF(email, username, DateTime.Now.ToString(), strOrderNo, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode);
+
+                        string qrImgPath = Server.MapPath("..") + "/Images/QR_Image.Png";
+                        string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";
+                        generateQR(xel.ToString(), qrImgPath);
+                        generateBarCode(strOrderNo, barImgPath);
+                        string Qrcode = "<img style = 'width:100px;height:100px' src =" + qrImgPath + " alt = 'QRCode' />";
+                        string barcode = "<img src =" + barImgPath + " alt = 'BarCode' >";
+                        MemoryStream attachment = generateTicketPDF(email, username, DateTime.Now.ToString(), strOrderNo, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode, barcode1);
                        // MemoryStream attachment = new MemoryStream(attach);
                         var Emailtemplate = hmc.getEmail("eticket");
                         if (Emailtemplate != null)
@@ -661,7 +667,7 @@ namespace EventCombo.Controllers
                                       
                                         if (EmailTag[i].Tag_Name == "EventBarcodeId")
                                         {
-                                            bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcode);
+                                            bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcode1);
 
                                         }
                                         if (EmailTag[i].Tag_Name == "EventTitleId")
@@ -729,6 +735,29 @@ namespace EventCombo.Controllers
             }
         }
 
+        public void generateQR(string qrdata, string qrImgPath)
+        {
+            WebClient wc = new WebClient();
+            string url = "http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=" + qrdata;
+            byte[] qrImage = wc.DownloadData(url);
+            MemoryStream ms = new MemoryStream(qrImage);
+            Image img = Image.FromStream(ms);
+            img.Save(qrImgPath, ImageFormat.Png);
+            img.Dispose();
+            ms.Close();
+        }
+
+        public void generateBarCode(string strBarCodeData, string strqrBarImgPath)
+        {
+            WebClient wc = new WebClient();
+            string url = "https://www.barcodesinc.com/generator/image.php?code=" + strBarCodeData + "&style=196&type=C128B&width=219&height=50&xres=1&font=3";
+            byte[] barImage = wc.DownloadData(url);
+            MemoryStream mms = new MemoryStream(barImage);
+            Image img = Image.FromStream(mms);
+            img.Save(strqrBarImgPath, ImageFormat.Png);
+            mms.Close();
+        }
+
         private string createxml(string Orderno,string ticketname,string tqty,string tprice,string fee,string discount,string tickettype,string customername,string eventname,string eventdate,string eventime,string venue,string organisername,string organiseremail)
         {
             XElement Ticketinfo = new XElement("Ticketinfo",
@@ -750,8 +779,8 @@ namespace EventCombo.Controllers
 
             strInfo.Append("UniqueOrderNumber:" + Orderno);
             strInfo.Append("TicketTypeName:" + ticketname);
-            strInfo.Append("TotalTicketQuantityPerOrder:" + tprice);
-            strInfo.Append("TicketPrice:" + Orderno);
+            strInfo.Append("TotalTicketQuantityPerOrder:" + tqty);
+            strInfo.Append("TicketPrice:" + tprice);
             strInfo.Append("TicketDiscountAmount:" + discount);
             strInfo.Append("TicketType:" + tickettype);
             strInfo.Append("CustomerName:" + customername);
@@ -763,7 +792,7 @@ namespace EventCombo.Controllers
 
         }
 
-        public MemoryStream generateTicketPDF(string email, string username, string TicketOrderdate, string OrderNo, string EventTitle, string TQD_StartDate, string ConsolidateAddress, string T_name, string tickettype, string TimeZone, string TQD_StartTime,string barcode,string qrcode)
+        public MemoryStream generateTicketPDF(string email, string username, string TicketOrderdate, string OrderNo, string EventTitle, string TQD_StartDate, string ConsolidateAddress, string T_name, string tickettype, string TimeZone, string TQD_StartTime,string barcode,string qrcode,string barcode1)
         {
             WebClient wc = new WebClient();
             string htmlPath = Server.MapPath("..");
@@ -780,7 +809,7 @@ namespace EventCombo.Controllers
             htmlText = htmlText.Replace("¶¶EventTimeZone¶¶", TimeZone);
             htmlText = htmlText.Replace("¶¶Ticketname¶¶", T_name);
             htmlText = htmlText.Replace("¶¶Tickettype¶¶", tickettype);
-            htmlText = htmlText.Replace("¶¶EventBarcodeId¶¶", barcode);
+            htmlText = htmlText.Replace("¶¶EventBarcodeId¶¶", barcode1);
             htmlText = htmlText.Replace("¶¶EventQrCode¶¶", qrcode);
             //Byte[] res = null;
             //using (MemoryStream ms = new MemoryStream())
