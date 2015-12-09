@@ -720,6 +720,8 @@ span.evnt_toltip{
   .affix-top{top: 147px !important;}
    #scrollhome.con_scr0l_home{margin-top:156px !important;}
    #eventtopscoll.event_top{ margin-top:132px !important; } 
+  .cyan-line-new .stylish-input-group .form-control{ height:56px; }
+  .cyan-line-new .psst{ line-height:56px; }
 }
 
 @media (width: 800px) {
@@ -912,7 +914,7 @@ span.evnt_toltip{
 }*/
 
 
-.home_fixed_header{ width: 100%; float: left; height: 120px; position: fixed; top: 0px; background: #fff; z-index: 9999;}
+.home_fixed_header{ width: 100%; float: left; height: 120px; position: fixed; top: 0px; background: #fff; z-index: 999;}
 .con_scr0l_home{ margin-top: 134px;}
 
 .Fix_Head{ width: 50px; float: right; position: absolute; top: 55px; right: 10px; }

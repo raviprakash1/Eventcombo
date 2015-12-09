@@ -147,6 +147,7 @@ namespace EventCombo.Controllers
 
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
                     //strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+                    strHtml.Append("<option value='0'>Select Past Location</option>");
                     foreach (var item in PrevAdd)
                     {
                         if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
@@ -174,15 +175,25 @@ namespace EventCombo.Controllers
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     var PrevAdd = (from myRow in objEnt.Addresses
-                                   where myRow.UserId == strUsers && myRow.EventId != lEid
+                                   where myRow.UserId == strUsers
                                    select myRow).ToList();
+
+                    var PrevAddID = (from myRow in objEnt.Events
+                                   where myRow.EventID == lEid
+                                   select myRow.LastLocationAddress).FirstOrDefault();
 
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
                     //strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+                    strHtml.Append("<option value='0'>Select Past Location</option>");
                     foreach (var item in PrevAdd)
                     {
                         if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
-                            strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                        {
+                            if (PrevAddID == item.AddressID)
+                                strHtml.Append("<option selected='selected' value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                            else
+                                strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                        }
                     }
                     return strHtml.ToString();
                 }
@@ -862,6 +873,12 @@ namespace EventCombo.Controllers
             ViewEvent viewEvent = new ViewEvent();
             //EventDetails
             var EventDetail = GetEventdetail(EventId);
+            TempData["EventType"] = EventDetail.EventType.EventType1;
+
+            var EvntCtgry = (from ev in db.EventCategories where ev.EventCategoryID == EventDetail.EventCategoryID select ev.EventCategory1).FirstOrDefault();
+            var EvntSubCtgry = (from ev in db.EventSubCategories where ev.EventCategoryID == EventDetail.EventCategoryID && ev.EventSubCategoryID == EventDetail.EventSubCategoryID select ev.EventSubCategory1).FirstOrDefault();
+            TempData["EventCategory"] = EvntCtgry;
+            TempData["EventSubCategory"] = EvntSubCtgry;
 
             var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;

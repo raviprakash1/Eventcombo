@@ -58,7 +58,7 @@
                     <button type="submit" name="submit" value="Create" class="btn btn-info col-md-offset-3 acnt_btn" id="btnCreate">Create</button>
                     <button type="submit" name="submit" value="Edit" class="btn btn-info col-md-offset-3 acnt_btn" id="btnEdit">Edit</button>
                     <button type="submit" name="submit" value="Delete" class="btn btn-info acnt_btn" id="btnDelete">Delete</button>
-                    <button type="submit" name="submit" value="Reset" class="btn btn-info acnt_btn" id="btnReset">Reset</button>
+                    <button type="button" name="submit" value="Reset" class="btn btn-info acnt_btn" id="btnReset">Reset</button>
                 </div>
             </div>
            
@@ -104,6 +104,8 @@
             $("#btnCreate").show();
             $("#btnEdit").hide();
             $("#btnDelete").hide();
+            $("#btnReset").hide();
+            $('#EventTypeListBox').find("option").attr("selected", false);
         });
         $('#btnCreate').click(function () {
             debugger;

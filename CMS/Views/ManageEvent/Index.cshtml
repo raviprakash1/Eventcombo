@@ -254,6 +254,10 @@
                                     </tfoot>
 
                                 </table>
+                                @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
+                                {
+                                    <span>No Result Found.</span>
+                                }
                             </div>
                         </div>
                     </div>

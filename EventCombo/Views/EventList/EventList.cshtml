@@ -1,4 +1,6 @@
-﻿@model IEnumerable<EventCombo.Models.GetEventsListByStatus1_Result>
+﻿@*@model IEnumerable<EventCombo.Models.GetEventsListByStatus1_Result>*@
+@model PagedList.IPagedList<EventCombo.Models.GetEventsListByStatus1_Result>
+@using PagedList.Mvc;
 @using EventCombo.Models;
 @{
     ViewBag.Title = "EventList";
@@ -12,7 +14,7 @@
     <!-- -- Search box open -->
         <div class="col-sm-6 no_pad">
             <form>
-                <div class="input-group custom ">                            
+                <div class="input-group custom ">                                                
                     @*<input id="txtSearchEvents" type="text" class="form-control mng-evnt-search" placeholder="Search for events and guests">*@
                     @Html.TextBox("SearchStringEventTitle", "", new { Class = "form-control mng-evnt-search", placeholder = "Search for events and guests" })
                     <div class="input-group-addon">
@@ -20,7 +22,7 @@
                             <button class="fa fa-search" type="submit"></button>
                         </div>
                     </div>
-                </div>
+                </div>                        
             </form>
         </div>
    
@@ -29,7 +31,7 @@
     <div class="col-sm-12 row">
         <div class="col-sm-12 no_pad mb10">
             <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Events</h3> </div>
-            <div class="col-sm-6 text-right no_pad">
+            @*<div class="col-sm-6 text-right no_pad">
                 <ul class="pagination evnt-list-pagination">
                     <li><a href="#"><<</a></li>
                     <li><a href="#"><</a></li>
@@ -39,25 +41,24 @@
                     <li><a href="#">></a></li>
                     <li><a href="#">>></a></li>
                 </ul>
-            </div>
+            </div>*@
         </div>      
         <div class="col-sm-12  custom fs18 no_pad" id="myTab">
                 <ul class="nav nav-tabs evnt-mng-tab">
-                    <li class="active">
-                        <a href="#sectionA" aria-controls="home" role="tab" data-toggle="tab">Live Events (@TempData["LiveEvents"])</a>
+                    <li class="active">                        
+                        <a href="#sectionA" id="tabLive" name="submit"  aria-controls="home" role="tab" data-toggle="tab">Live Events (@TempData["LiveEvents"])</a>
                     </li>
                     <li class="">
-                        <a href="#sectionB" aria-controls="home" role="tab" data-toggle="tab">Saved Events (@TempData["SavedEvents"])</a>
+                        <a href="#sectionB" id="tabSaved" name="submit"  aria-controls="home" role="tab" data-toggle="tab">Saved Events (@TempData["SavedEvents"])</a>
                     </li>
                     <li class="">
-                        <a href="#sectionC" aria-controls="home" role="tab" data-toggle="tab">Past Events (@TempData["PastEvents"])</a>
+                        <a href="#sectionC" id="tabPast" name="submit"  aria-controls="home" role="tab" data-toggle="tab">Past Events (@TempData["PastEvents"])</a>
                     </li>
                </ul>
-            </div>
-
+            </div>        
                 <div class="tab-content mt10">
                     <div id="sectionA" class="tab-pane active">
-                        <table class="table fs20 mb0" data-page-navigation=".pagination" data-page-size="3">
+                        <table class="table fs20 mb0">
                             <thead>
                                 <tr>
                                     <th class="evnt_mng_tit_200">Event Title</th>
@@ -68,8 +69,11 @@
                             </thead>
                             <tbody>
                                 @{
-                                    foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
+                                    //foreach (var item in Model)
+                                    foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)                                    
+                                    //foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
                                     {
+
 
                                         <tr>
                                             <td class="evnt_mng_tit_200">@item.EventTitle</td>
@@ -89,7 +93,22 @@
                             </tbody>                        
                         </table>
                         <!-- main-sec -->
-                    </div>
+                        @if (ViewData["LiveEvntCnt"] != null && Convert.ToInt32(ViewData["LiveEvntCnt"]) == 0  )
+                        {
+                            <span>You don't have any live events.</span>
+                        }
+                    </div> 
+                    @*@if (ViewBag.LiveEvent.PageCount > 1)
+                    {
+                        <div class="pager">
+                         
+                            Page @(ViewBag.LiveEvent.PageCount < ViewBag.LiveEvent.PageNumber ? 0 : ViewBag.LiveEvent.PageNumber) of @ViewBag.LiveEvent.PageCount                            
+                            @Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent, page => Url.Action("EventList", new
+                          {
+                              page
+                          }))
+                        </div>
+                    }*@                  
                     <div id="sectionB" class="tab-pane">
                         <table class="table fs20 mb0">
                                 <thead>
@@ -103,7 +122,8 @@
                                 <tbody>
     @{
         foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
-        {
+            //foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
+            {
                                     <tr>
                                         <td class="evnt_mng_tit_200">@item.EventTitle</td>
                                         <td>@item.EventDate / @item.EventTime</td>
@@ -120,7 +140,22 @@
         }
                                 </tbody>
                             </table><!-- main-sec -->
-                    </div>
+                        @if (ViewData["SavedEvntCnt"] != null && Convert.ToInt32(ViewData["SavedEvntCnt"]) == 0)
+                        {
+                            <span>You don't have any event drafts.</span>
+                        }
+                    </div>      
+                    @*@if (ViewBag.SavedEvent.PageCount > 1)
+                    {
+                        <div class="pager">
+
+                            Page @(ViewBag.SavedEvent.PageCount < ViewBag.SavedEvent.PageNumber ? 0 : ViewBag.SavedEvent.PageNumber) of @ViewBag.SavedEvent.PageCount
+                            @Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent, page => Url.Action("EventList", new
+                       {
+                           page
+                       }))
+                        </div>
+                    }*@           
                     <div id="sectionC" class="tab-pane">
                         <table class="table fs20 mb0">
                                 <thead>
@@ -134,6 +169,7 @@
                                 <tbody>
     @{
         foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
+        //foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
         {
                                     <tr>
                                         <td class="evnt_mng_tit_200">@item.EventTitle</td>
@@ -151,8 +187,22 @@
         }
                                 </tbody>
                             </table><!-- main-sec -->
+                        @if (ViewData["PastEvntCnt"] != null && Convert.ToInt32(ViewData["PastEvntCnt"]) == 0)
+                        {
+                            <span>You don't have any past event </span>
+                        }
                     </div>
+                    @*@if (ViewBag.PastEvent.PageCount > 1)
+                    {
+                        <div class="pager">
 
+                            Page @(ViewBag.PastEvent.PageCount < ViewBag.PastEvent.PageNumber ? 0 : ViewBag.PastEvent.PageNumber) of @ViewBag.PastEvent.PageCount
+                            @Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent, page => Url.Action("EventList", new
+                       {
+                           page
+                       }))
+                        </div>
+                    }*@
                     <!-- tab-content content-tab 2 -->
 
                 </div>  <!-- tab-content content-tab 1 -->
@@ -160,7 +210,7 @@
             <div class="col-sm-12 no_pad mt10">
                 <div class="col-sm-12 no_pad mb5">
                     <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Guests</h3> </div>
-                    <div class="col-sm-6 text-right no_pad">
+                    @*<div class="col-sm-6 text-right no_pad">
                         <ul class="pagination evnt-list-pagination">
                             <li><a href="#"><<</a></li>
                             <li><a href="#"><</a></li>
@@ -170,7 +220,7 @@
                             <li><a href="#">></a></li>
                             <li><a href="#">>></a></li>
                         </ul>
-                    </div>
+                    </div>*@
                   
                 </div>
                 <div class="col-sm-12 row">
