@@ -495,6 +495,14 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+            if(strUrlData==null)
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
+            {
+
+            }
                 if (!strUrlData.Contains('౼'))
             {
                 return RedirectToAction("Index", "Home");

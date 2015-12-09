@@ -289,17 +289,17 @@
                         <p><a href="#">View organizer profile </a></p>
                         @if (Html.DisplayFor(m => m.fblink).ToString() != "")
                         {
-                            <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="/Images/facebook-icon.png">&nbsp;@Html.DisplayFor(m => m.fblink)</a></p>
+                            <p><a href="@Html.DisplayFor(m => m.fblink)" target="_blank"><img src="/Images/facebook-icon.png">&nbsp;@Html.DisplayFor(m => m.fblink)</a></p>
 
                         }
                         @if (Html.DisplayFor(m => m.twitterlink).ToString() != "")
                         {
 
 
-                        <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="/Images/twitter-icon.png">&nbsp;@Html.DisplayFor(m => m.twitterlink) </a></p>
+                        <p><a href="@Html.DisplayFor(m => m.twitterlink)" target="_blank"><img src="/Images/twitter-icon.png">&nbsp;@Html.DisplayFor(m => m.twitterlink) </a></p>
 
 }
-                        <p><a href="#"><img src="~/Images/linkid.png" />&nbsp; Linkedin</a></p>
+                        <p><a href="#" target="_blank"><img src="~/Images/linkid.png" />&nbsp; Linkedin</a></p>
 
                  <p><span class="badge">5</span> <a href="#">&nbsp;Upcoming Event(s)</a> </p>
 
