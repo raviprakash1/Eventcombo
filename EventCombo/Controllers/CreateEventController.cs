@@ -1342,6 +1342,8 @@ namespace EventCombo.Controllers
 
         public string LockTickets(Ticket_Locked_Detail objLocked)
         {
+            
+
             string strResult = "Y";
             string strGuid = Guid.NewGuid().ToString();
             Session["TicketLockedId"] = strGuid;
@@ -1349,8 +1351,13 @@ namespace EventCombo.Controllers
             using (var context = new EventComboEntities())
             {
                 Ticket_Locked_Detail objTLD = new Ticket_Locked_Detail();
+                
+                
                 foreach (Ticket_Locked_Detail objModel in objLocked.TLD_List)
                 {
+                    var vEvtState = (from myevent in context.Events where myevent.EventID == objModel.TLD_Event_Id select myevent.EventStatus).FirstOrDefault();
+                    //if (vEvtState.Trim() != "Live") return "N";
+
                     var vRemQty = (from PQty in context.Ticket_Quantity_Detail where PQty.TQD_Id == objModel.TLD_TQD_Id select PQty.TQD_Remaining_Quantity).SingleOrDefault();
                     var vLockQty = (from PQty in context.Ticket_Locked_Detail where PQty.TLD_TQD_Id == objModel.TLD_TQD_Id select PQty.TLD_Locked_Qty).Sum();
                     vLockQty = (vLockQty != null ? vLockQty : 0);
