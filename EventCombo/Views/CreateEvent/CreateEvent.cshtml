@@ -1304,7 +1304,7 @@
                         <span> > </span>
                     </button>
                     
-                    <button  class="cbtPreview btn ev_live_sub_btn mb5" type="button">
+                    <button  class="cbtPreview btn ev_live_sub_btn" type="button">
                         PREVIEW &#10;
                         <span> > </span>
                     </button>
@@ -1524,7 +1524,7 @@
                 var startdate = $('#txtDateFrom').val();
 
                 var errorMsg = checkDate(e);
-
+                ValEventTime(e);
                 if (errorMsg != "") {
 
 
@@ -1576,7 +1576,7 @@
                 var enddate = $('#txtEndDate').val();
                 var startdate = $('#txtStartDate').val();
                 var errorMsg = checkDate(e);
-
+                ValEventTime(e); // checking if endDate !> startDate
                 if (errorMsg != "") {
 
 
@@ -1602,13 +1602,49 @@
 
             }
         }
+        // For parsing time 7:00pm to dateTime
+        function parseTime(timeString) {
+            if (timeString == '') return null;
+
+            var time = timeString.match(/(\d+)(:(\d\d))?\s*(p?)/i);
+            if (time == null) return null;
+
+            var hours = parseInt(time[1], 10);
+            if (hours == 12 && !time[4]) {
+                hours = 0;
+            }
+            else {
+                hours += (hours < 12 && time[4]) ? 12 : 0;
+            }
+            var d = new Date();
+            d.setHours(hours);
+            d.setMinutes(parseInt(time[3], 10) || 0);
+            d.setSeconds(0, 0);
+            return d;
+        }
+
         function ValEventTime(e) {
+            if ($("#txtStartDate").val() == $("#txtEndDate").val() && (e == "txtEndTime" || e == "txtEndDate")) {
+                var formattedEndTime = parseTime($("#txtEndTime").val());
+                var formattedStartTime = parseTime($("#txtStartTime").val());
+
+                if (formattedEndTime.getTime() < formattedStartTime.getTime()) {
+                    $("#txtEndTime").val($("#txtStartTime").val());
+                }
+            }
+
+            else if ($("#txtStartDate").val() == $("#txtEndDate").val() && (e == "txtDateTo")) {
+                var formattedEndTime = parseTime($("#txtTimeEnd").val());
+                var formattedStartTime = parseTime($("#txtTimeStart").val());
+
+                if (formattedEndTime.getTime() < formattedStartTime.getTime()) {
+                    $("#txtTimeEnd").val($("#txtTimeStart").val());
+                }
+            }
             var errorMsg = "";
             if (e == "txtStartTime") {
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
-
-
 
                     $('#txtStartTime').focus();
                     $('#txtStartTime').val("7:00pm");
@@ -1850,13 +1886,9 @@
 
                 $("#tblAddress tr").each(function () {
                     var Sno = $(this).find("td:first").html();
-                    console.log(Sno);
                     if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
                         $("#txtEventLocation").val($("#consolidate" + Sno).text());
-                    } else {
-                        $("#txtEventLocation").attr("placeholder", "Click here to enter venue address");
-                        $("#txtEventLocation").val("");
-                    }
+                    } 
                 });
 
             });

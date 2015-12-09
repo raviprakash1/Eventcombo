@@ -31,12 +31,12 @@ namespace EventCombo.Controllers
                 return RedirectToAction("Index", "Home");
             }
             if (string.IsNullOrEmpty(SearchStringEventTitle))
-                SearchStringEventTitle = "";            
+                SearchStringEventTitle = "";
             List<GetEventsListByStatus1_Result> objLiveEventList = GetLiveEvents(SearchStringEventTitle);
             List<GetEventsListByStatus1_Result> objSavedEventList = GetSavedEvents(SearchStringEventTitle);
-            List <GetEventsListByStatus1_Result> objPastEventList = GetPastEvents(SearchStringEventTitle);
+            List<GetEventsListByStatus1_Result> objPastEventList = GetPastEvents(SearchStringEventTitle);
             List<GetEventsListByStatus1_Result> objGuestEventList = GetGuestsList(SearchStringEventTitle);
-            
+
             TempData["LiveEvents"] = objLiveEventList.Count;
             TempData["SavedEvents"] = objSavedEventList.Count;
             TempData["PastEvents"] = objPastEventList.Count;
@@ -59,11 +59,11 @@ namespace EventCombo.Controllers
             {
                 if (Session["AppId"] != null)
                     UserId = Session["AppId"].ToString();
-                List<GetEventsListByStatus1_Result> liveevnt = new List<GetEventsListByStatus1_Result>();                
+                List<GetEventsListByStatus1_Result> liveevnt = new List<GetEventsListByStatus1_Result>();
                 liveevnt = db.GetEventsListByStatus1(SearchStringEventTitle, "Live", UserId).ToList();
-                ViewBag.LiveEvent= liveevnt.ToList();
+                ViewBag.LiveEvent = liveevnt.ToList();
                 return liveevnt.ToList();
-            }            
+            }
         }
         public List<GetEventsListByStatus1_Result> GetSavedEvents(string SearchStringEventTitle)
         {
@@ -84,7 +84,7 @@ namespace EventCombo.Controllers
                 if (Session["AppId"] != null)
                     UserId = Session["AppId"].ToString();
                 List<GetEventsListByStatus1_Result> pastevnt = new List<GetEventsListByStatus1_Result>();
-                pastevnt = db.GetEventsListByStatus1(SearchStringEventTitle, "Past", UserId).ToList();                
+                pastevnt = db.GetEventsListByStatus1(SearchStringEventTitle, "Past", UserId).ToList();
                 ViewBag.PastEvent = pastevnt.ToList();
                 return pastevnt.ToList();
             }
