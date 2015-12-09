@@ -928,7 +928,7 @@ namespace EventCombo.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                Session["Fromname"] = "ViewEvent";
+                Session["Fromname"] = "events";
                 List<paymentdate> Dateofevent = new List<paymentdate>();
                 CreateEventController cs = new CreateEventController();
                 PaymentConfirmation ps = new PaymentConfirmation();

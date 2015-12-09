@@ -51,8 +51,7 @@
                         <span> > </span>
                     </button>
                     <button class="cbtPreview btn ev_live_sub_btn mb5" type="button">
-                        PREVIEW &#10;
-                        <span> > </span>
+                        <span class="SPview"> PREVIEW > </span>
                     </button>
                     <button class="cbtMakeElive btn ev_live_sub_btn mb5 grn_live_btn" type="button">
                         MAKE EVENT LIVE NOW&#10;
@@ -1255,8 +1254,7 @@ else
                         <span> > </span>
                     </button>
                     <button class="cbtPreview btn ev_live_sub_btn mb5" type="button">
-                        PREVIEW &#10;
-                        <span> > </span>
+                        <span class="SPview"> PREVIEW > </span>
                     </button>
                     <button id="btMakeLive" class="cbtMakeElive btn ev_live_sub_btn mb5 grn_live_btn" type="button">
                         MAKE EVENT LIVE NOW&#10;
@@ -1412,18 +1410,17 @@ else
 
                     if (data.EventStatus == "Live")
                     {
-
                         $(".cbtMakeElive").hide();
                         $("#lblLive").show();
                         $("#lblDft").hide();
-
+                        $(".SPview").text("VIEW >");
                     }
                     else
                     {
                         $(".cbtMakeElive").show();
                         $("#lblLive").hide();
                         $("#lblDft").show();
-
+                        $(".SPview").text("PREVIEW >");
                         //$("#lblDft").html("DRAFT");
                     }
                     $('#status').val(data.EventStatus);
