@@ -341,8 +341,8 @@
             $("#month").removeClass('err-bor');
             $("#day").removeClass('err-bor');
             $("#year").removeClass('err-bor');
-            
-           
+
+
         })
 
         $(window).load(function () {
@@ -350,7 +350,7 @@
             var cntstreet2 = 256 - $("#StreetAddress1").val().length;
             var cntcity = 256 - $("#City").val().length;
             var cntstate = 256 - $("#State").val().length;
-           
+
             $('#cntstreetadd2').html("Count left  " + cntstreet2);
             $('#cntstreetadd1').html("Count left  " + cntstreet2);
             $('#cntcityadd1').html("Count left  " + cntcity);
@@ -360,7 +360,7 @@
         $("#StreeAddress2").keyup(function () {
             var cs = $(this).val().length;
             var left = 256 - cs;
-       
+
             $('#cntstreetadd2').html("Count left  " + left);
         });
         $("#StreetAddress1").keyup(function () {
@@ -386,7 +386,7 @@
             $("#State").val("");
             $("#City").val("");
 
-           
+
         });
         jQuery(function ($) {
             $("#MainPhone").mask("999-999-9999");
@@ -395,9 +395,9 @@
 
         });
         var Model = "@Html.Raw(Model.editsave)";
-      
+
         var files1 = '@(MvcHtmlString.Create(Json.Encode(ViewData["results"])))';
-      
+
         $(document).ready(function () {
             //$('#WebsiteURL').bind('keypress', function (event) {
             //    var regex = new RegExp("^[a-zA-Z0-9]+$");
@@ -408,7 +408,17 @@
             //    }
             //});
 
+            console.log(Model);
+            var userProfileImage="@Html.Raw(Model.UserProfileImage)";
+            var modelcontent="@Html.Raw(Model.contentype)";
+            if(Model=="Save")
+            {
 
+            }else{
+                var imgdata =userProfileImage+ '¶' + modelcontent;
+            }
+          
+            console.log(imgdata);
             //$('#WebsiteURL').bind('cut copy paste', function (event) {
             //    event.preventDefault();
             //    return false;
@@ -500,7 +510,7 @@
 
                         },
                         error: function (el) {
-                        
+
                             //var parent = el.find(".jFiler-jProgressBar").parent();
                             //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                             //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
@@ -525,7 +535,7 @@
                         image_count = parseInt(image_count) - 1;
                         var id_div = el[0].jfiler_id;
                         var hidden_image_element = 'image_hidden_' + id_div;
-                       
+
                         $('#userimage').val('');
                         $('#input2').click(function (e) {
                             e.preventDefault();
@@ -556,8 +566,8 @@
             }
             else if (Model == "Edit") {
                 $("#image_count").val("1");
-                var imgdata =@Model.UserProfileImage+ '¶' + @Model.contentype;
-              
+                @*var imgdata =@Model.UserProfileImage+ '¶' + @Model.contentype;*@
+
                 $('#userimage').val(imgdata);
                 $('#input2').filer({
                     limit: '1',
@@ -615,7 +625,7 @@
                         enctype: 'multipart/form-data',
                         beforeSend: function () { },
                         success: function (data, el) {
-                        
+
                             var parent = el.find(".jFiler-jProgressBar").parent();
                             el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                                 $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
@@ -666,15 +676,15 @@
                         $("#" + hidden_image_element).remove();
                         $('#input2').click(function (e) {
                             e.preventDefault();
-                           
+
                         })
                         $('#ImagePresent').val("NO");
 
-                   
+
                     },
                     onEmpty: function (el) {
                         console.log(el);
-                     
+
                         // alert($("#drag-drop div").hasClass("jFiler-items"))
                         if ($("#imageeror").val()==0) {
                             if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
@@ -687,7 +697,7 @@
                         drop: "Drop file here to Upload",
                         removeConfirmation: "Are you sure you want to remove this file?",
                         errors: {
-                           
+
 
                             filesLimit: ajaxsetup('MyAccount', 'MyAccountImageCountValidationUI'),
                             filesType: ajaxsetup('MyAccount', 'MyAccountImagestypeValidationUI'),
