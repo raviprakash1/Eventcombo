@@ -98,7 +98,7 @@
             <div class="evnt_tile_head">
                 <div class="evnt_tile_bg_l"></div>
                 <div class="col-sm-12 col-xs-12 text-left no_pad">
-                    <h2 class="fb_dis_head pt5">YOUR ORDER INFORMATION</h2>
+                    <h2 class="fb_dis_head pt5"  >YOUR ORDER INFORMATION</h2>
                 </div>
 
                 <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -550,8 +550,9 @@
         if (isNaN(vAmt) == true) vAmt = 0;
         if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
         vOrderTotal = (vOrderTotal + vAmt).toFixed(2);
-        $("#spGrdTotal").text(vOrderTotal.toFixed(2));
-        $("#hdGrandTotal").val(vOrderTotal.toFixed(2));
+        $("#spGrdTotal").text(vOrderTotal);
+        $("#hdGrandTotal").val(vOrderTotal);
+        $("#spSubTotal").text(vOrderTotal);
     }
     function calculateTickTotalOptional(vCount) {
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
@@ -565,6 +566,7 @@
         }
         $("#spGrdTotal").text(vOrderTotal.toFixed(2));
         $("#hdGrandTotal").val(vOrderTotal.toFixed(2));
+        $("#spSubTotal").text(vOrderTotal.toFixed(2));
     }
 
     //function afterStop() {
@@ -836,6 +838,7 @@
     $(document).ready(function () {
       
         $(window).unload(function () {
+            
             if ($("#hdIsPostBack").val() != "Y") {
                 $("#hdIsPostBack").val("N");
                 $.ajax({
@@ -858,7 +861,8 @@
                 url: '@Url.Action("ReleaseTickets", "TicketPayment")',
                 type: "Post",
                 success: function (response) {
-                    history.back();
+                    var title = $('#h2tag').html();
+                    window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';
                 }
             });
         });
@@ -1057,6 +1061,7 @@
         });
         var Eventid = $('#hdEventid').val();
         $('#login').click(function () {
+            $("#hdIsPostBack").val("Y");
             $.ajax({
                 url: '@Url.Action("setsession", "TicketPayment")',
                 data: { id: 'TicketPayment', Eventid: Eventid },
