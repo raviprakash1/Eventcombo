@@ -2080,6 +2080,7 @@ else
             }
         }
         function ValEventTime(e) {
+            debugger;
             var errorMsg = "";
             if (e == "txtStartTime") {
                 errorMsg = checkTime(e);
@@ -3743,7 +3744,8 @@ else
             //.toFixed() method will roundoff the final sum to 2 decimal places
             $("#id_totalqty").html(sum);
         }
-        function feechange(e) {
+        function feechange(e) {            
+            debugger;
             var fee = 0;
             var total = 0;
             var dropval = $('#' + e).val();
@@ -3830,6 +3832,7 @@ else
 
         }
         function validateforzero(id, evt) {
+            debugger;
             var price = parseFloat($('#' + id).val().replace(',','')).toFixed(2);
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
             var discount = parseFloat($('#id_Discount-' + num).val().replace(',','')).toFixed(2);
@@ -3951,6 +3954,7 @@ else
         }
 
         function changefeetype(el, evt, id) {
+            debugger;
             var fee = 0;
             var total = 0;
 
@@ -4005,7 +4009,7 @@ else
             $('#btn_vardelete-' + divlength).attr('href', '#cnfrmdeletevariable-' + divlength);
         });
         $('.save_btnpaid ').click(function () {
-
+            debugger;
             $(".ticket_panel").show();
             $("#id_ticket_footer").css('display', 'block');
             var divlength = $("#MasterDiv> div").size();
@@ -4993,7 +4997,7 @@ else
         }
         function checkTime(field) {
             var errorMsg = "";
-
+            debugger;
             // regular expression to match required time format
             re = /^(\d{1,2}):(\d{2})(:00)?([ap]m)?$/;
             var value = $("#" + field).val();
