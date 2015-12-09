@@ -1344,7 +1344,7 @@ namespace EventCombo.Controllers
                 foreach (Ticket_Locked_Detail objModel in objLocked.TLD_List)
                 {
                     var vRemQty = (from PQty in context.Ticket_Quantity_Detail where PQty.TQD_Id == objModel.TLD_TQD_Id select PQty.TQD_Remaining_Quantity).SingleOrDefault();
-                    var vLockQty = (from PQty in context.Ticket_Locked_Detail where PQty.TLD_TQD_Id == objModel.TLD_TQD_Id select PQty.TLD_Locked_Qty).SingleOrDefault();
+                    var vLockQty = (from PQty in context.Ticket_Locked_Detail where PQty.TLD_TQD_Id == objModel.TLD_TQD_Id select PQty.TLD_Locked_Qty).Sum();
                     vLockQty = (vLockQty != null ? vLockQty : 0);
                     if (vRemQty < (vLockQty + objModel.TLD_Locked_Qty))
                     {
