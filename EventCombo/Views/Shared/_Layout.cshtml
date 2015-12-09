@@ -96,7 +96,7 @@
             <div class="col-sm-3">
                 <form>
                     <div class="input-group stylish-input-group">
-                        <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Searh for Event">
+                        <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Search for Event">
                         <span class="input-group-addon">
                             <button type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -121,11 +121,12 @@
         </div>
     </div>
         <!-- Body Section -->
-}
-else
-{
-    if (HttpContext.Current.Session["Fromname"].ToString() == "ViewEvent")
-    {
+        }
+        else
+        {
+            
+            if (HttpContext.Current.Session["Fromname"].ToString() == "events")
+            {
 
         <div class="col-sm-12 filter_sep cont_margin">
             <img src="~/Images/desi-events-logo.gif">
@@ -216,7 +217,8 @@ else
 }
 else
 {
-    if (HttpContext.Current.Session["Fromname"].ToString() == "ViewEvent")
+  
+    if (HttpContext.Current.Session["Fromname"].ToString() == "events")
     {
     }
     else
@@ -515,6 +517,9 @@ else
     });
 
     $("#loginPopup").on('click', function () {
+        if (loginemail != '' || loginpwd != '') {
+            $('#btnSavelogin').removeAttr("disabled");
+        }
         $('#loginemail').css("border", "black solid 1px");
         $('#loginpassword').css("border", "black solid 1px");
         $('#diverro1login').css('display', 'none');
