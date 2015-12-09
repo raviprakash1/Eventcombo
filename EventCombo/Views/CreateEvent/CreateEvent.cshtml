@@ -1304,7 +1304,7 @@
                         <span> > </span>
                     </button>
                     
-                    <button  class="cbtPreview btn ev_live_sub_btn mb5" type="button">
+                    <button  class="cbtPreview btn ev_live_sub_btn" type="button">
                         PREVIEW &#10;
                         <span> > </span>
                     </button>
@@ -1850,13 +1850,9 @@
 
                 $("#tblAddress tr").each(function () {
                     var Sno = $(this).find("td:first").html();
-                    console.log(Sno);
                     if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
                         $("#txtEventLocation").val($("#consolidate" + Sno).text());
-                    } else {
-                        $("#txtEventLocation").attr("placeholder", "Click here to enter venue address");
-                        $("#txtEventLocation").val("");
-                    }
+                    } 
                 });
 
             });
