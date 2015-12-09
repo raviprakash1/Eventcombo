@@ -550,7 +550,8 @@
         if (isNaN(vAmt) == true) vAmt = 0;
         if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
         vOrderTotal = (vOrderTotal + vAmt).toFixed(2);
-        $("#spGrdTotal").text(vOrderTotal);
+        $("#spGrdTotal").text(vOrderTotal.toFixed(2));
+        $("#hdGrandTotal").val(vOrderTotal.toFixed(2));
     }
     function calculateTickTotalOptional(vCount) {
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
@@ -563,6 +564,7 @@
             }
         }
         $("#spGrdTotal").text(vOrderTotal.toFixed(2));
+        $("#hdGrandTotal").val(vOrderTotal.toFixed(2));
     }
 
     //function afterStop() {

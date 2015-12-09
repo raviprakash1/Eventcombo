@@ -321,12 +321,19 @@ namespace EventCombo.Controllers
                                    where myRow.UserId == strUsers
                                    select myRow).ToList();
 
+                    strHtml.Append("<option value='0'>Select Past Location</option>");
                     foreach (var item in PrevAdd)
                     {
                         if (item.AddressID == lPreAddId)
-                            strHtml.Append("<option selected='selected' value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+                        {
+                            if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
+                                strHtml.Append("<option selected='selected' value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                        }
                         else
-                            strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.VenueName + "," + item.Address1 + "," + item.Address2 + "," + item.City + "," + item.Zip + "</option>");
+                        {
+                            if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
+                                    strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
+                        }
                     }
                     return strHtml.ToString();
                 }
@@ -1221,12 +1228,12 @@ namespace EventCombo.Controllers
                     // Address info
                     if (model.AddressStatus == "Online")
                     {
-                        objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                        //objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
                     }
                     else if (model.AddressDetail != null)
                     {
                         Address ObjAdd = new Models.Address();
-                        objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                      //  objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
                         foreach (Address objA in model.AddressDetail)
                         {
                             if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
@@ -1243,7 +1250,7 @@ namespace EventCombo.Controllers
                                 ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
                                 ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
                                 ObjAdd.Name = "";
-                                objEnt.Addresses.Add(ObjAdd);
+                               // objEnt.Addresses.Add(ObjAdd);
                             }
 
                         }
@@ -1305,8 +1312,8 @@ namespace EventCombo.Controllers
                     if (model.Ticket != null)
                     {
                         Ticket ticket = new Ticket();
-                        objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
-                        objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
+                       // objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
+                      //  objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
                         foreach (Ticket tick in model.Ticket)
                         {
                             ticket = new Ticket();
@@ -1343,7 +1350,7 @@ namespace EventCombo.Controllers
                             ticket.T_Discount = tick.T_Discount;
 
 
-                            objEnt.Tickets.Add(ticket);
+                           // objEnt.Tickets.Add(ticket);
                         }
 
 
