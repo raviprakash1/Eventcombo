@@ -208,19 +208,21 @@
                                              <div class="dropdown text-left">
 @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
 {
-                                              <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
+                                              
 }
-                                                 <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" title="@Html.DisplayFor(m => m.TopAddress)">
-                                                     @Html.DisplayFor(m => m.TopAddress)
+                                                 <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips"  title="@Html.DisplayFor(m => m.TopAddress)">
+                                                     <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
+                                                     <span id="lbltopaddress">@Html.DisplayFor(m => m.TopAddress)</span>
+                                                     <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
+                                                         <span class="caret caret_cus"></span>
+                                                         <li>
+                                                             <div id="googleMap"  style="width:400px;height:300px;">
+
+                                                             </div>
+                                                         </li>
+                                                     </ul>
                                                  </label>
-                                              <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
-                                               <span class="caret caret_cus"></span>
-                                                <li>
-                                                  <div id="googleMap" style="width:400px;height:300px;">
-                                                 
-                                                  </div>
-                                                </li>
-                                              </ul>
+                                              
                                             </div>
                                            
                                        
@@ -627,7 +629,8 @@ else
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
 <script>
-
+    var map = "";
+    var geocoder = "";
     
     function InitializeMap() {
 
@@ -639,7 +642,12 @@ else
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             //disableDefaultUI: true
         };
-        map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+         if (!map) {
+             map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+         }
+         else {
+             map.setOptions(mapOptions);
+         }
     }
     function FindLocaiton() {
         InitializeMap();
@@ -656,8 +664,9 @@ else
 
             }
             else {
-                alert("Geocode was not successful for the following reason: " + status);
+                //alert("Geocode was not successful for the following reason: " + status);
             }
+
 
         });
         

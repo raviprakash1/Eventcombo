@@ -616,7 +616,7 @@
                             <div class="url-width">
 
                                 <span class="url-filed">
-                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" placeholder="enter url name">
+                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" placeholder="enter url name" onkeypress="return IsAlphaNumeric(event);">
                                 </span>
                                 <span class="url-name">.eventcombo.com</span>
                             </div>
@@ -1400,6 +1400,22 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script>
+
+
+        var specialKeys = new Array();
+        specialKeys.push(8); //Backspace
+        specialKeys.push(9); //Tab
+        specialKeys.push(46); //Delete
+        specialKeys.push(36); //Home
+        specialKeys.push(35); //End
+        specialKeys.push(37); //Left
+        specialKeys.push(39); //Right
+        function IsAlphaNumeric(e) {
+            var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+            var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+           
+            return ret;
+        }
         $(window).load(function () {
 
             var numbers = ajaxsetup('CreateEvent', 'CreateEventEnternumberUI');
@@ -3204,26 +3220,34 @@
             });
 
 
-            $('#txtEventUrl').bind('keypress', function (event) {
-                var yourInput = $(this).val();
-                re = /[`~!#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi;
-                var isSplChar = re.test(yourInput);
-                if (isSplChar) {
-                    event.preventDefault();
-                    return false;
-                }
+            //$('#txtEventUrl').bind('keypress', function (event) {
+
+            //    var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+            //    var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+            //    alert(ret);
+            //    //document.getElementById("error").style.display = ret ? "none" : "inline";
+            //    return ret;
+
+
+            //    //var yourInput = $(this).val();
+            //    //re = /[`~!#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi;
+            //    //var isSplChar = re.test(yourInput);
+            //    //if (isSplChar) {
+            //    //    event.preventDefault();
+            //    //    return false;
+            //    //}
 
 
 
 
-                //var regex = new RegExp("^[a-zA-Z0-9]+$");
-                //var charCode = (evt.which) ? evt.which : event.keyCode;
-                //var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-                //if (!regex.test(key)) {
-                //    event.preventDefault();
-                //    return false;
-                //}
-            });
+            //    //var regex = new RegExp("^[a-zA-Z0-9]+$");
+            //    //var charCode = (evt.which) ? evt.which : event.keyCode;
+            //    //var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            //    //if (!regex.test(key)) {
+            //    //    event.preventDefault();
+            //    //    return false;
+            //    //}
+            //});
 
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
