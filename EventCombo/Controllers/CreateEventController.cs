@@ -1146,6 +1146,7 @@ namespace EventCombo.Controllers
         {
             if (Session["AppId"] != null)
             {
+                Session["ReturnUrl"] = Url.Action("ViewEvent", "CreateEvent", new { strUrlData = "a౼" + Eventid + "౼N" });
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     EventVote ObjEC = new EventVote();
@@ -1157,10 +1158,10 @@ namespace EventCombo.Controllers
                 var voteCount = (from ev in db.EventVotes where ev.eventId.ToString() == Eventid select ev).Count();
 
                 return voteCount.ToString();
-
+              
             }
             else {
-                Session["ReturnUrl"] = Url.Action("ViewEvent", "CreateEvent", new { EventId = Eventid });
+                Session["ReturnUrl"] = Url.Action("ViewEvent", "CreateEvent", new { strUrlData = "a౼" + Eventid + "౼N" });
                 return "Y";
 
             }
@@ -1171,7 +1172,9 @@ namespace EventCombo.Controllers
 
             if (Session["AppId"] != null)
             {
-                if(type=="Y")
+                string url = Url.Action("ViewEvent", "CreateEvent", new { strUrlData = "a౼" + Eventid + "౼N" });
+                Session["ReturnUrl"] = Url.Action("ViewEvent", "CreateEvent", new { strUrlData = "a౼" + Eventid + "౼N" });
+                if (type=="Y")
                 {
                     using (EventComboEntities objEnt = new EventComboEntities())
                     {
@@ -1206,7 +1209,8 @@ namespace EventCombo.Controllers
             }
             else
             {
-                Session["ReturnUrl"] = Url.Action("ViewEvent", "CreateEvent", new { EventId = Eventid });
+                string url = Url.Action("ViewEvent", "CreateEvent", new { strUrlData = "a౼" + Eventid + "౼N" });
+                Session["ReturnUrl"] = Url.Action("ViewEvent", "CreateEvent", new { strUrlData ="a౼"+ Eventid+"౼N"  });
                 return "Y";
 
             }

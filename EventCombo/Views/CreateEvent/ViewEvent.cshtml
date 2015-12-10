@@ -610,7 +610,7 @@ else
         <div class="modal-content">
             <div class="modal-header">
                 @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
-                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">One of your selected ticket has been already sold. </h4>
+                <h4 class="modal-title ev_modal_header_title" id="myModalLabel"><span id="spanokid">One of your selected ticket has been already sold.</span> </h4>
             </div>
             <div class="modal-footer msg-action-btn ok">
                 <button  type="submit" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
@@ -900,8 +900,9 @@ function pad(n) { return n < 10 ? '0' + n : n };
             var clickvote = $('#hdEventvote').val();
 
             if (clickvote == "Y") {
-
-                alert('You can only vote once.');
+                $("#btOk").click();
+                $("#spanokid").html(ajaxsetup("ViewEvent", "VoteOnce"));
+                //alert('You can only vote once.');
             } else {
                 var eid = $('#hdEventid').val();
                 $.ajax({
@@ -919,11 +920,15 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
                             $('#hdEventvote').val("Y");
                             $('#spanvotes').html(data);
-                            alert('Thank you for voting!');
+
+                            $("#btOk").click();
+                            $("#spanokid").html(ajaxsetup("ViewEvent", "ThanksForVote"));
+                            //alert('Thank you for voting!');
                         }
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        $("#btOk").click();
+                        $("#spanokid").html("Sorry their is problem contact Administrator!!");
                         return false
                     }
                 });
@@ -954,10 +959,14 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         var clickfav = $('#hdEventFav').val();
                         if (clickfav == "Y") {
                             $("#btnfavourite").addClass("btn_fav_act");
-                            alert('Your Event have been saved!');
+                            $("#btOk").click();
+                            $("#spanokid").html(ajaxsetup("ViewEvent", "eventSaved"));
+                            //alert('Your Event have been saved!');
                         }
                         if (clickfav == "N") {
-                            alert('Your Event have not been saved!');
+                            $("#btOk").click();
+                            $("#spanokid").html(ajaxsetup("ViewEvent", "eventnotsaved"));
+                            //alert('Your Event have not been saved!');
                             $("#btnfavourite").removeClass("btn_fav_act");
                         }
 
@@ -1312,6 +1321,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
                     success: function (response) {
                         if (response == "N") {
                             $("#btOk").click();
+                            $("#spanokid").html(ajaxsetup("ViewEvent", "OverSelling"));
                             $.removeCookie("Selection");
                         }
                         else {
