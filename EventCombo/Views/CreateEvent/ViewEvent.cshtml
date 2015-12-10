@@ -4,6 +4,8 @@
     ViewBag.Title = "ViewEvent";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="http://maps.googleapis.com/maps/api/js">
+</script>
 <div id="fb-root"></div>
 <meta property="og:type" content="article" />
 <meta property="og:title" content=@Html.DisplayFor(m => m.Title) />
@@ -201,14 +203,31 @@
                                 <div class="form-group mb0">
                                     @*<a href="#" data-geo=""></a>*@
 
-                                   @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
-                                   {
+                               
+                                       
+                                             <div class="dropdown text-left">
+@if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
+{
+                                              <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
+}
+                                                 <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" title="@Html.DisplayFor(m => m.TopAddress)">
+                                                     @Html.DisplayFor(m => m.TopAddress)
+                                                 </label>
+                                              <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
+                                               <span class="caret caret_cus"></span>
+                                                <li>
+                                                  <div id="googleMap" style="width:400px;height:300px;">
+                                                 
+                                                  </div>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                           
+                                       
 
-                                    <div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" data-geo=""></div>
-                                   }
-                                    <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" title="@Html.DisplayFor(m => m.TopAddress)">
-                                        @Html.DisplayFor(m => m.TopAddress)
-                                    </label>
+                                    @*<div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" ></div>*@
+                                   
+                                 
                                 </div>
                             </div>
                             }
@@ -609,12 +628,46 @@ else
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
 <script>
 
+    
+    function InitializeMap() {
 
+         latlng = new google.maps.LatLng(-34.397, 150.644);
+         myOptions =
+        {
+            zoom: 12,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            //disableDefaultUI: true
+        };
+        map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+    }
+    function FindLocaiton() {
+        InitializeMap();
+        geocoder = new google.maps.Geocoder();
+         lbltopaddress = document.getElementById("lbltopaddress");
+         address = lbltopaddress.innerHTML.trim();
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                 marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
 
+            }
+            else {
+                alert("Geocode was not successful for the following reason: " + status);
+            }
 
+        });
+        
+    }
+   // window.onload = InitializeMap;
     $(document).ready(function () {
        
-
+        $('ul.dropdown-menu.dropdown-map').on('click', function (event) {
+            event.stopPropagation();
+        });
         //history.pushState(null, null, 'ViewEvent');
         //window.addEventListener('popstate', function (event) {
         //    history.pushState(null, null, 'ViewEvent');

@@ -533,11 +533,20 @@ span.evnt_toltip{
 
 }
     
-.err-bor{ border-color: red !important;}
+.err-bor{ 
+        border: 1px solid red !important;
+
+}
 .er_war_main{
     border: 1px solid #ffdb00;
     width: 100%;
     float: left;height: 50px; display: table; position:relative; }
+
+
+/*.er_war_main{
+    border: 1px solid #ffdb00;
+    width: 100%;
+    float: left;height: 50px; display: table;}*/
 .er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; }
 .er_war_img{ background: #ffdb00 url(../images/info_icn.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
 .er_war_main button{ position:absolute; right:2px; top:0px; padding:2px 5px;}
@@ -564,17 +573,9 @@ span.evnt_toltip{
 
 
 
-.err_main {
-    width: 100%;
-    margin: 0 auto;
 
-}
     
-.err-bor{ border-color: red !important;}
-.er_war_main{
-    border: 1px solid #ffdb00;
-    width: 100%;
-    float: left;height: 50px; display: table;}
+
 /*.er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; }
 .er_war_img{ background: #ffdb00 url(../images/info_icn.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
 
