@@ -135,7 +135,7 @@ namespace EventCombo.Controllers
         public string GetPreviousAddress()
         {
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-
+            bool bflag = false;
             StringBuilder strHtml = new StringBuilder();
             try
             {
@@ -150,10 +150,11 @@ namespace EventCombo.Controllers
                     strHtml.Append("<option value='0'>Select Past Location</option>");
                     foreach (var item in PrevAdd)
                     {
+                        bflag = true;
                         if (item.ConsolidateAddress != null && item.ConsolidateAddress.Trim() != "")
                             strHtml.Append("<option value=" + item.AddressID.ToString() + ">" + item.ConsolidateAddress + "</option>");
                     }
-                    return strHtml.ToString();
+                    if (bflag == false) return ""; else return strHtml.ToString();
                 }
             }
             catch (Exception ex)
@@ -1351,12 +1352,10 @@ namespace EventCombo.Controllers
             using (var context = new EventComboEntities())
             {
                 Ticket_Locked_Detail objTLD = new Ticket_Locked_Detail();
-                
-                
                 foreach (Ticket_Locked_Detail objModel in objLocked.TLD_List)
                 {
                     var vEvtState = (from myevent in context.Events where myevent.EventID == objModel.TLD_Event_Id select myevent.EventStatus).FirstOrDefault();
-                    //if (vEvtState.Trim() != "Live") return "N";
+                    if (vEvtState.Trim() != "Live") return "NOTLIVE";
 
                     var vRemQty = (from PQty in context.Ticket_Quantity_Detail where PQty.TQD_Id == objModel.TLD_TQD_Id select PQty.TQD_Remaining_Quantity).SingleOrDefault();
                     var vLockQty = (from PQty in context.Ticket_Locked_Detail where PQty.TLD_TQD_Id == objModel.TLD_TQD_Id select PQty.TLD_Locked_Qty).Sum();

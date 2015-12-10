@@ -588,8 +588,9 @@ else
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
-                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">One of your selected ticket has been already sold. </h4>
+                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">
+                    <span id="spOverSel">One of your selected ticket has been already sold.</span> </h4>
+                
             </div>
             <div class="modal-footer msg-action-btn ok">
                 <button  type="submit" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
@@ -1239,16 +1240,22 @@ function pad(n) { return n < 10 ? '0' + n : n };
                 'TLD_List': TList
             }
             if (vflag > 0) {
-
-
-               
-
                 $.ajax({
                     url: '@Url.Action("LockTickets", "CreateEvent")',
                     data: model,
                     type: "Post",
                     success: function (response) {
                         if (response == "N") {
+                            //$(".OverSel").html(ajaxsetup('ViewEvent', 'OverSelling'));
+                            var vMes = ajaxsetup('ViewEvent', 'OverSelling');
+                            $("#spOverSel").text(vMes);
+                            $("#btOk").click();
+                            $.removeCookie("Selection");
+                        }
+                        else if (response == "NOTLIVE")
+                        {
+                            var vMes = ajaxsetup('ViewEvent', 'EventNotLive');
+                            $("#spOverSel").text(vMes);
                             $("#btOk").click();
                             $.removeCookie("Selection");
                         }
