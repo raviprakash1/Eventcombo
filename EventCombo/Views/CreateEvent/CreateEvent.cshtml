@@ -284,94 +284,7 @@
                                                 <div class="col-sm-12 no_pad">
                                                     <div class="form-group mb5 ">
                                                         @Html.DropDownList("dllTimeZone", ViewBag.Timezonelist as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
-                                                        @*<select id="dllTimeZone" class="form-control evnt_inp_cont wd600">
-                                                            <option>(GMT-12:00) International Date Line West                                             </option>
-                                                            <option>(GMT-11:00) Midway Island, Samoa													 </option>
-                                                            <option>(GMT-10:00) Hawaii																	 </option>
-                                                            <option>(GMT-09:00) Alaska																	 </option>
-                                                            <option>(GMT-08:00) Pacific Time (US & Canada)												 </option>
-                                                            <option>(GMT-08:00) Tijuana, Baja California												 </option>
-                                                            <option>(GMT-07:00) Arizona																	 </option>
-                                                            <option>(GMT-07:00) Chihuahua, La Paz, Mazatlan												 </option>
-                                                            <option>(GMT-07:00) Mountain Time (US & Canada)												 </option>
-                                                            <option>(GMT-06:00) Central America															 </option>
-                                                            <option>(GMT-06:00) Central Time (US & Canada)												 </option>
-                                                            <option>(GMT-06:00) Guadalajara, Mexico City, Monterrey										 </option>
-                                                            <option>(GMT-06:00) Saskatchewan															 </option>
-                                                            <option>(GMT-05:00) Bogota, Lima, Quito, Rio Branco											 </option>
-                                                            <option>(GMT-05:00) Eastern Time (US & Canada)												 </option>
-                                                            <option>(GMT-05:00) Indiana (East)															 </option>
-                                                            <option>(GMT-04:00) Atlantic Time (Canada)													 </option>
-                                                            <option>(GMT-04:00) Caracas, La Paz															 </option>
-                                                            <option>(GMT-04:00) Manaus																	 </option>
-                                                            <option>(GMT-04:00) Santiago																 </option>
-                                                            <option>(GMT-03:30) Newfoundland															 </option>
-                                                            <option>(GMT-03:00) Brasilia																 </option>
-                                                            <option>(GMT-03:00) Buenos Aires, Georgetown												 </option>
-                                                            <option>(GMT-03:00) Greenland																 </option>
-                                                            <option>(GMT-03:00) Montevideo																 </option>
-                                                            <option>(GMT-02:00) Mid-Atlantic															 </option>
-                                                            <option>(GMT-01:00) Cape Verde Is.															 </option>
-                                                            <option>(GMT-01:00) Azores																	 </option>
-                                                            <option>(GMT+00:00) Casablanca, Monrovia, Reykjavik											 </option>
-                                                            <option>(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London					 </option>
-                                                            <option>(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna						 </option>
-                                                            <option>(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague						 </option>
-                                                            <option>(GMT+01:00) Brussels, Copenhagen, Madrid, Paris										 </option>
-                                                            <option>(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb										 </option>
-                                                            <option>(GMT+01:00) West Central Africa														 </option>
-                                                            <option>(GMT+02:00) Amman																	 </option>
-                                                            <option>(GMT+02:00) Athens, Bucharest, Istanbul												 </option>
-                                                            <option>(GMT+02:00) Beirut																	 </option>
-                                                            <option>(GMT+02:00) Cairo																	 </option>
-                                                            <option>(GMT+02:00) Harare, Pretoria														 </option>
-                                                            <option>(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius							 </option>
-                                                            <option>(GMT+02:00) Jerusalem																 </option>
-                                                            <option>(GMT+02:00) Minsk																	 </option>
-                                                            <option>(GMT+02:00) Windhoek																 </option>
-                                                            <option>(GMT+03:00) Kuwait, Riyadh, Baghdad													 </option>
-                                                            <option>(GMT+03:00) Moscow, St. Petersburg, Volgograd										 </option>
-                                                            <option>(GMT+03:00) Nairobi																	 </option>
-                                                            <option>(GMT+03:00) Tbilisi																	 </option>
-                                                            <option>(GMT+03:30) Tehran																	 </option>
-                                                            <option>(GMT+04:00) Abu Dhabi, Muscat														 </option>
-                                                            <option>(GMT+04:00) Baku																	 </option>
-                                                            <option>(GMT+04:00) Yerevan																	 </option>
-                                                            <option>(GMT+04:30) Kabul																	 </option>
-                                                            <option>(GMT+05:00) Yekaterinburg															 </option>
-                                                            <option>(GMT+05:00) Islamabad, Karachi, Tashkent											 </option>
-                                                            <option>(GMT+05:30) Sri Jayawardenapura														 </option>
-                                                            <option>(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi										 </option>
-                                                            <option>(GMT+05:45) Kathmandu																 </option>
-                                                            <option>(GMT+06:00) Almaty, Novosibirsk														 </option>
-                                                            <option>(GMT+06:00) Astana, Dhaka															 </option>
-                                                            <option>(GMT+06:30) Yangon (Rangoon)														 </option>
-                                                            <option>(GMT+07:00) Bangkok, Hanoi, Jakarta													 </option>
-                                                            <option>(GMT+07:00) Krasnoyarsk																 </option>
-                                                            <option>(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi									 </option>
-                                                            <option>(GMT+08:00) Kuala Lumpur, Singapore													 </option>
-                                                            <option>(GMT+08:00) Irkutsk, Ulaan Bataar													 </option>
-                                                            <option>(GMT+08:00) Perth																	 </option>
-                                                            <option>(GMT+08:00) Taipei																	 </option>
-                                                            <option>(GMT+09:00) Osaka, Sapporo, Tokyo													 </option>
-                                                            <option>(GMT+09:00) Seoul																	 </option>
-                                                            <option>(GMT+09:00) Yakutsk																	 </option>
-                                                            <option>(GMT+09:30) Adelaide																 </option>
-                                                            <option>(GMT+09:30) Darwin																	 </option>
-                                                            <option>(GMT+10:00) Brisbane																 </option>
-                                                            <option>(GMT+10:00) Canberra, Melbourne, Sydney												 </option>
-                                                            <option>(GMT+10:00) Hobart																	 </option>
-                                                            <option>(GMT+10:00) Guam, Port Moresby														 </option>
-                                                            <option>(GMT+10:00) Vladivostok																 </option>
-                                                            <option>(GMT+11:00) Magadan, Solomon Is., New Caledonia										 </option>
-                                                            <option>(GMT+12:00) Auckland, Wellington													 </option>
-                                                            <option>(GMT+12:00) Fiji, Kamchatka, Marshall Is.											 </option>
-                                                            <option>(GMT+13:00) Nukualofa																 </option>
-
-
-
-
-                                                        </select>*@
+                                                      
                                                     </div>
                                                     <div class="clearfix"></div>
                                                     <div class="form-group mb5 ">
@@ -420,7 +333,7 @@
                                 <div class="clearfix"></div>
                                 <div class="col-sm-6 ">
                                     <label class="label-control evnt_title_multi">
-                                        <a data-target="#myModal" id="btMultiVenue" data-toggle="modal" href="#">
+                                        <a data-target="#myModal" id="btMultiVenue" data-toggle="modal" href="#" draggable="false">
                                             Multiple Venue
                                         </a>
                                     </label>
@@ -703,7 +616,7 @@
                             <div class="url-width">
 
                                 <span class="url-filed">
-                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" placeholder="enter url name">
+                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" placeholder="enter url name" onkeypress="return IsAlphaNumeric(event);">
                                 </span>
                                 <span class="url-name">.eventcombo.com</span>
                             </div>
@@ -1487,6 +1400,22 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script>
+
+
+        var specialKeys = new Array();
+        specialKeys.push(8); //Backspace
+        specialKeys.push(9); //Tab
+        specialKeys.push(46); //Delete
+        specialKeys.push(36); //Home
+        specialKeys.push(35); //End
+        specialKeys.push(37); //Left
+        specialKeys.push(39); //Right
+        function IsAlphaNumeric(e) {
+            var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+            var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+           
+            return ret;
+        }
         $(window).load(function () {
 
             var numbers = ajaxsetup('CreateEvent', 'CreateEventEnternumberUI');
@@ -1888,7 +1817,7 @@
                     var Sno = $(this).find("td:first").html();
                     if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
                         $("#txtEventLocation").val($("#consolidate" + Sno).text());
-                    } 
+                    }
                 });
 
             });
@@ -2284,7 +2213,7 @@
                 if ($("#hdEventId").val() == '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
-                        data: { model, strIsLive: "N" },
+                        data: { model:model, strIsLive: "N" },
                         type: "Post",
                         success: function (response) {
                             $("#hdEventId").val(response);
@@ -2623,7 +2552,7 @@
 
                     // Basic Event Info
                     //alert($("#edSummer1").code());
-                    debugger;
+
                     //$("#spEvDesc").text();
                     var vEdesc = ''; //$("#edEventDesc").code();
 
@@ -2681,7 +2610,7 @@
                     if ($("#hdEventId").val() == '') {
                         $.ajax({
                             url: '@Url.Action("SaveEvent", "CreateEvent")',
-                            data: { model, strIsLive: "Y" },
+                            data: { model:model, strIsLive: "Y" },
                             type: "Post",
                             success: function (response) {
                                 $("#hdEventId").val(response);
@@ -3060,7 +2989,7 @@
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
-               
+
                 //$("#spEvDesc").text();
                 var vEdesc = ''; //$("#edEventDesc").code();
 
@@ -3118,7 +3047,7 @@
                 if ($("#hdEventId").val() == '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
-                        data: { model, strIsLive: "N" },
+                        data: { model:model, strIsLive: "N" },
                         type: "Post",
                         success: function (response) {
                             $("#hdEventId").val(response);
@@ -3127,7 +3056,7 @@
                             //$('#diverroacc').css('display', 'none');
                             //$('#succaccmsg').html(ajaxsetup('CreateEvent', 'CreateEventsavedsucc'));
                             $("#hdEventId").val(response);
-                           
+
                             $('#dvdraft').css('display', 'block');
                             window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
 
@@ -3291,14 +3220,34 @@
             });
 
 
-            $('#txtEventUrl').bind('keypress', function (event) {
-                var regex = new RegExp("^[a-zA-Z0-9]+$");
-                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-                if (!regex.test(key)) {
-                    event.preventDefault();
-                    return false;
-                }
-            });
+            //$('#txtEventUrl').bind('keypress', function (event) {
+
+            //    var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+            //    var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+            //    alert(ret);
+            //    //document.getElementById("error").style.display = ret ? "none" : "inline";
+            //    return ret;
+
+
+            //    //var yourInput = $(this).val();
+            //    //re = /[`~!#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi;
+            //    //var isSplChar = re.test(yourInput);
+            //    //if (isSplChar) {
+            //    //    event.preventDefault();
+            //    //    return false;
+            //    //}
+
+
+
+
+            //    //var regex = new RegExp("^[a-zA-Z0-9]+$");
+            //    //var charCode = (evt.which) ? evt.which : event.keyCode;
+            //    //var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            //    //if (!regex.test(key)) {
+            //    //    event.preventDefault();
+            //    //    return false;
+            //    //}
+            //});
 
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
@@ -5261,6 +5210,7 @@
 
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
+                disableDragAndDrop: true
             });
 
             $(".ticket_panel").hide();

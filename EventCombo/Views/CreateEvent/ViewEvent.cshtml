@@ -4,6 +4,8 @@
     ViewBag.Title = "ViewEvent";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="http://maps.googleapis.com/maps/api/js">
+</script>
 <div id="fb-root"></div>
 <meta property="og:type" content="article" />
 <meta property="og:title" content=@Html.DisplayFor(m => m.Title) />
@@ -201,14 +203,33 @@
                                 <div class="form-group mb0">
                                     @*<a href="#" data-geo=""></a>*@
 
-                                   @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
-                                   {
+                               
+                                       
+                                             <div class="dropdown text-left">
+@if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
+{
+                                              
+}
+                                                 <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips"  title="@Html.DisplayFor(m => m.TopAddress)">
+                                                     <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
+                                                     <span id="lbltopaddress">@Html.DisplayFor(m => m.TopAddress)</span>
+                                                     <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
+                                                         <span class="caret caret_cus"></span>
+                                                         <li>
+                                                             <div id="googleMap"  style="width:400px;height:300px;">
 
-                                    <div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" data-geo=""></div>
-                                   }
-                                    <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" title="@Html.DisplayFor(m => m.TopAddress)">
-                                        @Html.DisplayFor(m => m.TopAddress)
-                                    </label>
+                                                             </div>
+                                                         </li>
+                                                     </ul>
+                                                 </label>
+                                              
+                                            </div>
+                                           
+                                       
+
+                                    @*<div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" ></div>*@
+                                   
+                                 
                                 </div>
                             </div>
                             }
@@ -590,7 +611,6 @@ else
             <div class="modal-header">
                 <h4 class="modal-title ev_modal_header_title" id="myModalLabel">
                     <span id="spOverSel">One of your selected ticket has been already sold.</span> </h4>
-                
             </div>
             <div class="modal-footer msg-action-btn ok">
                 <button  type="submit" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
@@ -609,13 +629,54 @@ else
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
 <script>
+    var map = "";
+    var geocoder = "";
+    
+    function InitializeMap() {
+
+         latlng = new google.maps.LatLng(-34.397, 150.644);
+         myOptions =
+        {
+            zoom: 12,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            //disableDefaultUI: true
+        };
+         if (!map) {
+             map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+         }
+         else {
+             map.setOptions(mapOptions);
+         }
+    }
+    function FindLocaiton() {
+        InitializeMap();
+        geocoder = new google.maps.Geocoder();
+         lbltopaddress = document.getElementById("lbltopaddress");
+         address = lbltopaddress.innerHTML.trim();
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                 marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+
+            }
+            else {
+                //alert("Geocode was not successful for the following reason: " + status);
+            }
 
 
-
-
+        });
+        
+    }
+   // window.onload = InitializeMap;
     $(document).ready(function () {
        
-
+        $('ul.dropdown-menu.dropdown-map').on('click', function (event) {
+            event.stopPropagation();
+        });
         //history.pushState(null, null, 'ViewEvent');
         //window.addEventListener('popstate', function (event) {
         //    history.pushState(null, null, 'ViewEvent');
@@ -839,8 +900,9 @@ function pad(n) { return n < 10 ? '0' + n : n };
             var clickvote = $('#hdEventvote').val();
 
             if (clickvote == "Y") {
-
-                alert('You can only vote once.');
+                $("#btOk").click();
+                $("#spanokid").html(ajaxsetup("ViewEvent", "VoteOnce"));
+                //alert('You can only vote once.');
             } else {
                 var eid = $('#hdEventid').val();
                 $.ajax({
@@ -858,11 +920,15 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
                             $('#hdEventvote').val("Y");
                             $('#spanvotes').html(data);
-                            alert('Thank you for voting!');
+
+                            $("#btOk").click();
+                            $("#spanokid").html(ajaxsetup("ViewEvent", "ThanksForVote"));
+                            //alert('Thank you for voting!');
                         }
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        $("#btOk").click();
+                        $("#spanokid").html("Sorry their is problem contact Administrator!!");
                         return false
                     }
                 });
@@ -893,10 +959,14 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         var clickfav = $('#hdEventFav').val();
                         if (clickfav == "Y") {
                             $("#btnfavourite").addClass("btn_fav_act");
-                            alert('Your Event have been saved!');
+                            $("#btOk").click();
+                            $("#spanokid").html(ajaxsetup("ViewEvent", "eventSaved"));
+                            //alert('Your Event have been saved!');
                         }
                         if (clickfav == "N") {
-                            alert('Your Event have not been saved!');
+                            $("#btOk").click();
+                            $("#spanokid").html(ajaxsetup("ViewEvent", "eventnotsaved"));
+                            //alert('Your Event have not been saved!');
                             $("#btnfavourite").removeClass("btn_fav_act");
                         }
 
@@ -1257,6 +1327,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
                             var vMes = ajaxsetup('ViewEvent', 'EventNotLive');
                             $("#spOverSel").text(vMes);
                             $("#btOk").click();
+                            $("#spanokid").html(ajaxsetup("ViewEvent", "OverSelling"));
                             $.removeCookie("Selection");
                         }
                         else {
