@@ -161,27 +161,30 @@
                                                         <td>
                                                             <div class="section" id="dvorganiser-@i">
                                                                 <label class="field select">
+                                                                    <label id="lblorg-@i" style="display:none">@obj.OrganiserId</label>
                                                                     @if (obj.Organiser == "Y")
-                                                                    {
-                                                                        <select id="dlOrgnizer" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
+                                                                    { 
+                                                                        <select id="dlOrgnizer-@i" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value,this.id)">
                                                                             @*<option  value="0">Select</option>*@
                                                                             <option selected="selected" value="1">Yes</option>
                                                                             <option value="2">No</option>
                                                                         </select>
                                                                         <i class="arrow double"></i>
+
                                                                     }
                                                                     else if (obj.Organiser == "N")
                                                                     {
-                                                                        <select id="dlOrgnizer" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
+                                                                        <select id="dlOrgnizer-@i" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value,this.id)">
                                                                             @*<option value="0">Select</option>*@
                                                                             <option value="1">Yes</option>
                                                                             <option selected="selected" value="2">No</option>
                                                                         </select>
                                                                         <i class="arrow double"></i>
+
                                                                     }
                                                                     else
                                                                     {
-                                                                        <select id="dlOrgnizer" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value)">
+                                                                        <select id="dlOrgnizer-@i" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value,this.id)">
                                                                             @*<option value="0">Select</option>*@
                                                                             <option value="1">Yes</option>
                                                                             <option selected="selected" value="2">No</option>
@@ -197,9 +200,10 @@
                                                         <td>
                                                             <div class="section" id="dvmerchant-@i">
                                                                 <label class="field select">
+                                                                    <label id="lblMer-@i" style="display:none">@obj.MerchantId</label>
                                                                     @if (obj.Merchant == "Y")
                                                                     {
-                                                                        <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
+                                                                        <select id="dlMerchant-@i" onchange="SaveFields('@obj.Id','dlMerchant',this.value,this.id)">
                                                                             @*<option value="0">Select</option>*@
                                                                             <option selected="selected" value="1">Yes</option>
                                                                             <option value="2">No</option>
@@ -207,7 +211,8 @@
                                                                     }
                                                                     else if (obj.Merchant == "N")
                                                                     {
-                                                                        <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
+                                                                        
+                                                                        <select id="dlMerchant-@i" onchange="SaveFields('@obj.Id','dlMerchant',this.value,this.id)">
                                                                             @*<option value="0">Select</option>*@
                                                                             <option value="1">Yes</option>
                                                                             <option selected="selected" value="2">No</option>
@@ -215,7 +220,7 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                        <select id="dlMerchant" onchange="SaveFields('@obj.Id','dlMerchant',this.value)">
+                                                                        <select id="dlMerchant-@i" onchange="SaveFields('@obj.Id','dlMerchant',this.value,this.id)">
                                                                             @*<option value="0">Select</option>*@
                                                                             <option value="1">Yes</option>
                                                                             <option selected="selected" value="2">No</option>
@@ -230,9 +235,10 @@
                                                         <td>
                                                             <div class="section" id="dvstatus-@i">
                                                                 <label class="field select">
+                                                                    <label id="lblstatus-@i" style="display:none">@obj.UserStatusId</label>
                                                                     @if (obj.UserStatus == "Y")
                                                                     {
-                                                                        <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
+                                                                        <select id="dlStatus-@i" onchange="SaveFields('@obj.Id','dlStatus',this.value,this.id)">
                                                                             @*<option value="0">Select</option>*@
                                                                             <option value="1" selected="selected">Enable</option>
                                                                             <option value="2">Disable</option>
@@ -240,7 +246,7 @@
                                                                     }
                                                                     else if (obj.UserStatus == "N")
                                                                     {
-                                                                        <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
+                                                                        <select id="dlStatus-@i" onchange="SaveFields('@obj.Id','dlStatus',this.value,this.id)">
                                                                             @*<option value="0">Select</option>*@
                                                                             <option value="1">Enable</option>
                                                                             <option value="2" selected="selected">Disable</option>
@@ -249,7 +255,7 @@
 
                                                                     else
                                                                     {
-                                                                        <select id="dlStatus" onchange="SaveFields('@obj.Id','dlStatus',this.value)">
+                                                                        <select id="dlStatus-@i" onchange="SaveFields('@obj.Id','dlStatus',this.value,this.id)">
                                                                             @*<option value="0">Select</option>*@
                                                                             <option value="1" selected="selected">Enable</option>
                                                                             <option selected="selected" value="2">Disable</option>
@@ -765,11 +771,15 @@
         });
         return msgnew;
     }
-    function SaveFields(UserId, strId, dlValue) {
-
+    function SaveFields(UserId, strId, dlValue, id) {
+      
+        var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+       
+        //console.log($(this).attr(id));
         var vvalue = '';
         var sFields = '';
         if (strId == "dlStatus") {
+
             sFields = "UserStatus";
         }
 
@@ -785,6 +795,36 @@
             vvalue = 'Y';
         else
             vvalue = 'N';
+
+
+        if (sFields == "UserStatus" && vvalue == 'Y') {
+          
+            $("#lblstatus-"+el).html("Enable");
+           
+        }else if (sFields == "UserStatus" && vvalue == 'N') {
+           
+            $("#lblstatus-"+el).html("Disable");
+
+        }else if (sFields == "Merchant" && vvalue == 'Y') {
+           
+            $("#lblMer-"+el).html("Yes");
+
+        }else if (sFields == "Merchant" && vvalue == 'N') {
+            
+            $("#lblMer-"+el).html("No");
+
+        }else if (sFields == "Organiser" && vvalue == 'Y') {
+           
+            $("#lblorg-"+el).html("Yes");
+
+        }else if (sFields == "Organiser" && vvalue == 'N') {
+         
+            $("#lblorg-"+el).html("No");
+
+        }
+
+
+
 
         $.ajax({
             url: '@Url.Action("SaveOtherInfo","Users")',

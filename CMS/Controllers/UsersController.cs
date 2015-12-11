@@ -211,7 +211,10 @@ namespace CMS.Controllers
                                          LastName = Pr.LastName,
                                          Online= UserTemp.LoginStatus,
                                          Role="",
-                                         State=!string.IsNullOrEmpty(Pr.State)? Pr.State:""
+                                         State=!string.IsNullOrEmpty(Pr.State)? Pr.State:"",
+                                         OrganiserId= Pr.Organiser.Trim()=="Y"?"Yes":"No",
+                                         MerchantId= Pr.Merchant.Trim()=="Y"?"Yes":"No",
+                                         UserStatusId= Pr.UserStatus.Trim()=="Y"?"Enable":"Disable"
                                      }
                                     );
 

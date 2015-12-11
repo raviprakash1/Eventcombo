@@ -213,17 +213,17 @@
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256 id="accCity">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256 id="accCity" value="@Html.DisplayFor(m=>m.AccCity)">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256 id="accState">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256 id="accState" value="@Html.DisplayFor(m=>m.AccState)">
                                 </div>
 
 
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5 id="accZip">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5 id="accZip" value="@Html.DisplayFor(m=>m.Acczip)">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
                                     @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label",@id="accCountry" })

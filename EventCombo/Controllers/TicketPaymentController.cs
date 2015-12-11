@@ -40,7 +40,7 @@ namespace EventCombo.Controllers
             }
             TicketPayment tp = new TicketPayment();
             string defaultCountry = "";
-            string Fname = "", Lname = "", Phnnumber = "", Adress = "", Email = "";
+            string Fname = "", Lname = "", Phnnumber = "", Adress = "", Email = "",City="",State="",Country="",Zip="";
             var url = Url.Action("TicketPayment", "TicketPayment") + "?Eventid=" + Eventid;
             Session["ReturnUrl"] = "TicketPayment~" + url;
             CreateEventController cs = new CreateEventController();
@@ -61,6 +61,10 @@ namespace EventCombo.Controllers
                 Phnnumber = accountdetail.MainPhone;
                 Adress = accountdetail.StreetAddress1 + "," + accountdetail.StreeAddress2 + "," + accountdetail.City + "," + accountdetail.State + "," + accountdetail.Zip + "," + accountdetail.Country;
                 Email = accountdetail.Email;
+                City = accountdetail.City;
+                State =accountdetail.State;
+                Country = accountdetail.Country;
+                Zip = accountdetail.Zip;
 
 
             }
@@ -71,6 +75,9 @@ namespace EventCombo.Controllers
             tp.PhnNo = Phnnumber;
             tp.Address = Adress;
             tp.EventId = Eventid;
+            tp.AccState = State;
+            tp.AccCity = City;
+            tp.Acczip = Zip;
 
             using (EventComboEntities db = new EventComboEntities())
             {
@@ -78,7 +85,15 @@ namespace EventCombo.Controllers
                                     orderby c.Country1 ascending
                                     select c).Distinct();
                 List<SelectListItem> countryList = new List<SelectListItem>();
-                defaultCountry = "United States";
+                if(!string.IsNullOrEmpty(Country))
+                {
+                    defaultCountry = Country;
+                }
+                else
+                {
+                    defaultCountry = "United States";
+                }
+               
 
                 foreach (var item in countryQuery)
                 {

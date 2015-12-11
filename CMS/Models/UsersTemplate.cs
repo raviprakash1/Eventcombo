@@ -19,6 +19,10 @@ namespace CMS.Models
         public string Organiser { get; set; }
         public string Merchant { get; set; }
         public string UserStatus { get; set; }
+
+        public string OrganiserId { get; set; }
+        public string MerchantId { get; set; }
+        public string UserStatusId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Online { get; set; }
