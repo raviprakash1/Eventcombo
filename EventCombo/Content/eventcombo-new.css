@@ -1,5 +1,36 @@
+/********************** GMap css Starts by Ravi on 11Dec2015******************************/
+.ui-autocomplete {
+  z-index:2147483647 !important;
+}
+.ui-autocomplete.ui-widget-content.myClass li {border-bottom:1px solid #ccc !important;}
+.ui-autocomplete.ui-widget-content.myClass li a{ font-weight:normal !important; }
+.ui-autocomplete.ui-widget-content.myClass li a:hover{ text-decoration:none !important }
+
+.ui-autocomplete.ui-widget-content.myClass {
+	border-bottom: 1px solid #ccc !important;
+	background: #fff !important;
+	font-weight: normal !important;
+	color: #000 !important;
+}
 
 
+.ui-state-focus,
+.ui-widget-content.myClass .ui-state-focus{
+    font-weight: normal !important;
+   
+}
+
+.ui-state-hover,
+.ui-widget-content.myClass .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content.myClass .ui-state-focus
+{
+	border: none !important;
+	background: #fff !important;
+	font-weight: normal !important;
+	color: #000; cursor:pointer !important;
+}
+/***********************GMap css ends****************************/
 .ev_date_icn{ background-image: url(../images/icon-date.png); width: 29px; height: 29px; margin-top: 7px; left: -15px; position: absolute; cursor: pointer;}
 .ev_loc_icn{ background-image: url(../images/icon-location.png); width: 26px; height: 35px; position: absolute;   left: 45px; cursor: pointer;}
 .ev_loca_check_main{ margin-top: 20%;}
