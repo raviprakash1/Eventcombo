@@ -525,7 +525,10 @@ span.evnt_toltip{
 .evnt_thub_cont{ width: 100%; float:left;}
 .evnt_thub_list{ width: 20%; float: left;}
 
-
+.evnt-list-pag .pagination-container .pagination{ margin:0px; }
+.evnt-list-pag .pager{ text-align:right; }
+.evnt-list-pag .pager li > a, .pager li > span { border-radius:0px; }
+.evnt-list-pag .pagination-container .pagination > .active > a, .evnt-list-pag .pagination-container .pagination > .active > span, .evnt-list-pag .pagination-container .pagination > .active > a:hover, .evnt-list-pag .pagination-container .pagination > .active > span:hover, .evnt-list-pag .pagination-container .pagination > .active > a:focus, .evnt-list-pag .pagination-container .pagination > .active > span:focus {     background-color: #3cf; border-color:#3cf;}
 
 .err_main {
     width: 100%;
@@ -628,7 +631,8 @@ span.evnt_toltip{
 .fs18{font-size: 18px; font-weight: normal; }
 .fs24{ font-size: 24px; }
 
-
+.mar0{ margin:0px; }
+.pad{ padding:0px;}
 
 .evnt_title_location{ font-weight: normal; color: #baff00;}
 /*Placeholder Event name & event address*/
