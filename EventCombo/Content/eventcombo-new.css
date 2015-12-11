@@ -334,6 +334,7 @@
 
 .ev_elips{ width:100%; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; }
 
+
 .buy_tot_drop li:hover .sub-menu {
     visibility: visible;
 }
@@ -417,6 +418,7 @@
 .pl0{ padding-left: 0px !important;}
 
 .mr0{ margin-right:0px; }
+
 
 
 
