@@ -266,7 +266,7 @@
                                 <div class="clearfix"></div>
                                 <div class="col-sm-6 ">
                                     <label class="label-control evnt_title_multi">
-                                        <a data-target="#myModal" id="btMultiVenue" data-toggle="modal" href="#">
+                                        <a data-target="#myModal" id="btMultiVenue" data-toggle="modal" href="#" draggable="false">
                                             Multiple Venue
                                         </a>
                                     </label>
@@ -1942,7 +1942,7 @@ else
             if ($("#hdEventId").val() != '') {
                 $.ajax({
                     url: '@Url.Action("EditEventInfo", "EditEvent")',
-                    data: { model },
+                    data: { model:model },
                     type: "Post",
                     success: function (response) {
                         $("#hdEventId").val(response);
@@ -2775,7 +2775,7 @@ else
 
                     $.ajax({
                         url: '@Url.Action("EditEventInfo", "EditEvent")',
-                        data: { model },
+                        data: { model:model },
                         type: "Post",
                         success: function (response) {
                             $("#hdEventId").val(response);
@@ -3348,6 +3348,7 @@ else
 
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
+                disableDragAndDrop: true
             });
 
             $(".ticket_panel").hide();
@@ -4853,6 +4854,7 @@ else
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
+                $('#txtEventTitle').addClass('err-bor');
                 msg += ajaxsetup("CreateEvent", "CreateEventTitileUI")+"<br/>";
 
             }
