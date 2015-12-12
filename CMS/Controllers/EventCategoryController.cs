@@ -48,14 +48,7 @@ namespace CMS.Controllers
                             if (IsEventCatExists != true)
                             {
                                 ec.EventCategory1 = txtEventCategory;
-                                objEntity.EventCategories.Add(ec);
-                                //foreach (string str in strAry)
-                                //{
-                                //    objESC = new EventSubCategory();
-                                //    objESC.EventCategoryID = ec.EventCategoryID;
-                                //    objESC.EventSubCategory1 = str;
-                                //    objEntity.EventSubCategories.Add(objESC);
-                                //}
+                                objEntity.EventCategories.Add(ec);                             
                                 objEntity.SaveChanges();
                                 TempData["SuccessMessage"] = "Event Category Created.";
                             }
@@ -65,56 +58,7 @@ namespace CMS.Controllers
                             string message = ex.Message;
 
                         }                                                                                                            
-                    break;                    
-                case "Edit":
-                    bool IsEventCategory = false;
-                    bool IsEventSubCategory = false;                 
-                        var query2 = from EventCategory in objEntity.EventCategories
-                                    where EventCategory.EventCategory1 == EventCategoryListBox.Trim()
-                                    select EventCategory;
-                        foreach (var item in query2)
-                        {
-                            var query1 = from EventSubCategory in objEntity.EventSubCategories
-                                         where (EventSubCategory.EventSubCategory1 == EventSubCategoryListBox.Trim() && EventSubCategory.EventCategoryID == item.EventCategoryID)
-                                         select EventSubCategory;
-                            foreach (EventSubCategory evntsubcat in query1)
-                            {
-                                evntsubcat.EventSubCategory1 = esc.EventSubCategory1;
-                                IsEventSubCategory = true;
-                            }
-                        }
-                        foreach (EventCategory evntcat in query2)
-                        {
-                            evntcat.EventCategory1 = ec.EventCategory1;
-                            IsEventCategory = true;
-                        }                        
-                        try
-                        {
-                            objEntity.SaveChanges();
-                            if (IsEventCategory == true)
-                                TempData["SuccessMessage"] = "Event Category Edited.";
-                            if (IsEventSubCategory == true)
-                                TempData["SuccessMessage"] = "Event Sub Category Edited.";
-                            if (IsEventCategory == true && IsEventSubCategory == true)
-                                TempData["SuccessMessage"] = "Event Category and Sub Category Edited.";
-                        }
-
-                        catch (Exception ex)
-                        {
-                            string message = ex.Message;
-                        }                                            
-                    break;
-                case "Delete":                   
-                        var query3 = from EventCategory in objEntity.EventCategories
-                                    where EventCategory.EventCategory1 == EventCategoryListBox.Trim()
-                                    select EventCategory;
-                        foreach (var item in query3)
-                        {
-                            objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + item.EventCategoryID + "'");
-                            objEntity.Database.ExecuteSqlCommand("Delete from EventCategory where EventCategoryID='" + item.EventCategoryID + "'");
-                            TempData["SuccessMessage"] = "Event Category Deleted.";
-                        }                                                          
-                    break;
+                    break;                                    
                 default:
                     throw new Exception();
             }
@@ -158,6 +102,41 @@ namespace CMS.Controllers
             }
 
             return strResult ;
+        }
+        public string DeleteSubCategories(long iEvntCtgryId, long iEvntSubCtgryId)
+        {
+            string strResult = string.Empty;
+            try
+            {
+                EmsEntities objEntity = new EmsEntities();
+                objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "' and EventSubCategoryID='"+ iEvntSubCtgryId + "'");                
+                TempData["SuccessMessage"] = "Event Sub Category Deleted.";
+                strResult = "Y";
+            }
+            catch (Exception ex)
+            {
+                strResult = "N";
+            }
+
+            return strResult;
+        }
+        public string DeleteCategories(long iEvntCtgryId)
+        {
+            string strResult = string.Empty;
+            try
+            {
+                EmsEntities objEntity = new EmsEntities();
+                objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "'");
+                objEntity.Database.ExecuteSqlCommand("Delete from EventCategory where EventCategoryID='" + iEvntCtgryId + "'");
+                TempData["SuccessMessage"] = "Event Category Deleted.";
+                strResult = "Y";
+            }
+            catch (Exception ex)
+            {
+                strResult = "N";
+            }
+
+            return strResult;
         }
     }
 }

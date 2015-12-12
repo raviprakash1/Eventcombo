@@ -8,7 +8,7 @@
 
 
     <section id="content_wrapper">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("EventCategory", "EventCategory", FormMethod.Post, new { id = "formEvntCat"}))
         {
         if (TempData["SuccessMessage"] != null)
         {
@@ -54,14 +54,14 @@
                                             <tbody>
                                                 @{
                                                     int i = 0;
+                                                    int j = 0;
                                                     foreach (var itemCat in Model)
                                                     {
                                                         i = i + 1;
                                                 <tr class="col-sm-12 catbg">
-
-                                                    <td class="col-sm-12">@itemCat.EventCategory1</td>
+                                                    <td class="col-sm-12"><label id="lblEvntSubCatName-@i">@itemCat.EventCategory1</label></td>                                                    
                                                     <td class="pl5"><button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button></td>
-                                                    <td class="pl5"><button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>
+                                                    <td class="pl5"><button id="btnDeleteCat-@i" type="button" onclick="DeleteCatgry('@itemCat.EventCategoryID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>                                                    
                                                 </tr>
 
 
@@ -93,12 +93,13 @@
                                                                 </td>
                                                             </tr>
                                                             @{
-                                                            foreach (var itemSubCat in itemCat.ESubCat)
-                                                            {
+                                                                foreach (var itemSubCat in itemCat.ESubCat)
+                                                                {
+                                                                    j = j + 1;
                                                             <tr class="col-sm-12 crt-subcat2">
-                                                                <td class="col-sm-12">@itemSubCat.EventSubCategory1</td>
-                                                                <td class="pl5"><button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button></td>
-                                                                <td class="pl5"><button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>
+                                                                <td class="col-sm-12"><label id="lblEvntSubCatName-@j">@itemSubCat.EventSubCategory1 </label> </td>                                                                
+                                                                <td class="pl5"><button id="btnEditSubCat-@j" onclick="EditSubCat('@itemCat.EventCategoryID','@itemSubCat.EventSubCategoryID',document.getElementById('lblEvntSubCatName-@j').innerHTML);" type="button" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button></td>
+                                                                <td class="pl5"><button id="btnDeleteSubCat-@j" onclick="DeleteSubCat('@itemCat.EventCategoryID','@itemSubCat.EventSubCategoryID');" type="button" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>
                                                             </tr>
                                                             }
                                                             }
@@ -267,24 +268,21 @@
     <script src="~/Scripts/jquery.masked.js"></script>
     <script type="text/javascript">
 
-                $(window).load(function () {                    
+                $(window).load(function () {
                     $("#EventSubCategoryListBox").hide();
                     $("#lblSubCatList").hide();
                     $("#btnReset").hide();
                     $("#btnEdit").hide();
                     $("#btnDelete").hide();
-                });
-
-                function AddSubCat(CatId,SubCatName)
-                {                    
+                });                
+                function DeleteCatgry(CatId) {
+                    alert(CatId);                    
                     $.ajax({
-                        url: '@Url.Action("AddSubCategories", "EventCategory")',
-                        data: { iEvntCtgryId: CatId, strSubCatName: SubCatName },
+                        url: '@Url.Action("DeleteCategories", "EventCategory")',
+                        data: { iEvntCtgryId: CatId},
                         type: "POST",
-                        success: function (data) {
-                            if (data == "N")
-                                debugger;
-                                alert("Some error occur while saving.");
+                        success: function (response) {
+                            $("#formEvntCat").submit();
                         },
                         error: function (data) {
                             alert("Sorry! there is some problem.");
@@ -292,7 +290,56 @@
                         }
                     });
                 }
-
+                function AddSubCat(CatId,SubCatName)
+                {
+                    $.ajax({
+                        url: '@Url.Action("AddSubCategories", "EventCategory")',
+                        data: { iEvntCtgryId: CatId, strSubCatName: SubCatName },
+                        type: "POST",
+                        success: function (response) {
+                            $("#formEvntCat").submit();
+                        },
+                        error: function (data) {
+                            alert("Sorry! there is some problem.");
+                            return false
+                        }
+                    });
+                }
+                function DeleteSubCat(CatId, EvntSubCatId)
+                {
+                    alert(CatId);
+                    alert(EvntSubCatId);
+                    $.ajax({
+                        url: '@Url.Action("DeleteSubCategories", "EventCategory")',
+                        data: { iEvntCtgryId: CatId, iEvntSubCtgryId: EvntSubCatId},
+                        type: "POST",
+                        success: function (response) {
+                            $("#formEvntCat").submit();
+                        },
+                        error: function (data) {
+                            alert("Sorry! there is some problem.");
+                            return false
+                        }
+                    });
+                }
+                function EditSubCat(CatId,EvntSubCatId,NewSubCatName)
+                {
+                    alert(CatId);
+                    alert(EvntSubCatId);
+                    alert(NewSubCatName);
+                    $.ajax({
+                        url: '@Url.Action("AddSubCategories", "EventCategory")',
+                        data: { iEvntCtgryId: CatId, iEvntSubCtgryId: EvntSubCatId, strNewSubCatName: SubCatName },
+                        type: "POST",
+                        success: function (response) {
+                            $("#formEvntCat").submit();
+                        },
+                        error: function (data) {
+                            alert("Sorry! there is some problem.");
+                            return false
+                        }
+                    });
+                }
                 $(document).ready(function () {
                     $('#btnReset').click(function () {
                         $("#btnCreate").show();
