@@ -21,39 +21,40 @@
     <input type="hidden" id="hdimage" />
     <div class="event_container">
         <div class="event_inner_container event_top" id="eventtopscoll">
-            <div class="col-sm-12 pt10 bggrey">
-                <div class="Moderor" style="display: none;" id="diverroacc">
+            <div class="col-sm-12 pt10 bggrey clearfix">
+                <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
                     <div class="er_UI_main">
                         <div class="er_UI_img"></div>
-                        <div class="er_suc" id="erraccmsg">
+                        <div class="er_suc" id="erraccmsg"></div>
+                        <button class="close" type="button" id="btndiverrsuc">&#215;</button>
 
-                        </div>
                     </div>
                 </div>
-                <div class="Moderor" id="divaccsuc" style="display: none;">
-                    <div class="er_suc_main alert-success">
+                <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
+                    <div class="er_suc_main">
 
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg"> </div>
-                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndivaccsuc">&#215;</button>
+                        <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+
                     </div>
                 </div>
             </div>
 
-            <div class="col-sm-12 pt10 bggrey">
+            <div class="col-sm-12 pt10 bggrey clearfix">
                 <div class="col-sm-3 col-xs-6 pt10 text-left no_pad">
                     <label id="lblDft" class="btn ev_live_sub_btn yelw_live_btn" style="display:none">DRAFT</label>
                   <label id="lblLive" class="btn ev_live_sub_btn  grn_live_btn" style="display:none" > LIVE </label>
                 </div>
                 <div class="col-sm-9 col-xs-6 pt10 text-right no_pad">
-                    <button class="cbtSave btn ev_live_sub_btn mb5" type="button">
+                    <button class="cbtSave btn ev_live_sub_btn mb5 cdisable" type="button" disabled="disabled">
                         SAVE &#10;
                         <span> > </span>
                     </button>
-                    <button class="cbtPreview btn ev_live_sub_btn mb5" type="button">
+                    <button class="cbtPreview btn ev_live_sub_btn mb5 cdisable" type="button" disabled="disabled">
                         <span class="SPview"> PREVIEW > </span>
                     </button>
-                    <button class="cbtMakeElive btn ev_live_sub_btn mb5 grn_live_btn" type="button">
+                    <button class="cbtMakeElive btn ev_live_sub_btn mb5 grn_live_btn cdisable" type="button" disabled="disabled">
                         MAKE EVENT LIVE NOW&#10;
                         <span> > </span>
                     </button>
@@ -71,7 +72,7 @@
 
 
 
-                        <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold" placeholder="Click here to enter the name of the event" value="@Model.EventTitle" />
+                        <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold chkvalidation" placeholder="Click here to enter the name of the event" value="@Model.EventTitle" />
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
                         <div class="form-group mb0">
@@ -517,7 +518,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type</label>
                                 <div class="col-sm-9">
-                                    @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                    @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
@@ -525,7 +526,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category</label>
                                 <div class="col-sm-9">
-                                    @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                    @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
@@ -561,7 +562,7 @@
                             <div class="clearfix"></div>
                             <div class="url-width">
                                 <span class="url-filed">
-                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" value="@Model.EventUrl" placeholder="enter url name">
+                                    <input class="gui-input url-filed-border" id="txtEventUrl" type="text" value="@Model.EventUrl" placeholder="enter url name" onkeypress="return IsAlphaNumeric(event);">
                                 </span>
                                 <span class="url-name">.eventcombo.com</span>
                             </div>
@@ -725,7 +726,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label ev_tickt_lebel">Ticket</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control evnt_inp_cont" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256" />
+                                            <input type="text" class="form-control evnt_inp_cont chkvalidation" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256"  onblur="checkvalidatetkt(this.id)"/>
                                         </div>
                                     </div>
                                 </div>
@@ -1046,7 +1047,7 @@ else
                                 <div class="col-sm-5 no_pad">
                                     <label class="col-sm-4 control-label ev_tickt_lebel">Description</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="" id="id_vardesc" value="@Model.Ticket_variabledesc">
+                                        <input class="form-control evnt_inp_cont chkvalidation" type="text" placeholder="" id="id_vardesc" value="@Model.Ticket_variabledesc">
                                     </div>
                                 </div>
                                 <div class="col-sm-5 no_pad">
@@ -1094,12 +1095,12 @@ else
                                     <div class="list-group-item ev_var_chrg_list">
                                         <div class="form-group">
                                             <div class="col-sm-7 col-xs-7">
-                                                <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256">
+                                                <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256" onblur="checkvalidatetkt(this.id)">
                                             </div>
                                             <div class="col-sm-4 col-xs-4">
                                                 <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
                                                 <div class="col-sm-10 no_pad">
-                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="changefeetype(this, event, this.id);" onblur="tofixed(this.id)" >
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="changefeetype(this, event, this.id);" onblur="tofixed(this.id); checkvalidatetkt(this.id);" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
@@ -1230,7 +1231,7 @@ else
                                 }
                                 Require a password to view the event page
                             </label>
-                            <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />
+                            <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" />
 
                         </div>
                     </div>
@@ -1249,14 +1250,14 @@ else
                         </button>*@
 
 
-                    <button id="btSave" class="cbtSave btn ev_live_sub_btn mb5" type="button">
+                    <button id="btSave" class="cbtSave btn ev_live_sub_btn mb5 cdisable" type="button" disabled="disabled">
                         SAVE &#10;
                         <span> > </span>
                     </button>
-                    <button class="cbtPreview btn ev_live_sub_btn mb5" type="button">
+                    <button class="cbtPreview btn ev_live_sub_btn mb5 cdisable" type="button" disabled="disabled">
                         <span class="SPview"> PREVIEW > </span>
                     </button>
-                    <button id="btMakeLive" class="cbtMakeElive btn ev_live_sub_btn mb5 grn_live_btn" type="button">
+                    <button id="btMakeLive" class="cbtMakeElive btn ev_live_sub_btn mb5 grn_live_btn cdisable" type="button" disabled="disabled">
                         MAKE EVENT LIVE NOW&#10;
                         <span> > </span>
                     </button>
@@ -1561,6 +1562,16 @@ else
 
                 }
             );
+
+            var msg=validatemain();
+            //alert(msg);
+            if(msg=="")
+            {
+                $(".cdisable").removeAttr("disabled");
+
+            }   
+
+
         });
 
 
@@ -1975,6 +1986,46 @@ else
     // ---------------------Event Creation Script -------------------
     <script>
 
+        $(".chkvalidation").blur(function () {
+
+            var msg = validatemain();
+            if(msg=="")
+            {
+               
+                $(".cdisable").removeAttr("disabled");
+
+            }
+          
+           
+            $(this).removeClass("err-bor");
+
+        });
+
+        var specialKeys = new Array();
+        specialKeys.push(8); //Backspace
+        specialKeys.push(9); //Tab
+        specialKeys.push(46); //Delete
+        specialKeys.push(36); //Home
+        specialKeys.push(35); //End
+        specialKeys.push(37); //Left
+        specialKeys.push(39); //Right
+        function IsAlphaNumeric(e) {
+            var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+            var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+           
+            return ret;
+        }
+        $(window).load(function () {
+
+          
+            var numbers = ajaxsetup('CreateEvent', 'CreateEventEnternumberUI');
+            var deletemsg = ajaxsetup('CreateEvent', 'CreateEventDeleteUI');
+            $('#id_lblprice-n').html(numbers);
+            $('#id_lblmax-n').html(numbers);
+            $('.msg').html(deletemsg);
+
+
+        });
         function ValEventdate(e) {
             if (e.trim() == "txtDateFrom") {
 
@@ -2332,12 +2383,38 @@ else
                     var getHtml = data.split('¶');
                     $("#tblOrgnizer").append(getHtml[0]);
                     $("#ddlOrgnizers").append(getHtml[1]);
+
+                    var msg = validatemain();
+                    if(msg=="")
+                    {
+                        $("#txtOrgnizer").removeClass("err-bor");
+                        $(".cdisable").removeAttr("disabled");
+
+                    }
+          
                 },
                 error: function (data) {
                 }
             });
 
+            
+            $('#btndiverrsuc').click(function () {
 
+                $('#diverroacc').css('display', 'none');
+                $('#divaccsuc').css('display', 'none');
+                $('select').removeClass('err-bor');
+                $('input').removeClass('err-bor');
+
+            });
+            $('#btndivaccsuc').click(function () {
+
+                $('#diverroacc').css('display', 'none');
+                $('select').removeClass('err-bor');
+                $('#divaccsuc').css('display', 'none');
+                $('input').removeClass('err-bor');
+
+
+            });
 
 
 
@@ -2893,6 +2970,13 @@ else
                 $("#txtOrgTWlink").val('');
                 $("#Incsocial").prop("checked", false);
                 $("#dvOrgnizerFBTw").hide();
+
+                var msg = validatemain();
+                //alert(msg);
+                if (msg == " ") {
+                    $(".cdisable").removeAttr("disabled");
+                }
+                $("#txtOrgnizer").removeClass("err-bor");
                 //alert(divlength);
                 //var addOption = '<div class="list-group-item ev_orgz_list"></div> <div id = dvOrg_' + vLenght.toString() + '  class="col-sm-8 no_pad">' + $("#txtOrgnizer").val() + '</div><div class="col-sm-4 no_pad text-right ev_org_edt_main"><a href="#"><i class="fa fa-pencil"></i> </a> | <a href="#"><i class="fa fa-trash"></i></a></div>';
                 //$("#dvOrganizer").append(addOption)
@@ -2945,14 +3029,14 @@ else
             });
 
 
-            $('#txtEventUrl').bind('keypress', function (event) {
-                var regex = new RegExp("^[a-zA-Z0-9]+$");
-                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-                if (!regex.test(key)) {
-                    event.preventDefault();
-                    return false;
-                }
-            });
+            //$('#txtEventUrl').bind('keypress', function (event) {
+            //    var regex = new RegExp("^[a-zA-Z0-9]+$");
+            //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            //    if (!regex.test(key)) {
+            //        event.preventDefault();
+            //        return false;
+            //    }
+            //});
 
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
@@ -3684,6 +3768,15 @@ else
         //    $(".ticket_panel").slideDown();
 
         //});
+        function checkvalidatetkt(e)
+        {
+            var msg = validatemain();
+            if (msg == "") {
+                $(".cdisable").removeAttr("disabled");
+            }
+            $('#' + e).removeClass('err-bor');
+
+        }
         function changeqty(e) {
             var dropval = $('#' + e).val();
             var numbermsg = ajaxsetup('CreateEvent', 'CreateEventEnternumberUI');
@@ -3703,6 +3796,12 @@ else
                     // var total = parseInt(qty) + parseInt(dropval);
 
                     // $('#id_totalqty').html(total);
+                    var msg = validatemain();
+                    if (msg == "")
+                    {
+                        $(".cdisable").removeAttr("disabled");
+                    }
+                
                     $('#' + e).removeClass('err-bor');
 
                 }
@@ -4858,6 +4957,7 @@ else
                 msg += ajaxsetup("CreateEvent", "CreateEventTitileUI")+"<br/>";
 
             }
+           
             if ($('#ddlOrgnizers option').length <= 0) {
                 $('#txtOrgnizer').addClass('err-bor');
                 msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI") + "<br/>";;

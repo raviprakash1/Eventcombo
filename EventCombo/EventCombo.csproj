@@ -848,7 +848,9 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EditEvent.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\EventList\EventList.cshtml" />
+    <Content Include="Views\EventList\EventList.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
     <Content Include="Views\Account\Loginresult.cshtml" />
     <Content Include="Views\EditEvent\ModifyEvent.cshtml" />
     <Content Include="Views\CreateEvent\ViewCreateEvent.cshtml" />

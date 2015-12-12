@@ -1150,10 +1150,10 @@ namespace EventCombo.Controllers
                 case SignInStatus.Success:
                     var User = UserManager.FindByEmail(model.Email.ToString());
 
-                    var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
-                    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
-                    if (users.Find(x => x.Id == User.Id) != null)
-                    {
+                    //var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
+                    //var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
+                    //if (users.Find(x => x.Id == User.Id) != null)
+                    //{
                       var status=  db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
                         if (status == "Y" || status == "y")
                         {
@@ -1176,15 +1176,7 @@ namespace EventCombo.Controllers
                             return RedirectToAction("Index", "Home");
 
                         }
-                    }
-                    else
-                    {
-
-                        ModelState.AddModelError("", "You not authorized user");
-                        return RedirectToAction("Index", "Home");
-
-
-                    }
+                  
 
                 case SignInStatus.LockedOut:
                     return View("Lockout");

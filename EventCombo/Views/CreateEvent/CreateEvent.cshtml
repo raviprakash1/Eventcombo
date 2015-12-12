@@ -235,15 +235,15 @@
 
                 </div>
                 <div class="col-sm-9 col-xs-6 pt10 text-right no_pad">
-                    <button class="cbtSave btn ev_live_sub_btn mb5"  type="button">
+                    <button class="cbtSave btn ev_live_sub_btn mb5 cdisable"  type="button" disabled="disabled">
                         SAVE &#10;
                         <span> > </span>
                     </button>
-                    <button id="btPreview" class="cbtPreview btn ev_live_sub_btn mb5" type="button">
+                    <button id="btPreview" class="cbtPreview btn ev_live_sub_btn mb5 cdisable" type="button"  disabled="disabled">
                         PREVIEW &#10;
                         <span> > </span>
                     </button>
-                    <button class="cbtMakeLive btn ev_live_sub_btn mb5 grn_live_btn" type="button">
+                    <button class="cbtMakeLive btn ev_live_sub_btn mb5 grn_live_btn cdisable" type="button"  disabled="disabled">
                         MAKE EVENT LIVE NOW&#10;
                         <span> > </span>
                     </button>
@@ -258,7 +258,7 @@
                 <input type="file" name="image" id="input2" multiple data-jfiler-maxSize="2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
-                        <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold" placeholder="Click here to enter the name of the event" value="" />
+                        <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold chkvalidation" placeholder="Click here to enter the name of the event" value="" />
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
                         <div class="form-group mb0">
@@ -572,7 +572,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type</label>
                                 <div class="col-sm-9">
-                                    @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                    @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
@@ -580,7 +580,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category</label>
                                 <div class="col-sm-9">
-                                    @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                    @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
@@ -780,7 +780,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label ev_tickt_lebel">Ticket</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control evnt_inp_cont" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256" />
+                                            <input type="text" class="form-control evnt_inp_cont chkvalidation" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256" onblur="checkvalidatetkt(this.id)" />
                                         </div>
                                     </div>
                                 </div>
@@ -788,7 +788,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label ev_tickt_lebel">Qty</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control evnt_inp_cont txtsum numbers" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
+                                            <input type="text" class="form-control evnt_inp_cont txtsum numbers chkvalidation" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
                                         </div>
                                     </div>
                                 </div>
@@ -1078,7 +1078,7 @@
                                 <div class="col-sm-5 no_pad">
                                     <label class="col-sm-4 control-label ev_tickt_lebel">Description</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="" id="id_vardesc" maxlength="256">
+                                        <input class="form-control evnt_inp_cont chkvalidation" type="text" placeholder="" id="id_vardesc" maxlength="256">
                                     </div>
                                 </div>
                                 <div class="col-sm-5 no_pad">
@@ -1106,12 +1106,12 @@
                                     <div class="list-group-item ev_var_chrg_list">
                                         <div class="form-group">
                                             <div class="col-sm-7 col-xs-7">
-                                                <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256">
+                                                <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256" onblur="checkvalidatetkt(this.id)">
                                             </div>
                                             <div class="col-sm-4 col-xs-4">
                                                 <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
                                                 <div class="col-sm-10 no_pad">
-                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="changefeetype(this, event, this.id);" onblur="    tofixed(this.id)" >
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="changefeetype(this, event, this.id);" onblur="tofixed(this.id); checkvalidatetkt(this.id);" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
@@ -1204,7 +1204,7 @@
                                 <input type="checkbox" id="chkReqPassword">
                                 Require a password to view the event page
                             </label>
-                            <input type="password" id="txtReqPassword" readonly="readonly" value="" class="form-control evnt_inp_cont mb10 wd500" placeholder="Enter Password" />
+                            <input type="password" id="txtReqPassword" readonly="readonly" value="" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" />
                         </div>
                     </div>
 
@@ -1212,17 +1212,17 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-right mb10 make_live_btn">
-                    <button type="button" id="btSave" class="cbtSave btn ev_live_sub_btn ">
+                    <button type="button" id="btSave" class="cbtSave btn ev_live_sub_btn  cdisable"  disabled="disabled">
                         SAVE
                         <span> > </span>
                     </button>
                     
-                    <button  class="cbtPreview btn ev_live_sub_btn" type="button">
+                    <button  class="cbtPreview btn ev_live_sub_btn cdisable" type="button"  disabled="disabled">
                         PREVIEW &#10;
                         <span> > </span>
                     </button>
 
-                    <button type="button" id="btMakeLive" class="cbtMakeLive btn ev_live_sub_btn grn_live_btn">
+                    <button type="button" id="btMakeLive" class="cbtMakeLive btn ev_live_sub_btn grn_live_btn cdisable"  disabled="disabled">
                         MAKE YOUR EVENT LIVE
                         <span> > </span>
                     </button>
@@ -1400,7 +1400,20 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script>
+        $(".chkvalidation").blur(function () {
 
+            var msg = validatemain();
+            if(msg=="")
+            {
+               
+                $(".cdisable").removeAttr("disabled");
+
+            }
+          
+           
+            $(this).removeClass("err-bor");
+
+        });
 
         var specialKeys = new Array();
         specialKeys.push(8); //Backspace
@@ -3116,6 +3129,7 @@
 
 
             $("#btAddOrg").click(function () {
+               
                 //  alert("Test");
                 //  alert($('#dllOrganizer option').length);
                 //    if (parseInt($('#dllOrganizer option').length) < 25) {
@@ -3168,6 +3182,14 @@
                 $("#txtOrgTWlink").val('');
                 $("#Incsocial").prop("checked", false);
                 $("#dvOrgnizerFBTw").hide();
+
+
+                var msg = validatemain();
+                //alert(msg);
+                if (msg == " ") {
+                    $(".cdisable").removeAttr("disabled");
+                }
+                $("#txtOrgnizer").removeClass("err-bor");
                 //alert(divlength);
                 //var addOption = '<div class="list-group-item ev_orgz_list"></div> <div id = dvOrg_' + vLenght.toString() + '  class="col-sm-8 no_pad">' + $("#txtOrgnizer").val() + '</div><div class="col-sm-4 no_pad text-right ev_org_edt_main"><a href="#"><i class="fa fa-pencil"></i> </a> | <a href="#"><i class="fa fa-trash"></i></a></div>';
                 //$("#dvOrganizer").append(addOption)
@@ -3777,6 +3799,15 @@
         //    $(".ticket_panel").slideDown();
 
         //});
+        function checkvalidatetkt(e)
+        {
+            var msg = validatemain();
+            if (msg == "") {
+                $(".cdisable").removeAttr("disabled");
+            }
+            $('#' + e).removeClass('err-bor');
+
+        }
         function changeqty(e) {
             var dropval = $('#' + e).val();
             var numbermsg = ajaxsetup('CreateEvent', 'CreateEventEnternumberUI');
@@ -3796,6 +3827,11 @@
                     // var total = parseInt(qty) + parseInt(dropval);
 
                     // $('#id_totalqty').html(total);
+                    var msg = validatemain();
+                    if (msg == "")
+                    {
+                        $(".cdisable").removeAttr("disabled");
+                    }
                     $('#' + e).removeClass('err-bor');
 
                 }
@@ -4941,6 +4977,8 @@
             var count = 0;
             var countqty = 0;
             var countdesc = 0;
+            var countvardesc = 0;
+            var countvarqty = 0;
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
@@ -5043,7 +5081,7 @@
 
                         $('#id_varsubdesc-' + i).addClass('err-bor');
 
-                        count++;
+                         countvardesc++;
                     } else {
                         $('#id_varsubdesc-' + i).removeClass('err-bor');
 
@@ -5051,13 +5089,29 @@
                     if (subprice_Qty == "") {
 
                         $('#id_varsubprice-' + i).addClass('err-bor');
-                        count++;
+                        countvarqty++;
                     } else {
+                        if (subprice_Qty <= 0) {
+                            $('#id_varsubprice-' + i).addClass('err-bor');
+                            countvarqty++;
 
-                        $('#id_varsubprice-' + i).removeClass('err-bor');
+                        } else {
+                            $('#id_varsubprice-' + i).removeClass('err-bor');
+                        }
+
+                        
                     }
 
                 }
+
+            }
+            if (countvardesc > 0)
+            {
+                msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
+
+            }
+            if (countvarqty > 0) {
+                msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
 
             }
             if ($('#chkReqPassword').is(":checked") == true) {

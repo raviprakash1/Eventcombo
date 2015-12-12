@@ -1011,14 +1011,21 @@ namespace EventCombo.Controllers
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + " " + starttime + "-" + endday.ToString() + " " + eDate_new;
 
             }
-
-            var enday = DateTime.Parse(eDate_new);
-            var now = DateTime.Now;
-            if (enday < now)
+            if (eDate_new == "")
             {
-
                 TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy");
                 TempData["ForViewOnly"] = "Y";
+            }
+            else
+            {
+                var enday = DateTime.Parse(eDate_new);
+                var now = DateTime.Now;
+                if (enday < now)
+                {
+
+                    TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy");
+                    TempData["ForViewOnly"] = "Y";
+                }
             }
             viewEvent.typeofEvent = EventDetail.AddressStatus;
             viewEvent.Shareonfb = EventDetail.Private_ShareOnFB;

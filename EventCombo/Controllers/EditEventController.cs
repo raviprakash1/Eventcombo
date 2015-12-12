@@ -836,7 +836,7 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='col-sm-9'>");
                     if (ObjTick.TicketTypeID == 3)
                     {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont' id='id_ticket_type-" + j + "' placeholder='Dontion' maxlength='256' title='Donation'  value='" + ObjTick.T_name + "'  />");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont' id='id_ticket_type-" + j + "' placeholder='Dontion' maxlength='256' title='Donation'  value='" + ObjTick.T_name + "'  onblur='checkvalidatetkt(this.id)' />");
 
                     }
                     else
@@ -1167,9 +1167,9 @@ namespace EventCombo.Controllers
                     strvariableHtml.Append("<div class='list -group-item ev_var_chrg_list'>");
                     strvariableHtml.Append(" <div class='form-group'>");
                     strvariableHtml.Append("<div class='col-sm-7 col-xs-7'>");
-                    strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='Description' id='id_varsubdesc-" + k + "' maxlength='256' value='" + Objvardesc.VariableDesc + "'>");
+                    strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='Description' id='id_varsubdesc-" + k + "' maxlength='256' value='" + Objvardesc.VariableDesc + "' onblur='checkvalidatetkt(this.id)'     >");
                     strvariableHtml.Append(" </div><div class='col-sm-4 col-xs-4'><label class='col-sm-1 control-label ev_tickt_lebel'>$</label> <div class='col-sm-10 no_pad'>");
-                    strvariableHtml.Append("<input class='form -control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id)' value='"+ PRICE + "'>");
+                    strvariableHtml.Append("<input class='form -control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id);checkvalidatetkt(this.id);' value='" + PRICE + "'>");
                     strvariableHtml.Append("</div> </div><div class='col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main'> <button class='btn' type='button' id='btn_vardelete-" + k + "' onclick='deletevariable(this.id)'><i class='fa fa-times'></i></button>");
                     strvariableHtml.Append("</div> </div></div> </div>");
 

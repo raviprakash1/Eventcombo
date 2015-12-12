@@ -6,7 +6,7 @@
 }
 <script src="http://maps.googleapis.com/maps/api/js">
 </script>
-<div id="fb-root"></div>
+
 <meta property="og:type" content="article" />
 <meta property="og:title" content=@Html.DisplayFor(m => m.Title) />
 <meta property="og:description" content=@Html.DisplayFor(m => m.EventDescription)/>
@@ -27,19 +27,16 @@
 </style>
 
 
+
 <div id="fb-root"></div>
 <script>
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5";
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1568511006716154";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-
-
-
-</script>
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
@@ -348,19 +345,19 @@
         </div>
     </div>
     <div class="event_detail_container">
-        @if (@Html.DisplayFor(m => m.enablediscussion).ToString() == "y" || @Html.DisplayFor(m => m.enablediscussion).ToString() == "Y")
-        {
-        <div class="EveDisRib evnt_tile_head evnt_cursor bg-grey">
-            <div class="evnt_tile_dis_bg_l"></div>
-            <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad ">
-                <h2 class="fb_dis_head pt5"><img src="/Images/fb-dis.png" class="img_top"> <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
-            </div>
+                @if (@Html.DisplayFor(m => m.enablediscussion).ToString() == "y" || @Html.DisplayFor(m => m.enablediscussion).ToString() == "Y")
+                {
+                    <div class="EveDisRib evnt_tile_head evnt_cursor bg-grey">
+                        <div class="evnt_tile_dis_bg_l"></div>
+                        <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad ">
+                            <h2 class="fb_dis_head pt5"><img src="/Images/fb-dis.png" class="img_top"> @*<span class="comment-count"></span>*@ <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span> &nbsp; Comment(s)</h2>
+                    </div>
             <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
         </div>
         <div class="EveActRib evnt_tile_head evnt_cursor">
             <div class="evnt_tile_bg_l"></div>
             <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
-                <h2 class="fb_dis_head pt5"><img src="/Images/fb.png" class="img_top"> <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
+                <h2 class="fb_dis_head pt5"><img src="/Images/fb.png" class="img_top">  <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
             </div>
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
@@ -609,8 +606,8 @@ else
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">
-                    <span id="spOverSel">One of your selected ticket has been already sold.</span> </h4>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title ev_modal_header_title" id="myModalLabel"><span id="spanokid">One of your selected ticket has been already sold.</span> </h4>
             </div>
             <div class="modal-footer msg-action-btn ok">
                 <button  type="submit" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
@@ -629,6 +626,7 @@ else
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
 <script>
+   
     var map = "";
     var geocoder = "";
     
@@ -673,7 +671,17 @@ else
     }
    // window.onload = InitializeMap;
     $(document).ready(function () {
-       
+        $(function () {
+            var url = 'https://www.facebook.com/Eventcombo' // Replace this variable value with the link
+            $.getJSON('https://graph.facebook.com/?access_token=CAACEdEose0cBAInenFGuCK6iiWLaQtrhdAmumnHtYXBbImcddXwErefrPF5ZBFx7ZAU2Y0K8T3ZAfQh9xQPNrOOO9F3dpgI8lCOifLqiMSxer20YAKxZAQN8y1MBYjjO0ZAVywJSwmbPZAL1O8UqPrnliiNoZBqb2YGBRSjrHmJdTEFErjnMbQxXT0OQyXyi5Qjv56nLootuwZDZD&id=' + url, function (data) {
+                //alert(data.comments);
+                if (data.comments) { //If their is no comments on the page then comments data will not exist
+                    $('.comment-count').append(data.comments);
+                } else {
+                    $('.comment-count').append('0');
+                }
+            });
+        });
         $('ul.dropdown-menu.dropdown-map').on('click', function (event) {
             event.stopPropagation();
         });
@@ -1310,22 +1318,16 @@ function pad(n) { return n < 10 ? '0' + n : n };
                 'TLD_List': TList
             }
             if (vflag > 0) {
+
+
+               
+
                 $.ajax({
                     url: '@Url.Action("LockTickets", "CreateEvent")',
                     data: model,
                     type: "Post",
                     success: function (response) {
                         if (response == "N") {
-                            //$(".OverSel").html(ajaxsetup('ViewEvent', 'OverSelling'));
-                            var vMes = ajaxsetup('ViewEvent', 'OverSelling');
-                            $("#spOverSel").text(vMes);
-                            $("#btOk").click();
-                            $.removeCookie("Selection");
-                        }
-                        else if (response == "NOTLIVE")
-                        {
-                            var vMes = ajaxsetup('ViewEvent', 'EventNotLive');
-                            $("#spOverSel").text(vMes);
                             $("#btOk").click();
                             $("#spanokid").html(ajaxsetup("ViewEvent", "OverSelling"));
                             $.removeCookie("Selection");
