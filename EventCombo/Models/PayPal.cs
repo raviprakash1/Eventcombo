@@ -15,18 +15,17 @@ namespace EventCombo.Models
             NameValueCollection values = new NameValueCollection();
 
             values["METHOD"] = "SetExpressCheckout";
-            values["RETURNURL"] = PayPalSettings.ReturnUrl;
-            values["CANCELURL"] = PayPalSettings.CancelUrl;
-            values["AMT"] = "";
-            values["PAYMENTACTION"] = "Sale";
-            values["CURRENCYCODE"] = "GBP";
+            values["RETURNURL"] = order.ReturnUrl;
+            values["CANCELURL"] = order.CancelUrl;
+            values["PAYMENTACTION"] = "SALE";
+            values["CURRENCYCODE"] = "USD";
             values["BUTTONSOURCE"] = "PP-ECWizard";
             values["USER"] = PayPalSettings.Username;
             values["PWD"] = PayPalSettings.Password;
             values["SIGNATURE"] = PayPalSettings.Signature;
             values["SUBJECT"] = "";
-            values["VERSION"] = "2.3";
-            values["AMT"] = order.Amount.ToString(CultureInfo.InvariantCulture);
+            values["VERSION"] = "98";
+            values["AMT"] = order.Amount.ToString();
 
             values = Submit(values);
 
@@ -71,7 +70,10 @@ namespace EventCombo.Models
     }
     public class PayPalOrder
     {
-        public decimal Amount { get; set; }
+        public decimal? Amount { get; set; }
+        public string OrderId { get; set; }
+        public string ReturnUrl { get; set; }
+        public string CancelUrl { get; set; }
     }
 
     public class PayPalRedirect

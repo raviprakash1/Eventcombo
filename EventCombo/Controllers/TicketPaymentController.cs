@@ -251,7 +251,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId)
+        public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId,string strPaymentType)
         {
             string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
             ApiLoginID = ""; ApiTransactionKey = ""; strCardNo = ""; strExpDate = ""; strCvvCode = ""; dAmount = 0;
@@ -448,25 +448,23 @@ namespace EventCombo.Controllers
 
                         // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
 
-
-
-
-
-
-
-
-
-
-
                     }
-                    ApiLoginID = "354v9ZufxM6";
-                    ApiTransactionKey = "68Et2R3KcV62rJ27";
-                    strCardNo = model.cardno;
-                    strExpDate = model.expirydate;
-                    strCvvCode = model.cvv;
-                    dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
-                    //  PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
                     objEntity.SaveChanges();
+                    if (strPaymentType == "A")
+                    {
+                        ApiLoginID = "354v9ZufxM6";
+                        ApiTransactionKey = "68Et2R3KcV62rJ27";
+                        strCardNo = model.cardno;
+                        strExpDate = model.expirydate;
+                        strCvvCode = model.cvv;
+                        dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
+                        //  PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+                    }
+                    //else if (strPaymentType == "P")
+                    //{
+                    //    RedirectToAction("Pay", "Cart");
+                    //}
+                    
 
 
                     //SendMail
@@ -522,16 +520,16 @@ namespace EventCombo.Controllers
                             tickettype = "Donate";
                             fee = "";
                         }
-                        string xel = createxml(strOrderNo, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, address.ConsolidateAddress, "", "");
+                        //string xel = createxml(strOrderNo, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, address.ConsolidateAddress, "", "");
 
-                        string qrImgPath = Server.MapPath("..") + "/Images/QR_Image.Png";
-                        string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";
-                        generateQR(xel.ToString(), qrImgPath);
-                        generateBarCode(strOrderNo, barImgPath);
-                        string Qrcode = "<img style = 'width:100px;height:100px' src =" + qrImgPath + " alt = 'QRCode' />";
-                        string barcode = "<img src =" + barImgPath + " alt = 'BarCode' >";
-                        MemoryStream attachment = generateTicketPDF(email, username, DateTime.Now.ToString(), strOrderNo, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode, barcode1);
-                       // MemoryStream attachment = new MemoryStream(attach);
+                        //string qrImgPath = Server.MapPath("..") + "/Images/QR_Image.Png";
+                        //string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";
+                        //generateQR(xel.ToString(), qrImgPath);
+                        //generateBarCode(strOrderNo, barImgPath);
+                        //string Qrcode = "<img style = 'width:100px;height:100px' src =" + qrImgPath + " alt = 'QRCode' />";
+                        //string barcode = "<img src =" + barImgPath + " alt = 'BarCode' >";
+                        //MemoryStream attachment = generateTicketPDF(email, username, DateTime.Now.ToString(), strOrderNo, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode, barcode1);
+                      
                         var Emailtemplate = hmc.getEmail("eticket");
                         if (Emailtemplate != null)
                         {
@@ -730,7 +728,7 @@ namespace EventCombo.Controllers
 
                                 }
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, attachment);
+                           // hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, attachment);
                         }
                     }
 
@@ -931,11 +929,14 @@ namespace EventCombo.Controllers
 
        
 
-        public ActionResult PaymentConfirmation(long Eventid)
-
+        public ActionResult PaymentConfirmation()
         {
             if (Session["AppId"] != null)
             {
+                string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+                EventComboEntities objContent = new EventComboEntities();
+                var EvtOrDetail = (from Order in objContent.Ticket_Purchased_Detail where Order.TPD_GUID == strGUID select Order).FirstOrDefault();
+                long Eventid = (long) EvtOrDetail.TPD_Event_Id;
                 HomeController hmc = new HomeController();
                 hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
                 string usernme = hmc.getusername();

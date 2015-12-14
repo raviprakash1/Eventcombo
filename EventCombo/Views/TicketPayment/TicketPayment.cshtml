@@ -553,6 +553,17 @@
         $("#spGrdTotal").text(vOrderTotal);
         $("#hdGrandTotal").val(vOrderTotal);
         $("#spSubTotal").text(vOrderTotal);
+
+        if (vOrderTotal >0)
+        {
+            $('.divvisible').show();
+            //$('#cardshow').css('display', 'block');
+        }
+        else {
+            $('.divvisible').hide();
+            //$('#cardshow').css('display', 'none');
+        }
+
     }
     function calculateTickTotalOptional(vCount) {
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
@@ -567,6 +578,16 @@
         $("#spGrdTotal").text(vOrderTotal.toFixed(2));
         $("#hdGrandTotal").val(vOrderTotal.toFixed(2));
         $("#spSubTotal").text(vOrderTotal.toFixed(2));
+
+         if (vOrderTotal >0)
+        {
+             $('.divvisible').show();
+            //$('#cardshow').css('display', 'block');
+        }
+        else {
+             $('.divvisible').hide();
+            //$('#cardshow').css('display', 'none');
+        }
     }
 
     //function afterStop() {
@@ -676,31 +697,32 @@
         }
         var resultvar = "";
         if (total > 0) {
-        var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
-        if (result.card_type == null) {
-            resultvar += "Invalid Card Number" + "\n";
-            $("#cardno").focus();
-            $("#cardno").addClass('err-bor');
+           
+            if ($("#selectcard").val() != "P")
+            {
+                var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
+                if (result.card_type == null) {
+                    resultvar += "Invalid Card Number" + "\n";
+                    $("#cardno").focus();
+                    $("#cardno").addClass('err-bor');
 
-        }
-        if(result.length_valid==false)
-        {
-            resultvar += "Invalid Card Number" + "\n";
-            $("#cardno").focus();
-            $("#cardno").addClass('err-bor');
+                }
+                if (result.length_valid == false) {
+                    resultvar += "Invalid Card Number" + "\n";
+                    $("#cardno").focus();
+                    $("#cardno").addClass('err-bor');
 
-        }
-        if( result.luhn_valid==false)
-        {
-            resultvar += "Invalid Card Number" + "\n";
-            $("#cardno").focus();
-            $("#cardno").addClass('err-bor');
+                }
+                if (result.luhn_valid == false) {
+                    resultvar += "Invalid Card Number" + "\n";
+                    $("#cardno").focus();
+                    $("#cardno").addClass('err-bor');
 
-        }
-        if (resultvar != "")
-        {
-            msglogin += ajaxsetup('TicketPayment', 'TPayCardValidationUI') + "</br>";
-        }
+                }
+                if (resultvar != "") {
+                    msglogin += ajaxsetup('TicketPayment', 'TPayCardValidationUI') + "</br>";
+                }
+            }
         var billerr = "";
         var billfname = $('#billfname').val();
         var billLname = $('#billLname').val();
@@ -1042,17 +1064,18 @@
 
                 var Eventid = $('#hdEventid').val();
               //  alert(Eventid);
-
+                var PaymentType = $("#selectcard").val();
                 $.ajax({
                     url: '@Url.Action("SaveDetails", "TicketPayment")',
                     beforeSend: function () { $("#btOk").click(); },
-                    data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId },
+                    data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId, strPaymentType: PaymentType },
                     type: "Post",
                     success: function (response) {
                         var Eventid = $('#hdEventid').val();
-                        window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment",new{ })?Eventid='+Eventid;
-
-
+                        if (PaymentType == "P")
+                            window.location.href = '@Url.Action("Pay", "Cart")'; 
+                        else
+                            window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
                     }
                 });
 
