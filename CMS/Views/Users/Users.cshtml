@@ -149,9 +149,10 @@
                                                         <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
                                                         <td>
                                                             <div class="tdModel">
-                                                                <a class="td-btn" id="btEvent" onclick="GetEvents('@obj.Id');" type="button" href="#dvEvents" data-toggle="modal">
+                                                                @Html.ActionLink("Edit Event", "EventList", "EventList");
+                                                                @*<a class="td-btn" id="btEvent" onclick="GetEvents('@obj.Id');" type="button" href="#dvEvents" data-toggle="modal">
                                                                     @obj.EventCount
-                                                                </a>
+                                                                </a>*@
                                                             </div>
                                                         </td>
                                                         <td>0</td>

@@ -22,7 +22,7 @@ namespace CMS.Models
     
         public long EventCategoryID { get; set; }
         public string EventCategory1 { get; set; }
-    
+        public List<EventSubCategory> ESubCat { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventSubCategory> EventSubCategories { get; set; }
     }
