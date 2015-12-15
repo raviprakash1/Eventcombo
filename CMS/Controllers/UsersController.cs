@@ -114,7 +114,7 @@ namespace CMS.Controllers
                     PageFilter.Add(new SelectListItem()
                     {
                         Text = strText,
-                        Value = (z+ iGapValue).ToString(),
+                        Value = (i).ToString(),
                         Selected = (iCount == z ? true : false)
                     });
                     z = z + iGapValue;
@@ -125,7 +125,7 @@ namespace CMS.Controllers
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
-                            Value = (z + iGapValue).ToString(),
+                            Value = (i+1).ToString(),
                             Selected = (iCount == z ? true : false)
                         });
                     }
@@ -148,7 +148,7 @@ namespace CMS.Controllers
                 PageFilter.Add(new SelectListItem()
                 {
                     Text = "0 - 50",
-                    Value = "50",
+                    Value = "0",
                     Selected = (iCount == 50 ? true : false)
                 });
 

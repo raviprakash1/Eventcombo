@@ -57,7 +57,7 @@
                                         <span class="view_evnt fs15 col-sm-4 text-right">Total no. of members:@ViewData["Userscount"] </span>
                                         <label class="field select admin-form col-sm-2 text-right srh-by-no">
 
-                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()" })
+                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { })
 
                                             @*<select>
                                                     <option value="0">Select</option>
@@ -308,7 +308,7 @@
                                             <tr>
                                                 <td colspan="12">
                                                     <nav class="text-right">
-                                                        <ul class="pagination hide-if-no-paging"></ul>
+                                                        <ul class="pagination hide-if-no-paging" id="ulpage"></ul>
                                                     </nav>
                                                 </td>
                                             </tr>
@@ -501,7 +501,26 @@
 
 <script type="text/javascript">
 
+    $('#ulpage').click(function () {
+        console.log(this);
 
+        console.log($('#ulpage li.active'));
+        var datapage = $('#ulpage li.active').children().attr('data-page');
+
+        $('#PageF').val(datapage);
+
+    });
+
+    $('#PageF').change(function () {
+        var value = $(this).val();
+        console.log($(this).val());
+        $("#ulpage li").removeClass('active');
+        $('#ulpage li a[data-page=' + value + ']').click();
+        console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
+        //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
+
+
+    });
 
     function GetEvents(vUserId)
     {
