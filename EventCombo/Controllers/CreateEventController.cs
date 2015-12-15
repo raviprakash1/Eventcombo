@@ -265,11 +265,12 @@ namespace EventCombo.Controllers
             long lEventId = 0;
             try
             {
-                PayPalRedirect redirect = PayPal.ExpressCheckout(new PayPalOrder { Amount = 50 });
+                //PayPalRedirect redirect = PayPal.ExpressCheckout(new PayPalOrder { Amount = 50 });
 
-                Session["token"] = redirect.Token;
+                //Session["token"] = redirect.Token;
+                //Response.Redirect(redirect.Url);
 
-               // return new RedirectResult(redirect.Url);
+               //RedirectResult(redirect.Url);
 
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
 

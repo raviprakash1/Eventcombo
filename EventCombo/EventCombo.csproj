@@ -429,6 +429,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EditEvent.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EventConfirmation\EventConfirmation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventConfirmation.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EventList\CmsEventList.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -438,6 +443,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EventList.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TicketPayment\PaymentConfirmation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PaymentConfirmation.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\_ViewStart.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_ViewStart.cshtml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -802,6 +817,7 @@
     <Content Include="ticketpdf.html" />
     <Content Include="Views\_ViewStart.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_ViewStart.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\Error.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -971,6 +987,7 @@
     </Content>
     <Content Include="Views\EventConfirmation\EventConfirmation.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EventConfirmation.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\TicketPayment\TicketPayment.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -981,6 +998,7 @@
     </Content>
     <Content Include="Views\TicketPayment\PaymentConfirmation.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PaymentConfirmation.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\EditEvent\EditEvent.cshtml">
       <Generator>RazorGenerator</Generator>

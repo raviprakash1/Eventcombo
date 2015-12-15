@@ -153,19 +153,11 @@
                                                         </td>
                                                         <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
                                                         <td>
+
                                                             <button type="button" class="btn btn-info br2 btn-xs fs12" onclick="AssignSession('@(obj.Id)',@i)" id="btnevents-@i">
                                                                @obj.EventCount
                                                             </button>
                                                             
-                                                               
-                                                           
-                                                                @*<iframe src="@Url.Action("EventList","EventList")" width="1000" height="400"></iframe>*@
-                                                                @*@Html.ActionLink("List", "CmsEventList", "EventList", new { }, new { });
-                                                                @Html.ActionLink("EventList", "CmsEventList", "EventList")*@
-                                                                @*<a class="td-btn" id="btEvent" href="#" onclick="GetEvents('@obj.Id');" type="button" data-toggle="modal">
-                                                                    
-                                                                </a>*@
-                                                           
                                                         </td>
                                                         <td>0</td>
                                                         <td>@obj.State</td>

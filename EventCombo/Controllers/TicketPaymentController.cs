@@ -251,7 +251,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId)
+        public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId,string strPaymentType)
         {
             string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
             ApiLoginID = ""; ApiTransactionKey = ""; strCardNo = ""; strExpDate = ""; strCvvCode = ""; dAmount = 0;
@@ -448,291 +448,27 @@ namespace EventCombo.Controllers
 
                         // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
 
-
-
-
-
-
-
-
-
-
-
                     }
-                    ApiLoginID = "354v9ZufxM6";
-                    ApiTransactionKey = "68Et2R3KcV62rJ27";
-                    strCardNo = model.cardno;
-                    strExpDate = model.expirydate;
-                    strCvvCode = model.cvv;
-                    dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
-                    //  PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
                     objEntity.SaveChanges();
-
-
-                    //SendMail
-
-                    var userdetail = db.AspNetUsers.First(i => i.Id == Userid);
-                    var profiledetail = db.Profiles.FirstOrDefault(i => i.UserID == Userid);
-
-                    var email = userdetail.Email;
-                    var username = profiledetail.FirstName;
-
-                    var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == guid).ToList();
-                    foreach (var item in TicketPurchasedDetail)
+                    if (strPaymentType == "A")
                     {
-                        var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
-
-                        var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
-                        var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
-                        var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
-                      string barcode1="<img src =https://www.barcodesinc.com/generator/image.php?code="+strOrderNo+"&style=196&type=C128B&width=219&height=50&xres=1&font=3 alt = 'BarCode' >";
-                           
-
-                        string to = "", from = "", cc = "", bcc = "", subjectn = "";
-                        var bodyn = "";
-                        var ticketP = "";
-                        HomeController hmc = new HomeController();
-                        List<Email_Tag> EmailTag = new List<Email_Tag>();
-                        EmailTag = hmc.getTag();
-                        var tickettype = "";
-                        var fee = "";
-                        if(tickets.TicketTypeID==1)
-                        {
-                            tickettype = "Free";
-                            ticketP = "";
-                            fee = "";
-                        }
-                        if (tickets.TicketTypeID == 2)
-                        {
-                           var  ticketprice = item.TPD_Purchased_Qty * tickets.TotalPrice;
-                            ticketP = "$" + ticketprice.ToString();
-                            tickettype = "Paid";
-                            if(tickets.Fees_Type=="1")
-                            {
-                                fee = tickets.EC_Fee.ToString();
-                            }else
-                            {
-                                fee = tickets.Customer_Fee.ToString();
-                            }
-                          
-                        }
-                        if (tickets.TicketTypeID == 3)
-                        {
-                            ticketP = "$" + item.TPD_Donate.ToString();
-                            tickettype = "Donate";
-                            fee = "";
-                        }
-                        string xel = createxml(strOrderNo, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, address.ConsolidateAddress, "", "");
-
-                        string qrImgPath = Server.MapPath("..") + "/Images/QR_Image.Png";
-                        string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";
-                        generateQR(xel.ToString(), qrImgPath);
-                        generateBarCode(strOrderNo, barImgPath);
-                        string Qrcode = "<img style = 'width:100px;height:100px' src =" + qrImgPath + " alt = 'QRCode' />";
-                        string barcode = "<img src =" + barImgPath + " alt = 'BarCode' >";
-                        MemoryStream attachment = generateTicketPDF(email, username, DateTime.Now.ToString(), strOrderNo, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode, barcode1);
-                       // MemoryStream attachment = new MemoryStream(attach);
-                        var Emailtemplate = hmc.getEmail("eticket");
-                        if (Emailtemplate != null)
-                        {
-                            if (!string.IsNullOrEmpty(Emailtemplate.To))
-                            {
-
-
-                                to = Emailtemplate.To;
-                                if (to.Contains("¶¶UserEmailID¶¶"))
-                                {
-                                    to = to.Replace("¶¶UserEmailID¶¶", email);
-
-                                }
-                            }
-                            if (!(string.IsNullOrEmpty(Emailtemplate.From)))
-                            {
-                                from = Emailtemplate.From;
-                                if (from.Contains("¶¶UserEmailID¶¶"))
-                                {
-                                    from = from.Replace("¶¶UserEmailID¶¶", email);
-
-                                }
-                            }
-                            else
-                            {
-                                from = "shweta.sindhu@kiwitech.com";
-
-                            }
-                            if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
-                            {
-                                cc = Emailtemplate.CC;
-                                if (cc.Contains("¶¶UserEmailID¶¶"))
-                                {
-                                    cc = cc.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                                }
-                            }
-                            if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
-                            {
-                                bcc = Emailtemplate.Bcc;
-                                if (bcc.Contains("¶¶UserEmailID¶¶"))
-                                {
-                                    bcc = bcc.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                                }
-                            }
-                            if (!string.IsNullOrEmpty(Emailtemplate.Subject))
-                            {
-
-
-                                subjectn = Emailtemplate.Subject;
-
-                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                                {
-
-                                    if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                    {
-                                        if (EmailTag[i].Tag_Name == "UserEmailID")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶UserEmailID¶¶", email);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventTitleId")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventOrderNO")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", strOrderNo);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventStartDateID")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶EventStartDateID¶¶", tQntydetail.TQD_StartDate);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventVenueID")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶EventVenueID¶¶", address.ConsolidateAddress);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "Tickettype")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶Tickettype¶¶", tickets.T_name);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "TicketOrderDateId")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventImageId")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶EventImageId¶¶", "");
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventStartTimeID")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", tQntydetail.TQD_StartTime);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "TicketPrice")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶TicketPrice¶¶", ticketP);
-
-                                        }
-
-
-                                    }
-
-                                }
-                            }
-                            if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
-                            {
-                                bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                                 {
-
-
-                                    if (EmailTag[i].Tag_Name == "TicketOrderDateId")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
-
-                                    }
-                                    if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                    {
-                                        if (EmailTag[i].Tag_Name == "UserEmailID")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶UserEmailID¶¶", email);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventOrderNO")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", strOrderNo);
-
-                                        }
-                                      
-                                        if (EmailTag[i].Tag_Name == "EventBarcodeId")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcode1);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventTitleId")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventStartDateID")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶EventStartDateID¶¶", tQntydetail.TQD_StartDate);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventVenueID")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶EventVenueID¶¶", address.ConsolidateAddress);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "Tickettype")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶Tickettype¶¶", tickets.T_name);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "TicketOrderDateId")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventImageId")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶EventImageId¶¶", "");
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "EventStartTimeID")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶EventStartTimeID¶¶", tQntydetail.TQD_StartTime);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "TicketPrice")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶TicketPrice¶¶", ticketP);
-
-                                        }
-                                        
-                                    }
-
-                                }
-                            }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, attachment);
-                        }
+                        ApiLoginID = "354v9ZufxM6";
+                        ApiTransactionKey = "68Et2R3KcV62rJ27";
+                        strCardNo = model.cardno;
+                        strExpDate = model.expirydate;
+                        strCvvCode = model.cvv;
+                        dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
+                        //  PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
                     }
+                    //else if (strPaymentType == "P")
+                    //{
+                    //    RedirectToAction("Pay", "Cart");
+                    //}
+                    
+
+
+                  
+
 
                     Session["AppId"] = Userid;
                     Session["TicketLockedId"]= guid;
@@ -931,11 +667,16 @@ namespace EventCombo.Controllers
 
        
 
-        public ActionResult PaymentConfirmation(long Eventid)
-
+        public ActionResult PaymentConfirmation()
         {
             if (Session["AppId"] != null)
             {
+                List<paymentdate> Dateofevent = new List<paymentdate>();
+                string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+                List<Email_Tag> EmailTag = new List<Email_Tag>();
+                EventComboEntities objContent = new EventComboEntities();
+                var EvtOrDetail = (from Order in objContent.Ticket_Purchased_Detail where Order.TPD_GUID == strGUID select Order).FirstOrDefault();
+                long Eventid = (long) EvtOrDetail.TPD_Event_Id;
                 HomeController hmc = new HomeController();
                 hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
                 string usernme = hmc.getusername();
@@ -944,7 +685,295 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 Session["Fromname"] = "events";
-                List<paymentdate> Dateofevent = new List<paymentdate>();
+                //Send mail
+                var Userid = Session["AppId"].ToString();
+
+                var userdetail = db.AspNetUsers.First(i => i.Id == Userid);
+                var profiledetail = db.Profiles.FirstOrDefault(i => i.UserID == Userid);
+
+                var email = userdetail.Email;
+                var username = profiledetail.FirstName;
+
+                var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID).ToList();
+                foreach (var item in TicketPurchasedDetail)
+                {
+                    //Detail to send on page
+                    paymentdate pdate = new paymentdate();
+                    var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
+
+                    var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
+                    var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
+                    var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
+
+                    var datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
+                    var day = datetime.DayOfWeek;
+                    var Sdate = datetime.ToString("MMM dd, yyyy");
+                    var time = tQntydetail.TQD_StartTime;
+
+                    var addresslist = (!string.IsNullOrEmpty(address.ConsolidateAddress)) ? address.ConsolidateAddress : "";
+                    var timefinal = day.ToString() + "~" + Sdate.ToString() + "~" + time + "~" + addresslist;
+                    pdate.id = timefinal;
+                    pdate.Address = addresslist;
+                    pdate.Datetime = day.ToString() + " " + Sdate.ToString() + " " + time;
+                    Dateofevent.Add(pdate);
+                    //Detail to send on page
+
+
+                    string barcode1 = "<img src =https://www.barcodesinc.com/generator/image.php?code=" + item.TPD_Order_Id + "&style=196&type=C128B&width=219&height=50&xres=1&font=3 alt = 'BarCode' >";
+
+
+                    string to = "", from = "", cc = "", bcc = "", subjectn = "";
+                    var bodyn = "";
+                    var ticketP = "";
+                  
+                 //Get Email tags
+                    EmailTag = hmc.getTag();
+                 //Get Email tags
+                    var tickettype = "";
+                    var fee = "";
+                    if (tickets.TicketTypeID == 1)
+                    {
+                        tickettype = "Free";
+                        ticketP = "";
+                        fee = "";
+                    }
+                    if (tickets.TicketTypeID == 2)
+                    {
+                        var ticketprice = item.TPD_Purchased_Qty * tickets.TotalPrice;
+                        ticketP = "$" + ticketprice.ToString();
+                        tickettype = "Paid";
+                        if (tickets.Fees_Type == "1")
+                        {
+                            fee = tickets.EC_Fee.ToString();
+                        }
+                        else
+                        {
+                            fee = tickets.Customer_Fee.ToString();
+                        }
+
+                    }
+                    if (tickets.TicketTypeID == 3)
+                    {
+                        ticketP = "$" + item.TPD_Donate.ToString();
+                        tickettype = "Donate";
+                        fee = "";
+                    }
+                    string xel = createxml(item.TPD_Order_Id, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, address.ConsolidateAddress, "", "");
+
+                    string qrImgPath = Server.MapPath("..") + "/Images/QR_Image.Png";
+                   string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";
+                   generateQR(xel.ToString(), qrImgPath);
+                   generateBarCode(item.TPD_Order_Id, barImgPath);
+                   string Qrcode = "<img style = 'width:100px;height:100px' src =" + qrImgPath + " alt = 'QRCode' />";
+                   string barcode = "<img src =" + barImgPath + " alt = 'BarCode' >";
+                   MemoryStream attachment = generateTicketPDF(email, username, DateTime.Now.ToString(), item.TPD_Order_Id, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode, barcode1);
+
+                    var Emailtemplate = hmc.getEmail("eticket");
+                    if (Emailtemplate != null)
+                    {
+                        if (!string.IsNullOrEmpty(Emailtemplate.To))
+                        {
+
+
+                            to = Emailtemplate.To;
+                            if (to.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                to = to.Replace("¶¶UserEmailID¶¶", email);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                        {
+                            from = Emailtemplate.From;
+                            if (from.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                from = from.Replace("¶¶UserEmailID¶¶", email);
+
+                            }
+                        }
+                        else
+                        {
+                            from = "shweta.sindhu@kiwitech.com";
+
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                        {
+                            cc = Emailtemplate.CC;
+                            if (cc.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                cc = cc.Replace("¶¶UserEmailID¶¶", email);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                        {
+                            bcc = Emailtemplate.Bcc;
+                            if (bcc.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                bcc = bcc.Replace("¶¶UserEmailID¶¶", email);
+
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                        {
+
+
+                            subjectn = Emailtemplate.Subject;
+
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserEmailID¶¶", email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventTitleId")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventOrderNO")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", item.TPD_Order_Id);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventStartDateID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶EventStartDateID¶¶", tQntydetail.TQD_StartDate);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventVenueID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶EventVenueID¶¶", address.ConsolidateAddress);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "Tickettype")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶Tickettype¶¶", tickets.T_name);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventImageId")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶EventImageId¶¶", "");
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", tQntydetail.TQD_StartTime);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "TicketPrice")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶TicketPrice¶¶", ticketP);
+
+                                    }
+
+
+                                }
+
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                        {
+                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+
+                                if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                                {
+                                    bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
+
+                                }
+                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "UserEmailID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserEmailID¶¶", email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventOrderNO")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", item.TPD_Order_Id);
+
+                                    }
+
+                                    if (EmailTag[i].Tag_Name == "EventBarcodeId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcode1);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventTitleId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventStartDateID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventStartDateID¶¶", tQntydetail.TQD_StartDate);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventVenueID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventVenueID¶¶", address.ConsolidateAddress);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "Tickettype")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶Tickettype¶¶", tickets.T_name);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventImageId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventImageId¶¶", "");
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventStartTimeID¶¶", tQntydetail.TQD_StartTime);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "TicketPrice")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶TicketPrice¶¶", ticketP);
+
+                                    }
+
+                                }
+
+                            }
+                        }
+                        //Mail 
+                       hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, attachment);
+                        //Mail 
+                    }
+                }
+
+                //Send mail
+              
                 CreateEventController cs = new CreateEventController();
                 PaymentConfirmation ps = new PaymentConfirmation();
                 var Eventdetails = cs.GetEventdetail(Eventid);
@@ -966,29 +995,8 @@ namespace EventCombo.Controllers
                 var url = Request.Url;
                 var baseurl = url.GetLeftPart(UriPartial.Authority);
                 ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
-                var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == guid).ToList();
-                foreach (var item in TicketPurchasedDetail)
-                {
-                    paymentdate pdate = new paymentdate();
-                    var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
-
-                    var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
-                    var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
-                    var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
-
-                    var datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
-                    var day = datetime.DayOfWeek;
-                    var Sdate = datetime.ToString("MMM dd, yyyy");
-                    var time = tQntydetail.TQD_StartTime;
-
-                    var addresslist = (!string.IsNullOrEmpty(address.ConsolidateAddress)) ? address.ConsolidateAddress : "";
-                    var timefinal = day.ToString() + "~" + Sdate.ToString() + "~" + time + "~" + addresslist;
-                    pdate.id = timefinal;
-                    pdate.Address = addresslist;
-                    pdate.Datetime = day.ToString() + " " + Sdate.ToString() + " " + time;
-                    Dateofevent.Add(pdate);
-
-                }
+              
+            
                 ViewBag.Timecal = Dateofevent;
                 return View(ps);
             }
