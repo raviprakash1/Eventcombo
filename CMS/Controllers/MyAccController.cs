@@ -66,7 +66,7 @@ namespace CMS.Controllers
         {
             string defaultCountry = "";
 
-            if ((Session["AppId"] != null))
+            if ((Session["UserID"] != null))
             {
                 var client = new WebClient();
                 //string ip = GetLanIPAddress().Replace("::ffff:", "");

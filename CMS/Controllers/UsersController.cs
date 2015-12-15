@@ -45,7 +45,7 @@ namespace CMS.Controllers
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
 
-            if ((Session["AppId"] != null))
+            if ((Session["UserID"] != null))
             {
                
           
@@ -170,7 +170,7 @@ namespace CMS.Controllers
             //});
 
             ViewBag.PageF = PageFilter;
-                var userid = Session["AppId"].ToString();
+                var userid = Session["UserID"].ToString();
             ViewData["Userscount"] = db.AspNetUsers.Where(x=>x.Id!= userid).Count();
 
 
@@ -188,7 +188,7 @@ namespace CMS.Controllers
         }
         public List<UsersTemplate> GetAllUsers(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {
-            string user = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
+            string user = (Session["UserID"] != null ? Session["UserID"].ToString() : string.Empty);
 
             if (SearchStringFirstName == null) SearchStringFirstName = "";
             if (SearchStringLastName == null) SearchStringLastName = "";
@@ -316,6 +316,10 @@ namespace CMS.Controllers
             }
             return strResult;
         }
+
+
+
+      
         public string GetUserPermission(string strUserId)
         {
             StringBuilder strResult = new StringBuilder();

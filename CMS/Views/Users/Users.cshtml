@@ -2,11 +2,16 @@
 @using CMS.Models;
 @{
     ViewBag.Title = "Users";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<style type="text/css">
+   iframe {
+    border: none;
+}
+</style>
 <!-- Meta, title, CSS, favicons, etc. -->
+
 
 <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
 <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
@@ -148,11 +153,19 @@
                                                         </td>
                                                         <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
                                                         <td>
-                                                            <div class="tdModel">
-                                                                <a class="td-btn" id="btEvent" onclick="GetEvents('@obj.Id');" type="button" href="#dvEvents" data-toggle="modal">
-                                                                    @obj.EventCount
-                                                                </a>
-                                                            </div>
+                                                            <button type="button" class="btn btn-info br2 btn-xs fs12" onclick="AssignSession('@(obj.Id)',@i)" id="btnevents-@i">
+                                                               @obj.EventCount
+                                                            </button>
+                                                            
+                                                               
+                                                           
+                                                                @*<iframe src="@Url.Action("EventList","EventList")" width="1000" height="400"></iframe>*@
+                                                                @*@Html.ActionLink("List", "CmsEventList", "EventList", new { }, new { });
+                                                                @Html.ActionLink("EventList", "CmsEventList", "EventList")*@
+                                                                @*<a class="td-btn" id="btEvent" href="#" onclick="GetEvents('@obj.Id');" type="button" data-toggle="modal">
+                                                                    
+                                                                </a>*@
+                                                           
                                                         </td>
                                                         <td>0</td>
                                                         <td>@obj.State</td>
@@ -436,6 +449,23 @@
         </div>
 
 
+        @*Iframe Popup*@
+
+        <div class="modal fade" id="modaliframe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <iframe name="Embedded Frame"   height="400px" width="100%" align="left" frameborder="0"  scrolling="auto" id="mainframe"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Confirm Msg OK Modal Box -->
         <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -463,6 +493,10 @@
             </a>
         </div>
         <!-- Confirm Msg OK Modal Box -->
+
+
+
+        <div id="divId" title="Dialog Title" />
     </section>
 
                                                 }
@@ -474,9 +508,15 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>*@
 
 <script type="text/javascript">
+
+
+
     function GetEvents(vUserId)
     {
-        $.ajax({
+
+
+       window.location= '';
+        @*$.ajax({
             url: '@Url.Action("GetUserEvents", "Users")',
             data:{strUserId:vUserId},
             datatype: "Text",
@@ -486,7 +526,7 @@
                 $("#tbEvent").append(response);
 
             }
-        });
+        });*@
 
     }
     jQuery(document).ready(function () {
@@ -858,7 +898,25 @@
         });
     }
 
+    function AssignSession(userId,id)
+    {
+        $.ajax({
+            url: '@Url.Action("SetUserId","Users")',
+            data: { strUserId: userId },
+            datatype: "Text",
+            type: "Post",
+            success: function (response) {
+              
+            }
+               
+        });
 
+        
+        $('#mainframe').prop('src', 'http://localhost:10159/EventList/EventList')
+        $("#btnevents-"+id).attr("data-toggle","modal");
+        $("#btnevents-"+id).attr("data-target","#modaliframe");
+
+    }
     function AssignUserId(userId,id) {
         document.getElementById("hdUName").value = userId;
         document.getElementById("HdId").value = id;

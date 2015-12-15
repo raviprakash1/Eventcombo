@@ -223,6 +223,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
     <Compile Include="Controllers\EditEventController.cs" />
     <Compile Include="Controllers\EventConfirmationController.cs" />
@@ -367,6 +368,8 @@
     <Compile Include="Models\OrganizerMessages.cs" />
     <Compile Include="Models\PaymentConfirmation.cs" />
     <Compile Include="Models\PaymentProcess.cs" />
+    <Compile Include="Models\PayPal.cs" />
+    <Compile Include="Models\PayPalSettings.cs" />
     <Compile Include="Models\Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -416,10 +419,25 @@
     <Compile Include="Models\ViewEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Views\CreateEvent\ViewEvent.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewEvent.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditEvent\EditEvent.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EditEvent.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventList\CmsEventList.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CmsEventList.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventList\EventList.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventList.cshtml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +445,7 @@
     <Content Include="Content\eventcombo-new.css" />
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\flipclock.css" />
+    <Content Include="Content\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />
@@ -781,79 +800,215 @@
     <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ticketpdf.html" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_Login1Partial.cshtml" />
-    <Content Include="Views\Shared\_AuthenticateLayout.cshtml" />
-    <Content Include="Views\Shared\_Logout.cshtml" />
-    <Content Include="Views\Account\Confirm.cshtml" />
-    <Content Include="Views\Shared\_AccountLayout.cshtml" />
-    <Content Include="Views\Account\MyAccount.cshtml" />
-    <Content Include="Views\Shared\_signuppartial.cshtml" />
-    <Content Include="Views\Home\ForgetPassword.cshtml" />
-    <Content Include="Views\Home\PasswordReset.cshtml" />
-    <Content Include="Views\Account\PurchasedTicket.cshtml" />
-    <Content Include="Views\Account\PurchasedDeals.cshtml" />
-    <Content Include="Views\Account\PaymentInformation.cshtml" />
-    <Content Include="Views\Account\LiveEvents.cshtml" />
-    <Content Include="Views\Account\PastEvents.cshtml" />
-    <Content Include="Views\Account\EventHelp.cshtml" />
-    <Content Include="Views\Account\OrganizerProfile.cshtml" />
-    <Content Include="Views\Account\DealsDashboard.cshtml" />
-    <Content Include="Views\Account\MerchantProfile.cshtml" />
-    <Content Include="Views\Account\DealsHelp.cshtml" />
-    <Content Include="Views\Account\Customers.cshtml" />
-    <Content Include="Views\Account\InvoiceHistory.cshtml" />
-    <Content Include="Views\Account\ImpactReport.cshtml" />
-    <Content Include="Views\Account\Overview.cshtml" />
-    <Content Include="Views\Account\Feedback.cshtml" />
-    <Content Include="Views\Account\PastDeals.cshtml" />
-    <Content Include="Views\Account\CurrentDeals.cshtml" />
-    <Content Include="Views\Home\DiscoverEvents.cshtml" />
-    <Content Include="Views\Home\GetBuzz.cshtml" />
-    <Content Include="Views\Shared\_OrganizerLayout.cshtml" />
-    <Content Include="Views\Home\EventOraganizer.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\Error.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Home\About.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Home\Contact.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Home\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\ConfirmEmail.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\ForgotPassword.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\ResetPassword.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\SendCode.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\VerifyCode.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Manage\ChangePassword.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Manage\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Manage\ManageLogins.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Manage\SetPassword.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\Lockout.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\_Login1Partial.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\_AuthenticateLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\_Logout.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\Confirm.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\_AccountLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\MyAccount.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\_signuppartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Home\ForgetPassword.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Home\PasswordReset.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\PurchasedTicket.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\PurchasedDeals.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\PaymentInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\LiveEvents.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\PastEvents.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\EventHelp.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\OrganizerProfile.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\DealsDashboard.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\MerchantProfile.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\DealsHelp.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\Customers.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\InvoiceHistory.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\ImpactReport.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\Overview.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\Feedback.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\PastDeals.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Account\CurrentDeals.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Home\DiscoverEvents.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Home\GetBuzz.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\_OrganizerLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Home\EventOraganizer.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Event\EventCreation.cshtml" />
-    <Content Include="Views\CreateEvent\CreateEvent.cshtml" />
-    <Content Include="Views\EventConfirmation\EventConfirmation.cshtml" />
-    <Content Include="Views\TicketPayment\TicketPayment.cshtml" />
-    <Content Include="Views\CreateEvent\ViewEvent.cshtml" />
-    <Content Include="Views\TicketPayment\PaymentConfirmation.cshtml" />
+    <Content Include="Views\Event\EventCreation.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\CreateEvent\CreateEvent.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\EventConfirmation\EventConfirmation.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\TicketPayment\TicketPayment.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\CreateEvent\ViewEvent.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ViewEvent.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TicketPayment\PaymentConfirmation.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
     <Content Include="Views\EditEvent\EditEvent.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EditEvent.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\EventList\EventList.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EventList.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Account\Loginresult.cshtml" />
-    <Content Include="Views\EditEvent\ModifyEvent.cshtml" />
-    <Content Include="Views\CreateEvent\ViewCreateEvent.cshtml" />
+    <Content Include="Views\Account\Loginresult.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\EditEvent\ModifyEvent.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\CreateEvent\ViewCreateEvent.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Cart\Pay.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\Shared\_Layout1.cshtml">
+      <Generator>RazorGenerator</Generator>
+    </Content>
+    <Content Include="Views\EventList\CmsEventList.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CmsEventList.generated.cs</LastGenOutput>
+    </Content>
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

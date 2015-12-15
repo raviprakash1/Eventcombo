@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>Eventcombo Admin</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
+
+
+    @*<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+        <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">*@
+
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="~/assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/skin/default_skin/css/event_combo.css">
+    <link href="~/Content/datepicker.css" rel="stylesheet" />
+    <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
+    <!-- Admin Forms CSS -->
+    <link rel="stylesheet" type="text/css" href="~/assets/admin-tools/admin-forms/css/admin-forms.min.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/assets/img/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="~/assets/js/jquery-1.11.1.min.js"></script>
+    <script src="http://cdn.ckeditor.com/4.5.2/standard-all/ckeditor.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/jquery.timepicker.js"></script>
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Start: Main -->
+    <div id="main">
+        <!-- Start: Header -->
+        <header class="navbar navbar-fixed-top navbar-shadow">
+            <div class="navbar-branding">
+                <a class="navbar-brand" href="~/Home/Dashboard">
+                    <b>Event</b>combo
+                </a>
+                <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
+            </div>
+
+            <form class="navbar-form navbar-left navbar-search alt" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search..." value="Search...">
+                </div>
+            </form>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+{
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown menu-merge">
+                        <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
+
+
+                            @*<img src="@{Html.RenderAction("UserImage", "Home");}" alt="avatar" class="mw30 br64">*@
+                            <span class="hidden-xs pl15 ">@{Html.RenderAction("UserName", "Home");}</span>
+                            <span class="caret caret-tp hidden-xs"></span>
+                        </a>
+                        <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
+
+                            <li class="dropdown-footer">
+
+                                <a href="javascript:document.getElementById('logoutForm').submit()" class="">
+                                    <span class="fa fa-power-off pr5"></span> Logout
+                                </a>
+
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+}
+        </header>
+
+        <!-- Start: Sidebar -->
+        <aside id="sidebar_left" class="nano nano-light affix">
+
+            <!-- Start: Sidebar Left Content -->
+            <div class="sidebar-left-content nano-content">
+
+                <!-- Start: Sidebar Header -->
+                <header class="sidebar-header">
+                    @*@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutidForm" }))
+                        {*@
+                    <!-- Sidebar Widget - Author -->
+                    <div class="sidebar-widget author-widget">
+                        <div class="media">
+                            <a class="media-left" href="#">
+                                <img src="@{Html.RenderAction("UserImage", "Home");}" class="img-responsive">
+                            </a>
+
+                            <div class="media-body">
+                                <div class="media-links">
+
+                                    <a href="#" class="sidebar-menu-toggle">User Menu</a>
+
+                                    @*<a href="javascript:document.getElementById('logoutidForm').submit()">Logout</a>*@
+
+                                </div>
+                                <div class="media-author eml-ellps eml-ellps-wid">@{Html.RenderAction("UserName", "Home");}</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    @*//}*@
+
+                    <!-- Sidebar Widget - Menu (slidedown) -->
+                    <!-- Sidebar Widget - Search (hidden) -->
+                    <div class="sidebar-widget search-widget hidden">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input type="text" id="sidebar-search" class="form-control" placeholder="Search...">
+                        </div>
+                    </div>
+
+                </header>
+                <!-- End: Sidebar Header -->
+                <!-- Start: Sidebar Menu -->
+                <ul class="nav sidebar-menu">
+                    <li class="sidebar-label pt20">Menu</li>
+
+                    <li class="active">
+                        <a href="@Url.Action("Dashboard", "Home")">
+                            <span class="fa fa-tachometer"></span>
+                            <span class="sidebar-title">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-label pt15">Exclusive Tools</li>
+                    <li>
+                        <a href="#" onclick="checkPermission('3');">
+                            <span class="fa fa-user"></span>
+                            <span class="sidebar-title">Member Management</span>
+
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" onclick="checkPermission('4');">
+                            <span class="fa fa-lemon-o"></span>
+                            <span class="sidebar-title">Event</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="fa fa-ticket"></span>
+                            <span class="sidebar-title">Ticket</span>
+                        </a>
+
+                    </li>
+
+                    <li>                        
+                        <a href="@Url.Action("EventType", "EventType")">
+                            <span class="fa fa-ticket"></span>
+                            <span class="sidebar-title">Event Type</span>
+                        </a>
+
+                    </li>
+                    <li>
+                        <a href="@Url.Action("EventCategory", "EventCategory")">
+                            <span class="fa fa-ticket"></span>
+                            <span class="sidebar-title">Event Category</span>
+                        </a>
+
+                    </li>
+
+                    <li class="sidebar-label pt20">Systems</li>
+
+                    <li>
+
+                        <a href="#" onclick="checkPermission('6');">
+                            <span class="fa fa-envelope-o"></span>
+                            <span class="sidebar-title">Email Content Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="accordion-toggle" href="#">
+                            <span class="fa fa-exclamation-circle"></span>
+                            <span class="sidebar-title">UI Message</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="nav sub-nav" style="">
+
+                            <li>
+                                <a href="#" onclick="checkPermission('7');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title">My Account Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7A');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">Login Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7B');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">Sign Up Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7C');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">Forgot Password Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7D');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">Reset Password Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7E');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">Create Event Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7F');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">CMSUsers Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7G');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">Messages Form</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+                </ul>
+                <!-- End: Sidebar Menu -->
+                <!-- Start: Sidebar Collapse Button -->
+                <div class="sidebar-toggle-mini">
+                    <a href="#">
+                        <span class="fa fa-sign-out"></span>
+                    </a>
+                </div>
+                <!-- End: Sidebar Collapse Button -->
+
+            </div>
+            <!-- End: Sidebar Left Content -->
+
+        </aside>
+        <!-- End: Sidebar Left -->
+        <!-- Start: Content-Wrapper -->
+        @RenderBody()
+    </div>
+    <!-- End: Main -->
+    <!-- BEGIN: PAGE SCRIPTS -->
+    <!-- jQuery -->
+
+    <script src="~/assets/js/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap Tabdrop Plugin -->
+    <script src="~/plugins/tabdrop/bootstrap-tabdrop.js"></script>
+    @*<script src="~/plugins/ckeditor/ckeditor.js"></script>*@
+    <!-- Theme Javascript -->
+    <script src="~/assets/js/utility/utility.js"></script>
+    <script src="~/assets/js/demo/demo.js"></script>
+    <script src="~/assets/js/main.js"></script>
+
+    <!-- Widget Javascript -->
+    <script src="~/plugins/magnific/jquery.magnific-popup.js"></script>
+
+    <!-- FooTable Addon -->
+    <script src="~/plugins/footable/js/footable.all.min.js"></script>
+    <script src="~/plugins/footable/js/footable.filter.min.js"></script>
+    <script type="text/javascript">
+        function checkPermission(PermisionId) {
+            debugger;
+            var vPerm = PermisionId;
+            //  alert(vPerm);
+
+
+            if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G")
+            {
+
+                PermisionId = "7";
+            }
+
+
+            $.ajax({
+                url: '@Url.Action("GetPermission", "Permission")',
+                data: { iPermissionId: PermisionId },
+                async: false,
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    if (response != "Y") {
+                        alert("Access Denied !!!");
+                        return false;
+                        //  $('#spanid').html("Record Updated.");
+                        // $('#divError').css('display', 'block');
+                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
+                    }
+                    else {
+                        //  alert(vPerm);
+                        if (vPerm == "3")
+                            window.location.href = '@Url.Action("Users", "Users")';
+                        else if (vPerm == "6")
+
+                            window.location.href = '@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
+
+                        else if (vPerm == "7") {
+
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "MyAccount" })';
+
+                        }
+                        else if (vPerm == "7A") {
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "Login" })';
+
+                        }
+                        else if (vPerm == "7B") {
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "Signup" })';
+
+                        }
+                        else if (vPerm == "7C") {
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgotPassword" })';
+                        }
+                        else if (vPerm == "7D")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "ResetPassword" })';
+                        else if (vPerm == "7E")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "CreateEvent" })';
+                        else if (vPerm == "7F")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "CMSUsers" })';
+                        else if (vPerm == "7G")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
+                        else if (vPerm == "4")
+                            window.location.href = '@Url.Action("Index", "ManageEvent")';
+
+
+                    }
+                }
+            });
+
+
+
+        }
+
+
+
+        jQuery(document).ready(function () {
+
+
+
+
+            "use strict";
+
+            // Init Theme Core
+            Core.init();
+
+            // Init Demo JS
+            Demo.init();
+
+
+
+            $('.footable').footable();
+
+            var modalContent = $('#modal-content');
+
+            function findActive() {
+                var activeModal = modalContent.find('.holder-active').attr('href');
+                return activeModal;
+            };
+
+            // Form Skin Switcher
+            $('.animation-switcher button').on('click', function () {
+                $('.animation-switcher').find('button').removeClass('active-animation');
+                $(this).addClass('active-animation item-checked');
+
+                // Inline Admin-Form example
+                $.magnificPopup.open({
+                    removalDelay: 500, //delay removal by X to allow out-animation,
+                    items: {
+                        src: findActive()
+                    },
+                    // overflowY: 'hidden', //
+                    callbacks: {
+                        beforeOpen: function (e) {
+                            var Animation = $(".animation-switcher").find('.active-animation').attr('data-effect');
+                            this.st.mainClass = Animation;
+                        }
+                    },
+                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+
+                });
+
+            });
+
+            $('.admin-panels').adminpanel({
+                onFinish: function () {
+                    $('.admin-panels').addClass('animated fadeIn').removeClass('fade-onload');
+                },
+
+            });
+
+
+
+            $('#multiselect2').multiselect({
+                includeSelectAllOption: true
+            });
+
+            //CKEDITOR.disableAutoInline = true;
+
+            //// Init Ckeditor
+            //CKEDITOR.replace('ckeditor1', {
+            //    height: 210,
+            //    on: {
+            //        instanceReady: function (evt) {
+            //            $('.cke').addClass('admin-skin cke-hide-bottom');
+            //        }
+            //    },
+            //});
+
+            //// Init Inline Ckeditors
+            //CKEDITOR.inline('ckeditor-inline2');
+
+        });
+
+
+        jQuery(document).ready(function () {
+
+            $('.sub-nav > li a').click(function () {
+                $('.accordion-toggle').addClass('menu-open');
+
+            });
+            jQuery(".panel-heading .panel-controls").prepend('<a class="srh_filter" href="#">Search</a>');
+
+
+        });
+
+    </script>
+    <!-- END: PAGE SCRIPTS -->
+
+</body>
+
+</html>

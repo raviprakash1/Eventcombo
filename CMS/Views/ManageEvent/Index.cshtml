@@ -2,14 +2,13 @@
 @using CMS.Models;
 @{
     ViewBag.Title = "Event";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
 
 @using (Html.BeginForm("Index", "ManageEvent", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
 {
-
 
     <section id="content_wrapper">
 
@@ -57,7 +56,7 @@
                                         <span class="view_evnt fs26 col-sm-6"> Event</span>
                                         <label class="field select admin-form col-sm-4 text-right srh-by-no">
                                             Total no. of Events : @ViewData["Eventscount"] &nbsp; &nbsp; &nbsp; &nbsp;
-                                            @*@Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()",@class="pagination" })*@
+                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()",@class="pagination" })
                                             @*@Html.DropDownList("PaF", new { @class = "pagination" })*@
                                             @*<select name="forma" onchange="location = this.options[this.selectedIndex].value;">
                                                 <option value="Contact.php">Contact</option>
@@ -255,10 +254,6 @@
                                             <td colspan="13">
                                                 <nav class="text-right">
                                                     <ul class="pagination hide-if-no-paging"></ul>
-                                                    <select class="pagination">
-                                                        <option>Select</option>
-                                                        <option data-page="2" class="footable-page"><a data-page="2" href="#"> Hello</a> </option>
-                                                    </select>
                                                 </nav>
                                             </td>
                                         </tr>

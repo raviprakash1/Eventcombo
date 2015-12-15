@@ -1,213 +1,273 @@
-﻿@model CMS.Models.EventCategory
-@{
-    ViewBag.Title = "EventCategory";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model IEnumerable<CMS.Models.EventCategory>
+    @*@model CMS.Models.EventCategory*@
+    @{
+        ViewBag.Title = "EventCategory";
+        //Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
 
 
-            <section id="content_wrapper">
-                @using (Html.BeginForm())
-                {
-                    if (TempData["SuccessMessage"] != null)
-                    {
-                        <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
-                        </div>
-                    }
-                    <div class="row" id="modal-content">
-                        <div class="col-md-12 mt10">
-                            <div class="panel ">                              
-                                    <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
-                                        <div class="panel">
-                                            <div class="panel-heading">
-                                                <span class="view_evnt fs26">Event Category</span>
-                                            </div>
+    <section id="content_wrapper">
+        @using (Html.BeginForm())
+        {
+        if (TempData["SuccessMessage"] != null)
+        {
+        <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
+        </div>
+        }
+        <div class="row" id="modal-content">
+            <div class="col-md-12 mt10">
+                <div class="panel ">
+                    <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <span class="view_evnt fs26">Event Category</span>
+                            </div>
 
-                                            <div class="panel-body">
-                                                <div class="col-md-12">
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="col-md-12 nopad">
+                                        <ul class="nav add-cat-nav">
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle add-cat-pop" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                    + Add Category
+                                                    <span class="caret caret-tp"></span>
+                                                </a>
+                                                <div class="col-sm-12 dropdown-menu dropdown-menu-cus catbg">
                                                     <div class="col-md-12 nopad">
-                                                        <ul class="nav add-cat-nav">
-                                                            <li class="dropdown">
-                                                                <a href="#" class="dropdown-toggle add-cat-pop" data-toggle="dropdown" role="button" aria-expanded="false">
-                                                                    + Add Category
-                                                                    <span class="caret caret-tp"></span>
-                                                                </a>
-                                                                <div class="col-sm-12 dropdown-menu dropdown-menu-cus catbg">
-                                                                    <div class="col-md-12 nopad">
-                                                                        <div class="col-md-7">
-                                                                            <input type="text" class="form-control" placeholder="Enter category name">
-                                                                        </div>
-                                                                        <div class="col-md-5 ">
-                                                                            <button class="btn btn-primary" type="submit">+ Add </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
+                                                        <div class="col-md-7">
+                                                            @Html.TextBox("txtEventCategory", null,new {@class="form-control",@maxlength=35,@placeholder="Enter Category Name"})
+                                                        </div>
+                                                        <div class="col-md-5 ">
+                                                            <button class="btn btn-primary" name="submit" value="Add" id="btnAddCat" type="submit">+ Add </button>
+                                                        </div>
                                                     </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="col-md-12 mt10 nopad">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-12 mt10 nopad">
+                                        <table id="tabCategory" width="100%">
+                                            <tbody>
+                                                @{
+                                                    int i = 0;
+                                                    foreach (var itemCat in Model)
+                                                    {
+                                                        i = i + 1;
+                                                <tr class="col-sm-12 catbg">
 
-                                                        <div class="col-sm-12 catbg">
-                                                            <div class="col-sm-10">Community/Cultural </div>
-                                                            <div class="col-sm-2 text-right">
-                                                                <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    <td class="col-sm-12">@itemCat.EventCategory1</td>
+                                                    <td class="pl5"><button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button></td>
+                                                    <td class="pl5"><button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>
+                                                </tr>
+
+
+                                                <tr class="col-sm-11 mt10 catbg col-sm-offset-1 mb10">
+                                                    <td style="width: 100%; float: left;">
+                                                        <table width="100%">
+                                                            <tr class="col-sm-12 crt-subcat">
+                                                                <td>
+                                                                    <div class="col-md-12">
+                                                                        <ul class="nav add-cat-nav">
+                                                                            <li class="dropdown">
+                                                                                <a href="#" class="dropdown-toggle add-cat-pop" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                                                    + Add Subcategory
+                                                                                    <span class="caret caret-tp"></span>
+                                                                                </a>
+                                                                                <div class="col-sm-12 dropdown-menu dropdown-menu-cus catbg">
+                                                                                    <div class="col-md-12 nopad">
+                                                                                        <div class="col-md-9">                                                                                            
+                                                                                            <input type="text" id="txtEventSubCategory-@i" placeholder="Enter Sub Category Name" class="form-control" />
+                                                                                        </div>
+                                                                                        <div class="col-md-3 ">                                                                                            
+                                                                                            <button class="btn btn-primary" name="submit" value="Add" id="btnAddSubCat" onclick="AddSubCat('@itemCat.EventCategoryID',document.getElementById('txtEventSubCategory-@i').value);" type="button">+ Add </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            @{
+                                                            foreach (var itemSubCat in itemCat.ESubCat)
+                                                            {
+                                                            <tr class="col-sm-12 crt-subcat2">
+                                                                <td class="col-sm-12">@itemSubCat.EventSubCategory1</td>
+                                                                <td class="pl5"><button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button></td>
+                                                                <td class="pl5"><button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>
+                                                            </tr>
+                                                            }
+                                                            }
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                }                                                                
+                                                }
+                                            </tbody>
+                                        </table>
+                                        @*<div class="col-sm-12 catbg">
+                                            <div class="col-sm-10">
+                                                @Html.Label("Community/Cultural")
+                                            </div>
+                                            <div class="col-sm-2 text-right">
+                                                <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                            </div>
+                                        </div>*@
+
+                                        @*<div class="col-sm-11 mt10 catbg col-sm-offset-1 mb10">
+                                            <div class="col-md-12 crt-subcat">
+                                                <ul class="nav add-cat-nav">
+                                                    <li class="dropdown">
+                                                        <a href="#" class="dropdown-toggle add-cat-pop" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                            + Add Subcategory
+                                                            <span class="caret caret-tp"></span>
+                                                        </a>
+                                                        <div class="col-sm-12 dropdown-menu dropdown-menu-cus catbg">
+                                                            <div class="col-md-12 nopad">
+                                                                <div class="col-md-7">
+                                                                    <input type="text" class="form-control" placeholder="Enter category name">
+                                                                </div>
+                                                                <div class="col-md-5 ">
+                                                                    <button class="btn btn-primary" type="submit">+ Add </button>
+                                                                </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-sm-11 mt10 catbg col-sm-offset-1 mb10">
-                                                            <div class="col-md-12 crt-subcat">
-                                                                <ul class="nav add-cat-nav">
-                                                                    <li class="dropdown">
-                                                                        <a href="#" class="dropdown-toggle add-cat-pop" data-toggle="dropdown" role="button" aria-expanded="false">
-                                                                            + Add Subcategory
-                                                                            <span class="caret caret-tp"></span>
-                                                                        </a>
-                                                                        <div class="col-sm-12 dropdown-menu dropdown-menu-cus catbg">
-                                                                            <div class="col-md-12 nopad">
-                                                                                <div class="col-md-7">
-                                                                                    <input type="text" class="form-control" placeholder="Enter category name">
-                                                                                </div>
-                                                                                <div class="col-md-5 ">
-                                                                                    <button class="btn btn-primary" type="submit">+ Add </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-12 nopad sub-cat-main-cont">
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-12 nopad sub-cat-main-cont">
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10"> Sub-Community/Cultural </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
                                                     </div>
-
-                                                    <div class="col-md-12 mt10 nopad">
-
-                                                        <div class="col-sm-12 catbg">
-                                                            <div class="col-sm-10">Community/Cultural </div>
-                                                            <div class="col-sm-2 text-right">
-                                                                <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-sm-11 mt10 catbg col-sm-offset-1 mb10">
-                                                            <div class="col-md-12 crt-subcat">
-                                                                <ul class="nav add-cat-nav">
-                                                                    <li class="dropdown">
-                                                                        <a href="#" class="dropdown-toggle add-cat-pop" data-toggle="dropdown" role="button" aria-expanded="false">
-                                                                            + Add Subcategory
-                                                                            <span class="caret caret-tp"></span>
-                                                                        </a>
-                                                                        <div class="col-sm-12 dropdown-menu dropdown-menu-cus catbg">
-                                                                            <div class="col-md-12 nopad">
-                                                                                <div class="col-md-7">
-                                                                                    <input type="text" class="form-control" placeholder="Enter category name">
-                                                                                </div>
-                                                                                <div class="col-md-5 ">
-                                                                                    <button class="btn btn-primary" type="submit">+ Add </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-md-12 nopad sub-cat-main-cont">
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-12 sub-cat-mar">
-                                                                    <div class="col-sm-10"> Community/Cultural </div>
-                                                                    <div class="col-sm-2 text-right">
-                                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
-                                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
+                                                </div>
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10"> Sub-Community/Cultural </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
                                                     </div>
-                                                    
+                                                </div>
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10"> Sub-Community/Cultural </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10"> Sub-Community/Cultural </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10">Sub- Community/Cultural </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                        </div>*@
+
+                                    </div>
+
+                                    @*<div class="col-md-12 mt10 nopad">
+
+                                        <div class="col-sm-12 catbg">
+                                            <div class="col-sm-10">Community/Cultural </div>
+                                            <div class="col-sm-2 text-right">
+                                                <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                            </div>
                                         </div>
-                                    </div>   
+
+                                        <div class="col-sm-11 mt10 catbg col-sm-offset-1 mb10">
+                                            <div class="col-md-12 crt-subcat">
+                                                <ul class="nav add-cat-nav">
+                                                    <li class="dropdown">
+                                                        <a href="#" class="dropdown-toggle add-cat-pop" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                            + Add Subcategory
+                                                            <span class="caret caret-tp"></span>
+                                                        </a>
+                                                        <div class="col-sm-12 dropdown-menu dropdown-menu-cus catbg">
+                                                            <div class="col-md-12 nopad">
+                                                                <div class="col-md-7">
+                                                                    <input type="text" class="form-control" placeholder="Enter category name">
+                                                                </div>
+                                                                <div class="col-md-5 ">
+                                                                    <button class="btn btn-primary" type="submit">+ Add </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-12 nopad sub-cat-main-cont">
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10">Sub-Community/Cultural 2 </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10"> Sub-Community/Cultural 2 </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10">Sub-Community/Cultural 2 </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10"> Sub-Community/Cultural 2 </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 sub-cat-mar">
+                                                    <div class="col-sm-10">Sub-Community/Cultural 2 </div>
+                                                    <div class="col-sm-2 text-right">
+                                                        <button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                        <button class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>*@
+
+                                </div>
                             </div>
                         </div>
-                    </div>                    
-                }
-            </section>
-<script src="~/Scripts/jquery.masked.js"></script>
-            <script type="text/javascript">
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </section>
+    <script src="~/Scripts/jquery.masked.js"></script>
+    <script type="text/javascript">
 
-                $(window).load(function () {
-                    debugger;
+                $(window).load(function () {                    
                     $("#EventSubCategoryListBox").hide();
                     $("#lblSubCatList").hide();
                     $("#btnReset").hide();
@@ -215,8 +275,26 @@
                     $("#btnDelete").hide();
                 });
 
-                $(document).ready(function () {                    
-                    $('#btnReset').click(function () {                        
+                function AddSubCat(CatId,SubCatName)
+                {                    
+                    $.ajax({
+                        url: '@Url.Action("AddSubCategories", "EventCategory")',
+                        data: { iEvntCtgryId: CatId, strSubCatName: SubCatName },
+                        type: "POST",
+                        success: function (data) {
+                            if (data == "N")
+                                debugger;
+                                alert("Some error occur while saving.");
+                        },
+                        error: function (data) {
+                            alert("Sorry! there is some problem.");
+                            return false
+                        }
+                    });
+                }
+
+                $(document).ready(function () {
+                    $('#btnReset').click(function () {
                         $("#btnCreate").show();
                         $("#btnAddSub").show();
                         $("#lblSubCat").show();
@@ -226,12 +304,12 @@
                         $("#EventCategory1").val('');
                         $("#btnReset").hide();
                         $("#btnEdit").hide();
-                        $("#btnDelete").hide();                        
+                        $("#btnDelete").hide();
                         $("#EventSubCategoryListBox").empty();
-                        
+
                     });
 
-                    $('#btnAddSub').click(function () {                        
+                    $('#btnAddSub').click(function () {
                         $("#EventSubCategoryListBox").show();
                         $("#lblSubCatList").show();
                         var newListValue = $('#EventSubCategory1').val();
@@ -245,7 +323,7 @@
                         }
                     });
 
-                    $("#EventCategoryListBox option").click(function () {                        
+                    $("#EventCategoryListBox option").click(function () {
                         $("#EventSubCategoryListBox").show();
                         $("#lblSubCatList").show();
                         $("#EventSubCategory1").hide();
@@ -268,14 +346,14 @@
                                 var strary = data.split(',');
                                 for (var i = 0; i < strary.length; i++) {
                                     $('#EventSubCategoryListBox').append('<option>' + strary[i] + '</option>');
-                                    
+
                                 }
                                 $("#EventSubCategoryListBox option").click(function () {
                                     $("#lblSubCat").show();
                                         $("#EventSubCategory1").show();
                                         var _this = $(this);
                                         $("#EventSubCategory1").val($(_this).text());
-                                    
+
                                 });
                             },
                             error: function (data) {
@@ -284,7 +362,7 @@
                             }
                         });
 
-                    });                                      
+                    });
                 });
-            </script>
+    </script>
 

@@ -265,6 +265,12 @@ namespace EventCombo.Controllers
             long lEventId = 0;
             try
             {
+                PayPalRedirect redirect = PayPal.ExpressCheckout(new PayPalOrder { Amount = 50 });
+
+                Session["token"] = redirect.Token;
+
+               // return new RedirectResult(redirect.Url);
+
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
 
                 EventComboEntities objEntDup = new EventComboEntities();

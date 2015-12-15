@@ -149,7 +149,7 @@ namespace CMS.Controllers
         }
         public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory,string strFeature,string Events,string tickets)
         {
-            string user = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
+            string user = (Session["UserID"] != null ? Session["UserID"].ToString() : string.Empty);
 
             //if (SearchStringEventTitle == null) SearchStringEventTitle = "";
             //if (SearchStringEventType == null) SearchStringEventType = "";

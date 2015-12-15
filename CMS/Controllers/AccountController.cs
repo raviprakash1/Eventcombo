@@ -393,9 +393,9 @@ namespace CMS.Controllers
         {
             using (EmsEntities db = new EmsEntities())
             {
-                if (Session["AppId"] != null)
+                if (Session["UserID"] != null)
                 {
-                    var user = Session["AppId"].ToString();
+                    var user = Session["UserID"].ToString();
                     AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user);
                     aspuser.LoginStatus = "Y";
                     db.SaveChanges();

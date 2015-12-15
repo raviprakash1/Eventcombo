@@ -87,7 +87,7 @@ namespace CMS.Controllers
         [Authorize(Roles = "Super Admin,Admin")]
         public ActionResult Dashboard()
         {
-            if ((Session["AppId"] != null))
+            if ((Session["UserID"] != null))
             {
                 return View();
             }
@@ -112,9 +112,9 @@ namespace CMS.Controllers
 
         private string getuserImage()
         {
-            if ((Session["AppId"] != null))
+            if ((Session["UserID"] != null))
             {
-                string userid = Session["AppId"].ToString();
+                string userid = Session["UserID"].ToString();
                 var userImage = db.Profiles.Where(x => x.UserID == userid).Select(y => y.UserProfileImage).SingleOrDefault();
                 if (userImage != null)
                 {
@@ -133,9 +133,9 @@ namespace CMS.Controllers
 
         private string getusername()
         {
-            if ((Session["AppId"] != null))
+            if ((Session["UserID"] != null))
             {
-                string userid = Session["AppId"].ToString();
+                string userid = Session["UserID"].ToString();
                 var userEmail = db.AspNetUsers.Where(x => x.Id == userid).Select(y => y.Email).SingleOrDefault();
                 if(userEmail!=null)
                 {
@@ -174,7 +174,7 @@ namespace CMS.Controllers
                     var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id ).Contains(roleSuperAdmin.Id)).ToList();
                     if (users.Find(x => x.Id == User.Id ) != null)
                     {
-                        Session["AppId"] = User.Id;
+                        Session["UserID"] = User.Id;
                         using (EmsEntities db = new EmsEntities())
                         {
                             AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
@@ -190,7 +190,7 @@ namespace CMS.Controllers
                         var usersAdmin = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleAdmin.Id)).ToList();
                         if (usersAdmin.Find(x => x.Id == User.Id) != null)
                         {
-                            Session["AppId"] = User.Id;
+                            Session["UserID"] = User.Id;
                             using (EmsEntities db = new EmsEntities())
                             {
                                 AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);

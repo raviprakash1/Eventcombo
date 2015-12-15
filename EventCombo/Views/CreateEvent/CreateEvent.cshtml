@@ -14,7 +14,6 @@
 
 <script>
     $(document).ready(function () {
-
         $('#input2').filer({
             limit: 5,
             extensions: ['jpg', 'jpeg', 'png'],
@@ -1300,48 +1299,50 @@
                         <div class="col-sm-12 no_pad location_map_div loc_map" id="map_canvas"> <i class="fa fa-map-marker"></i> </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="col-sm-12 mt10">
-                        <button type="button" id="btAddMore" class="btn btn-primary ev_add_sub_btn">Add More</button>
-                        <button type="button" id="btReset" class="btn btn-primary ev_add_sub_btn">Reset</button>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="col-sm-12">
-                        <div class="col-sm-12 no_pad ">
-                            <div class="list-group ev_add_venue_group mb0">
-                                <div class="col-sm-10 no_pad mt5 ev_add_venue_addres">
-                                    <table id="tblAddress" class="table table-responsive">
-                                        <tbody>
-                                            <tr class="event_add_table">
-                                                <th>Address</th>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                @*<div class="ev_add_venue_list">
-                                        <div  class="col-sm-10 no_pad mt5 ev_add_venue_addres">
-
-                                        USA, Aghapur Road, Sector 41, Noida, Uttar Pradesh, India </div>
-                                        <div class="col-sm-2 no_pad text-right ev_add_venue_action">
-                                            <a href="#"><div class="ev_ven_act"><i class="fa fa-pencil"></i>  </div></a>
-                                            <a href="#"><div class="ev_ven_act ev_ven_blue"><i class="fa fa-trash"></i> </div></a>
-                                        </div>
+                    <div id="dvAddFooter">
+                        <div class="col-sm-12 mt10">
+                            <button type="button" id="btAddMore" class="btn btn-primary ev_add_sub_btn">Add More</button>
+                            <button type="button" id="btReset" class="btn btn-primary ev_add_sub_btn">Reset</button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12 no_pad ">
+                                <div class="list-group ev_add_venue_group mb0">
+                                    <div class="col-sm-10 no_pad mt5 ev_add_venue_addres">
+                                        <table id="tblAddress" class="table table-responsive">
+                                            <tbody>
+                                                <tr class="event_add_table">
+                                                    <th>Address</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="ev_add_venue_list">
-                                        <div class="col-sm-10 no_pad mt5 ev_add_venue_addres">USA, Aghapur Road, Sector 41, Noida, Uttar Pradesh, India</div>
-                                        <div class="col-sm-2 no_pad text-right ev_add_venue_action">
-                                            <a href="#"><div class="ev_ven_act"><i class="fa fa-pencil"></i>  </div></a>
-                                            <a href="#"><div class="ev_ven_act ev_ven_blue"><i class="fa fa-trash"></i> </div></a>
-                                        </div>
-                                    </div>*@
+                                    @*<div class="ev_add_venue_list">
+                            <div  class="col-sm-10 no_pad mt5 ev_add_venue_addres">
+
+                            USA, Aghapur Road, Sector 41, Noida, Uttar Pradesh, India </div>
+                            <div class="col-sm-2 no_pad text-right ev_add_venue_action">
+                                <a href="#"><div class="ev_ven_act"><i class="fa fa-pencil"></i>  </div></a>
+                                <a href="#"><div class="ev_ven_act ev_ven_blue"><i class="fa fa-trash"></i> </div></a>
+                            </div>
+                        </div>
+                        <div class="ev_add_venue_list">
+                            <div class="col-sm-10 no_pad mt5 ev_add_venue_addres">USA, Aghapur Road, Sector 41, Noida, Uttar Pradesh, India</div>
+                            <div class="col-sm-2 no_pad text-right ev_add_venue_action">
+                                <a href="#"><div class="ev_ven_act"><i class="fa fa-pencil"></i>  </div></a>
+                                <a href="#"><div class="ev_ven_act ev_ven_blue"><i class="fa fa-trash"></i> </div></a>
+                            </div>
+                        </div>*@
 
 
 
+
+                                </div>
 
                             </div>
-
                         </div>
-                    </div>
-                    <div class="clearfix"></div>
+                        <div class="clearfix"></div>
+                </div>
                 </div>
                 <div class="modal-footer no_pad">
                     <button type="button" id="btSaveAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
@@ -1391,14 +1392,16 @@
     </div><!-- confirm-msg -->
 </div>
 <div>
-    <a class="td-btn" id="btOkAc" type="button" href="#AccessDenied" data-toggle="modal" style="display:none">
+    <a class="td-btn" id="btOkAc"  type="button" href="#AccessDenied" data-toggle="modal" style="display:none">
 
     </a>
+    <div id='map-canvas-event'></div>
 </div>
 
     // ---------------------Event Creation Script -------------------
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    <script src="~/Content/gmap.js"></script>
     <script>
         $(".chkvalidation").blur(function () {
 
@@ -3086,6 +3089,7 @@
 
 
             $("#btMultiVenue").click(function () {
+                $("#dvAddFooter").show();
                 //$("#txtEventLocation").val('');
                 if ($("#tblAddress tr").length <= 1) {
                     if ($("#txtEventLocation").val().trim() != '') {
@@ -3448,79 +3452,76 @@
                 else
                     $("#hidAddressStatus").val('');
 
-
-
-
                 //$("#dllPastLocation")
             });
 
-
+            
 
             // ---------------------------------Map Implemetation--------------------------------------------
-            var input = document.getElementById('txtEventLocation');
-            var autocompleteEL = new google.maps.places.Autocomplete(input);
+            //var input = document.getElementById('txtEventLocation');
+            //var autocompleteEL = new google.maps.places.Autocomplete(input);
+            //debugger
+            //var inputVenu = document.getElementById('VenueName');
+            //var autocomplete = new google.maps.places.Autocomplete(inputVenu);
+            ////map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputVenu);
 
-            var inputVenu = document.getElementById('VenueName');
-            var autocomplete = new google.maps.places.Autocomplete(inputVenu);
-            //map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputVenu);
+            //google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            //    var mapOptions = {
+            //        center: new google.maps.LatLng(6.9167, 79.8473),
+            //        zoom: 10,
+            //        mapTypeId: google.maps.MapTypeId.ROADMAP
+            //    };
+            //    //var map = new google.maps.Map(document.getElementById("map_canvas"),
+            //    //  mapOptions);
+            //    var map = new google.maps.Map(document.getElementById("map_canvas"),
+            //      mapOptions);
+            //    // create a marker
+            //    var latlng = new google.maps.LatLng(6.9167, 79.8473);
+            //    var marker = new google.maps.Marker({
+            //        position: latlng,
+            //        map: map,
+            //        title: 'My Place'
 
-            google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                var mapOptions = {
-                    center: new google.maps.LatLng(6.9167, 79.8473),
-                    zoom: 10,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                //var map = new google.maps.Map(document.getElementById("map_canvas"),
-                //  mapOptions);
-                var map = new google.maps.Map(document.getElementById("map"),
-                  mapOptions);
-                // create a marker
-                var latlng = new google.maps.LatLng(6.9167, 79.8473);
-                var marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map,
-                    title: 'My Place'
+            //    });
+            //    var place = autocomplete.getPlace();
+            //    if (place.geometry.viewport) {
+            //        map.fitBounds(place.geometry.viewport);
+            //    }
+            //    else {
+            //        map.setCenter(place.geometry.location);
+            //        map.setZoom(17);
 
-                });
-                var place = autocomplete.getPlace();
-                if (place.geometry.viewport) {
-                    map.fitBounds(place.geometry.viewport);
-                }
-                else {
-                    map.setCenter(place.geometry.location);
-                    map.setZoom(17);
+            //    }
+            //    marker.setIcon(({
+            //        url: place.icon,
+            //        size: new google.maps.Size(71, 71),
+            //        origin: new google.maps.Point(0, 0),
+            //        anchor: new google.maps.Point(17, 34),
+            //        scaledSize: new google.maps.Size(35, 35)
+            //    }));
+            //    marker.setPosition(place.geometry.location);
+            //    marker.setVisible(true);
 
-                }
-                marker.setIcon(({
-                    url: place.icon,
-                    size: new google.maps.Size(71, 71),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(17, 34),
-                    scaledSize: new google.maps.Size(35, 35)
-                }));
-                marker.setPosition(place.geometry.location);
-                marker.setVisible(true);
+            //    var address = '';
+            //    if (place.address_components) {
+            //        address = [
+            //          (place.address_components[0] && place.address_components[0].short_name || ''),
+            //          (place.address_components[1] && place.address_components[1].short_name || ''),
+            //          (place.address_components[2] && place.address_components[2].short_name || '')
+            //        ].join(' ');
+            //    }
 
-                var address = '';
-                if (place.address_components) {
-                    address = [
-                      (place.address_components[0] && place.address_components[0].short_name || ''),
-                      (place.address_components[1] && place.address_components[1].short_name || ''),
-                      (place.address_components[2] && place.address_components[2].short_name || '')
-                    ].join(' ');
-                }
+            //    //$("#VenueName").val(place.address_components[0].long_name);
 
-                //$("#VenueName").val(place.address_components[0].long_name);
+            //    //$("#City").val(place.address_components[1].long_name);
+            //    //$("#State").val(place.address_components[3].long_name);
+            //    //$("#Zip").val(place.address_components[5].long_name);
+            //    //$("#CountryID").val(place.address_components[4].long_name);
 
-                //$("#City").val(place.address_components[1].long_name);
-                //$("#State").val(place.address_components[3].long_name);
-                //$("#Zip").val(place.address_components[5].long_name);
-                //$("#CountryID").val(place.address_components[4].long_name);
-
-                //$("#VenueName").val(address.toString());
-                //$("#Address1").val(address[1].toString());
-                //$("#Address2").val(address[2].toString());
-            });
+            //    //$("#VenueName").val(address.toString());
+            //    //$("#Address1").val(address[1].toString());
+            //    //$("#Address2").val(address[2].toString());
+            //});
             // --------------------Multiple Venue---------------------------
 
             function AddRow(TableId, ColumnValue, ColumnName, IncludeSNo) {
@@ -3690,7 +3691,18 @@
 
     //Ticket Section Starts
     <script>
+        function CannotFindLocation() {
+            $("#dvAddFooter").hide();
+            $("#VenueName").val('');
+            $("#Address1").val('');
+            $("#Address2").val('');
+            $("#City").val('');
+            $("#State").val('');
+            $("#Zip").val('');
+            $("#tblAddress").empty();
+            $("#CountryID").val('1');
 
+        }
         function changetext(e) {
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
             var al = e.substr(0, e.indexOf('-'));
@@ -3734,6 +3746,7 @@
 
         }
         $(document).ready(function () {
+         
             //$("#id_cost-n").each(function () {
             //    $(this).format({ format: "#,###", locale: "us" });
             //});
