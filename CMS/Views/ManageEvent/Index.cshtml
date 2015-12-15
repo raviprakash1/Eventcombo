@@ -56,7 +56,7 @@
                                         <span class="view_evnt fs26 col-sm-6"> Event</span>
                                         <label class="field select admin-form col-sm-4 text-right srh-by-no">
                                             Total no. of Events : @ViewData["Eventscount"] &nbsp; &nbsp; &nbsp; &nbsp;
-                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { onchange = "$('#formuser').submit()",@class="pagination" })
+                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { @class="pagination" })
                                             @*@Html.DropDownList("PaF", new { @class = "pagination" })*@
                                             @*<select name="forma" onchange="location = this.options[this.selectedIndex].value;">
                                                 <option value="Contact.php">Contact</option>
@@ -253,7 +253,7 @@
                                         <tr>
                                             <td colspan="13">
                                                 <nav class="text-right">
-                                                    <ul class="pagination hide-if-no-paging"></ul>
+                                                    <ul class="pagination hide-if-no-paging" id="ulpage"></ul>
                                                 </nav>
                                             </td>
                                         </tr>
@@ -344,7 +344,26 @@
         </div>
         <!-- End: Content -->
         <script>
+            $('#ulpage').click(function () {
+                console.log(this);
 
+               console.log( $('#ulpage li.active'));
+              var datapage=$('#ulpage li.active').children().attr('data-page');
+
+              $('#PageF').val(datapage);
+
+            });
+
+            $('#PageF').change(function () {
+                var value = $(this).val();
+                console.log($(this).val());
+                $("#ulpage li").removeClass('active');
+                $('#ulpage li a[data-page=' + value + ']').click();
+                console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
+               //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
+              
+
+            });
             function ConfirmDelete(userId) {
                 $("#hdUserId").val(userId);
                 $("#btnYes").show();

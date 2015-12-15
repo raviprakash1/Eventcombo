@@ -40,7 +40,7 @@ namespace CMS.Controllers
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
-                            Value = (z + iGapValue).ToString(),
+                            Value = (i).ToString(),
                             Selected = (iCount == z ? true : false)
                         });
                     }
@@ -52,7 +52,7 @@ namespace CMS.Controllers
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
-                            Value = (z + iGapValue).ToString(),
+                            Value = (i+1).ToString(),
                             Selected = (iCount == z ? true : false)
                         });
                     }
@@ -74,7 +74,7 @@ namespace CMS.Controllers
                 PageFilter.Add(new SelectListItem()
                 {
                     Text = "0 - 25",
-                    Value = "25",
+                    Value = "0",
                     Selected = (iCount == 25 ? true : false)
                 });
 
@@ -115,7 +115,7 @@ namespace CMS.Controllers
                     PageFilter.Add(new SelectListItem()
                     {
                         Text = strText,
-                        Value = (z + iGapValue).ToString(),
+                        Value = (i).ToString(),
                         Selected = (iCount == z ? true : false)
                     });
                     z = z + iGapValue;
@@ -126,7 +126,7 @@ namespace CMS.Controllers
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
-                            Value = (z + iGapValue).ToString(),
+                            Value = (i+1).ToString(),
                             Selected = (iCount == z ? true : false)
                         });
                         iUcount = 0;
@@ -138,7 +138,7 @@ namespace CMS.Controllers
                 PageFilter.Add(new SelectListItem()
                 {
                     Text = "0 - 25",
-                    Value = "25",
+                    Value = "0",
                     Selected = (iCount == 25 ? true : false)
                 });
 

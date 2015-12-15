@@ -53,7 +53,7 @@ namespace EventCombo.Controllers
 
 
         [HttpGet]
-        public ActionResult EventList(string Userid,string SearchStringEventTitle, string hdLastTab , int page_live = 1, int page_saved = 1, int page_past = 1, int pageSize = 20)
+        public ActionResult EventList(string SearchStringEventTitle, string hdLastTab , int page_live = 1, int page_saved = 1, int page_past = 1, int pageSize = 20)
         {
            
             if ((Session["AppId"] != null))
@@ -71,7 +71,7 @@ namespace EventCombo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Session["AppId"] = Userid;
+        
             page_live = page_live > 0 ? page_live : 1;
             page_saved = page_saved > 0 ? page_saved : 1;
             page_past = page_past > 0 ? page_past : 1;
