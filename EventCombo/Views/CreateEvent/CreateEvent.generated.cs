@@ -2902,7 +2902,7 @@ WriteLiteral(" placeholder=\"0\"");
 
 WriteLiteral(" id=\"id_min_ticket-n\"");
 
-WriteLiteral(" onblur=\"checkminum(this.id);\"");
+WriteLiteral(" onblur=\"return checkminum(this.id);\"");
 
 WriteLiteral(" onkeypress=\"allownumber(this,event,this.id)\"");
 
@@ -2925,7 +2925,7 @@ WriteLiteral(" placeholder=\"0\"");
 
 WriteLiteral(" id=\"id_max_ticket-n\"");
 
-WriteLiteral(" onblur=\"checkminum(this.id);\"");
+WriteLiteral(" onblur=\"return checkminum(this.id);\"");
 
 WriteLiteral(" onkeypress=\"allownumber(this,event,this.id)\"");
 
@@ -2944,9 +2944,9 @@ WriteLiteral(" style=\"color:red;display:none\"");
 
 WriteLiteral(" id=\"id_lblmax-n\"");
 
-WriteLiteral(">Please enter a valid number</label>\r\n\r\n                                         " +
-"               </div>\r\n                                                    </div" +
-">\r\n                                                    <div");
+WriteLiteral(">Please enter valid number</label>\r\n\r\n                                           " +
+"             </div>\r\n                                                    </div>\r" +
+"\n                                                    <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
@@ -3495,9 +3495,9 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 81551), Tuple.Create("\"", 81572)
-, Tuple.Create(Tuple.Create("", 81557), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 81557), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 81563), Tuple.Create("\"", 81584)
+, Tuple.Create(Tuple.Create("", 81569), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 81569), false)
 );
 
 WriteLiteral("> ENABLE DISCUSSION <input");
@@ -4163,7 +4163,15 @@ WriteLiteral(" class=\"btn btn-primary yes ok\"");
 WriteLiteral(">OK</button>\r\n                </div>\r\n            </form>\r\n        </div>\r\n    </" +
 "div><!-- confirm-msg -->\r\n</div>\r\n");
 
-WriteLiteral("<div>\r\n    <a");
+WriteLiteral("<div>\r\n    <input");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" id=\"hdMaxerr\"");
+
+WriteLiteral(" value=\"0\"");
+
+WriteLiteral("/>\r\n    <a");
 
 WriteLiteral(" class=\"td-btn\"");
 
@@ -4184,7 +4192,7 @@ WriteLiteral(" id=\'map-canvas-event\'");
 WriteLiteral("></div>\r\n</div>\r\n");
 
             
-            #line 1410 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1411 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
     // ---------------------Event Creation Script -------------------
 
@@ -4201,9 +4209,9 @@ WriteLiteral("></script>\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 94713), Tuple.Create("\"", 94736)
-, Tuple.Create(Tuple.Create("", 94719), Tuple.Create<System.Object, System.Int32>(Href("~/Content/gmap.js")
-, 94719), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 94777), Tuple.Create("\"", 94800)
+, Tuple.Create(Tuple.Create("", 94783), Tuple.Create<System.Object, System.Int32>(Href("~/Content/gmap.js")
+, 94783), false)
 );
 
 WriteLiteral("></script>\r\n");
@@ -4382,7 +4390,7 @@ WriteLiteral("    <script>\r\n        $(\".chkvalidation\").blur(function () {\r
 "\n                url: \'");
 
             
-            #line 1828 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1829 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                  Write(Url.Action("GetPermission", "Permission"));
 
             
@@ -4625,7 +4633,7 @@ WriteLiteral("\',\r\n                data: { iPermissionId: 1 },\r\n            
 "({\r\n                        url: \'");
 
             
-            #line 2249 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2250 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                          Write(Url.Action("SaveEvent", "CreateEvent"));
 
             
@@ -4640,7 +4648,7 @@ WriteLiteral(@"',
                             window.open('");
 
             
-            #line 2255 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2256 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                     Write(Url.Action("ViewCreateEvent", "CreateEvent",new { }));
 
             
@@ -4650,7 +4658,7 @@ WriteLiteral("?strUrlData=\' + vUrl, \"_blank\");\r\n                           
 "f = \'");
 
             
-            #line 2256 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2257 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                                Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -4662,7 +4670,7 @@ WriteLiteral("\' + \'?Eventid=\' + response;\r\n                        }\r\n   
 "indow.open(\'");
 
             
-            #line 2262 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2263 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                             Write(Url.Action("ViewCreateEvent", "CreateEvent",new { }));
 
             
@@ -4671,7 +4679,7 @@ WriteLiteral("\' + \'?Eventid=\' + response;\r\n                        }\r\n   
 WriteLiteral("?strUrlData=\' + vUrl, \"_blank\");\r\n                    window.location.href = \'");
 
             
-            #line 2263 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2264 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                        Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -4915,7 +4923,7 @@ WriteLiteral("\r\n            });\r\n\r\n            $(\".cbtMakeLive\").click(f
 "     $.ajax({\r\n                            url: \'");
 
             
-            #line 2649 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2650 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                              Write(Url.Action("SaveEvent", "CreateEvent"));
 
             
@@ -4929,7 +4937,7 @@ WriteLiteral(@"',
                                 window.location.href = '");
 
             
-            #line 2654 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2655 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                                    Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -4956,7 +4964,7 @@ WriteLiteral(@"?EventId=' + response + '';
                         url: '");
 
             
-            #line 2672 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2673 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                          Write(Url.Action("UpdateEventStatus", "CreateEvent"));
 
             
@@ -4978,7 +4986,7 @@ WriteLiteral(@"',
                                 window.location.href = '");
 
             
-            #line 2685 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2686 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                                    Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -5216,7 +5224,7 @@ WriteLiteral("?EventId=\' + hid + \'\';\r\n                            }\r\n    
 "                 url: \'");
 
             
-            #line 3089 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3090 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                          Write(Url.Action("SaveEvent", "CreateEvent"));
 
             
@@ -5237,7 +5245,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 3101 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3102 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                                Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -5362,7 +5370,7 @@ WriteLiteral("\' + \'?Eventid=\' + response;\r\n\r\n                        }\r\
 "              url: \'");
 
             
-            #line 3312 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3313 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "CreateEvent"));
 
             
@@ -5403,7 +5411,7 @@ WriteLiteral(@"',
                     url: '");
 
             
-            #line 3344 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3345 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -5476,7 +5484,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId },\r\n         
 "--------------------------------\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 3455 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3456 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                  Write(Url.Action("GetPreviousAddress", "CreateEvent"));
 
             
@@ -5627,7 +5635,7 @@ WriteLiteral("\',\r\n                type: \"Post\",\r\n                success:
 "    </script>\r\n");
 
             
-            #line 3714 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3715 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
 
     //Ticket Section Starts
@@ -5664,7 +5672,7 @@ WriteLiteral("    <script>\r\n        function CannotFindLocation() {\r\n       
 "  url: \'");
 
             
-            #line 3789 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3790 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                  Write(Url.Action("GetOrgnizerDetailbyUser", "CreateEvent"));
 
             
@@ -5685,7 +5693,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 3801 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3802 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -5721,527 +5729,538 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 "\");\r\n                    }\r\n                    $(\'#\' + e).removeClass(\'err-bor\'" +
 ");\r\n\r\n                }\r\n            } else { calculateSum(); }\r\n\r\n\r\n\r\n\r\n       " +
 " }\r\n        function checkminum(e) {\r\n\r\n            var el = e.substr(e.indexOf(" +
-"\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n\r\n            var minamt = parseInt($(\'" +
-"#id_min_ticket-\' + el).val());\r\n            var maxamt = parseInt($(\'#id_max_tic" +
-"ket-\' + el).val());\r\n\r\n            if (maxamt < minamt) {\r\n                $(\'#h" +
-"ddiscount\').val(\'1\');\r\n                $(\'#id_max_ticket-\' + el).addClass(\'err-b" +
-"or\');\r\n                $(\'#id_lblmax-\' + el).css(\'display\', \'block\');\r\n\r\n\r\n     " +
-"       } else {\r\n                $(\'#hddiscount\').val(\'0\');\r\n                $(\'" +
-"#id_max_ticket-\' + el).removeClass(\'err-bor\');\r\n                $(\'#id_lblmax-\' " +
-"+ el).css(\'display\', \'none\');\r\n            }\r\n        }\r\n        function calcul" +
-"ateSum() {\r\n\r\n            var sum = 0;\r\n            //iterate through each textb" +
-"oxes and add the values\r\n            $(\".txtsum\").each(function () {\r\n\r\n        " +
-"        //add only if the value is number\r\n                if (!isNaN(this.value" +
-") && this.value.length != 0) {\r\n                    sum += parseFloat(this.value" +
-");\r\n                }\r\n\r\n            });\r\n            //.toFixed() method will r" +
-"oundoff the final sum to 2 decimal places\r\n            $(\"#id_totalqty\").html(su" +
-"m);\r\n        }\r\n        function feechange(e) {\r\n            var fee = 0;\r\n     " +
-"       var total = 0;\r\n            var dropval = $(\'#\' + e).val();\r\n            " +
-"var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n            v" +
-"ar amount = parseFloat($(\'#id_cost-\' + el).val().replace(\',\', \'\'));\r\n           " +
-" if (amount > 999999.99) {\r\n\r\n\r\n            }\r\n            if (dropval.trim() ==" +
-" \'0\') {\r\n\r\n                var ccp = $(\'#id_cc\').val();\r\n\r\n                var c" +
-"cpamount = ((amount * ccp) / 100).toFixed(2);\r\n\r\n                var ccpfinal = " +
-"(parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);\r\n\r\n                var " +
-"msg = \"Ticket Price  &nbsp; &nbsp; &nbsp;     $\" + amount.toString().replace(/\\B" +
-"(?=(\\d{3})+(?!\\d))/g, \",\") + \"<br />\" + \"Fee      &nbsp;&nbsp; &nbsp; &nbsp;&nbs" +
-"p; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;       $\" + ccpamount.toString().rep" +
-"lace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\") + \"<br />\" + \"Buyer(s) Total    &nbsp;&nbsp; " +
-"&nbsp;      $\" + ccpfinal.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n   " +
-"             $(\'#id_buyerprice-\' + el).html(\"$\" + ccpfinal.toString().replace(/\\" +
-"B(?=(\\d{3})+(?!\\d))/g, \",\"));\r\n\r\n                $(\'#id_tooltip-\' + el).html(msg" +
-");\r\n                $(\'#id_feetype-\' + el).val(0);\r\n                fee = ccpamo" +
-"unt;\r\n                total = ccpfinal;\r\n\r\n            }\r\n            if (dropva" +
-"l.trim() == \'1\') {\r\n\r\n                var ccp = $(\'#id_cc\').val();\r\n            " +
-"    var ccpamount = ((amount * ccp) / 100).toFixed(2);\r\n                var ccpf" +
-"inal = parseFloat(amount).toFixed(2);\r\n                $(\'#id_buyerprice-\' + el)" +
-".html(\"$\" + ccpfinal.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\"));\r\n       " +
-"         var msg = \"Ticket Price  &nbsp; &nbsp; &nbsp;     $\" + amount.toString(" +
-").replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\") + \"<br />\" + \"Fee     &nbsp;&nbsp; &nbsp" +
-"; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $\" + ccpamount.toStr" +
-"ing().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\") + \"<br />\" + \"Buyer(s) Total    &nbs" +
-"p;&nbsp; &nbsp;      $\" + ccpfinal.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \"" +
-",\");\r\n                $(\'#id_tooltip-\' + el).html(msg);\r\n                //$(\'#i" +
-"d_tooltip-\' + el).html(msg);\r\n                $(\'#id_feetype-\' + el).val(1);\r\n  " +
-"              fee = ccpamount;\r\n                total = ccpfinal;\r\n\r\n           " +
-" }\r\n\r\n            $(\"#id_fee-\" + el).val(fee);\r\n            $(\"#id_total-\" + el)" +
-".val(total);\r\n\r\n        }\r\n        function checkprice(el, evt, id) {\r\n\r\n\r\n\r\n   " +
-"         var charCode = (evt.which) ? evt.which : event.keyCode;\r\n\r\n            " +
-"var number = el.value.split(\'.\');\r\n            if (charCode != 46 && charCode > " +
-"31 && (charCode < 48 || charCode > 57) && charCode != 44) {\r\n                evt" +
-".preventDefault();\r\n                return false;\r\n\r\n            }\r\n\r\n          " +
-"  if (number.length > 1 && charCode == 46) {\r\n                evt.preventDefault" +
-"();\r\n                return false;\r\n            }\r\n\r\n        }\r\n        function" +
-" tofixed(id) {\r\n            var price = $(\'#\' + id).val().replace(\',\', \'\');\r\n   " +
-"         var num = id.substr(id.indexOf(\'-\') + 1, id.length - id.indexOf(\'-\'));\r" +
-"\n            if (id == \"\") {\r\n\r\n            } else {\r\n\r\n                var pric" +
-"e = parseFloat(price).toFixed(2);\r\n\r\n                if (!isNaN(price)) {\r\n\r\n   " +
-"                 price = price.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");" +
-"\r\n                    document.getElementById(id).value = price;\r\n              " +
-"  }\r\n\r\n            }\r\n\r\n\r\n        }\r\n        function validateforzero(id, evt) {" +
-"\r\n            var price = parseFloat($(\'#\' + id).val().replace(\',\', \'\')).toFixed" +
-"(2);\r\n            var num = id.substr(id.indexOf(\'-\') + 1, id.length - id.indexO" +
-"f(\'-\'));\r\n            var discount = parseFloat($(\'#id_Discount-\' + num).val().r" +
-"eplace(\',\', \'\')).toFixed(2);\r\n            if (price == 0) {\r\n\r\n                $" +
-"(\'#id_cost-\' + num).addClass(\'err-bor\');\r\n                $(\'#id_lblprice-\' + nu" +
-"m).css(\'display\', \'block\');\r\n                $(\'#id_buyerprice-\' + num).html(\"$0" +
-".00\");\r\n                $(\'#id_tooltip-\' + num).html(\"Ticket Price &nbsp; &nbsp;" +
-" &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &n" +
-"bsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 \");\r\n                total =" +
-" 0;\r\n                fee = 0;\r\n                return false;\r\n\r\n            } el" +
-"se {\r\n\r\n                $(\'#id_cost-\' + num).removeClass(\'err-bor\');\r\n          " +
-"      $(\'#id_lblprice-\' + num).css(\'display\', \'none\');\r\n\r\n            }\r\n       " +
-"     if (price > 999999.99) {\r\n\r\n                $(\'#id_cost-\' + num).addClass(\'" +
-"err-bor\');\r\n                $(\'#id_lblprice-\' + num).css(\'display\', \'block\');\r\n " +
-"               $(\'#id_buyerprice-\' + num).html(\"$0.00\");\r\n                $(\'#id" +
-"_tooltip-\' + num).html(\"Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;" +
-"&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br />" +
-" Buyer(s) Total $0.00 \");\r\n                total = 0;\r\n                fee = 0;\r" +
-"\n                return false;\r\n            } else {\r\n\r\n                $(\'#id_c" +
-"ost-\' + num).removeClass(\'err-bor\');\r\n                $(\'#id_lblprice-\' + num).c" +
-"ss(\'display\', \'none\');\r\n\r\n            }\r\n\r\n\r\n            //Discount section\r\n   " +
-"         if (!isNaN(price) && !isNaN(discount)) {\r\n                if (price != " +
-"0 && discount != 0) {\r\n\r\n                    if (parseFloat(discount) >= parseFl" +
-"oat(price)) {\r\n\r\n                        $(\'#id_Discount-\' + num).addClass(\'err-" +
-"bor\');\r\n\r\n                        $(\'#hddiscount\').val(\'1\');\r\n\r\n                " +
-"    }\r\n                    else {\r\n\r\n                        $(\'#hddiscount\').va" +
-"l(\'0\');\r\n                        $(\'#id_Discount-\' + num).removeClass(\'err-bor\')" +
-";\r\n\r\n                    }\r\n\r\n                }\r\n                else if (price " +
-"== 0 && discount != 0) {\r\n\r\n                    $(\'#hddiscount\').val(\'1\');\r\n    " +
-"                $(\'#id_Discount-\' + num).addClass(\'err-bor\');\r\n                }" +
-"\r\n\r\n            }\r\n            else if (isNaN(price) && !isNaN(discount)) {\r\n\r\n " +
-"               $(\'#hddiscount\').val(\'1\');\r\n                $(\'#id_Discount-\' + n" +
-"um).addClass(\'err-bor\');\r\n            }\r\n\r\n            if (isNaN(price)) {\r\n\r\n  " +
-"              $(\'#id_buyerprice-\' + num).html(\"$0.00\");\r\n                $(\'#id_" +
-"tooltip-\' + num).html(\"Ticket Price  &nbsp; &nbsp;&nbsp; &nbsp; $0.00 <br/> Fee " +
-"&nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; $0.00 <br /> Buyer" +
-"(s) Total $0.00 \");\r\n                total = 0;\r\n                fee = 0;\r\n\r\n   " +
-"         }\r\n            else if (price > 0) {\r\n                var ccpamount = 0" +
-";\r\n                var ccpfinal = 0;\r\n                $(\'#id_feestruct-\' + num)." +
-"css(\'display\', \'block\');\r\n                var val = $(\"#id_feetype-0\").val();\r\n " +
-"               var fee = 0;\r\n\r\n                if (val == 0) {\r\n                " +
-"    ccp = parseFloat($(\'#id_cc\').val()).toFixed(2);\r\n\r\n                    ccpam" +
-"ount = ((price * ccp) / 100).toFixed(2);\r\n                    ccpamount = ccpamo" +
-"unt.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n                    ccpfi" +
-"nal = (parseFloat(ccpamount) + parseFloat(price)).toFixed(2);\r\n                 " +
-"   ccpfinal = ccpfinal.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n      " +
-"              price = price.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n " +
-"                   var msg = \"Ticket Price  &nbsp; &nbsp; &nbsp;     $\" + price " +
-"+ \"<br/>\" + \"Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp" +
-";    $\" + ccpamount + \"<br/>\" + \"Buyer(s) Total   &nbsp;&nbsp; &nbsp;       $\" +" +
-" ccpfinal;\r\n                    $(\'#id_buyerprice-\' + num).html(\"$\" + ccpfinal);" +
-"\r\n                    $(\'#id_tooltip-\' + num).html(msg);\r\n                    to" +
-"tal = ccpfinal;\r\n                    fee = ccpamount;\r\n                }\r\n      " +
-"          if (val == 1) {\r\n                    ccp = $(\'#id_cc\').val();\r\n       " +
-"             ccpamount = ((price * ccp) / 100).toFixed(2);\r\n                    " +
-"ccpamount = ccpamount.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n       " +
-"             ccpfinal = price;\r\n                    ccpfinal = ccpfinal.toString" +
-"().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n                    $(\'#id_buyerprice" +
-"-\' + num).html(\"$\" + ccpfinal);\r\n                    var msg = \"Ticket Price  &n" +
-"bsp; &nbsp; &nbsp;     $\" + price + \"<br/>\" + \"Fee    &nbsp;&nbsp; &nbsp; &nbsp;" +
-"&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;     $\" + ccpamount + \"<br/>\" + \"Buyer(s) Tot" +
-"al    &nbsp;&nbsp; &nbsp;      $\" + ccpfinal;\r\n\r\n                    $(\'#id_tool" +
-"tip-\' + num).html(msg);\r\n                    total = ccpfinal;\r\n                " +
-"    fee = ccpamount;\r\n                }\r\n\r\n                console.log(ccpamount" +
-");\r\n                console.log(ccpfinal);\r\n                $(\"#id_fee-\" + num)." +
-"val(ccpamount.replace(\',\', \'\'));\r\n                $(\"#id_total-\" + num).val(ccpf" +
-"inal.replace(\',\', \'\'));\r\n                //$(\'#\' + id).val(price)\r\n            }" +
-"\r\n\r\n\r\n        }\r\n\r\n        function changefeetype(el, evt, id) {\r\n            va" +
-"r fee = 0;\r\n            var total = 0;\r\n\r\n            var charCode = (evt.which)" +
-" ? evt.which : event.keyCode;\r\n\r\n            var number = el.value.split(\'.\');\r\n" +
-"            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > " +
-"57) && charCode != 44) {\r\n                evt.preventDefault();\r\n               " +
-" return false;\r\n\r\n            }\r\n\r\n            if (number.length > 1 && charCode" +
-" == 46) {\r\n                evt.preventDefault();\r\n                return false;\r" +
-"\n            }\r\n\r\n\r\n\r\n        }\r\n        function minimize(e) {\r\n\r\n            v" +
-"ar id = e;\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.index" +
-"Of(\'-\'));\r\n\r\n            $(\'#evnt_set-\' + el).slideToggle(\"fast\");\r\n\r\n        }\r" +
-"\n        $(\'.var_chg_btn\').click(function () {\r\n            $(\"#id_Mainvariable\"" +
-").css(\'display\', \'block\');\r\n            var divlength = $(\"#id_Mainvariable> div" +
-"\").size();\r\n            var data = $(\'#id_clonevariable-n\').clone();\r\n          " +
-"  data.attr(\'id\', \'id_clonevariable-\' + divlength);\r\n            data.removeAttr" +
-"(\"style\")\r\n            data.find(\'*[id]\').andSelf().each(function () {\r\n        " +
-"        //console.log($(this));\r\n\r\n                var id = $(this).attr(\'id\');\r" +
-"\n                //console.log(id);\r\n                id1 = id.substr(0, id.index" +
-"Of(\'-\'));\r\n                ////console.log(id);\r\n                var idn = id1 +" +
-" \"-\" + divlength;\r\n                $(this).attr(\"id\", idn);\r\n                $(t" +
-"his).val(\'\');\r\n\r\n\r\n\r\n            });\r\n\r\n\r\n            $(\'#id_Mainvariable\').appe" +
-"nd(data);\r\n            $(\'#btn_vardelete-\' + divlength).attr(\'href\', \'#cnfrmdele" +
-"tevariable-\' + divlength);\r\n        });\r\n        $(\'.save_btnpaid \').click(funct" +
-"ion () {\r\n\r\n            $(\".ticket_panel\").show();\r\n            $(\"#id_ticket_fo" +
-"oter\").css(\'display\', \'block\');\r\n            var divlength = $(\"#MasterDiv> div\"" +
-").size();\r\n            var data = $(\'#clonediv-n\').clone();\r\n            data.at" +
-"tr(\'id\', \'clonediv-\' + divlength);\r\n            data.removeAttr(\"style\")\r\n\r\n    " +
-"        data.find(\'*[id]\').andSelf().each(function () {\r\n                //conso" +
-"le.log($(this));\r\n\r\n                var id = $(this).attr(\'id\');\r\n              " +
-"  //console.log(id);\r\n                id1 = id.substr(0, id.indexOf(\'-\'));\r\n    " +
-"            ////console.log(id);\r\n                var idn = id1 + \"-\" + divlengt" +
-"h;\r\n                $(this).attr(\"id\", idn);\r\n                $(this).val(\'\');\r\n" +
-"\r\n                if ($(this).hasClass(\"paidticket-n\")) {\r\n                    $" +
-"(this).removeClass(\'paidticket-n\');\r\n                    $(this).addClass(\'paidt" +
-"icket-\' + divlength + \'\');\r\n                }\r\n                if ($(this).hasCl" +
-"ass(\"normalticket-n\")) {\r\n                    $(this).removeClass(\'normalticket-" +
-"n\');\r\n                    $(this).addClass(\'normalticket-\' + divlength + \'\');\r\n " +
-"               }\r\n\r\n            });\r\n\r\n\r\n            $(\'#MasterDiv\').append(data" +
-");\r\n            $(\".normalticket-\" + divlength).css(\'display\', \'none\');\r\n       " +
-"     $(\".paidticket-\" + divlength).css(\'display\', \'block\');\r\n            $(\"#id_" +
-"ticket_type-\" + divlength).attr(\"placeholder\", \"Early Bird, RSVP...\");\r\n        " +
-"    $(\"#id_ticket_type-\" + divlength).attr(\"title\", \"Give your ticket a name, li" +
-"ke General Admission, Early Bird, RSVP, etc.\");\r\n            //$(\"#id_paymenttyp" +
-"e-\" + divlength).attr(\"title\", \"Give your ticket a name, like General Admission," +
-" Early Bird, RSVP, etc.\");\r\n            //$(\"#id_paymenttype-\" + divlength).attr" +
-"(\"placeholder\", \"Early Bird, RSVP...\");\r\n            $(\"#id_Discount-\" + divleng" +
-"th).prop(\"readonly\", false);\r\n            var randomValue = randomString(4);\r\n  " +
-"          $(\"#id_ticket_id-\" + divlength).val(randomValue);\r\n            $(\"#id_" +
-"order-\" + divlength).val(divlength);\r\n            $(\"#id_feetype-\" + divlength)." +
-"css(\'display\', \'block\');\r\n            $(\"#id_Tickettype-\" + divlength).val(\"Paid" +
-"\");\r\n            $(\"#id_buyerprice-\" + divlength).html(\'$0.00\');\r\n            $(" +
-"\'#id_tooltip-\' + divlength).html(\'Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br />" +
-" Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;   $0.00 <br /" +
-"> Buyer(s) Total $0.00\');\r\n            //$(\"#id_tooltip-\" + divlength).html(\'Tic" +
-"ket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00\');\r\n            $(\"#" +
-"id_feemethod\").val(0);\r\n            $(\"#id_salestart-\" + divlength).datepicker({" +
-"\r\n                format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n        " +
-"        onSelect: function () {\r\n\r\n                    this.fireEvent && this.fi" +
-"reEvent(\'onchange\') || $(this).change();\r\n                }\r\n            }).on(\'" +
-"changeDate\', function (ev) {\r\n                $(\"#id_salestart-\" + divlength).da" +
-"tepicker(\'hide\');\r\n            });\r\n            $(\"#id_saleend-\" + divlength).da" +
-"tepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDate: \"0\"," +
-"\r\n                onSelect: function () {\r\n\r\n                    this.fireEvent " +
-"&& this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n         " +
-"   }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_saleend-\" + divle" +
-"ngth).datepicker(\'hide\');\r\n            });\r\n\r\n            $(\"#id_auto_hide_until" +
-"_Date-\" + divlength).datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n      " +
-"          minDate: \"0\",\r\n                onSelect: function () {\r\n\r\n            " +
-"        this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n     " +
-"           }\r\n            }).on(\'changeDate\', function (ev) {\r\n                $" +
-"(\"#id_auto_hide_until_Date-\" + divlength).datepicker(\'hide\');\r\n            });\r\n" +
-"            $(\"#id_auto_hide_after_Date-\" + divlength).datepicker({\r\n           " +
-"     format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n                onSel" +
-"ect: function () {\r\n\r\n                    this.fireEvent && this.fireEvent(\'onch" +
-"ange\') || $(this).change();\r\n                }\r\n            }).on(\'changeDate\', " +
-"function (ev) {\r\n                $(\"#id_auto_hide_after_Date-\" + divlength).date" +
-"picker(\'hide\');\r\n            });\r\n\r\n            $(\"#id_saletimestart-\" + divleng" +
-"th).timepicker();\r\n            $(\"#btndelete-\" + divlength).attr(\'href\', \'#cnfrm" +
-"delete-\' + divlength);\r\n            $(\"#id_saletimeend-\" + divlength).timepicker" +
-"();\r\n            $(\"#id_auto_hide_until_time-\" + divlength).timepicker();\r\n     " +
-"       $(\"#id_auto_hide_until_time-\" + divlength).timepicker();\r\n            $(\"" +
-"#id_auto_hide_after_Time-\" + divlength).timepicker();\r\n            $(\"#id_auto_h" +
-"ide_until_time-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_auto_hide_after" +
-"_Time-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_saletimestart-\" + divlen" +
-"gth).val(\"7:00pm\");\r\n            $(\"#id_saletimeend-\" + divlength).val(\"7:00pm\")" +
-";\r\n            $(\"input[id^=\'id_cost\']\").mask(\'000,000.00\', { reverse: true });\r" +
-"\n            $(\"input[id^=\'id_Discount\']\").mask(\'000,000.00\', { reverse: true })" +
-";\r\n\r\n        });\r\n        $(\'.save_btndonation\').click(function () {\r\n          " +
-"  $(\".ticket_panel\").show();\r\n            $(\"#id_ticket_footer\").css(\'display\', " +
-"\'block\');\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n\r\n         " +
-"   var data = $(\'#clonediv-n\').clone();\r\n            data.attr(\'id\', \'clonediv-\'" +
-" + divlength);\r\n            data.removeAttr(\"style\")\r\n            console.log(da" +
-"ta.find(\'input[type=text]\'));\r\n            data.find(\'*[id]\').andSelf().each(fun" +
-"ction () {\r\n                //console.log($(this));\r\n\r\n                var id = " +
-"$(this).attr(\'id\');\r\n                //console.log(id);\r\n                id1 = i" +
-"d.substr(0, id.indexOf(\'-\'));\r\n                ////console.log(id);\r\n           " +
-"     var idn = id1 + \"-\" + divlength;\r\n                $(this).attr(\"id\", idn);\r" +
-"\n                $(this).val(\'\');\r\n\r\n                if ($(this).hasClass(\"paidt" +
-"icket-n\")) {\r\n                    $(this).removeClass(\'paidticket-n\');\r\n        " +
-"            $(this).addClass(\'paidticket-\' + divlength + \'\');\r\n                }" +
-"\r\n                if ($(this).hasClass(\"normalticket-n\")) {\r\n                   " +
-" $(this).removeClass(\'normalticket-n\');\r\n                    $(this).addClass(\'n" +
-"ormalticket-\' + divlength + \'\');\r\n                }\r\n\r\n            });\r\n\r\n\r\n    " +
-"        $(data).appendTo(\'#MasterDiv\');\r\n            $(\".normalticket-\" + divlen" +
-"gth).css(\'display\', \'block\');\r\n            $(\".paidticket-\" + divlength).css(\'di" +
-"splay\', \'none\');\r\n            $(\"#id_feetype-\" + divlength).css(\'display\', \'bloc" +
-"k\');\r\n            $(\"#id_paymenttype-\" + divlength).text(\"Donation\");\r\n         " +
-"   $(\"#id_ticket_type-\" + divlength).attr(\"placeholder\", \"Donation\");\r\n         " +
-"   $(\"#id_ticket_type-\" + divlength).attr(\"title\", \"Donation\");\r\n            $(\"" +
-"#id_Discount-\" + divlength).prop(\"readonly\", true);\r\n            var randomValue" +
-" = randomString(4);\r\n            $(\"#id_ticket_id-\" + divlength).val(randomValue" +
-");\r\n\r\n            $(\"#id_order-\" + divlength).val(divlength);\r\n            $(\"#i" +
-"d_Tickettype-\" + divlength).val(\"Donation\");\r\n\r\n            $(\"#id_feemethod\").v" +
-"al(0);\r\n            $(\"#id_salestart-\" + divlength).datepicker({\r\n              " +
-"  format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n                onSelect" +
-": function () {\r\n\r\n                    this.fireEvent && this.fireEvent(\'onchang" +
-"e\') || $(this).change();\r\n                }\r\n            }).on(\'changeDate\', fun" +
-"ction (ev) {\r\n                $(\"#id_salestart-\" + divlength).datepicker(\'hide\')" +
-";\r\n            });\r\n            $(\"#id_saleend-\" + divlength).datepicker({\r\n    " +
-"            format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n              " +
-"  onSelect: function () {\r\n\r\n                    this.fireEvent && this.fireEven" +
-"t(\'onchange\') || $(this).change();\r\n                }\r\n            }).on(\'change" +
-"Date\', function (ev) {\r\n                $(\"#id_saleend-\" + divlength).datepicker" +
-"(\'hide\');\r\n            });\r\n\r\n            $(\"#id_auto_hide_until_Date-\" + divlen" +
-"gth).datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDat" +
-"e: \"0\",\r\n                onSelect: function () {\r\n\r\n                    this.fir" +
-"eEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n  " +
-"          }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_auto_hide_" +
-"until_Date-\" + divlength).datepicker(\'hide\');\r\n            });\r\n            $(\"#" +
-"id_auto_hide_after_Date-\" + divlength).datepicker({\r\n                format: \"mm" +
-"/dd/yyyy\",\r\n                minDate: \"0\",\r\n                onSelect: function ()" +
-" {\r\n\r\n                    this.fireEvent && this.fireEvent(\'onchange\') || $(this" +
-").change();\r\n                }\r\n            }).on(\'changeDate\', function (ev) {\r" +
-"\n                $(\"#id_auto_hide_after_Date-\" + divlength).datepicker(\'hide\');\r" +
-"\n            });\r\n\r\n            $(\"#id_saletimestart-\" + divlength).timepicker()" +
-";\r\n            $(\"#btndelete-\" + divlength).attr(\'href\', \'#cnfrmdelete-\' + divle" +
-"ngth);\r\n            $(\"#id_saletimeend-\" + divlength).timepicker();\r\n           " +
-" $(\"#id_auto_hide_until_time-\" + divlength).timepicker();\r\n            $(\"#id_au" +
-"to_hide_until_time-\" + divlength).timepicker();\r\n            $(\"#id_auto_hide_af" +
-"ter_Time-\" + divlength).timepicker();\r\n            $(\"#id_auto_hide_until_time-\"" +
-" + divlength).val(\"7:00pm\");\r\n            $(\"#id_auto_hide_after_Time-\" + divlen" +
-"gth).val(\"7:00pm\");\r\n            $(\"#id_saletimestart-\" + divlength).val(\"7:00pm" +
-"\");\r\n            $(\"#id_saletimeend-\" + divlength).val(\"7:00pm\");\r\n\r\n        });" +
-"\r\n        $(\'.save_btnfree\').click(function () {\r\n\r\n            $(\".ticket_panel" +
-"\").show();\r\n            $(\"#id_ticket_footer\").css(\'display\', \'block\');\r\n       " +
-"     var divlength = $(\"#MasterDiv> div\").size();\r\n            var data = $(\'#cl" +
-"onediv-n\').clone();\r\n            data.attr(\'id\', \'clonediv-\' + divlength);\r\n    " +
-"        data.removeAttr(\"style\");\r\n            data.find(\'*[id]\').andSelf().each" +
-"(function () {\r\n\r\n\r\n                var id = $(this).attr(\'id\');\r\n              " +
-"  //console.log(id);\r\n                id1 = id.substr(0, id.indexOf(\'-\'));\r\n    " +
-"            ////console.log(id);\r\n                var idn = id1 + \"-\" + divlengt" +
-"h;\r\n                $(this).attr(\"id\", idn);\r\n                $(this).val(\'\');\r\n" +
-"\r\n                if ($(this).hasClass(\"paidticket-n\")) {\r\n                    $" +
-"(this).removeClass(\'paidticket-n\');\r\n                    $(this).addClass(\'paidt" +
-"icket-\' + divlength + \'\');\r\n                }\r\n                if ($(this).hasCl" +
-"ass(\"normalticket-n\")) {\r\n                    $(this).removeClass(\'normalticket-" +
-"n\');\r\n                    $(this).addClass(\'normalticket-\' + divlength + \'\');\r\n " +
-"               }\r\n\r\n            });\r\n\r\n            //data.append(\'<span class=\"R" +
-"emoveMoreHub\" style=\"width:80%;\"><a href=\"javascript:void(0);\" style=\"float:righ" +
-"t;color:#CE0009;font-size:13px;text-decoration:none;margin-right:5%;\" >- Remove<" +
-"/a></span>\');\r\n            $(\'#MasterDiv\').append(data);\r\n            $(\"#btndel" +
-"ete-\" + divlength).attr(\'href\', \'#cnfrmdelete-\' + divlength);\r\n            $(\".n" +
-"ormalticket-\" + divlength).css(\'display\', \'block\');\r\n            $(\".paidticket-" +
-"\" + divlength).css(\'display\', \'none\');\r\n\r\n            $(\"#id_paymenttype-\" + div" +
-"length).text(\"Free\");\r\n            $(\"#id_ticket_type-\" + divlength).attr(\"title" +
-"\", \"Give your ticket a name, like General Admission, Early Bird, RSVP, etc.\");\r\n" +
-"            $(\"#id_ticket_type-\" + divlength).attr(\"placeholder\", \"Early Bird, R" +
-"SVP...\");\r\n            $(\"#id_Discount-\" + divlength).prop(\"readonly\", true);\r\n " +
-"           var randomValue = randomString(4);\r\n            $(\"#id_ticket_id-\" + " +
-"divlength).val(randomValue);\r\n            $(\"#id_order-\" + divlength).val(divlen" +
-"gth);\r\n            //$(\"#id_feetype-\" + divlength).css(\'display\', \'none\');\r\n    " +
-"        $(\"#id_Tickettype-\" + divlength).val(\"Free\");\r\n            //$(\"clonediv" +
-"-\" + divlength).css(\'display\', \'block\');\r\n\r\n            $(\"#id_feemethod\").val(0" +
-");\r\n            $(\"#id_salestart-\" + divlength).datepicker({\r\n                fo" +
+"\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n          \r\n            var minamt = pa" +
+"rseInt($(\'#id_min_ticket-\' + el).val());\r\n            var maxamt = parseInt($(\'#" +
+"id_max_ticket-\' + el).val());\r\n            if (isNaN(maxamt) && !isNaN(minamt))\r" +
+"\n            {\r\n                \r\n                $(\'#hdMaxerr\').val(\'1\');\r\n    " +
+"            $(\'#id_min_ticket-\' + el).addClass(\'err-bor\');\r\n                $(\'#" +
+"id_max_ticket-\' + el).addClass(\'err-bor\');\r\n                $(\'#id_lblmax-\' + el" +
+").css(\'display\', \'block\');\r\n\r\n            }else if(maxamt==0 && minamt==0)\r\n    " +
+"        {\r\n                $(\'#hdMaxerr\').val(\'0\');\r\n                $(\'#id_min_" +
+"ticket-\' + el).removeClass(\'err-bor\');\r\n                $(\'#id_max_ticket-\' + el" +
+").removeClass(\'err-bor\');\r\n                $(\'#id_lblmax-\' + el).css(\'display\', " +
+"\'none\');\r\n            }\r\n            else if (maxamt <= minamt) {\r\n             " +
+"       $(\'#hdMaxerr\').val(\'1\');\r\n                    $(\'#id_min_ticket-\' + el).a" +
+"ddClass(\'err-bor\');\r\n                    $(\'#id_max_ticket-\' + el).addClass(\'err" +
+"-bor\');\r\n                    $(\'#id_lblmax-\' + el).css(\'display\', \'block\');\r\n\r\n\r" +
+"\n                } else {\r\n                    $(\'#hdMaxerr\').val(\'0\');\r\n       " +
+"             $(\'#id_min_ticket-\' + el).removeClass(\'err-bor\');\r\n                " +
+"    $(\'#id_max_ticket-\' + el).removeClass(\'err-bor\');\r\n                    $(\'#i" +
+"d_lblmax-\' + el).css(\'display\', \'none\');\r\n                }\r\n          \r\n       " +
+" }\r\n        function calculateSum() {\r\n\r\n            var sum = 0;\r\n            /" +
+"/iterate through each textboxes and add the values\r\n            $(\".txtsum\").eac" +
+"h(function () {\r\n\r\n                //add only if the value is number\r\n          " +
+"      if (!isNaN(this.value) && this.value.length != 0) {\r\n                    s" +
+"um += parseFloat(this.value);\r\n                }\r\n\r\n            });\r\n           " +
+" //.toFixed() method will roundoff the final sum to 2 decimal places\r\n          " +
+"  $(\"#id_totalqty\").html(sum);\r\n        }\r\n        function feechange(e) {\r\n    " +
+"        var fee = 0;\r\n            var total = 0;\r\n            var dropval = $(\'#" +
+"\' + e).val();\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.in" +
+"dexOf(\'-\'));\r\n            var amount = parseFloat($(\'#id_cost-\' + el).val().repl" +
+"ace(\',\', \'\'));\r\n            if (amount > 999999.99) {\r\n\r\n\r\n            }\r\n      " +
+"      if (dropval.trim() == \'0\') {\r\n\r\n                var ccp = $(\'#id_cc\').val(" +
+");\r\n\r\n                var ccpamount = ((amount * ccp) / 100).toFixed(2);\r\n\r\n    " +
+"            var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(" +
+"2);\r\n\r\n                var msg = \"Ticket Price  &nbsp; &nbsp; &nbsp;     $\" + am" +
+"ount.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\") + \"<br />\" + \"Fee      &nb" +
+"sp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;       $\"" +
+" + ccpamount.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\") + \"<br />\" + \"Buye" +
+"r(s) Total    &nbsp;&nbsp; &nbsp;      $\" + ccpfinal.toString().replace(/\\B(?=(\\" +
+"d{3})+(?!\\d))/g, \",\");\r\n                $(\'#id_buyerprice-\' + el).html(\"$\" + ccp" +
+"final.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\"));\r\n\r\n                $(\'#" +
+"id_tooltip-\' + el).html(msg);\r\n                $(\'#id_feetype-\' + el).val(0);\r\n " +
+"               fee = ccpamount;\r\n                total = ccpfinal;\r\n\r\n          " +
+"  }\r\n            if (dropval.trim() == \'1\') {\r\n\r\n                var ccp = $(\'#i" +
+"d_cc\').val();\r\n                var ccpamount = ((amount * ccp) / 100).toFixed(2)" +
+";\r\n                var ccpfinal = parseFloat(amount).toFixed(2);\r\n              " +
+"  $(\'#id_buyerprice-\' + el).html(\"$\" + ccpfinal.toString().replace(/\\B(?=(\\d{3})" +
+"+(?!\\d))/g, \",\"));\r\n                var msg = \"Ticket Price  &nbsp; &nbsp; &nbsp" +
+";     $\" + amount.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\") + \"<br />\" + " +
+"\"Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nb" +
+"sp;    $\" + ccpamount.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\") + \"<br />" +
+"\" + \"Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $\" + ccpfinal.toString().replace" +
+"(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n                $(\'#id_tooltip-\' + el).html(msg" +
+");\r\n                //$(\'#id_tooltip-\' + el).html(msg);\r\n                $(\'#id_" +
+"feetype-\' + el).val(1);\r\n                fee = ccpamount;\r\n                total" +
+" = ccpfinal;\r\n\r\n            }\r\n\r\n            $(\"#id_fee-\" + el).val(fee);\r\n     " +
+"       $(\"#id_total-\" + el).val(total);\r\n\r\n        }\r\n        function checkpric" +
+"e(el, evt, id) {\r\n\r\n\r\n\r\n            var charCode = (evt.which) ? evt.which : eve" +
+"nt.keyCode;\r\n\r\n            var number = el.value.split(\'.\');\r\n            if (ch" +
+"arCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57) && charCode !=" +
+" 44) {\r\n                evt.preventDefault();\r\n                return false;\r\n\r\n" +
+"            }\r\n\r\n            if (number.length > 1 && charCode == 46) {\r\n       " +
+"         evt.preventDefault();\r\n                return false;\r\n            }\r\n\r\n" +
+"        }\r\n        function tofixed(id) {\r\n            var price = $(\'#\' + id).v" +
+"al().replace(\',\', \'\');\r\n            var num = id.substr(id.indexOf(\'-\') + 1, id." +
+"length - id.indexOf(\'-\'));\r\n            if (id == \"\") {\r\n\r\n            } else {\r" +
+"\n\r\n                var price = parseFloat(price).toFixed(2);\r\n\r\n                " +
+"if (!isNaN(price)) {\r\n\r\n                    price = price.toString().replace(/\\B" +
+"(?=(\\d{3})+(?!\\d))/g, \",\");\r\n                    document.getElementById(id).val" +
+"ue = price;\r\n                }\r\n\r\n            }\r\n\r\n\r\n        }\r\n        function" +
+" validateforzero(id, evt) {\r\n            var price = parseFloat($(\'#\' + id).val(" +
+").replace(\',\', \'\')).toFixed(2);\r\n            var num = id.substr(id.indexOf(\'-\')" +
+" + 1, id.length - id.indexOf(\'-\'));\r\n            var discount = parseFloat($(\'#i" +
+"d_Discount-\' + num).val().replace(\',\', \'\')).toFixed(2);\r\n            if (price =" +
+"= 0) {\r\n\r\n                $(\'#id_cost-\' + num).addClass(\'err-bor\');\r\n           " +
+"     $(\'#id_lblprice-\' + num).css(\'display\', \'block\');\r\n                $(\'#id_b" +
+"uyerprice-\' + num).html(\"$0.00\");\r\n                $(\'#id_tooltip-\' + num).html(" +
+"\"Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nb" +
+"sp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 \"" +
+");\r\n                total = 0;\r\n                fee = 0;\r\n                return" +
+" false;\r\n\r\n            } else {\r\n\r\n                $(\'#id_cost-\' + num).removeCl" +
+"ass(\'err-bor\');\r\n                $(\'#id_lblprice-\' + num).css(\'display\', \'none\')" +
+";\r\n\r\n            }\r\n            if (price > 999999.99) {\r\n\r\n                $(\'#" +
+"id_cost-\' + num).addClass(\'err-bor\');\r\n                $(\'#id_lblprice-\' + num)." +
+"css(\'display\', \'block\');\r\n                $(\'#id_buyerprice-\' + num).html(\"$0.00" +
+"\");\r\n                $(\'#id_tooltip-\' + num).html(\"Ticket Price &nbsp; &nbsp; &n" +
+"bsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp" +
+";  &nbsp;&nbsp;$0.00 <br /> Buyer(s) Total $0.00 \");\r\n                total = 0;" +
+"\r\n                fee = 0;\r\n                return false;\r\n            } else {\r" +
+"\n\r\n                $(\'#id_cost-\' + num).removeClass(\'err-bor\');\r\n               " +
+" $(\'#id_lblprice-\' + num).css(\'display\', \'none\');\r\n\r\n            }\r\n\r\n\r\n        " +
+"    //Discount section\r\n            if (!isNaN(price) && !isNaN(discount)) {\r\n  " +
+"              if (price != 0 && discount != 0) {\r\n\r\n                    if (pars" +
+"eFloat(discount) >= parseFloat(price)) {\r\n\r\n                        $(\'#id_Disco" +
+"unt-\' + num).addClass(\'err-bor\');\r\n\r\n                        $(\'#hddiscount\').va" +
+"l(\'1\');\r\n\r\n                    }\r\n                    else {\r\n\r\n                " +
+"        $(\'#hddiscount\').val(\'0\');\r\n                        $(\'#id_Discount-\' + " +
+"num).removeClass(\'err-bor\');\r\n\r\n                    }\r\n\r\n                }\r\n    " +
+"            else if (price == 0 && discount != 0) {\r\n\r\n                    $(\'#h" +
+"ddiscount\').val(\'1\');\r\n                    $(\'#id_Discount-\' + num).addClass(\'er" +
+"r-bor\');\r\n                }\r\n\r\n            }\r\n            else if (isNaN(price) " +
+"&& !isNaN(discount)) {\r\n\r\n                $(\'#hddiscount\').val(\'1\');\r\n          " +
+"      $(\'#id_Discount-\' + num).addClass(\'err-bor\');\r\n            }\r\n\r\n          " +
+"  if (isNaN(price)) {\r\n\r\n                $(\'#id_buyerprice-\' + num).html(\"$0.00\"" +
+");\r\n                $(\'#id_tooltip-\' + num).html(\"Ticket Price  &nbsp; &nbsp;&nb" +
+"sp; &nbsp; $0.00 <br/> Fee &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbs" +
+"p;&nbsp; $0.00 <br /> Buyer(s) Total $0.00 \");\r\n                total = 0;\r\n    " +
+"            fee = 0;\r\n\r\n            }\r\n            else if (price > 0) {\r\n      " +
+"          var ccpamount = 0;\r\n                var ccpfinal = 0;\r\n               " +
+" $(\'#id_feestruct-\' + num).css(\'display\', \'block\');\r\n                var val = $" +
+"(\"#id_feetype-0\").val();\r\n                var fee = 0;\r\n\r\n                if (va" +
+"l == 0) {\r\n                    ccp = parseFloat($(\'#id_cc\').val()).toFixed(2);\r\n" +
+"\r\n                    ccpamount = ((price * ccp) / 100).toFixed(2);\r\n           " +
+"         ccpamount = ccpamount.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");" +
+"\r\n                    ccpfinal = (parseFloat(ccpamount) + parseFloat(price)).toF" +
+"ixed(2);\r\n                    ccpfinal = ccpfinal.toString().replace(/\\B(?=(\\d{3" +
+"})+(?!\\d))/g, \",\");\r\n                    price = price.toString().replace(/\\B(?=" +
+"(\\d{3})+(?!\\d))/g, \",\");\r\n                    var msg = \"Ticket Price  &nbsp; &n" +
+"bsp; &nbsp;     $\" + price + \"<br/>\" + \"Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; " +
+"&nbsp;  &nbsp;  &nbsp;&nbsp;    $\" + ccpamount + \"<br/>\" + \"Buyer(s) Total   &nb" +
+"sp;&nbsp; &nbsp;       $\" + ccpfinal;\r\n                    $(\'#id_buyerprice-\' +" +
+" num).html(\"$\" + ccpfinal);\r\n                    $(\'#id_tooltip-\' + num).html(ms" +
+"g);\r\n                    total = ccpfinal;\r\n                    fee = ccpamount;" +
+"\r\n                }\r\n                if (val == 1) {\r\n                    ccp = " +
+"$(\'#id_cc\').val();\r\n                    ccpamount = ((price * ccp) / 100).toFixe" +
+"d(2);\r\n                    ccpamount = ccpamount.toString().replace(/\\B(?=(\\d{3}" +
+")+(?!\\d))/g, \",\");\r\n                    ccpfinal = price;\r\n                    c" +
+"cpfinal = ccpfinal.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n          " +
+"          $(\'#id_buyerprice-\' + num).html(\"$\" + ccpfinal);\r\n                    " +
+"var msg = \"Ticket Price  &nbsp; &nbsp; &nbsp;     $\" + price + \"<br/>\" + \"Fee   " +
+" &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;     $\" + ccpamoun" +
+"t + \"<br/>\" + \"Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $\" + ccpfinal;\r\n\r\n    " +
+"                $(\'#id_tooltip-\' + num).html(msg);\r\n                    total = " +
+"ccpfinal;\r\n                    fee = ccpamount;\r\n                }\r\n\r\n          " +
+"      console.log(ccpamount);\r\n                console.log(ccpfinal);\r\n         " +
+"       $(\"#id_fee-\" + num).val(ccpamount.replace(\',\', \'\'));\r\n                $(\"" +
+"#id_total-\" + num).val(ccpfinal.replace(\',\', \'\'));\r\n                //$(\'#\' + id" +
+").val(price)\r\n            }\r\n\r\n\r\n        }\r\n\r\n        function changefeetype(el," +
+" evt, id) {\r\n            var fee = 0;\r\n            var total = 0;\r\n\r\n           " +
+" var charCode = (evt.which) ? evt.which : event.keyCode;\r\n\r\n            var numb" +
+"er = el.value.split(\'.\');\r\n            if (charCode != 46 && charCode > 31 && (c" +
+"harCode < 48 || charCode > 57) && charCode != 44) {\r\n                evt.prevent" +
+"Default();\r\n                return false;\r\n\r\n            }\r\n\r\n            if (nu" +
+"mber.length > 1 && charCode == 46) {\r\n                evt.preventDefault();\r\n   " +
+"             return false;\r\n            }\r\n\r\n\r\n\r\n        }\r\n        function min" +
+"imize(e) {\r\n\r\n            var id = e;\r\n            var el = e.substr(e.indexOf(\'" +
+"-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n            $(\'#evnt_set-\' + el).slideTo" +
+"ggle(\"fast\");\r\n\r\n        }\r\n        $(\'.var_chg_btn\').click(function () {\r\n     " +
+"       $(\"#id_Mainvariable\").css(\'display\', \'block\');\r\n            var divlength" +
+" = $(\"#id_Mainvariable> div\").size();\r\n            var data = $(\'#id_clonevariab" +
+"le-n\').clone();\r\n            data.attr(\'id\', \'id_clonevariable-\' + divlength);\r\n" +
+"            data.removeAttr(\"style\")\r\n            data.find(\'*[id]\').andSelf().e" +
+"ach(function () {\r\n                //console.log($(this));\r\n\r\n                va" +
+"r id = $(this).attr(\'id\');\r\n                //console.log(id);\r\n                " +
+"id1 = id.substr(0, id.indexOf(\'-\'));\r\n                ////console.log(id);\r\n    " +
+"            var idn = id1 + \"-\" + divlength;\r\n                $(this).attr(\"id\"," +
+" idn);\r\n                $(this).val(\'\');\r\n\r\n\r\n\r\n            });\r\n\r\n\r\n           " +
+" $(\'#id_Mainvariable\').append(data);\r\n            $(\'#btn_vardelete-\' + divlengt" +
+"h).attr(\'href\', \'#cnfrmdeletevariable-\' + divlength);\r\n        });\r\n        $(\'." +
+"save_btnpaid \').click(function () {\r\n\r\n            $(\".ticket_panel\").show();\r\n " +
+"           $(\"#id_ticket_footer\").css(\'display\', \'block\');\r\n            var divl" +
+"ength = $(\"#MasterDiv> div\").size();\r\n            var data = $(\'#clonediv-n\').cl" +
+"one();\r\n            data.attr(\'id\', \'clonediv-\' + divlength);\r\n            data." +
+"removeAttr(\"style\")\r\n\r\n            data.find(\'*[id]\').andSelf().each(function ()" +
+" {\r\n                //console.log($(this));\r\n\r\n                var id = $(this)." +
+"attr(\'id\');\r\n                //console.log(id);\r\n                id1 = id.substr" +
+"(0, id.indexOf(\'-\'));\r\n                ////console.log(id);\r\n                var" +
+" idn = id1 + \"-\" + divlength;\r\n                $(this).attr(\"id\", idn);\r\n       " +
+"         $(this).val(\'\');\r\n\r\n                if ($(this).hasClass(\"paidticket-n\"" +
+")) {\r\n                    $(this).removeClass(\'paidticket-n\');\r\n                " +
+"    $(this).addClass(\'paidticket-\' + divlength + \'\');\r\n                }\r\n      " +
+"          if ($(this).hasClass(\"normalticket-n\")) {\r\n                    $(this)" +
+".removeClass(\'normalticket-n\');\r\n                    $(this).addClass(\'normaltic" +
+"ket-\' + divlength + \'\');\r\n                }\r\n\r\n            });\r\n\r\n\r\n            " +
+"$(\'#MasterDiv\').append(data);\r\n            $(\".normalticket-\" + divlength).css(\'" +
+"display\', \'none\');\r\n            $(\".paidticket-\" + divlength).css(\'display\', \'bl" +
+"ock\');\r\n            $(\"#id_ticket_type-\" + divlength).attr(\"placeholder\", \"Early" +
+" Bird, RSVP...\");\r\n            $(\"#id_ticket_type-\" + divlength).attr(\"title\", \"" +
+"Give your ticket a name, like General Admission, Early Bird, RSVP, etc.\");\r\n    " +
+"        //$(\"#id_paymenttype-\" + divlength).attr(\"title\", \"Give your ticket a na" +
+"me, like General Admission, Early Bird, RSVP, etc.\");\r\n            //$(\"#id_paym" +
+"enttype-\" + divlength).attr(\"placeholder\", \"Early Bird, RSVP...\");\r\n            " +
+"$(\"#id_Discount-\" + divlength).prop(\"readonly\", false);\r\n            var randomV" +
+"alue = randomString(4);\r\n            $(\"#id_ticket_id-\" + divlength).val(randomV" +
+"alue);\r\n            $(\"#id_order-\" + divlength).val(divlength);\r\n            $(\"" +
+"#id_feetype-\" + divlength).css(\'display\', \'block\');\r\n            $(\"#id_Ticketty" +
+"pe-\" + divlength).val(\"Paid\");\r\n            $(\"#id_buyerprice-\" + divlength).htm" +
+"l(\'$0.00\');\r\n            $(\'#id_tooltip-\' + divlength).html(\'Ticket Price &nbsp;" +
+" &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp; " +
+" &nbsp;&nbsp;   $0.00 <br /> Buyer(s) Total $0.00\');\r\n            //$(\"#id_toolt" +
+"ip-\" + divlength).html(\'Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total" +
+" $0.00\');\r\n            $(\"#id_feemethod\").val(0);\r\n            $(\"#id_salestart-" +
+"\" + divlength).datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n            " +
+"    minDate: \"0\",\r\n                onSelect: function () {\r\n\r\n                  " +
+"  this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n           " +
+"     }\r\n            }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_" +
+"salestart-\" + divlength).datepicker(\'hide\');\r\n            });\r\n            $(\"#i" +
+"d_saleend-\" + divlength).datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n  " +
+"              minDate: \"0\",\r\n                onSelect: function () {\r\n\r\n        " +
+"            this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n " +
+"               }\r\n            }).on(\'changeDate\', function (ev) {\r\n             " +
+"   $(\"#id_saleend-\" + divlength).datepicker(\'hide\');\r\n            });\r\n\r\n       " +
+"     $(\"#id_auto_hide_until_Date-\" + divlength).datepicker({\r\n                fo" +
 "rmat: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n                onSelect: fu" +
 "nction () {\r\n\r\n                    this.fireEvent && this.fireEvent(\'onchange\') " +
 "|| $(this).change();\r\n                }\r\n            }).on(\'changeDate\', functio" +
-"n (ev) {\r\n                $(\"#id_salestart-\" + divlength).datepicker(\'hide\');\r\n " +
-"           });\r\n            $(\"#id_saleend-\" + divlength).datepicker({\r\n        " +
-"        format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n                on" +
-"Select: function () {\r\n\r\n                    this.fireEvent && this.fireEvent(\'o" +
-"nchange\') || $(this).change();\r\n                }\r\n            }).on(\'changeDate" +
-"\', function (ev) {\r\n                $(\"#id_saleend-\" + divlength).datepicker(\'hi" +
-"de\');\r\n            });\r\n\r\n            $(\"#id_auto_hide_until_Date-\" + divlength)" +
-".datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDate: \"" +
-"0\",\r\n                onSelect: function () {\r\n\r\n                    this.fireEve" +
-"nt && this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n      " +
-"      }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_auto_hide_unti" +
-"l_Date-\" + divlength).datepicker(\'hide\');\r\n            });\r\n            $(\"#id_a" +
-"uto_hide_after_Date-\" + divlength).datepicker({\r\n                format: \"mm/dd/" +
-"yyyy\",\r\n                minDate: \"0\",\r\n                onSelect: function () {\r\n" +
-"\r\n                    this.fireEvent && this.fireEvent(\'onchange\') || $(this).ch" +
-"ange();\r\n                }\r\n            }).on(\'changeDate\', function (ev) {\r\n   " +
-"             $(\"#id_auto_hide_after_Date-\" + divlength).datepicker(\'hide\');\r\n   " +
-"         });\r\n\r\n            $(\"#id_saletimestart-\" + divlength).timepicker();\r\n\r" +
-"\n            $(\"#id_saletimeend-\" + divlength).timepicker();\r\n            $(\"#id" +
-"_auto_hide_until_time-\" + divlength).timepicker();\r\n            $(\"#id_auto_hide" +
-"_until_time-\" + divlength).timepicker();\r\n            $(\"#id_auto_hide_after_Tim" +
-"e-\" + divlength).timepicker();\r\n            $(\"#id_auto_hide_until_time-\" + divl" +
-"ength).val(\"7:00pm\");\r\n            $(\"#id_auto_hide_after_Time-\" + divlength).va" +
-"l(\"7:00pm\");\r\n            $(\"#id_saletimestart-\" + divlength).val(\"7:00pm\");\r\n  " +
-"          $(\"#id_saletimeend-\" + divlength).val(\"7:00pm\");\r\n\r\n\r\n\r\n        });\r\n " +
-"       function randomString(len, charSet) {\r\n            charSet = charSet || \'" +
-"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\';\r\n            va" +
-"r randomString = \'\';\r\n            for (var i = 0; i < len; i++) {\r\n             " +
-"   var randomPoz = Math.floor(Math.random() * charSet.length);\r\n                " +
-"randomString += charSet.substring(randomPoz, randomPoz + 1);\r\n            }\r\n   " +
-"         return randomString;\r\n        }\r\n        function deletevariable(e) {\r\n" +
-"\r\n            var divlength = $(\"#id_Mainvariable> div\").size();\r\n\r\n            " +
-"var id = e;\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.inde" +
-"xOf(\'-\'));\r\n\r\n            var div = document.getElementById(\"id_clonevariable-\" " +
-"+ el);\r\n\r\n\r\n\r\n            div.parentNode.removeChild(div);\r\n            divlengt" +
-"h = $(\"#id_Mainvariable> div\").size();\r\n\r\n            var count = 0;\r\n          " +
-"  $(\'#id_Mainvariable\').children(\'div\').each(function () {\r\n\r\n                va" +
-"r id = $(this).attr(\'id\');\r\n\r\n                id1 = id.substr(0, id.indexOf(\'-\')" +
-");\r\n                ////console.log(id);\r\n                var idn = id1 + \"-\" + " +
-"(count);\r\n                $(this).attr(\"id\", idn);\r\n                $(this).find" +
-"(\'*[id]\').andSelf().each(function () {\r\n\r\n\r\n                    var id = $(this)" +
-".attr(\'id\');\r\n                    //console.log(id);\r\n                    id1 = " +
-"id.substr(0, id.indexOf(\'-\'));\r\n                    console.log(id1);\r\n         " +
-"           var idn = id1 + \"-\" + (count);\r\n                    $(this).attr(\"id\"" +
-", idn);\r\n\r\n                    if (id1 == \"btn_vardelete\") {\r\n                  " +
-"      $(this).attr(\"href\", \"#cnfrmdeletevariable-\" + count);\r\n                  " +
-"  }\r\n\r\n\r\n                });\r\n                count = count + 1;\r\n\r\n            " +
-"});\r\n\r\n            if (divlength == 0) {\r\n                $(\'#id_Mainvariable\')." +
-"css(\'display\', \'none\');\r\n\r\n            }\r\n\r\n\r\n\r\n\r\n        }\r\n        function de" +
-"letediv(e) {\r\n\r\n            {\r\n\r\n                var divlength = $(\"#MasterDiv> " +
-"div\").size();\r\n\r\n                var id = e;\r\n                var el = e.substr(" +
-"e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n                var div = doc" +
-"ument.getElementById(\"clonediv-\" + el);\r\n                // var div = document.g" +
-"etElementById(\"clonediv-0\");\r\n                var toatlqty = $(\"#id_totalqty\").h" +
-"tml();\r\n                var qty = $(\"#id_quantity_total-\" + el).val();\r\n        " +
-"        var leftqty = parseInt(toatlqty) - parseInt(qty);\r\n                if (!" +
-"isNaN(leftqty)) {\r\n                    $(\"#id_totalqty\").html(leftqty);\r\n       " +
-"         } else {\r\n\r\n                    $(\"#id_totalqty\").html(0);\r\n           " +
-"     }\r\n\r\n\r\n                div.parentNode.removeChild(div);\r\n                di" +
-"vlength = $(\"#MasterDiv> div\").size();\r\n\r\n                var count = 0;\r\n      " +
-"          $(\'#MasterDiv\').children(\'div\').each(function () {\r\n\r\n                " +
-"    var id = $(this).attr(\'id\');\r\n\r\n                    id1 = id.substr(0, id.in" +
-"dexOf(\'-\'));\r\n                    ////console.log(id);\r\n                    var " +
-"idn = id1 + \"-\" + (count);\r\n                    $(this).attr(\"id\", idn);\r\n      " +
-"              $(this).find(\'*[id]\').andSelf().each(function () {\r\n\r\n\r\n          " +
-"              var id = $(this).attr(\'id\');\r\n                        //console.lo" +
-"g(id);\r\n                        id1 = id.substr(0, id.indexOf(\'-\'));\r\n          " +
-"              // console.log(id);\r\n                        var idn = id1 + \"-\" +" +
-" (count);\r\n                        $(this).attr(\"id\", idn);\r\n                   " +
-"     var al = $(this).attr(\"id\").substr(0, id.indexOf(\'-\'));\r\n                  " +
-"      console.log(al);\r\n                        if (al == \"id_order\") {\r\n\r\n     " +
-"                       $(this).val(count);\r\n                        }\r\n\r\n       " +
-"                 if (al == \"btndelete\") {\r\n\r\n                            $(this)" +
-".attr(\'href\', \'#cnfrmdelete-\' + (count));\r\n\r\n                        }\r\n        " +
-"                if ($(this).hasClass(\"paidticket-\" + (count + 1))) {\r\n          " +
-"                  $(this).removeClass(\'paidticket-\' + (count + 1));\r\n           " +
-"                 $(this).addClass(\'paidticket-\' + (count) + \'\');\r\n              " +
-"          }\r\n                        if ($(this).hasClass(\"normalticket-\" + (cou" +
-"nt + 1))) {\r\n                            $(this).removeClass(\'normalticket-\' + (" +
-"count + 1));\r\n                            $(this).addClass(\'normalticket-\' + (co" +
-"unt) + \'\');\r\n                        }\r\n\r\n                    });\r\n             " +
-"       count = count + 1;\r\n\r\n                });\r\n\r\n                if (divlengt" +
-"h == 0) {\r\n                    $(\'#id_ticket_footer\').css(\'display\', \'none\');\r\n\r" +
-"\n                }\r\n                calculateSum();\r\n\r\n                return tr" +
-"ue;\r\n            }\r\n\r\n\r\n        }\r\n        $(\".tab-content\").hide();\r\n        fu" +
-"nction showsettingdiv(e) {\r\n            var id = e;\r\n            var el = e.subs" +
-"tr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n            $(\'#evnt_set-\'" +
-" + el).slideToggle(\"fast\");\r\n            //if ($(\'#evnt_set-\' + el).css(\'display" +
-"\') == \'none\') {\r\n            //    $(\'#evnt_set-\' + el).slideToggle(\"fast\");\r\n\r\n" +
-"            //} else {\r\n\r\n            //    $(\'#evnt_set-\' + el).css(\'display\', " +
-"\'none\');\r\n\r\n            //}\r\n\r\n\r\n        }\r\n\r\n\r\n\r\n        $(\".evnt_doll_amnt\").h" +
-"ide();\r\n        $(\".ev_tic_end\").click(function () {\r\n            $(\".evt_time\")" +
-".css(\"display\", \"none\");\r\n            $(\".evnt_doll_amnt\").css(\"display\", \"block" +
-"\");\r\n        });\r\n        $(\".ev_by_date\").click(function () {\r\n            $(\"." +
-"evnt_doll_amnt\").css(\"display\", \"none\");\r\n            $(\".evt_time\").css(\"displa" +
-"y\", \"block\");\r\n        });\r\n        function checkdiscount(e) {\r\n            var" +
-" el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n            var " +
-"price = parseFloat($(\'#id_cost-\' + el).val().replace(\',\', \'\')).toFixed(2);\r\n    " +
-"        var discount = parseFloat($(\'#\' + e).val().replace(\',\', \'\')).toFixed(2);" +
-"\r\n\r\n            if (!isNaN(price) && !isNaN(discount)) {\r\n                if (pr" +
-"ice != 0 && discount != 0) {\r\n\r\n                    if (discount >= price) {\r\n  " +
-"                      $(\'#\' + e).addClass(\'err-bor\');\r\n\r\n                       " +
-" $(\'#hddiscount\').val(\'1\');\r\n                        return false;\r\n\r\n          " +
-"          } else {\r\n                        //$(\'#\' + e).val(discount);\r\n       " +
-"                 $(\'#hddiscount\').val(\'0\');\r\n                        $(\'#\' + e)." +
-"removeClass(\'err-bor\');\r\n\r\n                    }\r\n                }\r\n           " +
-"     else if (price == 0 && discount != 0) {\r\n                    $(\'#\' + e).add" +
-"Class(\'err-bor\');\r\n\r\n                    $(\'#hddiscount\').val(\'1\');\r\n           " +
-"         return false;\r\n                }\r\n\r\n            } else if (isNaN(price)" +
-" && !isNaN(discount)) {\r\n                $(\'#\' + e).addClass(\'err-bor\');\r\n\r\n    " +
-"            $(\'#hddiscount\').val(\'1\');\r\n                return false;\r\n\r\n       " +
-"     } else if (isNaN(discount)) {\r\n                $(\'#hddiscount\').val(\'0\');\r\n" +
-"                $(\'#\' + e).removeClass(\'err-bor\');\r\n            }\r\n\r\n\r\n\r\n\r\n     " +
-"   }\r\n        function checkvalidtime(e) {\r\n            var el = e.substr(e.inde" +
-"xOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n            var al = e.substr(0, e.in" +
-"dexOf(\'-\'));\r\n\r\n            if (al == \"id_saletimestart\") {\r\n                err" +
-"orMsg = checkTime(e);\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n            " +
-"        $(\'#id_saletimestart-\' + el).focus();\r\n                    $(\'#id_saleti" +
-"mestart-\' + el).val(\"7:00pm\");\r\n                    $(\'#id_saletimeend-\' + el).v" +
-"al(\"7:00pm\");\r\n\r\n                } else {\r\n\r\n                    $(\'#id_hdsaleti" +
-"mestart\' + el).val($(\'#\' + e).val());\r\n                    $(\'#id_saletimeend-\' " +
-"+ el).val($(\'#\' + e).val());\r\n\r\n                }\r\n            }\r\n            if" +
-" (al == \"id_saletimeend\") {\r\n                errorMsg = checkTime(e);\r\n         " +
-"       if (errorMsg != \"\") {\r\n\r\n                    $(\'#id_saletimeend-\' + el).v" +
-"al($(\'#id_saletimestart-\' + el).val());\r\n\r\n                    $(\'#id_saletimeen" +
-"d-\' + el).focus();\r\n                    $(\'#id_hdsaletimeend\' + el).val($(\'#\' + " +
-"e).val());\r\n\r\n                }\r\n            }\r\n            if (al == \"id_auto_h" +
-"ide_until_time\") {\r\n                errorMsg = checkTime(e);\r\n                if" +
-" (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_auto_hide_until_time-\' + e" +
-"l).focus();\r\n                    $(\'#id_auto_hide_until_time-\' + el).val(\"7:00pm" +
-"\");\r\n                    $(\'#id_auto_hide_after_Time-\' + el).val(\"7:00pm\");\r\n\r\n " +
-"               } else {\r\n                    $(\'#id_hdautohideuntil\' + el).val($" +
-"(\'#\' + e).val());\r\n                    $(\'#id_auto_hide_after_Time-\' + el).val($" +
-"(\'#\' + e).val());\r\n\r\n                }\r\n\r\n            }\r\n            if (al == \"" +
-"id_auto_hide_after_Time\") {\r\n                errorMsg = checkTime(e);\r\n         " +
-"       if (errorMsg != \"\") {\r\n\r\n                    $(\'#id_auto_hide_after_Time-" +
-"\' + el).val($(\'#id_auto_hide_until_time-\' + el).val());\r\n\r\n                    $" +
-"(\'#id_auto_hide_after_Time-\' + el).focus();\r\n                    $(\'#id_hdautohi" +
-"deafter\' + el).val($(\'#\' + e).val());\r\n\r\n                }\r\n            }\r\n\r\n\r\n " +
-"       }\r\n        function checkvalidDate(e) {\r\n\r\n            var el = e.substr(" +
-"e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n            var al = e.substr(0" +
-", e.indexOf(\'-\'));\r\n\r\n            var errorMsg = checkDate(e);\r\n            if (" +
-"al == \"id_saleend\") {\r\n                var enddate = $(\'#id_saleend-\' + el).val(" +
-");\r\n                var startdate = $(\'#id_salestart-\' + el).val();\r\n           " +
-"     if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_saleend-\' + el).foc" +
-"us();\r\n                    $(\'#id_saleend-\' + el).val(startdate);\r\n\r\n\r\n         " +
-"       }\r\n\r\n                errorMsg = compare(startdate, enddate);\r\n\r\n         " +
-"       if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_saleend-\' + el).f" +
-"ocus();\r\n                    $(\'#id_saleend-\' + el).val(startdate);\r\n           " +
-"         // field.value = \"\";\r\n\r\n\r\n                }\r\n            }\r\n           " +
-" if (al == \"id_auto_hide_after_Date\") {\r\n                var startdate = $(\'#id_" +
-"auto_hide_until_Date-\' + el).val();\r\n                var enddate = $(\'#id_auto_h" +
-"ide_after_Date-\' + el).val();\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n    " +
-"                $(\'#id_auto_hide_after_Date-\' + el).focus();\r\n                  " +
-"  $(\'#id_auto_hide_after_Date-\' + el).val(startdate);\r\n\r\n\r\n                }\r\n\r\n" +
-"                errorMsg = compare(startdate, enddate);\r\n\r\n                if (e" +
-"rrorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_auto_hide_after_Date-\' + el)." +
-"focus();\r\n                    $(\'#id_auto_hide_after_Date-\' + el).val(startdate)" +
-";\r\n                    // field.value = \"\";\r\n\r\n\r\n                }\r\n\r\n\r\n        " +
-"    }\r\n            return true;\r\n\r\n        }\r\n        function allownumber(el, e" +
-"vt, id) {\r\n\r\n\r\n\r\n            var charCode = (evt.which) ? evt.which : event.keyC" +
-"ode;\r\n\r\n            if ((charCode < 48 || charCode > 57) && charCode > 31 && cha" +
-"rCode != 44) {\r\n\r\n                evt.preventDefault();\r\n                return " +
-"false;\r\n            }\r\n            //if (charCode == 46 && charCode > 31 && (cha" +
-"rCode < 48 || charCode > 57) && charCode != 188) {\r\n            //    evt.preven" +
-"tDefault();\r\n            //    return false;\r\n\r\n            //}\r\n\r\n            /" +
-"/if (number.length > 1 && charCode == 46) {\r\n            //    evt.preventDefaul" +
-"t();\r\n            //    return false;\r\n            //}\r\n\r\n            //var code" +
-" = event.charCode ? event.charCode : event.keyCode;\r\n\r\n            ////  if (cha" +
-"rCode == 46 && charCode > 31 && (charCode < 48 || charCode > 57) && charcode!=18" +
-"8) {\r\n            ////      evt.preventDefault();\r\n            ////    return fa" +
-"lse;\r\n\r\n            ////}\r\n            //if ((!event.shiftKey && !event.ctrlKey " +
-"&& !event.altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))" +
-") // 0-9 or numpad 0-9, disallow shift, ctrl, and alt\r\n            //{\r\n\r\n      " +
-"      //}\r\n            //else if (code != 8 && code != 46 && code != 37 && code " +
-"!= 39 && code != 9) // not esc, del, left or right\r\n            //{\r\n           " +
-" //    event.preventDefault();\r\n            //    return false;\r\n            //}" +
-"\r\n\r\n\r\n\r\n        }\r\n\r\n\r\n        function hideunhide(e) {\r\n\r\n\r\n            var id " +
-"= e;\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'" +
-"));\r\n            var al = e.substr(0, e.indexOf(\'-\'));\r\n\r\n            var divlen" +
-"gth = $(\"#MasterDiv> div\").size();\r\n            if (al == \"id_EvaddTkt\") {\r\n\r\n  " +
-"              $(\"#id_RemvTkt-\" + el).css(\"display\", \"block\");\r\n                $" +
-"(\"#id_EvaddTkt-\" + el).css(\"display\", \"none\");\r\n                $(\"#id_CusdateCo" +
-"nt-\" + el).css(\"display\", \"block\");\r\n                $(\"#id_auto_hide_type_0-\" +" +
-" el).prop(\'checked\', true);\r\n                $(\"#id_auto_hide_until_Date-\" + el)" +
-".datepicker({\r\n                    format: \"mm/dd/yyyy\",\r\n                    mi" +
-"nDate: \"0\",\r\n                    onSelect: function () {\r\n\r\n                    " +
-"    this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n         " +
-"           }\r\n                }).on(\'changeDate\', function (ev) {\r\n             " +
-"       $(\"#id_auto_hide_until_Date-\" + el).datepicker(\'hide\');\r\n                " +
-"});\r\n                $(\"#id_auto_hide_after_Date-\" + el).datepicker({\r\n         " +
-"           format: \"mm/dd/yyyy\",\r\n                    minDate: \"0\",\r\n           " +
-"         onSelect: function () {\r\n\r\n                        this.fireEvent && th" +
-"is.fireEvent(\'onchange\') || $(this).change();\r\n                    }\r\n          " +
-"      }).on(\'changeDate\', function (ev) {\r\n                    $(\"#id_auto_hide_" +
-"after_Date-\" + el).datepicker(\'hide\');\r\n                });\r\n            }\r\n    " +
-"        if (al == \"id_RemvTkt\") {\r\n                $(\"#id_RemvTkt-\" + el).css(\"d" +
-"isplay\", \"none\");\r\n                $(\"#id_EvaddTkt-\" + el).css(\"display\", \"block" +
-"\");\r\n                $(\"#id_CusdateCont-\" + el).css(\"display\", \"none\");\r\n\r\n     " +
-"       }\r\n            if (al == \"id_CusdateTime\") {\r\n                $(\"#id_Hide" +
-"untDiv-\" + el).css(\"display\", \"block\");\r\n                $(\"#id_auto_hide_type_0" +
-"-\" + el).prop(\'checked\', false);\r\n            }\r\n            if (al == \"id_Tktno" +
-"tSale\") {\r\n                $(\"#id_HideuntDiv-\" + el).css(\"display\", \"none\");\r\n  " +
-"              $(\"#id_auto_hide_type_1-\" + el).prop(\'checked\', false);\r\n\r\n       " +
-"     }\r\n\r\n        }\r\n        function randomString(len, charSet) {\r\n            " +
-"charSet = charSet || \'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345" +
-"6789\';\r\n            var randomString = \'\';\r\n            for (var i = 0; i < len;" +
-" i++) {\r\n                var randomPoz = Math.floor(Math.random() * charSet.leng" +
-"th);\r\n                randomString += charSet.substring(randomPoz, randomPoz + 1" +
-");\r\n            }\r\n            return randomString;\r\n        }\r\n    </script>\r\n");
+"n (ev) {\r\n                $(\"#id_auto_hide_until_Date-\" + divlength).datepicker(" +
+"\'hide\');\r\n            });\r\n            $(\"#id_auto_hide_after_Date-\" + divlength" +
+").datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDate: " +
+"\"0\",\r\n                onSelect: function () {\r\n\r\n                    this.fireEv" +
+"ent && this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n     " +
+"       }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_auto_hide_aft" +
+"er_Date-\" + divlength).datepicker(\'hide\');\r\n            });\r\n\r\n            $(\"#i" +
+"d_saletimestart-\" + divlength).timepicker();\r\n            $(\"#btndelete-\" + divl" +
+"ength).attr(\'href\', \'#cnfrmdelete-\' + divlength);\r\n            $(\"#id_saletimeen" +
+"d-\" + divlength).timepicker();\r\n            $(\"#id_auto_hide_until_time-\" + divl" +
+"ength).timepicker();\r\n            $(\"#id_auto_hide_until_time-\" + divlength).tim" +
+"epicker();\r\n            $(\"#id_auto_hide_after_Time-\" + divlength).timepicker();" +
+"\r\n            $(\"#id_auto_hide_until_time-\" + divlength).val(\"7:00pm\");\r\n       " +
+"     $(\"#id_auto_hide_after_Time-\" + divlength).val(\"7:00pm\");\r\n            $(\"#" +
+"id_saletimestart-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_saletimeend-\"" +
+" + divlength).val(\"7:00pm\");\r\n            $(\"input[id^=\'id_cost\']\").mask(\'000,00" +
+"0.00\', { reverse: true });\r\n            $(\"input[id^=\'id_Discount\']\").mask(\'000," +
+"000.00\', { reverse: true });\r\n\r\n        });\r\n        $(\'.save_btndonation\').clic" +
+"k(function () {\r\n            $(\".ticket_panel\").show();\r\n            $(\"#id_tick" +
+"et_footer\").css(\'display\', \'block\');\r\n            var divlength = $(\"#MasterDiv>" +
+" div\").size();\r\n\r\n            var data = $(\'#clonediv-n\').clone();\r\n            " +
+"data.attr(\'id\', \'clonediv-\' + divlength);\r\n            data.removeAttr(\"style\")\r" +
+"\n            console.log(data.find(\'input[type=text]\'));\r\n            data.find(" +
+"\'*[id]\').andSelf().each(function () {\r\n                //console.log($(this));\r\n" +
+"\r\n                var id = $(this).attr(\'id\');\r\n                //console.log(id" +
+");\r\n                id1 = id.substr(0, id.indexOf(\'-\'));\r\n                ////co" +
+"nsole.log(id);\r\n                var idn = id1 + \"-\" + divlength;\r\n              " +
+"  $(this).attr(\"id\", idn);\r\n                $(this).val(\'\');\r\n\r\n                " +
+"if ($(this).hasClass(\"paidticket-n\")) {\r\n                    $(this).removeClass" +
+"(\'paidticket-n\');\r\n                    $(this).addClass(\'paidticket-\' + divlengt" +
+"h + \'\');\r\n                }\r\n                if ($(this).hasClass(\"normalticket-" +
+"n\")) {\r\n                    $(this).removeClass(\'normalticket-n\');\r\n            " +
+"        $(this).addClass(\'normalticket-\' + divlength + \'\');\r\n                }\r\n" +
+"\r\n            });\r\n\r\n\r\n            $(data).appendTo(\'#MasterDiv\');\r\n            " +
+"$(\".normalticket-\" + divlength).css(\'display\', \'block\');\r\n            $(\".paidti" +
+"cket-\" + divlength).css(\'display\', \'none\');\r\n            $(\"#id_feetype-\" + divl" +
+"ength).css(\'display\', \'block\');\r\n            $(\"#id_paymenttype-\" + divlength).t" +
+"ext(\"Donation\");\r\n            $(\"#id_ticket_type-\" + divlength).attr(\"placeholde" +
+"r\", \"Donation\");\r\n            $(\"#id_ticket_type-\" + divlength).attr(\"title\", \"D" +
+"onation\");\r\n            $(\"#id_Discount-\" + divlength).prop(\"readonly\", true);\r\n" +
+"            var randomValue = randomString(4);\r\n            $(\"#id_ticket_id-\" +" +
+" divlength).val(randomValue);\r\n\r\n            $(\"#id_order-\" + divlength).val(div" +
+"length);\r\n            $(\"#id_Tickettype-\" + divlength).val(\"Donation\");\r\n\r\n     " +
+"       $(\"#id_feemethod\").val(0);\r\n            $(\"#id_salestart-\" + divlength).d" +
+"atepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDate: \"0\"" +
+",\r\n                onSelect: function () {\r\n\r\n                    this.fireEvent" +
+" && this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n        " +
+"    }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_salestart-\" + di" +
+"vlength).datepicker(\'hide\');\r\n            });\r\n            $(\"#id_saleend-\" + di" +
+"vlength).datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                mi" +
+"nDate: \"0\",\r\n                onSelect: function () {\r\n\r\n                    this" +
+".fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n                }" +
+"\r\n            }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_saleen" +
+"d-\" + divlength).datepicker(\'hide\');\r\n            });\r\n\r\n            $(\"#id_auto" +
+"_hide_until_Date-\" + divlength).datepicker({\r\n                format: \"mm/dd/yyy" +
+"y\",\r\n                minDate: \"0\",\r\n                onSelect: function () {\r\n\r\n " +
+"                   this.fireEvent && this.fireEvent(\'onchange\') || $(this).chang" +
+"e();\r\n                }\r\n            }).on(\'changeDate\', function (ev) {\r\n      " +
+"          $(\"#id_auto_hide_until_Date-\" + divlength).datepicker(\'hide\');\r\n      " +
+"      });\r\n            $(\"#id_auto_hide_after_Date-\" + divlength).datepicker({\r\n" +
+"                format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n          " +
+"      onSelect: function () {\r\n\r\n                    this.fireEvent && this.fire" +
+"Event(\'onchange\') || $(this).change();\r\n                }\r\n            }).on(\'ch" +
+"angeDate\', function (ev) {\r\n                $(\"#id_auto_hide_after_Date-\" + divl" +
+"ength).datepicker(\'hide\');\r\n            });\r\n\r\n            $(\"#id_saletimestart-" +
+"\" + divlength).timepicker();\r\n            $(\"#btndelete-\" + divlength).attr(\'hre" +
+"f\', \'#cnfrmdelete-\' + divlength);\r\n            $(\"#id_saletimeend-\" + divlength)" +
+".timepicker();\r\n            $(\"#id_auto_hide_until_time-\" + divlength).timepicke" +
+"r();\r\n            $(\"#id_auto_hide_until_time-\" + divlength).timepicker();\r\n    " +
+"        $(\"#id_auto_hide_after_Time-\" + divlength).timepicker();\r\n            $(" +
+"\"#id_auto_hide_until_time-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_auto" +
+"_hide_after_Time-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_saletimestart" +
+"-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_saletimeend-\" + divlength).va" +
+"l(\"7:00pm\");\r\n\r\n        });\r\n        $(\'.save_btnfree\').click(function () {\r\n\r\n " +
+"           $(\".ticket_panel\").show();\r\n            $(\"#id_ticket_footer\").css(\'d" +
+"isplay\', \'block\');\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n  " +
+"          var data = $(\'#clonediv-n\').clone();\r\n            data.attr(\'id\', \'clo" +
+"nediv-\' + divlength);\r\n            data.removeAttr(\"style\");\r\n            data.f" +
+"ind(\'*[id]\').andSelf().each(function () {\r\n\r\n\r\n                var id = $(this)." +
+"attr(\'id\');\r\n                //console.log(id);\r\n                id1 = id.substr" +
+"(0, id.indexOf(\'-\'));\r\n                ////console.log(id);\r\n                var" +
+" idn = id1 + \"-\" + divlength;\r\n                $(this).attr(\"id\", idn);\r\n       " +
+"         $(this).val(\'\');\r\n\r\n                if ($(this).hasClass(\"paidticket-n\"" +
+")) {\r\n                    $(this).removeClass(\'paidticket-n\');\r\n                " +
+"    $(this).addClass(\'paidticket-\' + divlength + \'\');\r\n                }\r\n      " +
+"          if ($(this).hasClass(\"normalticket-n\")) {\r\n                    $(this)" +
+".removeClass(\'normalticket-n\');\r\n                    $(this).addClass(\'normaltic" +
+"ket-\' + divlength + \'\');\r\n                }\r\n\r\n            });\r\n\r\n            //" +
+"data.append(\'<span class=\"RemoveMoreHub\" style=\"width:80%;\"><a href=\"javascript:" +
+"void(0);\" style=\"float:right;color:#CE0009;font-size:13px;text-decoration:none;m" +
+"argin-right:5%;\" >- Remove</a></span>\');\r\n            $(\'#MasterDiv\').append(dat" +
+"a);\r\n            $(\"#btndelete-\" + divlength).attr(\'href\', \'#cnfrmdelete-\' + div" +
+"length);\r\n            $(\".normalticket-\" + divlength).css(\'display\', \'block\');\r\n" +
+"            $(\".paidticket-\" + divlength).css(\'display\', \'none\');\r\n\r\n           " +
+" $(\"#id_paymenttype-\" + divlength).text(\"Free\");\r\n            $(\"#id_ticket_type" +
+"-\" + divlength).attr(\"title\", \"Give your ticket a name, like General Admission, " +
+"Early Bird, RSVP, etc.\");\r\n            $(\"#id_ticket_type-\" + divlength).attr(\"p" +
+"laceholder\", \"Early Bird, RSVP...\");\r\n            $(\"#id_Discount-\" + divlength)" +
+".prop(\"readonly\", true);\r\n            var randomValue = randomString(4);\r\n      " +
+"      $(\"#id_ticket_id-\" + divlength).val(randomValue);\r\n            $(\"#id_orde" +
+"r-\" + divlength).val(divlength);\r\n            //$(\"#id_feetype-\" + divlength).cs" +
+"s(\'display\', \'none\');\r\n            $(\"#id_Tickettype-\" + divlength).val(\"Free\");" +
+"\r\n            //$(\"clonediv-\" + divlength).css(\'display\', \'block\');\r\n\r\n         " +
+"   $(\"#id_feemethod\").val(0);\r\n            $(\"#id_salestart-\" + divlength).datep" +
+"icker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n " +
+"               onSelect: function () {\r\n\r\n                    this.fireEvent && " +
+"this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n            " +
+"}).on(\'changeDate\', function (ev) {\r\n                $(\"#id_salestart-\" + divlen" +
+"gth).datepicker(\'hide\');\r\n            });\r\n            $(\"#id_saleend-\" + divlen" +
+"gth).datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDat" +
+"e: \"0\",\r\n                onSelect: function () {\r\n\r\n                    this.fir" +
+"eEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n  " +
+"          }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_saleend-\" " +
+"+ divlength).datepicker(\'hide\');\r\n            });\r\n\r\n            $(\"#id_auto_hid" +
+"e_until_Date-\" + divlength).datepicker({\r\n                format: \"mm/dd/yyyy\",\r" +
+"\n                minDate: \"0\",\r\n                onSelect: function () {\r\n\r\n     " +
+"               this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();" +
+"\r\n                }\r\n            }).on(\'changeDate\', function (ev) {\r\n          " +
+"      $(\"#id_auto_hide_until_Date-\" + divlength).datepicker(\'hide\');\r\n          " +
+"  });\r\n            $(\"#id_auto_hide_after_Date-\" + divlength).datepicker({\r\n    " +
+"            format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n              " +
+"  onSelect: function () {\r\n\r\n                    this.fireEvent && this.fireEven" +
+"t(\'onchange\') || $(this).change();\r\n                }\r\n            }).on(\'change" +
+"Date\', function (ev) {\r\n                $(\"#id_auto_hide_after_Date-\" + divlengt" +
+"h).datepicker(\'hide\');\r\n            });\r\n\r\n            $(\"#id_saletimestart-\" + " +
+"divlength).timepicker();\r\n\r\n            $(\"#id_saletimeend-\" + divlength).timepi" +
+"cker();\r\n            $(\"#id_auto_hide_until_time-\" + divlength).timepicker();\r\n " +
+"           $(\"#id_auto_hide_until_time-\" + divlength).timepicker();\r\n           " +
+" $(\"#id_auto_hide_after_Time-\" + divlength).timepicker();\r\n            $(\"#id_au" +
+"to_hide_until_time-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_auto_hide_a" +
+"fter_Time-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_saletimestart-\" + di" +
+"vlength).val(\"7:00pm\");\r\n            $(\"#id_saletimeend-\" + divlength).val(\"7:00" +
+"pm\");\r\n\r\n\r\n\r\n        });\r\n        function randomString(len, charSet) {\r\n       " +
+"     charSet = charSet || \'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0" +
+"123456789\';\r\n            var randomString = \'\';\r\n            for (var i = 0; i <" +
+" len; i++) {\r\n                var randomPoz = Math.floor(Math.random() * charSet" +
+".length);\r\n                randomString += charSet.substring(randomPoz, randomPo" +
+"z + 1);\r\n            }\r\n            return randomString;\r\n        }\r\n        fun" +
+"ction deletevariable(e) {\r\n\r\n            var divlength = $(\"#id_Mainvariable> di" +
+"v\").size();\r\n\r\n            var id = e;\r\n            var el = e.substr(e.indexOf(" +
+"\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n            var div = document.getEleme" +
+"ntById(\"id_clonevariable-\" + el);\r\n\r\n\r\n\r\n            div.parentNode.removeChild(" +
+"div);\r\n            divlength = $(\"#id_Mainvariable> div\").size();\r\n\r\n           " +
+" var count = 0;\r\n            $(\'#id_Mainvariable\').children(\'div\').each(function" +
+" () {\r\n\r\n                var id = $(this).attr(\'id\');\r\n\r\n                id1 = i" +
+"d.substr(0, id.indexOf(\'-\'));\r\n                ////console.log(id);\r\n           " +
+"     var idn = id1 + \"-\" + (count);\r\n                $(this).attr(\"id\", idn);\r\n " +
+"               $(this).find(\'*[id]\').andSelf().each(function () {\r\n\r\n\r\n         " +
+"           var id = $(this).attr(\'id\');\r\n                    //console.log(id);\r" +
+"\n                    id1 = id.substr(0, id.indexOf(\'-\'));\r\n                    c" +
+"onsole.log(id1);\r\n                    var idn = id1 + \"-\" + (count);\r\n          " +
+"          $(this).attr(\"id\", idn);\r\n\r\n                    if (id1 == \"btn_vardel" +
+"ete\") {\r\n                        $(this).attr(\"href\", \"#cnfrmdeletevariable-\" + " +
+"count);\r\n                    }\r\n\r\n\r\n                });\r\n                count =" +
+" count + 1;\r\n\r\n            });\r\n\r\n            if (divlength == 0) {\r\n           " +
+"     $(\'#id_Mainvariable\').css(\'display\', \'none\');\r\n\r\n            }\r\n\r\n\r\n\r\n\r\n   " +
+"     }\r\n        function deletediv(e) {\r\n\r\n            {\r\n\r\n                var " +
+"divlength = $(\"#MasterDiv> div\").size();\r\n\r\n                var id = e;\r\n       " +
+"         var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n  " +
+"              var div = document.getElementById(\"clonediv-\" + el);\r\n            " +
+"    // var div = document.getElementById(\"clonediv-0\");\r\n                var toa" +
+"tlqty = $(\"#id_totalqty\").html();\r\n                var qty = $(\"#id_quantity_tot" +
+"al-\" + el).val();\r\n                var leftqty = parseInt(toatlqty) - parseInt(q" +
+"ty);\r\n                if (!isNaN(leftqty)) {\r\n                    $(\"#id_totalqt" +
+"y\").html(leftqty);\r\n                } else {\r\n\r\n                    $(\"#id_total" +
+"qty\").html(0);\r\n                }\r\n\r\n\r\n                div.parentNode.removeChil" +
+"d(div);\r\n                divlength = $(\"#MasterDiv> div\").size();\r\n\r\n           " +
+"     var count = 0;\r\n                $(\'#MasterDiv\').children(\'div\').each(functi" +
+"on () {\r\n\r\n                    var id = $(this).attr(\'id\');\r\n\r\n                 " +
+"   id1 = id.substr(0, id.indexOf(\'-\'));\r\n                    ////console.log(id)" +
+";\r\n                    var idn = id1 + \"-\" + (count);\r\n                    $(thi" +
+"s).attr(\"id\", idn);\r\n                    $(this).find(\'*[id]\').andSelf().each(fu" +
+"nction () {\r\n\r\n\r\n                        var id = $(this).attr(\'id\');\r\n         " +
+"               //console.log(id);\r\n                        id1 = id.substr(0, id" +
+".indexOf(\'-\'));\r\n                        // console.log(id);\r\n                  " +
+"      var idn = id1 + \"-\" + (count);\r\n                        $(this).attr(\"id\"," +
+" idn);\r\n                        var al = $(this).attr(\"id\").substr(0, id.indexOf" +
+"(\'-\'));\r\n                        console.log(al);\r\n                        if (a" +
+"l == \"id_order\") {\r\n\r\n                            $(this).val(count);\r\n         " +
+"               }\r\n\r\n                        if (al == \"btndelete\") {\r\n\r\n        " +
+"                    $(this).attr(\'href\', \'#cnfrmdelete-\' + (count));\r\n\r\n        " +
+"                }\r\n                        if ($(this).hasClass(\"paidticket-\" + " +
+"(count + 1))) {\r\n                            $(this).removeClass(\'paidticket-\' +" +
+" (count + 1));\r\n                            $(this).addClass(\'paidticket-\' + (co" +
+"unt) + \'\');\r\n                        }\r\n                        if ($(this).hasC" +
+"lass(\"normalticket-\" + (count + 1))) {\r\n                            $(this).remo" +
+"veClass(\'normalticket-\' + (count + 1));\r\n                            $(this).add" +
+"Class(\'normalticket-\' + (count) + \'\');\r\n                        }\r\n\r\n           " +
+"         });\r\n                    count = count + 1;\r\n\r\n                });\r\n\r\n " +
+"               if (divlength == 0) {\r\n                    $(\'#id_ticket_footer\')" +
+".css(\'display\', \'none\');\r\n\r\n                }\r\n                calculateSum();\r\n" +
+"\r\n                return true;\r\n            }\r\n\r\n\r\n        }\r\n        $(\".tab-co" +
+"ntent\").hide();\r\n        function showsettingdiv(e) {\r\n            var id = e;\r\n" +
+"            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r" +
+"\n            $(\'#evnt_set-\' + el).slideToggle(\"fast\");\r\n            //if ($(\'#ev" +
+"nt_set-\' + el).css(\'display\') == \'none\') {\r\n            //    $(\'#evnt_set-\' + e" +
+"l).slideToggle(\"fast\");\r\n\r\n            //} else {\r\n\r\n            //    $(\'#evnt_" +
+"set-\' + el).css(\'display\', \'none\');\r\n\r\n            //}\r\n\r\n\r\n        }\r\n\r\n\r\n\r\n   " +
+"     $(\".evnt_doll_amnt\").hide();\r\n        $(\".ev_tic_end\").click(function () {\r" +
+"\n            $(\".evt_time\").css(\"display\", \"none\");\r\n            $(\".evnt_doll_a" +
+"mnt\").css(\"display\", \"block\");\r\n        });\r\n        $(\".ev_by_date\").click(func" +
+"tion () {\r\n            $(\".evnt_doll_amnt\").css(\"display\", \"none\");\r\n           " +
+" $(\".evt_time\").css(\"display\", \"block\");\r\n        });\r\n        function checkdis" +
+"count(e) {\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.index" +
+"Of(\'-\'));\r\n            var price = parseFloat($(\'#id_cost-\' + el).val().replace(" +
+"\',\', \'\')).toFixed(2);\r\n            var discount = parseFloat($(\'#\' + e).val().re" +
+"place(\',\', \'\')).toFixed(2);\r\n\r\n            if (!isNaN(price) && !isNaN(discount)" +
+") {\r\n                if (price != 0 && discount != 0) {\r\n\r\n                    i" +
+"f (discount >= price) {\r\n                        $(\'#\' + e).addClass(\'err-bor\');" +
+"\r\n\r\n                        $(\'#hddiscount\').val(\'1\');\r\n                        " +
+"return false;\r\n\r\n                    } else {\r\n                        //$(\'#\' +" +
+" e).val(discount);\r\n                        $(\'#hddiscount\').val(\'0\');\r\n        " +
+"                $(\'#\' + e).removeClass(\'err-bor\');\r\n\r\n                    }\r\n   " +
+"             }\r\n                else if (price == 0 && discount != 0) {\r\n       " +
+"             $(\'#\' + e).addClass(\'err-bor\');\r\n\r\n                    $(\'#hddiscou" +
+"nt\').val(\'1\');\r\n                    return false;\r\n                }\r\n\r\n        " +
+"    } else if (isNaN(price) && !isNaN(discount)) {\r\n                $(\'#\' + e).a" +
+"ddClass(\'err-bor\');\r\n\r\n                $(\'#hddiscount\').val(\'1\');\r\n             " +
+"   return false;\r\n\r\n            } else if (isNaN(discount)) {\r\n                $" +
+"(\'#hddiscount\').val(\'0\');\r\n                $(\'#\' + e).removeClass(\'err-bor\');\r\n " +
+"           }\r\n\r\n\r\n\r\n\r\n        }\r\n        function checkvalidtime(e) {\r\n         " +
+"   var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n          " +
+"  var al = e.substr(0, e.indexOf(\'-\'));\r\n\r\n            if (al == \"id_saletimesta" +
+"rt\") {\r\n                errorMsg = checkTime(e);\r\n                if (errorMsg !" +
+"= \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_saletimestart-\' + el).focus();\r\n      " +
+"              $(\'#id_saletimestart-\' + el).val(\"7:00pm\");\r\n                    $" +
+"(\'#id_saletimeend-\' + el).val(\"7:00pm\");\r\n\r\n                } else {\r\n\r\n        " +
+"            $(\'#id_hdsaletimestart\' + el).val($(\'#\' + e).val());\r\n              " +
+"      $(\'#id_saletimeend-\' + el).val($(\'#\' + e).val());\r\n\r\n                }\r\n  " +
+"          }\r\n            if (al == \"id_saletimeend\") {\r\n                errorMsg" +
+" = checkTime(e);\r\n                if (errorMsg != \"\") {\r\n\r\n                    $" +
+"(\'#id_saletimeend-\' + el).val($(\'#id_saletimestart-\' + el).val());\r\n\r\n          " +
+"          $(\'#id_saletimeend-\' + el).focus();\r\n                    $(\'#id_hdsale" +
+"timeend\' + el).val($(\'#\' + e).val());\r\n\r\n                }\r\n            }\r\n     " +
+"       if (al == \"id_auto_hide_until_time\") {\r\n                errorMsg = checkT" +
+"ime(e);\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id" +
+"_auto_hide_until_time-\' + el).focus();\r\n                    $(\'#id_auto_hide_unt" +
+"il_time-\' + el).val(\"7:00pm\");\r\n                    $(\'#id_auto_hide_after_Time-" +
+"\' + el).val(\"7:00pm\");\r\n\r\n                } else {\r\n                    $(\'#id_h" +
+"dautohideuntil\' + el).val($(\'#\' + e).val());\r\n                    $(\'#id_auto_hi" +
+"de_after_Time-\' + el).val($(\'#\' + e).val());\r\n\r\n                }\r\n\r\n           " +
+" }\r\n            if (al == \"id_auto_hide_after_Time\") {\r\n                errorMsg" +
+" = checkTime(e);\r\n                if (errorMsg != \"\") {\r\n\r\n                    $" +
+"(\'#id_auto_hide_after_Time-\' + el).val($(\'#id_auto_hide_until_time-\' + el).val()" +
+");\r\n\r\n                    $(\'#id_auto_hide_after_Time-\' + el).focus();\r\n        " +
+"            $(\'#id_hdautohideafter\' + el).val($(\'#\' + e).val());\r\n\r\n            " +
+"    }\r\n            }\r\n\r\n\r\n        }\r\n        function checkvalidDate(e) {\r\n\r\n   " +
+"         var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n    " +
+"        var al = e.substr(0, e.indexOf(\'-\'));\r\n\r\n            var errorMsg = chec" +
+"kDate(e);\r\n            if (al == \"id_saleend\") {\r\n                var enddate = " +
+"$(\'#id_saleend-\' + el).val();\r\n                var startdate = $(\'#id_salestart-" +
+"\' + el).val();\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                   " +
+" $(\'#id_saleend-\' + el).focus();\r\n                    $(\'#id_saleend-\' + el).val" +
+"(startdate);\r\n\r\n\r\n                }\r\n\r\n                errorMsg = compare(startd" +
+"ate, enddate);\r\n\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                 " +
+"   $(\'#id_saleend-\' + el).focus();\r\n                    $(\'#id_saleend-\' + el).v" +
+"al(startdate);\r\n                    // field.value = \"\";\r\n\r\n\r\n                }\r" +
+"\n            }\r\n            if (al == \"id_auto_hide_after_Date\") {\r\n            " +
+"    var startdate = $(\'#id_auto_hide_until_Date-\' + el).val();\r\n                " +
+"var enddate = $(\'#id_auto_hide_after_Date-\' + el).val();\r\n                if (er" +
+"rorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_auto_hide_after_Date-\' + el).f" +
+"ocus();\r\n                    $(\'#id_auto_hide_after_Date-\' + el).val(startdate);" +
+"\r\n\r\n\r\n                }\r\n\r\n                errorMsg = compare(startdate, enddate" +
+");\r\n\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_au" +
+"to_hide_after_Date-\' + el).focus();\r\n                    $(\'#id_auto_hide_after_" +
+"Date-\' + el).val(startdate);\r\n                    // field.value = \"\";\r\n\r\n\r\n    " +
+"            }\r\n\r\n\r\n            }\r\n            return true;\r\n\r\n        }\r\n       " +
+" function allownumber(el, evt, id) {\r\n\r\n\r\n\r\n            var charCode = (evt.whic" +
+"h) ? evt.which : event.keyCode;\r\n\r\n            if ((charCode < 48 || charCode > " +
+"57) && charCode > 31 && charCode != 44) {\r\n\r\n                evt.preventDefault(" +
+");\r\n                return false;\r\n            }\r\n            //if (charCode == " +
+"46 && charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 188) {\r\n " +
+"           //    evt.preventDefault();\r\n            //    return false;\r\n\r\n     " +
+"       //}\r\n\r\n            //if (number.length > 1 && charCode == 46) {\r\n        " +
+"    //    evt.preventDefault();\r\n            //    return false;\r\n            //" +
+"}\r\n\r\n            //var code = event.charCode ? event.charCode : event.keyCode;\r\n" +
+"\r\n            ////  if (charCode == 46 && charCode > 31 && (charCode < 48 || cha" +
+"rCode > 57) && charcode!=188) {\r\n            ////      evt.preventDefault();\r\n  " +
+"          ////    return false;\r\n\r\n            ////}\r\n            //if ((!event." +
+"shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (" +
+"code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt" +
+"\r\n            //{\r\n\r\n            //}\r\n            //else if (code != 8 && code !" +
+"= 46 && code != 37 && code != 39 && code != 9) // not esc, del, left or right\r\n " +
+"           //{\r\n            //    event.preventDefault();\r\n            //    ret" +
+"urn false;\r\n            //}\r\n\r\n\r\n\r\n        }\r\n\r\n\r\n        function hideunhide(e)" +
+" {\r\n\r\n\r\n            var id = e;\r\n            var el = e.substr(e.indexOf(\'-\') + " +
+"1, e.length - e.indexOf(\'-\'));\r\n            var al = e.substr(0, e.indexOf(\'-\'))" +
+";\r\n\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n            if (a" +
+"l == \"id_EvaddTkt\") {\r\n\r\n                $(\"#id_RemvTkt-\" + el).css(\"display\", \"" +
+"block\");\r\n                $(\"#id_EvaddTkt-\" + el).css(\"display\", \"none\");\r\n     " +
+"           $(\"#id_CusdateCont-\" + el).css(\"display\", \"block\");\r\n                " +
+"$(\"#id_auto_hide_type_0-\" + el).prop(\'checked\', true);\r\n                $(\"#id_a" +
+"uto_hide_until_Date-\" + el).datepicker({\r\n                    format: \"mm/dd/yyy" +
+"y\",\r\n                    minDate: \"0\",\r\n                    onSelect: function (" +
+") {\r\n\r\n                        this.fireEvent && this.fireEvent(\'onchange\') || $" +
+"(this).change();\r\n                    }\r\n                }).on(\'changeDate\', fun" +
+"ction (ev) {\r\n                    $(\"#id_auto_hide_until_Date-\" + el).datepicker" +
+"(\'hide\');\r\n                });\r\n                $(\"#id_auto_hide_after_Date-\" + " +
+"el).datepicker({\r\n                    format: \"mm/dd/yyyy\",\r\n                   " +
+" minDate: \"0\",\r\n                    onSelect: function () {\r\n\r\n                 " +
+"       this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n      " +
+"              }\r\n                }).on(\'changeDate\', function (ev) {\r\n          " +
+"          $(\"#id_auto_hide_after_Date-\" + el).datepicker(\'hide\');\r\n             " +
+"   });\r\n            }\r\n            if (al == \"id_RemvTkt\") {\r\n                $(" +
+"\"#id_RemvTkt-\" + el).css(\"display\", \"none\");\r\n                $(\"#id_EvaddTkt-\" " +
+"+ el).css(\"display\", \"block\");\r\n                $(\"#id_CusdateCont-\" + el).css(\"" +
+"display\", \"none\");\r\n\r\n            }\r\n            if (al == \"id_CusdateTime\") {\r\n" +
+"                $(\"#id_HideuntDiv-\" + el).css(\"display\", \"block\");\r\n            " +
+"    $(\"#id_auto_hide_type_0-\" + el).prop(\'checked\', false);\r\n            }\r\n    " +
+"        if (al == \"id_TktnotSale\") {\r\n                $(\"#id_HideuntDiv-\" + el)." +
+"css(\"display\", \"none\");\r\n                $(\"#id_auto_hide_type_1-\" + el).prop(\'c" +
+"hecked\', false);\r\n\r\n            }\r\n\r\n        }\r\n        function randomString(le" +
+"n, charSet) {\r\n            charSet = charSet || \'ABCDEFGHIJKLMNOPQRSTUVWXYZabcde" +
+"fghijklmnopqrstuvwxyz0123456789\';\r\n            var randomString = \'\';\r\n         " +
+"   for (var i = 0; i < len; i++) {\r\n                var randomPoz = Math.floor(M" +
+"ath.random() * charSet.length);\r\n                randomString += charSet.substri" +
+"ng(randomPoz, randomPoz + 1);\r\n            }\r\n            return randomString;\r\n" +
+"        }\r\n    </script>\r\n");
 
             
-            #line 4931 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 4949 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 4932 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 4950 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                      
  
 
@@ -6279,7 +6298,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n          \r\n    
 "    \r\n        });\r\n    </script>\r\n");
 
             
-            #line 4991 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 5009 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
     //DateTime
 
@@ -6290,7 +6309,7 @@ WriteLiteral("    <script>\r\n        function ajaxsetup(strname, strFormTag) {\
 "msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url:\'");
 
             
-            #line 4998 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 5016 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -6320,119 +6339,124 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "    if (divlength > 0) {\r\n\r\n                for (var i = 0; i < divlength; i++) " +
 "{\r\n\r\n                    var ticket_name = $(\'#id_ticket_type-\' + i).val();\r\n   " +
 "                 var ticket_Qty = $(\'#id_quantity_total-\' + i).val();\r\n         " +
-"           if (ticket_name == \"\") {\r\n                        $(\'#id_ticket_type-" +
-"\' + i).addClass(\'err-bor\');\r\n\r\n                        countdesc++;\r\n           " +
-"         } else {\r\n                        $(\'#id_ticket_type-\' + i).removeClass" +
-"(\'err-bor\');\r\n\r\n                    }\r\n                    if (ticket_Qty == \"\")" +
-" {\r\n\r\n                        $(\'#id_quantity_total-\' + i).addClass(\'err-bor\');\r" +
-"\n                        countqty++;\r\n                    } else\r\n              " +
-"      {\r\n                        if (ticket_Qty <= 0) {\r\n                       " +
-"     $(\'#id_quantity_total-\' + i).addClass(\'err-bor\');\r\n                        " +
-"    countqty++;\r\n\r\n                        } else {\r\n                           " +
-" $(\'#id_quantity_total-\' + i).removeClass(\'err-bor\');\r\n                        }" +
-"\r\n                    }\r\n                    if ($(\'#id_cost-\' + i).hasClass(\'er" +
-"r-bor\')) { count++; }\r\n\r\n                }\r\n\r\n\r\n            }\r\n            if ($" +
-"(\'#hddiscount\').val() == 1) {\r\n                count++;\r\n\r\n            }\r\n      " +
-"      if (countqty > 0) {\r\n                msg += ajaxsetup(\"CreateEvent\", \"Crea" +
-"teEventQtyValidateUI\") + \"<br/>\";\r\n            }\r\n            if (countdesc > 0)" +
-"\r\n            {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventHig" +
-"hlightFieldsUI\") + \"<br/>\";\r\n\r\n            }\r\n          \r\n            if ($(\'#id" +
-"_variablecharge\').is(\":checked\") == true) {\r\n                if ($(\'#id_vardesc\'" +
-").val() == \"\") {\r\n                    $(\'#id_vardesc\').addClass(\'err-bor\');\r\n   " +
-"                 msg += ajaxsetup(\"CreateEvent\", \"CreateEventvariabledescUI\") + " +
-"\"<br/>\";;\r\n\r\n\r\n\r\n                } else {\r\n                    $(\'#id_vardesc\')." +
-"removeClass(\'err-bor\');\r\n\r\n                }\r\n\r\n            }\r\n            var d" +
-"ivvar = $(\"#id_Mainvariable>div\").size();\r\n\r\n            if (divvar > 0) {\r\n\r\n  " +
-"              for (var i = 0; i < divvar; i++) {\r\n                    var subdes" +
-"c_name = $(\'#id_varsubdesc-\' + i).val();\r\n                    var subprice_Qty =" +
-" $(\'#id_varsubprice-\' + i).val();\r\n\r\n                    if (subdesc_name == \"\")" +
-" {\r\n\r\n                        $(\'#id_varsubdesc-\' + i).addClass(\'err-bor\');\r\n\r\n " +
-"                        countvardesc++;\r\n                    } else {\r\n         " +
-"               $(\'#id_varsubdesc-\' + i).removeClass(\'err-bor\');\r\n\r\n             " +
-"       }\r\n                    if (subprice_Qty == \"\") {\r\n\r\n                     " +
-"   $(\'#id_varsubprice-\' + i).addClass(\'err-bor\');\r\n                        count" +
-"varqty++;\r\n                    } else {\r\n                        if (subprice_Qt" +
-"y <= 0) {\r\n                            $(\'#id_varsubprice-\' + i).addClass(\'err-b" +
-"or\');\r\n                            countvarqty++;\r\n\r\n                        } e" +
-"lse {\r\n                            $(\'#id_varsubprice-\' + i).removeClass(\'err-bo" +
-"r\');\r\n                        }\r\n\r\n                        \r\n                   " +
-" }\r\n\r\n                }\r\n\r\n            }\r\n            if (countvardesc > 0)\r\n   " +
-"         {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubDescU" +
-"I\") + \"<br/>\";\r\n\r\n            }\r\n            if (countvarqty > 0) {\r\n           " +
-"     msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubQtyUI\") + \"<br/>\";\r\n\r\n      " +
-"      }\r\n            if ($(\'#chkReqPassword\').is(\":checked\") == true) {\r\n       " +
-"         if ($(\'#txtReqPassword\').val() == \"\") {\r\n                    $(\'#txtReq" +
-"Password\').addClass(\'err-bor\');\r\n                    msg += ajaxsetup(\"CreateEve" +
-"nt\", \"CreateEventPwdUI\") + \"<br/>\";;\r\n\r\n                } else {\r\n              " +
-"      $(\'#txtReqPassword\').removeClass(\'err-bor\');\r\n                }\r\n\r\n       " +
-"     }\r\n            return msg;\r\n        }\r\n        function compare(DateA, Date" +
-"B) {\r\n            var errorMsg = \"\";\r\n            var a = new Date(DateA);\r\n    " +
-"        var b = new Date(DateB);\r\n\r\n            var msDateA = Date.UTC(a.getFull" +
-"Year(), a.getMonth() + 1, a.getDate());\r\n            var msDateB = Date.UTC(b.ge" +
-"tFullYear(), b.getMonth() + 1, b.getDate());\r\n\r\n            if (parseFloat(msDat" +
-"eA) < parseFloat(msDateB))\r\n                return errorMsg = \"\";  // less than\r" +
-"\n            else if (parseFloat(msDateA) == parseFloat(msDateB))\r\n             " +
-"   return errorMsg = \"\";  // equal\r\n            else if (parseFloat(msDateA) > p" +
-"arseFloat(msDateB))\r\n                return errorMsg =  ajaxsetup(\"CreateEvent\"," +
-" \"CreateEventCompareDateUI\") +\"<br/>\"; // greater than\r\n            else\r\n      " +
-"          return null;  // error\r\n\r\n\r\n        }\r\n        function checkTime(fiel" +
-"d) {\r\n            var errorMsg = \"\";\r\n\r\n            // regular expression to mat" +
-"ch required time format\r\n            re = /^(\\d{1,2}):(\\d{2})(:00)?([ap]m)?$/;\r\n" +
-"            var value = $(\"#\" + field).val();\r\n            if (value != \'\') {\r\n " +
-"               if (regs = value.match(re)) {\r\n                    if (regs[4]) {" +
-"\r\n                        // 12-hour time format with am/pm\r\n                   " +
-"     if (regs[1] < 1 || regs[1] > 12) {\r\n                            errorMsg = " +
-"ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\") +\"<br/>\";;\r\n               " +
-"         }\r\n                    } else {\r\n                        // 24-hour tim" +
-"e format\r\n                        if (regs[1] > 23) {\r\n                         " +
-"   errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n  " +
-"                      }\r\n                    }\r\n                    if (!errorMs" +
-"g && regs[2] > 59) {\r\n                        errorMsg = ajaxsetup(\"CreateEvent\"" +
-", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n                    }\r\n                " +
-"} else {\r\n                    errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventIn" +
-"validTimeUI\")+\"<br/>\";;\r\n                }\r\n            }\r\n\r\n            return " +
-"errorMsg;\r\n        }\r\n        function checkDate(field) {\r\n            var allow" +
-"Blank = true;\r\n            var minYear = (new Date()).getFullYear();\r\n          " +
-"  var maxYear = (new Date()).getFullYear() + 10;\r\n            var d = new Date()" +
-";\r\n\r\n            var errorMsg = \"\";\r\n            var value = $(\"#\" + field).val(" +
-");\r\n            var datelast = new Date(value);\r\n\r\n            var msDateA = Dat" +
-"e.UTC(d.getFullYear(), d.getMonth() + 1, d.getDate());\r\n            var msDateB " +
-"= Date.UTC(datelast.getFullYear(), datelast.getMonth() + 1, datelast.getDate());" +
-"\r\n\r\n\r\n\r\n            // regular expression to match required date format\r\n       " +
-"     re = /^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/;\r\n\r\n            if (value != \'\') {\r\n" +
-"                if (regs = value.match(re)) {\r\n                    if (regs[2] !" +
-"= \'\' && regs[2] != \'\' && regs[3] != \'\') {\r\n                        if (regs[2] <" +
-" 1 || regs[2] > 31) {\r\n                            errorMsg = \"<br/>\" + ajaxsetu" +
-"p(\"CreateEvent\", \"CreateEventInvalidDateUI\");\r\n                        } else if" +
-" (regs[1] < 1 || regs[1] > 12) {\r\n                            errorMsg = \"<br/>\"" +
-" + ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\");\r\n                      " +
-"  } else if (regs[3] < minYear || regs[3] > maxYear) {\r\n                        " +
-"    errorMsg = \"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\");\r\n" +
-"                        }\r\n                    }\r\n                } else {\r\n    " +
-"                errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\")+" +
-"\"<br/>\" ;\r\n                }\r\n            } else if (!allowBlank) {\r\n           " +
-"     errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\") + \"<br/>\";\r" +
-"\n            }\r\n\r\n            if (parseFloat(msDateB) < parseFloat(msDateA)) {\r\n" +
-"\r\n                errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\"" +
-") + \"<br/>\";\r\n            }\r\n            return errorMsg;\r\n\r\n            //if (e" +
-"rrorMsg != \"\") {\r\n            //    return errorMsg;\r\n\r\n\r\n            //    fiel" +
-"d.focus();\r\n            //    field.value = \"\";\r\n\r\n            //}\r\n\r\n          " +
-"  //return true;\r\n        }\r\n\r\n        $(document).ready(function () {\r\n        " +
-"    $(\'input.number\').keyup(function (event) {\r\n\r\n                // skip for ar" +
-"row keys\r\n             \r\n\r\n                // format number\r\n                $(t" +
-"his).val(function (index, value) {\r\n                    return value\r\n          " +
-"          .replace(/\\D/g, \"\")\r\n                    .replace(/\\B(?=(\\d{3})+(?!\\d)" +
-")/g, \",\")\r\n                    ;\r\n                });\r\n            });\r\n        " +
-"    $(\'.close-model\').on(\'click\', function (e) {\r\n                $.modal.close(" +
-");\r\n            });\r\n            //$(document).click(function () {\r\n\r\n          " +
-"  //    $(\'#diverroacc\').css(\'display\', \'none\');\r\n            //    $(\'#divaccsu" +
-"c\').css(\'display\', \'none\');\r\n            //    $(\"input\").removeClass(\'err-bor\')" +
-";\r\n            //});\r\n            $(\'#drag-drop\').on(\'click\', function (e) {\r\n  " +
-"              $(\'#input2\').unbind(\'click\');\r\n\r\n            });\r\n        });\r\n\r\n " +
-"   </script>\r\n");
+"           var minimumQty = $(\'#id_min_ticket-\' + i).val();\r\n                   " +
+" var maxQty = $(\'#id_max_ticket-\' + i).val();\r\n                    if (ticket_na" +
+"me == \"\") {\r\n                        $(\'#id_ticket_type-\' + i).addClass(\'err-bor" +
+"\');\r\n\r\n                        countdesc++;\r\n                    } else {\r\n     " +
+"                   $(\'#id_ticket_type-\' + i).removeClass(\'err-bor\');\r\n\r\n        " +
+"            }\r\n                    if (ticket_Qty == \"\") {\r\n\r\n                  " +
+"      $(\'#id_quantity_total-\' + i).addClass(\'err-bor\');\r\n                       " +
+" countqty++;\r\n                    } else\r\n                    {\r\n               " +
+"         if (ticket_Qty <= 0) {\r\n                            $(\'#id_quantity_tot" +
+"al-\' + i).addClass(\'err-bor\');\r\n                            countqty++;\r\n\r\n     " +
+"                   } else {\r\n                            $(\'#id_quantity_total-\'" +
+" + i).removeClass(\'err-bor\');\r\n                        }\r\n                    }\r" +
+"\n                    if ($(\'#id_cost-\' + i).hasClass(\'err-bor\')) { count++; }\r\n\r" +
+"\n                }\r\n\r\n\r\n            }\r\n            if ($(\'#hddiscount\').val() ==" +
+" 1) {\r\n                count++;\r\n\r\n            }\r\n            if (parseInt($(\'#h" +
+"dMaxerr\').val()) == 1)\r\n            {\r\n                count++;\r\n            }\r\n" +
+"            if (countqty > 0) {\r\n                msg += ajaxsetup(\"CreateEvent\"," +
+" \"CreateEventQtyValidateUI\") + \"<br/>\";\r\n            }\r\n            if (countdes" +
+"c > 0)\r\n            {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEv" +
+"entHighlightFieldsUI\") + \"<br/>\";\r\n\r\n            }\r\n          \r\n            if (" +
+"$(\'#id_variablecharge\').is(\":checked\") == true) {\r\n                if ($(\'#id_va" +
+"rdesc\').val() == \"\") {\r\n                    $(\'#id_vardesc\').addClass(\'err-bor\')" +
+";\r\n                    msg += ajaxsetup(\"CreateEvent\", \"CreateEventvariabledescU" +
+"I\") + \"<br/>\";;\r\n\r\n\r\n\r\n                } else {\r\n                    $(\'#id_vard" +
+"esc\').removeClass(\'err-bor\');\r\n\r\n                }\r\n\r\n            }\r\n           " +
+" var divvar = $(\"#id_Mainvariable>div\").size();\r\n\r\n            if (divvar > 0) {" +
+"\r\n\r\n                for (var i = 0; i < divvar; i++) {\r\n                    var " +
+"subdesc_name = $(\'#id_varsubdesc-\' + i).val();\r\n                    var subprice" +
+"_Qty = $(\'#id_varsubprice-\' + i).val();\r\n\r\n                    if (subdesc_name " +
+"== \"\") {\r\n\r\n                        $(\'#id_varsubdesc-\' + i).addClass(\'err-bor\')" +
+";\r\n\r\n                         countvardesc++;\r\n                    } else {\r\n   " +
+"                     $(\'#id_varsubdesc-\' + i).removeClass(\'err-bor\');\r\n\r\n       " +
+"             }\r\n                    if (subprice_Qty == \"\") {\r\n\r\n               " +
+"         $(\'#id_varsubprice-\' + i).addClass(\'err-bor\');\r\n                       " +
+" countvarqty++;\r\n                    } else {\r\n                        if (subpr" +
+"ice_Qty <= 0) {\r\n                            $(\'#id_varsubprice-\' + i).addClass(" +
+"\'err-bor\');\r\n                            countvarqty++;\r\n\r\n                     " +
+"   } else {\r\n                            $(\'#id_varsubprice-\' + i).removeClass(\'" +
+"err-bor\');\r\n                        }\r\n\r\n                        \r\n             " +
+"       }\r\n\r\n                }\r\n\r\n            }\r\n            if (count > 0)\r\n    " +
+"        {\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventHighlig" +
+"htFieldsUI\") + \"<br/>\";\r\n            }\r\n            if (countvardesc > 0)\r\n     " +
+"       {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubDescUI\"" +
+") + \"<br/>\";\r\n\r\n            }\r\n            if (countvarqty > 0) {\r\n             " +
+"   msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubQtyUI\") + \"<br/>\";\r\n\r\n        " +
+"    }\r\n            if ($(\'#chkReqPassword\').is(\":checked\") == true) {\r\n         " +
+"       if ($(\'#txtReqPassword\').val() == \"\") {\r\n                    $(\'#txtReqPa" +
+"ssword\').addClass(\'err-bor\');\r\n                    msg += ajaxsetup(\"CreateEvent" +
+"\", \"CreateEventPwdUI\") + \"<br/>\";;\r\n\r\n                } else {\r\n                " +
+"    $(\'#txtReqPassword\').removeClass(\'err-bor\');\r\n                }\r\n\r\n         " +
+"   }\r\n         \r\n            return msg;\r\n        }\r\n        function compare(Da" +
+"teA, DateB) {\r\n            var errorMsg = \"\";\r\n            var a = new Date(Date" +
+"A);\r\n            var b = new Date(DateB);\r\n\r\n            var msDateA = Date.UTC(" +
+"a.getFullYear(), a.getMonth() + 1, a.getDate());\r\n            var msDateB = Date" +
+".UTC(b.getFullYear(), b.getMonth() + 1, b.getDate());\r\n\r\n            if (parseFl" +
+"oat(msDateA) < parseFloat(msDateB))\r\n                return errorMsg = \"\";  // l" +
+"ess than\r\n            else if (parseFloat(msDateA) == parseFloat(msDateB))\r\n    " +
+"            return errorMsg = \"\";  // equal\r\n            else if (parseFloat(msD" +
+"ateA) > parseFloat(msDateB))\r\n                return errorMsg =  ajaxsetup(\"Crea" +
+"teEvent\", \"CreateEventCompareDateUI\") +\"<br/>\"; // greater than\r\n            els" +
+"e\r\n                return null;  // error\r\n\r\n\r\n        }\r\n        function check" +
+"Time(field) {\r\n            var errorMsg = \"\";\r\n\r\n            // regular expressi" +
+"on to match required time format\r\n            re = /^(\\d{1,2}):(\\d{2})(:00)?([ap" +
+"]m)?$/;\r\n            var value = $(\"#\" + field).val();\r\n            if (value !=" +
+" \'\') {\r\n                if (regs = value.match(re)) {\r\n                    if (r" +
+"egs[4]) {\r\n                        // 12-hour time format with am/pm\r\n          " +
+"              if (regs[1] < 1 || regs[1] > 12) {\r\n                            er" +
+"rorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\") +\"<br/>\";;\r\n      " +
+"                  }\r\n                    } else {\r\n                        // 24" +
+"-hour time format\r\n                        if (regs[1] > 23) {\r\n                " +
+"            errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\")+\"<br" +
+"/>\";;\r\n                        }\r\n                    }\r\n                    if " +
+"(!errorMsg && regs[2] > 59) {\r\n                        errorMsg = ajaxsetup(\"Cre" +
+"ateEvent\", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n                    }\r\n       " +
+"         } else {\r\n                    errorMsg = ajaxsetup(\"CreateEvent\", \"Crea" +
+"teEventInvalidTimeUI\")+\"<br/>\";;\r\n                }\r\n            }\r\n\r\n          " +
+"  return errorMsg;\r\n        }\r\n        function checkDate(field) {\r\n            " +
+"var allowBlank = true;\r\n            var minYear = (new Date()).getFullYear();\r\n " +
+"           var maxYear = (new Date()).getFullYear() + 10;\r\n            var d = n" +
+"ew Date();\r\n\r\n            var errorMsg = \"\";\r\n            var value = $(\"#\" + fi" +
+"eld).val();\r\n            var datelast = new Date(value);\r\n\r\n            var msDa" +
+"teA = Date.UTC(d.getFullYear(), d.getMonth() + 1, d.getDate());\r\n            var" +
+" msDateB = Date.UTC(datelast.getFullYear(), datelast.getMonth() + 1, datelast.ge" +
+"tDate());\r\n\r\n\r\n\r\n            // regular expression to match required date format" +
+"\r\n            re = /^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/;\r\n\r\n            if (value !" +
+"= \'\') {\r\n                if (regs = value.match(re)) {\r\n                    if (" +
+"regs[2] != \'\' && regs[2] != \'\' && regs[3] != \'\') {\r\n                        if (" +
+"regs[2] < 1 || regs[2] > 31) {\r\n                            errorMsg = \"<br/>\" +" +
+" ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\");\r\n                        " +
+"} else if (regs[1] < 1 || regs[1] > 12) {\r\n                            errorMsg " +
+"= \"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\");\r\n             " +
+"           } else if (regs[3] < minYear || regs[3] > maxYear) {\r\n               " +
+"             errorMsg = \"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDa" +
+"teUI\");\r\n                        }\r\n                    }\r\n                } els" +
+"e {\r\n                    errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalid" +
+"DateUI\")+\"<br/>\" ;\r\n                }\r\n            } else if (!allowBlank) {\r\n  " +
+"              errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\") + " +
+"\"<br/>\";\r\n            }\r\n\r\n            if (parseFloat(msDateB) < parseFloat(msDa" +
+"teA)) {\r\n\r\n                errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInval" +
+"idDateUI\") + \"<br/>\";\r\n            }\r\n            return errorMsg;\r\n\r\n          " +
+"  //if (errorMsg != \"\") {\r\n            //    return errorMsg;\r\n\r\n\r\n            /" +
+"/    field.focus();\r\n            //    field.value = \"\";\r\n\r\n            //}\r\n\r\n " +
+"           //return true;\r\n        }\r\n\r\n        $(document).ready(function () {\r" +
+"\n            $(\'input.number\').keyup(function (event) {\r\n\r\n                // sk" +
+"ip for arrow keys\r\n             \r\n\r\n                // format number\r\n          " +
+"      $(this).val(function (index, value) {\r\n                    return value\r\n " +
+"                   .replace(/\\D/g, \"\")\r\n                    .replace(/\\B(?=(\\d{3" +
+"})+(?!\\d))/g, \",\")\r\n                    ;\r\n                });\r\n            });\r" +
+"\n            $(\'.close-model\').on(\'click\', function (e) {\r\n                $.mod" +
+"al.close();\r\n            });\r\n            //$(document).click(function () {\r\n\r\n " +
+"           //    $(\'#diverroacc\').css(\'display\', \'none\');\r\n            //    $(\'" +
+"#divaccsuc\').css(\'display\', \'none\');\r\n            //    $(\"input\").removeClass(\'" +
+"err-bor\');\r\n            //});\r\n            $(\'#drag-drop\').on(\'click\', function " +
+"(e) {\r\n                $(\'#input2\').unbind(\'click\');\r\n\r\n            });\r\n       " +
+" });\r\n\r\n    </script>\r\n");
 
             
-            #line 5298 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 5328 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
 
             
@@ -6547,7 +6571,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            $(
 "ezoneSet\").hide();\r\n\r\n            });\r\n\r\n        });\r\n        \r\n    </script>\r\n");
 
             
-            #line 5554 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 5584 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
 }
 

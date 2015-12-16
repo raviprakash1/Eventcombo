@@ -973,14 +973,14 @@
                                                     <div class="form-group">
                                                         <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
                                                         <div class="evnt_time_cont wd280 mr5_p">
-                                                            <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onblur="checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                            <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onblur="return checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
                                                             <label class="label-control lbl_bot_minim ">Minimum</label>
 
                                                         </div>
                                                         <div class="evnt_time_cont wd280">
-                                                            <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onblur="checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                            <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onblur="return checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
                                                             <label class="label-control lbl_bot_minim ">Maximum</label>
-                                                            <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
+                                                            <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter valid number</label>
 
                                                         </div>
                                                     </div>
@@ -1402,6 +1402,7 @@
     </div><!-- confirm-msg -->
 </div>
 <div>
+    <input type="hidden" id="hdMaxerr" value="0"/>
     <a class="td-btn" id="btOkAc"  type="button" href="#AccessDenied" data-toggle="modal" style="display:none">
 
     </a>
@@ -3882,21 +3883,38 @@
 
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
-
+          
             var minamt = parseInt($('#id_min_ticket-' + el).val());
             var maxamt = parseInt($('#id_max_ticket-' + el).val());
-
-            if (maxamt < minamt) {
-                $('#hddiscount').val('1');
+            if (isNaN(maxamt) && !isNaN(minamt))
+            {
+                
+                $('#hdMaxerr').val('1');
+                $('#id_min_ticket-' + el).addClass('err-bor');
                 $('#id_max_ticket-' + el).addClass('err-bor');
                 $('#id_lblmax-' + el).css('display', 'block');
 
-
-            } else {
-                $('#hddiscount').val('0');
+            }else if(maxamt==0 && minamt==0)
+            {
+                $('#hdMaxerr').val('0');
+                $('#id_min_ticket-' + el).removeClass('err-bor');
                 $('#id_max_ticket-' + el).removeClass('err-bor');
                 $('#id_lblmax-' + el).css('display', 'none');
             }
+            else if (maxamt <= minamt) {
+                    $('#hdMaxerr').val('1');
+                    $('#id_min_ticket-' + el).addClass('err-bor');
+                    $('#id_max_ticket-' + el).addClass('err-bor');
+                    $('#id_lblmax-' + el).css('display', 'block');
+
+
+                } else {
+                    $('#hdMaxerr').val('0');
+                    $('#id_min_ticket-' + el).removeClass('err-bor');
+                    $('#id_max_ticket-' + el).removeClass('err-bor');
+                    $('#id_lblmax-' + el).css('display', 'none');
+                }
+          
         }
         function calculateSum() {
 
@@ -5052,6 +5070,8 @@
 
                     var ticket_name = $('#id_ticket_type-' + i).val();
                     var ticket_Qty = $('#id_quantity_total-' + i).val();
+                    var minimumQty = $('#id_min_ticket-' + i).val();
+                    var maxQty = $('#id_max_ticket-' + i).val();
                     if (ticket_name == "") {
                         $('#id_ticket_type-' + i).addClass('err-bor');
 
@@ -5083,6 +5103,10 @@
             if ($('#hddiscount').val() == 1) {
                 count++;
 
+            }
+            if (parseInt($('#hdMaxerr').val()) == 1)
+            {
+                count++;
             }
             if (countqty > 0) {
                 msg += ajaxsetup("CreateEvent", "CreateEventQtyValidateUI") + "<br/>";
@@ -5142,6 +5166,11 @@
                 }
 
             }
+            if (count > 0)
+            {
+
+                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
+            }
             if (countvardesc > 0)
             {
                 msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
@@ -5161,6 +5190,7 @@
                 }
 
             }
+         
             return msg;
         }
         function compare(DateA, DateB) {
