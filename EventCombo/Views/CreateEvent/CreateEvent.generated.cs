@@ -1847,6 +1847,43 @@ WriteLiteral(" placeholder=\"\"");
 WriteLiteral(" maxlength=\"100\"");
 
 WriteLiteral(" />\r\n                                    </div>\r\n                                " +
+"</div>\r\n                                <div");
+
+WriteLiteral(" class=\"add_social_input mt10\"");
+
+WriteLiteral(">\r\n                                    <div");
+
+WriteLiteral(" class=\"col-sm-12 \"");
+
+WriteLiteral(">\r\n                                        <label");
+
+WriteLiteral(" class=\"control-label ev_tickt_lebel pl0\"");
+
+WriteLiteral(">\r\n                                            <span");
+
+WriteLiteral(" class=\"ln\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"fa fa-linkedin-square\"");
+
+WriteLiteral("></i></span> linkedin.com/\r\n                                        </label>\r\n   " +
+"                                 </div>\r\n                                    <di" +
+"v");
+
+WriteLiteral(" class=\"col-sm-8 \"");
+
+WriteLiteral(">\r\n                                        <input");
+
+WriteLiteral(" id=\"txtOrgLNlink\"");
+
+WriteLiteral(" class=\"form-control wd600\"");
+
+WriteLiteral(" placeholder=\"\"");
+
+WriteLiteral(" maxlength=\"100\"");
+
+WriteLiteral(" />\r\n                                    </div>\r\n                                " +
 "</div>\r\n                            </div>\r\n                        </div>\r\n    " +
 "                </div>\r\n                    <div");
 
@@ -3458,9 +3495,9 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 80843), Tuple.Create("\"", 80864)
-, Tuple.Create(Tuple.Create("", 80849), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 80849), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 81551), Tuple.Create("\"", 81572)
+, Tuple.Create(Tuple.Create("", 81557), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 81557), false)
 );
 
 WriteLiteral("> ENABLE DISCUSSION <input");
@@ -3755,7 +3792,7 @@ WriteLiteral(" />\r\n\r\n\r\n                </div>\r\n            </div>\r\n\r\
 "\r\n");
 
             
-            #line 1248 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1258 "..\..\Views\CreateEvent\CreateEvent.cshtml"
     //----------Model Starts Here------------------
 
 
@@ -3933,7 +3970,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 1294 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1304 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                        Write(Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" }));
 
             
@@ -4046,7 +4083,7 @@ WriteLiteral(">SAVE</button>\r\n                </div>\r\n\r\n            </div>
 " </div>\r\n");
 
             
-            #line 1354 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1364 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
 
             
@@ -4055,13 +4092,13 @@ WriteLiteral(">SAVE</button>\r\n                </div>\r\n\r\n            </div>
 WriteLiteral("       <!-- Confirm Msg OK Modal Box -->\r\n");
 
             
-            #line 1356 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1366 "..\..\Views\CreateEvent\CreateEvent.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 1374 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1384 "..\..\Views\CreateEvent\CreateEvent.cshtml"
             
 
             
@@ -4070,7 +4107,7 @@ WriteLiteral("       <!-- Confirm Msg OK Modal Box -->\r\n");
 WriteLiteral("        <!-- Confirm Msg OK Modal Box -->\r\n");
 
             
-            #line 1376 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1386 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
 
             
@@ -4147,7 +4184,7 @@ WriteLiteral(" id=\'map-canvas-event\'");
 WriteLiteral("></div>\r\n</div>\r\n");
 
             
-            #line 1400 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1410 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
     // ---------------------Event Creation Script -------------------
 
@@ -4164,9 +4201,9 @@ WriteLiteral("></script>\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 94005), Tuple.Create("\"", 94028)
-, Tuple.Create(Tuple.Create("", 94011), Tuple.Create<System.Object, System.Int32>(Href("~/Content/gmap.js")
-, 94011), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 94713), Tuple.Create("\"", 94736)
+, Tuple.Create(Tuple.Create("", 94719), Tuple.Create<System.Object, System.Int32>(Href("~/Content/gmap.js")
+, 94719), false)
 );
 
 WriteLiteral("></script>\r\n");
@@ -4272,74 +4309,80 @@ WriteLiteral("    <script>\r\n        $(\".chkvalidation\").blur(function () {\r
 "               }\r\n            });\r\n\r\n\r\n\r\n            $(\"#hidOrgnizer\").val(\'\');\r" +
 "\n            $(\"#txtOrgnizer\").val(\'\');\r\n            $(\"#edOrgDes\").code(\'\');\r\n " +
 "           $(\"#txtOrgFBlink\").val(\'\');\r\n            $(\"#txtOrgTWlink\").val(\'\');\r" +
-"\n            $(\"#Incsocial\").prop(\"checked\", false);\r\n            $(\"#dvOrgnizer" +
-"FBTw\").hide();\r\n\r\n        }\r\n\r\n        function editRow(Sno) {\r\n            //al" +
-"ert(ColumnValue);\r\n            $(\"#hidAddSno\").val(Sno);\r\n            $(\"#VenueN" +
-"ame\").val($(\"#VenueName\" + Sno).val());\r\n            $(\"#Address1\").val($(\"#Addr" +
-"ess1\" + Sno).val());\r\n            $(\"#Address2\").val($(\"#Address2\" + Sno).val())" +
-";\r\n            $(\"#City\").val($(\"#City\" + Sno).val());\r\n            $(\"#State\")." +
-"val($(\"#State\" + Sno).val());\r\n            $(\"#Zip\").val($(\"#Zip\" + Sno).val());" +
-"\r\n            $(\"#CountryID\").val($(\"#CID\" + Sno).val());\r\n            //   var " +
-"row_index = $(this).parent().index(\'tr\');\r\n\r\n\r\n            // var i = 1;\r\n      " +
-"      //var myTr = [];\r\n            //$(\'#tblAddress tr\').each(function () {\r\n  " +
-"          //    $(this).find(\'td\').each(function () {\r\n            //    });\r\n  " +
-"          //    alert(myTr);\r\n            //});\r\n\r\n            //$(\'#tblAddress " +
-"tr\').each(function () {\r\n            //    $(this).find(\'td\').each(function () {" +
-"\r\n            //        i =parseInt($(this).text());\r\n            //        if (" +
-"parseInt(Sno) == )\r\n            //        {\r\n            //            myTr.push" +
-"($(this).text());\r\n            //        }\r\n            //    });\r\n            /" +
-"/    alert(myTr);\r\n            //});\r\n\r\n        }\r\n        function editOrgnizer" +
-"() {\r\n            var Sno = $(\"#ddlOrgnizers\").val();\r\n            //alert(Sno);" +
-"\r\n            $(\"#hidOrgnizer\").val(Sno);\r\n            var vOrgName = $(\"#OrgNam" +
-"e_\" + Sno).text();\r\n            var vOrgDes = $(\"#OrgDes_\" + Sno).text();\r\n     " +
-"       var vOrgFB = $(\"#OrgFB_\" + Sno).text();\r\n            var vOrgTw = $(\"#Org" +
-"Tw_\" + Sno).text();\r\n\r\n            $(\"#txtOrgnizer\").val(vOrgName);\r\n           " +
-" $(\"#edOrgDes\").code(vOrgDes);\r\n            $(\"#txtOrgFBlink\").val(vOrgFB);\r\n   " +
-"         $(\"#txtOrgTWlink\").val(vOrgTw);\r\n\r\n            if (vOrgFB != \'\' || vOrg" +
-"Tw != \'\') {\r\n                $(\"#Incsocial\").prop(\"checked\", true);\r\n           " +
-"     $(\"#dvOrgnizerFBTw\").show();\r\n            }\r\n            else {\r\n          " +
-"      $(\"#Incsocial\").prop(\"checked\", false);\r\n                $(\"#dvOrgnizerFBT" +
-"w\").hide();\r\n            }\r\n\r\n        }\r\n\r\n        function AddOrgnizer() {\r\n   " +
-"         $(\"#hidOrgnizer\").val(\'\');\r\n            var Sno = $(\"#tblOrgnizer tr\")." +
-"length +1;\r\n\r\n            var vOrgName = $(\"#txtOrgnizer\").val();\r\n            v" +
-"ar vOrgDes = $(\"#edOrgDes\").code();\r\n            var vOrgFB = $(\"#txtOrgFBlink\")" +
-".val();\r\n            var vOrgTw = $(\"#txtOrgTWlink\").val();\r\n\r\n            var s" +
-"trHTML = \'<tr>\';\r\n            strHTML = strHTML + \'<td style=\"display:none\" widt" +
-"h=\"92%\">\' + Sno + \'</td>\';\r\n            strHTML = strHTML + \'<td width=\"92%\"><la" +
-"bel id=OrgName_\' + Sno + \'>\' + vOrgName + \'</label></td>\';\r\n            strHTML " +
-"= strHTML + \'<td style=\"display:none\"><label id=OrgDes_\' + Sno + \'>\' + vOrgDes +" +
-" \'</label></td>\';\r\n            strHTML = strHTML + \'<td style=\"display:none\"><la" +
-"bel id=OrgFB_\' + Sno + \'>\' + vOrgFB + \'</label></td>\';\r\n            strHTML = st" +
-"rHTML + \'<td style=\"display:none\"><label id=OrgTw_\' + Sno + \'>\' + vOrgTw + \'</la" +
-"bel></td>\';\r\n            //strHTML = strHTML + \'<td align=\"right\"><a href=\"#\" on" +
-"click=\"editOrgnizer(\' + Sno + \');\"><i class=\"fa fa-pencil\"></i> </a> | <a href=\"" +
-"#\"  onclick=\"DeleteOrgnizer(\' + Sno + \');\"><i class=\"fa fa-trash\"></i> </a></td>" +
-"\';\r\n            strHTML = strHTML + \'<td align=\"right\"><i onclick=\"editOrgnizer(" +
-"\' + Sno + \')\"; class=\"fa fa-pencil\"></i> | <i onclick=\"DeleteOrgnizer(\' + Sno + " +
-"\');\" class=\"fa fa-trash\"></i></td>\';\r\n\r\n            strHTML = strHTML + \'</tr>\';" +
-"\r\n            //                strHTML = strHTML + \'<td><div class=\"trigger mt5" +
-" ent_add\"><a href=\"#\" onclick=\"editRow(\' + Sno + \');\"><i class=\"fa fa-map-marker" +
-"\"></i> Edit</a>  <a href=\"#\" id=\"btAddDelete\" onclick=\"DeleteTableRow(\' + Sno + " +
-"\')\">Delete</a> </div> </td>\';\r\n\r\n\r\n            $(\"#tblOrgnizer\").append(strHTML)" +
-";\r\n            strHTML = \'<option value=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vOrgN" +
-"ame + \'</option>\';\r\n\r\n            $(\"#ddlOrgnizers\").append(strHTML);\r\n\r\n       " +
-" }\r\n\r\n        function UpdateOrgnizer() {\r\n            var Sno = $(\"#ddlOrgnizer" +
-"s\").val();\r\n            //    alert(Sno);\r\n            vOrgName = $(\"#txtOrgnize" +
-"r\").val();\r\n            vOrgDes = $(\"#edOrgDes\").code();\r\n            vOrgFB = $" +
-"(\"#txtOrgFBlink\").val();\r\n            vOrgTw = $(\"#txtOrgTWlink\").val();\r\n\r\n    " +
-"        $(\"#OrgName_\" + Sno).text(vOrgName);\r\n            $(\"#OrgDes_\" + Sno).te" +
-"xt(vOrgDes);\r\n            $(\"#OrgFB_\" + Sno).text(vOrgFB);\r\n            $(\"#OrgT" +
-"w_\" + Sno).text(vOrgTw);\r\n\r\n\r\n            $(\"#ddlOrgnizers option\").each(functio" +
-"n (i) {\r\n                if (Sno == $(this).val()) {\r\n                    $(this" +
-").remove();\r\n                }\r\n            });\r\n            var addOption = \'<o" +
-"ption value=\"\' + Sno + \'\" id=\"\' + Sno + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</opt" +
-"ion>\';\r\n            $(\"#ddlOrgnizers\").append(addOption);\r\n\r\n\r\n\r\n\r\n        }\r\n\r\n" +
-"        $(document).ready(function () {\r\n            $(\"#btOKAccess\").click(func" +
-"tion () {\r\n                history.back();\r\n            });\r\n            $.ajax(" +
-"{\r\n                url: \'");
+"\n            $(\"#txtOrgLNlink\").val(\'\')\r\n            $(\"#Incsocial\").prop(\"check" +
+"ed\", false);\r\n            $(\"#dvOrgnizerFBTw\").hide();\r\n\r\n        }\r\n\r\n        f" +
+"unction editRow(Sno) {\r\n            //alert(ColumnValue);\r\n            $(\"#hidAd" +
+"dSno\").val(Sno);\r\n            $(\"#VenueName\").val($(\"#VenueName\" + Sno).val());\r" +
+"\n            $(\"#Address1\").val($(\"#Address1\" + Sno).val());\r\n            $(\"#Ad" +
+"dress2\").val($(\"#Address2\" + Sno).val());\r\n            $(\"#City\").val($(\"#City\" " +
+"+ Sno).val());\r\n            $(\"#State\").val($(\"#State\" + Sno).val());\r\n         " +
+"   $(\"#Zip\").val($(\"#Zip\" + Sno).val());\r\n            $(\"#CountryID\").val($(\"#CI" +
+"D\" + Sno).val());\r\n            //   var row_index = $(this).parent().index(\'tr\')" +
+";\r\n\r\n\r\n            // var i = 1;\r\n            //var myTr = [];\r\n            //$(" +
+"\'#tblAddress tr\').each(function () {\r\n            //    $(this).find(\'td\').each(" +
+"function () {\r\n            //    });\r\n            //    alert(myTr);\r\n          " +
+"  //});\r\n\r\n            //$(\'#tblAddress tr\').each(function () {\r\n            // " +
+"   $(this).find(\'td\').each(function () {\r\n            //        i =parseInt($(th" +
+"is).text());\r\n            //        if (parseInt(Sno) == )\r\n            //      " +
+"  {\r\n            //            myTr.push($(this).text());\r\n            //       " +
+" }\r\n            //    });\r\n            //    alert(myTr);\r\n            //});\r\n\r\n" +
+"        }\r\n        function editOrgnizer() {\r\n            var Sno = $(\"#ddlOrgni" +
+"zers\").val();\r\n            //alert(Sno);\r\n            $(\"#hidOrgnizer\").val(Sno)" +
+";\r\n            var vOrgName = $(\"#OrgName_\" + Sno).text();\r\n            var vOrg" +
+"Des = $(\"#OrgDes_\" + Sno).text();\r\n            var vOrgFB = $(\"#OrgFB_\" + Sno).t" +
+"ext();\r\n            var vOrgTw = $(\"#OrgTw_\" + Sno).text();\r\n            var vOr" +
+"gLn= $(\"#OrgLn_\" + Sno).text();\r\n            $(\"#txtOrgnizer\").val(vOrgName);\r\n " +
+"           $(\"#edOrgDes\").code(vOrgDes);\r\n            $(\"#txtOrgFBlink\").val(vOr" +
+"gFB);\r\n            $(\"#txtOrgTWlink\").val(vOrgTw);\r\n\r\n            if (vOrgFB != " +
+"\'\' || vOrgTw != \'\' || vOrgLn!=\'\') {\r\n                $(\"#Incsocial\").prop(\"check" +
+"ed\", true);\r\n                $(\"#dvOrgnizerFBTw\").show();\r\n            }\r\n      " +
+"      else {\r\n                $(\"#Incsocial\").prop(\"checked\", false);\r\n         " +
+"       $(\"#dvOrgnizerFBTw\").hide();\r\n            }\r\n\r\n        }\r\n\r\n        funct" +
+"ion AddOrgnizer() {\r\n            $(\"#hidOrgnizer\").val(\'\');\r\n            var Sno" +
+" = $(\"#tblOrgnizer tr\").length +1;\r\n\r\n            var vOrgName = $(\"#txtOrgnizer" +
+"\").val();\r\n            var vOrgDes = $(\"#edOrgDes\").code();\r\n            var vOr" +
+"gFB = $(\"#txtOrgFBlink\").val();\r\n            var vOrgTw = $(\"#txtOrgTWlink\").val" +
+"();\r\n            var vOrgLn = $(\"#txtOrgLNlink\").val();\r\n            \r\n         " +
+"   var strHTML = \'<tr>\';\r\n            strHTML = strHTML + \'<td style=\"display:no" +
+"ne\" width=\"92%\">\' + Sno + \'</td>\';\r\n            strHTML = strHTML + \'<td width=\"" +
+"92%\"><label id=OrgName_\' + Sno + \'>\' + vOrgName + \'</label></td>\';\r\n            " +
+"strHTML = strHTML + \'<td style=\"display:none\"><label id=OrgDes_\' + Sno + \'>\' + v" +
+"OrgDes + \'</label></td>\';\r\n            strHTML = strHTML + \'<td style=\"display:n" +
+"one\"><label id=OrgFB_\' + Sno + \'>\' + vOrgFB + \'</label></td>\';\r\n            strH" +
+"TML = strHTML + \'<td style=\"display:none\"><label id=OrgTw_\' + Sno + \'>\' + vOrgTw" +
+" + \'</label></td>\';\r\n            strHTML = strHTML + \'<td style=\"display:none\"><" +
+"label id=OrgLn_\' + Sno + \'>\' + vOrgLn + \'</label></td>\';\r\n            //strHTML " +
+"= strHTML + \'<td align=\"right\"><a href=\"#\" onclick=\"editOrgnizer(\' + Sno + \');\">" +
+"<i class=\"fa fa-pencil\"></i> </a> | <a href=\"#\"  onclick=\"DeleteOrgnizer(\' + Sno" +
+" + \');\"><i class=\"fa fa-trash\"></i> </a></td>\';\r\n            strHTML = strHTML +" +
+" \'<td align=\"right\"><i onclick=\"editOrgnizer(\' + Sno + \')\"; class=\"fa fa-pencil\"" +
+"></i> | <i onclick=\"DeleteOrgnizer(\' + Sno + \');\" class=\"fa fa-trash\"></i></td>\'" +
+";\r\n\r\n            strHTML = strHTML + \'</tr>\';\r\n            //                str" +
+"HTML = strHTML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#\" onclick=\"edit" +
+"Row(\' + Sno + \');\"><i class=\"fa fa-map-marker\"></i> Edit</a>  <a href=\"#\" id=\"bt" +
+"AddDelete\" onclick=\"DeleteTableRow(\' + Sno + \')\">Delete</a> </div> </td>\';\r\n\r\n\r\n" +
+"            $(\"#tblOrgnizer\").append(strHTML);\r\n            strHTML = \'<option v" +
+"alue=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vOrgName + \'</option>\';\r\n\r\n            $" +
+"(\"#ddlOrgnizers\").append(strHTML);\r\n            console.log($(\"#tblOrgnizer\"));\r" +
+"\n        }\r\n\r\n        function UpdateOrgnizer() {\r\n            var Sno = $(\"#ddl" +
+"Orgnizers\").val();\r\n            //    alert(Sno);\r\n            vOrgName = $(\"#tx" +
+"tOrgnizer\").val();\r\n            vOrgDes = $(\"#edOrgDes\").code();\r\n            vO" +
+"rgFB = $(\"#txtOrgFBlink\").val();\r\n            vOrgTw = $(\"#txtOrgTWlink\").val();" +
+"\r\n            vOrgLn = $(\"#txtOrgLNlink\").val();\r\n         \r\n\r\n            $(\"#O" +
+"rgName_\" + Sno).text(vOrgName);\r\n            $(\"#OrgDes_\" + Sno).text(vOrgDes);\r" +
+"\n            $(\"#OrgFB_\" + Sno).text(vOrgFB);\r\n            $(\"#OrgTw_\" + Sno).te" +
+"xt(vOrgTw);\r\n            $(\"#OrgLn_\" + Sno).text(vOrgLn);\r\n\r\n            alert($" +
+"(\"#OrgLn_\" + Sno).text());\r\n            $(\"#ddlOrgnizers option\").each(function " +
+"(i) {\r\n                if (Sno == $(this).val()) {\r\n                    $(this)." +
+"remove();\r\n                }\r\n            });\r\n            var addOption = \'<opt" +
+"ion value=\"\' + Sno + \'\" id=\"\' + Sno + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</optio" +
+"n>\';\r\n            $(\"#ddlOrgnizers\").append(addOption);\r\n\r\n\r\n\r\n\r\n        }\r\n\r\n  " +
+"      $(document).ready(function () {\r\n            $(\"#btOKAccess\").click(functi" +
+"on () {\r\n                history.back();\r\n            });\r\n            $.ajax({\r" +
+"\n                url: \'");
 
             
-            #line 1812 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 1828 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                  Write(Url.Action("GetPermission", "Permission"));
 
             
@@ -4532,55 +4575,57 @@ WriteLiteral("\',\r\n                data: { iPermissionId: 1 },\r\n            
 " + Sno).text(),\r\n                            Orgnizer_Desc: $(\"#OrgDes_\" + Sno)." +
 "text(),\r\n                            FBLink: $(\"#OrgFB_\" + Sno).text(),\r\n       " +
 "                     Twitter: $(\"#OrgTw_\" + Sno).text(),\r\n                      " +
-"      DefaultOrg: (vDefaultOrg == Sno ? \'Y\' : \'N\')\r\n\r\n                        })" +
-";\r\n                    }\r\n                });\r\n\r\n\r\n\r\n                // Basic Ev" +
-"ent Info\r\n                //alert($(\"#edSummer1\").code());\r\n                debu" +
-"gger;\r\n                //$(\"#spEvDesc\").text();\r\n                var vEdesc = \'\'" +
-"; //$(\"#edEventDesc\").code();\r\n\r\n                var varDescritpion = \'\';\r\n     " +
-"           var optionalvariable = \'\';\r\n                if ($(\"#id_variablecharge" +
-"\").is(\":checked\")) {\r\n                    varDescritpion = $(\'#id_vardesc\').val(" +
-");\r\n                    optionalvariable = $(\'#variabletype\').val();\r\n          " +
-"      }\r\n\r\n\r\n                var model = {\r\n                    \'EventTypeID\': $" +
-"(\"#EventType\").val(),\r\n                    \'EventCategoryID\': $(\"#ddlEventCatego" +
-"ry\").val(),\r\n                    \'EventSubCategoryID\': $(\"#ddlEventSubCategory\")" +
-".val(),\r\n                    \'UserID\': \'\',\r\n                    \'EventTitle\': $(" +
-"\"#txtEventTitle\").val(),\r\n                    \'EventDescription\': $(\"#edEventDes" +
-"c\").code().replace(/<\\/p>/gi, \"\\n\").replace(/<br\\/?>/gi, \"\\n\").replace(/<\\/?[^>]" +
-"+(>|$)/g, \"\"),\r\n                    \'EventPrivacy\': ($(\"#rdPublic\").is(\":checked" +
-"\") == true ? \'Public\' : \'Private\'),\r\n                    \'Private_ShareOnFB\': ($" +
-"(\"#chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                    \'Pri" +
-"vate_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n     " +
-"               \'Private_Password\': $(\"#txtReqPassword\").val(),\r\n                " +
-"    \'EventUrl\': $(\"#txtEventUrl\").val().trim(),\r\n                    \'PublishOnF" +
-"B\': ($(\"#chkPublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n           " +
-"         \'EventStatus\': \'Save\',\r\n                    \'AddressDetail\': SubmitAddr" +
-"ess,\r\n                    \'EventVenue\': SingleTiming,\r\n                    \'Time" +
-"Zone\': $(\"#dllTimeZone\").val(),\r\n                    \'DisplayStartTime\': ($(\"#ch" +
-"kDisplayStartTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                    \'D" +
-"isplayEndTime\': ($(\"#chkDisplayEndTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n " +
-"                   \'DisplayTimeZone\': ($(\"#chkTimeZone\").is(\":checked\") == true " +
-"? \"Y\" : \"N\"),\r\n                    \'FBUrl\': \'\',\r\n                    \'TwitterUrl" +
-"\': \'\',\r\n                    \'MultipleEvents\': MultipleSchedule,\r\n               " +
-"     \'Orgnizer\': Orgnizer,\r\n                    \'AddressStatus\': $(\"#hidAddressS" +
-"tatus\").val(),\r\n                    \'LastLocationAddress\': ($(\"#hidAddressStatus" +
-"\").val() == \"PastLocation\" ? $(\"#dllPastLocation\").val() : 0),\r\n                " +
-"    \'EnableFBDiscussion\': ($(\"#chkAllowFBDis\").is(\":checked\") == true ? \'Y\' : \'N" +
-"\'),\r\n                    \'Ticket\': Ticket,\r\n                    \'EventImage\': Ev" +
-"entImage,\r\n                    \'EventVariable\': EventVariable,\r\n                " +
-"    \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr\").is(\":checked\") == true ? \'Y\' " +
-": \'N\'),\r\n                    \'Ticket_showremain\': ($(\"#id_showremaningticket\").i" +
-"s(\":checked\") == true ? \'Y\' : \'N\'),\r\n                    \'Ticket_showvariable\': " +
-"($(\"#id_variablecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                 " +
-"   \'Ticket_variabledesc\': varDescritpion,\r\n                    \'Ticket_variablet" +
-"ype\': optionalvariable,\r\n                    \'ShowMap\': ($(\"#chkShowMap\").is(\":c" +
-"hecked\") == true ? \'Y\' : \'N\'),\r\n                    \'DuplicateEvent\': ($(\"#chkDu" +
-"plicateEvent\").is(\":checked\") == true ? \'Y\' : \'N\')\r\n\r\n                };\r\n\r\n    " +
-"            //var params = \'strEveDec :\' + $(\"#edEventDesc\").code();\r\n\r\n\r\n      " +
-"          if ($(\"#hdEventId\").val() == \'\') {\r\n                    $.ajax({\r\n    " +
-"                    url: \'");
+"      Linkedin: $(\"#OrgLn_\" + Sno).text(),\r\n                            DefaultO" +
+"rg: (vDefaultOrg == Sno ? \'Y\' : \'N\')\r\n\r\n                        });\r\n           " +
+"         }\r\n                });\r\n               \r\n                console.log($(" +
+"\'#tblOrgnizer\'));\r\n                console.log(Orgnizer);\r\n\r\n                // " +
+"Basic Event Info\r\n                //alert($(\"#edSummer1\").code());\r\n            " +
+"    debugger;\r\n                //$(\"#spEvDesc\").text();\r\n                var vEd" +
+"esc = \'\'; //$(\"#edEventDesc\").code();\r\n\r\n                var varDescritpion = \'\'" +
+";\r\n                var optionalvariable = \'\';\r\n                if ($(\"#id_variab" +
+"lecharge\").is(\":checked\")) {\r\n                    varDescritpion = $(\'#id_vardes" +
+"c\').val();\r\n                    optionalvariable = $(\'#variabletype\').val();\r\n  " +
+"              }\r\n\r\n\r\n                var model = {\r\n                    \'EventTy" +
+"peID\': $(\"#EventType\").val(),\r\n                    \'EventCategoryID\': $(\"#ddlEve" +
+"ntCategory\").val(),\r\n                    \'EventSubCategoryID\': $(\"#ddlEventSubCa" +
+"tegory\").val(),\r\n                    \'UserID\': \'\',\r\n                    \'EventTi" +
+"tle\': $(\"#txtEventTitle\").val(),\r\n                    \'EventDescription\': $(\"#ed" +
+"EventDesc\").code().replace(/<\\/p>/gi, \"\\n\").replace(/<br\\/?>/gi, \"\\n\").replace(/" +
+"<\\/?[^>]+(>|$)/g, \"\"),\r\n                    \'EventPrivacy\': ($(\"#rdPublic\").is(\"" +
+":checked\") == true ? \'Public\' : \'Private\'),\r\n                    \'Private_ShareO" +
+"nFB\': ($(\"#chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                " +
+"    \'Private_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") == true ? \'Y\' : \'N\')" +
+",\r\n                    \'Private_Password\': $(\"#txtReqPassword\").val(),\r\n        " +
+"            \'EventUrl\': $(\"#txtEventUrl\").val().trim(),\r\n                    \'Pu" +
+"blishOnFB\': ($(\"#chkPublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n   " +
+"                 \'EventStatus\': \'Save\',\r\n                    \'AddressDetail\': Su" +
+"bmitAddress,\r\n                    \'EventVenue\': SingleTiming,\r\n                 " +
+"   \'TimeZone\': $(\"#dllTimeZone\").val(),\r\n                    \'DisplayStartTime\':" +
+" ($(\"#chkDisplayStartTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n              " +
+"      \'DisplayEndTime\': ($(\"#chkDisplayEndTime\").is(\":checked\") == true ? \"Y\" : " +
+"\"N\"),\r\n                    \'DisplayTimeZone\': ($(\"#chkTimeZone\").is(\":checked\") " +
+"== true ? \"Y\" : \"N\"),\r\n                    \'FBUrl\': \'\',\r\n                    \'Tw" +
+"itterUrl\': \'\',\r\n                    \'MultipleEvents\': MultipleSchedule,\r\n       " +
+"             \'Orgnizer\': Orgnizer,\r\n                    \'AddressStatus\': $(\"#hid" +
+"AddressStatus\").val(),\r\n                    \'LastLocationAddress\': ($(\"#hidAddre" +
+"ssStatus\").val() == \"PastLocation\" ? $(\"#dllPastLocation\").val() : 0),\r\n        " +
+"            \'EnableFBDiscussion\': ($(\"#chkAllowFBDis\").is(\":checked\") == true ? " +
+"\'Y\' : \'N\'),\r\n                    \'Ticket\': Ticket,\r\n                    \'EventIm" +
+"age\': EventImage,\r\n                    \'EventVariable\': EventVariable,\r\n        " +
+"            \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr\").is(\":checked\") == tru" +
+"e ? \'Y\' : \'N\'),\r\n                    \'Ticket_showremain\': ($(\"#id_showremaningti" +
+"cket\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                    \'Ticket_showvar" +
+"iable\': ($(\"#id_variablecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n         " +
+"           \'Ticket_variabledesc\': varDescritpion,\r\n                    \'Ticket_v" +
+"ariabletype\': optionalvariable,\r\n                    \'ShowMap\': ($(\"#chkShowMap\"" +
+").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                    \'DuplicateEvent\': ($" +
+"(\"#chkDuplicateEvent\").is(\":checked\") == true ? \'Y\' : \'N\')\r\n\r\n                };" +
+"\r\n\r\n                //var params = \'strEveDec :\' + $(\"#edEventDesc\").code();\r\n\r\n" +
+"\r\n                if ($(\"#hdEventId\").val() == \'\') {\r\n                    $.ajax" +
+"({\r\n                        url: \'");
 
             
-            #line 2231 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2249 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                          Write(Url.Action("SaveEvent", "CreateEvent"));
 
             
@@ -4595,7 +4640,7 @@ WriteLiteral(@"',
                             window.open('");
 
             
-            #line 2237 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2255 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                     Write(Url.Action("ViewCreateEvent", "CreateEvent",new { }));
 
             
@@ -4605,7 +4650,7 @@ WriteLiteral("?strUrlData=\' + vUrl, \"_blank\");\r\n                           
 "f = \'");
 
             
-            #line 2238 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2256 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                                Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -4617,7 +4662,7 @@ WriteLiteral("\' + \'?Eventid=\' + response;\r\n                        }\r\n   
 "indow.open(\'");
 
             
-            #line 2244 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2262 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                             Write(Url.Action("ViewCreateEvent", "CreateEvent",new { }));
 
             
@@ -4626,7 +4671,7 @@ WriteLiteral("\' + \'?Eventid=\' + response;\r\n                        }\r\n   
 WriteLiteral("?strUrlData=\' + vUrl, \"_blank\");\r\n                    window.location.href = \'");
 
             
-            #line 2245 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2263 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                        Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -4817,58 +4862,60 @@ WriteLiteral("\r\n            });\r\n\r\n            $(\".cbtMakeLive\").click(f
 "gnizer_Name: $(\"#OrgName_\" + Sno).text(),\r\n                                Orgni" +
 "zer_Desc: $(\"#OrgDes_\" + Sno).text(),\r\n                                FBLink: $" +
 "(\"#OrgFB_\" + Sno).text(),\r\n                                Twitter: $(\"#OrgTw_\" " +
-"+ Sno).text(),\r\n                                DefaultOrg: (vDefaultOrg == Sno " +
-"? \'Y\' : \'N\')\r\n\r\n                            });\r\n                        }\r\n    " +
-"                });\r\n\r\n\r\n\r\n                    // Basic Event Info\r\n            " +
-"        //alert($(\"#edSummer1\").code());\r\n\r\n                    //$(\"#spEvDesc\")" +
-".text();\r\n                    var vEdesc = \'\'; //$(\"#edEventDesc\").code();\r\n\r\n  " +
-"                  var varDescritpion = \'\';\r\n                    var optionalvari" +
-"able = \'\';\r\n                    if ($(\"#id_variablecharge\").is(\":checked\")) {\r\n " +
-"                       varDescritpion = $(\'#id_vardesc\').val();\r\n               " +
-"         optionalvariable = $(\'#variabletype\').val()\r\n                    }\r\n\r\n\r" +
-"\n                    var model = {\r\n                        \'EventTypeID\': $(\"#E" +
-"ventType\").val(),\r\n                        \'EventCategoryID\': $(\"#ddlEventCatego" +
-"ry\").val(),\r\n                        \'EventSubCategoryID\': $(\"#ddlEventSubCatego" +
-"ry\").val(),\r\n                        \'UserID\': \'\',\r\n                        \'Eve" +
-"ntTitle\': $(\"#txtEventTitle\").val(),\r\n                        \'EventDescription\'" +
-": $(\"#edEventDesc\").code().replace(/<\\/p>/gi, \"\\n\").replace(/<br\\/?>/gi, \"\\n\").r" +
-"eplace(/<\\/?[^>]+(>|$)/g, \"\"),\r\n                        \'EventPrivacy\': ($(\"#rdP" +
-"ublic\").is(\":checked\") == true ? \'Public\' : \'Private\'),\r\n                       " +
-" \'Private_ShareOnFB\': ($(\"#chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n" +
-"                        \'Private_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") " +
-"== true ? \'Y\' : \'N\'),\r\n                        \'Private_Password\': $(\"#txtReqPas" +
-"sword\").val(),\r\n                        \'EventUrl\': $(\"#txtEventUrl\").val().trim" +
-"(),\r\n                        \'PublishOnFB\': ($(\"#chkPublishEventOnFB\").is(\":chec" +
-"ked\") == true ? \'Y\' : \'N\'),\r\n                        \'EventStatus\': \'Save\',\r\n   " +
-"                     \'AddressDetail\': SubmitAddress,\r\n                        \'E" +
-"ventVenue\': SingleTiming,\r\n                        \'TimeZone\': $(\"#dllTimeZone\")" +
-".val(),\r\n                        \'DisplayStartTime\': ($(\"#chkDisplayStartTime\")." +
-"is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                        \'DisplayEndTime\': " +
-"($(\"#chkDisplayEndTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                 " +
-"       \'DisplayTimeZone\': ($(\"#chkTimeZone\").is(\":checked\") == true ? \"Y\" : \"N\")" +
-",\r\n                        \'FBUrl\': \'\',\r\n                        \'TwitterUrl\': \'" +
-"\',\r\n                        \'MultipleEvents\': MultipleSchedule,\r\n               " +
-"         \'Orgnizer\': Orgnizer,\r\n                        \'AddressStatus\': $(\"#hid" +
-"AddressStatus\").val(),\r\n                        \'LastLocationAddress\': ($(\"#hidA" +
-"ddressStatus\").val() == \"PastLocation\" ? $(\"#dllPastLocation\").val() : 0),\r\n    " +
-"                    \'EnableFBDiscussion\': ($(\"#chkAllowFBDis\").is(\":checked\") ==" +
-" true ? \'Y\' : \'N\'),\r\n                        \'Ticket\': Ticket,\r\n                " +
-"        \'EventImage\': EventImage,\r\n                        \'EventVariable\': Even" +
-"tVariable,\r\n                        \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr" +
-"\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                        \'Ticket_showrem" +
-"ain\': ($(\"#id_showremaningticket\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n       " +
-"                 \'Ticket_showvariable\': ($(\"#id_variablecharge\").is(\":checked\") " +
-"== true ? \'Y\' : \'N\'),\r\n                        \'Ticket_variabledesc\': varDescrit" +
-"pion,\r\n                        \'Ticket_variabletype\': optionalvariable,\r\n       " +
-"                 \'ShowMap\': ($(\"#chkShowMap\").is(\":checked\") == true ? \'Y\' : \'N\'" +
-"),\r\n                        \'DuplicateEvent\': ($(\"#chkDuplicateEvent\").is(\":chec" +
-"ked\") == true ? \'Y\' : \'N\')\r\n\r\n                    };\r\n\r\n                    //va" +
-"r params = \'strEveDec :\' + $(\"#edEventDesc\").code();\r\n\r\n\r\n                    if" +
-" ($(\"#hdEventId\").val() == \'\') {\r\n                        $.ajax({\r\n            " +
-"                url: \'");
+"+ Sno).text(),\r\n                                Linkedin: $(\"#OrgLn_\" + Sno).tex" +
+"t(),\r\n                                DefaultOrg: (vDefaultOrg == Sno ? \'Y\' : \'N" +
+"\')\r\n\r\n                            });\r\n                        }\r\n              " +
+"      });\r\n\r\n                    \r\n                    console.log($(\'#tblOrgniz" +
+"er\'));\r\n                    console.log(Orgnizer);\r\n\r\n                    // Bas" +
+"ic Event Info\r\n                    //alert($(\"#edSummer1\").code());\r\n\r\n         " +
+"           //$(\"#spEvDesc\").text();\r\n                    var vEdesc = \'\'; //$(\"#" +
+"edEventDesc\").code();\r\n\r\n                    var varDescritpion = \'\';\r\n         " +
+"           var optionalvariable = \'\';\r\n                    if ($(\"#id_variablech" +
+"arge\").is(\":checked\")) {\r\n                        varDescritpion = $(\'#id_vardes" +
+"c\').val();\r\n                        optionalvariable = $(\'#variabletype\').val()\r" +
+"\n                    }\r\n\r\n\r\n                    var model = {\r\n                 " +
+"       \'EventTypeID\': $(\"#EventType\").val(),\r\n                        \'EventCate" +
+"goryID\': $(\"#ddlEventCategory\").val(),\r\n                        \'EventSubCategor" +
+"yID\': $(\"#ddlEventSubCategory\").val(),\r\n                        \'UserID\': \'\',\r\n " +
+"                       \'EventTitle\': $(\"#txtEventTitle\").val(),\r\n               " +
+"         \'EventDescription\': $(\"#edEventDesc\").code().replace(/<\\/p>/gi, \"\\n\").r" +
+"eplace(/<br\\/?>/gi, \"\\n\").replace(/<\\/?[^>]+(>|$)/g, \"\"),\r\n                     " +
+"   \'EventPrivacy\': ($(\"#rdPublic\").is(\":checked\") == true ? \'Public\' : \'Private\'" +
+"),\r\n                        \'Private_ShareOnFB\': ($(\"#chkShareOnFB\").is(\":checke" +
+"d\") == true ? \'Y\' : \'N\'),\r\n                        \'Private_GuestOnly\': ($(\"#chk" +
+"Guestonly\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                        \'Priva" +
+"te_Password\': $(\"#txtReqPassword\").val(),\r\n                        \'EventUrl\': $" +
+"(\"#txtEventUrl\").val().trim(),\r\n                        \'PublishOnFB\': ($(\"#chkP" +
+"ublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                        " +
+"\'EventStatus\': \'Save\',\r\n                        \'AddressDetail\': SubmitAddress,\r" +
+"\n                        \'EventVenue\': SingleTiming,\r\n                        \'T" +
+"imeZone\': $(\"#dllTimeZone\").val(),\r\n                        \'DisplayStartTime\': " +
+"($(\"#chkDisplayStartTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n               " +
+"         \'DisplayEndTime\': ($(\"#chkDisplayEndTime\").is(\":checked\") == true ? \"Y\"" +
+" : \"N\"),\r\n                        \'DisplayTimeZone\': ($(\"#chkTimeZone\").is(\":che" +
+"cked\") == true ? \"Y\" : \"N\"),\r\n                        \'FBUrl\': \'\',\r\n            " +
+"            \'TwitterUrl\': \'\',\r\n                        \'MultipleEvents\': Multipl" +
+"eSchedule,\r\n                        \'Orgnizer\': Orgnizer,\r\n                     " +
+"   \'AddressStatus\': $(\"#hidAddressStatus\").val(),\r\n                        \'Last" +
+"LocationAddress\': ($(\"#hidAddressStatus\").val() == \"PastLocation\" ? $(\"#dllPastL" +
+"ocation\").val() : 0),\r\n                        \'EnableFBDiscussion\': ($(\"#chkAll" +
+"owFBDis\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                        \'Ticket\'" +
+": Ticket,\r\n                        \'EventImage\': EventImage,\r\n                  " +
+"      \'EventVariable\': EventVariable,\r\n                        \'Ticket_DAdress\':" +
+" ($(\"#id_ticketdeliveryaddr\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n            " +
+"            \'Ticket_showremain\': ($(\"#id_showremaningticket\").is(\":checked\") == " +
+"true ? \'Y\' : \'N\'),\r\n                        \'Ticket_showvariable\': ($(\"#id_varia" +
+"blecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                        \'Ticke" +
+"t_variabledesc\': varDescritpion,\r\n                        \'Ticket_variabletype\':" +
+" optionalvariable,\r\n                        \'ShowMap\': ($(\"#chkShowMap\").is(\":ch" +
+"ecked\") == true ? \'Y\' : \'N\'),\r\n                        \'DuplicateEvent\': ($(\"#ch" +
+"kDuplicateEvent\").is(\":checked\") == true ? \'Y\' : \'N\')\r\n\r\n                    };\r" +
+"\n\r\n                    //var params = \'strEveDec :\' + $(\"#edEventDesc\").code();\r" +
+"\n\r\n\r\n                    if ($(\"#hdEventId\").val() == \'\') {\r\n                   " +
+"     $.ajax({\r\n                            url: \'");
 
             
-            #line 2628 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2649 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                              Write(Url.Action("SaveEvent", "CreateEvent"));
 
             
@@ -4882,7 +4929,7 @@ WriteLiteral(@"',
                                 window.location.href = '");
 
             
-            #line 2633 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2654 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                                    Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -4909,7 +4956,7 @@ WriteLiteral(@"?EventId=' + response + '';
                         url: '");
 
             
-            #line 2651 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2672 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                          Write(Url.Action("UpdateEventStatus", "CreateEvent"));
 
             
@@ -4931,7 +4978,7 @@ WriteLiteral(@"',
                                 window.location.href = '");
 
             
-            #line 2664 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 2685 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                                    Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -5119,55 +5166,57 @@ WriteLiteral("?EventId=\' + hid + \'\';\r\n                            }\r\n    
 "rgnizer_Name: $(\"#OrgName_\" + Sno).text(),\r\n                            Orgnizer" +
 "_Desc: $(\"#OrgDes_\" + Sno).text(),\r\n                            FBLink: $(\"#OrgF" +
 "B_\" + Sno).text(),\r\n                            Twitter: $(\"#OrgTw_\" + Sno).text" +
-"(),\r\n                            DefaultOrg: (vDefaultOrg == Sno ? \'Y\' : \'N\')\r\n\r" +
-"\n                        });\r\n                    }\r\n                });\r\n\r\n\r\n\r\n" +
-"                // Basic Event Info\r\n                //alert($(\"#edSummer1\").cod" +
-"e());\r\n\r\n                //$(\"#spEvDesc\").text();\r\n                var vEdesc = " +
-"\'\'; //$(\"#edEventDesc\").code();\r\n\r\n                var varDescritpion = \'\';\r\n   " +
-"             var optionalvariable = \'\';\r\n                if ($(\"#id_variablechar" +
-"ge\").is(\":checked\")) {\r\n                    varDescritpion = $(\'#id_vardesc\').va" +
-"l();\r\n                    optionalvariable = $(\'#variabletype\').val();\r\n        " +
-"        }\r\n\r\n\r\n                var model = {\r\n                    \'EventTypeID\':" +
-" $(\"#EventType\").val(),\r\n                    \'EventCategoryID\': $(\"#ddlEventCate" +
-"gory\").val(),\r\n                    \'EventSubCategoryID\': $(\"#ddlEventSubCategory" +
-"\").val(),\r\n                    \'UserID\': \'\',\r\n                    \'EventTitle\': " +
-"$(\"#txtEventTitle\").val(),\r\n                    \'EventDescription\': $(\"#edEventD" +
-"esc\").code().replace(/<\\/p>/gi, \"\\n\").replace(/<br\\/?>/gi, \"\\n\").replace(/<\\/?[^" +
-">]+(>|$)/g, \"\"),\r\n                    \'EventPrivacy\': ($(\"#rdPublic\").is(\":check" +
-"ed\") == true ? \'Public\' : \'Private\'),\r\n                    \'Private_ShareOnFB\': " +
-"($(\"#chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                    \'P" +
-"rivate_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n   " +
-"                 \'Private_Password\': $(\"#txtReqPassword\").val(),\r\n              " +
-"      \'EventUrl\': $(\"#txtEventUrl\").val().trim(),\r\n                    \'PublishO" +
-"nFB\': ($(\"#chkPublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n         " +
-"           \'EventStatus\': \'Save\',\r\n                    \'AddressDetail\': SubmitAd" +
-"dress,\r\n                    \'EventVenue\': SingleTiming,\r\n                    \'Ti" +
-"meZone\': $(\"#dllTimeZone\").val(),\r\n                    \'DisplayStartTime\': ($(\"#" +
-"chkDisplayStartTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                    " +
-"\'DisplayEndTime\': ($(\"#chkDisplayEndTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r" +
-"\n                    \'DisplayTimeZone\': ($(\"#chkTimeZone\").is(\":checked\") == tru" +
-"e ? \"Y\" : \"N\"),\r\n                    \'FBUrl\': \'\',\r\n                    \'TwitterU" +
-"rl\': \'\',\r\n                    \'MultipleEvents\': MultipleSchedule,\r\n             " +
-"       \'Orgnizer\': Orgnizer,\r\n                    \'AddressStatus\': $(\"#hidAddres" +
-"sStatus\").val(),\r\n                    \'LastLocationAddress\': ($(\"#hidAddressStat" +
-"us\").val() == \"PastLocation\" ? $(\"#dllPastLocation\").val() : 0),\r\n              " +
-"      \'EnableFBDiscussion\': ($(\"#chkAllowFBDis\").is(\":checked\") == true ? \'Y\' : " +
-"\'N\'),\r\n                    \'Ticket\': Ticket,\r\n                    \'EventImage\': " +
-"EventImage,\r\n                    \'EventVariable\': EventVariable,\r\n              " +
-"      \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr\").is(\":checked\") == true ? \'Y" +
-"\' : \'N\'),\r\n                    \'Ticket_showremain\': ($(\"#id_showremaningticket\")" +
-".is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                    \'Ticket_showvariable\'" +
-": ($(\"#id_variablecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n               " +
-"     \'Ticket_variabledesc\': varDescritpion,\r\n                    \'Ticket_variabl" +
-"etype\': optionalvariable,\r\n                    \'ShowMap\': ($(\"#chkShowMap\").is(\"" +
-":checked\") == true ? \'Y\' : \'N\'),\r\n                    \'DuplicateEvent\': ($(\"#chk" +
-"DuplicateEvent\").is(\":checked\") == true ? \'Y\' : \'N\')\r\n\r\n                };\r\n\r\n  " +
-"              //var params = \'strEveDec :\' + $(\"#edEventDesc\").code();\r\n\r\n\r\n    " +
-"            if ($(\"#hdEventId\").val() == \'\') {\r\n                    $.ajax({\r\n  " +
-"                      url: \'");
+"(),\r\n                            Linkedin: $(\"#OrgLn_\" + Sno).text(),\r\n         " +
+"                   DefaultOrg: (vDefaultOrg == Sno ? \'Y\' : \'N\')\r\n\r\n             " +
+"           });\r\n                    }\r\n                });\r\n                cons" +
+"ole.log($(\'#tblOrgnizer\'));\r\n\r\n                console.log(Orgnizer);\r\n\r\n\r\n     " +
+"           // Basic Event Info\r\n                //alert($(\"#edSummer1\").code());" +
+"\r\n\r\n                //$(\"#spEvDesc\").text();\r\n                var vEdesc = \'\'; /" +
+"/$(\"#edEventDesc\").code();\r\n\r\n                var varDescritpion = \'\';\r\n        " +
+"        var optionalvariable = \'\';\r\n                if ($(\"#id_variablecharge\")." +
+"is(\":checked\")) {\r\n                    varDescritpion = $(\'#id_vardesc\').val();\r" +
+"\n                    optionalvariable = $(\'#variabletype\').val();\r\n             " +
+"   }\r\n\r\n\r\n                var model = {\r\n                    \'EventTypeID\': $(\"#" +
+"EventType\").val(),\r\n                    \'EventCategoryID\': $(\"#ddlEventCategory\"" +
+").val(),\r\n                    \'EventSubCategoryID\': $(\"#ddlEventSubCategory\").va" +
+"l(),\r\n                    \'UserID\': \'\',\r\n                    \'EventTitle\': $(\"#t" +
+"xtEventTitle\").val(),\r\n                    \'EventDescription\': $(\"#edEventDesc\")" +
+".code().replace(/<\\/p>/gi, \"\\n\").replace(/<br\\/?>/gi, \"\\n\").replace(/<\\/?[^>]+(>" +
+"|$)/g, \"\"),\r\n                    \'EventPrivacy\': ($(\"#rdPublic\").is(\":checked\") " +
+"== true ? \'Public\' : \'Private\'),\r\n                    \'Private_ShareOnFB\': ($(\"#" +
+"chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                    \'Privat" +
+"e_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n        " +
+"            \'Private_Password\': $(\"#txtReqPassword\").val(),\r\n                   " +
+" \'EventUrl\': $(\"#txtEventUrl\").val().trim(),\r\n                    \'PublishOnFB\':" +
+" ($(\"#chkPublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n              " +
+"      \'EventStatus\': \'Save\',\r\n                    \'AddressDetail\': SubmitAddress" +
+",\r\n                    \'EventVenue\': SingleTiming,\r\n                    \'TimeZon" +
+"e\': $(\"#dllTimeZone\").val(),\r\n                    \'DisplayStartTime\': ($(\"#chkDi" +
+"splayStartTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                    \'Disp" +
+"layEndTime\': ($(\"#chkDisplayEndTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n    " +
+"                \'DisplayTimeZone\': ($(\"#chkTimeZone\").is(\":checked\") == true ? \"" +
+"Y\" : \"N\"),\r\n                    \'FBUrl\': \'\',\r\n                    \'TwitterUrl\': " +
+"\'\',\r\n                    \'MultipleEvents\': MultipleSchedule,\r\n                  " +
+"  \'Orgnizer\': Orgnizer,\r\n                    \'AddressStatus\': $(\"#hidAddressStat" +
+"us\").val(),\r\n                    \'LastLocationAddress\': ($(\"#hidAddressStatus\")." +
+"val() == \"PastLocation\" ? $(\"#dllPastLocation\").val() : 0),\r\n                   " +
+" \'EnableFBDiscussion\': ($(\"#chkAllowFBDis\").is(\":checked\") == true ? \'Y\' : \'N\')," +
+"\r\n                    \'Ticket\': Ticket,\r\n                    \'EventImage\': Event" +
+"Image,\r\n                    \'EventVariable\': EventVariable,\r\n                   " +
+" \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr\").is(\":checked\") == true ? \'Y\' : \'" +
+"N\'),\r\n                    \'Ticket_showremain\': ($(\"#id_showremaningticket\").is(\"" +
+":checked\") == true ? \'Y\' : \'N\'),\r\n                    \'Ticket_showvariable\': ($(" +
+"\"#id_variablecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                    " +
+"\'Ticket_variabledesc\': varDescritpion,\r\n                    \'Ticket_variabletype" +
+"\': optionalvariable,\r\n                    \'ShowMap\': ($(\"#chkShowMap\").is(\":chec" +
+"ked\") == true ? \'Y\' : \'N\'),\r\n                    \'DuplicateEvent\': ($(\"#chkDupli" +
+"cateEvent\").is(\":checked\") == true ? \'Y\' : \'N\')\r\n\r\n                };\r\n\r\n       " +
+"         //var params = \'strEveDec :\' + $(\"#edEventDesc\").code();\r\n\r\n\r\n         " +
+"       if ($(\"#hdEventId\").val() == \'\') {\r\n                    $.ajax({\r\n       " +
+"                 url: \'");
 
             
-            #line 3065 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3089 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                          Write(Url.Action("SaveEvent", "CreateEvent"));
 
             
@@ -5188,7 +5237,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 3077 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3101 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                                                Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -5313,7 +5362,7 @@ WriteLiteral("\' + \'?Eventid=\' + response;\r\n\r\n                        }\r\
 "              url: \'");
 
             
-            #line 3288 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3312 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "CreateEvent"));
 
             
@@ -5354,7 +5403,7 @@ WriteLiteral(@"',
                     url: '");
 
             
-            #line 3320 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3344 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -5427,7 +5476,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId },\r\n         
 "--------------------------------\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 3431 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3455 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                  Write(Url.Action("GetPreviousAddress", "CreateEvent"));
 
             
@@ -5578,7 +5627,7 @@ WriteLiteral("\',\r\n                type: \"Post\",\r\n                success:
 "    </script>\r\n");
 
             
-            #line 3690 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3714 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
 
     //Ticket Section Starts
@@ -5615,7 +5664,7 @@ WriteLiteral("    <script>\r\n        function CannotFindLocation() {\r\n       
 "  url: \'");
 
             
-            #line 3765 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3789 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                  Write(Url.Action("GetOrgnizerDetailbyUser", "CreateEvent"));
 
             
@@ -5636,7 +5685,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 3777 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 3801 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -6185,14 +6234,14 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 ");\r\n            }\r\n            return randomString;\r\n        }\r\n    </script>\r\n");
 
             
-            #line 4907 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 4931 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 4908 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 4932 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                      
  
 
@@ -6230,7 +6279,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n          \r\n    
 "    \r\n        });\r\n    </script>\r\n");
 
             
-            #line 4967 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 4991 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
     //DateTime
 
@@ -6241,7 +6290,7 @@ WriteLiteral("    <script>\r\n        function ajaxsetup(strname, strFormTag) {\
 "msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url:\'");
 
             
-            #line 4974 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 4998 "..\..\Views\CreateEvent\CreateEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -6383,7 +6432,7 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "   </script>\r\n");
 
             
-            #line 5274 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 5298 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
 
             
@@ -6498,7 +6547,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            $(
 "ezoneSet\").hide();\r\n\r\n            });\r\n\r\n        });\r\n        \r\n    </script>\r\n");
 
             
-            #line 5530 "..\..\Views\CreateEvent\CreateEvent.cshtml"
+            #line 5554 "..\..\Views\CreateEvent\CreateEvent.cshtml"
 
 }
 

@@ -424,6 +424,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateEvent.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CreateEvent\ViewCreateEvent.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewCreateEvent.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateEvent\ViewEvent.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1028,6 +1033,7 @@
     </Content>
     <Content Include="Views\CreateEvent\ViewCreateEvent.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ViewCreateEvent.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Cart\Pay.cshtml">
       <Generator>RazorGenerator</Generator>

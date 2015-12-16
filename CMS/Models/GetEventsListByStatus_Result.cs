@@ -7,17 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EventCombo.Models
+namespace CMS.Models
 {
     using System;
     
-    public partial class GetEventsListByStatus1_Result
+    public partial class GetEventsListByStatus_Result
     {
         public string Name { get; set; }
         public string EMail { get; set; }
         public string Date_Time { get; set; }
         public string TicketType { get; set; }
-        public long TicketPurchased { get; set; }
+        public Nullable<long> TicketPurchased { get; set; }
         public string OrderId { get; set; }
         public long EventID { get; set; }
         public string EventTitle { get; set; }

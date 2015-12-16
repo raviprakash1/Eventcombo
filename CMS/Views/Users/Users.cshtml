@@ -153,10 +153,11 @@
                                                         </td>
                                                         <td class="eml-ellps" title="@obj.EMail">@obj.EMail</td>
                                                         <td>
+                                                            <a href="~/EventList/ListEvent?UserId=@obj.Id" class="btn btn-success br2 btn-xs fs12" id="Event-@i" onclick="return checkeventcount(this.id)">@obj.EventCount</a>
 
-                                                            <button type="button" class="btn btn-info br2 btn-xs fs12" onclick="AssignSession('@(obj.Id)',@i)" id="btnevents-@i">
-                                                               @obj.EventCount
-                                                            </button>
+                                                            @*<button type="button" class="btn btn-info br2 btn-xs fs12" onclick="AssignSession('@(obj.Id)',@i)" id="btnevents-@i">
+                                                              
+                                                            </button>*@
                                                             
                                                         </td>
                                                         <td>0</td>
@@ -500,6 +501,22 @@
     <script src="~/plugins/footable/js/footable.filter.min.js"></script>*@
 
 <script type="text/javascript">
+
+    function checkeventcount(id)
+    {
+        //console.log(id.substr(id.indexOf('-')+1,id.length-id.indexOf('-')));
+        var value = $('#' + id).text();
+        if (parseInt(value) == 0)
+        {
+            $('#btnYes').hide();
+            $('#hId').text(GetMess("CMSUsers", "NoEvents"));
+            $('#btnNo').hide();
+            $('#btOk').click();
+            return false;
+        }
+        console.log($('#'+id).text());
+        
+    }
 
     $('#ulpage').click(function () {
         console.log(this);

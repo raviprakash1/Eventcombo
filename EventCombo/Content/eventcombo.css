@@ -301,6 +301,7 @@ button:focus { outline: none;}
 .add_social_input{width: 100%; float: left;}
 .fb{ color:#3d5a98;}
 .tw{ color:#5ea9dd;}
+.ln{ color:#007bb6;}
 .Moderor{ width:100%; float: left; max-width: 100%;
           margin-top:23px; outline:none; 
 }

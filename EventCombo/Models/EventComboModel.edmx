@@ -231,6 +231,7 @@
           <Property Name="Twitter" Type="varchar" MaxLength="100" />
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
           <Property Name="DefaultOrg" Type="varchar" MaxLength="1" />
+          <Property Name="Linkedin" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -1167,6 +1168,7 @@
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="DefaultOrg" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
+          <Property Name="Linkedin" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -2123,6 +2125,7 @@
           <EntitySetMapping Name="Event_Orgnizer_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Event_Orgnizer_Detail">
               <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
+                <ScalarProperty Name="Linkedin" ColumnName="Linkedin" />
                 <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
                 <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />

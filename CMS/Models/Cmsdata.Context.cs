@@ -179,5 +179,22 @@ namespace CMS.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishEvent", eventIdParameter, userIdParameter);
         }
+    
+        public virtual ObjectResult<GetEventsListByStatus_Result> GetEventsListByStatus(string eventTitle, string eventStatus, string userID)
+        {
+            var eventTitleParameter = eventTitle != null ?
+                new ObjectParameter("EventTitle", eventTitle) :
+                new ObjectParameter("EventTitle", typeof(string));
+    
+            var eventStatusParameter = eventStatus != null ?
+                new ObjectParameter("EventStatus", eventStatus) :
+                new ObjectParameter("EventStatus", typeof(string));
+    
+            var userIDParameter = userID != null ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventsListByStatus_Result>("GetEventsListByStatus", eventTitleParameter, eventStatusParameter, userIDParameter);
+        }
     }
 }

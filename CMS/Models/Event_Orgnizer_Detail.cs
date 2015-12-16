@@ -22,6 +22,7 @@ namespace CMS.Models
         public string Twitter { get; set; }
         public string UserId { get; set; }
         public string DefaultOrg { get; set; }
+        public string Linkedin { get; set; }
     
         public virtual Event Event { get; set; }
     }

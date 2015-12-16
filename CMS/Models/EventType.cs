@@ -11,7 +11,7 @@ namespace CMS.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class EventType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,8 +21,6 @@ namespace CMS.Models
         }
     
         public long EventTypeID { get; set; }
-        [Required(ErrorMessage = "Please Enter Event Type.")]
-        [Display(Name = "EventType")]
         public string EventType1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

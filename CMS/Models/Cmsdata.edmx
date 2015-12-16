@@ -231,6 +231,7 @@
           <Property Name="Twitter" Type="varchar" MaxLength="100" />
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
           <Property Name="DefaultOrg" Type="varchar" MaxLength="1" />
+          <Property Name="Linkedin" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -806,6 +807,11 @@
           <Parameter Name="EventStartdate" Type="varchar" Mode="In" />
           <Parameter Name="EventTicket" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetEventsListByStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="EventStatus" Type="varchar" Mode="In" />
+          <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GUID" Type="varchar" Mode="In" />
           <Parameter Name="EventId" Type="bigint" Mode="In" />
@@ -1184,6 +1190,7 @@
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="DefaultOrg" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
+          <Property Name="Linkedin" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -1866,6 +1873,11 @@
             <Parameter Name="EventId" Mode="In" Type="Int64" />
             <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetEventsListByStatus" ReturnType="Collection(Cmsdata.GetEventsListByStatus_Result)">
+            <Parameter Name="EventTitle" Mode="In" Type="String" />
+            <Parameter Name="EventStatus" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1899,6 +1911,20 @@
           <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="3" />
           <Property Type="String" Name="StartingFrom" Nullable="true" MaxLength="50" />
           <Property Type="Int64" Name="Purchasedqty" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetEventsListByStatus_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="EMail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Date_Time" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="TicketType" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="TicketPurchased" Nullable="true" />
+          <Property Type="String" Name="OrderId" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="EventID" Nullable="false" />
+          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventDate" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EventTime" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="TotalTicket" Nullable="false" />
+          <Property Type="Int64" Name="TicketSold" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2127,6 +2153,7 @@
           <EntitySetMapping Name="Event_Orgnizer_Detail">
             <EntityTypeMapping TypeName="Cmsdata.Event_Orgnizer_Detail">
               <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
+                <ScalarProperty Name="Linkedin" ColumnName="Linkedin" />
                 <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
                 <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
@@ -2554,6 +2581,24 @@
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="Cmsdata.Store.GetSetUserRole" />
           <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="Cmsdata.Store.GetTicketListing" />
           <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="Cmsdata.Store.PublishEvent" />
+          <FunctionImportMapping FunctionImportName="GetEventsListByStatus" FunctionName="Cmsdata.Store.GetEventsListByStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Cmsdata.GetEventsListByStatus_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
+                <ScalarProperty Name="TicketType" ColumnName="TicketType" />
+                <ScalarProperty Name="TicketPurchased" ColumnName="TicketPurchased" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+                <ScalarProperty Name="TotalTicket" ColumnName="TotalTicket" />
+                <ScalarProperty Name="TicketSold" ColumnName="TicketSold" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

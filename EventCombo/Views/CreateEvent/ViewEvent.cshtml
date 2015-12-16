@@ -317,7 +317,10 @@
                         <p><a href="@Html.DisplayFor(m => m.twitterlink)" target="_blank"><img src="/Images/twitter-icon.png">&nbsp;@Html.DisplayFor(m => m.twitterlink) </a></p>
 
 }
-                        <p><a href="#" target="_blank"><img src="~/Images/linkid.png" />&nbsp; Linkedin</a></p>
+                        @if (Html.DisplayFor(m => m.Linkedinlin).ToString() != "")
+                        {
+                        <p><a href="@Html.DisplayFor(m => m.Linkedinlin)" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Html.DisplayFor(m => m.Linkedinlin)</a></p>
+                        }
 
                  <p><span class="badge">5</span> <a href="#">&nbsp;Upcoming Event(s)</a> </p>
 
@@ -339,8 +342,8 @@
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
                 <label class="label-control evnt_ticket_label">
-                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                    </fb:login-button> @*<img src="/images/fb_connect.jpg"> to see which of your Facebook friends are going*@
+                    @*<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                    </fb:login-button>*@ @*<img src="/images/fb_connect.jpg"> to see which of your Facebook friends are going*@
                 </label>
             </div>
         </div>
@@ -358,14 +361,19 @@
         <div class="EveActRib evnt_tile_head evnt_cursor">
             <div class="evnt_tile_bg_l"></div>
             <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
-                <h2 class="fb_dis_head pt5"><img src="/Images/fb.png" class="img_top">  <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
+                <h2 class="fb_dis_head pt5"><img src="/Images/fb.png" class="img_top">
+                    <fb:comments-count class="" href="https://www.facebook.com/Eventcombo" fb-xfbml-state="rendered">
+                       
+                    </fb:comments-count>
+                
+                  @*<span class="fb-comments-count" data-href=""></span>*@&nbsp; Comment(s)</h2>
             </div>
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
 
         <div class="evnt_details_body2">
             <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10" id="comments">
-                <div class="fb-comments" data-href="https://www.facebook.com/Eventcombo" data-numposts="5"></div>
+                <div class="fb-comments" data-href="https://www.facebook.com/Eventcombo" data-numposts="15"  fb-xfbml-state="rendered"></div>
 
             </div>
         </div>
@@ -628,61 +636,6 @@ else
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
 <script>
 
-    function statusChangeCallback(response) {
-        console.log('statusChangeCallback');
-        console.log(response);
-        // The response object is returned with a status field that lets the
-        // app know the current login status of the person.
-        // Full docs on the response object can be found in the documentation
-        // for FB.getLoginStatus().
-        if (response.status === 'connected') {
-            // Logged into your app and Facebook.
-            testAPI();
-        } else if (response.status === 'not_authorized') {
-            // The person is logged into Facebook, but not your app.
-          console.log( 'Please log ' +
-              'into this app.');
-        } else {
-            // The person is not logged into Facebook, so we're not sure if
-            // they are logged into this app or not.
-          console.log('Please log ' +
-              'into Facebook.');
-        }
-    }
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '963347903739086',
-            cookie     : true,  // enable cookies to allow the server to access 
-            // the session
-            xfbml      : true,  // parse social plugins on this page
-            version    : 'v2.2' // use version 2.2
-        });
-    function checkLoginState() {
-        FB.getLoginStatus(function (response) {
-            statusChangeCallback(response);
-        });
-    }
-
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-        // Here we run a very simple test of the Graph API after login is
-        // successful.  See statusChangeCallback() for when this call is made.
-    function testAPI() {
-        console.log('Welcome!  Fetching your information.... ');
-        FB.api('/me', function(response) {
-
-            console.log(JSON.stringify(response));
-            console.log('Successful login for: ' + response.name);
-          
-              console.log('Thanks for logging in, ' + response.name + '!');
-        });
-    }
     var map = "";
     var geocoder = "";
     

@@ -687,6 +687,16 @@
                                         <input id="txtOrgTWlink" class="form-control wd600" placeholder="" maxlength="100" />
                                     </div>
                                 </div>
+                                <div class="add_social_input mt10">
+                                    <div class="col-sm-12 ">
+                                        <label class="control-label ev_tickt_lebel pl0">
+                                            <span class="ln"><i class="fa fa-linkedin-square"></i></span> linkedin.com/
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-8 ">
+                                        <input id="txtOrgLNlink" class="form-control wd600" placeholder="" maxlength="100" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1685,6 +1695,7 @@
             $("#edOrgDes").code('');
             $("#txtOrgFBlink").val('');
             $("#txtOrgTWlink").val('');
+            $("#txtOrgLNlink").val('')
             $("#Incsocial").prop("checked", false);
             $("#dvOrgnizerFBTw").hide();
 
@@ -1731,13 +1742,13 @@
             var vOrgDes = $("#OrgDes_" + Sno).text();
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
-
+            var vOrgLn= $("#OrgLn_" + Sno).text();
             $("#txtOrgnizer").val(vOrgName);
             $("#edOrgDes").code(vOrgDes);
             $("#txtOrgFBlink").val(vOrgFB);
             $("#txtOrgTWlink").val(vOrgTw);
 
-            if (vOrgFB != '' || vOrgTw != '') {
+            if (vOrgFB != '' || vOrgTw != '' || vOrgLn!='') {
                 $("#Incsocial").prop("checked", true);
                 $("#dvOrgnizerFBTw").show();
             }
@@ -1756,13 +1767,15 @@
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
             var vOrgTw = $("#txtOrgTWlink").val();
-
+            var vOrgLn = $("#txtOrgLNlink").val();
+            
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgFB_' + Sno + '>' + vOrgFB + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgTw_' + Sno + '>' + vOrgTw + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgLn_' + Sno + '>' + vOrgLn + '</label></td>';
             //strHTML = strHTML + '<td align="right"><a href="#" onclick="editOrgnizer(' + Sno + ');"><i class="fa fa-pencil"></i> </a> | <a href="#"  onclick="DeleteOrgnizer(' + Sno + ');"><i class="fa fa-trash"></i> </a></td>';
             strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
 
@@ -1774,7 +1787,7 @@
             strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vOrgName + '</option>';
 
             $("#ddlOrgnizers").append(strHTML);
-
+            console.log($("#tblOrgnizer"));
         }
 
         function UpdateOrgnizer() {
@@ -1784,13 +1797,16 @@
             vOrgDes = $("#edOrgDes").code();
             vOrgFB = $("#txtOrgFBlink").val();
             vOrgTw = $("#txtOrgTWlink").val();
+            vOrgLn = $("#txtOrgLNlink").val();
+         
 
             $("#OrgName_" + Sno).text(vOrgName);
             $("#OrgDes_" + Sno).text(vOrgDes);
             $("#OrgFB_" + Sno).text(vOrgFB);
             $("#OrgTw_" + Sno).text(vOrgTw);
+            $("#OrgLn_" + Sno).text(vOrgLn);
 
-
+            alert($("#OrgLn_" + Sno).text());
             $("#ddlOrgnizers option").each(function (i) {
                 if (Sno == $(this).val()) {
                     $(this).remove();
@@ -2161,13 +2177,15 @@
                             Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                             FBLink: $("#OrgFB_" + Sno).text(),
                             Twitter: $("#OrgTw_" + Sno).text(),
+                            Linkedin: $("#OrgLn_" + Sno).text(),
                             DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
 
                         });
                     }
                 });
-
-
+               
+                console.log($('#tblOrgnizer'));
+                console.log(Orgnizer);
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
@@ -2558,13 +2576,16 @@
                                 Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                                 FBLink: $("#OrgFB_" + Sno).text(),
                                 Twitter: $("#OrgTw_" + Sno).text(),
+                                Linkedin: $("#OrgLn_" + Sno).text(),
                                 DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
 
                             });
                         }
                     });
 
-
+                    
+                    console.log($('#tblOrgnizer'));
+                    console.log(Orgnizer);
 
                     // Basic Event Info
                     //alert($("#edSummer1").code());
@@ -2995,12 +3016,15 @@
                             Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                             FBLink: $("#OrgFB_" + Sno).text(),
                             Twitter: $("#OrgTw_" + Sno).text(),
+                            Linkedin: $("#OrgLn_" + Sno).text(),
                             DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
 
                         });
                     }
                 });
+                console.log($('#tblOrgnizer'));
 
+                console.log(Orgnizer);
 
 
                 // Basic Event Info

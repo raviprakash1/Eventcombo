@@ -32,7 +32,6 @@ namespace EventCombo.Models
         public string typeofEvent { get; set; }
         public string enablediscussion { get; set; }
         public string showmaponevent { get; set; }
-
-
+        public string Linkedinlin { get;  set; }
     }
 }
