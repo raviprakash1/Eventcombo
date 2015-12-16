@@ -385,6 +385,7 @@ namespace EventCombo.Controllers
                                 objEOrg.FBLink = objOr.FBLink;
                                 objEOrg.Twitter = objOr.Twitter;
                                 objEOrg.DefaultOrg = objOr.DefaultOrg;
+                                objEOrg.Linkedin = objOr.Linkedin;
                                 objEOrg.UserId = strUserId;
                                 objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                             }
@@ -486,13 +487,7 @@ namespace EventCombo.Controllers
 
         public ActionResult ViewEvent(string strUrlData)
         {
-            //HomeController hmc = new HomeController();
-            //hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
-            //string usernme = hmc.getusername();
-            //if (string.IsNullOrEmpty(usernme))
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
+           
             if ((Session["AppId"] != null))
             {
                 HomeController hmc = new HomeController();
@@ -539,7 +534,7 @@ namespace EventCombo.Controllers
            // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
             Session["ReturnUrl"] = "ViewEvent~" + url;
             var TopAddress = "";var Topvenue="";
-            string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="",enablediscussion="";
+            string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="",enablediscussion="",linkedin="";
             ViewEvent viewEvent = new ViewEvent();
             //EventDetails
             var EventDetail = GetEventdetail(EventId);
@@ -583,6 +578,7 @@ namespace EventCombo.Controllers
                 fblink = OrganiserDetail.FBLink;
                 twitterlink = OrganiserDetail.Twitter;
                 organizerid = OrganiserDetail.Orgnizer_Id.ToString();
+                linkedin = OrganiserDetail.Linkedin;
 
             }
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
@@ -702,6 +698,7 @@ namespace EventCombo.Controllers
             viewEvent.organizerid = organizerid;
             viewEvent.fblink = fblink;
             viewEvent.twitterlink = twitterlink;
+            viewEvent.Linkedinlin = linkedin;
             if (Session["AppId"] != null)
             {
                 var userid = Session["AppId"].ToString();
@@ -885,7 +882,7 @@ namespace EventCombo.Controllers
             // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
             Session["ReturnUrl"] = "ViewEvent~" + url;
             var TopAddress = ""; var Topvenue = "";
-            string organizername = "", fblink = "", twitterlink = "", organizerid = "", tickettype = "", enablediscussion = "";
+            string organizername = "", fblink = "", twitterlink = "", organizerid = "", tickettype = "", enablediscussion = "",Linkedin="";
             ViewEvent viewEvent = new ViewEvent();
             //EventDetails
             var EventDetail = GetEventdetail(EventId);
@@ -930,6 +927,7 @@ namespace EventCombo.Controllers
                 fblink = OrganiserDetail.FBLink;
                 twitterlink = OrganiserDetail.Twitter;
                 organizerid = OrganiserDetail.Orgnizer_Id.ToString();
+                Linkedin = OrganiserDetail.Linkedin;
 
             }
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
@@ -1049,6 +1047,7 @@ namespace EventCombo.Controllers
             viewEvent.organizerid = organizerid;
             viewEvent.fblink = fblink;
             viewEvent.twitterlink = twitterlink;
+            viewEvent.Linkedinlin = Linkedin;
             if (Session["AppId"] != null)
             {
                 var userid = Session["AppId"].ToString();

@@ -1,74 +1,160 @@
-﻿
-@model CMS.Models.EventType
-
+﻿@model IEnumerable<CMS.Models.EventType>
 @{
     ViewBag.Title = "EventType";
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@*<style>
+    .event-type {
+        display: inline-block;
+        width: 100%;
+        float: left;
+        position: relative;
+    }
 
+        .event-type label, .event-type div {
+            display: inline-block;
+            float: none;
+            vertical-align: middle;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .event-type label {
+            width: 8%;
+        }
+
+        .event-type div {
+            width: 17%;
+        }
+
+        .event-type .button_type-event {
+            width: 70%;
+            margin-left: 1%;
+        }
+
+            .event-type .button_type-event .btn {
+                margin: 0 auto;
+                width: 75px;
+            }
+
+    .select_types-edit {
+        width: 100%;
+        float: left;
+        position: relative;
+        padding-left: 7.5%;
+    }
+
+        .select_types-edit select {
+            width: 30%;
+            height: 200px;
+        }
+</style>*@
 <section id="content_wrapper">        
     @using (Html.BeginForm())
     {
-        <div class="col-sm-12">
-            <h2>EventType</h2>
-            <style>
-                .event-type {
-                    display: inline-block;
-                    width: 100%;
-                    float: left;
-                    position: relative;
-                }
-.event-type label, .event-type div {
-    display: inline-block;
-    float: none;
-    vertical-align: middle;
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
-.event-type label {width:8%;}
-.event-type div {width:17%;}
-.event-type .button_type-event {width:70%;    margin-left: 1%;}
-.event-type .button_type-event .btn{margin: 0 auto; width: 75px;}
-.select_types-edit {
-    width: 100%;
-    float: left;
-    position: relative;
-    padding-left: 7.5%;
-}
-.select_types-edit select {width:30%; height: 200px;}
-
-</style>
-
-            @if (TempData["SuccessMessage"] != null)
-            {
+                    if (TempData["SuccessMessage"] != null)
+                    {
                 <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
                 </div>
-            }
+        }
+        <div class="row" id="modal-content">
 
-            <div class="form-group event-type">
-                <label class="col-md-2 control-label acnt_form_label ">Event Type</label>
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.EventType1, new { @maxlength = 35, @class = "form-control" })                    
-                    
-                </div>
-                <div class="button_type-event">
-                    <button type="submit" name="submit" value="Create" class="btn btn-info col-md-offset-3 acnt_btn" id="btnCreate">Create</button>
-                    <button type="submit" name="submit" value="Edit" class="btn btn-info col-md-offset-3 acnt_btn" id="btnEdit">Edit</button>
-                    <button type="submit" name="submit" value="Delete" class="btn btn-info acnt_btn" id="btnDelete">Delete</button>
-                    <button type="button" name="submit" value="Reset" class="btn btn-info acnt_btn" id="btnReset">Reset</button>
+            <div class="col-md-12 mt10">
+                <div class="panel ">
+                    <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <span class="view_evnt fs26">Event Type</span>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-12">
+
+                                    <div class="col-md-12 nopad">
+                                        <ul class="nav add-cat-nav">
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle add-cat-pop" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                    + Add Type
+                                                    <span class="caret caret-tp"></span>
+                                                </a>
+                                                <div class="col-sm-12 dropdown-menu dropdown-menu-cus catbg">
+                                                    <div class="col-md-12 nopad">
+                                                        <div class="col-md-7">
+                                                            @Html.TextBox("txtEventType", null, new { @class = "form-control", @maxlength = 35, @placeholder = "Enter Type Name" })
+                                                        </div>
+                                                        <div class="col-md-5 ">
+                                                            <button class="btn btn-primary" name="submit" value="Add" id="btnAdd" type="button">+ Add </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12 mt10 nopad">
+
+                            <table id="tabType" width="100%">
+                                <tbody>
+                                    @{
+                                        int i = 0;
+                                       
+                                        foreach (var itemType in Model)
+                                       {
+                                          i = i + 1;
+                                            <tr class="col-sm-12 catbg">
+                                                <td class="col-sm-12"><label id="lblEvntTypeName-@i">@itemType.EventType1</label></td>
+                                                <td class="pl5"><button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button></td>
+                                                <td class="pl5"><button id="btnDeleteCat-@i" type="button" onclick="DeleteType('@itemType.EventTypeID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>
+                                            </tr>
+
+
+                                                
+                          }
+                                    }
+                                </tbody>
+                            </table>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
                 </div>
             </div>
-           
-            <div class="form-group select_types-edit">
-                <div class="col-md-9">                    
-                    @Html.ListBox("EventTypeListBox",new SelectList(ViewBag.EventType), new { @class="form-control"})
+
+
+            @*<div class="col-sm-12">
+                <div class="form-group event-type">
+                    <label class="col-md-2 control-label acnt_form_label ">Event Type</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.EventType1, new { @maxlength = 35, @class = "form-control" })
+
+                    </div>
+                    <div class="button_type-event">
+                        <button type="submit" name="submit" value="Create" class="btn btn-info col-md-offset-3 acnt_btn" id="btnCreate">Create</button>
+                        <button type="submit" name="submit" value="Edit" class="btn btn-info col-md-offset-3 acnt_btn" id="btnEdit">Edit</button>
+                        <button type="submit" name="submit" value="Delete" class="btn btn-info acnt_btn" id="btnDelete">Delete</button>
+                        <button type="button" name="submit" value="Reset" class="btn btn-info acnt_btn" id="btnReset">Reset</button>
+                    </div>
                 </div>
-            </div>
-        </div>
-    }
+
+                <div class="form-group select_types-edit">
+                    <div class="col-md-9">
+                        @Html.ListBox("EventTypeListBox", new SelectList(ViewBag.EventType), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>*@
+            }
 </section>
 
 <script type="text/javascript">
@@ -79,8 +165,43 @@
         $("#btnReset").hide();
     });
 
+
+    $("#btnAdd").click(function () {
+        var Type = $("#txtEventType").val();
+        alert(Type);
+        $.ajax({
+            url: '@Url.Action("AddType", "EventType")',
+            data: { iType: Type },
+            type: "POST",
+            success: function (response) {
+                location.reload();
+            },
+            error: function (data) {
+                alert("Sorry! there is some problem.");
+                return false
+            }
+        });
+
+
+
+    });
+    function DeleteType(CatId) {
+
+                    $.ajax({
+                        url: '@Url.Action("DeleteType", "EventType")',
+                        data: { iType: CatId },
+                        type: "POST",
+                        success: function (response) {
+                            location.reload();
+                        },
+                        error: function (data) {
+                            alert("Sorry! there is some problem.");
+                            return false
+                        }
+                    });
+                }
     $(document).ready(function () {
-        window.history.forward();
+      
 
         //$('#btnCreate').click(function () {
         //    var newListValue = $('#EventType1').val();
@@ -111,10 +232,10 @@
             debugger;
             var reqval = $("#EventType1").val();
             if (reqval == "") {
-                alert("Please Enter Event Type.");                
+                alert("Please Enter Event Type.");
                 return false;
             }
             else { return true; }
-        });        
+        });
     });
 </script>

@@ -30,6 +30,9 @@
     <!-- Search box close -- -->
     <!-- -- 3 tabs open -->
     <div class="col-sm-12 row">
+
+@if ((Convert.ToInt32(TempData["LiveEvents"]) > 0 && TempData["LiveEvents"] != null) || (Convert.ToInt32(TempData["SavedEvents"]) > 0 && TempData["SavedEvents"] != null) || (Convert.ToInt32(TempData["PastEvents"]) > 0 && TempData["PastEvents"] != null))
+{
         <div class="col-sm-12 no_pad mb10">
             <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Events</h3> </div>
             <div class="col-sm-6 no_pad evnt-list-pag text-right">
@@ -207,8 +210,11 @@
 
             <!-- tab-content content-tab 2 -->
 
-        </div>  <!-- tab-content content-tab 1 -->
-
+        </div>
+ } 
+     <!-- tab-content content-tab 1 -->
+  @if (Convert.ToInt32(TempData["GuestList"]) > 0 && TempData["GuestList"] != null)
+  {
         <div class="col-sm-12 no_pad mt10">
             <div class="col-sm-12 no_pad mb5">
                 <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Guests</h3> </div>
@@ -246,6 +252,7 @@
                 </div>
             </div>
         </div>
+    }
     </div><!-- event-tabs -->
     <!-- 3 tabs close -- -->
 

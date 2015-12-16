@@ -687,6 +687,16 @@
                                         <input id="txtOrgTWlink" class="form-control wd600" placeholder="" maxlength="100" />
                                     </div>
                                 </div>
+                                <div class="add_social_input mt10">
+                                    <div class="col-sm-12 ">
+                                        <label class="control-label ev_tickt_lebel pl0">
+                                            <span class="ln"><i class="fa fa-linkedin-square"></i></span> linkedin.com/
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-8 ">
+                                        <input id="txtOrgLNlink" class="form-control wd600" placeholder="" maxlength="100" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -963,14 +973,14 @@
                                                     <div class="form-group">
                                                         <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
                                                         <div class="evnt_time_cont wd280 mr5_p">
-                                                            <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onblur="checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                            <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onblur="return checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
                                                             <label class="label-control lbl_bot_minim ">Minimum</label>
 
                                                         </div>
                                                         <div class="evnt_time_cont wd280">
-                                                            <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onblur="checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                            <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onblur="return checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
                                                             <label class="label-control lbl_bot_minim ">Maximum</label>
-                                                            <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
+                                                            <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter valid number</label>
 
                                                         </div>
                                                     </div>
@@ -1392,6 +1402,7 @@
     </div><!-- confirm-msg -->
 </div>
 <div>
+    <input type="hidden" id="hdMaxerr" value="0"/>
     <a class="td-btn" id="btOkAc"  type="button" href="#AccessDenied" data-toggle="modal" style="display:none">
 
     </a>
@@ -1685,6 +1696,7 @@
             $("#edOrgDes").code('');
             $("#txtOrgFBlink").val('');
             $("#txtOrgTWlink").val('');
+            $("#txtOrgLNlink").val('')
             $("#Incsocial").prop("checked", false);
             $("#dvOrgnizerFBTw").hide();
 
@@ -1731,13 +1743,13 @@
             var vOrgDes = $("#OrgDes_" + Sno).text();
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
-
+            var vOrgLn= $("#OrgLn_" + Sno).text();
             $("#txtOrgnizer").val(vOrgName);
             $("#edOrgDes").code(vOrgDes);
             $("#txtOrgFBlink").val(vOrgFB);
             $("#txtOrgTWlink").val(vOrgTw);
 
-            if (vOrgFB != '' || vOrgTw != '') {
+            if (vOrgFB != '' || vOrgTw != '' || vOrgLn!='') {
                 $("#Incsocial").prop("checked", true);
                 $("#dvOrgnizerFBTw").show();
             }
@@ -1756,13 +1768,15 @@
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
             var vOrgTw = $("#txtOrgTWlink").val();
-
+            var vOrgLn = $("#txtOrgLNlink").val();
+            
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgFB_' + Sno + '>' + vOrgFB + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgTw_' + Sno + '>' + vOrgTw + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgLn_' + Sno + '>' + vOrgLn + '</label></td>';
             //strHTML = strHTML + '<td align="right"><a href="#" onclick="editOrgnizer(' + Sno + ');"><i class="fa fa-pencil"></i> </a> | <a href="#"  onclick="DeleteOrgnizer(' + Sno + ');"><i class="fa fa-trash"></i> </a></td>';
             strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
 
@@ -1774,7 +1788,7 @@
             strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vOrgName + '</option>';
 
             $("#ddlOrgnizers").append(strHTML);
-
+            console.log($("#tblOrgnizer"));
         }
 
         function UpdateOrgnizer() {
@@ -1784,13 +1798,16 @@
             vOrgDes = $("#edOrgDes").code();
             vOrgFB = $("#txtOrgFBlink").val();
             vOrgTw = $("#txtOrgTWlink").val();
+            vOrgLn = $("#txtOrgLNlink").val();
+         
 
             $("#OrgName_" + Sno).text(vOrgName);
             $("#OrgDes_" + Sno).text(vOrgDes);
             $("#OrgFB_" + Sno).text(vOrgFB);
             $("#OrgTw_" + Sno).text(vOrgTw);
+            $("#OrgLn_" + Sno).text(vOrgLn);
 
-
+            alert($("#OrgLn_" + Sno).text());
             $("#ddlOrgnizers option").each(function (i) {
                 if (Sno == $(this).val()) {
                     $(this).remove();
@@ -2161,13 +2178,15 @@
                             Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                             FBLink: $("#OrgFB_" + Sno).text(),
                             Twitter: $("#OrgTw_" + Sno).text(),
+                            Linkedin: $("#OrgLn_" + Sno).text(),
                             DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
 
                         });
                     }
                 });
-
-
+               
+                console.log($('#tblOrgnizer'));
+                console.log(Orgnizer);
 
                 // Basic Event Info
                 //alert($("#edSummer1").code());
@@ -2558,13 +2577,16 @@
                                 Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                                 FBLink: $("#OrgFB_" + Sno).text(),
                                 Twitter: $("#OrgTw_" + Sno).text(),
+                                Linkedin: $("#OrgLn_" + Sno).text(),
                                 DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
 
                             });
                         }
                     });
 
-
+                    
+                    console.log($('#tblOrgnizer'));
+                    console.log(Orgnizer);
 
                     // Basic Event Info
                     //alert($("#edSummer1").code());
@@ -2995,12 +3017,15 @@
                             Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
                             FBLink: $("#OrgFB_" + Sno).text(),
                             Twitter: $("#OrgTw_" + Sno).text(),
+                            Linkedin: $("#OrgLn_" + Sno).text(),
                             DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
 
                         });
                     }
                 });
+                console.log($('#tblOrgnizer'));
 
+                console.log(Orgnizer);
 
 
                 // Basic Event Info
@@ -3858,21 +3883,38 @@
 
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
-
+          
             var minamt = parseInt($('#id_min_ticket-' + el).val());
             var maxamt = parseInt($('#id_max_ticket-' + el).val());
-
-            if (maxamt < minamt) {
-                $('#hddiscount').val('1');
+            if (isNaN(maxamt) && !isNaN(minamt))
+            {
+                
+                $('#hdMaxerr').val('1');
+                $('#id_min_ticket-' + el).addClass('err-bor');
                 $('#id_max_ticket-' + el).addClass('err-bor');
                 $('#id_lblmax-' + el).css('display', 'block');
 
-
-            } else {
-                $('#hddiscount').val('0');
+            }else if(maxamt==0 && minamt==0)
+            {
+                $('#hdMaxerr').val('0');
+                $('#id_min_ticket-' + el).removeClass('err-bor');
                 $('#id_max_ticket-' + el).removeClass('err-bor');
                 $('#id_lblmax-' + el).css('display', 'none');
             }
+            else if (maxamt <= minamt) {
+                    $('#hdMaxerr').val('1');
+                    $('#id_min_ticket-' + el).addClass('err-bor');
+                    $('#id_max_ticket-' + el).addClass('err-bor');
+                    $('#id_lblmax-' + el).css('display', 'block');
+
+
+                } else {
+                    $('#hdMaxerr').val('0');
+                    $('#id_min_ticket-' + el).removeClass('err-bor');
+                    $('#id_max_ticket-' + el).removeClass('err-bor');
+                    $('#id_lblmax-' + el).css('display', 'none');
+                }
+          
         }
         function calculateSum() {
 
@@ -5028,6 +5070,8 @@
 
                     var ticket_name = $('#id_ticket_type-' + i).val();
                     var ticket_Qty = $('#id_quantity_total-' + i).val();
+                    var minimumQty = $('#id_min_ticket-' + i).val();
+                    var maxQty = $('#id_max_ticket-' + i).val();
                     if (ticket_name == "") {
                         $('#id_ticket_type-' + i).addClass('err-bor');
 
@@ -5059,6 +5103,10 @@
             if ($('#hddiscount').val() == 1) {
                 count++;
 
+            }
+            if (parseInt($('#hdMaxerr').val()) == 1)
+            {
+                count++;
             }
             if (countqty > 0) {
                 msg += ajaxsetup("CreateEvent", "CreateEventQtyValidateUI") + "<br/>";
@@ -5118,6 +5166,11 @@
                 }
 
             }
+            if (count > 0)
+            {
+
+                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
+            }
             if (countvardesc > 0)
             {
                 msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
@@ -5137,6 +5190,7 @@
                 }
 
             }
+         
             return msg;
         }
         function compare(DateA, DateB) {

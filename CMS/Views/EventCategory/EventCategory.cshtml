@@ -276,7 +276,7 @@
                     $("#btnDelete").hide();
                 });                
                 function DeleteCatgry(CatId) {
-                    alert(CatId);                    
+                                      
                     $.ajax({
                         url: '@Url.Action("DeleteCategories", "EventCategory")',
                         data: { iEvntCtgryId: CatId},

@@ -91,7 +91,7 @@ namespace EventCombo.Controllers
             TempData["SavedEvents"] = objSavedEventList.Count;
             TempData["PastEvents"] = objPastEventList.Count;
             TempData["hdLastTab"] = hdLastTab;
-            
+            TempData["GuestList"] = objGuestEventList.Count;
 
 
             if (objLiveEventList.Count == 0)
@@ -100,7 +100,8 @@ namespace EventCombo.Controllers
                 ViewData["SavedEvntCnt"] = 0;
             if (objPastEventList.Count == 0)
                 ViewData["PastEvntCnt"] = 0;
-
+            if (objGuestEventList.Count == 0)
+                ViewData["GuestLstCnt"] = 0;
             return View();
         }
         public List<GetEventsListByStatus1_Result> GetLiveEvents(string SearchStringEventTitle)
