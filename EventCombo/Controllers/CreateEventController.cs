@@ -562,6 +562,7 @@ namespace EventCombo.Controllers
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
             viewEvent.showmaponevent = EventDetail.ShowMap;
+            viewEvent.EventPrivacy = EventDetail.EventPrivacy;
             //Address
             var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)
@@ -1429,7 +1430,22 @@ namespace EventCombo.Controllers
 
         #endregion
 
+public string Checkpassword(string password ,long id)
+        {
+            EventComboEntities obje = new EventComboEntities();
+            string strresult = "";
+            var checkpwd = (from obj in obje.Events where obj.EventID == id && obj.Private_Password.Trim() == password.Trim() select obj).Any();
+            if(checkpwd==true)
+            {
+                strresult = "Y";
+            }
+            else
+            {
+                strresult = "N";
+            }
 
+            return strresult;
+        }
 
 
 

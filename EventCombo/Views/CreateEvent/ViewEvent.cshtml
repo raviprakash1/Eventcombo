@@ -624,8 +624,52 @@ else
         </div>
     </div>
 </div>
+<div class="modal fade  modal-vcenter" id="viewticketpassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none;" id="btnclosepwd"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">View Event Password</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 no_pad">
+                    <div class="form-group mb5 ">
+                        <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
+                         <label class="alert-danger" id="lblwrongpwd" style="display:none;">Invalid Password</label>
+                        </div>
+                        <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
+                            Enter Password to view your live event.
+                        </div>
+                       
+                            <div class="col-sm-12 no_pad">
+                                <div class="form-group mb10">
+                                    <label class="col-md-4 control-label ev_tickt_lebel ">Password</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control evnt_inp_cont" type="password" id="txtpwdlive">
+                                    </div>
+                                </div>
+                            </div>
 
+                        </div>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 text-center mt20">
+                        <button type="button" class="btn ev_live_btn ev_live_sub_btn" id="btnbackpwd">
+                            CANCEL
+                        </button>
+                        <button type="button" class="btn ev_live_btn ev_live_sub_btn" id="btnsubmitpwd">
+                            SUBMIT
+                        </button>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
 <div>
+    <button type="button" data-target="#viewticketpassword" data-toggle="modal" style="display:none;" id="idpasswordtick"></button>
     <a class="td-btn" id="btOk" type="button" href="#Overselling" data-toggle="modal" style="display:none">
 
     </a>
@@ -680,6 +724,42 @@ else
     }
    // window.onload = InitializeMap;
     $(document).ready(function () {
+
+
+        $('#lblwrongpwd').css('display', 'none');
+        var eventype="@Model.EventPrivacy";
+        if (eventype == "Private")
+        {
+
+            $('#idpasswordtick').click();
+
+        }
+
+        $('#btnbackpwd').click(function () {
+
+            window.location.href = '@Url.Action("Index","Home")';
+
+        });
+
+        $('#btnsubmitpwd').click(function () {
+            var a = $('#txtpwdlive').val();
+            var id = $('#hdEventid').val();
+            $.ajax({
+                url: '@Url.Action("Checkpassword", "CreateEvent")',
+                data: { password: a, id: id },
+                type: "Post",
+                success: function (response) {
+                  
+                    if (response == "Y") {
+                        $('#btnclosepwd').click();
+                    } else {
+                        $('#lblwrongpwd').css('display', 'block');
+                        $('#lblwrongpwd').html('Invalid Password');
+                    }
+                }
+            });
+
+        });
         $(function () {
             var url = 'https://www.facebook.com/Eventcombo' // Replace this variable value with the link
             $.getJSON('https://graph.facebook.com/?access_token=CAACEdEose0cBAInenFGuCK6iiWLaQtrhdAmumnHtYXBbImcddXwErefrPF5ZBFx7ZAU2Y0K8T3ZAfQh9xQPNrOOO9F3dpgI8lCOifLqiMSxer20YAKxZAQN8y1MBYjjO0ZAVywJSwmbPZAL1O8UqPrnliiNoZBqb2YGBRSjrHmJdTEFErjnMbQxXT0OQyXyi5Qjv56nLootuwZDZD&id=' + url, function (data) {

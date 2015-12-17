@@ -459,6 +459,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventList.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Home\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TicketPayment\PaymentConfirmation.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -848,6 +853,7 @@
     </Content>
     <Content Include="Views\Home\Index.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml">
       <Generator>RazorGenerator</Generator>

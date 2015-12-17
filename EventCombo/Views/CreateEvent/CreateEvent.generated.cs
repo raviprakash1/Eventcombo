@@ -31,15 +31,13 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/CreateEvent/CreateEvent.cshtml")]
-    public partial class _Views_CreateEvent_CreateEvent_cshtml : System.Web.Mvc.WebViewPage<dynamic>
+    public partial class _Views_CreateEvent_CreateEvent_cshtml : System.Web.Mvc.WebViewPage<EventCombo.Models.EventCreation>
     {
         public _Views_CreateEvent_CreateEvent_cshtml()
         {
         }
         public override void Execute()
         {
-WriteLiteral("Time@model EventCombo.Models.EventCreation\r\n");
-
             
             #line 2 "..\..\Views\CreateEvent\CreateEvent.cshtml"
   
@@ -51,59 +49,59 @@ WriteLiteral("Time@model EventCombo.Models.EventCreation\r\n");
             #line hidden
 WriteLiteral("\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 146), Tuple.Create("\"", 185)
-, Tuple.Create(Tuple.Create("", 153), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 153), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 142), Tuple.Create("\"", 181)
+, Tuple.Create(Tuple.Create("", 149), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 149), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 215), Tuple.Create("\"", 247)
-, Tuple.Create(Tuple.Create("", 221), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.masked.js")
-, 221), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 211), Tuple.Create("\"", 243)
+, Tuple.Create(Tuple.Create("", 217), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.masked.js")
+, 217), false)
 );
 
 WriteLiteral("></script>\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 265), Tuple.Create("\"", 322)
-, Tuple.Create(Tuple.Create("", 272), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 272), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 261), Tuple.Create("\"", 318)
+, Tuple.Create(Tuple.Create("", 268), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 268), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 352), Tuple.Create("\"", 389)
-, Tuple.Create(Tuple.Create("", 358), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 358), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 348), Tuple.Create("\"", 385)
+, Tuple.Create(Tuple.Create("", 354), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 354), false)
 );
 
 WriteLiteral("></script>\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 407), Tuple.Create("\"", 437)
-, Tuple.Create(Tuple.Create("", 414), Tuple.Create<System.Object, System.Int32>(Href("~/Content/jquery-ui.css")
-, 414), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 403), Tuple.Create("\"", 433)
+, Tuple.Create(Tuple.Create("", 410), Tuple.Create<System.Object, System.Int32>(Href("~/Content/jquery-ui.css")
+, 410), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 465), Tuple.Create("\"", 496)
-, Tuple.Create(Tuple.Create("", 472), Tuple.Create<System.Object, System.Int32>(Href("~/Content/summernote.css")
-, 472), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 461), Tuple.Create("\"", 492)
+, Tuple.Create(Tuple.Create("", 468), Tuple.Create<System.Object, System.Int32>(Href("~/Content/summernote.css")
+, 468), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 526), Tuple.Create("\"", 561)
-, Tuple.Create(Tuple.Create("", 533), Tuple.Create<System.Object, System.Int32>(Href("~/Content/eventcombo-new.css")
-, 533), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 522), Tuple.Create("\"", 557)
+, Tuple.Create(Tuple.Create("", 529), Tuple.Create<System.Object, System.Int32>(Href("~/Content/eventcombo-new.css")
+, 529), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -3495,9 +3493,9 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 81563), Tuple.Create("\"", 81584)
-, Tuple.Create(Tuple.Create("", 81569), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 81569), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 81559), Tuple.Create("\"", 81580)
+, Tuple.Create(Tuple.Create("", 81565), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 81565), false)
 );
 
 WriteLiteral("> ENABLE DISCUSSION <input");
@@ -4209,9 +4207,9 @@ WriteLiteral("></script>\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 94777), Tuple.Create("\"", 94800)
-, Tuple.Create(Tuple.Create("", 94783), Tuple.Create<System.Object, System.Int32>(Href("~/Content/gmap.js")
-, 94783), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 94773), Tuple.Create("\"", 94796)
+, Tuple.Create(Tuple.Create("", 94779), Tuple.Create<System.Object, System.Int32>(Href("~/Content/gmap.js")
+, 94779), false)
 );
 
 WriteLiteral("></script>\r\n");

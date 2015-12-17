@@ -52,13 +52,14 @@
 <section id="content_wrapper">        
     @using (Html.BeginForm())
     {
-                    if (TempData["SuccessMessage"] != null)
-                    {
-                <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
-                </div>
+        if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
+            </div>
         }
+
         <div class="row" id="modal-content">
 
             <div class="col-md-12 mt10">
@@ -99,40 +100,50 @@
 
                             </div>
                         <div class="clearfix"></div>
+                        @if (int.Parse(TempData["Count"].ToString()) > 0)
+                        {
                         <div class="col-md-12 mt10 nopad">
 
                             <table id="tabType" width="100%">
                                 <tbody>
                                     @{
                                         int i = 0;
-                                       
+
                                         foreach (var itemType in Model)
-                                       {
-                                          i = i + 1;
+                                        {
+                                            i = i + 1;
                                             <tr class="col-sm-12 catbg">
-                                                <td class="col-sm-12"><label id="lblEvntTypeName-@i">@itemType.EventType1</label></td>
-                                                <td class="pl5"><button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button></td>
+                                                <td class="col-sm-12">
+                                                    <label id="lblEvntTypeName-@i">@itemType.EventType1</label>
+                                                <input id="txtEvnttypename-@i" type="text" style="display:none;" class="form-control" maxlength="35"  />
+                                                </td>
+                                                <td class="pl5">
+                                                 <button class="btn btn-primary  br2 btn-xs fs12" style="display:none;" id="btnEditfinal-@i" type="button" onclick="EditTypefinal(this.id)"><i class="fa fa-edit"></i></button>
+
+                                                <button class="btn btn-success  br2 btn-xs fs12" id="btnEdittype-@i" type="button" onclick="EditType('@itemType.EventTypeID',this.id)"><i class="fa fa-edit"></i></button>
+                                                </td>
                                                 <td class="pl5"><button id="btnDeleteCat-@i" type="button" onclick="DeleteType('@itemType.EventTypeID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>
                                             </tr>
 
 
-                                                
-                          }
+
+                                        }
                                     }
                                 </tbody>
                             </table>
 
                             </div>
+                                        }
                         </div>
 
 
                     </div>
-
+               
 
                 </div>
             </div>
 
-
+            <input type="hidden" id="hdtypeid"/>
             @*<div class="col-sm-12">
                 <div class="form-group event-type">
                     <label class="col-md-2 control-label acnt_form_label ">Event Type</label>
@@ -160,21 +171,59 @@
 <script type="text/javascript">
 
     $(window).load(function () {
+
         $("#btnEdit").hide();
         $("#btnDelete").hide();
         $("#btnReset").hide();
     });
 
+    function EditTypefinal(id)
+    {
+        var no = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+        var text = $('#txtEvnttypename-' + no).val();
+        var id = $('#hdtypeid').val();
+        $.ajax({
+            url: '@Url.Action("EditType", "EventType")',
+            data: { iTypeid: id, Typename: text },
+            type: "POST",
+            success: function (response) {
 
+
+                window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
+            },
+            error: function (data) {
+                alert("Sorry! there is some problem.");
+                return false
+            }
+        });
+
+    }
+    function EditType(typeid,id)
+    {
+        var no = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+        var txt = $('#lblEvntTypeName-' + no).html();
+        $('#hdtypeid').val(typeid);
+        $('#lblEvntTypeName-' + no).css('display', 'none');
+       $('#txtEvnttypename-' + no).css('display', 'block');
+       $('#btnEditfinal-' + no).css('display', 'block');
+       $('#btnEdittype-' + no).css('display', 'none');
+
+       $('#txtEvnttypename-' + no).val(txt);
+
+    }
     $("#btnAdd").click(function () {
         var Type = $("#txtEventType").val();
-        alert(Type);
+
         $.ajax({
             url: '@Url.Action("AddType", "EventType")',
             data: { iType: Type },
             type: "POST",
             success: function (response) {
-                location.reload();
+
+                $('#hdstate').val(response);
+                $("#txtEventType").val('');
+
+                window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
             },
             error: function (data) {
                 alert("Sorry! there is some problem.");
@@ -192,7 +241,7 @@
                         data: { iType: CatId },
                         type: "POST",
                         success: function (response) {
-                            location.reload();
+                            window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=D' ;
                         },
                         error: function (data) {
                             alert("Sorry! there is some problem.");
@@ -201,7 +250,7 @@
                     });
                 }
     $(document).ready(function () {
-      
+
 
         //$('#btnCreate').click(function () {
         //    var newListValue = $('#EventType1').val();

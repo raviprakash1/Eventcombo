@@ -2208,8 +2208,157 @@ WriteLiteral(" id=\"btMesOk\"");
 
 WriteLiteral(" data-dismiss=\"modal\"");
 
-WriteLiteral(">OK</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div>\r\n  " +
-"  <a");
+WriteLiteral(">OK</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div");
+
+WriteLiteral(" class=\"modal fade  modal-vcenter\"");
+
+WriteLiteral(" id=\"viewticketpassword\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(" role=\"dialog\"");
+
+WriteLiteral(" aria-labelledby=\"myModalLabel\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"modal-dialog modal-sm\"");
+
+WriteLiteral(" role=\"document\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"modal-content\"");
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"modal-header\"");
+
+WriteLiteral(">\r\n               <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" class=\"close\"");
+
+WriteLiteral(" data-dismiss=\"modal\"");
+
+WriteLiteral(" aria-label=\"Close\"");
+
+WriteLiteral(" style=\"display:none;\"");
+
+WriteLiteral(" id=\"btnclosepwd\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" aria-hidden=\"true\"");
+
+WriteLiteral(">&times;</span></button>\r\n                <h4");
+
+WriteLiteral(" class=\"modal-title ev_modal_header_title\"");
+
+WriteLiteral(" id=\"myModalLabel\"");
+
+WriteLiteral(">View Event Password</h4>\r\n            </div>\r\n            <div");
+
+WriteLiteral(" class=\"modal-body\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"col-md-12 no_pad\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"form-group mb5 \"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad ev_ven_mod_lebel mb10\"");
+
+WriteLiteral(">\r\n                         <label");
+
+WriteLiteral(" class=\"alert-danger\"");
+
+WriteLiteral(" id=\"lblwrongpwd\"");
+
+WriteLiteral(" style=\"display:none;\"");
+
+WriteLiteral(">Invalid Password</label>\r\n                        </div>\r\n                      " +
+"  <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad ev_ven_mod_lebel mb10\"");
+
+WriteLiteral(">\r\n                            Enter Password to view your live event.\r\n         " +
+"               </div>\r\n                       \r\n                            <div" +
+"");
+
+WriteLiteral(" class=\"col-sm-12 no_pad\"");
+
+WriteLiteral(">\r\n                                <div");
+
+WriteLiteral(" class=\"form-group mb10\"");
+
+WriteLiteral(">\r\n                                    <label");
+
+WriteLiteral(" class=\"col-md-4 control-label ev_tickt_lebel \"");
+
+WriteLiteral(">Password</label>\r\n                                    <div");
+
+WriteLiteral(" class=\"col-md-8\"");
+
+WriteLiteral(">\r\n                                        <input");
+
+WriteLiteral(" class=\"form-control evnt_inp_cont\"");
+
+WriteLiteral(" type=\"password\"");
+
+WriteLiteral(" id=\"txtpwdlive\"");
+
+WriteLiteral(">\r\n                                    </div>\r\n                                </" +
+"div>\r\n                            </div>\r\n\r\n                        </div>\r\n    " +
+"                <div");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral("></div>\r\n                    <div");
+
+WriteLiteral(" class=\"col-sm-12 text-center mt20\"");
+
+WriteLiteral(">\r\n                        <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" class=\"btn ev_live_btn ev_live_sub_btn\"");
+
+WriteLiteral(" id=\"btnbackpwd\"");
+
+WriteLiteral(">\r\n                            CANCEL\r\n                        </button>\r\n       " +
+"                 <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" class=\"btn ev_live_btn ev_live_sub_btn\"");
+
+WriteLiteral(" id=\"btnsubmitpwd\"");
+
+WriteLiteral(">\r\n                            SUBMIT\r\n                        </button>\r\n       " +
+"             </div>\r\n\r\n                </div>\r\n                <div");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral("></div>\r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n<div>\r\n    <bu" +
+"tton");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" data-target=\"#viewticketpassword\"");
+
+WriteLiteral(" data-toggle=\"modal\"");
+
+WriteLiteral(" style=\"display:none;\"");
+
+WriteLiteral(" id=\"idpasswordtick\"");
+
+WriteLiteral("></button>\r\n    <a");
 
 WriteLiteral(" class=\"td-btn\"");
 
@@ -2227,71 +2376,140 @@ WriteLiteral(">\r\n\r\n    </a>\r\n</div>\r\n\r\n\r\n");
 
 WriteLiteral("\r\n");
 
-WriteLiteral("\r\n<script>\r\n\r\n    var map = \"\";\r\n    var geocoder = \"\";\r\n    \r\n    function Initi" +
-"alizeMap() {\r\n\r\n         latlng = new google.maps.LatLng(-34.397, 150.644);\r\n   " +
-"      myOptions =\r\n        {\r\n            zoom: 12,\r\n            center: latlng," +
-"\r\n            mapTypeId: google.maps.MapTypeId.ROADMAP,\r\n            //disableDe" +
-"faultUI: true\r\n        };\r\n         if (!map) {\r\n             map = new google.m" +
-"aps.Map(document.getElementById(\"googleMap\"), myOptions);\r\n         }\r\n         " +
-"else {\r\n             map.setOptions(mapOptions);\r\n         }\r\n    }\r\n    functio" +
-"n FindLocaiton() {\r\n        InitializeMap();\r\n        geocoder = new google.maps" +
-".Geocoder();\r\n         lbltopaddress = document.getElementById(\"lbltopaddress\");" +
-"\r\n         address = lbltopaddress.innerHTML.trim();\r\n        geocoder.geocode({" +
-" \'address\': address }, function (results, status) {\r\n            if (status == g" +
-"oogle.maps.GeocoderStatus.OK) {\r\n                map.setCenter(results[0].geomet" +
-"ry.location);\r\n                 marker = new google.maps.Marker({\r\n             " +
-"       map: map,\r\n                    position: results[0].geometry.location\r\n  " +
-"              });\r\n\r\n            }\r\n            else {\r\n                //alert(" +
-"\"Geocode was not successful for the following reason: \" + status);\r\n            " +
-"}\r\n\r\n\r\n        });\r\n        \r\n    }\r\n   // window.onload = InitializeMap;\r\n    $" +
-"(document).ready(function () {\r\n        $(function () {\r\n            var url = \'" +
-"https://www.facebook.com/Eventcombo\' // Replace this variable value with the lin" +
-"k\r\n            $.getJSON(\'https://graph.facebook.com/?access_token=CAACEdEose0cB" +
-"AInenFGuCK6iiWLaQtrhdAmumnHtYXBbImcddXwErefrPF5ZBFx7ZAU2Y0K8T3ZAfQh9xQPNrOOO9F3d" +
-"pgI8lCOifLqiMSxer20YAKxZAQN8y1MBYjjO0ZAVywJSwmbPZAL1O8UqPrnliiNoZBqb2YGBRSjrHmJd" +
-"TEFErjnMbQxXT0OQyXyi5Qjv56nLootuwZDZD&id=\' + url, function (data) {\r\n           " +
-"     //alert(data.comments);\r\n                if (data.comments) { //If their is" +
-" no comments on the page then comments data will not exist\r\n                    " +
-"$(\'.comment-count\').append(data.comments);\r\n                } else {\r\n          " +
-"          $(\'.comment-count\').append(\'0\');\r\n                }\r\n            });\r\n" +
-"        });\r\n        $(\'ul.dropdown-menu.dropdown-map\').on(\'click\', function (ev" +
-"ent) {\r\n            event.stopPropagation();\r\n        });\r\n        //history.pus" +
-"hState(null, null, \'ViewEvent\');\r\n        //window.addEventListener(\'popstate\', " +
-"function (event) {\r\n        //    history.pushState(null, null, \'ViewEvent\');\r\n " +
-"       //});\r\n\r\n        $(document).click(function () {\r\n            $(\'#orgerro" +
-"r\').css(\'display\', \'none\');\r\n\r\n            if ($(\'#orgerror\').css(\'display\') == " +
-"\'block\') {\r\n                $(\'input\').removeClass(\'err-bor\');\r\n                " +
-"$(\"#id_orgtext\").removeClass(\'err-bor\');\r\n            }\r\n            $(\'#id_orgt" +
-"ext\').removeClass(\'err-bor\');\r\n        });\r\n        //$(document).click(function" +
-" () {\r\n\r\n        //    //$(\'#diverroacc\').css(\'display\', \'none\');\r\n        //   " +
-" //$(\'#divaccsuc\').css(\'display\', \'none\');\r\n        //    $(\'#orgerror\').css(\'di" +
-"splay\', \'none\');\r\n        //    $(\"input\").removeClass(\'err-bor\');\r\n        //  " +
-"  $(\"#id_orgtext\").removeClass(\'err-bor\');\r\n        //});\r\n\r\n        $(\'#saveorg" +
-"aizermsg\').click(function () {\r\n\r\n\r\n            var errormsg = \"\", erroremail = " +
-"\"\";\r\n            var name = $(\'#id_orgname\').val();\r\n            var mail = $(\'#" +
-"id_orgemail\').val();\r\n            var txt = $(\'#id_orgtext\').val();\r\n\r\n         " +
-"   var count = 0;\r\n\r\n            if (name != \'\') {\r\n                $(\'#id_orgna" +
-"me\').removeClass(\'err-bor\');\r\n\r\n            } else {\r\n\r\n                count++;" +
-"\r\n                $(\'#id_orgname\').addClass(\'err-bor\');\r\n\r\n            }\r\n\r\n\r\n\r\n" +
-"            if (!validateEmail(mail)) {\r\n                $(\'#id_orgemail\').addCl" +
-"ass(\'err-bor\');\r\n                errormsg += \"Invalid Email</br>\";\r\n            " +
-"}\r\n\r\n\r\n\r\n            if (txt != \'\') {\r\n                $(\'#id_orgtext\').removeCl" +
-"ass(\'err-bor\');\r\n\r\n            } else {\r\n                count++;\r\n             " +
-"   $(\'#id_orgtext\').addClass(\'err-bor\');\r\n\r\n            }\r\n            if (error" +
-"email != \"\") {\r\n                errormsg += erroremail;\r\n\r\n            }\r\n      " +
-"      if (count > 0)\r\n            {\r\n                errormsg = \"Fill the missin" +
-"g details\"\r\n            }\r\n            if (errormsg != \"\") {\r\n\r\n                " +
-"$(\'#orgerror\').css(\'display\', \'block\');\r\n                $(\'#orgerror\').html(err" +
-"ormsg);\r\n                return false;\r\n            }\r\n            else {\r\n     " +
-"           var organiserid = $(\'#hdorganiserid\').val();\r\n                var eve" +
-"ntid = $(\'#hdEventid\').val();\r\n                var model = {\r\n                  " +
-"  \'email\': mail,\r\n                    \'name\': name,\r\n                    \'mesasg" +
-"es\': txt,\r\n                    \'organiserid\': organiserid,\r\n                    " +
-"\'EventId\': eventid\r\n\r\n                }\r\n                $.ajax({\r\n             " +
-"       url: \'");
+WriteLiteral(@"
+<script>
+
+    var map = """";
+    var geocoder = """";
+    
+    function InitializeMap() {
+
+         latlng = new google.maps.LatLng(-34.397, 150.644);
+         myOptions =
+        {
+            zoom: 12,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            //disableDefaultUI: true
+        };
+         if (!map) {
+             map = new google.maps.Map(document.getElementById(""googleMap""), myOptions);
+         }
+         else {
+             map.setOptions(mapOptions);
+         }
+    }
+    function FindLocaiton() {
+        InitializeMap();
+        geocoder = new google.maps.Geocoder();
+         lbltopaddress = document.getElementById(""lbltopaddress"");
+         address = lbltopaddress.innerHTML.trim();
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                 marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+
+            }
+            else {
+                //alert(""Geocode was not successful for the following reason: "" + status);
+            }
+
+
+        });
+        
+    }
+   // window.onload = InitializeMap;
+    $(document).ready(function () {
+
+
+        $('#lblwrongpwd').css('display', 'none');
+        var eventype=""");
 
             
-            #line 783 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 730 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+                 Write(Model.EventPrivacy);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\";\r\n        if (eventype == \"Private\")\r\n        {\r\n\r\n            $(\'#idpasswordti" +
+"ck\').click();\r\n\r\n        }\r\n\r\n        $(\'#btnbackpwd\').click(function () {\r\n\r\n  " +
+"          window.location.href = \'");
+
+            
+            #line 740 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+                               Write(Url.Action("Index","Home"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n\r\n        });\r\n\r\n        $(\'#btnsubmitpwd\').click(function () {\r\n            " +
+"var a = $(\'#txtpwdlive\').val();\r\n            var id = $(\'#hdEventid\').val();\r\n  " +
+"          $.ajax({\r\n                url: \'");
+
+            
+            #line 748 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+                 Write(Url.Action("Checkpassword", "CreateEvent"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\',\r\n                data: { password: a, id: id },\r\n                type: \"Post\"," +
+"\r\n                success: function (response) {\r\n                  \r\n          " +
+"          if (response == \"Y\") {\r\n                        $(\'#btnclosepwd\').clic" +
+"k();\r\n                    } else {\r\n                        $(\'#lblwrongpwd\').cs" +
+"s(\'display\', \'block\');\r\n                        $(\'#lblwrongpwd\').html(\'Invalid " +
+"Password\');\r\n                    }\r\n                }\r\n            });\r\n\r\n      " +
+"  });\r\n        $(function () {\r\n            var url = \'https://www.facebook.com/" +
+"Eventcombo\' // Replace this variable value with the link\r\n            $.getJSON(" +
+"\'https://graph.facebook.com/?access_token=CAACEdEose0cBAInenFGuCK6iiWLaQtrhdAmum" +
+"nHtYXBbImcddXwErefrPF5ZBFx7ZAU2Y0K8T3ZAfQh9xQPNrOOO9F3dpgI8lCOifLqiMSxer20YAKxZA" +
+"QN8y1MBYjjO0ZAVywJSwmbPZAL1O8UqPrnliiNoZBqb2YGBRSjrHmJdTEFErjnMbQxXT0OQyXyi5Qjv5" +
+"6nLootuwZDZD&id=\' + url, function (data) {\r\n                //alert(data.comment" +
+"s);\r\n                if (data.comments) { //If their is no comments on the page " +
+"then comments data will not exist\r\n                    $(\'.comment-count\').appen" +
+"d(data.comments);\r\n                } else {\r\n                    $(\'.comment-cou" +
+"nt\').append(\'0\');\r\n                }\r\n            });\r\n        });\r\n        $(\'u" +
+"l.dropdown-menu.dropdown-map\').on(\'click\', function (event) {\r\n            event" +
+".stopPropagation();\r\n        });\r\n        //history.pushState(null, null, \'ViewE" +
+"vent\');\r\n        //window.addEventListener(\'popstate\', function (event) {\r\n     " +
+"   //    history.pushState(null, null, \'ViewEvent\');\r\n        //});\r\n\r\n        $" +
+"(document).click(function () {\r\n            $(\'#orgerror\').css(\'display\', \'none\'" +
+");\r\n\r\n            if ($(\'#orgerror\').css(\'display\') == \'block\') {\r\n             " +
+"   $(\'input\').removeClass(\'err-bor\');\r\n                $(\"#id_orgtext\").removeCl" +
+"ass(\'err-bor\');\r\n            }\r\n            $(\'#id_orgtext\').removeClass(\'err-bo" +
+"r\');\r\n        });\r\n        //$(document).click(function () {\r\n\r\n        //    //" +
+"$(\'#diverroacc\').css(\'display\', \'none\');\r\n        //    //$(\'#divaccsuc\').css(\'d" +
+"isplay\', \'none\');\r\n        //    $(\'#orgerror\').css(\'display\', \'none\');\r\n       " +
+" //    $(\"input\").removeClass(\'err-bor\');\r\n        //    $(\"#id_orgtext\").remove" +
+"Class(\'err-bor\');\r\n        //});\r\n\r\n        $(\'#saveorgaizermsg\').click(function" +
+" () {\r\n\r\n\r\n            var errormsg = \"\", erroremail = \"\";\r\n            var name" +
+" = $(\'#id_orgname\').val();\r\n            var mail = $(\'#id_orgemail\').val();\r\n   " +
+"         var txt = $(\'#id_orgtext\').val();\r\n\r\n            var count = 0;\r\n\r\n    " +
+"        if (name != \'\') {\r\n                $(\'#id_orgname\').removeClass(\'err-bor" +
+"\');\r\n\r\n            } else {\r\n\r\n                count++;\r\n                $(\'#id_" +
+"orgname\').addClass(\'err-bor\');\r\n\r\n            }\r\n\r\n\r\n\r\n            if (!validate" +
+"Email(mail)) {\r\n                $(\'#id_orgemail\').addClass(\'err-bor\');\r\n        " +
+"        errormsg += \"Invalid Email</br>\";\r\n            }\r\n\r\n\r\n\r\n            if (" +
+"txt != \'\') {\r\n                $(\'#id_orgtext\').removeClass(\'err-bor\');\r\n\r\n      " +
+"      } else {\r\n                count++;\r\n                $(\'#id_orgtext\').addCl" +
+"ass(\'err-bor\');\r\n\r\n            }\r\n            if (erroremail != \"\") {\r\n         " +
+"       errormsg += erroremail;\r\n\r\n            }\r\n            if (count > 0)\r\n   " +
+"         {\r\n                errormsg = \"Fill the missing details\"\r\n            }" +
+"\r\n            if (errormsg != \"\") {\r\n\r\n                $(\'#orgerror\').css(\'displ" +
+"ay\', \'block\');\r\n                $(\'#orgerror\').html(errormsg);\r\n                " +
+"return false;\r\n            }\r\n            else {\r\n                var organiseri" +
+"d = $(\'#hdorganiserid\').val();\r\n                var eventid = $(\'#hdEventid\').va" +
+"l();\r\n                var model = {\r\n                    \'email\': mail,\r\n       " +
+"             \'name\': name,\r\n                    \'mesasges\': txt,\r\n              " +
+"      \'organiserid\': organiserid,\r\n                    \'EventId\': eventid\r\n\r\n   " +
+"             }\r\n                $.ajax({\r\n                    url: \'");
+
+            
+            #line 863 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("saveorganizermsg", "CreateEvent"));
 
             
@@ -2358,7 +2576,7 @@ WriteLiteral("\r\n\r\n\r\n\r\n\r\n\r\n                function showevent(t) {\r\
 "(\"#ioutlook\").attr(\"href\", \'");
 
             
-            #line 885 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 965 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                             Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -2369,7 +2587,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "ender\").attr(\"href\", \'");
 
             
-            #line 886 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 966 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                              Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -2398,7 +2616,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "val();\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 926 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1006 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("savevote", "CreateEvent"));
 
             
@@ -2450,7 +2668,7 @@ WriteLiteral(@"
                 url: '");
 
             
-            #line 967 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1047 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                  Write(Url.Action("savefavourite", "CreateEvent"));
 
             
@@ -2589,7 +2807,7 @@ WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNa
 "             url: \'");
 
             
-            #line 1245 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1325 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2616,7 +2834,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 1263 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1343 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                  Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2662,7 +2880,7 @@ WriteLiteral("\',\r\n                beforeSend: function () { $(\'#dvAjxLoader\
 "              $.ajax({\r\n                    url: \'");
 
             
-            #line 1335 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1415 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("LockTickets", "CreateEvent"));
 
             
@@ -2682,7 +2900,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 1346 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1426 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
@@ -2717,7 +2935,7 @@ WriteLiteral(@"' + '?Eventid=' + Eventid;
             url: '");
 
             
-            #line 1372 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1452 "..\..\Views\CreateEvent\ViewEvent.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             
