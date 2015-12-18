@@ -486,7 +486,7 @@ namespace EventCombo.Controllers
 
 
 
-
+     
         public ActionResult ViewEvent(string strUrlData)
         {
            

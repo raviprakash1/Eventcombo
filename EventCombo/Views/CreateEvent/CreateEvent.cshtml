@@ -4006,9 +4006,10 @@
 
         }
         function validateforzero(id, evt) {
-            var price = parseFloat($('#' + id).val().replace(',', '')).toFixed(2);
+            debugger;
+            var price = parseFloat(parseFloat($('#' + id).val().replace(',', '')).toFixed(2));
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-            var discount = parseFloat($('#id_Discount-' + num).val().replace(',', '')).toFixed(2);
+            var discount =parseFloat(parseFloat($('#id_Discount-' + num).val().replace(',', '')).toFixed(2));
             if (price == 0) {
 
                 $('#id_cost-' + num).addClass('err-bor');
@@ -4662,9 +4663,10 @@
             $(".evt_time").css("display", "block");
         });
         function checkdiscount(e) {
+            debugger;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var price = parseFloat($('#id_cost-' + el).val().replace(',', '')).toFixed(2);
-            var discount = parseFloat($('#' + e).val().replace(',', '')).toFixed(2);
+            var price =parseFloat( parseFloat($('#id_cost-' + el).val().replace(',', '')).toFixed(2));
+            var discount =parseFloat( parseFloat($('#' + e).val().replace(',', '')).toFixed(2));
 
             if (!isNaN(price) && !isNaN(discount)) {
                 if (price != 0 && discount != 0) {
