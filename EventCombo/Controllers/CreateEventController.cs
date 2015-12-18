@@ -311,10 +311,12 @@ namespace EventCombo.Controllers
                         ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
                         ObjEC.Ticket_variabletype = model.Ticket_variabletype;
                         ObjEC.ShowMap = model.ShowMap;
+                        ObjEC.Parent_EventID = 0;
                         ObjEC.CreateDate = DateTime.Now;
+                    //objEnt.Events.Add(ObjEC);
                         objEnt.Events.Add(ObjEC);
-                        // Address info
-                        if (model.AddressDetail != null)
+                    // Address info
+                    if (model.AddressDetail != null)
                         {
                             Address ObjAdd = new Models.Address();
                             foreach (Address objA in model.AddressDetail)
@@ -515,7 +517,9 @@ namespace EventCombo.Controllers
             string[] str = strUrlData.Split('౼');
             string strForView = "";
             string eventTitle = str[0].ToString();
-            long EventId = Convert.ToInt64(str[1]);
+
+            long EventId =  vmc.GetLatestEventId(Convert.ToInt64(str[1]));
+
             try
             {
                 strForView = str[2].ToString();

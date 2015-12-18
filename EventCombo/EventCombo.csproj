@@ -332,6 +332,9 @@
     <Compile Include="Models\Event_Orgnizer_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Event_Parent.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Event_VariableDesc.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>

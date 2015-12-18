@@ -12,20 +12,8 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Event
+    public partial class Event_Parent
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Event()
-        {
-            this.Addresses = new HashSet<Address>();
-            this.Event_Orgnizer_Detail = new HashSet<Event_Orgnizer_Detail>();
-            this.Event_VariableDesc = new HashSet<Event_VariableDesc>();
-            this.EventImages = new HashSet<EventImage>();
-            this.EventVenues = new HashSet<EventVenue>();
-            this.MultipleEvents = new HashSet<MultipleEvent>();
-            this.Tickets = new HashSet<Ticket>();
-        }
-    
         public long EventID { get; set; }
         public long EventTypeID { get; set; }
         public long EventCategoryID { get; set; }
@@ -61,22 +49,5 @@ namespace EventCombo.Models
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> ModifyDate { get; set; }
         public string ShowMap { get; set; }
-        public Nullable<long> Parent_EventID { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
-        public virtual EventType EventType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Event_VariableDesc> Event_VariableDesc { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventImage> EventImages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventVenue> EventVenues { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MultipleEvent> MultipleEvents { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }
