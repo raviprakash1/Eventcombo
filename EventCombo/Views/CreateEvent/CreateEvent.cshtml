@@ -892,7 +892,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
-                                                                <input type="hidden" value="0" id="id_hdsaletimestart-n" />
+                                                                <input type="hidden" value="7:00pm" id="id_hdsaletimestart-n" />
                                                                 <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" />
                                                             </div>
 
@@ -906,7 +906,7 @@
                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
                                                             </div>
                                                             <div class="col-sm-4 no_pad">
-                                                                <input type="hidden" value="0" id="id_hdsaletimeend-n" />
+                                                                <input type="hidden" value="7:00pm" id="id_hdsaletimeend-n"  />
                                                                 <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
                                                             </div>
 
@@ -947,7 +947,7 @@
                                                                             <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_until_Date-n" onchange="changetext(this.id); " />
                                                                         </div>
                                                                         <div class="col-sm-4 no_pad">
-                                                                            <input type="hidden" value="0" id="id_hdautohideuntil-n" />
+                                                                            <input type="hidden" value="7:00pm" id="id_hdautohideuntil-n" />
                                                                             <input id="id_auto_hide_until_time-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
                                                                         </div>
                                                                     </div>
@@ -960,7 +960,7 @@
                                                                             <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_after_Date-n" onchange="checkvalidDate(this.id)" />
                                                                         </div>
                                                                         <div class="col-sm-4 no_pad">
-                                                                            <input type="hidden" value="0" id="id_hdautohideafter-n" />
+                                                                            <input type="hidden" value="7:00pm" id="id_hdautohideafter-n" />
                                                                             <input id="id_auto_hide_after_Time-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
                                                                         </div>
                                                                     </div>
@@ -1991,7 +1991,7 @@
 
                         var Discount = $('#id_Discount-' + i).val().replace(',', '');
                         var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
-
+                        console.log($('#id_saletimeend-' + i).val());
                         Ticket.push({
                             T_name: $('#id_ticket_type-' + i).val(),
                             Qty_Available: $('#id_quantity_total-' + i).val(),
@@ -2185,9 +2185,7 @@
                     }
                 });
                
-                console.log($('#tblOrgnizer'));
-                console.log(Orgnizer);
-
+               
                 // Basic Event Info
                 //alert($("#edSummer1").code());
                 debugger;
@@ -2244,7 +2242,7 @@
 
                 //var params = 'strEveDec :' + $("#edEventDesc").code();
 
-
+             
                 if ($("#hdEventId").val() == '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
@@ -2584,9 +2582,7 @@
                         }
                     });
 
-                    
-                    console.log($('#tblOrgnizer'));
-                    console.log(Orgnizer);
+                  
 
                     // Basic Event Info
                     //alert($("#edSummer1").code());
@@ -2827,7 +2823,7 @@
 
                             TicketTypeID = 3
                         }
-
+                     
                         var Discount = $('#id_Discount-' + i).val().replace(',', '');
                         var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
 
@@ -2867,8 +2863,7 @@
                     }
 
                 }
-
-
+          
                 //$('#tblAddress tr').each(function () {
 
 
@@ -3023,9 +3018,7 @@
                         });
                     }
                 });
-                console.log($('#tblOrgnizer'));
-
-                console.log(Orgnizer);
+              
 
 
                 // Basic Event Info
@@ -3084,7 +3077,7 @@
 
                 //var params = 'strEveDec :' + $("#edEventDesc").code();
 
-
+              
                 if ($("#hdEventId").val() == '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
@@ -3092,10 +3085,7 @@
                         type: "Post",
                         success: function (response) {
                             $("#hdEventId").val(response);
-                            //$('#divaccsuc').css('display', 'block');
-                            //$('#divaccsuc').focus();
-                            //$('#diverroacc').css('display', 'none');
-                            //$('#succaccmsg').html(ajaxsetup('CreateEvent', 'CreateEventsavedsucc'));
+                          
                             $("#hdEventId").val(response);
 
                             $('#dvdraft').css('display', 'block');
@@ -4729,8 +4719,9 @@
                     $('#id_saletimeend-' + el).val("7:00pm");
 
                 } else {
-
-                    $('#id_hdsaletimestart' + el).val($('#' + e).val());
+                    var txt=$('#' + e).val();
+                    $('#id_hdsaletimestart-' + el).val(txt);
+                    $('#id_hdsaletimeend-' + el).val(txt);
                     $('#id_saletimeend-' + el).val($('#' + e).val());
 
                 }
@@ -4739,11 +4730,13 @@
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
 
+                 
                     $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
-
                     $('#id_saletimeend-' + el).focus();
-                    $('#id_hdsaletimeend' + el).val($('#' + e).val());
+                    $('#id_hdsaletimeend-' + el).val($('#id_saletimestart-' + el).val());
 
+                } else {
+                    $('#id_hdsaletimeend-' + el).val($('#' + e).val());
                 }
             }
             if (al == "id_auto_hide_until_time") {
@@ -4757,7 +4750,9 @@
                     $('#id_auto_hide_after_Time-' + el).val("7:00pm");
 
                 } else {
-                    $('#id_hdautohideuntil' + el).val($('#' + e).val());
+                
+                    $('#id_hdautohideuntil-' + el).val($('#' + e).val());
+                    $('#id_hdautohideafter-' + el).val($('#' + e).val());
                     $('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
 
                 }
@@ -4768,10 +4763,14 @@
                 if (errorMsg != "") {
 
                     $('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
-
+                  
                     $('#id_auto_hide_after_Time-' + el).focus();
-                    $('#id_hdautohideafter' + el).val($('#' + e).val());
 
+                    $('#id_hdautohideafter-' + el).val($('#id_auto_hide_until_time-' + el).val());
+
+                } else {
+                    $('#id_hdautohideafter-' + el).val($('#' + e).val());
+                    
                 }
             }
 

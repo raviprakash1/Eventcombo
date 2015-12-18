@@ -419,11 +419,6 @@
     <Compile Include="Models\ViewEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Views\CreateEvent\CreateEvent.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CreateEvent.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CreateEvent\ViewCreateEvent.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1004,8 +999,7 @@
       <Generator>RazorGenerator</Generator>
     </Content>
     <Content Include="Views\CreateEvent\CreateEvent.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>CreateEvent.generated.cs</LastGenOutput>
+      <LastGenOutput>CreateEvent1.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\EventConfirmation\EventConfirmation.cshtml">
       <Generator>RazorGenerator</Generator>

@@ -2287,9 +2287,8 @@ WriteLiteral(">Invalid Password</label>\r\n                        </div>\r\n   
 
 WriteLiteral(" class=\"col-sm-12 no_pad ev_ven_mod_lebel mb10\"");
 
-WriteLiteral(">\r\n                            Enter Password to view your live event.\r\n         " +
-"               </div>\r\n                       \r\n                            <div" +
-"");
+WriteLiteral(">\r\n                            Enter Password to View the Event\r\n                " +
+"        </div>\r\n                       \r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-12 no_pad\"");
 
