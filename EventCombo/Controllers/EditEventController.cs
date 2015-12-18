@@ -159,7 +159,7 @@ namespace EventCombo.Controllers
                 Session["ReturnUrl"] = "CreateEvent~" + url;
 
                 string defaultCountry = "";
-                string timezone = objCr.TimeZone;
+                string timezone = objCr.TimeZone != null ? objCr.TimeZone : "";
                 using (EventComboEntities db = new EventComboEntities())
                 {
                     var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
@@ -1187,11 +1187,14 @@ namespace EventCombo.Controllers
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-
-
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                    Event ObjEC = objEnt.Events.First(i => i.EventID == lEventId);
+                    var vParentEvt = (from myEnt in objEnt.Events where myEnt.EventID == lEventId select myEnt.Parent_EventID).FirstOrDefault();
+                    if (vParentEvt == 0) vParentEvt = lEventId;
+
+                    //Event ObjEC = objEnt.Events.First(i => i.EventID == lEventId);
+                    Event ObjEC = new Event();
+                    ObjEC.Parent_EventID = vParentEvt;
                     ObjEC.EventTypeID = model.EventTypeID;
                     ObjEC.EventCategoryID = model.EventCategoryID;
                     ObjEC.EventSubCategoryID = model.EventSubCategoryID;
@@ -1225,41 +1228,35 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_variabletype = model.Ticket_variabletype;
                     ObjEC.ShowMap = model.ShowMap;
                     ObjEC.ModifyDate = DateTime.Now;
-                    
+                    objEnt.Events.Add(ObjEC);
                     // Address info
-                    if (model.AddressStatus == "Online")
-                    {
-                        //objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
-                    }
-                    else if (model.AddressDetail != null)
-                    {
-                        Address ObjAdd = new Models.Address();
+                 
+                    Address ObjAdd = new Models.Address();
                       //  objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
-                        foreach (Address objA in model.AddressDetail)
+                    foreach (Address objA in model.AddressDetail)
+                    {
+                        if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
                         {
-                            if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
-                            {
-                                ObjAdd = new Models.Address();
-                                ObjAdd.EventId = ObjEC.EventID;
-                                ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
-                                ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
-                                ObjAdd.City = objA.City == null ? "" : objA.City;
-                                ObjAdd.CountryID = objA.CountryID;
-                                ObjAdd.State = objA.State == null ? "" : objA.State;
-                                ObjAdd.UserId = strUserId;
-                                ObjAdd.VenueName = objA.VenueName;
-                                ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
-                                ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
-                                ObjAdd.Name = "";
-                               // objEnt.Addresses.Add(ObjAdd);
-                            }
-
+                            ObjAdd = new Models.Address();
+                            ObjAdd.EventId = ObjEC.EventID;
+                            ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
+                            ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
+                            ObjAdd.City = objA.City == null ? "" : objA.City;
+                            ObjAdd.CountryID = objA.CountryID;
+                            ObjAdd.State = objA.State == null ? "" : objA.State;
+                            ObjAdd.UserId = strUserId;
+                            ObjAdd.VenueName = objA.VenueName;
+                            ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
+                            ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
+                            ObjAdd.Name = "";
+                            objEnt.Addresses.Add(ObjAdd);
                         }
                     }
+                    
                     // Event on Single Timing 
                     if (model.EventVenue != null)
                     {
-                        EventVenue objEVenue = objEnt.EventVenues.First(Ev => Ev.EventID == lEventId) ;
+                        EventVenue objEVenue = new EventVenue();
                         foreach (EventVenue objEv in model.EventVenue)
                         {
                             objEVenue.EventID = ObjEC.EventID;
@@ -1267,16 +1264,15 @@ namespace EventCombo.Controllers
                             objEVenue.EventEndDate = objEv.EventEndDate;
                             objEVenue.EventStartTime = objEv.EventStartTime;
                             objEVenue.EventEndTime = objEv.EventEndTime;
-
+                            objEnt.EventVenues.Add(objEVenue);
                         }
                     }
                     // Event on Multiple timing 
                     if (model.MultipleEvents != null)
                     {
-                        MultipleEvent objMEvents = objEnt.MultipleEvents.FirstOrDefault(Ev => Ev.EventID == lEventId);
+                        MultipleEvent objMEvents = new MultipleEvent();
                         foreach (MultipleEvent objME in model.MultipleEvents)
                         {
-                          
                             objMEvents.EventID = ObjEC.EventID;
                             objMEvents.Frequency = objME.Frequency;
                             objMEvents.WeeklyDay = objME.WeeklyDay;
@@ -1287,14 +1283,13 @@ namespace EventCombo.Controllers
                             objMEvents.StartingTo = objME.StartingTo;
                             objMEvents.StartTime = objME.StartTime;
                             objMEvents.EndTime = objME.EndTime;
-                            //ObjEC.MultipleEvents.Add(objMEvents);
+                            ObjEC.MultipleEvents.Add(objMEvents);
                         }
                     }
                     // Orgnizer
                     if (model.Orgnizer != null)
                     {
                         Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
-                        objEnt.Event_Orgnizer_Detail.RemoveRange(objEnt.Event_Orgnizer_Detail.Where(x => x.Orgnizer_Event_Id == lEventId));
                         foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
                         {
                             objEOrg = new Event_Orgnizer_Detail();
@@ -1318,9 +1313,7 @@ namespace EventCombo.Controllers
                         foreach (Ticket tick in model.Ticket)
                         {
                             ticket = new Ticket();
-
                             ticket.E_Id = ObjEC.EventID;
-
                             ticket.TicketTypeID = tick.TicketTypeID;
                             ticket.T_name = tick.T_name;
                             ticket.Qty_Available = tick.Qty_Available;
@@ -1349,14 +1342,9 @@ namespace EventCombo.Controllers
                             ticket.Customer_Fee = tick.Customer_Fee;
                             ticket.TotalPrice = tick.TotalPrice;
                             ticket.T_Discount = tick.T_Discount;
-
-
-                           // objEnt.Tickets.Add(ticket);
+                            objEnt.Tickets.Add(ticket);
                         }
-
-
                     }
-                    objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
 
                     if (model.EventImage != null)
                     {
@@ -1368,11 +1356,8 @@ namespace EventCombo.Controllers
                             Image.EventImageUrl = img.EventImageUrl;
                             Image.ImageType = img.ImageType;
                             objEnt.EventImages.Add(Image);
-
                         }
                     }
-                    objEnt.Event_VariableDesc.RemoveRange(objEnt.Event_VariableDesc.Where(x => x.Event_Id == lEventId));
-
 
                     if (model.EventVariable != null)
                     {
@@ -1384,12 +1369,11 @@ namespace EventCombo.Controllers
                             var.VariableDesc = variable.VariableDesc;
                             var.Price = variable.Price;
                             objEnt.Event_VariableDesc.Add(var);
-
                         }
                     }
-
                     objEnt.SaveChanges();
-                  
+                    lEventId = ObjEC.EventID;
+                    PublishEvent(lEventId);
                 }
             }
             catch (Exception ex)
@@ -1398,6 +1382,29 @@ namespace EventCombo.Controllers
             }
             return lEventId;
         }
+
+        public string PublishEvent(long lEventId)
+        {
+            string strResult = "N";
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                if (strUserId != "" && lEventId > 0)
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        objEnt.PublishEvent(lEventId, strUserId);
+                    }
+                    strResult = "Y";
+                }
+            }
+            catch (Exception)
+            {
+                strResult = "N";
+            }
+            return strResult;
+        }
+
         public string GetOrgnizerDetail(long lEventId)
         {
             StringBuilder strHTML = new StringBuilder();

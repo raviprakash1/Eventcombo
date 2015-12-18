@@ -10,7 +10,37 @@ namespace EventCombo.Controllers
     public class ValidationMessageController : Controller
     {
         // GET: ValidationMessage
-       
+        public long GetLatestEventId(long lEvntId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var lParentID = (from myEvt in db.Events
+                           where myEvt.EventID == lEvntId
+                           select myEvt.Parent_EventID).FirstOrDefault();
+                if (lParentID > 0)
+                {
+                    lParentID = (from myEvt in db.Events
+                                   where myEvt.Parent_EventID == lParentID
+                                   select myEvt.EventID).Max();
+                }
+                else
+                {
+                    lParentID = (from myEvt in db.Events
+                                 where myEvt.Parent_EventID == lEvntId
+                                 select myEvt.EventID).Count();
+                    
+                    if (lParentID >1)
+                    {
+                        lParentID = (from myEvt in db.Events
+                                     where myEvt.Parent_EventID == lEvntId
+                                     select myEvt.EventID).Max();
+                    }
+                }
+                if ( lParentID == null || lParentID <=0) lParentID = lEvntId;
+
+                return (long)lParentID;                    
+            }
+        }
         public string Index(string strFormName, string strFormTag)
        {
             string result = geterrorMessage(strFormName, strFormTag);

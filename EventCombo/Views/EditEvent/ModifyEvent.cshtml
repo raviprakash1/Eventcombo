@@ -1991,12 +1991,12 @@ else
             var msg = validatemain();
             if(msg=="")
             {
-               
+
                 $(".cdisable").removeAttr("disabled");
 
             }
-          
-           
+
+
             $(this).removeClass("err-bor");
 
         });
@@ -2012,12 +2012,12 @@ else
         function IsAlphaNumeric(e) {
             var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
             var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
-           
+
             return ret;
         }
         $(window).load(function () {
 
-          
+
             var numbers = ajaxsetup('CreateEvent', 'CreateEventEnternumberUI');
             var deletemsg = ajaxsetup('CreateEvent', 'CreateEventDeleteUI');
             $('#id_lblprice-n').html(numbers);
@@ -2391,13 +2391,13 @@ else
                         $(".cdisable").removeAttr("disabled");
 
                     }
-          
+
                 },
                 error: function (data) {
                 }
             });
 
-            
+
             $('#btndiverrsuc').click(function () {
 
                 $('#diverroacc').css('display', 'none');
@@ -2860,7 +2860,7 @@ else
                             $('#diverroacc').css('display', 'none');
                             $('#succaccmsg').html('Your event is updated!');
                             $("#hdEventId").val(response);
-                           // window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
                         }
                     });
                 }

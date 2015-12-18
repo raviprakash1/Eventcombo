@@ -188,6 +188,7 @@
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="ModifyDate" Type="datetime" />
           <Property Name="ShowMap" Type="varchar" MaxLength="1" />
+          <Property Name="Parent_EventID" Type="bigint" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -232,6 +233,51 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
           <Property Name="DefaultOrg" Type="varchar" MaxLength="1" />
           <Property Name="Linkedin" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Event_Parent">
+          <Key>
+            <PropertyRef Name="EventID" />
+            <PropertyRef Name="EventTypeID" />
+            <PropertyRef Name="EventCategoryID" />
+            <PropertyRef Name="EventSubCategoryID" />
+          </Key>
+          <Property Name="EventID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventTypeID" Type="bigint" Nullable="false" />
+          <Property Name="EventCategoryID" Type="bigint" Nullable="false" />
+          <Property Name="EventSubCategoryID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="256" />
+          <Property Name="EventTitle" Type="nvarchar" MaxLength="600" />
+          <Property Name="DisplayStartTime" Type="varchar" MaxLength="1" />
+          <Property Name="DisplayEndTime" Type="varchar" MaxLength="1" />
+          <Property Name="DisplayTimeZone" Type="varchar" MaxLength="1" />
+          <Property Name="EventDescription" Type="nvarchar(max)" />
+          <Property Name="EventPrivacy" Type="varchar" MaxLength="20" />
+          <Property Name="Private_ShareOnFB" Type="varchar" MaxLength="1" />
+          <Property Name="Private_GuestOnly" Type="varchar" MaxLength="1" />
+          <Property Name="Private_Password" Type="varchar" MaxLength="50" />
+          <Property Name="EventUrl" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PublishOnFB" Type="varchar" MaxLength="1" />
+          <Property Name="EventStatus" Type="varchar" MaxLength="20" />
+          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="UpdateOn" Type="datetime" />
+          <Property Name="IsMultipleEvent" Type="varchar" MaxLength="1" />
+          <Property Name="TimeZone" Type="nvarchar" MaxLength="1000" />
+          <Property Name="FBUrl" Type="nvarchar" MaxLength="1000" />
+          <Property Name="TwitterUrl" Type="nvarchar" MaxLength="1000" />
+          <Property Name="AddressStatus" Type="varchar" MaxLength="100" />
+          <Property Name="LastLocationAddress" Type="bigint" />
+          <Property Name="EnableFBDiscussion" Type="varchar" MaxLength="1" />
+          <Property Name="Feature" Type="int" />
+          <Property Name="Ticket_DAdress" Type="varchar" MaxLength="1" />
+          <Property Name="Ticket_showremain" Type="varchar" MaxLength="1" />
+          <Property Name="Ticket_showvariable" Type="varchar" MaxLength="1" />
+          <Property Name="Ticket_variabledesc" Type="varchar" MaxLength="256" />
+          <Property Name="Ticket_variabletype" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="ShowMap" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -877,6 +923,45 @@
           <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event_Parent" EntityType="Self.Event_Parent" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Event_Parent].[EventID] AS [EventID], 
+    [Event_Parent].[EventTypeID] AS [EventTypeID], 
+    [Event_Parent].[EventCategoryID] AS [EventCategoryID], 
+    [Event_Parent].[EventSubCategoryID] AS [EventSubCategoryID], 
+    [Event_Parent].[UserID] AS [UserID], 
+    [Event_Parent].[EventTitle] AS [EventTitle], 
+    [Event_Parent].[DisplayStartTime] AS [DisplayStartTime], 
+    [Event_Parent].[DisplayEndTime] AS [DisplayEndTime], 
+    [Event_Parent].[DisplayTimeZone] AS [DisplayTimeZone], 
+    [Event_Parent].[EventDescription] AS [EventDescription], 
+    [Event_Parent].[EventPrivacy] AS [EventPrivacy], 
+    [Event_Parent].[Private_ShareOnFB] AS [Private_ShareOnFB], 
+    [Event_Parent].[Private_GuestOnly] AS [Private_GuestOnly], 
+    [Event_Parent].[Private_Password] AS [Private_Password], 
+    [Event_Parent].[EventUrl] AS [EventUrl], 
+    [Event_Parent].[PublishOnFB] AS [PublishOnFB], 
+    [Event_Parent].[EventStatus] AS [EventStatus], 
+    [Event_Parent].[AddedOn] AS [AddedOn], 
+    [Event_Parent].[UpdateOn] AS [UpdateOn], 
+    [Event_Parent].[IsMultipleEvent] AS [IsMultipleEvent], 
+    [Event_Parent].[TimeZone] AS [TimeZone], 
+    [Event_Parent].[FBUrl] AS [FBUrl], 
+    [Event_Parent].[TwitterUrl] AS [TwitterUrl], 
+    [Event_Parent].[AddressStatus] AS [AddressStatus], 
+    [Event_Parent].[LastLocationAddress] AS [LastLocationAddress], 
+    [Event_Parent].[EnableFBDiscussion] AS [EnableFBDiscussion], 
+    [Event_Parent].[Feature] AS [Feature], 
+    [Event_Parent].[Ticket_DAdress] AS [Ticket_DAdress], 
+    [Event_Parent].[Ticket_showremain] AS [Ticket_showremain], 
+    [Event_Parent].[Ticket_showvariable] AS [Ticket_showvariable], 
+    [Event_Parent].[Ticket_variabledesc] AS [Ticket_variabledesc], 
+    [Event_Parent].[Ticket_variabletype] AS [Ticket_variabletype], 
+    [Event_Parent].[CreateDate] AS [CreateDate], 
+    [Event_Parent].[ModifyDate] AS [ModifyDate], 
+    [Event_Parent].[ShowMap] AS [ShowMap]
+    FROM [dbo].[Event_Parent] AS [Event_Parent]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
@@ -1124,6 +1209,7 @@
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Parent_EventID" Type="Int64" />
         </EntityType>
         <EntityType Name="Event_Detail">
           <Key>
@@ -1816,6 +1902,7 @@
             <Parameter Name="EventStatus" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Event_Parent" EntityType="EventComboModel.Event_Parent" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1917,6 +2004,49 @@
           <Property Type="Int64" Name="TotalTicket" Nullable="false" />
           <Property Type="Int64" Name="TicketSold" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Event_Parent">
+          <Key>
+            <PropertyRef Name="EventID" />
+            <PropertyRef Name="EventTypeID" />
+            <PropertyRef Name="EventCategoryID" />
+            <PropertyRef Name="EventSubCategoryID" />
+          </Key>
+          <Property Name="EventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventTypeID" Type="Int64" Nullable="false" />
+          <Property Name="EventCategoryID" Type="Int64" Nullable="false" />
+          <Property Name="EventSubCategoryID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EventTitle" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayStartTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayEndTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayTimeZone" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="EventDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EventPrivacy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Private_ShareOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Private_GuestOnly" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Private_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventUrl" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PublishOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="EventStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdateOn" Type="DateTime" Precision="3" />
+          <Property Name="IsMultipleEvent" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="FBUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TwitterUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="AddressStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastLocationAddress" Type="Int64" />
+          <Property Name="EnableFBDiscussion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Feature" Type="Int32" />
+          <Property Name="Ticket_DAdress" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Ticket_showremain" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Ticket_showvariable" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Ticket_variabledesc" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Ticket_variabletype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2052,6 +2182,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Parent_EventID" ColumnName="Parent_EventID" />
                 <ScalarProperty Name="ShowMap" ColumnName="ShowMap" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -2588,6 +2719,47 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Event_Parent">
+            <EntityTypeMapping TypeName="EventComboModel.Event_Parent">
+              <MappingFragment StoreEntitySet="Event_Parent">
+                <ScalarProperty Name="ShowMap" ColumnName="ShowMap" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Ticket_variabletype" ColumnName="Ticket_variabletype" />
+                <ScalarProperty Name="Ticket_variabledesc" ColumnName="Ticket_variabledesc" />
+                <ScalarProperty Name="Ticket_showvariable" ColumnName="Ticket_showvariable" />
+                <ScalarProperty Name="Ticket_showremain" ColumnName="Ticket_showremain" />
+                <ScalarProperty Name="Ticket_DAdress" ColumnName="Ticket_DAdress" />
+                <ScalarProperty Name="Feature" ColumnName="Feature" />
+                <ScalarProperty Name="EnableFBDiscussion" ColumnName="EnableFBDiscussion" />
+                <ScalarProperty Name="LastLocationAddress" ColumnName="LastLocationAddress" />
+                <ScalarProperty Name="AddressStatus" ColumnName="AddressStatus" />
+                <ScalarProperty Name="TwitterUrl" ColumnName="TwitterUrl" />
+                <ScalarProperty Name="FBUrl" ColumnName="FBUrl" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="IsMultipleEvent" ColumnName="IsMultipleEvent" />
+                <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
+                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+                <ScalarProperty Name="EventStatus" ColumnName="EventStatus" />
+                <ScalarProperty Name="PublishOnFB" ColumnName="PublishOnFB" />
+                <ScalarProperty Name="EventUrl" ColumnName="EventUrl" />
+                <ScalarProperty Name="Private_Password" ColumnName="Private_Password" />
+                <ScalarProperty Name="Private_GuestOnly" ColumnName="Private_GuestOnly" />
+                <ScalarProperty Name="Private_ShareOnFB" ColumnName="Private_ShareOnFB" />
+                <ScalarProperty Name="EventPrivacy" ColumnName="EventPrivacy" />
+                <ScalarProperty Name="EventDescription" ColumnName="EventDescription" />
+                <ScalarProperty Name="DisplayTimeZone" ColumnName="DisplayTimeZone" />
+                <ScalarProperty Name="DisplayEndTime" ColumnName="DisplayEndTime" />
+                <ScalarProperty Name="DisplayStartTime" ColumnName="DisplayStartTime" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="EventSubCategoryID" ColumnName="EventSubCategoryID" />
+                <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
+                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
