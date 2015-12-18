@@ -9,7 +9,7 @@ namespace CMS.Controllers
     public class EventTypeController : Controller
     {
         // GET: EventType
-        public ActionResult EventType()// Calling when we first hit controller.
+        public ActionResult EventType(string Type)// Calling when we first hit controller.
         {
             EventType objET = new Models.EventType();
             EmsEntities objEntity = new EmsEntities();
@@ -17,16 +17,79 @@ namespace CMS.Controllers
                 var modelPerm = (from EventType in objEntity.EventTypes
                                  orderby EventType.EventType1 ascending
                                  select EventType).ToList();
-                
-                //List<string> EventTypeList = new List<string>();
-                //foreach (var item in modelPerm)
-                //{                    
-                //    EventTypeList.Add(item.EventType1);                    
-                //}
-                //ViewBag.EventType = EventTypeList;
-                   
-                return View(modelPerm);
+
+            //List<string> EventTypeList = new List<string>();
+            //foreach (var item in modelPerm)
+            //{                    
+            //    EventTypeList.Add(item.EventType1);                    
+            //}
+            //ViewBag.EventType = EventTypeList;
+            TempData["Count"] = modelPerm.Count;
+            if (Type=="S")
+            {
+                TempData["SuccessMessage"] = "Type Created Successfully";
+
+            }
+            if (Type == "X")
+            {
+                TempData["SuccessMessage"] = "Type already exist !!";
+
+            }
+            if (Type == "D")
+            {
+                TempData["SuccessMessage"] = "Type deleted successfully !!";
+
+            }
+            if (Type == "E")
+            {
+                TempData["SuccessMessage"] = "Type Updated successfully !!";
+
+            }
+            return View(modelPerm);
             
+        }
+
+
+        public string  EditType(long iTypeid,string typename)
+        {
+            string strResult = string.Empty;
+            try
+            {
+                using (EmsEntities objEntity = new EmsEntities())
+                {
+                    var query = (from EventType in objEntity.EventTypes
+                                 where EventType.EventType1 == typename
+                                 select EventType).Any();
+                    if (query != true)
+                    {
+                        EventType et = (from EventType in objEntity.EventTypes
+                                        where EventType.EventTypeID == iTypeid
+                                        select EventType).FirstOrDefault();
+
+
+                        if (et != null)
+                        {
+                            et.EventType1 = typename.Trim();
+                            objEntity.SaveChanges();
+                        }
+
+                        strResult = "E";
+                    }
+                    else
+                    {
+                        strResult = "X";
+                    }
+
+                   
+                }
+
+            }
+            catch(Exception ex)
+            {
+                strResult = "N";
+            }
+
+            return strResult;
         }
         public string DeleteType(long iType)
         {
@@ -45,16 +108,46 @@ namespace CMS.Controllers
 
             return strResult;
         }
-        public string AddType(string Type)
+        public string AddType(string iType)
         {
-            return "N";
+            var str = "";
+            using (EmsEntities objEntity = new EmsEntities())
+            {
 
+                bool IsEventExists = false;
+                try
+                {
+                    var query = (from EventType in objEntity.EventTypes
+                                where EventType.EventType1 == iType
+                                select EventType).Any();
+
+                    
+                    if (query != true)
+                    {
+                        EventType et = new EventType();
+                        et.EventType1 = iType;
+                        objEntity.EventTypes.Add(et);
+                        objEntity.SaveChanges();
+                        str = "S";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                    str = "C";
+                }
+
+              
+
+            }
+
+            return str;
         }
 
 
 
         [HttpPost]
-        public ActionResult EventType(EventType et,string submit,string EventTypeListBox,string txtEventType)
+        public ActionResult EventType(EventType et,string submit,string EventTypeListBox,string txtEventType, string hdstate)
         {
             var modelPerm=new List<EventType>();
             if (ModelState.IsValid)

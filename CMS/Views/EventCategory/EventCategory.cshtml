@@ -41,14 +41,17 @@
                                                             @Html.TextBox("txtEventCategory", null,new {@class="form-control",@maxlength=35,@placeholder="Enter Category Name"})
                                                         </div>
                                                         <div class="col-md-5 ">
-                                                            <button class="btn btn-primary" name="submit" value="Add" id="btnAddCat" type="submit">+ Add </button>
+                                                            <button class="btn btn-primary" name="button" value="Add" id="btnAddCat" type="submit">+ Add </button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="clearfix"></div>
+                                    <div class="clearfix">
+                                        <input type="hidden" id="hdCatid" />
+                                        <input type="hidden" id="hdSubcatid" />
+                                    </div>
                                     <div class="col-md-12 mt10 nopad">
                                         <table id="tabCategory" width="100%">
                                             <tbody>
@@ -59,8 +62,13 @@
                                                     {
                                                         i = i + 1;
                                                 <tr class="col-sm-12 catbg">
-                                                    <td class="col-sm-12"><label id="lblEvntSubCatName-@i">@itemCat.EventCategory1</label></td>                                                    
-                                                    <td class="pl5"><button class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button></td>
+                                                    <td class="col-sm-12"><label id="lblEvntCatName-@i">@itemCat.EventCategory1</label>
+                                                    <input type="text" id="txtEventcatname-@i" value="@itemCat.EventCategory1" style="display:none;"  />
+                                                    </td>                                                    
+                                                    <td class="pl5">
+                                                    <button id="btnEditcatfinal-@i" class="btn btn-primary br2 btn-xs fs12" style="display:none;" onclick="EditCategoryfinal(this.id)" type="button"><i class="fa fa-edit"></i></button>
+                                                    <button id="btnEditcat-@i" class="btn btn-success br2 btn-xs fs12" onclick="EditCategory('@itemCat.EventCategoryID',this.id)" type="button"><i class="fa fa-edit"></i></button>
+                                                    </td>
                                                     <td class="pl5"><button id="btnDeleteCat-@i" type="button" onclick="DeleteCatgry('@itemCat.EventCategoryID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>                                                    
                                                 </tr>
 
@@ -97,8 +105,14 @@
                                                                 {
                                                                     j = j + 1;
                                                             <tr class="col-sm-12 crt-subcat2">
-                                                                <td class="col-sm-12"><label id="lblEvntSubCatName-@j">@itemSubCat.EventSubCategory1 </label> </td>                                                                
-                                                                <td class="pl5"><button id="btnEditSubCat-@j" onclick="EditSubCat('@itemCat.EventCategoryID','@itemSubCat.EventSubCategoryID',document.getElementById('lblEvntSubCatName-@j').innerHTML);" type="button" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button></td>
+                                                                <td class="col-sm-12"><label id="lblEvntSubCatName-@j">@itemSubCat.EventSubCategory1 </label> 
+                                                                <input type="text" id="txtEvntSubCatName-@j"  style=" display :none;" value="@itemSubCat.EventSubCategory1"/>
+                                                                </td>                                                                
+                                                                <td class="pl5">
+                                                               <button id="btnEditSubfinalCat-@j" onclick="EditSubCatFinal(this.id);" type="button" class="btn btn-primary br2 btn-xs fs12" style="display:none;"><i class="fa fa-edit"></i></button>
+
+                                                                <button id="btnEditSubCat-@j" onclick="EditSubCat('@itemCat.EventCategoryID','@itemSubCat.EventSubCategoryID',this.id);" type="button" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
+                                                                </td>
                                                                 <td class="pl5"><button id="btnDeleteSubCat-@j" onclick="DeleteSubCat('@itemCat.EventCategoryID','@itemSubCat.EventSubCategoryID');" type="button" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>
                                                             </tr>
                                                             }
@@ -274,15 +288,65 @@
                     $("#btnReset").hide();
                     $("#btnEdit").hide();
                     $("#btnDelete").hide();
-                });                
+                });
+                $('#btnAddCat').click(function () {
+
+                    var txtcat = $('#txtEventCategory').val();
+                    $.ajax({
+                        url: '@Url.Action("AddCategories", "EventCategory")',
+                        data: { txtcat: txtcat },
+                        type: "POST",
+                        success: function (response) {
+                            window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
+                        },
+                        error: function (data) {
+                            alert("Sorry! there is some problem.");
+                            return false
+                        }
+                    });
+
+
+
+                });
+                function EditCategoryfinal(id)
+                {
+                    var no = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+                    var catid = $('#hdCatid').val();
+
+                    var catname = $('#txtEventcatname-' + no).val();
+                    $.ajax({
+                        url: '@Url.Action("EditCategories", "EventCategory")',
+                        data: { iEvntCtgryId: catid, strNewCatName: catname },
+                        type: "POST",
+                        success: function (response) {
+                            window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
+                        },
+                        error: function (data) {
+                            alert("Sorry! there is some problem.");
+                            return false
+                        }
+                    });
+
+                }
+
+                function EditCategory(Catid,id)
+                {
+                    var no = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+                    $('#hdCatid').val(Catid);
+                    $('#txtEventcatname-' + no).css('display', 'block');
+                    $('#btnEditcatfinal-'+no).css('display', 'block');
+                    $('#lblEvntCatName-' + no).css('display', 'none');
+                    $('#btnEditcat-' + no).css('display', 'none');
+
+                }
                 function DeleteCatgry(CatId) {
-                                      
+
                     $.ajax({
                         url: '@Url.Action("DeleteCategories", "EventCategory")',
                         data: { iEvntCtgryId: CatId},
                         type: "POST",
                         success: function (response) {
-                            $("#formEvntCat").submit();
+                            window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
                         },
                         error: function (data) {
                             alert("Sorry! there is some problem.");
@@ -297,7 +361,7 @@
                         data: { iEvntCtgryId: CatId, strSubCatName: SubCatName },
                         type: "POST",
                         success: function (response) {
-                            $("#formEvntCat").submit();
+                            window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
                         },
                         error: function (data) {
                             alert("Sorry! there is some problem.");
@@ -307,14 +371,13 @@
                 }
                 function DeleteSubCat(CatId, EvntSubCatId)
                 {
-                    alert(CatId);
-                    alert(EvntSubCatId);
+
                     $.ajax({
                         url: '@Url.Action("DeleteSubCategories", "EventCategory")',
                         data: { iEvntCtgryId: CatId, iEvntSubCtgryId: EvntSubCatId},
                         type: "POST",
                         success: function (response) {
-                            $("#formEvntCat").submit();
+                            window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
                         },
                         error: function (data) {
                             alert("Sorry! there is some problem.");
@@ -322,12 +385,37 @@
                         }
                     });
                 }
-                function EditSubCat(CatId,EvntSubCatId,NewSubCatName)
+
+        function EditSubCatFinal(id)
+        {
+            var no = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+            var catid = $('#hdCatid').val();
+            var subcatid = $('#hdSubcatid').val();
+           var subcatname= $('#txtEvntSubCatName-' + no).val();
+ $.ajax({
+     url: '@Url.Action("EditSubCategories", "EventCategory")',
+     data: { iEvntCtgryId: catid, iEvntSubCtgryId: subcatid, subcatname: subcatname },
+     type: "POST",
+     success: function (response) {
+         window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
+     },
+     error: function (data) {
+         alert("Sorry! there is some problem.");
+         return false
+     }
+ });
+        }
+                function EditSubCat(CatId,EvntSubCatId,id)
                 {
-                    alert(CatId);
-                    alert(EvntSubCatId);
-                    alert(NewSubCatName);
-                    $.ajax({
+                    var no = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+                    $('#hdSubcatid').val(EvntSubCatId);
+                    $('#hdCatid').val(CatId);
+                    $('#lblEvntSubCatName-' + no).css('display', 'none');
+                    $('#txtEvntSubCatName-' + no).css('display', 'block');
+                    $('#btnEditSubCat-' + no).css('display', 'none');
+                    $('#btnEditSubfinalCat-' + no).css('display', 'block');
+
+                    @*$.ajax({
                         url: '@Url.Action("AddSubCategories", "EventCategory")',
                         data: { iEvntCtgryId: CatId, iEvntSubCtgryId: EvntSubCatId, strNewSubCatName: SubCatName },
                         type: "POST",
@@ -338,7 +426,7 @@
                             alert("Sorry! there is some problem.");
                             return false
                         }
-                    });
+                    });*@
                 }
                 $(document).ready(function () {
                     $('#btnReset').click(function () {
