@@ -879,7 +879,7 @@ namespace EventCombo.Controllers
             }
             //Session["Fromname"] = "events";
             TempData["ForViewOnly"] = strForView;
-
+            EventId = vmc.GetLatestEventId(EventId);
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             Session["Fromname"] = "events";

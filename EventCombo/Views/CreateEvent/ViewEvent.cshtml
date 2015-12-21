@@ -1421,6 +1421,12 @@ function pad(n) { return n < 10 ? '0' + n : n };
                             $("#spanokid").html(ajaxsetup("ViewEvent", "OverSelling"));
                             $.removeCookie("Selection");
                         }
+                        else if (response == "NOTLIVE")
+                        {
+                            $("#btOk").click();
+                            $("#spanokid").html(ajaxsetup("ViewEvent", "EventNotLive"));
+                            $.removeCookie("Selection");
+                        }
                         else {
                             $.cookie("Selection", vSelection, { expire: 1 });
                             window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;

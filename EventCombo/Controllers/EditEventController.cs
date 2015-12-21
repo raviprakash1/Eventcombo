@@ -144,6 +144,8 @@ namespace EventCombo.Controllers
         public ActionResult ModifyEvent(long Eventid)
         {
 
+            ValidationMessageController vmc = new ValidationMessageController();
+            Eventid = vmc.GetLatestEventId(Eventid);
             EventCreation objCr = GetEventDataEditing(Eventid);
             if ((Session["AppId"] != null))
             {
