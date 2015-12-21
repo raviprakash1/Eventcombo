@@ -2608,14 +2608,15 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "v_act\");\r\n\r\n        }\r\n        if (clickvote == \"Y\") {\r\n            $(\"#btnvote\"" +
 ").addClass(\"btn_fav_act\");\r\n\r\n        } else {\r\n            $(\"#btnvote\").remove" +
 "Class(\"btn_fav_act\");\r\n\r\n        }\r\n        $(\"#btnvote\").click(function () {\r\n " +
-"           var clickvote = $(\'#hdEventvote\').val();\r\n\r\n            if (clickvote" +
-" == \"Y\") {\r\n                $(\"#btOk\").click();\r\n                $(\"#spanokid\")." +
-"html(ajaxsetup(\"ViewEvent\", \"VoteOnce\"));\r\n                //alert(\'You can only" +
-" vote once.\');\r\n            } else {\r\n                var eid = $(\'#hdEventid\')." +
-"val();\r\n                $.ajax({\r\n                    url: \'");
+"           debugger;\r\n            var msg = \"\";\r\n            var clickvote = $(\'" +
+"#hdEventvote\').val();\r\n\r\n            if (clickvote == \"Y\") {\r\n                $(" +
+"\"#btOk\").click();\r\n                 msg = ajaxsetup(\"ViewEvent\", \"VoteOnce\");\r\n " +
+"               $(\"#spanokid\").html(msg);\r\n                //alert(\'You can only " +
+"vote once.\');\r\n            } else {\r\n                var eid = $(\'#hdEventid\').v" +
+"al();\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 1006 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1009 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("savevote", "CreateEvent"));
 
             
@@ -2639,7 +2640,8 @@ WriteLiteral(@"
                             $('#spanvotes').html(data);
 
                             $(""#btOk"").click();
-                            $(""#spanokid"").html(ajaxsetup(""ViewEvent"", ""ThanksForVote""));
+                             msg = ajaxsetup(""ViewEvent"", ""ThanksForVote"");
+                             $(""#spanokid"").html(msg);
                             //alert('Thank you for voting!');
                         }
                     },
@@ -2653,7 +2655,8 @@ WriteLiteral(@"
         });
 
         $(""#btnfavourite"").click(function () {
-
+            debugger;
+            var msg = """";
             var clickfav = $('#hdEventFav').val();
             if (clickfav == ""Y"") {
                 $('#hdEventFav').val(""N"");
@@ -2667,7 +2670,7 @@ WriteLiteral(@"
                 url: '");
 
             
-            #line 1047 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1052 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                  Write(Url.Action("savefavourite", "CreateEvent"));
 
             
@@ -2682,38 +2685,40 @@ WriteLiteral("\r\n                        return false;\r\n                    }
 "              var clickfav = $(\'#hdEventFav\').val();\r\n                        if" +
 " (clickfav == \"Y\") {\r\n                            $(\"#btnfavourite\").addClass(\"b" +
 "tn_fav_act\");\r\n                            $(\"#btOk\").click();\r\n                " +
-"            $(\"#spanokid\").html(ajaxsetup(\"ViewEvent\", \"eventSaved\"));\r\n        " +
-"                    //alert(\'Your Event have been saved!\');\r\n                   " +
-"     }\r\n                        if (clickfav == \"N\") {\r\n                        " +
-"    $(\"#btOk\").click();\r\n                            $(\"#spanokid\").html(ajaxset" +
-"up(\"ViewEvent\", \"eventnotsaved\"));\r\n                            //alert(\'Your Ev" +
-"ent have not been saved!\');\r\n                            $(\"#btnfavourite\").remo" +
-"veClass(\"btn_fav_act\");\r\n                        }\r\n\r\n                        $(" +
-"\'#spanfav\').html(data);\r\n\r\n                    }\r\n                },\r\n          " +
-"      error: function (data) {\r\n                    alert(\"Sorry there is some p" +
-"roblem.\");\r\n                    return false\r\n                }\r\n            });" +
-"\r\n\r\n        });\r\n\r\n        $(\"#lstcarousel div:first\").addClass(\"active\");\r\n\r\n\r\n" +
-"        $(\".EveActRib\").css(\"display\", \"none\");\r\n        $(\".FacdisComm\").click(" +
-"function () {\r\n            $(\".EveActRib\").show();\r\n            $(\".EveDisRib\")." +
-"hide();\r\n        });\r\n\r\n        $(\".FacdactComm\").click(function () {\r\n         " +
-"   $(\".EveActRib\").hide();\r\n            $(\".EveDisRib\").show();\r\n        });\r\n\r\n" +
-"\r\n        $(\".TmezoneSet\").hide();\r\n        $(\".Timezone\").click(function () {\r\n" +
-"            var eventtype = $(\"#hdEventtype\").val();\r\n            if (eventtype " +
-"== \"Multiple\") {\r\n                $(\".TmezoneSet\").slideToggle(\"fast\");\r\n       " +
-"     } else {\r\n                $(\".TmezoneSet\").slideToggle(\"fast\");\r\n          " +
-"  }\r\n            //\r\n\r\n        });\r\n\r\n        $(\".closetimemodal\").click(functio" +
-"n () {\r\n            $(\".TmezoneSet\").hide();\r\n\r\n        });\r\n    });\r\n</script>\r" +
-"\n\r\n\r\n\r\n<script>\r\n    $(function () {\r\n        var address = $(\'#lbltopaddress\')." +
-"html();\r\n        $(document).tooltip({\r\n            items: \"[data-geo], [title]\"" +
-",\r\n            content: function () {\r\n                var element = $(this);\r\n " +
-"               if (element.is(\"[data-geo]\")) {\r\n\r\n                    var text =" +
-" address;\r\n                    return \"<img class=\'map\'  alt=\'\" + text +\r\n      " +
-"                \"\' src=\'http://maps.google.com/maps/api/staticmap?\" +\r\n         " +
-"             \"zoom=15&size=250x250&maptype=roadmap& zoomControl=true&sensor=fals" +
-"e&center=\" +\r\n                      text + \"&markers=size:mid%7Ccolor:0xff0000%7" +
-"Clabel:%7C\" + text + \"\'>\";\r\n                }\r\n                if (element.is(\"[" +
-"title]\")) {\r\n                    return element.attr(\"title\");\r\n                " +
-"}\r\n\r\n            }\r\n        });\r\n    });\r\n</script>\r\n\r\n\r\n");
+"            msg = ajaxsetup(\"ViewEvent\", \"eventSaved\");\r\n                       " +
+"     $(\"#spanokid\").html(msg);\r\n                            //alert(\'Your Event " +
+"have been saved!\');\r\n                        }\r\n                        if (clic" +
+"kfav == \"N\") {\r\n                            $(\"#btOk\").click();\r\n               " +
+"             msg = ajaxsetup(\"ViewEvent\", \"eventnotsaved\");\r\n                   " +
+"      \r\n                            $(\"#spanokid\").html(msg);\r\n                 " +
+"           //alert(\'Your Event have not been saved!\');\r\n                        " +
+"    $(\"#btnfavourite\").removeClass(\"btn_fav_act\");\r\n                        }\r\n\r" +
+"\n                        $(\'#spanfav\').html(data);\r\n\r\n                    }\r\n   " +
+"             },\r\n                error: function (data) {\r\n                    a" +
+"lert(\"Sorry there is some problem.\");\r\n                    return false\r\n       " +
+"         }\r\n            });\r\n\r\n        });\r\n\r\n        $(\"#lstcarousel div:first\"" +
+").addClass(\"active\");\r\n\r\n\r\n        $(\".EveActRib\").css(\"display\", \"none\");\r\n    " +
+"    $(\".FacdisComm\").click(function () {\r\n            $(\".EveActRib\").show();\r\n " +
+"           $(\".EveDisRib\").hide();\r\n        });\r\n\r\n        $(\".FacdactComm\").cli" +
+"ck(function () {\r\n            $(\".EveActRib\").hide();\r\n            $(\".EveDisRib" +
+"\").show();\r\n        });\r\n\r\n\r\n        $(\".TmezoneSet\").hide();\r\n        $(\".Timez" +
+"one\").click(function () {\r\n            var eventtype = $(\"#hdEventtype\").val();\r" +
+"\n            if (eventtype == \"Multiple\") {\r\n                $(\".TmezoneSet\").sl" +
+"ideToggle(\"fast\");\r\n            } else {\r\n                $(\".TmezoneSet\").slide" +
+"Toggle(\"fast\");\r\n            }\r\n            //\r\n\r\n        });\r\n\r\n        $(\".clo" +
+"setimemodal\").click(function () {\r\n            $(\".TmezoneSet\").hide();\r\n\r\n     " +
+"   });\r\n    });\r\n</script>\r\n\r\n\r\n\r\n<script>\r\n    $(function () {\r\n        var add" +
+"ress = $(\'#lbltopaddress\').html();\r\n        $(document).tooltip({\r\n            i" +
+"tems: \"[data-geo], [title]\",\r\n            content: function () {\r\n              " +
+"  var element = $(this);\r\n                if (element.is(\"[data-geo]\")) {\r\n\r\n   " +
+"                 var text = address;\r\n                    return \"<img class=\'ma" +
+"p\'  alt=\'\" + text +\r\n                      \"\' src=\'http://maps.google.com/maps/a" +
+"pi/staticmap?\" +\r\n                      \"zoom=15&size=250x250&maptype=roadmap& z" +
+"oomControl=true&sensor=false&center=\" +\r\n                      text + \"&markers=" +
+"size:mid%7Ccolor:0xff0000%7Clabel:%7C\" + text + \"\'>\";\r\n                }\r\n      " +
+"          if (element.is(\"[title]\")) {\r\n                    return element.attr(" +
+"\"title\");\r\n                }\r\n\r\n            }\r\n        });\r\n    });\r\n</script>\r\n" +
+"\r\n\r\n");
 
 WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNaN(this.value + \"\" + S" +
 "tring.fromCharCode(e.charCode))) return false;\r\n    //}\r\n    //$(\'.number-only\')" +
@@ -2806,7 +2811,7 @@ WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNa
 "             url: \'");
 
             
-            #line 1325 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1333 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2833,7 +2838,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 1343 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1351 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                  Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2879,7 +2884,7 @@ WriteLiteral("\',\r\n                beforeSend: function () { $(\'#dvAjxLoader\
 "              $.ajax({\r\n                    url: \'");
 
             
-            #line 1415 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1423 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("LockTickets", "CreateEvent"));
 
             
@@ -2899,7 +2904,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 1426 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1434 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
@@ -2928,13 +2933,14 @@ WriteLiteral(@"' + '?Eventid=' + Eventid;
     });
 
     function ajaxsetup(strname, strFormTag) {
+        debugger;
         var msgnew = """";
 
         var request = $.ajax({
             url: '");
 
             
-            #line 1452 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1461 "..\..\Views\CreateEvent\ViewEvent.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             

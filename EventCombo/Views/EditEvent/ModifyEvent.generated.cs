@@ -211,7 +211,7 @@ WriteLiteral(" class=\"col-sm-12 pt10 bggrey clearfix\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"col-sm-3 col-xs-6 pt10 text-left no_pad\"");
+WriteLiteral(" class=\"col-sm-3 col-xs-12 pt10 text-left no_pad\"");
 
 WriteLiteral(">\r\n                    <label");
 
@@ -231,7 +231,7 @@ WriteLiteral(" style=\"display:none\"");
 
 WriteLiteral(" > LIVE </label>\r\n                </div>\r\n                <div");
 
-WriteLiteral(" class=\"col-sm-9 col-xs-6 pt10 text-right no_pad\"");
+WriteLiteral(" class=\"col-sm-9 col-xs-12 pt10 text-right no_pad\"");
 
 WriteLiteral(">\r\n                    <button");
 
@@ -315,14 +315,14 @@ WriteLiteral(" class=\"form-control evnt_title_control evnt_placehold chkvalidat
 
 WriteLiteral(" placeholder=\"Click here to enter the name of the event\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3481), Tuple.Create("\"", 3506)
+WriteAttribute("value", Tuple.Create(" value=\"", 3483), Tuple.Create("\"", 3508)
             
             #line 75 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                                                                                                      , Tuple.Create(Tuple.Create("", 3489), Tuple.Create<System.Object, System.Int32>(Model.EventTitle
+                                                                                                                      , Tuple.Create(Tuple.Create("", 3491), Tuple.Create<System.Object, System.Int32>(Model.EventTitle
             
             #line default
             #line hidden
-, 3489), false)
+, 3491), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                    <div");
@@ -742,14 +742,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdPastLId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 21522), Tuple.Create("\"", 21556)
+WriteAttribute("value", Tuple.Create(" value=\"", 21524), Tuple.Create("\"", 21558)
             
             #line 260 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-      , Tuple.Create(Tuple.Create("", 21530), Tuple.Create<System.Object, System.Int32>(Model.LastLocationAddress
+      , Tuple.Create(Tuple.Create("", 21532), Tuple.Create<System.Object, System.Int32>(Model.LastLocationAddress
             
             #line default
             #line hidden
-, 21530), false)
+, 21532), false)
 );
 
 WriteLiteral(" />\r\n                                            \r\n                              " +
@@ -1764,14 +1764,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hidSubCat\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 42601), Tuple.Create("\"", 42634)
+WriteAttribute("value", Tuple.Create(" value=\"", 42603), Tuple.Create("\"", 42636)
             
             #line 538 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 42609), Tuple.Create<System.Object, System.Int32>(Model.EventSubCategoryID
+, Tuple.Create(Tuple.Create("", 42611), Tuple.Create<System.Object, System.Int32>(Model.EventSubCategoryID
             
             #line default
             #line hidden
-, 42609), false)
+, 42611), false)
 );
 
 WriteLiteral(" />\r\n                                </div>\r\n                            </div>\r\n" +
@@ -1848,14 +1848,14 @@ WriteLiteral(" id=\"txtEventUrl\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 44095), Tuple.Create("\"", 44118)
+WriteAttribute("value", Tuple.Create(" value=\"", 44097), Tuple.Create("\"", 44120)
             
             #line 565 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 44103), Tuple.Create<System.Object, System.Int32>(Model.EventUrl
+                                 , Tuple.Create(Tuple.Create("", 44105), Tuple.Create<System.Object, System.Int32>(Model.EventUrl
             
             #line default
             #line hidden
-, 44103), false)
+, 44105), false)
 );
 
 WriteLiteral(" placeholder=\"enter url name\"");
@@ -2223,7 +2223,7 @@ WriteLiteral(" class=\"col-sm-12 no_pad text-left mt10 evnt_tct_btn ev_btn_type\
 
 WriteLiteral(">\r\n                        <label");
 
-WriteLiteral(" class=\"ev_add_tkt_tit\"");
+WriteLiteral(" class=\"ev_add_tkt_tit col12\"");
 
 WriteLiteral(">Add ticket type</label>\r\n                        <button");
 
@@ -2249,7 +2249,7 @@ WriteLiteral("></i></button>\r\n                        <button");
 
 WriteLiteral(" type=\"button\"");
 
-WriteLiteral(" class=\"btn btn-primary save_btndonation save_btn\"");
+WriteLiteral(" class=\"btn btn-primary save_btndonation save_btn xsmr0\"");
 
 WriteLiteral(">DONATE <i");
 
@@ -3568,14 +3568,14 @@ WriteLiteral(" placeholder=\"\"");
 
 WriteLiteral(" id=\"id_vardesc\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 81290), Tuple.Create("\"", 81324)
+WriteAttribute("value", Tuple.Create(" value=\"", 81304), Tuple.Create("\"", 81338)
             
             #line 1050 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                                                 , Tuple.Create(Tuple.Create("", 81298), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
+                                                                 , Tuple.Create(Tuple.Create("", 81312), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
             
             #line default
             #line hidden
-, 81298), false)
+, 81312), false)
 );
 
 WriteLiteral(">\r\n                                    </div>\r\n                                </" +
@@ -3834,9 +3834,9 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 
 WriteLiteral(">\r\n                                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 86002), Tuple.Create("\"", 86023)
-, Tuple.Create(Tuple.Create("", 86008), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 86008), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 86016), Tuple.Create("\"", 86037)
+, Tuple.Create(Tuple.Create("", 86022), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 86022), false)
 );
 
 WriteLiteral("> ENABLE DISCUSSION\r\n");
@@ -4306,14 +4306,14 @@ WriteLiteral(" id=\"txtReqPassword\"");
 
 WriteLiteral(" readonly=\"readonly\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 91652), Tuple.Create("\"", 91683)
+WriteAttribute("value", Tuple.Create(" value=\"", 91666), Tuple.Create("\"", 91697)
             
             #line 1234 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                 , Tuple.Create(Tuple.Create("", 91660), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
+                 , Tuple.Create(Tuple.Create("", 91674), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
             
             #line default
             #line hidden
-, 91660), false)
+, 91674), false)
 );
 
 WriteLiteral(" class=\"form-control evnt_inp_cont mb10 wd500 chkvalidation\"");
@@ -4403,14 +4403,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 93495), Tuple.Create("\"", 93517)
+WriteAttribute("value", Tuple.Create(" value=\"", 93509), Tuple.Create("\"", 93531)
             
             #line 1270 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 93503), Tuple.Create<System.Object, System.Int32>(Model.EventID
+, Tuple.Create(Tuple.Create("", 93517), Tuple.Create<System.Object, System.Int32>(Model.EventID
             
             #line default
             #line hidden
-, 93503), false)
+, 93517), false)
 );
 
 WriteLiteral(" />\r\n\r\n                    <input");
@@ -6773,9 +6773,9 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 240251), Tuple.Create("\"", 240290)
-, Tuple.Create(Tuple.Create("", 240258), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 240258), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 240265), Tuple.Create("\"", 240304)
+, Tuple.Create(Tuple.Create("", 240272), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 240272), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6791,9 +6791,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 240324), Tuple.Create("\"", 240381)
-, Tuple.Create(Tuple.Create("", 240331), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 240331), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 240338), Tuple.Create("\"", 240395)
+, Tuple.Create(Tuple.Create("", 240345), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 240345), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6802,9 +6802,9 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 240415), Tuple.Create("\"", 240452)
-, Tuple.Create(Tuple.Create("", 240421), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 240421), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 240429), Tuple.Create("\"", 240466)
+, Tuple.Create(Tuple.Create("", 240435), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 240435), false)
 );
 
 WriteLiteral("></script>\r\n");

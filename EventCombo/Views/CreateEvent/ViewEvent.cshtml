@@ -994,11 +994,14 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
         }
         $("#btnvote").click(function () {
+            debugger;
+            var msg = "";
             var clickvote = $('#hdEventvote').val();
 
             if (clickvote == "Y") {
                 $("#btOk").click();
-                $("#spanokid").html(ajaxsetup("ViewEvent", "VoteOnce"));
+                 msg = ajaxsetup("ViewEvent", "VoteOnce");
+                $("#spanokid").html(msg);
                 //alert('You can only vote once.');
             } else {
                 var eid = $('#hdEventid').val();
@@ -1019,7 +1022,8 @@ function pad(n) { return n < 10 ? '0' + n : n };
                             $('#spanvotes').html(data);
 
                             $("#btOk").click();
-                            $("#spanokid").html(ajaxsetup("ViewEvent", "ThanksForVote"));
+                             msg = ajaxsetup("ViewEvent", "ThanksForVote");
+                             $("#spanokid").html(msg);
                             //alert('Thank you for voting!');
                         }
                     },
@@ -1033,7 +1037,8 @@ function pad(n) { return n < 10 ? '0' + n : n };
         });
 
         $("#btnfavourite").click(function () {
-
+            debugger;
+            var msg = "";
             var clickfav = $('#hdEventFav').val();
             if (clickfav == "Y") {
                 $('#hdEventFav').val("N");
@@ -1057,12 +1062,15 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         if (clickfav == "Y") {
                             $("#btnfavourite").addClass("btn_fav_act");
                             $("#btOk").click();
-                            $("#spanokid").html(ajaxsetup("ViewEvent", "eventSaved"));
+                            msg = ajaxsetup("ViewEvent", "eventSaved");
+                            $("#spanokid").html(msg);
                             //alert('Your Event have been saved!');
                         }
                         if (clickfav == "N") {
                             $("#btOk").click();
-                            $("#spanokid").html(ajaxsetup("ViewEvent", "eventnotsaved"));
+                            msg = ajaxsetup("ViewEvent", "eventnotsaved");
+                         
+                            $("#spanokid").html(msg);
                             //alert('Your Event have not been saved!');
                             $("#btnfavourite").removeClass("btn_fav_act");
                         }
@@ -1446,6 +1454,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
     });
 
     function ajaxsetup(strname, strFormTag) {
+        debugger;
         var msgnew = "";
 
         var request = $.ajax({
