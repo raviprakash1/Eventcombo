@@ -25,11 +25,11 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
-                    lParentID = (from myEvt in db.Events
+                   int lCnt = (from myEvt in db.Events
                                  where myEvt.Parent_EventID == lEvntId
                                  select myEvt.EventID).Count();
                     
-                    if (lParentID >1)
+                    if (lCnt >0 )
                     {
                         lParentID = (from myEvt in db.Events
                                      where myEvt.Parent_EventID == lEvntId
