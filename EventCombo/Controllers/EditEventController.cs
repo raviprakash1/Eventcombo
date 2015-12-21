@@ -939,7 +939,7 @@ namespace EventCombo.Controllers
                     }
                     strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel'>Disc.$</label>");
                     strticketHtml.Append("<div class='col-sm-8'>");
-                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)' onkeyup='checkdiscount(this.id)' onblur='[tofixed(this.id)' maxlength='9' value='" + discount + "' />");
+                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)' onkeyup='checkdiscount(this.id)' onblur='tofixed(this.id)' maxlength='9' value='" + discount + "' />");
                     strticketHtml.Append("</div></div></div>");
                     strticketHtml.Append("<div class='col-sm-1 no_pad evnt_sett_main'>");
                     strticketHtml.Append("<div class='nav evnt_setting'>");
