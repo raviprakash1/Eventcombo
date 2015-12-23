@@ -36,7 +36,7 @@
 .ev_loca_check_main{ margin-top: 20%;}
 .ev_loca_check{ color: #aaa; font-size: 18px; font-weight: normal; }
 .evnt_tile_bg_l{background-image: url(../images/title_bg_l.png); width: 19px; height: 34px; float: left; margin-left: -19px; position: absolute; cursor: pointer;  }
-.evnt_tile_bg_r{background-image: url(../images/title_bg_r.png); width: 19px; height: 34px; float: right; margin-right: -19px; margin-right: -19px;
+.evnt_tile_bg_r{background-image: url(../images/title_bg_r.png); width: 19px; height: 34px; float: right; margin-right: -19px;
     margin-top: -34px !important; top: 6px; position: absolute;right: 0; position: relative; cursor: pointer;  }
  .evnt_tile_head h2{ font-size: 1.2em; color: #fff; text-transform: uppercase;}
  .ev_add_tkt_tit{ font-size: 1.6em; font-weight: normal; color: #4a4a4a; margin-right: 10px;}
@@ -266,7 +266,7 @@
 .evnt_details_body2{ width: 100%; float: left; padding: 0px 20px; margin-bottom: 30px; }
 .evnt_desc{ font-size: 1.2em;}
 .inst_karm_box{ border:1px solid #000;}
-.inst_karm_box p{ font-size: 1.2em; margin-bottom: 5px; }
+.inst_karm_box p{ font-size: 1.2em; margin-bottom: 5px; word-break: break-all; }
 .inst_karm_box p a{color: #3cf;}
 .inst_karm_box p span.badge{ font-weight: normal; background:#3cf; font-size: 1em; }
 
