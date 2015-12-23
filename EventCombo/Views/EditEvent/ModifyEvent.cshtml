@@ -1277,7 +1277,7 @@ else
                     <input type="hidden" id="hidAddSno" value="" />
                     <input type="hidden" id="hidSchLastState" value="" />
                     <input type="hidden" id="hidOrgnizer" value="" />
-                    <input type="hidden" id="hidAddressStatus" value="" />
+                    <input type="hidden" id="hidAddressStatus" value="@Model.AddressStatus" />
                     <input type="hidden" id="hdEventId" value="@Model.EventID" />
 
                     <input id="imageeror" type="hidden" value="0" />
@@ -1482,7 +1482,7 @@ else
                     else
                     {
                         $("#dvAddress").show();
-                        $("#hidAddressStatus").val('');
+                        $("#hidAddressStatus").val(data.AddressStatus);
                     }
                     $("#edEventDesc").code(data.EventDescription);
                     $("#UsepastLoc").change();
@@ -1509,7 +1509,7 @@ else
                         $('#MasterDiv').append(data.Ticket);
                         $(".tab-content").hide();
 
-                        var divlength=    $('#MasterDiv').length;
+                        var divlength=$('#MasterDiv').length;
                         if(divlength>0)
                         {
                             for(var i=0;i<divlength;i++)
@@ -2150,13 +2150,18 @@ else
                     } else {
                         Auto_Schedule = 0;
                     }
-                    if ($('#id_include_ticket_fees-' + i).val() == 0) {
-                        customerfee = $('#id_fee-' + i).val();
+                    if($('#id_feestruct-'+i).css('display') == "block")
+                    {
+                        var val=$('#id_include_ticket_fees-' + i).val();
+                        var fee=$('#id_fee-'+i).val();
+                        if ($('#id_include_ticket_fees-' + i).val() == 0) {
+                            customerfee = $('#id_fee-'+i).val();
 
-                    }
-                    if ($('#id_include_ticket_fees-' + i).val() == 1) {
-                        ecfee = $('#id_fee-' + i).val();
+                        }
+                        if ($('#id_include_ticket_fees-' + i).val() == 1) {
+                            ecfee = $('#id_fee-'+i).val();
 
+                        }
                     }
                     total = $('#id_total-' + i).val();
                     if ($('#id_Tickettype-' + i).val() == "Free") {
@@ -2218,22 +2223,22 @@ else
 
 
             //  alert($("#tblAddress tr").length);
-            if ($("#tblAddress tr").length <= 1) {
-                if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
-                    SubmitAddress.push({
-                        VenueName: ' ',
-                        Address1: ' ',
-                        Address2: ' ',
-                        City: ' ',
-                        State: ' ',
-                        Zip: ' ',
-                        CountryID: ' ',
-                        ConsolidateAddress: $("#txtEventLocation").val()
-                    })
-                }
+            var addressstatus=$('#hidAddressStatus').val();
+            if(addressstatus=="Single")
+            {
+                SubmitAddress.push({
+                    VenueName: ' ',
+                    Address1: ' ',
+                    Address2: ' ',
+                    City: ' ',
+                    State: ' ',
+                    Zip: ' ',
+                    CountryID: ' ',
+                    ConsolidateAddress: $("#txtEventLocation").val()
+                })
             }
-            else {
-                debugger;
+            if(addressstatus=="Multiple")
+            {
                 $("#tblAddress tr").each(function () {
 
                     var Sno = $(this).find("td:first").html();
@@ -2254,24 +2259,8 @@ else
                     }
 
                 });
-
             }
-
-            //if (SubmitAddress == null && )
-            //{
-            //    alert("In Submit");
-            //    SubmitAddress.push({
-            //        VenueName: '',
-            //        Address1: '',
-            //        Address2: '',
-            //        City: '',
-            //        State: '',
-            //        Zip: '',
-            //        CountryID: '',
-            //        ConsolidateAddress: $("#txtEventLocation").val()
-            //    });
-
-            //}
+            
 
             // Single Timing
             if ($("#hdSchType").val() == 'Single') {
@@ -2881,6 +2870,7 @@ else
                 debugger;
                 var Sno ="";
                 var txt="";
+                $('#hidAddressStatus').val('Multiple');
                 $("#txtEventLocation").val('');
                 //$("#txtEventLocation").val("Click here to enter venue address");
                
@@ -3798,8 +3788,7 @@ else
                     fee = ccpamount;
                 }
 
-
-                $("#id_fee-" + num).val(ccpamount.replace(',',''));
+                $("#id_fee-" + num).val(ccpamount.replace(',', ''));
                 $("#id_total-" + num).val(ccpfinal.replace(',', ''));
                 //$('#' + id).val(price)
             }
@@ -3808,7 +3797,7 @@ else
         }
 
         function changefeetype(el, evt, id) {
-            debugger;
+          
             var fee = 0;
             var total = 0;
 
@@ -4731,6 +4720,7 @@ else
             return msgnew;
         }
         function validatemain() {
+            debugger;
             var msg = "";
             var count = 0;
             var countqty = 0;
@@ -4800,7 +4790,7 @@ else
                             $('#id_quantity_total-' + i).removeClass('err-bor');
                         }
                     }
-                    if ($('#id_cost-' + i).hasClass('err-bor')) { count++; }
+                   
                     if($('#id_paid-'+i).css('display')=="block")
                     {
 
@@ -4817,7 +4807,7 @@ else
                             $('#id_cost-'+i).addClass('err-bor');
                             countprice++;
                         }else{
-                            $('#id_cost-'+i).addClass('err-bor');
+                            $('#id_cost-'+i).removeClass('err-bor');
                         }
                     }
                 }

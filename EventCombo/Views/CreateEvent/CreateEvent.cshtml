@@ -2884,10 +2884,11 @@
                             CountryID: ' ',
                             ConsolidateAddress: $("#txtEventLocation").val()
                         })
+                        $('#hidAddressStatus').val('Single');
                     }
                 }
                 else {
-
+                    $('#hidAddressStatus').val('Multiple');
                     $("#tblAddress tr").each(function () {
 
                         var Sno = $(this).find("td:first").html();

@@ -203,12 +203,14 @@
                                
                                        
                                              <div class="dropdown text-left">
+
+
+                                                 <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips"  title="@Html.DisplayFor(m => m.TopAddress)">
 @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
 {
-                                              
-}
-                                                 <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips"  title="@Html.DisplayFor(m => m.TopAddress)">
+
                                                      <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
+}
                                                      <span id="lbltopaddress">@Html.DisplayFor(m => m.TopAddress)</span>
                                                      <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
                                                          <span class="caret caret_cus"></span>
@@ -219,7 +221,8 @@
                                                          </li>
                                                      </ul>
                                                  </label>
-                                              
+
+
                                             </div>
                                            
                                        
