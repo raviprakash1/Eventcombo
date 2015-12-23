@@ -634,6 +634,16 @@
                                         <input id="txtOrgTWlink" class="form-control wd600" placeholder="" />
                                     </div>
                                 </div>
+                                <div class="add_social_input mt10">
+                                    <div class="col-sm-12 ">
+                                        <label class="control-label ev_tickt_lebel pl0">
+                                            <span class="ln"><i class="fa fa-linkedin-square"></i></span> linkedin.com/
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-8 ">
+                                        <input id="txtOrgLNlink" class="form-control wd600" placeholder="" maxlength="100" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1095,6 +1105,7 @@ else
                                     <div class="list-group-item ev_var_chrg_list">
                                         <div class="form-group">
                                             <div class="col-sm-7 col-xs-7">
+                                                <input type='hidden' id="id_varid-n" value=0 />
                                                 <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256" onblur="checkvalidatetkt(this.id)">
                                             </div>
                                             <div class="col-sm-4 col-xs-4">
@@ -1168,67 +1179,67 @@ else
                     <div class="form-group">
                         <div class="col-sm-12 no_pad">
                             <label class="Pubpage label-control ev_tickt_lebel pl0">
-                                @if (Model.EventPrivacy == "Private")
+                                @*@if (Model.EventPrivacy == "Private")
                                 {
                                     <input type="radio" name="rdPr" id="rdPublic" />
                                 }
                                 else
-                                {
-                                    <input type="radio" checked="checked" name="rdPr" id="rdPublic" />
-                                }
+                                {*@
+                                    <input type="radio" name="rdPr" id="rdPublic" />
+                                @*}*@
                                 Public
                             </label>
                         </div>
                         <div class="clearfix"></div>
                         <div class="col-sm-12 no_pad">
                             <label class="Prvpage label-control ev_tickt_lebel pl0">
-                                @if (Model.EventPrivacy == "Private")
-                                {
-                                    <input type="radio" checked="checked" name="rdPr" id="rdPrivate" />
-                                }
+                                @*@if (Model.EventPrivacy == "Private")
+                                {*@
+                                    @*<input type="radio" checked="checked" name="rdPr" id="rdPrivate" />*@
+                                @*}
                                 else
-                                {
+                                {*@
                                     <input type="radio" name="rdPr" id="rdPrivate" />
-                                }
+                                @*}*@
                                 Private
                             </label>
                         </div>
                         <div class="clearfix"></div>
                         <div class="priv_cont">
                             <label class="label-control label_private ev_tickt_lebel">
-                                @if (Model.Private_ShareOnFB == "Y")
+                                @*@if (Model.Private_ShareOnFB == "Y")
                                 {
                                     <input type="checkbox" checked="checked" id="chkShareOnFB">
                                 }
                                 else
-                                {
+                                {*@
                                     <input type="checkbox" id="chkShareOnFB">
 
-                                }
+                               @*}*@
                                 Attendees can share this event on Facebook, Twitter, and LinkedIn
                             </label>
                             <div class="clearfix"></div>
                             <label class="label-control label_private ev_tickt_lebel">
-                                @if (Model.Private_GuestOnly == "Y")
+                                @*@if (Model.Private_GuestOnly == "Y")
                                 {
                                     <input type="checkbox" checked="checked" id="chkGuestonly">
                                 }
                                 else
-                                {
+                                {*@
                                     <input type="checkbox" id="chkGuestonly">
-                                }
+                               @*}*@
                                 This event is by Invite-Only
                             </label>
                             <div class="clearfix"></div>
                             <label class="label-control label_private ev_tickt_lebel">
-                                @if (Model.Private_Password != null && Model.Private_Password.Length > 0)
+                                @*@if (Model.Private_Password != null && Model.Private_Password.Length > 0)
                                 {
                                     <input type="checkbox" checked="checked" id="chkReqPassword">
                                 }
                                 else
-                                {
+                                {*@
                                     <input type="checkbox" id="chkReqPassword">
-                                }
+                                @*}*@
                                 Require a password to view the event page
                             </label>
                             <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" />
@@ -1314,6 +1325,7 @@ else
                 <div class="modal-body">
                     <div class="col-sm-6">
                         <div class="form-group">
+                            <input id="VenueId" type="hidden" value="0"/>
                             <input id="VenueName" class="form-control evnt_inp_cont" placeholder="Enter the Venue Name" />
                         </div>
                         <div class="form-group">
@@ -1408,8 +1420,9 @@ else
             // alert("Chal pya");
             $.getJSON('@Url.Action("GetEventChildData", "EditEvent")', { lEventId: $("#hdEventId").val()},
                 function (data) {
-
-                    if (data.EventStatus == "Live")
+                    debugger;
+                    console.log(data.EventStatus);
+                    if (data.EventStatus.trim() == "Live")
                     {
                         $(".cbtMakeElive").hide();
                         $("#lblLive").show();
@@ -1425,14 +1438,17 @@ else
                         //$("#lblDft").html("DRAFT");
                     }
                     $('#status').val(data.EventStatus);
-                    if (data.MultipleSchTime == "S") {
+                  
+                        
+                    if (data.MultipleSchTime == "S") 
+                    {
                         $("#txtStartDate").val(data.EventStartDate);
                         $("#txtStartTime").val(data.EventStartTime);
                         $("#txtEndDate").val(data.EventEndDate);
                         $("#txtEndTime").val(data.EventEndTime);
                         $("#hdSchType").val('Single');
                     }
-                    else
+                    if (data.MultipleSchTime == "M") 
                     {
                         $(".SchmultiEvnt").click();
                         $("#dlSchOption").val(data.Frequency);
@@ -1474,12 +1490,17 @@ else
                     $("#btSaveTimeZone").click();
                     //alert()
                     //$("#hdEventId").val(data.EventID);
+                  
+                    if(data.Addresses!="")
+                    {
                     $("#tblAddress").append(data.Addresses);
+                    }
                     $("#txtEventLocation").val(data.FirstAddress);
                     $("#dllTimezone").val(data.timezone);
 
                     //Tickets start
                     //
+                   
                     if(data.Ticket!='')
                     {
 
@@ -1487,51 +1508,64 @@ else
                         //$(".tab-content").hide();
                         $('#MasterDiv').append(data.Ticket);
                         $(".tab-content").hide();
-                        $("input[id^='id_salestart']").datepicker({
-                            format: "mm/dd/yyyy",
-                            minDate: "0",
-                            onSelect: function () {
 
-                                this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                        var divlength=    $('#MasterDiv').length;
+                        if(divlength>0)
+                        {
+                            for(var i=0;i<divlength;i++)
+                            {
+                                $("#id_salestart-" + i).datepicker({
+                                    format: "mm/dd/yyyy",
+                                    minDate: "0",
+                                    onSelect: function () {
+
+                                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                                    }
+                                }).on('changeDate', function (ev) {
+                                    $("#id_salestart-" + i).datepicker('hide');
+                                });
+
+                                $("#id_saleend-" + i).datepicker({
+                                    format: "mm/dd/yyyy",
+                                    minDate: "0",
+                                    onSelect: function () {
+
+                                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                                    }
+                                }).on('changeDate', function (ev) {
+                                    $("#id_saleend-" + i).datepicker('hide');
+                                });
+
+                                $("#id_auto_hide_until_Date-" + i).datepicker({
+                                    format: "mm/dd/yyyy",
+                                    minDate: "0",
+                                    onSelect: function () {
+
+                                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                                    }
+                                }).on('changeDate', function (ev) {
+                                    $("#id_auto_hide_until_Date-" + i).datepicker('hide');
+                                });
+                                $("#id_auto_hide_after_Date-" + i).datepicker({
+                                    format: "mm/dd/yyyy",
+                                    minDate: "0",
+                                    onSelect: function () {
+
+                                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                                    }
+                                }).on('changeDate', function (ev) {
+                                    $("#id_auto_hide_after_Date-" + i).datepicker('hide');
+                                });
+                                
+                                $("#id_saletimestart-" + i).timepicker();
+           
+                                $("#id_saletimeend-" + i).timepicker();
+                                $("#id_auto_hide_until_time-" + i).timepicker();
+                                $("#id_auto_hide_after_Time-" + i).timepicker();
                             }
-                        }).on('changeDate', function (ev) {
-                            $("input[id^='id_salestart']").datepicker('hide');
-                        });
-                        $("input[id^='id_saleend']").datepicker({
-                            format: "mm/dd/yyyy",
-                            minDate: "0",
-                            onSelect: function () {
 
-                                this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                            }
-                        }).on('changeDate', function (ev) {
-                            $("input[id^='id_saleend']").datepicker('hide');
-                        });
-
-                        $("input[id^='id_auto_hide_until_Date']").datepicker({
-                            format: "mm/dd/yyyy",
-                            minDate: "0",
-                            onSelect: function () {
-
-                                this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                            }
-                        }).on('changeDate', function (ev) {
-                            $("input[id^='id_auto_hide_until_Date']").datepicker('hide');
-                        });
-                        $("input[id^='id_auto_hide_after_Date']").datepicker({
-                            format: "mm/dd/yyyy",
-                            minDate: "0",
-                            onSelect: function () {
-
-                                this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                            }
-                        }).on('changeDate', function (ev) {
-                            $("input[id^='id_auto_hide_after_Date']").datepicker('hide');
-                        });
-                        $("input[id^='id_saletimestart']").timepicker();
-                        $("input[id^='id_saletimeend']").timepicker();
-                        $("input[id^='id_auto_hide_until_time']").timepicker();
-                        $("input[id^='id_auto_hide_after_Time']").timepicker();
+                        }
+                    
 
 
                         $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
@@ -1563,18 +1597,72 @@ else
                 }
             );
 
-            var msg=validatemain();
-            //alert(msg);
-            if(msg=="")
-            {
-                $(".cdisable").removeAttr("disabled");
 
-            }   
+            var privat="@Model.EventPrivacy";
+            var privatefb="@Model.Private_ShareOnFB"
+            var privateguest="@Model.Private_GuestOnly" 
+            var privatepwd="@Model.Private_Password"
+          
+            debugger;
+            if(privat=="Private")
+            {
+                $('#rdPrivate').prop("checked","true");
+                //$('#rdPublic').prop("checked","false");
+                $(".priv_cont").show();
+            }else{
+                $(".priv_cont").hide();
+            }
+
+            if(privat=="Public")
+            {
+                //$('#rdPrivate').prop("checked","false");
+                $('#rdPublic').prop("checked","true");
+                
+                $(".priv_cont").hide();
+            }
+
+            if(privatefb=="Y")
+            {
+                $('#chkShareOnFB').prop("checked","true");
+
+            }
+            if(privateguest=="Y")
+            {
+                $('#chkGuestonly').prop("checked","true");
+
+            }
+            if(privatepwd.length>0)
+            {
+                $('#chkReqPassword').prop("checked","true");
+                $('#txtReqPassword').attr('readonly', false);
+                
+
+            }
+            $(".cdisable").removeAttr("disabled");
+            //var msg=validatemain();
+            //alert(msg);
+            //if(msg=="")
+            //{
+            //    
+
+            //}   
 
 
         });
 
+        $("#rdPublic").click(function(){
+            
+            //$("#rdPrivate").prop("checked","false");
 
+            $("#chkShareOnFB").prop("checked",false);
+            $("#chkGuestonly").prop("checked",false);
+            $("#chkReqPassword").prop("checked",false);
+            $("#txtReqPassword").val('');
+            $('#txtReqPassword').attr('readonly', true);
+            $(".priv_cont").hide();
+        
+        
+        });
         $(".cbtPreview").click(function () {
             var msg = validatemain();
             if (msg != "") {
@@ -1583,401 +1671,8 @@ else
                 return false;
 
             }
-            // Address Entry
-            var SubmitAddress = [];
-            var SingleTiming = [];
-            var MultipleSchedule = [];
-            var Orgnizer = [];
-            var EventImage = [];
-            var EventVariable = [];
-            //var table = $("#tblAddress");
-
-
-            //Variable charges
-            var varlength = $("#id_Mainvariable> div").size();
-            if (varlength > 0) {
-                for (var i = 0; i < varlength; i++) {
-                    var varprice = $('#id_varsubprice-' + i).val().replace(',', ' ');
-                    EventVariable.push({
-
-                        VariableDesc: $('#id_varsubdesc-' + i).val(),
-                        Price: varprice
-
-                    });
-                }
-
-
-            }
-
-            //Image Section
-
-            if ($("#image_count").val() > 0) {
-                var count = ($("#image_count").val());
-                for (var i = 0; i < count; i++) {
-
-                    var image = $("#image_hidden_" + i).val();
-                    var res = image.split("####");
-
-                    var imagename = res[0];
-                    var imagetype = res[1];
-
-                    EventImage.push({
-                        EventImageUrl: imagename,
-                        ImageType: imagetype,
-                    });
-                }
-
-            }
-
-
-            // Ticket
-            var Ticket = [];
-            var divlength = $("#MasterDiv> div").size();
-            if (divlength > 0) {
-                var TicketPrice = 0;
-                var Auto_Schedule = 0;
-                var AutoSechduleType = 0;
-                var TicketTypeID = 0;
-                var ecfee = 0;
-                var customerfee = 0;
-                var total = 0;
-                for (var i = 0; i < divlength; i++) {
-
-                    if ($('#id_cost-' + i).css('display') == "block") {
-                        TicketPrice = $('#id_cost-' + i).val().replace(',', '');
-
-                    } else { TicketPrice = 0; }
-                    if ($('#id_CusdateCont-' + i).css('display') == "block") {
-
-                        Auto_Schedule = 1;
-
-                        if ($('#id_auto_hide_type_0-' + i).is(":checked") == true) {
-                            AutoSechduleType = 0;
-
-                        }
-                        if ($('#id_auto_hide_type_1-' + i).is(":checked") == true) {
-                            AutoSechduleType = 1;
-
-                        }
-
-                    } else {
-                        Auto_Schedule = 0;
-                    }
-                    if ($('#id_include_ticket_fees-' + i).val() == 0) {
-                        customerfee = $('#id_fee-' + i).val();
-
-                    }
-                    if ($('#id_include_ticket_fees-' + i).val() == 1) {
-                        ecfee = $('#id_fee-' + i).val();
-
-                    }
-                    total = $('#id_total-' + i).val();
-                    if ($('#id_Tickettype-' + i).val() == "Free") {
-                        TicketTypeID = 1
-
-                    } else if ($('#id_Tickettype-' + i).val() == "Paid") {
-                        TicketTypeID = 2
-
-                    } else {
-
-                        TicketTypeID = 3
-                    }
-
-                    var Discount = $('#id_Discount-' + i).val().replace(',', '');
-                    var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
-
-                    Ticket.push({
-                        T_name: $('#id_ticket_type-' + i).val(),
-                        Qty_Available: $('#id_quantity_total-' + i).val(),
-                        T_Type: $('#id_Tickettype-' + i).val(),
-                        Price: TicketPrice,
-                        'T_Desc': $('#id_descriptionclass-' + i).val(),
-                        'Show_T_Desc': parseInt(showdesc),
-                        Sale_Start_Date: $('#id_salestart-' + i).val(),
-                        Sale_Start_Time: $('#id_hdsaletimestart-' + i).val(),
-                        Sale_End_Date: $('#id_saleend-' + i).val(),
-                        Sale_End_Time: $('#id_hdsaletimeend-' + i).val(),
-                        'Hide_Ticket': parseInt(($("#id_ticketshidden-" + i).is(":checked") == true ? '1' : '0')),
-                        Auto_Hide_Sche: parseInt(Auto_Schedule),
-                        Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
-                        Hide_Untill_Time: $('#id_hdautohideuntil-' + i).val(),
-                        Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
-                        Hide_After_Time: $('#id_hdautohideafter-' + i).val(),
-                        Min_T_Qty: $('#id_min_ticket-' + i).val(),
-                        Max_T_Qty: $('#id_max_ticket-' + i).val(),
-                        T_Disable: (($('#id_disableticket-' + i).is(":checked") == true ? '1' : '0')),
-                        T_Mark_SoldOut: parseInt(($('#id_marksoldout-' + i).is(":checked") == true ? '1' : '0')),
-                        T_Displayremaining: ($('#id_displayremaining-' + i).is(":checked") == true ? '1' : '0'),
-                        Fees_Type: $('#id_include_ticket_fees-' + i).val(),
-                        'T_Discount': Discount,
-                        T_order: $('#id_order-' + i).val(),
-                        TicketTypeID: TicketTypeID,
-                        T_AutoSechduleType: AutoSechduleType,
-                        EC_Fee: ecfee,
-                        Customer_Fee: customerfee,
-                        TotalPrice: total
-
-                    });
-
-                }
-
-            }
-
-            //$('#tblAddress tr').each(function () {
-
-
-            //});
-
-
-            //  alert($("#tblAddress tr").length);
-            if ($("#tblAddress tr").length <= 1) {
-                if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
-                    SubmitAddress.push({
-                        VenueName: ' ',
-                        Address1: ' ',
-                        Address2: ' ',
-                        City: ' ',
-                        State: ' ',
-                        Zip: ' ',
-                        CountryID: ' ',
-                        ConsolidateAddress: $("#txtEventLocation").val()
-                    })
-                }
-            }
-            else {
-                debugger;
-                $("#tblAddress tr").each(function () {
-
-                    var Sno = $(this).find("td:first").html();
-                    //  alert(Sno);
-                    // Multiple Address
-                    if (Sno != '' && Sno != undefined && Sno != null) {
-                        SubmitAddress.push({
-                            VenueName: $("#VenueName" + Sno).val(),
-                            Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() : ''),
-                            Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
-                            City: ($("#City" + Sno).val() != null ? $("#City" + Sno).val() : ''),
-                            State: ($("#State" + Sno).val() != null ? $("#State" + Sno).val() : ''),
-                            Zip: ($("#Zip" + Sno).val() != null ? $("#Zip" + Sno).val() : ''),
-                            CountryID: ($("#CID" + Sno).val() != null ? $("#CID" + Sno).val() : ''),
-                            ConsolidateAddress: $("#consolidate" + Sno).text()
-                        });
-                    }
-
-                });
-
-            }
-
-            //if (SubmitAddress == null && )
-            //{
-            //    alert("In Submit");
-            //    SubmitAddress.push({
-            //        VenueName: '',
-            //        Address1: '',
-            //        Address2: '',
-            //        City: '',
-            //        State: '',
-            //        Zip: '',
-            //        CountryID: '',
-            //        ConsolidateAddress: $("#txtEventLocation").val()
-            //    });
-
-            //}
-
-            // Single Timing
-            if ($("#hdSchType").val() == 'Single') {
-                SingleTiming.push({
-                    'EventStartDate': $("#txtStartDate").val(),
-                    'EventEndDate': $("#txtEndDate").val(),
-                    'EventStartTime': $("#txtStartTime").val(),
-                    'EventEndTime': $("#txtEndTime").val()
-                });
-            }
-
-            // Multiple Schedule
-
-
-            if ($("#hdSchType").val() == 'Multiple') {
-
-
-                var SchOption = $("#dlSchOption").val();
-                var vWeeklyDayAry = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
-                var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
-                var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
-               
-                var vMonthlyWeekDaysAry = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
-
-                var vStartingFrom = $("#txtDateFrom").val();
-                var vStartingTo = $("#txtDateTo").val();
-                var vStartTime = $("#txtTimeStart").val();
-                var vEndTime = $("#txtTimeEnd").val();
-                var vMonthlyWeekDays = '';
-                var vWeeklyDay = '';
-
-                if (SchOption == "Daily") {
-                    vWeeklyDay = '';
-                    vMonthlyDay = '';
-                    vMonthlyWeek = '';
-                    vMonthlyWeekDays = '';
-                    $("#hidSchLastState").val("Daily");
-                }
-                else if (SchOption == "Weekly") {
-                    vMonthlyDay = '';
-                    vMonthlyWeek = '';
-                    vMonthlyWeekDays = '';
-                    $("#hidSchLastState").val("Weekly");
-                    for (i = 0; i < vWeeklyDayAry.length; i++) {
-                        if (vWeeklyDay == '') vWeeklyDay = vWeeklyDayAry[i].toString();
-                        else vWeeklyDay = vWeeklyDay + ',' + vWeeklyDayAry[i].toString();
-                    }
-                }
-                else if (SchOption == "Monthly") {
-                    vWeeklyDay = '';
-                    if ($("#hdMonthlyType").val() == "DM") vMonthlyWeek = ''; vMonthlyWeekDays = '';
-                    if ($("#hdMonthlyType").val() == "DW") {
-                        vMonthlyDay = '';
-                        for (i = 0; i < vMonthlyWeekDaysAry.length; i++) {
-                            if (vMonthlyWeekDays == '') vMonthlyWeekDays = vMonthlyWeekDaysAry[i].toString();
-                            else vMonthlyWeekDays = vMonthlyWeekDays + ',' + vMonthlyWeekDaysAry[i].toString();
-                        }
-                    }
-
-                    $("#hidSchLastState").val("Monthly");
-                }
-                else if (SchOption == "Custom") {
-                    vWeeklyDay = '';
-                    vMonthlyDay = '';
-                    vMonthlyWeek = '';
-                    vMonthlyWeekDays = '';
-                    $("#hidSchLastState").val("Custom");
-                }
-
-                MultipleSchedule.push({
-                    'Frequency': SchOption,
-                    'WeeklyDay': vWeeklyDay,
-                    'MonthlyDay': vMonthlyDay,
-                    'MonthlyWeek': vMonthlyWeek,
-                    'MonthlyWeekDays': vMonthlyWeekDays,
-                    'StartingFrom': vStartingFrom,
-                    'StartingTo': vStartingTo,
-                    'StartTime': vStartTime,
-                    'EndTime': vEndTime
-                });
-
-            }
-            // Orgnizer
-            //$("#tblOrgnizer option").each(function (i) {
-            //    Orgnizer.push({
-            //        'Orgnizer_Name': $(this).text(),
-            //        'Orgnizer_Desc': $(this).val()
-            //    });
-            //    //alert($(this).text() + " : " + $(this).val());
-            //});
-
-            var vDefaultOrg = $("#ddlOrgnizers").val();
-            console.log( $("#tblOrgnizer"));
-            $("#tblOrgnizer tr").each(function () {
-                var Sno = $(this).find("td:first").html();
-                //alert(Sno);
-                // Multiple Address
-                if (Sno != '') {
-                    Orgnizer.push({
-                        Orgnizer_Name: $("#OrgName_" + Sno).text(),
-                        Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
-                        FBLink: $("#OrgFB_" + Sno).text(),
-                        Twitter: $("#OrgTw_" + Sno).text(),
-                        DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
-
-                    });
-                }
-            });
-
-            console.log(Orgnizer);
-
-            // Basic Event Info
-            //alert($("#edSummer1").code());
-            //debugger;
-            //$("#spEvDesc").text();
-            var vEdesc = ''; //$("#edEventDesc").code();
-
-            var varDescritpion = '';
-            var optionalvariable = '';
-            if ($("#id_variablecharge").is(":checked")) {
-                varDescritpion = $('#id_vardesc').val();
-                optionalvariable = $('#variabletype').val();
-            }
-
-            var model = {
-                'EventID': $("#hdEventId").val(),
-                'EventTypeID': $("#EventType").val(),
-                'EventCategoryID': $("#ddlEventCategory").val(),
-                'EventSubCategoryID': $("#ddlEventSubCategory").val(),
-                'UserID': '',
-                'EventTitle': $("#txtEventTitle").val(),
-                'EventDescription': $("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, ""),
-                'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
-                'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
-                'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
-                'Private_Password': $("#txtReqPassword").val(),
-                'EventUrl': $("#txtEventUrl").val().trim(),
-                'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
-                'EventStatus': 'Save',
-                'AddressDetail': SubmitAddress,
-                'EventVenue': SingleTiming,
-                'TimeZone': $("#dllTimeZone").val(),
-                'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
-                'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
-                'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
-                'FBUrl': '',
-                'TwitterUrl': '',
-                'MultipleEvents': MultipleSchedule,
-                'Orgnizer': Orgnizer,
-                'AddressStatus': $("#hidAddressStatus").val(),
-                'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
-                'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") == true ? 'Y' : 'N'),
-                'Ticket': Ticket,
-                'EventImage': EventImage,
-                'EventVariable': EventVariable,
-                'Ticket_DAdress': ($("#id_ticketdeliveryaddr").is(":checked") == true ? 'Y' : 'N'),
-                'Ticket_showremain': ($("#id_showremaningticket").is(":checked") == true ? 'Y' : 'N'),
-                'Ticket_showvariable': ($("#id_variablecharge").is(":checked") == true ? 'Y' : 'N'),
-                'Ticket_variabledesc': varDescritpion,
-                'Ticket_variabletype': optionalvariable,
-                'ShowMap': ($("#chkShowMap").is(":checked") == true ? 'Y' : 'N')
-
-            };
-
-            //var params = 'strEveDec :' + $("#edEventDesc").code();
-
-
-            if ($("#hdEventId").val() != '') {
-                $.ajax({
-                    url: '@Url.Action("EditEventInfo", "EditEvent")',
-                    data: { model:model },
-                    type: "Post",
-                    success: function (response) {
-                        $("#hdEventId").val(response);
-                        $('#divaccsuc').css('display', 'block');
-                        $('#diverroacc').css('display', 'none');
-                        $('#succaccmsg').html('Your event is updated!');
-                        $("#hdEventId").val(response);
-                        // window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
-                        var vUrl = $('#txtEventTitle').val() + "౼" + $("#hdEventId").val() + "౼Y";
-                        //alert(vUrl);
-                        window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
-                    }
-                });
-            }
-            else {
-                $('#divaccsuc').css('display', 'none');
-                $('#diverroacc').css('display', 'block');
-                $('#erraccmsg').html('There some problem occurs, Please check after some time.');
-            }
-            // var vUrl = $('#txtEventTitle').val() + "౼" + $("#hdEventId").val() + "౼Y";
-            //  window.location = '@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl;
-
-            @*window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");*@
-            //window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+            save("Preview");
+            
         });
 
 
@@ -2242,6 +1937,7 @@ else
         function editRow(Sno) {
             //alert(ColumnValue);
             $("#hidAddSno").val(Sno);
+            $("#VenueId").val($("#VenueId"+ Sno).val());
             $("#VenueName").val($("#VenueName" + Sno).val());
             $("#Address1").val($("#Address1" + Sno).val());
             $("#Address2").val($("#Address2" + Sno).val());
@@ -2276,19 +1972,20 @@ else
 
             var Sno = $("#ddlOrgnizers").val();
            // alert(Sno);
-         //   debugger;
+           
             $("#hidOrgnizer").val(Sno);
             var vOrgName = $("#OrgName_" + Sno).text();
             var vOrgDes = $("#OrgDes_" + Sno).text();
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
-
+            var vOrgLn= $("#OrgLn_" + Sno).text();
             $("#txtOrgnizer").val(vOrgName);
             $("#edOrgDes").code(vOrgDes);
             $("#txtOrgFBlink").val(vOrgFB);
             $("#txtOrgTWlink").val(vOrgTw);
+            $("#txtOrgLNlink").val(vOrgLn);
 
-            if (vOrgFB != '' || vOrgTw != '') {
+            if (vOrgFB != '' || vOrgTw != ''|| vOrgLn!='') {
                 $("#Incsocial").prop("checked", true);
                 $("#dvOrgnizerFBTw").show();
             }
@@ -2300,6 +1997,7 @@ else
         }
 
         function AddOrgnizer() {
+            debugger;
             $("#hidOrgnizer").val('');
             var Sno = $("#tblOrgnizer tr").length+1;
             //alert(Sno);
@@ -2307,13 +2005,16 @@ else
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
             var vOrgTw = $("#txtOrgTWlink").val();
+            var vOrgLn = $("#txtOrgLNlink").val();
             //alert(Sno);
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgId_' + Sno + '>0</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgFB_' + Sno + '>' + vOrgFB + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgTw_' + Sno + '>' + vOrgTw + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgLn_' + Sno + '>' + vOrgLn + '</label></td>';
             //strHTML = strHTML + '<td align="right"><a href="#" onclick="editOrgnizer(' + Sno + ');"><i class="fa fa-pencil"></i> </a> | <a href="#"  onclick="DeleteOrgnizer(' + Sno + ');"><i class="fa fa-trash"></i> </a></td>';
             strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
 
@@ -2335,12 +2036,12 @@ else
             vOrgDes = $("#edOrgDes").code();
             vOrgFB = $("#txtOrgFBlink").val();
             vOrgTw = $("#txtOrgTWlink").val();
-
+            vOrgLn = $("#txtOrgLNlink").val();
             $("#OrgName_" + Sno).text(vOrgName);
             $("#OrgDes_" + Sno).text(vOrgDes);
             $("#OrgFB_" + Sno).text(vOrgFB);
             $("#OrgTw_" + Sno).text(vOrgTw);
-
+            $("#OrgLn_" + Sno).text(vOrgLn);
 
             $("#ddlOrgnizers option").each(function (i) {
                 if (Sno == $(this).val()) {
@@ -2354,7 +2055,434 @@ else
 
 
         }
+        function save(type)
+        {
+            debugger;
 
+            var status="";
+            if(type=="Preview")
+            {
+                status="Save";
+            }
+            else
+            {
+                status=type;
+            }
+            // Address Entry
+            var SubmitAddress = [];
+            var SingleTiming = [];
+            var MultipleSchedule = [];
+            var Orgnizer = [];
+            var EventImage = [];
+            var EventVariable = [];
+            //var table = $("#tblAddress");
+
+
+            //Variable charges
+            var varlength = $("#id_Mainvariable> div").size();
+            if (varlength > 0) {
+                for (var i = 0; i < varlength; i++) {
+                    //alert($('#id_varsubprice-' + i).val());
+                    var varprice = $('#id_varsubprice-' + i).val().replace(',', '');
+                    //alert(varprice);
+                    EventVariable.push({
+                        Variable_Id:$('#id_varid-' + i).val(),
+                        VariableDesc: $('#id_varsubdesc-' + i).val(),
+                        Price: varprice
+
+                    });
+                }
+
+
+            }
+
+            //Image Section
+
+            if ($("#image_count").val() > 0) {
+                var count = ($("#image_count").val());
+                for (var i = 0; i < count; i++) {
+
+                    var image = $("#image_hidden_" + i).val();
+                    var res = image.split("####");
+
+                    var imagename = res[0];
+                    var imagetype = res[1];
+
+                    EventImage.push({
+                        EventImageUrl: imagename,
+                        ImageType: imagetype,
+                    });
+                }
+
+            }
+
+
+            // Ticket
+            var Ticket = [];
+            var divlength = $("#MasterDiv> div").size();
+            if (divlength > 0) {
+                var TicketPrice = 0;
+                var Auto_Schedule = 0;
+                var AutoSechduleType = 0;
+                var TicketTypeID = 0;
+                var ecfee = 0;
+                var customerfee = 0;
+                var total = 0;
+                for (var i = 0; i < divlength; i++) {
+
+                    if ($('#id_cost-' + i).css('display') == "block") {
+                        TicketPrice = $('#id_cost-' + i).val().replace(',', '');
+
+                    } else { TicketPrice = 0; }
+                    if ($('#id_CusdateCont-' + i).css('display') == "block") {
+
+                        Auto_Schedule = 1;
+
+                        if ($('#id_auto_hide_type_0-' + i).is(":checked") == true) {
+                            AutoSechduleType = 0;
+
+                        }
+                        if ($('#id_auto_hide_type_1-' + i).is(":checked") == true) {
+                            AutoSechduleType = 1;
+
+                        }
+
+                    } else {
+                        Auto_Schedule = 0;
+                    }
+                    if ($('#id_include_ticket_fees-' + i).val() == 0) {
+                        customerfee = $('#id_fee-' + i).val();
+
+                    }
+                    if ($('#id_include_ticket_fees-' + i).val() == 1) {
+                        ecfee = $('#id_fee-' + i).val();
+
+                    }
+                    total = $('#id_total-' + i).val();
+                    if ($('#id_Tickettype-' + i).val() == "Free") {
+                        TicketTypeID = 1
+
+                    } else if ($('#id_Tickettype-' + i).val() == "Paid") {
+                        TicketTypeID = 2
+
+                    } else {
+
+                        TicketTypeID = 3
+                    }
+
+                    var Discount = $('#id_Discount-' + i).val().replace(',', '');
+                    var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
+
+                    Ticket.push({
+                        T_Id:$('#id_ticket_id-' + i).val(),
+                        T_name: $('#id_ticket_type-' + i).val(),
+                        Qty_Available: $('#id_quantity_total-' + i).val(),
+                        T_Type: $('#id_Tickettype-' + i).val(),
+                        Price: TicketPrice,
+                        'T_Desc': $('#id_descriptionclass-' + i).val(),
+                        'Show_T_Desc': parseInt(showdesc),
+                        Sale_Start_Date: $('#id_salestart-' + i).val(),
+                        Sale_Start_Time: $('#id_saletimestart-' + i).val(),
+                        Sale_End_Date: $('#id_saleend-' + i).val(),
+                        Sale_End_Time: $('#id_saletimeend-' + i).val(),
+                        'Hide_Ticket': parseInt(($("#id_ticketshidden-" + i).is(":checked") == true ? '1' : '0')),
+                        Auto_Hide_Sche: parseInt(Auto_Schedule),
+                        Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
+                        Hide_Untill_Time: $('#id_auto_hide_until_time-' + i).val(),
+                        Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
+                        Hide_After_Time: $('#id_auto_hide_after_Time-' + i).val(),
+                        Min_T_Qty: $('#id_min_ticket-' + i).val(),
+                        Max_T_Qty: $('#id_max_ticket-' + i).val(),
+                        T_Disable: (($('#id_disableticket-' + i).is(":checked") == true ? '1' : '0')),
+                        T_Mark_SoldOut: parseInt(($('#id_marksoldout-' + i).is(":checked") == true ? '1' : '0')),
+                        T_Displayremaining: ($('#id_displayremaining-' + i).is(":checked") == true ? '1' : '0'),
+                        Fees_Type: $('#id_include_ticket_fees-' + i).val(),
+                        'T_Discount': Discount,
+                        T_order: $('#id_order-' + i).val(),
+                        TicketTypeID: TicketTypeID,
+                        T_AutoSechduleType: AutoSechduleType,
+                        EC_Fee: ecfee,
+                        Customer_Fee: customerfee,
+                        TotalPrice: total
+
+                    });
+
+                }
+
+            }
+
+            //$('#tblAddress tr').each(function () {
+
+
+            //});
+
+
+            //  alert($("#tblAddress tr").length);
+            if ($("#tblAddress tr").length <= 1) {
+                if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
+                    SubmitAddress.push({
+                        VenueName: ' ',
+                        Address1: ' ',
+                        Address2: ' ',
+                        City: ' ',
+                        State: ' ',
+                        Zip: ' ',
+                        CountryID: ' ',
+                        ConsolidateAddress: $("#txtEventLocation").val()
+                    })
+                }
+            }
+            else {
+                debugger;
+                $("#tblAddress tr").each(function () {
+
+                    var Sno = $(this).find("td:first").html();
+                    //  alert(Sno);
+                    // Multiple Address
+                    if (Sno != '' && Sno != undefined && Sno != null) {
+                        SubmitAddress.push({
+                            AddressId:$("#VenueId"+Sno).val(),
+                            VenueName: $("#VenueName" + Sno).val(),
+                            Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() : ''),
+                            Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
+                            City: ($("#City" + Sno).val() != null ? $("#City" + Sno).val() : ''),
+                            State: ($("#State" + Sno).val() != null ? $("#State" + Sno).val() : ''),
+                            Zip: ($("#Zip" + Sno).val() != null ? $("#Zip" + Sno).val() : ''),
+                            CountryID: ($("#CID" + Sno).val() != null ? $("#CID" + Sno).val() : ''),
+                            ConsolidateAddress: $("#consolidate" + Sno).text()
+                        });
+                    }
+
+                });
+
+            }
+
+            //if (SubmitAddress == null && )
+            //{
+            //    alert("In Submit");
+            //    SubmitAddress.push({
+            //        VenueName: '',
+            //        Address1: '',
+            //        Address2: '',
+            //        City: '',
+            //        State: '',
+            //        Zip: '',
+            //        CountryID: '',
+            //        ConsolidateAddress: $("#txtEventLocation").val()
+            //    });
+
+            //}
+
+            // Single Timing
+            if ($("#hdSchType").val() == 'Single') {
+                SingleTiming.push({
+                    'EventStartDate': $("#txtStartDate").val(),
+                    'EventEndDate': $("#txtEndDate").val(),
+                    'EventStartTime': $("#txtStartTime").val(),
+                    'EventEndTime': $("#txtEndTime").val()
+                });
+            }
+
+            // Multiple Schedule
+
+
+            if ($("#hdSchType").val() == 'Multiple') {
+
+
+                var SchOption = $("#dlSchOption").val();
+                var vWeeklyDayAry = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
+                var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
+                var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
+                var vMonthlyWeekDaysAry = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
+
+                var vStartingFrom = $("#txtDateFrom").val();
+                var vStartingTo = $("#txtDateTo").val();
+                var vStartTime = $("#txtTimeStart").val();
+                var vEndTime = $("#txtTimeEnd").val();
+                var vMonthlyWeekDays = '';
+                var vWeeklyDay = '';
+
+                if (SchOption == "Daily") {
+                    vWeeklyDay = '';
+                    vMonthlyDay = '';
+                    vMonthlyWeek = '';
+                    vMonthlyWeekDays = '';
+                    $("#hidSchLastState").val("Daily");
+                }
+                else if (SchOption == "Weekly") {
+                    vMonthlyDay = '';
+                    vMonthlyWeek = '';
+                    vMonthlyWeekDays = '';
+                    $("#hidSchLastState").val("Weekly");
+                    for (i = 0; i < vWeeklyDayAry.length; i++) {
+                        if (vWeeklyDay == '') vWeeklyDay = vWeeklyDayAry[i].toString();
+                        else vWeeklyDay = vWeeklyDay + ',' + vWeeklyDayAry[i].toString();
+                    }
+                }
+                else if (SchOption == "Monthly") {
+                    vWeeklyDay = '';
+                    if ($("#hdMonthlyType").val() == "DM") vMonthlyWeek = ''; vMonthlyWeekDays = '';
+                    if ($("#hdMonthlyType").val() == "DW") {
+                        vMonthlyDay = '';
+                        for (i = 0; i < vMonthlyWeekDaysAry.length; i++) {
+                            if (vMonthlyWeekDays == '') vMonthlyWeekDays = vMonthlyWeekDaysAry[i].toString();
+                            else vMonthlyWeekDays = vMonthlyWeekDays + ',' + vMonthlyWeekDaysAry[i].toString();
+                        }
+                    }
+
+                    $("#hidSchLastState").val("Monthly");
+                }
+                else if (SchOption == "Custom") {
+                    vWeeklyDay = '';
+                    vMonthlyDay = '';
+                    vMonthlyWeek = '';
+                    vMonthlyWeekDays = '';
+                    $("#hidSchLastState").val("Custom");
+                }
+
+                MultipleSchedule.push({
+                    'Frequency': SchOption,
+                    'WeeklyDay': vWeeklyDay,
+                    'MonthlyDay': vMonthlyDay,
+                    'MonthlyWeek': vMonthlyWeek,
+                    'MonthlyWeekDays': vMonthlyWeekDays,
+                    'StartingFrom': vStartingFrom,
+                    'StartingTo': vStartingTo,
+                    'StartTime': vStartTime,
+                    'EndTime': vEndTime
+                });
+
+            }
+            // Orgnizer
+            //$("#tblOrgnizer option").each(function (i) {
+            //    Orgnizer.push({
+            //        'Orgnizer_Name': $(this).text(),
+            //        'Orgnizer_Desc': $(this).val()
+            //    });
+            //    //alert($(this).text() + " : " + $(this).val());
+            //});
+
+            var vDefaultOrg = $("#ddlOrgnizers").val();
+            console.log( $("#tblOrgnizer"));
+            $("#tblOrgnizer tr").each(function () {
+                var Sno = $(this).find("td:first").html();
+                //alert(Sno);
+                // Multiple Address
+                debugger;
+                if (Sno != '') {
+                    Orgnizer.push({
+                        Orgnizer_Id: $("#OrgId_" + Sno).text(),
+                        Orgnizer_Name: $("#OrgName_" + Sno).text(),
+                        Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
+                        FBLink: $("#OrgFB_" + Sno).text(),
+                        Twitter: $("#OrgTw_" + Sno).text(),
+                        Linkedin: $("#OrgLn_" + Sno).text(),
+                        DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
+
+                    });
+                }
+            });
+
+            console.log(Orgnizer);
+
+            // Basic Event Info
+            //alert($("#edSummer1").code());
+            //debugger;
+            //$("#spEvDesc").text();
+            var vEdesc = ''; //$("#edEventDesc").code();
+
+            var varDescritpion = '';
+            var optionalvariable = '';
+            if ($("#id_variablecharge").is(":checked")) {
+
+                varDescritpion = $('#id_vardesc').val();
+                optionalvariable = $('#variabletype').val();
+            }
+
+            var model = {
+                'EventID': $("#hdEventId").val(),
+                'EventTypeID': $("#EventType").val(),
+                'EventCategoryID': $("#ddlEventCategory").val(),
+                'EventSubCategoryID': $("#ddlEventSubCategory").val(),
+                'UserID': '',
+                'EventTitle': $("#txtEventTitle").val(),
+                'EventDescription': $("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, ""),
+                'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
+                'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
+                'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
+                'Private_Password': $("#txtReqPassword").val(),
+                'EventUrl': $("#txtEventUrl").val().trim(),
+                'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
+                'EventStatus': status,
+                'AddressDetail': SubmitAddress,
+                'EventVenue': SingleTiming,
+                'TimeZone': $("#dllTimeZone").val(),
+                'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
+                'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
+                'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
+                'FBUrl': '',
+                'TwitterUrl': '',
+                'MultipleEvents': MultipleSchedule,
+                'Orgnizer': Orgnizer,
+                'AddressStatus': $("#hidAddressStatus").val(),
+                'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
+                'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") == true ? 'Y' : 'N'),
+                'Ticket': Ticket,
+                'EventImage': EventImage,
+                'EventVariable': EventVariable,
+                'Ticket_DAdress': ($("#id_ticketdeliveryaddr").is(":checked") == true ? 'Y' : 'N'),
+                'Ticket_showremain': ($("#id_showremaningticket").is(":checked") == true ? 'Y' : 'N'),
+                'Ticket_showvariable': ($("#id_variablecharge").is(":checked") == true ? 'Y' : 'N'),
+                'Ticket_variabledesc': varDescritpion,
+                'Ticket_variabletype': optionalvariable,
+                'ShowMap': ($("#chkShowMap").is(":checked") == true ? 'Y' : 'N')
+
+            };
+
+            //var params = 'strEveDec :' + $("#edEventDesc").code();
+
+
+            if ($("#hdEventId").val() != '') {
+
+                $.ajax({
+                    url: '@Url.Action("Draftmodemodification", "EditEvent")',
+                    data: { model:model },
+                    type: "Post",
+                    success: function (response) {
+                        $("#hdEventId").val(response);
+                        $('#divaccsuc').css('display', 'block');
+                        $('#diverroacc').css('display', 'none');
+                        $('#succaccmsg').html('Your event is updated!');
+                        $("#hdEventId").val(response);
+                        if(type=="Save")
+                        {
+                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                        }
+
+
+                        //preview
+                        if(type=="Preview")
+                        {
+                            var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
+                         
+                            window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
+                        }
+                        if(type=="Live")
+                        {
+                            //live
+                            window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;
+                        }
+                    }
+                });
+            }
+            else {
+                $('#divaccsuc').css('display', 'none');
+                $('#diverroacc').css('display', 'block');
+                $('#erraccmsg').html('There some problem occurs, Please check after some time.');
+            }
+
+
+        }
         $(document).ready(function () {
             var vCatId = $("#ddlEventCategory").val();
             var vSubCatId = $("#hidSubCat").val();
@@ -2385,12 +2513,13 @@ else
                     $("#ddlOrgnizers").append(getHtml[1]);
 
                     var msg = validatemain();
-                    if(msg=="")
-                    {
-                        $("#txtOrgnizer").removeClass("err-bor");
-                        $(".cdisable").removeAttr("disabled");
+                   
+                    //if(msg=="")
+                    //{
+                    //    $("#txtOrgnizer").removeClass("err-bor");
+                    //    $(".cdisable").removeAttr("disabled");
 
-                    }
+                    //}
 
                 },
                 error: function (data) {
@@ -2440,384 +2569,10 @@ else
                     return false;
 
                 }
-                // Address Entry
-                var SubmitAddress = [];
-                var SingleTiming = [];
-                var MultipleSchedule = [];
-                var Orgnizer = [];
-                var EventImage = [];
-                var EventVariable = [];
-                //var table = $("#tblAddress");
+                save("Live");
 
 
-                //Variable charges
-                var varlength = $("#id_Mainvariable> div").size();
-                if (varlength > 0) {
-                    for (var i = 0; i < varlength; i++) {
-                        var varprice = $('#id_varsubprice-' + i).val().replace(',', ' ');
-                        EventVariable.push({
-
-                            VariableDesc: $('#id_varsubdesc-' + i).val(),
-                            Price: varprice
-
-                        });
-                    }
-
-
-                }
-
-                //Image Section
-
-                if ($("#image_count").val() > 0) {
-                    var count = ($("#image_count").val());
-                    for (var i = 0; i < count; i++) {
-
-                        var image = $("#image_hidden_" + i).val();
-                        var res = image.split("####");
-
-                        var imagename = res[0];
-                        var imagetype = res[1];
-
-                        EventImage.push({
-                            EventImageUrl: imagename,
-                            ImageType: imagetype,
-                        });
-                    }
-
-                }
-
-
-                // Ticket
-                var Ticket = [];
-                var divlength = $("#MasterDiv> div").size();
-                if (divlength > 0) {
-                    var TicketPrice = 0;
-                    var Auto_Schedule = 0;
-                    var AutoSechduleType = 0;
-                    var TicketTypeID = 0;
-                    var ecfee = 0;
-                    var customerfee = 0;
-                    var total = 0;
-                    for (var i = 0; i < divlength; i++) {
-
-                        if ($('#id_cost-' + i).css('display') == "block") {
-                            TicketPrice = $('#id_cost-' + i).val().replace(',', '');
-
-                        } else { TicketPrice = 0; }
-                        if ($('#id_CusdateCont-' + i).css('display') == "block") {
-
-                            Auto_Schedule = 1;
-
-                            if ($('#id_auto_hide_type_0-' + i).is(":checked") == true) {
-                                AutoSechduleType = 0;
-
-                            }
-                            if ($('#id_auto_hide_type_1-' + i).is(":checked") == true) {
-                                AutoSechduleType = 1;
-
-                            }
-
-                        } else {
-                            Auto_Schedule = 0;
-                        }
-                        if ($('#id_include_ticket_fees-' + i).val() == 0) {
-                            customerfee = $('#id_fee-' + i).val();
-
-                        }
-                        if ($('#id_include_ticket_fees-' + i).val() == 1) {
-                            ecfee = $('#id_fee-' + i).val();
-
-                        }
-                        total = $('#id_total-' + i).val();
-                        if ($('#id_Tickettype-' + i).val() == "Free") {
-                            TicketTypeID = 1
-
-                        } else if ($('#id_Tickettype-' + i).val() == "Paid") {
-                            TicketTypeID = 2
-
-                        } else {
-
-                            TicketTypeID = 3
-                        }
-
-                        var Discount = $('#id_Discount-' + i).val().replace(',', '');
-                        var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
-
-                        Ticket.push({
-                            T_name: $('#id_ticket_type-' + i).val(),
-                            Qty_Available: $('#id_quantity_total-' + i).val(),
-                            T_Type: $('#id_Tickettype-' + i).val(),
-                            Price: TicketPrice,
-                            'T_Desc': $('#id_descriptionclass-' + i).val(),
-                            'Show_T_Desc': parseInt(showdesc),
-                            Sale_Start_Date: $('#id_salestart-' + i).val(),
-                            Sale_Start_Time: $('#id_hdsaletimestart-' + i).val(),
-                            Sale_End_Date: $('#id_saleend-' + i).val(),
-                            Sale_End_Time: $('#id_hdsaletimeend-' + i).val(),
-                            'Hide_Ticket': parseInt(($("#id_ticketshidden-" + i).is(":checked") == true ? '1' : '0')),
-                            Auto_Hide_Sche: parseInt(Auto_Schedule),
-                            Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
-                            Hide_Untill_Time: $('#id_hdautohideuntil-' + i).val(),
-                            Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
-                            Hide_After_Time: $('#id_hdautohideafter-' + i).val(),
-                            Min_T_Qty: $('#id_min_ticket-' + i).val(),
-                            Max_T_Qty: $('#id_max_ticket-' + i).val(),
-                            T_Disable: (($('#id_disableticket-' + i).is(":checked") == true ? '1' : '0')),
-                            T_Mark_SoldOut: parseInt(($('#id_marksoldout-' + i).is(":checked") == true ? '1' : '0')),
-                            T_Displayremaining: ($('#id_displayremaining-' + i).is(":checked") == true ? '1' : '0'),
-                            Fees_Type: $('#id_include_ticket_fees-' + i).val(),
-                            'T_Discount': Discount,
-                            T_order: $('#id_order-' + i).val(),
-                            TicketTypeID: TicketTypeID,
-                            T_AutoSechduleType: AutoSechduleType,
-                            EC_Fee: ecfee,
-                            Customer_Fee: customerfee,
-                            TotalPrice: total
-
-                        });
-
-                    }
-
-                }
-
-                //$('#tblAddress tr').each(function () {
-
-
-                //});
-
-
-                //  alert($("#tblAddress tr").length);
-                if ($("#tblAddress tr").length <= 1) {
-                    if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
-                        SubmitAddress.push({
-                            VenueName: ' ',
-                            Address1: ' ',
-                            Address2: ' ',
-                            City: ' ',
-                            State: ' ',
-                            Zip: ' ',
-                            CountryID: ' ',
-                            ConsolidateAddress: $("#txtEventLocation").val()
-                        })
-                    }
-                }
-                else {
-                    debugger;
-                    $("#tblAddress tr").each(function () {
-
-                        var Sno = $(this).find("td:first").html();
-                        //  alert(Sno);
-                        // Multiple Address
-                        if (Sno != '' && Sno != undefined && Sno != null) {
-                            SubmitAddress.push({
-                                VenueName: $("#VenueName" + Sno).val(),
-                                Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() : ''),
-                                Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
-                                City: ($("#City" + Sno).val() != null ? $("#City" + Sno).val() : ''),
-                                State: ($("#State" + Sno).val() != null ? $("#State" + Sno).val() : ''),
-                                Zip: ($("#Zip" + Sno).val() != null ? $("#Zip" + Sno).val() : ''),
-                                CountryID: ($("#CID" + Sno).val() != null ? $("#CID" + Sno).val() : ''),
-                                ConsolidateAddress: $("#consolidate" + Sno).text()
-                            });
-                        }
-
-                    });
-
-                }
-
-                //if (SubmitAddress == null && )
-                //{
-                //    alert("In Submit");
-                //    SubmitAddress.push({
-                //        VenueName: '',
-                //        Address1: '',
-                //        Address2: '',
-                //        City: '',
-                //        State: '',
-                //        Zip: '',
-                //        CountryID: '',
-                //        ConsolidateAddress: $("#txtEventLocation").val()
-                //    });
-
-                //}
-
-                // Single Timing
-                if ($("#hdSchType").val() == 'Single') {
-                    SingleTiming.push({
-                        'EventStartDate': $("#txtStartDate").val(),
-                        'EventEndDate': $("#txtEndDate").val(),
-                        'EventStartTime': $("#txtStartTime").val(),
-                        'EventEndTime': $("#txtEndTime").val()
-                    });
-                }
-
-                // Multiple Schedule
-
-
-                if ($("#hdSchType").val() == 'Multiple') {
-
-
-                    var SchOption = $("#dlSchOption").val();
-                    var vWeeklyDayAry = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
-                    var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
-                    var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
-               
-                    var vMonthlyWeekDaysAry = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
-
-                    var vStartingFrom = $("#txtDateFrom").val();
-                    var vStartingTo = $("#txtDateTo").val();
-                    var vStartTime = $("#txtTimeStart").val();
-                    var vEndTime = $("#txtTimeEnd").val();
-                    var vMonthlyWeekDays = '';
-                    var vWeeklyDay = '';
-
-                    if (SchOption == "Daily") {
-                        vWeeklyDay = '';
-                        vMonthlyDay = '';
-                        vMonthlyWeek = '';
-                        vMonthlyWeekDays = '';
-                        $("#hidSchLastState").val("Daily");
-                    }
-                    else if (SchOption == "Weekly") {
-                        vMonthlyDay = '';
-                        vMonthlyWeek = '';
-                        vMonthlyWeekDays = '';
-                        $("#hidSchLastState").val("Weekly");
-                        for (i = 0; i < vWeeklyDayAry.length; i++) {
-                            if (vWeeklyDay == '') vWeeklyDay = vWeeklyDayAry[i].toString();
-                            else vWeeklyDay = vWeeklyDay + ',' + vWeeklyDayAry[i].toString();
-                        }
-                    }
-                    else if (SchOption == "Monthly") {
-                        vWeeklyDay = '';
-                        if ($("#hdMonthlyType").val() == "DM") vMonthlyWeek = ''; vMonthlyWeekDays = '';
-                        if ($("#hdMonthlyType").val() == "DW") {
-                            vMonthlyDay = '';
-                            for (i = 0; i < vMonthlyWeekDaysAry.length; i++) {
-                                if (vMonthlyWeekDays == '') vMonthlyWeekDays = vMonthlyWeekDaysAry[i].toString();
-                                else vMonthlyWeekDays = vMonthlyWeekDays + ',' + vMonthlyWeekDaysAry[i].toString();
-                            }
-                        }
-
-                        $("#hidSchLastState").val("Monthly");
-                    }
-                    else if (SchOption == "Custom") {
-                        vWeeklyDay = '';
-                        vMonthlyDay = '';
-                        vMonthlyWeek = '';
-                        vMonthlyWeekDays = '';
-                        $("#hidSchLastState").val("Custom");
-                    }
-
-                    MultipleSchedule.push({
-                        'Frequency': SchOption,
-                        'WeeklyDay': vWeeklyDay,
-                        'MonthlyDay': vMonthlyDay,
-                        'MonthlyWeek': vMonthlyWeek,
-                        'MonthlyWeekDays': vMonthlyWeekDays,
-                        'StartingFrom': vStartingFrom,
-                        'StartingTo': vStartingTo,
-                        'StartTime': vStartTime,
-                        'EndTime': vEndTime
-                    });
-
-                }
-                // Orgnizer
-                //$("#tblOrgnizer option").each(function (i) {
-                //    Orgnizer.push({
-                //        'Orgnizer_Name': $(this).text(),
-                //        'Orgnizer_Desc': $(this).val()
-                //    });
-                //    //alert($(this).text() + " : " + $(this).val());
-                //});
-
-                var vDefaultOrg = $("#ddlOrgnizers").val();
-                console.log( $("#tblOrgnizer"));
-                $("#tblOrgnizer tr").each(function () {
-                    var Sno = $(this).find("td:first").html();
-                    //alert(Sno);
-                    // Multiple Address
-                    if (Sno != '') {
-                        Orgnizer.push({
-                            Orgnizer_Name: $("#OrgName_" + Sno).text(),
-                            Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
-                            FBLink: $("#OrgFB_" + Sno).text(),
-                            Twitter: $("#OrgTw_" + Sno).text(),
-                            DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
-
-                        });
-                    }
-                });
-
-                console.log(Orgnizer);
-
-                // Basic Event Info
-                //alert($("#edSummer1").code());
-                //debugger;
-                //$("#spEvDesc").text();
-                var vEdesc = ''; //$("#edEventDesc").code();
-
-                var varDescritpion = '';
-                var optionalvariable = '';
-                if ($("#id_variablecharge").is(":checked")) {
-                    varDescritpion = $('#id_vardesc').val();
-                    optionalvariable = $('#variabletype').val();
-                }
-
-                var model = {
-                    'EventID': $("#hdEventId").val(),
-                    'EventTypeID': $("#EventType").val(),
-                    'EventCategoryID': $("#ddlEventCategory").val(),
-                    'EventSubCategoryID': $("#ddlEventSubCategory").val(),
-                    'UserID': '',
-                    'EventTitle': $("#txtEventTitle").val(),
-                    'EventDescription': $("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, ""),
-                    'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
-                    'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
-                    'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
-                    'Private_Password': $("#txtReqPassword").val(),
-                    'EventUrl': $("#txtEventUrl").val().trim(),
-                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
-                    'EventStatus': 'Save',
-                    'AddressDetail': SubmitAddress,
-                    'EventVenue': SingleTiming,
-                    'TimeZone': $("#dllTimeZone").val(),
-                    'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
-                    'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
-                    'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
-                    'FBUrl': '',
-                    'TwitterUrl': '',
-                    'MultipleEvents': MultipleSchedule,
-                    'Orgnizer': Orgnizer,
-                    'AddressStatus': $("#hidAddressStatus").val(),
-                    'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
-                    'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") == true ? 'Y' : 'N'),
-                    'Ticket': Ticket,
-                    'EventImage': EventImage,
-                    'EventVariable': EventVariable,
-                    'Ticket_DAdress': ($("#id_ticketdeliveryaddr").is(":checked") == true ? 'Y' : 'N'),
-                    'Ticket_showremain': ($("#id_showremaningticket").is(":checked") == true ? 'Y' : 'N'),
-                    'Ticket_showvariable': ($("#id_variablecharge").is(":checked") == true ? 'Y' : 'N'),
-                    'Ticket_variabledesc': varDescritpion,
-                    'Ticket_variabletype': optionalvariable,
-                    'ShowMap': ($("#chkShowMap").is(":checked") == true ? 'Y' : 'N')
-                };
-
-                if ($("#hdEventId").val() != '') {
-                    $.ajax({
-                        url: '@Url.Action("UpdateEventStatus", "CreateEvent")',
-                        data: { strEventId: $("#hdEventId").val() },
-                        type: "Post",
-                        success: function (response) {
-                            window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + $("#hdEventId").val() + '';
-                        }
-                    });
-                }
-                else {
-                    $('#divaccsuc').css('display', 'none');
-                    $('#diverroacc').css('display', 'block');
-                    $('#erraccmsg').html('There some erroe occurs, please try again');
-                }
+              
 
             });
             $('#chkReqPassword').change(function () {
@@ -2850,405 +2605,19 @@ else
                     return false;
 
                 }
-                // Address Entry
-                var SubmitAddress = [];
-                var SingleTiming = [];
-                var MultipleSchedule = [];
-                var Orgnizer = [];
-                var EventImage = [];
-                var EventVariable = [];
-                //var table = $("#tblAddress");
 
-
-                //Variable charges
-                var varlength = $("#id_Mainvariable> div").size();
-                if (varlength > 0) {
-                    for (var i = 0; i < varlength; i++) {
-                        //alert($('#id_varsubprice-' + i).val());
-                        var varprice = $('#id_varsubprice-' + i).val().replace(',', '');
-                        //alert(varprice);
-                        EventVariable.push({
-
-                            VariableDesc: $('#id_varsubdesc-' + i).val(),
-                            Price: varprice
-
-                        });
-                    }
-
-
-                }
-
-                //Image Section
-
-                if ($("#image_count").val() > 0) {
-                    var count = ($("#image_count").val());
-                    for (var i = 0; i < count; i++) {
-
-                        var image = $("#image_hidden_" + i).val();
-                        var res = image.split("####");
-
-                        var imagename = res[0];
-                        var imagetype = res[1];
-
-                        EventImage.push({
-                            EventImageUrl: imagename,
-                            ImageType: imagetype,
-                        });
-                    }
-
-                }
-
-
-                // Ticket
-                var Ticket = [];
-                var divlength = $("#MasterDiv> div").size();
-                if (divlength > 0) {
-                    var TicketPrice = 0;
-                    var Auto_Schedule = 0;
-                    var AutoSechduleType = 0;
-                    var TicketTypeID = 0;
-                    var ecfee = 0;
-                    var customerfee = 0;
-                    var total = 0;
-                    for (var i = 0; i < divlength; i++) {
-
-                        if ($('#id_cost-' + i).css('display') == "block") {
-                            TicketPrice = $('#id_cost-' + i).val().replace(',', '');
-
-                        } else { TicketPrice = 0; }
-                        if ($('#id_CusdateCont-' + i).css('display') == "block") {
-
-                            Auto_Schedule = 1;
-
-                            if ($('#id_auto_hide_type_0-' + i).is(":checked") == true) {
-                                AutoSechduleType = 0;
-
-                            }
-                            if ($('#id_auto_hide_type_1-' + i).is(":checked") == true) {
-                                AutoSechduleType = 1;
-
-                            }
-
-                        } else {
-                            Auto_Schedule = 0;
-                        }
-                        if ($('#id_include_ticket_fees-' + i).val() == 0) {
-                            customerfee = $('#id_fee-' + i).val();
-
-                        }
-                        if ($('#id_include_ticket_fees-' + i).val() == 1) {
-                            ecfee = $('#id_fee-' + i).val();
-
-                        }
-                        total = $('#id_total-' + i).val();
-                        if ($('#id_Tickettype-' + i).val() == "Free") {
-                            TicketTypeID = 1
-
-                        } else if ($('#id_Tickettype-' + i).val() == "Paid") {
-                            TicketTypeID = 2
-
-                        } else {
-
-                            TicketTypeID = 3
-                        }
-
-                        var Discount = $('#id_Discount-' + i).val().replace(',', '');
-                        var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
-
-                        Ticket.push({
-                            T_name: $('#id_ticket_type-' + i).val(),
-                            Qty_Available: $('#id_quantity_total-' + i).val(),
-                            T_Type: $('#id_Tickettype-' + i).val(),
-                            Price: TicketPrice,
-                            'T_Desc': $('#id_descriptionclass-' + i).val(),
-                            'Show_T_Desc': parseInt(showdesc),
-                            Sale_Start_Date: $('#id_salestart-' + i).val(),
-                            Sale_Start_Time: $('#id_hdsaletimestart-' + i).val(),
-                            Sale_End_Date: $('#id_saleend-' + i).val(),
-                            Sale_End_Time: $('#id_hdsaletimeend-' + i).val(),
-                            'Hide_Ticket': parseInt(($("#id_ticketshidden-" + i).is(":checked") == true ? '1' : '0')),
-                            Auto_Hide_Sche: parseInt(Auto_Schedule),
-                            Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
-                            Hide_Untill_Time: $('#id_hdautohideuntil-' + i).val(),
-                            Hide_After_Date: $('#id_auto_hide_after_Date-' + i).val(),
-                            Hide_After_Time: $('#id_hdautohideafter-' + i).val(),
-                            Min_T_Qty: $('#id_min_ticket-' + i).val(),
-                            Max_T_Qty: $('#id_max_ticket-' + i).val(),
-                            T_Disable: (($('#id_disableticket-' + i).is(":checked") == true ? '1' : '0')),
-                            T_Mark_SoldOut: parseInt(($('#id_marksoldout-' + i).is(":checked") == true ? '1' : '0')),
-                            T_Displayremaining: ($('#id_displayremaining-' + i).is(":checked") == true ? '1' : '0'),
-                            Fees_Type: $('#id_include_ticket_fees-' + i).val(),
-                            'T_Discount': Discount,
-                            T_order: $('#id_order-' + i).val(),
-                            TicketTypeID: TicketTypeID,
-                            T_AutoSechduleType: AutoSechduleType,
-                            EC_Fee: ecfee,
-                            Customer_Fee: customerfee,
-                            TotalPrice: total
-
-                        });
-
-                    }
-
-                }
-
-                //$('#tblAddress tr').each(function () {
-
-
-                //});
-
-
-                //  alert($("#tblAddress tr").length);
-                if ($("#tblAddress tr").length <= 1) {
-                    if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
-                        SubmitAddress.push({
-                            VenueName: ' ',
-                            Address1: ' ',
-                            Address2: ' ',
-                            City: ' ',
-                            State: ' ',
-                            Zip: ' ',
-                            CountryID: ' ',
-                            ConsolidateAddress: $("#txtEventLocation").val()
-                        })
-                    }
-                }
-                else {
-                    debugger;
-                    $("#tblAddress tr").each(function () {
-
-                        var Sno = $(this).find("td:first").html();
-                        //  alert(Sno);
-                        // Multiple Address
-                        if (Sno != '' && Sno != undefined && Sno != null) {
-                            SubmitAddress.push({
-                                VenueName: $("#VenueName" + Sno).val(),
-                                Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() : ''),
-                                Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
-                                City: ($("#City" + Sno).val() != null ? $("#City" + Sno).val() : ''),
-                                State: ($("#State" + Sno).val() != null ? $("#State" + Sno).val() : ''),
-                                Zip: ($("#Zip" + Sno).val() != null ? $("#Zip" + Sno).val() : ''),
-                                CountryID: ($("#CID" + Sno).val() != null ? $("#CID" + Sno).val() : ''),
-                                ConsolidateAddress: $("#consolidate" + Sno).text()
-                            });
-                        }
-
-                    });
-
-                }
-
-                //if (SubmitAddress == null && )
-                //{
-                //    alert("In Submit");
-                //    SubmitAddress.push({
-                //        VenueName: '',
-                //        Address1: '',
-                //        Address2: '',
-                //        City: '',
-                //        State: '',
-                //        Zip: '',
-                //        CountryID: '',
-                //        ConsolidateAddress: $("#txtEventLocation").val()
-                //    });
-
-                //}
-
-                // Single Timing
-                if ($("#hdSchType").val() == 'Single') {
-                    SingleTiming.push({
-                        'EventStartDate': $("#txtStartDate").val(),
-                        'EventEndDate': $("#txtEndDate").val(),
-                        'EventStartTime': $("#txtStartTime").val(),
-                        'EventEndTime': $("#txtEndTime").val()
-                    });
-                }
-
-                // Multiple Schedule
-
-
-                if ($("#hdSchType").val() == 'Multiple') {
-
-
-                    var SchOption = $("#dlSchOption").val();
-                    var vWeeklyDayAry = ($("#dllWeeklyDayChk").val() == null ? '' : $("#dllWeeklyDayChk").val());
-                    var vMonthlyDay = ($("#dllMonth").val() == null ? '' : $("#dllMonth").val());
-                    var vMonthlyWeek = ($("#dllMonthlyWeek").val() == null ? '' : $("#dllMonthlyWeek").val());
-                    var vMonthlyWeekDaysAry = ($("#dllMonthlyWeekDay").val() == null ? '' : $("#dllMonthlyWeekDay").val());
-
-                    var vStartingFrom = $("#txtDateFrom").val();
-                    var vStartingTo = $("#txtDateTo").val();
-                    var vStartTime = $("#txtTimeStart").val();
-                    var vEndTime = $("#txtTimeEnd").val();
-                    var vMonthlyWeekDays = '';
-                    var vWeeklyDay = '';
-
-                    if (SchOption == "Daily") {
-                        vWeeklyDay = '';
-                        vMonthlyDay = '';
-                        vMonthlyWeek = '';
-                        vMonthlyWeekDays = '';
-                        $("#hidSchLastState").val("Daily");
-                    }
-                    else if (SchOption == "Weekly") {
-                        vMonthlyDay = '';
-                        vMonthlyWeek = '';
-                        vMonthlyWeekDays = '';
-                        $("#hidSchLastState").val("Weekly");
-                        for (i = 0; i < vWeeklyDayAry.length; i++) {
-                            if (vWeeklyDay == '') vWeeklyDay = vWeeklyDayAry[i].toString();
-                            else vWeeklyDay = vWeeklyDay + ',' + vWeeklyDayAry[i].toString();
-                        }
-                    }
-                    else if (SchOption == "Monthly") {
-                        vWeeklyDay = '';
-                        if ($("#hdMonthlyType").val() == "DM") vMonthlyWeek = ''; vMonthlyWeekDays = '';
-                        if ($("#hdMonthlyType").val() == "DW") {
-                            vMonthlyDay = '';
-                            for (i = 0; i < vMonthlyWeekDaysAry.length; i++) {
-                                if (vMonthlyWeekDays == '') vMonthlyWeekDays = vMonthlyWeekDaysAry[i].toString();
-                                else vMonthlyWeekDays = vMonthlyWeekDays + ',' + vMonthlyWeekDaysAry[i].toString();
-                            }
-                        }
-
-                        $("#hidSchLastState").val("Monthly");
-                    }
-                    else if (SchOption == "Custom") {
-                        vWeeklyDay = '';
-                        vMonthlyDay = '';
-                        vMonthlyWeek = '';
-                        vMonthlyWeekDays = '';
-                        $("#hidSchLastState").val("Custom");
-                    }
-
-                    MultipleSchedule.push({
-                        'Frequency': SchOption,
-                        'WeeklyDay': vWeeklyDay,
-                        'MonthlyDay': vMonthlyDay,
-                        'MonthlyWeek': vMonthlyWeek,
-                        'MonthlyWeekDays': vMonthlyWeekDays,
-                        'StartingFrom': vStartingFrom,
-                        'StartingTo': vStartingTo,
-                        'StartTime': vStartTime,
-                        'EndTime': vEndTime
-                    });
-
-                }
-                // Orgnizer
-                //$("#tblOrgnizer option").each(function (i) {
-                //    Orgnizer.push({
-                //        'Orgnizer_Name': $(this).text(),
-                //        'Orgnizer_Desc': $(this).val()
-                //    });
-                //    //alert($(this).text() + " : " + $(this).val());
-                //});
-
-                var vDefaultOrg = $("#ddlOrgnizers").val();
-                console.log( $("#tblOrgnizer"));
-                $("#tblOrgnizer tr").each(function () {
-                    var Sno = $(this).find("td:first").html();
-                    //alert(Sno);
-                    // Multiple Address
-                    if (Sno != '') {
-                        Orgnizer.push({
-                            Orgnizer_Name: $("#OrgName_" + Sno).text(),
-                            Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
-                            FBLink: $("#OrgFB_" + Sno).text(),
-                            Twitter: $("#OrgTw_" + Sno).text(),
-                            DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
-
-                        });
-                    }
-                });
-
-                console.log(Orgnizer);
-
-                // Basic Event Info
-                //alert($("#edSummer1").code());
-                //debugger;
-                //$("#spEvDesc").text();
-                var vEdesc = ''; //$("#edEventDesc").code();
-
-                var varDescritpion = '';
-                var optionalvariable = '';
-                if ($("#id_variablecharge").is(":checked")) {
-                    varDescritpion = $('#id_vardesc').val();
-                    optionalvariable = $('#variabletype').val();
-                }
-
-                var model = {
-                    'EventID': $("#hdEventId").val(),
-                    'EventTypeID': $("#EventType").val(),
-                    'EventCategoryID': $("#ddlEventCategory").val(),
-                    'EventSubCategoryID': $("#ddlEventSubCategory").val(),
-                    'UserID': '',
-                    'EventTitle': $("#txtEventTitle").val(),
-                    'EventDescription': $("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, ""),
-                    'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
-                    'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
-                    'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
-                    'Private_Password': $("#txtReqPassword").val(),
-                    'EventUrl': $("#txtEventUrl").val().trim(),
-                    'PublishOnFB': ($("#chkPublishEventOnFB").is(":checked") == true ? 'Y' : 'N'),
-                    'EventStatus': 'Save',
-                    'AddressDetail': SubmitAddress,
-                    'EventVenue': SingleTiming,
-                    'TimeZone': $("#dllTimeZone").val(),
-                    'DisplayStartTime': ($("#chkDisplayStartTime").is(":checked") == true ? "Y" : "N"),
-                    'DisplayEndTime': ($("#chkDisplayEndTime").is(":checked") == true ? "Y" : "N"),
-                    'DisplayTimeZone': ($("#chkTimeZone").is(":checked") == true ? "Y" : "N"),
-                    'FBUrl': '',
-                    'TwitterUrl': '',
-                    'MultipleEvents': MultipleSchedule,
-                    'Orgnizer': Orgnizer,
-                    'AddressStatus': $("#hidAddressStatus").val(),
-                    'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
-                    'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") == true ? 'Y' : 'N'),
-                    'Ticket': Ticket,
-                    'EventImage': EventImage,
-                    'EventVariable': EventVariable,
-                    'Ticket_DAdress': ($("#id_ticketdeliveryaddr").is(":checked") == true ? 'Y' : 'N'),
-                    'Ticket_showremain': ($("#id_showremaningticket").is(":checked") == true ? 'Y' : 'N'),
-                    'Ticket_showvariable': ($("#id_variablecharge").is(":checked") == true ? 'Y' : 'N'),
-                    'Ticket_variabledesc': varDescritpion,
-                    'Ticket_variabletype': optionalvariable,
-                    'ShowMap': ($("#chkShowMap").is(":checked") == true ? 'Y' : 'N')
-
-                };
-
-                //var params = 'strEveDec :' + $("#edEventDesc").code();
-
-
-                if ($("#hdEventId").val() != '') {
-
-                    $.ajax({
-                        url: '@Url.Action("EditEventInfo", "EditEvent")',
-                        data: { model:model },
-                        type: "Post",
-                        success: function (response) {
-                            $("#hdEventId").val(response);
-                            $('#divaccsuc').css('display', 'block');
-                            $('#diverroacc').css('display', 'none');
-                            $('#succaccmsg').html('Your event is updated!');
-                            $("#hdEventId").val(response);
-                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
-                        }
-                    });
-                }
-                else {
-                    $('#divaccsuc').css('display', 'none');
-                    $('#diverroacc').css('display', 'block');
-                    $('#erraccmsg').html('There some problem occurs, Please check after some time.');
-                }
+                save("Save");
+              
             });
 
-
+          
             $("#btMultiVenue").click(function () {
                 //$("#txtEventLocation").val('');
                 if ($("#tblAddress tr").length <= 1) {
                     if ($("#txtEventLocation").val().trim() != '') {
                         $("#VenueName").val($("#txtEventLocation").val());
-                        var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + '' + "¶" + '';
-                        var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
+                        var vCols = 0+"¶"+$("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + '' + "¶" + '';
+                        var vColName = "Venueid¶VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
                         AddRow("tblAddress", vCols, vColName, "Y");
                         $("#VenueName").val("");
                         $("#hidAddSno").val("");
@@ -3315,7 +2684,7 @@ else
                 //    return false;
                 //}
 
-
+                debugger;
 
                 if ($("#hidOrgnizer").val() == '') {
                     if (parseInt($("#ddlOrgnizers option").length) > 24) {
@@ -3338,10 +2707,12 @@ else
                 $("#edOrgDes").code('');
                 $("#txtOrgFBlink").val('');
                 $("#txtOrgTWlink").val('');
+                $("#txtOrgLNlink").val('');
                 $("#Incsocial").prop("checked", false);
                 $("#dvOrgnizerFBTw").hide();
 
                 var msg = validatemain();
+              console.log(msg);
                 //alert(msg);
                 if (msg == " ") {
                     $(".cdisable").removeAttr("disabled");
@@ -3399,14 +2770,7 @@ else
             });
 
 
-            //$('#txtEventUrl').bind('keypress', function (event) {
-            //    var regex = new RegExp("^[a-zA-Z0-9]+$");
-            //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-            //    if (!regex.test(key)) {
-            //        event.preventDefault();
-            //        return false;
-            //    }
-            //});
+         
 
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
@@ -3514,17 +2878,28 @@ else
                 }
             });
             $("#btSaveAddress").click(function () {
+                debugger;
+                var Sno ="";
+                var txt="";
+                $("#txtEventLocation").val('');
                 //$("#txtEventLocation").val("Click here to enter venue address");
-                $("#tblAddress tr").each(function () {
-                    var Sno = $(this).find("td:first").html();
-                    if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
-                        $("#txtEventLocation").val($("#consolidate" + Sno).text());
-                    }
-                    else {
-                        $("#txtEventLocation").attr("placeholder", "Click here to enter venue address");
-                        $("#txtEventLocation").val("");
-                    }
+               
+              
+                $("#tblAddress tr").each(function (i) {
+                    console.log( $("#tblAddress tr"));
+                     Sno = $(this).find("td:first").html();
+                     if(i==1)
+                     {
+                         //if (Sno != '' && Sno != undefined && Sno != null ) {
+                             txt=$("#consolidate" + Sno).text();
+                       
+                       
+                         //}
+                     }
+                    
                 });
+                $("#txtEventLocation").val(txt);
+                console.log(Sno);
             });
             $("#btSaveTimeZone").click(function () {
                 var vval = $("#dllTimeZone option:selected").text();
@@ -3674,6 +3049,7 @@ else
             // --------------------Multiple Venue---------------------------
 
             function AddRow(TableId, ColumnValue, ColumnName, IncludeSNo) {
+                debugger;
                 var ColAry = ColumnValue.split('¶');
                 var ColName = ColumnName.split('¶');
                 var Sno = $("#" + TableId + " tr").length;
@@ -3687,10 +3063,17 @@ else
                     strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
                     if (ColAry[i] != '') {
                         if (i != ColAry.length - 1) {
-                            if (ConsolidateValue == '')
-                                ConsolidateValue = ColAry[i];
+                            if(i==0)
+                            {
+
+                            }
                             else
-                                ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                            {
+                                if (ConsolidateValue == '')
+                                    ConsolidateValue = ColAry[i];
+                                else
+                                    ConsolidateValue = ConsolidateValue + ',' + ColAry[i];
+                            }
                         }
                     }
                     //if (ColName[i].toString() == "CID" || ColName[i].toString() == "CountryID")
@@ -3712,7 +3095,7 @@ else
                 var ColAry = ColumnValue.split('¶');
                 var ColName = ColumnName.split('¶');
                 var ConsolidateValue = '';
-                for (i = 0; i <= ColName.length - 1; i++) {
+                for (i = 1; i <= ColName.length - 1; i++) {
 
                     CtrlId = ColName[i] + Sno.toString();
                     if (ColAry[i] != '') {
@@ -3770,14 +3153,13 @@ else
 
                 if (validateAddress() == false) return false;
 
-                var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID option:selected").text() + "¶" + $("#CountryID").val();
-                var vColName = "VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
+                var vCols = $("#VenueId").val()+ "¶" +$("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID option:selected").text() + "¶" + $("#CountryID").val();
+                var vColName = "VenueId¶VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID";
                 if ($("#hidAddSno").val().trim() != "")
                     EditRow("tblAddress", vCols, vColName, $("#hidAddSno").val().trim());
                 else
                     AddRow("tblAddress", vCols, vColName, "Y");
-
-
+                $("#VenueId").val(0);
                 $("#VenueName").val("");
                 $("#Address1").val("");
                 $("#Address2").val("");
@@ -3917,7 +3299,7 @@ else
                 }
             });
 
-            $(".priv_cont").hide();
+           
             $(".Prvpage").click(function () {
                 $(".priv_cont").css("display", "block");
             });
@@ -4521,7 +3903,7 @@ else
             //$("#id_paymenttype-" + divlength).attr("placeholder", "Early Bird, RSVP...");
             $("#id_Discount-" + divlength).prop("readonly", false);
             var randomValue = randomString(4);
-            $("#id_ticket_id-" + divlength).val(randomValue);
+           $("#id_ticket_id-" + divlength).val(0);
             $("#id_order-" + divlength).val(divlength);
             $("#id_feetype-" + divlength).css('display', 'block');
             $("#id_Tickettype-" + divlength).val("Paid");
@@ -4572,15 +3954,17 @@ else
             });
 
             $("#id_saletimestart-" + divlength).timepicker();
-            $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
+           
             $("#id_saletimeend-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).timepicker();
             $("#id_auto_hide_after_Time-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
             $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
+            $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
+          
+        
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
 
@@ -4626,7 +4010,7 @@ else
             $("#id_ticket_type-" + divlength).attr("title", "Donation");
             $("#id_Discount-" + divlength).prop("readonly", true);
             var randomValue = randomString(4);
-            $("#id_ticket_id-" + divlength).val(randomValue);
+           $("#id_ticket_id-" + divlength).val(0);
 
             $("#id_order-" + divlength).val(divlength);
             $("#id_Tickettype-" + divlength).val("Donation");
@@ -4675,19 +4059,22 @@ else
             });
 
             $("#id_saletimestart-" + divlength).timepicker();
-            $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
+           
             $("#id_saletimeend-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).timepicker();
             $("#id_auto_hide_after_Time-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
             $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
+            $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
+            $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
+            $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
+        
 
         });
         $('.save_btnfree').click(function () {
-
+            debugger;
             $(".ticket_panel").show();
             $("#id_ticket_footer").css('display', 'block');
             var divlength = $("#MasterDiv> div").size();
@@ -4727,7 +4114,7 @@ else
             $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
             $("#id_Discount-" + divlength).prop("readonly", true);
             var randomValue = randomString(4);
-            $("#id_ticket_id-" + divlength).val(randomValue);
+           $("#id_ticket_id-" + divlength).val(0);
             $("#id_order-" + divlength).val(divlength);
             //$("#id_feetype-" + divlength).css('display', 'none');
             $("#id_Tickettype-" + divlength).val("Free");
@@ -4777,17 +4164,17 @@ else
             });
 
             $("#id_saletimestart-" + divlength).timepicker();
-
+           
             $("#id_saletimeend-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).timepicker();
             $("#id_auto_hide_after_Time-" + divlength).timepicker();
             $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
             $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
-
-
+            $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
+            $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
+            $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
 
         });
         function randomString(len, charSet) {
@@ -4854,10 +4241,11 @@ else
         }
         function deletediv(e) {
             {
-
+                debugger;
                 var divlength = $("#MasterDiv> div").size();
                 var status = $('#status').val();
-                if (divlength == 1)
+                console.log(status);
+                if (divlength == 1 && status=="Live")
                 {
                     $('#anodelete').click();
                     $(".tab-content").hide();
@@ -4904,7 +4292,7 @@ else
                         var idn = id1 + "-" + (count);
                         $(this).attr("id", idn);
                         var al = $(this).attr("id").substr(0, id.indexOf('-'));
-                        console.log(al);
+                      
                         if (al == "id_order") {
 
                             $(this).val(count);
@@ -5016,6 +4404,7 @@ else
 
         }
         function checkvalidtime(e) {
+            debugger;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
             var al = e.substr(0, e.indexOf('-'));
 
@@ -5030,8 +4419,9 @@ else
                     $('#id_saletimeend-' + el).val("7:00pm");
 
                 } else {
-
-                    $('#id_hdsaletimestart' + el).val($('#' + e).val());
+                    var txt=$('#' + e).val();
+                    $('#id_hdsaletimestart-' + el).val(txt);
+                    $('#id_hdsaletimeend-' + el).val(txt);
                     $('#id_saletimeend-' + el).val($('#' + e).val());
 
                 }
@@ -5040,11 +4430,13 @@ else
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
 
+                 
                     $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
-
                     $('#id_saletimeend-' + el).focus();
-                    $('#id_hdsaletimeend' + el).val($('#' + e).val());
+                    $('#id_hdsaletimeend-' + el).val($('#id_saletimestart-' + el).val());
 
+                } else {
+                    $('#id_hdsaletimeend-' + el).val($('#' + e).val());
                 }
             }
             if (al == "id_auto_hide_until_time") {
@@ -5058,7 +4450,9 @@ else
                     $('#id_auto_hide_after_Time-' + el).val("7:00pm");
 
                 } else {
-                    $('#id_hdautohideuntil' + el).val($('#' + e).val());
+                
+                    $('#id_hdautohideuntil-' + el).val($('#' + e).val());
+                    $('#id_hdautohideafter-' + el).val($('#' + e).val());
                     $('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
 
                 }
@@ -5069,10 +4463,14 @@ else
                 if (errorMsg != "") {
 
                     $('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
-
+                  
                     $('#id_auto_hide_after_Time-' + el).focus();
-                    $('#id_hdautohideafter' + el).val($('#' + e).val());
 
+                    $('#id_hdautohideafter-' + el).val($('#id_auto_hide_until_time-' + el).val());
+
+                } else {
+                    $('#id_hdautohideafter-' + el).val($('#' + e).val());
+                    
                 }
             }
 
@@ -5188,7 +4586,7 @@ else
 
         function hideunhide(e) {
 
-
+            debugger;
             var id = e;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
             var al = e.substr(0, e.indexOf('-'));
@@ -5200,6 +4598,8 @@ else
                 $("#id_EvaddTkt-" + el).css("display", "none");
                 $("#id_CusdateCont-" + el).css("display", "block");
                 $("#id_auto_hide_type_0-" + el).prop('checked', true);
+                $("#id_auto_hide_type_1-" + el).prop('checked', false);
+                $("#id_HideuntDiv-" + el).css("display", "none");
                 $("#id_auto_hide_until_Date-" + el).datepicker({
                     format: "mm/dd/yyyy",
                     minDate: "0",
@@ -5222,9 +4622,17 @@ else
                 });
             }
             if (al == "id_RemvTkt") {
+                $("#id_auto_hide_type_0-" + el).prop('checked', true);
+                $("#id_auto_hide_type_1-" + el).prop('checked', false);
                 $("#id_RemvTkt-" + el).css("display", "none");
                 $("#id_EvaddTkt-" + el).css("display", "block");
                 $("#id_CusdateCont-" + el).css("display", "none");
+                $("#id_HideuntDiv-" + el).css("display", "none");
+                $("#id_auto_hide_until_Date-" + el).val('');
+                $("#id_auto_hide_until_time-" + el).val('');
+                $("#id_auto_hide_after_Date-" + el).val('');
+                $("#id_auto_hide_after_Time-" + el).val('');
+                
 
             }
             if (al == "id_CusdateTime") {
@@ -5234,6 +4642,11 @@ else
             if (al == "id_TktnotSale") {
                 $("#id_HideuntDiv-" + el).css("display", "none");
                 $("#id_auto_hide_type_1-" + el).prop('checked', false);
+                $("#id_auto_hide_until_Date-" + el).val('');
+                $("#id_auto_hide_until_time-" + el).val('');
+                $("#id_auto_hide_after_Date-" + el).val('');
+                $("#id_auto_hide_after_Time-" + el).val('');
+            
 
             }
 
@@ -5322,6 +4735,9 @@ else
             var count = 0;
             var countqty = 0;
             var countdesc = 0;
+            var countvardesc = 0;
+            var countvarqty = 0;
+            var countprice=0;
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
@@ -5350,7 +4766,12 @@ else
 
 
             var divlength = $("#MasterDiv> div").size();
+            if (divlength <=0)
+            {
+                msg+=ajaxsetup("CreateEvent", "NoTicketUI") + "<br/>";
 
+            }
+          
             if (divlength > 0) {
 
                 for (var i = 0; i < divlength; i++) {
@@ -5380,7 +4801,25 @@ else
                         }
                     }
                     if ($('#id_cost-' + i).hasClass('err-bor')) { count++; }
+                    if($('#id_paid-'+i).css('display')=="block")
+                    {
 
+                        var price=parseFloat( $('#id_cost-'+i).val());
+                        if(isNaN( price))
+                        {
+                            $('#id_cost-'+i).addClass('err-bor');
+                            countprice++;
+                        }else{
+                            $('#id_cost-'+i).removeClass('err-bor');
+                        }
+                        if(price<=0)
+                        {
+                            $('#id_cost-'+i).addClass('err-bor');
+                            countprice++;
+                        }else{
+                            $('#id_cost-'+i).addClass('err-bor');
+                        }
+                    }
                 }
 
 
@@ -5388,6 +4827,10 @@ else
             if ($('#hddiscount').val() == 1) {
                 count++;
 
+            }
+            if(countprice>0)
+            {
+                msg+= ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
             }
             if (countqty > 0) {
                 msg += ajaxsetup("CreateEvent", "CreateEventQtyValidateUI") + "<br/>";
@@ -5423,7 +4866,7 @@ else
 
                         $('#id_varsubdesc-' + i).addClass('err-bor');
 
-                        count++;
+                        countvardesc++;
                     } else {
                         $('#id_varsubdesc-' + i).removeClass('err-bor');
 
@@ -5431,13 +4874,29 @@ else
                     if (subprice_Qty == "") {
 
                         $('#id_varsubprice-' + i).addClass('err-bor');
-                        count++;
+                        countvarqty++;
                     } else {
+                        if (subprice_Qty <= 0) {
+                            $('#id_varsubprice-' + i).addClass('err-bor');
+                            countvarqty++;
 
-                        $('#id_varsubprice-' + i).removeClass('err-bor');
+                        } else {
+                            $('#id_varsubprice-' + i).removeClass('err-bor');
+                        }
+
+                        
                     }
 
                 }
+
+            }
+            if (countvardesc > 0)
+            {
+                msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
+
+            }
+            if (countvarqty > 0) {
+                msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
 
             }
             if ($('#chkReqPassword').is(":checked") == true) {

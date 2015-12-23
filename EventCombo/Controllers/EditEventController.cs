@@ -726,7 +726,8 @@ namespace EventCombo.Controllers
                     strHTML.Append("<td style='display: none'>");
                     strHTML.Append(i);
                     strHTML.Append("</td>");
-
+                   
+                    strHTML.Append("<td style='display: none'>  <input type = 'hidden' id = VenueId" + i.ToString() + " value = '" + objAdd.AddressID + "' /></td>");
                     strHTML.Append("<td style='display: none'> <input type='text' name='' id=VenueName" + i.ToString() + " style='width: 100px;'  value='" + objAdd.VenueName + "' /></td>");
                     strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address1" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Address1 + "' /></td>");
                     strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address2" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Address2 + "' /></td>");
@@ -815,7 +816,7 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div id='clonediv-" + j + "' class='ticket_haeding ev_ticket_haeding mt10 pb10'>");
                     strticketHtml.Append("<div class='col-sm-1 text-center no_pad ev_row_mov'>");
                     strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");
-                    strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value=0/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value='"+ObjTick.T_Id+"'/>");
                     strticketHtml.Append("<input type='hidden' id='id_order-" + j + "' value='" + ObjTick.T_order + "' />");
 
                     strticketHtml.Append("<input type='hidden' id='id_Tickettype-" + j + "' value=" + type + " />");
@@ -866,7 +867,7 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='col-sm-8'>");
                     if (ObjTick.TicketTypeID == 2)
                     {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='changefeetype(this, event, this.id)' onkeyup='validateforzero(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' value='" + Price + "' />");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='changefeetype(this, event, this.id)' onkeyup='validateforzero(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' value=" + Price + " />");
                     }
                     else
                     {
@@ -1000,12 +1001,12 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel'>Ticket Sales Start</label></div><div class='col-sm-8 ev_pad_l0'>");
                     strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_salestart-" + j + "' onchange='changetext(this.id);' value='" + startdate + "' />");
                     strticketHtml.Append("</div><div class='col-sm-4 no_pad'><input type='hidden' value='0' id='id_hdsaletimestart-" + j + "' value='" + ObjTick.Sale_Start_Time + "' />");
-                    strticketHtml.Append("<input id='id_saletimestart-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='00:00am' onchange='checkvalidtime(this.id)' value='" + ObjTick.Sale_Start_Time + "' />");
+                    strticketHtml.Append("<input id='id_saletimestart-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Sale_Start_Time + "' />");
                     strticketHtml.Append("</div></div>");
                     strticketHtml.Append("<div class='col-sm-6 ev_pad_r0'><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel'>Ticket Sales End</label>");
-                    strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_saleend" + j + "' onchange='checkvalidDate(this.id)' value='" + enddate + "' />");
+                    strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_saleend-" + j + "' onchange='checkvalidDate(this.id)' value='" + enddate + "' />");
                     strticketHtml.Append("</div><div class='col-sm-4 no_pad'> <input type='hidden' value='0' id='id_hdsaletimeend-" + j + "' value='" + ObjTick.Sale_End_Time + "' />");
-                    strticketHtml.Append("<input id='id_saletimeend-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='00:00am' onchange='checkvalidtime(this.id) ' value='" + ObjTick.Sale_End_Time + "' />");
+                    strticketHtml.Append("<input id='id_saletimeend-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id) ' value='" + ObjTick.Sale_End_Time + "' />");
                     strticketHtml.Append("</div> </div></div><div class='clearfix'></div>");
                     strticketHtml.Append("<div class='form-group'><div class='col-sm-12 mt10 no_pad'>");
                     strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel mt5'>");
@@ -1080,7 +1081,7 @@ namespace EventCombo.Controllers
                         strticketHtml.Append("<input type='radio' id='id_auto_hide_type_1-" + j + "'  />");
 
                     }
-                    if (custdate == "1")
+                    if (custdate == "0")
                     {
                         strticketHtml.Append("For custom date and time</label> </div> <div class='hide_unt_aft' id='id_HideuntDiv-" + j + "' style='display:block;'>");
                     }
@@ -1092,11 +1093,11 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='form-group mt10'><div class='col-sm-6 ev_pad_l0'><div class='col-sm-12 no_pad'><label class='label-control ev_tickt_lebel'>Hide Untill</label>");
                     strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_until_Date-" + j + "' onchange='changetext(this.id);' value='" + untilldate + "' />");
                     strticketHtml.Append("</div><div class='col-sm-4 no_pad'> <input type='hidden' value='0' id='id_hdautohideuntil-" + j + "' value='" + ObjTick.Hide_Untill_Time + "' />");
-                    strticketHtml.Append("<input id ='id_auto_hide_until_time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='00:00am' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_Untill_Time + "' />");
+                    strticketHtml.Append("<input id ='id_auto_hide_until_time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_Untill_Time + "' />");
                     strticketHtml.Append("</div></div><div class='col-sm-6 ev_pad_r0'><div class='col-sm-12 no_pad'><label class='label-control ev_tickt_lebel'>Hide After</label>");
                     strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_after_Date-" + j + "' onchange='checkvalidDate(this.id)' value='" + afterdate + "' />");
                     strticketHtml.Append(" </div> <div class='col-sm-4 no_pad'><input type='hidden' value='0' id='id_hdautohideafter-" + j + "' value='" + ObjTick.Hide_After_Time + "' />");
-                    strticketHtml.Append("<input id ='id_auto_hide_after_Time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='00:00am' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_After_Time + "' />");
+                    strticketHtml.Append("<input id ='id_auto_hide_after_Time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_After_Time + "' />");
                     strticketHtml.Append("</div></div></div></div></div></div><div class='clearfix'></div><div class='form-group'><label class='label-control pl0 ev_tickt_lebel wd600'>Tickets allowed per order</label>");
                     strticketHtml.Append("<div class='evnt_time_cont wd280 mr5_p'><input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_min_ticket-" + j + "' onblur='checkminum(this.id);' onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Min_T_Qty + "' />");
                     strticketHtml.Append("<label class='label-control lbl_bot_minim'>Minimum</label></div><div class='evnt_time_cont wd280'>");
@@ -1168,7 +1169,7 @@ namespace EventCombo.Controllers
                     strvariableHtml.Append(" <div class='col-sm-12 no_pad' id='id_clonevariable-" + k + "' >");
                     strvariableHtml.Append("<div class='list -group-item ev_var_chrg_list'>");
                     strvariableHtml.Append(" <div class='form-group'>");
-                    strvariableHtml.Append("<div class='col-sm-7 col-xs-7'>");
+                    strvariableHtml.Append("<div class='col-sm-7 col-xs-7'><input type='hidden' id='id_varid-"+k+"' value='"+Objvardesc.Variable_Id+"'/>");
                     strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='Description' id='id_varsubdesc-" + k + "' maxlength='256' value='" + Objvardesc.VariableDesc + "' onblur='checkvalidatetkt(this.id)'     >");
                     strvariableHtml.Append(" </div><div class='col-sm-4 col-xs-4'><label class='col-sm-1 control-label ev_tickt_lebel'>$</label> <div class='col-sm-10 no_pad'>");
                     strvariableHtml.Append("<input class='form -control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id);checkvalidatetkt(this.id);' value='" + PRICE + "'>");
@@ -1212,7 +1213,7 @@ namespace EventCombo.Controllers
                     ObjEC.Private_Password = model.Private_Password;
                     ObjEC.EventUrl = model.EventUrl;
                     ObjEC.PublishOnFB = model.PublishOnFB;
-                    ObjEC.EventStatus = model.EventStatus;
+                    ObjEC.EventStatus = "Live";
                     ObjEC.IsMultipleEvent = model.IsMultipleEvent;
                     ObjEC.TimeZone = model.TimeZone;
                     ObjEC.DisplayStartTime = model.DisplayStartTime;
@@ -1230,7 +1231,7 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_variabletype = model.Ticket_variabletype;
                     ObjEC.ShowMap = model.ShowMap;
                     ObjEC.ModifyDate = DateTime.Now;
-                    objEnt.Events.Add(ObjEC);
+                   objEnt.Events.Add(ObjEC);
                     // Address info
                  
                     Address ObjAdd = new Models.Address();
@@ -1251,7 +1252,7 @@ namespace EventCombo.Controllers
                             ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
                             ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
                             ObjAdd.Name = "";
-                            objEnt.Addresses.Add(ObjAdd);
+                           objEnt.Addresses.Add(ObjAdd);
                         }
                     }
                     
@@ -1266,7 +1267,7 @@ namespace EventCombo.Controllers
                             objEVenue.EventEndDate = objEv.EventEndDate;
                             objEVenue.EventStartTime = objEv.EventStartTime;
                             objEVenue.EventEndTime = objEv.EventEndTime;
-                            objEnt.EventVenues.Add(objEVenue);
+                           objEnt.EventVenues.Add(objEVenue);
                         }
                     }
                     // Event on Multiple timing 
@@ -1285,7 +1286,7 @@ namespace EventCombo.Controllers
                             objMEvents.StartingTo = objME.StartingTo;
                             objMEvents.StartTime = objME.StartTime;
                             objMEvents.EndTime = objME.EndTime;
-                            ObjEC.MultipleEvents.Add(objMEvents);
+                           ObjEC.MultipleEvents.Add(objMEvents);
                         }
                     }
                     // Orgnizer
@@ -1373,7 +1374,7 @@ namespace EventCombo.Controllers
                             objEnt.Event_VariableDesc.Add(var);
                         }
                     }
-                    objEnt.SaveChanges();
+                   objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
                     PublishEvent(lEventId);
                 }
@@ -1385,6 +1386,326 @@ namespace EventCombo.Controllers
             return lEventId;
         }
 
+
+        public long Draftmodemodification(EventCreation model)
+        {
+
+
+            long lEventId = model.EventID;
+            List<long> ids = new List<long>();
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    Event ObjEC = objEnt.Events.FirstOrDefault(i => i.EventID == lEventId);
+                    if (ObjEC != null)
+                    {
+
+                        if (ObjEC.EventStatus == "Live")
+                        {
+                            lEventId = EditEventInfo(model);
+
+                        }
+                        else
+
+                        {
+
+
+
+                            objEnt.Publish_Event_Detail.RemoveRange(objEnt.Publish_Event_Detail.Where(x => x.PE_Event_Id == lEventId).ToList());
+                            objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId).ToList());
+
+                            //  var vParentEvt = (from myEnt in objEnt.Events where myEnt.EventID == lEventId select myEnt.Parent_EventID).FirstOrDefault();
+                            // if (vParentEvt == 0) vParentEvt = lEventId;
+
+
+                            // Event ObjEC = new Event();
+                            ObjEC.Parent_EventID = 0;
+                            ObjEC.EventTypeID = model.EventTypeID;
+                            ObjEC.EventCategoryID = model.EventCategoryID;
+                            ObjEC.EventSubCategoryID = model.EventSubCategoryID;
+                            ObjEC.UserID = strUserId;
+                            ObjEC.EventTitle = model.EventTitle;
+                            ObjEC.DisplayStartTime = model.DisplayStartTime;
+                            ObjEC.DisplayEndTime = model.DisplayEndTime;
+                            ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                            ObjEC.EventDescription = model.EventDescription;
+                            ObjEC.EventPrivacy = model.EventPrivacy;
+                            ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
+                            ObjEC.Private_GuestOnly = model.Private_GuestOnly;
+                            ObjEC.Private_Password = model.Private_Password;
+                            ObjEC.EventUrl = model.EventUrl;
+                            ObjEC.PublishOnFB = model.PublishOnFB;
+                            ObjEC.EventStatus = model.EventStatus;
+                            ObjEC.IsMultipleEvent = model.IsMultipleEvent;
+                            ObjEC.TimeZone = model.TimeZone;
+                            ObjEC.DisplayStartTime = model.DisplayStartTime;
+                            ObjEC.DisplayEndTime = model.DisplayEndTime;
+                            ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                            ObjEC.FBUrl = model.FBUrl;
+                            ObjEC.TwitterUrl = model.TwitterUrl;
+                            ObjEC.LastLocationAddress = model.LastLocationAddress;
+                            ObjEC.AddressStatus = model.AddressStatus;
+                            ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
+                            ObjEC.Ticket_DAdress = model.Ticket_DAdress;
+                            ObjEC.Ticket_showremain = model.Ticket_showremain;
+                            ObjEC.Ticket_showvariable = model.Ticket_showvariable;
+                            ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
+                            ObjEC.Ticket_variabletype = model.Ticket_variabletype;
+                            ObjEC.ShowMap = model.ShowMap;
+                            ObjEC.ModifyDate = DateTime.Now;
+                            //objEnt.Events.Add(ObjEC);
+                            // Address info
+
+                            Address ObjAdd = new Models.Address();
+                            //  objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                            ids = new List<long>();
+                            foreach (Address objA in model.AddressDetail)
+                            {
+
+                                if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
+                                {
+                                    if (objA.AddressID == 0)
+                                    {
+                                        ObjAdd = new Models.Address();
+                                    }
+                                    else
+                                    {
+                                        ObjAdd = (from obj in objEnt.Addresses where obj.AddressID == objA.AddressID && obj.EventId == lEventId select obj).FirstOrDefault();
+                                    }
+                                    ObjAdd.EventId = lEventId;
+                                    ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
+                                    ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
+                                    ObjAdd.City = objA.City == null ? "" : objA.City;
+                                    ObjAdd.CountryID = objA.CountryID;
+                                    ObjAdd.State = objA.State == null ? "" : objA.State;
+                                    ObjAdd.UserId = strUserId;
+                                    ObjAdd.VenueName = objA.VenueName;
+                                    ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
+                                    ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
+                                    ObjAdd.Name = "";
+                                    if (objA.AddressID == 0)
+                                    {
+                                        objEnt.Addresses.Add(ObjAdd);
+                                    }
+                                    ids.Add(ObjAdd.AddressID);
+                                }
+                            }
+                            var results = objEnt.Addresses.Where(x => !ids.Contains(x.AddressID) && x.EventId == lEventId).ToList();
+                            if (results != null)
+                            {
+                                objEnt.Addresses.RemoveRange(results);
+                            }
+                            // Event on Single Timing 
+                            if (model.EventVenue != null)
+                            {
+                                //To be discuss  
+                                objEnt.MultipleEvents.RemoveRange(objEnt.MultipleEvents.Where(x => x.EventID == lEventId).ToList());
+                                objEnt.EventVenues.RemoveRange(objEnt.EventVenues.Where(x => x.EventID == lEventId).ToList());
+                                EventVenue objEVenue = new EventVenue();
+
+                                foreach (EventVenue objEv in model.EventVenue)
+                                {
+
+
+                                    objEVenue.EventID = lEventId;
+                                    objEVenue.EventStartDate = objEv.EventStartDate;
+                                    objEVenue.EventEndDate = objEv.EventEndDate;
+                                    objEVenue.EventStartTime = objEv.EventStartTime;
+                                    objEVenue.EventEndTime = objEv.EventEndTime;
+
+                                    objEnt.EventVenues.Add(objEVenue);
+
+
+                                }
+                            }
+                            // Event on Multiple timing 
+                            if (model.MultipleEvents != null)
+                            {
+                                objEnt.EventVenues.RemoveRange(objEnt.EventVenues.Where(x => x.EventID == lEventId).ToList());
+                                objEnt.MultipleEvents.RemoveRange(objEnt.MultipleEvents.Where(x => x.EventID == lEventId).ToList());
+
+                                MultipleEvent objMEvents = new MultipleEvent();
+                                foreach (MultipleEvent objME in model.MultipleEvents)
+                                {
+                                    objMEvents.EventID = lEventId;
+                                    objMEvents.Frequency = objME.Frequency;
+                                    objMEvents.WeeklyDay = objME.WeeklyDay;
+                                    objMEvents.MonthlyDay = objME.MonthlyDay;
+                                    objMEvents.MonthlyWeek = objME.MonthlyWeek;
+                                    objMEvents.MonthlyWeekDays = objME.MonthlyWeekDays;
+                                    objMEvents.StartingFrom = objME.StartingFrom;
+                                    objMEvents.StartingTo = objME.StartingTo;
+                                    objMEvents.StartTime = objME.StartTime;
+                                    objMEvents.EndTime = objME.EndTime;
+
+                                    ObjEC.MultipleEvents.Add(objMEvents);
+
+
+                                }
+                            }
+                            // Orgnizer
+                            if (model.Orgnizer != null)
+                            {
+                                ids = new List<long>();
+                                Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
+                                foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
+                                {
+                                    if (objOr.Orgnizer_Id == 0)
+                                    {
+                                        objEOrg = new Event_Orgnizer_Detail();
+                                    }
+                                    else
+                                    {
+                                        objEOrg = (from obj in objEnt.Event_Orgnizer_Detail where obj.Orgnizer_Id == objOr.Orgnizer_Id && obj.Orgnizer_Event_Id == lEventId select obj).FirstOrDefault();
+                                    }
+                                    objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                                    objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                    objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
+                                    objEOrg.FBLink = objOr.FBLink;
+                                    objEOrg.Twitter = objOr.Twitter;
+                                    objEOrg.Linkedin = objOr.Linkedin;
+                                    objEOrg.DefaultOrg = objOr.DefaultOrg;
+                                    objEOrg.UserId = strUserId;
+                                    if (objOr.Orgnizer_Id == 0)
+                                    {
+                                        objEnt.Event_Orgnizer_Detail.Add(objEOrg);
+                                    }
+                                    ids.Add(objOr.Orgnizer_Id);
+                                }
+                                var resultorg = objEnt.Event_Orgnizer_Detail.Where(x => !ids.Contains(x.Orgnizer_Id) && x.Orgnizer_Event_Id == lEventId).ToList();
+                                if (resultorg != null)
+                                {
+                                    objEnt.Event_Orgnizer_Detail.RemoveRange(resultorg);
+                                }
+                            }
+                            // Tickets
+
+
+
+
+                            if (model.Ticket != null)
+                            {
+                                Ticket ticket = new Ticket();
+                                ids = new List<long>();
+                                // objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
+                                //  objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
+                                foreach (Ticket tick in model.Ticket)
+                                {
+                                    if (tick.T_Id == 0)
+                                    {
+                                        ticket = new Ticket();
+                                    }
+                                    else
+                                    {
+                                        ticket = (from obj in objEnt.Tickets where obj.T_Id == tick.T_Id && obj.E_Id == lEventId select obj).FirstOrDefault();
+                                    }
+                                    ticket.E_Id = lEventId;
+                                    ticket.TicketTypeID = tick.TicketTypeID;
+                                    ticket.T_name = tick.T_name;
+                                    ticket.Qty_Available = tick.Qty_Available;
+                                    ticket.Price = tick.Price;
+                                    ticket.T_Desc = tick.T_Desc;
+                                    ticket.TicketTypeID = tick.TicketTypeID;
+                                    ticket.T_order = tick.T_order;
+                                    ticket.Show_T_Desc = tick.Show_T_Desc;
+                                    ticket.Fees_Type = tick.Fees_Type;
+                                    ticket.Sale_Start_Date = tick.Sale_Start_Date;
+                                    ticket.Sale_Start_Time = tick.Sale_Start_Time;
+                                    ticket.Sale_End_Date = tick.Sale_End_Date;
+                                    ticket.Sale_End_Time = tick.Sale_End_Time;
+                                    ticket.Hide_Ticket = tick.Hide_Ticket;
+                                    ticket.Auto_Hide_Sche = tick.Auto_Hide_Sche;
+                                    ticket.T_AutoSechduleType = tick.T_AutoSechduleType;
+                                    ticket.Hide_Untill_Date = tick.Hide_Untill_Date;
+                                    ticket.Hide_Untill_Time = tick.Hide_Untill_Time;
+                                    ticket.Hide_After_Date = tick.Hide_After_Date;
+                                    ticket.Hide_After_Time = tick.Hide_After_Time;
+                                    ticket.Min_T_Qty = tick.Min_T_Qty;
+                                    ticket.Max_T_Qty = tick.Max_T_Qty;
+                                    ticket.T_Disable = tick.T_Disable;
+                                    ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
+                                    ticket.T_Displayremaining = tick.T_Displayremaining;
+                                    ticket.EC_Fee = tick.EC_Fee;
+                                    ticket.Customer_Fee = tick.Customer_Fee;
+                                    ticket.TotalPrice = tick.TotalPrice;
+                                    ticket.T_Discount = tick.T_Discount;
+                                    if (tick.T_Id == 0)
+                                    {
+                                        objEnt.Tickets.Add(ticket);
+                                    }
+                                    ids.Add(ticket.T_Id);
+                                }
+
+
+                                //var ids = new HashSet<long>(objEnt.Tickets.Where(x => x.E_Id== lEventId).Select(x=>x.T_Id));
+
+                                var resultticks = objEnt.Tickets.Where(x => !ids.Contains(x.T_Id) && x.E_Id == lEventId).ToList();
+                                if (resultticks != null)
+                                {
+                                    objEnt.Tickets.RemoveRange(resultticks);
+                                }
+
+
+                            }
+
+                            if (model.EventImage != null)
+                            {
+                                EventImage Image = new EventImage();
+                                objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
+                                foreach (EventImage img in model.EventImage)
+                                {
+                                    Image = new EventImage();
+                                    Image.EventID = lEventId;
+                                    Image.EventImageUrl = img.EventImageUrl;
+                                    Image.ImageType = img.ImageType;
+                                    objEnt.EventImages.Add(Image);
+                                }
+                            }
+
+                            if (model.EventVariable != null)
+                            {
+                                Event_VariableDesc var = new Event_VariableDesc();
+                                ids = new List<long>();
+                                foreach (Event_VariableDesc variable in model.EventVariable)
+                                {
+                                    if (variable.Variable_Id == 0)
+                                    {
+                                        var = new Event_VariableDesc();
+                                    }
+                                    var.Event_Id = lEventId;
+                                    var.VariableDesc = variable.VariableDesc;
+                                    var.Price = variable.Price;
+                                    if (variable.Variable_Id == 0)
+                                    {
+                                        objEnt.Event_VariableDesc.Add(var);
+
+                                    }
+                                    ids.Add(variable.Variable_Id);
+                                }
+                                var resultdesc = objEnt.Event_VariableDesc.Where(x => !ids.Contains(x.Variable_Id) && x.Event_Id == lEventId).ToList();
+                                if (resultdesc != null)
+                                {
+                                    objEnt.Event_VariableDesc.RemoveRange(resultdesc);
+                                }
+
+                            }
+                            objEnt.SaveChanges();
+                            lEventId = ObjEC.EventID;
+                            PublishEvent(lEventId);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            return lEventId;
+        }
+     
+     
         public string PublishEvent(long lEventId)
         {
             string strResult = "N";
@@ -1433,6 +1754,12 @@ namespace EventCombo.Controllers
                     strHTML.Append(EOD.Orgnizer_Name);
                     strHTML.Append("</label></td>");
 
+                    strHTML.Append("<td style='display: none'><label id=OrgId_");
+                    strHTML.Append(i);
+                    strHTML.Append(">");
+                    strHTML.Append(EOD.Orgnizer_Id);
+                    strHTML.Append("</label></td>");
+
                     strHTML.Append("<td style='display: none'><label id=OrgDes_");
                     strHTML.Append(i);
                     strHTML.Append(">");
@@ -1450,6 +1777,12 @@ namespace EventCombo.Controllers
                     strHTML.Append(i);
                     strHTML.Append(">");
                     strHTML.Append(EOD.Twitter);
+                    strHTML.Append("</label></td>");
+
+                    strHTML.Append("<td style='display: none'><label id=OrgLn_");
+                    strHTML.Append(i);
+                    strHTML.Append(">");
+                    strHTML.Append(EOD.Linkedin);
                     strHTML.Append("</label></td>");
                     strtemp = "<td align='right'><i onclick='editOrgnizer(" + i + ")'; class='fa fa-pencil'></i> | <i onclick='DeleteOrgnizer(" + i + ");' class='fa fa-trash'></i></td>";
                     strHTML.Append(strtemp);

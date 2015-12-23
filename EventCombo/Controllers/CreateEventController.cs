@@ -487,7 +487,7 @@ namespace EventCombo.Controllers
 
 
 
-        [Route("{strUrlData}")]
+        //[Route("{strUrlData}")]
         public ActionResult ViewEvent(string strUrlData)
         {
            
@@ -567,7 +567,8 @@ namespace EventCombo.Controllers
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
             viewEvent.showmaponevent = EventDetail.ShowMap;
-            viewEvent.EventPrivacy = EventDetail.EventPrivacy;
+
+            viewEvent.EventPrivacy = EventDetail.Private_Password;
             //Address
             var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
             if (evAdress != null)

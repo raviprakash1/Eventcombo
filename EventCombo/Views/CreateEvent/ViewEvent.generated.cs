@@ -2434,9 +2434,9 @@ WriteLiteral(@"
             
             #line default
             #line hidden
-WriteLiteral("\";\r\n        if (eventype == \"Private\")\r\n        {\r\n\r\n            $(\'#idpasswordti" +
-"ck\').click();\r\n\r\n        }\r\n\r\n        $(\'#btnbackpwd\').click(function () {\r\n\r\n  " +
-"          window.location.href = \'");
+WriteLiteral("\";\r\n        if (eventype !=\"\")\r\n        {\r\n\r\n            $(\'#idpasswordtick\').cli" +
+"ck();\r\n\r\n        }\r\n\r\n        $(\'#btnbackpwd\').click(function () {\r\n\r\n          " +
+"  window.location.href = \'");
 
             
             #line 740 "..\..\Views\CreateEvent\ViewEvent.cshtml"
@@ -2899,12 +2899,18 @@ WriteLiteral(@"',
                             $(""#spanokid"").html(ajaxsetup(""ViewEvent"", ""OverSelling""));
                             $.removeCookie(""Selection"");
                         }
+                        else if (response == ""NOTLIVE"")
+                        {
+                            $(""#btOk"").click();
+                            $(""#spanokid"").html(ajaxsetup(""ViewEvent"", ""EventNotLive""));
+                            $.removeCookie(""Selection"");
+                        }
                         else {
                             $.cookie(""Selection"", vSelection, { expire: 1 });
                             window.location.href = '");
 
             
-            #line 1434 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1440 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
@@ -2940,7 +2946,7 @@ WriteLiteral(@"' + '?Eventid=' + Eventid;
             url: '");
 
             
-            #line 1461 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1467 "..\..\Views\CreateEvent\ViewEvent.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             
