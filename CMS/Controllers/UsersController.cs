@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using CMS.Models;
 using System.Data;
 using System.Text;
-
+using EventCombo;
 namespace CMS.Controllers
 {
     public class UsersController : Controller
@@ -17,6 +17,8 @@ namespace CMS.Controllers
         {
             try
             {
+                
+                
 
                 db.Database.ExecuteSqlCommand("Delete from User_Permission_Detail where UP_User_Id='" + userid + "'");
                 Profile prof = db.Profiles.Where(i => i.UserID == userid).FirstOrDefault();
@@ -44,7 +46,8 @@ namespace CMS.Controllers
 
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
-
+            EventListController objEl = new EventListController();
+            
             if ((Session["UserID"] != null))
             {
                

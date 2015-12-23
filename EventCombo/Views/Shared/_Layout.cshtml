@@ -688,9 +688,24 @@ else
                     }
                     return msglogin;
                 }
+
+                
                 function ajaxsetup(strname, strFormTag)
                 {
                     var msgnew = "";
+                    $.ajax({
+                        url: '@Url.Action("geterrorMessage", "ValidationMessage")',
+                        data: { formname: strname, errortype: strFormTag },
+                        async: false,
+                        type: 'Post',
+                        success: function (data) {
+                            msgnew = data;
+                        }
+                    });
+
+                    return msgnew;
+
+                    @*var msgnew = "";
 
                     var request = $.ajax({
                         url: '@Url.Action("Index", "ValidationMessage")',
@@ -705,7 +720,7 @@ else
                     request.fail(function (jqXHR, textStatus) {
                         msgnew += "Some Error occur!!";
                     });
-                    return msgnew;
+                    return msgnew;*@
                 }
                 function validateEmail(sEmail) {
                     var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;

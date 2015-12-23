@@ -489,6 +489,7 @@ namespace EventCombo.Controllers
      
         public ActionResult ViewEvent(string strUrlData)
         {
+            
            
             if ((Session["AppId"] != null))
             {
