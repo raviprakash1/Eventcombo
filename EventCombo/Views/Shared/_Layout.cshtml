@@ -33,8 +33,14 @@
     <script src="~/Scripts/jquery.timepicker.js"></script>
 
     <script src="~/Scripts/jquery.cookie.js"></script>
+   
+    <style type="text/css">
+        html {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
-
+    </style>
 </head>
 
 <body>
@@ -426,14 +432,20 @@ else
 </body>
 </html>
 <script type="text/javascript">
+
+    var WindowObjectReference;
     function invokeLogin() {
+        debugger;
         var chrome = 100;       
         var width = 600;        
         var height = 500;       
         var left = (screen.width - width) / 2;
         var top = (screen.height - height - chrome) / 2;
+
+       
         var options = "location=0, menubar=0, status=0, toolbar=0, scrollbars=0, resizable=0,left=" + left + ",top=" + top + ",width=" + width + ",height=" + height;
-        window.open("about:blank", "login-popup", options);
+        WindowObjectReference = window.open("about:blank", "login-popup", options);
+     
     }
 </script>
 <script type="text/javascript">

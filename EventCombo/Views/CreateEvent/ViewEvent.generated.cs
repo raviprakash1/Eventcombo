@@ -793,34 +793,33 @@ WriteLiteral("\r\n\r\n                               \r\n                       
 
 WriteLiteral(" class=\"dropdown text-left\"");
 
-WriteLiteral(">\r\n");
-
-            
-            #line 206 "..\..\Views\CreateEvent\ViewEvent.cshtml"
- if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
-{
-                                              
-}
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                                                 <label");
+WriteLiteral(">\r\n\r\n\r\n                                                 <label");
 
 WriteLiteral(" class=\"label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_" +
 "elips\"");
 
-WriteAttribute("title", Tuple.Create("  title=\"", 10721), Tuple.Create("\"", 10765)
+WriteAttribute("title", Tuple.Create("  title=\"", 10547), Tuple.Create("\"", 10591)
             
-            #line 210 "..\..\Views\CreateEvent\ViewEvent.cshtml"
-                                                                      , Tuple.Create(Tuple.Create("", 10730), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.TopAddress)
+            #line 208 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+                                                                      , Tuple.Create(Tuple.Create("", 10556), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.TopAddress)
             
             #line default
             #line hidden
-, 10730), false)
+, 10556), false)
 );
 
-WriteLiteral(">\r\n                                                     <img");
+WriteLiteral(">\r\n");
+
+            
+            #line 209 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+ if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
+{
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                                     <img");
 
 WriteLiteral(" class=\"evnt_clock evnt_cursor\"");
 
@@ -828,19 +827,28 @@ WriteLiteral(" data-toggle=\"dropdown\"");
 
 WriteLiteral(" onclick=\"return FindLocaiton()\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 10912), Tuple.Create("\"", 10944)
-, Tuple.Create(Tuple.Create("", 10918), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-location.png")
-, 10918), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 10867), Tuple.Create("\"", 10899)
+, Tuple.Create(Tuple.Create("", 10873), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-location.png")
+, 10873), false)
 );
 
-WriteLiteral(">\r\n                                                     <span");
+WriteLiteral(">\r\n");
+
+            
+            #line 213 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+}
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                                     <span");
 
 WriteLiteral(" id=\"lbltopaddress\"");
 
 WriteLiteral(">");
 
             
-            #line 212 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 214 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                                          Write(Html.DisplayFor(m => m.TopAddress));
 
             
@@ -867,7 +875,8 @@ WriteLiteral(@">
                                                          </li>
                                                      </ul>
                                                  </label>
-                                              
+
+
                                             </div>
                                            
                                        
@@ -878,7 +887,7 @@ WriteLiteral("\r\n                                   \r\n                       
 "                         </div>\r\n                            </div>\r\n");
 
             
-            #line 232 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 235 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                             }
 
             
@@ -896,13 +905,13 @@ WriteLiteral(" id=\"lstcarousel\"");
 WriteLiteral(">\r\n");
 
             
-            #line 237 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 240 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 237 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 240 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      foreach (var item in (List<string>)ViewBag.Images)
                     {
 
@@ -917,14 +926,14 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" class=\"img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 12536), Tuple.Create("\"", 12547)
+WriteAttribute("src", Tuple.Create(" src=\"", 12450), Tuple.Create("\"", 12461)
             
-            #line 240 "..\..\Views\CreateEvent\ViewEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 12542), Tuple.Create<System.Object, System.Int32>(item
+            #line 243 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 12456), Tuple.Create<System.Object, System.Int32>(item
             
             #line default
             #line hidden
-, 12542), false)
+, 12456), false)
 );
 
 WriteLiteral(" alt=\"First slide\"");
@@ -932,7 +941,7 @@ WriteLiteral(" alt=\"First slide\"");
 WriteLiteral(">\r\n\r\n                        </div>\r\n");
 
             
-            #line 243 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 246 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                     }
 
             
@@ -1068,7 +1077,7 @@ WriteLiteral(">\r\n\r\n\r\n");
 WriteLiteral("                        ");
 
             
-            #line 299 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 302 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                    Write(Html.DisplayFor(m => m.EventDescription));
 
             
@@ -1087,7 +1096,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 304 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 307 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                    Write(Html.HiddenFor(m => m.organizerid, new { id = "hdorganiserid" }));
 
             
@@ -1096,7 +1105,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                        <h4>");
 
             
-            #line 305 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 308 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                        Write(Html.DisplayFor(m => m.organizername));
 
             
@@ -1117,13 +1126,13 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">View organizer profile </a></p>\r\n");
 
             
-            #line 308 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 311 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 308 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 311 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                          if (Html.DisplayFor(m => m.fblink).ToString() != "")
                         {
 
@@ -1132,14 +1141,14 @@ WriteLiteral(">View organizer profile </a></p>\r\n");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15851), Tuple.Create("\"", 15889)
+WriteAttribute("href", Tuple.Create(" href=\"", 15765), Tuple.Create("\"", 15803)
             
-            #line 310 "..\..\Views\CreateEvent\ViewEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15858), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
+            #line 313 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 15772), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
             
             #line default
             #line hidden
-, 15858), false)
+, 15772), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -1151,7 +1160,7 @@ WriteLiteral(" src=\"/Images/facebook-icon.png\"");
 WriteLiteral(">&nbsp;");
 
             
-            #line 310 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 313 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                                                                                                Write(Html.DisplayFor(m => m.fblink));
 
             
@@ -1160,7 +1169,7 @@ WriteLiteral(">&nbsp;");
 WriteLiteral("</a></p>\r\n");
 
             
-            #line 311 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 314 "..\..\Views\CreateEvent\ViewEvent.cshtml"
 
                         }
 
@@ -1170,7 +1179,7 @@ WriteLiteral("</a></p>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 313 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 316 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                          if (Html.DisplayFor(m => m.twitterlink).ToString() != "")
                         {
 
@@ -1181,14 +1190,14 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("                        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 16164), Tuple.Create("\"", 16207)
+WriteAttribute("href", Tuple.Create(" href=\"", 16078), Tuple.Create("\"", 16121)
             
-            #line 317 "..\..\Views\CreateEvent\ViewEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 16171), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
+            #line 320 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 16085), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
             
             #line default
             #line hidden
-, 16171), false)
+, 16085), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -1200,7 +1209,7 @@ WriteLiteral(" src=\"/Images/twitter-icon.png\"");
 WriteLiteral(">&nbsp;");
 
             
-            #line 317 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 320 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                                                                                                Write(Html.DisplayFor(m => m.twitterlink));
 
             
@@ -1209,7 +1218,7 @@ WriteLiteral(">&nbsp;");
 WriteLiteral(" </a></p>\r\n");
 
             
-            #line 318 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 321 "..\..\Views\CreateEvent\ViewEvent.cshtml"
 
 }
 
@@ -1219,7 +1228,7 @@ WriteLiteral(" </a></p>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 320 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 323 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                          if (Html.DisplayFor(m => m.Linkedinlin).ToString() != "")
                         {
 
@@ -1228,29 +1237,29 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("                        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 16459), Tuple.Create("\"", 16502)
+WriteAttribute("href", Tuple.Create(" href=\"", 16373), Tuple.Create("\"", 16416)
             
-            #line 322 "..\..\Views\CreateEvent\ViewEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 16466), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
+            #line 325 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 16380), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
             
             #line default
             #line hidden
-, 16466), false)
+, 16380), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 16524), Tuple.Create("\"", 16549)
-, Tuple.Create(Tuple.Create("", 16530), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
-, 16530), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 16438), Tuple.Create("\"", 16463)
+, Tuple.Create(Tuple.Create("", 16444), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
+, 16444), false)
 );
 
 WriteLiteral(" />&nbsp; ");
 
             
-            #line 322 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 325 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                                                                                              Write(Html.DisplayFor(m => m.Linkedinlin));
 
             
@@ -1259,7 +1268,7 @@ WriteLiteral(" />&nbsp; ");
 WriteLiteral("</a></p>\r\n");
 
             
-            #line 323 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 326 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                         }
 
             
@@ -1322,13 +1331,13 @@ WriteLiteral(" class=\"event_detail_container\"");
 WriteLiteral(">\r\n");
 
             
-            #line 352 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 355 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 352 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 355 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                  if (@Html.DisplayFor(m => m.enablediscussion).ToString() == "y" || @Html.DisplayFor(m => m.enablediscussion).ToString() == "Y")
                 {
 
@@ -1411,7 +1420,7 @@ WriteLiteral(" class=\"evnt_tile_bg_r evnt_tile_bg_r_call\"");
 WriteLiteral("></div>\r\n        </div>\r\n");
 
             
-            #line 373 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 376 "..\..\Views\CreateEvent\ViewEvent.cshtml"
 
 
             
@@ -1440,7 +1449,7 @@ WriteLiteral("  fb-xfbml-state=\"rendered\"");
 WriteLiteral("></div>\r\n\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 380 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 383 "..\..\Views\CreateEvent\ViewEvent.cshtml"
         }
 
             
@@ -1492,9 +1501,9 @@ WriteLiteral(" id=\"dvAjxLoader\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 20109), Tuple.Create("\"", 20139)
-, Tuple.Create(Tuple.Create("", 20115), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 20115), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 20023), Tuple.Create("\"", 20053)
+, Tuple.Create(Tuple.Create("", 20029), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 20029), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
@@ -1599,7 +1608,7 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">");
 
             
-            #line 447 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 450 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                            Write(TempData["EventType"]);
 
             
@@ -1616,7 +1625,7 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">");
 
             
-            #line 448 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 451 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                            Write(TempData["EventCategory"]);
 
             
@@ -1633,7 +1642,7 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">");
 
             
-            #line 449 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 452 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                            Write(TempData["EventSubCategory"]);
 
             
@@ -1821,7 +1830,7 @@ WriteLiteral(" class=\"col-sm-12 text-right no_pad\"");
 WriteLiteral(">\r\n");
 
             
-            #line 520 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 523 "..\..\Views\CreateEvent\ViewEvent.cshtml"
  if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
 {
 
@@ -1841,7 +1850,7 @@ WriteLiteral(" style=\"display:none;\"");
 WriteLiteral(">PROCEED TO PAYMENT  > </button>\r\n");
 
             
-            #line 523 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 526 "..\..\Views\CreateEvent\ViewEvent.cshtml"
 }
 else
 {
@@ -1864,7 +1873,7 @@ WriteLiteral(" class=\"btn btn-lg ev_live_btn ev_live_sub_btn\"");
 WriteLiteral(">PROCEED TO PAYMENT  > </button>\r\n");
 
             
-            #line 529 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 532 "..\..\Views\CreateEvent\ViewEvent.cshtml"
     }
     else
     {
@@ -1883,7 +1892,7 @@ WriteLiteral(" class=\"btn btn-lg ev_live_btn ev_live_sub_btn\"");
 WriteLiteral(">PROCEED TO PAYMENT  > </button>\r\n");
 
             
-            #line 533 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 536 "..\..\Views\CreateEvent\ViewEvent.cshtml"
 
     }
 }
@@ -2428,18 +2437,18 @@ WriteLiteral(@"
         var eventype=""");
 
             
-            #line 730 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 733 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                  Write(Model.EventPrivacy);
 
             
             #line default
             #line hidden
-WriteLiteral("\";\r\n        if (eventype == \"Private\")\r\n        {\r\n\r\n            $(\'#idpasswordti" +
-"ck\').click();\r\n\r\n        }\r\n\r\n        $(\'#btnbackpwd\').click(function () {\r\n\r\n  " +
-"          window.location.href = \'");
+WriteLiteral("\";\r\n        if (eventype !=\"\")\r\n        {\r\n\r\n            $(\'#idpasswordtick\').cli" +
+"ck();\r\n\r\n        }\r\n\r\n        $(\'#btnbackpwd\').click(function () {\r\n\r\n          " +
+"  window.location.href = \'");
 
             
-            #line 740 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 743 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                Write(Url.Action("Index","Home"));
 
             
@@ -2450,7 +2459,7 @@ WriteLiteral("\';\r\n\r\n        });\r\n\r\n        $(\'#btnsubmitpwd\').click(f
 "          $.ajax({\r\n                url: \'");
 
             
-            #line 748 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 751 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                  Write(Url.Action("Checkpassword", "CreateEvent"));
 
             
@@ -2508,7 +2517,7 @@ WriteLiteral("\',\r\n                data: { password: a, id: id },\r\n         
 "             }\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 863 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 866 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("saveorganizermsg", "CreateEvent"));
 
             
@@ -2575,7 +2584,7 @@ WriteLiteral("\r\n\r\n\r\n\r\n\r\n\r\n                function showevent(t) {\r\
 "(\"#ioutlook\").attr(\"href\", \'");
 
             
-            #line 965 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 968 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                             Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -2586,7 +2595,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "ender\").attr(\"href\", \'");
 
             
-            #line 966 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 969 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                              Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -2608,14 +2617,15 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "v_act\");\r\n\r\n        }\r\n        if (clickvote == \"Y\") {\r\n            $(\"#btnvote\"" +
 ").addClass(\"btn_fav_act\");\r\n\r\n        } else {\r\n            $(\"#btnvote\").remove" +
 "Class(\"btn_fav_act\");\r\n\r\n        }\r\n        $(\"#btnvote\").click(function () {\r\n " +
-"           var clickvote = $(\'#hdEventvote\').val();\r\n\r\n            if (clickvote" +
-" == \"Y\") {\r\n                $(\"#btOk\").click();\r\n                $(\"#spanokid\")." +
-"html(ajaxsetup(\"ViewEvent\", \"VoteOnce\"));\r\n                //alert(\'You can only" +
-" vote once.\');\r\n            } else {\r\n                var eid = $(\'#hdEventid\')." +
-"val();\r\n                $.ajax({\r\n                    url: \'");
+"           debugger;\r\n            var msg = \"\";\r\n            var clickvote = $(\'" +
+"#hdEventvote\').val();\r\n\r\n            if (clickvote == \"Y\") {\r\n                $(" +
+"\"#btOk\").click();\r\n                 msg = ajaxsetup(\"ViewEvent\", \"VoteOnce\");\r\n " +
+"               $(\"#spanokid\").html(msg);\r\n                //alert(\'You can only " +
+"vote once.\');\r\n            } else {\r\n                var eid = $(\'#hdEventid\').v" +
+"al();\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 1006 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1012 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("savevote", "CreateEvent"));
 
             
@@ -2639,7 +2649,8 @@ WriteLiteral(@"
                             $('#spanvotes').html(data);
 
                             $(""#btOk"").click();
-                            $(""#spanokid"").html(ajaxsetup(""ViewEvent"", ""ThanksForVote""));
+                             msg = ajaxsetup(""ViewEvent"", ""ThanksForVote"");
+                             $(""#spanokid"").html(msg);
                             //alert('Thank you for voting!');
                         }
                     },
@@ -2653,7 +2664,8 @@ WriteLiteral(@"
         });
 
         $(""#btnfavourite"").click(function () {
-
+            debugger;
+            var msg = """";
             var clickfav = $('#hdEventFav').val();
             if (clickfav == ""Y"") {
                 $('#hdEventFav').val(""N"");
@@ -2667,7 +2679,7 @@ WriteLiteral(@"
                 url: '");
 
             
-            #line 1047 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1055 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                  Write(Url.Action("savefavourite", "CreateEvent"));
 
             
@@ -2682,38 +2694,40 @@ WriteLiteral("\r\n                        return false;\r\n                    }
 "              var clickfav = $(\'#hdEventFav\').val();\r\n                        if" +
 " (clickfav == \"Y\") {\r\n                            $(\"#btnfavourite\").addClass(\"b" +
 "tn_fav_act\");\r\n                            $(\"#btOk\").click();\r\n                " +
-"            $(\"#spanokid\").html(ajaxsetup(\"ViewEvent\", \"eventSaved\"));\r\n        " +
-"                    //alert(\'Your Event have been saved!\');\r\n                   " +
-"     }\r\n                        if (clickfav == \"N\") {\r\n                        " +
-"    $(\"#btOk\").click();\r\n                            $(\"#spanokid\").html(ajaxset" +
-"up(\"ViewEvent\", \"eventnotsaved\"));\r\n                            //alert(\'Your Ev" +
-"ent have not been saved!\');\r\n                            $(\"#btnfavourite\").remo" +
-"veClass(\"btn_fav_act\");\r\n                        }\r\n\r\n                        $(" +
-"\'#spanfav\').html(data);\r\n\r\n                    }\r\n                },\r\n          " +
-"      error: function (data) {\r\n                    alert(\"Sorry there is some p" +
-"roblem.\");\r\n                    return false\r\n                }\r\n            });" +
-"\r\n\r\n        });\r\n\r\n        $(\"#lstcarousel div:first\").addClass(\"active\");\r\n\r\n\r\n" +
-"        $(\".EveActRib\").css(\"display\", \"none\");\r\n        $(\".FacdisComm\").click(" +
-"function () {\r\n            $(\".EveActRib\").show();\r\n            $(\".EveDisRib\")." +
-"hide();\r\n        });\r\n\r\n        $(\".FacdactComm\").click(function () {\r\n         " +
-"   $(\".EveActRib\").hide();\r\n            $(\".EveDisRib\").show();\r\n        });\r\n\r\n" +
-"\r\n        $(\".TmezoneSet\").hide();\r\n        $(\".Timezone\").click(function () {\r\n" +
-"            var eventtype = $(\"#hdEventtype\").val();\r\n            if (eventtype " +
-"== \"Multiple\") {\r\n                $(\".TmezoneSet\").slideToggle(\"fast\");\r\n       " +
-"     } else {\r\n                $(\".TmezoneSet\").slideToggle(\"fast\");\r\n          " +
-"  }\r\n            //\r\n\r\n        });\r\n\r\n        $(\".closetimemodal\").click(functio" +
-"n () {\r\n            $(\".TmezoneSet\").hide();\r\n\r\n        });\r\n    });\r\n</script>\r" +
-"\n\r\n\r\n\r\n<script>\r\n    $(function () {\r\n        var address = $(\'#lbltopaddress\')." +
-"html();\r\n        $(document).tooltip({\r\n            items: \"[data-geo], [title]\"" +
-",\r\n            content: function () {\r\n                var element = $(this);\r\n " +
-"               if (element.is(\"[data-geo]\")) {\r\n\r\n                    var text =" +
-" address;\r\n                    return \"<img class=\'map\'  alt=\'\" + text +\r\n      " +
-"                \"\' src=\'http://maps.google.com/maps/api/staticmap?\" +\r\n         " +
-"             \"zoom=15&size=250x250&maptype=roadmap& zoomControl=true&sensor=fals" +
-"e&center=\" +\r\n                      text + \"&markers=size:mid%7Ccolor:0xff0000%7" +
-"Clabel:%7C\" + text + \"\'>\";\r\n                }\r\n                if (element.is(\"[" +
-"title]\")) {\r\n                    return element.attr(\"title\");\r\n                " +
-"}\r\n\r\n            }\r\n        });\r\n    });\r\n</script>\r\n\r\n\r\n");
+"            msg = ajaxsetup(\"ViewEvent\", \"eventSaved\");\r\n                       " +
+"     $(\"#spanokid\").html(msg);\r\n                            //alert(\'Your Event " +
+"have been saved!\');\r\n                        }\r\n                        if (clic" +
+"kfav == \"N\") {\r\n                            $(\"#btOk\").click();\r\n               " +
+"             msg = ajaxsetup(\"ViewEvent\", \"eventnotsaved\");\r\n                   " +
+"      \r\n                            $(\"#spanokid\").html(msg);\r\n                 " +
+"           //alert(\'Your Event have not been saved!\');\r\n                        " +
+"    $(\"#btnfavourite\").removeClass(\"btn_fav_act\");\r\n                        }\r\n\r" +
+"\n                        $(\'#spanfav\').html(data);\r\n\r\n                    }\r\n   " +
+"             },\r\n                error: function (data) {\r\n                    a" +
+"lert(\"Sorry there is some problem.\");\r\n                    return false\r\n       " +
+"         }\r\n            });\r\n\r\n        });\r\n\r\n        $(\"#lstcarousel div:first\"" +
+").addClass(\"active\");\r\n\r\n\r\n        $(\".EveActRib\").css(\"display\", \"none\");\r\n    " +
+"    $(\".FacdisComm\").click(function () {\r\n            $(\".EveActRib\").show();\r\n " +
+"           $(\".EveDisRib\").hide();\r\n        });\r\n\r\n        $(\".FacdactComm\").cli" +
+"ck(function () {\r\n            $(\".EveActRib\").hide();\r\n            $(\".EveDisRib" +
+"\").show();\r\n        });\r\n\r\n\r\n        $(\".TmezoneSet\").hide();\r\n        $(\".Timez" +
+"one\").click(function () {\r\n            var eventtype = $(\"#hdEventtype\").val();\r" +
+"\n            if (eventtype == \"Multiple\") {\r\n                $(\".TmezoneSet\").sl" +
+"ideToggle(\"fast\");\r\n            } else {\r\n                $(\".TmezoneSet\").slide" +
+"Toggle(\"fast\");\r\n            }\r\n            //\r\n\r\n        });\r\n\r\n        $(\".clo" +
+"setimemodal\").click(function () {\r\n            $(\".TmezoneSet\").hide();\r\n\r\n     " +
+"   });\r\n    });\r\n</script>\r\n\r\n\r\n\r\n<script>\r\n    $(function () {\r\n        var add" +
+"ress = $(\'#lbltopaddress\').html();\r\n        $(document).tooltip({\r\n            i" +
+"tems: \"[data-geo], [title]\",\r\n            content: function () {\r\n              " +
+"  var element = $(this);\r\n                if (element.is(\"[data-geo]\")) {\r\n\r\n   " +
+"                 var text = address;\r\n                    return \"<img class=\'ma" +
+"p\'  alt=\'\" + text +\r\n                      \"\' src=\'http://maps.google.com/maps/a" +
+"pi/staticmap?\" +\r\n                      \"zoom=15&size=250x250&maptype=roadmap& z" +
+"oomControl=true&sensor=false&center=\" +\r\n                      text + \"&markers=" +
+"size:mid%7Ccolor:0xff0000%7Clabel:%7C\" + text + \"\'>\";\r\n                }\r\n      " +
+"          if (element.is(\"[title]\")) {\r\n                    return element.attr(" +
+"\"title\");\r\n                }\r\n\r\n            }\r\n        });\r\n    });\r\n</script>\r\n" +
+"\r\n\r\n");
 
 WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNaN(this.value + \"\" + S" +
 "tring.fromCharCode(e.charCode))) return false;\r\n    //}\r\n    //$(\'.number-only\')" +
@@ -2806,7 +2820,7 @@ WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNa
 "             url: \'");
 
             
-            #line 1325 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1336 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2833,7 +2847,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 1343 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1354 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                  Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2879,7 +2893,7 @@ WriteLiteral("\',\r\n                beforeSend: function () { $(\'#dvAjxLoader\
 "              $.ajax({\r\n                    url: \'");
 
             
-            #line 1415 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1426 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("LockTickets", "CreateEvent"));
 
             
@@ -2894,12 +2908,18 @@ WriteLiteral(@"',
                             $(""#spanokid"").html(ajaxsetup(""ViewEvent"", ""OverSelling""));
                             $.removeCookie(""Selection"");
                         }
+                        else if (response == ""NOTLIVE"")
+                        {
+                            $(""#btOk"").click();
+                            $(""#spanokid"").html(ajaxsetup(""ViewEvent"", ""EventNotLive""));
+                            $.removeCookie(""Selection"");
+                        }
                         else {
                             $.cookie(""Selection"", vSelection, { expire: 1 });
                             window.location.href = '");
 
             
-            #line 1426 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1443 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                                Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
@@ -2928,13 +2948,14 @@ WriteLiteral(@"' + '?Eventid=' + Eventid;
     });
 
     function ajaxsetup(strname, strFormTag) {
+        debugger;
         var msgnew = """";
 
         var request = $.ajax({
             url: '");
 
             
-            #line 1452 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1470 "..\..\Views\CreateEvent\ViewEvent.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             
