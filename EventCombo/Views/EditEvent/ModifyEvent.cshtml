@@ -14,7 +14,9 @@
 <link href="~/Content/summernote.css" rel="stylesheet" />
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
-
+<style>
+ 
+</style>
 
 @using (Html.BeginForm())
 {
@@ -393,7 +395,7 @@
                                                             <option>Four</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6 no_pad_res">
+                                                    <div class="col-sm-6 no_pad_res" id="dvmonthchk">
                                                         <select id="dllMonthlyWeekDay" class="checkboxName" multiple="multiple">
                                                             <option value="1">Monday</option>
                                                             <option value="2">Tuesday</option>
@@ -2901,6 +2903,8 @@ else
             });
 
             $("#btnAddSch").click(function () {
+                debugger;
+                var days;
                 $("#hidSchLastState").val($("#dlSchOption").val());
                 if ($(".SchmultiDetail").css('display') == 'block') {
                     $("#hdSchType").val('Multiple');
@@ -2910,10 +2914,14 @@ else
                             vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
                         }
                         else if ($("#dlSchOption").val() == "Weekly") {
+                            days= $("#dllWeeklyDayChk").val();
+                           
                             vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
                         }
                         else if ($("#dlSchOption").val() == "Monthly") {
+                            days=$("#dllMonthlyWeekDay").val(); 
+
                             vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
                         }
@@ -4660,6 +4668,12 @@ else
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#dllWeeklyDayChk').multiselect({
+               onChange: function(option, checked) {
+                    alert(option.length + ' options ' + (checked ? 'selected' : 'deselected'));
+                }
+            });
             function uuid() {
                 var chars = '0123456789abcdef'.split('');
 
@@ -4898,6 +4912,164 @@ else
                     $('#txtReqPassword').removeClass('err-bor');
                 }
 
+            }
+            var weekcnt=0;
+            var weekdaily=0;
+            var weekmnth=0;
+            var custom=0;
+            var days;
+            var single=0;
+            if ($("#hdSchType").val() == 'Multiple') {
+
+                if ($("#dlSchOption").val() == "Weekly")
+                {
+                    days= $("#dllWeeklyDayChk").val();
+
+                    if(days==null)
+                    {
+                        weekcnt++;
+                        $("#dvWeeklyDayChk button").addClass('err-bor');
+                    }
+                    if($("#txtTimeStart").length<=0)
+                    {  weekcnt++;
+                    $("#txtTimeStart").addClass('err-bor');
+                    }
+                    if($("#txtTimeEnd").length<=0)
+                    {  weekcnt++;
+                    $("#txtTimeEnd").addClass('err-bor');
+                    }
+                    if($("#txtTimeEnd").length<=0)
+                    {  weekcnt++;
+                        $("#txtTimeEnd").addClass('err-bor');
+                    }
+                    if($("#txtDateFrom").length<=0)
+                    {  weekcnt++;
+                    $("#txtDateFrom").addClass('err-bor');
+                    }
+                    if($("#txtDateTo").length<=0)
+                    {  weekcnt++;
+                    $("#txtDateTo").addClass('err-bor');
+                    }
+                }
+
+                if ($("#dlSchOption").val() == "Daily")
+                {
+                    if($("#txtDateFrom").length<=0)
+                    {  weekdaily++;
+                    $("#txtDateFrom").addClass('err-bor');
+                    }
+                    if($("#txtDateTo").length<=0)
+                    {  weekdaily++;
+                    $("#txtDateTo").addClass('err-bor');
+                    }
+                    if($("#txtTimeStart").length<=0)
+                    {  weekdaily++;
+                    $("#txtTimeStart").addClass('err-bor');
+                    }
+                    if($("#txtTimeEnd").length<=0)
+                    {  weekdaily++;
+                    $("#txtTimeEnd").addClass('err-bor');
+                    }
+                    
+                }
+                if ($("#dlSchOption").val() == "Monthly")
+                {
+                    days= $("#dllMonthlyWeekDay").val(); 
+                    if(days==null)
+                    {
+
+                        weekmnth++;
+                        $("#dvmonthchk button").addClass('err-bor');
+                    }
+                    if($("#txtDateFrom").length<=0)
+                    {  weekmnth++;
+                    $("#txtDateFrom").addClass('err-bor');
+                    }
+                    if($("#txtDateFrom").length<=0)
+                    {  weekmnth++;
+                        $("#txtDateFrom").addClass('err-bor');
+                    }
+                    if($("#txtTimeStart").length<=0)
+                    {  weekmnth++;
+                        $("#txtTimeStart").addClass('err-bor');
+                    }
+                    if($("#txtDateTo").length<=0)
+                    {  weekmnth++;
+                    $("#txtDateTo").addClass('err-bor');
+                    }
+                    
+                }
+                if ($("#dlSchOption").val() == "Custom")
+                {
+                  
+                    if($("#txtTimeStart").length<=0)
+                    {  custom++;
+                    $("#txtTimeStart").addClass('err-bor');
+                    }
+                    if($("#txtTimeEnd").length<=0)
+                    {  custom++;
+                    $("#txtTimeEnd").addClass('err-bor');
+                    }
+                    if($("#txtDateFrom").length<=0)
+                    {  custom++;
+                    $("#txtDateFrom").addClass('err-bor');
+                    }
+                    if($("#txtDateTo").length<=0)
+                    {  custom++;
+                    $("#txtDateTo").addClass('err-bor');
+                    }
+                    
+                }
+
+            }else{
+                
+
+                if($("#txtStartDate").length<=0)
+                {  single++;
+                $("#txtStartDate").addClass('err-bor');
+                }
+                if($("#txtStartTime").length<=0)
+                {  single++;
+                $("#txtStartTime").addClass('err-bor');
+                }
+                if($("#txtEndDate").length<=0)
+                {  single++;
+                $("#txtEndDate").addClass('err-bor');
+                }
+                if($("#txtEndTime").length<=0)
+                {  single++;
+                $("#txtEndTime").addClass('err-bor');
+                }
+
+            }
+
+            if(weekcnt>0)
+            {
+                $("#btEnterDates").click();
+                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+
+            }
+            if(weekdaily>0)
+            {
+                $("#btEnterDates").click();
+                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+
+            }
+            if(weekmnth>0)
+            {
+                $("#btEnterDates").click();
+                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+
+            }
+            if(custom>0)
+            {
+                $("#btEnterDates").click();
+                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+            }
+            if(single>0)
+            {
+                $("#btEnterDates").click();
+                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
             }
             return msg;
         }
