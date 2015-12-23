@@ -41,14 +41,29 @@ namespace EventCombo.Controllers
                 return (long)lParentID;                    
             }
         }
+<<<<<<< HEAD
+        public Event GetSelectedEventDetail(string strGuid)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var EventId = (from MyE in db.Ticket_Locked_Detail where MyE.TLD_GUID == strGuid select MyE.TLD_Event_Id).FirstOrDefault();
+                var MyEvent = (from MyEv in db.Events
+                               where MyEv.EventID == EventId
+                               select MyEv).FirstOrDefault();
+                return MyEvent;
+            }
+        }
+
+=======
      
+>>>>>>> 6d8e87ad6388604d27512ee365768068feb2b70d
         public string Index(string strFormName, string strFormTag)
-       {
+        {
             string result = geterrorMessage(strFormName, strFormTag);
             return result;
         }
 
-        private string geterrorMessage(string formname, string errortype)
+        public string geterrorMessage(string formname, string errortype)
         {
             string message = "";
             try

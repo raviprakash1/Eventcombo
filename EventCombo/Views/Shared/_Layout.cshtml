@@ -278,22 +278,22 @@ else
 
                                
 
-                                <div class="err_main">
-                                    <div class="er_UI_main alert-danger" id="diverrologin" style="display :none;width:100%">
-                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
+                               
+                                    <div class="er_UI_main" id="diverrologin" style="display :none;">
                                         <div class="er_UI_img"></div>
                                         <div class="er_suc" id="dverrui">  </div>
+                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
                                     </div>
-                                </div>
+                                
 
 
-                                <div class="err_main">
-                                    <div class="er_UI_main alert-danger" id="diverro1login" style="display :none;width:100%">
-                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1login">&#215;</button>
+                              
+                                    <div class="er_UI_main" id="diverro1login" style="display :none;">
                                         <div class="er_sys_img"></div>
                                         <div class="er_suc" id="dverrsys">  </div>
+                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1login">&#215;</button>
                                     </div>
-                                </div>
+                              
                                 <div class="clearfix"></div>
 
                                 <div class="form-group">
@@ -331,7 +331,6 @@ else
                         <div class="col-md-12">
                             <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="#" id="signUpPopup" class="btn btn-primary login_btn_sub">Sign UP</a>
                         </div>
-                        <div class="clearfix"></div>
                         <div class="col-md-12 social-buttons text-center ">
                             <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
                                 @*@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
@@ -374,8 +373,8 @@ else
                                 </div>
                             </div>
     }
-    <div class="err_main">
-        <div class="er_UI_main alert-danger" id="diverro" style="display :none;width:100%">
+    <div class="err_main" id="diverro" style="display :none;">
+        <div class="er_UI_main alert-danger">
             <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro">&#215;</button>
             <div class="er_UI_img"></div>
             <div class="er_suc" id="dverrsignui">  </div>
@@ -383,15 +382,15 @@ else
     </div>
 
 
-        <div class="err_main">
-            <div class="er_UI_main alert-danger" id="diverro1" style="display :none;width:100%">
+        <div class="err_main" id="diverro1" style="display :none;">
+            <div class="er_UI_main alert-danger">
                 <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1">&#215;</button>
                 <div class="er_sys_img"></div>
                 <div class="er_suc" id="dverrsignsys">  </div>
             </div>
         </div>
             <div class="clearfix"></div>
-            <div class="form-group">
+           
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-sm-5 login_form_bot">
@@ -418,7 +417,7 @@ else
                     @Html.ActionLink("forgot password?", "ForgetPassword", "Home",null, new { id="ASignupfrgt"})
 
                 </div>
-            </div>
+           
 }
 
 
@@ -700,9 +699,24 @@ else
                     }
                     return msglogin;
                 }
+
+                
                 function ajaxsetup(strname, strFormTag)
                 {
                     var msgnew = "";
+                    $.ajax({
+                        url: '@Url.Action("geterrorMessage", "ValidationMessage")',
+                        data: { formname: strname, errortype: strFormTag },
+                        async: false,
+                        type: 'Post',
+                        success: function (data) {
+                            msgnew = data;
+                        }
+                    });
+
+                    return msgnew;
+
+                    @*var msgnew = "";
 
                     var request = $.ajax({
                         url: '@Url.Action("Index", "ValidationMessage")',
@@ -717,7 +731,7 @@ else
                     request.fail(function (jqXHR, textStatus) {
                         msgnew += "Some Error occur!!";
                     });
-                    return msgnew;
+                    return msgnew;*@
                 }
                 function validateEmail(sEmail) {
                     var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;

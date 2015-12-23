@@ -20,14 +20,19 @@ using System.Drawing.Imaging;
 
 namespace EventCombo.Controllers
 {
+
+    
     public class TicketPaymentController : Controller
     {
         EventComboEntities db = new EventComboEntities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         // GET: TicketPayment
-        public ActionResult TicketPayment(long Eventid)
+
+        //[Route("Payment", Name = "TPayment", Order=2)]
+        public ActionResult TicketPayment()
         {
+            ValidationMessageController vmc = new ValidationMessageController();
             if ((Session["AppId"] != null))
             {
                 HomeController hmc = new HomeController();
@@ -38,11 +43,24 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+            long Eventid = 0;
+            if (Session["TicketLockedId"] != null)
+            {
+                Event objMyEvent = new Event();
+                objMyEvent = vmc.GetSelectedEventDetail(Session["TicketLockedId"].ToString());
+                Eventid = objMyEvent.EventID;
+            }
+            
+            Eventid = vmc.GetLatestEventId(Eventid);
+
             TicketPayment tp = new TicketPayment();
             string defaultCountry = "";
             string Fname = "", Lname = "", Phnnumber = "", Adress = "", Email = "",City="",State="",Country="",Zip="";
-            var url = Url.Action("TicketPayment", "TicketPayment") + "?Eventid=" + Eventid;
+
+            var url = Url.Action("TicketPayment", "TicketPayment") + "?Eventid=" + Eventid.ToString();
+            //var url = Url.RouteUrl("TPayment");
             Session["ReturnUrl"] = "TicketPayment~" + url;
+
             CreateEventController cs = new CreateEventController();
             AccountController AccDetail = new AccountController();
             tp.Imageurl = cs.GetImages(Eventid).FirstOrDefault();

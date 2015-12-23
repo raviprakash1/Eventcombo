@@ -236,6 +236,7 @@
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\TicketPaymentController.cs" />
     <Compile Include="Controllers\ValidationMessageController.cs" />
+    <Compile Include="Controllers\ViewEventController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1051,6 +1052,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CmsEventList.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\ViewEvent\ViewEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

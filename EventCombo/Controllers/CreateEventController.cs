@@ -490,6 +490,7 @@ namespace EventCombo.Controllers
         //[Route("{strUrlData}")]
         public ActionResult ViewEvent(string strUrlData)
         {
+            
            
             if ((Session["AppId"] != null))
             {
