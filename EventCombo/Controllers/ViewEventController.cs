@@ -15,12 +15,12 @@ using System.Globalization;
 
 namespace EventCombo.Controllers
 {
-    [RoutePrefix("")]
+    //[RoutePrefix("")]
     public class ViewEventController : Controller
     {
         EventComboEntities db = new EventComboEntities();
         // GET: ViewEvent
-        [Route("{strUrlData}", Name = "ViewEvent",Order =1)]
+        //[Route("{strUrlData}", Name = "ViewEvent",Order =1)]
         public ActionResult ViewEvent(string strUrlData)
         {
 

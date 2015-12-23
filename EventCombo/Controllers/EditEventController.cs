@@ -1390,8 +1390,6 @@ namespace EventCombo.Controllers
 
         public long Draftmodemodification(EventCreation model)
         {
-
-
             long lEventId = model.EventID;
             List<long> ids = new List<long>();
             try
@@ -1477,42 +1475,45 @@ namespace EventCombo.Controllers
                                 {
                                     objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
                                 }
-                                foreach (Address objA in model.AddressDetail)
+                                if (model.AddressDetail != null)
                                 {
-
-                                    if ((objA.VenueName != null && objA.VenueName.Trim() != "") || (objA.ConsolidateAddress != "" && objA.ConsolidateAddress != null))
+                                    foreach (Address objA in model.AddressDetail)
                                     {
-                                        if (objA.AddressID == 0)
-                                        {
-                                            ObjAdd = new Models.Address();
-                                        }
-                                        else
-                                        {
-                                            ObjAdd = (from obj in objEnt.Addresses where obj.AddressID == objA.AddressID && obj.EventId == lEventId select obj).FirstOrDefault();
-                                        }
-                                        ObjAdd.EventId = lEventId;
-                                        ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
-                                        ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
-                                        ObjAdd.City = objA.City == null ? "" : objA.City;
-                                        ObjAdd.CountryID = objA.CountryID;
-                                        ObjAdd.State = objA.State == null ? "" : objA.State;
-                                        ObjAdd.UserId = strUserId;
-                                        ObjAdd.VenueName = objA.VenueName;
-                                        ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
-                                        ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
-                                        ObjAdd.Name = "";
-                                        if (objA.AddressID == 0)
-                                        {
-                                            objEnt.Addresses.Add(ObjAdd);
-                                        }
-                                        ids.Add(ObjAdd.AddressID);
-                                    }
 
-                                }
-                                var results = objEnt.Addresses.Where(x => !ids.Contains(x.AddressID) && x.EventId == lEventId).ToList();
-                                if (results != null)
-                                {
-                                    objEnt.Addresses.RemoveRange(results);
+                                        if ((objA.VenueName != null && objA.VenueName.Trim() != "") || (objA.ConsolidateAddress != "" && objA.ConsolidateAddress != null))
+                                        {
+                                            if (objA.AddressID == 0)
+                                            {
+                                                ObjAdd = new Models.Address();
+                                            }
+                                            else
+                                            {
+                                                ObjAdd = (from obj in objEnt.Addresses where obj.AddressID == objA.AddressID && obj.EventId == lEventId select obj).FirstOrDefault();
+                                            }
+                                            ObjAdd.EventId = lEventId;
+                                            ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
+                                            ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
+                                            ObjAdd.City = objA.City == null ? "" : objA.City;
+                                            ObjAdd.CountryID = objA.CountryID;
+                                            ObjAdd.State = objA.State == null ? "" : objA.State;
+                                            ObjAdd.UserId = strUserId;
+                                            ObjAdd.VenueName = objA.VenueName;
+                                            ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
+                                            ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
+                                            ObjAdd.Name = "";
+                                            if (objA.AddressID == 0)
+                                            {
+                                                objEnt.Addresses.Add(ObjAdd);
+                                            }
+                                            ids.Add(ObjAdd.AddressID);
+                                        }
+
+                                    }
+                                    var results = objEnt.Addresses.Where(x => !ids.Contains(x.AddressID) && x.EventId == lEventId).ToList();
+                                    if (results != null)
+                                    {
+                                        objEnt.Addresses.RemoveRange(results);
+                                    }
                                 }
                             }
                             // Event on Single Timing 

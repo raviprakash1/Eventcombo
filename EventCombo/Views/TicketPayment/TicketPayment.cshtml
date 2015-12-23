@@ -865,13 +865,11 @@
                 type: "Post",
                 success: function (response) {
                     var title = $('#h2tag').html().split(" ").join("");
-                    window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';
-                    @*var vBack = '@Url.Action("ViewEvent", "ViewEvent")' + '/a౼' + Eventid + '౼N';
-                    alert(vBack)
-
-                    @Url.RouteUrl()
-                    window.location.href = '@Url.Action("ViewEvent", "ViewEvent")' + '/a౼' + Eventid + '౼N';;*@
-
+                   @*window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';*@
+                    @*var vBack = '@Url.Action("ViewEvent", "ViewEvent")' + '/a౼' + Eventid + '౼N';*@
+                    @*window.location.href = '@Url.Action("ViewEvent", "ViewEvent")' + '/a౼' + Eventid + '౼N';*@
+                    var title = $('#h2tag').html();
+                    window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';
                 }
             });
         });
@@ -1092,10 +1090,10 @@
         });
         //--------------Fire when User Click on Continue in Previous Page ------------------------------------
         $("#btMessOk").click(function () {
-            @*var title = $('#h2tag').html();
-            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';*@
-            var title = $('#h2tag').html().split(" ").join("");
-            window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';
+            var title = $('#h2tag').html();
+            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';
+            @*var title = $('#h2tag').html().split(" ").join("");
+            window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';*@
 
 
         });
@@ -1144,9 +1142,10 @@
                         },
                         error: function () {
                             //ShowMessage('E', 'Sorry, There is some error.');
-                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';*@
                             var title = $('#h2tag').html().split(" ").join("");
-                            window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';
+                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';
+                            @*var title = $('#h2tag').html().split(" ").join("");
+                            window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';*@
                         }
                     });
                 }

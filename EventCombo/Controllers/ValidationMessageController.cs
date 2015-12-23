@@ -41,7 +41,7 @@ namespace EventCombo.Controllers
                 return (long)lParentID;                    
             }
         }
-<<<<<<< HEAD
+
         public Event GetSelectedEventDetail(string strGuid)
         {
             using (EventComboEntities db = new EventComboEntities())
@@ -54,9 +54,6 @@ namespace EventCombo.Controllers
             }
         }
 
-=======
-     
->>>>>>> 6d8e87ad6388604d27512ee365768068feb2b70d
         public string Index(string strFormName, string strFormTag)
         {
             string result = geterrorMessage(strFormName, strFormTag);

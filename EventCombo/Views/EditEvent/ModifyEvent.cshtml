@@ -1454,7 +1454,11 @@ else
                         $("#dlSchOption").val(data.Frequency);
                         $("#dlSchOption").change();
                         if (data.WeeklyDay != null) {
-                            $("dllWeeklyDayChk").val(data.WeeklyDay);
+                            var vTemp  = data.WeeklyDay.split(',');
+                            for(i =0; i< vTemp.length;i++)
+                            {
+                                $('#dllWeeklyDayChk').multiselect('select', [vTemp[i].toString()]);
+                            }
                         }
                         $("#txtTimeStart").val(data.StartTime);
                         $("#txtTimeEnd").val(data.EndTime);
@@ -1469,8 +1473,14 @@ else
                         else {
                             $("#hdMonthlyType").val('DW');
                             $("#btDayofWeek").click();
-                            console.log(data.MonthlyWeek);
-                            $("#dllMonthlyWeek").val(data.MonthlyWeek);
+                            //$("#dllMonthlyWeek").val(data.MonthlyWeek);
+
+                            var vTemp  = data.MonthlyWeekDays.split(',');
+                            for(i =0; i< vTemp.length;i++)
+                            {
+                                $('#dllMonthlyWeekDay').multiselect('select', [vTemp[i].toString()]);
+                            }
+
                         }
                     }
 
