@@ -236,6 +236,7 @@
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\TicketPaymentController.cs" />
     <Compile Include="Controllers\ValidationMessageController.cs" />
+    <Compile Include="Controllers\ViewEventController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -461,6 +462,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_Layout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Layout.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\TicketPayment\PaymentConfirmation.generated.cs">
       <AutoGen>True</AutoGen>
@@ -840,9 +846,7 @@
     <Content Include="Views\Shared\Error.cshtml">
       <Generator>RazorGenerator</Generator>
     </Content>
-    <Content Include="Views\Shared\_Layout.cshtml">
-      <Generator>RazorGenerator</Generator>
-    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml">
       <Generator>RazorGenerator</Generator>
     </Content>
@@ -1048,6 +1052,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>CmsEventList.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\ViewEvent\ViewEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
