@@ -187,7 +187,7 @@ button:focus { outline: none;}
 
 .psst span.ev_org{ position: relative; top:-3px;}
 
-.login_pop{ min-height: 300px; border:4px solid #777; border-radius:0px; }
+.login_pop{ min-height: 310px; border:4px solid #777; border-radius:0px; }
 .login_pop h3{ font-size: 1.5em; font-weight: normal; padding-left:10px;}
 .login_pop .modal-header{ border:0px; padding-bottom:0px;}
 .modal-dialog{  top: 15%; position: relative;}
@@ -213,7 +213,7 @@ button:focus { outline: none;}
 
 /************Start Create Event Page**********************/
 
-.event_container{ width: 900px; max-width: 100%; margin: 0 auto;}
+.event_container{ width: 900px; max-width: 88%; margin: 0 auto;}
 .event-upload-container{
     width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: 600px; position:relative; }
 
@@ -551,22 +551,25 @@ span.evnt_toltip{
     border: 1px solid #ffdb00;
     width: 100%;
     float: left;height: 50px; display: table;}*/
-.er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; }
+.er_war {width: 100%;display: table-cell; padding-left: 10px; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align: left; background:#fff;  }
 .er_war_img{ background: #ffdb00 url(../images/info_icn.png) no-repeat; width: 50px; height: 50px; float: left; position: relative; background-position: 10px 10px;}
 .er_war_main button{ position:absolute; right:2px; top:0px; padding:2px 5px;}
+
 .er_suc_main{
  border: 1px solid green;
     width: 100%;
-    float: left;height: 50px; display: table; position:relative; }
+    float: left;height: 50px; display: table; margin-bottom :10px;  position:relative; background:#fff; }
 .er_suc {width: 100%; padding-left:55px; display: table-cell; vertical-align: middle; font-family: arial; font-size: 15px; color: #000; text-align:left;text-transform:none; }
+.er_suc_main button{ position:absolute; right:2px; top:0px; padding:2px 5px;}
 
 .er_UI_main{border: 1px solid red;
     width: 100%;
     float: left;height: 50px; display: table;
-    margin-bottom :10px; position:relative; 
+    margin-bottom :10px; position:relative; background:#fff; 
 }
-.er_UI_main button{ position:absolute; right:2px; top:0px; padding:2px 5px;}
+
 .er_UI_img{ background: red url(../Images/ui.png) no-repeat; width: 50px; height: 100%; float: left; top:0px; position: absolute; background-position: center; }
+.er_UI_main button{ position:absolute; right:2px; top:0px; padding:2px 5px;}
 
 .er_sys_img{background: red url(../Images/sys.png) no-repeat; width: 50px; height: 100%; float: left; top:0px; position: absolute; background-position: center;}
   
@@ -750,7 +753,7 @@ span.evnt_toltip{
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-.logo img{ width: 285px;}
+.logo img{ width: 245px;}
 .headr_main { padding-top:10px !important;}
 
 
@@ -765,13 +768,14 @@ span.evnt_toltip{
 
 .home_fixed_header{ height: 142px !important; }
 .frnt-top-header{ width:100%; float:left; padding:0px; }
-#divmain .social_icn{ position:absolute; margin-top:25px !important; right:15px;}
+
+#divmain .social_icn{ position:absolute; margin-top:15px !important; right:15px;}
 
 .cont_margin2{ margin-bottom: 15px;margin-top: 0px;}
 .navbar-right { margin:0px; padding:0px;}
 #divsecmain{ margin-bottom:10px !important; }
 
-
+.col12{ width:100%; float:left; }
 
 }
 @media (width: 320px) {
@@ -780,9 +784,11 @@ span.evnt_toltip{
 #eventtopscoll.event_top{ margin-top:139px !important; } 
 /*#eventtopscoll .cbtMakeLive { right:87px; position:relative; }*/
 .home_fixed_header{ height:132px !important; }
-
+/*.headr_main{ padding-bottom:15px;}*/
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:134px !important;}
-
+#divmain .Fix_Head{ position:absolute; top:20px;}
+#divmain .social_icn{ position:absolute; margin-top:0 !important; right:15px;}
+.outer-header .outer-container .con_scr0l_home{}
 }
 @media (width: 480px){
 #navtop.affix-top {top:118px !important;}
@@ -794,7 +800,7 @@ span.evnt_toltip{
 #eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}
 
 #eventtopscoll.viewevent_container.evnt_confma{ margin-top:122px !important; }
-
+.xspad0{ padding:0px;}
 
 }
 @media (min-width: 360px) and (max-width: 640px) {
@@ -814,7 +820,9 @@ span.evnt_toltip{
 #mainhead .col-sm-1{ position:absolute; top:25px !important; right:-5px; }
 /*#midsection{ top:132px;}*/ 
 .navbar-right { margin:0px; padding:0px;}
+.col12{ width:100%; float:left; }
 .eventtopscoll.event_top{}  
+.xspad0{ padding:0px;}
 }
 
 @media (width: 360px) {
@@ -857,6 +865,9 @@ span.evnt_toltip{
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:140px !important;}
 #eventtopscoll.view_evnt_top.event_top .event-slide-container{ margin-top:0px !important;}
 #eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}
+.ev_btn_type .col12{ width:100%; float:left; }
+.xsmr0{ margin-right:0px !important}
+.xspad0{ padding:0px;}
 }
 
 @media (width: 667px) {
@@ -879,6 +890,8 @@ span.evnt_toltip{
 #eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}
 
 #eventtopscoll.viewevent_container.evnt_confma{ margin-top:160px !important; }
+.xspad0{ padding:0px;}
+
 }
 @media (width: 414px) {
 #navtop.affix-top {
@@ -893,6 +906,10 @@ span.evnt_toltip{
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:140px !important;}
 #eventtopscoll.view_evnt_top.event_top .event-slide-container{ margin-top:0px !important;}
 #eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}
+/*.ev_btn_type .col12{ width:100%; float:left; }*/
+#divmain .social_icn{  margin-top:20px !important;}
+.xsmr0{ margin-right:0px !important}
+.xspad0{ padding:0px;}
 }
 @media (width: 736px) {
 .navbar-right { margin:0px; padding:0px;}
@@ -913,14 +930,8 @@ span.evnt_toltip{
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:170px !important;}
 #eventtopscoll.view_evnt_top.event_top .event-slide-container{ margin-top:0px !important;}
 #eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}
+.xspad0{ padding:0px;}
 }
-/*@media (min-width: 640px){
-.affix-top {
-    top:149px !important;
-}
-.midd_cont {margin-top: 27px !important;}
-
-}*/
 
 
 .home_fixed_header{ width: 100%; float: left; height: 120px; position: fixed; top: 0px; background: #fff; z-index: 999;}

@@ -211,21 +211,21 @@
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" value="@Html.DisplayFor(m=>m.PhnNo)" id="accountphnno">
                             </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0">
+                            <div class="col-sm-10 col-xs-12 no_pad">
+                                <div class="col-sm-6 col-xs-12 mb10 pl0 xspad0">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256 id="accCity" value="@Html.DisplayFor(m=>m.AccCity)">
                                 </div>
-                                <div class="col-sm-6 col-xs-12 no_pad ">
+                                <div class="col-sm-6 col-xs-12 mb10 no_pad ">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256 id="accState" value="@Html.DisplayFor(m=>m.AccState)">
                                 </div>
 
 
                             </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0">
+                            <div class="col-sm-10 col-xs-12 no_pad">
+                                <div class="col-sm-6 col-xs-12 mb10 pl0 xspad0">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5 id="accZip" value="@Html.DisplayFor(m=>m.Acczip)">
                                 </div>
-                                <div class="col-sm-6 col-xs-12 no_pad ">
+                                <div class="col-sm-6 col-xs-12 mb10 no_pad ">
                                     @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label",@id="accCountry" })
                                    
                                 </div>
@@ -428,11 +428,11 @@
 </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="col-sm-12 text-right mt10">
-                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="btBack">
+                    <div class="col-sm-12 text-right mb10 mt10">
+                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="btBack">
                             < Back
                         </button>   
-                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn" id="completeorder" >
+                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="completeorder" >
                             COMPLTE ORDER >
                         </button>
                         <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
