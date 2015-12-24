@@ -544,6 +544,7 @@ namespace EventCombo.Controllers
             ViewEvent viewEvent = new ViewEvent();
             //EventDetails
             var EventDetail = GetEventdetail(EventId);
+            if (EventDetail == null) return null;
             TempData["EventType"] = EventDetail.EventType.EventType1;
             
             var EvntCtgry = (from ev in db.EventCategories where ev.EventCategoryID == EventDetail.EventCategoryID select ev.EventCategory1).FirstOrDefault();

@@ -481,6 +481,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-multiselect.css" />
+    <Content Include="Content\ec-select.css" />
     <Content Include="Content\eventcombo-new.css" />
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\flipclock.css" />
@@ -768,6 +769,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Commonfunction.js" />
     <Content Include="Scripts\dropit.js" />
+    <Content Include="Scripts\ec-select.js" />
     <Content Include="Scripts\fake-element.js" />
     <Content Include="Scripts\filer\jquery.filer.js" />
     <Content Include="Scripts\filer\jquery.filer.min.js" />

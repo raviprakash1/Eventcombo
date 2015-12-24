@@ -840,8 +840,9 @@
     }
     $(document).ready(function () {
 
-        $(window).unload(function () {
+        
 
+        $(window).unload(function () {
             if ($("#hdIsPostBack").val() != "Y") {
                 $("#hdIsPostBack").val("N");
                 $.ajax({
@@ -1188,17 +1189,16 @@
             type: "Get",
             success: function (response) {
                 $("#dvTicketInfo").append(response);
-                var total = parseFloat($('#hdOrderTotal').val());
-                if (total > 0) {
-                    $('.divvisible').css('display', 'block');
-                } else {
-
-                    $('.divvisible').css('display', 'none');
-
-                }
+                var vGrdTotal = parseFloat($("#spGrdTotal").text());
+                if (isNaN(vGrdTotal) == true) vGrdTotal = 0;
+                if (vGrdTotal > 0)
+                    $('.divvisible').show();
+                else
+                    $('.divvisible').hide();
             },
         });
 
+      
 
 
 

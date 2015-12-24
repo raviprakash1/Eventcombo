@@ -49,6 +49,8 @@
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui.js"></script>
 
+@using (Html.BeginForm(new { autocomplete = "off"}))
+{
 
 <div class="event_container">
 
@@ -157,7 +159,7 @@
 
 
 
-                                            }
+                                                }
                                         </span>
 
                                        
@@ -272,6 +274,7 @@
                 <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
+                    
                 </a>
             </div>
         </div>
@@ -319,7 +322,7 @@
 
                         <p><a href="@Html.DisplayFor(m => m.twitterlink)" target="_blank"><img src="/Images/twitter-icon.png">&nbsp;@Html.DisplayFor(m => m.twitterlink) </a></p>
 
-}
+                        }
                         @if (Html.DisplayFor(m => m.Linkedinlin).ToString() != "")
                         {
                         <p><a href="@Html.DisplayFor(m => m.Linkedinlin)" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Html.DisplayFor(m => m.Linkedinlin)</a></p>
@@ -380,7 +383,7 @@
 
             </div>
         </div>
-        }
+                }
        
 
 
@@ -677,7 +680,7 @@ else
 
     </a>
 </div>
-
+}
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
@@ -1252,7 +1255,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
     }
     $(document).ready(function () {
-     
+       
 
 
 
@@ -1358,6 +1361,8 @@ function pad(n) { return n < 10 ? '0' + n : n };
                 type: "Post",
                 success: function (data) {
                     $("#dvTicketInfo").append(data);
+                    //alert($("#txtd_22").val());
+
                     if ($.cookie("Selection") != undefined && $.cookie("Selection") != null && $.cookie("Selection") != '') {
                         var vSelection = $.cookie("Selection")
                         var vRow = vSelection.split('¶');
@@ -1370,12 +1375,14 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         $.removeCookie("Selection");
                         calculateTickTotal();
                     }
+                    
                 },
                 error: function (data) {
                     alert("Sorry there is some problem.");
                 }
             });
         }
+        
         var Eventid = $('#hdEventid').val();
         $("#btPayment").click(function () {
             var vEntid = $('#hdEventid').val();
