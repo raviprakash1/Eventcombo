@@ -941,7 +941,7 @@ namespace EventCombo.Controllers
                     }
                     strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel'>Disc.$</label>");
                     strticketHtml.Append("<div class='col-sm-8'>");
-                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)' onkeyup='checkdiscount(this.id)' onblur='tofixed(this.id)' maxlength='9' value='" + discount + "' />");
+                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)'  onblur='tofixed(this.id)' maxlength='9' value='" + discount + "' />");
                     strticketHtml.Append("</div></div></div>");
                     strticketHtml.Append("<div class='col-sm-1 no_pad evnt_sett_main'>");
                     strticketHtml.Append("<div class='nav evnt_setting'>");
@@ -1100,9 +1100,9 @@ namespace EventCombo.Controllers
                     strticketHtml.Append(" </div> <div class='col-sm-4 no_pad'><input type='hidden' value='0' id='id_hdautohideafter-" + j + "' value='" + ObjTick.Hide_After_Time + "' />");
                     strticketHtml.Append("<input id ='id_auto_hide_after_Time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_After_Time + "' />");
                     strticketHtml.Append("</div></div></div></div></div></div><div class='clearfix'></div><div class='form-group'><label class='label-control pl0 ev_tickt_lebel wd600'>Tickets allowed per order</label>");
-                    strticketHtml.Append("<div class='evnt_time_cont wd280 mr5_p'><input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_min_ticket-" + j + "' onblur='checkminum(this.id);' onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Min_T_Qty + "' />");
+                    strticketHtml.Append("<div class='evnt_time_cont wd280 mr5_p'><input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_min_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Min_T_Qty + "' />");
                     strticketHtml.Append("<label class='label-control lbl_bot_minim'>Minimum</label></div><div class='evnt_time_cont wd280'>");
-                    strticketHtml.Append("<input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_max_ticket-" + j + "' onblur='checkminum(this.id);' onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Max_T_Qty + "' />");
+                    strticketHtml.Append("<input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_max_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Max_T_Qty + "' />");
                     strticketHtml.Append("<label class='label-control lbl_bot_minim '>Maximum</label><label class='col-sm-12 no_pad control-label' style='color:red;display:none' id='id_lblmax-" + j + "' >Please enter a valid number</label>");
                     strticketHtml.Append(" </div></div><div class='clearfix'></div><div class='form-group'><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel mt5'>");
                     if (ObjTick.T_Disable == "1")
@@ -1165,6 +1165,7 @@ namespace EventCombo.Controllers
                 int k = 0;
                 foreach (Event_VariableDesc Objvardesc in vardesc)
                 {
+                   
                     var PRICE = String.Format("{0:#,###,###.##}", Objvardesc.Price);
 
                     strvariableHtml.Append(" <div class='col-sm-12 no_pad' id='id_clonevariable-" + k + "' >");
@@ -1173,7 +1174,7 @@ namespace EventCombo.Controllers
                     strvariableHtml.Append("<div class='col-sm-7 col-xs-7'><input type='hidden' id='id_varid-"+k+"' value='"+Objvardesc.Variable_Id+"'/>");
                     strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='Description' id='id_varsubdesc-" + k + "' maxlength='256' value='" + Objvardesc.VariableDesc + "' onblur='checkvalidatetkt(this.id)'     >");
                     strvariableHtml.Append(" </div><div class='col-sm-4 col-xs-4'><label class='col-sm-1 control-label ev_tickt_lebel'>$</label> <div class='col-sm-10 no_pad'>");
-                    strvariableHtml.Append("<input class='form -control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id);checkvalidatetkt(this.id);' value='" + PRICE + "'>");
+                    strvariableHtml.Append("<input class='form -control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id);checkvalidatetkt(this.id);' value=" + PRICE + ">");
                     strvariableHtml.Append("</div> </div><div class='col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main'> <button class='btn' type='button' id='btn_vardelete-" + k + "' onclick='deletevariable(this.id)'><i class='fa fa-times'></i></button>");
                     strvariableHtml.Append("</div> </div></div> </div>");
 
@@ -1418,7 +1419,11 @@ namespace EventCombo.Controllers
                             //  var vParentEvt = (from myEnt in objEnt.Events where myEnt.EventID == lEventId select myEnt.Parent_EventID).FirstOrDefault();
                             // if (vParentEvt == 0) vParentEvt = lEventId;
 
-
+                            if (model.AddressDetail == null)
+                            {
+                                objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                                model.AddressStatus = "";
+                            }
                             // Event ObjEC = new Event();
                             ObjEC.Parent_EventID = 0;
                             ObjEC.EventTypeID = model.EventTypeID;
@@ -1516,6 +1521,9 @@ namespace EventCombo.Controllers
                                     }
                                 }
                             }
+
+
+                          
                             // Event on Single Timing 
                             if (model.EventVenue != null)
                             {

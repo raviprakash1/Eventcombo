@@ -783,7 +783,7 @@
                                     <div class="form-group paidticket-n" id="id_Disc-n">
                                         <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="checkdiscount(this.id)" onblur="tofixed(this.id)" maxlength="9" />
+                                            <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="changefeetype(this, event, this.id)"  onblur="tofixed(this.id)" maxlength="9" />
 
                                         </div>
                                     </div>
@@ -922,12 +922,12 @@
                                                     <div class="form-group">
                                                         <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
                                                         <div class="evnt_time_cont wd280 mr5_p">
-                                                            <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onblur="checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                            <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n"  onkeypress="allownumber(this,event,this.id)" maxlength="6" />
                                                             <label class="label-control lbl_bot_minim ">Minimum</label>
 
                                                         </div>
                                                         <div class="evnt_time_cont wd280">
-                                                            <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onblur="checkminum(this.id);" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                            <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n"  onkeypress="allownumber(this,event,this.id)" maxlength="6" />
                                                             <label class="label-control lbl_bot_minim ">Maximum</label>
                                                             <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
 
@@ -1289,8 +1289,8 @@ else
                     <input type="hidden" id="hdSchType" value="" />
                     <input type="hidden" id="hdMonthlyType" value="DW" />
                     <input type="hidden" id="status" />
-                    <a class="btn ev_set_del_btn evnt_set" id="anodelete" type="button" href="#nodelete" style="display:none" data-toggle="modal"></a>
-                    <div class="modal fade" id="nodelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <a class="btn ev_set_del_btn evnt_set" id="anodelete"  href="#nodelete" style="display:none" data-toggle="modal"></a>
+                    <div class="modal fade" id="nodelete"  tabindex="-1" role="dialog" aria-labelledby="nodelete" aria-hidden="true">
                         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
                             <div class="modal-content">
                                 <!-- <div class="modal-header custom">
@@ -1298,7 +1298,7 @@ else
                                 </div> -->
                                 <form id="contactForm" class="fullw1 add">
                                     <div class="modal-body text-center pv50 txt-msg">
-                                        <h4 class="msg" id="nodelete">You cannot delete the last ticket while your event is live. Add another ticket or unpublish this event first</h4>
+                                        <h4 class="msg" id="nodeleteH4">You cannot delete the last ticket while your event is live. Add another ticket or unpublish this event first</h4>
                                     </div>
                                     <div class="modal-footer msg-action-btn ok">
 
@@ -1476,11 +1476,13 @@ else
                             $("#hdMonthlyType").val('DW');
                             $("#btDayofWeek").click();
                             //$("#dllMonthlyWeek").val(data.MonthlyWeek);
-
-                            var vTemp  = data.MonthlyWeekDays.split(',');
-                            for(i =0; i< vTemp.length;i++)
+                            if(data.MonthlyWeekDays!=null)
                             {
-                                $('#dllMonthlyWeekDay').multiselect('select', [vTemp[i].toString()]);
+                                var vTemp  = data.MonthlyWeekDays.split(',');
+                                for(i =0; i< vTemp.length;i++)
+                                {
+                                    $('#dllMonthlyWeekDay').multiselect('select', [vTemp[i].toString()]);
+                                }
                             }
 
                         }
@@ -1597,6 +1599,7 @@ else
                         $('#id_Mainvariable').css('display','block');
                         $('#id_Mainvariable').append(data.Variabledesc);
                         $("input[id^='id_varsubprice']").mask('000,000.00', { reverse: true });
+                     
 
 
                     }else
@@ -1695,7 +1698,7 @@ else
 
         $(".chkvalidation").blur(function () {
 
-            var msg = validatemain();
+            var msg = disablebutton();
             if(msg=="")
             {
 
@@ -2232,10 +2235,27 @@ else
 
 
             //});
-
+            debugger;
 
             //  alert($("#tblAddress tr").length);
             var addressstatus=$('#hidAddressStatus').val();
+            if(addressstatus=="")
+            {
+                if($("#txtEventLocation").val()!="")
+                {
+                    SubmitAddress.push({
+                        VenueName: ' ',
+                        Address1: ' ',
+                        Address2: ' ',
+                        City: ' ',
+                        State: ' ',
+                        Zip: ' ',
+                        CountryID: ' ',
+                        ConsolidateAddress: $("#txtEventLocation").val()
+                    })
+                    $('#hidAddressStatus').val("Single");
+                }
+            }
             if(addressstatus=="Single")
             {
                 SubmitAddress.push({
@@ -2425,7 +2445,7 @@ else
                 'TwitterUrl': '',
                 'MultipleEvents': MultipleSchedule,
                 'Orgnizer': Orgnizer,
-                'AddressStatus': $("#hidAddressStatus").val(),
+                'AddressStatus':  $('#hidAddressStatus').val(),
                 'LastLocationAddress': ($("#hidAddressStatus").val() == "PastLocation" ? $("#dllPastLocation").val() : 0),
                 'EnableFBDiscussion': ($("#chkAllowFBDis").is(":checked") == true ? 'Y' : 'N'),
                 'Ticket': Ticket,
@@ -2712,7 +2732,7 @@ else
                 $("#Incsocial").prop("checked", false);
                 $("#dvOrgnizerFBTw").hide();
 
-                var msg = validatemain();
+                var msg = disablebutton();
               console.log(msg);
                 //alert(msg);
                 if (msg == " ") {
@@ -3530,7 +3550,7 @@ else
         //});
         function checkvalidatetkt(e)
         {
-            var msg = validatemain();
+            var msg = disablebutton();
             if (msg == "") {
                 $(".cdisable").removeAttr("disabled");
             }
@@ -3556,7 +3576,7 @@ else
                     // var total = parseInt(qty) + parseInt(dropval);
 
                     // $('#id_totalqty').html(total);
-                    var msg = validatemain();
+                    var msg = disablebutton();
                     if (msg == "")
                     {
                         $(".cdisable").removeAttr("disabled");
@@ -3674,6 +3694,7 @@ else
         }
         function tofixed(id)
         {
+            debugger;
             var price = $('#' + id).val().replace(',','');
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
             if (id == "") {
@@ -3732,36 +3753,36 @@ else
 
 
             //Discount section
-            if (!isNaN(price) && !isNaN(discount)) {
-                if (price != 0 && discount != 0) {
+            //if (!isNaN(price) && !isNaN(discount)) {
+            //    if (price != 0 && discount != 0) {
 
-                    if (parseFloat(discount) >= parseFloat(price)) {
+            //        if (parseFloat(discount) >= parseFloat(price)) {
 
-                        $('#id_Discount-' + num).addClass('err-bor');
+            //            $('#id_Discount-' + num).addClass('err-bor');
 
-                        $('#hddiscount').val('1');
+            //            $('#hddiscount').val('1');
 
-                    }
-                    else {
+            //        }
+            //        else {
 
-                        $('#hddiscount').val('0');
-                        $('#id_Discount-' + num).removeClass('err-bor');
+            //            $('#hddiscount').val('0');
+            //            $('#id_Discount-' + num).removeClass('err-bor');
 
-                    }
+            //        }
 
-                }
-                else if (price == 0 && discount != 0) {
+            //    }
+            //    else if (price == 0 && discount != 0) {
 
-                    $('#hddiscount').val('1');
-                    $('#id_Discount-' + num).addClass('err-bor');
-                }
+            //        $('#hddiscount').val('1');
+            //        $('#id_Discount-' + num).addClass('err-bor');
+            //    }
 
-            }
-            else if (isNaN(price) && !isNaN(discount)) {
+            //}
+            //else if (isNaN(price) && !isNaN(discount)) {
 
-                $('#hddiscount').val('1');
-                $('#id_Discount-' + num).addClass('err-bor');
-            }
+            //    $('#hddiscount').val('1');
+            //    $('#id_Discount-' + num).addClass('err-bor');
+            //}
 
             if (isNaN(price)) {
 
@@ -3867,8 +3888,338 @@ else
 
 
             $('#id_Mainvariable').append(data);
+            $("input[id^='id_varsubprice']").mask('000,000.00', { reverse: true });
             $('#btn_vardelete-' + divlength).attr('href', '#cnfrmdeletevariable-' + divlength);
         });
+        function disablebutton() {
+           
+            var msg = "";
+            var count = 0;
+            var countqty = 0;
+            var countdesc = 0;
+            var countvardesc = 0;
+            var countvarqty = 0;
+            var countprice = 0;
+            var title = $('#txtEventTitle').val();
+
+            if (title == "") {
+               
+
+                msg += ajaxsetup("CreateEvent", "CreateEventTitileUI") + "<br/>";
+
+            }
+
+            if ($('#ddlOrgnizers option').length <= 0) {
+              
+                msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI") + "<br/>";;
+
+
+            }
+            var type = $("#EventType").val();
+            var cat = $("#ddlEventCategory").val();
+            if (type <= 0) {
+               
+                msg += ajaxsetup("CreateEvent", "CreateEventtypeUI") + "<br/>";;
+            }
+            if (cat <= 0) {
+              
+                msg += ajaxsetup("CreateEvent", "CreateEventCategoryUI") + "<br/>";;
+            }
+
+
+
+            var divlength = $("#MasterDiv> div").size();
+            if (divlength <= 0) {
+                msg += "Please Enter atleast one ticket";
+
+            }
+            if (divlength > 0) {
+
+                for (var i = 0; i < divlength; i++) {
+
+                    var ticket_name = $('#id_ticket_type-' + i).val();
+                    var ticket_Qty = $('#id_quantity_total-' + i).val();
+                    if (ticket_name == "") {
+                      
+
+                        countdesc++;
+                    }
+                    if (ticket_Qty == "") {
+
+                      
+                        countqty++;
+                    } else {
+                        if (ticket_Qty <= 0) {
+                           
+                            countqty++;
+
+                        } 
+                    }
+
+                    if ($('#id_paid-' + i).css('display') == "block") {
+
+                        var price = parseFloat($('#id_cost-' + i).val());
+                        if (isNaN(price)) {
+                          
+                            countprice++;
+                        }
+                        if (price <= 0) {
+                           
+                            countprice++;
+                        } 
+                    }
+                }
+
+
+            }
+            if ($('#hddiscount').val() == 1) {
+                count++;
+
+            }
+            if (parseInt($('#hdMaxerr').val()) == 1) {
+                count++;
+            }
+            if (countprice > 0) {
+                msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
+            }
+            if (countqty > 0) {
+                msg += ajaxsetup("CreateEvent", "CreateEventQtyValidateUI") + "<br/>";
+            }
+            if (countdesc > 0) {
+                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
+
+            }
+
+            if ($('#id_variablecharge').is(":checked") == true) {
+                if ($('#id_vardesc').val() == "") {
+                
+                    msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI") + "<br/>";;
+
+
+
+                } else {
+                    $('#id_vardesc').removeClass('err-bor');
+
+                }
+                var divvar = $("#id_Mainvariable>div").size();
+                if (divvar <= 0) {
+                    msg += "Please enter Variable valid charges by clicking on Add button" + "<br/>";;
+
+                }
+                if (divvar > 0) {
+
+                    for (var i = 0; i < divvar; i++) {
+                        var subdesc_name = $('#id_varsubdesc-' + i).val();
+                        var subprice_Qty = $('#id_varsubprice-' + i).val();
+
+                        if (subdesc_name == "") {
+
+                           
+
+                            countvardesc++;
+                        } 
+                        if (subprice_Qty == "") {
+
+                           
+                            countvarqty++;
+                        } else {
+                            if (subprice_Qty <= 0) {
+                              
+                                countvarqty++;
+
+                            } 
+
+
+                        }
+
+                    }
+
+                }
+            }
+
+
+
+            if (count > 0) {
+
+                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
+            }
+            if (countvardesc > 0) {
+                msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
+
+            }
+            if (countvarqty > 0) {
+                msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
+
+            }
+            if ($('#chkReqPassword').is(":checked") == true) {
+                if ($('#txtReqPassword').val() == "") {
+                   
+                    msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
+
+                } 
+            }
+            var weekcnt = 0;
+            var weekdaily = 0;
+            var weekmnth = 0;
+            var custom = 0;
+            var days;
+            var single = 0;
+            var type = $("#dlSchOption").val();
+            if ($("#hdSchType").val() == 'Multiple') {
+
+                if ($("#dlSchOption").val() == "Weekly") {
+                    days = $("#dllWeeklyDayChk").val();
+
+                    if (days == null) {
+                        weekcnt++;
+                       
+                    } 
+                    if ($("#txtTimeStart").val() == "") {
+                        weekcnt++;
+                        
+                    } 
+                    if ($("#txtTimeEnd").val() == "") {
+                        weekcnt++;
+                       
+                    }
+                    if ($("#txtTimeEnd").val() == "") {
+                        weekcnt++;
+                      
+                    }
+                    if ($("#txtDateFrom").val() == "") {
+                        weekcnt++;
+                       
+                    }
+                    if ($("#txtDateTo").val() == "") {
+                        weekcnt++;
+                      
+                    }
+                }
+
+                if ($("#dlSchOption").val() == "Daily") {
+                    $("#txtDateFrom").length;
+                    if ($("#txtDateFrom").val() == "") {
+                        weekdaily++;
+                       
+                    }
+                    $("#txtDateTo").length;
+                    if ($("#txtDateTo").val() == "") {
+                        weekdaily++;
+                       
+                    }
+                    $("#txtTimeStart").length;
+                    if ($("#txtTimeStart").val() == "") {
+                        weekdaily++;
+                       
+                    }
+                    $("#txtTimeEnd").length;
+                    if ($("#txtTimeEnd").val() == "") {
+                        weekdaily++;
+                        
+                    }
+
+                }
+                if ($("#dlSchOption").val() == "Monthly") {
+                    days = $("#dllMonthlyWeekDay").val();
+                    if (days == null) {
+
+                        weekmnth++;
+                       
+                    }
+                    if ($("#txtDateFrom").val() == "") {
+                        weekmnth++;
+                       
+                    }
+                    if ($("#txtDateFrom").val() == "") {
+                        weekmnth++;
+                       
+                    }
+                    if ($("#txtTimeStart").val() == "") {
+                        weekmnth++;
+                       
+                    }
+                    if ($("#txtDateTo").val() == "") {
+                        weekmnth++;
+                        
+                    }
+
+                }
+                if ($("#dlSchOption").val() == "Custom") {
+
+                    if ($("#txtTimeStart").val() == "") {
+                        custom++;
+                      
+                    }
+                    if ($("#txtTimeEnd").val() == "") {
+                        custom++;
+                       
+                    }
+                    if ($("#txtDateFrom").val() == "") {
+                        custom++;
+                       
+                    }
+                    if ($("#txtDateTo").val() == "") {
+                        custom++;
+                        
+                    }
+
+                }
+
+            } else {
+
+                var str = $("#txtStartDate").val();
+                if ($("#txtStartDate").val() == "") {
+                    single++;
+                   
+                }
+                str = $("#txtStartTime").val();
+                if ($("#txtStartTime").val() == "") {
+                    single++;
+                   
+                }
+                str = $("#txtEndDate").val();
+                if ($("#txtEndDate").val() == "") {
+                    single++;
+                   
+                }
+                str = $("#txtEndTime").val();
+                if ($("#txtEndTime").val() == "") {
+                    single++;
+                   
+                }
+
+            }
+
+            if (weekcnt > 0) {
+              
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+
+            }
+            if (weekdaily > 0) {
+                $("#btEnterDates").click();
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+
+            }
+            if (weekmnth > 0) {
+              
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+
+            }
+            if (custom > 0) {
+                
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+            }
+            if (single > 0) {
+               
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+            }
+            debugger;
+            return msg;
+
+
+
+        }
+
         $('.save_btnpaid ').click(function () {
             debugger;
             $(".ticket_panel").show();
@@ -4254,6 +4605,7 @@ else
                 console.log(status);
                 if (divlength == 1 && status=="Live")
                 {
+                    $('#nodeleteH4').text("You cannot delete the last ticket while your event is live. Add another ticket or unpublish this event first")
                     $('#anodelete').click();
                     $(".tab-content").hide();
                     //  alert('You cannot delete the last ticket while your event is live. Add another ticket or unpublish this event first');
@@ -4744,6 +5096,7 @@ else
             return msgnew;
         }
         function validatemain() {
+
             debugger;
             var msg = "";
             var count = 0;
@@ -4751,15 +5104,18 @@ else
             var countdesc = 0;
             var countvardesc = 0;
             var countvarqty = 0;
-            var countprice=0;
+            var countprice = 0;
+            var countmax = 0;
+            var countdiscount = 0;
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
                 $('#txtEventTitle').addClass('err-bor');
+                
                 msg += ajaxsetup("CreateEvent", "CreateEventTitileUI")+"<br/>";
 
             }
-           
+
             if ($('#ddlOrgnizers option').length <= 0) {
                 $('#txtOrgnizer').addClass('err-bor');
                 msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI") + "<br/>";;
@@ -4780,12 +5136,10 @@ else
 
 
             var divlength = $("#MasterDiv> div").size();
-            if (divlength <=0)
-            {
-                msg+=ajaxsetup("CreateEvent", "NoTicketUI") + "<br/>";
+            if (divlength <= 0) {
+                msg += "Please Enter atleast one ticket";
 
             }
-          
             if (divlength > 0) {
 
                 for (var i = 0; i < divlength; i++) {
@@ -4804,8 +5158,7 @@ else
 
                         $('#id_quantity_total-' + i).addClass('err-bor');
                         countqty++;
-                    } else
-                    {
+                    } else {
                         if (ticket_Qty <= 0) {
                             $('#id_quantity_total-' + i).addClass('err-bor');
                             countqty++;
@@ -4814,26 +5167,62 @@ else
                             $('#id_quantity_total-' + i).removeClass('err-bor');
                         }
                     }
-                   
-                    if($('#id_paid-'+i).css('display')=="block")
-                    {
 
-                        var price=parseFloat( $('#id_cost-'+i).val());
-                        if(isNaN( price))
-                        {
-                            $('#id_cost-'+i).addClass('err-bor');
+                    if ($('#id_paid-' + i).css('display') == "block") {
+
+                        var price = parseFloat($('#id_cost-' + i).val());
+                        if (isNaN(price)) {
+                            $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        }else{
-                            $('#id_cost-'+i).removeClass('err-bor');
+                        } else {
+                            $('#id_cost-' + i).removeClass('err-bor');
                         }
-                        if(price<=0)
-                        {
-                            $('#id_cost-'+i).addClass('err-bor');
+                        if (price <= 0) {
+                            $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        }else{
-                            $('#id_cost-'+i).removeClass('err-bor');
+                        } else {
+                            $('#id_cost-' + i).removeClass('err-bor');
+                        }
+                        if (price > 999999.99) {
+                            $('#id_cost-' + i).addClass('err-bor');
+                            countprice++;
+                        } else {
+                            $('#id_cost-' + i).removeClass('err-bor');
                         }
                     }
+
+
+                    var min =parseFloat( $('#id_min_ticket-' + i).val());
+                    var max =parseFloat( $('#id_max_ticket-' + i).val());
+                    var discount = parseFloat($('#id_Discount-' + i).val().replace(',', ''));
+                    var cost = parseFloat($('#id_cost-' + i).val().replace(',', ''));
+                    if(!isNaN(min) && !isNaN(max) && min!=0 && max!=0 )
+                    {
+                        if(min>max)
+                        {
+                            $('#id_min_ticket-' + i).addClass('err-bor');
+                            $('#evnt_set-' + i).css('display', 'block');
+                            countmax++;
+                        }
+                        else {
+                            $('#id_min_ticket-' + i).removeClass('err-bor');
+                        }
+
+                    }
+                    if (!isNaN(cost) && !isNaN(discount) && cost != 0 && discount != 0) {
+                        if (cost <= discount) {
+                            $('#id_Discount-' + i).addClass('err-bor');
+                            countdiscount++;
+                        }
+                       
+
+                    }
+                    if(isNaN(cost)&& !isNaN(discount))
+                    {
+                        $('#id_Discount-' + i).addClass('err-bor');
+                        countdiscount++;
+                    }
+                    
                 }
 
 
@@ -4842,9 +5231,21 @@ else
                 count++;
 
             }
-            if(countprice>0)
+            if (parseInt($('#hdMaxerr').val()) == 1)
             {
-                msg+= ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
+                count++;
+            }
+            if (countdiscount > 0)
+            {
+                msg += "Please Enter valid discount price <br/>";
+            }
+            if (countmax > 0)
+            {
+
+                msg+="Please Enter valid minimum price <br/>";
+            }
+            if (countprice > 0) {
+                msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
             }
             if (countqty > 0) {
                 msg += ajaxsetup("CreateEvent", "CreateEventQtyValidateUI") + "<br/>";
@@ -4854,7 +5255,7 @@ else
                 msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
 
             }
-
+          
             if ($('#id_variablecharge').is(":checked") == true) {
                 if ($('#id_vardesc').val() == "") {
                     $('#id_vardesc').addClass('err-bor');
@@ -4866,43 +5267,54 @@ else
                     $('#id_vardesc').removeClass('err-bor');
 
                 }
+                var divvar = $("#id_Mainvariable>div").size();
+                if(divvar<=0)
+                {
+                    msg += "Please enter Variable valid charges by clicking on Add button"+ "<br/>";;
 
-            }
-            var divvar = $("#id_Mainvariable>div").size();
+                }
+                if (divvar > 0) {
 
-            if (divvar > 0) {
+                    for (var i = 0; i < divvar; i++) {
+                        var subdesc_name = $('#id_varsubdesc-' + i).val();
+                        var subprice_Qty = $('#id_varsubprice-' + i).val();
 
-                for (var i = 0; i < divvar; i++) {
-                    var subdesc_name = $('#id_varsubdesc-' + i).val();
-                    var subprice_Qty = $('#id_varsubprice-' + i).val();
+                        if (subdesc_name == "") {
 
-                    if (subdesc_name == "") {
+                            $('#id_varsubdesc-' + i).addClass('err-bor');
 
-                        $('#id_varsubdesc-' + i).addClass('err-bor');
+                            countvardesc++;
+                        } else {
+                            $('#id_varsubdesc-' + i).removeClass('err-bor');
 
-                        countvardesc++;
-                    } else {
-                        $('#id_varsubdesc-' + i).removeClass('err-bor');
+                        }
+                        if (subprice_Qty == "") {
 
-                    }
-                    if (subprice_Qty == "") {
-
-                        $('#id_varsubprice-' + i).addClass('err-bor');
-                        countvarqty++;
-                    } else {
-                        if (subprice_Qty <= 0) {
                             $('#id_varsubprice-' + i).addClass('err-bor');
                             countvarqty++;
-
                         } else {
-                            $('#id_varsubprice-' + i).removeClass('err-bor');
+                            if (subprice_Qty <= 0) {
+                                $('#id_varsubprice-' + i).addClass('err-bor');
+                                countvarqty++;
+
+                            } else {
+                                $('#id_varsubprice-' + i).removeClass('err-bor');
+                            }
+
+
                         }
 
-                        
                     }
 
                 }
+            }
+           
 
+         
+            if (count > 0)
+            {
+
+                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
             }
             if (countvardesc > 0)
             {
@@ -4923,163 +5335,164 @@ else
                 }
 
             }
-            var weekcnt=0;
-            var weekdaily=0;
-            var weekmnth=0;
-            var custom=0;
+            var weekcnt = 0;
+            var weekdaily = 0;
+            var weekmnth = 0;
+            var custom = 0;
             var days;
-            var single=0;
+            var single = 0;
+            var type=  $("#dlSchOption").val();
             if ($("#hdSchType").val() == 'Multiple') {
 
-                if ($("#dlSchOption").val() == "Weekly")
-                {
-                    days= $("#dllWeeklyDayChk").val();
+                if ($("#dlSchOption").val() == "Weekly") {
+                    days = $("#dllWeeklyDayChk").val();
 
-                    if(days==null)
-                    {
+                    if (days == null) {
                         weekcnt++;
                         $("#dvWeeklyDayChk button").addClass('err-bor');
+                    } else {
+                        $("#dvWeeklyDayChk button").removeClass('err-bor');
                     }
-                    if($("#txtTimeStart").length<=0)
-                    {  weekcnt++;
-                    $("#txtTimeStart").addClass('err-bor');
+                    if ($("#txtTimeStart").val() == "") {
+                        weekcnt++;
+                        $("#txtTimeStart").addClass('err-bor');
+                    } else {
+                        $("#txtTimeStart").removeClass('err-bor');
                     }
-                    if($("#txtTimeEnd").length<=0)
-                    {  weekcnt++;
-                    $("#txtTimeEnd").addClass('err-bor');
-                    }
-                    if($("#txtTimeEnd").length<=0)
-                    {  weekcnt++;
+                    if ($("#txtTimeEnd").val() == "") {
+                        weekcnt++;
                         $("#txtTimeEnd").addClass('err-bor');
                     }
-                    if($("#txtDateFrom").length<=0)
-                    {  weekcnt++;
-                    $("#txtDateFrom").addClass('err-bor');
+                    if ($("#txtTimeEnd").val() == "") {
+                        weekcnt++;
+                        $("#txtTimeEnd").addClass('err-bor');
                     }
-                    if($("#txtDateTo").length<=0)
-                    {  weekcnt++;
-                    $("#txtDateTo").addClass('err-bor');
+                    if ($("#txtDateFrom").val() == "") {
+                        weekcnt++;
+                        $("#txtDateFrom").addClass('err-bor');
+                    }
+                    if ($("#txtDateTo").val() == "") {
+                        weekcnt++;
+                        $("#txtDateTo").addClass('err-bor');
                     }
                 }
 
-                if ($("#dlSchOption").val() == "Daily")
-                {
-                    if($("#txtDateFrom").length<=0)
-                    {  weekdaily++;
-                    $("#txtDateFrom").addClass('err-bor');
+                if ($("#dlSchOption").val() == "Daily") {
+                    $("#txtDateFrom").length;
+                    if ($("#txtDateFrom").val() == "") {
+                        weekdaily++;
+                        $("#txtDateFrom").addClass('err-bor');
                     }
-                    if($("#txtDateTo").length<=0)
-                    {  weekdaily++;
-                    $("#txtDateTo").addClass('err-bor');
+                    $("#txtDateTo").length;
+                    if ($("#txtDateTo").val() == "") {
+                        weekdaily++;
+                        $("#txtDateTo").addClass('err-bor');
                     }
-                    if($("#txtTimeStart").length<=0)
-                    {  weekdaily++;
-                    $("#txtTimeStart").addClass('err-bor');
+                    $("#txtTimeStart").length;
+                    if ($("#txtTimeStart").val() == "") {
+                        weekdaily++;
+                        $("#txtTimeStart").addClass('err-bor');
                     }
-                    if($("#txtTimeEnd").length<=0)
-                    {  weekdaily++;
-                    $("#txtTimeEnd").addClass('err-bor');
+                    $("#txtTimeEnd").length;
+                    if ($("#txtTimeEnd").val() == "") {
+                        weekdaily++;
+                        $("#txtTimeEnd").addClass('err-bor');
                     }
-                    
+
                 }
-                if ($("#dlSchOption").val() == "Monthly")
-                {
-                    days= $("#dllMonthlyWeekDay").val(); 
-                    if(days==null)
-                    {
+                if ($("#dlSchOption").val() == "Monthly") {
+                    days = $("#dllMonthlyWeekDay").val();
+                    if (days == null) {
 
                         weekmnth++;
                         $("#dvmonthchk button").addClass('err-bor');
                     }
-                    if($("#txtDateFrom").length<=0)
-                    {  weekmnth++;
-                    $("#txtDateFrom").addClass('err-bor');
-                    }
-                    if($("#txtDateFrom").length<=0)
-                    {  weekmnth++;
+                    if ($("#txtDateFrom").val() == "") {
+                        weekmnth++;
                         $("#txtDateFrom").addClass('err-bor');
                     }
-                    if($("#txtTimeStart").length<=0)
-                    {  weekmnth++;
+                    if ($("#txtDateFrom").val() == "") {
+                        weekmnth++;
+                        $("#txtDateFrom").addClass('err-bor');
+                    }
+                    if ($("#txtTimeStart").val() == "") {
+                        weekmnth++;
                         $("#txtTimeStart").addClass('err-bor');
                     }
-                    if($("#txtDateTo").length<=0)
-                    {  weekmnth++;
-                    $("#txtDateTo").addClass('err-bor');
+                    if ($("#txtDateTo").val() == "") {
+                        weekmnth++;
+                        $("#txtDateTo").addClass('err-bor');
                     }
-                    
+
                 }
-                if ($("#dlSchOption").val() == "Custom")
-                {
-                  
-                    if($("#txtTimeStart").length<=0)
-                    {  custom++;
-                    $("#txtTimeStart").addClass('err-bor');
+                if ($("#dlSchOption").val() == "Custom") {
+
+                    if ($("#txtTimeStart").val() == "") {
+                        custom++;
+                        $("#txtTimeStart").addClass('err-bor');
                     }
-                    if($("#txtTimeEnd").length<=0)
-                    {  custom++;
-                    $("#txtTimeEnd").addClass('err-bor');
+                    if ($("#txtTimeEnd").val() == "") {
+                        custom++;
+                        $("#txtTimeEnd").addClass('err-bor');
                     }
-                    if($("#txtDateFrom").length<=0)
-                    {  custom++;
-                    $("#txtDateFrom").addClass('err-bor');
+                    if ($("#txtDateFrom").val() == "") {
+                        custom++;
+                        $("#txtDateFrom").addClass('err-bor');
                     }
-                    if($("#txtDateTo").length<=0)
-                    {  custom++;
-                    $("#txtDateTo").addClass('err-bor');
+                    if ($("#txtDateTo").val() == "") {
+                        custom++;
+                        $("#txtDateTo").addClass('err-bor');
                     }
-                    
+
                 }
 
-            }else{
-                
+            } else {
 
-                if($("#txtStartDate").length<=0)
-                {  single++;
-                $("#txtStartDate").addClass('err-bor');
+                var str=   $("#txtStartDate").val();
+                if ($("#txtStartDate").val()=="") {
+                    single++;
+                    $("#txtStartDate").addClass('err-bor');
                 }
-                if($("#txtStartTime").length<=0)
-                {  single++;
-                $("#txtStartTime").addClass('err-bor');
+                str = $("#txtStartTime").val();
+                if ($("#txtStartTime").val() == "") {
+                    single++;
+                    $("#txtStartTime").addClass('err-bor');
                 }
-                if($("#txtEndDate").length<=0)
-                {  single++;
-                $("#txtEndDate").addClass('err-bor');
+                str=$("#txtEndDate").val();
+                if ($("#txtEndDate").val() == "") {
+                    single++;
+                    $("#txtEndDate").addClass('err-bor');
                 }
-                if($("#txtEndTime").length<=0)
-                {  single++;
-                $("#txtEndTime").addClass('err-bor');
+                str=  $("#txtEndTime").val();
+                if ($("#txtEndTime").val() == "") {
+                    single++;
+                    $("#txtEndTime").addClass('err-bor');
                 }
 
             }
 
-            if(weekcnt>0)
-            {
+            if (weekcnt > 0) {
                 $("#btEnterDates").click();
-                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
 
             }
-            if(weekdaily>0)
-            {
+            if (weekdaily > 0) {
                 $("#btEnterDates").click();
-                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
 
             }
-            if(weekmnth>0)
-            {
+            if (weekmnth > 0) {
                 $("#btEnterDates").click();
-                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
 
             }
-            if(custom>0)
-            {
+            if (custom > 0) {
                 $("#btEnterDates").click();
-                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
             }
-            if(single>0)
-            {
+            if (single > 0) {
                 $("#btEnterDates").click();
-                msg+=ajaxsetup("CreateEvent", "Validdate") + "<br/>";
+                msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
             }
             return msg;
         }
