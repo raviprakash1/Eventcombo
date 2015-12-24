@@ -261,7 +261,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        public long SaveEvent(EventCreation model, string strIsLive)
+        public long SaveEvent(EventCreation model)
         {
             long lEventId = 0;
             try
@@ -465,21 +465,21 @@ namespace EventCombo.Controllers
                         }
                     }
 
-                    objEnt.SaveChanges();
+                  objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
                     PublishEvent(lEventId);
-                    if (strIsLive == "Y")
-                        UpdateEventStatus(lEventId.ToString());
+                    //if (strIsLive == "Y")
+                    //    UpdateEventStatus(lEventId.ToString());
                 }
                 if (model.DuplicateEvent == "Y")
                 {
                     model.DuplicateEvent = "N";
-                    SaveEvent(model, strIsLive);
+                    SaveEvent(model);
                 }
             }
             catch (Exception ex)
             {
-                return 0;
+                return lEventId;
             }
             return lEventId;
         }
@@ -845,6 +845,11 @@ namespace EventCombo.Controllers
                         strHTML.Append(i);
                         strHTML.Append(">");
                         strHTML.Append(EOD.Twitter);
+                        strHTML.Append("</label></td>");
+                        strHTML.Append("<td style='display: none'><label id=OrgLn_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Linkedin);
                         strHTML.Append("</label></td>");
                         strtemp = "<td align='right'><i onclick='editOrgnizer(" + i + ")'; class='fa fa-pencil'></i> | <i onclick='DeleteOrgnizer(" + i + ");' class='fa fa-trash'></i></td>";
                         strHTML.Append(strtemp);
