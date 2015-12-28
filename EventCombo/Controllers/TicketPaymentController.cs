@@ -939,6 +939,11 @@ namespace EventCombo.Controllers
                                         bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcode1);
 
                                     }
+                                    if (EmailTag[i].Tag_Name == "EventQrCode")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventQrCode¶¶", Qrcode);
+
+                                    }
                                     if (EmailTag[i].Tag_Name == "EventTitleId")
                                     {
                                         bodyn = bodyn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);

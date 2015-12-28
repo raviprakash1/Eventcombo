@@ -700,6 +700,17 @@ namespace EventCombo.Controllers
                                         subjectn= subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
 
                                     }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", "");
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserLastNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserLastNameID¶¶", "");
+
+                                    }
+                                    
 
                                 }
 
@@ -716,6 +727,16 @@ namespace EventCombo.Controllers
                                     if (EmailTag[i].Tag_Name == "UserEmailID")
                                     {
                                         bodyn= bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", "");
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserLastNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserLastNameID¶¶", "");
 
                                     }
 
