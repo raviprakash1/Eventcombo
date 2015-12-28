@@ -1321,9 +1321,9 @@
                                     <div class="col-sm-10 no_pad mt5 ev_add_venue_addres">
                                         <table id="tblAddress" class="table table-responsive">
                                             <tbody>
-                                                <tr class="event_add_table">
+                                                @*<tr class="event_add_table">
                                                     <th>Address</th>
-                                                </tr>
+                                                </tr>*@
                                             </tbody>
                                         </table>
                                     </div>
@@ -1406,7 +1406,7 @@
     <a class="td-btn" id="btOkAc"  type="button" href="#AccessDenied" data-toggle="modal" style="display:none">
 
     </a>
-    <div id='map-canvas-event'></div>
+    @*<div id='map-canvas-event'></div>*@
 </div>
 
     // ---------------------Event Creation Script -------------------
@@ -1844,16 +1844,41 @@
 
 
             $("#btSaveAddress").click(function () {
-                //$("#txtEventLocation").val("Click here to enter venue address");
+                var vCols = '';
+                if ($("#tblAddress tr").length <= 0) {
+                    if ($("#VenueName").val().trim() != '')
+                        vCols = $("#VenueName").val().trim() + ",";
+                    if ($("#Address1").val().trim() != '')
+                        vCols = vCols + $("#Address1").val().trim() + ",";
+                    if ($("#Address2").val().trim() != '')
+                        vCols = vCols + $("#Address2").val().trim() + ",";
+                    if ($("#City").val().trim() != '')
+                        vCols = vCols + $("#City").val().trim() + ",";
+                    if ($("#State").val().trim() != '')
+                        vCols = vCols + $("#State").val().trim() + ",";
+                    if ($("#Zip").val().trim() != '')
+                        vCols = vCols + $("#Zip").val().trim();
+                    if ($("#CountryID").val().trim() != '')
+                        vCols = vCols + $("#CountryID option:selected").text();
 
+                    $('#hidAddressStatus').val('Single');
+                    $("#txtEventLocation").val(vCols);
 
-                $("#tblAddress tr").each(function () {
-                    var Sno = $(this).find("td:first").html();
-                    if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
-                        $("#txtEventLocation").val($("#consolidate" + Sno).text());
-                    }
-                });
-
+                }
+                else {
+                    $("#tblAddress tr").each(function (i) {
+                        //var Sno = $(this).find("td:first").html();
+                        //if (Sno != '' && Sno != undefined && Sno != null && (Sno == 1 || Sno == 0)) {
+                        //    $("#txtEventLocation").val($("#consolidate" + Sno).text());
+                        //}
+                        if (i == 0) {
+                            
+                            //if (Sno != '' && Sno != undefined && Sno != null ) {
+                            $("#txtEventLocation").val($("#consolidate" + i).text());
+                            //}
+                        }
+                    });
+                }
             });
 
             $("#btSaveTimeZone").click(function () {
@@ -2341,7 +2366,7 @@
             $("#btMultiVenue").click(function () {
                 $("#dvAddFooter").show();
                 //$("#txtEventLocation").val('');
-                if ($("#tblAddress tr").length <= 1) {
+                if ($("#tblAddress tr").length <= 0) {
                     if ($("#txtEventLocation").val().trim() != '') {
                         $("#VenueName").val($("#txtEventLocation").val());
                         var vCols = $("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + '' + "¶" + '';
@@ -2351,6 +2376,14 @@
                         $("#hidAddSno").val("");
                     }
                 }
+                $("#VenueName").val("");
+                $("#Address1").val("");
+                $("#Address2").val("");
+                $("#City").val("");
+                $("#State").val("");
+                $("#Zip").val("");
+                $("#hidAddSno").val("");
+                $("#CountryID").val('1');
                 //var inputVenu = document.getElementById('VenueName');
                 //var autocomplete = new google.maps.places.Autocomplete(inputVenu);
             });
