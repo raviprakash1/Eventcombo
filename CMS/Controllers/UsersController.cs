@@ -217,7 +217,9 @@ namespace CMS.Controllers
                                          State=!string.IsNullOrEmpty(Pr.State)? Pr.State:"",
                                          OrganiserId= Pr.Organiser.Trim()=="Y"?"Yes":"No",
                                          MerchantId= Pr.Merchant.Trim()=="Y"?"Yes":"No",
-                                         UserStatusId= Pr.UserStatus.Trim()=="Y"?"Enable":"Disable"
+                                         UserStatusId= Pr.UserStatus.Trim()=="Y"?"Enable":"Disable",
+                                         Ipcountry=Pr.Ipcountry
+                                        
                                      }
                                     );
 

@@ -18,12 +18,28 @@ namespace CMS.Controllers
                                  orderby EventType.EventType1 ascending
                                  select EventType).ToList();
 
-            //List<string> EventTypeList = new List<string>();
-            //foreach (var item in modelPerm)
-            //{                    
-            //    EventTypeList.Add(item.EventType1);                    
-            //}
-            //ViewBag.EventType = EventTypeList;
+            List<Eventtype> EventTypeList = new List<Eventtype>();
+         
+            foreach (var item in modelPerm)
+            {
+                Eventtype evt = new Eventtype();
+                evt.EventTypeID = item.EventTypeID;
+                evt.EventType1 = item.EventType1;
+
+              
+                var checktype=(from eve in objEntity.Events where eve.EventTypeID == item.EventTypeID select eve).Any();
+                if(checktype==true)
+                {
+                    evt.EventContains = true;
+                }else
+                {
+                    evt.EventContains = false;
+                }
+
+                evt.HideType = "";
+                EventTypeList.Add(evt);
+            }
+         
             TempData["Count"] = modelPerm.Count;
             if (Type=="S")
             {
@@ -45,7 +61,7 @@ namespace CMS.Controllers
                 TempData["SuccessMessage"] = "Type Updated successfully !!";
 
             }
-            return View(modelPerm);
+            return View(EventTypeList);
             
         }
 
@@ -85,6 +101,33 @@ namespace CMS.Controllers
 
             }
             catch(Exception ex)
+            {
+                strResult = "N";
+            }
+
+            return strResult;
+        }
+
+        public string HideType(long iType)
+        {
+            string strResult = string.Empty;
+            try
+            {
+                using (EmsEntities objEntity = new EmsEntities())
+                {
+                    EventType et = (from EventType in objEntity.EventTypes
+                                    where EventType.EventTypeID == iType
+                                    select EventType).FirstOrDefault();
+
+
+                    if (et != null)
+                    {
+                              et.EventType1 = "";
+                        objEntity.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
             {
                 strResult = "N";
             }

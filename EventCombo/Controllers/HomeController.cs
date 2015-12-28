@@ -20,6 +20,7 @@ using System.Web.Security;
 using System.Configuration;
 using System.Text;
 using System.Security.Cryptography;
+using System.Xml.Linq;
 
 namespace EventCombo.Controllers
 {
@@ -559,7 +560,7 @@ namespace EventCombo.Controllers
        
         public async Task<ActionResult> Signup(LoginViewModel model)
         {
-           
+            string city = "", state = "", country = "", zipcode="";
             string url = null;
             if (Session["ReturnUrl"] != null)
             {
@@ -574,7 +575,7 @@ namespace EventCombo.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-
+                String url1 = String.Empty;
                 var Userid = UserManager.FindByEmail(model.Email);
 
 
@@ -601,13 +602,49 @@ namespace EventCombo.Controllers
                             objEntity.SaveChanges();
                         }
 
+                        try
+                        {
+                            using (WebClient client = new WebClient())
+                            {
+                                string ip = GetLanIPAddress().Replace("::ffff:", "");
+
+                                
+                                var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
+                                dynamic stuff = JsonConvert.DeserializeObject(json);
+                                if (stuff != null)
+                                {
+                                    city = stuff.city;
+                                    state = stuff.region_name;
+                                    zipcode = stuff.zip_code;
+                                    country = stuff.country_name;
+                                }
+                                else
+                                {
+                                    city = "";
+                                    state = "";
+                                    zipcode = "";
+                                    country = "";
+
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            city = "";
+                            state = "";
+                            zipcode = "";
+                            country = "";
+
+                        }
                         Profile prof = new Profile();
 
                         prof.Email = model.Email;
 
                         prof.UserID = Userid.Id.ToString();
                         prof.UserStatus = "Y";
-
+                        prof.Ipcountry = country;
+                        prof.IpState = state;
+                        prof.Ipcity = city;
                         objEntity.Profiles.Add(prof);
 
 
@@ -700,6 +737,17 @@ namespace EventCombo.Controllers
                                         subjectn= subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
 
                                     }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", "");
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserLastNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserLastNameID¶¶", "");
+
+                                    }
+                                    
 
                                 }
 
@@ -716,6 +764,16 @@ namespace EventCombo.Controllers
                                     if (EmailTag[i].Tag_Name == "UserEmailID")
                                     {
                                         bodyn= bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", "");
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserLastNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserLastNameID¶¶", "");
 
                                     }
 
@@ -739,7 +797,18 @@ namespace EventCombo.Controllers
            
             return RedirectToAction("Index", "Home");
         }
-
+        public String GetLanIPAddress()
+        {
+            //The X-Forwarded-For (XFF) HTTP header field is a de facto standard for identifying the originating IP address of a
+            //client connecting to a web server through an HTTP proxy or load balancer
+            string strIpAddress;
+            strIpAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (strIpAddress == null)
+            {
+                strIpAddress = Request.ServerVariables["REMOTE_ADDR"];
+            }
+            return strIpAddress;
+        }
         public void SendHtmlFormattedEmail(string To,string from, string subject, string body,string cc,string bcc)
         {
             using (MailMessage mailMessage = new MailMessage())

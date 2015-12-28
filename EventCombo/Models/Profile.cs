@@ -46,6 +46,9 @@ namespace EventCombo.Models
         public string Merchant { get; set; }
         public string UserStatus { get; set; }
         public string SendCur_EventDetail { get; set; }
+        public string Ipcountry { get; set; }
+        public string IpState { get; set; }
+        public string Ipcity { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

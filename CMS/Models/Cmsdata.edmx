@@ -188,24 +188,7 @@
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="ModifyDate" Type="datetime" />
           <Property Name="ShowMap" Type="varchar" MaxLength="1" />
-        </EntityType>
-        <EntityType Name="Event_Detail">
-          <Key>
-            <PropertyRef Name="E_Id" />
-          </Key>
-          <Property Name="E_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="E_Title" Type="nvarchar" MaxLength="520" />
-          <Property Name="E_StartDate" Type="date" />
-          <Property Name="E_StartTime" Type="time" Precision="7" />
-          <Property Name="E_EndDate" Type="date" />
-          <Property Name="E_EndTime" Type="time" Precision="7" />
-          <Property Name="E_DisplayStartTime" Type="varchar" MaxLength="1" />
-          <Property Name="E_DisplayEndTime" Type="varchar" MaxLength="1" />
-          <Property Name="E_DisplayTimeZone" Type="varchar" MaxLength="1" />
-          <Property Name="E_EventPrivacy" Type="varchar" MaxLength="10" />
-          <Property Name="E_ShareOnFB" Type="varchar" MaxLength="1" />
-          <Property Name="E_GuestOnly" Type="varchar" MaxLength="1" />
-          <Property Name="E_Password" Type="nchar" MaxLength="10" />
+          <Property Name="Parent_EventID" Type="bigint" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -274,22 +257,13 @@
           <Property Name="EventCategoryID" Type="bigint" Nullable="false" />
           <Property Name="EventSubCategory" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
-        <EntityType Name="EventTempImage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="UserId" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="EvenUniqueid" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="EventImageUrl" Type="varchar" MaxLength="300" />
-          <Property Name="ImageType" Type="varchar" MaxLength="50" />
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-        </EntityType>
         <EntityType Name="EventType">
           <Key>
             <PropertyRef Name="EventTypeID" />
           </Key>
           <Property Name="EventTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventType" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="EventHide" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -401,6 +375,9 @@
           <Property Name="Merchant" Type="varchar" MaxLength="2" />
           <Property Name="UserStatus" Type="varchar" MaxLength="2" />
           <Property Name="SendCur_EventDetail" Type="char" MaxLength="1" />
+          <Property Name="Ipcountry" Type="varchar" MaxLength="100" />
+          <Property Name="IpState" Type="varchar" MaxLength="100" />
+          <Property Name="Ipcity" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -663,18 +640,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Event_EventType">
-          <End Role="EventType" Type="Self.EventType" Multiplicity="1" />
-          <End Role="Event" Type="Self.Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EventType">
-              <PropertyRef Name="EventTypeID" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="EventTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Event_Orgnizer_Detail_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Event_Orgnizer_Detail" Type="Self.Event_Orgnizer_Detail" Multiplicity="*" />
@@ -846,7 +811,6 @@
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Event_Detail" EntityType="Self.Event_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_VariableDesc" EntityType="Self.Event_VariableDesc" Schema="dbo" store:Type="Tables" />
@@ -854,7 +818,6 @@
           <EntitySet Name="EventFavourite" EntityType="Self.EventFavourite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventImage" EntityType="Self.EventImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventSubCategory" EntityType="Self.EventSubCategory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EventTempImage" EntityType="Self.EventTempImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVenue" EntityType="Self.EventVenue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVote" EntityType="Self.EventVote" Schema="dbo" store:Type="Tables" />
@@ -904,10 +867,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Event_EventType" Association="Self.FK_Event_EventType">
-            <End Role="EventType" EntitySet="EventType" />
-            <End Role="Event" EntitySet="Event" />
           </AssociationSet>
           <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Self.FK_Event_Orgnizer_Detail_Event">
             <End Role="Event" EntitySet="Event" />
@@ -1146,24 +1105,7 @@
           <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Event_Detail">
-          <Key>
-            <PropertyRef Name="E_Id" />
-          </Key>
-          <Property Name="E_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="E_Title" Type="String" MaxLength="520" FixedLength="false" Unicode="true" />
-          <Property Name="E_StartDate" Type="DateTime" Precision="0" />
-          <Property Name="E_StartTime" Type="Time" Precision="7" />
-          <Property Name="E_EndDate" Type="DateTime" Precision="0" />
-          <Property Name="E_EndTime" Type="Time" Precision="7" />
-          <Property Name="E_DisplayStartTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_DisplayEndTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_DisplayTimeZone" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_EventPrivacy" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="E_ShareOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_GuestOnly" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Parent_EventID" Type="Int64" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1237,16 +1179,6 @@
           <Property Name="EventSubCategory1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="EventCategory" Relationship="Self.FK__EventSubC__Event__5F141958" FromRole="EventSubCategory" ToRole="EventCategory" />
         </EntityType>
-        <EntityType Name="EventTempImage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="UserId" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EvenUniqueid" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EventImageUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="EventType">
           <Key>
             <PropertyRef Name="EventTypeID" />
@@ -1254,6 +1186,7 @@
           <Property Name="EventTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventType1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="Self.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
+          <Property Name="EventHide" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -1370,6 +1303,9 @@
           <Property Name="UserStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="SendCur_EventDetail" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUsers" />
+          <Property Name="Ipcountry" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IpState" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Ipcity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -1746,7 +1682,6 @@
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" />
           <EntitySet Name="Events" EntityType="Self.Event" />
-          <EntitySet Name="Event_Detail" EntityType="Self.Event_Detail" />
           <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" />
           <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" />
           <EntitySet Name="Event_VariableDesc" EntityType="Self.Event_VariableDesc" />
@@ -1754,7 +1689,6 @@
           <EntitySet Name="EventFavourites" EntityType="Self.EventFavourite" />
           <EntitySet Name="EventImages" EntityType="Self.EventImage" />
           <EntitySet Name="EventSubCategories" EntityType="Self.EventSubCategory" />
-          <EntitySet Name="EventTempImages" EntityType="Self.EventTempImage" />
           <EntitySet Name="EventTypes" EntityType="Self.EventType" />
           <EntitySet Name="EventVenues" EntityType="Self.EventVenue" />
           <EntitySet Name="EventVotes" EntityType="Self.EventVote" />
@@ -2080,6 +2014,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="Cmsdata.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Parent_EventID" ColumnName="Parent_EventID" />
                 <ScalarProperty Name="ShowMap" ColumnName="ShowMap" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
@@ -2115,25 +2050,6 @@
                 <ScalarProperty Name="Ticket_variabletype" ColumnName="Ticket_variabletype" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Event_Detail">
-            <EntityTypeMapping TypeName="Cmsdata.Event_Detail">
-              <MappingFragment StoreEntitySet="Event_Detail">
-                <ScalarProperty Name="E_Id" ColumnName="E_Id" />
-                <ScalarProperty Name="E_Title" ColumnName="E_Title" />
-                <ScalarProperty Name="E_StartDate" ColumnName="E_StartDate" />
-                <ScalarProperty Name="E_StartTime" ColumnName="E_StartTime" />
-                <ScalarProperty Name="E_EndDate" ColumnName="E_EndDate" />
-                <ScalarProperty Name="E_EndTime" ColumnName="E_EndTime" />
-                <ScalarProperty Name="E_DisplayStartTime" ColumnName="E_DisplayStartTime" />
-                <ScalarProperty Name="E_DisplayEndTime" ColumnName="E_DisplayEndTime" />
-                <ScalarProperty Name="E_DisplayTimeZone" ColumnName="E_DisplayTimeZone" />
-                <ScalarProperty Name="E_EventPrivacy" ColumnName="E_EventPrivacy" />
-                <ScalarProperty Name="E_ShareOnFB" ColumnName="E_ShareOnFB" />
-                <ScalarProperty Name="E_GuestOnly" ColumnName="E_GuestOnly" />
-                <ScalarProperty Name="E_Password" ColumnName="E_Password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2211,20 +2127,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EventTempImages">
-            <EntityTypeMapping TypeName="Cmsdata.EventTempImage">
-              <MappingFragment StoreEntitySet="EventTempImage">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="EvenUniqueid" ColumnName="EvenUniqueid" />
-                <ScalarProperty Name="EventImageUrl" ColumnName="EventImageUrl" />
-                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EventTypes">
             <EntityTypeMapping TypeName="Cmsdata.EventType">
               <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="EventHide" ColumnName="EventHide" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventType1" ColumnName="EventType" />
               </MappingFragment>
@@ -2314,6 +2220,9 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="Cmsdata.Profile">
               <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="Ipcity" ColumnName="Ipcity" />
+                <ScalarProperty Name="IpState" ColumnName="IpState" />
+                <ScalarProperty Name="Ipcountry" ColumnName="Ipcountry" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />

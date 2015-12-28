@@ -783,8 +783,8 @@ namespace EventCombo.Controllers
                    string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";
                    generateQR(xel.ToString(), qrImgPath);
                    generateBarCode(item.TPD_Order_Id, barImgPath);
-                   string Qrcode = "<img style = 'width:100px;height:100px' src =" + qrImgPath + " alt = 'QRCode' />";
-                   string barcode = "<img src =" + barImgPath + " alt = 'BarCode' >";
+                   string Qrcode = "<img style = 'width:100px;height:100px' src ='" + qrImgPath + "' alt = 'QRCode' />";
+                   string barcode = "<img src ='" + barImgPath + "' alt = 'BarCode' >";
                    MemoryStream attachment = generateTicketPDF(email, username, DateTime.Now.ToString(), item.TPD_Order_Id, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode, barcode1);
 
                     var Emailtemplate = hmc.getEmail("eticket");
@@ -937,7 +937,12 @@ namespace EventCombo.Controllers
 
                                     if (EmailTag[i].Tag_Name == "EventBarcodeId")
                                     {
-                                        bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcode1);
+                                        bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcode);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventQrCode")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventQrCode¶¶", Qrcode);
 
                                     }
                                     if (EmailTag[i].Tag_Name == "EventTitleId")

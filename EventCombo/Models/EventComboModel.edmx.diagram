@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5a4f8de9c532467d899c62cae9c49339" Name="Diagram1">
+      <Diagram DiagramId="5a4f8de9c532467d899c62cae9c49339" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="EventComboModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Address" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.AspNetRole" Width="1.5" PointX="7.75" PointY="6.875" IsExpanded="true" />
@@ -17,7 +17,6 @@
         <EntityTypeShape EntityType="EventComboModel.Email_Tag" Width="1.5" PointX="7.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Email_Template" Width="1.5" PointX="7.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Event" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Event_Detail" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Event_OrganizerMessages" Width="1.5" PointX="9.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Event_Orgnizer_Detail" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Event_VariableDesc" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
@@ -25,7 +24,6 @@
         <EntityTypeShape EntityType="EventComboModel.EventFavourite" Width="1.5" PointX="14.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventImage" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventSubCategory" Width="1.5" PointX="17" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.EventTempImage" Width="1.5" PointX="11.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventType" Width="1.5" PointX="0.75" PointY="16" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventVenue" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventVote" Width="1.5" PointX="13.75" PointY="14.75" IsExpanded="true" />
@@ -65,7 +63,6 @@
         <AssociationConnector Association="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="EventComboModel.FK_Profile_Profile" />
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="EventComboModel.Event_Parent" Width="1.5" PointX="10.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
