@@ -17,7 +17,7 @@
     <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
 
     
-
+    @*<link href="~/Content/ec-select.css" rel="stylesheet" />*@
     <!-- Custom styles for this template -->
     <link href="~/Content/eventcombo.css" rel="stylesheet" />
     <!--  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
@@ -33,7 +33,9 @@
     <script src="~/Scripts/jquery.timepicker.js"></script>
 
     <script src="~/Scripts/jquery.cookie.js"></script>
-   
+
+    @*<script src="~/Scripts/ec-select.js"></script>*@
+
     <style type="text/css">
         html {
   overflow-x: hidden;
@@ -280,15 +282,16 @@ else
 
                                
                                     <div class="er_UI_main" id="diverrologin" style="display :none;">
+                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
                                         <div class="er_UI_img"></div>
                                         <div class="er_suc" id="dverrui">  </div>
-                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
                                     </div>
                                 
 
 
                               
-                                    <div class="er_UI_main" id="diverro1login" style="display :none;">
+                                    <div 
+                                         class="er_UI_main" id="diverro1login" style="display :none;">
                                         <div class="er_sys_img"></div>
                                         <div class="er_suc" id="dverrsys">  </div>
                                         <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1login">&#215;</button>
@@ -379,6 +382,9 @@ else
             <div class="er_UI_img"></div>
             <div class="er_suc" id="dverrsignui">  </div>
         </div>
+
+
+
     </div>
 
 
@@ -685,7 +691,10 @@ else
                     if (Passowrdlogin.length < 4) {
                         $('#loginpassword').focus();
                         $('#loginpassword').addClass('err-bor');
-                        msglogin += "<br />" + ajaxsetup('Login', 'LoginPasswordValidationUI');
+                        if (msglogin.trim() == "")
+                            msglogin = ajaxsetup('Login', 'LoginPasswordValidationUI');
+                        else
+                            msglogin += "<br />" + ajaxsetup('Login', 'LoginPasswordValidationUI');
 
 
                     } else {
@@ -889,12 +898,12 @@ else
                     if (!validateEmail(Email)) {
                         $('#SignupEmail').focus();
                         $('#SignupEmail').addClass('err-bor');
+                        if (msg.trim() == "")
+                            msg = ajaxsetup('Signup', 'SignupEmailValidationUI');
+                        else
+                            msg += ajaxsetup('Signup', 'SignupEmailValidationUI');
                         
-                        msg += ajaxsetup('Signup', 'SignupEmailValidationUI');
-                        
-
                     } else {
-
                         msg = "";
                         $('#SignupEmail').focus();
                         $('#SignupEmail').removeClass('err-bor');
@@ -903,7 +912,10 @@ else
                     if (Passowrdw.length < 4) {
                         $('#SignupPassword').focus();
                         $('#SignupPassword').addClass('err-bor');
-                        msg += "</br>" + ajaxsetup('Signup', 'SignupPasswordValidationUI');
+                        if (msg.trim() == "")
+                            msg = ajaxsetup('Signup', 'SignupPasswordValidationUI');
+                        else
+                            msg += "</br>" + ajaxsetup('Signup', 'SignupPasswordValidationUI');
                        
 
                     } else {

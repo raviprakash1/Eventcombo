@@ -677,6 +677,7 @@ namespace EventCombo.Controllers
                     strGetSelectedTickets = context.GetSelectedTicketListing(strGuid, (strEvent != "" ? Convert.ToInt64(strEvent) : 0)).Single();
                 }
             }
+
             return strGetSelectedTickets;
         }
 
