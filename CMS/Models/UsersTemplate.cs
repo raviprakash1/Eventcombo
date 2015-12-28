@@ -32,9 +32,19 @@ namespace CMS.Models
         public string State { get; set; }
         public string Usercount { get; set; }
         public int TicketPurchased { get; set; }
+        public string Ipcountry { get; set; }
 
     }
 
 
+
+    public class Eventtype
+    {
+        public long EventTypeID { get; set; }
+        public string EventType1 { get; set; }
+        public bool EventContains { get; set; }
+        public string HideType { get; set; }
+
+    }
 
 }

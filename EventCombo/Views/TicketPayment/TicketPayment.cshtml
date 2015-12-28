@@ -1495,89 +1495,94 @@
 
 
     });
-    $('#accZip').change(function () {
-        var country = $("#accCountry option:selected").text().trim();
+    //$('#accZip').change(function () {
+    //    var country = $("#accCountry option:selected").text().trim();
 
-        var city = "";
-        var state = "";
+    //    var city = "";
+    //    var state = "";
 
-        var pincode = $(this).val();
-
-
-        $.ajax({
-            url: 'http://maps.googleapis.com/maps/api/geocode/json',
-            data: '&address=' + pincode + '&sensor=true',
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
+    //    var pincode = $(this).val();
 
 
-                if (data.status == 'OK') {
-
-                    for (var i = 0; i < data.results[0].address_components.length; i++) {
-                        var obj = data.results[0].address_components[i];
-
-                        var obj2 = obj['types'];
-
-                        for (var j = 0; j < obj2.length; j++) {
-                            if (obj2[j] == 'locality') {
-                                city = obj['long_name'];
+    //    $.ajax({
+    //        url: 'http://maps.googleapis.com/maps/api/geocode/json',
+    //        data: '&address=' + pincode + '&sensor=true',
+    //        dataType: 'json',
+    //        cache: false,
+    //        success: function (data) {
 
 
-                            }
-                            if (obj2[j] == 'postal_town') {
-                                city = obj['long_name'];
+    //            if (data.status == 'OK') {
+
+    //                for (var i = 0; i < data.results[0].address_components.length; i++) {
+    //                    var obj = data.results[0].address_components[i];
+
+    //                    var obj2 = obj['types'];
+
+    //                    for (var j = 0; j < obj2.length; j++) {
+    //                        if (obj2[j] == 'locality') {
+    //                            city = obj['long_name'];
 
 
-                            }
-                            if (obj2[j] == 'administrative_area_level_1') {
-                                state = obj['long_name'];
-
-                            }
-                            if (obj2[j] == 'administrative_area_level_2') {
-                                state = obj['long_name'];
-
-                            }
+    //                        }
+    //                        if (obj2[j] == 'sublocality_level_1') {
+    //                            city = obj['long_name'];
 
 
-                            if (obj2[j] == 'country') {
-                                if (obj['long_name'] == country) {
+    //                        }
+    //                        if (obj2[j] == 'postal_town') {
+    //                            city = obj['long_name'];
 
 
-                                    $('#accCity').val(city);
-                                    $('#accState').val(state);
-                                } else {
-                                    $('#accCity').val('');
-                                    $('#accState').val('');
-                                }
+    //                        }
+    //                        if (obj2[j] == 'administrative_area_level_1') {
+    //                            state = obj['long_name'];
 
-                            }
+    //                        }
+    //                        if (obj2[j] == 'administrative_area_level_2') {
+    //                            state = obj['long_name'];
 
-                        }
-
+    //                        }
 
 
-                    }
-
-                }
-
+    //                        if (obj2[j] == 'country') {
+    //                            if (obj['long_name'] == country) {
 
 
-                else {
-                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
-                    $("#accState").val("");
-                    $("#accCity").val("");
-                    $('#accZip').addClass('err-bor');
-                    ShowMessage('E', msg)
+    //                                $('#accCity').val(city);
+    //                                $('#accState').val(state);
+    //                            } else {
+    //                                $('#accCity').val('');
+    //                                $('#accState').val('');
+    //                            }
 
-                    return false;
-                }
-            },
-            error: function (data) { alert(data) }
-        });
+    //                        }
+
+    //                    }
 
 
-    });
+
+    //                }
+
+    //            }
+
+
+
+    //            else {
+    //                var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+    //                $("#accState").val("");
+    //                $("#accCity").val("");
+    //                $('#accZip').addClass('err-bor');
+    //                ShowMessage('E', msg)
+
+    //                return false;
+    //            }
+    //        },
+    //        error: function (data) { alert(data) }
+    //    });
+
+
+    //});
 
     $("#accCountry").change(function () {
         $("#accZip").val("");
@@ -1616,6 +1621,42 @@
 
 
                             }
+                          
+                            if (obj2[j] == 'sublocality_level_1') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_2') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_3') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_4') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'ward') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
                             if (obj2[j] == 'postal_town') {
                                 city = obj['long_name'];
 
@@ -1625,10 +1666,10 @@
                                 state = obj['long_name'];
 
                             }
-                            if (obj2[j] == 'administrative_area_level_2') {
-                                state = obj['long_name'];
+                            //if (obj2[j] == 'administrative_area_level_2') {
+                            //    state = obj['long_name'];
 
-                            }
+                            //}
 
 
                             if (obj2[j] == 'country') {
@@ -1678,6 +1719,7 @@
 
     });
     $('#billzip').change(function () {
+        debugger;
         var country = $("#billcountry option:selected").text().trim();
 
         var city = "";
@@ -1687,8 +1729,7 @@
 
 
         $.ajax({
-            url: 'http://maps.googleapis.com/maps/api/geocode/json',
-            data: '&address=' + pincode + '&sensor=true',
+            url: 'http://maps.googleapis.com/maps/api/geocode/json?address=' + pincode + '',
             dataType: 'json',
             cache: false,
             success: function (data) {
@@ -1707,16 +1748,48 @@
 
 
                             }
+
+                            if (obj2[j] == 'sublocality_level_1') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_2') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_3') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_4') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'ward') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
                             if (obj2[j] == 'postal_town') {
                                 city = obj['long_name'];
 
 
                             }
                             if (obj2[j] == 'administrative_area_level_1') {
-                                state = obj['long_name'];
-
-                            }
-                            if (obj2[j] == 'administrative_area_level_2') {
                                 state = obj['long_name'];
 
                             }
@@ -1798,16 +1871,48 @@
 
 
                             }
+
+                            if (obj2[j] == 'sublocality_level_1') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_2') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_3') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_4') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'ward') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
                             if (obj2[j] == 'postal_town') {
                                 city = obj['long_name'];
 
 
                             }
                             if (obj2[j] == 'administrative_area_level_1') {
-                                state = obj['long_name'];
-
-                            }
-                            if (obj2[j] == 'administrative_area_level_2') {
                                 state = obj['long_name'];
 
                             }

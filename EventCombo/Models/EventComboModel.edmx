@@ -190,24 +190,6 @@
           <Property Name="ShowMap" Type="varchar" MaxLength="1" />
           <Property Name="Parent_EventID" Type="bigint" />
         </EntityType>
-        <EntityType Name="Event_Detail">
-          <Key>
-            <PropertyRef Name="E_Id" />
-          </Key>
-          <Property Name="E_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="E_Title" Type="nvarchar" MaxLength="520" />
-          <Property Name="E_StartDate" Type="date" />
-          <Property Name="E_StartTime" Type="time" Precision="7" />
-          <Property Name="E_EndDate" Type="date" />
-          <Property Name="E_EndTime" Type="time" Precision="7" />
-          <Property Name="E_DisplayStartTime" Type="varchar" MaxLength="1" />
-          <Property Name="E_DisplayEndTime" Type="varchar" MaxLength="1" />
-          <Property Name="E_DisplayTimeZone" Type="varchar" MaxLength="1" />
-          <Property Name="E_EventPrivacy" Type="varchar" MaxLength="10" />
-          <Property Name="E_ShareOnFB" Type="varchar" MaxLength="1" />
-          <Property Name="E_GuestOnly" Type="varchar" MaxLength="1" />
-          <Property Name="E_Password" Type="nchar" MaxLength="10" />
-        </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
             <PropertyRef Name="MessageId" />
@@ -233,51 +215,6 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
           <Property Name="DefaultOrg" Type="varchar" MaxLength="1" />
           <Property Name="Linkedin" Type="varchar" MaxLength="100" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Event_Parent">
-          <Key>
-            <PropertyRef Name="EventID" />
-            <PropertyRef Name="EventTypeID" />
-            <PropertyRef Name="EventCategoryID" />
-            <PropertyRef Name="EventSubCategoryID" />
-          </Key>
-          <Property Name="EventID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EventTypeID" Type="bigint" Nullable="false" />
-          <Property Name="EventCategoryID" Type="bigint" Nullable="false" />
-          <Property Name="EventSubCategoryID" Type="bigint" Nullable="false" />
-          <Property Name="UserID" Type="nvarchar" MaxLength="256" />
-          <Property Name="EventTitle" Type="nvarchar" MaxLength="600" />
-          <Property Name="DisplayStartTime" Type="varchar" MaxLength="1" />
-          <Property Name="DisplayEndTime" Type="varchar" MaxLength="1" />
-          <Property Name="DisplayTimeZone" Type="varchar" MaxLength="1" />
-          <Property Name="EventDescription" Type="nvarchar(max)" />
-          <Property Name="EventPrivacy" Type="varchar" MaxLength="20" />
-          <Property Name="Private_ShareOnFB" Type="varchar" MaxLength="1" />
-          <Property Name="Private_GuestOnly" Type="varchar" MaxLength="1" />
-          <Property Name="Private_Password" Type="varchar" MaxLength="50" />
-          <Property Name="EventUrl" Type="nvarchar" MaxLength="2000" />
-          <Property Name="PublishOnFB" Type="varchar" MaxLength="1" />
-          <Property Name="EventStatus" Type="varchar" MaxLength="20" />
-          <Property Name="AddedOn" Type="datetime" />
-          <Property Name="UpdateOn" Type="datetime" />
-          <Property Name="IsMultipleEvent" Type="varchar" MaxLength="1" />
-          <Property Name="TimeZone" Type="nvarchar" MaxLength="1000" />
-          <Property Name="FBUrl" Type="nvarchar" MaxLength="1000" />
-          <Property Name="TwitterUrl" Type="nvarchar" MaxLength="1000" />
-          <Property Name="AddressStatus" Type="varchar" MaxLength="100" />
-          <Property Name="LastLocationAddress" Type="bigint" />
-          <Property Name="EnableFBDiscussion" Type="varchar" MaxLength="1" />
-          <Property Name="Feature" Type="int" />
-          <Property Name="Ticket_DAdress" Type="varchar" MaxLength="1" />
-          <Property Name="Ticket_showremain" Type="varchar" MaxLength="1" />
-          <Property Name="Ticket_showvariable" Type="varchar" MaxLength="1" />
-          <Property Name="Ticket_variabledesc" Type="varchar" MaxLength="256" />
-          <Property Name="Ticket_variabletype" Type="varchar" MaxLength="50" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="ModifyDate" Type="datetime" />
-          <Property Name="ShowMap" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -319,16 +256,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <Property Name="EventSubCategoryID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventCategoryID" Type="bigint" Nullable="false" />
           <Property Name="EventSubCategory" Type="varchar" MaxLength="200" Nullable="false" />
-        </EntityType>
-        <EntityType Name="EventTempImage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="UserId" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="EvenUniqueid" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="EventImageUrl" Type="varchar" MaxLength="300" />
-          <Property Name="ImageType" Type="varchar" MaxLength="50" />
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="EventType">
           <Key>
@@ -447,6 +374,9 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <Property Name="Merchant" Type="varchar" MaxLength="2" />
           <Property Name="UserStatus" Type="varchar" MaxLength="2" />
           <Property Name="SendCur_EventDetail" Type="char" MaxLength="1" />
+          <Property Name="Ipcountry" Type="varchar" MaxLength="100" />
+          <Property Name="IpState" Type="varchar" MaxLength="100" />
+          <Property Name="Ipcity" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -709,18 +639,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Event_EventType">
-          <End Role="EventType" Type="Self.EventType" Multiplicity="1" />
-          <End Role="Event" Type="Self.Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EventType">
-              <PropertyRef Name="EventTypeID" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="EventTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Event_Orgnizer_Detail_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Event_Orgnizer_Detail" Type="Self.Event_Orgnizer_Detail" Multiplicity="*" />
@@ -892,7 +810,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Event_Detail" EntityType="Self.Event_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_VariableDesc" EntityType="Self.Event_VariableDesc" Schema="dbo" store:Type="Tables" />
@@ -900,7 +817,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <EntitySet Name="EventFavourite" EntityType="Self.EventFavourite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventImage" EntityType="Self.EventImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventSubCategory" EntityType="Self.EventSubCategory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EventTempImage" EntityType="Self.EventTempImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVenue" EntityType="Self.EventVenue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVote" EntityType="Self.EventVote" Schema="dbo" store:Type="Tables" />
@@ -923,45 +839,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Event_Parent" EntityType="Self.Event_Parent" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Event_Parent].[EventID] AS [EventID], 
-    [Event_Parent].[EventTypeID] AS [EventTypeID], 
-    [Event_Parent].[EventCategoryID] AS [EventCategoryID], 
-    [Event_Parent].[EventSubCategoryID] AS [EventSubCategoryID], 
-    [Event_Parent].[UserID] AS [UserID], 
-    [Event_Parent].[EventTitle] AS [EventTitle], 
-    [Event_Parent].[DisplayStartTime] AS [DisplayStartTime], 
-    [Event_Parent].[DisplayEndTime] AS [DisplayEndTime], 
-    [Event_Parent].[DisplayTimeZone] AS [DisplayTimeZone], 
-    [Event_Parent].[EventDescription] AS [EventDescription], 
-    [Event_Parent].[EventPrivacy] AS [EventPrivacy], 
-    [Event_Parent].[Private_ShareOnFB] AS [Private_ShareOnFB], 
-    [Event_Parent].[Private_GuestOnly] AS [Private_GuestOnly], 
-    [Event_Parent].[Private_Password] AS [Private_Password], 
-    [Event_Parent].[EventUrl] AS [EventUrl], 
-    [Event_Parent].[PublishOnFB] AS [PublishOnFB], 
-    [Event_Parent].[EventStatus] AS [EventStatus], 
-    [Event_Parent].[AddedOn] AS [AddedOn], 
-    [Event_Parent].[UpdateOn] AS [UpdateOn], 
-    [Event_Parent].[IsMultipleEvent] AS [IsMultipleEvent], 
-    [Event_Parent].[TimeZone] AS [TimeZone], 
-    [Event_Parent].[FBUrl] AS [FBUrl], 
-    [Event_Parent].[TwitterUrl] AS [TwitterUrl], 
-    [Event_Parent].[AddressStatus] AS [AddressStatus], 
-    [Event_Parent].[LastLocationAddress] AS [LastLocationAddress], 
-    [Event_Parent].[EnableFBDiscussion] AS [EnableFBDiscussion], 
-    [Event_Parent].[Feature] AS [Feature], 
-    [Event_Parent].[Ticket_DAdress] AS [Ticket_DAdress], 
-    [Event_Parent].[Ticket_showremain] AS [Ticket_showremain], 
-    [Event_Parent].[Ticket_showvariable] AS [Ticket_showvariable], 
-    [Event_Parent].[Ticket_variabledesc] AS [Ticket_variabledesc], 
-    [Event_Parent].[Ticket_variabletype] AS [Ticket_variabletype], 
-    [Event_Parent].[CreateDate] AS [CreateDate], 
-    [Event_Parent].[ModifyDate] AS [ModifyDate], 
-    [Event_Parent].[ShowMap] AS [ShowMap]
-    FROM [dbo].[Event_Parent] AS [Event_Parent]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
@@ -989,10 +866,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Event_EventType" Association="Self.FK_Event_EventType">
-            <End Role="EventType" EntitySet="EventType" />
-            <End Role="Event" EntitySet="Event" />
           </AssociationSet>
           <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Self.FK_Event_Orgnizer_Detail_Event">
             <End Role="Event" EntitySet="Event" />
@@ -1211,24 +1084,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Parent_EventID" Type="Int64" />
         </EntityType>
-        <EntityType Name="Event_Detail">
-          <Key>
-            <PropertyRef Name="E_Id" />
-          </Key>
-          <Property Name="E_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="E_Title" Type="String" MaxLength="520" FixedLength="false" Unicode="true" />
-          <Property Name="E_StartDate" Type="DateTime" Precision="0" />
-          <Property Name="E_StartTime" Type="Time" Precision="7" />
-          <Property Name="E_EndDate" Type="DateTime" Precision="0" />
-          <Property Name="E_EndTime" Type="Time" Precision="7" />
-          <Property Name="E_DisplayStartTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_DisplayEndTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_DisplayTimeZone" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_EventPrivacy" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="E_ShareOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_GuestOnly" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="E_Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
             <PropertyRef Name="MessageId" />
@@ -1300,16 +1155,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <Property Name="EventCategoryID" Type="Int64" Nullable="false" />
           <Property Name="EventSubCategory1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="EventCategory" Relationship="Self.FK__EventSubC__Event__5F141958" FromRole="EventSubCategory" ToRole="EventCategory" />
-        </EntityType>
-        <EntityType Name="EventTempImage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="UserId" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EvenUniqueid" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EventImageUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="EventType">
           <Key>
@@ -1434,6 +1279,9 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <Property Name="UserStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="SendCur_EventDetail" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUser" />
+          <Property Name="Ipcountry" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IpState" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Ipcity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -1765,7 +1613,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" />
           <EntitySet Name="Events" EntityType="Self.Event" />
-          <EntitySet Name="Event_Detail" EntityType="Self.Event_Detail" />
           <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" />
           <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" />
           <EntitySet Name="Event_VariableDesc" EntityType="Self.Event_VariableDesc" />
@@ -1773,7 +1620,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <EntitySet Name="EventFavourites" EntityType="Self.EventFavourite" />
           <EntitySet Name="EventImages" EntityType="Self.EventImage" />
           <EntitySet Name="EventSubCategories" EntityType="Self.EventSubCategory" />
-          <EntitySet Name="EventTempImages" EntityType="Self.EventTempImage" />
           <EntitySet Name="EventTypes" EntityType="Self.EventType" />
           <EntitySet Name="EventVenues" EntityType="Self.EventVenue" />
           <EntitySet Name="EventVotes" EntityType="Self.EventVote" />
@@ -1902,7 +1748,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
             <Parameter Name="EventStatus" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Event_Parent" EntityType="EventComboModel.Event_Parent" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2004,49 +1849,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <Property Type="Int64" Name="TotalTicket" Nullable="false" />
           <Property Type="Int64" Name="TicketSold" Nullable="false" />
         </ComplexType>
-        <EntityType Name="Event_Parent">
-          <Key>
-            <PropertyRef Name="EventID" />
-            <PropertyRef Name="EventTypeID" />
-            <PropertyRef Name="EventCategoryID" />
-            <PropertyRef Name="EventSubCategoryID" />
-          </Key>
-          <Property Name="EventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventTypeID" Type="Int64" Nullable="false" />
-          <Property Name="EventCategoryID" Type="Int64" Nullable="false" />
-          <Property Name="EventSubCategoryID" Type="Int64" Nullable="false" />
-          <Property Name="UserID" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EventTitle" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
-          <Property Name="DisplayStartTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="DisplayEndTime" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="DisplayTimeZone" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="EventDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EventPrivacy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Private_ShareOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Private_GuestOnly" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Private_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventUrl" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="PublishOnFB" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="EventStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="AddedOn" Type="DateTime" Precision="3" />
-          <Property Name="UpdateOn" Type="DateTime" Precision="3" />
-          <Property Name="IsMultipleEvent" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="TimeZone" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="FBUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="TwitterUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="AddressStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LastLocationAddress" Type="Int64" />
-          <Property Name="EnableFBDiscussion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Feature" Type="Int32" />
-          <Property Name="Ticket_DAdress" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Ticket_showremain" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Ticket_showvariable" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Ticket_variabledesc" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Ticket_variabletype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
-          <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2221,25 +2023,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Event_Detail">
-            <EntityTypeMapping TypeName="EventComboModel.Event_Detail">
-              <MappingFragment StoreEntitySet="Event_Detail">
-                <ScalarProperty Name="E_Id" ColumnName="E_Id" />
-                <ScalarProperty Name="E_Title" ColumnName="E_Title" />
-                <ScalarProperty Name="E_StartDate" ColumnName="E_StartDate" />
-                <ScalarProperty Name="E_StartTime" ColumnName="E_StartTime" />
-                <ScalarProperty Name="E_EndDate" ColumnName="E_EndDate" />
-                <ScalarProperty Name="E_EndTime" ColumnName="E_EndTime" />
-                <ScalarProperty Name="E_DisplayStartTime" ColumnName="E_DisplayStartTime" />
-                <ScalarProperty Name="E_DisplayEndTime" ColumnName="E_DisplayEndTime" />
-                <ScalarProperty Name="E_DisplayTimeZone" ColumnName="E_DisplayTimeZone" />
-                <ScalarProperty Name="E_EventPrivacy" ColumnName="E_EventPrivacy" />
-                <ScalarProperty Name="E_ShareOnFB" ColumnName="E_ShareOnFB" />
-                <ScalarProperty Name="E_GuestOnly" ColumnName="E_GuestOnly" />
-                <ScalarProperty Name="E_Password" ColumnName="E_Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Event_OrganizerMessages">
             <EntityTypeMapping TypeName="EventComboModel.Event_OrganizerMessages">
               <MappingFragment StoreEntitySet="Event_OrganizerMessages">
@@ -2311,17 +2094,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
                 <ScalarProperty Name="EventSubCategoryID" ColumnName="EventSubCategoryID" />
                 <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
                 <ScalarProperty Name="EventSubCategory1" ColumnName="EventSubCategory" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EventTempImages">
-            <EntityTypeMapping TypeName="EventComboModel.EventTempImage">
-              <MappingFragment StoreEntitySet="EventTempImage">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="EvenUniqueid" ColumnName="EvenUniqueid" />
-                <ScalarProperty Name="EventImageUrl" ColumnName="EventImageUrl" />
-                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2417,6 +2189,9 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="EventComboModel.Profile">
               <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="Ipcity" ColumnName="Ipcity" />
+                <ScalarProperty Name="IpState" ColumnName="IpState" />
+                <ScalarProperty Name="Ipcountry" ColumnName="Ipcountry" />
                 <ScalarProperty Name="SendCur_EventDetail" ColumnName="SendCur_EventDetail" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -2719,47 +2494,6 @@ warning 6002: The table/view 'EventCombo.dbo.Event_Parent' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Event_Parent">
-            <EntityTypeMapping TypeName="EventComboModel.Event_Parent">
-              <MappingFragment StoreEntitySet="Event_Parent">
-                <ScalarProperty Name="ShowMap" ColumnName="ShowMap" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Ticket_variabletype" ColumnName="Ticket_variabletype" />
-                <ScalarProperty Name="Ticket_variabledesc" ColumnName="Ticket_variabledesc" />
-                <ScalarProperty Name="Ticket_showvariable" ColumnName="Ticket_showvariable" />
-                <ScalarProperty Name="Ticket_showremain" ColumnName="Ticket_showremain" />
-                <ScalarProperty Name="Ticket_DAdress" ColumnName="Ticket_DAdress" />
-                <ScalarProperty Name="Feature" ColumnName="Feature" />
-                <ScalarProperty Name="EnableFBDiscussion" ColumnName="EnableFBDiscussion" />
-                <ScalarProperty Name="LastLocationAddress" ColumnName="LastLocationAddress" />
-                <ScalarProperty Name="AddressStatus" ColumnName="AddressStatus" />
-                <ScalarProperty Name="TwitterUrl" ColumnName="TwitterUrl" />
-                <ScalarProperty Name="FBUrl" ColumnName="FBUrl" />
-                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
-                <ScalarProperty Name="IsMultipleEvent" ColumnName="IsMultipleEvent" />
-                <ScalarProperty Name="UpdateOn" ColumnName="UpdateOn" />
-                <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
-                <ScalarProperty Name="EventStatus" ColumnName="EventStatus" />
-                <ScalarProperty Name="PublishOnFB" ColumnName="PublishOnFB" />
-                <ScalarProperty Name="EventUrl" ColumnName="EventUrl" />
-                <ScalarProperty Name="Private_Password" ColumnName="Private_Password" />
-                <ScalarProperty Name="Private_GuestOnly" ColumnName="Private_GuestOnly" />
-                <ScalarProperty Name="Private_ShareOnFB" ColumnName="Private_ShareOnFB" />
-                <ScalarProperty Name="EventPrivacy" ColumnName="EventPrivacy" />
-                <ScalarProperty Name="EventDescription" ColumnName="EventDescription" />
-                <ScalarProperty Name="DisplayTimeZone" ColumnName="DisplayTimeZone" />
-                <ScalarProperty Name="DisplayEndTime" ColumnName="DisplayEndTime" />
-                <ScalarProperty Name="DisplayStartTime" ColumnName="DisplayStartTime" />
-                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="EventSubCategoryID" ColumnName="EventSubCategoryID" />
-                <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
-                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
