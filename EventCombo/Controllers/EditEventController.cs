@@ -1419,11 +1419,14 @@ namespace EventCombo.Controllers
 
                             //  var vParentEvt = (from myEnt in objEnt.Events where myEnt.EventID == lEventId select myEnt.Parent_EventID).FirstOrDefault();
                             // if (vParentEvt == 0) vParentEvt = lEventId;
-
+                            var addressstatus = model.AddressStatus;
                             if (model.AddressDetail == null)
                             {
                                 objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
-                                model.AddressStatus = "";
+                                if (addressstatus != "PastLocation" && addressstatus != "Online")
+                                {
+                                    model.AddressStatus = "";
+                                }
                             }
                             // Event ObjEC = new Event();
                             ObjEC.Parent_EventID = 0;

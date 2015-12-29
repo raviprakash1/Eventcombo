@@ -176,12 +176,12 @@
 
                         </div>
                         <div class="clearfix"></div>
-                        <div class="col-sm-12 text-right">
+                        @*<div class="col-sm-12 text-right">
                             <label class="label-control evnt_title_date ev_white evnt_title_xs">
                                 @Html.DisplayFor(m => m.TopVenue)
                             </label>
-                        </div>  
-                        <div class="clearfix"></div>
+                        </div>*@  
+                        @*<div class="clearfix"></div>*@
                         <div class="col-sm-12 no_pad">
                             <div class="col-sm-4 col-xs-6 pb10">
                                 @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
@@ -203,29 +203,22 @@
                                     @*<a href="#" data-geo=""></a>*@
 
                                
-                                       
-                                             <div class="dropdown text-left">
+                                    <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips">
+                                        @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
+                                        {
 
+                                            <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
+                                        }
+                                        <span title="@Html.DisplayFor(m => m.TopAddress)" id="lbltopaddress">@Html.DisplayFor(m => m.TopAddress)</span>
+                                        <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
+                                            <span class="caret caret_cus"></span>
+                                            <li>
+                                                <div id="googleMap" style="width:200px;height:300px;">
 
-                                                 <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips"  title="@Html.DisplayFor(m => m.TopAddress)">
-@if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
-{
-
-                                                     <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
-}
-                                                     <span id="lbltopaddress">@Html.DisplayFor(m => m.TopAddress)</span>
-                                                     <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
-                                                         <span class="caret caret_cus"></span>
-                                                         <li>
-                                                             <div id="googleMap"  style="width:200px;height:300px;">
-
-                                                             </div>
-                                                         </li>
-                                                     </ul>
-                                                 </label>
-
-
-                                            </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </label>
                                            
                                        
 

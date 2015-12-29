@@ -322,7 +322,7 @@ WriteLiteral(" id=\"btndiverrsuc\"");
 
 WriteLiteral(">&#215;</button>\r\n\r\n                </div>\r\n            </div>\r\n            <div");
 
-WriteLiteral(" class=\"col-sm-3 col-xs-6 pt10 text-center no_pad\"");
+WriteLiteral(" class=\"col-sm-3 col-xs-12 pt10 text-center no_pad\"");
 
 WriteLiteral(">\r\n                ");
 
@@ -539,30 +539,30 @@ WriteLiteral(" onclick=\"showevent(this.id)\"");
 
 WriteLiteral(" data-target=\"#schcalender\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 6640), Tuple.Create("\"", 6686)
+WriteAttribute("id", Tuple.Create(" id=\"", 6641), Tuple.Create("\"", 6687)
             
             #line 140 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                            , Tuple.Create(Tuple.Create("", 6645), Tuple.Create<System.Object, System.Int32>(item.Dayofweek
+                                            , Tuple.Create(Tuple.Create("", 6646), Tuple.Create<System.Object, System.Int32>(item.Dayofweek
             
             #line default
             #line hidden
-, 6645), false)
-, Tuple.Create(Tuple.Create("", 6660), Tuple.Create("-", 6660), true)
+, 6646), false)
+, Tuple.Create(Tuple.Create("", 6661), Tuple.Create("-", 6661), true)
             
             #line 140 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 6661), Tuple.Create<System.Object, System.Int32>(item.Datefrom
+                                                            , Tuple.Create(Tuple.Create("", 6662), Tuple.Create<System.Object, System.Int32>(item.Datefrom
             
             #line default
             #line hidden
-, 6661), false)
-, Tuple.Create(Tuple.Create("", 6675), Tuple.Create("-", 6675), true)
+, 6662), false)
+, Tuple.Create(Tuple.Create("", 6676), Tuple.Create("-", 6676), true)
             
             #line 140 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                                                           , Tuple.Create(Tuple.Create("", 6676), Tuple.Create<System.Object, System.Int32>(item.Time
+                                                                           , Tuple.Create(Tuple.Create("", 6677), Tuple.Create<System.Object, System.Int32>(item.Time
             
             #line default
             #line hidden
-, 6676), false)
+, 6677), false)
 );
 
 WriteLiteral(" data-toggle=\"modal\"");
@@ -652,31 +652,11 @@ WriteLiteral("\r\n\r\n                                    </ul>\r\n             
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n                        <div");
+WriteLiteral("></div>\r\n                        ");
 
-WriteLiteral(" class=\"col-sm-12 text-right\"");
+WriteLiteral("\r\n                        ");
 
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" class=\"label-control evnt_title_date ev_white evnt_title_xs\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 179 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                           Write(Html.DisplayFor(m => m.TopVenue));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            </label>\r\n                        </div>\r\n         " +
-"               <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                        <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"col-sm-12 no_pad\"");
 
@@ -772,17 +752,7 @@ WriteLiteral(" class=\"label-control evnt_title_date evnt_title_date2 ev_white e
 
 WriteLiteral(" id=\"lbltopaddress\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 10733), Tuple.Create("\"", 10776)
-            
-            #line 199 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                                                               , Tuple.Create(Tuple.Create("", 10741), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.TopAddress)
-            
-            #line default
-            #line hidden
-, 10741), false)
-);
-
-WriteLiteral(">\r\n");
+WriteLiteral(" >\r\n");
 
 WriteLiteral("                                            ");
 
@@ -836,14 +806,14 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" class=\"img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 11384), Tuple.Create("\"", 11395)
+WriteAttribute("src", Tuple.Create(" src=\"", 11350), Tuple.Create("\"", 11361)
             
             #line 212 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 11390), Tuple.Create<System.Object, System.Int32>(item
+, Tuple.Create(Tuple.Create("", 11356), Tuple.Create<System.Object, System.Int32>(item
             
             #line default
             #line hidden
-, 11390), false)
+, 11356), false)
 );
 
 WriteLiteral(" alt=\"First slide\"");
@@ -1076,14 +1046,14 @@ WriteLiteral(">View organizer profile </a></p>\r\n");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 14851), Tuple.Create("\"", 14889)
+WriteAttribute("href", Tuple.Create(" href=\"", 14817), Tuple.Create("\"", 14855)
             
             #line 283 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 14858), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
+, Tuple.Create(Tuple.Create("", 14824), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
             
             #line default
             #line hidden
-, 14858), false)
+, 14824), false)
 );
 
 WriteLiteral("><img");
@@ -1123,14 +1093,14 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15152), Tuple.Create("\"", 15195)
+WriteAttribute("href", Tuple.Create(" href=\"", 15118), Tuple.Create("\"", 15161)
             
             #line 290 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15159), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
+, Tuple.Create(Tuple.Create("", 15125), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
             
             #line default
             #line hidden
-, 15159), false)
+, 15125), false)
 );
 
 WriteLiteral("><img");
@@ -1166,21 +1136,21 @@ WriteLiteral(" </a></p>\r\n");
             #line hidden
 WriteLiteral("                        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15407), Tuple.Create("\"", 15450)
+WriteAttribute("href", Tuple.Create(" href=\"", 15373), Tuple.Create("\"", 15416)
             
             #line 295 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15414), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
+, Tuple.Create(Tuple.Create("", 15380), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
             
             #line default
             #line hidden
-, 15414), false)
+, 15380), false)
 );
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 15456), Tuple.Create("\"", 15481)
-, Tuple.Create(Tuple.Create("", 15462), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
-, 15462), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 15422), Tuple.Create("\"", 15447)
+, Tuple.Create(Tuple.Create("", 15428), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
+, 15428), false)
 );
 
 WriteLiteral(" />&nbsp; ");
@@ -1463,9 +1433,9 @@ WriteLiteral(" id=\"dvAjxLoader\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 19185), Tuple.Create("\"", 19215)
-, Tuple.Create(Tuple.Create("", 19191), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 19191), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 19151), Tuple.Create("\"", 19181)
+, Tuple.Create(Tuple.Create("", 19157), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 19157), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n                <div");

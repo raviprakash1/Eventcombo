@@ -550,6 +550,32 @@ namespace CMS.Controllers
                     successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY");
                 }
                 TempData["SuccessMessage"] = successmsg;
+                var ans = db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0", model.Id).FirstOrDefault();
+
+                if (ans == "2")
+                {
+                    model.Designation = "Admin";
+                }
+                if (ans == "1")
+                {
+                    model.Designation = "Super Admin";
+                }
+                if (ans == "3")
+                {
+                    var countperrm = db.Permission_Detail.Where(i => i.Permission_Category == "APP").Count();
+                    var countuserperm = db.User_Permission_Detail.Where(i => i.UP_User_Id == model.Id).Count();
+
+                    if (countuserperm < countperrm)
+                    {
+                        model.Designation = "Member-Limited";
+                        ans = "4";
+                    }
+                    else
+                    {
+                        model.Designation = "Member";
+                    }
+                }
+                model.role = ans;
                 return View(model);
 
             }

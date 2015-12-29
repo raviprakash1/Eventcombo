@@ -571,12 +571,12 @@
                             <div class="gnrate-url mb10 fs13"> ( For eg: xyz.eventcombo.com )</div>
                         </div>
                     </div>
-                    <div class="col-sm-12 no_pad">
+                    @*<div class="col-sm-12 no_pad">
                         <label class="label-control ev_tickt_lebel pl0">
                             <input id="chkDuplicateEvent" class="" type="checkbox">
                             &#10; Duplicate Event
                         </label>
-                    </div>
+                    </div>*@
 
                 </div>
             </div>
@@ -1491,7 +1491,7 @@ else
 
                         }
                     }
-
+                  
                     if (data.AddressStatus == "Online")
                     {
                         $("#dvAddress").hide();
@@ -2475,12 +2475,13 @@ else
                     type: "Post",
                     success: function (response) {
                         $("#hdEventId").val(response);
-                        $('#divaccsuc').css('display', 'block');
-                        $('#diverroacc').css('display', 'none');
-                        $('#succaccmsg').html('Your event is updated!');
-                        $("#hdEventId").val(response);
+                      
+                      
                         if(type=="Save")
                         {
+                            $('#divaccsuc').css('display', 'block');
+                            $('#diverroacc').css('display', 'none');
+                            $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
                             window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
                         }
 
@@ -2495,6 +2496,7 @@ else
                         if(type=="Live")
                         {
                             //live
+
                             window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;
                         }
                     }
