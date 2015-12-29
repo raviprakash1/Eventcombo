@@ -772,7 +772,7 @@
                             <div id="MasterDiv" class="">
 
                             </div>
-                            <div id="clonediv-n" class="ticket_haeding ev_ticket_haeding mt10 pb10" style="display:none;">
+                            <div id="clonediv-n" class="ticket_haeding ev_ticket_haeding mt10 pb10" style="display:none;" tabindex="-1">
                                 <div class="col-sm-1 text-center no_pad ev_row_mov">
 
                                     <span class="ev_row_icn"><i class="fa fa-ellipsis-v"></i></span>
@@ -3529,6 +3529,7 @@
             $("#id_saletimeend-" + divlength).val("7:00pm");
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
+            $("#clonediv-" + divlength).focus();
 
         });
         $('.save_btndonation').click(function () {
@@ -3630,6 +3631,7 @@
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
+            $("#clonediv-" + divlength).focus();
         });
         $('.save_btnfree').click(function () {
 
@@ -3732,7 +3734,7 @@
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
 
-
+            $("#clonediv-" + divlength).focus();
 
         });
         function randomString(len, charSet) {

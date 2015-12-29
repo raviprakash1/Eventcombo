@@ -263,6 +263,7 @@
           </Key>
           <Property Name="EventTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventType" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="EventHide" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -1163,6 +1164,7 @@
           <Property Name="EventTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventType1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="Self.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
+          <Property Name="EventHide" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -2100,6 +2102,7 @@
           <EntitySetMapping Name="EventTypes">
             <EntityTypeMapping TypeName="EventComboModel.EventType">
               <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="EventHide" ColumnName="EventHide" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventType1" ColumnName="EventType" />
               </MappingFragment>

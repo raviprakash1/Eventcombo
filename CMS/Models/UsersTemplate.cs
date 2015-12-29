@@ -43,7 +43,7 @@ namespace CMS.Models
         public long EventTypeID { get; set; }
         public string EventType1 { get; set; }
         public bool EventContains { get; set; }
-        public string HideType { get; set; }
+        public string EventHide { get; set; }
 
     }
 

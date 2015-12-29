@@ -195,6 +195,7 @@ namespace EventCombo.Controllers
                     }
 
                     var rows = (from myRow in db.EventTypes
+                                where myRow.EventHide == "N" || string.IsNullOrEmpty(myRow.EventHide)
                                 select myRow).ToList();
                     List<SelectListItem> EventType = new List<SelectListItem>();
                     EventType.Add(new SelectListItem()
@@ -814,7 +815,7 @@ namespace EventCombo.Controllers
                         type = "Donate";
                     }
 
-                    strticketHtml.Append("<div id='clonediv-" + j + "' class='ticket_haeding ev_ticket_haeding mt10 pb10'>");
+                    strticketHtml.Append("<div id='clonediv-" + j + "' class='ticket_haeding ev_ticket_haeding mt10 pb10' tabindex='-1'>");
                     strticketHtml.Append("<div class='col-sm-1 text-center no_pad ev_row_mov'>");
                     strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");
                     strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value='"+ObjTick.T_Id+"'/>");

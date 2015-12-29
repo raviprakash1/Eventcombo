@@ -14,8 +14,8 @@ namespace CMS.Controllers
         {
             EventCategory EC = new Models.EventCategory();
             EmsEntities objEntity = new EmsEntities();           
-                var modelPerm = (from EventCategory in objEntity.EventCategories orderby EventCategory.EventCategory1
-                                 select EventCategory).ToList();                
+                var modelPerm = (from EventCategory in objEntity.EventCategories 
+                                 select EventCategory).OrderBy(x=>x.EventCategory1).ToList();                
                 foreach (var item in modelPerm)
                 {
                     item.ESubCat = GetSubCategories(item.EventCategoryID);
@@ -156,7 +156,7 @@ namespace CMS.Controllers
 
                 var query = (from EventSubCategory in objEntity.EventSubCategories
                               where EventSubCategory.EventCategoryID == iEvntCtgryId
-                              select EventSubCategory).ToList();            
+                              select EventSubCategory).OrderBy (x=>x.EventSubCategory1).ToList();            
                 return query;
             }            
         }

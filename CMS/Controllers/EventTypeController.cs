@@ -15,8 +15,8 @@ namespace CMS.Controllers
             EmsEntities objEntity = new EmsEntities();
             
                 var modelPerm = (from EventType in objEntity.EventTypes
-                                 orderby EventType.EventType1 ascending
-                                 select EventType).ToList();
+                               
+                                 select EventType).OrderBy(x=>x.EventType1).ToList();
 
             List<Eventtype> EventTypeList = new List<Eventtype>();
          
@@ -36,7 +36,7 @@ namespace CMS.Controllers
                     evt.EventContains = false;
                 }
 
-                evt.HideType = "";
+                evt.EventHide = item.EventHide;
                 EventTypeList.Add(evt);
             }
          
@@ -59,6 +59,16 @@ namespace CMS.Controllers
             if (Type == "E")
             {
                 TempData["SuccessMessage"] = "Type Updated successfully !!";
+
+            }
+            if (Type == "HN")
+            {
+                TempData["SuccessMessage"] = "Type is visible to all !!";
+
+            }
+            if (Type == "HY")
+            {
+                TempData["SuccessMessage"] = "Type is hidden successfully !!";
 
             }
             return View(EventTypeList);
@@ -122,7 +132,16 @@ namespace CMS.Controllers
 
                     if (et != null)
                     {
-                              et.EventType1 = "";
+                          if(et.EventHide == "Y")
+                        {
+                            et.EventHide ="N";
+                            strResult = "HN";
+                        }
+                        else
+                        {
+                            strResult = "HY";
+                            et.EventHide = "Y";
+                        }
                         objEntity.SaveChanges();
                     }
                 }
