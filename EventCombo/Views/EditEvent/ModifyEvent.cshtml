@@ -571,12 +571,12 @@
                             <div class="gnrate-url mb10 fs13"> ( For eg: xyz.eventcombo.com )</div>
                         </div>
                     </div>
-                    <div class="col-sm-12 no_pad">
+                    @*<div class="col-sm-12 no_pad">
                         <label class="label-control ev_tickt_lebel pl0">
                             <input id="chkDuplicateEvent" class="" type="checkbox">
                             &#10; Duplicate Event
                         </label>
-                    </div>
+                    </div>*@
 
                 </div>
             </div>
@@ -721,7 +721,7 @@
                             <div id="MasterDiv" class="">
 
                             </div>
-                            <div id="clonediv-n" class="ticket_haeding ev_ticket_haeding mt10 pb10" style="display:none;">
+                            <div id="clonediv-n" class="ticket_haeding ev_ticket_haeding mt10 pb10" style="display:none;" tabindex="-1">
                                 <div class="col-sm-1 text-center no_pad ev_row_mov">
 
                                     <span class="ev_row_icn"><i class="fa fa-ellipsis-v"></i></span>
@@ -1491,7 +1491,7 @@ else
 
                         }
                     }
-
+                  
                     if (data.AddressStatus == "Online")
                     {
                         $("#dvAddress").hide();
@@ -2475,12 +2475,13 @@ else
                     type: "Post",
                     success: function (response) {
                         $("#hdEventId").val(response);
-                        $('#divaccsuc').css('display', 'block');
-                        $('#diverroacc').css('display', 'none');
-                        $('#succaccmsg').html('Your event is updated!');
-                        $("#hdEventId").val(response);
+                      
+                      
                         if(type=="Save")
                         {
+                            $('#divaccsuc').css('display', 'block');
+                            $('#diverroacc').css('display', 'none');
+                            $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
                             window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
                         }
 
@@ -2495,6 +2496,7 @@ else
                         if(type=="Live")
                         {
                             //live
+
                             window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;
                         }
                     }
@@ -4377,7 +4379,7 @@ else
         
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
-
+            $("#clonediv-" + divlength).focus();
         });
         $('.save_btndonation').click(function () {
             $(".ticket_panel").show();
@@ -4480,7 +4482,7 @@ else
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
-        
+            $("#clonediv-" + divlength).focus();
 
         });
         $('.save_btnfree').click(function () {
@@ -4585,7 +4587,7 @@ else
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
-
+            $("#clonediv-" + divlength).focus();
         });
         function randomString(len, charSet) {
             charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

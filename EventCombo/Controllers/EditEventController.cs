@@ -195,6 +195,7 @@ namespace EventCombo.Controllers
                     }
 
                     var rows = (from myRow in db.EventTypes
+                                where myRow.EventHide == "N" || string.IsNullOrEmpty(myRow.EventHide)
                                 select myRow).ToList();
                     List<SelectListItem> EventType = new List<SelectListItem>();
                     EventType.Add(new SelectListItem()
@@ -774,17 +775,17 @@ namespace EventCombo.Controllers
                     capacity += ObjTick.Qty_Available;
                     if (ObjTick.Price != null)
                     {
-                        Price = String.Format("{0:#,###,###.##}", ObjTick.Price);
+                        Price = String.Format("{0:#,###,###.00}", ObjTick.Price);
 
                     }
                     if (ObjTick.T_Discount != null)
                     {
-                        discount = String.Format("{0:#,###,###.##}", ObjTick.T_Discount);
+                        discount = String.Format("{0:#,###,###.00}", ObjTick.T_Discount);
 
                     }
                     if (ObjTick.TotalPrice != null)
                     {
-                        totaoln = String.Format("{0:#,###,###.##}", ObjTick.TotalPrice);
+                        totaoln = String.Format("{0:#,###,###.00}", ObjTick.TotalPrice);
                     }
                     if (ObjTick.TicketTypeID == 1)
                     {
@@ -799,12 +800,12 @@ namespace EventCombo.Controllers
                         if (ObjTick.Fees_Type == "0")
                         {
                             fee = ObjTick.Customer_Fee.ToString();
-                            feen = String.Format("{0:#,###,###.##}", ObjTick.Customer_Fee);
+                            feen = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
                         }
                         if (ObjTick.Fees_Type == "1")
                         {
                             fee = ObjTick.EC_Fee.ToString();
-                            feen = String.Format("{0:#,###,###.##}", ObjTick.Customer_Fee);
+                            feen = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
                         }
                         type = "Paid";
                     }
@@ -814,7 +815,7 @@ namespace EventCombo.Controllers
                         type = "Donate";
                     }
 
-                    strticketHtml.Append("<div id='clonediv-" + j + "' class='ticket_haeding ev_ticket_haeding mt10 pb10'>");
+                    strticketHtml.Append("<div id='clonediv-" + j + "' class='ticket_haeding ev_ticket_haeding mt10 pb10' tabindex='-1'>");
                     strticketHtml.Append("<div class='col-sm-1 text-center no_pad ev_row_mov'>");
                     strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");
                     strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value='"+ObjTick.T_Id+"'/>");
@@ -1166,7 +1167,7 @@ namespace EventCombo.Controllers
                 foreach (Event_VariableDesc Objvardesc in vardesc)
                 {
                    
-                    var PRICE = String.Format("{0:#,###,###.##}", Objvardesc.Price);
+                    var PRICE = String.Format("{0:#,###,###.00}", Objvardesc.Price);
 
                     strvariableHtml.Append(" <div class='col-sm-12 no_pad' id='id_clonevariable-" + k + "' >");
                     strvariableHtml.Append("<div class='list -group-item ev_var_chrg_list'>");
@@ -1418,11 +1419,14 @@ namespace EventCombo.Controllers
 
                             //  var vParentEvt = (from myEnt in objEnt.Events where myEnt.EventID == lEventId select myEnt.Parent_EventID).FirstOrDefault();
                             // if (vParentEvt == 0) vParentEvt = lEventId;
-
+                            var addressstatus = model.AddressStatus;
                             if (model.AddressDetail == null)
                             {
                                 objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
-                                model.AddressStatus = "";
+                                if (addressstatus != "PastLocation" && addressstatus != "Online")
+                                {
+                                    model.AddressStatus = "";
+                                }
                             }
                             // Event ObjEC = new Event();
                             ObjEC.Parent_EventID = 0;
@@ -1700,6 +1704,11 @@ namespace EventCombo.Controllers
                                     if (variable.Variable_Id == 0)
                                     {
                                         var = new Event_VariableDesc();
+                                    }
+                                    else
+                                    {
+                                        var = (from obj in objEnt.Event_VariableDesc where obj.Variable_Id == variable.Variable_Id && obj.Event_Id == lEventId select obj).FirstOrDefault();
+
                                     }
                                     var.Event_Id = lEventId;
                                     var.VariableDesc = variable.VariableDesc;

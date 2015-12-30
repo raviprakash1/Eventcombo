@@ -174,12 +174,12 @@
 
                         </div>
                         <div class="clearfix"></div>
-                        <div class="col-sm-12 text-right">
+                        @*<div class="col-sm-12 text-right">
                             <label class="label-control evnt_title_date ev_white evnt_title_xs">
                                 @Html.DisplayFor(m => m.TopVenue)
                             </label>
-                        </div>
-                        <div class="clearfix"></div>
+                        </div>*@
+                        @*<div class="clearfix"></div>*@
                         <div class="col-sm-12 no_pad">
                             <div class="col-sm-4 col-xs-6">
                                 <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
@@ -196,7 +196,7 @@
 
                                             <div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" data-geo=""></div>
                                         }
-                                        <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" title="@Html.DisplayFor(m => m.TopAddress)">
+                                        <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips" id="lbltopaddress" >
                                             @Html.DisplayFor(m => m.TopAddress)
                                         </label>
                                     </div>

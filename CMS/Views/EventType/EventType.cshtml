@@ -124,11 +124,24 @@
                                                 </td>
                                                 @if (itemType.EventContains == false)
                                                 {
-                                                <td class="pl5"><button id="btnDeleteCat-@i" type="button" onclick="DeleteType('@itemType.EventTypeID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button></td>
+                                                <td class="pl5">
+                                                    <a class="btn btn-danger br2 btn-xs fs12"  onclick="ConfirmDelete('@itemType.EventTypeID');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="btnDeleteCat-@i">
+                                                        <i class="fa fa-remove"></i>
+                                                    </a>
+                                                @*<button id="btnDeleteCat-@i" type="button" onclick="DeleteType('@itemType.EventTypeID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>*@
+                                                </td>
                                                 }
                                                 else
                                                 {
+                                                    if (itemType.EventHide == "N" || string.IsNullOrEmpty(itemType.EventHide))
+                                                    {
                                                 <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-block br2 btn-xs fs12"><i class="fa fa-eye"></i></button></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-block br2 btn-xs fs12"><i class="fa fa-eye-slash"></i></button></td>
+
+                                                    }
                                                 }
                                             </tr>
 
@@ -151,6 +164,26 @@
             </div>
 
             <input type="hidden" id="hdtypeid"/>
+            <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                    <div class="modal-content">
+
+                        <form id="contactForm" class="fullw1 add">
+                            <div class="modal-body text-center pv50 txt-msg">
+
+                                <h4 class="msg" id="hId"></h4>
+                            </div>
+                            <div class="modal-footer msg-action-btn ok">
+                                <button type="submit" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
+                                <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
+                            </div>
+                        </form>
+                        <input type="hidden" id="hdUserId" value="" />
+                    </div>
+                </div><!-- confirm-msg -->
+            </div>
+         
             @*<div class="col-sm-12">
                 <div class="form-group event-type">
                     <label class="col-md-2 control-label acnt_form_label ">Event Type</label>
@@ -176,7 +209,38 @@
 </section>
 
 <script type="text/javascript">
+    function ConfirmDelete(userId) {
+        $("#hdtypeid").val(userId);
+        $("#btnYes").show();
+        $("#btnNo").show();
+        $("#btMesOk").hide();
 
+
+
+        $("#hId").text(GetMess("EventType", "EventtypeDeleteUI"));
+
+
+        return false;
+
+    }
+    function GetMess(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
     $(window).load(function () {
 
         $("#btnEdit").hide();
@@ -218,6 +282,24 @@
        $('#txtEvnttypename-' + no).val(txt);
 
     }
+
+    $("#btnYes").click(function () {
+
+        $.ajax({
+            url: '@Url.Action("DeleteType", "EventType")',
+            data: { iType: $("#hdtypeid").val() },
+            type: "POST",
+            success: function (response) {
+                window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=D';
+            },
+            error: function (data) {
+                alert("Sorry! there is some problem.");
+                return false
+            }
+        });
+
+    });
+
     $("#btnAdd").click(function () {
         var Type = $("#txtEventType").val();
 
@@ -249,7 +331,7 @@
             data: { iType: Typeid },
             type: "POST",
             success: function (response) {
-                window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=H';
+                window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
             },
             error: function (data) {
                 alert("Sorry! there is some problem.");
@@ -259,18 +341,7 @@
     }
     function DeleteType(CatId) {
 
-                    $.ajax({
-                        url: '@Url.Action("DeleteType", "EventType")',
-                        data: { iType: CatId },
-                        type: "POST",
-                        success: function (response) {
-                            window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=D' ;
-                        },
-                        error: function (data) {
-                            alert("Sorry! there is some problem.");
-                            return false
-                        }
-                    });
+
                 }
     $(document).ready(function () {
 

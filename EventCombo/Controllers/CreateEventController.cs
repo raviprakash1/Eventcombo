@@ -62,7 +62,7 @@ namespace EventCombo.Controllers
                         });
                     }
 
-                    var rows = (from myRow in db.EventTypes
+                    var rows = (from myRow in db.EventTypes where myRow.EventHide=="N" || string.IsNullOrEmpty(myRow.EventHide)
                                 select myRow).ToList();
                     List<SelectListItem> EventType = new List<SelectListItem>();
                     EventType.Add(new SelectListItem()
@@ -572,12 +572,25 @@ namespace EventCombo.Controllers
 
             viewEvent.EventPrivacy = EventDetail.Private_Password;
             //Address
-            var evAdress=  (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
-            if (evAdress != null)
+            var Addresstype = EventDetail.AddressStatus;
+            if (Addresstype == "PastLocation")
             {
-                 TopAddress = evAdress.ConsolidateAddress;
-                 Topvenue = evAdress.VenueName;
+                var evAdress = (from ev in db.Addresses where ev.AddressID == EventDetail.LastLocationAddress select ev).FirstOrDefault();
+                if (evAdress != null)
+                {
+                    TopAddress = evAdress.ConsolidateAddress;
+                    Topvenue = evAdress.VenueName;
+                }
+            }
+            else
+            {
+                var evAdress = (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
+                if (evAdress != null)
+                {
+                    TopAddress = evAdress.ConsolidateAddress;
+                    Topvenue = evAdress.VenueName;
 
+                }
             }
 
             //Organiser
@@ -926,12 +939,26 @@ namespace EventCombo.Controllers
             viewEvent.showmaponevent = EventDetail.ShowMap;
             viewEvent.eventId = EventId.ToString();
             //Address
-            var evAdress = (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
-            if (evAdress != null)
-            {
-                TopAddress = evAdress.ConsolidateAddress;
-                Topvenue = evAdress.VenueName;
 
+            var Addresstype = EventDetail.AddressStatus;
+            if (Addresstype == "PastLocation")
+            {
+                var evAdress = (from ev in db.Addresses where ev.AddressID == EventDetail.LastLocationAddress select ev).FirstOrDefault();
+                if (evAdress != null)
+                {
+                    TopAddress = evAdress.ConsolidateAddress;
+                    Topvenue = evAdress.VenueName;
+                }
+            }
+            else
+            {
+                var evAdress = (from ev in db.Addresses where ev.EventId == EventId select ev).FirstOrDefault();
+                if (evAdress != null)
+                {
+                    TopAddress = evAdress.ConsolidateAddress;
+                    Topvenue = evAdress.VenueName;
+
+                }
             }
 
             //Organiser
