@@ -1127,7 +1127,7 @@ namespace EventCombo.Controllers
        
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            string url = null;
+            string url = null, city="", state="", zipcode="", country="";
         if(Session["ReturnUrl"]!=null)
             {
                 url = Session["ReturnUrl"].ToString();
@@ -1154,7 +1154,41 @@ namespace EventCombo.Controllers
                     //var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
                     //if (users.Find(x => x.Id == User.Id) != null)
                     //{
-                      var status=  db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
+                    try
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            string ip = GetLanIPAddress().Replace("::ffff:", "");
+
+
+                            var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
+                            dynamic stuff = JsonConvert.DeserializeObject(json);
+                            if (stuff != null)
+                            {
+                                city = stuff.city;
+                                state = stuff.region_name;
+                                zipcode = stuff.zip_code;
+                                country = stuff.country_name;
+                            }
+                            else
+                            {
+                                city = "";
+                                state = "";
+                                zipcode = "";
+                                country = "";
+
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        city = "";
+                        state = "";
+                        zipcode = "";
+                        country = "";
+
+                    }
+                    var status=  db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
                         if (status == "Y" || status == "y")
                         {
 
@@ -1165,9 +1199,13 @@ namespace EventCombo.Controllers
                             {
                                 AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
                                 aspuser.LoginStatus = "Y";
-                                db.SaveChanges();
-
-                            }
+                               
+                            Profile prof = db.Profiles.First(i => i.UserID == User.Id);
+                            prof.Ipcity = city;
+                            prof.Ipcountry = country;
+                            prof.IpState = state;
+                            db.SaveChanges();
+                        }
                             return RedirectToLocal(url);
                         }else
 
@@ -1497,6 +1535,41 @@ namespace EventCombo.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
+            string city = "", state = "", zipcode = "", country = "";
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    string ip = GetLanIPAddress().Replace("::ffff:", "");
+
+
+                    var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
+                    dynamic stuff = JsonConvert.DeserializeObject(json);
+                    if (stuff != null)
+                    {
+                        city = stuff.city;
+                        state = stuff.region_name;
+                        zipcode = stuff.zip_code;
+                        country = stuff.country_name;
+                    }
+                    else
+                    {
+                        city = "";
+                        state = "";
+                        zipcode = "";
+                        country = "";
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                city = "";
+                state = "";
+                zipcode = "";
+                country = "";
+
+            }
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             string firstname = "", Lastnmae = "", Email = "";
             if (loginInfo == null)
@@ -1586,7 +1659,9 @@ namespace EventCombo.Controllers
                                 prof.LastName = Lastnmae;
                                 prof.Email = Email;
                                 prof.UserID = user1.Id;
-
+                                prof.Ipcountry = country;
+                                prof.IpState = state;
+                                prof.Ipcity = city;
 
                                 objEntity.Profiles.Add(prof);
 
@@ -1647,7 +1722,7 @@ namespace EventCombo.Controllers
                         prof.LoginProvider = loginInfo.Login.LoginProvider;
                         prof.ProviderKey = loginInfo.Login.ProviderKey;
                         prof.UserId = user.Id;
-
+                        
 
                         objEntity.AspNetUserLogins.Add(prof);
                         objEntity.SaveChanges();
@@ -1700,20 +1775,31 @@ namespace EventCombo.Controllers
                         prof.Email = Email;
                         prof.UserID = user.Id;
 
-
+                        prof.Ipcountry = country;
+                        prof.IpState = state;
+                        prof.Ipcity = city;
                         objEntity.Profiles.Add(prof);
                         objEntity.SaveChanges();
 
                     }
 
                 }
+               
                 var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
                 Session["AppId"] = user.Id;
                 using (EventComboEntities db = new EventComboEntities())
                 {
                     AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user.Id);
                     aspuser.LoginStatus = "Y";
+
+
+                    Profile prof = db.Profiles.First(i => i.UserID == user.Id);
+                    prof.Ipcountry = country;
+                    prof.IpState = state;
+                    prof.Ipcity = city;
+
                     db.SaveChanges();
+                   
 
                 }
                 return View("LoginResult", new LoginResultViewModel(true, url));

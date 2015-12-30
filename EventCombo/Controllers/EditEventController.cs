@@ -775,17 +775,17 @@ namespace EventCombo.Controllers
                     capacity += ObjTick.Qty_Available;
                     if (ObjTick.Price != null)
                     {
-                        Price = String.Format("{0:#,###,###.##}", ObjTick.Price);
+                        Price = String.Format("{0:#,###,###.00}", ObjTick.Price);
 
                     }
                     if (ObjTick.T_Discount != null)
                     {
-                        discount = String.Format("{0:#,###,###.##}", ObjTick.T_Discount);
+                        discount = String.Format("{0:#,###,###.00}", ObjTick.T_Discount);
 
                     }
                     if (ObjTick.TotalPrice != null)
                     {
-                        totaoln = String.Format("{0:#,###,###.##}", ObjTick.TotalPrice);
+                        totaoln = String.Format("{0:#,###,###.00}", ObjTick.TotalPrice);
                     }
                     if (ObjTick.TicketTypeID == 1)
                     {
@@ -800,12 +800,12 @@ namespace EventCombo.Controllers
                         if (ObjTick.Fees_Type == "0")
                         {
                             fee = ObjTick.Customer_Fee.ToString();
-                            feen = String.Format("{0:#,###,###.##}", ObjTick.Customer_Fee);
+                            feen = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
                         }
                         if (ObjTick.Fees_Type == "1")
                         {
                             fee = ObjTick.EC_Fee.ToString();
-                            feen = String.Format("{0:#,###,###.##}", ObjTick.Customer_Fee);
+                            feen = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
                         }
                         type = "Paid";
                     }
@@ -1167,7 +1167,7 @@ namespace EventCombo.Controllers
                 foreach (Event_VariableDesc Objvardesc in vardesc)
                 {
                    
-                    var PRICE = String.Format("{0:#,###,###.##}", Objvardesc.Price);
+                    var PRICE = String.Format("{0:#,###,###.00}", Objvardesc.Price);
 
                     strvariableHtml.Append(" <div class='col-sm-12 no_pad' id='id_clonevariable-" + k + "' >");
                     strvariableHtml.Append("<div class='list -group-item ev_var_chrg_list'>");
@@ -1704,6 +1704,11 @@ namespace EventCombo.Controllers
                                     if (variable.Variable_Id == 0)
                                     {
                                         var = new Event_VariableDesc();
+                                    }
+                                    else
+                                    {
+                                        var = (from obj in objEnt.Event_VariableDesc where obj.Variable_Id == variable.Variable_Id && obj.Event_Id == lEventId select obj).FirstOrDefault();
+
                                     }
                                     var.Event_Id = lEventId;
                                     var.VariableDesc = variable.VariableDesc;
