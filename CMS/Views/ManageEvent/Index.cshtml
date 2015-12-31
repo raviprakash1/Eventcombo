@@ -153,35 +153,38 @@
                                             <th>Organizer Name & Email</th>
                                             <th>Venue name & address</th>
                                             <th>Action</th>
-                                            <th>Manage Ticketing</th>
+                                            @*<th>Manage Ticketing</th>*@
                                             <th>Tickets Sold</th>
                                             <th>Feature </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @{ int i = 0;
-                                            foreach (var obj in Model)
-                                            {
-                                                i = i + 1;
+                                                string host = Request.Url.Host;
+                                                foreach (var obj in Model)
+                                                {
+                                                    i = i + 1;
                                                 <tr>
-                                                    <td>@i.ToString()</td>  
-                                                    <td>@obj.EventTitle</td>
+                                                    <td>@i.ToString()</td>
+                                                    <td><a target="_blank" href="http://@host/CreateEvent/ViewEvent?strUrlData=@obj.EventTitle.Trim()౼@obj.EventID౼N">@obj.EventTitle</a></td>
                                                     <td>@obj.EventType</td>
                                                     <td>@obj.EventCategory-@obj.EventSubCategory</td>
                                                     <td>@obj.EventTiming</td>
-                                                    <td style="table-layout: fixed; word-break: break-all;">@obj.Orgnizer_Name -@obj.Email</td>
+                                                    <td style="table-layout: fixed; word-break: break-all;">@obj.Orgnizer_Name  &
+                                                    
+                                                    <a  href="mailto:@obj.Email">@obj.Email</a></td>
                                                     <td>@obj.EventAddress</td>
                                                     <td>
                                                         <a href="#" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
                                                         @if (obj.Purchasedqty <= 0)
-                                                        {
+                                            {
                                                         <a class="td-btn" type="button" onclick="ConfirmDelete('@obj.EventID');" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
                                                             <i class="fa fa-remove"></i>
                                                         </a>
                                                         }
                                                         @*@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")/*@
                                                     </td>
-                                                    <td>Manage Ticketing</td>
+                                                    @*<td>Manage Ticketing</td>*@
                                                     <td>@obj.TicketDetail</td>
                                                     <td>
                                                         <div class="view_sel_wid">

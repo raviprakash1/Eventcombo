@@ -779,6 +779,11 @@ namespace EventCombo.Controllers
                 tickettype = "Order Now";
 
             }
+            if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation > 0)
+            {
+                tickettype = "Order Now";
+
+            }
             if (ticketsfree > 0 && ticketsPaid > 0 && ticketsDonation <= 0)
             {
                 tickettype = "Order Now";
