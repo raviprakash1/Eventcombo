@@ -14,16 +14,10 @@
 }
 
 
-.ui-state-focus,
-.ui-widget-content.myClass .ui-state-focus{
-    font-weight: normal !important;
-   
-}
 
-.ui-state-hover,
-.ui-widget-content.myClass .ui-state-hover,
-.ui-state-focus,
-.ui-widget-content.myClass .ui-state-focus
+
+.ui-autocomplete.ui-widget-content.myClass .ui-state-hover,
+.ui-autocomplete.ui-widget-content.myClass .ui-state-focus
 {
 	border: none !important;
 	background: #fff !important;
