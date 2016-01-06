@@ -727,9 +727,16 @@ namespace EventCombo.Controllers
                     var datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
                     var day = datetime.DayOfWeek;
                     var Sdate = datetime.ToString("MMM dd, yyyy");
+                    var addresslist = "";
                     var time = tQntydetail.TQD_StartTime;
-
-                    var addresslist = (!string.IsNullOrEmpty(address.ConsolidateAddress)) ? address.ConsolidateAddress : "";
+                    if (address != null)
+                    {
+                         addresslist = (!string.IsNullOrEmpty(address.ConsolidateAddress)) ? address.ConsolidateAddress : "";
+                    }
+                    else
+                    {
+                        addresslist = "";
+                    }
                     var timefinal = day.ToString() + "~" + Sdate.ToString() + "~" + time + "~" + addresslist;
                     pdate.id = timefinal;
                     pdate.Address = addresslist;

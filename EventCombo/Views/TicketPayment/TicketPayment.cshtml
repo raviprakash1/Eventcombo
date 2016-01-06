@@ -1052,7 +1052,7 @@
             $.ajax({
                 url: '@Url.Action("SaveDetails", "TicketPayment")',
                 beforeSend: function () { $("#btOk").click(); },
-                data: { model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId, strPaymentType: PaymentType },
+                data: { model:model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId, strPaymentType: PaymentType },
                 type: "Post",
                 success: function (response) {
                     var Eventid = $('#hdEventid').val();
@@ -1188,6 +1188,7 @@
             data: { 'strEvent': $('#hdEventid').val() },
             type: "Get",
             success: function (response) {
+                debugger;
                 $("#dvTicketInfo").append(response);
                 var vGrdTotal = parseFloat($("#spGrdTotal").text());
                 if (isNaN(vGrdTotal) == true) vGrdTotal = 0;

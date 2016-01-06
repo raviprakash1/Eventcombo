@@ -12,12 +12,21 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using Facebook;
+using System.Dynamic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace EventCombo.Controllers
 {
    
     public class CreateEventController : Controller
     {
+        string facebook_urlAuthorize_base = "https://graph.facebook.com/oauth/authorize";
+        string facebook_urlGetToken_base = "https://graph.facebook.com/oauth/access_token";
+        string facebook_AppID = "963347903739086";
+        string facebook_AppSecret = "abe6b97c1d8b47d3545f0b429ad73cb0";
         EventComboEntities db = new EventComboEntities();
         // GET: Event
         [HttpPost]
@@ -564,8 +573,15 @@ namespace EventCombo.Controllers
             if (Timezonedetail != null)
             {
                  timezone = Timezonedetail.TimeZone_Name;
-             
+               
+                //Timezone value
+            
             }
+
+          
+      
+
+
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
             viewEvent.showmaponevent = EventDetail.ShowMap;
@@ -761,8 +777,11 @@ namespace EventCombo.Controllers
 
             }
             ViewBag.Images= GetImages(EventId);
-
+            
+            var cnt = GetImages(EventId).Count();
+            TempData["ImageCount"] = cnt;
             var ticketsfree = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 1 select r).Count();
+            int imgcount = GetImages(EventId).Count();
             var ticketsPaid = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 2 select r).Count();
             var ticketsDonation = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 3 select r).Count();
             
@@ -1135,7 +1154,8 @@ namespace EventCombo.Controllers
 
             }
             ViewBag.Images = GetImages(EventId);
-
+            var cnt = GetImages(EventId).Count();
+            TempData["ImageCount"] = cnt;
             var ticketsfree = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 1 select r).Count();
             var ticketsPaid = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 2 select r).Count();
             var ticketsDonation = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 3 select r).Count();
@@ -1493,7 +1513,115 @@ public string Checkpassword(string password ,long id)
             return strresult;
         }
 
+        public void InsertFriendlist(string accesstoken)
+        {
+
+          
+
+            FacebookClient client = new FacebookClient(accesstoken);
+
+            var friendListData = client.Get("/me/friends");
+            JObject friendListJson = JObject.Parse(friendListData.ToString());
+
+            List<FbUser> fbUsers = new List<FbUser>();
+            foreach (var friend in friendListJson["data"].Children())
+            {
+                FbUser fbUser = new FbUser();
+                fbUser.Id = friend["id"].ToString().Replace("\"", "");
+                fbUser.Name = friend["name"].ToString().Replace("\"", "");
+                fbUsers.Add(fbUser);
+            }
+        }
+
+        public Friends friendlist(string accesstoken)
+        {
+          Friends frnd=  Facebook_ListFriends(accesstoken);
+            return frnd;
+        }
+
+        private Friends Facebook_ListFriends(string pAccessToken)
+        {
+            string username = "me";
+            string dataType = "friends";
+            string urlGetFriends = "https://graph.facebook.com/" + username + "/" + dataType + "?access_token=" + pAccessToken+ "&fields=name,picture,id";
+            string jsonFriends = RequestResponse(urlGetFriends);
+            //if (jsonFriends == "")
+            //{
+            //    Response.Write("<br /><br />urlGetFriends have problems");
+            //    return;
+            //}
+            Friends friends = JsonConvert.DeserializeObject<Friends>(jsonFriends); //we write the Friends class later
+
+            return friends;
+
+        }
+        private string RequestResponse(string pUrl)
+        {
+            HttpWebRequest webRequest = System.Net.WebRequest.Create(pUrl) as HttpWebRequest;
+            webRequest.Method = "GET";
+            webRequest.ServicePoint.Expect100Continue = false;
+            webRequest.Timeout = 20000;
+
+            Stream responseStream = null;
+            StreamReader responseReader = null;
+            string responseData = "";
+            try
+            {
+                WebResponse webResponse = webRequest.GetResponse();
+                responseStream = webResponse.GetResponseStream();
+                responseReader = new StreamReader(responseStream);
+                responseData = responseReader.ReadToEnd();
+            }
+            catch (Exception exc)
+            {
+                Response.Write("<br /><br />ERROR : " + exc.Message);
+            }
+            finally
+            {
+                if (responseStream != null)
+                {
+                    responseStream.Close();
+                    responseReader.Close();
+                }
+            }
+
+            return responseData;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
+
+       
+
+    }
+
+public class Friends
+{
+    public List<Friend> data { get; set; }
+}
+
+public class FbUser
+    {
+       public String Id { set; get; }
+        public String Name { set; get; }
+    }
+
+public class Friend
+{
+    public string id { get; set; }
+    public string name { get; set; }
 }

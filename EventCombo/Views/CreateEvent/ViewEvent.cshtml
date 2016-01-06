@@ -27,9 +27,17 @@
 </style>
 
 
-
 <div id="fb-root"></div>
 <script>
+
+
+    (function () {
+        var e = document.createElement('script');
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        e.async = true;
+        document.getElementById('fb-root').appendChild(e);
+    }());
+
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -232,10 +240,23 @@
                     </div>
                 </div>
                 <div class="carousel-inner" role="listbox" id="lstcarousel">
-                    @foreach (var item in (List<string>)ViewBag.Images)
+
+                    @if ((int)TempData["ImageCount"] > 0)
+                    {
+
+
+                    foreach (var item in (List<string>)ViewBag.Images)
                     {
                         <div class="item ">
                             <img class="img-responsive" src="@item" alt="First slide">
+
+                        </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="item active">
+                            <img class="img-responsive" src="~/Images/default_event_image.jpg" alt="First slide">
 
                         </div>
                     }
@@ -341,6 +362,7 @@
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
                 <label class="label-control evnt_ticket_label">
+                    <a href="#" ><img src="~/Images/fb_connect.jpg" border="0" alt=""></a>
                     @*<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
                     </fb:login-button>*@ @*<img src="/images/fb_connect.jpg"> to see which of your Facebook friends are going*@
                 </label>
@@ -518,17 +540,17 @@
                 <div class="col-sm-12 text-right no_pad">
 @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
 {
-    <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn" style="display:none;">PROCEED TO PAYMENT  > </button>
+    <button type="button" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn" style="display:none;">PROCEED TO PAYMENT  > </button>
 }
 else
 {
     if (TempData["ForViewOnly"].ToString() == "Y")
     {
-        <button type="submit" id="btPayment" style="display:none;" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+        <button type="button" id="btPayment" style="display:none;" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
     }
     else
     {
-        <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+        <button type="button" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
 
     }
 }
@@ -678,6 +700,75 @@ else
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
 <script>
+    @*window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1956731254551382',
+            oauth: true,
+            status: true, // check login status
+            cookie: true, // enable cookies to allow the server to access the session
+            xfbml: true // parse XFBML
+        });
+
+    };
+    function fb_login() {
+        debugger;
+        FB.login(function (response) {
+
+            if (response.authResponse) {
+                alert('Welcome!  Fetching your information.... ');
+               console.log(response); // dump complete info
+                access_token = response.authResponse.accessToken; //get access token
+                user_id = response.authResponse.userID; //get FB UID
+                console.log(user_id);
+                console.log(access_token);
+                $.ajax({
+                    url: '@Url.Action("friendlist", "CreateEvent")',
+                    data: { accesstoken: access_token },
+                    type: "Post",
+                    success: function (response) {
+                        console.log(response);
+                      
+                    }
+
+
+                });
+
+                FB.api('/me?fields=email,name,friends,user_friends', function (response) {
+                    var name = response.name;
+                    var email = response.email;
+                   var  friends = response.friends; //get user email
+                    // you can store this data into your database     
+                   console.log(response.user_friends);
+                  
+                });
+
+            } else {
+                //user hit cancel button
+                alert('User cancelled login or did not fully authorize.');
+
+            }
+        }, {
+            scope: 'email,user_friends'
+        });
+    }
+    (function () {
+        var e = document.createElement('script');
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        e.async = true;
+        document.getElementById('fb-root').appendChild(e);
+    }());*@
+
+    //$(function () {
+    //    var url = 'https://www.facebook.com/Eventcombo' // Replace this variable value with the link
+    //    $.getJSON('https://graph.facebook.com/?access_token=CAACEdEose0cBAInenFGuCK6iiWLaQtrhdAmumnHtYXBbImcddXwErefrPF5ZBFx7ZAU2Y0K8T3ZAfQh9xQPNrOOO9F3dpgI8lCOifLqiMSxer20YAKxZAQN8y1MBYjjO0ZAVywJSwmbPZAL1O8UqPrnliiNoZBqb2YGBRSjrHmJdTEFErjnMbQxXT0OQyXyi5Qjv56nLootuwZDZD&id=' + url, function (data) {
+    //        //alert(data.comments);
+    //        if (data.comments) { //If their is no comments on the page then comments data will not exist
+    //            $('.comment-count').append(data.comments);
+    //        } else {
+    //            $('.comment-count').append('0');
+    //        }
+    //    });
+    //});
 
     var map = "";
     var geocoder = "";
@@ -759,17 +850,7 @@ else
             });
 
         });
-        $(function () {
-            var url = 'https://www.facebook.com/Eventcombo' // Replace this variable value with the link
-            $.getJSON('https://graph.facebook.com/?access_token=CAACEdEose0cBAInenFGuCK6iiWLaQtrhdAmumnHtYXBbImcddXwErefrPF5ZBFx7ZAU2Y0K8T3ZAfQh9xQPNrOOO9F3dpgI8lCOifLqiMSxer20YAKxZAQN8y1MBYjjO0ZAVywJSwmbPZAL1O8UqPrnliiNoZBqb2YGBRSjrHmJdTEFErjnMbQxXT0OQyXyi5Qjv56nLootuwZDZD&id=' + url, function (data) {
-                //alert(data.comments);
-                if (data.comments) { //If their is no comments on the page then comments data will not exist
-                    $('.comment-count').append(data.comments);
-                } else {
-                    $('.comment-count').append('0');
-                }
-            });
-        });
+     
         $('ul.dropdown-menu.dropdown-map').on('click', function (event) {
             event.stopPropagation();
         });

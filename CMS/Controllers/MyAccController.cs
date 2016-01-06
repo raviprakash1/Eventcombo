@@ -170,6 +170,8 @@ namespace CMS.Controllers
                     {
                         myacc.ZipCode = zipcode;
                     }
+                    var ticketpurchased = db.Database.SqlQuery<Int64>("select isnull(sum(TPD_Purchased_Qty),0) from Ticket_Purchased_Detail  where TPD_User_Id=@p0", UserId).FirstOrDefault();
+                    myacc.TicketPurchased = ticketpurchased;
                     //JavaScriptSerializer js = new JavaScriptSerializer();
                     //var results = js.Serialize(x);
 
@@ -576,6 +578,8 @@ namespace CMS.Controllers
                     }
                 }
                 model.role = ans;
+                var ticketpurchased = db.Database.SqlQuery<Int64>("select isnull(sum(TPD_Purchased_Qty),0) from Ticket_Purchased_Detail  where TPD_User_Id=@p0", Userid).FirstOrDefault();
+                model.TicketPurchased = ticketpurchased;
                 return View(model);
 
             }

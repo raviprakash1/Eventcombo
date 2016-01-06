@@ -14,7 +14,6 @@ namespace CMS.Models
     public partial class GetEventsListByStatus_Result
     {
         public string Name { get; set; }
-        public string EMail { get; set; }
         public string Date_Time { get; set; }
         public string TicketType { get; set; }
         public Nullable<long> TicketPurchased { get; set; }
@@ -23,7 +22,8 @@ namespace CMS.Models
         public string EventTitle { get; set; }
         public string EventDate { get; set; }
         public string EventTime { get; set; }
-        public long TotalTicket { get; set; }
-        public long TicketSold { get; set; }
+        public Nullable<long> TotalTicket { get; set; }
+        public Nullable<long> TicketSold { get; set; }
+        public string Email { get; set; }
     }
 }

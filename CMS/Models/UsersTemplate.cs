@@ -31,7 +31,7 @@ namespace CMS.Models
         public int EventCount { get; set; }
         public string State { get; set; }
         public string Usercount { get; set; }
-        public int TicketPurchased { get; set; }
+        public long TicketPurchased { get; set; }
         public string Ipcountry { get; set; }
 
     }

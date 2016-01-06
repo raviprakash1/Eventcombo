@@ -531,6 +531,13 @@
           <Property Name="TimeZone_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TimeZone_Name" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="TimeZonesystem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="DisplayName" Type="varchar" MaxLength="400" />
+          <Property Name="Id" Type="varchar" MaxLength="400" Nullable="false" />
+        </EntityType>
         <EntityType Name="User_Permission_Detail">
           <Key>
             <PropertyRef Name="UP_Id" />
@@ -838,6 +845,7 @@
           <EntitySet Name="TicketDeliveryMethod" EntityType="Self.TicketDeliveryMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeZonesystem" EntityType="Self.TimeZonesystem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
@@ -1750,6 +1758,7 @@
             <Parameter Name="EventStatus" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="TimeZonesystems" EntityType="EventComboModel.TimeZonesystem" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1851,6 +1860,13 @@
           <Property Type="Int64" Name="TotalTicket" Nullable="false" />
           <Property Type="Int64" Name="TicketSold" Nullable="false" />
         </ComplexType>
+        <EntityType Name="TimeZonesystem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="DisplayName" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2497,6 +2513,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="TimeZonesystems">
+            <EntityTypeMapping TypeName="EventComboModel.TimeZonesystem">
+              <MappingFragment StoreEntitySet="TimeZonesystem">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

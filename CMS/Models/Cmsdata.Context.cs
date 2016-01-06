@@ -84,13 +84,13 @@ namespace CMS.Models
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<func_Split_Result>("[EmsEntities].[func_Split](@DelimitedString, @Delimiter)", delimitedStringParameter, delimiterParameter);
         }
     
-        public virtual ObjectResult<GetEventDateList_Result> GetEventDateList(Nullable<long> eventId)
+        public virtual ObjectResult<EventCreation> GetEventDateList(Nullable<long> eventId)
         {
             var eventIdParameter = eventId.HasValue ?
                 new ObjectParameter("EventId", eventId) :
                 new ObjectParameter("EventId", typeof(long));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventDateList_Result>("GetEventDateList", eventIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventDateList", eventIdParameter);
         }
     
         public virtual ObjectResult<EventCreation> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature, string eventStartdate, string eventTicket)

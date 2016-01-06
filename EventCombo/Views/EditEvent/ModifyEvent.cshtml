@@ -612,7 +612,7 @@
                         <div class="form-group mb0">
                             <label class="control-label ev_tickt_lebel pl0 ">
                                 <input id="Incsocial" type="checkbox">
-                                Include links to Facebook and Twitter
+                                Include links to Facebook , Twitter and Linkedin
 
                             </label>
                             <div id="dvOrgnizerFBTw" class="AddSocial add_social_cont">
@@ -623,7 +623,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input class="form-control wd600" id="txtOrgFBlink" placeholder="" />
+                                        <input class="form-control wd600" id="txtOrgFBlink" placeholder="" maxlength="100" />
                                     </div>
                                 </div>
                                 <div class="add_social_input mt10">
@@ -633,7 +633,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input id="txtOrgTWlink" class="form-control wd600" placeholder="" />
+                                        <input id="txtOrgTWlink" class="form-control wd600" placeholder="" maxlength="100" />
                                     </div>
                                 </div>
                                 <div class="add_social_input mt10">
@@ -1685,7 +1685,9 @@ else
         $(".cbtPreview").click(function () {
             var msg = validatemain();
             if (msg != "") {
+
                 $('#diverroacc').css('display', 'block');
+                $('#diverroacc').focus();
                 $('#erraccmsg').html(msg);
                 return false;
 
@@ -2480,6 +2482,7 @@ else
                         if(type=="Save")
                         {
                             $('#divaccsuc').css('display', 'block');
+                            $('#divaccsuc').focus();
                             $('#diverroacc').css('display', 'none');
                             $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
                             window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
@@ -2505,6 +2508,7 @@ else
             else {
                 $('#divaccsuc').css('display', 'none');
                 $('#diverroacc').css('display', 'block');
+                $('#diverroacc').focus();
                 $('#erraccmsg').html('There some problem occurs, Please check after some time.');
             }
 
@@ -2539,14 +2543,14 @@ else
                     $("#tblOrgnizer").append(getHtml[0]);
                     $("#ddlOrgnizers").append(getHtml[1]);
 
-                    var msg = validatemain();
+                  var msg = disablebutton();
                    
-                    //if(msg=="")
-                    //{
-                    //    $("#txtOrgnizer").removeClass("err-bor");
-                    //    $(".cdisable").removeAttr("disabled");
+                    if(msg=="")
+                    {
+                       
+                        $(".cdisable").removeAttr("disabled");
 
-                    //}
+                    }
 
                 },
                 error: function (data) {
@@ -2593,6 +2597,7 @@ else
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
                     $('#erraccmsg').html(msg);
+                    $('#diverroacc').focus();
                     return false;
 
                 }
@@ -2628,6 +2633,7 @@ else
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
                     $('#erraccmsg').html(msg);
                     return false;
 
@@ -2825,6 +2831,7 @@ else
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
+                                $('#diverroacc').focus();
                                 $('#erraccmsg').html("Event Url already exists.");
 
                                 $("#txtEventUrl").val('');
@@ -5228,21 +5235,15 @@ else
                         if (isNaN(price)) {
                             $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        } else {
-                            $('#id_cost-' + i).removeClass('err-bor');
                         }
                         if (price <= 0) {
                             $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        } else {
-                            $('#id_cost-' + i).removeClass('err-bor');
                         }
                         if (price > 999999.99) {
                             $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        } else {
-                            $('#id_cost-' + i).removeClass('err-bor');
-                        }
+                        } 
                     }
 
 
@@ -5262,6 +5263,22 @@ else
                             $('#id_min_ticket-' + i).removeClass('err-bor');
                         }
 
+                    }
+                    if (!isNaN(max) && max != 0)
+                    {
+                        if(max>ticket_Qty)
+                        {
+                            $('#id_max_ticket-' + i).addClass('err-bor');
+                            $('#evnt_set-' + i).css('display', 'block');
+                            countmax++;
+                        }
+                    }
+                    if (!isNaN(min) && min != 0) {
+                        if (min > ticket_Qty) {
+                            $('#id_min_ticket-' + i).addClass('err-bor');
+                            $('#evnt_set-' + i).css('display', 'block');
+                            countmax++;
+                        }
                     }
                     if (!isNaN(cost) && !isNaN(discount) && cost != 0 && discount != 0) {
                         if (cost <= discount) {
@@ -5295,8 +5312,7 @@ else
             }
             if (countmax > 0)
             {
-
-                msg+="Please Enter valid minimum price <br/>";
+                msg+="Please Enter valid qty <br/>";
             }
             if (countprice > 0) {
                 msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
