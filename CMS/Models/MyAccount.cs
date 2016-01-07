@@ -59,5 +59,6 @@ namespace CMS.Models
         public string Password { get; set; }
 
         public string role { get; set; }
+        public long TicketPurchased { get; set; }
     }
 }

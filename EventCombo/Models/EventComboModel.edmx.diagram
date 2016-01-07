@@ -63,6 +63,7 @@
         <AssociationConnector Association="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="EventComboModel.FK_Profile_Profile" />
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="EventComboModel.TimeZonesystem" Width="1.5" PointX="10.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

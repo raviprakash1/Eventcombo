@@ -405,6 +405,9 @@
     <Compile Include="Models\TimeZoneDetail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TimeZonesystem.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -493,13 +496,16 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="EventTicket_HTML.html" />
     <Content Include="Images\ajaxloader1.gif" />
+    <Content Include="Images\Bar_Image.Png" />
     <Content Include="Images\deal_img1.jpg" />
     <Content Include="Images\deal_title_bg_l.png" />
     <Content Include="Images\deal_title_bg_r.png" />
+    <Content Include="Images\default_event_image.jpg" />
     <Content Include="Images\dis_title_bg_l.png" />
     <Content Include="Images\dis_title_bg_r.png" />
     <Content Include="Images\event1.jpg" />
     <Content Include="Images\fac.png" />
+    <Content Include="Images\fb-dis.png" />
     <Content Include="Images\fb_btn.png" />
     <Content Include="Images\fb_connect.jpg" />
     <Content Include="Images\gmap.png" />
@@ -507,9 +513,11 @@
     <Content Include="Images\go_btn.png" />
     <Content Include="Images\info_icn.png" />
     <Content Include="Images\lin.png" />
+    <Content Include="Images\linkid.png" />
     <Content Include="Images\logo_small.png" />
     <Content Include="Images\mail.png" />
     <Content Include="Images\o_cal.png" />
+    <Content Include="Images\QR_Image.Png" />
     <Content Include="Images\slider1.jpg" />
     <Content Include="Images\slider2.png" />
     <Content Include="Images\slider3.png" />

@@ -87,7 +87,7 @@ namespace CMS.Controllers
                 item.Role = ans;
                 var evtcount = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
                 item.EventCount = evtcount;
-                var ticketpurchased= db.Database.SqlQuery<Int32>("select count(*) from Ticket_Purchased_Detail  where TPD_User_Id=@p0", item.Id).FirstOrDefault();
+                var ticketpurchased= db.Database.SqlQuery<Int64>("select isnull(sum(TPD_Purchased_Qty),0) from Ticket_Purchased_Detail  where TPD_User_Id=@p0", item.Id).FirstOrDefault();
                 item.TicketPurchased = ticketpurchased;
             }
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);

@@ -792,7 +792,43 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 209 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                     foreach (var item in (List<string>)ViewBag.Images)
+                     if ((int)TempData["ImageCount"] > 0)
+                    {
+
+
+                        foreach (var item in (List<string>)ViewBag.Images)
+                        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            <div");
+
+WriteLiteral(" class=\"item \"");
+
+WriteLiteral(">\r\n                                <img");
+
+WriteLiteral(" class=\"img-responsive\"");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 11451), Tuple.Create("\"", 11462)
+            
+            #line 216 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 11457), Tuple.Create<System.Object, System.Int32>(item
+            
+            #line default
+            #line hidden
+, 11457), false)
+);
+
+WriteLiteral(" alt=\"First slide\"");
+
+WriteLiteral(">\r\n\r\n                            </div>\r\n");
+
+            
+            #line 219 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+                        }
+                    }
+                    else
                     {
 
             
@@ -800,20 +836,15 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                        <div");
 
-WriteLiteral(" class=\"item \"");
+WriteLiteral(" class=\"item active\"");
 
 WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" class=\"img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 11350), Tuple.Create("\"", 11361)
-            
-            #line 212 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 11356), Tuple.Create<System.Object, System.Int32>(item
-            
-            #line default
-            #line hidden
-, 11356), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 11727), Tuple.Create("\"", 11765)
+, Tuple.Create(Tuple.Create("", 11733), Tuple.Create<System.Object, System.Int32>(Href("~/Images/default_event_image.jpg")
+, 11733), false)
 );
 
 WriteLiteral(" alt=\"First slide\"");
@@ -821,7 +852,7 @@ WriteLiteral(" alt=\"First slide\"");
 WriteLiteral(">\r\n\r\n                        </div>\r\n");
 
             
-            #line 215 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 227 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                     }
 
             
@@ -893,13 +924,13 @@ WriteLiteral(" class=\"fb_dis_head no_pad pt5\"");
 WriteLiteral(">COMPLETE INFO</h2>\r\n            </div>\r\n");
 
             
-            #line 254 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 266 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 254 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 266 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
              if (Html.DisplayFor(m => m.Shareonfb).ToString() == "y" || Html.DisplayFor(m => m.Shareonfb).ToString() == "Y")
             {
 
@@ -951,7 +982,7 @@ WriteLiteral(" src=\"/Images/lin.png\"");
 WriteLiteral("></a>\r\n                </div>\r\n");
 
             
-            #line 263 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 275 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
             }
 
             
@@ -982,7 +1013,7 @@ WriteLiteral(">\r\n\r\n\r\n");
 WriteLiteral("                        ");
 
             
-            #line 272 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 284 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                    Write(Html.DisplayFor(m => m.EventDescription));
 
             
@@ -1001,7 +1032,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 277 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 289 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                    Write(Html.HiddenFor(m => m.organizerid, new { id = "hdorganiserid" }));
 
             
@@ -1010,7 +1041,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                        <h4>");
 
             
-            #line 278 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 290 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                        Write(Html.DisplayFor(m => m.organizername));
 
             
@@ -1031,13 +1062,13 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">View organizer profile </a></p>\r\n");
 
             
-            #line 281 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 293 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 281 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 293 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                          if (Html.DisplayFor(m => m.fblink).ToString() != "")
                         {
 
@@ -1046,14 +1077,14 @@ WriteLiteral(">View organizer profile </a></p>\r\n");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 14817), Tuple.Create("\"", 14855)
+WriteAttribute("href", Tuple.Create(" href=\"", 15221), Tuple.Create("\"", 15259)
             
-            #line 283 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 14824), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
+            #line 295 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 15228), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
             
             #line default
             #line hidden
-, 14824), false)
+, 15228), false)
 );
 
 WriteLiteral("><img");
@@ -1063,7 +1094,7 @@ WriteLiteral(" src=\"/Images/facebook-icon.png\"");
 WriteLiteral(">&nbsp;");
 
             
-            #line 283 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 295 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                                                                                Write(Html.DisplayFor(m => m.fblink));
 
             
@@ -1072,7 +1103,7 @@ WriteLiteral(">&nbsp;");
 WriteLiteral("</a></p>\r\n");
 
             
-            #line 284 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 296 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
 
                         }
 
@@ -1082,7 +1113,7 @@ WriteLiteral("</a></p>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 286 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 298 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                          if (Html.DisplayFor(m => m.twitterlink).ToString() != "")
                         {
 
@@ -1093,14 +1124,14 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15118), Tuple.Create("\"", 15161)
+WriteAttribute("href", Tuple.Create(" href=\"", 15522), Tuple.Create("\"", 15565)
             
-            #line 290 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15125), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
+            #line 302 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 15529), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
             
             #line default
             #line hidden
-, 15125), false)
+, 15529), false)
 );
 
 WriteLiteral("><img");
@@ -1110,7 +1141,7 @@ WriteLiteral(" src=\"/Images/twitter-icon.png\"");
 WriteLiteral(">&nbsp;");
 
             
-            #line 290 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 302 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                                                                                    Write(Html.DisplayFor(m => m.twitterlink));
 
             
@@ -1119,7 +1150,7 @@ WriteLiteral(">&nbsp;");
 WriteLiteral(" </a></p>\r\n");
 
             
-            #line 291 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 303 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
 
                         }
 
@@ -1127,7 +1158,7 @@ WriteLiteral(" </a></p>\r\n");
             #line default
             #line hidden
             
-            #line 293 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 305 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
  if (Html.DisplayFor(m => m.Linkedinlin).ToString() != "")
 {
 
@@ -1136,27 +1167,27 @@ WriteLiteral(" </a></p>\r\n");
             #line hidden
 WriteLiteral("                        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15373), Tuple.Create("\"", 15416)
+WriteAttribute("href", Tuple.Create(" href=\"", 15777), Tuple.Create("\"", 15820)
             
-            #line 295 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15380), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
+            #line 307 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 15784), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
             
             #line default
             #line hidden
-, 15380), false)
+, 15784), false)
 );
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 15422), Tuple.Create("\"", 15447)
-, Tuple.Create(Tuple.Create("", 15428), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
-, 15428), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 15826), Tuple.Create("\"", 15851)
+, Tuple.Create(Tuple.Create("", 15832), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
+, 15832), false)
 );
 
 WriteLiteral(" />&nbsp; ");
 
             
-            #line 295 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 307 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                                                                              Write(Html.DisplayFor(m => m.Linkedinlin));
 
             
@@ -1165,7 +1196,7 @@ WriteLiteral(" />&nbsp; ");
 WriteLiteral("</a></p>\r\n");
 
             
-            #line 296 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 308 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
 }
 
             
@@ -1228,13 +1259,13 @@ WriteLiteral(" class=\"event_detail_container\"");
 WriteLiteral(">\r\n");
 
             
-            #line 324 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 336 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 324 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 336 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
          if (@Html.DisplayFor(m => m.enablediscussion).ToString() == "y" || @Html.DisplayFor(m => m.enablediscussion).ToString() == "Y")
         {
 
@@ -1310,7 +1341,7 @@ WriteLiteral(" class=\"evnt_tile_bg_r evnt_tile_bg_r_call\"");
 WriteLiteral("></div>\r\n            </div>\r\n");
 
             
-            #line 340 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 352 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
 
 
             
@@ -1337,7 +1368,7 @@ WriteLiteral(" data-numposts=\"5\"");
 WriteLiteral("></div>\r\n\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 347 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 359 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
         }
         else
         {
@@ -1380,7 +1411,7 @@ WriteLiteral(" class=\"evnt_tile_dis_bg_r evnt_tile_bg_r_call\"");
 WriteLiteral("></div>\r\n            </div>\r\n");
 
             
-            #line 357 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 369 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
 
         }
 
@@ -1433,9 +1464,9 @@ WriteLiteral(" id=\"dvAjxLoader\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 19151), Tuple.Create("\"", 19181)
-, Tuple.Create(Tuple.Create("", 19157), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 19157), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 19555), Tuple.Create("\"", 19585)
+, Tuple.Create(Tuple.Create("", 19561), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 19561), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
@@ -1540,7 +1571,7 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">");
 
             
-            #line 423 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 435 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                            Write(TempData["EventType"]);
 
             
@@ -1557,7 +1588,7 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">");
 
             
-            #line 424 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 436 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                            Write(TempData["EventCategory"]);
 
             
@@ -1574,7 +1605,7 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">");
 
             
-            #line 425 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 437 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                            Write(TempData["EventSubCategory"]);
 
             
@@ -1708,7 +1739,7 @@ WriteLiteral(" class=\"col-sm-6 no_pad dl_title\"");
 
 WriteLiteral(">Upscale French Dinner</div>\r\n                        <div");
 
-WriteLiteral(" class=\"col-sm-2 \"");
+WriteLiteral(" class=\"col-sm-2 mb5\"");
 
 WriteLiteral(">\r\n                            <select");
 
@@ -1723,7 +1754,7 @@ WriteLiteral(@">
                         </div>
                         <div");
 
-WriteLiteral(" class=\"col-sm-4 \"");
+WriteLiteral(" class=\"col-sm-4 mb5\"");
 
 WriteLiteral(">\r\n                            <button");
 
@@ -1761,13 +1792,13 @@ WriteLiteral(" class=\"col-sm-12 text-right no_pad\"");
 WriteLiteral(">\r\n");
 
             
-            #line 495 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 507 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 495 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 507 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      if (TempData["ForViewOnly"].ToString() == "Y")
                     {
 
@@ -1787,7 +1818,7 @@ WriteLiteral(" class=\"btn btn-lg ev_live_btn ev_live_sub_btn\"");
 WriteLiteral(">PROCEED TO PAYMENT  > </button>\r\n");
 
             
-            #line 498 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 510 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                     }
                     else
                     {
@@ -1806,7 +1837,7 @@ WriteLiteral(" class=\"btn btn-lg ev_live_btn ev_live_sub_btn\"");
 WriteLiteral(">PROCEED TO PAYMENT  > </button>\r\n");
 
             
-            #line 502 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 514 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
 
                     }
 
@@ -2149,7 +2180,7 @@ WriteLiteral("\r\n<script>\r\n\r\n\r\n\r\n\r\n    $(document).ready(function () 
 "ck(function () {\r\n            window.location.href = \'");
 
             
-            #line 612 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 624 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -2159,7 +2190,7 @@ WriteLiteral("\' + \'?Eventid=\' + $(\'#hdEventid\').val();\r\n        });\r\n\r
 ".click(function () {\r\n           window.location.href = \'");
 
             
-            #line 616 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 628 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                               Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -2202,7 +2233,7 @@ WriteLiteral("?EventId=\' + $(\"#hdEventId\").val() + \'\';\r\n        });\r\n\r
 "                 url: \'");
 
             
-            #line 710 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 722 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("saveorganizermsg", "CreateEvent"));
 
             
@@ -2269,7 +2300,7 @@ WriteLiteral("\r\n\r\n\r\n\r\n\r\n\r\n                function showevent(t) {\r\
 "(\"#ioutlook\").attr(\"href\", \'");
 
             
-            #line 812 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 824 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                             Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -2280,7 +2311,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "ender\").attr(\"href\", \'");
 
             
-            #line 813 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 825 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                              Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -2308,7 +2339,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "{\r\n                    url: \'");
 
             
-            #line 852 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 864 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("savevote", "CreateEvent"));
 
             
@@ -2356,7 +2387,7 @@ WriteLiteral(@"
                 url: '");
 
             
-            #line 889 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 901 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                  Write(Url.Action("savefavourite", "CreateEvent"));
 
             
@@ -2490,7 +2521,7 @@ WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNa
 "         url: \'");
 
             
-            #line 1163 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1175 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2517,7 +2548,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 1181 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1193 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                  Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2563,7 +2594,7 @@ WriteLiteral("\',\r\n                beforeSend: function () { $(\'#dvAjxLoader\
 ".ajax({\r\n                    url: \'");
 
             
-            #line 1253 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1265 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("LockTickets", "CreateEvent"));
 
             
@@ -2582,7 +2613,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 1263 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1275 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
@@ -2617,7 +2648,7 @@ WriteLiteral(@"' + '?Eventid=' + Eventid;
             url: '");
 
             
-            #line 1289 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1301 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             

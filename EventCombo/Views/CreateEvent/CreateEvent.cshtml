@@ -663,7 +663,7 @@
                         <div class="form-group mb0">
                             <label class="control-label ev_tickt_lebel pl0 ">
                                 <input id="Incsocial" type="checkbox">
-                                Include links to Facebook and Twitter
+                                Include links to Facebook , Twitter and Linkedin
 
                             </label>
                             <div id="dvOrgnizerFBTw" class="AddSocial add_social_cont">
@@ -3563,6 +3563,12 @@
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
             $("#clonediv-" + divlength).focus();
+            var msg = disablebutton();
+            if (msg == "") {
+
+                $(".cdisable").removeAttr("disabled");
+
+            }
 
         });
         $('.save_btndonation').click(function () {
@@ -3665,6 +3671,12 @@
             $("#id_saletimeend-" + divlength).val("7:00pm");
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("#clonediv-" + divlength).focus();
+            var msg = disablebutton();
+            if (msg == "") {
+
+                $(".cdisable").removeAttr("disabled");
+
+            }
         });
         $('.save_btnfree').click(function () {
 
@@ -3768,6 +3780,12 @@
             $("#id_saletimeend-" + divlength).val("7:00pm");
 
             $("#clonediv-" + divlength).focus();
+            var msg = disablebutton();
+            if (msg == "") {
+
+                $(".cdisable").removeAttr("disabled");
+
+            }
 
         });
         function randomString(len, charSet) {
@@ -4348,131 +4366,6 @@
                 msg += "Please Enter atleast one ticket";
 
             }
-            if (divlength > 0) {
-
-                for (var i = 0; i < divlength; i++) {
-
-                    var ticket_name = $('#id_ticket_type-' + i).val();
-                    var ticket_Qty = $('#id_quantity_total-' + i).val();
-                    if (ticket_name == "") {
-                      
-
-                        countdesc++;
-                    }
-                    if (ticket_Qty == "") {
-
-                      
-                        countqty++;
-                    } else {
-                        if (ticket_Qty <= 0) {
-                           
-                            countqty++;
-
-                        } 
-                    }
-
-                    if ($('#id_paid-' + i).css('display') == "block") {
-
-                        var price = parseFloat($('#id_cost-' + i).val());
-                        if (isNaN(price)) {
-                          
-                            countprice++;
-                        }
-                        if (price <= 0) {
-                           
-                            countprice++;
-                        } 
-                    }
-                }
-
-
-            }
-            if ($('#hddiscount').val() == 1) {
-                count++;
-
-            }
-            if (parseInt($('#hdMaxerr').val()) == 1) {
-                count++;
-            }
-            if (countprice > 0) {
-                msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
-            }
-            if (countqty > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventQtyValidateUI") + "<br/>";
-            }
-            if (countdesc > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
-
-            }
-
-            if ($('#id_variablecharge').is(":checked") == true) {
-                if ($('#id_vardesc').val() == "") {
-                
-                    msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI") + "<br/>";;
-
-
-
-                } else {
-                    $('#id_vardesc').removeClass('err-bor');
-
-                }
-                var divvar = $("#id_Mainvariable>div").size();
-                if (divvar <= 0) {
-                    msg += "Please enter Variable valid charges by clicking on Add button" + "<br/>";;
-
-                }
-                if (divvar > 0) {
-
-                    for (var i = 0; i < divvar; i++) {
-                        var subdesc_name = $('#id_varsubdesc-' + i).val();
-                        var subprice_Qty = $('#id_varsubprice-' + i).val();
-
-                        if (subdesc_name == "") {
-
-                           
-
-                            countvardesc++;
-                        } 
-                        if (subprice_Qty == "") {
-
-                           
-                            countvarqty++;
-                        } else {
-                            if (subprice_Qty <= 0) {
-                              
-                                countvarqty++;
-
-                            } 
-
-
-                        }
-
-                    }
-
-                }
-            }
-
-
-
-            if (count > 0) {
-
-                msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
-            }
-            if (countvardesc > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
-
-            }
-            if (countvarqty > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
-
-            }
-            if ($('#chkReqPassword').is(":checked") == true) {
-                if ($('#txtReqPassword').val() == "") {
-                   
-                    msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
-
-                } 
-            }
             var weekcnt = 0;
             var weekdaily = 0;
             var weekmnth = 0;
@@ -4491,8 +4384,8 @@
                     } 
                     if ($("#txtTimeStart").val() == "") {
                         weekcnt++;
-                        
-                    } 
+                       
+                    }
                     if ($("#txtTimeEnd").val() == "") {
                         weekcnt++;
                        
@@ -4503,11 +4396,11 @@
                     }
                     if ($("#txtDateFrom").val() == "") {
                         weekcnt++;
-                       
+                      
                     }
                     if ($("#txtDateTo").val() == "") {
                         weekcnt++;
-                      
+                        
                     }
                 }
 
@@ -4543,7 +4436,7 @@
                     }
                     if ($("#txtDateFrom").val() == "") {
                         weekmnth++;
-                       
+                        
                     }
                     if ($("#txtDateFrom").val() == "") {
                         weekmnth++;
@@ -4555,7 +4448,7 @@
                     }
                     if ($("#txtDateTo").val() == "") {
                         weekmnth++;
-                        
+                       
                     }
 
                 }
@@ -4563,11 +4456,11 @@
 
                     if ($("#txtTimeStart").val() == "") {
                         custom++;
-                      
+                       
                     }
                     if ($("#txtTimeEnd").val() == "") {
                         custom++;
-                       
+                        
                     }
                     if ($("#txtDateFrom").val() == "") {
                         custom++;
@@ -4585,7 +4478,7 @@
                 var str = $("#txtStartDate").val();
                 if ($("#txtStartDate").val() == "") {
                     single++;
-                   
+                    
                 }
                 str = $("#txtStartTime").val();
                 if ($("#txtStartTime").val() == "") {
@@ -4600,13 +4493,13 @@
                 str = $("#txtEndTime").val();
                 if ($("#txtEndTime").val() == "") {
                     single++;
-                   
+                  
                 }
 
             }
 
             if (weekcnt > 0) {
-              
+                $("#btEnterDates").click();
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
 
             }
@@ -4616,19 +4509,18 @@
 
             }
             if (weekmnth > 0) {
-              
+               
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
 
             }
             if (custom > 0) {
-                
+               
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
             }
             if (single > 0) {
                
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
             }
-            debugger;
             return msg;
 
 
@@ -4713,21 +4605,15 @@
                         if (isNaN(price)) {
                             $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        } else {
-                            $('#id_cost-' + i).removeClass('err-bor');
                         }
                         if (price <= 0) {
                             $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        } else {
-                            $('#id_cost-' + i).removeClass('err-bor');
                         }
                         if (price > 999999.99) {
                             $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        } else {
-                            $('#id_cost-' + i).removeClass('err-bor');
-                        }
+                        } 
                     }
 
 
@@ -4747,6 +4633,22 @@
                             $('#id_min_ticket-' + i).removeClass('err-bor');
                         }
 
+                    }
+                    if (!isNaN(max) && max != 0)
+                    {
+                        if(max>ticket_Qty)
+                        {
+                            $('#id_max_ticket-' + i).addClass('err-bor');
+                            $('#evnt_set-' + i).css('display', 'block');
+                            countmax++;
+                        }
+                    }
+                    if (!isNaN(min) && min != 0) {
+                        if (min > ticket_Qty) {
+                            $('#id_min_ticket-' + i).addClass('err-bor');
+                            $('#evnt_set-' + i).css('display', 'block');
+                            countmax++;
+                        }
                     }
                     if (!isNaN(cost) && !isNaN(discount) && cost != 0 && discount != 0) {
                         if (cost <= discount) {
@@ -4780,7 +4682,7 @@
             }
             if (countmax > 0)
             {
-                msg+="Please Enter valid minimum price <br/>";
+                msg+="Please Enter valid qty <br/>";
             }
             if (countprice > 0) {
                 msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";

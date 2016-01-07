@@ -1779,7 +1779,7 @@
             <Parameter Name="DelimitedString" Mode="In" Type="String" />
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetEventDateList" ReturnType="Collection(Cmsdata.GetEventDateList_Result)">
+          <FunctionImport Name="GetEventDateList" ReturnType="Collection(Cmsdata.EventCreation)">
           <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetEventListing" ReturnType="Collection(Cmsdata.EventCreation)">
@@ -1837,28 +1837,28 @@
           <Property Type="String" Name="EventCategory" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="123" />
+          <Property Type="String" Name="StartingFrom" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="Feature" Nullable="false" />
           <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventAddress" Nullable="true" />
           <Property Type="String" Name="Venuename" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
           <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="3" />
-          <Property Type="String" Name="StartingFrom" Nullable="true" MaxLength="50" />
           <Property Type="Int64" Name="Purchasedqty" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetEventsListByStatus_Result">
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="EMail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="102" />
           <Property Type="String" Name="Date_Time" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="TicketType" Nullable="false" MaxLength="1" />
           <Property Type="Int64" Name="TicketPurchased" Nullable="true" />
           <Property Type="String" Name="OrderId" Nullable="false" MaxLength="1" />
           <Property Type="Int64" Name="EventID" Nullable="false" />
           <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventDate" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="EventTime" Nullable="true" MaxLength="50" />
-          <Property Type="Int64" Name="TotalTicket" Nullable="false" />
-          <Property Type="Int64" Name="TicketSold" Nullable="false" />
+          <Property Type="String" Name="EventDate" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EventTime" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="TotalTicket" Nullable="true" />
+          <Property Type="Int64" Name="TicketSold" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2457,13 +2457,9 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetEventDateList" FunctionName="Cmsdata.Store.GetEventDateList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Cmsdata.GetEventDateList_Result">
-                <ScalarProperty Name="Dayofweek" ColumnName="Dayofweek" />
-                <ScalarProperty Name="Datefrom" ColumnName="Datefrom" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="type" ColumnName="type" />
-              </ComplexTypeMapping>
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="Cmsdata.EventCreation">
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetEventListing" FunctionName="Cmsdata.Store.GetEventListing">
@@ -2475,13 +2471,13 @@
                 <ScalarProperty Name="EventCategory" ColumnName="EventCategory" />
                 <ScalarProperty Name="EventSubCategory" ColumnName="EventSubCategory" />
                 <ScalarProperty Name="EventTiming" ColumnName="EventTiming" />
+                <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
                 <ScalarProperty Name="Feature" ColumnName="Feature" />
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
                 <ScalarProperty Name="EventAddress" ColumnName="EventAddress" />
                 <ScalarProperty Name="Venuename" ColumnName="Venuename" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="TicketDetail" ColumnName="TicketDetail" />
-                <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
                 <ScalarProperty Name="Purchasedqty" ColumnName="Purchasedqty" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -2494,7 +2490,6 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="Cmsdata.GetEventsListByStatus_Result">
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="EMail" ColumnName="EMail" />
                 <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
                 <ScalarProperty Name="TicketType" ColumnName="TicketType" />
                 <ScalarProperty Name="TicketPurchased" ColumnName="TicketPurchased" />
@@ -2505,6 +2500,7 @@
                 <ScalarProperty Name="EventTime" ColumnName="EventTime" />
                 <ScalarProperty Name="TotalTicket" ColumnName="TotalTicket" />
                 <ScalarProperty Name="TicketSold" ColumnName="TicketSold" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

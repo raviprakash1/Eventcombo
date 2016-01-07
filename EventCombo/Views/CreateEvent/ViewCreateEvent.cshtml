@@ -206,10 +206,22 @@
                     </div>
                 </div>
                 <div class="carousel-inner" role="listbox" id="lstcarousel">
-                    @foreach (var item in (List<string>)ViewBag.Images)
+                    @if ((int)TempData["ImageCount"] > 0)
                     {
-                        <div class="item ">
-                            <img class="img-responsive" src="@item" alt="First slide">
+
+
+                        foreach (var item in (List<string>)ViewBag.Images)
+                        {
+                            <div class="item ">
+                                <img class="img-responsive" src="@item" alt="First slide">
+
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="item active">
+                            <img class="img-responsive" src="~/Images/default_event_image.jpg" alt="First slide">
 
                         </div>
                     }
