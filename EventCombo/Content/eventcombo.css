@@ -194,7 +194,7 @@ button:focus { outline: none;}
 .login_form_bot{ margin-bottom: 10px;}
 .forgt_pass{ color: #00cafd; font-size: 1.2em;}
 .forgt_pass:hover{color:#00cafd; text-decoration:none;}
-.login_btn_sub{ background-color: #00cafd; border:1px solid #00cafd; padding:2px 15px; font-size:20px; text-transform: uppercase; }
+.login_btn_sub{ background-color: #00cafd; border:1px solid #00cafd; padding:2px 6px; font-size:20px; text-transform: uppercase; }
 .login_btn_sub:hover{background-color: #00cafd; border:1px solid #00cafd;}
 .social_net_log{ font-size: 1.1em;}
 
@@ -692,7 +692,9 @@ span.evnt_toltip{
 #diverro1acc{ margin-left:15px; width:97%;} 
 
 @media (min-width:1200px) {
-    .acnt_form{ width:500px; margin-bottom:20px;}
+    .acnt_form{ max-width:100%; margin-bottom:20px; min-width:500px; }
+
+    .acnt_form.acnt_form_forget{ width:500px; }
 }
 
 

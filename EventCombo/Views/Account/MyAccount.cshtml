@@ -51,394 +51,396 @@
     }
     if (!ViewData.ModelState.IsValid)
     {
-        
-        <div class="er_UI_main" id="diverro1acc" tabindex="-1">
-           
-            <div class="er_sys_img"></div>
-            <div class="er_suc" id="erraccsucc">@Html.ValidationMessage("Error")</div>
-            <button class="close" type="button" id="btndiverro1acc">&#215;</button>
-        </div>
-    }
-    @*if (ViewData["Error"]!=null)
-    {
-        <div class="er_UI_main" id="diverro1acc">
-            <div class="er_sys_img"></div>
-            <div class="er_suc">@ViewData["Error"]</div>
-        </div>
-   }*@
-        <div class="er_UI_main" id="diverroacc" style="display :none;" tabindex="-1">
-            
-            @*<div class="alert alert-danger alert-dismissable">*@
-              
+        <div class="col-sm-10 mb10 col-xs-12" id="diverro1acc" tabindex="-1">
+            <div class="er_UI_main" >
+
+                <div class="er_sys_img"></div>
+                <div class="er_suc" id="erraccsucc">@Html.ValidationMessage("Error")</div>
+                <button class="close" type="button" id="btndiverro1acc">&#215;</button>
+            </div>
+         </div>
+            }
+            @*if (ViewData["Error"]!=null)
+                 {
+                     <div class="er_UI_main" id="diverro1acc">
+                         <div class="er_sys_img"></div>
+                         <div class="er_suc">@ViewData["Error"]</div>
+                     </div>
+                }*@
+        <div class="col-sm-10 mb10 col-xs-12"  id="diverroacc" style="display :none;" tabindex="-1">
+            <div class="er_UI_main">
+
+                @*<div class="alert alert-danger alert-dismissable">*@
+
                 <div class="er_UI_img"></div>
                 <div class="er_suc" id="erraccmsg">  </div>
-            <button class="close" type="button" id="btndiverroacc">&#215;</button>
-            @*</div>*@
-       
-           
+                <button class="close" type="button" id="btndiverroacc">&#215;</button>
+                @*</div>*@
+
+
+            </div>
         </div>
         <div class="clearfix"></div>
         <div class="col-sm-3">
             <div>
 
-                <input type="file"  name="image" id="input2">
+                <input type="file" name="image" id="input2">
             </div>
         </div>
 
 
-<div class="col-sm-7">
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label ">Name</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-6">
-                    @Html.TextBoxFor(m => m.Firstname, new { @maxlength = 35, @class = "form-control" })
-                    <small class="acnt_form_name_mini">First Name</small>
+        <div class="col-sm-7">
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label ">Name</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.Firstname, new { @maxlength = 35, @class = "form-control" })
+                            <small class="acnt_form_name_mini">First Name</small>
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.TextBoxFor(m => m.Lastname, new { @maxlength = 35, @class = "form-control" })
+                            <small class="acnt_form_name_mini">Last Name</small>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="col-xs-6">
-                    @Html.TextBoxFor(m => m.Lastname, new { @maxlength = 35, @class = "form-control" })
-                    <small class="acnt_form_name_mini">Last Name</small>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Date of Birth</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-4 add_form_bot mb0">
+                            @Html.DropDownList("month", Enumerable.Range(1, 12).Select(i => new SelectListItem
+                           {
+                               Value = i.ToString(),
+                               Text = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(i),
+                               Selected = i == Model.month
+
+                           }), new { @class = "form-control" })
+
+                        </div>
+                        <div class="col-xs-4 add_form_bot mb0">
+                            @Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
+                           {
+                               Value = i.ToString(),
+                               Text = i.ToString(),
+                               Selected = i == Model.day
+
+                           }), new { @class = "form-control" })
+                        </div>
+                        <div class="col-xs-4 add_form_bot mb0">
+                            @Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
+                           {
+                               Value = i.ToString(),
+                               Text = i.ToString(),
+                               Selected = i == Model.year
+
+                           }), new { @class = "form-control" })
+                        </div>
+                    </div>
                 </div>
 
             </div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Date of Birth</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-4 add_form_bot mb0">
-                    @Html.DropDownList("month", Enumerable.Range(1, 12).Select(i => new SelectListItem
-                {
-                    Value = i.ToString(),
-                    Text = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(i),
-                    Selected = i == Model.month
-
-                }), new { @class = "form-control" })
-                    
-                </div>
-                <div class="col-xs-4 add_form_bot mb0">
-                    @Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
-                {
-                    Value = i.ToString(),
-                    Text = i.ToString(),
-                    Selected = i == Model.day
-
-                }), new { @class = "form-control" })
-                </div>
-                <div class="col-xs-4 add_form_bot mb0">
-                    @Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
-               {
-                   Value = i.ToString(),
-                   Text = i.ToString(),
-                   Selected = i == Model.year
-
-               }), new { @class = "form-control" })
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    <div class="clearfix"></div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Gender</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-12 add_form_bot mb0">
-                    @Html.DropDownList("Gender", new List<SelectListItem>{
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Gender</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-12 add_form_bot mb0">
+                            @Html.DropDownList("Gender", new List<SelectListItem>{
         new SelectListItem{ Text="Male", Value="Male"},
         new SelectListItem{ Text="Female", Value="Female"}
         }, "--- Select ---", new { @class = "form-control" }
         )
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Address</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-12 add_form_bot">
+                            @Html.TextBoxFor(m => m.StreetAddress1, new { @maxlength = 256, @class = "form-control" })
+                            <small class="acnt_form_name_mini">Street Address</small>
+                            <small class="acnt_form_name_mini pull-right coun_lef" id="cntstreetadd1">Count Left 256</small>
+                        </div>
+                        <div class="col-xs-12 add_form_bot">
+                            @Html.TextBoxFor(m => m.StreeAddress2, new { @maxlength = 256, @class = "form-control" })
+                            <small class="acnt_form_name_mini">Street Address 2</small>
+                            <small class="acnt_form_name_mini pull-right coun_lef" id="cntstreetadd2">Count Left 256</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 add_form_bot">
+                            @Html.TextBoxFor(m => m.City, new { @maxlength = 256, @class = "form-control" })
+
+                            <small class="acnt_form_name_mini">City</small>
+                            <small class="acnt_form_name_mini pull-right coun_lef" id="cntcityadd1">Count Left 256</small>
+                        </div>
+                        <div class="col-xs-6 add_form_bot">
+                            @Html.TextBoxFor(m => m.State, new { @maxlength = 256, @class = "form-control" })
+                            <small class="acnt_form_name_mini">State</small>
+                            <small class="acnt_form_name_mini pull-right coun_lef" id="cntcitystate">Count Left 256</small>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 add_form_bot mb0">
+                            @Html.TextBoxFor(m => m.Zip, new { @maxlength = 5, @class = "form-control" })
+                            <small class="acnt_form_name_mini">Zip</small>
+                        </div>
+                        <div class="col-xs-6 add_form_bot mb0">
+                            @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control" })
+                            <small class="acnt_form_name_mini">Country</small>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Home Number</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-6 add_form_bot mb0">
+                            @Html.TextBoxFor(m => m.MainPhone, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Cellular Number</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-6 add_form_bot mb0">
+                            @Html.TextBoxFor(m => m.SecondPhone, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Work Number</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-6 add_form_bot mb0">
+                            @Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Email</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-12 add_form_bot mb0">
+                            @Html.HiddenFor(m => m.PreviousEmail, new { id = "hdEmail" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @maxlength = 256 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">E-mail Verification</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-12 add_form_bot mb0">
+                            @Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control", @maxlength = 256 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Website</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-12 add_form_bot mb0">
+                            @Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control", @maxlength = 256 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Current Password</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-12 add_form_bot mb0">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 15 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">New Password</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-12 add_form_bot mb0">
+                            @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @maxlength = 15 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label acnt_form_label">Confirm New Password</label>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-xs-12 add_form_bot mb0">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @maxlength = 15 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-info col-md-offset-3 acnt_btn mb10" value="Save" id="btnsave" />
+            @Html.HiddenFor(m => m.ImagePresent)
+            @Html.HiddenFor(m => m.userimage)
+            <input id="image_count" type="hidden" />
+
         </div>
-    </div>
-</div>
-</div>
-    <div class="clearfix"></div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Address</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-12 add_form_bot">
-                    @Html.TextBoxFor(m => m.StreetAddress1, new { @maxlength = 256, @class = "form-control" })
-                    <small class="acnt_form_name_mini">Street Address</small>
-                    <small class="acnt_form_name_mini pull-right coun_lef" id="cntstreetadd1">Count Left 256</small>
-                </div>
-                <div class="col-xs-12 add_form_bot">
-                    @Html.TextBoxFor(m => m.StreeAddress2, new { @maxlength = 256, @class = "form-control" })
-                    <small class="acnt_form_name_mini">Street Address 2</small>
-                    <small class="acnt_form_name_mini pull-right coun_lef" id="cntstreetadd2">Count Left 256</small>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 add_form_bot">
-                    @Html.TextBoxFor(m => m.City, new { @maxlength = 256, @class = "form-control" })
-                  
-                    <small class="acnt_form_name_mini">City</small>
-                    <small class="acnt_form_name_mini pull-right coun_lef" id="cntcityadd1">Count Left 256</small>
-                </div>
-                <div class="col-xs-6 add_form_bot">
-                    @Html.TextBoxFor(m => m.State, new { @maxlength = 256, @class = "form-control" })
-                    <small class="acnt_form_name_mini">State</small>
-                    <small class="acnt_form_name_mini pull-right coun_lef" id="cntcitystate">Count Left 256</small>
-                </div>
 
-            </div>
-            <div class="row">
-                <div class="col-xs-6 add_form_bot mb0">
-                    @Html.TextBoxFor(m => m.Zip, new { @maxlength = 5, @class = "form-control" })
-                    <small class="acnt_form_name_mini">Zip</small>
-                </div>
-                <div class="col-xs-6 add_form_bot mb0">
-                    @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new {@class = "form-control" })
-                    <small class="acnt_form_name_mini">Country</small>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Home Number</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-6 add_form_bot mb0">
-                    @Html.TextBoxFor(m => m.MainPhone, new { @class = "form-control" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div  class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Cellular Number</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-6 add_form_bot mb0">
-                    @Html.TextBoxFor(m => m.SecondPhone, new { @class = "form-control" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Work Number</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-6 add_form_bot mb0">
-                    @Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Email</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-12 add_form_bot mb0">
-                    @Html.HiddenFor(m=>m.PreviousEmail, new { id="hdEmail"})
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control",@maxlength = 256 })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">E-mail Verification</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-12 add_form_bot mb0">
-                    @Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control", @maxlength = 256 })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Website</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-12 add_form_bot mb0">
-                    @Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control", @maxlength = 256 })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Current Password</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-12 add_form_bot mb0">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" , @maxlength = 15 })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">New Password</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-12 add_form_bot mb0">
-                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @maxlength = 15 })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label acnt_form_label">Confirm New Password</label>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-xs-12 add_form_bot mb0">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" , @maxlength = 15 })
-                </div>
-            </div>
-        </div>
-    </div>
-    <input type="submit" class="btn btn-info col-md-offset-3 acnt_btn mb10" value="Save" id="btnsave" />
-    @Html.HiddenFor(m=>m.ImagePresent )
-    @Html.HiddenFor(m => m.userimage)
-    <input id="image_count" type="hidden" />
-
-</div>
-
-    }
-
-
- 
-<input type="hidden" value="0" id="imageeror" />
+        }
 
 
 
-    <script type="text/javascript">
-        $(document).click(function () {
-            $('#diverro1acc').css('display', 'none');
-            $('#diverroacc').css('display', 'none');
-            $('#divaccsuc').css('display', 'none');
-            $("input").removeClass('err-bor');
-            $("#month").removeClass('err-bor');
-            $("#day").removeClass('err-bor');
-            $("#year").removeClass('err-bor');
-        });
-        $('#btndivaccsuc').click(function () {
-            $('#diverro1acc').css('display', 'none');
-            $('#diverroacc').css('display', 'none');
-            $('#divaccsuc').css('display', 'none');
-            $("input").removeClass('err-bor');
-            $("#month").removeClass('err-bor');
-            $("#day").removeClass('err-bor');
-            $("#year").removeClass('err-bor');
-
-        })
-        $('#btndiverro1acc').click(function () {
-            $('#diverro1acc').css('display', 'none');
-            $('#diverroacc').css('display', 'none');
-            $("input").removeClass('err-bor');
-            $("#month").removeClass('err-bor');
-            $("#day").removeClass('err-bor');
-            $("#year").removeClass('err-bor');
-
-        })
-        $('#btndiverroacc').click(function () {
-            $("#imageeror").val('0');
-            $('#diverro1acc').css('display', 'none');
-            $('#diverroacc').css('display', 'none');
-            $("input").removeClass('err-bor');
-            $("#month").removeClass('err-bor');
-            $("#day").removeClass('err-bor');
-            $("#year").removeClass('err-bor');
+        <input type="hidden" value="0" id="imageeror" />
 
 
-        })
 
-        $(window).load(function () {
-            var cntstreet2 = 256 - $("#StreeAddress2").val().length;
-            var cntstreet2 = 256 - $("#StreetAddress1").val().length;
-            var cntcity = 256 - $("#City").val().length;
-            var cntstate = 256 - $("#State").val().length;
+        <script type="text/javascript">
+            $(document).click(function () {
+                $('#diverro1acc').css('display', 'none');
+                $('#diverroacc').css('display', 'none');
+                $('#divaccsuc').css('display', 'none');
+                $("input").removeClass('err-bor');
+                $("#month").removeClass('err-bor');
+                $("#day").removeClass('err-bor');
+                $("#year").removeClass('err-bor');
+            });
+            $('#btndivaccsuc').click(function () {
+                $('#diverro1acc').css('display', 'none');
+                $('#diverroacc').css('display', 'none');
+                $('#divaccsuc').css('display', 'none');
+                $("input").removeClass('err-bor');
+                $("#month").removeClass('err-bor');
+                $("#day").removeClass('err-bor');
+                $("#year").removeClass('err-bor');
 
-            $('#cntstreetadd2').html("Count left  " + cntstreet2);
-            $('#cntstreetadd1').html("Count left  " + cntstreet2);
-            $('#cntcityadd1').html("Count left  " + cntcity);
-            $('#cntcitystate').html("Count left  " + cntstate);
-        });
+            })
+            $('#btndiverro1acc').click(function () {
+                $('#diverro1acc').css('display', 'none');
+                $('#diverroacc').css('display', 'none');
+                $("input").removeClass('err-bor');
+                $("#month").removeClass('err-bor');
+                $("#day").removeClass('err-bor');
+                $("#year").removeClass('err-bor');
 
-        $("#StreeAddress2").keyup(function () {
-            var cs = $(this).val().length;
-            var left = 256 - cs;
-
-            $('#cntstreetadd2').html("Count left  " + left);
-        });
-        $("#StreetAddress1").keyup(function () {
-            var cs = $(this).val().length;
-            var left = 256 - cs;
-
-            $('#cntstreetadd1').html("Count left  " + left);
-        });
-        $("#City").keyup(function () {
-            var cs = $(this).val().length;
-            var left = 256 - cs;
-
-            $('#cntcityadd1').html("Count left  " + left);
-        });
-        $("#State").keyup(function () {
-            var cs = $(this).val().length;
-            var left = 256 - cs;
-
-            $('#cntcitystate').html("Count left  " + left);
-        });
-        $("#Country").change(function () {
-            $("#Zip").val("");
-            $("#State").val("");
-            $("#City").val("");
+            })
+            $('#btndiverroacc').click(function () {
+                $("#imageeror").val('0');
+                $('#diverro1acc').css('display', 'none');
+                $('#diverroacc').css('display', 'none');
+                $("input").removeClass('err-bor');
+                $("#month").removeClass('err-bor');
+                $("#day").removeClass('err-bor');
+                $("#year").removeClass('err-bor');
 
 
-        });
-        jQuery(function ($) {
-            $("#MainPhone").mask("999-999-9999");
-            $("#SecondPhone").mask("999-999-9999");
-            $("#WorkPhone").mask("999-999-9999");
+            })
 
-        });
-        var Model = "@Html.Raw(Model.editsave)";
+            $(window).load(function () {
+                var cntstreet2 = 256 - $("#StreeAddress2").val().length;
+                var cntstreet2 = 256 - $("#StreetAddress1").val().length;
+                var cntcity = 256 - $("#City").val().length;
+                var cntstate = 256 - $("#State").val().length;
 
-        var files1 = '@(MvcHtmlString.Create(Json.Encode(ViewData["results"])))';
+                $('#cntstreetadd2').html("Count left  " + cntstreet2);
+                $('#cntstreetadd1').html("Count left  " + cntstreet2);
+                $('#cntcityadd1').html("Count left  " + cntcity);
+                $('#cntcitystate').html("Count left  " + cntstate);
+            });
 
-        $(document).ready(function () {
-            //$('#WebsiteURL').bind('keypress', function (event) {
-            //    var regex = new RegExp("^[a-zA-Z0-9]+$");
-            //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-            //    if (!regex.test(key)) {
-            //        event.preventDefault();
-            //        return false;
-            //    }
-            //});
+            $("#StreeAddress2").keyup(function () {
+                var cs = $(this).val().length;
+                var left = 256 - cs;
 
-            console.log(Model);
-            var userProfileImage="@Html.Raw(Model.UserProfileImage)";
-            var modelcontent="@Html.Raw(Model.contentype)";
-            if(Model=="Save")
-            {
+                $('#cntstreetadd2').html("Count left  " + left);
+            });
+            $("#StreetAddress1").keyup(function () {
+                var cs = $(this).val().length;
+                var left = 256 - cs;
 
-            }else{
-                var imgdata =userProfileImage+ '¶' + modelcontent;
-            }
-          
-            console.log(imgdata);
-            //$('#WebsiteURL').bind('cut copy paste', function (event) {
-            //    event.preventDefault();
-            //    return false;
-            //});
+                $('#cntstreetadd1').html("Count left  " + left);
+            });
+            $("#City").keyup(function () {
+                var cs = $(this).val().length;
+                var left = 256 - cs;
+
+                $('#cntcityadd1').html("Count left  " + left);
+            });
+            $("#State").keyup(function () {
+                var cs = $(this).val().length;
+                var left = 256 - cs;
+
+                $('#cntcitystate').html("Count left  " + left);
+            });
+            $("#Country").change(function () {
+                $("#Zip").val("");
+                $("#State").val("");
+                $("#City").val("");
 
 
-            if (Model == "Save") {
-                $('#input2').filer({
-                    limit: '1',
-                    maxSize: '2',
-                    extensions: ['jpg', 'jpeg', 'png'],
-                    changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
-                    showThumbs: true,
-                    appendTo: "#drag-drop",
-                    theme: "dragdropbox",
-                    onChange: false,
-                    templates: {
-                        box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
-                        item: '<li class="jFiler-item">\
+            });
+            jQuery(function ($) {
+                $("#MainPhone").mask("999-999-9999");
+                $("#SecondPhone").mask("999-999-9999");
+                $("#WorkPhone").mask("999-999-9999");
+
+            });
+            var Model = "@Html.Raw(Model.editsave)";
+
+            var files1 = '@(MvcHtmlString.Create(Json.Encode(ViewData["results"])))';
+
+            $(document).ready(function () {
+                //$('#WebsiteURL').bind('keypress', function (event) {
+                //    var regex = new RegExp("^[a-zA-Z0-9]+$");
+                //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                //    if (!regex.test(key)) {
+                //        event.preventDefault();
+                //        return false;
+                //    }
+                //});
+
+                console.log(Model);
+                var userProfileImage = "@Html.Raw(Model.UserProfileImage)";
+                var modelcontent = "@Html.Raw(Model.contentype)";
+                if (Model == "Save") {
+
+                } else {
+                    var imgdata = userProfileImage + '¶' + modelcontent;
+                }
+
+                console.log(imgdata);
+                //$('#WebsiteURL').bind('cut copy paste', function (event) {
+                //    event.preventDefault();
+                //    return false;
+                //});
+
+
+                if (Model == "Save") {
+                    $('#input2').filer({
+                        limit: '1',
+                        maxSize: '2',
+                        extensions: ['jpg', 'jpeg', 'png'],
+                        changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
+                        showThumbs: true,
+                        appendTo: "#drag-drop",
+                        theme: "dragdropbox",
+                        onChange: false,
+                        templates: {
+                            box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
+                            item: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <div class="jFiler-item-container">\
@@ -456,7 +458,7 @@
                                              </button>\
                                        </div>\
                         </li>',
-                        itemAppend: '<li class="jFiler-item">\
+                            itemAppend: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <button class="btn  jFiler-item-trash-action can_btn" type="button">\
@@ -466,122 +468,122 @@
                         </li>',
 
 
-                        progressBar: '<div class="bar"></div>',
-                        itemAppendToEnd: true,
-                        removeConfirmation: false,
-                        _selectors: {
-                            list: '.jFiler-item-list',
-                            item: '.jFiler-item',
-                            progressBar: '.bar',
-                            remove: '.jFiler-item-trash-action',
-                        }
-                    },
-                    uploadFile: {
-                        url: "/Account/SaveUploadedFile",
-                        data: {},
-                        type: 'POST',
-                        enctype: 'multipart/form-data',
-                        beforeSend: function () { },
-                        success: function (data, el) {
-
-                            var parent = el.find(".jFiler-jProgressBar").parent();
-                            el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
-                                $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
-                            });
-                            var image_count = $("#image_count").val();
-                            var imagejson = jQuery.parseJSON(JSON.stringify(data));
-                            var imgdata = imagejson.image_name + '¶' + imagejson.image_type;
-                            //$("#image_count").val(el[0].jfiler_id)
-                            $('#userimage').val(imgdata);
-                            //$('<input>').attr({
-                            //    type: 'hidden',
-                            //    id: 'image_hidden_' + el[0].jfiler_id,
-                            //    name: 'Eventpicture[' + imgdata + ']',
-                            //    value: imgdata
-                            //}).appendTo('form');
-
-                            $('#ImagePresent').val("Yes");
-
-                            if ($.trim(image_count) == '') {
-                                $("#image_count").val('1');
-                            } else {
-                                image_count = parseInt(image_count) + 1;
-                                $("#image_count").val(image_count);
+                            progressBar: '<div class="bar"></div>',
+                            itemAppendToEnd: true,
+                            removeConfirmation: false,
+                            _selectors: {
+                                list: '.jFiler-item-list',
+                                item: '.jFiler-item',
+                                progressBar: '.bar',
+                                remove: '.jFiler-item-trash-action',
                             }
-
                         },
-                        error: function (el) {
+                        uploadFile: {
+                            url: "/Account/SaveUploadedFile",
+                            data: {},
+                            type: 'POST',
+                            enctype: 'multipart/form-data',
+                            beforeSend: function () { },
+                            success: function (data, el) {
 
-                            //var parent = el.find(".jFiler-jProgressBar").parent();
-                            //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                            //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
-                            //});
+                                var parent = el.find(".jFiler-jProgressBar").parent();
+                                el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                                    $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                                });
+                                var image_count = $("#image_count").val();
+                                var imagejson = jQuery.parseJSON(JSON.stringify(data));
+                                var imgdata = imagejson.image_name + '¶' + imagejson.image_type;
+                                //$("#image_count").val(el[0].jfiler_id)
+                                $('#userimage').val(imgdata);
+                                //$('<input>').attr({
+                                //    type: 'hidden',
+                                //    id: 'image_hidden_' + el[0].jfiler_id,
+                                //    name: 'Eventpicture[' + imgdata + ']',
+                                //    value: imgdata
+                                //}).appendTo('form');
+
+                                $('#ImagePresent').val("Yes");
+
+                                if ($.trim(image_count) == '') {
+                                    $("#image_count").val('1');
+                                } else {
+                                    image_count = parseInt(image_count) + 1;
+                                    $("#image_count").val(image_count);
+                                }
+
+                            },
+                            error: function (el) {
+
+                                //var parent = el.find(".jFiler-jProgressBar").parent();
+                                //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                                //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                                //});
+                            },
+                            statusCode: {},
+                            onProgress: function () { },
                         },
-                        statusCode: {},
-                        onProgress: function () { },
-                    },
-                    dragDrop: {
-                        dragEnter: function () { },
-                        dragLeave: function () { },
-                        drop: function () { },
-                    },
-                    addMore: false,
-                    clipBoardPaste: true,
-                    excludeName: null,
-                    beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
-                    onSelect: function () { $(".jFiler-input-inner").hide(); },
-                    afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
-                    onRemove: function (el) {
-                        var image_count = $("#image_count").val();
-                        image_count = parseInt(image_count) - 1;
-                        var id_div = el[0].jfiler_id;
-                        var hidden_image_element = 'image_hidden_' + id_div;
+                        dragDrop: {
+                            dragEnter: function () { },
+                            dragLeave: function () { },
+                            drop: function () { },
+                        },
+                        addMore: false,
+                        clipBoardPaste: true,
+                        excludeName: null,
+                        beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
+                        onSelect: function () { $(".jFiler-input-inner").hide(); },
+                        afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
+                        onRemove: function (el) {
+                            var image_count = $("#image_count").val();
+                            image_count = parseInt(image_count) - 1;
+                            var id_div = el[0].jfiler_id;
+                            var hidden_image_element = 'image_hidden_' + id_div;
 
-                        $('#userimage').val('');
-                        $('#input2').click(function (e) {
-                            e.preventDefault();
+                            $('#userimage').val('');
+                            $('#input2').click(function (e) {
+                                e.preventDefault();
 
-                        })
-                        $('#ImagePresent').val("NO");
-                    },
-                    onEmpty: function (el) {
-                        if ($("#imageeror").val() == 0) {
-                            if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                            })
+                            $('#ImagePresent').val("NO");
+                        },
+                        onEmpty: function (el) {
+                            if ($("#imageeror").val() == 0) {
+                                if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                            }
+                        },
+                        captions: {
+                            button: "Choose Files",
+                            feedback: "Choose files To Upload",
+                            feedback2: "files were chosen",
+                            drop: "Drop file here to Upload",
+                            removeConfirmation: "Are you sure you want to remove this file?",
+                            errors: {
+                                filesLimit: ajaxsetup('MyAccount', 'MyAccountImageCountValidationUI'),
+                                filesType: ajaxsetup('MyAccount', 'MyAccountImagestypeValidationUI'),
+                                filesSize: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI'),
+                                filesSizeAll: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI')
+                            }
                         }
-                    },
-                    captions: {
-                        button: "Choose Files",
-                        feedback: "Choose files To Upload",
-                        feedback2: "files were chosen",
-                        drop: "Drop file here to Upload",
-                        removeConfirmation: "Are you sure you want to remove this file?",
-                        errors: {
-                            filesLimit: ajaxsetup('MyAccount', 'MyAccountImageCountValidationUI'),
-                            filesType: ajaxsetup('MyAccount', 'MyAccountImagestypeValidationUI'),
-                            filesSize: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI'),
-                            filesSizeAll: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI')
-                        }
-                    }
 
-                });
-            }
-            else if (Model == "Edit") {
-                $("#image_count").val("1");
-                @*var imgdata =@Model.UserProfileImage+ '¶' + @Model.contentype;*@
+                    });
+                }
+                else if (Model == "Edit") {
+                    $("#image_count").val("1");
+                    @*var imgdata =@Model.UserProfileImage+ '¶' + @Model.contentype;*@
 
-                $('#userimage').val(imgdata);
-                $('#input2').filer({
-                    limit: '1',
-                    maxSize: '2',
-                    extensions: ['jpg', 'jpeg', 'png'],
-                    changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
-                    showThumbs: true,
-                    appendTo: "#drag-drop",
-                    theme: "dragdropbox",
-                    onChange:false,
-                    templates: {
-                        box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
-                        item: '<li class="jFiler-item">\
+                    $('#userimage').val(imgdata);
+                    $('#input2').filer({
+                        limit: '1',
+                        maxSize: '2',
+                        extensions: ['jpg', 'jpeg', 'png'],
+                        changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
+                        showThumbs: true,
+                        appendTo: "#drag-drop",
+                        theme: "dragdropbox",
+                        onChange: false,
+                        templates: {
+                            box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
+                            item: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <div class="jFiler-item-container">\
@@ -599,7 +601,7 @@
                                              </button>\
                                        </div>\
                         </li>',
-                        itemAppend: '<li class="jFiler-item">\
+                            itemAppend: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <button class="btn  jFiler-item-trash-action can_btn" type="button">\
@@ -609,454 +611,448 @@
                         </li>',
 
 
-                        progressBar: '<div class="bar"></div>',
-                        itemAppendToEnd: false,
-                        removeConfirmation: false,
-                        _selectors: {
-                            list: '.jFiler-item-list',
-                            item: '.jFiler-item',
-                            progressBar: '.bar',
-                            remove: '.jFiler-item-trash-action',
-                        }
-                    },
-                    uploadFile: {
-                        url: "/Account/SaveUploadedFile",
-                        data: {},
-                        type: 'POST',
-                        enctype: 'multipart/form-data',
-                        beforeSend: function () { },
-                        success: function (data, el) {
-
-                            var parent = el.find(".jFiler-jProgressBar").parent();
-                            el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                                $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
-                            });
-                            var image_count = $("#image_count").val();
-                            var imagejson = jQuery.parseJSON(JSON.stringify(data));
-                            var imgdata = imagejson.image_name + '¶' + imagejson.image_type;
-                            $("#image_count").val(el[0].jfiler_id)
-                            $('#userimage').val(imgdata);
-
-                            $('#ImagePresent').val("Yes");
-
-                            if ($.trim(image_count) == '') {
-                                $("#image_count").val('1');
-                            } else {
-                                image_count = parseInt(image_count) + 1;
-                                $("#image_count").val(image_count);
+                            progressBar: '<div class="bar"></div>',
+                            itemAppendToEnd: false,
+                            removeConfirmation: false,
+                            _selectors: {
+                                list: '.jFiler-item-list',
+                                item: '.jFiler-item',
+                                progressBar: '.bar',
+                                remove: '.jFiler-item-trash-action',
                             }
+                        },
+                        uploadFile: {
+                            url: "/Account/SaveUploadedFile",
+                            data: {},
+                            type: 'POST',
+                            enctype: 'multipart/form-data',
+                            beforeSend: function () { },
+                            success: function (data, el) {
+
+                                var parent = el.find(".jFiler-jProgressBar").parent();
+                                el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                                    $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                                });
+                                var image_count = $("#image_count").val();
+                                var imagejson = jQuery.parseJSON(JSON.stringify(data));
+                                var imgdata = imagejson.image_name + '¶' + imagejson.image_type;
+                                $("#image_count").val(el[0].jfiler_id)
+                                $('#userimage').val(imgdata);
+
+                                $('#ImagePresent').val("Yes");
+
+                                if ($.trim(image_count) == '') {
+                                    $("#image_count").val('1');
+                                } else {
+                                    image_count = parseInt(image_count) + 1;
+                                    $("#image_count").val(image_count);
+                                }
+
+
+                            },
+                            error: function (el) {
+                                //var parent = el.find(".jFiler-jProgressBar").parent();
+                                //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                                //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                                //});
+                            },
+                            statusCode: {},
+                            onProgress: function () { },
+                        },
+                        dragDrop: {
+                            dragEnter: function () { },
+                            dragLeave: function () { },
+                            drop: function () { },
+                        },
+                        addMore: false,
+                        clipBoardPaste: true,
+                        excludeName: null,
+                        beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
+                        onSelect: function () { $(".jFiler-input-inner").hide(); },
+                        afterShow: function () { $(".jFiler-input-inner").hide(); },
+                        onRemove: function (el) {
+                            var image_count = $("#image_count").val();
+                            image_count = parseInt(image_count) - 1;
+                            var id_div = el[0].jfiler_id;
+                            var hidden_image_element = 'image_hidden_' + id_div;
+                            $('#userimage').val('');
+                            $("#" + hidden_image_element).remove();
+                            $('#input2').click(function (e) {
+                                e.preventDefault();
+
+                            })
+                            $('#ImagePresent').val("NO");
 
 
                         },
-                        error: function (el) {
-                            //var parent = el.find(".jFiler-jProgressBar").parent();
-                            //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                            //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
-                            //});
+                        onEmpty: function (el) {
+                            console.log(el);
+
+                            // alert($("#drag-drop div").hasClass("jFiler-items"))
+                            if ($("#imageeror").val() == 0) {
+                                if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                            }
                         },
-                        statusCode: {},
-                        onProgress: function () { },
-                    },
-                    dragDrop: {
-                        dragEnter: function () { },
-                        dragLeave: function () { },
-                        drop: function () { },
-                    },
-                    addMore: false,
-                    clipBoardPaste: true,
-                    excludeName: null,
-                    beforeShow: function () {  $(".jFiler-input-inner").hide(); return true },
-                    onSelect: function () { $(".jFiler-input-inner").hide(); },
-                    afterShow: function () {  $(".jFiler-input-inner").hide(); },
-                    onRemove: function (el) {
-                        var image_count = $("#image_count").val();
-                        image_count = parseInt(image_count) - 1;
-                        var id_div = el[0].jfiler_id;
-                        var hidden_image_element = 'image_hidden_' + id_div;
-                        $('#userimage').val('');
-                        $("#" + hidden_image_element).remove();
-                        $('#input2').click(function (e) {
-                            e.preventDefault();
-
-                        })
-                        $('#ImagePresent').val("NO");
+                        captions: {
+                            button: "Choose Files",
+                            feedback: "Choose files To Upload",
+                            feedback2: "files were chosen",
+                            drop: "Drop file here to Upload",
+                            removeConfirmation: "Are you sure you want to remove this file?",
+                            errors: {
 
 
-                    },
-                    onEmpty: function (el) {
-                        console.log(el);
+                                filesLimit: ajaxsetup('MyAccount', 'MyAccountImageCountValidationUI'),
+                                filesType: ajaxsetup('MyAccount', 'MyAccountImagestypeValidationUI'),
+                                filesSize: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI'),
+                                filesSizeAll: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI')
+                            }
+                        },
+                        files: [{
+                            "type": "@Model.contentype",
+                            "name": "@Model.UserProfileImage",
+                            "file": "@Model.ImagePath"
+                        }]
 
-                        // alert($("#drag-drop div").hasClass("jFiler-items"))
-                        if ($("#imageeror").val()==0) {
-                            if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                    });
+                }
+
+            });
+
+
+        </script>
+        <script type="text/javascript">
+            function isleap(leapyear) {
+                var yr = leapyear;
+                if ((parseInt(yr) % 4) == 0) {
+                    if (parseInt(yr) % 100 == 0) {
+                        if (parseInt(yr) % 400 != 0) {
+
+                            return "false";
                         }
-                    },
-                    captions: {
-                        button: "Choose Files",
-                        feedback: "Choose files To Upload",
-                        feedback2: "files were chosen",
-                        drop: "Drop file here to Upload",
-                        removeConfirmation: "Are you sure you want to remove this file?",
-                        errors: {
+                        if (parseInt(yr) % 400 == 0) {
 
-
-                            filesLimit: ajaxsetup('MyAccount', 'MyAccountImageCountValidationUI'),
-                            filesType: ajaxsetup('MyAccount', 'MyAccountImagestypeValidationUI'),
-                            filesSize: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI'),
-                            filesSizeAll: ajaxsetup('MyAccount', 'MyAccountImagesizeValidationUI')
+                            return "true";
                         }
-                    },
-                    files: [{
-                        "type": "@Model.contentype",
-                        "name": "@Model.UserProfileImage",
-                        "file": "@Model.ImagePath"
-                    }]
-
-                });
-            }
-
-        });
-
-
-    </script>
-    <script type="text/javascript">
-        function isleap(leapyear) {
-            var yr = leapyear;
-            if ((parseInt(yr) % 4) == 0) {
-                if (parseInt(yr) % 100 == 0) {
-                    if (parseInt(yr) % 400 != 0) {
-                       
-                        return "false";
                     }
-                    if (parseInt(yr) % 400 == 0) {
-                      
+                    if (parseInt(yr) % 100 != 0) {
+
                         return "true";
                     }
                 }
-                if (parseInt(yr) % 100 != 0) {
-                   
-                    return "true";
+                if ((parseInt(yr) % 4) != 0) {
+
+                    return "false";
                 }
             }
-            if ((parseInt(yr) % 4) != 0) {
-             
-                return "false";
-            }
-        }
-        $('#btnsave').click(function () {
-            var msg = "";
-            var firstnmae = $("#Firstname").val();
-            var emailcount = 0, pwdcount = 0;;
-            var lastname = $("#Lastname").val();
-            var ConfirmPassword = $("#ConfirmPassword").val();
+            $('#btnsave').click(function () {
+                var msg = "";
+                var firstnmae = $("#Firstname").val();
+                var emailcount = 0, pwdcount = 0;;
+                var lastname = $("#Lastname").val();
+                var ConfirmPassword = $("#ConfirmPassword").val();
 
-            var Email = $("#Email").val();
-            var NewPassword = $("#NewPassword").val();
-            var ConfirmEmail = $("#ConfirmEmail").val();
-            var Websiteurl = $("#WebsiteURL").val();
-            var Password = $("#Password").val();
-            var ConfirmPassword = $("#ConfirmPassword").val();
+                var Email = $("#Email").val();
+                var NewPassword = $("#NewPassword").val();
+                var ConfirmEmail = $("#ConfirmEmail").val();
+                var Websiteurl = $("#WebsiteURL").val();
+                var Password = $("#Password").val();
+                var ConfirmPassword = $("#ConfirmPassword").val();
 
-            var NewPassword = $("#NewPassword").val();
-            var month = $("#month").val();
-          
-            var year = $("#year").val();
-            var day = $("#day").val();
-            var ily = returnleap(year);
-           
-            if (ily == true)
-            {
-              
-                if (day > 29 && month == 2) {
+                var NewPassword = $("#NewPassword").val();
+                var month = $("#month").val();
+
+                var year = $("#year").val();
+                var day = $("#day").val();
+                var ily = returnleap(year);
+
+                if (ily == true) {
+
+                    if (day > 29 && month == 2) {
+                        msg += ajaxsetup('MyAccount', 'MyAccountDateValidationUI');
+
+                        $('#month').addClass('err-bor');
+                        $('#year').addClass('err-bor');
+                        $('#day').addClass('err-bor');
+                    }
+
+                }
+                else {
+                    if (day > 28 && month == 2) {
+
+                        msg += ajaxsetup('MyAccount', 'MyAccountDateValidationUI');
+                        $('#month').addClass('err-bor');
+                        $('#year').addClass('err-bor');
+                        $('#day').addClass('err-bor');
+                    }
+                }
+                if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11)) {
+
                     msg += ajaxsetup('MyAccount', 'MyAccountDateValidationUI');
-                 
                     $('#month').addClass('err-bor');
                     $('#year').addClass('err-bor');
                     $('#day').addClass('err-bor');
+
                 }
 
-            }
-            else {
-                if (day > 28 && month == 2) {
-                    
-                    msg += ajaxsetup('MyAccount', 'MyAccountDateValidationUI');
-                    $('#month').addClass('err-bor');
-                    $('#year').addClass('err-bor');
-                    $('#day').addClass('err-bor');
-                }
-            }
-            if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
-            {
-                
-                msg += ajaxsetup('MyAccount', 'MyAccountDateValidationUI');
-                $('#month').addClass('err-bor');
-                $('#year').addClass('err-bor');
-                $('#day').addClass('err-bor');
+                if (firstnmae == "") {
+                    msg = ajaxsetup('MyAccount', 'MyAccountFnameRequiredUI');
 
-            }
-          
-            if (firstnmae=="") {
-                msg = ajaxsetup('MyAccount', 'MyAccountFnameRequiredUI');
-               
-                $('#Firstname').addClass('err-bor');
-            } else {
-               
-                $('#Firstname').removeClass('err-bor');
-            }
-         
-
-
-
-            if (Email != "") {
-                if (!validateEmail(Email)) {
-                    emailcount += 1;
-                    $('#Email').addClass('err-bor');
-                  
-
+                    $('#Firstname').addClass('err-bor');
                 } else {
-                    
-                  
-                    $('#Email').removeClass('err-bor');
-                }
-            }
 
-            if (ConfirmEmail != "") {
-
-                if (!validateEmail(ConfirmEmail)) {
-                    emailcount += 1;
-                    $('#ConfirmEmail').addClass('err-bor');
-                  
-
-                } else {
-                    $('#ConfirmEmail').removeClass('err-bor');
-                   
+                    $('#Firstname').removeClass('err-bor');
                 }
 
 
-            }
-            if (Password != "") {
-                if (Password.length < 4) {
-                    pwdcount += 1;
-                    $('#Password').addClass('err-bor');
-                    
 
-                }
-            }
-            if (NewPassword!="")
-            {
-                if (NewPassword.length < 4)
-                {
-                    pwdcount += 1;
-                    $('#NewPassword').addClass('err-bor');
-                    
 
-                }
-               
+                if (Email != "") {
+                    if (!validateEmail(Email)) {
+                        emailcount += 1;
+                        $('#Email').addClass('err-bor');
 
-            }
-            if (ConfirmPassword != "") {
-                if (ConfirmPassword.length < 4) {
-                    pwdcount += 1;
-                    $('#ConfirmPassword').addClass('err-bor');
-                   
+
+                    } else {
+
+
+                        $('#Email').removeClass('err-bor');
+                    }
                 }
 
+                if (ConfirmEmail != "") {
 
+                    if (!validateEmail(ConfirmEmail)) {
+                        emailcount += 1;
+                        $('#ConfirmEmail').addClass('err-bor');
+
+
+                    } else {
+                        $('#ConfirmEmail').removeClass('err-bor');
+
+                    }
+
+
+                }
+                if (Password != "") {
+                    if (Password.length < 4) {
+                        pwdcount += 1;
+                        $('#Password').addClass('err-bor');
+
+
+                    }
+                }
+                if (NewPassword != "") {
+                    if (NewPassword.length < 4) {
+                        pwdcount += 1;
+                        $('#NewPassword').addClass('err-bor');
+
+
+                    }
+
+
+                }
+                if (ConfirmPassword != "") {
+                    if (ConfirmPassword.length < 4) {
+                        pwdcount += 1;
+                        $('#ConfirmPassword').addClass('err-bor');
+
+                    }
+
+
+                }
+
+                if (emailcount > 0) {
+                    msg += ajaxsetup('MyAccount', 'MyAccountEmailValidationUI');
+
+                }
+                if (pwdcount > 0) {
+                    msg = ajaxsetup('MyAccount', 'MyAccountPasswordValidationUI');
+
+                }
+                if (msg == "") {
+                    $('#diverroacc').css("display", "none");
+                    $("#imageeror").val('0');
+                    return true;
+                }
+                else {
+
+                    $('#erraccmsg').html(msg);
+                    $('#diverro1acc').css("display", "none");
+                    $('#divaccsuc').css("display", "none");
+
+                    $('#diverroacc').css("display", "block");
+
+                    $('#diverroacc').focus();
+                    return false;
+                }
+            });
+            function returnleap(yr) {
+                return (yr % 400) ? ((yr % 100) ? ((yr % 4) ? false : true) : false) : true;
             }
-          
-            if (emailcount > 0)
-            {
-                msg += ajaxsetup('MyAccount', 'MyAccountEmailValidationUI') ;
+            function validateEmail(sEmail) {
+                var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
 
+                if (filter.test(sEmail)) {
+
+                    return true;
+                }
+                else {
+
+
+                    return false;
+                }
             }
-            if (pwdcount > 0)
-            {
-                msg = ajaxsetup('MyAccount', 'MyAccountPasswordValidationUI') ;
+            var val1, val2;
+            $('#Zip').change(function () {
+                var country = $("#Country option:selected").text().trim();
 
-            }
-            if (msg == "") {
-                $('#diverroacc').css("display", "none");
-                $("#imageeror").val('0');
-                return true;
-            }
-            else {
-              
-                $('#erraccmsg').html(msg);
-                $('#diverro1acc').css("display", "none");
-                $('#divaccsuc').css("display", "none");
-                
-                $('#diverroacc').css("display", "block");
-                
-                $('#diverroacc').focus();
-                return false;
-            }
-        });
-        function returnleap(yr) {
-            return (yr % 400) ? ((yr % 100) ? ((yr % 4) ? false : true) : false) : true;
-        }
-        function validateEmail(sEmail) {
-            var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+                var city = "";
+                var state = "";
 
-            if (filter.test(sEmail)) {
-
-                return true;
-            }
-            else {
+                var pincode = $(this).val();
+                $.ajax({
+                    url: 'http://maps.googleapis.com/maps/api/geocode/json',
+                    data: '&address=' + pincode + '&sensor=true',
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
 
 
-                return false;
-            }
-        }
-        var val1, val2;
-        $('#Zip').change(function () {
-            var country = $("#Country option:selected").text().trim();
-           
-            var city = "";
-            var state = "";
+                        if (data.status == 'OK') {
 
-            var pincode = $(this).val();
-            $.ajax({
-                url: 'http://maps.googleapis.com/maps/api/geocode/json',
-                data: '&address=' + pincode + '&sensor=true',
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
+                            for (var i = 0; i < data.results[0].address_components.length; i++) {
+                                var obj = data.results[0].address_components[i];
+
+                                var obj2 = obj['types'];
+
+                                for (var j = 0; j < obj2.length; j++) {
+                                    if (obj2[j] == 'locality') {
+                                        city = obj['long_name'];
 
 
-                    if (data.status == 'OK') {
-
-                        for (var i = 0; i < data.results[0].address_components.length; i++) {
-                            var obj = data.results[0].address_components[i];
-                         
-                            var obj2 = obj['types'];
-                          
-                            for (var j = 0; j < obj2.length; j++) {
-                                if (obj2[j] == 'locality') {
-                                    city = obj['long_name'];
-
-                                 
-                                }
-                                if (obj2[j] == 'postal_town') {
-                                    city = obj['long_name'];
-
-                               
-                                }
-                                if (obj2[j] == 'sublocality_level_1') {
-                                    city = obj['long_name'];
+                                    }
+                                    if (obj2[j] == 'postal_town') {
+                                        city = obj['long_name'];
 
 
-                                }
-                                if (obj2[j] == 'sublocality_level_2') {
-                                    city = obj['long_name'];
+                                    }
+                                    if (obj2[j] == 'sublocality_level_1') {
+                                        city = obj['long_name'];
 
 
-                                }
-                                if (obj2[j] == 'sublocality_level_3') {
-                                    city = obj['long_name'];
+                                    }
+                                    if (obj2[j] == 'sublocality_level_2') {
+                                        city = obj['long_name'];
 
 
-                                }
-                                if (obj2[j] == 'sublocality_level_4') {
-                                    city = obj['long_name'];
+                                    }
+                                    if (obj2[j] == 'sublocality_level_3') {
+                                        city = obj['long_name'];
 
 
-                                }
-                                if (obj2[j] == 'sublocality_level_5') {
-                                    city = obj['long_name'];
+                                    }
+                                    if (obj2[j] == 'sublocality_level_4') {
+                                        city = obj['long_name'];
 
 
-                                }
-                                if (obj2[j] == 'ward') {
-                                    city = obj['long_name'];
+                                    }
+                                    if (obj2[j] == 'sublocality_level_5') {
+                                        city = obj['long_name'];
 
 
-                                }
-                                if (obj2[j] == 'sublocality_level_5') {
-                                    city = obj['long_name'];
+                                    }
+                                    if (obj2[j] == 'ward') {
+                                        city = obj['long_name'];
 
 
-                                }
-                                if (obj2[j] == 'administrative_area_level_1') {
-                                    state = obj['long_name'];
-                                   
-                                }
-                                //if (obj2[j] == 'administrative_area_level_2') {
-                                  
-                                //    state = obj['long_name'];
-                                  
-                                //}
-                                //if (obj2[j] == 'administrative_area_level_3') {
+                                    }
+                                    if (obj2[j] == 'sublocality_level_5') {
+                                        city = obj['long_name'];
 
-                                //    state = obj['long_name'];
 
-                                //}
-                                //if (obj2[j] == 'administrative_area_level_4') {
+                                    }
+                                    if (obj2[j] == 'administrative_area_level_1') {
+                                        state = obj['long_name'];
 
-                                //    state = obj['long_name'];
+                                    }
+                                    //if (obj2[j] == 'administrative_area_level_2') {
 
-                                //}
-                                //if (obj2[j] == 'administrative_area_level_5') {
+                                    //    state = obj['long_name'];
 
-                                //    state = obj['long_name'];
+                                    //}
+                                    //if (obj2[j] == 'administrative_area_level_3') {
 
-                                //}
-                             
-                               
-                                if (obj2[j] == 'country') {
-                                    if (obj['long_name'] == country) {
-                                        $('#City').val(city);
-                                        $('#State').val(state);
-                                      
-                                      
+                                    //    state = obj['long_name'];
+
+                                    //}
+                                    //if (obj2[j] == 'administrative_area_level_4') {
+
+                                    //    state = obj['long_name'];
+
+                                    //}
+                                    //if (obj2[j] == 'administrative_area_level_5') {
+
+                                    //    state = obj['long_name'];
+
+                                    //}
+
+
+                                    if (obj2[j] == 'country') {
+                                        if (obj['long_name'] == country) {
+                                            $('#City').val(city);
+                                            $('#State').val(state);
+
+
+                                        }
+
                                     }
 
                                 }
 
+
+
                             }
-
-
 
                         }
 
+
+
+                        else {
+                            var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                            $('#erraccmsg').html(msg);
+                            $('#diverro1acc').css("display", "none");
+                            $('#divaccsuc').css("display", "none");
+
+                            $('#diverroacc').css("display", "block");
+
+                            $('#diverroacc').focus();
+
+                            $('#Zip').addClass('err-bor');
+                            return false;
+                        }
                     }
-
-
-
-                    else {
-                        var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
-                        $('#erraccmsg').html(msg);
-                        $('#diverro1acc').css("display", "none");
-                        $('#divaccsuc').css("display", "none");
-
-                        $('#diverroacc').css("display", "block");
-
-                        $('#diverroacc').focus();
-                      
-                        $('#Zip').addClass('err-bor');
-                        return false;
-                    }
-                }
-            });
-        });
-
-        function ajaxsetup(strname, strFormTag) {
-            var msgnew = "";
-
-            var request = $.ajax({
-                url: '@Url.Action("Index", "ValidationMessage")',
-                async: false,
-                data: { strFormName: strname, strFormTag: strFormTag },
-                type: 'Post'
-            });
-            request.done(function (msg) {
-                msgnew += msg;
+                });
             });
 
-            request.fail(function (jqXHR, textStatus) {
-                msgnew += "Some Error occur!!";
-            });
-            return msgnew;
-        }
-    </script>
-    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+            function ajaxsetup(strname, strFormTag) {
+                var msgnew = "";
+
+                var request = $.ajax({
+                    url: '@Url.Action("Index", "ValidationMessage")',
+                    async: false,
+                    data: { strFormName: strname, strFormTag: strFormTag },
+                    type: 'Post'
+                });
+                request.done(function (msg) {
+                    msgnew += msg;
+                });
+
+                request.fail(function (jqXHR, textStatus) {
+                    msgnew += "Some Error occur!!";
+                });
+                return msgnew;
+            }
+        </script>
+        <script src="~/Scripts/jquery.maskedinput.min.js"></script>
 
