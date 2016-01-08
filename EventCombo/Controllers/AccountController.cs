@@ -563,8 +563,8 @@ namespace EventCombo.Controllers
 
                         var result = await UserManager.ResetPasswordAsync(Userid, token, model.NewPassword);
                         successmsg = vmc.Index("MyAccount", "MyAccountSuccessPasswordSY") + successmsg;
-                      
-                      
+                        string tag = "UserEmailID:" + model.Email + "¶UserFirstNameID:" + model.Firstname;
+
                         EmailTag = hmc.getTag();
 
                          Emailtemplate = hmc.getEmail("acc_pwd_set");
@@ -619,51 +619,265 @@ namespace EventCombo.Controllers
 
                                 subjectn = Emailtemplate.Subject;
 
-                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                                {
+                                //for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                                //{
 
-                                    if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                    {
-                                        if (EmailTag[i].Tag_Name == "UserEmailID")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
+                                //    if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                //    {
+                                //        if (EmailTag[i].Tag_Name == "UserEmailID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
 
-                                        }
-                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
 
-                                        }
+                                //        }
+                                     
+                                //        if (EmailTag[i].Tag_Name == "UserLastNameID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶UserLastNameID¶¶", "");
 
-                                    }
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventNameID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventNameID¶¶", "");
 
-                                }
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventStartDateID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventStartDateID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventEndDateID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventEndDateID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventEndTimeID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventEndTimeID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventVenueID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventVenueID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventAddressID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventAddressID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "TicketOrderNumberID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶TicketOrderNumberID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "DealOrderNumberID")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶DealOrderNumberID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "ResetPwdUrl")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶ResetPwdUrl¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventOrderNO")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventBarcodeId")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventBarcodeId¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventTitleId")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventTitleId¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventImageId")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventImageId¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "Tickettype")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶Tickettype¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "TicketPrice")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶TicketPrice¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶TicketOrderDateId¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventTimeZone")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventTimeZone¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "Ticketname")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶Ticketname¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventQrCode")
+                                //        {
+                                //            subjectn = subjectn.Replace("¶¶EventQrCode¶¶", "");
+
+                                //        }
+
+
+                                //    }
+
+                                //}
                             }
                             if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
                             {
                                 bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                                {
+                                //for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                                //{
 
-                                    if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                    {
-                                        if (EmailTag[i].Tag_Name == "UserEmailID")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
+                                //    if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                //    {
+                                //        if (EmailTag[i].Tag_Name == "UserEmailID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
 
-                                        }
-                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
 
-                                        }
+                                //        }
+                                     
+                                //        if (EmailTag[i].Tag_Name == "UserLastNameID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶UserLastNameID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventNameID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventNameID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventStartDateID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventStartDateID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventEndDateID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventEndDateID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventStartTimeID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventEndTimeID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventEndTimeID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventVenueID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventVenueID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventAddressID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventAddressID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "TicketOrderNumberID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶TicketOrderNumberID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "DealOrderNumberID")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶DealOrderNumberID¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "ResetPwdUrl")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶ResetPwdUrl¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventOrderNO")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventBarcodeId")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventTitleId")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventTitleId¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventImageId")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventImageId¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "Tickettype")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶Tickettype¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "TicketPrice")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶TicketPrice¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventTimeZone")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventTimeZone¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "Ticketname")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶Ticketname¶¶", "");
+
+                                //        }
+                                //        if (EmailTag[i].Tag_Name == "EventQrCode")
+                                //        {
+                                //            bodyn = bodyn.Replace("¶¶EventQrCode¶¶", "");
+
+                                //        }
 
 
-                                    }
 
-                                }
+                                //    }
+
+                                //}
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc,tag);
                         }
 
 
@@ -697,6 +911,8 @@ namespace EventCombo.Controllers
                         EmailTag = hmc.getTag();
 
                         Emailtemplate = hmc.getEmail("acc_info_update");
+
+                        string tag = "UserEmailID:" + model.Email+ "¶UserFirstNameID:"+ model.Firstname;
                         if (Emailtemplate != null)
                         {
                             if (!string.IsNullOrEmpty(Emailtemplate.To))
@@ -748,51 +964,14 @@ namespace EventCombo.Controllers
 
                                 subjectn = Emailtemplate.Subject;
 
-                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                                {
-
-                                    if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                    {
-                                        if (EmailTag[i].Tag_Name == "UserEmailID")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                        {
-                                            subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
-
-                                        }
-
-                                    }
-
-                                }
+                              
                             }
                             if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
                             {
                                 bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                                for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                                {
-
-                                    if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                    {
-                                        if (EmailTag[i].Tag_Name == "UserEmailID")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                                        }
-                                        if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                        {
-                                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", model.Firstname);
-
-                                        }
-
-
-                                    }
-
-                                }
+                              
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag);
                         }
               
                     }

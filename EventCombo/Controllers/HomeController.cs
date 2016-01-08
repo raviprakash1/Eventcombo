@@ -319,6 +319,8 @@ namespace EventCombo.Controllers
             var Emailtemplate = getEmail("email_lost_pwd");
             if (Emailtemplate != null)
             {
+
+                string tag = "UserEmailID:"+model.Email + "¶" + "UserFirstNameID:"+username+ "ResetPwdUrl:"+ url1;
                 if (!string.IsNullOrEmpty(Emailtemplate.To))
                 {
 
@@ -383,6 +385,115 @@ namespace EventCombo.Controllers
                                 subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
 
                             }
+                            if (EmailTag[i].Tag_Name == "UserLastNameID")
+                            {
+                                subjectn = subjectn.Replace("¶¶UserLastNameID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventNameID")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventNameID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventStartDateID")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventStartDateID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventEndDateID")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventEndDateID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventEndTimeID")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventEndTimeID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventVenueID")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventVenueID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventAddressID")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventAddressID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "TicketOrderNumberID")
+                            {
+                                subjectn = subjectn.Replace("¶¶TicketOrderNumberID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "DealOrderNumberID")
+                            {
+                                subjectn = subjectn.Replace("¶¶DealOrderNumberID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "ResetPwdUrl")
+                            {
+                                subjectn = subjectn.Replace("¶¶ResetPwdUrl¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventOrderNO")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventBarcodeId")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventBarcodeId¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventTitleId")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventTitleId¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventImageId")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventImageId¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "Tickettype")
+                            {
+                                subjectn = subjectn.Replace("¶¶Tickettype¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "TicketPrice")
+                            {
+                                subjectn = subjectn.Replace("¶¶TicketPrice¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                            {
+                                subjectn = subjectn.Replace("¶¶TicketOrderDateId¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventTimeZone")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventTimeZone¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "Ticketname")
+                            {
+                                subjectn = subjectn.Replace("¶¶Ticketname¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventQrCode")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventQrCode¶¶", "");
+
+                            }
+                            // All tags
+                           
+                         
+
 
                         }
 
@@ -411,12 +522,113 @@ namespace EventCombo.Controllers
                                 bodyn = bodyn.Replace("¶¶ResetPwdUrl¶¶", url1);
 
                             }
+                            if (EmailTag[i].Tag_Name == "UserLastNameID")
+                            {
+                                bodyn = bodyn.Replace("¶¶UserLastNameID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventNameID")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventNameID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventStartDateID")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventStartDateID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventEndDateID")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventEndDateID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventStartTimeID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventEndTimeID")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventEndTimeID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventVenueID")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventVenueID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventAddressID")
+                            {
+                                bodyn = subjectn.Replace("¶¶EventAddressID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "TicketOrderNumberID")
+                            {
+                                bodyn = bodyn.Replace("¶¶TicketOrderNumberID¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "DealOrderNumberID")
+                            {
+                                bodyn = bodyn.Replace("¶¶DealOrderNumberID¶¶", "");
+
+                            }
+                         
+                            if (EmailTag[i].Tag_Name == "EventOrderNO")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventBarcodeId")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventTitleId")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventTitleId¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventImageId")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventImageId¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "Tickettype")
+                            {
+                                bodyn = bodyn.Replace("¶¶Tickettype¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "TicketPrice")
+                            {
+                                bodyn = bodyn.Replace("¶¶TicketPrice¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                            {
+                                bodyn = subjectn.Replace("¶¶TicketOrderDateId¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventTimeZone")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventTimeZone¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "Ticketname")
+                            {
+                                bodyn = bodyn.Replace("¶¶Ticketname¶¶", "");
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventQrCode")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventQrCode¶¶", "");
+
+                            }
 
                         }
 
                     }
                 }
-                SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc);
+                SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag);
             }
             ValidationMessageController vmc = new ValidationMessageController();
            var msg= vmc.Index("ForgotPassword", "ForgotPwdSuccessInitSY");
@@ -673,7 +885,7 @@ namespace EventCombo.Controllers
                         var bodyn = "";
                         List<Email_Tag> EmailTag = new List<Email_Tag>();
                          EmailTag = getTag();
-                       
+                        string tag = "UserEmailID:" + model.Email;
                         var Emailtemplate = getEmail("email_welcome");
                         if (!string.IsNullOrEmpty(Emailtemplate.To))
                         {
@@ -727,61 +939,18 @@ namespace EventCombo.Controllers
 
                             subjectn = Emailtemplate.Subject;
 
-                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                            {
-
-                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                {
-                                    if (EmailTag[i].Tag_Name == "UserEmailID")
-                                    {
-                                        subjectn= subjectn.Replace("¶¶UserEmailID¶¶", model.Email);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", "");
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserLastNameID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶UserLastNameID¶¶", "");
-
-                                    }
-                                    
-
-                                }
-
-                            }
+                          
                         }
                         if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
                         {
-                            bodyn =  new  MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                            {
+                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
 
-                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                {
-                                    if (EmailTag[i].Tag_Name == "UserEmailID")
-                                    {
-                                        bodyn= bodyn.Replace("¶¶UserEmailID¶¶", model.Email);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", "");
+                        
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserLastNameID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserLastNameID¶¶", "");
-
-                                    }
-
-                                }
-
-                            }
+                            
                         }
-                        SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc);
+                        SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag);
 
 
                     }
@@ -809,11 +978,71 @@ namespace EventCombo.Controllers
             }
             return strIpAddress;
         }
-        public void SendHtmlFormattedEmail(string To,string from, string subject, string body,string cc,string bcc)
+        public void SendHtmlFormattedEmail(string To,string from, string subject, string body,string cc,string bcc,string tags)
         {
             using (MailMessage mailMessage = new MailMessage())
             {
                 mailMessage.From = new MailAddress(from, from);
+              string[] arr= tags.Split('¶');
+                int length = arr.Length;
+                List<Email_Tag> EmailTag = new List<Email_Tag>();
+                EmailTag = getTag();
+
+                if (!string.IsNullOrEmpty(subject) && subject!=null)
+                {
+                  
+                   
+                       for(int j=0;j<length;j++)
+                        {
+                        for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                        {
+                            string[] arrtag = arr[j].Split(':');
+                            if (arrtag[0]==EmailTag[i].Tag_Name)
+                            {
+                                if(subject.Contains(EmailTag[i].Tag_Name))
+                                {
+                                    subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
+                                }
+                            }
+                        } 
+                    }
+                    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                    {
+                        if (subject.Contains(EmailTag[i].Tag_Name))
+                        {
+                            subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
+                        }
+                    }
+
+                       
+
+                }
+                if(body!=null && !string.IsNullOrEmpty( body))
+                {
+                    for (int j = 0; j < length; j++)
+                    {
+                        for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                    {
+                       
+                            string[] arrtag = arr[j].Split(':');
+                            if (arrtag[0] == EmailTag[i].Tag_Name)
+                            {
+                                if (body.Contains(EmailTag[i].Tag_Name))
+                                {
+                                    body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
+                                }
+                            }
+                        }
+                    }
+                    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                    {
+                        if (body.Contains(EmailTag[i].Tag_Name))
+                        {
+                            body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
+                        }
+                    }
+
+                }
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;    
                 if (!string.IsNullOrEmpty(cc))
@@ -843,7 +1072,66 @@ namespace EventCombo.Controllers
             MailMessage mailMessage = new MailMessage();
             
                 mailMessage.From = new MailAddress(from, from);
-                mailMessage.Subject = subject;
+
+            //string[] arr = tags.Split('¶');
+            //int length = arr.Length;
+            //List<Email_Tag> EmailTag = new List<Email_Tag>();
+            //EmailTag = getTag();
+
+            //if (!string.IsNullOrEmpty(subject) && subject != null)
+            //{
+
+            //    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+            //    {
+            //        for (int j = 0; j < length; i++)
+            //        {
+            //            string[] arrtag = arr[i].Split(':');
+            //            if (arrtag[0] == EmailTag[i].Tag_Name)
+            //            {
+            //                if (subject.Contains(EmailTag[i].Tag_Name))
+            //                {
+            //                    subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
+            //                }
+            //            }
+            //        }
+            //    }
+            //    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+            //    {
+            //        if (subject.Contains(EmailTag[i].Tag_Name))
+            //        {
+            //            subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
+            //        }
+            //    }
+
+
+
+            //}
+            //if (body != null && !string.IsNullOrEmpty(body))
+            //{
+            //    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+            //    {
+            //        for (int j = 0; j < length; i++)
+            //        {
+            //            string[] arrtag = arr[i].Split(':');
+            //            if (arrtag[0] == EmailTag[i].Tag_Name)
+            //            {
+            //                if (body.Contains(EmailTag[i].Tag_Name))
+            //                {
+            //                    body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
+            //                }
+            //            }
+            //        }
+            //    }
+            //    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+            //    {
+            //        if (body.Contains(EmailTag[i].Tag_Name))
+            //        {
+            //            body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
+            //        }
+            //    }
+
+            //}
+            mailMessage.Subject = subject;
                 mailMessage.Body = body;
                 if (!string.IsNullOrEmpty(cc))
                 {

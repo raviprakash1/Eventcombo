@@ -90,10 +90,36 @@ namespace EventCombo.Controllers
             TempData["LiveEvents"] = objLiveEventList.Count;
             TempData["SavedEvents"] = objSavedEventList.Count;
             TempData["PastEvents"] = objPastEventList.Count;
-            TempData["hdLastTab"] = hdLastTab;
+
             TempData["GuestList"] = objGuestEventList.Count;
 
+            if (!string.IsNullOrEmpty(SearchStringEventTitle) && SearchStringEventTitle != null)
+             {
+                TempData["LiveEventscnt"] = objLiveEventList.Count;
+                TempData["SavedEventscnt"] = objSavedEventList.Count;
+                TempData["PastEventscnt"] = objPastEventList.Count;
+              
+                TempData["GuestListcnt"] = objGuestEventList.Count;
+                TempData["Allcount"] = 1;
+            }
+            else
+            {
+                TempData["LiveEventscnt"] = 10;
+                TempData["SavedEventscnt"] = 10;
+                TempData["PastEventscnt"] = 10;
+                TempData["GuestListcnt"] = objGuestEventList.Count;
 
+                if (objLiveEventList.Count == 0 && objSavedEventList.Count == 0 && objPastEventList.Count == 0 && objGuestEventList.Count == 0)
+                {
+                    TempData["Allcount"] = 0;
+                }
+                else
+                {
+                    TempData["Allcount"] = 1;
+                }
+            }
+
+            TempData["hdLastTab"] = hdLastTab;
             if (objLiveEventList.Count == 0)
                 ViewData["LiveEvntCnt"] = 0;
             if (objSavedEventList.Count == 0)
@@ -102,6 +128,7 @@ namespace EventCombo.Controllers
                 ViewData["PastEvntCnt"] = 0;
             if (objGuestEventList.Count == 0)
                 ViewData["GuestLstCnt"] = 0;
+         
             return View();
         }
         public List<GetEventsListByStatus1_Result> GetLiveEvents(string SearchStringEventTitle)

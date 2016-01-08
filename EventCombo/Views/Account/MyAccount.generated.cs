@@ -200,12 +200,15 @@ WriteLiteral(">&#215;</button>\r\n            </div>\r\n        </div>\r\n");
     }
     if (!ViewData.ModelState.IsValid)
     {
-        
 
             
             #line default
             #line hidden
 WriteLiteral("        <div");
+
+WriteLiteral(" class=\"col-sm-10 mb10 col-xs-12\"");
+
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"er_UI_main\"");
 
@@ -213,11 +216,11 @@ WriteLiteral(" id=\"diverro1acc\"");
 
 WriteLiteral(" tabindex=\"-1\"");
 
-WriteLiteral(">\r\n           \r\n            <div");
+WriteLiteral(">\r\n\r\n                <div");
 
 WriteLiteral(" class=\"er_sys_img\"");
 
-WriteLiteral("></div>\r\n            <div");
+WriteLiteral("></div>\r\n                <div");
 
 WriteLiteral(" class=\"er_suc\"");
 
@@ -227,12 +230,12 @@ WriteLiteral(">");
 
             
             #line 58 "..\..\Views\Account\MyAccount.cshtml"
-                                           Write(Html.ValidationMessage("Error"));
+                                               Write(Html.ValidationMessage("Error"));
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n            <button");
+WriteLiteral("</div>\r\n                <button");
 
 WriteLiteral(" class=\"close\"");
 
@@ -240,23 +243,28 @@ WriteLiteral(" type=\"button\"");
 
 WriteLiteral(" id=\"btndiverro1acc\"");
 
-WriteLiteral(">&#215;</button>\r\n        </div>\r\n");
+WriteLiteral(">&#215;</button>\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 61 "..\..\Views\Account\MyAccount.cshtml"
+            #line 62 "..\..\Views\Account\MyAccount.cshtml"
+
     }
-    
+            
             
             #line default
             #line hidden
             
-            #line 68 "..\..\Views\Account\MyAccount.cshtml"
-      
+            #line 70 "..\..\Views\Account\MyAccount.cshtml"
+                   
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"col-sm-10 mb10 col-xs-12\"");
+
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"er_UI_main\"");
 
@@ -266,13 +274,13 @@ WriteLiteral(" style=\"display :none;\"");
 
 WriteLiteral(" tabindex=\"-1\"");
 
-WriteLiteral(">\r\n            \r\n            ");
+WriteLiteral(">\r\n\r\n            ");
 
-WriteLiteral("\r\n              \r\n                <div");
+WriteLiteral("\r\n\r\n            <div");
 
 WriteLiteral(" class=\"er_UI_img\"");
 
-WriteLiteral("></div>\r\n                <div");
+WriteLiteral("></div>\r\n            <div");
 
 WriteLiteral(" class=\"er_suc\"");
 
@@ -286,9 +294,9 @@ WriteLiteral(" type=\"button\"");
 
 WriteLiteral(" id=\"btndiverroacc\"");
 
-WriteLiteral(">&#215;</button>\r\n            ");
+WriteLiteral(">&#215;</button>\r\n        </div>\r\n            ");
 
-WriteLiteral("\r\n       \r\n           \r\n        </div>\r\n");
+WriteLiteral("\r\n\r\n\r\n        </div>\r\n");
 
 WriteLiteral("        <div");
 
@@ -304,194 +312,195 @@ WriteLiteral(">\r\n            <div>\r\n\r\n                <input");
 
 WriteLiteral(" type=\"file\"");
 
-WriteLiteral("  name=\"image\"");
+WriteLiteral(" name=\"image\"");
 
 WriteLiteral(" id=\"input2\"");
 
 WriteLiteral(">\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 87 "..\..\Views\Account\MyAccount.cshtml"
+            #line 91 "..\..\Views\Account\MyAccount.cshtml"
 
 
 
             
             #line default
             #line hidden
-WriteLiteral("<div");
+WriteLiteral("        <div");
 
 WriteLiteral(" class=\"col-sm-7\"");
 
-WriteLiteral(">\r\n    <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label \"");
 
-WriteLiteral(">Name</label>\r\n        <div");
+WriteLiteral(">Name</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-6\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
-
-            
-            #line 95 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.Firstname, new { @maxlength = 35, @class = "form-control" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <small");
-
-WriteLiteral(" class=\"acnt_form_name_mini\"");
-
-WriteLiteral(">First Name</small>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"col-xs-6\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
             #line 99 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.Lastname, new { @maxlength = 35, @class = "form-control" }));
+                       Write(Html.TextBoxFor(m => m.Firstname, new { @maxlength = 35, @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <small");
+WriteLiteral("\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini\"");
 
-WriteLiteral(">Last Name</small>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r" +
-"\n    </div>\r\n    <div");
+WriteLiteral(">First Name</small>\r\n                        </div>\r\n                        <div" +
+"");
+
+WriteLiteral(" class=\"col-xs-6\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 103 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.Lastname, new { @maxlength = 35, @class = "form-control" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <small");
+
+WriteLiteral(" class=\"acnt_form_name_mini\"");
+
+WriteLiteral(">Last Name</small>\r\n                        </div>\r\n\r\n                    </div>\r" +
+"\n                </div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n    <div");
+WriteLiteral("></div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Date of Birth</label>\r\n        <div");
+WriteLiteral(">Date of Birth</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-4 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 112 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.DropDownList("month", Enumerable.Range(1, 12).Select(i => new SelectListItem
-                {
-                    Value = i.ToString(),
-                    Text = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(i),
-                    Selected = i == Model.month
+            #line 116 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.DropDownList("month", Enumerable.Range(1, 12).Select(i => new SelectListItem
+                           {
+                               Value = i.ToString(),
+                               Text = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(i),
+                               Selected = i == Model.month
 
-                }), new { @class = "form-control" }));
+                           }), new { @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    \r\n                </div>\r\n                <div");
+WriteLiteral("\r\n\r\n                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-4 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 122 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
-                {
-                    Value = i.ToString(),
-                    Text = i.ToString(),
-                    Selected = i == Model.day
+            #line 126 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
+                           {
+                               Value = i.ToString(),
+                               Text = i.ToString(),
+                               Selected = i == Model.day
 
-                }), new { @class = "form-control" }));
+                           }), new { @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n                <div");
+WriteLiteral("\r\n                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-4 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 131 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
-               {
-                   Value = i.ToString(),
-                   Text = i.ToString(),
-                   Selected = i == Model.year
+            #line 135 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
+                           {
+                               Value = i.ToString(),
+                               Text = i.ToString(),
+                               Selected = i == Model.year
 
-               }), new { @class = "form-control" }));
+                           }), new { @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n        \r\n    </div" +
-">\r\n    <div");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n    <div");
+WriteLiteral("></div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Gender</label>\r\n        <div");
+WriteLiteral(">Gender</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-12 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 149 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.DropDownList("Gender", new List<SelectListItem>{
+            #line 153 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.DropDownList("Gender", new List<SelectListItem>{
         new SelectListItem{ Text="Male", Value="Male"},
         new SelectListItem{ Text="Female", Value="Female"}
         }, "--- Select ---", new { @class = "form-control" }
@@ -500,479 +509,482 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n    </div>\r\n</div>\r\n</div>\r\n    <div");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n    <div");
+WriteLiteral("></div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Address</label>\r\n        <div");
+WriteLiteral(">Address</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 164 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.StreetAddress1, new { @maxlength = 256, @class = "form-control" }));
+            #line 168 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.StreetAddress1, new { @maxlength = 256, @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <small");
+WriteLiteral("\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini\"");
 
-WriteLiteral(">Street Address</small>\r\n                    <small");
+WriteLiteral(">Street Address</small>\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini pull-right coun_lef\"");
 
 WriteLiteral(" id=\"cntstreetadd1\"");
 
-WriteLiteral(">Count Left 256</small>\r\n                </div>\r\n                <div");
+WriteLiteral(">Count Left 256</small>\r\n                        </div>\r\n                        " +
+"<div");
 
 WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 169 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.StreeAddress2, new { @maxlength = 256, @class = "form-control" }));
+            #line 173 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.StreeAddress2, new { @maxlength = 256, @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <small");
+WriteLiteral("\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini\"");
 
-WriteLiteral(">Street Address 2</small>\r\n                    <small");
+WriteLiteral(">Street Address 2</small>\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini pull-right coun_lef\"");
 
 WriteLiteral(" id=\"cntstreetadd2\"");
 
-WriteLiteral(">Count Left 256</small>\r\n                </div>\r\n            </div>\r\n            " +
-"<div");
+WriteLiteral(">Count Left 256</small>\r\n                        </div>\r\n                    </di" +
+"v>\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-6 add_form_bot\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 176 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.City, new { @maxlength = 256, @class = "form-control" }));
+            #line 180 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.City, new { @maxlength = 256, @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                  \r\n                    <small");
+WriteLiteral("\r\n\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini\"");
 
-WriteLiteral(">City</small>\r\n                    <small");
+WriteLiteral(">City</small>\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini pull-right coun_lef\"");
 
 WriteLiteral(" id=\"cntcityadd1\"");
 
-WriteLiteral(">Count Left 256</small>\r\n                </div>\r\n                <div");
+WriteLiteral(">Count Left 256</small>\r\n                        </div>\r\n                        " +
+"<div");
 
 WriteLiteral(" class=\"col-xs-6 add_form_bot\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 182 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.State, new { @maxlength = 256, @class = "form-control" }));
+            #line 186 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.State, new { @maxlength = 256, @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <small");
+WriteLiteral("\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini\"");
 
-WriteLiteral(">State</small>\r\n                    <small");
+WriteLiteral(">State</small>\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini pull-right coun_lef\"");
 
 WriteLiteral(" id=\"cntcitystate\"");
 
-WriteLiteral(">Count Left 256</small>\r\n                </div>\r\n\r\n            </div>\r\n          " +
-"  <div");
+WriteLiteral(">Count Left 256</small>\r\n                        </div>\r\n\r\n                    </" +
+"div>\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-6 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
-
-            
-            #line 190 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.Zip, new { @maxlength = 5, @class = "form-control" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    <small");
-
-WriteLiteral(" class=\"acnt_form_name_mini\"");
-
-WriteLiteral(">Zip</small>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"col-xs-6 add_form_bot mb0\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
             #line 194 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new {@class = "form-control" }));
+                       Write(Html.TextBoxFor(m => m.Zip, new { @maxlength = 5, @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <small");
+WriteLiteral("\r\n                            <small");
 
 WriteLiteral(" class=\"acnt_form_name_mini\"");
 
-WriteLiteral(">Country</small>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n " +
-"   </div>\r\n    <div");
+WriteLiteral(">Zip</small>\r\n                        </div>\r\n                        <div");
+
+WriteLiteral(" class=\"col-xs-6 add_form_bot mb0\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 198 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                            <small");
+
+WriteLiteral(" class=\"acnt_form_name_mini\"");
+
+WriteLiteral(">Country</small>\r\n                        </div>\r\n\r\n                    </div>\r\n " +
+"               </div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n    <div");
+WriteLiteral("></div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Home Number</label>\r\n        <div");
+WriteLiteral(">Home Number</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-6 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 207 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.MainPhone, new { @class = "form-control" }));
+            #line 211 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.MainPhone, new { @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <di" +
-"v");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <div");
 
-WriteLiteral("  class=\"form-group\"");
+WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Cellular Number</label>\r\n        <div");
+WriteLiteral(">Cellular Number</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-6 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 217 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.SecondPhone, new { @class = "form-control" }));
+            #line 221 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.SecondPhone, new { @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <di" +
-"v");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Work Number</label>\r\n        <div");
+WriteLiteral(">Work Number</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-6 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 227 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" }));
+            #line 231 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <di" +
-"v");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Email</label>\r\n        <div");
+WriteLiteral(">Email</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-12 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 237 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.HiddenFor(m=>m.PreviousEmail, new { id="hdEmail"}));
+            #line 241 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.HiddenFor(m => m.PreviousEmail, new { id = "hdEmail" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 238 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.Email, new { @class = "form-control",@maxlength = 256 }));
+            #line 242 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.Email, new { @class = "form-control", @maxlength = 256 }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <di" +
-"v");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">E-mail Verification</label>\r\n        <div");
+WriteLiteral(">E-mail Verification</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-12 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 248 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control", @maxlength = 256 }));
+            #line 252 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control", @maxlength = 256 }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <di" +
-"v");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Website</label>\r\n        <div");
+WriteLiteral(">Website</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-12 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 258 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control", @maxlength = 256 }));
+            #line 262 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control", @maxlength = 256 }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <di" +
-"v");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Current Password</label>\r\n        <div");
+WriteLiteral(">Current Password</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-12 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 268 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.PasswordFor(m => m.Password, new { @class = "form-control" , @maxlength = 15 }));
+            #line 272 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 15 }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <di" +
-"v");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">New Password</label>\r\n        <div");
+WriteLiteral(">New Password</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-12 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 278 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @maxlength = 15 }));
+            #line 282 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @maxlength = 15 }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <di" +
-"v");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n        <label");
+WriteLiteral(">\r\n                <label");
 
 WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
 
-WriteLiteral(">Confirm New Password</label>\r\n        <div");
+WriteLiteral(">Confirm New Password</label>\r\n                <div");
 
 WriteLiteral(" class=\"col-md-9\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"row\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"col-xs-12 add_form_bot mb0\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                            ");
 
             
-            #line 288 "..\..\Views\Account\MyAccount.cshtml"
-               Write(Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" , @maxlength = 15 }));
+            #line 292 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @maxlength = 15 }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <in" +
-"put");
+WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
+"iv>\r\n            </div>\r\n            <input");
 
 WriteLiteral(" type=\"submit\"");
 
@@ -984,43 +996,43 @@ WriteLiteral(" id=\"btnsave\"");
 
 WriteLiteral(" />\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("            ");
 
             
-            #line 294 "..\..\Views\Account\MyAccount.cshtml"
-Write(Html.HiddenFor(m=>m.ImagePresent ));
+            #line 298 "..\..\Views\Account\MyAccount.cshtml"
+       Write(Html.HiddenFor(m => m.ImagePresent));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("            ");
 
             
-            #line 295 "..\..\Views\Account\MyAccount.cshtml"
-Write(Html.HiddenFor(m => m.userimage));
+            #line 299 "..\..\Views\Account\MyAccount.cshtml"
+       Write(Html.HiddenFor(m => m.userimage));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    <input");
+WriteLiteral("\r\n            <input");
 
 WriteLiteral(" id=\"image_count\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteLiteral(" />\r\n\r\n</div>\r\n");
+WriteLiteral(" />\r\n\r\n        </div>\r\n");
 
             
-            #line 299 "..\..\Views\Account\MyAccount.cshtml"
+            #line 303 "..\..\Views\Account\MyAccount.cshtml"
 
-    }
+        }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n \r\n<input");
+WriteLiteral("\r\n\r\n\r\n        <input");
 
 WriteLiteral(" type=\"hidden\"");
 
@@ -1028,495 +1040,510 @@ WriteLiteral(" value=\"0\"");
 
 WriteLiteral(" id=\"imageeror\"");
 
-WriteLiteral(" />\r\n\r\n\r\n\r\n    <script");
+WriteLiteral(" />\r\n\r\n\r\n\r\n        <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n        $(document).click(function () {\r\n            $(\'#diverro1acc\').css(\'di" +
-"splay\', \'none\');\r\n            $(\'#diverroacc\').css(\'display\', \'none\');\r\n        " +
-"    $(\'#divaccsuc\').css(\'display\', \'none\');\r\n            $(\"input\").removeClass(" +
-"\'err-bor\');\r\n            $(\"#month\").removeClass(\'err-bor\');\r\n            $(\"#da" +
-"y\").removeClass(\'err-bor\');\r\n            $(\"#year\").removeClass(\'err-bor\');\r\n   " +
-"     });\r\n        $(\'#btndivaccsuc\').click(function () {\r\n            $(\'#diverr" +
-"o1acc\').css(\'display\', \'none\');\r\n            $(\'#diverroacc\').css(\'display\', \'no" +
-"ne\');\r\n            $(\'#divaccsuc\').css(\'display\', \'none\');\r\n            $(\"input" +
-"\").removeClass(\'err-bor\');\r\n            $(\"#month\").removeClass(\'err-bor\');\r\n   " +
-"         $(\"#day\").removeClass(\'err-bor\');\r\n            $(\"#year\").removeClass(\'" +
-"err-bor\');\r\n\r\n        })\r\n        $(\'#btndiverro1acc\').click(function () {\r\n    " +
-"        $(\'#diverro1acc\').css(\'display\', \'none\');\r\n            $(\'#diverroacc\')." +
-"css(\'display\', \'none\');\r\n            $(\"input\").removeClass(\'err-bor\');\r\n       " +
-"     $(\"#month\").removeClass(\'err-bor\');\r\n            $(\"#day\").removeClass(\'err" +
-"-bor\');\r\n            $(\"#year\").removeClass(\'err-bor\');\r\n\r\n        })\r\n        $" +
-"(\'#btndiverroacc\').click(function () {\r\n            $(\"#imageeror\").val(\'0\');\r\n " +
-"           $(\'#diverro1acc\').css(\'display\', \'none\');\r\n            $(\'#diverroacc" +
-"\').css(\'display\', \'none\');\r\n            $(\"input\").removeClass(\'err-bor\');\r\n    " +
-"        $(\"#month\").removeClass(\'err-bor\');\r\n            $(\"#day\").removeClass(\'" +
-"err-bor\');\r\n            $(\"#year\").removeClass(\'err-bor\');\r\n\r\n\r\n        })\r\n\r\n  " +
-"      $(window).load(function () {\r\n            var cntstreet2 = 256 - $(\"#Stree" +
-"Address2\").val().length;\r\n            var cntstreet2 = 256 - $(\"#StreetAddress1\"" +
-").val().length;\r\n            var cntcity = 256 - $(\"#City\").val().length;\r\n     " +
-"       var cntstate = 256 - $(\"#State\").val().length;\r\n\r\n            $(\'#cntstre" +
-"etadd2\').html(\"Count left  \" + cntstreet2);\r\n            $(\'#cntstreetadd1\').htm" +
-"l(\"Count left  \" + cntstreet2);\r\n            $(\'#cntcityadd1\').html(\"Count left " +
-" \" + cntcity);\r\n            $(\'#cntcitystate\').html(\"Count left  \" + cntstate);\r" +
-"\n        });\r\n\r\n        $(\"#StreeAddress2\").keyup(function () {\r\n            var" +
-" cs = $(this).val().length;\r\n            var left = 256 - cs;\r\n\r\n            $(\'" +
-"#cntstreetadd2\').html(\"Count left  \" + left);\r\n        });\r\n        $(\"#StreetAd" +
-"dress1\").keyup(function () {\r\n            var cs = $(this).val().length;\r\n      " +
-"      var left = 256 - cs;\r\n\r\n            $(\'#cntstreetadd1\').html(\"Count left  " +
-"\" + left);\r\n        });\r\n        $(\"#City\").keyup(function () {\r\n            var" +
-" cs = $(this).val().length;\r\n            var left = 256 - cs;\r\n\r\n            $(\'" +
-"#cntcityadd1\').html(\"Count left  \" + left);\r\n        });\r\n        $(\"#State\").ke" +
-"yup(function () {\r\n            var cs = $(this).val().length;\r\n            var l" +
-"eft = 256 - cs;\r\n\r\n            $(\'#cntcitystate\').html(\"Count left  \" + left);\r\n" +
-"        });\r\n        $(\"#Country\").change(function () {\r\n            $(\"#Zip\").v" +
-"al(\"\");\r\n            $(\"#State\").val(\"\");\r\n            $(\"#City\").val(\"\");\r\n\r\n\r\n" +
-"        });\r\n        jQuery(function ($) {\r\n            $(\"#MainPhone\").mask(\"99" +
-"9-999-9999\");\r\n            $(\"#SecondPhone\").mask(\"999-999-9999\");\r\n            " +
-"$(\"#WorkPhone\").mask(\"999-999-9999\");\r\n\r\n        });\r\n        var Model = \"");
+WriteLiteral(">\r\n            $(document).click(function () {\r\n                $(\'#diverro1acc\')" +
+".css(\'display\', \'none\');\r\n                $(\'#diverroacc\').css(\'display\', \'none\'" +
+");\r\n                $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                $(\"" +
+"input\").removeClass(\'err-bor\');\r\n                $(\"#month\").removeClass(\'err-bo" +
+"r\');\r\n                $(\"#day\").removeClass(\'err-bor\');\r\n                $(\"#yea" +
+"r\").removeClass(\'err-bor\');\r\n            });\r\n            $(\'#btndivaccsuc\').cli" +
+"ck(function () {\r\n                $(\'#diverro1acc\').css(\'display\', \'none\');\r\n   " +
+"             $(\'#diverroacc\').css(\'display\', \'none\');\r\n                $(\'#divac" +
+"csuc\').css(\'display\', \'none\');\r\n                $(\"input\").removeClass(\'err-bor\'" +
+");\r\n                $(\"#month\").removeClass(\'err-bor\');\r\n                $(\"#day" +
+"\").removeClass(\'err-bor\');\r\n                $(\"#year\").removeClass(\'err-bor\');\r\n" +
+"\r\n            })\r\n            $(\'#btndiverro1acc\').click(function () {\r\n        " +
+"        $(\'#diverro1acc\').css(\'display\', \'none\');\r\n                $(\'#diverroac" +
+"c\').css(\'display\', \'none\');\r\n                $(\"input\").removeClass(\'err-bor\');\r" +
+"\n                $(\"#month\").removeClass(\'err-bor\');\r\n                $(\"#day\")." +
+"removeClass(\'err-bor\');\r\n                $(\"#year\").removeClass(\'err-bor\');\r\n\r\n " +
+"           })\r\n            $(\'#btndiverroacc\').click(function () {\r\n            " +
+"    $(\"#imageeror\").val(\'0\');\r\n                $(\'#diverro1acc\').css(\'display\', " +
+"\'none\');\r\n                $(\'#diverroacc\').css(\'display\', \'none\');\r\n            " +
+"    $(\"input\").removeClass(\'err-bor\');\r\n                $(\"#month\").removeClass(" +
+"\'err-bor\');\r\n                $(\"#day\").removeClass(\'err-bor\');\r\n                " +
+"$(\"#year\").removeClass(\'err-bor\');\r\n\r\n\r\n            })\r\n\r\n            $(window)." +
+"load(function () {\r\n                var cntstreet2 = 256 - $(\"#StreeAddress2\").v" +
+"al().length;\r\n                var cntstreet2 = 256 - $(\"#StreetAddress1\").val()." +
+"length;\r\n                var cntcity = 256 - $(\"#City\").val().length;\r\n         " +
+"       var cntstate = 256 - $(\"#State\").val().length;\r\n\r\n                $(\'#cnt" +
+"streetadd2\').html(\"Count left  \" + cntstreet2);\r\n                $(\'#cntstreetad" +
+"d1\').html(\"Count left  \" + cntstreet2);\r\n                $(\'#cntcityadd1\').html(" +
+"\"Count left  \" + cntcity);\r\n                $(\'#cntcitystate\').html(\"Count left " +
+" \" + cntstate);\r\n            });\r\n\r\n            $(\"#StreeAddress2\").keyup(functi" +
+"on () {\r\n                var cs = $(this).val().length;\r\n                var lef" +
+"t = 256 - cs;\r\n\r\n                $(\'#cntstreetadd2\').html(\"Count left  \" + left)" +
+";\r\n            });\r\n            $(\"#StreetAddress1\").keyup(function () {\r\n      " +
+"          var cs = $(this).val().length;\r\n                var left = 256 - cs;\r\n" +
+"\r\n                $(\'#cntstreetadd1\').html(\"Count left  \" + left);\r\n            " +
+"});\r\n            $(\"#City\").keyup(function () {\r\n                var cs = $(this" +
+").val().length;\r\n                var left = 256 - cs;\r\n\r\n                $(\'#cnt" +
+"cityadd1\').html(\"Count left  \" + left);\r\n            });\r\n            $(\"#State\"" +
+").keyup(function () {\r\n                var cs = $(this).val().length;\r\n         " +
+"       var left = 256 - cs;\r\n\r\n                $(\'#cntcitystate\').html(\"Count le" +
+"ft  \" + left);\r\n            });\r\n            $(\"#Country\").change(function () {\r" +
+"\n                $(\"#Zip\").val(\"\");\r\n                $(\"#State\").val(\"\");\r\n     " +
+"           $(\"#City\").val(\"\");\r\n\r\n\r\n            });\r\n            jQuery(function" +
+" ($) {\r\n                $(\"#MainPhone\").mask(\"999-999-9999\");\r\n                $" +
+"(\"#SecondPhone\").mask(\"999-999-9999\");\r\n                $(\"#WorkPhone\").mask(\"99" +
+"9-999-9999\");\r\n\r\n            });\r\n            var Model = \"");
 
             
-            #line 398 "..\..\Views\Account\MyAccount.cshtml"
-                Write(Html.Raw(Model.editsave));
+            #line 402 "..\..\Views\Account\MyAccount.cshtml"
+                    Write(Html.Raw(Model.editsave));
 
             
             #line default
             #line hidden
-WriteLiteral("\";\r\n\r\n        var files1 = \'");
+WriteLiteral("\";\r\n\r\n            var files1 = \'");
 
             
-            #line 400 "..\..\Views\Account\MyAccount.cshtml"
-                  Write(MvcHtmlString.Create(Json.Encode(ViewData["results"])));
+            #line 404 "..\..\Views\Account\MyAccount.cshtml"
+                      Write(MvcHtmlString.Create(Json.Encode(ViewData["results"])));
 
             
             #line default
             #line hidden
 WriteLiteral(@"';
 
-        $(document).ready(function () {
-            //$('#WebsiteURL').bind('keypress', function (event) {
-            //    var regex = new RegExp(""^[a-zA-Z0-9]+$"");
-            //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-            //    if (!regex.test(key)) {
-            //        event.preventDefault();
-            //        return false;
-            //    }
-            //});
+            $(document).ready(function () {
+                //$('#WebsiteURL').bind('keypress', function (event) {
+                //    var regex = new RegExp(""^[a-zA-Z0-9]+$"");
+                //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                //    if (!regex.test(key)) {
+                //        event.preventDefault();
+                //        return false;
+                //    }
+                //});
 
-            console.log(Model);
-            var userProfileImage=""");
-
-            
-            #line 413 "..\..\Views\Account\MyAccount.cshtml"
-                             Write(Html.Raw(Model.UserProfileImage));
+                console.log(Model);
+                var userProfileImage = """);
 
             
-            #line default
-            #line hidden
-WriteLiteral("\";\r\n            var modelcontent=\"");
-
-            
-            #line 414 "..\..\Views\Account\MyAccount.cshtml"
-                         Write(Html.Raw(Model.contentype));
+            #line 417 "..\..\Views\Account\MyAccount.cshtml"
+                                   Write(Html.Raw(Model.UserProfileImage));
 
             
             #line default
             #line hidden
-WriteLiteral("\";\r\n            if(Model==\"Save\")\r\n            {\r\n\r\n            }else{\r\n         " +
-"       var imgdata =userProfileImage+ \'¶\' + modelcontent;\r\n            }\r\n      " +
-"    \r\n            console.log(imgdata);\r\n            //$(\'#WebsiteURL\').bind(\'cu" +
-"t copy paste\', function (event) {\r\n            //    event.preventDefault();\r\n  " +
-"          //    return false;\r\n            //});\r\n\r\n\r\n            if (Model == \"" +
-"Save\") {\r\n                $(\'#input2\').filer({\r\n                    limit: \'1\',\r" +
-"\n                    maxSize: \'2\',\r\n                    extensions: [\'jpg\', \'jpe" +
-"g\', \'png\'],\r\n                    changeInput: \'<div class=\"jFiler-input-dragDrop" +
-"\" id=\"drag-drop\"><div class=\"jFiler-input-inner\"><div class=\"jFiler-input-icon\">" +
-"<i class=\"icon-jfi-cloud-up-o\"></i></div><div class=\"jFiler-input-text\"><h3>Drag" +
-"  photo or normal upload</h3> </div></div></div>\',\r\n                    showThum" +
-"bs: true,\r\n                    appendTo: \"#drag-drop\",\r\n                    them" +
-"e: \"dragdropbox\",\r\n                    onChange: false,\r\n                    tem" +
-"plates: {\r\n                        box: \'<ul class=\"jFiler-item-list profile-vie" +
-"ws clearfix\"></ul>\',\r\n                        item: \'<li class=\"jFiler-item\">\\\r\n" +
-"                                    <div class=\"\">\\\r\n                           " +
-"                 {{fi-image}}\\\r\n                                             <di" +
-"v class=\"jFiler-item-container\">\\\r\n                                <div class=\"j" +
-"Filer-item-inner\">\\\r\n                                     <div class=\"jFiler-ite" +
-"m-assets jFiler-row\">\\\r\n                                        <ul class=\"list-" +
-"inline pull-left\">\\\r\n                                            <li>{{fi-progre" +
-"ssBar}}</li>\\\r\n                                        </ul>\\\r\n                 " +
-"                   </div>\\\r\n                                    </div>\\\r\n       " +
-"                     </div>\\\r\n                                            <span>" +
-"</span>\\\r\n                                             <button class=\"btn  jFile" +
-"r-item-trash-action can_btn\" type=\"button\">\\\r\n                                  " +
-"              <i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n              " +
-"                               </button>\\\r\n                                     " +
-"  </div>\\\r\n                        </li>\',\r\n                        itemAppend: " +
-"\'<li class=\"jFiler-item\">\\\r\n                                    <div class=\"\">\\\r" +
-"\n                                            {{fi-image}}\\\r\n                    " +
-"                         <button class=\"btn  jFiler-item-trash-action can_btn\" t" +
-"ype=\"button\">\\\r\n                                                <i class=\"glyphi" +
-"con glyphicon-remove-circle\"></i>\\\r\n                                            " +
-" </button>\\\r\n                                       </div>\\\r\n                   " +
-"     </li>\',\r\n\r\n\r\n                        progressBar: \'<div class=\"bar\"></div>\'" +
-",\r\n                        itemAppendToEnd: true,\r\n                        remov" +
-"eConfirmation: false,\r\n                        _selectors: {\r\n                  " +
-"          list: \'.jFiler-item-list\',\r\n                            item: \'.jFiler" +
-"-item\',\r\n                            progressBar: \'.bar\',\r\n                     " +
-"       remove: \'.jFiler-item-trash-action\',\r\n                        }\r\n        " +
-"            },\r\n                    uploadFile: {\r\n                        url: " +
-"\"/Account/SaveUploadedFile\",\r\n                        data: {},\r\n               " +
-"         type: \'POST\',\r\n                        enctype: \'multipart/form-data\',\r" +
-"\n                        beforeSend: function () { },\r\n                        s" +
-"uccess: function (data, el) {\r\n\r\n                            var parent = el.fin" +
-"d(\".jFiler-jProgressBar\").parent();\r\n                            el.find(\".jFile" +
-"r-jProgressBar\").fadeOut(\"slow\", function () {\r\n                                " +
-"$(\"<div class=\\\"jFiler-item-others text-success\\\"><i class=\\\"icon-jfi-check-circ" +
-"le\\\"></i> Success</div>\").hide().appendTo(parent).fadeIn(\"slow\").remove();\r\n    " +
-"                        });\r\n                            var image_count = $(\"#i" +
-"mage_count\").val();\r\n                            var imagejson = jQuery.parseJSO" +
-"N(JSON.stringify(data));\r\n                            var imgdata = imagejson.im" +
-"age_name + \'¶\' + imagejson.image_type;\r\n                            //$(\"#image_" +
-"count\").val(el[0].jfiler_id)\r\n                            $(\'#userimage\').val(im" +
-"gdata);\r\n                            //$(\'<input>\').attr({\r\n                    " +
-"        //    type: \'hidden\',\r\n                            //    id: \'image_hidd" +
-"en_\' + el[0].jfiler_id,\r\n                            //    name: \'Eventpicture[\'" +
-" + imgdata + \']\',\r\n                            //    value: imgdata\r\n           " +
-"                 //}).appendTo(\'form\');\r\n\r\n                            $(\'#Image" +
-"Present\').val(\"Yes\");\r\n\r\n                            if ($.trim(image_count) == " +
-"\'\') {\r\n                                $(\"#image_count\").val(\'1\');\r\n            " +
-"                } else {\r\n                                image_count = parseInt" +
-"(image_count) + 1;\r\n                                $(\"#image_count\").val(image_" +
-"count);\r\n                            }\r\n\r\n                        },\r\n          " +
-"              error: function (el) {\r\n\r\n                            //var parent" +
-" = el.find(\".jFiler-jProgressBar\").parent();\r\n                            //el.f" +
-"ind(\".jFiler-jProgressBar\").fadeOut(\"slow\", function(){\r\n                       " +
-"     //    $(\"<div class=\\\"jFiler-item-others text-error\\\"><i class=\\\"icon-jfi-m" +
-"inus-circle\\\"></i> Error</div>\").hide().appendTo(parent).fadeIn(\"slow\");\r\n      " +
-"                      //});\r\n                        },\r\n                       " +
-" statusCode: {},\r\n                        onProgress: function () { },\r\n        " +
-"            },\r\n                    dragDrop: {\r\n                        dragEnt" +
-"er: function () { },\r\n                        dragLeave: function () { },\r\n     " +
-"                   drop: function () { },\r\n                    },\r\n             " +
-"       addMore: false,\r\n                    clipBoardPaste: true,\r\n             " +
-"       excludeName: null,\r\n                    beforeShow: function () { $(\".jFi" +
-"ler-input-inner\").hide(); return true },\r\n                    onSelect: function" +
-" () { $(\".jFiler-input-inner\").hide(); },\r\n                    afterShow: functi" +
-"on () { $(\".jFiler-input-inner\").hide(); $(\".fi-progressBar\").hide(); },\r\n      " +
-"              onRemove: function (el) {\r\n                        var image_count" +
-" = $(\"#image_count\").val();\r\n                        image_count = parseInt(imag" +
-"e_count) - 1;\r\n                        var id_div = el[0].jfiler_id;\r\n          " +
-"              var hidden_image_element = \'image_hidden_\' + id_div;\r\n\r\n          " +
-"              $(\'#userimage\').val(\'\');\r\n                        $(\'#input2\').cli" +
-"ck(function (e) {\r\n                            e.preventDefault();\r\n\r\n          " +
-"              })\r\n                        $(\'#ImagePresent\').val(\"NO\");\r\n       " +
-"             },\r\n                    onEmpty: function (el) {\r\n                 " +
-"       if ($(\"#imageeror\").val() == 0) {\r\n                            if ($(\".jF" +
-"iler-items\").length == 1) { setTimeout(function () { $(\".jFiler-input-inner\").cs" +
-"s(\'display\', \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); };\r\n              " +
-"          }\r\n                    },\r\n                    captions: {\r\n          " +
-"              button: \"Choose Files\",\r\n                        feedback: \"Choose" +
-" files To Upload\",\r\n                        feedback2: \"files were chosen\",\r\n   " +
+WriteLiteral("\";\r\n                var modelcontent = \"");
+
+            
+            #line 418 "..\..\Views\Account\MyAccount.cshtml"
+                               Write(Html.Raw(Model.contentype));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\";\r\n                if (Model == \"Save\") {\r\n\r\n                } else {\r\n         " +
+"           var imgdata = userProfileImage + \'¶\' + modelcontent;\r\n               " +
+" }\r\n\r\n                console.log(imgdata);\r\n                //$(\'#WebsiteURL\')." +
+"bind(\'cut copy paste\', function (event) {\r\n                //    event.preventDe" +
+"fault();\r\n                //    return false;\r\n                //});\r\n\r\n\r\n      " +
+"          if (Model == \"Save\") {\r\n                    $(\'#input2\').filer({\r\n    " +
+"                    limit: \'1\',\r\n                        maxSize: \'2\',\r\n        " +
+"                extensions: [\'jpg\', \'jpeg\', \'png\'],\r\n                        cha" +
+"ngeInput: \'<div class=\"jFiler-input-dragDrop\" id=\"drag-drop\"><div class=\"jFiler-" +
+"input-inner\"><div class=\"jFiler-input-icon\"><i class=\"icon-jfi-cloud-up-o\"></i><" +
+"/div><div class=\"jFiler-input-text\"><h3>Drag  photo or normal upload</h3> </div>" +
+"</div></div>\',\r\n                        showThumbs: true,\r\n                     " +
+"   appendTo: \"#drag-drop\",\r\n                        theme: \"dragdropbox\",\r\n     " +
+"                   onChange: false,\r\n                        templates: {\r\n     " +
+"                       box: \'<ul class=\"jFiler-item-list profile-views clearfix\"" +
+"></ul>\',\r\n                            item: \'<li class=\"jFiler-item\">\\\r\n        " +
+"                            <div class=\"\">\\\r\n                                   " +
+"         {{fi-image}}\\\r\n                                             <div class=" +
+"\"jFiler-item-container\">\\\r\n                                <div class=\"jFiler-it" +
+"em-inner\">\\\r\n                                     <div class=\"jFiler-item-assets" +
+" jFiler-row\">\\\r\n                                        <ul class=\"list-inline p" +
+"ull-left\">\\\r\n                                            <li>{{fi-progressBar}}<" +
+"/li>\\\r\n                                        </ul>\\\r\n                         " +
+"           </div>\\\r\n                                    </div>\\\r\n               " +
+"             </div>\\\r\n                                            <span></span>\\" +
+"\r\n                                             <button class=\"btn  jFiler-item-t" +
+"rash-action can_btn\" type=\"button\">\\\r\n                                          " +
+"      <i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n                      " +
+"                       </button>\\\r\n                                       </div>" +
+"\\\r\n                        </li>\',\r\n                            itemAppend: \'<li" +
+" class=\"jFiler-item\">\\\r\n                                    <div class=\"\">\\\r\n   " +
+"                                         {{fi-image}}\\\r\n                        " +
+"                     <button class=\"btn  jFiler-item-trash-action can_btn\" type=" +
+"\"button\">\\\r\n                                                <i class=\"glyphicon " +
+"glyphicon-remove-circle\"></i>\\\r\n                                             </b" +
+"utton>\\\r\n                                       </div>\\\r\n                       " +
+" </li>\',\r\n\r\n\r\n                            progressBar: \'<div class=\"bar\"></div>\'" +
+",\r\n                            itemAppendToEnd: true,\r\n                         " +
+"   removeConfirmation: false,\r\n                            _selectors: {\r\n      " +
+"                          list: \'.jFiler-item-list\',\r\n                          " +
+"      item: \'.jFiler-item\',\r\n                                progressBar: \'.bar\'" +
+",\r\n                                remove: \'.jFiler-item-trash-action\',\r\n       " +
+"                     }\r\n                        },\r\n                        uplo" +
+"adFile: {\r\n                            url: \"/Account/SaveUploadedFile\",\r\n      " +
+"                      data: {},\r\n                            type: \'POST\',\r\n    " +
+"                        enctype: \'multipart/form-data\',\r\n                       " +
+"     beforeSend: function () { },\r\n                            success: function" +
+" (data, el) {\r\n\r\n                                var parent = el.find(\".jFiler-j" +
+"ProgressBar\").parent();\r\n                                el.find(\".jFiler-jProgr" +
+"essBar\").fadeOut(\"slow\", function () {\r\n                                    $(\"<" +
+"div class=\\\"jFiler-item-others text-success\\\"><i class=\\\"icon-jfi-check-circle\\\"" +
+"></i> Success</div>\").hide().appendTo(parent).fadeIn(\"slow\").remove();\r\n        " +
+"                        });\r\n                                var image_count = $" +
+"(\"#image_count\").val();\r\n                                var imagejson = jQuery." +
+"parseJSON(JSON.stringify(data));\r\n                                var imgdata = " +
+"imagejson.image_name + \'¶\' + imagejson.image_type;\r\n                            " +
+"    //$(\"#image_count\").val(el[0].jfiler_id)\r\n                                $(" +
+"\'#userimage\').val(imgdata);\r\n                                //$(\'<input>\').attr" +
+"({\r\n                                //    type: \'hidden\',\r\n                     " +
+"           //    id: \'image_hidden_\' + el[0].jfiler_id,\r\n                       " +
+"         //    name: \'Eventpicture[\' + imgdata + \']\',\r\n                         " +
+"       //    value: imgdata\r\n                                //}).appendTo(\'form" +
+"\');\r\n\r\n                                $(\'#ImagePresent\').val(\"Yes\");\r\n\r\n       " +
+"                         if ($.trim(image_count) == \'\') {\r\n                     " +
+"               $(\"#image_count\").val(\'1\');\r\n                                } el" +
+"se {\r\n                                    image_count = parseInt(image_count) + " +
+"1;\r\n                                    $(\"#image_count\").val(image_count);\r\n   " +
+"                             }\r\n\r\n                            },\r\n              " +
+"              error: function (el) {\r\n\r\n                                //var pa" +
+"rent = el.find(\".jFiler-jProgressBar\").parent();\r\n                              " +
+"  //el.find(\".jFiler-jProgressBar\").fadeOut(\"slow\", function(){\r\n               " +
+"                 //    $(\"<div class=\\\"jFiler-item-others text-error\\\"><i class=" +
+"\\\"icon-jfi-minus-circle\\\"></i> Error</div>\").hide().appendTo(parent).fadeIn(\"slo" +
+"w\");\r\n                                //});\r\n                            },\r\n   " +
+"                         statusCode: {},\r\n                            onProgress" +
+": function () { },\r\n                        },\r\n                        dragDrop" +
+": {\r\n                            dragEnter: function () { },\r\n                  " +
+"          dragLeave: function () { },\r\n                            drop: functio" +
+"n () { },\r\n                        },\r\n                        addMore: false,\r\n" +
+"                        clipBoardPaste: true,\r\n                        excludeNa" +
+"me: null,\r\n                        beforeShow: function () { $(\".jFiler-input-in" +
+"ner\").hide(); return true },\r\n                        onSelect: function () { $(" +
+"\".jFiler-input-inner\").hide(); },\r\n                        afterShow: function (" +
+") { $(\".jFiler-input-inner\").hide(); $(\".fi-progressBar\").hide(); },\r\n          " +
+"              onRemove: function (el) {\r\n                            var image_c" +
+"ount = $(\"#image_count\").val();\r\n                            image_count = parse" +
+"Int(image_count) - 1;\r\n                            var id_div = el[0].jfiler_id;" +
+"\r\n                            var hidden_image_element = \'image_hidden_\' + id_di" +
+"v;\r\n\r\n                            $(\'#userimage\').val(\'\');\r\n                    " +
+"        $(\'#input2\').click(function (e) {\r\n                                e.pre" +
+"ventDefault();\r\n\r\n                            })\r\n                            $(" +
+"\'#ImagePresent\').val(\"NO\");\r\n                        },\r\n                       " +
+" onEmpty: function (el) {\r\n                            if ($(\"#imageeror\").val()" +
+" == 0) {\r\n                                if ($(\".jFiler-items\").length == 1) { " +
+"setTimeout(function () { $(\".jFiler-input-inner\").css(\'display\', \'block\'); $(\'#i" +
+"nput2\').unbind(\'click\'); }, 200); };\r\n                            }\r\n           " +
+"             },\r\n                        captions: {\r\n                          " +
+"  button: \"Choose Files\",\r\n                            feedback: \"Choose files T" +
+"o Upload\",\r\n                            feedback2: \"files were chosen\",\r\n       " +
 "                     drop: \"Drop file here to Upload\",\r\n                        " +
-"removeConfirmation: \"Are you sure you want to remove this file?\",\r\n             " +
-"           errors: {\r\n                            filesLimit: ajaxsetup(\'MyAccou" +
-"nt\', \'MyAccountImageCountValidationUI\'),\r\n                            filesType:" +
-" ajaxsetup(\'MyAccount\', \'MyAccountImagestypeValidationUI\'),\r\n                   " +
-"         filesSize: ajaxsetup(\'MyAccount\', \'MyAccountImagesizeValidationUI\'),\r\n " +
-"                           filesSizeAll: ajaxsetup(\'MyAccount\', \'MyAccountImages" +
-"izeValidationUI\')\r\n                        }\r\n                    }\r\n\r\n         " +
-"       });\r\n            }\r\n            else if (Model == \"Edit\") {\r\n            " +
-"    $(\"#image_count\").val(\"1\");\r\n                ");
+"    removeConfirmation: \"Are you sure you want to remove this file?\",\r\n         " +
+"                   errors: {\r\n                                filesLimit: ajaxse" +
+"tup(\'MyAccount\', \'MyAccountImageCountValidationUI\'),\r\n                          " +
+"      filesType: ajaxsetup(\'MyAccount\', \'MyAccountImagestypeValidationUI\'),\r\n   " +
+"                             filesSize: ajaxsetup(\'MyAccount\', \'MyAccountImagesi" +
+"zeValidationUI\'),\r\n                                filesSizeAll: ajaxsetup(\'MyAc" +
+"count\', \'MyAccountImagesizeValidationUI\')\r\n                            }\r\n      " +
+"                  }\r\n\r\n                    });\r\n                }\r\n             " +
+"   else if (Model == \"Edit\") {\r\n                    $(\"#image_count\").val(\"1\");\r" +
+"\n                    ");
 
-WriteLiteral("\r\n\r\n                $(\'#userimage\').val(imgdata);\r\n                $(\'#input2\').f" +
-"iler({\r\n                    limit: \'1\',\r\n                    maxSize: \'2\',\r\n    " +
-"                extensions: [\'jpg\', \'jpeg\', \'png\'],\r\n                    changeI" +
-"nput: \'<div class=\"jFiler-input-dragDrop\" id=\"drag-drop\"><div class=\"jFiler-inpu" +
-"t-inner\"><div class=\"jFiler-input-icon\"><i class=\"icon-jfi-cloud-up-o\"></i></div" +
-"><div class=\"jFiler-input-text\"><h3>Drag  photo or normal upload</h3> </div></di" +
-"v></div>\',\r\n                    showThumbs: true,\r\n                    appendTo:" +
-" \"#drag-drop\",\r\n                    theme: \"dragdropbox\",\r\n                    o" +
-"nChange:false,\r\n                    templates: {\r\n                        box: \'" +
-"<ul class=\"jFiler-item-list profile-views clearfix\"></ul>\',\r\n                   " +
-"     item: \'<li class=\"jFiler-item\">\\\r\n                                    <div " +
-"class=\"\">\\\r\n                                            {{fi-image}}\\\r\n         " +
-"                                    <div class=\"jFiler-item-container\">\\\r\n      " +
-"                          <div class=\"jFiler-item-inner\">\\\r\n                    " +
-"                 <div class=\"jFiler-item-assets jFiler-row\">\\\r\n                 " +
-"                       <ul class=\"list-inline pull-left\">\\\r\n                    " +
-"                        <li>{{fi-progressBar}}</li>\\\r\n                          " +
-"              </ul>\\\r\n                                    </div>\\\r\n             " +
-"                       </div>\\\r\n                            </div>\\\r\n           " +
-"                                 <span></span>\\\r\n                               " +
-"              <button class=\"btn  jFiler-item-trash-action can_btn\" type=\"button" +
-"\">\\\r\n                                                <i class=\"glyphicon glyphic" +
-"on-remove-circle\"></i>\\\r\n                                             </button>\\" +
-"\r\n                                       </div>\\\r\n                        </li>\'" +
-",\r\n                        itemAppend: \'<li class=\"jFiler-item\">\\\r\n             " +
-"                       <div class=\"\">\\\r\n                                        " +
-"    {{fi-image}}\\\r\n                                             <button class=\"b" +
-"tn  jFiler-item-trash-action can_btn\" type=\"button\">\\\r\n                         " +
-"                       <i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n     " +
-"                                        </button>\\\r\n                            " +
-"           </div>\\\r\n                        </li>\',\r\n\r\n\r\n                       " +
-" progressBar: \'<div class=\"bar\"></div>\',\r\n                        itemAppendToEn" +
-"d: false,\r\n                        removeConfirmation: false,\r\n                 " +
-"       _selectors: {\r\n                            list: \'.jFiler-item-list\',\r\n  " +
-"                          item: \'.jFiler-item\',\r\n                            pro" +
-"gressBar: \'.bar\',\r\n                            remove: \'.jFiler-item-trash-actio" +
-"n\',\r\n                        }\r\n                    },\r\n                    uplo" +
-"adFile: {\r\n                        url: \"/Account/SaveUploadedFile\",\r\n          " +
-"              data: {},\r\n                        type: \'POST\',\r\n                " +
-"        enctype: \'multipart/form-data\',\r\n                        beforeSend: fun" +
-"ction () { },\r\n                        success: function (data, el) {\r\n\r\n       " +
-"                     var parent = el.find(\".jFiler-jProgressBar\").parent();\r\n   " +
-"                         el.find(\".jFiler-jProgressBar\").fadeOut(\"slow\", functio" +
-"n(){\r\n                                $(\"<div class=\\\"jFiler-item-others text-su" +
-"ccess\\\"><i class=\\\"icon-jfi-check-circle\\\"></i> Success</div>\").hide().appendTo(" +
-"parent).fadeIn(\"slow\").remove();\r\n                            });\r\n             " +
-"               var image_count = $(\"#image_count\").val();\r\n                     " +
-"       var imagejson = jQuery.parseJSON(JSON.stringify(data));\r\n                " +
-"            var imgdata = imagejson.image_name + \'¶\' + imagejson.image_type;\r\n  " +
-"                          $(\"#image_count\").val(el[0].jfiler_id)\r\n              " +
-"              $(\'#userimage\').val(imgdata);\r\n\r\n                            $(\'#I" +
-"magePresent\').val(\"Yes\");\r\n\r\n                            if ($.trim(image_count)" +
-" == \'\') {\r\n                                $(\"#image_count\").val(\'1\');\r\n        " +
-"                    } else {\r\n                                image_count = pars" +
-"eInt(image_count) + 1;\r\n                                $(\"#image_count\").val(im" +
-"age_count);\r\n                            }\r\n\r\n\r\n                        },\r\n    " +
-"                    error: function (el) {\r\n                            //var pa" +
-"rent = el.find(\".jFiler-jProgressBar\").parent();\r\n                            //" +
-"el.find(\".jFiler-jProgressBar\").fadeOut(\"slow\", function(){\r\n                   " +
-"         //    $(\"<div class=\\\"jFiler-item-others text-error\\\"><i class=\\\"icon-j" +
-"fi-minus-circle\\\"></i> Error</div>\").hide().appendTo(parent).fadeIn(\"slow\");\r\n  " +
-"                          //});\r\n                        },\r\n                   " +
-"     statusCode: {},\r\n                        onProgress: function () { },\r\n    " +
-"                },\r\n                    dragDrop: {\r\n                        dra" +
-"gEnter: function () { },\r\n                        dragLeave: function () { },\r\n " +
-"                       drop: function () { },\r\n                    },\r\n         " +
-"           addMore: false,\r\n                    clipBoardPaste: true,\r\n         " +
-"           excludeName: null,\r\n                    beforeShow: function () {  $(" +
-"\".jFiler-input-inner\").hide(); return true },\r\n                    onSelect: fun" +
-"ction () { $(\".jFiler-input-inner\").hide(); },\r\n                    afterShow: f" +
-"unction () {  $(\".jFiler-input-inner\").hide(); },\r\n                    onRemove:" +
-" function (el) {\r\n                        var image_count = $(\"#image_count\").va" +
-"l();\r\n                        image_count = parseInt(image_count) - 1;\r\n        " +
-"                var id_div = el[0].jfiler_id;\r\n                        var hidde" +
-"n_image_element = \'image_hidden_\' + id_div;\r\n                        $(\'#userima" +
-"ge\').val(\'\');\r\n                        $(\"#\" + hidden_image_element).remove();\r\n" +
-"                        $(\'#input2\').click(function (e) {\r\n                     " +
-"       e.preventDefault();\r\n\r\n                        })\r\n                      " +
-"  $(\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n                    },\r\n                   " +
-" onEmpty: function (el) {\r\n                        console.log(el);\r\n\r\n         " +
-"               // alert($(\"#drag-drop div\").hasClass(\"jFiler-items\"))\r\n         " +
-"               if ($(\"#imageeror\").val()==0) {\r\n                            if (" +
-"$(\".jFiler-items\").length == 1) { setTimeout(function () { $(\".jFiler-input-inne" +
-"r\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); };\r\n        " +
-"                }\r\n                    },\r\n                    captions: {\r\n    " +
-"                    button: \"Choose Files\",\r\n                        feedback: \"" +
-"Choose files To Upload\",\r\n                        feedback2: \"files were chosen\"" +
-",\r\n                        drop: \"Drop file here to Upload\",\r\n                  " +
-"      removeConfirmation: \"Are you sure you want to remove this file?\",\r\n       " +
-"                 errors: {\r\n\r\n\r\n                            filesLimit: ajaxsetu" +
-"p(\'MyAccount\', \'MyAccountImageCountValidationUI\'),\r\n                            " +
-"filesType: ajaxsetup(\'MyAccount\', \'MyAccountImagestypeValidationUI\'),\r\n         " +
-"                   filesSize: ajaxsetup(\'MyAccount\', \'MyAccountImagesizeValidati" +
-"onUI\'),\r\n                            filesSizeAll: ajaxsetup(\'MyAccount\', \'MyAcc" +
-"ountImagesizeValidationUI\')\r\n                        }\r\n                    },\r\n" +
-"                    files: [{\r\n                        \"type\": \"");
-
-            
-            #line 710 "..\..\Views\Account\MyAccount.cshtml"
-                            Write(Model.contentype);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\",\r\n                        \"name\": \"");
+WriteLiteral("\r\n\r\n                    $(\'#userimage\').val(imgdata);\r\n                    $(\'#in" +
+"put2\').filer({\r\n                        limit: \'1\',\r\n                        max" +
+"Size: \'2\',\r\n                        extensions: [\'jpg\', \'jpeg\', \'png\'],\r\n       " +
+"                 changeInput: \'<div class=\"jFiler-input-dragDrop\" id=\"drag-drop\"" +
+"><div class=\"jFiler-input-inner\"><div class=\"jFiler-input-icon\"><i class=\"icon-j" +
+"fi-cloud-up-o\"></i></div><div class=\"jFiler-input-text\"><h3>Drag  photo or norma" +
+"l upload</h3> </div></div></div>\',\r\n                        showThumbs: true,\r\n " +
+"                       appendTo: \"#drag-drop\",\r\n                        theme: \"" +
+"dragdropbox\",\r\n                        onChange: false,\r\n                       " +
+" templates: {\r\n                            box: \'<ul class=\"jFiler-item-list pro" +
+"file-views clearfix\"></ul>\',\r\n                            item: \'<li class=\"jFil" +
+"er-item\">\\\r\n                                    <div class=\"\">\\\r\n               " +
+"                             {{fi-image}}\\\r\n                                    " +
+"         <div class=\"jFiler-item-container\">\\\r\n                                <" +
+"div class=\"jFiler-item-inner\">\\\r\n                                     <div class" +
+"=\"jFiler-item-assets jFiler-row\">\\\r\n                                        <ul " +
+"class=\"list-inline pull-left\">\\\r\n                                            <li" +
+">{{fi-progressBar}}</li>\\\r\n                                        </ul>\\\r\n     " +
+"                               </div>\\\r\n                                    </di" +
+"v>\\\r\n                            </div>\\\r\n                                      " +
+"      <span></span>\\\r\n                                             <button class" +
+"=\"btn  jFiler-item-trash-action can_btn\" type=\"button\">\\\r\n                      " +
+"                          <i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n  " +
+"                                           </button>\\\r\n                         " +
+"              </div>\\\r\n                        </li>\',\r\n                        " +
+"    itemAppend: \'<li class=\"jFiler-item\">\\\r\n                                    " +
+"<div class=\"\">\\\r\n                                            {{fi-image}}\\\r\n    " +
+"                                         <button class=\"btn  jFiler-item-trash-a" +
+"ction can_btn\" type=\"button\">\\\r\n                                                " +
+"<i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n                            " +
+"                 </button>\\\r\n                                       </div>\\\r\n   " +
+"                     </li>\',\r\n\r\n\r\n                            progressBar: \'<div" +
+" class=\"bar\"></div>\',\r\n                            itemAppendToEnd: false,\r\n    " +
+"                        removeConfirmation: false,\r\n                            " +
+"_selectors: {\r\n                                list: \'.jFiler-item-list\',\r\n     " +
+"                           item: \'.jFiler-item\',\r\n                              " +
+"  progressBar: \'.bar\',\r\n                                remove: \'.jFiler-item-tr" +
+"ash-action\',\r\n                            }\r\n                        },\r\n       " +
+"                 uploadFile: {\r\n                            url: \"/Account/SaveU" +
+"ploadedFile\",\r\n                            data: {},\r\n                          " +
+"  type: \'POST\',\r\n                            enctype: \'multipart/form-data\',\r\n  " +
+"                          beforeSend: function () { },\r\n                        " +
+"    success: function (data, el) {\r\n\r\n                                var parent" +
+" = el.find(\".jFiler-jProgressBar\").parent();\r\n                                el" +
+".find(\".jFiler-jProgressBar\").fadeOut(\"slow\", function () {\r\n                   " +
+"                 $(\"<div class=\\\"jFiler-item-others text-success\\\"><i class=\\\"ic" +
+"on-jfi-check-circle\\\"></i> Success</div>\").hide().appendTo(parent).fadeIn(\"slow\"" +
+").remove();\r\n                                });\r\n                              " +
+"  var image_count = $(\"#image_count\").val();\r\n                                va" +
+"r imagejson = jQuery.parseJSON(JSON.stringify(data));\r\n                         " +
+"       var imgdata = imagejson.image_name + \'¶\' + imagejson.image_type;\r\n       " +
+"                         $(\"#image_count\").val(el[0].jfiler_id)\r\n               " +
+"                 $(\'#userimage\').val(imgdata);\r\n\r\n                              " +
+"  $(\'#ImagePresent\').val(\"Yes\");\r\n\r\n                                if ($.trim(i" +
+"mage_count) == \'\') {\r\n                                    $(\"#image_count\").val(" +
+"\'1\');\r\n                                } else {\r\n                               " +
+"     image_count = parseInt(image_count) + 1;\r\n                                 " +
+"   $(\"#image_count\").val(image_count);\r\n                                }\r\n\r\n\r\n " +
+"                           },\r\n                            error: function (el) " +
+"{\r\n                                //var parent = el.find(\".jFiler-jProgressBar\"" +
+").parent();\r\n                                //el.find(\".jFiler-jProgressBar\").f" +
+"adeOut(\"slow\", function(){\r\n                                //    $(\"<div class=" +
+"\\\"jFiler-item-others text-error\\\"><i class=\\\"icon-jfi-minus-circle\\\"></i> Error<" +
+"/div>\").hide().appendTo(parent).fadeIn(\"slow\");\r\n                               " +
+" //});\r\n                            },\r\n                            statusCode: " +
+"{},\r\n                            onProgress: function () { },\r\n                 " +
+"       },\r\n                        dragDrop: {\r\n                            drag" +
+"Enter: function () { },\r\n                            dragLeave: function () { }," +
+"\r\n                            drop: function () { },\r\n                        }," +
+"\r\n                        addMore: false,\r\n                        clipBoardPast" +
+"e: true,\r\n                        excludeName: null,\r\n                        be" +
+"foreShow: function () { $(\".jFiler-input-inner\").hide(); return true },\r\n       " +
+"                 onSelect: function () { $(\".jFiler-input-inner\").hide(); },\r\n  " +
+"                      afterShow: function () { $(\".jFiler-input-inner\").hide(); " +
+"},\r\n                        onRemove: function (el) {\r\n                         " +
+"   var image_count = $(\"#image_count\").val();\r\n                            image" +
+"_count = parseInt(image_count) - 1;\r\n                            var id_div = el" +
+"[0].jfiler_id;\r\n                            var hidden_image_element = \'image_hi" +
+"dden_\' + id_div;\r\n                            $(\'#userimage\').val(\'\');\r\n        " +
+"                    $(\"#\" + hidden_image_element).remove();\r\n                   " +
+"         $(\'#input2\').click(function (e) {\r\n                                e.pr" +
+"eventDefault();\r\n\r\n                            })\r\n                            $" +
+"(\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n                        },\r\n                  " +
+"      onEmpty: function (el) {\r\n                            console.log(el);\r\n\r\n" +
+"                            // alert($(\"#drag-drop div\").hasClass(\"jFiler-items\"" +
+"))\r\n                            if ($(\"#imageeror\").val() == 0) {\r\n             " +
+"                   if ($(\".jFiler-items\").length == 1) { setTimeout(function () " +
+"{ $(\".jFiler-input-inner\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'click\')" +
+"; }, 200); };\r\n                            }\r\n                        },\r\n      " +
+"                  captions: {\r\n                            button: \"Choose Files" +
+"\",\r\n                            feedback: \"Choose files To Upload\",\r\n           " +
+"                 feedback2: \"files were chosen\",\r\n                            dr" +
+"op: \"Drop file here to Upload\",\r\n                            removeConfirmation:" +
+" \"Are you sure you want to remove this file?\",\r\n                            erro" +
+"rs: {\r\n\r\n\r\n                                filesLimit: ajaxsetup(\'MyAccount\', \'M" +
+"yAccountImageCountValidationUI\'),\r\n                                filesType: aj" +
+"axsetup(\'MyAccount\', \'MyAccountImagestypeValidationUI\'),\r\n                      " +
+"          filesSize: ajaxsetup(\'MyAccount\', \'MyAccountImagesizeValidationUI\'),\r\n" +
+"                                filesSizeAll: ajaxsetup(\'MyAccount\', \'MyAccountI" +
+"magesizeValidationUI\')\r\n                            }\r\n                        }" +
+",\r\n                        files: [{\r\n                            \"type\": \"");
 
             
-            #line 711 "..\..\Views\Account\MyAccount.cshtml"
-                            Write(Model.UserProfileImage);
+            #line 713 "..\..\Views\Account\MyAccount.cshtml"
+                                Write(Model.contentype);
 
             
             #line default
             #line hidden
-WriteLiteral("\",\r\n                        \"file\": \"");
+WriteLiteral("\",\r\n                            \"name\": \"");
 
             
-            #line 712 "..\..\Views\Account\MyAccount.cshtml"
-                            Write(Model.ImagePath);
+            #line 714 "..\..\Views\Account\MyAccount.cshtml"
+                                Write(Model.UserProfileImage);
 
             
             #line default
             #line hidden
-WriteLiteral("\"\r\n                    }]\r\n\r\n                });\r\n            }\r\n\r\n        });\r\n\r" +
-"\n\r\n    </script>\r\n    <script");
+WriteLiteral("\",\r\n                            \"file\": \"");
+
+            
+            #line 715 "..\..\Views\Account\MyAccount.cshtml"
+                                Write(Model.ImagePath);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"\r\n                        }]\r\n\r\n                    });\r\n                }\r\n\r\n  " +
+"          });\r\n\r\n\r\n        </script>\r\n        <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n        function isleap(leapyear) {\r\n            var yr = leapyear;\r\n         " +
-"   if ((parseInt(yr) % 4) == 0) {\r\n                if (parseInt(yr) % 100 == 0) " +
-"{\r\n                    if (parseInt(yr) % 400 != 0) {\r\n                       \r\n" +
-"                        return \"false\";\r\n                    }\r\n                " +
-"    if (parseInt(yr) % 400 == 0) {\r\n                      \r\n                    " +
-"    return \"true\";\r\n                    }\r\n                }\r\n                if" +
-" (parseInt(yr) % 100 != 0) {\r\n                   \r\n                    return \"t" +
-"rue\";\r\n                }\r\n            }\r\n            if ((parseInt(yr) % 4) != 0" +
-") {\r\n             \r\n                return \"false\";\r\n            }\r\n        }\r\n " +
-"       $(\'#btnsave\').click(function () {\r\n            var msg = \"\";\r\n           " +
-" var firstnmae = $(\"#Firstname\").val();\r\n            var emailcount = 0, pwdcoun" +
-"t = 0;;\r\n            var lastname = $(\"#Lastname\").val();\r\n            var Confi" +
-"rmPassword = $(\"#ConfirmPassword\").val();\r\n\r\n            var Email = $(\"#Email\")" +
-".val();\r\n            var NewPassword = $(\"#NewPassword\").val();\r\n            var" +
-" ConfirmEmail = $(\"#ConfirmEmail\").val();\r\n            var Websiteurl = $(\"#Webs" +
-"iteURL\").val();\r\n            var Password = $(\"#Password\").val();\r\n            v" +
-"ar ConfirmPassword = $(\"#ConfirmPassword\").val();\r\n\r\n            var NewPassword" +
-" = $(\"#NewPassword\").val();\r\n            var month = $(\"#month\").val();\r\n       " +
-"   \r\n            var year = $(\"#year\").val();\r\n            var day = $(\"#day\").v" +
-"al();\r\n            var ily = returnleap(year);\r\n           \r\n            if (ily" +
-" == true)\r\n            {\r\n              \r\n                if (day > 29 && month " +
-"== 2) {\r\n                    msg += ajaxsetup(\'MyAccount\', \'MyAccountDateValidat" +
-"ionUI\');\r\n                 \r\n                    $(\'#month\').addClass(\'err-bor\')" +
-";\r\n                    $(\'#year\').addClass(\'err-bor\');\r\n                    $(\'#" +
-"day\').addClass(\'err-bor\');\r\n                }\r\n\r\n            }\r\n            else" +
-" {\r\n                if (day > 28 && month == 2) {\r\n                    \r\n       " +
-"             msg += ajaxsetup(\'MyAccount\', \'MyAccountDateValidationUI\');\r\n      " +
-"              $(\'#month\').addClass(\'err-bor\');\r\n                    $(\'#year\').a" +
-"ddClass(\'err-bor\');\r\n                    $(\'#day\').addClass(\'err-bor\');\r\n       " +
-"         }\r\n            }\r\n            if (day > 30 && (month == 4 || month == 6" +
-" || month == 9 || month == 11))\r\n            {\r\n                \r\n              " +
-"  msg += ajaxsetup(\'MyAccount\', \'MyAccountDateValidationUI\');\r\n                $" +
-"(\'#month\').addClass(\'err-bor\');\r\n                $(\'#year\').addClass(\'err-bor\');" +
-"\r\n                $(\'#day\').addClass(\'err-bor\');\r\n\r\n            }\r\n          \r\n " +
-"           if (firstnmae==\"\") {\r\n                msg = ajaxsetup(\'MyAccount\', \'M" +
-"yAccountFnameRequiredUI\');\r\n               \r\n                $(\'#Firstname\').add" +
-"Class(\'err-bor\');\r\n            } else {\r\n               \r\n                $(\'#Fi" +
-"rstname\').removeClass(\'err-bor\');\r\n            }\r\n         \r\n\r\n\r\n\r\n            i" +
-"f (Email != \"\") {\r\n                if (!validateEmail(Email)) {\r\n               " +
-"     emailcount += 1;\r\n                    $(\'#Email\').addClass(\'err-bor\');\r\n   " +
-"               \r\n\r\n                } else {\r\n                    \r\n             " +
-"     \r\n                    $(\'#Email\').removeClass(\'err-bor\');\r\n                " +
-"}\r\n            }\r\n\r\n            if (ConfirmEmail != \"\") {\r\n\r\n                if " +
-"(!validateEmail(ConfirmEmail)) {\r\n                    emailcount += 1;\r\n        " +
-"            $(\'#ConfirmEmail\').addClass(\'err-bor\');\r\n                  \r\n\r\n     " +
-"           } else {\r\n                    $(\'#ConfirmEmail\').removeClass(\'err-bor" +
-"\');\r\n                   \r\n                }\r\n\r\n\r\n            }\r\n            if (" +
-"Password != \"\") {\r\n                if (Password.length < 4) {\r\n                 " +
-"   pwdcount += 1;\r\n                    $(\'#Password\').addClass(\'err-bor\');\r\n    " +
-"                \r\n\r\n                }\r\n            }\r\n            if (NewPasswor" +
-"d!=\"\")\r\n            {\r\n                if (NewPassword.length < 4)\r\n            " +
-"    {\r\n                    pwdcount += 1;\r\n                    $(\'#NewPassword\')" +
-".addClass(\'err-bor\');\r\n                    \r\n\r\n                }\r\n              " +
-" \r\n\r\n            }\r\n            if (ConfirmPassword != \"\") {\r\n                if" +
-" (ConfirmPassword.length < 4) {\r\n                    pwdcount += 1;\r\n           " +
-"         $(\'#ConfirmPassword\').addClass(\'err-bor\');\r\n                   \r\n      " +
-"          }\r\n\r\n\r\n            }\r\n          \r\n            if (emailcount > 0)\r\n   " +
-"         {\r\n                msg += ajaxsetup(\'MyAccount\', \'MyAccountEmailValidat" +
-"ionUI\') ;\r\n\r\n            }\r\n            if (pwdcount > 0)\r\n            {\r\n      " +
-"          msg = ajaxsetup(\'MyAccount\', \'MyAccountPasswordValidationUI\') ;\r\n\r\n   " +
-"         }\r\n            if (msg == \"\") {\r\n                $(\'#diverroacc\').css(\"" +
-"display\", \"none\");\r\n                $(\"#imageeror\").val(\'0\');\r\n                r" +
-"eturn true;\r\n            }\r\n            else {\r\n              \r\n                " +
-"$(\'#erraccmsg\').html(msg);\r\n                $(\'#diverro1acc\').css(\"display\", \"no" +
-"ne\");\r\n                $(\'#divaccsuc\').css(\"display\", \"none\");\r\n                " +
-"\r\n                $(\'#diverroacc\').css(\"display\", \"block\");\r\n                \r\n " +
-"               $(\'#diverroacc\').focus();\r\n                return false;\r\n       " +
-"     }\r\n        });\r\n        function returnleap(yr) {\r\n            return (yr %" +
-" 400) ? ((yr % 100) ? ((yr % 4) ? false : true) : false) : true;\r\n        }\r\n   " +
-"     function validateEmail(sEmail) {\r\n            var filter = /^[\\w\\-\\.\\+]+\\");
+WriteLiteral(">\r\n            function isleap(leapyear) {\r\n                var yr = leapyear;\r\n " +
+"               if ((parseInt(yr) % 4) == 0) {\r\n                    if (parseInt(" +
+"yr) % 100 == 0) {\r\n                        if (parseInt(yr) % 400 != 0) {\r\n\r\n   " +
+"                         return \"false\";\r\n                        }\r\n           " +
+"             if (parseInt(yr) % 400 == 0) {\r\n\r\n                            retur" +
+"n \"true\";\r\n                        }\r\n                    }\r\n                   " +
+" if (parseInt(yr) % 100 != 0) {\r\n\r\n                        return \"true\";\r\n     " +
+"               }\r\n                }\r\n                if ((parseInt(yr) % 4) != 0" +
+") {\r\n\r\n                    return \"false\";\r\n                }\r\n            }\r\n  " +
+"          $(\'#btnsave\').click(function () {\r\n                var msg = \"\";\r\n    " +
+"            var firstnmae = $(\"#Firstname\").val();\r\n                var emailcou" +
+"nt = 0, pwdcount = 0;;\r\n                var lastname = $(\"#Lastname\").val();\r\n  " +
+"              var ConfirmPassword = $(\"#ConfirmPassword\").val();\r\n\r\n            " +
+"    var Email = $(\"#Email\").val();\r\n                var NewPassword = $(\"#NewPas" +
+"sword\").val();\r\n                var ConfirmEmail = $(\"#ConfirmEmail\").val();\r\n  " +
+"              var Websiteurl = $(\"#WebsiteURL\").val();\r\n                var Pass" +
+"word = $(\"#Password\").val();\r\n                var ConfirmPassword = $(\"#ConfirmP" +
+"assword\").val();\r\n\r\n                var NewPassword = $(\"#NewPassword\").val();\r\n" +
+"                var month = $(\"#month\").val();\r\n\r\n                var year = $(\"" +
+"#year\").val();\r\n                var day = $(\"#day\").val();\r\n                var " +
+"ily = returnleap(year);\r\n\r\n                if (ily == true) {\r\n\r\n               " +
+"     if (day > 29 && month == 2) {\r\n                        msg += ajaxsetup(\'My" +
+"Account\', \'MyAccountDateValidationUI\');\r\n\r\n                        $(\'#month\').a" +
+"ddClass(\'err-bor\');\r\n                        $(\'#year\').addClass(\'err-bor\');\r\n  " +
+"                      $(\'#day\').addClass(\'err-bor\');\r\n                    }\r\n\r\n " +
+"               }\r\n                else {\r\n                    if (day > 28 && mo" +
+"nth == 2) {\r\n\r\n                        msg += ajaxsetup(\'MyAccount\', \'MyAccountD" +
+"ateValidationUI\');\r\n                        $(\'#month\').addClass(\'err-bor\');\r\n  " +
+"                      $(\'#year\').addClass(\'err-bor\');\r\n                        $" +
+"(\'#day\').addClass(\'err-bor\');\r\n                    }\r\n                }\r\n       " +
+"         if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11)" +
+") {\r\n\r\n                    msg += ajaxsetup(\'MyAccount\', \'MyAccountDateValidatio" +
+"nUI\');\r\n                    $(\'#month\').addClass(\'err-bor\');\r\n                  " +
+"  $(\'#year\').addClass(\'err-bor\');\r\n                    $(\'#day\').addClass(\'err-b" +
+"or\');\r\n\r\n                }\r\n\r\n                if (firstnmae == \"\") {\r\n          " +
+"          msg = ajaxsetup(\'MyAccount\', \'MyAccountFnameRequiredUI\');\r\n\r\n         " +
+"           $(\'#Firstname\').addClass(\'err-bor\');\r\n                } else {\r\n\r\n   " +
+"                 $(\'#Firstname\').removeClass(\'err-bor\');\r\n                }\r\n\r\n\r" +
+"\n\r\n\r\n                if (Email != \"\") {\r\n                    if (!validateEmail(" +
+"Email)) {\r\n                        emailcount += 1;\r\n                        $(\'" +
+"#Email\').addClass(\'err-bor\');\r\n\r\n\r\n                    } else {\r\n\r\n\r\n           " +
+"             $(\'#Email\').removeClass(\'err-bor\');\r\n                    }\r\n       " +
+"         }\r\n\r\n                if (ConfirmEmail != \"\") {\r\n\r\n                    i" +
+"f (!validateEmail(ConfirmEmail)) {\r\n                        emailcount += 1;\r\n  " +
+"                      $(\'#ConfirmEmail\').addClass(\'err-bor\');\r\n\r\n\r\n             " +
+"       } else {\r\n                        $(\'#ConfirmEmail\').removeClass(\'err-bor" +
+"\');\r\n\r\n                    }\r\n\r\n\r\n                }\r\n                if (Passwor" +
+"d != \"\") {\r\n                    if (Password.length < 4) {\r\n                    " +
+"    pwdcount += 1;\r\n                        $(\'#Password\').addClass(\'err-bor\');\r" +
+"\n\r\n\r\n                    }\r\n                }\r\n                if (NewPassword !" +
+"= \"\") {\r\n                    if (NewPassword.length < 4) {\r\n                    " +
+"    pwdcount += 1;\r\n                        $(\'#NewPassword\').addClass(\'err-bor\'" +
+");\r\n\r\n\r\n                    }\r\n\r\n\r\n                }\r\n                if (Confir" +
+"mPassword != \"\") {\r\n                    if (ConfirmPassword.length < 4) {\r\n     " +
+"                   pwdcount += 1;\r\n                        $(\'#ConfirmPassword\')" +
+".addClass(\'err-bor\');\r\n\r\n                    }\r\n\r\n\r\n                }\r\n\r\n       " +
+"         if (emailcount > 0) {\r\n                    msg += ajaxsetup(\'MyAccount\'" +
+", \'MyAccountEmailValidationUI\');\r\n\r\n                }\r\n                if (pwdco" +
+"unt > 0) {\r\n                    msg = ajaxsetup(\'MyAccount\', \'MyAccountPasswordV" +
+"alidationUI\');\r\n\r\n                }\r\n                if (msg == \"\") {\r\n         " +
+"           $(\'#diverroacc\').css(\"display\", \"none\");\r\n                    $(\"#ima" +
+"geeror\").val(\'0\');\r\n                    return true;\r\n                }\r\n       " +
+"         else {\r\n\r\n                    $(\'#erraccmsg\').html(msg);\r\n             " +
+"       $(\'#diverro1acc\').css(\"display\", \"none\");\r\n                    $(\'#divacc" +
+"suc\').css(\"display\", \"none\");\r\n\r\n                    $(\'#diverroacc\').css(\"displ" +
+"ay\", \"block\");\r\n\r\n                    $(\'#diverroacc\').focus();\r\n               " +
+"     return false;\r\n                }\r\n            });\r\n            function ret" +
+"urnleap(yr) {\r\n                return (yr % 400) ? ((yr % 100) ? ((yr % 4) ? fal" +
+"se : true) : false) : true;\r\n            }\r\n            function validateEmail(s" +
+"Email) {\r\n                var filter = /^[\\w\\-\\.\\+]+\\");
 
-WriteLiteral("@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/;\r\n\r\n            if (filter.test(sEmail)) {\r" +
-"\n\r\n                return true;\r\n            }\r\n            else {\r\n\r\n\r\n        " +
-"        return false;\r\n            }\r\n        }\r\n        var val1, val2;\r\n      " +
-"  $(\'#Zip\').change(function () {\r\n            var country = $(\"#Country option:s" +
-"elected\").text().trim();\r\n           \r\n            var city = \"\";\r\n            v" +
-"ar state = \"\";\r\n\r\n            var pincode = $(this).val();\r\n            $.ajax({" +
-"\r\n                url: \'http://maps.googleapis.com/maps/api/geocode/json\',\r\n    " +
-"            data: \'&address=\' + pincode + \'&sensor=true\',\r\n                dataT" +
-"ype: \'json\',\r\n                cache: false,\r\n                success: function (" +
-"data) {\r\n\r\n\r\n                    if (data.status == \'OK\') {\r\n\r\n                 " +
-"       for (var i = 0; i < data.results[0].address_components.length; i++) {\r\n  " +
-"                          var obj = data.results[0].address_components[i];\r\n    " +
-"                     \r\n                            var obj2 = obj[\'types\'];\r\n   " +
-"                       \r\n                            for (var j = 0; j < obj2.le" +
-"ngth; j++) {\r\n                                if (obj2[j] == \'locality\') {\r\n    " +
-"                                city = obj[\'long_name\'];\r\n\r\n                    " +
-"             \r\n                                }\r\n                              " +
-"  if (obj2[j] == \'postal_town\') {\r\n                                    city = ob" +
-"j[\'long_name\'];\r\n\r\n                               \r\n                            " +
-"    }\r\n                                if (obj2[j] == \'sublocality_level_1\') {\r\n" +
+WriteLiteral("@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/;\r\n\r\n                if (filter.test(sEmail)" +
+") {\r\n\r\n                    return true;\r\n                }\r\n                else" +
+" {\r\n\r\n\r\n                    return false;\r\n                }\r\n            }\r\n   " +
+"         var val1, val2;\r\n            $(\'#Zip\').change(function () {\r\n          " +
+"      var country = $(\"#Country option:selected\").text().trim();\r\n\r\n            " +
+"    var city = \"\";\r\n                var state = \"\";\r\n\r\n                var pinco" +
+"de = $(this).val();\r\n                $.ajax({\r\n                    url: \'http://" +
+"maps.googleapis.com/maps/api/geocode/json\',\r\n                    data: \'&address" +
+"=\' + pincode + \'&sensor=true\',\r\n                    dataType: \'json\',\r\n         " +
+"           cache: false,\r\n                    success: function (data) {\r\n\r\n\r\n  " +
+"                      if (data.status == \'OK\') {\r\n\r\n                            " +
+"for (var i = 0; i < data.results[0].address_components.length; i++) {\r\n         " +
+"                       var obj = data.results[0].address_components[i];\r\n\r\n     " +
+"                           var obj2 = obj[\'types\'];\r\n\r\n                         " +
+"       for (var j = 0; j < obj2.length; j++) {\r\n                                " +
+"    if (obj2[j] == \'locality\') {\r\n                                        city =" +
+" obj[\'long_name\'];\r\n\r\n\r\n                                    }\r\n                 " +
+"                   if (obj2[j] == \'postal_town\') {\r\n                            " +
+"            city = obj[\'long_name\'];\r\n\r\n\r\n                                    }\r" +
+"\n                                    if (obj2[j] == \'sublocality_level_1\') {\r\n  " +
+"                                      city = obj[\'long_name\'];\r\n\r\n\r\n            " +
+"                        }\r\n                                    if (obj2[j] == \'s" +
+"ublocality_level_2\') {\r\n                                        city = obj[\'long" +
+"_name\'];\r\n\r\n\r\n                                    }\r\n                           " +
+"         if (obj2[j] == \'sublocality_level_3\') {\r\n                              " +
+"          city = obj[\'long_name\'];\r\n\r\n\r\n                                    }\r\n " +
+"                                   if (obj2[j] == \'sublocality_level_4\') {\r\n    " +
 "                                    city = obj[\'long_name\'];\r\n\r\n\r\n              " +
-"                  }\r\n                                if (obj2[j] == \'sublocality" +
-"_level_2\') {\r\n                                    city = obj[\'long_name\'];\r\n\r\n\r\n" +
-"                                }\r\n                                if (obj2[j] =" +
-"= \'sublocality_level_3\') {\r\n                                    city = obj[\'long" +
-"_name\'];\r\n\r\n\r\n                                }\r\n                               " +
-" if (obj2[j] == \'sublocality_level_4\') {\r\n                                    ci" +
-"ty = obj[\'long_name\'];\r\n\r\n\r\n                                }\r\n                 " +
-"               if (obj2[j] == \'sublocality_level_5\') {\r\n                        " +
-"            city = obj[\'long_name\'];\r\n\r\n\r\n                                }\r\n   " +
-"                             if (obj2[j] == \'ward\') {\r\n                         " +
-"           city = obj[\'long_name\'];\r\n\r\n\r\n                                }\r\n    " +
-"                            if (obj2[j] == \'sublocality_level_5\') {\r\n           " +
-"                         city = obj[\'long_name\'];\r\n\r\n\r\n                         " +
-"       }\r\n                                if (obj2[j] == \'administrative_area_le" +
-"vel_1\') {\r\n                                    state = obj[\'long_name\'];\r\n      " +
-"                             \r\n                                }\r\n              " +
-"                  //if (obj2[j] == \'administrative_area_level_2\') {\r\n           " +
-"                       \r\n                                //    state = obj[\'long" +
-"_name\'];\r\n                                  \r\n                                //" +
-"}\r\n                                //if (obj2[j] == \'administrative_area_level_3" +
-"\') {\r\n\r\n                                //    state = obj[\'long_name\'];\r\n\r\n     " +
-"                           //}\r\n                                //if (obj2[j] ==" +
-" \'administrative_area_level_4\') {\r\n\r\n                                //    state" +
-" = obj[\'long_name\'];\r\n\r\n                                //}\r\n                   " +
-"             //if (obj2[j] == \'administrative_area_level_5\') {\r\n\r\n              " +
-"                  //    state = obj[\'long_name\'];\r\n\r\n                           " +
-"     //}\r\n                             \r\n                               \r\n      " +
-"                          if (obj2[j] == \'country\') {\r\n                         " +
-"           if (obj[\'long_name\'] == country) {\r\n                                 " +
-"       $(\'#City\').val(city);\r\n                                        $(\'#State\'" +
-").val(state);\r\n                                      \r\n                         " +
-"             \r\n                                    }\r\n\r\n                        " +
-"        }\r\n\r\n                            }\r\n\r\n\r\n\r\n                        }\r\n\r\n " +
-"                   }\r\n\r\n\r\n\r\n                    else {\r\n                        " +
-"var msg = ajaxsetup(\'MyAccount\', \'MyAccountZipValidationUI\');\r\n                 " +
-"       $(\'#erraccmsg\').html(msg);\r\n                        $(\'#diverro1acc\').css" +
-"(\"display\", \"none\");\r\n                        $(\'#divaccsuc\').css(\"display\", \"no" +
-"ne\");\r\n\r\n                        $(\'#diverroacc\').css(\"display\", \"block\");\r\n\r\n  " +
-"                      $(\'#diverroacc\').focus();\r\n                      \r\n       " +
-"                 $(\'#Zip\').addClass(\'err-bor\');\r\n                        return " +
-"false;\r\n                    }\r\n                }\r\n            });\r\n        });\r\n" +
-"\r\n        function ajaxsetup(strname, strFormTag) {\r\n            var msgnew = \"\"" +
-";\r\n\r\n            var request = $.ajax({\r\n                url: \'");
+"                      }\r\n                                    if (obj2[j] == \'sub" +
+"locality_level_5\') {\r\n                                        city = obj[\'long_n" +
+"ame\'];\r\n\r\n\r\n                                    }\r\n                             " +
+"       if (obj2[j] == \'ward\') {\r\n                                        city = " +
+"obj[\'long_name\'];\r\n\r\n\r\n                                    }\r\n                  " +
+"                  if (obj2[j] == \'sublocality_level_5\') {\r\n                     " +
+"                   city = obj[\'long_name\'];\r\n\r\n\r\n                               " +
+"     }\r\n                                    if (obj2[j] == \'administrative_area_" +
+"level_1\') {\r\n                                        state = obj[\'long_name\'];\r\n" +
+"\r\n                                    }\r\n                                    //i" +
+"f (obj2[j] == \'administrative_area_level_2\') {\r\n\r\n                              " +
+"      //    state = obj[\'long_name\'];\r\n\r\n                                    //}" +
+"\r\n                                    //if (obj2[j] == \'administrative_area_leve" +
+"l_3\') {\r\n\r\n                                    //    state = obj[\'long_name\'];\r\n" +
+"\r\n                                    //}\r\n                                    /" +
+"/if (obj2[j] == \'administrative_area_level_4\') {\r\n\r\n                            " +
+"        //    state = obj[\'long_name\'];\r\n\r\n                                    /" +
+"/}\r\n                                    //if (obj2[j] == \'administrative_area_le" +
+"vel_5\') {\r\n\r\n                                    //    state = obj[\'long_name\'];" +
+"\r\n\r\n                                    //}\r\n\r\n\r\n                               " +
+"     if (obj2[j] == \'country\') {\r\n                                        if (ob" +
+"j[\'long_name\'] == country) {\r\n                                            $(\'#Ci" +
+"ty\').val(city);\r\n                                            $(\'#State\').val(sta" +
+"te);\r\n\r\n\r\n                                        }\r\n\r\n                         " +
+"           }\r\n\r\n                                }\r\n\r\n\r\n\r\n                       " +
+"     }\r\n\r\n                        }\r\n\r\n\r\n\r\n                        else {\r\n     " +
+"                       var msg = ajaxsetup(\'MyAccount\', \'MyAccountZipValidationU" +
+"I\');\r\n                            $(\'#erraccmsg\').html(msg);\r\n                  " +
+"          $(\'#diverro1acc\').css(\"display\", \"none\");\r\n                           " +
+" $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                            $(\'#dive" +
+"rroacc\').css(\"display\", \"block\");\r\n\r\n                            $(\'#diverroacc\'" +
+").focus();\r\n\r\n                            $(\'#Zip\').addClass(\'err-bor\');\r\n      " +
+"                      return false;\r\n                        }\r\n                " +
+"    }\r\n                });\r\n            });\r\n\r\n            function ajaxsetup(st" +
+"rname, strFormTag) {\r\n                var msgnew = \"\";\r\n\r\n                var re" +
+"quest = $.ajax({\r\n                    url: \'");
 
             
-            #line 1046 "..\..\Views\Account\MyAccount.cshtml"
-                 Write(Url.Action("Index", "ValidationMessage"));
+            #line 1043 "..\..\Views\Account\MyAccount.cshtml"
+                     Write(Url.Action("Index", "ValidationMessage"));
 
             
             #line default
             #line hidden
 WriteLiteral(@"',
-                async: false,
-                data: { strFormName: strname, strFormTag: strFormTag },
-                type: 'Post'
-            });
-            request.done(function (msg) {
-                msgnew += msg;
-            });
+                    async: false,
+                    data: { strFormName: strname, strFormTag: strFormTag },
+                    type: 'Post'
+                });
+                request.done(function (msg) {
+                    msgnew += msg;
+                });
 
-            request.fail(function (jqXHR, textStatus) {
-                msgnew += ""Some Error occur!!"";
-            });
-            return msgnew;
-        }
-    </script>
-    <script");
+                request.fail(function (jqXHR, textStatus) {
+                    msgnew += ""Some Error occur!!"";
+                });
+                return msgnew;
+            }
+        </script>
+        <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 44063), Tuple.Create("\"", 44104)
-, Tuple.Create(Tuple.Create("", 44069), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 44069), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 47108), Tuple.Create("\"", 47149)
+, Tuple.Create(Tuple.Create("", 47114), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 47114), false)
 );
 
 WriteLiteral("></script>\r\n\r\n");

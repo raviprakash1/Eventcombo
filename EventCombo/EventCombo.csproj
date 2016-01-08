@@ -462,6 +462,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\_AccountLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_AccountLayout.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\_Layout.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -933,6 +938,7 @@
     </Content>
     <Content Include="Views\Shared\_AccountLayout.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_AccountLayout.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\MyAccount.cshtml">
       <Generator>RazorGenerator</Generator>

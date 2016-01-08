@@ -77,7 +77,23 @@ WriteLiteral("></div>\r\n<div");
 
 WriteLiteral(" class=\"col-sm-12 mange-events\"");
 
-WriteLiteral(">\r\n    <!-- -- Search box open -->\r\n    <div");
+WriteLiteral(">\r\n\r\n    <!-- -- Search box open -->\r\n");
+
+            
+            #line 16 "..\..\Views\EventList\EventList.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 16 "..\..\Views\EventList\EventList.cshtml"
+     if (Convert.ToInt32(TempData["Allcount"]) != 0)
+    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"col-sm-6 no_pad\"");
 
@@ -92,7 +108,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 19 "..\..\Views\EventList\EventList.cshtml"
+            #line 22 "..\..\Views\EventList\EventList.cshtml"
            Write(Html.TextBox("SearchStringEventTitle", "", new { Class = "form-control mng-evnt-search", placeholder = "Search for events and guests" }));
 
             
@@ -103,7 +119,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 20 "..\..\Views\EventList\EventList.cshtml"
+            #line 23 "..\..\Views\EventList\EventList.cshtml"
            Write(Html.Hidden("hdLastTab", ""));
 
             
@@ -124,16 +140,24 @@ WriteLiteral(" class=\"fa fa-search\"");
 WriteLiteral(" type=\"submit\"");
 
 WriteLiteral("></button>\r\n                    </div>\r\n                </div>\r\n            </div" +
-">\r\n        </form>\r\n    </div>\r\n\r\n    <!-- Search box close -- -->\r\n    <!-- -- " +
-"3 tabs open -->\r\n    <div");
+">\r\n        </form>\r\n    </div>\r\n");
+
+            
+            #line 32 "..\..\Views\EventList\EventList.cshtml"
+    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n    <!-- Search box close -- -->\r\n    <!-- -- 3 tabs open -->\r\n    <div");
 
 WriteLiteral(" class=\"col-sm-12 row\"");
 
 WriteLiteral(">\r\n\r\n");
 
             
-            #line 34 "..\..\Views\EventList\EventList.cshtml"
- if ((Convert.ToInt32(TempData["LiveEvents"]) > 0 && TempData["LiveEvents"] != null) || (Convert.ToInt32(TempData["SavedEvents"]) > 0 && TempData["SavedEvents"] != null) || (Convert.ToInt32(TempData["PastEvents"]) > 0 && TempData["PastEvents"] != null))
+            #line 39 "..\..\Views\EventList\EventList.cshtml"
+ if ((Convert.ToInt32(TempData["LiveEventscnt"]) > 0 && TempData["LiveEventscnt"] != null) || (Convert.ToInt32(TempData["SavedEventscnt"]) > 0 && TempData["SavedEventscnt"] != null) || (Convert.ToInt32(TempData["PastEventscnt"]) > 0 && TempData["PastEventscnt"] != null))
 {
 
             
@@ -158,13 +182,13 @@ WriteLiteral(" class=\"col-sm-6 no_pad evnt-list-pag text-right\"");
 WriteLiteral(">\r\n");
 
             
-            #line 39 "..\..\Views\EventList\EventList.cshtml"
+            #line 44 "..\..\Views\EventList\EventList.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 39 "..\..\Views\EventList\EventList.cshtml"
+            #line 44 "..\..\Views\EventList\EventList.cshtml"
                  if (ViewBag.LiveEvent.PageCount > 1)
                 {
 
@@ -184,7 +208,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 43 "..\..\Views\EventList\EventList.cshtml"
+            #line 48 "..\..\Views\EventList\EventList.cshtml"
                    Write(Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent, page_live => Url.Action("EventList", new
                    {
                        page_live,
@@ -197,7 +221,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n");
 
             
-            #line 49 "..\..\Views\EventList\EventList.cshtml"
+            #line 54 "..\..\Views\EventList\EventList.cshtml"
                 }
 
             
@@ -206,7 +230,7 @@ WriteLiteral("\r\n                    </div>\r\n");
 WriteLiteral("                ");
 
             
-            #line 50 "..\..\Views\EventList\EventList.cshtml"
+            #line 55 "..\..\Views\EventList\EventList.cshtml"
                  if (ViewBag.SavedEvent.PageCount > 1)
                 {
 
@@ -226,7 +250,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 55 "..\..\Views\EventList\EventList.cshtml"
+            #line 60 "..\..\Views\EventList\EventList.cshtml"
                    Write(Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent, page_saved => Url.Action("EventList", new
                    {
                        page_saved,
@@ -239,7 +263,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n");
 
             
-            #line 61 "..\..\Views\EventList\EventList.cshtml"
+            #line 66 "..\..\Views\EventList\EventList.cshtml"
                 }
 
             
@@ -248,7 +272,7 @@ WriteLiteral("\r\n                    </div>\r\n");
 WriteLiteral("                ");
 
             
-            #line 62 "..\..\Views\EventList\EventList.cshtml"
+            #line 67 "..\..\Views\EventList\EventList.cshtml"
                  if (ViewBag.PastEvent.PageCount > 1)
                 {
 
@@ -268,7 +292,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                        ");
 
             
-            #line 67 "..\..\Views\EventList\EventList.cshtml"
+            #line 72 "..\..\Views\EventList\EventList.cshtml"
                    Write(Html.PagedListPager((PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent, page_past => Url.Action("EventList", new
                    {
                        page_past,
@@ -281,7 +305,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n");
 
             
-            #line 73 "..\..\Views\EventList\EventList.cshtml"
+            #line 78 "..\..\Views\EventList\EventList.cshtml"
                 }
 
             
@@ -290,7 +314,7 @@ WriteLiteral("\r\n                    </div>\r\n");
 WriteLiteral("            </div>\r\n        </div>\r\n");
 
             
-            #line 76 "..\..\Views\EventList\EventList.cshtml"
+            #line 81 "..\..\Views\EventList\EventList.cshtml"
 
 
             
@@ -325,7 +349,7 @@ WriteLiteral(" data-toggle=\"tab\"");
 WriteLiteral(">Live Events (");
 
             
-            #line 80 "..\..\Views\EventList\EventList.cshtml"
+            #line 85 "..\..\Views\EventList\EventList.cshtml"
                                                                                                                             Write(TempData["LiveEvents"]);
 
             
@@ -352,7 +376,7 @@ WriteLiteral(" data-toggle=\"tab\"");
 WriteLiteral(">Saved Events (");
 
             
-            #line 83 "..\..\Views\EventList\EventList.cshtml"
+            #line 88 "..\..\Views\EventList\EventList.cshtml"
                                                                                                                               Write(TempData["SavedEvents"]);
 
             
@@ -379,7 +403,7 @@ WriteLiteral(" data-toggle=\"tab\"");
 WriteLiteral(">Past Events (");
 
             
-            #line 86 "..\..\Views\EventList\EventList.cshtml"
+            #line 91 "..\..\Views\EventList\EventList.cshtml"
                                                                                                                             Write(TempData["PastEvents"]);
 
             
@@ -416,13 +440,13 @@ WriteLiteral(">Action</th>\r\n                        </tr>\r\n                 
 "              <tbody>\r\n");
 
             
-            #line 102 "..\..\Views\EventList\EventList.cshtml"
+            #line 107 "..\..\Views\EventList\EventList.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 102 "..\..\Views\EventList\EventList.cshtml"
+            #line 107 "..\..\Views\EventList\EventList.cshtml"
                           
                             //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
@@ -440,7 +464,7 @@ WriteLiteral(" class=\"evnt_mng_tit_200\"");
 WriteLiteral(">");
 
             
-            #line 109 "..\..\Views\EventList\EventList.cshtml"
+            #line 114 "..\..\Views\EventList\EventList.cshtml"
                                                             Write(item.EventTitle);
 
             
@@ -449,7 +473,7 @@ WriteLiteral(">");
 WriteLiteral("</td>\r\n                                    <td>");
 
             
-            #line 110 "..\..\Views\EventList\EventList.cshtml"
+            #line 115 "..\..\Views\EventList\EventList.cshtml"
                                    Write(item.EventDate);
 
             
@@ -458,7 +482,7 @@ WriteLiteral("</td>\r\n                                    <td>");
 WriteLiteral(" / ");
 
             
-            #line 110 "..\..\Views\EventList\EventList.cshtml"
+            #line 115 "..\..\Views\EventList\EventList.cshtml"
                                                      Write(item.EventTime);
 
             
@@ -467,7 +491,7 @@ WriteLiteral(" / ");
 WriteLiteral("</td>\r\n                                    <td>");
 
             
-            #line 111 "..\..\Views\EventList\EventList.cshtml"
+            #line 116 "..\..\Views\EventList\EventList.cshtml"
                                    Write(item.TicketSold);
 
             
@@ -476,7 +500,7 @@ WriteLiteral("</td>\r\n                                    <td>");
 WriteLiteral("/");
 
             
-            #line 111 "..\..\Views\EventList\EventList.cshtml"
+            #line 116 "..\..\Views\EventList\EventList.cshtml"
                                                     Write(item.TotalTicket);
 
             
@@ -505,7 +529,7 @@ WriteLiteral(" class=\"btn-link manage\"");
 WriteLiteral(">");
 
             
-            #line 115 "..\..\Views\EventList\EventList.cshtml"
+            #line 120 "..\..\Views\EventList\EventList.cshtml"
                                                                   Write(Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null));
 
             
@@ -518,7 +542,7 @@ WriteLiteral(" class=\"btn-link manage\"");
 WriteLiteral(">");
 
             
-            #line 116 "..\..\Views\EventList\EventList.cshtml"
+            #line 121 "..\..\Views\EventList\EventList.cshtml"
                                                                   Write(Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null));
 
             
@@ -528,7 +552,7 @@ WriteLiteral(" </p>\r\n\r\n                                        </div>\r\n   
 "            </td>\r\n                                </tr>\r\n");
 
             
-            #line 121 "..\..\Views\EventList\EventList.cshtml"
+            #line 126 "..\..\Views\EventList\EventList.cshtml"
                             }
                         
             
@@ -538,13 +562,13 @@ WriteLiteral("\r\n                    </tbody>\r\n                </table>\r\n  
 "in-sec -->\r\n");
 
             
-            #line 126 "..\..\Views\EventList\EventList.cshtml"
+            #line 131 "..\..\Views\EventList\EventList.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 126 "..\..\Views\EventList\EventList.cshtml"
+            #line 131 "..\..\Views\EventList\EventList.cshtml"
                  if (Convert.ToInt32(ViewData["LiveEvntCnt"]) == 0 && ViewData["LiveEvntCnt"] != null)
                 {
 
@@ -554,7 +578,7 @@ WriteLiteral("\r\n                    </tbody>\r\n                </table>\r\n  
 WriteLiteral("                    <span>You don\'t have any live events.</span>\r\n");
 
             
-            #line 129 "..\..\Views\EventList\EventList.cshtml"
+            #line 134 "..\..\Views\EventList\EventList.cshtml"
                 }
 
             
@@ -585,13 +609,13 @@ WriteLiteral(">Action</th>\r\n                        </tr>\r\n                 
 "              <tbody>\r\n");
 
             
-            #line 144 "..\..\Views\EventList\EventList.cshtml"
+            #line 149 "..\..\Views\EventList\EventList.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 144 "..\..\Views\EventList\EventList.cshtml"
+            #line 149 "..\..\Views\EventList\EventList.cshtml"
                           
                             //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
@@ -607,7 +631,7 @@ WriteLiteral(" class=\"evnt_mng_tit_200\"");
 WriteLiteral(">");
 
             
-            #line 149 "..\..\Views\EventList\EventList.cshtml"
+            #line 154 "..\..\Views\EventList\EventList.cshtml"
                                                             Write(item.EventTitle);
 
             
@@ -616,7 +640,7 @@ WriteLiteral(">");
 WriteLiteral("</td>\r\n                                    <td>");
 
             
-            #line 150 "..\..\Views\EventList\EventList.cshtml"
+            #line 155 "..\..\Views\EventList\EventList.cshtml"
                                    Write(item.EventDate);
 
             
@@ -625,7 +649,7 @@ WriteLiteral("</td>\r\n                                    <td>");
 WriteLiteral(" / ");
 
             
-            #line 150 "..\..\Views\EventList\EventList.cshtml"
+            #line 155 "..\..\Views\EventList\EventList.cshtml"
                                                      Write(item.EventTime);
 
             
@@ -634,7 +658,7 @@ WriteLiteral(" / ");
 WriteLiteral("</td>\r\n                                    <td>");
 
             
-            #line 151 "..\..\Views\EventList\EventList.cshtml"
+            #line 156 "..\..\Views\EventList\EventList.cshtml"
                                    Write(item.TicketSold);
 
             
@@ -643,7 +667,7 @@ WriteLiteral("</td>\r\n                                    <td>");
 WriteLiteral("/");
 
             
-            #line 151 "..\..\Views\EventList\EventList.cshtml"
+            #line 156 "..\..\Views\EventList\EventList.cshtml"
                                                     Write(item.TotalTicket);
 
             
@@ -664,7 +688,7 @@ WriteLiteral(" class=\"btn-link manage\"");
 WriteLiteral(">");
 
             
-            #line 154 "..\..\Views\EventList\EventList.cshtml"
+            #line 159 "..\..\Views\EventList\EventList.cshtml"
                                                                   Write(Html.ActionLink("Manage", "", ""));
 
             
@@ -677,7 +701,7 @@ WriteLiteral(" class=\"btn-link manage\"");
 WriteLiteral(">");
 
             
-            #line 155 "..\..\Views\EventList\EventList.cshtml"
+            #line 160 "..\..\Views\EventList\EventList.cshtml"
                                                                   Write(Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null));
 
             
@@ -690,7 +714,7 @@ WriteLiteral(" class=\"btn-link manage\"");
 WriteLiteral(">");
 
             
-            #line 156 "..\..\Views\EventList\EventList.cshtml"
+            #line 161 "..\..\Views\EventList\EventList.cshtml"
                                                                   Write(Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null));
 
             
@@ -700,7 +724,7 @@ WriteLiteral(" </p>\r\n                                        </div>\r\n       
 "          </td>\r\n                                </tr>\r\n");
 
             
-            #line 160 "..\..\Views\EventList\EventList.cshtml"
+            #line 165 "..\..\Views\EventList\EventList.cshtml"
                             }
                         
             
@@ -709,13 +733,13 @@ WriteLiteral(" </p>\r\n                                        </div>\r\n       
 WriteLiteral("\r\n                    </tbody>\r\n                </table><!-- main-sec -->\r\n");
 
             
-            #line 164 "..\..\Views\EventList\EventList.cshtml"
+            #line 169 "..\..\Views\EventList\EventList.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 164 "..\..\Views\EventList\EventList.cshtml"
+            #line 169 "..\..\Views\EventList\EventList.cshtml"
                  if (Convert.ToInt32(ViewData["SavedEvntCnt"]) == 0 && ViewData["SavedEvntCnt"] != null)
                 {
 
@@ -725,7 +749,7 @@ WriteLiteral("\r\n                    </tbody>\r\n                </table><!-- m
 WriteLiteral("                    <span>You don\'t have any events drafts.</span>\r\n");
 
             
-            #line 167 "..\..\Views\EventList\EventList.cshtml"
+            #line 172 "..\..\Views\EventList\EventList.cshtml"
                 }
 
             
@@ -756,13 +780,13 @@ WriteLiteral(">Action</th>\r\n                        </tr>\r\n                 
 "              <tbody>\r\n");
 
             
-            #line 184 "..\..\Views\EventList\EventList.cshtml"
+            #line 189 "..\..\Views\EventList\EventList.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 184 "..\..\Views\EventList\EventList.cshtml"
+            #line 189 "..\..\Views\EventList\EventList.cshtml"
                           
                             //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
@@ -778,7 +802,7 @@ WriteLiteral(" class=\"evnt_mng_tit_200\"");
 WriteLiteral(">");
 
             
-            #line 189 "..\..\Views\EventList\EventList.cshtml"
+            #line 194 "..\..\Views\EventList\EventList.cshtml"
                                                             Write(item.EventTitle);
 
             
@@ -787,7 +811,7 @@ WriteLiteral(">");
 WriteLiteral("</td>\r\n                                    <td>");
 
             
-            #line 190 "..\..\Views\EventList\EventList.cshtml"
+            #line 195 "..\..\Views\EventList\EventList.cshtml"
                                    Write(item.EventDate);
 
             
@@ -796,7 +820,7 @@ WriteLiteral("</td>\r\n                                    <td>");
 WriteLiteral("/ ");
 
             
-            #line 190 "..\..\Views\EventList\EventList.cshtml"
+            #line 195 "..\..\Views\EventList\EventList.cshtml"
                                                     Write(item.EventTime);
 
             
@@ -805,7 +829,7 @@ WriteLiteral("/ ");
 WriteLiteral("</td>\r\n                                    <td>");
 
             
-            #line 191 "..\..\Views\EventList\EventList.cshtml"
+            #line 196 "..\..\Views\EventList\EventList.cshtml"
                                    Write(item.TicketSold);
 
             
@@ -814,7 +838,7 @@ WriteLiteral("</td>\r\n                                    <td>");
 WriteLiteral("/");
 
             
-            #line 191 "..\..\Views\EventList\EventList.cshtml"
+            #line 196 "..\..\Views\EventList\EventList.cshtml"
                                                     Write(item.TotalTicket);
 
             
@@ -835,7 +859,7 @@ WriteLiteral(" class=\"btn-link manage\"");
 WriteLiteral(">");
 
             
-            #line 194 "..\..\Views\EventList\EventList.cshtml"
+            #line 199 "..\..\Views\EventList\EventList.cshtml"
                                                                   Write(Html.ActionLink("Manage", "", ""));
 
             
@@ -848,7 +872,7 @@ WriteLiteral(" class=\"btn-link manage\"");
 WriteLiteral(">");
 
             
-            #line 195 "..\..\Views\EventList\EventList.cshtml"
+            #line 200 "..\..\Views\EventList\EventList.cshtml"
                                                                   Write(Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null));
 
             
@@ -861,7 +885,7 @@ WriteLiteral(" class=\"btn-link manage\"");
 WriteLiteral(">");
 
             
-            #line 196 "..\..\Views\EventList\EventList.cshtml"
+            #line 201 "..\..\Views\EventList\EventList.cshtml"
                                                                   Write(Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null));
 
             
@@ -871,7 +895,7 @@ WriteLiteral(" </p>\r\n                                        </div>\r\n       
 "          </td>\r\n                                </tr>\r\n");
 
             
-            #line 200 "..\..\Views\EventList\EventList.cshtml"
+            #line 205 "..\..\Views\EventList\EventList.cshtml"
                             }
                         
             
@@ -880,13 +904,13 @@ WriteLiteral(" </p>\r\n                                        </div>\r\n       
 WriteLiteral("\r\n                    </tbody>\r\n                </table><!-- main-sec -->\r\n");
 
             
-            #line 204 "..\..\Views\EventList\EventList.cshtml"
+            #line 209 "..\..\Views\EventList\EventList.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 204 "..\..\Views\EventList\EventList.cshtml"
+            #line 209 "..\..\Views\EventList\EventList.cshtml"
                  if (Convert.ToInt32(ViewData["PastEvntCnt"]) == 0 && ViewData["PastEvntCnt"] != null)
                 {
 
@@ -896,7 +920,7 @@ WriteLiteral("\r\n                    </tbody>\r\n                </table><!-- m
 WriteLiteral("                    <span>You don\'t have any past events.</span>\r\n");
 
             
-            #line 207 "..\..\Views\EventList\EventList.cshtml"
+            #line 212 "..\..\Views\EventList\EventList.cshtml"
                 }
 
             
@@ -906,7 +930,7 @@ WriteLiteral("\r\n            </div>\r\n\r\n            <!-- tab-content content
 " </div>\r\n");
 
             
-            #line 214 "..\..\Views\EventList\EventList.cshtml"
+            #line 219 "..\..\Views\EventList\EventList.cshtml"
  } 
 
             
@@ -915,14 +939,14 @@ WriteLiteral("\r\n            </div>\r\n\r\n            <!-- tab-content content
 WriteLiteral("     <!-- tab-content content-tab 1 -->\r\n");
 
             
-            #line 216 "..\..\Views\EventList\EventList.cshtml"
+            #line 221 "..\..\Views\EventList\EventList.cshtml"
   
             
             #line default
             #line hidden
             
-            #line 216 "..\..\Views\EventList\EventList.cshtml"
-   if (Convert.ToInt32(TempData["GuestList"]) > 0 && TempData["GuestList"] != null)
+            #line 221 "..\..\Views\EventList\EventList.cshtml"
+   if (Convert.ToInt32(TempData["GuestListcnt"]) > 0 && TempData["GuestListcnt"] != null)
   {
 
             
@@ -971,13 +995,13 @@ WriteLiteral(@">
 ");
 
             
-            #line 236 "..\..\Views\EventList\EventList.cshtml"
+            #line 241 "..\..\Views\EventList\EventList.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 236 "..\..\Views\EventList\EventList.cshtml"
+            #line 241 "..\..\Views\EventList\EventList.cshtml"
                               
                                 foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.GuestList)
                                 {
@@ -989,7 +1013,7 @@ WriteLiteral("                                    <tr>\r\n                      
 " <td>");
 
             
-            #line 240 "..\..\Views\EventList\EventList.cshtml"
+            #line 245 "..\..\Views\EventList\EventList.cshtml"
                                        Write(item.Name);
 
             
@@ -998,7 +1022,7 @@ WriteLiteral("                                    <tr>\r\n                      
 WriteLiteral("</td>\r\n                                        <td>");
 
             
-            #line 241 "..\..\Views\EventList\EventList.cshtml"
+            #line 246 "..\..\Views\EventList\EventList.cshtml"
                                        Write(item.EMail);
 
             
@@ -1007,7 +1031,7 @@ WriteLiteral("</td>\r\n                                        <td>");
 WriteLiteral("</td>\r\n                                        <td>");
 
             
-            #line 242 "..\..\Views\EventList\EventList.cshtml"
+            #line 247 "..\..\Views\EventList\EventList.cshtml"
                                        Write(item.EventTitle);
 
             
@@ -1016,7 +1040,7 @@ WriteLiteral("</td>\r\n                                        <td>");
 WriteLiteral("</td>\r\n                                        <td>");
 
             
-            #line 243 "..\..\Views\EventList\EventList.cshtml"
+            #line 248 "..\..\Views\EventList\EventList.cshtml"
                                        Write(item.Date_Time);
 
             
@@ -1025,7 +1049,7 @@ WriteLiteral("</td>\r\n                                        <td>");
 WriteLiteral("</td>\r\n                                        <td>");
 
             
-            #line 244 "..\..\Views\EventList\EventList.cshtml"
+            #line 249 "..\..\Views\EventList\EventList.cshtml"
                                        Write(item.OrderId);
 
             
@@ -1034,7 +1058,7 @@ WriteLiteral("</td>\r\n                                        <td>");
 WriteLiteral("</td>\r\n                                        <td>");
 
             
-            #line 245 "..\..\Views\EventList\EventList.cshtml"
+            #line 250 "..\..\Views\EventList\EventList.cshtml"
                                        Write(item.TicketType);
 
             
@@ -1043,7 +1067,7 @@ WriteLiteral("</td>\r\n                                        <td>");
 WriteLiteral("/");
 
             
-            #line 245 "..\..\Views\EventList\EventList.cshtml"
+            #line 250 "..\..\Views\EventList\EventList.cshtml"
                                                         Write(item.TicketPurchased);
 
             
@@ -1052,7 +1076,7 @@ WriteLiteral("/");
 WriteLiteral("</td>\r\n\r\n                                    </tr>\r\n");
 
             
-            #line 248 "..\..\Views\EventList\EventList.cshtml"
+            #line 253 "..\..\Views\EventList\EventList.cshtml"
                                 }
                             
             
@@ -1062,7 +1086,7 @@ WriteLiteral("\r\n                        </tbody>\r\n                    </tabl
 " </div>\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 255 "..\..\Views\EventList\EventList.cshtml"
+            #line 260 "..\..\Views\EventList\EventList.cshtml"
     }
 
             

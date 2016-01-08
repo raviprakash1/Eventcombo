@@ -11,7 +11,10 @@
 </div>
 <div class="clearfix"></div>
 <div class="col-sm-12 mange-events">
+
     <!-- -- Search box open -->
+    @if (Convert.ToInt32(TempData["Allcount"]) != 0)
+    {
     <div class="col-sm-6 no_pad">
         <form>
             <div class="input-group custom ">
@@ -26,12 +29,14 @@
             </div>
         </form>
     </div>
+    }
+
 
     <!-- Search box close -- -->
     <!-- -- 3 tabs open -->
     <div class="col-sm-12 row">
 
-@if ((Convert.ToInt32(TempData["LiveEvents"]) > 0 && TempData["LiveEvents"] != null) || (Convert.ToInt32(TempData["SavedEvents"]) > 0 && TempData["SavedEvents"] != null) || (Convert.ToInt32(TempData["PastEvents"]) > 0 && TempData["PastEvents"] != null))
+@if ((Convert.ToInt32(TempData["LiveEventscnt"]) > 0 && TempData["LiveEventscnt"] != null) || (Convert.ToInt32(TempData["SavedEventscnt"]) > 0 && TempData["SavedEventscnt"] != null) || (Convert.ToInt32(TempData["PastEventscnt"]) > 0 && TempData["PastEventscnt"] != null))
 {
         <div class="col-sm-12 no_pad mb10">
             <div class="col-sm-6 no_pad"> <h3 class="acnt_title">Events</h3> </div>
@@ -213,7 +218,7 @@
         </div>
  } 
      <!-- tab-content content-tab 1 -->
-  @if (Convert.ToInt32(TempData["GuestList"]) > 0 && TempData["GuestList"] != null)
+  @if (Convert.ToInt32(TempData["GuestListcnt"]) > 0 && TempData["GuestListcnt"] != null)
   {
         <div class="col-sm-12 no_pad mt10">
             <div class="col-sm-12 no_pad mb5">
