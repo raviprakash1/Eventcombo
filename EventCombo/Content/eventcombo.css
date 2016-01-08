@@ -195,7 +195,7 @@ button:focus { outline: none;}
 .login_form_bot{ margin-bottom: 10px;}
 .forgt_pass{ color: #00cafd; font-size: 1.2em;}
 .forgt_pass:hover{color:#00cafd; text-decoration:none;}
-.login_btn_sub{ background-color: #00cafd; border:1px solid #00cafd; padding:2px 6px; font-size:20px; text-transform: uppercase; }
+.login_btn_sub{ background-color: #00cafd; border:1px solid #00cafd; padding:2px 6px; font-size:20px; }
 .login_btn_sub:hover{background-color: #00cafd; border:1px solid #00cafd;}
 .social_net_log{ font-size: 1.1em;}
 

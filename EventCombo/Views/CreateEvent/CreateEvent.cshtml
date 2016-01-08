@@ -207,7 +207,7 @@
     
     <div class="event_container">
         <div class="event_inner_container event_top" id="eventtopscoll">
-            <div class="col-sm-12 pt10 bggrey clearfix">
+            <div class="col-sm-12 pt10 bggrey clearfix"  >
                 <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
                     <div class="er_UI_main" >
                         <div class="er_UI_img"></div>
@@ -587,7 +587,7 @@
                             <div class="form-group">
                                 <label class="col-sm-5 control-label ev_tickt_lebel no_pad">Sub Category</label>
                                 <div class="col-sm-7 dropheight">
-                                    <select id="ddlEventSubCategory" class="form-control selectpicker wd600"></select>
+                                    <select id="ddlEventSubCategory" class="form-control  wd600"></select>
                                 </div>
                             </div>
                         </div>
@@ -1453,6 +1453,7 @@
 
 
         });
+     
         function ValEventdate(e) {
             if (e.trim() == "txtDateFrom") {
 
@@ -1823,6 +1824,52 @@
         }
 
         $(document).ready(function () {
+
+            $(".cbtPreview").click(function () {
+                var msg = validatemain();
+                if (msg != "") {
+                    $('#diverroacc').css('display', 'block');
+                    //$(document).scrollTo('#diverroacc');
+
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html(msg);
+                    return false;
+
+                }
+                save("Preview");
+            });
+
+            $(".cbtMakeLive").click(function () {
+
+                var msg = validatemain();
+                if (msg != "") {
+                    $('#diverroacc').css('display', 'block');
+                    //$(document).scrollTo('#diverroacc');
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html(msg);
+                    return false;
+
+                }
+
+
+                save("Live");
+            });
+            $('.cbtSave').click(function () {
+                var msg = validatemain();
+                if (msg != "") {
+                    $('#diverroacc').css('display', 'block');
+                    //$(document).scrollTo('#diverroacc');
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html(msg);
+                    return false;
+
+                }
+
+                save("Save");
+
+
+            });
+
             $("#btOKAccess").click(function () {
                 history.back();
             });
@@ -1906,34 +1953,7 @@
                 //$("#hdSchType").val('Single');
             });
 
-            $(".cbtPreview").click(function () {
-                var msg = validatemain();
-                if (msg != "") {
-                    $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').scrollIntoView();
-                    $('#btndiverrsuc').focus();
-                    $('#erraccmsg').html(msg);
-                    return false;
-
-                }
-                save("Preview");
-            });
-
-            $(".cbtMakeLive").click(function () {
-               
-                var msg = validatemain();
-                if (msg != "") {
-                    $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').scrollIntoView();
-                    $('#btndiverrsuc').focus();
-                    $('#erraccmsg').html(msg);
-                    return false;
-
-                }
-
-
-                save("Live");
-            });
+         
             $('#chkReqPassword').change(function () {
 
                 if ($('#chkReqPassword').is(":checked") == true) {
@@ -1956,21 +1976,7 @@
             });
 
 
-            $('.cbtSave').click(function () {
-                var msg = validatemain();
-                if (msg != "") {
-                    $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').scrollIntoView();
-                    $('#btndiverrsuc').focus();
-                    $('#erraccmsg').html(msg);
-                    return false;
-
-                }
-
-                save("Save");
-
-            
-            });
+           
 
             function save(type)
             {
@@ -2441,8 +2447,8 @@
                     var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').scrollIntoView();
-                    $('#btndiverrsuc').focus();
+                 
+                    $('#diverroacc').focus();
                     $('#erraccmsg').html(msg);
                     //$("#txtOrgnizer").focus();
                     return false;
@@ -2455,8 +2461,8 @@
                         var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                        $('#diverroacc').scrollIntoView();
-                        $('#btndiverrsuc').focus();
+                       
+                        $('#diverroacc').focus();
                         $('#erraccmsg').html(msg);
                         //alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
                         return false;
@@ -2580,8 +2586,8 @@
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
-                                $('#diverroacc').scrollIntoView();
-                                $('#btndiverrsuc').focus();
+                               
+                                $('#diverroacc').focus();
                                 var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
                                 $('#erraccmsg').html(msg);
 
@@ -2594,7 +2600,7 @@
 
                             $('#divaccsuc').css('display', 'none');
                             $('#diverroacc').css('display', 'block');
-                            $('#diverroacc').scrollIntoView();
+                            //$(document).scrollTo('#diverroacc');
                             $('#btndiverrsuc').focus();
                             $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                             //alert("Sorry there is some problem.");
@@ -2622,8 +2628,8 @@
                     error: function (data) {
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                        $('#diverroacc').scrollIntoView();
-                        $('#btndiverrsuc').focus();
+                      
+                        $('#diverroacc').focus();
                         $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                     }
                 });
@@ -2741,8 +2747,8 @@
                 error: function (data) {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').scrollIntoView();
-                    $('#btndiverrsuc').focus();
+                    
+                    $('#diverroacc').focus();
                     $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                 }
             });
@@ -2905,8 +2911,9 @@
                     $("#VenueName").addClass('err-bor');
                     var msg = ajaxsetup('CreateEvent', 'CreateEventValidatevenueUI');
                     $('#erraccmsgvenue').html(msg);
+                    $('#diverrorvenue').focus();
                     //alert("Please enter valid venue name");
-                    $("#VenueName").focus();
+                    //$(document).scrollTo('#diverroacc');
                     return false;
                 }
                 //if ($("#Address1").val().trim() == '') {
