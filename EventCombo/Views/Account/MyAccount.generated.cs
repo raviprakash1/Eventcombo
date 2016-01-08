@@ -665,7 +665,7 @@ WriteLiteral(" class=\"acnt_form_name_mini\"");
 
 WriteLiteral(">Zip</small>\r\n                        </div>\r\n                        <div");
 
-WriteLiteral(" class=\"col-xs-6 add_form_bot mb0\"");
+WriteLiteral(" class=\"col-xs-6 add_form_bot mb0 dropheight\"");
 
 WriteLiteral(">\r\n");
 
@@ -673,7 +673,7 @@ WriteLiteral("                            ");
 
             
             #line 203 "..\..\Views\Account\MyAccount.cshtml"
-                       Write(Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control" }));
+                       Write(Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker" }));
 
             
             #line default
@@ -1392,68 +1392,68 @@ WriteLiteral(">\r\n            function isleap(leapyear) {\r\n                va
 " if (parseInt(yr) % 100 != 0) {\r\n\r\n                        return \"true\";\r\n     " +
 "               }\r\n                }\r\n                if ((parseInt(yr) % 4) != 0" +
 ") {\r\n\r\n                    return \"false\";\r\n                }\r\n            }\r\n  " +
-"          $(\'#btnsave\').click(function () {\r\n                var msg = \"\";\r\n    " +
-"            var firstnmae = $(\"#Firstname\").val();\r\n                var emailcou" +
-"nt = 0, pwdcount = 0;;\r\n                var lastname = $(\"#Lastname\").val();\r\n  " +
-"              var ConfirmPassword = $(\"#ConfirmPassword\").val();\r\n\r\n            " +
-"    var Email = $(\"#Email\").val();\r\n                var NewPassword = $(\"#NewPas" +
-"sword\").val();\r\n                var ConfirmEmail = $(\"#ConfirmEmail\").val();\r\n  " +
-"              var Websiteurl = $(\"#WebsiteURL\").val();\r\n                var Pass" +
-"word = $(\"#Password\").val();\r\n                var ConfirmPassword = $(\"#ConfirmP" +
-"assword\").val();\r\n\r\n                var NewPassword = $(\"#NewPassword\").val();\r\n" +
-"                var month = $(\"#month\").val();\r\n\r\n                var year = $(\"" +
-"#year\").val();\r\n                var day = $(\"#day\").val();\r\n                var " +
-"ily = returnleap(year);\r\n\r\n                if (ily == true) {\r\n\r\n               " +
-"     if (day > 29 && month == 2) {\r\n                        msg += ajaxsetup(\'My" +
-"Account\', \'MyAccountDateValidationUI\');\r\n\r\n                        $(\'#month\').a" +
-"ddClass(\'err-bor\');\r\n                        $(\'#year\').addClass(\'err-bor\');\r\n  " +
-"                      $(\'#day\').addClass(\'err-bor\');\r\n                    }\r\n\r\n " +
-"               }\r\n                else {\r\n                    if (day > 28 && mo" +
-"nth == 2) {\r\n\r\n                        msg += ajaxsetup(\'MyAccount\', \'MyAccountD" +
-"ateValidationUI\');\r\n                        $(\'#month\').addClass(\'err-bor\');\r\n  " +
-"                      $(\'#year\').addClass(\'err-bor\');\r\n                        $" +
-"(\'#day\').addClass(\'err-bor\');\r\n                    }\r\n                }\r\n       " +
-"         if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11)" +
-") {\r\n\r\n                    msg += ajaxsetup(\'MyAccount\', \'MyAccountDateValidatio" +
-"nUI\');\r\n                    $(\'#month\').addClass(\'err-bor\');\r\n                  " +
-"  $(\'#year\').addClass(\'err-bor\');\r\n                    $(\'#day\').addClass(\'err-b" +
-"or\');\r\n\r\n                }\r\n\r\n                if (firstnmae == \"\") {\r\n          " +
-"          msg = ajaxsetup(\'MyAccount\', \'MyAccountFnameRequiredUI\');\r\n\r\n         " +
-"           $(\'#Firstname\').addClass(\'err-bor\');\r\n                } else {\r\n\r\n   " +
-"                 $(\'#Firstname\').removeClass(\'err-bor\');\r\n                }\r\n\r\n\r" +
-"\n\r\n\r\n                if (Email != \"\") {\r\n                    if (!validateEmail(" +
-"Email)) {\r\n                        emailcount += 1;\r\n                        $(\'" +
-"#Email\').addClass(\'err-bor\');\r\n\r\n\r\n                    } else {\r\n\r\n\r\n           " +
-"             $(\'#Email\').removeClass(\'err-bor\');\r\n                    }\r\n       " +
-"         }\r\n\r\n                if (ConfirmEmail != \"\") {\r\n\r\n                    i" +
-"f (!validateEmail(ConfirmEmail)) {\r\n                        emailcount += 1;\r\n  " +
-"                      $(\'#ConfirmEmail\').addClass(\'err-bor\');\r\n\r\n\r\n             " +
-"       } else {\r\n                        $(\'#ConfirmEmail\').removeClass(\'err-bor" +
-"\');\r\n\r\n                    }\r\n\r\n\r\n                }\r\n                if (Passwor" +
-"d != \"\") {\r\n                    if (Password.length < 4) {\r\n                    " +
-"    pwdcount += 1;\r\n                        $(\'#Password\').addClass(\'err-bor\');\r" +
-"\n\r\n\r\n                    }\r\n                }\r\n                if (NewPassword !" +
-"= \"\") {\r\n                    if (NewPassword.length < 4) {\r\n                    " +
-"    pwdcount += 1;\r\n                        $(\'#NewPassword\').addClass(\'err-bor\'" +
-");\r\n\r\n\r\n                    }\r\n\r\n\r\n                }\r\n                if (Confir" +
-"mPassword != \"\") {\r\n                    if (ConfirmPassword.length < 4) {\r\n     " +
-"                   pwdcount += 1;\r\n                        $(\'#ConfirmPassword\')" +
-".addClass(\'err-bor\');\r\n\r\n                    }\r\n\r\n\r\n                }\r\n\r\n       " +
-"         if (emailcount > 0) {\r\n                    msg += ajaxsetup(\'MyAccount\'" +
-", \'MyAccountEmailValidationUI\');\r\n\r\n                }\r\n                if (pwdco" +
-"unt > 0) {\r\n                    msg = ajaxsetup(\'MyAccount\', \'MyAccountPasswordV" +
-"alidationUI\');\r\n\r\n                }\r\n                if (msg == \"\") {\r\n         " +
-"           $(\'#diverroacc\').css(\"display\", \"none\");\r\n                    $(\"#ima" +
-"geeror\").val(\'0\');\r\n                    return true;\r\n                }\r\n       " +
-"         else {\r\n\r\n                    $(\'#erraccmsg\').html(msg);\r\n             " +
-"       $(\'#diverro1acc\').css(\"display\", \"none\");\r\n                    $(\'#divacc" +
-"suc\').css(\"display\", \"none\");\r\n\r\n                    $(\'#diverroacc\').css(\"displ" +
-"ay\", \"block\");\r\n                    $(\'#diverroacc\').scrollIntoView();\r\n        " +
-"            $(\'#btndiverroacc\').focus();\r\n                    return false;\r\n   " +
-"             }\r\n            });\r\n            function returnleap(yr) {\r\n        " +
-"        return (yr % 400) ? ((yr % 100) ? ((yr % 4) ? false : true) : false) : t" +
-"rue;\r\n            }\r\n            function validateEmail(sEmail) {\r\n             " +
-"   var filter = /^[\\w\\-\\.\\+]+\\");
+"          $(\'#btnsave\').click(function () {\r\n                debugger;\r\n        " +
+"        var msg = \"\";\r\n                var firstnmae = $(\"#Firstname\").val();\r\n " +
+"               var emailcount = 0, pwdcount = 0;;\r\n                var lastname " +
+"= $(\"#Lastname\").val();\r\n                var ConfirmPassword = $(\"#ConfirmPasswo" +
+"rd\").val();\r\n\r\n                var Email = $(\"#Email\").val();\r\n                v" +
+"ar NewPassword = $(\"#NewPassword\").val();\r\n                var ConfirmEmail = $(" +
+"\"#ConfirmEmail\").val();\r\n                var Websiteurl = $(\"#WebsiteURL\").val()" +
+";\r\n                var Password = $(\"#Password\").val();\r\n                var Con" +
+"firmPassword = $(\"#ConfirmPassword\").val();\r\n\r\n                var NewPassword =" +
+" $(\"#NewPassword\").val();\r\n                var month = $(\"#month\").val();\r\n\r\n   " +
+"             var year = $(\"#year\").val();\r\n                var day = $(\"#day\").v" +
+"al();\r\n                var ily = returnleap(year);\r\n\r\n                if (ily ==" +
+" true) {\r\n\r\n                    if (day > 29 && month == 2) {\r\n                 " +
+"       msg += ajaxsetup(\'MyAccount\', \'MyAccountDateValidationUI\');\r\n\r\n          " +
+"              $(\'#month\').addClass(\'err-bor\');\r\n                        $(\'#year" +
+"\').addClass(\'err-bor\');\r\n                        $(\'#day\').addClass(\'err-bor\');\r" +
+"\n                    }\r\n\r\n                }\r\n                else {\r\n           " +
+"         if (day > 28 && month == 2) {\r\n\r\n                        msg += ajaxset" +
+"up(\'MyAccount\', \'MyAccountDateValidationUI\');\r\n                        $(\'#month" +
+"\').addClass(\'err-bor\');\r\n                        $(\'#year\').addClass(\'err-bor\');" +
+"\r\n                        $(\'#day\').addClass(\'err-bor\');\r\n                    }\r" +
+"\n                }\r\n                if (day > 30 && (month == 4 || month == 6 ||" +
+" month == 9 || month == 11)) {\r\n\r\n                    msg += ajaxsetup(\'MyAccoun" +
+"t\', \'MyAccountDateValidationUI\');\r\n                    $(\'#month\').addClass(\'err" +
+"-bor\');\r\n                    $(\'#year\').addClass(\'err-bor\');\r\n                  " +
+"  $(\'#day\').addClass(\'err-bor\');\r\n\r\n                }\r\n\r\n                if (fir" +
+"stnmae == \"\") {\r\n                    msg = ajaxsetup(\'MyAccount\', \'MyAccountFnam" +
+"eRequiredUI\');\r\n\r\n                    $(\'#Firstname\').addClass(\'err-bor\');\r\n    " +
+"            } else {\r\n\r\n                    $(\'#Firstname\').removeClass(\'err-bor" +
+"\');\r\n                }\r\n\r\n\r\n\r\n\r\n                if (Email != \"\") {\r\n            " +
+"        if (!validateEmail(Email)) {\r\n                        emailcount += 1;\r\n" +
+"                        $(\'#Email\').addClass(\'err-bor\');\r\n\r\n\r\n                  " +
+"  } else {\r\n\r\n\r\n                        $(\'#Email\').removeClass(\'err-bor\');\r\n   " +
+"                 }\r\n                }\r\n\r\n                if (ConfirmEmail != \"\")" +
+" {\r\n\r\n                    if (!validateEmail(ConfirmEmail)) {\r\n                 " +
+"       emailcount += 1;\r\n                        $(\'#ConfirmEmail\').addClass(\'er" +
+"r-bor\');\r\n\r\n\r\n                    } else {\r\n                        $(\'#ConfirmE" +
+"mail\').removeClass(\'err-bor\');\r\n\r\n                    }\r\n\r\n\r\n                }\r\n" +
+"                if (Password != \"\") {\r\n                    if (Password.length <" +
+" 4) {\r\n                        pwdcount += 1;\r\n                        $(\'#Passw" +
+"ord\').addClass(\'err-bor\');\r\n\r\n\r\n                    }\r\n                }\r\n      " +
+"          if (NewPassword != \"\") {\r\n                    if (NewPassword.length <" +
+" 4) {\r\n                        pwdcount += 1;\r\n                        $(\'#NewPa" +
+"ssword\').addClass(\'err-bor\');\r\n\r\n\r\n                    }\r\n\r\n\r\n                }\r" +
+"\n                if (ConfirmPassword != \"\") {\r\n                    if (ConfirmPa" +
+"ssword.length < 4) {\r\n                        pwdcount += 1;\r\n                  " +
+"      $(\'#ConfirmPassword\').addClass(\'err-bor\');\r\n\r\n                    }\r\n\r\n\r\n " +
+"               }\r\n\r\n                if (emailcount > 0) {\r\n                    m" +
+"sg += ajaxsetup(\'MyAccount\', \'MyAccountEmailValidationUI\');\r\n\r\n                }" +
+"\r\n                if (pwdcount > 0) {\r\n                    msg = ajaxsetup(\'MyAc" +
+"count\', \'MyAccountPasswordValidationUI\');\r\n\r\n                }\r\n                " +
+"if (msg == \"\") {\r\n                    $(\'#diverroacc\').css(\"display\", \"none\");\r\n" +
+"                    $(\"#imageeror\").val(\'0\');\r\n                    return true;\r" +
+"\n                }\r\n                else {\r\n\r\n                    $(\'#erraccmsg\'" +
+").html(msg);\r\n                    $(\'#diverro1acc\').css(\"display\", \"none\");\r\n   " +
+"                 $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                    " +
+"$(\'#diverroacc\').css(\"display\", \"block\");\r\n                   \r\n                " +
+"    $(\'#btndiverroacc\').focus();\r\n                    return false;\r\n           " +
+"     }\r\n            });\r\n            function returnleap(yr) {\r\n                " +
+"return (yr % 400) ? ((yr % 100) ? ((yr % 4) ? false : true) : false) : true;\r\n  " +
+"          }\r\n            function validateEmail(sEmail) {\r\n                var f" +
+"ilter = /^[\\w\\-\\.\\+]+\\");
 
 WriteLiteral("@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/;\r\n\r\n                if (filter.test(sEmail)" +
 ") {\r\n\r\n                    return true;\r\n                }\r\n                else" +
@@ -1513,16 +1513,15 @@ WriteLiteral("@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/;\r\n\r\n                i
 "I\');\r\n                            $(\'#erraccmsg\').html(msg);\r\n                  " +
 "          $(\'#diverro1acc\').css(\"display\", \"none\");\r\n                           " +
 " $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                            $(\'#dive" +
-"rroacc\').css(\"display\", \"block\");\r\n                            $(\'#diverroacc\')." +
-"scrollIntoView();\r\n                            $(\'#btndiverroacc\').focus();\r\n\r\n " +
-"                           $(\'#Zip\').addClass(\'err-bor\');\r\n                     " +
-"       return false;\r\n                        }\r\n                    }\r\n        " +
-"        });\r\n            });\r\n\r\n            function ajaxsetup(strname, strFormT" +
-"ag) {\r\n                var msgnew = \"\";\r\n\r\n                var request = $.ajax(" +
-"{\r\n                    url: \'");
+"rroacc\').css(\"display\", \"block\");\r\n                            \r\n               " +
+"             $(\'#btndiverroacc\').focus();\r\n\r\n                            $(\'#Zip" +
+"\').addClass(\'err-bor\');\r\n                            return false;\r\n            " +
+"            }\r\n                    }\r\n                });\r\n            });\r\n\r\n  " +
+"          function ajaxsetup(strname, strFormTag) {\r\n                var msgnew " +
+"= \"\";\r\n\r\n                var request = $.ajax({\r\n                    url: \'");
 
             
-            #line 1048 "..\..\Views\Account\MyAccount.cshtml"
+            #line 1049 "..\..\Views\Account\MyAccount.cshtml"
                      Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -1545,9 +1544,9 @@ WriteLiteral(@"',
         </script>
         <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 47287), Tuple.Create("\"", 47328)
-, Tuple.Create(Tuple.Create("", 47293), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 47293), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 47269), Tuple.Create("\"", 47310)
+, Tuple.Create(Tuple.Create("", 47275), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 47275), false)
 );
 
 WriteLiteral("></script>\r\n\r\n");
