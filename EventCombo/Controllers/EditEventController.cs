@@ -1680,7 +1680,7 @@ namespace EventCombo.Controllers
 
 
                             }
-
+                           
                             if (model.EventImage != null)
                             {
                                 EventImage Image = new EventImage();
@@ -1693,6 +1693,10 @@ namespace EventCombo.Controllers
                                     Image.ImageType = img.ImageType;
                                     objEnt.EventImages.Add(Image);
                                 }
+                            }
+                            else
+                            {
+                                objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
                             }
 
                             if (model.EventVariable != null)
@@ -1726,6 +1730,10 @@ namespace EventCombo.Controllers
                                     objEnt.Event_VariableDesc.RemoveRange(resultdesc);
                                 }
 
+                            }
+                            else
+                            {
+                                objEnt.Event_VariableDesc.RemoveRange(objEnt.Event_VariableDesc.Where(x => x.Event_Id == lEventId));
                             }
                             objEnt.SaveChanges();
                             lEventId = ObjEC.EventID;

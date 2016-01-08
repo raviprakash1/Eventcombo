@@ -1687,7 +1687,8 @@ else
             if (msg != "") {
 
                 $('#diverroacc').css('display', 'block');
-                $('#diverroacc').focus();
+                $('#diverroacc').scrollIntoView();
+                $('#btndiverrsuc').focus();
                 $('#erraccmsg').html(msg);
                 return false;
 
@@ -2508,7 +2509,8 @@ else
             else {
                 $('#divaccsuc').css('display', 'none');
                 $('#diverroacc').css('display', 'block');
-                $('#diverroacc').focus();
+                $('#diverroacc').scrollIntoView();
+                $('#btndiverrsuc').focus();
                 $('#erraccmsg').html('There some problem occurs, Please check after some time.');
             }
 
@@ -2597,7 +2599,8 @@ else
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
                     $('#erraccmsg').html(msg);
-                    $('#diverroacc').focus();
+                    $('#diverroacc').scrollIntoView();
+                    $('#btndiverrsuc').focus();
                     return false;
 
                 }
@@ -2633,7 +2636,8 @@ else
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').focus();
+                    $('#diverroacc').scrollIntoView();
+                    $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
                     return false;
 
@@ -2714,7 +2718,8 @@ else
                     var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').focus();
+                    $('#diverroacc').scrollIntoView();
+                    $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
                     //$("#txtOrgnizer").focus();
                     return false;
@@ -2733,7 +2738,8 @@ else
                         var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                        $('#diverroacc').focus();
+                        $('#diverroacc').scrollIntoView();
+                        $('#btndiverrsuc').focus();
                         $('#erraccmsg').html(msg);
                         //alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
                         return false;
@@ -2831,7 +2837,8 @@ else
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
-                                $('#diverroacc').focus();
+                                $('#diverroacc').scrollIntoView();
+                                $('#btndiverrsuc').focus();
                                 $('#erraccmsg').html("Event Url already exists.");
 
                                 $("#txtEventUrl").val('');

@@ -1910,7 +1910,8 @@
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').focus();
+                    $('#diverroacc').scrollIntoView();
+                    $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
                     return false;
 
@@ -1923,7 +1924,8 @@
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').focus();
+                    $('#diverroacc').scrollIntoView();
+                    $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
                     return false;
 
@@ -1958,7 +1960,8 @@
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').focus();
+                    $('#diverroacc').scrollIntoView();
+                    $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
                     return false;
 
@@ -2438,7 +2441,8 @@
                     var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').focus();
+                    $('#diverroacc').scrollIntoView();
+                    $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
                     //$("#txtOrgnizer").focus();
                     return false;
@@ -2451,7 +2455,8 @@
                         var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                        $('#diverroacc').focus();
+                        $('#diverroacc').scrollIntoView();
+                        $('#btndiverrsuc').focus();
                         $('#erraccmsg').html(msg);
                         //alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
                         return false;
@@ -2575,6 +2580,8 @@
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
+                                $('#diverroacc').scrollIntoView();
+                                $('#btndiverrsuc').focus();
                                 var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
                                 $('#erraccmsg').html(msg);
 
@@ -2587,7 +2594,8 @@
 
                             $('#divaccsuc').css('display', 'none');
                             $('#diverroacc').css('display', 'block');
-                            $('#diverroacc').focus();
+                            $('#diverroacc').scrollIntoView();
+                            $('#btndiverrsuc').focus();
                             $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                             //alert("Sorry there is some problem.");
                         }
@@ -2614,7 +2622,8 @@
                     error: function (data) {
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                        $('#diverroacc').focus();
+                        $('#diverroacc').scrollIntoView();
+                        $('#btndiverrsuc').focus();
                         $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                     }
                 });
@@ -2732,7 +2741,8 @@
                 error: function (data) {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').focus();
+                    $('#diverroacc').scrollIntoView();
+                    $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                 }
             });

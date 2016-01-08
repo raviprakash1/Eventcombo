@@ -194,7 +194,7 @@ function autocomplete_init_MultiVenue() {
 }; // autocomplete_init
 function autocomplete_init_Venue() {
     $("#txtEventLocation").autocomplete({
-
+   
         // source is the list of input options shown in the autocomplete dropdown.
         // see documentation: http://jqueryui.com/demos/autocomplete/
         source: function (request, response) {
@@ -229,7 +229,7 @@ function autocomplete_init_Venue() {
     // triggered when user presses a key in the address box
     $("#txtEventLocation").bind('keydown', function (event) {
         if (event.keyCode == 13) {
-            geocode_lookup('address', $('#txtEventLocation').val(), true);
+            //geocode_lookup('address', $('#txtEventLocation').val(), true);
 
             // ensures dropdown disappears when enter is pressed
             $('#txtEventLocation').autocomplete("disable")

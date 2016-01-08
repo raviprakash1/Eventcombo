@@ -4870,13 +4870,13 @@ WriteLiteral("\"\r\n          \r\n            debugger;\r\n            if(privat
 "ord\').attr(\'readonly\', true);\r\n            $(\".priv_cont\").hide();\r\n        \r\n  " +
 "      \r\n        });\r\n        $(\".cbtPreview\").click(function () {\r\n            v" +
 "ar msg = validatemain();\r\n            if (msg != \"\") {\r\n\r\n                $(\'#di" +
-"verroacc\').css(\'display\', \'block\');\r\n                $(\'#diverroacc\').focus();\r\n" +
-"                $(\'#erraccmsg\').html(msg);\r\n                return false;\r\n\r\n   " +
-"         }\r\n            save(\"Preview\");\r\n            \r\n        });\r\n\r\n\r\n    </s" +
-"cript>\r\n");
+"verroacc\').css(\'display\', \'block\');\r\n                $(\'#diverroacc\').scrollInto" +
+"View();\r\n                $(\'#btndiverrsuc\').focus();\r\n                $(\'#erracc" +
+"msg\').html(msg);\r\n                return false;\r\n\r\n            }\r\n            sa" +
+"ve(\"Preview\");\r\n            \r\n        });\r\n\r\n\r\n    </script>\r\n");
 
             
-            #line 1701 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1702 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     // ---------------------Event Creation Script -------------------
 
@@ -5251,7 +5251,7 @@ WriteLiteral("    <script>\r\n\r\n        $(\".chkvalidation\").blur(function ()
 "                    url: \'");
 
             
-            #line 2475 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2476 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("Draftmodemodification", "EditEvent"));
 
             
@@ -5273,7 +5273,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 2488 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2489 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -5291,7 +5291,7 @@ WriteLiteral(@"' + '?Eventid=' + response;
                             window.open('");
 
             
-            #line 2497 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2498 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                     Write(Url.Action("ViewCreateEvent", "CreateEvent",new { }));
 
             
@@ -5302,7 +5302,7 @@ WriteLiteral("?strUrlData=\' + vUrl, \"_blank\");\r\n                        }\r
 "ive\r\n\r\n                            window.location.href = \'");
 
             
-            #line 2503 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2504 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -5316,7 +5316,8 @@ WriteLiteral(@"?EventId=' +response;
             else {
                 $('#divaccsuc').css('display', 'none');
                 $('#diverroacc').css('display', 'block');
-                $('#diverroacc').focus();
+                $('#diverroacc').scrollIntoView();
+                $('#btndiverrsuc').focus();
                 $('#erraccmsg').html('There some problem occurs, Please check after some time.');
             }
 
@@ -5329,7 +5330,7 @@ WriteLiteral(@"?EventId=' +response;
                 url: '");
 
             
-            #line 2521 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2523 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetSubCat", "EditEvent"));
 
             
@@ -5355,7 +5356,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 2538 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2540 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetOrgnizerDetail", "EditEvent"));
 
             
@@ -5385,126 +5386,129 @@ WriteLiteral("\',\r\n                data: { lEventId: $(\"#hdEventId\").val() }
 "cbtMakeElive\").click(function () {\r\n                var msg = validatemain();\r\n " +
 "               if (msg != \"\") {\r\n                    $(\'#diverroacc\').css(\'displ" +
 "ay\', \'block\');\r\n                    $(\'#erraccmsg\').html(msg);\r\n                " +
-"    $(\'#diverroacc\').focus();\r\n                    return false;\r\n\r\n            " +
-"    }\r\n                save(\"Live\");\r\n\r\n\r\n              \r\n\r\n            });\r\n   " +
-"         $(\'#chkReqPassword\').change(function () {\r\n\r\n                if ($(\'#ch" +
-"kReqPassword\').is(\":checked\") == true) {\r\n\r\n                    $(\'#txtReqPasswo" +
-"rd\').attr(\'readonly\', false);\r\n\r\n                } else {\r\n                    $" +
-"(\'#txtReqPassword\').attr(\'readonly\', true);\r\n                    $(\'#txtReqPassw" +
-"ord\').val(\'\');\r\n                }\r\n\r\n            })\r\n\r\n            $(\"#btDayofMo" +
-"nth\").click(function () {\r\n                $(\"#hdMonthlyType\").val(\'DM\');\r\n     " +
-"       });\r\n\r\n            $(\"#btDayofWeek\").click(function () {\r\n               " +
-" $(\"#hdMonthlyType\").val(\'DW\');\r\n            });\r\n\r\n\r\n            $(\'.cbtSave\')." +
-"click(function () {\r\n                var msg = validatemain();\r\n                " +
-"if (msg != \"\") {\r\n                    $(\'#diverroacc\').css(\'display\', \'block\');\r" +
-"\n                    $(\'#diverroacc\').focus();\r\n                    $(\'#erraccms" +
-"g\').html(msg);\r\n                    return false;\r\n\r\n                }\r\n\r\n      " +
-"          save(\"Save\");\r\n              \r\n            });\r\n\r\n          \r\n        " +
-"    $(\"#btMultiVenue\").click(function () {\r\n                $(\"#dvAddFooter\").sh" +
-"ow();\r\n                //$(\"#txtEventLocation\").val(\'\');\r\n                if ($(" +
-"\"#tblAddress tr\").length <= 0) {\r\n                    if ($(\"#txtEventLocation\")" +
-".val().trim() != \'\') {\r\n                        $(\"#VenueName\").val($(\"#txtEvent" +
-"Location\").val());\r\n                        var vCols = 0+\"¶\"+$(\"#VenueName\").va" +
-"l() + \"¶\" + $(\"#Address1\").val() + \"¶\" + $(\"#Address2\").val() + \"¶\" + $(\"#City\")" +
-".val() + \"¶\" + $(\"#State\").val() + \"¶\" + $(\"#Zip\").val() + \"¶\" + \'\' + \"¶\" + \'\';\r" +
-"\n                        var vColName = \"Venueid¶VenueName¶Address1¶Address2¶Cit" +
-"y¶State¶Zip¶CountryID¶CID\";\r\n                        AddRow(\"tblAddress\", vCols," +
-" vColName, \"Y\");\r\n                        $(\"#VenueName\").val(\"\");\r\n            " +
-"            $(\"#hidAddSno\").val(\"\");\r\n                    }\r\n                }\r\n" +
-"                $(\"#VenueName\").val(\"\");\r\n                $(\"#Address1\").val(\"\")" +
-";\r\n                $(\"#Address2\").val(\"\");\r\n                $(\"#City\").val(\"\");\r" +
-"\n                $(\"#State\").val(\"\");\r\n                $(\"#Zip\").val(\"\");\r\n     " +
-"           $(\"#hidAddSno\").val(\"\");\r\n                $(\"#CountryID\").val(\'1\');\r\n" +
-"            });\r\n\r\n            $(\"#btOnlineEvent\").click(function () {\r\n        " +
-"        if ($(\"#btOnlineEvent\").is(\":checked\") == true) {\r\n                    $" +
-"(\"#dvAddress\").hide();\r\n                    //$(\"#txtEventLocation\").prop(\'disab" +
-"led\', true);\r\n                    //$(\"#dllPastLocation\").prop(\'disabled\', true)" +
-";\r\n                    //$(\"#FindNewVen\").prop(\'disabled\', true);\r\n             " +
-"       //$(\"#btMultiVenue\").prop(\'disabled\', true);\r\n                    //$(\"#U" +
-"sepastLoc\").prop(\'disabled\', true);\r\n                    $(\"#hidAddressStatus\")." +
-"val(\'Online\');\r\n                }\r\n                else {\r\n                    $" +
-"(\"#dvAddress\").show();\r\n                    //$(\"#txtEventLocation\").prop(\'disab" +
-"led\', false);\r\n                    //$(\"#dllPastLocation\").prop(\'disabled\', fals" +
-"e);\r\n                    //$(\"#FindNewVen\").prop(\'disabled\', false);\r\n          " +
-"          //$(\"#btMultiVenue\").prop(\'disabled\', false);\r\n                    //$" +
-"(\"#UsepastLoc\").prop(\'disabled\', false);\r\n                    $(\"#hidAddressStat" +
-"us\").val(\'\');\r\n                }\r\n\r\n                //$(\"#dvAddress\").children()" +
-".attr(\"disabled\", \"disabled\");\r\n                //$(\"#dvAddress\").prop(\'disabled" +
-"\', true);\r\n            });\r\n\r\n\r\n\r\n\r\n            $(\"#btAddOrg\").click(function ()" +
-" {\r\n                //  alert(\"Test\");\r\n                //  alert($(\'#dllOrganiz" +
-"er option\').length);\r\n                //    if (parseInt($(\'#dllOrganizer option" +
-"\').length) < 25) {\r\n                //if ($(\"#hidOrgnizer\").val() == \"\") {\r\n    " +
-"            //var vval = $(\"#edSummer2\").code();\r\n                //var vLenght " +
-"= $(\"#dvOrganizer\").length;\r\n\r\n                //var divlength = $(\"#dvOrg_0> di" +
-"v\").size();\r\n\r\n                //var data = $(\"#dvOrg_0\").clone();\r\n            " +
-"    //$(\"#dvOrganizer\").append(data);\r\n                //alert(parseInt($(\"#ddlO" +
-"rgnizers option\").length));\r\n                if ($(\"#txtOrgnizer\").val().trim() " +
-"== \'\') {\r\n\r\n                    //alert(\"Please enter valid organizer.\");\r\n\r\n   " +
-"                 var msg = ajaxsetup(\'CreateEvent\', \'CreateEventOrganizerUI\');\r\n" +
-"                    $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                   " +
-" $(\'#diverroacc\').css(\'display\', \'block\');\r\n                    $(\'#diverroacc\')" +
-".focus();\r\n                    $(\'#erraccmsg\').html(msg);\r\n                    /" +
-"/$(\"#txtOrgnizer\").focus();\r\n                    return false;\r\n                " +
-"}\r\n\r\n                //if ($(\"#txtOrgnizer\").val().trim() == \'\') {\r\n            " +
-"    //    alert(\"Please enter valid organizer.\");\r\n                //    $(\"#txt" +
-"Orgnizer\").focus();\r\n                //    return false;\r\n                //}\r\n\r" +
-"\n                debugger;\r\n\r\n                if ($(\"#hidOrgnizer\").val() == \'\')" +
-" {\r\n                    if (parseInt($(\"#ddlOrgnizers option\").length) > 24) {\r\n" +
-"                        var msg = ajaxsetup(\'CreateEvent\', \'CreateEventOrganizer" +
-"countUI\');\r\n                        $(\'#divaccsuc\').css(\'display\', \'none\');\r\n   " +
-"                     $(\'#diverroacc\').css(\'display\', \'block\');\r\n                " +
-"        $(\'#diverroacc\').focus();\r\n                        $(\'#erraccmsg\').html(" +
-"msg);\r\n                        //alert(\"Limit Exceeded, System Allow Only 25 Org" +
-"nizer.\");\r\n                        return false;\r\n                    }\r\n       " +
-"             AddOrgnizer();\r\n                }\r\n                else\r\n          " +
-"          UpdateOrgnizer($(\"#hidOrgnizer\").val());\r\n\r\n\r\n                $(\"#hidO" +
-"rgnizer\").val(\'\');\r\n                $(\"#txtOrgnizer\").val(\'\');\r\n                " +
-"$(\"#edOrgDes\").code(\'\');\r\n                $(\"#txtOrgFBlink\").val(\'\');\r\n         " +
-"       $(\"#txtOrgTWlink\").val(\'\');\r\n                $(\"#txtOrgLNlink\").val(\'\');\r" +
-"\n                $(\"#Incsocial\").prop(\"checked\", false);\r\n                $(\"#dv" +
-"OrgnizerFBTw\").hide();\r\n\r\n                var msg = disablebutton();\r\n          " +
-"    console.log(msg);\r\n                //alert(msg);\r\n                if (msg ==" +
-" \" \") {\r\n                    $(\".cdisable\").removeAttr(\"disabled\");\r\n           " +
-"     }\r\n                $(\"#txtOrgnizer\").removeClass(\"err-bor\");\r\n             " +
-"   //alert(divlength);\r\n                //var addOption = \'<div class=\"list-grou" +
-"p-item ev_orgz_list\"></div> <div id = dvOrg_\' + vLenght.toString() + \'  class=\"c" +
-"ol-sm-8 no_pad\">\' + $(\"#txtOrgnizer\").val() + \'</div><div class=\"col-sm-4 no_pad" +
-" text-right ev_org_edt_main\"><a href=\"#\"><i class=\"fa fa-pencil\"></i> </a> | <a " +
-"href=\"#\"><i class=\"fa fa-trash\"></i></a></div>\';\r\n                //$(\"#dvOrgani" +
-"zer\").append(addOption)\r\n\r\n                //\'<option value=\"\' + vval + \'\" id=\"\'" +
-" + $(\"#txtOrgnizer\").val() + \'\">\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n    " +
-"            //$(\"#dllOrganizer\").append(addOption);\r\n\r\n                //}\r\n    " +
-"            //else {\r\n                //    //$(\'#dllOrganizer option:selected\')" +
-".removeAttr(\'selected\');\r\n                //    var vval = $(\"#edSummer2\").code(" +
-");\r\n                //    $(\"#dllOrganizer option\").each(function (i) {\r\n       " +
-"         //        //alert($(this).text());\r\n                //        //alert($" +
-"(\"#hidOrgnizer\").val());\r\n                //        if ($(\"#hidOrgnizer\").val() " +
-"== $(this).text()) {\r\n\r\n                //            $(this).remove();\r\n       " +
-"         //            //alert($(\"#hidOrgnizer\").val());\r\n                //    " +
-"        //$(this).text($(\"#txtOrgnizer\").val());\r\n                //            " +
-"//$(this).val(vval);\r\n                //        }\r\n                //        //a" +
-"lert($(this).text() + \" : \" + $(this).val());\r\n                //    });\r\n      " +
-"          //    var vval = $(\"#edSummer2\").code();\r\n                //    var ad" +
-"dOption = \'<option value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\")" +
-".val() + \'</option>\';\r\n                //    $(\"#dllOrganizer\").append(addOption" +
-");\r\n\r\n\r\n\r\n                //    //var addOption = \'<option value=\"\' + vval + \'\" " +
-"id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                /" +
-"/    //$(\"#dllOrganizer\").append(addOption);\r\n                //}\r\n             " +
-"   //}\r\n                //else {\r\n                //    alert(\"Limit Exceeded, S" +
-"ystem Alow Only 25 Orgnizer.\");\r\n\r\n                //}\r\n\r\n                //$(\"#" +
-"hidOrgnizer\").val(\'\');\r\n                //$(\"#txtOrgnizer\").val(\'\');\r\n          " +
-"      //$(\"#edSummer2\").code(\'\');\r\n\r\n                // $(\"#txtOrgnizer\").focus(" +
-");\r\n                //$(\"#dllOrganizer option\").each(function (i) {\r\n           " +
-"     //    alert($(this).text() + \" : \" + $(this).val());\r\n                //});" +
-"\r\n\r\n                //alert(vval);\r\n\r\n            });\r\n\r\n\r\n         \r\n\r\n\r\n      " +
-"      $(\'#txtEventUrl\').bind(\'cut copy paste\', function (event) {\r\n             " +
-"   event.preventDefault();\r\n                return false;\r\n            });\r\n\r\n  " +
-"          $(\"#txtEventUrl\").focusout(function () {\r\n                var vval = $" +
-"(\"#txtEventUrl\").val().trim();\r\n                if (vval != \'\') {\r\n             " +
-"       $.ajax({\r\n                        url: \'");
+"    $(\'#diverroacc\').scrollIntoView();\r\n                    $(\'#btndiverrsuc\').f" +
+"ocus();\r\n                    return false;\r\n\r\n                }\r\n               " +
+" save(\"Live\");\r\n\r\n\r\n              \r\n\r\n            });\r\n            $(\'#chkReqPas" +
+"sword\').change(function () {\r\n\r\n                if ($(\'#chkReqPassword\').is(\":ch" +
+"ecked\") == true) {\r\n\r\n                    $(\'#txtReqPassword\').attr(\'readonly\', " +
+"false);\r\n\r\n                } else {\r\n                    $(\'#txtReqPassword\').at" +
+"tr(\'readonly\', true);\r\n                    $(\'#txtReqPassword\').val(\'\');\r\n      " +
+"          }\r\n\r\n            })\r\n\r\n            $(\"#btDayofMonth\").click(function (" +
+") {\r\n                $(\"#hdMonthlyType\").val(\'DM\');\r\n            });\r\n\r\n        " +
+"    $(\"#btDayofWeek\").click(function () {\r\n                $(\"#hdMonthlyType\").v" +
+"al(\'DW\');\r\n            });\r\n\r\n\r\n            $(\'.cbtSave\').click(function () {\r\n " +
+"               var msg = validatemain();\r\n                if (msg != \"\") {\r\n    " +
+"                $(\'#diverroacc\').css(\'display\', \'block\');\r\n                    $" +
+"(\'#diverroacc\').scrollIntoView();\r\n                    $(\'#btndiverrsuc\').focus(" +
+");\r\n                    $(\'#erraccmsg\').html(msg);\r\n                    return f" +
+"alse;\r\n\r\n                }\r\n\r\n                save(\"Save\");\r\n              \r\n   " +
+"         });\r\n\r\n          \r\n            $(\"#btMultiVenue\").click(function () {\r\n" +
+"                $(\"#dvAddFooter\").show();\r\n                //$(\"#txtEventLocatio" +
+"n\").val(\'\');\r\n                if ($(\"#tblAddress tr\").length <= 0) {\r\n          " +
+"          if ($(\"#txtEventLocation\").val().trim() != \'\') {\r\n                    " +
+"    $(\"#VenueName\").val($(\"#txtEventLocation\").val());\r\n                        " +
+"var vCols = 0+\"¶\"+$(\"#VenueName\").val() + \"¶\" + $(\"#Address1\").val() + \"¶\" + $(\"" +
+"#Address2\").val() + \"¶\" + $(\"#City\").val() + \"¶\" + $(\"#State\").val() + \"¶\" + $(\"" +
+"#Zip\").val() + \"¶\" + \'\' + \"¶\" + \'\';\r\n                        var vColName = \"Ven" +
+"ueid¶VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID\";\r\n               " +
+"         AddRow(\"tblAddress\", vCols, vColName, \"Y\");\r\n                        $(" +
+"\"#VenueName\").val(\"\");\r\n                        $(\"#hidAddSno\").val(\"\");\r\n      " +
+"              }\r\n                }\r\n                $(\"#VenueName\").val(\"\");\r\n  " +
+"              $(\"#Address1\").val(\"\");\r\n                $(\"#Address2\").val(\"\");\r\n" +
+"                $(\"#City\").val(\"\");\r\n                $(\"#State\").val(\"\");\r\n     " +
+"           $(\"#Zip\").val(\"\");\r\n                $(\"#hidAddSno\").val(\"\");\r\n       " +
+"         $(\"#CountryID\").val(\'1\');\r\n            });\r\n\r\n            $(\"#btOnlineE" +
+"vent\").click(function () {\r\n                if ($(\"#btOnlineEvent\").is(\":checked" +
+"\") == true) {\r\n                    $(\"#dvAddress\").hide();\r\n                    " +
+"//$(\"#txtEventLocation\").prop(\'disabled\', true);\r\n                    //$(\"#dllP" +
+"astLocation\").prop(\'disabled\', true);\r\n                    //$(\"#FindNewVen\").pr" +
+"op(\'disabled\', true);\r\n                    //$(\"#btMultiVenue\").prop(\'disabled\'," +
+" true);\r\n                    //$(\"#UsepastLoc\").prop(\'disabled\', true);\r\n       " +
+"             $(\"#hidAddressStatus\").val(\'Online\');\r\n                }\r\n         " +
+"       else {\r\n                    $(\"#dvAddress\").show();\r\n                    " +
+"//$(\"#txtEventLocation\").prop(\'disabled\', false);\r\n                    //$(\"#dll" +
+"PastLocation\").prop(\'disabled\', false);\r\n                    //$(\"#FindNewVen\")." +
+"prop(\'disabled\', false);\r\n                    //$(\"#btMultiVenue\").prop(\'disable" +
+"d\', false);\r\n                    //$(\"#UsepastLoc\").prop(\'disabled\', false);\r\n  " +
+"                  $(\"#hidAddressStatus\").val(\'\');\r\n                }\r\n\r\n        " +
+"        //$(\"#dvAddress\").children().attr(\"disabled\", \"disabled\");\r\n            " +
+"    //$(\"#dvAddress\").prop(\'disabled\', true);\r\n            });\r\n\r\n\r\n\r\n\r\n        " +
+"    $(\"#btAddOrg\").click(function () {\r\n                //  alert(\"Test\");\r\n    " +
+"            //  alert($(\'#dllOrganizer option\').length);\r\n                //    " +
+"if (parseInt($(\'#dllOrganizer option\').length) < 25) {\r\n                //if ($(" +
+"\"#hidOrgnizer\").val() == \"\") {\r\n                //var vval = $(\"#edSummer2\").cod" +
+"e();\r\n                //var vLenght = $(\"#dvOrganizer\").length;\r\n\r\n             " +
+"   //var divlength = $(\"#dvOrg_0> div\").size();\r\n\r\n                //var data = " +
+"$(\"#dvOrg_0\").clone();\r\n                //$(\"#dvOrganizer\").append(data);\r\n     " +
+"           //alert(parseInt($(\"#ddlOrgnizers option\").length));\r\n               " +
+" if ($(\"#txtOrgnizer\").val().trim() == \'\') {\r\n\r\n                    //alert(\"Ple" +
+"ase enter valid organizer.\");\r\n\r\n                    var msg = ajaxsetup(\'Create" +
+"Event\', \'CreateEventOrganizerUI\');\r\n                    $(\'#divaccsuc\').css(\'dis" +
+"play\', \'none\');\r\n                    $(\'#diverroacc\').css(\'display\', \'block\');\r\n" +
+"                    $(\'#diverroacc\').scrollIntoView();\r\n                    $(\'#" +
+"btndiverrsuc\').focus();\r\n                    $(\'#erraccmsg\').html(msg);\r\n       " +
+"             //$(\"#txtOrgnizer\").focus();\r\n                    return false;\r\n  " +
+"              }\r\n\r\n                //if ($(\"#txtOrgnizer\").val().trim() == \'\') {" +
+"\r\n                //    alert(\"Please enter valid organizer.\");\r\n               " +
+" //    $(\"#txtOrgnizer\").focus();\r\n                //    return false;\r\n        " +
+"        //}\r\n\r\n                debugger;\r\n\r\n                if ($(\"#hidOrgnizer\"" +
+").val() == \'\') {\r\n                    if (parseInt($(\"#ddlOrgnizers option\").len" +
+"gth) > 24) {\r\n                        var msg = ajaxsetup(\'CreateEvent\', \'Create" +
+"EventOrganizercountUI\');\r\n                        $(\'#divaccsuc\').css(\'display\'," +
+" \'none\');\r\n                        $(\'#diverroacc\').css(\'display\', \'block\');\r\n  " +
+"                      $(\'#diverroacc\').scrollIntoView();\r\n                      " +
+"  $(\'#btndiverrsuc\').focus();\r\n                        $(\'#erraccmsg\').html(msg)" +
+";\r\n                        //alert(\"Limit Exceeded, System Allow Only 25 Orgnize" +
+"r.\");\r\n                        return false;\r\n                    }\r\n           " +
+"         AddOrgnizer();\r\n                }\r\n                else\r\n              " +
+"      UpdateOrgnizer($(\"#hidOrgnizer\").val());\r\n\r\n\r\n                $(\"#hidOrgni" +
+"zer\").val(\'\');\r\n                $(\"#txtOrgnizer\").val(\'\');\r\n                $(\"#" +
+"edOrgDes\").code(\'\');\r\n                $(\"#txtOrgFBlink\").val(\'\');\r\n             " +
+"   $(\"#txtOrgTWlink\").val(\'\');\r\n                $(\"#txtOrgLNlink\").val(\'\');\r\n   " +
+"             $(\"#Incsocial\").prop(\"checked\", false);\r\n                $(\"#dvOrgn" +
+"izerFBTw\").hide();\r\n\r\n                var msg = disablebutton();\r\n              " +
+"console.log(msg);\r\n                //alert(msg);\r\n                if (msg == \" \"" +
+") {\r\n                    $(\".cdisable\").removeAttr(\"disabled\");\r\n               " +
+" }\r\n                $(\"#txtOrgnizer\").removeClass(\"err-bor\");\r\n                /" +
+"/alert(divlength);\r\n                //var addOption = \'<div class=\"list-group-it" +
+"em ev_orgz_list\"></div> <div id = dvOrg_\' + vLenght.toString() + \'  class=\"col-s" +
+"m-8 no_pad\">\' + $(\"#txtOrgnizer\").val() + \'</div><div class=\"col-sm-4 no_pad tex" +
+"t-right ev_org_edt_main\"><a href=\"#\"><i class=\"fa fa-pencil\"></i> </a> | <a href" +
+"=\"#\"><i class=\"fa fa-trash\"></i></a></div>\';\r\n                //$(\"#dvOrganizer\"" +
+").append(addOption)\r\n\r\n                //\'<option value=\"\' + vval + \'\" id=\"\' + $" +
+"(\"#txtOrgnizer\").val() + \'\">\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n        " +
+"        //$(\"#dllOrganizer\").append(addOption);\r\n\r\n                //}\r\n        " +
+"        //else {\r\n                //    //$(\'#dllOrganizer option:selected\').rem" +
+"oveAttr(\'selected\');\r\n                //    var vval = $(\"#edSummer2\").code();\r\n" +
+"                //    $(\"#dllOrganizer option\").each(function (i) {\r\n           " +
+"     //        //alert($(this).text());\r\n                //        //alert($(\"#h" +
+"idOrgnizer\").val());\r\n                //        if ($(\"#hidOrgnizer\").val() == $" +
+"(this).text()) {\r\n\r\n                //            $(this).remove();\r\n           " +
+"     //            //alert($(\"#hidOrgnizer\").val());\r\n                //        " +
+"    //$(this).text($(\"#txtOrgnizer\").val());\r\n                //            //$(" +
+"this).val(vval);\r\n                //        }\r\n                //        //alert" +
+"($(this).text() + \" : \" + $(this).val());\r\n                //    });\r\n          " +
+"      //    var vval = $(\"#edSummer2\").code();\r\n                //    var addOpt" +
+"ion = \'<option value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val" +
+"() + \'</option>\';\r\n                //    $(\"#dllOrganizer\").append(addOption);\r\n" +
+"\r\n\r\n\r\n                //    //var addOption = \'<option value=\"\' + vval + \'\" id=\"" +
+"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                //   " +
+" //$(\"#dllOrganizer\").append(addOption);\r\n                //}\r\n                /" +
+"/}\r\n                //else {\r\n                //    alert(\"Limit Exceeded, Syste" +
+"m Alow Only 25 Orgnizer.\");\r\n\r\n                //}\r\n\r\n                //$(\"#hidO" +
+"rgnizer\").val(\'\');\r\n                //$(\"#txtOrgnizer\").val(\'\');\r\n              " +
+"  //$(\"#edSummer2\").code(\'\');\r\n\r\n                // $(\"#txtOrgnizer\").focus();\r\n" +
+"                //$(\"#dllOrganizer option\").each(function (i) {\r\n               " +
+" //    alert($(this).text() + \" : \" + $(this).val());\r\n                //});\r\n\r\n" +
+"                //alert(vval);\r\n\r\n            });\r\n\r\n\r\n         \r\n\r\n\r\n          " +
+"  $(\'#txtEventUrl\').bind(\'cut copy paste\', function (event) {\r\n                e" +
+"vent.preventDefault();\r\n                return false;\r\n            });\r\n\r\n      " +
+"      $(\"#txtEventUrl\").focusout(function () {\r\n                var vval = $(\"#t" +
+"xtEventUrl\").val().trim();\r\n                if (vval != \'\') {\r\n                 " +
+"   $.ajax({\r\n                        url: \'");
 
             
-            #line 2827 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2833 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "CreateEvent"));
 
             
@@ -5517,7 +5521,8 @@ WriteLiteral(@"',
                             if (data == ""Y"") {
                                 $(""#txtEventUrl"").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
-                                $('#diverroacc').focus();
+                                $('#diverroacc').scrollIntoView();
+                                $('#btndiverrsuc').focus();
                                 $('#erraccmsg').html(""Event Url already exists."");
 
                                 $(""#txtEventUrl"").val('');
@@ -5540,7 +5545,7 @@ WriteLiteral(@"',
                     url: '");
 
             
-            #line 2854 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2861 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -5652,7 +5657,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 ".ajax({\r\n                url: \'");
 
             
-            #line 3035 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3042 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetPreviousAddressForEditing", "CreateEvent"));
 
             
@@ -5884,7 +5889,7 @@ WriteLiteral("\',\r\n                data: { \"lEid\": $(\"#hdEventId\").val() }
 "gation();\r\n            //});\r\n\r\n\r\n\r\n        });\r\n    </script>\r\n");
 
             
-            #line 3501 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3508 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
     //Ticket Section Starts
@@ -5920,7 +5925,7 @@ WriteLiteral("    <script>\r\n        function CannotFindLocation() {\r\n       
 "           }\r\n            });\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 3574 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3581 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -6633,14 +6638,14 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 "ring;\r\n        }\r\n    </script>\r\n");
 
             
-            #line 5084 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5091 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 5085 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5092 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      
 
             
@@ -6648,9 +6653,9 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 242761), Tuple.Create("\"", 242800)
-, Tuple.Create(Tuple.Create("", 242768), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 242768), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 243175), Tuple.Create("\"", 243214)
+, Tuple.Create(Tuple.Create("", 243182), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 243182), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6658,7 +6663,7 @@ WriteLiteral(" rel=\"stylesheet\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 5087 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5094 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -6666,9 +6671,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 242834), Tuple.Create("\"", 242891)
-, Tuple.Create(Tuple.Create("", 242841), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 242841), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 243248), Tuple.Create("\"", 243305)
+, Tuple.Create(Tuple.Create("", 243255), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 243255), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6677,15 +6682,15 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 242925), Tuple.Create("\"", 242962)
-, Tuple.Create(Tuple.Create("", 242931), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 242931), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 243339), Tuple.Create("\"", 243376)
+, Tuple.Create(Tuple.Create("", 243345), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 243345), false)
 );
 
 WriteLiteral("></script>\r\n");
 
             
-            #line 5090 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5097 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
 
@@ -6718,7 +6723,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            $(
 ").val(uuid());\r\n\r\n\r\n        });\r\n    </script>\r\n");
 
             
-            #line 5139 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5146 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -6728,7 +6733,7 @@ WriteLiteral("    <script>\r\n        function ajaxsetup(strname, strFormTag) {\
 "msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url:\'");
 
             
-            #line 5145 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5152 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -6994,7 +6999,7 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "      });\r\n        });\r\n\r\n    </script>\r\n");
 
             
-            #line 5696 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5703 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7004,7 +7009,7 @@ WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n\r\n   
 "       var j= ");
 
             
-            #line 5701 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5708 "..\..\Views\EditEvent\ModifyEvent.cshtml"
           Write(Html.Raw(ViewData["Image"]));
 
             
@@ -7128,7 +7133,7 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 ";\r\n\r\n                }\r\n\r\n            }\r\n    });\r\n    </script>\r\n");
 
             
-            #line 5908 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5915 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 
