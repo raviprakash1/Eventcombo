@@ -6,6 +6,7 @@
 
 body{font-family:"Abel",Arial,sans-serif;}
 a:focus { outline: none; text-decoration: none; }
+textarea {resize: none;}
 .modal.fade{ z-index:9999; }
 button:focus { outline: none;}
 .form-control:focus{ border:1px solid #ccc; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;}
@@ -689,7 +690,7 @@ span.evnt_toltip{
    font-weight: normal; color: #000; font-size: 1em;
 }
 
-#diverro1acc{ margin-left:15px; width:97%;} 
+/*#diverro1acc{ margin-left:15px; width:97%;}*/ 
 
 @media (min-width:1200px) {
     .acnt_form{ max-width:100%; margin-bottom:20px; min-width:500px; }
@@ -1158,5 +1159,8 @@ span.evnt_toltip{
     vertical-align: middle;
 }
 
+ .dropheight .dropdown-menu.open .dropdown-menu.inner{ max-height: 150px !important;   }
+ .dropheight .dropdown-menu.open > .dropdown-menu.inner > li a{ padding:3px 10px;  }
+ .dropheight .dropdown-menu.open .dropdown-menu.inner li a span.text{ width:100%; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
 /*Close NOV 10 -- 3 Tab Screen*/
 

@@ -25,6 +25,7 @@
 	color: #000; cursor:pointer !important;
 }
 /***********************GMap css ends****************************/
+textarea {resize: none;}
 .ev_date_icn{ background-image: url(../images/icon-date.png); width: 29px; height: 29px; margin-top: 7px; left: -15px; position: absolute; cursor: pointer;}
 .ev_loc_icn{ background-image: url(../images/icon-location.png); width: 26px; height: 35px; position: absolute;   left: 45px; cursor: pointer;}
 .ev_loca_check_main{ margin-top: 20%;}
@@ -500,3 +501,5 @@
 
 
 }
+
+ .dropheight .dropdown-menu.open {margin-top:0px !important;}
