@@ -199,8 +199,8 @@
                             @Html.TextBoxFor(m => m.Zip, new { @maxlength = 5, @class = "form-control" })
                             <small class="acnt_form_name_mini">Zip</small>
                         </div>
-                        <div class="col-xs-6 add_form_bot mb0">
-                            @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control" })
+                        <div class="col-xs-6 add_form_bot mb0 dropheight">
+                            @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker" })
                             <small class="acnt_form_name_mini">Country</small>
                         </div>
 
