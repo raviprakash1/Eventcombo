@@ -11,16 +11,22 @@
                     <img class="evnt_img" src="~/Images/event1.jpg" alt="">
                 </div>
                 <div class="event_list_right">
-                    <p class="event_tit"><a class="aclick" href='@Url.RouteUrl("ViewEvent",new { strUrlData="a౼74౼N"})'>Campagnolo Gran Fondo New York 2015</a></p>
+                    @*<p class="event_tit"><a class="aclick" href='@Url.RouteUrl("ViewEvent",new {strEventDs ="a",strEventId="74"})'>Campagnolo Gran Fondo New York 2015</a></p>*@
+                    @*<p class="event_tit"><a class="aclick" href='@Url.Action("ViewEvent","ViewEvent",new {strEventDs ="a",strEventId="74"})'>Campagnolo Gran Fondo New York 2015</a></p>*@
+                    @*<button type="button" value="EventView" id="btTest">Event View</button>*@
+                    <select id="dllEventList">
+
+
+                    </select>
                     <p class="event_desc">
-                        <a class="aclick" href='@Url.RouteUrl("ViewEvent",new { strUrlData="a౼74౼N"})'>
+                        @*<a class="aclick" href='@Url.RouteUrl("ViewEvent",new {strEventDesc="a",strEventId="74"})'>
                             Sun National Bank Arena
                             81 Hamilton Avenue
                             Trenton, NJ , 08611
                             New York, New York
-                        </a>
+                        </a>*@
                     </p>
-                    <p class="event_date_time"><a class="aclick" href='@Url.RouteUrl("ViewEvent",new { strUrlData="a౼74౼N"})'>Saturday, Aug 2, 2014 8:00 PM</a> </p>
+                    @*<p class="event_date_time"><a class="aclick" href='@Url.RouteUrl("ViewEvent",new {strEventDesc="a",strEventId="74"})'>Saturday, Aug 2, 2014 8:00 PM</a> </p>*@
 
                     @*<p class="event_tit"><a class="aclick" href='@Url.Action("ViewEvent", "ViewEvent",new { strUrlData="a౼74౼N"})'>Campagnolo Gran Fondo New York 2015</a></p>
                     <p class="event_desc">
@@ -35,7 +41,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 col-xs-12 col-sm-6 wid_1024">
+        @*<div class="col-md-4 col-xs-12 col-sm-6 wid_1024">
             <div class="event_list_main">
                 <div class="event_list_left">
                     <img class="evnt_img" src="~/Images/event1.jpg" alt="">
@@ -72,7 +78,7 @@
                     <p class="event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
     <div class="col-md-3 col-sm-12 clearfix">
         <div class="col-sm-12 no-padding">
@@ -113,6 +119,23 @@
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetEventURL", "CreateEvent")',
+            type: "Post",
+            success: function (data) {
+                if (data != "")
+                    $("#dllEventList").html(data);
+           },
+        });
+        $("#dllEventList").change(function () {
+            window.location.href = $("#dllEventList").val();
+        });
+        $("#btTest").click(function () {
+           // alert("button click");
+            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = "a", strEventId = "74" })';
 
+        });
+    });
   
 </script>

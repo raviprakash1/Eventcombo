@@ -12,6 +12,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using Facebook;
 using System.Dynamic;
 using Newtonsoft.Json;
@@ -493,14 +494,12 @@ namespace EventCombo.Controllers
             return lEventId;
         }
 
-
-
-
-        //[Route("{strUrlData}")]
-        public ActionResult ViewEvent(string strUrlData)
+        //[Route("{strEventDs}/{strEventId}", Name ="ViewEvent",Order=1),HttpGet]
+        //public ActionResult ViewEvent(string strUrlData)
+        //[Route("Event/{strEventDs}/{strEventId}", Name = "ViewEvent", Order = 1), HttpGet]
+        public ActionResult ViewEvent(string strEventDs,string strEventId)
         {
-            
-           
+
             if ((Session["AppId"] != null))
             {
                 HomeController hmc = new HomeController();
@@ -511,43 +510,42 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            if(strUrlData==null)
+            if(strEventId == null)
             {
                 return RedirectToAction("Index", "Home");
-
             }
-            {
+            //if (!strUrlData.Contains('౼'))
+            //{
+            //    return RedirectToAction("Index", "Home");
 
-            }
-                if (!strUrlData.Contains('౼'))
-            {
-                return RedirectToAction("Index", "Home");
-
-            }
+            //}
             ValidationMessageController vmc = new ValidationMessageController();
-            string[] str = strUrlData.Split('౼');
-            string strForView = "";
-            string eventTitle = str[0].ToString();
 
-            long EventId =  vmc.GetLatestEventId(Convert.ToInt64(str[1]));
+            //string[] str = strUrlData.Split('౼');
+            //string strForView = "";
+            //string eventTitle = str[0].ToString();
 
-            try
-            {
-                strForView = str[2].ToString();
-            }
-            catch (Exception)
-            {
-                strForView = "N";
-            }
+            //long EventId =  vmc.GetLatestEventId(Convert.ToInt64(str[1]));
 
-            TempData["ForViewOnly"] = strForView;
+            //try
+            //{
+            //    strForView = str[2].ToString();
+            //}
+            //catch (Exception)
+            //{
+            //    strForView = "N";
+            //}
+            long EventId = (strEventId != "" ? Convert.ToInt64(strEventId) : 0);
+            EventId = vmc.GetLatestEventId(EventId);
+            TempData["ForViewOnly"] = "N";
 
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "events";
-            var url= Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
+            //var url= Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
            // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
-            Session["ReturnUrl"] = "ViewEvent~" + url;
+          // var url = Url
+           // Session["ReturnUrl"] = "ViewEvent~" + url;
             var TopAddress = "";var Topvenue="";
             string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="",enablediscussion="",linkedin="";
             ViewEvent viewEvent = new ViewEvent();
@@ -1516,12 +1514,10 @@ public string Checkpassword(string password ,long id)
         public void InsertFriendlist(string accesstoken)
         {
 
-          
-
             FacebookClient client = new FacebookClient(accesstoken);
-
             var friendListData = client.Get("/me/friends");
             JObject friendListJson = JObject.Parse(friendListData.ToString());
+
 
             List<FbUser> fbUsers = new List<FbUser>();
             foreach (var friend in friendListJson["data"].Children())
@@ -1588,7 +1584,53 @@ public string Checkpassword(string password ,long id)
             return responseData;
         }
 
+        public string ReleaseTickets()
+        {
+            string strResult = "";
+            try
+            {
+                string strLockedId = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+                CommanClasses objC = new CommanClasses();
+                using (var context = new EventComboEntities())
+                {
+                    context.Database.ExecuteSqlCommand("DELETE FROM Ticket_Locked_Detail WHERE TLD_GUID ='" + strLockedId + "'");
+                    strResult = objC.GetMessage("TicketPayment", "TenMinWindowExpires");
+                }
+            }
+            catch (Exception)
+            {
+                strResult = "There is some Problem.";
+            }
+            return strResult;
+        }
 
+        public string GetEventURL()
+        {
+            StringBuilder strHtml = new StringBuilder();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var EvList = (from myRow in objEnt.Events
+                                  select myRow).ToList().OrderByDescending(m => m.EventID);
+
+                    strHtml.Append("<option value='0'>Select Any Event</option>");
+                    foreach (var item in EvList)
+                    {
+                        if (item.EventTitle != null && item.EventTitle.Trim() != "")
+                            strHtml.Append("<option>" + @Url.Action("ViewEvent", "ViewEvent", new { strEventDs = item.EventTitle.Replace(" ", "-"), strEventId = item.EventID.ToString() }) + "</option>");
+                    }
+                    return strHtml.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return strHtml.ToString();
+
+            }
+
+
+        }
 
 
 

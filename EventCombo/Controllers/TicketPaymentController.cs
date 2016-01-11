@@ -21,7 +21,7 @@ using System.Drawing.Imaging;
 namespace EventCombo.Controllers
 {
 
-    
+    //[RoutePrefix("Payment")]
     public class TicketPaymentController : Controller
     {
         EventComboEntities db = new EventComboEntities();
@@ -30,6 +30,8 @@ namespace EventCombo.Controllers
         // GET: TicketPayment
 
         //[Route("Payment", Name = "TPayment", Order=2)]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
+        //[Route("",Name ="Payment"),HttpGet]
         public ActionResult TicketPayment()
         {
             ValidationMessageController vmc = new ValidationMessageController();
@@ -49,6 +51,7 @@ namespace EventCombo.Controllers
                 Event objMyEvent = new Event();
                 objMyEvent = vmc.GetSelectedEventDetail(Session["TicketLockedId"].ToString());
                 Eventid = objMyEvent.EventID;
+
             }
             
             Eventid = vmc.GetLatestEventId(Eventid);
@@ -57,8 +60,9 @@ namespace EventCombo.Controllers
             string defaultCountry = "";
             string Fname = "", Lname = "", Phnnumber = "", Adress = "", Email = "",City="",State="",Country="",Zip="";
 
-            var url = Url.Action("TicketPayment", "TicketPayment") + "?Eventid=" + Eventid.ToString();
-            //var url = Url.RouteUrl("TPayment");
+            var url = Url.Action("TicketPayment", "TicketPayment");
+            //Session["ReturnUrl"] = "TicketPayment~" + url;
+            //var url = Url.RouteUrl("Payment");
             Session["ReturnUrl"] = "TicketPayment~" + url;
 
             CreateEventController cs = new CreateEventController();

@@ -438,9 +438,7 @@
                     </table>
                 </div>
 
-                @*<div class="col-sm-12 text-right">
-                        <button type="submit" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PAYMENT PROCEED > </button>
-                    </div>*@
+          
             </div>
         </div>
     </div>
@@ -1329,7 +1327,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
     }
     $(document).ready(function () {
-       
+
 
 
 
@@ -1338,13 +1336,13 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
             $(".Evenfaccomment").slideToggle("fast");
             //facebook comments
-         
-           
+
+
             if ($('.fb-comments').length >0) {
                 var scriptText = 'FB.XFBML.parse();';
                 var scriptNode = document.createElement('script');
                 scriptNode.appendChild(document.createTextNode(scriptText));
-               
+
                 $('#comments').append(scriptNode);
             }
         });
@@ -1352,13 +1350,13 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
             $(".Evenfaccomment").slideToggle("fast");
             //facebook comments
-           
-          
+
+
             if ($('.fb-comments').length > 0) {
                 var scriptText = 'FB.XFBML.parse();';
                 var scriptNode = document.createElement('script');
                 scriptNode.appendChild(document.createTextNode(scriptText));
-               
+
                 $('#comments').append(scriptNode);
             }
         });
@@ -1404,7 +1402,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
         //    alert("test");
         //    //if (String.fromCharCode(e.keyCode).match(/[^0-9]/g)) return false;
         //});
-        
+
         $("#btMesOk").click(function () {
             $("#dvTicketInfo").empty();
             var veventId = ($("#hdEventid").val().trim() != '' ? $("#hdEventid").val() : '');
@@ -1426,9 +1424,10 @@ function pad(n) { return n < 10 ? '0' + n : n };
             }
         });
         var veventId = ($("#hdEventid").val().trim() != '' ? $("#hdEventid").val() : '');
+        alert(veventId);
         if (veventId != '') {
             $.ajax({
-                url: '@Url.Action("GetTicketDetail", "CreateEvent")',
+                url: '@Url.RouteUrl("GetTicketDetail", "CreateEvent")',
                 beforeSend: function () { $('#dvAjxLoader').show(); },
                 complete: function () { $('#dvAjxLoader').hide(); },
                 data: { Eventid: veventId },
@@ -1449,14 +1448,14 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         $.removeCookie("Selection");
                         calculateTickTotal();
                     }
-                    
+
                 },
                 error: function (data) {
                     alert("Sorry there is some problem.");
                 }
             });
         }
-        
+
         var Eventid = $('#hdEventid').val();
         $("#btPayment").click(function () {
             var vEntid = $('#hdEventid').val();
@@ -1501,7 +1500,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
             if (vflag > 0) {
 
 
-               
+
 
                 $.ajax({
                     url: '@Url.Action("LockTickets", "CreateEvent")',
@@ -1521,14 +1520,18 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         }
                         else {
                             $.cookie("Selection", vSelection, { expire: 1 });
-                            window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;
+                            var vUrl = '@Url.Action("TicketPayment", "TicketPayment")';
+                            @*var vUrl = '@Url.RouteUrl("Payment")';*@
+                            //alert(vUrl);
+                            window.location.href =vUrl;
+                            @*window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;*@
                         }
                     }
                 });
 
 
 
-                
+
             } else
             {
                 $('#diverroacc').css('display', 'block');

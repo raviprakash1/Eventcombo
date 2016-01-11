@@ -277,7 +277,7 @@
                                 </div>
                             </div>
                                  <div class="clearfix divvisible"></div>
-                        <div class="form-group mt10 divvisible" >
+                        <div class="form-group mt10 divvisible" id="dvBillingAddress" >
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <label class="control-label ev_payment_lebel pl0">
                                     PLEASE ENTER YOUR BILLING ADDRESS<br>
@@ -600,7 +600,7 @@
     //    }
 
     //});
-
+   
     function ajaxsetup(strname, strFormTag) {
         var msgnew = "";
 
@@ -710,63 +710,64 @@
                 if (resultvar != "") {
                     msglogin += ajaxsetup('TicketPayment', 'TPayCardValidationUI') + "</br>";
                 }
-            }
-            var billerr = "";
-            var billfname = $('#billfname').val();
-            var billLname = $('#billLname').val();
-            var billingphno = $('#billingphno').val();
-            var billaddress1 = $('#billaddress1').val();
 
-            var billcity = $('#billcity').val();
-            var billzip = $('#billzip').val();
-            var billstate = $('#billstate').val();
-            var billcountry = $('#billcountry').val();
+                var billerr = "";
+                var billfname = $('#billfname').val();
+                var billLname = $('#billLname').val();
+                var billingphno = $('#billingphno').val();
+                var billaddress1 = $('#billaddress1').val();
 
-            if (billfname == "") {
-                billerr += "Please Enter Billing First name" + "\n";
-                $("#billfname").focus();
-                $("#billfname").addClass('err-bor');
+                var billcity = $('#billcity').val();
+                var billzip = $('#billzip').val();
+                var billstate = $('#billstate').val();
+                var billcountry = $('#billcountry').val();
 
-            }
-            if (billingphno == "") {
-                billerr += "Please Enter Billing Phone number" + "\n";
-                $("#billingphno").focus();
-                $("#billingphno").addClass('err-bor');
+                if (billfname == "") {
+                    billerr += "Please Enter Billing First name" + "\n";
+                    $("#billfname").focus();
+                    $("#billfname").addClass('err-bor');
 
-            }
-            if (billaddress1 == "") {
-                billerr += "Please Enter Billing Address" + "\n";
-                $("#billaddress1").focus();
-                $("#billaddress1").addClass('err-bor');
+                }
+                if (billingphno == "") {
+                    billerr += "Please Enter Billing Phone number" + "\n";
+                    $("#billingphno").focus();
+                    $("#billingphno").addClass('err-bor');
 
-            }
+                }
+                if (billaddress1 == "") {
+                    billerr += "Please Enter Billing Address" + "\n";
+                    $("#billaddress1").focus();
+                    $("#billaddress1").addClass('err-bor');
 
-            if (billcity == "") {
-                billerr += "Please Enter Billing City" + "\n";
-                $("#billcity").focus();
-                $("#billcity").addClass('err-bor');
+                }
 
-            }
-            if (billzip == "") {
-                billerr += "Please Enter Billing Zip" + "\n";
-                $("#billzip").focus();
-                $("#billzip").addClass('err-bor');
+                if (billcity == "") {
+                    billerr += "Please Enter Billing City" + "\n";
+                    $("#billcity").focus();
+                    $("#billcity").addClass('err-bor');
 
-            }
-            if (billstate == "") {
-                billerr += "Please Enter Billing State" + "\n";
-                $("#billstate").focus();
-                $("#billstate").addClass('err-bor');
+                }
+                if (billzip == "") {
+                    billerr += "Please Enter Billing Zip" + "\n";
+                    $("#billzip").focus();
+                    $("#billzip").addClass('err-bor');
 
-            }
-            if (billcountry == "") {
-                billerr += "Please Enter Billing Country" + "\n";
-                $("#billcountry").focus();
-                $("#billcountry").addClass('err-bor');
+                }
+                if (billstate == "") {
+                    billerr += "Please Enter Billing State" + "\n";
+                    $("#billstate").focus();
+                    $("#billstate").addClass('err-bor');
 
-            }
-            if (billerr != "") {
-                msglogin += ajaxsetup('TicketPayment', 'TPayValidateBillingAddressUI') + "</br>";
+                }
+                if (billcountry == "") {
+                    billerr += "Please Enter Billing Country" + "\n";
+                    $("#billcountry").focus();
+                    $("#billcountry").addClass('err-bor');
+
+                }
+                if (billerr != "") {
+                    msglogin += ajaxsetup('TicketPayment', 'TPayValidateBillingAddressUI') + "</br>";
+                }
             }
             var shippingerr = "";
             if ($("#shippinginfo").is(":checked")) {
@@ -840,7 +841,17 @@
     }
     $(document).ready(function () {
 
-        
+        $("#selectcard").change(function () {
+            if ($("#selectcard").val() == "P")
+            {
+                $("#dvBillingAddress").hide();
+            }
+            else
+            {
+                $("#dvBillingAddress").show();
+            }
+        });
+       
 
         $(window).unload(function () {
             if ($("#hdIsPostBack").val() != "Y") {
@@ -856,21 +867,19 @@
         $("#login").click(function () {
             $("#hdIsPostBack").val("Y");
         });
-        //history.pushState(null, null, 'TicketPayment');
-        //window.addEventListener('popstate', function (event) {
-        //    history.pushState(null, null, 'TicketPayment');
-        //});
+
+        history.pushState(null, null, 'TicketPayment');
+        window.addEventListener('popstate', function (event) {
+            history.pushState(null, null, 'TicketPayment');
+        });
+
         $('#btBack').click(function () {
+            //alert(url);
             $.ajax({
-                url: '@Url.Action("ReleaseTickets", "TicketPayment")',
+                url: '@Url.Action("ReleaseTickets", "CreateEvent")',
                 type: "Post",
                 success: function (response) {
-                    var title = $('#h2tag').html().split(" ").join("");
-                   @*window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';*@
-                    @*var vBack = '@Url.Action("ViewEvent", "ViewEvent")' + '/a౼' + Eventid + '౼N';*@
-                    @*window.location.href = '@Url.Action("ViewEvent", "ViewEvent")' + '/a౼' + Eventid + '౼N';*@
-                    var title = $('#h2tag').html();
-                    window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';
+                    window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","-"), strEventId = Model.EventId.ToString()})';
                 }
             });
         });
@@ -1139,14 +1148,16 @@
                         type: "Get",
                         success: function (response) {
                             $("#btOkMes").click();
-                            //window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid+ '౼N';
+                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid+ '౼N';*@
                         },
                         error: function () {
                             //ShowMessage('E', 'Sorry, There is some error.');
                             var title = $('#h2tag').html().split(" ").join("");
-                            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';
+                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';*@
                             @*var title = $('#h2tag').html().split(" ").join("");
                             window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';*@
+                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';*@
+                            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","") , strEventId = Model.EventId.ToString()})';
                         }
                     });
                 }
@@ -1199,7 +1210,7 @@
             },
         });
 
-      
+
 
 
 
@@ -1421,6 +1432,7 @@
 
     });
     function NullSession(e) {
+        $("#hdIsPostBack").val("Y");
         $.ajax({
             url: '@Url.Action("Nullsession", "TicketPayment")',
             type: "Get",
@@ -1622,7 +1634,7 @@
 
 
                             }
-                          
+
                             if (obj2[j] == 'sublocality_level_1') {
                                 city = obj['long_name'];
 
