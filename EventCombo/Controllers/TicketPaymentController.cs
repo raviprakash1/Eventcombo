@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ using NReco.PdfGenerator;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-
+using System.Text.RegularExpressions;
 namespace EventCombo.Controllers
 {
 
@@ -71,6 +70,7 @@ namespace EventCombo.Controllers
             var eventdetails = cs.GetEventdetail(Eventid);
             tp.Ticketdeliveraddress = eventdetails.Ticket_DAdress;
             tp.Title = eventdetails.EventTitle;
+            tp.URLTitle = Regex.Replace(eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "");
             tp.Tickettype = "Paid";
             ViewData["Type"] = tp.Tickettype;
             List<Cardview> Detailscard = new List<Cardview>();

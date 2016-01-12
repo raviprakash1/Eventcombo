@@ -1618,7 +1618,7 @@ public string Checkpassword(string password ,long id)
                     foreach (var item in EvList)
                     {
                         if (item.EventTitle != null && item.EventTitle.Trim() != "")
-                            strHtml.Append("<option>" + @Url.Action("ViewEvent", "ViewEvent", new { strEventDs = item.EventTitle.Replace(" ", "-"), strEventId = item.EventID.ToString() }) + "</option>");
+                            strHtml.Append("<option>" + @Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "") , strEventId = item.EventID.ToString() }) + "</option>");
                     }
                     return strHtml.ToString();
                 }

@@ -12,10 +12,11 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace EventCombo.Controllers
 {
-    [RoutePrefix("event")]
+    //[RoutePrefix("event")]
     //[RouteArea("Event", AreaPrefix = "E")]
     //[RoutePrefix("Ev")]
     public class ViewEventController : Controller
@@ -23,9 +24,9 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
         // GET: ViewEvent
         //[Route("{strUrlData}", Name = "ViewEvent",Order =1)]
-        [OutputCache(NoStore =true,Duration =0,VaryByParam ="None") ]
+        //[OutputCache(NoStore =true,Duration =0,VaryByParam ="None") ]
         
-        [Route("{strEventDs?}-{strEventId?}", Name = "ViewEvent"), HttpGet]
+        //[Route("{strEventDs?}-{strEventId?}", Name = "ViewEvent"), HttpGet]
         
         public ActionResult ViewEvent(string strEventDs, string strEventId)
         {
@@ -78,7 +79,7 @@ namespace EventCombo.Controllers
             CreateEventController objCE = new CreateEventController();
             var EventDetail = objCE.GetEventdetail(EventId);
             if (EventDetail == null) return null;
-            var url = Url.RouteUrl("ViewEvent", new { strEventDs = EventDetail.EventTitle.Replace(" ", "-"), strEventId = EventDetail.EventID.ToString() });
+            var url = Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "") , strEventId = EventDetail.EventID.ToString()});
             Session["ReturnUrl"] = "ViewEvent~" + url;
 
             TempData["EventType"] = EventDetail.EventType.EventType1;

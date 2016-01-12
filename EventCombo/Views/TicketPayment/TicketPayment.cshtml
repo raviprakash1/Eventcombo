@@ -879,7 +879,7 @@
                 url: '@Url.Action("ReleaseTickets", "CreateEvent")',
                 type: "Post",
                 success: function (response) {
-                    window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","-"), strEventId = Model.EventId.ToString()})';
+                    window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
                 }
             });
         });
@@ -1100,12 +1100,7 @@
         });
         //--------------Fire when User Click on Continue in Previous Page ------------------------------------
         $("#btMessOk").click(function () {
-            var title = $('#h2tag').html();
-            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';
-            @*var title = $('#h2tag').html().split(" ").join("");
-            window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';*@
-
-
+            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
         });
 
         //
@@ -1148,15 +1143,8 @@
                         type: "Get",
                         success: function (response) {
                             $("#btOkMes").click();
-                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid+ '౼N';*@
                         },
                         error: function () {
-                            //ShowMessage('E', 'Sorry, There is some error.');
-                            var title = $('#h2tag').html().split(" ").join("");
-                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';*@
-                            @*var title = $('#h2tag').html().split(" ").join("");
-                            window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';*@
-                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';*@
                             window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","") , strEventId = Model.EventId.ToString()})';
                         }
                     });

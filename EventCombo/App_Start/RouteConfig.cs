@@ -28,17 +28,17 @@ namespace EventCombo
             //);
 
 
-            //routes.MapRoute(
-            //    name: "ViewEvent",
-            //    url: "Event/{strEventDs}-{strEventId}",
-            //    defaults: new
-            //    {
-            //        controller = "ViewEvent",
-            //        action = "ViewEvent",
-            //        strEventDs = UrlParameter.Optional,
-            //        strEventId = UrlParameter.Optional
-            //    }
-            //);
+            routes.MapRoute(
+                name: "ViewEvent",
+                url: "Event/{strEventDs}-{strEventId}",
+                defaults: new
+                {
+                    controller = "ViewEvent",
+                    action = "ViewEvent",
+                    strEventDs = UrlParameter.Optional ,
+                    strEventId = UrlParameter.Optional
+                }
+            );
 
             //    routes.MapRoute(
             //    name: "TPayment",
@@ -58,6 +58,11 @@ namespace EventCombo
                 defaults: new { controller = "Home", action = "Index"}
             );
             //routes.MapRoute("ViewEvent", "CreateEvent/{strUrlData} ", new { controller = "CreateEvent", action = "ViewEvent", strUrlData = UrlParameter.Optional });
+        }
+
+        protected void Application_Start()
+        {
+            RegisterRoutes(RouteTable.Routes);
         }
     }
 }
