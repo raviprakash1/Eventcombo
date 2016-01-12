@@ -12,7 +12,9 @@ namespace EventCombo
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            //routes.MapMvcAttributeRoutes();
+            routes.MapMvcAttributeRoutes();
+            routes.LowercaseUrls = true;
+            AreaRegistration.RegisterAllAreas();
             //AreaRegistration.RegisterAllAreas();
             //routes.MapRoute(
             //name: "ViewEvent",
@@ -28,30 +30,32 @@ namespace EventCombo
 
             //routes.MapRoute(
             //    name: "ViewEvent",
-            //    url: "Event/{strUrlData}",
+            //    url: "Event/{strEventDs}-{strEventId}",
             //    defaults: new
             //    {
             //        controller = "ViewEvent",
-            //        action = "ViewEvent"
+            //        action = "ViewEvent",
+            //        strEventDs = UrlParameter.Optional,
+            //        strEventId = UrlParameter.Optional
             //    }
             //);
 
-        //    routes.MapRoute(
-        //    name: "TPayment",
-        //    url: "Payment/{strUrl}",
-        //    defaults: new
-        //    {
-        //        controller = "TicketPayment",
-        //        action = "TicketPayment"
-        //    }
-        //);
+            //    routes.MapRoute(
+            //    name: "TPayment",
+            //    url: "Payment/{strUrl}",
+            //    defaults: new
+            //    {
+            //        controller = "TicketPayment",
+            //        action = "TicketPayment"
+            //    }
+            //);
 
 
             routes.MapRoute(
                 name: "Default",
                 namespaces: new[] { "EventCombo.Controllers" },
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                url: "{controller}/{action}",
+                defaults: new { controller = "Home", action = "Index"}
             );
             //routes.MapRoute("ViewEvent", "CreateEvent/{strUrlData} ", new { controller = "CreateEvent", action = "ViewEvent", strUrlData = UrlParameter.Optional });
         }

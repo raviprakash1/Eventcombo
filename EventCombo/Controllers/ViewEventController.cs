@@ -15,16 +15,20 @@ using System.Globalization;
 
 namespace EventCombo.Controllers
 {
-    //[RoutePrefix("")]
+    [RoutePrefix("event")]
+    //[RouteArea("Event", AreaPrefix = "E")]
+    //[RoutePrefix("Ev")]
     public class ViewEventController : Controller
     {
         EventComboEntities db = new EventComboEntities();
         // GET: ViewEvent
         //[Route("{strUrlData}", Name = "ViewEvent",Order =1)]
-        public ActionResult ViewEvent(string strUrlData)
+        [OutputCache(NoStore =true,Duration =0,VaryByParam ="None") ]
+        
+        [Route("{strEventDs?}-{strEventId?}", Name = "ViewEvent"), HttpGet]
+        
+        public ActionResult ViewEvent(string strEventDs, string strEventId)
         {
-
-
             if ((Session["AppId"] != null))
             {
                 HomeController hmc = new HomeController();
@@ -35,49 +39,48 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-            if (strUrlData == null)
+            if (strEventId == null)
             {
                 return RedirectToAction("Index", "Home");
-
             }
-            {
+            //if (!strUrlData.Contains('౼'))
+            //{
+            //    return RedirectToAction("Index", "Home");
 
-            }
-            if (!strUrlData.Contains('౼'))
-            {
-                return RedirectToAction("Index", "Home");
-
-            }
+            //}
             ValidationMessageController vmc = new ValidationMessageController();
-            string[] str = strUrlData.Split('౼');
-            string strForView = "";
-            string eventTitle = str[0].ToString();
+            //string[] str = strUrlData.Split('౼');
+            //string strForView = "";
+            //string eventTitle = str[0].ToString();
 
-            long EventId = vmc.GetLatestEventId(Convert.ToInt64(str[1]));
+            //long EventId = vmc.GetLatestEventId(Convert.ToInt64(str[1]));
+            long EventId = (strEventId != "" ? Convert.ToInt64(strEventId) : 0);
+            EventId = vmc.GetLatestEventId(EventId);
+            //try
+            //{
+            //    strForView = str[2].ToString();
+            //}
+            //catch (Exception)
+            //{
+            //    strForView = "N";
+            //}
 
-            try
-            {
-                strForView = str[2].ToString();
-            }
-            catch (Exception)
-            {
-                strForView = "N";
-            }
-
-            TempData["ForViewOnly"] = strForView;
+            TempData["ForViewOnly"] = "N";
 
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             Session["Fromname"] = "events";
-            var url = Url.Action("ViewEvent", "ViewEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
-            //var url = Url.Action("ViewEvent", "ViewEvent");
-            Session["ReturnUrl"] = "ViewEvent~" + url;
+            //var url = Url.Action("ViewEvent", "ViewEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
             var TopAddress = ""; var Topvenue = "";
             string organizername = "", fblink = "", twitterlink = "", organizerid = "", tickettype = "", enablediscussion = "", linkedin = "";
             ViewEvent viewEvent = new ViewEvent();
             //EventDetails
             CreateEventController objCE = new CreateEventController();
             var EventDetail = objCE.GetEventdetail(EventId);
+            if (EventDetail == null) return null;
+            var url = Url.RouteUrl("ViewEvent", new { strEventDs = EventDetail.EventTitle.Replace(" ", "-"), strEventId = EventDetail.EventID.ToString() });
+            Session["ReturnUrl"] = "ViewEvent~" + url;
+
             TempData["EventType"] = EventDetail.EventType.EventType1;
 
             var EvntCtgry = (from ev in db.EventCategories where ev.EventCategoryID == EventDetail.EventCategoryID select ev.EventCategory1).FirstOrDefault();

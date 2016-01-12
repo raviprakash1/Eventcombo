@@ -776,6 +776,7 @@
     <Content Include="Models\EventComboModel.edmx.diagram">
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
