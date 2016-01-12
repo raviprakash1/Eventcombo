@@ -1014,12 +1014,12 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel mt5'>");
                     if (ObjTick.Hide_Ticket == "0")
                     {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_ticketshidden-" + j + "' />");
+                        strticketHtml.Append("<input type='checkbox' class='' id='id_ticketshidden-" + j + "' onclick='showdiv(this.id)' />");
 
                     }
                     else
                     {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_ticketshidden-" + j + "' checked='checked' />");
+                        strticketHtml.Append("<input type='checkbox' class='' id='id_ticketshidden-" + j + "' onclick='showdiv(this.id)' checked='checked' />");
 
                     }
 

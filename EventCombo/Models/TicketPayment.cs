@@ -56,6 +56,7 @@ namespace EventCombo.Models
 
         public List<TicketBearer> NameList { get; set; }
         public string Ticketname { get; set; }
+        public string card_type { get; set; }
     }
 
 

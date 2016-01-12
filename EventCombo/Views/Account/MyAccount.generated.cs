@@ -134,7 +134,7 @@ WriteLiteral("></div>\r\n");
 
             
             #line 38 "..\..\Views\Account\MyAccount.cshtml"
- using (Html.BeginForm("MyAccount", "Account", FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
+ using (Html.BeginForm("MyAccount", "Account", FormMethod.Post, new { role = "form", @class = "form-horizontal",autocomplete="off" }))
 {
     
             
@@ -1425,35 +1425,37 @@ WriteLiteral(">\r\n            function isleap(leapyear) {\r\n                va
 "        if (!validateEmail(Email)) {\r\n                        emailcount += 1;\r\n" +
 "                        $(\'#Email\').addClass(\'err-bor\');\r\n\r\n\r\n                  " +
 "  } else {\r\n\r\n\r\n                        $(\'#Email\').removeClass(\'err-bor\');\r\n   " +
-"                 }\r\n                }\r\n\r\n                if (ConfirmEmail != \"\")" +
-" {\r\n\r\n                    if (!validateEmail(ConfirmEmail)) {\r\n                 " +
-"       emailcount += 1;\r\n                        $(\'#ConfirmEmail\').addClass(\'er" +
-"r-bor\');\r\n\r\n\r\n                    } else {\r\n                        $(\'#ConfirmE" +
-"mail\').removeClass(\'err-bor\');\r\n\r\n                    }\r\n\r\n\r\n                }\r\n" +
-"                if (Password != \"\") {\r\n                    if (Password.length <" +
-" 4) {\r\n                        pwdcount += 1;\r\n                        $(\'#Passw" +
-"ord\').addClass(\'err-bor\');\r\n\r\n\r\n                    }\r\n                }\r\n      " +
-"          if (NewPassword != \"\") {\r\n                    if (NewPassword.length <" +
-" 4) {\r\n                        pwdcount += 1;\r\n                        $(\'#NewPa" +
-"ssword\').addClass(\'err-bor\');\r\n\r\n\r\n                    }\r\n\r\n\r\n                }\r" +
-"\n                if (ConfirmPassword != \"\") {\r\n                    if (ConfirmPa" +
-"ssword.length < 4) {\r\n                        pwdcount += 1;\r\n                  " +
-"      $(\'#ConfirmPassword\').addClass(\'err-bor\');\r\n\r\n                    }\r\n\r\n\r\n " +
-"               }\r\n\r\n                if (emailcount > 0) {\r\n                    m" +
-"sg += ajaxsetup(\'MyAccount\', \'MyAccountEmailValidationUI\');\r\n\r\n                }" +
-"\r\n                if (pwdcount > 0) {\r\n                    msg = ajaxsetup(\'MyAc" +
-"count\', \'MyAccountPasswordValidationUI\');\r\n\r\n                }\r\n                " +
-"if (msg == \"\") {\r\n                    $(\'#diverroacc\').css(\"display\", \"none\");\r\n" +
-"                    $(\"#imageeror\").val(\'0\');\r\n                    return true;\r" +
-"\n                }\r\n                else {\r\n\r\n                    $(\'#erraccmsg\'" +
-").html(msg);\r\n                    $(\'#diverro1acc\').css(\"display\", \"none\");\r\n   " +
-"                 $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                    " +
-"$(\'#diverroacc\').css(\"display\", \"block\");\r\n                   \r\n                " +
-"    $(\'#btndiverroacc\').focus();\r\n                    return false;\r\n           " +
-"     }\r\n            });\r\n            function returnleap(yr) {\r\n                " +
-"return (yr % 400) ? ((yr % 100) ? ((yr % 4) ? false : true) : false) : true;\r\n  " +
-"          }\r\n            function validateEmail(sEmail) {\r\n                var f" +
-"ilter = /^[\\w\\-\\.\\+]+\\");
+"                 }\r\n                } else {\r\n                    $(\'#Email\').ad" +
+"dClass(\'err-bor\');\r\n                    msg += ajaxsetup(\'MyAccount\', \'MyAccount" +
+"EmailRequiredUI\');\r\n\r\n                }\r\n\r\n\r\n                if (ConfirmEmail !=" +
+" \"\") {\r\n\r\n                    if (!validateEmail(ConfirmEmail)) {\r\n             " +
+"           emailcount += 1;\r\n                        $(\'#ConfirmEmail\').addClass" +
+"(\'err-bor\');\r\n\r\n\r\n                    } else {\r\n                        $(\'#Conf" +
+"irmEmail\').removeClass(\'err-bor\');\r\n\r\n                    }\r\n\r\n\r\n               " +
+" }\r\n                if (Password != \"\") {\r\n                    if (Password.leng" +
+"th < 4) {\r\n                        pwdcount += 1;\r\n                        $(\'#P" +
+"assword\').addClass(\'err-bor\');\r\n\r\n\r\n                    }\r\n                }\r\n  " +
+"              if (NewPassword != \"\") {\r\n                    if (NewPassword.leng" +
+"th < 4) {\r\n                        pwdcount += 1;\r\n                        $(\'#N" +
+"ewPassword\').addClass(\'err-bor\');\r\n\r\n\r\n                    }\r\n\r\n\r\n              " +
+"  }\r\n                if (ConfirmPassword != \"\") {\r\n                    if (Confi" +
+"rmPassword.length < 4) {\r\n                        pwdcount += 1;\r\n              " +
+"          $(\'#ConfirmPassword\').addClass(\'err-bor\');\r\n\r\n                    }\r\n\r" +
+"\n\r\n                }\r\n\r\n                if (emailcount > 0) {\r\n                 " +
+"   msg += ajaxsetup(\'MyAccount\', \'MyAccountEmailValidationUI\');\r\n\r\n             " +
+"   }\r\n                if (pwdcount > 0) {\r\n                    msg = ajaxsetup(\'" +
+"MyAccount\', \'MyAccountPasswordValidationUI\');\r\n\r\n                }\r\n            " +
+"    if (msg == \"\") {\r\n                    $(\'#diverroacc\').css(\"display\", \"none\"" +
+");\r\n                    $(\"#imageeror\").val(\'0\');\r\n                    return tr" +
+"ue;\r\n                }\r\n                else {\r\n\r\n                    $(\'#erracc" +
+"msg\').html(msg);\r\n                    $(\'#diverro1acc\').css(\"display\", \"none\");\r" +
+"\n                    $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                " +
+"    $(\'#diverroacc\').css(\"display\", \"block\");\r\n                    $(\'html,body\'" +
+").animate({ scrollTop: 0 });\r\n                    //$(\'#btndiverroacc\').focus();" +
+"\r\n                    return false;\r\n                }\r\n            });\r\n       " +
+"     function returnleap(yr) {\r\n                return (yr % 400) ? ((yr % 100) " +
+"? ((yr % 4) ? false : true) : false) : true;\r\n            }\r\n            functio" +
+"n validateEmail(sEmail) {\r\n                var filter = /^[\\w\\-\\.\\+]+\\");
 
 WriteLiteral("@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/;\r\n\r\n                if (filter.test(sEmail)" +
 ") {\r\n\r\n                    return true;\r\n                }\r\n                else" +
@@ -1513,15 +1515,16 @@ WriteLiteral("@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/;\r\n\r\n                i
 "I\');\r\n                            $(\'#erraccmsg\').html(msg);\r\n                  " +
 "          $(\'#diverro1acc\').css(\"display\", \"none\");\r\n                           " +
 " $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                            $(\'#dive" +
-"rroacc\').css(\"display\", \"block\");\r\n                            \r\n               " +
-"             $(\'#btndiverroacc\').focus();\r\n\r\n                            $(\'#Zip" +
-"\').addClass(\'err-bor\');\r\n                            return false;\r\n            " +
-"            }\r\n                    }\r\n                });\r\n            });\r\n\r\n  " +
-"          function ajaxsetup(strname, strFormTag) {\r\n                var msgnew " +
-"= \"\";\r\n\r\n                var request = $.ajax({\r\n                    url: \'");
+"rroacc\').css(\"display\", \"block\");\r\n                            //$(\'body\').scrol" +
+"lTo(\'#btndiverroacc\');\r\n                            //$(\'#btndiverroacc\').focus(" +
+");\r\n\r\n                            $(\'#Zip\').addClass(\'err-bor\');\r\n              " +
+"              return false;\r\n                        }\r\n                    }\r\n " +
+"               });\r\n            });\r\n\r\n            function ajaxsetup(strname, s" +
+"trFormTag) {\r\n                var msgnew = \"\";\r\n\r\n                var request = " +
+"$.ajax({\r\n                    url: \'");
 
             
-            #line 1049 "..\..\Views\Account\MyAccount.cshtml"
+            #line 1054 "..\..\Views\Account\MyAccount.cshtml"
                      Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -1544,9 +1547,9 @@ WriteLiteral(@"',
         </script>
         <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 47269), Tuple.Create("\"", 47310)
-, Tuple.Create(Tuple.Create("", 47275), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 47275), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 47537), Tuple.Create("\"", 47578)
+, Tuple.Create(Tuple.Create("", 47543), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 47543), false)
 );
 
 WriteLiteral("></script>\r\n\r\n");
