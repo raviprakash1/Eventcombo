@@ -35,7 +35,7 @@ namespace EventCombo
                 {
                     controller = "ViewEvent",
                     action = "ViewEvent",
-                    strEventDs = UrlParameter.Optional ,
+                    strEventDs = UrlParameter.Optional,
                     strEventId = UrlParameter.Optional
                 }
             );

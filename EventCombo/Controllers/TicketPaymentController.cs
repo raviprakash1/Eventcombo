@@ -29,7 +29,7 @@ namespace EventCombo.Controllers
         // GET: TicketPayment
 
         //[Route("Payment", Name = "TPayment", Order=2)]
-        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
+        //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         //[Route("",Name ="Payment"),HttpGet]
         public ActionResult TicketPayment()
         {
