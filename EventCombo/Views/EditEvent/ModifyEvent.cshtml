@@ -865,7 +865,7 @@
                                                     <div class="form-group">
                                                         <div class="col-sm-12 mt10 no_pad">
                                                             <label class="label-control pl0 ev_tickt_lebel mt5">
-                                                                <input type="checkbox" class="" id="id_ticketshidden-n" />
+                                                                <input type="checkbox" class="" id="id_ticketshidden-n" onclick="showdiv(this.id)" />
                                                                 Hide this ticket type
                                                             </label>
                                                         </div>
@@ -1324,6 +1324,14 @@ else
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Add Venue</h4>
                 </div>
+                <div id="diverrorvenue" style="display:none;">
+                    <div class="er_UI_main">
+                        <div class="er_UI_img"></div>
+                        <div class="er_suc" id="erraccmsgvenue">
+
+                        </div>
+                    </div>
+                </div>
                 <div class="modal-body">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -1690,6 +1698,7 @@ else
                
                 $('#btndiverrsuc').focus();
                 $('#erraccmsg').html(msg);
+                $('html,body').animate({ scrollTop: 0 });
                 return false;
 
             }
@@ -2510,8 +2519,10 @@ else
                 $('#divaccsuc').css('display', 'none');
                 $('#diverroacc').css('display', 'block');
             
-                $('#btndiverrsuc').focus();
+               
                 $('#erraccmsg').html('There some problem occurs, Please check after some time.');
+                $('#btndiverrsuc').focus();
+                $('html,body').animate({ scrollTop: 0 });
             }
 
 
@@ -2600,7 +2611,7 @@ else
                     $('#diverroacc').css('display', 'block');
                     $('#erraccmsg').html(msg);
                    
-                    $('#btndiverrsuc').focus();
+                    $('html,body').animate({ scrollTop: 0 });
                     return false;
 
                 }
@@ -2636,9 +2647,8 @@ else
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
-                 
-                    $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
+                    $('html,body').animate({ scrollTop: 0 });
                     return false;
 
                 }
@@ -2721,6 +2731,7 @@ else
                    
                     $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
+                    $('html,body').animate({ scrollTop: 0 });
                     //$("#txtOrgnizer").focus();
                     return false;
                 }
@@ -2741,6 +2752,7 @@ else
                     
                         $('#btndiverrsuc').focus();
                         $('#erraccmsg').html(msg);
+                        $('html,body').animate({ scrollTop: 0 });
                         //alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
                         return false;
                     }
@@ -2843,11 +2855,16 @@ else
 
                                 $("#txtEventUrl").val('');
                                 $("#txtEventUrl").focus();
+                                $('html,body').animate({ scrollTop: 0 });
 
                             }
                         },
                         error: function (data) {
-                            alert("Sorry there is some problem.");
+                            $('#divaccsuc').css('display', 'none');
+                            $('#diverroacc').css('display', 'block');
+                            $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
+                            $('html,body').animate({ scrollTop: 0 });
+                            $('#btndiverrsuc').focus();
                         }
                     });
                 }
@@ -2870,7 +2887,13 @@ else
                         //});
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        $('#divaccsuc').css('display', 'none');
+                        $('#diverroacc').css('display', 'block');
+                      
+                        
+                        $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
+                        $('#diverroacc').focus();
+                        $('html,body').animate({ scrollTop: 0 });
                     }
                 });
             });
@@ -3051,7 +3074,13 @@ else
                     }
                 },
                 error: function (data) {
-                    alert("Sorry there is some problem.");
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+                      
+                        
+                    $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
+                    $('#diverroacc').focus();
+                    $('html,body').animate({ scrollTop: 0 });
                 }
             });
             $("#UsepastLoc").click(function () {
@@ -3210,7 +3239,11 @@ else
             }
             function validateAddress() {
                 if ($("#VenueName").val().trim() == '') {
-                    alert("Please enter valid venue name");
+                    $('#diverrorvenue').css('display', 'block');
+                    $("#VenueName").addClass('err-bor');
+                    var msg = ajaxsetup('CreateEvent', 'CreateEventValidatevenueUI');
+                    $('#erraccmsgvenue').html(msg);
+                    $('#diverrorvenue').focus();
                     $("#VenueName").focus();
                     return false;
                 }
@@ -5009,7 +5042,26 @@ else
 
 
         }
+        function showdiv(e)
+        {
+            debugger;
+            var id = e;
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if ($('#id_ticketshidden-' + el).is(":checked") == true) {
+                $("#id_CusdateCont-" + el).css("display", "block");
+                $("#id_RemvTkt-" + el).css("display", "block");
+                $("#id_EvaddTkt-" + el).css("display", "none");
 
+            } else {
+                $("#id_CusdateCont-" + el).css("display", "none");
+                $("#id_RemvTkt-" + el).css("display", "none");
+                $("#id_EvaddTkt-" + el).css("display", "block");
+            }
+            $("#id_auto_hide_type_0-" + el).prop('checked', true);
+            $("#id_auto_hide_type_1-" + el).prop('checked', false);
+            $("#id_HideuntDiv-" + el).css("display", "none");
+        }
 
         function hideunhide(e) {
 
@@ -5027,6 +5079,7 @@ else
                 $("#id_auto_hide_type_0-" + el).prop('checked', true);
                 $("#id_auto_hide_type_1-" + el).prop('checked', false);
                 $("#id_HideuntDiv-" + el).css("display", "none");
+                $("#id_ticketshidden-" + el).prop('checked', true);
                 $("#id_auto_hide_until_Date-" + el).datepicker({
                     format: "mm/dd/yyyy",
                     minDate: "0",
@@ -5055,6 +5108,7 @@ else
                 $("#id_EvaddTkt-" + el).css("display", "block");
                 $("#id_CusdateCont-" + el).css("display", "none");
                 $("#id_HideuntDiv-" + el).css("display", "none");
+                $("#id_ticketshidden-" + el).prop('checked', false);
                 $("#id_auto_hide_until_Date-" + el).val('');
                 $("#id_auto_hide_until_time-" + el).val('');
                 $("#id_auto_hide_after_Date-" + el).val('');
@@ -5099,11 +5153,11 @@ else
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('#dllWeeklyDayChk').multiselect({
-               onChange: function(option, checked) {
-                    alert(option.length + ' options ' + (checked ? 'selected' : 'deselected'));
-                }
-            });
+            //$('#dllWeeklyDayChk').multiselect({
+            //   onChange: function(option, checked) {
+            //        alert(option.length + ' options ' + (checked ? 'selected' : 'deselected'));
+            //    }
+            //});
             function uuid() {
                 var chars = '0123456789abcdef'.split('');
 

@@ -106,16 +106,7 @@
                                                 <div class="section">
                                                   
                                                     @Html.DropDownList("Features", ViewBag.Features as List<SelectListItem>, new { @class = "form-control" })
-                                                    @*<label class="field select">
-                                                        <select id="strFeature" class="form-control">
-                                                            <option text=0 value="0">Select</option>
-                                                            <option value=1>Platinum</option>
-                                                            <option value=2>Gold</option>
-                                                            <option value=3>Silver</option>
-                                                            <option value=4>Bronze</option>
-                                                        </select>
-                                                        <i class="arrow single"></i>
-                                                    </label>*@
+                                                 
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-sm-2 mt10">
@@ -134,8 +125,13 @@
                                             <div class="col-md-2 col-sm-2 mt10">
                                                 <label> &nbsp;  </label>
                                                 <button class="btn btn-info br2 col-md-12 fs15">Search</button>
+                                              
                                             </div>
-                                        </form>
+                                            <div class="col-md-2 col-sm-2 mt10">
+                                                <label> &nbsp;  </label>
+                                                <button class="btn btn-info br2 col-md-12 fs15" type="button" id="btnReset" >Reset</button>
+                                            </div>
+</form>
 
                                     </div>
                                 </div>
@@ -347,6 +343,18 @@
         </div>
         <!-- End: Content -->
         <script>
+            $('#btnReset').click(function () {
+
+                $('#SearchStringEventTitle').val('');
+                $('#EventType').val(0);
+                $('#ddlEventCategory').val(0);
+                $('#Features').val(0);
+                $('#Events').val(0);
+                $('#Tickets').val(0);
+                $('#ddlEventSubCategory').empty();
+                $('#formuser').submit();
+
+            });
             $('#ulpage').click(function () {
                 console.log(this);
 

@@ -399,6 +399,7 @@ namespace EventCombo.Controllers
         public async Task<ActionResult> MyAccount(myAccount model, HttpPostedFileBase file)
         {
             string msg = "", errormessage = "", successmsg = "";
+            int emailchange = 0,Pwdchange=0,mainchange=1;
             string to = "", from = "", cc = "", bcc = "", subjectn = "";
             var bodyn = "";
             var Emailtemplate =new Email_Template();
@@ -413,6 +414,7 @@ namespace EventCombo.Controllers
                 ValidationMessageController vmc = new ValidationMessageController();
                 validationresult = vmc.Index("", "");
                 var accountdetail = GetLoginDetails(Userid);
+                //check validation
                 if (string.IsNullOrEmpty(model.Firstname))
                 {
                     validationresult = vmc.Index("MyAccount", "MyAccountFnameRequiredUI");
@@ -428,6 +430,15 @@ namespace EventCombo.Controllers
 
                     }
                 }
+                else
+                {
+                    if(model.Email !=accountdetail.Email )
+                    {
+                        validationresult = vmc.Index("MyAccount", "MyAccountEmailValidationUI");
+                        ModelState.AddModelError("Error", validationresult);
+                    }
+
+                }
                 if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
                 {
                     if (model.NewPassword != model.ConfirmPassword)
@@ -438,9 +449,14 @@ namespace EventCombo.Controllers
 
                     }
                 }
-
-                if (!string.IsNullOrEmpty(model.Password))
+                if (!string.IsNullOrEmpty(model.ConfirmEmail) && !string.IsNullOrEmpty(model.Email) && string.IsNullOrEmpty(model.Password))
                 {
+                    validationresult = vmc.Index("MyAccount", "MyAccountPwdValidationSys");
+                    ModelState.AddModelError("Error", validationresult);
+
+                }
+                    if (!string.IsNullOrEmpty(model.Password))
+                   {
 
                     var user12 = UserManager.FindByEmail(accountdetail.PreviousEmail);
                     var result = UserManager.PasswordHasher.VerifyHashedPassword(user12.PasswordHash, model.Password);
@@ -451,7 +467,6 @@ namespace EventCombo.Controllers
 
                     }
                 }
-                var userimage = model.userimage;
 
                 if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.ConfirmEmail))
                 {
@@ -466,12 +481,17 @@ namespace EventCombo.Controllers
                     }
                 }
 
+
+                var userimage = model.userimage;
+
+          
+
                 if (ModelState.IsValid)
                 {
 
                     using (EventComboEntities objEntity = new EventComboEntities())
                     {
-                        var ApplicationUser = objEntity.AspNetUsers.Find(Userid);
+                       // var ApplicationUser = objEntity.AspNetUsers.Find(Userid);
                         Profile profile = objEntity.Profiles.First(i => i.UserID == Userid);
 
                         if (userimage != null)
@@ -503,8 +523,6 @@ namespace EventCombo.Controllers
                         profile.SecondPhone = model.SecondPhone;
                         profile.WorkPhone = model.WorkPhone;
                         profile.WebsiteURL = model.WebsiteURL;
-
-
                         profile.Gender = model.Gender;
                         if (!string.IsNullOrEmpty(model.day.ToString()) && !string.IsNullOrEmpty(model.month.ToString()) && !string.IsNullOrEmpty(model.year.ToString()))
                         {
@@ -516,7 +534,7 @@ namespace EventCombo.Controllers
                             {
                                 profile.Email = model.Email;
 
-                                successmsg = vmc.Index("MyAccount", "MyAccountSuccessEmailSY");
+                               
 
                             }
                         }
@@ -545,6 +563,7 @@ namespace EventCombo.Controllers
                                 try
                                 {
                                     objEntity.SaveChanges();
+                                    emailchange = 1;
                                 }
                                 catch (Exception ex)
                                 {
@@ -562,117 +581,22 @@ namespace EventCombo.Controllers
                         var token = await UserManager.GeneratePasswordResetTokenAsync(Userid);
 
                         var result = await UserManager.ResetPasswordAsync(Userid, token, model.NewPassword);
-                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessPasswordSY") + successmsg;
-                        var email = "";
-                        using (EventComboEntities objEntity = new EventComboEntities())
-                        {
-                            AspNetUser aspuser = objEntity.AspNetUsers.First(i => i.Id == Userid);
-                            email = aspuser.Email;
-                        }
-                        string tag = "UserEmailID:" + email + "¶UserFirstNameID:" + model.Firstname;
-
-                        EmailTag = hmc.getTag();
-
-                         Emailtemplate = hmc.getEmail("acc_pwd_set");
-                        if (Emailtemplate != null)
-                        {
-                            if (!string.IsNullOrEmpty(Emailtemplate.To))
-                            {
-
-
-                                to = Emailtemplate.To;
-                                if (to.Contains("¶¶UserEmailID¶¶"))
-                                {
-                                    to = to.Replace("¶¶UserEmailID¶¶", email);
-
-                                }
-                            }
-                            if (!(string.IsNullOrEmpty(Emailtemplate.From)))
-                            {
-                                from = Emailtemplate.From;
-                                if (from.Contains("¶¶UserEmailID¶¶"))
-                                {
-                                    from = from.Replace("¶¶UserEmailID¶¶", email);
-
-                                }
-                            }
-                            else
-                            {
-                                from = "shweta.sindhu@kiwitech.com";
-
-                            }
-                            if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
-                            {
-                                cc = Emailtemplate.CC;
-                                if (cc.Contains("¶¶UserEmailID¶¶"))
-                                {
-                                    cc = from.Replace("¶¶UserEmailID¶¶", email);
-
-                                }
-                            }
-                            if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
-                            {
-                                bcc = Emailtemplate.Bcc;
-                                if (bcc.Contains("¶¶UserEmailID¶¶"))
-                                {
-                                    bcc = from.Replace("¶¶UserEmailID¶¶", email);
-
-                                }
-                            }
-                            if (!string.IsNullOrEmpty(Emailtemplate.Subject))
-                            {
-
-
-                                subjectn = Emailtemplate.Subject;
-
-                              
-                            }
-                            if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
-                            {
-                                bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                               
-                            }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc,tag);
-                        }
-
-
-                    }
-
-
-                    var countryQuery = (from c in db.Countries
-                                        orderby c.Country1 ascending
-                                        select c).Distinct();
-                    List<SelectListItem> countryList = new List<SelectListItem>();
-                    string defaultCountry = model.Country;
-                    foreach (var item in countryQuery)
+                          Pwdchange = 1;
+                     }
+                    var email = "";
+                    using (EventComboEntities objEntity = new EventComboEntities())
                     {
-                        countryList.Add(new SelectListItem()
-                        {
-                            Text = item.Country1,
-                            Value = item.CountryID.ToString(),
-                            Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
-                        });
+                        AspNetUser aspuser = objEntity.AspNetUsers.First(i => i.Id == Userid);
+                        email = aspuser.Email;
                     }
-                    ViewBag.Country = countryList;
-
-                    if (successmsg != "")
+                    string tag = "UserEmailID:" + email + "¶UserFirstNameID:" + model.Firstname;
+                    if (emailchange==1 && Pwdchange==0)
                     {
-                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY") + "," + successmsg;
-                    }
-                    else
-                    {
-                        var email = "";
-                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY");
-                        using (EventComboEntities objEntity = new EventComboEntities())
-                        {
-                            AspNetUser aspuser = objEntity.AspNetUsers.First(i => i.Id == Userid);
-                            email = aspuser.Email;
-                        }
-                        EmailTag = hmc.getTag();
+                        successmsg =  vmc.Index("MyAccount", "MyAccountSuccessEmailSY");
+                        
+                       Emailtemplate = hmc.getEmail("acc_info_update");
 
-                        Emailtemplate = hmc.getEmail("acc_info_update");
-
-                        string tag = "UserEmailID:" + email + "¶UserFirstNameID:"+ model.Firstname;
+                      
                         if (Emailtemplate != null)
                         {
                             if (!string.IsNullOrEmpty(Emailtemplate.To))
@@ -724,17 +648,230 @@ namespace EventCombo.Controllers
 
                                 subjectn = Emailtemplate.Subject;
 
-                              
+
                             }
                             if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
                             {
                                 bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                              
+
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag);
                         }
-              
                     }
+                    if (emailchange == 1 && Pwdchange == 1)
+                    {
+                        successmsg =  vmc.Index("MyAccount", "AccEmailPwdchangesys");
+
+                        Emailtemplate = hmc.getEmail("acc_pwd_set");
+                        if (Emailtemplate != null)
+                        {
+                            if (!string.IsNullOrEmpty(Emailtemplate.To))
+                            {
+                                to = Emailtemplate.To;
+                                if (to.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    to = to.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                            {
+                                from = Emailtemplate.From;
+                                if (from.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    from = from.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            else
+                            {
+                                from = "shweta.sindhu@kiwitech.com";
+
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                            {
+                                cc = Emailtemplate.CC;
+                                if (cc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    cc = from.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                            {
+                                bcc = Emailtemplate.Bcc;
+                                if (bcc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    bcc = from.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                            {
+
+
+                                subjectn = Emailtemplate.Subject;
+
+
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                            {
+                                bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+
+                            }
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag);
+                        }
+                    }
+                    if (emailchange == 0 && Pwdchange == 1)
+                    {
+                        successmsg =  vmc.Index("MyAccount", "MyAccountSuccessPasswordSY") + successmsg;
+                        Emailtemplate = hmc.getEmail("acc_pwd_set");
+                        if (Emailtemplate != null)
+                        {
+                            if (!string.IsNullOrEmpty(Emailtemplate.To))
+                            {
+                                to = Emailtemplate.To;
+                                if (to.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    to = to.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                            {
+                                from = Emailtemplate.From;
+                                if (from.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    from = from.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            else
+                            {
+                                from = "shweta.sindhu@kiwitech.com";
+
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                            {
+                                cc = Emailtemplate.CC;
+                                if (cc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    cc = from.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                            {
+                                bcc = Emailtemplate.Bcc;
+                                if (bcc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    bcc = from.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                            {
+
+
+                                subjectn = Emailtemplate.Subject;
+
+
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                            {
+                                bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+
+                            }
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag);
+                        }
+                    }
+                    if (emailchange == 0 && Pwdchange == 0)
+                    {
+                        successmsg = vmc.Index("MyAccount", "MyAccountSuccessInitSY");
+                        Emailtemplate = hmc.getEmail("acc_info_update");
+
+
+                        if (Emailtemplate != null)
+                        {
+                            if (!string.IsNullOrEmpty(Emailtemplate.To))
+                            {
+
+
+                                to = Emailtemplate.To;
+                                if (to.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    to = to.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                            {
+                                from = Emailtemplate.From;
+                                if (from.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    from = from.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            else
+                            {
+                                from = "shweta.sindhu@kiwitech.com";
+
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                            {
+                                cc = Emailtemplate.CC;
+                                if (cc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    cc = cc.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                            {
+                                bcc = Emailtemplate.Bcc;
+                                if (bcc.Contains("¶¶UserEmailID¶¶"))
+                                {
+                                    bcc = bcc.Replace("¶¶UserEmailID¶¶", email);
+
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                            {
+
+
+                                subjectn = Emailtemplate.Subject;
+
+
+                            }
+                            if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                            {
+                                bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+
+                            }
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag);
+                        }
+                    }
+
+
+                    var countryQuery = (from c in db.Countries
+                                        orderby c.Country1 ascending
+                                        select c).Distinct();
+                    List<SelectListItem> countryList = new List<SelectListItem>();
+                    string defaultCountry = model.Country;
+                    foreach (var item in countryQuery)
+                    {
+                        countryList.Add(new SelectListItem()
+                        {
+                            Text = item.Country1,
+                            Value = item.CountryID.ToString(),
+                            Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
+                        });
+                    }
+                    ViewBag.Country = countryList;
+
+
+
                     ViewData["Message"] = successmsg;
                     return View(model);
 

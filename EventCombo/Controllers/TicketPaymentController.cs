@@ -141,8 +141,36 @@ namespace EventCombo.Controllers
                         foreach (var item in carddetails)
                         {
                             Cardview card1 = new Cardview();
+                            var Scardnumber = item.CardNumber.Trim();
+                            var Icardlength = Scardnumber.Length;
+                            var WrVS = "";
+                            int k = 1;
+                            for (int i = 0; i < Icardlength; i++)
+                            {
+
+                                WrVS += "X";
+                                if (k == 4)
+                                {
+                                    WrVS += "-";
+                                    k = 0;
+                                }
+                              
+                              
+                                k++;
+
+                            }
+                            if(WrVS.EndsWith("-"))
+                            {
+                                WrVS= WrVS.Substring(0, WrVS.LastIndexOf("-"));
+                            }
+                            var rvrs = WrVS.Substring (0, WrVS.LastIndexOf  ("-")+1);
+                           var rvrsd= rvrs.Replace("-", "");
+                           var chrlength= Icardlength - rvrsd.Length;
+                            var result = Scardnumber.Substring(Icardlength - Math.Min(chrlength, Icardlength));
+                          var  finalstr= rvrs+ result;
                             card1.value = item.CardId.ToString();
-                            card1.text = Fname + "-" + item.CardNumber;
+                            var touper=char.ToUpper(item.card_type[0]) + item.card_type.Substring(1);
+                            card1.text = "Payment Method:Customer-" + Fname + "  " + touper + "  " + finalstr;
                             Detailscard.Add(card1);
 
 
@@ -217,7 +245,7 @@ namespace EventCombo.Controllers
 
             var Carddetails = (from ev in db.CardDetails where ev.CardId.ToString() == cardid select ev).FirstOrDefault();
 
-            return Carddetails.CardNumber + "*" + Carddetails.Cvv + "*" + Carddetails.ExpirationDate;
+            return Carddetails.CardNumber + "*" + Carddetails.ExpirationDate  + "*" + Carddetails.Cvv;
 
         }
         public ApplicationSignInManager SignInManager
@@ -386,14 +414,19 @@ namespace EventCombo.Controllers
 
                         if (model.Savecarddetail != "N")
                         {
-                            CardDetail card = new CardDetail();
-                            card.OrderId = strOrderNo;
-                            card.CardNumber = model.cardno;
-                            card.ExpirationDate = model.expirydate;
-                            card.Cvv = model.cvv;
-                            card.UserId = Userid;
-                            card.Guid = guid;
-                            objEntity.CardDetails.Add(card);
+                            var objcarddetail = (from objdetail in objEntity.CardDetails where objdetail.UserId == Userid && objdetail.CardNumber == model.cardno select objdetail).Any();
+                            if (!objcarddetail)
+                            {
+                                CardDetail card = new CardDetail();
+                                card.OrderId = strOrderNo;
+                                card.CardNumber = model.cardno;
+                                card.ExpirationDate = model.expirydate;
+                                card.Cvv = model.cvv;
+                                card.UserId = Userid;
+                                card.Guid = guid;
+                                card.card_type = model.card_type;
+                                objEntity.CardDetails.Add(card);
+                            }
 
 
                         }
