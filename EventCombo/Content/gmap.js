@@ -193,7 +193,7 @@ function autocomplete_init_MultiVenue() {
   });
 }; // autocomplete_init
 function autocomplete_init_Venue() {
-    $("#txtEventLocationss").autocomplete({
+    $("#txtEventLocation").autocomplete({
    
         // source is the list of input options shown in the autocomplete dropdown.
         // see documentation: http://jqueryui.com/demos/autocomplete/
