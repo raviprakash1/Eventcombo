@@ -88,6 +88,7 @@
 
             </div>
             <div class="col-sm-9 col-xs-6 pt10 text-right no_pad">
+                
                 @*<button class="btn ev_live_sub_btn mb5" type="button">
                     SAVE &#10;
                     <span> > </span>
@@ -1462,8 +1463,9 @@ function pad(n) { return n < 10 ? '0' + n : n };
             var vDonate = 0;
             var vflag = 0;
             var vSelection = "";
+            debugger;
             for (i = 0; i < IdAry.length; i++) {
-                debugger;
+                //debugger;
                 vId = parseInt(IdAry[i].toString());
                 vLockQty = parseInt($("#d_" + IdAry[i].toString()).val());
                 vDonate = parseFloat($("#txtd_" + IdAry[i].toString()).val());
@@ -1473,6 +1475,9 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
                 if (vLockQty > 0 || vDonate >0) {
                     vflag = 1;
+                    if (vLockQty > 0 && vDonate <= 0 && vTAmt <= 0) {
+                        vLockQty = 0;
+                    }
                     TList.push({
                         'TLD_TQD_Id': vId,
                         'TLD_Locked_Qty': vLockQty,
