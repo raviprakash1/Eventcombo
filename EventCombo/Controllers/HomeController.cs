@@ -311,7 +311,7 @@ namespace EventCombo.Controllers
 
             /// to send email////
             /// 
-            string to = "", from = "", cc = "", bcc = "", subjectn = "";
+            string to = "", from = "", cc = "", bcc = "", subjectn = "",emailname="";
             var bodyn = "";
             List<Email_Tag> EmailTag = new List<Email_Tag>();
             EmailTag = getTag();
@@ -346,6 +346,14 @@ namespace EventCombo.Controllers
                     from = "shweta.sindhu@kiwitech.com";
 
                 }
+                if(!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                {
+                    emailname = Emailtemplate.From_Name;
+                }
+                else
+                {
+                    emailname = from;
+                }
                 if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                 {
                     cc = Emailtemplate.CC;
@@ -363,6 +371,14 @@ namespace EventCombo.Controllers
                         bcc = bcc.Replace("¶¶UserEmailID¶¶", model.Email);
 
                     }
+                }
+                if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                {
+                    emailname = Emailtemplate.From_Name;
+                }
+                else
+                {
+                    emailname = from;
                 }
                 if (!string.IsNullOrEmpty(Emailtemplate.Subject))
                 {
@@ -628,7 +644,7 @@ namespace EventCombo.Controllers
 
                     }
                 }
-                SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag);
+                SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag, emailname);
             }
             ValidationMessageController vmc = new ValidationMessageController();
            var msg= vmc.Index("ForgotPassword", "ForgotPwdSuccessInitSY");
@@ -881,7 +897,7 @@ namespace EventCombo.Controllers
 
                         /// to send email////
                         /// 
-                        string to = "", from ="",cc="",bcc="",subjectn="";
+                        string to = "", from ="",cc="",bcc="",subjectn="",emailname="";
                         var bodyn = "";
                         List<Email_Tag> EmailTag = new List<Email_Tag>();
                          EmailTag = getTag();
@@ -912,7 +928,14 @@ namespace EventCombo.Controllers
                             from = "shweta.sindhu@kiwitech.com";
 
                         }
-
+                        if(!(string.IsNullOrEmpty (Emailtemplate.From_Name)))
+                        {
+                            emailname = Emailtemplate.From_Name;
+                        }
+                        else
+                        {
+                            emailname = from;
+                        }
 
                         if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                         {
@@ -950,7 +973,7 @@ namespace EventCombo.Controllers
 
                             
                         }
-                        SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag);
+                        SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag, emailname);
 
 
                     }
@@ -978,11 +1001,11 @@ namespace EventCombo.Controllers
             }
             return strIpAddress;
         }
-        public void SendHtmlFormattedEmail(string To,string from, string subject, string body,string cc,string bcc,string tags)
+        public void SendHtmlFormattedEmail(string To,string from, string subject, string body,string cc,string bcc,string tags,string emailname)
         {
             using (MailMessage mailMessage = new MailMessage())
             {
-                mailMessage.From = new MailAddress(from, from);
+                mailMessage.From = new MailAddress(from, emailname);
               string[] arr= tags.Split('¶');
                 int length = arr.Length;
                 List<Email_Tag> EmailTag = new List<Email_Tag>();

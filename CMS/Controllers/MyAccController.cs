@@ -425,7 +425,7 @@ namespace CMS.Controllers
 
                     var result = await UserManager.ResetPasswordAsync(model.Id, token, model.NewPassword);
                     successmsg = vmc.Index("MyAccount", "MyAccountSuccessPasswordSY") + successmsg;
-                    string to = "", from = "", cc = "", bcc = "", subjectn = "";
+                    string to = "", from = "", cc = "", bcc = "", subjectn = "", emailname="";
                     var bodyn = "";
                     List<Email_Tag> EmailTag = new List<Email_Tag>();
                     HomeController hmc = new HomeController();
@@ -444,6 +444,14 @@ namespace CMS.Controllers
                                 to = to.Replace("¶¶UserEmailID¶¶", model.Email);
 
                             }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                        {
+                            emailname = Emailtemplate.From_Name;
+                        }
+                        else
+                        {
+                            emailname = from;
                         }
                         if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                         {
@@ -742,7 +750,7 @@ namespace CMS.Controllers
 
                             }
                         }
-                        SendHtmlFormattedEmail(to, from, cc,bcc,subjectn, bodyn);
+                        SendHtmlFormattedEmail(to, from, cc,bcc,subjectn, bodyn, emailname);
                     }
                 }
 
@@ -895,11 +903,11 @@ namespace CMS.Controllers
 
 
         }
-        public void SendHtmlFormattedEmail(string To, string from,string cc,string bcc, string subject, string body)
+        public void SendHtmlFormattedEmail(string To, string from,string cc,string bcc, string subject, string body,string emailname)
         {
             using (MailMessage mailMessage = new MailMessage())
             {
-                mailMessage.From = new MailAddress(from, "Eventcombo");
+                mailMessage.From = new MailAddress(from, emailname);
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
                 if (!string.IsNullOrEmpty(cc))

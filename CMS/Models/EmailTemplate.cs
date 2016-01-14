@@ -20,7 +20,8 @@ namespace CMS.Models
         [AllowHtml]
         public string ckeditor1 { get; set; }
         public string emailtag { get; set; }
-        
+        public string FromName { get; set; }
+
     }
    
 }

@@ -55,98 +55,8 @@
                                     }
                                     }
 
-                                @*<li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="0" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable" >
-                                        UserFirstNameID
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="1" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        UserLastNameID
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="2" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        EventNameID 
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="3" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        EventStartDateID 
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="4" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        EventEndDateID
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="5" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        EventStartTimeID
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="6" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        EventEndTimeID
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="7" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        EventVenueID
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="8" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        EventAddressID
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="9" draggable="true" tabindex="0" ondragstart="drag(event)" id="draggable">
-                                        TicketOrderNumberID 
-                                    </div>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <div class="contact h-card ui-widget-content ui-draggable" data-contact="10" draggable="true" tabindex="0"  ondragstart="drag(event)" id="draggable">
-                                        DealOrderNumberID
-                                    </div>
-                                </li>*@
                             </ul>
-                            @*<ul id="allfields" class="list-group">
-                                <li class="list-group-item em_bor_bot">
-                                   
-                                  <a href="#" ondragstart="drag(event)" draggable="true">UserFirstNameID</a>
-                                </li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true"> UserLastNameID</a>
-</li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true"> EventNameID </a>
-</li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true"> EventStartDateID </a>
-</li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true">  EventEndDateID </a>
-</li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true"> EventStartTimeID</a>
-</li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true">   EventEndTimeID </a>
-</li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true">EventVenueID </a>
-</li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true"> EventAddressID </a>
-</li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true">  TicketOrderNumberID </a>
-</li>
-                                <li class="list-group-item em_bor_bot">
-                                    <a href="#" ondragstart="drag(event)" draggable="true">   DealOrderNumberID </a>
-</li>
-                            </ul>*@
+                           
 
                         </div>
 
@@ -203,6 +113,13 @@
                                     <label for="inputStandard" class="col-lg-2 control-label">From</label>
                                     <div class="col-lg-8">
                                         @Html.TextBoxFor(m => m.From, new { @class = "form-control", id = "From", @placeholder = "Type Here...", ondrop = "drop(event)", ondragover = "allowDrop(event)" })
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStandard" class="col-lg-2 control-label">From Name</label>
+                                    <div class="col-lg-8">
+                                        @Html.TextBoxFor(m => m.FromName, new { @class = "form-control disabledrop", id = "From", @placeholder = "Type Here...",maxlength=100 })
 
                                     </div>
                                 </div>
@@ -343,7 +260,21 @@
 
 </section>
 <script>
-
+    $(function () {
+        var controls = $(".disabledrop");
+        controls.bind("paste", function () {
+            return false;
+        });
+        controls.bind("drop", function () {
+            return false;
+        });
+        controls.bind("cut", function () {
+            return false;
+        });
+        controls.bind("copy", function () {
+            return false;
+        });
+    });
     $(function () {
         $("#draggable").draggable();
     });

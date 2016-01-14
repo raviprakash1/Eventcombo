@@ -381,7 +381,7 @@
 
                     </div>
 
-                    <div class="col-sm-6 divvisible" >
+                    <div class="col-sm-6 divqtyvisible"  >
                         <div class="form-group ">
                            
                                 <div class="col-sm-12 col-xs-12 no_pad mt20">
@@ -541,7 +541,9 @@
 @*<script src="~/Scripts/jquery.countdownTimer.js"></script>*@
 <script>
     function calculateTickTotal(vAmount) {
+    
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
+        var vQty = parseInt($("#hidQty").val());
         vAmt = parseFloat(vAmount);
         if (isNaN(vAmt) == true) vAmt = 0;
         if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
@@ -552,6 +554,10 @@
 
         if (vOrderTotal > 0) {
             $('.divvisible').show();
+         
+            if (totqty <= 0) {
+                $('.divqtyvisible').hide();
+            }
             //$('#cardshow').css('display', 'block');
         }
         else {
@@ -840,6 +846,76 @@
         }
     }
     $(document).ready(function () {
+        $("#btAddList").click(function () {
+           
+            if ($("#nameofticket").val().trim() == '') {
+                ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebearernameUI'));
+                $("#nameofticket").addClass('err-bor');
+
+                return false;
+            } 
+
+            if ($('.Notifybox').css('display') == 'block') {
+                    var email = $('#emailbearer').val();
+                    if (!validateEmail(email)) {
+                        $('#emailbearer').addClass('err-bor');
+                        ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebeareremailUI'));
+                        //alert("Please enter valid Email.");
+                        if ($('#ddlListitem option').length < 0) {
+                            $('#blocklist').css('display', 'none');
+                        }
+                        return false;
+
+
+                    } else {
+
+                        $('#blocklist').css('display', 'block');
+                    }
+
+                }
+                else {
+
+                    $('#blocklist').css('display', 'block');
+                }
+
+
+            
+
+            var qty = $('#hidQty').val();
+            
+
+
+
+            if ($("#hidTicketbearer").val() == '') {
+                var qty = parseInt($('#hidQty').val());
+                var ddlength = parseInt($("#ddlListitem option").length);
+                if (ddlength > (qty-1))
+                {
+                    var msg = ajaxsetup('TicketPayment', 'TpayMaxTicketReciepts') + qty;
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'block');
+
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html(msg);
+                    $('html,body').animate({ scrollTop: 0 });
+                    return false;
+                }
+                AddTicket();
+            }
+            else
+                UpdateTicket($("#hidTicketbearer").val());
+
+
+            $("#hidTicketbearer").val('');
+            $("#nameofticket").val('');
+            $("#emailbearer").val('');
+            if ($('.Notifybox').css('display') == 'block') {
+                $('.Notifybox').css('display', 'none');
+            }
+
+        });
+
+
 
         $("#selectcard").change(function () {
             if ($("#selectcard").val() == "P")
@@ -1210,6 +1286,13 @@
                     $('.divvisible').show();
                 else
                     $('.divvisible').hide();
+
+                var totqty = $('#hidQty').val();
+              
+                if(totqty<=0)
+                {
+                    $('.divqtyvisible').hide();
+                }
             },
         });
 
@@ -1243,90 +1326,39 @@
 
 
 
-    $("#btAddList").click(function () {
-
-        if ($("#nameofticket").val().trim() == '') {
-            ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebearernameUI'));
-            $("#nameofticket").addClass('err-bor');
-
-            return false;
-        } else {
-            if ($('.Notifybox').css('display') == 'block') {
-                var email = $('#emailbearer').val();
-                if (!validateEmail(email)) {
-                    $('#emailbearer').addClass('err-bor');
-                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebeareremailUI'));
-                    //alert("Please enter valid Email.");
-                    if ($('#ddlListitem option').length < 0) {
-                        $('#blocklist').css('display', 'none');
-                    }
-                    return false;
-
-
-                } else {
-
-                    $('#blocklist').css('display', 'block');
-                }
-
-            }
-            else {
-
-                $('#blocklist').css('display', 'block');
-            }
-
-
-        }
-
-
-
-
-
-        if ($("#hidTicketbearer").val() == '') {
-            //if (parseInt($("#ddlOrgnizers option").length) > 24) {
-            //    alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
-            //    return false;
-            //}
-            AddTicket();
-        }
-        else
-            UpdateTicket($("#hidTicketbearer").val());
-
-
-        $("#hidTicketbearer").val('');
-        $("#nameofticket").val('');
-        $("#emailbearer").val('');
-        if ($('.Notifybox').css('display') == 'block') {
-            $('.Notifybox').css('display', 'none');
-        }
-
-    });
+   
 
     function AddTicket() {
+
+      
         $("#hidTicketbearer").val('');
+        var qty = parseInt($('#hidQty').val());
+        var ddlength = parseInt($("#ddlListitem option").length);
+        if (ddlength < qty) {
+            var Sno = $("#tblListitem tr").length;
+            var vTicketName = $("#nameofticket").val();
+            var vTicketEmailDes = $("#emailbearer").val();
+            if ($('.Notifybox').css('display') == 'block') {
+                vTicketEmailDes = $("#emailbearer").val();
+            } else {
 
-        var Sno = $("#tblListitem tr").length;
-        var vTicketName = $("#nameofticket").val();
-        var vTicketEmailDes = $("#emailbearer").val();
-        if ($('.Notifybox').css('display') == 'block') {
-            vTicketEmailDes = $("#emailbearer").val();
-        } else {
+                vTicketEmailDes = "";
+            }
+            //strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
 
-            vTicketEmailDes = "";
+            var strHTML = '<tr>';
+            strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
+            strHTML = strHTML + '<td width="92%"><label id=TicketName_' + Sno + '>' + vTicketName + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=TicketEmail_' + Sno + '>' + vTicketEmailDes + '</label></td>';
+            strHTML = strHTML + '</tr>';
+            //                strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
+
+
+            $("#tblListitem").append(strHTML);
+            strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vTicketName + '</option>';
+
+            $("#ddlListitem").append(strHTML);
         }
-        //strHTML = strHTML + '<td align="right"><i onclick="editOrgnizer(' + Sno + ')"; class="fa fa-pencil"></i> | <i onclick="DeleteOrgnizer(' + Sno + ');" class="fa fa-trash"></i></td>';
-
-        var strHTML = '<tr>';
-        strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
-        strHTML = strHTML + '<td width="92%"><label id=TicketName_' + Sno + '>' + vTicketName + '</label></td>';
-        strHTML = strHTML + '<td style="display:none"><label id=TicketEmail_' + Sno + '>' + vTicketEmailDes + '</label></td>';
-        strHTML = strHTML + '</tr>';
-        //                strHTML = strHTML + '<td><div class="trigger mt5 ent_add"><a href="#" onclick="editRow(' + Sno + ');"><i class="fa fa-map-marker"></i> Edit</a>  <a href="#" id="btAddDelete" onclick="DeleteTableRow(' + Sno + ')">Delete</a> </div> </td>';
-
-
-        $("#tblListitem").append(strHTML);
-        strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vTicketName + '</option>';
-
-        $("#ddlListitem").append(strHTML);
 
     }
     $("#editlist").click(function () {

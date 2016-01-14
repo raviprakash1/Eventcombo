@@ -113,6 +113,7 @@
           <Property Name="CardNumber" Type="varchar" MaxLength="50" />
           <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
           <Property Name="Cvv" Type="varchar" MaxLength="50" />
+          <Property Name="card_type" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -148,6 +149,7 @@
           <Property Name="TemplateHtml" Type="nvarchar(max)" />
           <Property Name="From" Type="varchar" MaxLength="300" />
           <Property Name="Template_Tag" Type="varchar" MaxLength="300" />
+          <Property Name="From_Name" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -530,6 +532,7 @@
           </Key>
           <Property Name="TimeZone_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TimeZone_Name" Type="varchar" MaxLength="500" />
+          <Property Name="TimeZone" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="User_Permission_Detail">
           <Key>
@@ -548,7 +551,7 @@
           <Property Name="AddressID" Type="bigint" Nullable="false" />
           <Property Name="VenueName" Type="varchar" MaxLength="200" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__5F141958">
+        <Association Name="FK__EventSubC__Event__019419E5">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -560,7 +563,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__1A69E950">
+        <Association Name="FK__TicketDel__Deliv__08411774">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -840,11 +843,11 @@
           <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
+          <AssociationSet Name="FK__EventSubC__Event__019419E5" Association="Self.FK__EventSubC__Event__019419E5">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__1A69E950" Association="Self.FK__TicketDel__Deliv__1A69E950">
+          <AssociationSet Name="FK__TicketDel__Deliv__08411774" Association="Self.FK__TicketDel__Deliv__08411774">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -1021,6 +1024,7 @@
           <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -1057,6 +1061,7 @@
           <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Template_Tag" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="From_Name" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -1462,6 +1467,7 @@
           </Key>
           <Property Name="TimeZone_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TimeZone_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User_Permission_Detail">
           <Key>
@@ -1962,6 +1968,7 @@
           <EntitySetMapping Name="CardDetails">
             <EntityTypeMapping TypeName="Cmsdata.CardDetail">
               <MappingFragment StoreEntitySet="CardDetails">
+                <ScalarProperty Name="card_type" ColumnName="card_type" />
                 <ScalarProperty Name="CardId" ColumnName="CardId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
@@ -1999,6 +2006,7 @@
           <EntitySetMapping Name="Email_Template">
             <EntityTypeMapping TypeName="Cmsdata.Email_Template">
               <MappingFragment StoreEntitySet="Email_Template">
+                <ScalarProperty Name="From_Name" ColumnName="From_Name" />
                 <ScalarProperty Name="Template_Tag" ColumnName="Template_Tag" />
                 <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
                 <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
@@ -2416,6 +2424,7 @@
           <EntitySetMapping Name="TimeZoneDetails">
             <EntityTypeMapping TypeName="Cmsdata.TimeZoneDetail">
               <MappingFragment StoreEntitySet="TimeZoneDetail">
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
                 <ScalarProperty Name="TimeZone_Id" ColumnName="TimeZone_Id" />
                 <ScalarProperty Name="TimeZone_Name" ColumnName="TimeZone_Name" />
               </MappingFragment>

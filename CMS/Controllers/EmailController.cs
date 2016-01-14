@@ -59,6 +59,7 @@ namespace CMS.Controllers
                         email.Subject = model.Subject;
                         email.To = model.To;
                         email.From = model.From;
+                        email.From_Name = model.FromName;
                         email.CC = model.CC;
                         email.Bcc = model.Bcc;
                         email.TemplateHtml =model.ckeditor1;
@@ -115,6 +116,7 @@ namespace CMS.Controllers
                                         CC = cpd.CC,
                                         Bcc = cpd.Bcc,
                                         From=cpd.From,
+                                        FromName =cpd.From_Name,
                                         Subject = cpd.Subject,
                                         ckeditor1 = cpd.TemplateHtml,
                                         Template_Name=cpd.Template_Name ,
