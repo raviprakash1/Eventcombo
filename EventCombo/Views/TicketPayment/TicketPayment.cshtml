@@ -774,50 +774,49 @@
                 if (billerr != "") {
                     msglogin += ajaxsetup('TicketPayment', 'TPayValidateBillingAddressUI') + "</br>";
                 }
-            }
-            var shippingerr = "";
-            if ($("#shippinginfo").is(":checked")) {
-                if ($('#shipfname').val() == "") {
-                    shippingerr += "Please Enter Shipping First name" + "\n";
-                    $("#shipfname").focus();
-                    $("#shipfname").addClass('err-bor');
+                var shippingerr = "";
+                if ($("#shippinginfo").is(":checked")) {
+                    if ($('#shipfname').val() == "") {
+                        shippingerr += "Please Enter Shipping First name" + "\n";
+                        $("#shipfname").focus();
+                        $("#shipfname").addClass('err-bor');
 
-                }
-                if ($('#shippingphnno').val() == "") {
-                    shippingerr += "Please Enter Shipping Phone number" + "\n";
-                    $("#shippingphnno").focus();
-                    $("#shippingphnno").addClass('err-bor');
+                    }
+                    if ($('#shippingphnno').val() == "") {
+                        shippingerr += "Please Enter Shipping Phone number" + "\n";
+                        $("#shippingphnno").focus();
+                        $("#shippingphnno").addClass('err-bor');
+                    }
+                    if ($('#shipaddress1').val() == "") {
+                        shippingerr += "Please Enter Shipping Address" + "\n";
+                        $("#shipaddress1").focus();
+                        $("#shipaddress1").addClass('err-bor');
 
-                }
-                if ($('#shipaddress1').val() == "") {
-                    shippingerr += "Please Enter Shipping Address" + "\n";
-                    $("#shipaddress1").focus();
-                    $("#shipaddress1").addClass('err-bor');
+                    }
+                    if ($('#shipcity').val() == "") {
+                        shippingerr += "Please Enter Shipping City" + "\n";
+                        $("#shipcity").focus();
+                        $("#shipcity").addClass('err-bor');
 
-                }
-                if ($('#shipcity').val() == "") {
-                    shippingerr += "Please Enter Shipping City" + "\n";
-                    $("#shipcity").focus();
-                    $("#shipcity").addClass('err-bor');
+                    }
+                    if ($('#shipzip').val() == "") {
+                        shippingerr += "Please Enter Shipping Zip" + "\n";
+                        $("#shipzip").focus();
+                        $("#shipzip").addClass('err-bor');
 
-                }
-                if ($('#shipzip').val() == "") {
-                    shippingerr += "Please Enter Shipping Zip" + "\n";
-                    $("#shipzip").focus();
-                    $("#shipzip").addClass('err-bor');
+                    }
+                    if ($('#shipstate').val() == "") {
+                        shippingerr += "Please Enter Shipping state" + "\n";
+                        $("#shipstate").focus();
+                        $("#shipstate").addClass('err-bor');
 
-                }
-                if ($('#shipstate').val() == "") {
-                    shippingerr += "Please Enter Shipping state" + "\n";
-                    $("#shipstate").focus();
-                    $("#shipstate").addClass('err-bor');
+                    }
+                    if ($('#shipcountry').val() == "") {
+                        shippingerr += "Please Enter Shipping country" + "\n";
+                        $("#shipcountry").focus();
+                        $("#shipcountry").addClass('err-bor');
 
-                }
-                if ($('#shipcountry').val() == "") {
-                    shippingerr += "Please Enter Shipping country" + "\n";
-                    $("#shipcountry").focus();
-                    $("#shipcountry").addClass('err-bor');
-
+                    }
                 }
             }
             if (shippingerr != "") {
@@ -955,7 +954,7 @@
                 url: '@Url.Action("ReleaseTickets", "CreateEvent")',
                 type: "Post",
                 success: function (response) {
-                    window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","-"), strEventId = Model.EventId.ToString()})';
+                    window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
                 }
             });
         });
@@ -1179,12 +1178,7 @@
         });
         //--------------Fire when User Click on Continue in Previous Page ------------------------------------
         $("#btMessOk").click(function () {
-            var title = $('#h2tag').html();
-            window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';
-            @*var title = $('#h2tag').html().split(" ").join("");
-            window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';*@
-
-
+            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
         });
 
         //
@@ -1227,15 +1221,8 @@
                         type: "Get",
                         success: function (response) {
                             $("#btOkMes").click();
-                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid+ '౼N';*@
                         },
                         error: function () {
-                            //ShowMessage('E', 'Sorry, There is some error.');
-                            var title = $('#h2tag').html().split(" ").join("");
-                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';*@
-                            @*var title = $('#h2tag').html().split(" ").join("");
-                            window.location.href = '@Url.RouteUrl("ViewEvent")' + '/' + title + '౼' + Eventid + '౼N';*@
-                            @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + title + '౼' + Eventid + '౼N';*@
                             window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","") , strEventId = Model.EventId.ToString()})';
                         }
                     });

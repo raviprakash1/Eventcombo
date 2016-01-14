@@ -571,12 +571,12 @@
                             <div class="gnrate-url mb10 fs13"> ( For eg: xyz.eventcombo.com )</div>
                         </div>
                     </div>
-                    @*<div class="col-sm-12 no_pad">
+                    <div class="col-sm-12 no_pad">
                         <label class="label-control ev_tickt_lebel pl0">
                             <input id="chkDuplicateEvent" class="" type="checkbox">
                             &#10; Duplicate Event
                         </label>
-                    </div>*@
+                    </div>
 
                 </div>
             </div>
@@ -2478,12 +2478,12 @@ else
 
             //var params = 'strEveDec :' + $("#edEventDesc").code();
 
-
+            var vDuplicate  = ($("#chkDuplicateEvent").is(":checked") == true ? 'Y' : 'N');
             if ($("#hdEventId").val() != '') {
 
                 $.ajax({
                     url: '@Url.Action("Draftmodemodification", "EditEvent")',
-                    data: { model:model },
+                    data: { model:model,strDuplicate:vDuplicate },
                     type: "Post",
                     success: function (response) {
                         $("#hdEventId").val(response);

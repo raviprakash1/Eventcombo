@@ -29,9 +29,9 @@ namespace EventCombo.Models
         public string Acccountry { get; set; }
         public string cardno { get; set; }
         public string expirydate{ get; set; }
-    public string cvv { get; set; }
-    public string billfname { get; set; }
-    public string billLname { get; set; }
+        public string cvv { get; set; }
+        public string billfname { get; set; }
+        public string billLname { get; set; }
         public string billingphno { get; set; }
         public string billaddress1 { get; set; }
         public string billaddress2 { get; set; }
@@ -53,9 +53,9 @@ namespace EventCombo.Models
         public string sameshipbilldetail { get; set; }
         public string Ticketdeliveraddress { get; set; }
         public List<Ticket_Purchased_Detail> TPurchaseList { get; set; }
-
         public List<TicketBearer> NameList { get; set; }
         public string Ticketname { get; set; }
+        public string URLTitle { get; set; }
         public string card_type { get; set; }
     }
 

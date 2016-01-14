@@ -1390,12 +1390,19 @@ namespace EventCombo.Controllers
         }
 
 
-        public long Draftmodemodification(EventCreation model)
+        public long Draftmodemodification(EventCreation model,string strDuplicate)
         {
             long lEventId = model.EventID;
             List<long> ids = new List<long>();
             try
             {
+                if (strDuplicate == "Y")
+                {
+                    CreateEventController objCE = new CreateEventController();
+                    objCE.ControllerContext = new ControllerContext(this.Request.RequestContext, objCE);
+                    lEventId = objCE.SaveEvent(model);
+                    return lEventId;
+                }
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
@@ -1406,17 +1413,11 @@ namespace EventCombo.Controllers
                         if (ObjEC.EventStatus == "Live")
                         {
                             lEventId = EditEventInfo(model);
-
                         }
                         else
-
                         {
-
-
-
                             objEnt.Publish_Event_Detail.RemoveRange(objEnt.Publish_Event_Detail.Where(x => x.PE_Event_Id == lEventId).ToList());
                             objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId).ToList());
-
                             //  var vParentEvt = (from myEnt in objEnt.Events where myEnt.EventID == lEventId select myEnt.Parent_EventID).FirstOrDefault();
                             // if (vParentEvt == 0) vParentEvt = lEventId;
                             var addressstatus = model.AddressStatus;

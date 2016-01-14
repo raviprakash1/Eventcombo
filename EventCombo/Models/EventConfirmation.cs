@@ -17,5 +17,7 @@ namespace EventCombo.Models
         public string Descritption { get; set; }
 
         public string EventId { get; set; }
+
+        public string urlTitle { get; set; }
     }
 }

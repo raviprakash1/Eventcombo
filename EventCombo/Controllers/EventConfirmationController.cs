@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace EventCombo.Controllers
 {
@@ -31,6 +32,7 @@ namespace EventCombo.Controllers
                     cms.Imageurl = "/Images/events/event_flyers/imagepath/" + Image.EventImageUrl;
                 }
                 cms.Title = Eventdetails.EventTitle.ToString();
+                cms.urlTitle = Regex.Replace(Eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""); ;
                 var evid = long.Parse(EventId);
                 var evAdress = (from ev in db.Addresses where ev.EventId == evid select ev).FirstOrDefault();
 

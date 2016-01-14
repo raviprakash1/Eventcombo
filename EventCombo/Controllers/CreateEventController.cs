@@ -542,16 +542,16 @@ namespace EventCombo.Controllers
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
             Session["Fromname"] = "events";
-            //var url= Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
-           // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
-          // var url = Url
-           // Session["ReturnUrl"] = "ViewEvent~" + url;
+            CreateEventController objCE = new CreateEventController();
+            var EventDetail = objCE.GetEventdetail(EventId);
+            if (EventDetail == null) return null;
+            var url = Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = EventDetail.EventID.ToString() });
+            Session["ReturnUrl"] = "ViewEvent~" + url;
+
             var TopAddress = "";var Topvenue="";
             string organizername = "", fblink = "", twitterlink = "", organizerid = "",tickettype="",enablediscussion="",linkedin="";
             ViewEvent viewEvent = new ViewEvent();
             //EventDetails
-            var EventDetail = GetEventdetail(EventId);
-            if (EventDetail == null) return null;
             TempData["EventType"] = EventDetail.EventType.EventType1;
             
             var EvntCtgry = (from ev in db.EventCategories where ev.EventCategoryID == EventDetail.EventCategoryID select ev.EventCategory1).FirstOrDefault();
@@ -1618,7 +1618,7 @@ public string Checkpassword(string password ,long id)
                     foreach (var item in EvList)
                     {
                         if (item.EventTitle != null && item.EventTitle.Trim() != "")
-                            strHtml.Append("<option>" + @Url.Action("ViewEvent", "ViewEvent", new { strEventDs = item.EventTitle.Replace(" ", "-"), strEventId = item.EventID.ToString() }) + "</option>");
+                            strHtml.Append("<option>" + @Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "") , strEventId = item.EventID.ToString() }) + "</option>");
                     }
                     return strHtml.ToString();
                 }
