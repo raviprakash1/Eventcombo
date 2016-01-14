@@ -83,187 +83,29 @@ WriteLiteral(">\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"event_list_right\"");
 
-WriteLiteral(">\r\n                    <p");
+WriteLiteral(">\r\n                    ");
 
-WriteLiteral(" class=\"event_tit\"");
+WriteLiteral("\r\n                    ");
 
-WriteLiteral("><a");
+WriteLiteral("\r\n                    ");
 
-WriteLiteral(" class=\"aclick\"");
+WriteLiteral("\r\n                    <select");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 546), Tuple.Create("\'", 619)
-            
-            #line 14 "..\..\Views\Home\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 553), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "CreateEvent",new { strUrlData="a౼74౼N"})
-            
-            #line default
-            #line hidden
-, 553), false)
-);
+WriteLiteral(" id=\"dllEventList\"");
 
-WriteLiteral(">Campagnolo Gran Fondo New York 2015</a></p>\r\n                    <p");
+WriteLiteral(">\r\n\r\n\r\n                    </select>\r\n                    <p");
 
 WriteLiteral(" class=\"event_desc\"");
 
-WriteLiteral(">\r\n                        <a");
+WriteLiteral(">\r\n                        ");
 
-WriteLiteral(" class=\"aclick\"");
+WriteLiteral("\r\n                    </p>\r\n                    ");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 751), Tuple.Create("\'", 824)
-            
-            #line 16 "..\..\Views\Home\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 758), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "CreateEvent",new { strUrlData="a౼74౼N"})
-            
-            #line default
-            #line hidden
-, 758), false)
-);
+WriteLiteral("\r\n\r\n                    ");
 
-WriteLiteral(@">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                    <p");
+WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n        ");
 
-WriteLiteral("  class=\"event_date_time\"");
-
-WriteLiteral("><a");
-
-WriteLiteral(" class=\"aclick\"");
-
-WriteAttribute("href", Tuple.Create(" href=\'", 1147), Tuple.Create("\'", 1220)
-            
-            #line 23 "..\..\Views\Home\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1154), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "CreateEvent",new { strUrlData="a౼74౼N"})
-            
-            #line default
-            #line hidden
-, 1154), false)
-);
-
-WriteLiteral(">Saturday, Aug 2, 2014 8:00 PM</a> </p>\r\n                </div>\r\n            </di" +
-"v>\r\n        </div>\r\n        <div");
-
-WriteLiteral(" class=\"col-md-4 col-xs-12 col-sm-6 wid_1024\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"event_list_main\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"event_list_left\"");
-
-WriteLiteral(">\r\n                    <img");
-
-WriteLiteral(" class=\"evnt_img\"");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 1513), Tuple.Create("\"", 1538)
-, Tuple.Create(Tuple.Create("", 1519), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 1519), false)
-);
-
-WriteLiteral(" alt=\"\"");
-
-WriteLiteral(">\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"event_list_right\"");
-
-WriteLiteral(">\r\n                    <p");
-
-WriteLiteral(" class=\"event_tit\"");
-
-WriteLiteral("><a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(">Campagnolo Gran Fondo New York 2015</a></p>\r\n                    <p");
-
-WriteLiteral(" class=\"event_desc\"");
-
-WriteLiteral(">\r\n                        <a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(@">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                    <p");
-
-WriteLiteral(" class=\"event_date_time\"");
-
-WriteLiteral("><a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(">Saturday, Aug 2, 2014 8:00 PM</a> </p>\r\n                </div>\r\n            </di" +
-"v>\r\n        </div>\r\n        <div");
-
-WriteLiteral(" class=\"col-md-4 col-xs-12 col-sm-6 wid_1024\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"event_list_main\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"event_list_left\"");
-
-WriteLiteral(">\r\n                    <img");
-
-WriteLiteral(" class=\"evnt_img\"");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 2405), Tuple.Create("\"", 2430)
-, Tuple.Create(Tuple.Create("", 2411), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 2411), false)
-);
-
-WriteLiteral(" alt=\"\"");
-
-WriteLiteral(">\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"event_list_right\"");
-
-WriteLiteral(">\r\n                    <p");
-
-WriteLiteral(" class=\"event_tit\"");
-
-WriteLiteral("><a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(">Campagnolo Gran Fondo New York 2015</a></p>\r\n                    <p");
-
-WriteLiteral(" class=\"event_desc\"");
-
-WriteLiteral(">\r\n                        <a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(@">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                    <p");
-
-WriteLiteral(" class=\"event_date_time\"");
-
-WriteLiteral("><a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(">Saturday, Aug 2, 2014 8:00 PM</a> </p>\r\n                </div>\r\n            </di" +
-"v>\r\n        </div>\r\n    </div>\r\n    <div");
+WriteLiteral("\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"col-md-3 col-sm-12 clearfix\"");
 
@@ -316,9 +158,9 @@ WriteLiteral(">\r\n                    <img");
 
 WriteLiteral(" class=\"evnt_img_right\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3988), Tuple.Create("\"", 4013)
-, Tuple.Create(Tuple.Create("", 3994), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 3994), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 5143), Tuple.Create("\"", 5168)
+, Tuple.Create(Tuple.Create("", 5149), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
+, 5149), false)
 );
 
 WriteLiteral(" alt=\"\"");
@@ -364,15 +206,46 @@ WriteLiteral(">\r\n                    <img");
 
 WriteLiteral(" class=\"evnt_img_right\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4779), Tuple.Create("\"", 4804)
-, Tuple.Create(Tuple.Create("", 4785), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 4785), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 5934), Tuple.Create("\"", 5959)
+, Tuple.Create(Tuple.Create("", 5940), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
+, 5940), false)
 );
 
 WriteLiteral(" alt=\"\"");
 
 WriteLiteral(">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>" +
-"\r\n<script>\r\n\r\n  \r\n</script>\r\n");
+"\r\n<script>\r\n    $(document).ready(function () {\r\n        $.ajax({\r\n            u" +
+"rl: \'");
+
+            
+            #line 124 "..\..\Views\Home\Index.cshtml"
+             Write(Url.Action("GetEventURL", "CreateEvent"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"',
+            type: ""Post"",
+            success: function (data) {
+                if (data != """")
+                    $(""#dllEventList"").html(data);
+           },
+        });
+        $(""#dllEventList"").change(function () {
+            window.location.href = $(""#dllEventList"").val();
+        });
+        $(""#btTest"").click(function () {
+           // alert(""button click"");
+            window.location.href = '");
+
+            
+            #line 136 "..\..\Views\Home\Index.cshtml"
+                               Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = "a", strEventId = "74" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n\r\n        });\r\n    });\r\n  \r\n</script>\r\n");
 
         }
     }

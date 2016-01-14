@@ -400,7 +400,7 @@ namespace EventCombo.Controllers
         {
             string msg = "", errormessage = "", successmsg = "";
             int emailchange = 0,Pwdchange=0,mainchange=1;
-            string to = "", from = "", cc = "", bcc = "", subjectn = "";
+            string to = "", from = "", cc = "", bcc = "", subjectn = "", emailname="";
             var bodyn = "";
             var Emailtemplate =new Email_Template();
             List<Email_Tag> EmailTag = new List<Email_Tag>();
@@ -624,6 +624,15 @@ namespace EventCombo.Controllers
                                 from = "shweta.sindhu@kiwitech.com";
 
                             }
+
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                            {
+                                emailname = Emailtemplate.From_Name;
+                            }
+                            else
+                            {
+                                emailname = from;
+                            }
                             if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                             {
                                 cc = Emailtemplate.CC;
@@ -655,7 +664,7 @@ namespace EventCombo.Controllers
                                 bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
 
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag, emailname);
                         }
                     }
                     if (emailchange == 1 && Pwdchange == 1)
@@ -688,6 +697,14 @@ namespace EventCombo.Controllers
                                 from = "shweta.sindhu@kiwitech.com";
 
                             }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                            {
+                                emailname = Emailtemplate.From_Name;
+                            }
+                            else
+                            {
+                                emailname = from;
+                            }
                             if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                             {
                                 cc = Emailtemplate.CC;
@@ -719,7 +736,7 @@ namespace EventCombo.Controllers
                                 bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
 
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag, emailname);
                         }
                     }
                     if (emailchange == 0 && Pwdchange == 1)
@@ -751,6 +768,14 @@ namespace EventCombo.Controllers
                                 from = "shweta.sindhu@kiwitech.com";
 
                             }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                            {
+                                emailname = Emailtemplate.From_Name;
+                            }
+                            else
+                            {
+                                emailname = from;
+                            }
                             if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                             {
                                 cc = Emailtemplate.CC;
@@ -782,7 +807,7 @@ namespace EventCombo.Controllers
                                 bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
 
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag, emailname);
                         }
                     }
                     if (emailchange == 0 && Pwdchange == 0)
@@ -818,6 +843,14 @@ namespace EventCombo.Controllers
                                 from = "shweta.sindhu@kiwitech.com";
 
                             }
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                            {
+                                emailname = Emailtemplate.From_Name;
+                            }
+                            else
+                            {
+                                emailname = from;
+                            }
                             if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                             {
                                 cc = Emailtemplate.CC;
@@ -849,7 +882,7 @@ namespace EventCombo.Controllers
                                 bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
 
                             }
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag);
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag, emailname);
                         }
                     }
 
@@ -1918,7 +1951,7 @@ namespace EventCombo.Controllers
             }
         } 
 
-        private bool Getprofiledetails(string id)
+        public bool Getprofiledetails(string id)
         {
             using (EventComboEntities objEntity = new EventComboEntities())
             {
@@ -1981,6 +2014,12 @@ namespace EventCombo.Controllers
 
 
         }
+
+        public void FacebookLogin(string id)
+        {
+
+        }
+
         [AllowAnonymous]
         public ActionResult Confirm(string Email)
         {

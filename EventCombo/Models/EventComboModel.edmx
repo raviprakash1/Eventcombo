@@ -133,7 +133,7 @@
           <Key>
             <PropertyRef Name="Tag_Id" />
           </Key>
-          <Property Name="Tag_Id" Type="nchar" MaxLength="150" Nullable="false" />
+          <Property Name="Tag_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Tag_Name" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Email_Template">
@@ -149,6 +149,7 @@
           <Property Name="TemplateHtml" Type="nvarchar(max)" />
           <Property Name="From" Type="varchar" MaxLength="300" />
           <Property Name="Template_Tag" Type="varchar" MaxLength="300" />
+          <Property Name="From_Name" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -1026,13 +1027,6 @@
           <Property Name="DeliveryMethod1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="TicketDeliveryMethods" Relationship="Self.FK__TicketDel__Deliv__1A69E950" FromRole="DeliveryMethod" ToRole="TicketDeliveryMethod" />
         </EntityType>
-        <EntityType Name="Email_Tag">
-          <Key>
-            <PropertyRef Name="Tag_Id" />
-          </Key>
-          <Property Name="Tag_Id" Type="String" MaxLength="150" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Tag_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Email_Template">
           <Key>
             <PropertyRef Name="TemplateId" />
@@ -1046,6 +1040,7 @@
           <Property Name="TemplateHtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="From" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Template_Tag" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="From_Name" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -1624,7 +1619,6 @@
           <EntitySet Name="CardDetails" EntityType="Self.CardDetail" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
           <EntitySet Name="DeliveryMethods" EntityType="Self.DeliveryMethod" />
-          <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" />
@@ -1763,6 +1757,7 @@
             <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="TimeZonesystems" EntityType="EventComboModel.TimeZonesystem" />
+          <EntitySet Name="Email_Tag" EntityType="EventComboModel.Email_Tag" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1870,6 +1865,13 @@
           </Key>
           <Property Name="DisplayName" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Email_Tag">
+          <Key>
+            <PropertyRef Name="Tag_Id" />
+          </Key>
+          <Property Name="Tag_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tag_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1981,17 +1983,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Email_Tag">
-            <EntityTypeMapping TypeName="EventComboModel.Email_Tag">
-              <MappingFragment StoreEntitySet="Email_Tag">
-                <ScalarProperty Name="Tag_Id" ColumnName="Tag_Id" />
-                <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Email_Template">
             <EntityTypeMapping TypeName="EventComboModel.Email_Template">
               <MappingFragment StoreEntitySet="Email_Template">
+                <ScalarProperty Name="From_Name" ColumnName="From_Name" />
                 <ScalarProperty Name="Template_Tag" ColumnName="Template_Tag" />
                 <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
                 <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
@@ -2524,6 +2519,14 @@
               <MappingFragment StoreEntitySet="TimeZonesystem">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Email_Tag">
+            <EntityTypeMapping TypeName="EventComboModel.Email_Tag">
+              <MappingFragment StoreEntitySet="Email_Tag">
+                <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
+                <ScalarProperty Name="Tag_Id" ColumnName="Tag_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

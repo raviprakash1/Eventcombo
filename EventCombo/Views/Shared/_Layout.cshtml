@@ -48,7 +48,7 @@
 <body>
 
 
-
+    <div id="fb-root"></div>
     <!-- Header -->
     <div class="home_fixed_header" id="divmain">
         <div class="container-fluid headr_main " id="divsecmain">
@@ -335,16 +335,18 @@ else
                             <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="#" id="signUpPopup" class="btn btn-primary login_btn_sub">SignUp</a>
                         </div>
                         <div class="col-md-12 social-buttons text-center ">
+                            <div class="col-xs-6">
+                                <button type="button" onclick="return fb_login();" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
+
+                            </div>
+
                             <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
                                 @*@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
                                 {*@
                                     <input type="hidden" id="provider" name="provider" />
                                     <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
 
-                                    <div class="col-xs-6">
-                                        <button type="submit" onclick="$('#provider').attr('value', 'Facebook'); $('#login-launch').submit();" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
-
-                                    </div>
+                                 
 
                                     <div class="col-xs-6">
                                         <button type="submit" onclick="$('#provider').attr('value', 'Google'); $('#login-launch').submit(); " class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
@@ -455,6 +457,77 @@ else
     }
 </script>
 <script type="text/javascript">
+    //Fb login
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1956731254551382',
+            oauth: true,
+            status: true, // check login status
+            cookie: true, // enable cookies to allow the server to access the session
+            xfbml: true // parse XFBML
+        });
+
+    };
+    function fb_login() {
+        debugger;
+        var access_token = "";
+        FB.login(function (response) {
+
+            if (response.authResponse) {
+             
+                console.log(response); // dump complete info
+                access_token = response.authResponse.accessToken; //get access token
+                user_id = response.authResponse.userID; //get FB UID
+                console.log(user_id);
+                console.log(access_token);
+               
+
+                FB.api('/me?fields=email,first_name,last_name', function (response) {
+                    var name = response.name;
+                    var email = response.email;
+                    $.ajax({
+                        url: '@Url.Action("FacebookLogin", "Home")',
+                        data: { id: access_token,email:email },
+                        type: "Post",
+                        success: function (data) {
+                        
+                            if (data.indexOf('~') > -1) {
+                                urlarray = data.split('~');
+                                data = urlarray[1];
+                            }
+                            if (data) {
+                                window.location.href = data;
+                            }
+                        },
+                        error: function (data) {
+                            alert("Sorry there is some problem.");
+                            return false
+                        }
+                    });
+                   //get user email
+                    // you can store this data into your database     
+                 
+
+                });
+
+            } else {
+                //user hit cancel button
+                alert('User cancelled login or did not fully authorize.');
+
+            }
+        }, {
+            scope: 'email'
+        });
+    }
+    (function () {
+        var e = document.createElement('script');
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        e.async = true;
+        document.getElementById('fb-root').appendChild(e);
+    }());
+
+    //Fb Login
+
     function loginCallback(success, returnUrl) {
         if (returnUrl.indexOf('~') > -1)
         {
@@ -556,7 +629,7 @@ else
               
                 if (data == "Y") {
                     $("#loginPopup").click();
-                    url.val('@Url.Action("CreateEvent", "CreateEvent")');
+                   // url.val('@Url.Action("CreateEvent", "CreateEvent")');
                     return false;
                 } else {
                     window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';

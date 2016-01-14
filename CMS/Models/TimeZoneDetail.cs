@@ -16,5 +16,6 @@ namespace CMS.Models
     {
         public int TimeZone_Id { get; set; }
         public string TimeZone_Name { get; set; }
+        public string TimeZone { get; set; }
     }
 }

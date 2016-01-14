@@ -257,7 +257,7 @@
                 <input type="file" name="image" id="input2" multiple data-jfiler-maxSize="2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
-                        <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold chkvalidation" placeholder="Click here to enter the name of the event" value="" />
+                        <input id="txtEventTitle" maxlength="256" class="form-control evnt_title_control evnt_placehold chkvalidation" placeholder="Click here to enter the name of the event*" value="" />
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
                         <div class="form-group mb0">
@@ -267,7 +267,7 @@
                     <div class="col-sm-9 text-right no_pad">
                         <div class="form-group mb0 ">
                             <div class="ev_date_icn StartDate"></div>
-                            <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date</label>
+                            <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date*</label>
                             <div class="form-group mb5">
                                 <label class="Timezone label-control evnt_title_timezone mb0" id="lblTimeZone">Timezone & date setting</label>
                                 <div class="TmezoneSet col-sm-12 ev_time_zone_model_main">
@@ -569,7 +569,7 @@
                     <div class="col-sm-12 mt20 no_pad">
                         <div class="col-sm-4 pl0">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type</label>
+                                <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type*</label>
                                 <div class="col-sm-9 dropheight">
                                     @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control selectpicker wd600 chkvalidation" })
                                 </div>
@@ -577,7 +577,7 @@
                         </div>
                         <div class="col-sm-4 pl0">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category</label>
+                                <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category*</label>
                                 <div class="col-sm-9 dropheight">
                                     @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control selectpicker wd600 chkvalidation" })
                                 </div>
@@ -644,7 +644,7 @@
                 <div class="evnt_details_body">
                     <div class="col-sm-12 no_pad">
                         <div class="form-group ">
-                            <label class="col-sm-12 control-label ev_tickt_lebel pl0">Organizer Name</label>
+                            <label class="col-sm-12 control-label ev_tickt_lebel pl0">Organizer Name*</label>
                             <div class="col-sm-8 no_pad">
                                 <input id="txtOrgnizer" maxlength="200" class="form-control evnt_inp_cont" type="text">
                             </div>
@@ -762,7 +762,7 @@
                 <div class="evnt_details_body">
 
                     <div class="col-sm-12 no_pad text-left mt10 evnt_tct_btn ev_btn_type">
-                        <label class="ev_add_tkt_tit col12">Add ticket type</label>
+                        <label class="ev_add_tkt_tit col12">Add ticket type*</label>
                         <button type="button" class="btn btn-primary save_btnfree save_btn">FREE <i class="fa fa-plus"></i> </button>
                         <button type="button" class="btn btn-primary save_btnpaid save_btn">PAID <i class="fa fa-plus"></i></button>
                         <button type="button" class="btn btn-primary save_btndonation save_btn xsmr0 ">DONATE <i class="fa fa-plus"></i> </button>
@@ -788,7 +788,7 @@
                                 </div>
                                 <div class="col-sm-3 no_pad">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label ev_tickt_lebel">Ticket</label>
+                                        <label class="col-sm-3 control-label ev_tickt_lebel">Ticket*</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control evnt_inp_cont chkvalidation" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256" onblur="checkvalidatetkt(this.id)" />
                                         </div>
@@ -796,7 +796,7 @@
                                 </div>
                                 <div class="col-sm-2 no_pad">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label ev_tickt_lebel">Qty</label>
+                                        <label class="col-sm-3 control-label ev_tickt_lebel">Qty*</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control evnt_inp_cont txtsum numbers chkvalidation" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
                                         </div>
@@ -804,7 +804,7 @@
                                 </div>
                                 <div class="col-sm-3 no_pad">
                                     <div class="form-group paidticket-n" id="id_paid-n">
-                                        <label class="col-sm-4 no_pad control-label ev_tickt_lebel">Price $</label>
+                                        <label class="col-sm-4 no_pad control-label ev_tickt_lebel">Price* $</label>
                                         <div class="col-sm-8 ">
                                             <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="validateforzero(this.id, event)" onblur="tofixed(this.id)"   placeholder="0.00" maxlength="9" />
                                         </div>
@@ -1076,7 +1076,7 @@
                         </div>
                         <div class="col-sm-12 no_pad">
                             <label class="label-control ev_tickt_lebel pl0">
-                                <input class="" type="checkbox" id="id_variablecharge">
+                                <input class="" type="checkbox" id="id_variablecharge" >
                                 &#10; Variable Charge(s)
                             </label>
                         </div>
@@ -1086,7 +1086,7 @@
                         <div class="TicketFees col-sm-12 no_pad">
                             <div class="form-group">
                                 <div class="col-sm-5 no_pad">
-                                    <label class="col-sm-4 control-label ev_tickt_lebel">Description</label>
+                                    <label class="col-sm-4 control-label ev_tickt_lebel">Description*</label>
                                     <div class="col-sm-8">
                                         <input class="form-control evnt_inp_cont chkvalidation" type="text" placeholder="" id="id_vardesc" maxlength="256">
                                     </div>
@@ -1116,7 +1116,7 @@
                                     <div class="list-group-item ev_var_chrg_list">
                                         <div class="form-group">
                                             <div class="col-sm-7 col-xs-7">
-                                                <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256" onblur="checkvalidatetkt(this.id)">
+                                                <input class="form-control evnt_inp_cont" type="text" placeholder="Variable Charges Description n" id="id_varsubdesc-n" maxlength="256" onblur="checkvalidatetkt(this.id)">
                                             </div>
                                             <div class="col-sm-4 col-xs-4">
                                                 <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
@@ -2291,6 +2291,7 @@
                 if ($("#id_variablecharge").is(":checked")) {
                     varDescritpion = $('#id_vardesc').val();
                     optionalvariable = $('#variabletype').val();
+
                 }
 
 
@@ -3077,8 +3078,42 @@
             $('#id_variablecharge').change(function () {
                 if ($(this).is(":checked")) {
                     $('.TicketFees').show();
+                    $('#id_Mainvariable').show();
+                    var divlength = $("#id_Mainvariable> div").size();
+                    if (divlength <= 0) {
+                        var data = $('#id_clonevariable-n').clone();
+                        data.attr('id', 'id_clonevariable-' + divlength);
+                        data.removeAttr("style")
+                        data.find('*[id]').andSelf().each(function () {
+                            //console.log($(this));
+
+                            var id = $(this).attr('id');
+                            //console.log(id);
+                            id1 = id.substr(0, id.indexOf('-'));
+                            ////console.log(id);
+                            var idn = id1 + "-" + divlength;
+                            $(this).attr("id", idn);
+                            $(this).val('');
+                            if(id1=="id_varsubdesc")
+                            {
+                                $(this).attr("placeholder", "Variable Charges Description " + parseInt(divlength + 1));
+                            }
+
+
+                        });
+
+
+                        $('#id_Mainvariable').append(data);
+                        $('#btn_vardelete-' + divlength).attr('href', '#cnfrmdeletevariable-' + divlength);
+                        $("input[id^='id_varsubprice']").mask('000,000.00', { reverse: true });
+                    }
                 } else {
                     $('.TicketFees').hide();
+                    $('#id_Mainvariable').hide();
+                    var myNode = document.getElementById("id_Mainvariable");
+                    while (myNode.firstChild) {
+                        myNode.removeChild(myNode.firstChild);
+                    }
                 }
             });
 
@@ -3479,7 +3514,9 @@
                 var idn = id1 + "-" + divlength;
                 $(this).attr("id", idn);
                 $(this).val('');
-
+                if (id1 == "id_varsubdesc") {
+                    $(this).attr("placeholder", "Variable Charges Description " + parseInt(divlength + 1));
+                }
 
 
             });
@@ -3830,49 +3867,54 @@
         function deletevariable(e) {
 
             var divlength = $("#id_Mainvariable> div").size();
+            if (divlength == 1) {
 
-            var id = e;
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            } else {
+                var id = e;
+                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
-            var div = document.getElementById("id_clonevariable-" + el);
+                var div = document.getElementById("id_clonevariable-" + el);
 
 
 
-            div.parentNode.removeChild(div);
-            divlength = $("#id_Mainvariable> div").size();
+                div.parentNode.removeChild(div);
+                divlength = $("#id_Mainvariable> div").size();
 
-            var count = 0;
-            $('#id_Mainvariable').children('div').each(function () {
-
-                var id = $(this).attr('id');
-
-                id1 = id.substr(0, id.indexOf('-'));
-                ////console.log(id);
-                var idn = id1 + "-" + (count);
-                $(this).attr("id", idn);
-                $(this).find('*[id]').andSelf().each(function () {
-
+                var count = 0;
+                $('#id_Mainvariable').children('div').each(function () {
 
                     var id = $(this).attr('id');
-                    //console.log(id);
+
                     id1 = id.substr(0, id.indexOf('-'));
-                    console.log(id1);
+                    ////console.log(id);
                     var idn = id1 + "-" + (count);
                     $(this).attr("id", idn);
+                    $(this).find('*[id]').andSelf().each(function () {
 
-                    if (id1 == "btn_vardelete") {
-                        $(this).attr("href", "#cnfrmdeletevariable-" + count);
-                    }
 
+                        var id = $(this).attr('id');
+                        //console.log(id);
+                        id1 = id.substr(0, id.indexOf('-'));
+                        console.log(id1);
+                        var idn = id1 + "-" + (count);
+                        $(this).attr("id", idn);
+
+                        if (id1 == "btn_vardelete") {
+                            $(this).attr("href", "#cnfrmdeletevariable-" + count);
+                        }
+                        if (id1 == "id_varsubdesc") {
+                            $(this).attr("placeholder", "Variable Charges Description " + parseInt(count+1));
+                        }
+
+                    });
+                    count = count + 1;
 
                 });
-                count = count + 1;
 
-            });
+                if (divlength == 0) {
+                    $('#id_Mainvariable').css('display', 'none');
 
-            if (divlength == 0) {
-                $('#id_Mainvariable').css('display', 'none');
-
+                }
             }
 
 

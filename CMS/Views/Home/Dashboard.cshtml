@@ -86,11 +86,11 @@
                 <div class="col-sm-3 col-xl-3">
                     <div class="panel panel-tile text-center br-a br-grey">
                         <div class="panel-body bg-dark">
-                            <i class="fa fa-tags text-muted fs70 mt10"></i>
+                            <i class="fa fa-ticket text-muted fs70 mt10"></i>
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
-                                <b><a href="#">Deals</a></b>
+                                <b><a href="@Url.Action("EventType", "EventType", new {Type="N"})">Event Type</a></b>
                             </span>
                         </div>
                     </div>
@@ -98,11 +98,11 @@
                 <div class="col-sm-3 col-xl-3">
                     <div class="panel panel-tile text-center br-a br-grey">
                         <div class="panel-body bg-alert light">
-                            <i class="fa fa-sun-o text-muted fs70 mt10"></i>
+                            <i class="fa fa-ticket text-muted fs70 mt10"></i>
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
-                                <b><a href="#" onclick="checkPermission('6');">Template</a></b>
+                                <b><a  href="@Url.Action("EventCategory", "EventCategory", new {msg="N"})">Event Category</a></b>
                             </span>
                         </div>
                     </div>

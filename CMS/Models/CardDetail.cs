@@ -21,5 +21,6 @@ namespace CMS.Models
         public string CardNumber { get; set; }
         public string ExpirationDate { get; set; }
         public string Cvv { get; set; }
+        public string card_type { get; set; }
     }
 }

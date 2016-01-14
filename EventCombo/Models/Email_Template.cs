@@ -23,5 +23,6 @@ namespace EventCombo.Models
         public string TemplateHtml { get; set; }
         public string From { get; set; }
         public string Template_Tag { get; set; }
+        public string From_Name { get; set; }
     }
 }
