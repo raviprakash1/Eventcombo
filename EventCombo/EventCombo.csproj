@@ -494,6 +494,7 @@
     <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="email.html" />
     <Content Include="EventTicket_HTML.html" />
     <Content Include="Images\ajaxloader1.gif" />
     <Content Include="Images\Bar_Image.Png" />

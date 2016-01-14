@@ -602,7 +602,7 @@ namespace EventCombo.Controllers
         {
             WebClient wc = new WebClient();
             string htmlPath = Server.MapPath("..");
-            string htmlText = wc.DownloadString(htmlPath + "/EventTicket_HTML.html");
+            string htmlText = wc.DownloadString(htmlPath + "/email.html");
             htmlText = htmlText.Replace("¶¶Email¶¶", email);
             htmlText = htmlText.Replace("¶¶EventTitleId¶¶", EventTitle);
             htmlText = htmlText.Replace("¶¶EventStartDateID¶¶", TQD_StartDate);

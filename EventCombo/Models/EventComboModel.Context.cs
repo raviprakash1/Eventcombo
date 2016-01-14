@@ -36,7 +36,6 @@ namespace EventCombo.Models
         public virtual DbSet<CardDetail> CardDetails { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<DeliveryMethod> DeliveryMethods { get; set; }
-        public virtual DbSet<Email_Tag> Email_Tag { get; set; }
         public virtual DbSet<Email_Template> Email_Template { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Event_OrganizerMessages> Event_OrganizerMessages { get; set; }
@@ -70,6 +69,7 @@ namespace EventCombo.Models
         public virtual DbSet<Venue> Venues { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<TimeZonesystem> TimeZonesystems { get; set; }
+        public virtual DbSet<Email_Tag> Email_Tag { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
