@@ -1474,21 +1474,24 @@ function pad(n) { return n < 10 ? '0' + n : n };
                 if (isNaN(vTAmt) == true) vTAmt = 0;
 
                 if (vLockQty > 0 || vDonate >0) {
-                    vflag = 1;
                     if (vLockQty > 0 && vDonate <= 0 && vTAmt <= 0) {
                         vLockQty = 0;
                     }
-                    TList.push({
-                        'TLD_TQD_Id': vId,
-                        'TLD_Locked_Qty': vLockQty,
-                        'TLD_Event_Id': vEntid,
-                        'TLD_Donate': vDonate,
-                        'TicketAmount': vTAmt
-                    });
-                    if (vSelection == "")
-                        vSelection = vId + "~" + vLockQty + "~" + vDonate;
-                    else
-                        vSelection = vSelection + "¶" + (vId + "~" + vLockQty + "~" + vDonate);
+                    else {
+                        vflag = 1;
+                        TList.push({
+                            'TLD_TQD_Id': vId,
+                            'TLD_Locked_Qty': vLockQty,
+                            'TLD_Event_Id': vEntid,
+                            'TLD_Donate': vDonate,
+                            'TicketAmount': vTAmt
+                        });
+                        if (vSelection == "")
+                            vSelection = vId + "~" + vLockQty + "~" + vDonate;
+                        else
+                            vSelection = vSelection + "¶" + (vId + "~" + vLockQty + "~" + vDonate);
+                    }
+                   
                 }
 
             }

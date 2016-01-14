@@ -206,7 +206,7 @@ function autocomplete_init_Venue() {
                 response($.map(results.slice(0,6), function (item) {
                     return {
                         label: item.formatted_address, // appears in dropdown box
-                        value: item.formatted_address, // inserted into input element when selected
+                        value: results[0].geometry.location, // inserted into input element when selected
                         geocode: item                  // all geocode data: used in select callback event
                     }
                 }));
