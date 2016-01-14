@@ -17,41 +17,7 @@ namespace EventCombo.Controllers
 
 
 
-       public ActionResult CmsEventList(string SearchStringEventTitle, string hdLastTab, int page_live = 1, int page_saved = 1, int page_past = 1, int pageSize = 20)
-        {
-            page_live = page_live > 0 ? page_live : 1;
-            page_saved = page_saved > 0 ? page_saved : 1;
-            page_past = page_past > 0 ? page_past : 1;
-            pageSize = pageSize > 0 ? pageSize : 2;
-            if (string.IsNullOrEmpty(SearchStringEventTitle))
-                SearchStringEventTitle = "";
-            List<GetEventsListByStatus1_Result> objLiveEventList = GetLiveEvents(SearchStringEventTitle);
-            List<GetEventsListByStatus1_Result> objSavedEventList = GetSavedEvents(SearchStringEventTitle);
-            List<GetEventsListByStatus1_Result> objPastEventList = GetPastEvents(SearchStringEventTitle);
-            List<GetEventsListByStatus1_Result> objGuestEventList = GetGuestsList(SearchStringEventTitle);
-
-            ViewBag.LiveEvent = objLiveEventList.ToPagedList(page_live, pageSize);
-            ViewBag.SavedEvent = objSavedEventList.ToPagedList(page_saved, pageSize);
-            ViewBag.PastEvent = objPastEventList.ToPagedList(page_past, pageSize);
-
-            TempData["LiveEvents"] = objLiveEventList.Count;
-            TempData["SavedEvents"] = objSavedEventList.Count;
-            TempData["PastEvents"] = objPastEventList.Count;
-            TempData["hdLastTab"] = hdLastTab;
-
-
-
-            if (objLiveEventList.Count == 0)
-                ViewData["LiveEvntCnt"] = 0;
-            if (objSavedEventList.Count == 0)
-                ViewData["SavedEvntCnt"] = 0;
-            if (objPastEventList.Count == 0)
-                ViewData["PastEvntCnt"] = 0;
-
-            return View();
-        }
-
-
+     
         [HttpGet]
         public ActionResult EventList(string SearchStringEventTitle, string hdLastTab , int page_live = 1, int page_saved = 1, int page_past = 1, int pageSize = 20)
         {
@@ -107,7 +73,7 @@ namespace EventCombo.Controllers
                 TempData["LiveEventscnt"] = 10;
                 TempData["SavedEventscnt"] = 10;
                 TempData["PastEventscnt"] = 10;
-                TempData["GuestListcnt"] = objGuestEventList.Count;
+                TempData["GuestListcnt"] = 0;
 
                 if (objLiveEventList.Count == 0 && objSavedEventList.Count == 0 && objPastEventList.Count == 0 && objGuestEventList.Count == 0)
                 {

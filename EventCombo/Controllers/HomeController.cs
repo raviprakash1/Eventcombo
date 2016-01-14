@@ -21,6 +21,9 @@ using System.Configuration;
 using System.Text;
 using System.Security.Cryptography;
 using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using Microsoft.Owin.Security.OAuth;
 
 namespace EventCombo.Controllers
 {
@@ -60,6 +63,222 @@ namespace EventCombo.Controllers
                 return "Found";
             }
 
+
+        }
+        public async Task<string> FacebookLogin(string id,string email)
+        {
+            //current login details 
+            string city = "", state = "", zipcode = "", country = "";
+            var Strfirstname = "";
+            var Strlastnmae = "";
+            var Stremail = "";
+            AccountController acc = new AccountController();
+            try
+            {
+                using (WebClient wbclient = new WebClient())
+                {
+                    string ip = GetLanIPAddress().Replace("::ffff:", "");
+
+
+                    var json = wbclient.DownloadString("http://freegeoip.net/json/" + ip + "");
+                    dynamic stuff = JsonConvert.DeserializeObject(json);
+                    if (stuff != null)
+                    {
+                        city = stuff.city;
+                        state = stuff.region_name;
+                        zipcode = stuff.zip_code;
+                        country = stuff.country_name;
+                    }
+                    else
+                    {
+                        city = "";
+                        state = "";
+                        zipcode = "";
+                        country = "";
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                city = "";
+                state = "";
+                zipcode = "";
+                country = "";
+
+            }
+
+            //
+
+            //Redirect url
+            string url = null;
+            if (Session["ReturnUrl"] != null)
+            {
+                url = Session["ReturnUrl"].ToString();
+            }
+            else
+            {
+
+                url = Url.Action("Index", "Home");
+            }
+            //
+
+            //Fb userdetail
+            var client = new FacebookClient(id);
+
+            dynamic me = client.Get("me?fields=first_name,last_name,id,email");
+            Strfirstname = me.first_name;
+            Strlastnmae = me.last_name;
+            Stremail = me.email;
+
+            string HitURL = string.Format("https://graph.facebook.com/me?access_token={0}", id);
+            HttpClient clienthd = new HttpClient();
+            Uri uri = new Uri(HitURL);
+            HttpResponseMessage response = await clienthd.GetAsync(uri);
+            ClaimsIdentity identity = null;
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                dynamic iObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "1956731254551382", ClaimValueTypes.String, "Facebook", "Facebook"));
+            }
+            Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
+            var LoginProvider = providerKeyClaim.Issuer;
+            var ProviderKey = providerKeyClaim.Value;
+            var UserName = identity.FindFirstValue(ClaimTypes.Name);
+            //
+
+            var user = UserManager.FindByEmail(email);
+            UserLoginInfo login = new UserLoginInfo(LoginProvider, ProviderKey);
+            if (user == null)
+            {
+                var user1 = new ApplicationUser { UserName = email, Email = email };
+                var result1 = await UserManager.CreateAsync(user1);
+               
+
+                if (result1.Succeeded)
+                {
+                    result1 = await UserManager.AddLoginAsync(user1.Id, login);
+                    if (result1.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user1, isPersistent: false, rememberBrowser: false);
+                        await this.UserManager.AddToRoleAsync(user1.Id, "Member");
+                        Session["AppId"] = user1.Id;
+                        using (EventComboEntities objEntity = new EventComboEntities())
+                        {
+                            User_Permission_Detail permdetail = new User_Permission_Detail();
+                            for (int i = 1; i < 3; i++)
+                            {
+
+                                permdetail.UP_Permission_Id = i;
+                                permdetail.UP_User_Id = user1.Id.ToString();
+                                objEntity.User_Permission_Detail.Add(permdetail);
+                                objEntity.SaveChanges();
+                            }
+                           
+                            bool getprofstatus = acc.Getprofiledetails(user1.Id);
+                            if (getprofstatus == false)
+                            {
+                                Profile prof = new Profile();
+
+                                prof.FirstName = Strfirstname;
+                                prof.LastName = Strlastnmae;
+                                prof.Email = email;
+                                prof.UserID = user1.Id;
+                                prof.Ipcountry = country;
+                                prof.IpState = state;
+                                prof.Ipcity = city;
+
+                                objEntity.Profiles.Add(prof);
+
+                              
+                                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user1.Id);
+                                aspuser.LoginStatus = "Y";
+
+
+                                objEntity.SaveChanges();
+
+                            }
+                        }
+
+                        return url;
+                    }
+                    else
+                    {
+                        return Url.Action("Index", "Home");
+                    }
+                }else
+                {
+                    return Url.Action("Index", "Home");
+                }
+            }
+            else
+            {
+                bool getstatus = acc.GetExternalLogindetails(user.Id, LoginProvider);
+                if(!getstatus)
+                {
+                    using (EventComboEntities objEntity = new EventComboEntities())
+                    {
+                        AspNetUserLogin prof = new AspNetUserLogin();
+
+                        prof.LoginProvider = LoginProvider;
+                        prof.ProviderKey = ProviderKey;
+                        prof.UserId = user.Id;
+
+
+                        objEntity.AspNetUserLogins.Add(prof);
+                        objEntity.SaveChanges();
+
+                    }
+                }
+
+                bool getprofstatus = acc.Getprofiledetails(user.Id);
+                using (EventComboEntities objEntity = new EventComboEntities())
+                {
+                    
+                    if (getprofstatus == false)
+                    {
+
+                        Profile prof = new Profile();
+                        prof.FirstName = Strfirstname;
+                        prof.LastName = Strlastnmae;
+                        prof.Email = email;
+                        prof.UserID = user.Id;
+                        objEntity.Profiles.Add(prof);
+                        
+
+                    }else
+                    {
+                        Profile prof = db.Profiles.First(i => i.UserID == user.Id);
+                        prof.Ipcountry = country;
+                        prof.IpState = state;
+                        prof.Ipcity = city;
+                    }
+                   
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user.Id);
+                    aspuser.LoginStatus = "Y";
+
+                    objEntity.SaveChanges();
+                }
+                var usernew = new ApplicationUser { UserName = email, Email = email };
+                ExternalLoginInfo exterlogin = new ExternalLoginInfo();
+                exterlogin.DefaultUserName = Strfirstname;
+                exterlogin.Email = email;
+                exterlogin.Login = login;
+                exterlogin.ExternalIdentity = identity;
+                var result = await SignInManager.ExternalSignInAsync(exterlogin, isPersistent: false);
+                Session["AppId"] = user.Id;
+                return url;
+            }
+                
+              
+          
+
+            
+
+
+           
 
         }
         public string IsValidID(string Email,string Password)

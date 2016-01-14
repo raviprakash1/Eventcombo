@@ -1951,7 +1951,7 @@ namespace EventCombo.Controllers
             }
         } 
 
-        private bool Getprofiledetails(string id)
+        public bool Getprofiledetails(string id)
         {
             using (EventComboEntities objEntity = new EventComboEntities())
             {
@@ -2014,6 +2014,12 @@ namespace EventCombo.Controllers
 
 
         }
+
+        public void FacebookLogin(string id)
+        {
+
+        }
+
         [AllowAnonymous]
         public ActionResult Confirm(string Email)
         {
