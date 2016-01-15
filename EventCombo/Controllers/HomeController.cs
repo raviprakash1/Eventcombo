@@ -1309,7 +1309,7 @@ namespace EventCombo.Controllers
                 smtp.Send(mailMessage);
             }
         }
-        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string Imageevent)
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string Imageevent,string qrimage,string brcode)
         {
             MailMessage mailMessage = new MailMessage();
             
@@ -1343,16 +1343,16 @@ namespace EventCombo.Controllers
             htmlView.LinkedResources.Add(theEmailImage);
 
 
-            //LinkedResource theQrImage = new LinkedResource(Server.MapPath("..") + "/Images/QR_Image.Png");
+            //LinkedResource theQrImage = new LinkedResource(qrimage);
 
             //theQrImage.ContentId = "myQrcodeImageID";
             //htmlView.LinkedResources.Add(theQrImage);
 
 
-            LinkedResource thebarImage = new LinkedResource(Server.MapPath("..") + "/Images/Bar_Image.Png");
+            //LinkedResource thebarImage = new LinkedResource(brcode);
 
-            thebarImage.ContentId = "myBarcodeImageID";
-            htmlView.LinkedResources.Add(thebarImage);
+            //thebarImage.ContentId = "myBarcodeImageID";
+            //htmlView.LinkedResources.Add(thebarImage);
 
             LinkedResource theeventImage = new LinkedResource(Imageevent);
 

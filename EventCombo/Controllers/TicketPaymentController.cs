@@ -846,9 +846,9 @@ namespace EventCombo.Controllers
                     generateQR(xel.ToString(), qrImgPath);
                    generateBarCode(item.TPD_Order_Id, barImgPath);
                    string Qrcode = "<img style = 'width:150px;height:150px' src ='" + qrImgPath + "' alt = 'QRCode' />";
-                    string QrcodeImg= "<img  src = cid:myQrcodeImageID alt = 'BarCode' >";
+                    string QrcodeImg= "<img  src = 'http://eventcombonew-qa.kiwireader.com/Images/QR_Image.png' alt = 'QrCode' >";
                     string barcode = "<img  src ='" + barImgPath + "' alt = 'BarCode' >";
-                    string barcodeimg= "<img  src = cid:myBarcodeImageID alt = 'BarCode' >";
+                    string barcodeimg= "<img  src = 'http://eventcombonew-qa.kiwireader.com/Images/Bar_Image.png' alt = 'BarCode' >";
                     string logoImage = "<img style='width:57px;height:375px' src ='" + Imagelogo + "' alt = 'Logo' >";
                     string logoImageemail = "<img style='width:57px;height:375px' src = cid:myImageID alt = 'Logo' >";
                     CreateEventController ccEvent = new CreateEventController();
@@ -1139,7 +1139,7 @@ namespace EventCombo.Controllers
                             }
                         }
                         //Mail 
-                       hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, attachment, Imageevent);
+                       hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, attachment, Imageevent, qrImgPath,barImgPath);
                         //Mail 
                     }
                 }
