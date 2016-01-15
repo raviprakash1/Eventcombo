@@ -1440,9 +1440,13 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         for (i = 0; i <= vRow.length - 1; i++) {
                             var vColm = vRow[i].split('~');
                             vId = vColm[0].toString();
+                            
+                            var vCol1 = vColm[1].toString();
                             var vCol2 = parseInt(vColm[2]);
-                            if (vCol2 == NaN) { vCol2=0 }
-                            $("#d_" + vId.toString()).val(vColm[1].toString());
+
+                            if (vCol2 == NaN) { vCol2 = 0 } else vCol1 = "1";
+
+                            $("#d_" + vId.toString()).val(vCol1);
                             if (vCol2 > 0) { $("#txtd_" + vId.toString()).val(vColm[2].toString()); }
                             
                         }
@@ -1478,21 +1482,24 @@ function pad(n) { return n < 10 ? '0' + n : n };
                 if (isNaN(vTAmt) == true) vTAmt = 0;
 
                 if (vLockQty > 0 || vDonate >0) {
-                    vflag = 1;
+                    
                     if (vLockQty > 0 && vDonate <= 0 && vTAmt <= 0) {
                         vLockQty = 0;
                     }
-                    TList.push({
-                        'TLD_TQD_Id': vId,
-                        'TLD_Locked_Qty': vLockQty,
-                        'TLD_Event_Id': vEntid,
-                        'TLD_Donate': vDonate,
-                        'TicketAmount': vTAmt
-                    });
-                    if (vSelection == "")
-                        vSelection = vId + "~" + vLockQty + "~" + vDonate;
-                    else
-                        vSelection = vSelection + "¶" + (vId + "~" + vLockQty + "~" + vDonate);
+                    else {
+                        vflag = 1;
+                        TList.push({
+                            'TLD_TQD_Id': vId,
+                            'TLD_Locked_Qty': vLockQty,
+                            'TLD_Event_Id': vEntid,
+                            'TLD_Donate': vDonate,
+                            'TicketAmount': vTAmt
+                        });
+                        if (vSelection == "")
+                            vSelection = vId + "~" + vLockQty + "~" + vDonate;
+                        else
+                            vSelection = vSelection + "¶" + (vId + "~" + vLockQty + "~" + vDonate);
+                    }
                 }
 
             }
