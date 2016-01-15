@@ -77,4 +77,31 @@ namespace EventCombo.Models
     }
 
 
+    public class Pdfgeneration
+    {
+        public string EventOrderNO { get; set; }
+        public string EventLogo { get; set; }
+        public string EventBarcodeId { get; set; }
+        public string EventQrCode { get; set; }
+        public string UserFirstNameID { get; set; }
+        public string UserLastNameID { get; set; }
+        public string EventImage { get; set; }
+        public string EventTitleId { get; set; }
+        public string EventStartDateID { get; set; }
+        public string EventdayId { get; set; }
+        public string EventStartTimeID { get; set; }
+        public string EventVenueID { get; set; }
+        public string Eventtype { get; set; }
+        public string EventOrganiserName { get; set; }
+        public string EventOrganiserEmail { get; set; }
+        public string EventDescription { get; set; }
+        public string Tickettype { get; set; }
+        public string TicketOrderDateId { get; set; }
+        public string TicketPrice { get; set; }
+       public string Purchased_Qty { get; set; }
+
+
+
+    }
+
 }
