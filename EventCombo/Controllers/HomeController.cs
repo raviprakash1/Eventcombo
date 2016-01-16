@@ -1309,70 +1309,13 @@ namespace EventCombo.Controllers
                 smtp.Send(mailMessage);
             }
         }
-        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment)
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string Imageevent,string qrimage,string brcode)
         {
             MailMessage mailMessage = new MailMessage();
             
                 mailMessage.From = new MailAddress(from, from);
 
-            //string[] arr = tags.Split('¶');
-            //int length = arr.Length;
-            //List<Email_Tag> EmailTag = new List<Email_Tag>();
-            //EmailTag = getTag();
-
-            //if (!string.IsNullOrEmpty(subject) && subject != null)
-            //{
-
-            //    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-            //    {
-            //        for (int j = 0; j < length; i++)
-            //        {
-            //            string[] arrtag = arr[i].Split(':');
-            //            if (arrtag[0] == EmailTag[i].Tag_Name)
-            //            {
-            //                if (subject.Contains(EmailTag[i].Tag_Name))
-            //                {
-            //                    subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
-            //                }
-            //            }
-            //        }
-            //    }
-            //    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-            //    {
-            //        if (subject.Contains(EmailTag[i].Tag_Name))
-            //        {
-            //            subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
-            //        }
-            //    }
-
-
-
-            //}
-            //if (body != null && !string.IsNullOrEmpty(body))
-            //{
-            //    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-            //    {
-            //        for (int j = 0; j < length; i++)
-            //        {
-            //            string[] arrtag = arr[i].Split(':');
-            //            if (arrtag[0] == EmailTag[i].Tag_Name)
-            //            {
-            //                if (body.Contains(EmailTag[i].Tag_Name))
-            //                {
-            //                    body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
-            //                }
-            //            }
-            //        }
-            //    }
-            //    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-            //    {
-            //        if (body.Contains(EmailTag[i].Tag_Name))
-            //        {
-            //            body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
-            //        }
-            //    }
-
-            //}
+          
             mailMessage.Subject = subject;
                 mailMessage.Body = body;
                 if (!string.IsNullOrEmpty(cc))
@@ -1391,7 +1334,33 @@ namespace EventCombo.Controllers
                     mailMessage.Attachments.Add(attach);
                 }
                 mailMessage.IsBodyHtml = true;
-                mailMessage.To.Add(new MailAddress(To));
+            AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+            mailMessage.AlternateViews.Add(htmlView);
+
+            //Add Image
+            LinkedResource theEmailImage = new LinkedResource(Server.MapPath("..") + "/Images/logo_vertical.png");
+            theEmailImage.ContentId = "myImageID";
+            htmlView.LinkedResources.Add(theEmailImage);
+
+
+            //LinkedResource theQrImage = new LinkedResource(qrimage);
+
+            //theQrImage.ContentId = "myQrcodeImageID";
+            //htmlView.LinkedResources.Add(theQrImage);
+
+
+            //LinkedResource thebarImage = new LinkedResource(brcode);
+
+            //thebarImage.ContentId = "myBarcodeImageID";
+            //htmlView.LinkedResources.Add(thebarImage);
+
+            LinkedResource theeventImage = new LinkedResource(Imageevent);
+
+            theeventImage.ContentId = "myeventImageID";
+            htmlView.LinkedResources.Add(theeventImage);
+
+
+            mailMessage.To.Add(new MailAddress(To));
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = ConfigurationManager.AppSettings["Host"];
                 smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);

@@ -556,7 +556,7 @@ namespace EventCombo.Controllers
         public void generateBarCode(string strBarCodeData, string strqrBarImgPath)
         {
             WebClient wc = new WebClient();
-            string url = "https://www.barcodesinc.com/generator/image.php?code=" + strBarCodeData + "&style=196&type=C128B&width=219&height=50&xres=1&font=3";
+            string url = "https://www.barcodesinc.com/generator/image.php?code=" + strBarCodeData + "&style=196&type=C128B&width=250&height=70&xres=1&font=3";
             byte[] barImage = wc.DownloadData(url);
             MemoryStream mms = new MemoryStream(barImage);
             Image img = Image.FromStream(mms);
@@ -598,39 +598,33 @@ namespace EventCombo.Controllers
 
         }
 
-        public MemoryStream generateTicketPDF(string email, string username, string TicketOrderdate, string OrderNo, string EventTitle, string TQD_StartDate, string ConsolidateAddress, string T_name, string tickettype, string TimeZone, string TQD_StartTime,string barcode,string qrcode,string barcode1)
+        public MemoryStream generateTicketPDF(Pdfgeneration pdf,string barcode1)
         {
             WebClient wc = new WebClient();
             string htmlPath = Server.MapPath("..");
             string htmlText = wc.DownloadString(htmlPath + "/email.html");
-            htmlText = htmlText.Replace("¶¶Email¶¶", email);
-            htmlText = htmlText.Replace("¶¶EventTitleId¶¶", EventTitle);
-            htmlText = htmlText.Replace("¶¶EventStartDateID¶¶", TQD_StartDate);
-            htmlText = htmlText.Replace("¶¶EventVenueID¶¶", ConsolidateAddress);
-            htmlText = htmlText.Replace("¶¶EventOrderNO¶¶", OrderNo);
-            htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", username);
-            htmlText = htmlText.Replace("¶¶TicketOrderDateId¶¶", TicketOrderdate);
-            htmlText = htmlText.Replace("¶¶EventStartTimeID¶¶", TQD_StartTime);
-            htmlText = htmlText.Replace("¶¶EventTimeZone¶¶", TimeZone);
-            htmlText = htmlText.Replace("¶¶EventTimeZone¶¶", TimeZone);
-            htmlText = htmlText.Replace("¶¶Ticketname¶¶", T_name);
-            htmlText = htmlText.Replace("¶¶Tickettype¶¶", tickettype);
-            htmlText = htmlText.Replace("¶¶EventBarcodeId¶¶", barcode1);
-            htmlText = htmlText.Replace("¶¶EventQrCode¶¶", qrcode);
-            //Byte[] res = null;
-            //using (MemoryStream ms = new MemoryStream())
-            //{
-            //    HtmlToPdfConverter nRecohtmltoPdfObj = new HtmlToPdfConverter();
-            //    nRecohtmltoPdfObj.Orientation = PageOrientation.Portrait;
-            //    //nRecohtmltoPdfObj.PageFooterHtml = CreatePDFFooter();
-
-            //    res = nRecohtmltoPdfObj.GeneratePdf(htmlText);
-
-            //    //var pdf = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.GeneratePdf(htmlText, PdfSharp.PageSize.A4);
-            //    //pdf.Save(ms);
-            //    //res = ms.ToArray();
-            //}
-            //return res;
+            htmlText = htmlText.Replace("¶¶Email¶¶", "");
+            htmlText = htmlText.Replace("¶¶EventTitleId¶¶", pdf.EventTitleId);
+            htmlText = htmlText.Replace("¶¶EventStartDateID¶¶", pdf.EventStartDateID);
+            htmlText = htmlText.Replace("¶¶EventVenueID¶¶", pdf.EventVenueID);
+            htmlText = htmlText.Replace("¶¶EventOrderNO¶¶", pdf.EventOrderNO);
+            htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", pdf.UserFirstNameID);
+            htmlText = htmlText.Replace("¶¶UserLastNameID¶¶", pdf.UserLastNameID);
+            htmlText = htmlText.Replace("¶¶TicketOrderDateId¶¶", pdf.TicketOrderDateId);
+            htmlText = htmlText.Replace("¶¶EventStartTimeID¶¶", pdf.EventStartTimeID);
+            htmlText = htmlText.Replace("¶¶Ticketname¶¶", "");
+            htmlText = htmlText.Replace("¶¶Tickettype¶¶", pdf.Tickettype);
+            htmlText = htmlText.Replace("¶¶EventBarcodeId¶¶", pdf.EventBarcodeId);
+            htmlText = htmlText.Replace("¶¶EventQrCode¶¶", pdf.EventQrCode);
+            htmlText = htmlText.Replace("¶¶EventImage¶¶", pdf.EventImage);
+            htmlText = htmlText.Replace("¶¶EventdayId¶¶", pdf.EventdayId);
+            htmlText = htmlText.Replace("¶¶EventLogo¶¶", pdf.EventLogo);
+            htmlText = htmlText.Replace("¶¶Eventtype¶¶", pdf.Eventtype);
+            htmlText = htmlText.Replace("¶¶EventDescription¶¶", pdf.EventDescription);
+            htmlText = htmlText.Replace("¶¶TicketPrice¶¶", pdf.TicketPrice);
+            htmlText = htmlText.Replace("¶¶TicketQty¶¶", pdf.Purchased_Qty);
+            htmlText = htmlText.Replace("¶¶EventOrganiserName¶¶", pdf.EventOrganiserName);
+            htmlText = htmlText.Replace("¶¶EventOrganiserEmail¶¶", pdf.EventOrganiserEmail);
 
             var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
             var pdfBytes = htmlToPdf.GeneratePdf(htmlText);
@@ -744,12 +738,35 @@ namespace EventCombo.Controllers
                 //Send mail
                 var Userid = Session["AppId"].ToString();
 
-                var userdetail = db.AspNetUsers.First(i => i.Id == Userid);
+                var userdetail = db.AspNetUsers.FirstOrDefault(i => i.Id == Userid);
                 var profiledetail = db.Profiles.FirstOrDefault(i => i.UserID == Userid);
 
                 var email = userdetail.Email;
                 var username = profiledetail.FirstName;
+                var lastname = profiledetail.LastName;
+                // Organiserdetail
 
+
+                var Organiser = db.Event_Orgnizer_Detail.FirstOrDefault(i => i.Orgnizer_Event_Id == Eventid && i.DefaultOrg == "Y");
+                var Organiserdetail = db.Profiles.FirstOrDefault(i => i.UserID == Organiser.UserId);
+                var Organisername = Organiserdetail.FirstName;
+                var Organiseremail = Organiserdetail.Email;
+
+                //
+
+                //type of event
+                var etype = "";
+              var typeid=  db.EventVenues.Any(i => i.EventID == Eventid);
+                if(typeid)
+                {
+                    etype = "Single";
+                }
+                else
+                {
+                    var tyid = db.MultipleEvents.FirstOrDefault(i => i.EventID == Eventid);
+                    etype = tyid.Frequency;
+                }
+                //
                 var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID).ToList();
                 foreach (var item in TicketPurchasedDetail)
                 {
@@ -760,7 +777,7 @@ namespace EventCombo.Controllers
                     var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
                     var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
                     var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
-
+                    var eventid = tQntydetail.TQD_Event_Id;
                     var datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
                     var day = datetime.DayOfWeek;
                     var Sdate = datetime.ToString("MMM dd, yyyy");
@@ -797,8 +814,8 @@ namespace EventCombo.Controllers
                     if (tickets.TicketTypeID == 1)
                     {
                         tickettype = "Free";
-                        ticketP = "";
-                        fee = "";
+                        ticketP = "$0.00";
+                        fee = "$0.00";
                     }
                     if (tickets.TicketTypeID == 2)
                     {
@@ -825,11 +842,53 @@ namespace EventCombo.Controllers
 
                     string qrImgPath = Server.MapPath("..") + "/Images/QR_Image.Png";
                    string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";
-                   generateQR(xel.ToString(), qrImgPath);
+                    string Imagelogo= Server.MapPath("..") + "/Images/logo_vertical.png";
+                    generateQR(xel.ToString(), qrImgPath);
                    generateBarCode(item.TPD_Order_Id, barImgPath);
-                   string Qrcode = "<img style = 'width:100px;height:100px' src ='" + qrImgPath + "' alt = 'QRCode' />";
-                   string barcode = "<img src ='" + barImgPath + "' alt = 'BarCode' >";
-                   MemoryStream attachment = generateTicketPDF(email, username, DateTime.Now.ToString(), item.TPD_Order_Id, eventdetail.EventTitle, tQntydetail.TQD_StartDate, address.ConsolidateAddress,tickets.T_name, tickettype, eventdetail.TimeZone, tQntydetail.TQD_StartTime, barcode, Qrcode, barcode1);
+                   string Qrcode = "<img style = 'width:150px;height:150px' src ='" + qrImgPath + "' alt = 'QRCode' />";
+                    string QrcodeImg= "<img  src = 'http://eventcombonew-qa.kiwireader.com/Images/QR_Image.png' alt = 'QrCode' >";
+                    string barcode = "<img  src ='" + barImgPath + "' alt = 'BarCode' >";
+                    string barcodeimg= "<img  src = 'http://eventcombonew-qa.kiwireader.com/Images/Bar_Image.png' alt = 'BarCode' >";
+                    string logoImage = "<img style='width:57px;height:375px' src ='" + Imagelogo + "' alt = 'Logo' >";
+                    string logoImageemail = "<img style='width:57px;height:375px' src = cid:myImageID alt = 'Logo' >";
+                    CreateEventController ccEvent = new CreateEventController();
+                    
+                var Images= ccEvent.GetImages(eventdetail.EventID).FirstOrDefault();
+                    string Imageevent = "";
+                    if (string.IsNullOrEmpty (Images))
+                    {
+                        Imageevent = Server.MapPath("..") + "/Images/default_event_image.jpg";
+                    }
+                    else
+                    {
+                        Imageevent = Server.MapPath("..") + Images;
+                    }
+                    string Imagevent = "<img style='width:200px' src ='" + Imageevent + "' alt = 'Image' >";
+                    string Imageeventimg= "<img style='width:200px' src = cid:myeventImageID alt = 'Image' >";
+                    Pdfgeneration pdf = new Pdfgeneration();
+                    pdf.EventBarcodeId = barcode;
+                    pdf.EventQrCode = Qrcode;
+                    pdf.EventLogo = logoImage;
+                    pdf.EventOrderNO = item.TPD_Order_Id;
+                    pdf.UserFirstNameID = username;
+                    pdf.UserLastNameID = lastname;
+                    pdf.EventImage = Imagevent;
+                    pdf.EventTitleId = eventdetail.EventTitle;
+                    pdf.EventdayId = day.ToString();
+                    pdf.EventStartDateID = tQntydetail.TQD_StartDate;
+                    pdf.EventStartTimeID = tQntydetail.TQD_StartTime;
+                    pdf.Eventtype = etype;
+                    pdf.EventVenueID = address.ConsolidateAddress;
+                    pdf.EventOrganiserName = Organisername;
+                    pdf.EventOrganiserEmail = Organiseremail;
+                    pdf.EventDescription = eventdetail.EventDescription;
+                    pdf.Tickettype = tickettype;
+                    pdf.TicketOrderDateId = DateTime.Now.ToString();
+                    pdf.TicketPrice = ticketP;
+                    pdf.Purchased_Qty = item.TPD_Purchased_Qty.ToString();
+
+
+                   MemoryStream attachment = generateTicketPDF(pdf, barcode1);
 
                     var Emailtemplate = hmc.getEmail("eticket");
                     if (Emailtemplate != null)
@@ -956,86 +1015,131 @@ namespace EventCombo.Controllers
                             {
 
 
-                                if (EmailTag[i].Tag_Name == "TicketOrderDateId")
-                                {
-                                    bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
-
-                                }
                                 if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
                                 {
-                                    if (EmailTag[i].Tag_Name == "UserEmailID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserEmailID¶¶", email);
+                       
+                     
+                          
+                            if (EmailTag[i].Tag_Name == "EventTitleId")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventTitleId¶¶", pdf.EventTitleId);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
+                            }
+                            if (EmailTag[i].Tag_Name == "EventStartDateID")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventStartDateID¶¶", pdf.EventStartDateID);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventOrderNO")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", item.TPD_Order_Id);
+                            }
+                            if (EmailTag[i].Tag_Name == "EventVenueID")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventVenueID¶¶", pdf.EventVenueID);
 
-                                    }
+                            }
+                            if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                            {
+                                bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", pdf.UserFirstNameID);
 
-                                    if (EmailTag[i].Tag_Name == "EventBarcodeId")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcode);
+                            }
+                            if (EmailTag[i].Tag_Name == "EventOrderNO")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", pdf.EventOrderNO);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventQrCode")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventQrCode¶¶", Qrcode);
+                            }
+                            if (EmailTag[i].Tag_Name == "UserLastNameID")
+                            {
+                                bodyn = bodyn.Replace("¶¶UserLastNameID¶¶", pdf.UserLastNameID);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventTitleId")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
+                            }
+                            if (EmailTag[i].Tag_Name == "TicketOrderDateId")
+                            {
+                                bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", pdf.TicketOrderDateId);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventStartDateID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventStartDateID¶¶", tQntydetail.TQD_StartDate);
+                            }
+                            if (EmailTag[i].Tag_Name == "EventStartTimeID")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventStartTimeID¶¶", pdf.EventStartTimeID);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventVenueID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventVenueID¶¶", address.ConsolidateAddress);
+                            }
+                            if (EmailTag[i].Tag_Name == "Ticketname")
+                            {
+                                bodyn = bodyn.Replace("¶¶Ticketname¶¶", "");
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "Tickettype")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶Tickettype¶¶", tickets.T_name);
+                            }
+                            if (EmailTag[i].Tag_Name == "Tickettype")
+                            {
+                                bodyn = bodyn.Replace("¶¶Tickettype¶¶", pdf.Tickettype);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "TicketOrderDateId")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
+                            }
+                            if (EmailTag[i].Tag_Name == "EventBarcodeId")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcodeimg);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventImageId")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventImageId¶¶", "");
+                            }
+                            if (EmailTag[i].Tag_Name == "EventQrCode")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventQrCode¶¶", QrcodeImg);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventStartTimeID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventStartTimeID¶¶", tQntydetail.TQD_StartTime);
+                            }
+                            if (EmailTag[i].Tag_Name == "EventImage")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventImage¶¶", Imageeventimg);
 
-                                    }
-                                    if (EmailTag[i].Tag_Name == "TicketPrice")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶TicketPrice¶¶", ticketP);
+                            }
+                            if (EmailTag[i].Tag_Name == "EventdayId")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventdayId¶¶", pdf.EventdayId);
 
-                                    }
+                            }
+                            if (EmailTag[i].Tag_Name == "EventLogo")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventLogo¶¶", logoImageemail);
+
+                            }
+                            if (EmailTag[i].Tag_Name == "Eventtype")
+                            {
+                                bodyn = bodyn.Replace("¶¶Eventtype¶¶", pdf.Eventtype);
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventDescription")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventDescription¶¶", pdf.EventDescription);
+
+                            }
+                            if (EmailTag[i].Tag_Name == "TicketPrice")
+                            {
+                                bodyn = bodyn.Replace("¶¶TicketPrice¶¶", pdf.TicketPrice);
+
+                            }
+                            if (EmailTag[i].Tag_Name == "TicketQty")
+                            {
+                                bodyn = bodyn.Replace("¶¶TicketQty¶¶", pdf.Purchased_Qty);
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventOrganiserName")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", pdf.EventOrganiserName);
+
+                            }
+                            if (EmailTag[i].Tag_Name == "EventOrganiserEmail")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventOrganiserEmail¶¶", pdf.EventOrganiserEmail);
+
+                            }
+                            if (EmailTag[i].Tag_Name == "UserEmailID")
+                            {
+                                bodyn = bodyn.Replace("¶¶UserEmailID¶¶", email);
+
+                            }
+                            ////////////////////
+
+                          
 
                                 }
 
                             }
                         }
                         //Mail 
-                       hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, attachment);
+                       hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, attachment, Imageevent, qrImgPath,barImgPath);
                         //Mail 
                     }
                 }
@@ -1170,6 +1274,10 @@ namespace EventCombo.Controllers
 
 
     }
+
+
+
+   
 
    
 }
