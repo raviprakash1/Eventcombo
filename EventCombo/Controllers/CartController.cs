@@ -26,8 +26,8 @@ namespace EventCombo.Controllers
 
                 //objPay.Amount = OrderDetail.O_OrderAmount;
                 //objPay.OrderId = OrderDetail.O_Order_Id;
-                objPay.ReturnUrl = "http://eventcombo.kiwireader.com//" + Url.Action("PayPalReturn", "PayPalReturn");
-                objPay.CancelUrl = "http://eventcombo.kiwireader.com//" + Url.Action("PayPalReturn", "PayPalReturn");
+                objPay.ReturnUrl = "http://eventcombonew-qa.kiwireader.com//" + Url.Action("PayPalReturn", "PayPalReturn");
+                objPay.CancelUrl = "http://eventcombonew-qa.kiwireader.com//" + Url.Action("PayPalReturn", "PayPalReturn");
 
                 //objPay.ReturnUrl = "http://eventcombo.kiwireader.com//" + Url.Action("PaymentConfirmation", "TicketPayment");
                 //objPay.CancelUrl = "http://eventcombo.kiwireader.com//" + Url.Action("PaymentConfirmation", "TicketPayment");
