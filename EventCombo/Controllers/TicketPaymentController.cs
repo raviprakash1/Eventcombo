@@ -178,7 +178,15 @@ namespace EventCombo.Controllers
                             var result = Scardnumber.Substring(Icardlength - Math.Min(chrlength, Icardlength));
                           var  finalstr= rvrs+ result;
                             card1.value = item.CardId.ToString();
-                            var touper=char.ToUpper(item.card_type[0]) + item.card_type.Substring(1);
+                            var touper = "";
+                            if (!string.IsNullOrWhiteSpace(item.card_type))
+                            {
+                                 touper = char.ToUpper(item.card_type[0]) + item.card_type.Substring(1);
+                            }
+                            else
+                            {
+                                touper = "";
+                            }
                             card1.text = "Payment Method:Customer-" + Fname + "  " + touper + "  " + finalstr;
                             Detailscard.Add(card1);
 
@@ -791,7 +799,7 @@ namespace EventCombo.Controllers
                     etype = tyid.Frequency;
                 }
                 //
-                var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID).ToList();
+                var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID && i.TPD_Event_Id== Eventid).ToList();
                 foreach (var item in TicketPurchasedDetail)
                 {
                     //Detail to send on page

@@ -1893,57 +1893,35 @@ namespace EventCombo.Controllers
                     }
 
                 }
-               
-                var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-                Session["AppId"] = user.Id;
-                using (EventComboEntities db = new EventComboEntities())
+                var status = db.Profiles.Where(x => x.UserID == user.Id).Select(x => x.UserStatus).FirstOrDefault();
+                if (status == "Y" || status == "y")
                 {
-                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user.Id);
-                    aspuser.LoginStatus = "Y";
+                    var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+                    Session["AppId"] = user.Id;
+                    using (EventComboEntities db = new EventComboEntities())
+                    {
+                        AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user.Id);
+                        aspuser.LoginStatus = "Y";
 
 
-                    Profile prof = db.Profiles.First(i => i.UserID == user.Id);
-                    prof.Ipcountry = country;
-                    prof.IpState = state;
-                    prof.Ipcity = city;
+                        Profile prof = db.Profiles.First(i => i.UserID == user.Id);
+                        prof.Ipcountry = country;
+                        prof.IpState = state;
+                        prof.Ipcity = city;
 
-                    db.SaveChanges();
-                   
+                        db.SaveChanges();
 
+
+                    }
+                    return View("LoginResult", new LoginResultViewModel(true, url));
                 }
-                return View("LoginResult", new LoginResultViewModel(true, url));
+                else
+                {
+                    return View("LoginResult", new LoginResultViewModel(false, Url.Action("Index", "Home")));
+                }
+               
 
-              // return RedirectToLocal(url);
-                //if (result == SignInStatus.Success)
-                //{
-                //    //var User = UserManager.FindByEmail(model.Email.ToString());
-
-                //    var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
-                //    var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
-                //    if (users.Find(x => x.Id == user.Id) != null)
-                //    {
-                //        Session["AppId"] = user.Id;
-
-                //        return RedirectToLocal(returnUrl);
-                //    }
-                //    else
-                //    {
-
-                //        ModelState.AddModelError("", "You not authorized user");
-                //        return RedirectToAction("Index", "Home");
-
-
-                //    }
-
-
-
-
-                //}
-                //else {
-                //    ModelState.AddModelError("", "You are  not a authorized user");
-                //    return RedirectToAction("Index", "Home");
-
-                //}
+             
 
 
 

@@ -897,7 +897,7 @@ namespace CMS.Controllers
         public Email_Template getEmail(string template)
         {
 
-            var userEmail = db.Email_Template.Where(x => x.Template_Name == template).SingleOrDefault();
+            var userEmail = db.Email_Template.Where(x => x.Template_Tag == template).SingleOrDefault();
 
             return userEmail;
 

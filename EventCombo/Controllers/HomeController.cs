@@ -72,6 +72,8 @@ namespace EventCombo.Controllers
             var Strfirstname = "";
             var Strlastnmae = "";
             var Stremail = "";
+          
+
             AccountController acc = new AccountController();
             try
             {
@@ -267,9 +269,17 @@ namespace EventCombo.Controllers
                 exterlogin.Email = email;
                 exterlogin.Login = login;
                 exterlogin.ExternalIdentity = identity;
-                var result = await SignInManager.ExternalSignInAsync(exterlogin, isPersistent: false);
-                Session["AppId"] = user.Id;
-                return url;
+                var status = db.Profiles.Where(x => x.UserID == user.Id).Select(x => x.UserStatus).FirstOrDefault();
+                if (status == "Y" || status == "y")
+                {
+                    var result = await SignInManager.ExternalSignInAsync(exterlogin, isPersistent: false);
+                    Session["AppId"] = user.Id;
+                    return url;
+                }
+                else
+                {
+                    return Url.Action("Index", "Home");
+                }
             }
                 
               

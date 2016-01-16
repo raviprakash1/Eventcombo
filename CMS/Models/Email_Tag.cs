@@ -14,7 +14,7 @@ namespace CMS.Models
     
     public partial class Email_Tag
     {
-        public string Tag_Id { get; set; }
+        public int Tag_Id { get; set; }
         public string Tag_Name { get; set; }
     }
 }
