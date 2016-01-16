@@ -115,8 +115,8 @@ namespace EventCombo.Controllers
                         Timezonelist.Add(new SelectListItem()
                         {
                             Text = item.TimeZone_Name.ToString(),
-                            Value = item.TimeZone_Id.ToString()
-                            //Selected = (item.TimeZone_Id.ToString().Trim() == timezone.Trim() ? true : false)
+                            Value = item.TimeZone_Id.ToString(),
+                            Selected = (item.TimeZone_Id.ToString().Trim() == "26" ? true : false)
 
                         });
 

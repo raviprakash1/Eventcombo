@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="Cmsdata.CardDetail" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Country" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.DeliveryMethod" Width="1.5" PointX="14.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.Email_Tag" Width="1.5" PointX="7.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Email_Template" Width="1.5" PointX="7.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Event" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Event_OrganizerMessages" Width="1.5" PointX="14.75" PointY="11.75" IsExpanded="true" />
@@ -63,6 +62,7 @@
         <AssociationConnector Association="Cmsdata.FK_EventVenue_EventVenue" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.FK_Ticket_Quantity_Info_Ticket" ManuallyRouted="false" />
         <AssociationConnector Association="Cmsdata.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Cmsdata.Email_Tag" Width="1.5" PointX="7.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
