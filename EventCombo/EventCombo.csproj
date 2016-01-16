@@ -493,6 +493,7 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />
+    <Content Include="Content\MapPlaces.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="email.html" />
     <Content Include="EventTicket_HTML.html" />

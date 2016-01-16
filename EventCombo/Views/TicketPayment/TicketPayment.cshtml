@@ -426,6 +426,7 @@
                         <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
 
                         </a>
+                        @Ajax.ActionLink("Open popup", "Cart", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "PaypalCart", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })<br />
                     </div>
                     <div id="dvAjxSave" style="display:none">
                         <img src="~/Images/ajaxloader1.gif" />
@@ -520,6 +521,8 @@
     <a class="td-btn" id="btOkMes" type="button" href="#SessionExp" data-toggle="modal" style="display:none">
             
     </a>
+    
+
 </div>
 
 }
@@ -959,6 +962,18 @@
             $('#divaccsuc').css('display', 'none');
             $("input").removeClass('err-bor');
         });
+        $("#result").dialog({
+            autoOpen: false,
+            title: 'Title',
+            width: 500,
+            height: 'auto',
+            modal: true
+        });
+        function openPopup() {
+            alert("CHal Pya");
+            //$("#result").dialog("open");
+        }
+
         $('#completeorder').click(function () {
             // $("#dvAjxSave").show();
             debugger;
