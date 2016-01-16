@@ -423,10 +423,13 @@
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="completeorder" >
                             COMPLTE ORDER >
                         </button>
+                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="btPaypal">
+                            Paypal >
+                        </button>
                         <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
 
                         </a>
-                        @Ajax.ActionLink("Open popup", "Cart", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "PaypalCart", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })<br />
+                        @*@Ajax.ActionLink("Open popup", "Pay", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "PaypalCart", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })<br />*@
                     </div>
                     <div id="dvAjxSave" style="display:none">
                         <img src="~/Images/ajaxloader1.gif" />
@@ -519,11 +522,23 @@
 </div>
 <div>
     <a class="td-btn" id="btOkMes" type="button" href="#SessionExp" data-toggle="modal" style="display:none">
-            
     </a>
-    
 
+    <a class="td-btn" id="btOkMesPaypal" type="button" href="#PaypalInt" data-toggle="modal" style="display:none">
+    </a>
 </div>
+
+
+<div class="modal fade" id="PaypalInt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+        <div class="modal-content">
+            <form id="contactForm" class="fullw1 add">
+                <iframe src="" id="iPayPal" style="width:500px;height:400px"></iframe>
+            </form>
+        </div>
+    </div><!-- confirm-msg -->
+</div>
+
 
 }
 <script src="~/Scripts/Commonfunction.js"></script>
@@ -532,7 +547,7 @@
 @*<script src="~/Scripts/jquery.countdownTimer.js"></script>*@
 <script>
     function calculateTickTotal(vAmount) {
-    
+
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
         var vQty = parseInt($("#hidQty").val());
         vAmt = parseFloat(vAmount);
@@ -545,7 +560,7 @@
 
         if (vOrderTotal > 0) {
             $('.divvisible').show();
-         
+
             if (totqty <= 0) {
                 $('.divqtyvisible').hide();
             }
@@ -597,7 +612,7 @@
     //    }
 
     //});
-   
+
     function ajaxsetup(strname, strFormTag) {
         var msgnew = "";
 
@@ -683,7 +698,7 @@
         }
         var resultvar = "";
         if (total > 0) {
-
+            var shippingerr = "";
             if ($("#selectcard").val() != "P") {
                 var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
                 if (result.card_type == null) {
@@ -765,7 +780,7 @@
                 if (billerr != "") {
                     msglogin += ajaxsetup('TicketPayment', 'TPayValidateBillingAddressUI') + "</br>";
                 }
-                var shippingerr = "";
+
                 if ($("#shippinginfo").is(":checked")) {
                     if ($('#shipfname').val() == "") {
                         shippingerr += "Please Enter Shipping First name" + "\n";
@@ -810,6 +825,7 @@
                     }
                 }
             }
+            //alert(shippingerr);
             if (shippingerr != "") {
                 msglogin += ajaxsetup('TicketPayment', 'TPayValidateShippingAddressUI') + "</br>";
             }
@@ -837,42 +853,42 @@
     }
     $(document).ready(function () {
         $("#btAddList").click(function () {
-           
+
             if ($("#nameofticket").val().trim() == '') {
                 ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebearernameUI'));
                 $("#nameofticket").addClass('err-bor');
 
                 return false;
-            } 
+            }
 
             if ($('.Notifybox').css('display') == 'block') {
-                    var email = $('#emailbearer').val();
-                    if (!validateEmail(email)) {
-                        $('#emailbearer').addClass('err-bor');
-                        ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebeareremailUI'));
-                        //alert("Please enter valid Email.");
-                        if ($('#ddlListitem option').length < 0) {
-                            $('#blocklist').css('display', 'none');
-                        }
-                        return false;
-
-
-                    } else {
-
-                        $('#blocklist').css('display', 'block');
+                var email = $('#emailbearer').val();
+                if (!validateEmail(email)) {
+                    $('#emailbearer').addClass('err-bor');
+                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebeareremailUI'));
+                    //alert("Please enter valid Email.");
+                    if ($('#ddlListitem option').length < 0) {
+                        $('#blocklist').css('display', 'none');
                     }
+                    return false;
 
-                }
-                else {
+
+                } else {
 
                     $('#blocklist').css('display', 'block');
                 }
 
+            }
+            else {
 
-            
+                $('#blocklist').css('display', 'block');
+            }
+
+
+
 
             var qty = $('#hidQty').val();
-            
+
 
 
 
@@ -917,7 +933,7 @@
                 $("#dvBillingAddress").show();
             }
         });
-       
+
 
         $(window).unload(function () {
             if ($("#hdIsPostBack").val() != "Y") {
@@ -962,17 +978,24 @@
             $('#divaccsuc').css('display', 'none');
             $("input").removeClass('err-bor');
         });
-        $("#result").dialog({
-            autoOpen: false,
-            title: 'Title',
-            width: 500,
-            height: 'auto',
-            modal: true
+        //$("#PaypalCart").dialog({
+        //    autoOpen: false,
+        //    title: 'Title',
+        //    width: 500,
+        //    height: 'auto',
+        //    modal: true
+        //});
+        //function openPopup() {
+        //    alert("CHal Pya");
+        //    //$("#result").dialog("open");
+        //}
+
+        $('#btPaypal').click(function () {
+            //$("#btOkMesPaypal").click();
+            window.open('@Url.Action("Pay", "Cart")', "Paypal", "height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=absolute");
+            @*$("#iPayPal").attr('src', '@Url.Action("Pay", "Cart")');*@
+            
         });
-        function openPopup() {
-            alert("CHal Pya");
-            //$("#result").dialog("open");
-        }
 
         $('#completeorder').click(function () {
             // $("#dvAjxSave").show();
@@ -1133,28 +1156,43 @@
                 'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
                 'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
                 'sameshipbilldetail': ($("#sameshipping").is(":checked") == true ? "Y" : "N"),
-                'Ticketname': type
+                'Ticketname': type,
+                'strOrderTotal': vOrderTotal,
+                'strGrandTotal': vGrandTotal,
+                'strPromId': vPromoId,
+                'strVarChanges': vVarChanges,
+                'strVarId': vVarId,
+                'strPaymentType': PaymentType
             }
 
             var Eventid = $('#hdEventid').val();
-            //  alert(Eventid);
             var PaymentType = $("#selectcard").val();
-            $.ajax({
-                url: '@Url.Action("SaveDetails", "TicketPayment")',
-                beforeSend: function () { $("#btOk").click(); },
-                data: { model:model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId, strPaymentType: PaymentType },
-                type: "Post",
-                success: function (response) {
-                    var Eventid = $('#hdEventid').val();
-                    if (PaymentType == "P")
-                        window.location.href = '@Url.Action("Pay", "Cart")';
-                    else
+
+            if (PaymentType == "P") {
+                $.ajax({
+                    url: '@Url.Action("SendPaypaldetail", "TicketPayment")',
+                    data: { model: model},
+                    type: "Post",
+                    success: function (response) {
+                        if (response == "Y")
+                        {
+                            window.open('@Url.Action("Pay", "Cart")', "Paypal", "height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=absolute");
+                        }
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    url: '@Url.Action("SaveDetails", "TicketPayment")',
+                    beforeSend: function () { $("#btOk").click(); },
+                    data: { model: model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId, strPaymentType: PaymentType },
+                    type: "Post",
+                    success: function (response) {
+                        var Eventid = $('#hdEventid').val();
                         window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
-                }
-            });
-
-
-
+                    }
+                });
+            }
         });
         var Eventid = $('#hdEventid').val();
         $('#login').click(function () {
@@ -1278,7 +1316,7 @@
                     $('.divvisible').hide();
 
                 var totqty = $('#hidQty').val();
-              
+
                 if(totqty<=0)
                 {
                     $('.divqtyvisible').hide();
@@ -1316,11 +1354,11 @@
 
 
 
-   
+
 
     function AddTicket() {
 
-      
+
         $("#hidTicketbearer").val('');
         var qty = parseInt($('#hidQty').val());
         var ddlength = parseInt($("#ddlListitem option").length);

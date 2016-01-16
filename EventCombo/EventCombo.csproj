@@ -233,6 +233,7 @@
     <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PayPalReturnController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\TicketPaymentController.cs" />
     <Compile Include="Controllers\ValidationMessageController.cs" />
@@ -1066,6 +1067,7 @@
       <Generator>RazorGenerator</Generator>
     </Content>
     <Content Include="Views\ViewEvent\ViewEvent.cshtml" />
+    <Content Include="Views\PayPalReturn\PayPalReturn.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

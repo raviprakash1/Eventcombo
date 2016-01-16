@@ -57,6 +57,14 @@ namespace EventCombo.Models
         public string Ticketname { get; set; }
         public string URLTitle { get; set; }
         public string card_type { get; set; }
+            public string strOrderTotal { get; set; }
+            public string strGrandTotal { get; set; }
+            public string strPromId { get; set; }
+            public string strVarChanges { get; set; }
+
+            public string strVarId { get; set; }
+
+            public string strPaymentType { get; set; }
     }
 
 

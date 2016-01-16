@@ -33,6 +33,15 @@ namespace EventCombo.Controllers
         //[Route("",Name ="Payment"),HttpGet]
         public ActionResult TicketPayment()
         {
+            if (Session["token"] != null && Session["PayerID"] != null)
+            {
+                string strtoken = Session["token"].ToString();
+                string strPayerID = Session["PayerID"].ToString();
+
+
+            } 
+             
+
             ValidationMessageController vmc = new ValidationMessageController();
             if ((Session["AppId"] != null))
             {
@@ -299,6 +308,21 @@ namespace EventCombo.Controllers
                 return "";
 
             }
+        }
+
+        public string SendPaypaldetail(TicketPayment model)
+        {
+            string strResult = "";
+            try
+            {
+                strResult = "Y";
+                Session["TicketDatamodel"] = model;
+            }
+            catch (Exception)
+            {
+                strResult = "N";
+            }
+            return strResult;
         }
 
         public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId,string strPaymentType)
