@@ -481,11 +481,11 @@ namespace EventCombo.Controllers
                     //if (strIsLive == "Y")
                     //    UpdateEventStatus(lEventId.ToString());
                 }
-                if (model.DuplicateEvent == "Y")
-                {
-                    model.DuplicateEvent = "N";
-                    SaveEvent(model);
-                }
+                //if (model.DuplicateEvent == "Y")
+                //{
+                //    model.DuplicateEvent = "N";
+                //    SaveEvent(model);
+                //}
             }
             catch (Exception ex)
             {
