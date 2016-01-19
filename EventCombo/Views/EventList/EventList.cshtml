@@ -154,7 +154,8 @@
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
                                         <div class="event-btn-action">
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID }, null)</p>
+
                                             <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
                                         </div>
@@ -194,7 +195,8 @@
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
                                         <div class="event-btn-action">
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "", "") </p>
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID }, null)</p>
+
                                             <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
                                         </div>

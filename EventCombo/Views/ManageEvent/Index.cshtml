@@ -1,19 +1,30 @@
-﻿@{
+﻿@model EventCombo.Models.ManageEvent
+@{
     ViewBag.Title = "ManageEvent";
-  Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 @using (Html.BeginForm())
 
 {
-<div class="event_container">
-    <div class="event_inner_container event_top">
-        <div class="col-sm-12 pt10 bggrey">
-            <div class="col-sm-6 col-xs-6 pt10 text-left no_pad">
-                <div class="col-sm-12 no_pad">
-                    <p class="ev_mng_title">K K Live <label class="btn ev_live_sub_btn yelw_live_btn ft24"> DRAFT </label> </p>
-                    <p class="ev_mng_title_mini ">City, State Country </p>
-                    <p class="ev_mng_title_mini">Date </p>
+    <div class="event_container">
+        <div class="event_inner_container event_top">
+            <div class="col-sm-12 pt10 bggrey">
+                <div class="col-sm-6 col-xs-6 pt10 text-left no_pad">
+                    <div class="col-sm-12 no_pad">
+                        <p class="ev_mng_title">
+                            @Model.Eventtitle
+                        @if (Model.Eventstatus == "Save")
+                        {
+                            <label class="btn ev_live_sub_btn yelw_live_btn ft24"> DRAFT </label>
+                        }
+                        else
+                        {
+                            <label class="btn ev_live_sub_btn grn_live_btn ft24"> LIVE </label>
+                        }
+                    </p>
+                    <p class="ev_mng_title_mini ">@Model.EventAddress </p>
+                    <p class="ev_mng_title_mini">@Model.Eventdate </p>
                 </div>
 
             </div>
@@ -53,7 +64,17 @@
                 </div>
                 <div class="col-sm-6 col-xs-12 text-right no_pad">
                     <ul class="col-sm-12 col-xs-12 no_pad mang-ev-nav">
-                        <li><a href="#">Unpublish</a></li>
+                        @if (Model.EventExpired == "N")
+                        {
+                        if (Model.Eventstatus == "Save")
+                        {
+                            <li><a href="#">Publish</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#">Unpublish</a></li>
+                        }
+                        }
                         <li><a href="#">Copy</a></li>
                         <li><a href="#">Cancel</a></li>
                         <li><a href="#">Delete</a></li>
