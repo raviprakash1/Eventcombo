@@ -54,4 +54,16 @@ namespace EventCombo.Models
 
         public string ModifyDate { get; set; }
     }
+
+
+    public class ManageEvent
+    {
+        public string Eventstatus { get; set; }
+        public string Eventtitle { get; set; }
+        public string EventAddress { get; set; }
+        public string Eventdate { get; set; }
+        public string EventExpired { get; set; }
+
+
+    }
 }
