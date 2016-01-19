@@ -327,7 +327,7 @@
 
         </div>
         <div class="clearfix"></div>
-
+            <a href="#nopublish" id="aTransaction" style="display:none;" data-toggle="modal"></a>
 
 
     </div>
@@ -341,11 +341,32 @@
                 </div> -->
                 <form id="contactForm" class="fullw1 add">
                     <div class="modal-body text-center pv50 txt-msg">
-                        <h4 class="msg">Are you sure you want to unpublish event?</h4>
+                        <h4 id="hdmsg" class="msg">Are you sure you want to unpublish event?</h4>
                     </div>
                     <div class="modal-footer msg-action-btn ok">
                         <button type="button" class="btn btn-primary yes ok" id="btnyes"  data-dismiss="modal">Yes</button>
-                        <button type="button" class="btn btn-primary no" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">No</button>
+                      
+
+                    </div>
+                </form>
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
+    <div class="modal fade" id="nopublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
+                <!-- <div class="modal-header custom">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div> -->
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+                        <h4 id="hdmsg" class="msg">Can't Unpublish event as transaction had been done on this event</h4>
+                    </div>
+                    <div class="modal-footer msg-action-btn ok">
+                      
+                        <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">Ok</button>
+
 
                     </div>
                 </form>
@@ -394,7 +415,7 @@
 
                     }
                     if (response == "T") {
-                        alert("Transaction");
+                        $("#aTransaction").click();
                     }
                 }
             });
