@@ -423,9 +423,9 @@
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="completeorder" >
                             COMPLTE ORDER >
                         </button>
-                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="btPaypal">
+                        @*<button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="btPaypal">
                             Paypal >
-                        </button>
+                        </button>*@
                         <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
 
                         </a>
@@ -533,7 +533,7 @@
     <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
         <div class="modal-content">
             <form id="contactForm" class="fullw1 add">
-                <iframe src="" id="iPayPal" style="width:500px;height:400px"></iframe>
+                @*<div id="dvPaypals">  </div>*@
             </form>
         </div>
     </div><!-- confirm-msg -->
@@ -994,7 +994,7 @@
             //$("#btOkMesPaypal").click();
             window.open('@Url.Action("Pay", "Cart")', "Paypal", "height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=absolute");
             @*$("#iPayPal").attr('src', '@Url.Action("Pay", "Cart")');*@
-            
+
         });
 
         $('#completeorder').click(function () {
@@ -1176,7 +1176,9 @@
                     success: function (response) {
                         if (response == "Y")
                         {
-                            window.open('@Url.Action("Pay", "Cart")', "Paypal", "height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=absolute");
+                            $("#btOkMesPaypal").click();
+                            window.open('@Url.Action("Pay", "Cart")', "Paypal", "location=no,toolbar=no,height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=center");
+
                         }
                     }
                 });

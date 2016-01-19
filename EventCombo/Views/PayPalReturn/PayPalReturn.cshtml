@@ -10,7 +10,7 @@
 
 <script>
     $(document).ready(function () {
-        window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
+        window.opener.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
         window.close();
     });
 
