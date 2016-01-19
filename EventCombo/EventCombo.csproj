@@ -233,6 +233,7 @@
     <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\PayPalReturnController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\TicketPaymentController.cs" />
@@ -499,7 +500,10 @@
     <Content Include="email.html" />
     <Content Include="EventTicket_HTML.html" />
     <Content Include="Images\ajaxloader1.gif" />
+    <Content Include="Images\ana_graph.png" />
     <Content Include="Images\Bar_Image.Png" />
+    <Content Include="Images\cong-mark-mini.png" />
+    <Content Include="Images\cong-mark.png" />
     <Content Include="Images\deal_img1.jpg" />
     <Content Include="Images\deal_title_bg_l.png" />
     <Content Include="Images\deal_title_bg_r.png" />
@@ -507,18 +511,22 @@
     <Content Include="Images\dis_title_bg_l.png" />
     <Content Include="Images\dis_title_bg_r.png" />
     <Content Include="Images\event1.jpg" />
+    <Content Include="Images\ev_reg.png" />
     <Content Include="Images\fac.png" />
     <Content Include="Images\fb-dis.png" />
     <Content Include="Images\fb_btn.png" />
     <Content Include="Images\fb_connect.jpg" />
+    <Content Include="Images\fb_prom.png" />
     <Content Include="Images\gmap.png" />
     <Content Include="Images\go.png" />
     <Content Include="Images\go_btn.png" />
+    <Content Include="Images\gr1.png" />
     <Content Include="Images\info_icn.png" />
     <Content Include="Images\lin.png" />
     <Content Include="Images\linkid.png" />
     <Content Include="Images\logo_small.png" />
     <Content Include="Images\mail.png" />
+    <Content Include="Images\org_prof.png" />
     <Content Include="Images\o_cal.png" />
     <Content Include="Images\QR_Image.Png" />
     <Content Include="Images\slider1.jpg" />
@@ -814,6 +822,8 @@
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.countdownTimer.js" />
     <Content Include="Scripts\jquery.creditCardValidator.js" />
+    <Content Include="Scripts\jquery.geocomplete.js" />
+    <Content Include="Scripts\jquery.geocomplete.min.js" />
     <Content Include="Scripts\jquery.icalendar.pack.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
@@ -1068,6 +1078,7 @@
     </Content>
     <Content Include="Views\ViewEvent\ViewEvent.cshtml" />
     <Content Include="Views\PayPalReturn\PayPalReturn.cshtml" />
+    <Content Include="Views\ManageEvent\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -16,3 +16,15 @@ pac-item-query {
     padding-right: 3px;
     color: #000;
 }
+.zindex{
+
+    z-index:1000000;
+}
+
+.displaynone{
+    display:none !important;
+}
+/*.pac-container 
+{
+    z-index:1000;
+}*/

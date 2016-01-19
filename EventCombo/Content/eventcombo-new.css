@@ -503,3 +503,71 @@ textarea {resize: none;}
 }
 
  .dropheight .dropdown-menu.open {margin-top:0px !important;}
+
+
+
+ /*Manage Event css*/
+
+ .ev_mng_title{ font-size: 25px; font-weight: bold; margin-bottom: 0px; }
+.ev_mng_title_mini{font-size: 20px; margin-bottom: 0px; line-height: 22px; }
+.bor_line{height: 2px; background: #d5d5d5; margin-top: 5px;margin-bottom: 5px; }
+.ev-pilot-font1{ font-size: 30px; color: #000; font-weight: bold; }
+.ev-pilot-font{ font-size: 22px; color: #000; }
+.ev-mg-url{ font-size: 20px; color: #000; color: #000;  }
+.ev-mg-url a{ color: #00cfff; }
+.ev-mg-url a:hover{ text-transform: none; font-size: 20px;  }
+.ev_mng_searh{ min-height: 30px; font-size: 22px; padding: 2px 5px; width: 200px; max-width: 100%;  }
+
+.ev_congrt{ font-size: 15px; color: #000; }
+.ev_congrt span{ font-size: 25px;  }
+.mang-ev-nav { margin-top: 10px; }
+.mang-ev-nav li{ list-style: none; float: left; }
+.mang-ev-nav li a{ padding: 7px 15px; font-size: 18px; color:#00cfff;   }
+
+.for_total{ color: #000; margin-bottom: 10px; }
+.for_total_amont{ color: #c9c9c9;  }
+.ev_detail a{ color: #3cf;}
+
+.for_net_amont{ color: #000; font-weight: bold; }
+.sales_ticket_ype{ border: 1px solid #d4d4d4; background: #fff; }
+.sal_tic_bg{ background: #f4f4f4; padding: 5px 10px; font-size: 20px; color: #000; border-bottom: 1px solid #d4d4d4; margin-bottom: 15px; }
+.sales_ticket_inner{ clear: both; display: block; background: #fff; margin: 10px 15px;  }
+.traf_promo_inner{clear: both; display: block; background: #fff; }
+
+.traf_promo_bg{ padding: 5px 0px; font-size: 20px; color: #000; }
+
+.order_attendee_tab{background: #fff; border-bottom: 1px solid #d4d4d4; border-left: 1px solid #d4d4d4; border-right: 1px solid #d4d4d4; }
+.order_attendee_inner {
+    background: #fff;
+    clear: both;
+    display: block;
+    margin: 0 15px;
+    padding: 10px 0;}
+
+
+.nav-tabs.recent_tab_ord > li.active > a, .nav-tabs.recent_tab_ord > li.active > a:hover, .nav-tabs.recent_tab_ord > li.active > a:focus{ border-top:5px solid #3cf; }
+.nav-tabs.recent_tab_ord > li > a:hover{ border-color:#f0f0f0; }
+.nav-tabs.recent_tab_ord > li > a{ color: #000;}
+.promo_tab_head{ border: 1px solid #d4d4d4; }
+.promo_tab_thead{ background: #f4f4f4;}
+.link_share{ background: #fff; border: 1px solid #d4d4d4; padding-top: 10px; padding-bottom: 10px;  }
+.link_share p{ margin-bottom: 0px; font-size: 15px; color: #000; }
+.link_share p a{ color: #3cf;}
+.prom_event p{ margin-bottom: 0px; color: #000; font-weight: normal; font-weight: 16px; }
+.recent_view_ord{  margin-top: 10px; padding-left: 15px; font-size: 18px; }
+
+.grp_strip{ background: #c9c9c9; }
+
+.mb20{ margin-bottom: 20px; }
+.ft_black{ color: #000;}
+.ft_red{ color: red; }
+.ft_blue{ color: #3cf; }
+
+.ft15{ font-size: 15px;}
+.ft16{ font-size: 16px; }
+.ft18{ font-size: 18px; }
+.ft20{ font-size: 20px; }
+.ft22{ font-size: 22px; }
+.ft24{ font-size: 24px; }
+.ft4em{font-size: 4em; }
+.ft3em{font-size: 3em; }

@@ -1308,7 +1308,7 @@
 
                     </div>
                     <div class="col-sm-6">
-                        <div class="col-sm-12 no_pad location_map_div loc_map" id="map_canvas"> <i class="fa fa-map-marker"></i> </div>
+                        <div class="col-sm-12 no_pad location_map_div loc_map map_canvas" id="map_canvas1"> <i class="fa fa-map-marker"></i> </div>
                     </div>
                     <div class="clearfix"></div>
                     <div id="dvAddFooter">
@@ -2852,16 +2852,39 @@
             $('#txtEventLocation').on('click', function () {
                 $(".pac-container").addClass('map-drop-block');
                 $("#divCNF").addClass('map-drop-block');
+            
             });
             $('#txtEventLocation').on('focus', function () {
                 $(".pac-container").addClass('map-drop-block');
                 $("#divCNF").addClass('map-drop-block');
+                
+            });
+
+        
+            var Vname = document.getElementById('VenueName');
+            var autocomplete = new google.maps.places.Autocomplete(Vname);
+           
+          
+       
+            $('#VenueName').on('click', function () {
+              
+              
+             
+                $('.pac-container').each(function (i) {
+                    $(this).attr('id', 'idpac_' + (i + 1));
+                });
+                var div =$(".location-places-autocomplete-cant-find");
+                console.log(div.parent());
+
+              
+                $('#idpac_2 div:first').remove();
+              
+                $("#idpac_2").addClass("zindex");
+              
             });
 
 
-            var Vname = document.getElementById('VenueName');
-            var autocomplete = new google.maps.places.Autocomplete(Vname);
-
+         
             //google.maps.event.addListener(autocomplete, 'place_changed', function () {
             //    var mapOptions = {
             //        center: new google.maps.LatLng(6.9167, 79.8473),
