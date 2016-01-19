@@ -519,7 +519,7 @@ WriteLiteral(">");
 
             
             #line 116 "..\..\Views\EventList\EventList.cshtml"
-                                                                  Write(Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID }, null));
+                                                                  Write(Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID, type = "N" }, null));
 
             
             #line default
@@ -694,7 +694,7 @@ WriteLiteral(">");
 
             
             #line 157 "..\..\Views\EventList\EventList.cshtml"
-                                                                  Write(Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID }, null));
+                                                                  Write(Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID, type = "N" }, null));
 
             
             #line default
@@ -865,7 +865,7 @@ WriteLiteral(">");
 
             
             #line 198 "..\..\Views\EventList\EventList.cshtml"
-                                                                  Write(Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID }, null));
+                                                                  Write(Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID, type="N" }, null));
 
             
             #line default

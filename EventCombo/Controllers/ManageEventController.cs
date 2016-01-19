@@ -12,9 +12,9 @@ namespace EventCombo.Controllers
     {
         // GET: ManageEvent
         EventComboEntities db = new EventComboEntities();
-        public ActionResult Index(long Eventid)
+        public ActionResult Index(long Eventid,string type)
         {
-            var TopAddress = ""; var Topvenue = "";var Dayofweek = "";
+            var TopAddress = ""; var Topvenue = ""; var Dayofweek = "";
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             ManageEvent Mevent = new ManageEvent();
@@ -50,8 +50,8 @@ namespace EventCombo.Controllers
             //Get Address detail
             //Get Event Date
             DateTime ENDATE = new DateTime();
-            var chkdate=  (from ev in db.MultipleEvents where ev.EventID == Eventid select ev).Any();
-            if(chkdate)
+            var chkdate = (from ev in db.MultipleEvents where ev.EventID == Eventid select ev).Any();
+            if (chkdate)
             {
                 var evschdetails = (from ev in db.MultipleEvents where ev.EventID == Eventid select ev).FirstOrDefault();
                 var startdate = (evschdetails.StartingFrom);
@@ -115,7 +115,7 @@ namespace EventCombo.Controllers
             }
             if (!string.IsNullOrEmpty(eDate_new))
             {
-              
+
                 if (ENDATE < dateTime)
                 {
 
@@ -132,14 +132,62 @@ namespace EventCombo.Controllers
             }
             //Get Event Date
 
-          
 
+            Mevent.Eventid = Eventid;
             Mevent.Eventstatus = Edetails.EventStatus;
             Mevent.Eventtitle = Edetails.EventTitle;
             Mevent.EventAddress = TopAddress;
             Mevent.Eventdate = startday.ToString() + " " + sDate_new + " " + starttime;
             Session["Fromname"] = "events";
+            ValidationMessageController vmc = new ValidationMessageController();
+            vmc.ControllerContext = new ControllerContext(this.Request.RequestContext, vmc);
+          
+            if (type=="P")
+            {
+                TempData["Success"] = vmc.Index("ManageEvent", "MEPublisheventSucc"); 
+            }
+            else
+            {
+                TempData["Success"] = null;
+            }
             return View(Mevent);
+        }
+
+
+        public string PublishUnpublishEvent(string Tag, long id)
+        {
+            string result = "";
+            try
+            {
+                Event objEvt = db.Events.First(i => i.EventID == id);
+                if (Tag == "P")
+                {
+                   
+                    objEvt.EventStatus = "Live";
+                  
+                    result = "Y";
+                }
+
+                if (Tag == "U")
+                {
+                    var transaction = db.Ticket_Purchased_Detail.Any(i => i.TPD_Event_Id == id);
+                    if (transaction)
+                    {
+                        result = "T";
+                    }
+                    else
+                    {
+                        objEvt.EventStatus = "Save";
+                        result = "Y";
+                    }
+                }
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                result = "N";
+            }
+            return result;
         }
     }
 }

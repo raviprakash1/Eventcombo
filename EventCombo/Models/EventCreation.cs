@@ -64,6 +64,8 @@ namespace EventCombo.Models
         public string Eventdate { get; set; }
         public string EventExpired { get; set; }
 
+        public long Eventid { get; set; }
+
 
     }
 }
