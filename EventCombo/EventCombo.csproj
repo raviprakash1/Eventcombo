@@ -233,11 +233,8 @@
     <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-
     <Compile Include="Controllers\ManageEventController.cs" />
-
     <Compile Include="Controllers\PayPalController.cs" />
-
     <Compile Include="Controllers\PayPalReturnController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\TicketPaymentController.cs" />
@@ -1082,11 +1079,9 @@
     </Content>
     <Content Include="Views\ViewEvent\ViewEvent.cshtml" />
     <Content Include="Views\PayPalReturn\PayPalReturn.cshtml" />
-
     <Content Include="Views\ManageEvent\Index.cshtml" />
-
     <Content Include="Views\PayPal\PayPal.cshtml" />
-
+    <Content Include="Views\ManageEvent\CopyEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

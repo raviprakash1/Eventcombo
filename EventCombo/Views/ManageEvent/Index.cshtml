@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "ManageEvent";
   Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
@@ -54,7 +55,7 @@
                 <div class="col-sm-6 col-xs-12 text-right no_pad">
                     <ul class="col-sm-12 col-xs-12 no_pad mang-ev-nav">
                         <li><a href="#">Unpublish</a></li>
-                        <li><a href="#">Copy</a></li>
+                        <li>@Html.ActionLink("ManageEvent", "CopyEvent",new { Eventid = 359   })</li>
                         <li><a href="#">Cancel</a></li>
                         <li><a href="#">Delete</a></li>
                         <li><a href="#">Edit Event</a></li>

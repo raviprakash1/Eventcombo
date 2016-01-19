@@ -420,7 +420,6 @@ namespace EventCombo.Controllers
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     Event ObjEC = new Event();
-
                     ObjEC.EventTypeID = model.EventTypeID;
                     ObjEC.EventCategoryID = model.EventCategoryID;
                     ObjEC.EventSubCategoryID = model.EventSubCategoryID;
