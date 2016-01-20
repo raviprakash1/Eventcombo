@@ -69,6 +69,10 @@ namespace EventCombo.Controllers
             EventId = vmc.GetLatestEventId(EventId);
             TempData["ForViewOnly"] = "N";
 
+            EventHit(EventId);
+
+
+
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             Session["Fromname"] = "events";
@@ -380,7 +384,38 @@ namespace EventCombo.Controllers
             return View(viewEvent);
         }
 
+        public void EventHit(long EventId)
+        {
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var EventH = (from myRow in objEnt.Events_Hit
+                                    where myRow.EventHit_EventId == EventId
+                                    select myRow).FirstOrDefault();
+                    if (EventH == null)
+                    {
+                        Events_Hit objEHI = new Events_Hit();
+                        objEHI.EventHit_EventId = EventId;
+                        objEHI.EventHit_Hits = 1;
+                        objEnt.Events_Hit.Add(objEHI);
+                    }
+                    else
+                    {
+                        decimal? dEventHit = EventH.EventHit_Hits + 1;
+                        Events_Hit objEH = objEnt.Events_Hit.First(h => h.EventHit_EventId == EventId);
+                        objEH.EventHit_Hits = dEventHit;
+                    }
+                    objEnt.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
 
+            }
+
+
+        }
 
         //public ActionResult ViewEvent(string strEventDs, string strEventId)
         //{

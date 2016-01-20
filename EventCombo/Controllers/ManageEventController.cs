@@ -192,8 +192,14 @@ namespace EventCombo.Controllers
 
         public ActionResult CopyEvent(long Eventid)
         {
+            string strTitle="";
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                var vEvent = (from myEnt in objEnt.Events where myEnt.EventID == Eventid select myEnt).FirstOrDefault();
+                strTitle = "Copy of "  +  vEvent.EventTitle;
+            }
             TempData["EventId"] = Eventid.ToString();
-
+            TempData["Title"] = strTitle;
             return View();
         }
 

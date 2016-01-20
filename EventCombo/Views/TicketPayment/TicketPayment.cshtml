@@ -11,27 +11,27 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
-   
-    <input type="hidden" id="hdemailexist"  />
+
+    <input type="hidden" id="hdemailexist" />
     <input id="hidTicketbearer" type="hidden" />
-    @Html.HiddenFor(m=>m.EventId,new {id="hdEventid" })
+    @Html.HiddenFor(m => m.EventId, new { id = "hdEventid" })
     <div class="event_container ">
         <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
             <div class="col-sm-12 bggrey">
                 <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
-                    <div class="er_UI_main" >
+                    <div class="er_UI_main">
                         <div class="er_UI_img"></div>
                         <div class="er_suc" id="erraccmsg">
-                         <button class="close" type="button" id="btndivaccerr">&#215;</button>
+                            <button class="close" type="button" id="btndivaccerr">&#215;</button>
                         </div>
                     </div>
                 </div>
                 <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
                     <div class="er_suc_main">
-                        
+
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg"> </div>
-                        <button class="close"  type="button" id="btndivaccsuc">&#215;</button>
+                        <button class="close" type="button" id="btndivaccsuc">&#215;</button>
                     </div>
                 </div>
             </div>
@@ -42,16 +42,16 @@
                             <img class="img-responsive" src="@Html.DisplayFor(m=>m.Imageurl)">
                         </div>
                         <div class="col-sm-9 pl0">
-                            <h2 class="th_tilte" id="h2tag">@Html.DisplayFor(m=>m.Title )</h2>
+                            <h2 class="th_tilte" id="h2tag">@Html.DisplayFor(m => m.Title)</h2>
 
                             <div class="col-sm-12 col-xs-12 text-left">
                                 @*<div class="form-group mb0">
-                                    <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
-                                    <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
+                                        <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
+                                        <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
 
-                                       Add Schedule to calendar
-                                    </label>
-                                </div>*@
+                                           Add Schedule to calendar
+                                        </label>
+                                    </div>*@
                                 <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
                                     <div class="ev_time_zone_model date_time_modal">
                                         <div class="modal-content ev_tm_zon_cont">
@@ -86,7 +86,7 @@
             <div class="evnt_tile_head">
                 <div class="evnt_tile_bg_l"></div>
                 <div class="col-sm-12 col-xs-12 text-left no_pad">
-                    <h2 class="fb_dis_head pt5"  >YOUR ORDER INFORMATION</h2>
+                    <h2 class="fb_dis_head pt5">YOUR ORDER INFORMATION</h2>
                 </div>
 
                 <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -100,26 +100,26 @@
 
                     </div>
                     @*<table class="table evnt_tkt_list_tbl">
-                        <tfoot>
-                            <tr>
-                                <td colspan="5">
-                                    <div class="col-sm-12 text-right mt10">Subtotal : $0.3333 </div>
-                                    <div class="col-sm-12 text-right mt10">Variable Charge : $5.00</div>
-                                    <div class="col-sm-12 text-right mt10"><strong>Order total : $0.3333 </strong></div>
-                                    <div class="col-sm-12 text-right mt10">
-                                        <div class="form-group">
-                                            <label class="col-md-10 pt5 ">Promo code</label>
-                                            <div class="col-md-2 no_pad">
-                                                <input class="form-control evnt_inp_cont" placeholder="Promocode" type="text">
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="col-sm-12 text-right mt10">Subtotal : $0.3333 </div>
+                                        <div class="col-sm-12 text-right mt10">Variable Charge : $5.00</div>
+                                        <div class="col-sm-12 text-right mt10"><strong>Order total : $0.3333 </strong></div>
+                                        <div class="col-sm-12 text-right mt10">
+                                            <div class="form-group">
+                                                <label class="col-md-10 pt5 ">Promo code</label>
+                                                <div class="col-md-2 no_pad">
+                                                    <input class="form-control evnt_inp_cont" placeholder="Promocode" type="text">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-12 text-right mt10"><strong>Grand total : $0.3333 </strong></div>
-                                </td>
+                                        <div class="col-sm-12 text-right mt10"><strong>Grand total : $0.3333 </strong></div>
+                                    </td>
 
-                            </tr>
-                        </tfoot>
-                    </table>*@
+                                </tr>
+                            </tfoot>
+                        </table>*@
                 </div>
             </div>
         </div>
@@ -133,7 +133,7 @@
                 <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
             </div>
 
-           
+
 
             <div class="evnt_details_body2 evnt_timer_margin">
                 <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
@@ -142,222 +142,222 @@
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <label class="control-label ev_payment_lebel pl0">
                                     PLEASE ENTER YOUR ACCOUNT INFORMATION<br>
-                                   @if (HttpContext.Current.Session["AppId"] != null)
-                                   {
-                                    <span class="ev_pay_span">Hi, @Html.DisplayFor(m => m.Email) Not you? <a href="#" onclick="NullSession();" id="nullsession" >Sign Out</a></span>
-                                   }
-                                   else
-                                   {
-                                    <span class="ev_pay_span">Have you used Eventcombo before?<a href="#" id="login">Sign In To Your Account    </a></span>
+                                    @if (HttpContext.Current.Session["AppId"] != null)
+                                    {
+                                        <span class="ev_pay_span">Hi, @Html.DisplayFor(m => m.Email) Not you? <a href="#" onclick="NullSession();" id="nullsession">Sign Out</a></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="ev_pay_span">Have you used Eventcombo before?<a href="#" id="login">Sign In To Your Account    </a></span>
 
-                                   }
-</label>
-                            </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" value="@Html.DisplayFor(m=>m.FName)"  maxlength = 35 id="accfname"/>
-                            </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" value="@Html.DisplayFor(m=>m.LName)" id="accLname" maxlength = 35/>
-                            </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL"  value="@Html.DisplayFor(m=>m.Email)" id="Email" maxlength = 256 />
-                            </div>
-@if (HttpContext.Current.Session["AppId"] == null)
-{
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmail" maxlength = 256>
-                            </div>
-}
-                        </div>
-                        <div class="clearfix"></div>
-@if (HttpContext.Current.Session["AppId"] == null)
-{
-                        <div class="form-group ">
-                            <div class="col-sm-12 col-xs-12 no_pad">
-                                <label class="control-label ev_payment_lebel pl0">
-                                    <span class="ev_pay_span">Password</span>
+                                    }
                                 </label>
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="password" id="password" placeholder="PASSWORD"  maxlength = 15>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="form-group ">
-                            <div class="col-sm-12 col-xs-12 no_pad">
-                                <label class="control-label ev_payment_lebel pl0">
-                                    <span class="ev_pay_span">Confirm Password</span>
-                                </label>
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" value="@Html.DisplayFor(m=>m.FName)" maxlength=35 id="accfname" />
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="password" placeholder="CONFIRM PASSWORD" id="confirmpassword" maxlength = 15>
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" value="@Html.DisplayFor(m=>m.LName)" id="accLname" maxlength=35 />
                             </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL" value="@Html.DisplayFor(m=>m.Email)" id="Email" maxlength=256 />
+                            </div>
+                            @if (HttpContext.Current.Session["AppId"] == null)
+                            {
+                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmail" maxlength=256>
+                                </div>
+                            }
                         </div>
                         <div class="clearfix"></div>
-}
+                        @if (HttpContext.Current.Session["AppId"] == null)
+                        {
+                            <div class="form-group ">
+                                <div class="col-sm-12 col-xs-12 no_pad">
+                                    <label class="control-label ev_payment_lebel pl0">
+                                        <span class="ev_pay_span">Password</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                    <input class="form-control evnt_inp_cont" type="password" id="password" placeholder="PASSWORD" maxlength=15>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group ">
+                                <div class="col-sm-12 col-xs-12 no_pad">
+                                    <label class="control-label ev_payment_lebel pl0">
+                                        <span class="ev_pay_span">Confirm Password</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                    <input class="form-control evnt_inp_cont" type="password" placeholder="CONFIRM PASSWORD" id="confirmpassword" maxlength=15>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        }
                         <div class="form-group ">
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" value="@Html.DisplayFor(m=>m.PhnNo)" id="accountphnno">
                             </div>
                             <div class="col-sm-10 col-xs-12 no_pad">
                                 <div class="col-sm-6 col-xs-12 mb10 pl0 xspad0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256 id="accCity" value="@Html.DisplayFor(m=>m.AccCity)">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength=256 id="accCity" value="@Html.DisplayFor(m=>m.AccCity)">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 mb10 no_pad ">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256 id="accState" value="@Html.DisplayFor(m=>m.AccState)">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength=256 id="accState" value="@Html.DisplayFor(m=>m.AccState)">
                                 </div>
 
 
                             </div>
                             <div class="col-sm-10 col-xs-12 no_pad">
                                 <div class="col-sm-6 col-xs-12 mb10 pl0 xspad0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5 id="accZip" value="@Html.DisplayFor(m=>m.Acczip)">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="accZip" value="@Html.DisplayFor(m=>m.Acczip)">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 mb10 no_pad ">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label",@id="accCountry" })
-                                   
+                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label", @id = "accCountry" })
+
                                 </div>
 
 
                             </div>
-                           
+
                         </div>
-                      
-                       
-                            <div class="form-group mt10 divvisible" >
-                                <div class="col-sm-12 col-xs-12 no_pad">
-                                    <label class="control-label ev_payment_lebel pl0">
-                                        PLEASE ENTER YOUR CREDIT CARD INFORMATION
-                                    </label>
-                                </div>
-                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
 
 
-                                   <select  class="form-control ev_drop_label" id="selectcard" onchange="showcardetails(this.id)">
-                                       @foreach (var item in (List<Cardview>)ViewBag.Detailscard)
-                                       {
+                        <div class="form-group mt10 divvisible">
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                <label class="control-label ev_payment_lebel pl0">
+                                    PLEASE ENTER YOUR CREDIT CARD INFORMATION
+                                </label>
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+
+
+                                <select class="form-control ev_drop_label" id="selectcard" onchange="showcardetails(this.id)">
+                                    @foreach (var item in (List<Cardview>)ViewBag.Detailscard)
+                                    {
                                         <option value="@item.value">@item.text</option>
 
-                                       }
-                                    </select>
+                                    }
+                                </select>
+                            </div>
+                            <div id="cardshow" style="display:none;">
+                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CREDIT CARD NUMBER" id="cardno" onkeyup="getcardvisa(this.id)">
                                 </div>
-                                <div id="cardshow" style="display:none;">
-                                    <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="CREDIT CARD NUMBER" id="cardno" onkeyup="getcardvisa(this.id)">
-                                    </div>
 
-                                    <div class="col-sm-10 col-xs-12 mb10 no_pad card_list">
-                                        <img src="/Images/visa.png" id="imgcard" style="display:none">
-                                        @*<img src="~/Images/mastercard.png" id="mastercard" style="display:none">
-                <img src="~/Images/discover.png" id="discover" style="display:none">
-                <img src="~/Images/amr-exp.png" id="amr" style="display:none">*@
-                                    </div>
-                                    <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="EXPIRATION DATE" id="expirationdate">
-                                    </div>
-                                    <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE" id="cvvcode" onkeydown="return checknumber(event);" maxlength="5">
-                                    </div>
-                                    <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                        <input type="checkbox" id="chkcarddetails" /> <span class="ev_pay_span">Save billing and payment info for easy ordering </span>
+                                <div class="col-sm-10 col-xs-12 mb10 no_pad card_list">
+                                    <img src="/Images/visa.png" id="imgcard" style="display:none">
+                                    @*<img src="~/Images/mastercard.png" id="mastercard" style="display:none">
+                                        <img src="~/Images/discover.png" id="discover" style="display:none">
+                                        <img src="~/Images/amr-exp.png" id="amr" style="display:none">*@
+                                </div>
+                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="EXPIRATION DATE" id="expirationdate">
+                                </div>
+                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE" id="cvvcode" onkeydown="return checknumber(event);" maxlength="5">
+                                </div>
+                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                    <input type="checkbox" id="chkcarddetails" /> <span class="ev_pay_span">Save billing and payment info for easy ordering </span>
 
-                                    </div>
                                 </div>
                             </div>
-                                 <div class="clearfix divvisible"></div>
-                        <div class="form-group mt10 divvisible" id="dvBillingAddress" >
+                        </div>
+                        <div class="clearfix divvisible"></div>
+                        <div class="form-group mt10 divvisible" id="dvBillingAddress">
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <label class="control-label ev_payment_lebel pl0">
                                     PLEASE ENTER YOUR BILLING ADDRESS<br>
-                                 </label>
+                                </label>
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength = 35 id="billfname">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength=35 id="billfname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength = 35 id="billLname">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength=35 id="billLname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" id="billingphno">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength = 256 id="billaddress1">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength=256 id="billaddress1">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength = 256 id="billaddress2">
-                            </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256 id="billcity" >
-                                </div>
-                                <div class="col-sm-6 col-xs-12 no_pad ">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256 id="billstate">
-                                </div>
-
-
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength=256 id="billaddress2">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5 id="billzip">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength=256 id="billcity">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label" ,@id="billcountry" })
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength=256 id="billstate">
+                                </div>
+
+
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <div class="col-sm-6 col-xs-12 pl0">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="billzip">
+                                </div>
+                                <div class="col-sm-6 col-xs-12 no_pad ">
+                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label", @id = "billcountry" })
 
 
                                 </div>
-                                    
+
 
                             </div>
                         </div>
-                        <div class="clearfix divvisible" ></div>
+                        <div class="clearfix divvisible"></div>
                         @if (Html.DisplayFor(x => x.Ticketdeliveraddress).ToString() == "Y")
                         {
-                        <div class="form-group mt10 divvisible">
-                            <input type="checkbox" class="billingaddress" id="shippinginfo" /> <span class="ev_pay_span">Enter Delivery Address</span>
-                            <div class="clearfix"></div>
-                            <input type="checkbox" id="sameshipping" /> <span class="ev_pay_span">Delivery Address Same as Billing Address</span>
+                            <div class="form-group mt10 divvisible">
+                                <input type="checkbox" class="billingaddress" id="shippinginfo" /> <span class="ev_pay_span">Enter Delivery Address</span>
+                                <div class="clearfix"></div>
+                                <input type="checkbox" id="sameshipping" /> <span class="ev_pay_span">Delivery Address Same as Billing Address</span>
 
-                     </div>
+                            </div>
                         }
 
-                        <div class="form-group mt10 shippingaddress" style="display:none;" >
+                        <div class="form-group mt10 shippingaddress" style="display:none;">
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <label class="control-label ev_payment_lebel pl0">
-                                   PLEASE ENTER DELIVERY ADDRESS<br>
-                                   <div class="clearfix"></div>
+                                    PLEASE ENTER DELIVERY ADDRESS<br>
+                                    <div class="clearfix"></div>
                                 </label>
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength = 35 id="shipfname">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength=35 id="shipfname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength = 35 id="shipLname">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength=35 id="shipLname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" id="shippingphnno">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength = 256 id="shipaddress1">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength=256 id="shipaddress1">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength = 256 id="shipaddress2">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength=256 id="shipaddress2">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength = 256 id="shipcity">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength=256 id="shipcity">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength = 256 id="shipstate">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength=256 id="shipstate">
                                 </div>
 
 
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength = 5 id="shipzip">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="shipzip">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label"  ,@id= "shipcountry" })
+                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label", @id = "shipcountry" })
 
 
                                 </div>
@@ -365,67 +365,67 @@
 
                             </div>
                         </div>
-                        
+
 
                     </div>
 
-                    <div class="col-sm-6 divqtyvisible"  >
+                    <div class="col-sm-6 divqtyvisible">
                         <div class="form-group ">
-                           
-                                <div class="col-sm-12 col-xs-12 no_pad mt20">
-                                    <label class="control-label ev_payment_lebel pl0">
-                                        PLEASE ENTER INTENDED TICKET RECEPIENTS (OPTIONAL)
-                                    </label>
-                                    <div class="clearfix"></div>
-                                    <div class="col-sm-8 col-xs-8 no_pad">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="NAME OF THE TICKET BEARER" id="nameofticket">
 
+                            <div class="col-sm-12 col-xs-12 no_pad mt20">
+                                <label class="control-label ev_payment_lebel pl0">
+                                    PLEASE ENTER INTENDED TICKET RECEPIENTS (OPTIONAL)
+                                </label>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-8 col-xs-8 no_pad">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="NAME OF THE TICKET BEARER" id="nameofticket">
+
+                                </div>
+                                <label class="control-label ev_tickt_recp_lebel ev_not_me">
+                                    <span class="Notify"> Notify by email</span>
+                                </label>
+
+                                <div class="col-sm-12 col-xs-12 no_pad mt10">
+                                    <div class="Notifybox col-sm-8 col-xs-8 no_pad mt10 mb10" id="divemail">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL OF TICKET BEARER" id="emailbearer">
                                     </div>
-                                    <label class="control-label ev_tickt_recp_lebel ev_not_me">
-                                        <span class="Notify"> Notify by email</span>
-                                    </label>
-
-                                    <div class="col-sm-12 col-xs-12 no_pad mt10">
-                                        <div class="Notifybox col-sm-8 col-xs-8 no_pad mt10 mb10" id="divemail">
-                                            <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL OF TICKET BEARER" id="emailbearer">
+                                    <div class="col-sm-12 col-xs-12 no_pad">
+                                        <button class="btn ev_live_btn" type="button" id="btAddList">
+                                            ADD TO LIST
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-12 col-xs-12 no_pad mt10" id="blocklist" style="display:none;">
+                                        <div class="col-sm-8 col-xs-8 no_pad ">
+                                            <select class="form-control evnt_inp_cont " id="ddlListitem"></select>
                                         </div>
-                                        <div class="col-sm-12 col-xs-12 no_pad">
-                                            <button class="btn ev_live_btn" type="button" id="btAddList">
-                                                ADD TO LIST
+                                        <div class="col-sm-2 col-xs-2">
+                                            <button class="btn ev_live_btn" type="button" id="editlist">
+                                                Edit
                                             </button>
                                         </div>
-                                        <div class="col-sm-12 col-xs-12 no_pad mt10" id="blocklist" style="display:none;">
-                                            <div class="col-sm-8 col-xs-8 no_pad ">
-                                                <select class="form-control evnt_inp_cont " id="ddlListitem"></select>
-                                            </div>
-                                            <div class="col-sm-2 col-xs-2">
-                                                <button class="btn ev_live_btn" type="button" id="editlist">
-                                                    Edit
-                                                </button>
-                                            </div>
-                                            <div class="col-sm-2 col-xs-2">
-                                                <button class="btn ev_live_btn" type="button" id="deletelist">
-                                                    Delete
-                                                </button>
-                                            </div>
+                                        <div class="col-sm-2 col-xs-2">
+                                            <button class="btn ev_live_btn" type="button" id="deletelist">
+                                                Delete
+                                            </button>
                                         </div>
                                     </div>
-                                    <table style="display:none;" id="tblListitem"></table>
                                 </div>
+                                <table style="display:none;" id="tblListitem"></table>
+                            </div>
 
-</div>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="col-sm-12 text-right mb10 mt10">
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="btBack">
                             < Back
-                        </button>   
-                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="completeorder" >
+                        </button>
+                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="completeorder">
                             COMPLTE ORDER >
                         </button>
-                        @*<button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="btPaypal">
+                        <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="btPaypal">
                             Paypal >
-                        </button>*@
+                        </button>
                         <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
 
                         </a>
@@ -442,7 +442,7 @@
     <div class="clearfix"></div>
     <div class="strat_timer_cont">
         <div class="col-sm-12 no_pad text-center">
-        
+
             <p class="bg-green mb0 strt_tim_desc">
                 Please complete this purchase within 10:00 minutes.<br>
                 After 10:00 minutes, the reservation we're holding will be released to others.
@@ -474,7 +474,7 @@
                         <i class="fa fa-yahoo"></i> <a href="#" target="_blank" id="yahoocal">Yahoo Calendar </a>
                     </div>
                     <div class="clearfix"></div>
-                    
+
 
                 </div>
 
@@ -483,7 +483,7 @@
     </div>
 
 
-    
+
 
 
     <div class="modal fade" id="dvProgress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -494,57 +494,100 @@
                         <h4 class="msg"><img src="~/Images/ajaxloader1.gif" />Please wait, Preparing your order.</h4>
                     </div>
                     @*<div class="modal-footer msg-action-btn ok">
-                        <button type="button" class="btn btn-primary yes ok" data-dismiss="modal">OK</button>
-                    </div>*@
+                            <button type="button" class="btn btn-primary yes ok" data-dismiss="modal">OK</button>
+                        </div>*@
                 </form>
             </div>
         </div><!-- confirm-msg -->
     </div>
 
 
-<div class="modal fade" id="SessionExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
-        <div class="modal-content">
+    <div class="modal fade" id="SessionExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
 
-            <form id="contactForm" class="fullw1 add">
-                <div class="modal-body text-center pv50 txt-msg">
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
 
-                    <h4 class="msg" id="hId">Sorry, you took too long and we have to release your order. Please try again.</h4>
-                </div>
-                <div class="modal-footer msg-action-btn ok">
-                    <button type="button" class="btn btn-primary yes ok" id="btMessOk" data-dismiss="modal">OK</button>
-                </div>
-            </form>
-            <input type="hidden" id="hdUserId" value="" />
-            <input type="hidden" id="hdIsPostBack" value="" />
-        </div>
-    </div><!-- confirm-msg -->
-</div>
-<div>
-    <a class="td-btn" id="btOkMes" type="button" href="#SessionExp" data-toggle="modal" style="display:none">
-    </a>
+                        <h4 class="msg" id="hId">Sorry, you took too long and we have to release your order. Please try again.</h4>
+                    </div>
+                    <div class="modal-footer msg-action-btn ok">
+                        <button type="button" class="btn btn-primary yes ok" id="btMessOk" data-dismiss="modal">OK</button>
+                    </div>
+                </form>
+                <input type="hidden" id="hdUserId" value="" />
+                <input type="hidden" id="hdIsPostBack" value="" />
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
+    <div>
+        <a class="td-btn" id="btOkMes" type="button" href="#SessionExp" data-toggle="modal" style="display:none">
+        </a>
 
-    <a class="td-btn" id="btOkMesPaypal" type="button" href="#PaypalInt" data-toggle="modal" style="display:none">
-    </a>
-</div>
+        <a class="td-btn" id="btOkMesPaypal" type="button" href="#PaypalInt" data-toggle="modal" style="display:none">
+        </a>
+    </div>
 
 
-<div class="modal fade" id="PaypalInt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
-        <div class="modal-content">
-            <form id="contactForm" class="fullw1 add">
-                @*<div id="dvPaypals">  </div>*@
-            </form>
-        </div>
-    </div><!-- confirm-msg -->
-</div>
+    <div class="modal fade" id="PaypalInt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
+                <form id="contactForm" class="fullw1 add">
+                    @*<div id="dvPaypals">  </div>*@
+                </form>
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
+    <div id="dvdialog">
 
+    </div>
 
 }
 <script src="~/Scripts/Commonfunction.js"></script>
 <script src="~/Scripts/flipclock.js"></script>
 <script src="~/Scripts/jquery.cookie.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<link href="~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" />
+<script async src="//www.paypalobjects.com/api/checkout.js"></script>
 @*<script src="~/Scripts/jquery.countdownTimer.js"></script>*@
+
+<script type="text/javascript">
+
+    window.paypalCheckoutReady = function() {
+        paypal.checkout.setup("6XF3MPZBZV6HU", {
+            environment: 'sandbox',
+            click: function(event) {
+                event.preventDefault();
+
+                paypal.checkout.initXO();
+                $.support.cors = true;
+                $.ajax({
+                    url: "http://166.78.8.98/cgi-bin/aries.cgi?sandbox=1&direct=1&returnurl=http://eventcombonew-qa.kiwireader.com/@Url.Action("PayPalReturn", "PayPalReturn")&cancelurl=http://eventcombonew-qa.kiwireader.com/@Url.Action("PayPalReturn", "PayPalReturn")",
+                    type: "GET",
+                    data: '&ajax=1&onlytoken=1&AMT=100',
+                    async: true,
+                    crossDomain: true,
+
+                    //Load the minibrowser with the redirection url in the success handler
+                    success: function (token) {
+                        var url = paypal.checkout.urlPrefix +token;
+                        //Loading Mini browser with redirect url, true for async AJAX calls
+                        paypal.checkout.startFlow(url);
+                    },
+                    error: function (responseData, textStatus, errorThrown) {
+                        alert("Error in ajax post"+responseData.statusText);
+                        //Gracefully Close the minibrowser in case of AJAX errors
+                        paypal.checkout.closeFlow();
+                    }
+                });
+            },
+            button: ['btPaypal']
+        });
+    }
+
+</script>
+
+
 <script>
     function calculateTickTotal(vAmount) {
 
@@ -852,6 +895,9 @@
         }
     }
     $(document).ready(function () {
+       $("#completeorder").hide();
+        $("#btPaypal").hide();
+
         $("#btAddList").click(function () {
 
             if ($("#nameofticket").val().trim() == '') {
@@ -926,11 +972,17 @@
         $("#selectcard").change(function () {
             if ($("#selectcard").val() == "P")
             {
+                $('#completeorder').click();
                 $("#dvBillingAddress").hide();
+                $("#completeorder").hide();
+                $("#btPaypal").show();
             }
             else
             {
                 $("#dvBillingAddress").show();
+                $("#completeorder").show();
+                $("#btPaypal").hide();
+
             }
         });
 
@@ -990,12 +1042,12 @@
         //    //$("#result").dialog("open");
         //}
 
-        $('#btPaypal').click(function () {
+        @*$('#btPaypal').click(function () {
             //$("#btOkMesPaypal").click();
             window.open('@Url.Action("Pay", "Cart")', "Paypal", "height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=absolute");
-            @*$("#iPayPal").attr('src', '@Url.Action("Pay", "Cart")');*@
 
-        });
+
+        });*@
 
         $('#completeorder').click(function () {
             // $("#dvAjxSave").show();
@@ -1176,8 +1228,9 @@
                     success: function (response) {
                         if (response == "Y")
                         {
-                            $("#btOkMesPaypal").click();
-                            window.open('@Url.Action("Pay", "Cart")', "Paypal", "location=no,toolbar=no,height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=center");
+                            ////$('#dialog').dialog('open');
+                            //$("#btOkMesPaypal").click();
+                            //window.open('@Url.Action("Pay", "Cart")', "Paypal", "location=no,toolbar=no,height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=center");
 
                         }
                     }

@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+
 @using (Html.BeginForm())
 
 {
@@ -97,7 +98,7 @@
                             <li><a href="#cnfrmdelete" id="aUnpublish" data-toggle="modal">Unpublish</a></li>
                         }
                         }
-                        <li>@Html.ActionLink("Copy", "ManageEvent", "CopyEvent", new { Eventid = Model.Eventid })</li>
+                        <li>@Html.ActionLink("Copy", "CopyEvent", new { Eventid = Model.Eventid })</li>
                         <li><a href="#">Cancel</a></li>
                         <li><a href="#">Delete</a></li>
                         <li><a href="#">Edit Event</a></li>
@@ -123,6 +124,7 @@
                         <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Event Page Hits </p>
                         <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Promotional Tools</a></p>
                         <div class="col-sm-12 col-xs-12 no_pad">
+                            @*<canvas id="cnEventHit" width="200px" height="200px"></canvas>*@
                             <img src="/Images/gr1.png">
                         </div>
                     </div>
@@ -375,10 +377,38 @@
     </div>
 }
 
-
+<script src="~/Scripts/Chart.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
+    var data = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+        {
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [28, 48, 40, 19, 86, 27, 90]
+        }
+    ]
+};
+        var ctx = $("#cnEventHit").get(0).getContext("2d"); 
+        var myLineChart = new Chart(ctx).Line(data, options);
+
         $('#btndivaccsuc').click(function () {
             $('#divaccsuc').css('display', 'none');
 

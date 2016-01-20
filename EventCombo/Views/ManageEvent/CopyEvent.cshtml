@@ -3,29 +3,33 @@
     ViewBag.Title = "CopyEvent";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
-
-<h2>CopyEvent</h2>
-<div>
-    You may copy this event to quickly create a new event with the same description, ticket types, survey, and dates. You may also make whatever changes are necessary to the new event, both before and after publishing. You must press the Publish Event button on the next page before the new event will be available for attendee registrations
-
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<div class="event_container">
+    <div class="event_inner_container event_top" id="eventtopscoll">
+        <div class="col-sm-12 pt10 bggrey clearfix">
+            <div class="col-sm-12">
+                You may copy this event to quickly create a new event with the same description, ticket types, survey, and dates. You may also make whatever changes are necessary to the new event, both before and after publishing. You must press the Publish Event button on the next page before the new event will be available for attendee registrations
+            </div>
+            <div class="col-sm-12">
+                <input type="text" id="txtEventDesc" value="@TempData["Title"]" style="width:200px;" />
+                <button type="button" id="btCopyEvent" value="Save Event">Save Event</button>
+                <input type="hidden" value="@TempData["EventId"]" id="hdEventId" />
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <input type="text" id="txtEventDesc" style="width:200px;" />
-    <button type="button" id="btCopyEvent" value="Save Event">Save Event</button>
-    <input type="hidden" value="@TempData["EventId"]" id="hdEventId" />
-</div>
-<script>
-    $("#btCopyEvent").click(function () {
-        var vEventId = $("#hdEventId").val();
-        var vEventTitle = $("#txtEventDesc").val();
-        $.ajax({
-            url: '@Url.Action("SaveEvent", "ManageEvent")',
-            data: { Eventid: vEventId, strEventTitle:vEventTitle},
-            type: "Post",
-            success: function (response) {
-                window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
-            }
-        });
-    });
+        <script>
+            $("#btCopyEvent").click(function () {
+                var vEventId = $("#hdEventId").val();
+                var vEventTitle = $("#txtEventDesc").val();
+                $.ajax({
+                    url: '@Url.Action("SaveEvent", "ManageEvent")',
+                    data: { Eventid: vEventId, strEventTitle: vEventTitle },
+                    type: "Post",
+                    success: function (response) {
+                        window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                    }
+                });
+            });
 
-</script>
+        </script>
