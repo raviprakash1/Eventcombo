@@ -1,27 +1,59 @@
-﻿
+﻿@model EventCombo.Models.ManageEvent
 @{
     ViewBag.Title = "ManageEvent";
-  Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 @using (Html.BeginForm())
 
 {
-<div class="event_container">
-    <div class="event_inner_container event_top">
-        <div class="col-sm-12 pt10 bggrey">
-            <div class="col-sm-6 col-xs-6 pt10 text-left no_pad">
-                <div class="col-sm-12 no_pad">
-                    <p class="ev_mng_title">K K Live <label class="btn ev_live_sub_btn yelw_live_btn ft24"> DRAFT </label> </p>
-                    <p class="ev_mng_title_mini ">City, State Country </p>
-                    <p class="ev_mng_title_mini">Date </p>
+    <input type="hidden" value="@Model.Eventid" id="hdEventid" />
+    <div class="event_container">
+        <div class="event_inner_container event_top">
+            <div class="col-sm-12 pt10 bggrey">
+                @if (@TempData["Success"] != null)
+                {
+                <div class="Moderor" id="divaccsuc"  tabindex="-1">
+                    <div class="er_suc_main">
+
+                        <div class="er_suc_img"></div>
+                        <div class="er_suc" id="succaccmsg">@TempData["Success"] </div>
+                        <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+
+                    </div>
+                </div>
+                }
+                <div class="col-sm-6 col-xs-6 pt10 text-left no_pad">
+                    <div class="col-sm-12 no_pad">
+                        <p class="ev_mng_title">
+                            @Model.Eventtitle
+                        @if (Model.Eventstatus == "Save")
+                        {
+                            <label class="btn ev_live_sub_btn yelw_live_btn ft24"> DRAFT </label>
+                        }
+                        else
+                        {
+                            <label class="btn ev_live_sub_btn grn_live_btn ft24"> LIVE </label>
+                        }
+                    </p>
+                    <p class="ev_mng_title_mini ">@Model.EventAddress </p>
+                    <p class="ev_mng_title_mini">@Model.Eventdate </p>
                 </div>
 
             </div>
             <div class="col-sm-6 col-xs-6 pt10 text-right no_pad">
+                @if (Model.Eventstatus == "Save")
+                {
                 <button class="btn ev_live_sub_btn mb5 ft24" type="button">
                     PREVIEW
                 </button>
+                }
+                else
+                {
+                    <button class="btn ev_live_sub_btn mb5 ft24" type="button">
+                        VIEW
+                    </button>
+                }
             </div>
             <div class="clearfix"></div>
             <div class="col-sm-12 no_pad bor_line"></div>
@@ -54,8 +86,18 @@
                 </div>
                 <div class="col-sm-6 col-xs-12 text-right no_pad">
                     <ul class="col-sm-12 col-xs-12 no_pad mang-ev-nav">
-                        <li><a href="#">Unpublish</a></li>
-                        <li>@Html.ActionLink("Copy", "ManageEvent", "CopyEvent",new { Eventid = 359   })</li>
+                        @if (Model.EventExpired == "N")
+                        {
+                        if (Model.Eventstatus == "Save")
+                        {
+                            <li><a href="#" id="aPublish">Publish</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#cnfrmdelete" id="aUnpublish" data-toggle="modal">Unpublish</a></li>
+                        }
+                        }
+                        <li>@Html.ActionLink("Copy", "ManageEvent", "CopyEvent", new { Eventid = Model.Eventid })</li>
                         <li><a href="#">Cancel</a></li>
                         <li><a href="#">Delete</a></li>
                         <li><a href="#">Edit Event</a></li>
@@ -285,9 +327,106 @@
 
         </div>
         <div class="clearfix"></div>
-
+            <a href="#nopublish" id="aTransaction" style="display:none;" data-toggle="modal"></a>
 
 
     </div>
 </div>
+<div class="clearfix"></div>
+    <div class="modal fade" id="cnfrmdelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
+                <!-- <div class="modal-header custom">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div> -->
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+                        <h4 id="hdmsg" class="msg">Are you sure you want to unpublish event?</h4>
+                    </div>
+                    <div class="modal-footer msg-action-btn ok">
+                        <button type="button" class="btn btn-primary yes ok" id="btnyes"  data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">No</button>
+                      
+
+                    </div>
+                </form>
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
+    <div class="modal fade" id="nopublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
+                <!-- <div class="modal-header custom">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div> -->
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+                        <h4 id="hdmsg" class="msg">Can't Unpublish event as transaction had been done on this event</h4>
+                    </div>
+                    <div class="modal-footer msg-action-btn ok">
+                      
+                        <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">Ok</button>
+
+
+                    </div>
+                </form>
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
 }
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#btndivaccsuc').click(function () {
+            $('#divaccsuc').css('display', 'none');
+
+        });
+        $("#aPublish").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("PublishUnpublishEvent", "ManageEvent")',
+                data: { Tag: "P", id: EventId },
+                type: "Post",
+                success: function (response) {
+
+                    if (response == "Y") {
+                        window.location.href = '@Url.Action("Index", "ManageEvent", new { })' + '?Eventid=' + EventId+'&type=P';
+
+                    } else {
+
+                    }
+                }
+            });
+
+        });
+
+        $("#btnyes").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("PublishUnpublishEvent", "ManageEvent")',
+                data: { Tag: "U", id: EventId },
+                type: "Post",
+                success: function (response) {
+
+                    if (response == "Y") {
+                        window.location.href = '@Url.Action("Index", "ManageEvent", new { })' + '?Eventid=' + EventId + '&type=U';
+
+                    }
+                    if (response == "T") {
+                        $("#aTransaction").click();
+                    }
+                }
+            });
+
+        });
+
+
+
+        });
+
+
+
+
+</script>
