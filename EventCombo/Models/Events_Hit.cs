@@ -17,6 +17,6 @@ namespace EventCombo.Models
         public long EventHit_Id { get; set; }
         public Nullable<long> EventHit_EventId { get; set; }
         public Nullable<decimal> EventHit_Hits { get; set; }
-        public Nullable<System.DateTime> EventHitDateTime { get; set; }
+        public DateTime EventHitDateTime { get; set; }
     }
 }

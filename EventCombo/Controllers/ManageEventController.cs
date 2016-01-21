@@ -163,11 +163,20 @@ namespace EventCombo.Controllers
                 else
                     strDates.Append("," + dt.ToShortDateString());
 
-
-
-
-                dt.AddDays(1);
+                lHitCount = GetEventHitDayCount(Eventid, dt);
+                strDates.Append("-");
+                if (lHitCount >0)
+                {
+                    strDates.Append(lHitCount.ToString());
+                }
+                else
+                {
+                    strDates.Append(" ");
+                }
+                dt =dt.AddDays(1);
             }
+            TempData["EventHits"] = strDates.ToString();
+
             return View(Mevent);
         }
 
@@ -178,11 +187,13 @@ namespace EventCombo.Controllers
             {
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                    var vEvent = (from myEnt in objEnt.Events_Hit where myEnt.EventHit_EventId == eventId && myEnt.EventHitDateTime==dt select myEnt.EventHit_Id).Count();
+                    //var vEvent = objEnt.Events_Hit.SqlQuery("Select EventHit_Id from Events_Hit").Count();
+                    var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId + " and  convert(date,EventHitDatetime) = convert(date,'" + dt + "')").Count();
+                    //var vEvent = (from myEnt in objEnt.Events_Hit where myEnt.EventHit_EventId == eventId && myEnt.EventHitDateTime == dt  select myEnt.EventHit_Id).Count();
                     lResult = vEvent;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 lResult = 0;
             }

@@ -124,8 +124,8 @@
                         <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Event Page Hits </p>
                         <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Promotional Tools</a></p>
                         <div class="col-sm-12 col-xs-12 no_pad">
-                            @*<canvas id="cnEventHit" width="200px" height="200px"></canvas>*@
-                            <img src="/Images/gr1.png">
+                            <canvas id="cnEventHit" width="300px" height="300px"></canvas>
+                            @*<img src="/Images/gr1.png">*@
                         </div>
                     </div>
                 </div>
@@ -330,7 +330,7 @@
         </div>
         <div class="clearfix"></div>
             <a href="#nopublish" id="aTransaction" style="display:none;" data-toggle="modal"></a>
-
+            <input type="hidden" value="@TempData["EventHits"]" id="hidEventhit" />
 
     </div>
 </div>
@@ -366,10 +366,7 @@
                         <h4 id="hdmsg" class="msg">Can't Unpublish event as transaction had been done on this event</h4>
                     </div>
                     <div class="modal-footer msg-action-btn ok">
-                      
                         <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">Ok</button>
-
-
                     </div>
                 </form>
             </div>
@@ -381,26 +378,37 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        var vLable = []
+        if ($("#hidEventhit").val() != "")
+        {
+            debugger;
+            var vHitData  = $("#hidEventhit").val().split(",");
+            var vLables = [];
+            var vValues = [];
+            for(i=0;i < vHitData.length;i++)
+            {
+                vHit = vHitData[i].split("-");
+                vLables.push(vHit[0]);
+                vValues.push(vHit[1]);
+            }
 
-        var data = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [
-                {
-                    label: "Event Hits",
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(151,187,205,1)",
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                }
-            ]
-        };
-        var ctx = $("#cnEventHit").get(0).getContext("2d"); 
-        var myLineChart = new Chart(ctx).Line(data, options);
-
+            var data = {
+                labels: vLables,
+                datasets: [
+                    {
+                        label: "Event Hits",
+                        fillColor: "rgba(151,187,205,0.2)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: vValues
+                    }
+                ]
+            };
+            var ctx = $("#cnEventHit").get(0).getContext("2d"); 
+            var myLineChart = new Chart(ctx).Line(data);
+        }
         $('#btndivaccsuc').click(function () {
             $('#divaccsuc').css('display', 'none');
 
