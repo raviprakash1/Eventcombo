@@ -251,6 +251,14 @@
           <Property Name="EventImageUrl" Type="varchar" MaxLength="200" />
           <Property Name="ImageType" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Events_Hit">
+          <Key>
+            <PropertyRef Name="EventHit_Id" />
+          </Key>
+          <Property Name="EventHit_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventHit_EventId" Type="bigint" />
+          <Property Name="EventHit_Hits" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
         <EntityType Name="EventSubCategory">
           <Key>
             <PropertyRef Name="EventSubCategoryID" />
@@ -530,16 +538,9 @@
           <Key>
             <PropertyRef Name="TimeZone_Id" />
           </Key>
-          <Property Name="TimeZone_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TimeZone_Name" Type="varchar" MaxLength="500" />
-          <Property Name="TimeZone" Type="varchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="TimeZonesystem">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="DisplayName" Type="varchar" MaxLength="400" />
-          <Property Name="Id" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="TimeZone" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="TimeZone_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="User_Permission_Detail">
           <Key>
@@ -827,6 +828,7 @@
           <EntitySet Name="EventCategory" EntityType="Self.EventCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventFavourite" EntityType="Self.EventFavourite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventImage" EntityType="Self.EventImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events_Hit" EntityType="Self.Events_Hit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventSubCategory" EntityType="Self.EventSubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVenue" EntityType="Self.EventVenue" Schema="dbo" store:Type="Tables" />
@@ -848,7 +850,6 @@
           <EntitySet Name="TicketDeliveryMethod" EntityType="Self.TicketDeliveryMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TimeZonesystem" EntityType="Self.TimeZonesystem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__EventSubC__Event__019419E5" Association="Self.FK__EventSubC__Event__019419E5">
@@ -1446,7 +1447,7 @@
           </Key>
           <Property Name="TimeZone_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TimeZone_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="TimeZone" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="User_Permission_Detail">
           <Key>
@@ -1756,8 +1757,8 @@
             <Parameter Name="EventStatus" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="TimeZonesystems" EntityType="EventComboModel.TimeZonesystem" />
           <EntitySet Name="Email_Tag" EntityType="EventComboModel.Email_Tag" />
+          <EntitySet Name="Events_Hit" EntityType="EventComboModel.Events_Hit" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1859,19 +1860,20 @@
           <Property Type="Int64" Name="TotalTicket" Nullable="false" />
           <Property Type="Int64" Name="TicketSold" Nullable="false" />
         </ComplexType>
-        <EntityType Name="TimeZonesystem">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="DisplayName" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Email_Tag">
           <Key>
             <PropertyRef Name="Tag_Id" />
           </Key>
           <Property Name="Tag_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Tag_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Events_Hit">
+          <Key>
+            <PropertyRef Name="EventHit_Id" />
+          </Key>
+          <Property Name="EventHit_Id" Type="Int64" Nullable="false" />
+          <Property Name="EventHit_EventId" Type="Int64" />
+          <Property Name="EventHit_Hits" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2514,19 +2516,20 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="TimeZonesystems">
-            <EntityTypeMapping TypeName="EventComboModel.TimeZonesystem">
-              <MappingFragment StoreEntitySet="TimeZonesystem">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Email_Tag">
             <EntityTypeMapping TypeName="EventComboModel.Email_Tag">
               <MappingFragment StoreEntitySet="Email_Tag">
                 <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
                 <ScalarProperty Name="Tag_Id" ColumnName="Tag_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events_Hit">
+            <EntityTypeMapping TypeName="EventComboModel.Events_Hit">
+              <MappingFragment StoreEntitySet="Events_Hit">
+                <ScalarProperty Name="EventHit_Hits" ColumnName="EventHit_Hits" />
+                <ScalarProperty Name="EventHit_EventId" ColumnName="EventHit_EventId" />
+                <ScalarProperty Name="EventHit_Id" ColumnName="EventHit_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
