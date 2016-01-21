@@ -14,7 +14,7 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
         public ActionResult Index(long Eventid,string type)
         {
-            var TopAddress = ""; var Topvenue = ""; var Dayofweek = "";
+            var TopAddress = ""; var Topvenue = ""; 
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             ManageEvent Mevent = new ManageEvent();
