@@ -581,7 +581,7 @@
                     }
                 });
             },
-            button: ['btPaypal']
+            button: ['btPaypal1']
         });
     }
 
@@ -1042,12 +1042,12 @@
         //    //$("#result").dialog("open");
         //}
 
-        @*$('#btPaypal').click(function () {
+        $('#btPaypal').click(function () {
             //$("#btOkMesPaypal").click();
             window.open('@Url.Action("Pay", "Cart")', "Paypal", "height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=absolute");
 
 
-        });*@
+        });
 
         $('#completeorder').click(function () {
             // $("#dvAjxSave").show();

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
+using System.Text;
 
 namespace EventCombo.Controllers
 {
@@ -150,9 +151,44 @@ namespace EventCombo.Controllers
             {
                 TempData["Success"] = null;
             }
+
+            //TimeSpan tm = new TimeSpan(30, 0, 0, 0);
+            DateTime dt = DateTime.Today.AddDays(-30);
+            StringBuilder strDates = new StringBuilder();
+            long lHitCount = 0;
+            for(int i =1;dt <= DateTime.Today; i++)
+            {
+                if (strDates.ToString().Equals(""))
+                    strDates.Append(dt.ToShortDateString());
+                else
+                    strDates.Append("," + dt.ToShortDateString());
+
+
+
+
+                dt.AddDays(1);
+            }
             return View(Mevent);
         }
 
+        public long GetEventHitDayCount(long eventId, DateTime dt)
+        {
+            long lResult = 0;
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var vEvent = (from myEnt in objEnt.Events_Hit where myEnt.EventHit_EventId == eventId && myEnt.EventHitDateTime==dt select myEnt.EventHit_Id).Count();
+                    lResult = vEvent;
+                }
+            }
+            catch (Exception)
+            {
+                lResult = 0;
+            }
+
+            return lResult;
+        }
 
         public string PublishUnpublishEvent(string Tag, long id)
         {
@@ -199,7 +235,6 @@ namespace EventCombo.Controllers
                 strTitle = "Copy of "  +  vEvent.EventTitle;
             }
             TempData["EventId"] = Eventid.ToString();
-            TempData["Title"] = strTitle;
             return View();
         }
 

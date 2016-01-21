@@ -390,22 +390,21 @@ namespace EventCombo.Controllers
             {
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                    var EventH = (from myRow in objEnt.Events_Hit
-                                    where myRow.EventHit_EventId == EventId
-                                    select myRow).FirstOrDefault();
-                    if (EventH == null)
-                    {
+                    //var EventH = (from myRow in objEnt.Events_Hit
+                    //                where myRow.EventHit_EventId == EventId
+                    //                select myRow).FirstOrDefault();
+                    //if (EventH == null)
+                    //{
                         Events_Hit objEHI = new Events_Hit();
                         objEHI.EventHit_EventId = EventId;
-                        objEHI.EventHit_Hits = 1;
                         objEnt.Events_Hit.Add(objEHI);
-                    }
-                    else
-                    {
-                        decimal? dEventHit = EventH.EventHit_Hits + 1;
-                        Events_Hit objEH = objEnt.Events_Hit.First(h => h.EventHit_EventId == EventId);
-                        objEH.EventHit_Hits = dEventHit;
-                    }
+                    //}
+                    //else
+                    //{
+                    //    decimal? dEventHit = EventH.EventHit_Hits + 1;
+                    //    Events_Hit objEH = objEnt.Events_Hit.First(h => h.EventHit_EventId == EventId);
+                    //    objEH.EventHit_Hits = dEventHit;
+                    //}
                     objEnt.SaveChanges();
                 }
             }

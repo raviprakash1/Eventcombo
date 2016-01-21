@@ -258,6 +258,7 @@
           <Property Name="EventHit_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventHit_EventId" Type="bigint" />
           <Property Name="EventHit_Hits" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="EventHitDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="EventSubCategory">
           <Key>
@@ -340,6 +341,7 @@
           <Property Name="O_VariableId" Type="bigint" />
           <Property Name="O_VariableAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="O_PromoCodeId" Type="bigint" />
+          <Property Name="O_OrderDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -1242,6 +1244,7 @@
           <Property Name="O_VariableId" Type="Int64" />
           <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="O_PromoCodeId" Type="Int64" />
+          <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -1874,6 +1877,7 @@
           <Property Name="EventHit_Id" Type="Int64" Nullable="false" />
           <Property Name="EventHit_EventId" Type="Int64" />
           <Property Name="EventHit_Hits" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EventHitDateTime" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2187,6 +2191,7 @@
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_OrderDateTime" ColumnName="O_OrderDateTime" />
                 <ScalarProperty Name="O_Id" ColumnName="O_Id" />
                 <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
                 <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
@@ -2527,6 +2532,7 @@
           <EntitySetMapping Name="Events_Hit">
             <EntityTypeMapping TypeName="EventComboModel.Events_Hit">
               <MappingFragment StoreEntitySet="Events_Hit">
+                <ScalarProperty Name="EventHitDateTime" ColumnName="EventHitDateTime" />
                 <ScalarProperty Name="EventHit_Hits" ColumnName="EventHit_Hits" />
                 <ScalarProperty Name="EventHit_EventId" ColumnName="EventHit_EventId" />
                 <ScalarProperty Name="EventHit_Id" ColumnName="EventHit_Id" />
