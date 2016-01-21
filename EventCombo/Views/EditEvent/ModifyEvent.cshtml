@@ -1088,14 +1088,14 @@ else
             <div class="event_detail_container mt10">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
-                    <div class="col-sm-12 col-xs-12 text-left no_pad">
+                    <div class="col-sm-12 col-xs-12 text-left no_pad"  >
                         <h2 class="fb_dis_head pt5">
                             EVENT SETTING
                         </h2>
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
-                <div class="evnt_details_body">
+                <div class="evnt_details_body" id="PrivaPub" tabindex="-1">
                     <div class="form-group">
                         <div class="col-sm-12 no_pad">
                             <label class="Pubpage label-control ev_tickt_lebel pl0">
@@ -1591,7 +1591,11 @@ else
             //    
 
             //}   
+            debugger;
 
+                var scroll="@TempData["Scroll"]";
+                $(window).scrollTop($("#"+scroll).offset().top);
+             $("#"+scroll).focus();
 
         });
 

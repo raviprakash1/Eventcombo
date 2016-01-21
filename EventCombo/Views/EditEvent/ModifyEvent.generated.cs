@@ -4016,7 +4016,7 @@ WriteLiteral("></div>\r\n                    <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 text-left no_pad\"");
 
-WriteLiteral(">\r\n                        <h2");
+WriteLiteral("  >\r\n                        <h2");
 
 WriteLiteral(" class=\"fb_dis_head pt5\"");
 
@@ -4028,6 +4028,10 @@ WriteLiteral(" class=\"evnt_tile_bg_r evnt_tile_bg_r_call\"");
 WriteLiteral("></div>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"evnt_details_body\"");
+
+WriteLiteral(" id=\"PrivaPub\"");
+
+WriteLiteral(" tabindex=\"-1\"");
 
 WriteLiteral(">\r\n                    <div");
 
@@ -4153,14 +4157,14 @@ WriteLiteral(" id=\"txtReqPassword\"");
 
 WriteLiteral(" readonly=\"readonly\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 82232), Tuple.Create("\"", 82263)
+WriteAttribute("value", Tuple.Create(" value=\"", 82262), Tuple.Create("\"", 82293)
             
             #line 1165 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                 , Tuple.Create(Tuple.Create("", 82240), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
+                 , Tuple.Create(Tuple.Create("", 82270), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
             
             #line default
             #line hidden
-, 82240), false)
+, 82270), false)
 );
 
 WriteLiteral(" class=\"form-control evnt_inp_cont mb10 wd500 chkvalidation\"");
@@ -4242,14 +4246,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hidAddressStatus\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 84006), Tuple.Create("\"", 84034)
+WriteAttribute("value", Tuple.Create(" value=\"", 84036), Tuple.Create("\"", 84064)
             
             #line 1200 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 84014), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
+, Tuple.Create(Tuple.Create("", 84044), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
             
             #line default
             #line hidden
-, 84014), false)
+, 84044), false)
 );
 
 WriteLiteral(" />\r\n                    <input");
@@ -4258,14 +4262,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 84095), Tuple.Create("\"", 84117)
+WriteAttribute("value", Tuple.Create(" value=\"", 84125), Tuple.Create("\"", 84147)
             
             #line 1201 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 84103), Tuple.Create<System.Object, System.Int32>(Model.EventID
+, Tuple.Create(Tuple.Create("", 84133), Tuple.Create<System.Object, System.Int32>(Model.EventID
             
             #line default
             #line hidden
-, 84103), false)
+, 84133), false)
 );
 
 WriteLiteral(" />\r\n\r\n                    <input");
@@ -4885,37 +4889,103 @@ WriteLiteral("\" \r\n            var privatepwd=\"");
             
             #line default
             #line hidden
-WriteLiteral("\"\r\n          \r\n            debugger;\r\n            if(privat==\"Private\")\r\n        " +
-"    {\r\n                $(\'#rdPrivate\').prop(\"checked\",\"true\");\r\n                " +
-"//$(\'#rdPublic\').prop(\"checked\",\"false\");\r\n                $(\".priv_cont\").show(" +
-");\r\n            }else{\r\n                $(\".priv_cont\").hide();\r\n            }\r\n" +
-"\r\n            if(privat==\"Public\")\r\n            {\r\n                //$(\'#rdPriva" +
-"te\').prop(\"checked\",\"false\");\r\n                $(\'#rdPublic\').prop(\"checked\",\"tr" +
-"ue\");\r\n                \r\n                $(\".priv_cont\").hide();\r\n            }\r" +
-"\n\r\n            if(privatefb==\"Y\")\r\n            {\r\n                $(\'#chkShareOn" +
-"FB\').prop(\"checked\",\"true\");\r\n\r\n            }\r\n            if(privateguest==\"Y\")" +
-"\r\n            {\r\n                $(\'#chkGuestonly\').prop(\"checked\",\"true\");\r\n\r\n " +
-"           }\r\n            if(privatepwd.length>0)\r\n            {\r\n              " +
-"  $(\'#chkReqPassword\').prop(\"checked\",\"true\");\r\n                $(\'#txtReqPasswo" +
-"rd\').attr(\'readonly\', false);\r\n                \r\n\r\n            }\r\n            $(" +
-"\".cdisable\").removeAttr(\"disabled\");\r\n            //var msg=validatemain();\r\n   " +
-"         //alert(msg);\r\n            //if(msg==\"\")\r\n            //{\r\n            " +
-"//    \r\n\r\n            //}   \r\n\r\n\r\n        });\r\n\r\n        $(\"#rdPublic\").click(fu" +
-"nction(){\r\n            \r\n            //$(\"#rdPrivate\").prop(\"checked\",\"false\");\r" +
-"\n\r\n            $(\"#chkShareOnFB\").prop(\"checked\",false);\r\n            $(\"#chkGue" +
-"stonly\").prop(\"checked\",false);\r\n            $(\"#chkReqPassword\").prop(\"checked\"" +
-",false);\r\n            $(\"#txtReqPassword\").val(\'\');\r\n            $(\'#txtReqPassw" +
-"ord\').attr(\'readonly\', true);\r\n            $(\".priv_cont\").hide();\r\n        \r\n  " +
-"      \r\n        });\r\n        $(\".cbtPreview\").click(function () {\r\n            v" +
-"ar msg = validatemain();\r\n            if (msg != \"\") {\r\n\r\n                $(\'#di" +
-"verroacc\').css(\'display\', \'block\');\r\n               \r\n                $(\'#btndiv" +
-"errsuc\').focus();\r\n                $(\'#erraccmsg\').html(msg);\r\n                $" +
-"(\'html,body\').animate({ scrollTop: 0 });\r\n                return false;\r\n\r\n     " +
-"       }\r\n            save(\"Preview\");\r\n            \r\n        });\r\n\r\n\r\n    </scr" +
-"ipt>\r\n");
+WriteLiteral(@"""
+          
+            debugger;
+            if(privat==""Private"")
+            {
+                $('#rdPrivate').prop(""checked"",""true"");
+                //$('#rdPublic').prop(""checked"",""false"");
+                $("".priv_cont"").show();
+            }else{
+                $("".priv_cont"").hide();
+            }
+
+            if(privat==""Public"")
+            {
+                //$('#rdPrivate').prop(""checked"",""false"");
+                $('#rdPublic').prop(""checked"",""true"");
+                
+                $("".priv_cont"").hide();
+            }
+
+            if(privatefb==""Y"")
+            {
+                $('#chkShareOnFB').prop(""checked"",""true"");
+
+            }
+            if(privateguest==""Y"")
+            {
+                $('#chkGuestonly').prop(""checked"",""true"");
+
+            }
+            if(privatepwd.length>0)
+            {
+                $('#chkReqPassword').prop(""checked"",""true"");
+                $('#txtReqPassword').attr('readonly', false);
+                
+
+            }
+            $("".cdisable"").removeAttr(""disabled"");
+            //var msg=validatemain();
+            //alert(msg);
+            //if(msg=="""")
+            //{
+            //    
+
+            //}   
+            debugger;
+
+                var scroll=""");
 
             
-            #line 1629 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1596 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+                       Write(TempData["Scroll"]);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@""";
+                $(window).scrollTop($(""#""+scroll).offset().top);
+             $(""#""+scroll).focus();
+
+        });
+
+        $(""#rdPublic"").click(function(){
+            
+            //$(""#rdPrivate"").prop(""checked"",""false"");
+
+            $(""#chkShareOnFB"").prop(""checked"",false);
+            $(""#chkGuestonly"").prop(""checked"",false);
+            $(""#chkReqPassword"").prop(""checked"",false);
+            $(""#txtReqPassword"").val('');
+            $('#txtReqPassword').attr('readonly', true);
+            $("".priv_cont"").hide();
+        
+        
+        });
+        $("".cbtPreview"").click(function () {
+            var msg = validatemain();
+            if (msg != """") {
+
+                $('#diverroacc').css('display', 'block');
+               
+                $('#btndiverrsuc').focus();
+                $('#erraccmsg').html(msg);
+                $('html,body').animate({ scrollTop: 0 });
+                return false;
+
+            }
+            save(""Preview"");
+            
+        });
+
+
+    </script>
+");
+
+            
+            #line 1633 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     // ---------------------Event Creation Script -------------------
 
@@ -5291,7 +5361,7 @@ WriteLiteral("    <script>\r\n\r\n        $(\".chkvalidation\").blur(function ()
 " $.ajax({\r\n                    url: \'");
 
             
-            #line 2403 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2407 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("Draftmodemodification", "EditEvent"));
 
             
@@ -5313,7 +5383,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 2416 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2420 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -5331,7 +5401,7 @@ WriteLiteral(@"' + '?Eventid=' + response;
                             window.open('");
 
             
-            #line 2425 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2429 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                     Write(Url.Action("ViewCreateEvent", "CreateEvent",new { }));
 
             
@@ -5342,7 +5412,7 @@ WriteLiteral("?strUrlData=\' + vUrl, \"_blank\");\r\n                        }\r
 "ive\r\n\r\n                            window.location.href = \'");
 
             
-            #line 2431 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2435 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -5372,7 +5442,7 @@ WriteLiteral(@"?EventId=' +response;
                 url: '");
 
             
-            #line 2452 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2456 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetSubCat", "EditEvent"));
 
             
@@ -5398,7 +5468,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 2469 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2473 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetOrgnizerDetail", "EditEvent"));
 
             
@@ -5550,7 +5620,7 @@ WriteLiteral("\',\r\n                data: { lEventId: $(\"#hdEventId\").val() }
 "jax({\r\n                        url: \'");
 
             
-            #line 2763 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2767 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "CreateEvent"));
 
             
@@ -5578,7 +5648,7 @@ WriteLiteral("\',\r\n                        data: { strUserUrl: $(\"#txtEventUr
 "     url: \'");
 
             
-            #line 2796 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2800 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -5694,7 +5764,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 "----\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 2983 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2987 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetPreviousAddressForEditing", "CreateEvent"));
 
             
@@ -5934,7 +6004,7 @@ WriteLiteral("\',\r\n                data: { \"lEid\": $(\"#hdEventId\").val() }
 "");
 
             
-            #line 3459 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3463 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
     //Ticket Section Starts
@@ -5992,7 +6062,7 @@ WriteLiteral("    <script>\r\n        function CannotFindLocation() {\r\n       
 "           url: \'");
 
             
-            #line 3566 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3570 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -6726,14 +6796,14 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 "cript>\r\n");
 
             
-            #line 5105 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5109 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 5106 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5110 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      
 
             
@@ -6741,9 +6811,9 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 238011), Tuple.Create("\"", 238050)
-, Tuple.Create(Tuple.Create("", 238018), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 238018), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 238218), Tuple.Create("\"", 238257)
+, Tuple.Create(Tuple.Create("", 238225), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 238225), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6751,7 +6821,7 @@ WriteLiteral(" rel=\"stylesheet\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 5108 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5112 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -6759,9 +6829,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 238084), Tuple.Create("\"", 238141)
-, Tuple.Create(Tuple.Create("", 238091), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 238091), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 238291), Tuple.Create("\"", 238348)
+, Tuple.Create(Tuple.Create("", 238298), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 238298), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6770,15 +6840,15 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 238175), Tuple.Create("\"", 238212)
-, Tuple.Create(Tuple.Create("", 238181), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 238181), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 238382), Tuple.Create("\"", 238419)
+, Tuple.Create(Tuple.Create("", 238388), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 238388), false)
 );
 
 WriteLiteral("></script>\r\n");
 
             
-            #line 5111 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5115 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
 
@@ -6811,7 +6881,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            //
 "niqueguid\').val(uuid());\r\n\r\n\r\n        });\r\n    </script>\r\n");
 
             
-            #line 5160 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5164 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -6821,7 +6891,7 @@ WriteLiteral("    <script>\r\n        function ajaxsetup(strname, strFormTag) {\
 "msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url:\'");
 
             
-            #line 5166 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5170 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -7087,7 +7157,7 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "      });\r\n        });\r\n\r\n    </script>\r\n");
 
             
-            #line 5717 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5721 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7097,7 +7167,7 @@ WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n\r\n   
 "       var j= ");
 
             
-            #line 5722 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5726 "..\..\Views\EditEvent\ModifyEvent.cshtml"
           Write(Html.Raw(ViewData["Image"]));
 
             
@@ -7221,7 +7291,7 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 ";\r\n\r\n                }\r\n\r\n            }\r\n    });\r\n    </script>\r\n");
 
             
-            #line 5929 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5933 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 

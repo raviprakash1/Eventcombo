@@ -131,13 +131,24 @@ namespace EventCombo.Controllers
                 Mevent.EventExpired = "Y";
             }
             //Get Event Date
-
+            //Trn
+            var transaction = db.Ticket_Purchased_Detail.Any(i => i.TPD_Event_Id == Eventid);
+            if(transaction)
+            {
+                Mevent.Eventtransaction = "Y";
+            }
+            else
+            {
+                Mevent.Eventtransaction = "N";
+            }
+            //Trn
 
             Mevent.Eventid = Eventid;
             Mevent.Eventstatus = Edetails.EventStatus;
             Mevent.Eventtitle = Edetails.EventTitle;
             Mevent.EventAddress = TopAddress;
             Mevent.Eventdate = startday.ToString() + " " + sDate_new + " " + starttime;
+            Mevent.Eventprivacy = Edetails.EventPrivacy;
             Session["Fromname"] = "events";
             ValidationMessageController vmc = new ValidationMessageController();
             vmc.ControllerContext = new ControllerContext(this.Request.RequestContext, vmc);
@@ -150,10 +161,91 @@ namespace EventCombo.Controllers
             {
                 TempData["Success"] = null;
             }
+            OrderAttendees CO = new OrderAttendees();
+            Mevent.Order = (from o in db.Order_Detail_T
+                          join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
+                          join a in db.Profiles on p.TPD_User_Id equals a.UserID
+                          where p.TPD_Event_Id == Eventid
+                          group new
+                          {
+                              OrderId = o.O_Order_Id,
+                              Price = o.O_TotalAmount,
+                              Qty = p.TPD_Purchased_Qty,
+                              Name = a.FirstName + " " + a.LastName,
+                              Date = o.O_OrderDateTime
+                          }
+                          by new
+                          {
+                              o.O_Order_Id,
+                              o.O_TotalAmount,
+                              p.TPD_Purchased_Qty,
+                              a.FirstName,
+                              a.LastName,
+                              o.O_OrderDateTime
+                          } into gc
+                     orderby gc.Key.O_Order_Id descending
+                    select new OrderAttendees()
+                    {
+                            OrderId = gc.Key.O_Order_Id,
+                        Amount  = gc.Key.O_TotalAmount.ToString(),
+                              Qty = gc.ToList().Sum(a => a.Qty).ToString(),
+                              Name = gc.Key.FirstName + " " + gc.Key.LastName,
+                        Date = gc.Key.O_OrderDateTime.ToString()
+                    }).Take(3).ToList();
+
+
+
+            Mevent.Attendess = (from o in db.Order_Detail_T
+                                join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
+                                join a in db.Profiles on p.TPD_User_Id equals a.UserID
+                                where p.TPD_Event_Id == Eventid
+                                group new
+                                {
+                                    OrderId = o.O_Order_Id,
+                                    Price = o.O_TotalAmount,
+                                    Qty = p.TPD_Purchased_Qty,
+                                    Name = a.FirstName + " " + a.LastName,
+                                    Date=o.O_OrderDateTime
+                                }
+                                by new
+                                {
+                                    o.O_Order_Id,
+                                    o.O_TotalAmount,
+                                    p.TPD_Purchased_Qty,
+                                    a.FirstName,
+                                    a.LastName,
+                                    o.O_OrderDateTime
+                                } into gc
+                                orderby gc.Key.O_Order_Id descending,gc.Key.FirstName ascending
+                                select new OrderAttendees()
+                                {
+                                    OrderId = gc.Key.O_Order_Id,
+                                    Amount = gc.Key.O_TotalAmount.ToString(),
+                                    Qty = gc.ToList().Sum(a => a.Qty).ToString(),
+                                    Name = gc.Key.FirstName + " " + gc.Key.LastName,
+                                    Date    =gc.Key.O_OrderDateTime.ToString()
+                                }).Take(3).ToList();
+
+          
+           
             return View(Mevent);
         }
 
+        public string ReturnOrderAttendees(long eventid,string type)
+        {
+            string msg = "";
 
+            if(type=="O")
+            {
+               
+
+            }
+            if (type == "A")
+            {
+
+            }
+            return msg;
+        }
         public string PublishUnpublishEvent(string Tag, long id)
         {
             string result = "";
@@ -427,6 +519,12 @@ namespace EventCombo.Controllers
                 return Eventid;
             }
             return Eventid;
+        }
+
+
+        public void SetScrollTemp()
+        {
+            TempData["Scroll"] = "PrivaPub";
         }
 
     }
