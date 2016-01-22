@@ -75,9 +75,13 @@ namespace EventCombo.Models
         public Nullable<decimal> TicketAmount { get; set; }
     }
 
-    //public partial class Ticket_Pub
-    //{
-    //    public Ticket_Locked_Detail[] TLD_List { get; set; }
-    //}
+
+    public class SaleTickets
+    {
+        public long SaleQty { get; set; }
+        public DateTime orderDate { get; set; }
+        
+    }
+
 
 }

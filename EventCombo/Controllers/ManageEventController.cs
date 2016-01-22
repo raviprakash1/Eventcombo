@@ -152,9 +152,9 @@ namespace EventCombo.Controllers
                 TempData["Success"] = null;
             }
 
-            //TimeSpan tm = new TimeSpan(30, 0, 0, 0);
             DateTime dt = DateTime.Today.AddDays(-30);
             StringBuilder strDates = new StringBuilder();
+            StringBuilder strSaleQty = new StringBuilder();
             long lHitCount = 0;
             for(int i =1;dt <= DateTime.Today; i++)
             {
@@ -173,10 +173,28 @@ namespace EventCombo.Controllers
                 {
                     strDates.Append(" ");
                 }
-                dt =dt.AddDays(1);
+
+
+                if (strSaleQty.ToString().Equals(""))
+                    strSaleQty.Append(dt.ToShortDateString());
+                else
+                    strSaleQty.Append("," + dt.ToShortDateString());
+
+                SaleTickets objSale = GetTicketSalebyEvent(Eventid, dt);
+                strSaleQty.Append("-");
+                if (objSale != null)
+                {
+                    strSaleQty.Append(objSale.SaleQty);
+                }
+                else
+                {
+                    strSaleQty.Append(" ");
+                }
+                dt = dt.AddDays(1);
             }
             TempData["EventHits"] = strDates.ToString();
-
+            TempData["SaleQty"] = strSaleQty.ToString();
+            TempData["TicketSalePer"] = GetSalePer(Eventid);
             return View(Mevent);
         }
 
@@ -201,6 +219,48 @@ namespace EventCombo.Controllers
             return lResult;
         }
 
+        public double GetSalePer(long eventId)
+        {
+            double dResult = 0;
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var vtotalqty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Quantity).Sum();
+                    var vremqty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Remaining_Quantity).Sum();
+                    long ltotalqty = (vtotalqty != null ? Convert.ToInt64(vtotalqty) : 0);
+                    long lremqty = (vremqty != null ? Convert.ToInt64(vremqty) : 0);
+                    dResult = (ltotalqty * lremqty) / 100;
+                }
+            }
+            catch (Exception ex)
+            {
+                dResult = 0;
+            }
+            return dResult;
+        }
+
+        public SaleTickets GetTicketSalebyEvent(long eventId, DateTime dt)
+        {
+            SaleTickets objResult = new SaleTickets();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    //var vEvent = objEnt.Events_Hit.SqlQuery("Select EventHit_Id from Events_Hit").Count();
+                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail LEFT JOIN Order_Detail_T On Ticket_Purchased_Detail.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND TPD_Event_Id = " + eventId + " and COnvert(date,O_OrderDateTime) = convert(date,'" + dt + "') group by Convert(date,O_OrderDateTime) ";
+                    var vEvent = objEnt.Database.SqlQuery<SaleTickets>(strQuery).FirstOrDefault();
+                    //var vEvent = (from myEnt in objEnt.Events_Hit where myEnt.EventHit_EventId == eventId && myEnt.EventHitDateTime == dt  select myEnt.EventHit_Id).Count();
+                    objResult = vEvent;
+                }
+            }
+            catch (Exception ex)
+            {
+                return objResult;
+            }
+
+            return objResult;
+        }
         public string PublishUnpublishEvent(string Tag, long id)
         {
             string result = "";

@@ -16,11 +16,9 @@
                 {
                 <div class="Moderor" id="divaccsuc"  tabindex="-1">
                     <div class="er_suc_main">
-
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg">@TempData["Success"] </div>
                         <button class="close" type="button" id="btndivaccsuc">&#215;</button>
-
                     </div>
                 </div>
                 }
@@ -110,13 +108,14 @@
             <div class="col-sm-12 no_pad mt10">
                 <div class="col-sm-6 col-xs-12 no_pad">
                     <div class="col-sm-12 col-xs-12 no_pad for_total">
-                        <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">32% Ticket Sold </p>
+                        <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">@TempData["TicketSalePer"]% Ticket Sold </p>
                         <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Sales Report</a></p>
                         <div class="col-sm-12 col-xs-12 grp_strip mb10">
                             <span class="ft3em ft_blue">5,400</span>
                         </div>
                         <div class="col-sm-12 col-xs-12 no_pad">
-                            <img src="/Images/gr1.png">
+                            <canvas id="cnSaleQty" width="430px" height="300px"></canvas>
+                            @*<img src="/Images/gr1.png">*@
                         </div>
                     </div>
 
@@ -124,7 +123,7 @@
                         <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Event Page Hits </p>
                         <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Promotional Tools</a></p>
                         <div class="col-sm-12 col-xs-12 no_pad">
-                            <canvas id="cnEventHit" width="300px" height="300px"></canvas>
+                            <canvas id="cnEventHit" width="430px" height="300px"></canvas>
                             @*<img src="/Images/gr1.png">*@
                         </div>
                     </div>
@@ -331,6 +330,8 @@
         <div class="clearfix"></div>
             <a href="#nopublish" id="aTransaction" style="display:none;" data-toggle="modal"></a>
             <input type="hidden" value="@TempData["EventHits"]" id="hidEventhit" />
+            <input type="hidden" value="@TempData["SaleQty"]" id="hidSaleQty" />
+            
 
     </div>
 </div>
@@ -378,9 +379,42 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        if ($("#hidSaleQty").val() != "")
+        {
+            var vHitData = $("#hidSaleQty").val().split(",");
+            var vLables = [];
+            var vValues = [];
+            for (i = 0; i < vHitData.length; i++) {
+                vHit = vHitData[i].split("-");
+                vLables.push(vHit[0]);
+                vValues.push(vHit[1]);
+            }
+            var voption = {
+                scaleShowGridLines: false
+            };
+            var data = {
+                labels: vLables,
+                datasets: [
+                    {
+                        label: "Ticket Sales",
+                        fillColor: "rgba(151,187,205,0.2)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: vValues
+                    }
+                ]
+            };
+            Chart.defaults.global.responsive = true;
+            Chart.defaults.global.showTooltips = false;
+            var ctx = $("#cnSaleQty").get(0).getContext("2d");
+            var myLineChart = new Chart(ctx).Line(data, voption);
+
+        }
         if ($("#hidEventhit").val() != "")
         {
-            debugger;
             var vHitData  = $("#hidEventhit").val().split(",");
             var vLables = [];
             var vValues = [];
@@ -390,7 +424,9 @@
                 vLables.push(vHit[0]);
                 vValues.push(vHit[1]);
             }
-
+            var voption = {
+                scaleShowGridLines: false
+            };
             var data = {
                 labels: vLables,
                 datasets: [
@@ -406,8 +442,10 @@
                     }
                 ]
             };
+            Chart.defaults.global.responsive = true;
+            Chart.defaults.global.showTooltips = false;
             var ctx = $("#cnEventHit").get(0).getContext("2d"); 
-            var myLineChart = new Chart(ctx).Line(data);
+            var myLineChart = new Chart(ctx).Line(data, voption);
         }
         $('#btndivaccsuc').click(function () {
             $('#divaccsuc').css('display', 'none');
