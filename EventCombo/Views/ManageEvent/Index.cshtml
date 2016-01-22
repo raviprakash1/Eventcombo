@@ -172,8 +172,31 @@
                         <div class="col-sm-6 col-xs-12 no_pad for_total">
                             <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">@TempData["TicketSalePer"]% Ticket Sold </p>
                             <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Sales Report</a></p>
-                            <div class="col-sm-12 col-xs-12 grp_strip mb10">
-                                <span class="ft3em ft_blue">5,400</span>
+                            <div class="col-sm-12 col-xs-12 mb10 no_pad">
+                                    <figure id="tickets_sold_graph">
+                                        <div class="tickets_sold_paid curved-left" style="width: @TempData["PaidTicket"]%;"></div>
+                                        <div class="tickets_sold_free" style="width: @TempData["FreeTicket"]%;"></div>
+                                        <div class="tickets_sold_qyant">@TempData["RemQty"] </div>
+                                       
+                                        @*<figcaption>@TempData["TicketSalePer"]%</figcaption>*@
+                                        <div class="tickets_total_tic">Total : @TempData["TotalQty"]</div>
+                                    </figure>
+                                <dl id="tickets_sold_legend">
+                                    <dt class="tickets_sold_paid">
+                                        Paid Tickets 1%
+                                    </dt>
+                                    <dd>Paid</dd>
+                                    <dt class="tickets_sold_free">
+                                        Free Tickets 1%
+                                    </dt>
+                                    <dd>Free</dd>
+                                </dl>
+
+
+                              
+
+
+
                             </div>
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <canvas id="cnSaleQty" width="430px" height="300px"></canvas>

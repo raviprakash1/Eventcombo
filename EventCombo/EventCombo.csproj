@@ -494,6 +494,7 @@
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\flipclock.css" />
     <Content Include="Images\dgd.png" />
+    <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
     <Content Include="Images\qwe.png" />
     <Content Include="Scripts\gmap.js" />
