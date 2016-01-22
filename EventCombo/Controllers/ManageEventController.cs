@@ -230,7 +230,60 @@ namespace EventCombo.Controllers
            
             return View(Mevent);
         }
+        public string DeleteEvent(long eventid)
+        {
+            string msg = "";
+           
+                using (var transaction=db.Database.BeginTransaction())
+                {
+                try
+                {
+                    db.Event_Orgnizer_Detail.RemoveRange(db.Event_Orgnizer_Detail.Where(x => x.Orgnizer_Event_Id == eventid).ToList());
+                    db.Event_VariableDesc.RemoveRange(db.Event_VariableDesc.Where(x => x.Event_Id == eventid).ToList());
+                    db.EventImages.RemoveRange(db.EventImages.Where(x => x.EventID == eventid).ToList());
+                    db.EventFavourites.RemoveRange(db.EventFavourites.Where(x => x.eventId == eventid).ToList());
+                    db.Addresses.RemoveRange(db.Addresses.Where(x => x.EventId == eventid).ToList());
+                    db.EventVenues.RemoveRange(db.EventVenues.Where(x => x.EventID == eventid).ToList());
+                    db.EventVotes.RemoveRange(db.EventVotes.Where(x => x.eventId == eventid).ToList());
+                    db.MultipleEvents.RemoveRange(db.MultipleEvents.Where(x => x.EventID == eventid).ToList());
+                    db.Publish_Event_Detail.RemoveRange(db.Publish_Event_Detail.Where(x => x.PE_Event_Id == eventid).ToList());
+                    db.Ticket_Quantity_Detail.RemoveRange(db.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == eventid).ToList());
+                    db.Events_Hit.RemoveRange(db.Events_Hit.Where(x => x.EventHit_EventId == eventid).ToList());
+                    db.Tickets.RemoveRange(db.Tickets.Where(x => x.E_Id == eventid).ToList());
+                    db.Events.RemoveRange(db.Events.Where(x => x.EventID == eventid).ToList());
 
+                    //db.Database.ExecuteSqlCommand("Delete from Event_Orgnizer_Detail where Orgnizer_Event_Id='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Event_VariableDesc where Event_Id='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from EventImage where EventID='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from EventFavourite where eventId='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Address where EventId='" + eventid + "'");
+                    // db.Database.ExecuteSqlCommand("Delete from EventVenue where EventID='" + eventid + "'");
+                    // db.Database.ExecuteSqlCommand("Delete from EventVote where eventId='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from MultipleEvent where EventID='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Publish_Event_Detail where PE_Event_Id='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Ticket_Quantity_Detail where TQD_Event_Id='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Events_Hit where EventHit_EventId='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Ticket where E_Id='" + eventid + "'");
+                   // db.Database.ExecuteSqlCommand("Delete from Event where EventID='" + eventid + "'");
+
+
+
+
+                   
+                
+                    db.SaveChanges();
+                    transaction.Commit();
+                    msg = "Y";
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    msg = "N";
+                }
+            }
+          
+                return msg;
+        }
         public string ReturnOrderAttendees(long eventid,string type)
         {
             string msg = "";

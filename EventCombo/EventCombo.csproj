@@ -493,7 +493,7 @@
     <Content Include="Content\eventcombo-new.css" />
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\flipclock.css" />
-    <Content Include="Content\gmap.js" />
+    <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />

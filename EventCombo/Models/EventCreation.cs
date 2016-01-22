@@ -70,6 +70,7 @@ namespace EventCombo.Models
 
         public List<OrderAttendees> Order{ get; set; }
         public List<OrderAttendees> Attendess { get; set; }
+        public string Eventcancel { get; set; }
 
 
     }

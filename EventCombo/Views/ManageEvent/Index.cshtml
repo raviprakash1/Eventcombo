@@ -29,7 +29,9 @@
                     <div class="col-sm-12 no_pad">
                         <p class="ev_mng_title">
                             @Model.Eventtitle
-                            @if (Model.Eventstatus == "Save")
+@if (Model.EventExpired == "N")
+{
+                            if (Model.Eventstatus == "Save")
                             {
                                 <label class="btn ev_live_sub_btn yelw_live_btn ft24"> DRAFT </label>
                             }
@@ -37,6 +39,7 @@
                             {
                                 <label class="btn ev_live_sub_btn grn_live_btn ft24"> LIVE </label>
                             }
+}
                         </p>
                         <p class="ev_mng_title_mini ">@Model.EventAddress </p>
                         <p class="ev_mng_title_mini">@Model.Eventdate </p>
@@ -44,8 +47,10 @@
 
                 </div>
                 <div class="col-sm-6 col-xs-6 pt10 text-right no_pad">
-                    @if (Model.Eventstatus == "Save")
-                {
+@if (Model.EventExpired == "N")
+{
+                    if (Model.Eventstatus == "Save")
+                    {
                         <button class="btn ev_live_sub_btn mb5 ft24" type="button" id="cbtnprivew">
                             PREVIEW
                         </button>
@@ -55,7 +60,14 @@
                         <button class="btn ev_live_sub_btn mb5 ft24" type="button" id="cbtview">
                             VIEW
                         </button>
-                    }
+    }
+}
+else
+{
+    <button class="btn ev_live_sub_btn mb5 ft24" type="button" id="cbtnprivew">
+        PREVIEW
+    </button>
+}
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad bor_line"></div>
@@ -91,8 +103,37 @@
                 <div class="col-sm-12 no_pad bor_line"></div>
                 <div class="col-sm-12 no_pad pt10 pb10">
                     <div class="col-sm-6 col-xs-12 no_pad">
+
+@if (Model.EventExpired == "N")
+{
+    if (Model.Eventstatus == "Save")
+    {
+        <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/cong-mark.png"></div>
+        <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
+
+            <span> Unpublished </span> <br>Your event is in draft mode, please publish it to make it live.
+
+        </div>
+    }
+    else
+    {
+        <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/cong-mark.png"></div>
+        <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
+
+            <span> In Progress </span> <br>Your event page is live and you are ready to sell tickets.
+
+        </div>
+    }
+}
+else
+{
                         <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/cong-mark.png"></div>
-                        <div class="col-sm-10 col-xs-10 no_pad ev_congrt"><span> Completed </span> <br>Congratulation on completeing your event.</div>
+                        <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
+
+                 <span> Completed </span> <br>Congratulation on completeing your event.
+
+                        </div>
+}
                     </div>
                     <div class="col-sm-6 col-xs-12 text-right no_pad">
                         <ul class="col-sm-12 col-xs-12 no_pad mang-ev-nav">
@@ -104,13 +145,20 @@
                                 }
                                 else
                                 {
-                                    <li><a href="#cnfrmdelete" id="aUnpublish" data-toggle="modal">Unpublish</a></li>
+                                    <li><a href="#cnfrmunpublish" id="aUnpublish" data-toggle="modal">Unpublish</a></li>
                                 }
                             }
                             <li>@Html.ActionLink("Copy", "CopyEvent", new { Eventid = Model.Eventid })</li>
                             <li><a href="#">Cancel</a></li>
-                            <li><a href="#">Delete</a></li>
-                            <li><a href="#">Edit Event</a></li>
+                          
+                            @if (Model.Eventtransaction == "N")
+                            {
+                            <li><a href="#cnfrmdelete" id="aDelete" data-toggle="modal">Delete</a></li>
+                            }
+@if (Model.EventExpired == "N")
+{
+                            <li>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = Model.Eventid }, new { }) </li>
+}
                         </ul>
                     </div>
                 </div>
@@ -133,8 +181,8 @@
                             <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Event Page Hits </p>
                             <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Promotional Tools</a></p>
                             <div class="col-sm-12 col-xs-12 no_pad">
-                                @*<canvas id="cnEventHit" width="200px" height="200px"></canvas>*@
-                                <img src="/Images/gr1.png">
+                                <canvas id="cnEventHit" width="200px" height="200px"></canvas>
+                                @*<img src="/Images/gr1.png">*@
                             </div>
                         </div>
                     </div>
@@ -381,7 +429,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="modal fade" id="cnfrmdelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cnfrmunpublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
             <div class="modal-content">
                 <!-- <div class="modal-header custom">
@@ -401,6 +449,26 @@
             </div>
         </div><!-- confirm-msg -->
     </div>
+    <div class="modal fade" id="cnfrmdelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
+                <!-- <div class="modal-header custom">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div> -->
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+                        <h4 id="hdmsgdelete" class="msg"></h4>
+                    </div>
+                    <div class="modal-footer msg-action-btn ok">
+                        <button type="button" class="btn btn-primary yes ok" id="btnyesdelete" data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">No</button>
+
+
+                    </div>
+                </form>
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
     <div class="modal fade" id="nopublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
             <div class="modal-content">
@@ -409,7 +477,7 @@
                 </div> -->
                 <form id="contactForm" class="fullw1 add">
                     <div class="modal-body text-center pv50 txt-msg">
-                        <h4 id="hdmsg" class="msg">Can't Unpublish event as transaction had been done on this event</h4>
+                        <h4 id="hdmsg1" class="msg">Can't Unpublish event as transaction had been done on this event</h4>
                     </div>
                     <div class="modal-footer msg-action-btn ok">
 
@@ -427,16 +495,27 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+     var msg = ajaxsetup('ManageEvent', 'MEDeleteEvent');
+   $("#hdmsgdelete").html(msg);
       var EventId = $("#hdEventid").val();
-            $.ajax({
-                url: '@Url.Action("ReturnOrderAttendees", "ManageEvent")',
-                data: { eventid: EventId, type: "O" },
-                type: "Post",
-                success: function (response) {
+       function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
 
-                 alert(response;)
-                }
-            });
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
 
     var data = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -464,7 +543,7 @@
     ]
 };
         var ctx = $("#cnEventHit").get(0).getContext("2d");
-        var myLineChart = new Chart(ctx).Line(data, options);
+        //var myLineChart = new Chart(ctx).Line(data);
 
         $('#btndivaccsuc').click(function () {
             $('#divaccsuc').css('display', 'none');
@@ -488,6 +567,24 @@
             });
 
         });
+        $("#btnyesdelete").click(function(){
+         var EventId = $("#hdEventid").val();
+          $.ajax({
+                url: '@Url.Action("DeleteEvent", "ManageEvent")',
+                data: { eventid: EventId },
+                type: "Post",
+                success: function (response) {
+
+                    if (response == "Y") {
+                        window.location.href = '@Url.Action("EventList", "EventList")';
+
+                    }
+                   
+                }
+            });
+
+        });
+
 
         $("#btnyes").click(function () {
             var EventId = $("#hdEventid").val();
