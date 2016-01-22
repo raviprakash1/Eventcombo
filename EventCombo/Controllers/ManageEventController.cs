@@ -230,7 +230,7 @@ namespace EventCombo.Controllers
                     var vremqty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Remaining_Quantity).Sum();
                     long ltotalqty = (vtotalqty != null ? Convert.ToInt64(vtotalqty) : 0);
                     long lremqty = (vremqty != null ? Convert.ToInt64(vremqty) : 0);
-                    dResult = (ltotalqty * lremqty) / 100;
+                    dResult = (lremqty * 100) / ltotalqty;
                 }
             }
             catch (Exception ex)
