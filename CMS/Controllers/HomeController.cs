@@ -172,24 +172,13 @@ namespace CMS.Controllers
                     var User = UserManager.FindByEmail(model.Email.ToString());
                     var roleSuperAdmin = (from r in db.AspNetRoles  where r.Name.Contains("Super Admin")  select r).FirstOrDefault();
                     var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id ).Contains(roleSuperAdmin.Id)).ToList();
+                    var status = db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
                     if (users.Find(x => x.Id == User.Id ) != null)
                     {
-                        Session["UserID"] = User.Id;
-                        using (EmsEntities db = new EmsEntities())
+                     
+                        if (status == "Y" || status == "y")
                         {
-                            AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
-                            aspuser.LoginStatus = "Y";
-                            db.SaveChanges();
 
-                        }
-                        return RedirectToAction("Dashboard");
-                    }
-                    else
-                    {
-                        var roleAdmin = (from r in db.AspNetRoles where r.Name.Contains("Admin") select r).FirstOrDefault();
-                        var usersAdmin = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleAdmin.Id)).ToList();
-                        if (usersAdmin.Find(x => x.Id == User.Id) != null)
-                        {
                             Session["UserID"] = User.Id;
                             using (EmsEntities db = new EmsEntities())
                             {
@@ -199,6 +188,37 @@ namespace CMS.Controllers
 
                             }
                             return RedirectToAction("Dashboard");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "You are not an authorized user!!");
+                            return View(model);
+                        }
+                    }
+                    else
+                    {
+                        var roleAdmin = (from r in db.AspNetRoles where r.Name.Contains("Admin") select r).FirstOrDefault();
+                        var usersAdmin = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleAdmin.Id)).ToList();
+                        if (usersAdmin.Find(x => x.Id == User.Id) != null)
+                        {
+                            if (status == "Y" || status == "y")
+                            {
+
+                                Session["UserID"] = User.Id;
+                                using (EmsEntities db = new EmsEntities())
+                                {
+                                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
+                                    aspuser.LoginStatus = "Y";
+                                    db.SaveChanges();
+
+                                }
+                                return RedirectToAction("Dashboard");
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", "You are not an authorized user!!");
+                                return View(model);
+                            }
                         }
                         else
                         {

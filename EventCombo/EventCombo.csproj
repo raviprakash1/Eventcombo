@@ -232,7 +232,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
+    <Compile Include="Controllers\InbetweenController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManageEventController.cs" />
+    <Compile Include="Controllers\PayPalController.cs" />
+    <Compile Include="Controllers\PayPalReturnController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\TicketPaymentController.cs" />
     <Compile Include="Controllers\ValidationMessageController.cs" />
@@ -310,6 +314,9 @@
     </Compile>
     <Compile Include="Models\EventListTemplate.cs" />
     <Compile Include="Models\EventSubCategory.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Events_Hit.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventType.cs">
@@ -405,9 +412,6 @@
     <Compile Include="Models\TimeZoneDetail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TimeZonesystem.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -493,11 +497,14 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
     <Content Include="Content\jquery.timepicker.css" />
+    <Content Include="Content\MapPlaces.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="email.html" />
     <Content Include="EventTicket_HTML.html" />
     <Content Include="Images\ajaxloader1.gif" />
-    <Content Include="Images\Bar_Image.Png" />
+    <Content Include="Images\ana_graph.png" />
+    <Content Include="Images\cong-mark-mini.png" />
+    <Content Include="Images\cong-mark.png" />
     <Content Include="Images\deal_img1.jpg" />
     <Content Include="Images\deal_title_bg_l.png" />
     <Content Include="Images\deal_title_bg_r.png" />
@@ -505,20 +512,23 @@
     <Content Include="Images\dis_title_bg_l.png" />
     <Content Include="Images\dis_title_bg_r.png" />
     <Content Include="Images\event1.jpg" />
+    <Content Include="Images\ev_reg.png" />
     <Content Include="Images\fac.png" />
     <Content Include="Images\fb-dis.png" />
     <Content Include="Images\fb_btn.png" />
     <Content Include="Images\fb_connect.jpg" />
+    <Content Include="Images\fb_prom.png" />
     <Content Include="Images\gmap.png" />
     <Content Include="Images\go.png" />
     <Content Include="Images\go_btn.png" />
+    <Content Include="Images\gr1.png" />
     <Content Include="Images\info_icn.png" />
     <Content Include="Images\lin.png" />
     <Content Include="Images\linkid.png" />
     <Content Include="Images\logo_small.png" />
     <Content Include="Images\mail.png" />
+    <Content Include="Images\org_prof.png" />
     <Content Include="Images\o_cal.png" />
-    <Content Include="Images\QR_Image.Png" />
     <Content Include="Images\slider1.jpg" />
     <Content Include="Images\slider2.png" />
     <Content Include="Images\slider3.png" />
@@ -778,6 +788,7 @@
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
     <None Include="Properties\PublishProfiles\temp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Commonfunction.js" />
     <Content Include="Scripts\dropit.js" />
     <Content Include="Scripts\ec-select.js" />
@@ -788,6 +799,29 @@
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-icons_454545_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-icons_888888_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\index.html" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.structure.css" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.structure.min.css" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.theme.css" />
+    <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.theme.min.css" />
     <Content Include="Scripts\jquery.appendGrid\appendGrid.jquery.json" />
     <Content Include="Scripts\jquery.appendGrid\CHANGELOG.md" />
     <Content Include="Scripts\jquery.appendGrid\LGPL-LICENSE.md" />
@@ -812,6 +846,8 @@
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.countdownTimer.js" />
     <Content Include="Scripts\jquery.creditCardValidator.js" />
+    <Content Include="Scripts\jquery.geocomplete.js" />
+    <Content Include="Scripts\jquery.geocomplete.min.js" />
     <Content Include="Scripts\jquery.icalendar.pack.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
@@ -1065,6 +1101,11 @@
       <Generator>RazorGenerator</Generator>
     </Content>
     <Content Include="Views\ViewEvent\ViewEvent.cshtml" />
+    <Content Include="Views\PayPalReturn\PayPalReturn.cshtml" />
+    <Content Include="Views\ManageEvent\Index.cshtml" />
+    <Content Include="Views\PayPal\PayPal.cshtml" />
+    <Content Include="Views\ManageEvent\CopyEvent.cshtml" />
+    <Content Include="Views\Inbetween\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -113,7 +113,7 @@ namespace CMS.Controllers
             {
                 for (i = 0; i < iUcount; i++)
                 {
-                    strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                    strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
                     PageFilter.Add(new SelectListItem()
                     {
                         Text = strText,
@@ -124,7 +124,7 @@ namespace CMS.Controllers
                     iUcount = iUcount - iGapValue;
                     if (iUcount < iGapValue)
                     {
-                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                        strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
@@ -150,7 +150,7 @@ namespace CMS.Controllers
             {
                 PageFilter.Add(new SelectListItem()
                 {
-                    Text = "0 - 50",
+                    Text = "1 - 50",
                     Value = "0",
                     Selected = (iCount == 50 ? true : false)
                 });

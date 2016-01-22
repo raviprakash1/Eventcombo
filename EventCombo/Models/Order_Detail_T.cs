@@ -22,5 +22,6 @@ namespace EventCombo.Models
         public Nullable<long> O_VariableId { get; set; }
         public Nullable<decimal> O_VariableAmount { get; set; }
         public Nullable<long> O_PromoCodeId { get; set; }
+        public Nullable<System.DateTime> O_OrderDateTime { get; set; }
     }
 }

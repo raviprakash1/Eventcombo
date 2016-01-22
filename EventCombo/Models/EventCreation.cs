@@ -54,4 +54,32 @@ namespace EventCombo.Models
 
         public string ModifyDate { get; set; }
     }
+
+
+    public class ManageEvent
+    {
+        public string Eventstatus { get; set; }
+        public string Eventtitle { get; set; }
+        public string EventAddress { get; set; }
+        public string Eventdate { get; set; }
+        public string EventExpired { get; set; }
+
+        public long Eventid { get; set; }
+        public string Eventprivacy { get; set; }
+        public string Eventtransaction { get; set; }
+
+        public List<OrderAttendees> Order{ get; set; }
+        public List<OrderAttendees> Attendess { get; set; }
+
+
+    }
+
+    public class OrderAttendees
+    {
+        public string Qty { get; set; }
+        public string Amount { get; set; }
+        public string OrderId { get; set; }
+        public string Name { get; set; }
+        public string Date { get; set; }
+    }
 }

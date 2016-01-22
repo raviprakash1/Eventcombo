@@ -69,6 +69,10 @@ namespace EventCombo.Controllers
             EventId = vmc.GetLatestEventId(EventId);
             TempData["ForViewOnly"] = "N";
 
+            EventHit(EventId);
+
+
+
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             Session["Fromname"] = "events";
@@ -97,13 +101,18 @@ namespace EventCombo.Controllers
             enablediscussion = EventDetail.EnableFBDiscussion;
             viewEvent.showTimezone = showtimezone;
             var timezone = "";
+            DateTime dateTime= new DateTime();
             var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
             if (Timezonedetail != null)
             {
-                timezone = Timezonedetail.TimeZone_Name;
+                timezone = Timezonedetail.TimeZone;
+                TimeZoneInfo timeZoneInfo;
 
+                
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezone);
+                dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
                 //Timezone value
-
+               
             }
 
 
@@ -153,7 +162,7 @@ namespace EventCombo.Controllers
             //GetDateList
             var GetEventDate = db.GetEventDateList(EventId).ToList();
             ViewBag.DateList = GetEventDate;
-
+            DateTime ENDATE = new DateTime();
             if (eventype > 0)
             {
                 viewEvent.eventType = "Multiple";
@@ -173,7 +182,7 @@ namespace EventCombo.Controllers
 
                 starttime = evschdetails.StartTime.ToUpper();
                 endtime = evschdetails.EndTime.ToUpper();
-
+                 ENDATE = DateTime.Parse(enddate + " "+evschdetails.EndTime);
 
 
 
@@ -204,6 +213,7 @@ namespace EventCombo.Controllers
 
                     starttime = evschdetails.EventStartTime.ToString();
                     endtime = evschdetails.EventEndTime.ToString();
+                     ENDATE = DateTime.Parse(enddate + " " + endtime);
                 }
 
 
@@ -233,12 +243,13 @@ namespace EventCombo.Controllers
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + " " + starttime + "-" + endday.ToString() + " " + eDate_new;
 
             }
-
+           
             if (!string.IsNullOrEmpty(eDate_new))
             {
                 var enday = DateTime.Parse(eDate_new);
+             
                 var now = DateTime.Now;
-                if (enday < now)
+                if (ENDATE < dateTime)
                 {
 
                     TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy");
@@ -354,6 +365,11 @@ namespace EventCombo.Controllers
                 tickettype = "Donate";
 
             }
+            if (ticketsfree >0 && ticketsPaid <= 0 && ticketsDonation > 0)
+            {
+                tickettype = "Register";
+
+            }
             if (ticketsfree <= 0 && ticketsPaid <= 0 && ticketsDonation <= 0)
             {
                 tickettype = "Get Tickets";
@@ -368,7 +384,38 @@ namespace EventCombo.Controllers
             return View(viewEvent);
         }
 
+        public void EventHit(long EventId)
+        {
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var EventH = (from myRow in objEnt.Events_Hit
+                                    where myRow.EventHit_EventId == EventId
+                                    select myRow).FirstOrDefault();
+                    if (EventH == null)
+                    {
+                        Events_Hit objEHI = new Events_Hit();
+                        objEHI.EventHit_EventId = EventId;
+                        objEHI.EventHit_Hits = 1;
+                        objEnt.Events_Hit.Add(objEHI);
+                    }
+                    else
+                    {
+                        decimal? dEventHit = EventH.EventHit_Hits + 1;
+                        Events_Hit objEH = objEnt.Events_Hit.First(h => h.EventHit_EventId == EventId);
+                        objEH.EventHit_Hits = dEventHit;
+                    }
+                    objEnt.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
 
+            }
+
+
+        }
 
         //public ActionResult ViewEvent(string strEventDs, string strEventId)
         //{

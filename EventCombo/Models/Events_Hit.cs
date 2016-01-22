@@ -12,9 +12,11 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TimeZonesystem
+    public partial class Events_Hit
     {
-        public string DisplayName { get; set; }
-        public string Id { get; set; }
+        public long EventHit_Id { get; set; }
+        public Nullable<long> EventHit_EventId { get; set; }
+        public Nullable<decimal> EventHit_Hits { get; set; }
+        public Nullable<System.DateTime> EventHitDateTime { get; set; }
     }
 }

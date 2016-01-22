@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "PayPalReturn";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<h2>PayPalReturn</h2>
+
+<span>Please Wait ...</span>
+
+<script>
+    $(document).ready(function () {
+        window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
+        //window.close();
+    });
+
+</script>

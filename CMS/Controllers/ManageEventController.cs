@@ -34,9 +34,9 @@ namespace CMS.Controllers
             {
                 for (i = 0; i < iUcount; i++)
                 {
-                    if (strText != z.ToString() + " - " + (z + iGapValue).ToString())
+                    if (strText != (z+1).ToString() + " - " + (z + iGapValue).ToString())
                     {
-                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                        strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
@@ -48,7 +48,7 @@ namespace CMS.Controllers
                     iUcount = iUcount - iGapValue;
                     if (iUcount < iGapValue && iUcount>0)
                     {
-                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                        strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
@@ -73,7 +73,7 @@ namespace CMS.Controllers
             {
                 PageFilter.Add(new SelectListItem()
                 {
-                    Text = "0 - 25",
+                    Text = "1 - 25",
                     Value = "0",
                     Selected = (iCount == 25 ? true : false)
                 });
@@ -111,7 +111,7 @@ namespace CMS.Controllers
             {
                 for (i = 0; i < iUcount; i++)
                 {
-                    strText = z.ToString() + " - " + (z + iGapValue).ToString();
+                    strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
                     PageFilter.Add(new SelectListItem()
                     {
                         Text = strText,
@@ -120,16 +120,19 @@ namespace CMS.Controllers
                     });
                     z = z + iGapValue;
                     iUcount = iUcount - iGapValue;
-                    if (iUcount < iGapValue)
+                    if (iUcount > 0)
                     {
-                        strText = z.ToString() + " - " + (z + iGapValue).ToString();
-                        PageFilter.Add(new SelectListItem()
+                        if (iUcount < iGapValue)
                         {
-                            Text = strText,
-                            Value = (i+1).ToString(),
-                            Selected = (iCount == z ? true : false)
-                        });
-                        iUcount = 0;
+                            strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                            PageFilter.Add(new SelectListItem()
+                            {
+                                Text = strText,
+                                Value = (i + 1).ToString(),
+                                Selected = (iCount == z ? true : false)
+                            });
+                            iUcount = 0;
+                        }
                     }
                 }
             }

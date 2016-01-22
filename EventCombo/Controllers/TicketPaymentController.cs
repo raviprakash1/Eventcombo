@@ -33,6 +33,15 @@ namespace EventCombo.Controllers
         //[Route("",Name ="Payment"),HttpGet]
         public ActionResult TicketPayment()
         {
+            if (Session["token"] != null && Session["PayerID"] != null)
+            {
+                string strtoken = Session["token"].ToString();
+                string strPayerID = Session["PayerID"].ToString();
+
+
+            } 
+             
+
             ValidationMessageController vmc = new ValidationMessageController();
             if ((Session["AppId"] != null))
             {
@@ -169,7 +178,15 @@ namespace EventCombo.Controllers
                             var result = Scardnumber.Substring(Icardlength - Math.Min(chrlength, Icardlength));
                           var  finalstr= rvrs+ result;
                             card1.value = item.CardId.ToString();
-                            var touper=char.ToUpper(item.card_type[0]) + item.card_type.Substring(1);
+                            var touper = "";
+                            if (!string.IsNullOrWhiteSpace(item.card_type))
+                            {
+                                 touper = char.ToUpper(item.card_type[0]) + item.card_type.Substring(1);
+                            }
+                            else
+                            {
+                                touper = "";
+                            }
                             card1.text = "Payment Method:Customer-" + Fname + "  " + touper + "  " + finalstr;
                             Detailscard.Add(card1);
 
@@ -299,6 +316,21 @@ namespace EventCombo.Controllers
                 return "";
 
             }
+        }
+
+        public string SendPaypaldetail(TicketPayment model)
+        {
+            string strResult = "";
+            try
+            {
+                strResult = "Y";
+                Session["TicketDatamodel"] = model;
+            }
+            catch (Exception)
+            {
+                strResult = "N";
+            }
+            return strResult;
         }
 
         public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId,string strPaymentType)
@@ -767,7 +799,7 @@ namespace EventCombo.Controllers
                     etype = tyid.Frequency;
                 }
                 //
-                var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID).ToList();
+                var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID && i.TPD_Event_Id== Eventid).ToList();
                 foreach (var item in TicketPurchasedDetail)
                 {
                     //Detail to send on page
@@ -838,7 +870,7 @@ namespace EventCombo.Controllers
                         tickettype = "Donate";
                         fee = "";
                     }
-                    string xel = createxml(item.TPD_Order_Id, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, address.ConsolidateAddress, "", "");
+                    string xel = createxml(item.TPD_Order_Id, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, addresslist, "", "");
 
                     string qrImgPath = Server.MapPath("..") + "/Images/QR_Image.Png";
                    string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";

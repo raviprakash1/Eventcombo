@@ -1327,7 +1327,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
     }
     $(document).ready(function () {
 
-
+        
 
 
         $(".Evenfaccomment").css("display", "none");
@@ -1463,6 +1463,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
         var Eventid = $('#hdEventid').val();
         $("#btPayment").click(function () {
+            debugger;
             var vEntid = $('#hdEventid').val();
             var IdAry = $("#hdIds").val().split(',');
             var TList = [];

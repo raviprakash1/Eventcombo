@@ -1,0 +1,23 @@
+﻿
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<div class="event_container">
+    <div class="event_inner_container event_top" id="eventtopscoll">
+        <div class="col-sm-12 pt10 bggrey clearfix">
+            <div class="col-sm-12">
+                You may copy this event to quickly create a new event with the same description, ticket types, survey, and dates. You may also make whatever changes are necessary to the new event, both before and after publishing. You must press the Publish Event button on the next page before the new event will be available for attendee registrations
+            </div>
+            <div class="col-sm-12">
+                <button type="button" id="btCopyEvent" value="Save Event">Save Event</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btCopyEvent").click(function () {
+        alert("calling Paypal");
+        window.location.href = '@Url.Action("PayPal", "PayPal")';
+    });
+
+</script>

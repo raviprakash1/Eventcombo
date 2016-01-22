@@ -11,6 +11,7 @@
 <link href="~/Content/summernote.css" rel="stylesheet" />
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
 
 <script>
     $(document).ready(function () {
@@ -1307,7 +1308,7 @@
 
                     </div>
                     <div class="col-sm-6">
-                        <div class="col-sm-12 no_pad location_map_div loc_map" id="map_canvas"> <i class="fa fa-map-marker"></i> </div>
+                        <div class="col-sm-12 no_pad location_map_div loc_map map_canvas" id="map_canvas1"> <i class="fa fa-map-marker"></i> </div>
                     </div>
                     <div class="clearfix"></div>
                     <div id="dvAddFooter">
@@ -1413,8 +1414,65 @@
     // ---------------------Event Creation Script -------------------
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    <script src="~/Content/gmap.js"></script>
+    @*<script src="~/Content/gmap.js"></script>*@
     <script>
+        //function TestCLick() {
+        //    $(".pac-container").removeClass('map-drop-block');
+        //    alert("Click on div");
+        //}
+
+        //$(document).ready(function () {
+
+        //    var mapOptions = {
+        //        zoom: 10,
+        //        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        //        center: new google.maps.LatLng(41.06000, 28.98700)
+        //    };
+
+        //    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        //    var geocoder = new google.maps.Geocoder();
+        //    searchBoxMapAddress = function () {
+        //        var input = document.getElementById('txtEventLocation');
+
+        //        var searchBox = new google.maps.places.Autocomplete(input);
+        //        google.maps.event.addListener(searchBox, 'place_changed', function () {
+        //            var places = searchBox.getPlace();
+        //            var bounds = new google.maps.LatLngBounds();
+
+        //            bounds.extend(places.geometry.location);
+
+        //            map.fitBounds(bounds);
+
+
+        //        });
+
+        //        // Bias the SearchBox results towards places that are within the bounds of the
+        //        // current map's viewport.
+        //        google.maps.event.addListener(map, 'bounds_changed', function () {
+        //            var bounds = map.getBounds();
+        //            searchBox.setBounds(bounds);
+        //        });
+
+        //    }
+        //    searchBoxMapAddress();
+        //    setTimeout(function () {
+        //        $(".pac-container").append('<div class="pac-item location-places-autocomplete-cant-find " id="divCNF"><i class="ico-search"></i><b><span class="pac-item-query"><a class="js-location-cant-find" onclick="TestCLick();" href="#">Cant find your location?</a></span></b></div>');
+        //        $(".pac-container").on("click", function (event) {
+        //            $(this).removeClass('map-drop-block');
+        //            $("#divCNF").removeClass('map-drop-block');
+        //            $(this).hide();
+        //        });
+        //    }, 500);
+        //    $('#txtEventLocation').on('click', function () {
+        //        $(".pac-container").addClass('map-drop-block');
+        //        $("#divCNF").addClass('map-drop-block');
+        //    });
+
+        //});
+
+
+
         $(".chkvalidation").blur(function () {
 
             var msg = disablebutton();
@@ -2774,25 +2832,67 @@
             });
 
             // ---------------------------------Map Implemetation--------------------------------------------
-//            var input = document.getElementById('txtEventLocation');
-            //var autocompleteEL = new google.maps.places.Autocomplete(input);
-            //debugger
-            //var inputVenu = document.getElementById('VenueName');
-            //var autocomplete = new google.maps.places.Autocomplete(input);
-            //$(".pac-container").add("Click Here");
-            //<div class="pac-item"><span class="pac-icon pac-icon-marker"></span><span class="pac-item-query"><span class="pac-matched">M</span>ehrauli</span><span>New Delhi, Delhi, India</span></div>
-            ////map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputVenu);
-            //google.maps.event.addListener(autocomplete, 'place_keydown', function () {
-            //    alert("Keydown fire");
+
+
+          
+
+
+
+            var input = document.getElementById('txtEventLocation');
+            var Eloc = new google.maps.places.Autocomplete(input);
+            setTimeout(function () {
+                $(".pac-container").append("<div class='pac-item location-places-autocomplete-cant-find ' id='divCNF'><i class='ico-search'></i><b><span class='pac-item-query'><a data-target='#myModal' class='js-location-cant-find' onclick='CannotFindLocation();' href='javascript:void(0);'   style='cursor: pointer; cursor: hand; margin-left:7px; color:#3cf;' data-toggle='modal' draggable='false'>Can't find your location?</a></span></b></div>");
+                $(".pac-container").on("click", function (event) {
+                    $(this).removeClass('map-drop-block');
+                    $("#divCNF").removeClass('map-drop-block');
+                    $(this).hide();
+                });
+            }, 500);
+
+            $('#txtEventLocation').on('click', function () {
+                $(".pac-container").addClass('map-drop-block');
+                $("#divCNF").addClass('map-drop-block');
+            
+            });
+            $('#txtEventLocation').on('focus', function () {
+                $(".pac-container").addClass('map-drop-block');
+                $("#divCNF").addClass('map-drop-block');
+                
+            });
+
+
+            //var Vname = document.getElementById('VenueName');
+            //var autocomplete = new google.maps.places.Autocomplete(Vname);
+           
+          
+       
+            //$('#VenueName').on('click', function () {
+              
+              
+             
+            //    $('.pac-container').each(function (i) {
+            //        $(this).attr('id', 'idpac_' + (i + 1));
+            //    });
+            //    var div =$(".location-places-autocomplete-cant-find");
+            //    console.log(div.parent());
+
+              
+            //    $('#idpac_2 div:first').remove();
+              
+            //    $("#idpac_2").addClass("zindex");
+              
             //});
+
+
+
+         
             //google.maps.event.addListener(autocomplete, 'place_changed', function () {
             //    var mapOptions = {
             //        center: new google.maps.LatLng(6.9167, 79.8473),
             //        zoom: 10,
             //        mapTypeId: google.maps.MapTypeId.ROADMAP
             //    };
-            //    //var map = new google.maps.Map(document.getElementById("map_canvas"),
-            //    //  mapOptions);
+
             //    var map = new google.maps.Map(document.getElementById("map_canvas"),
             //      mapOptions);
             //    // create a marker
@@ -2831,17 +2931,17 @@
             //        ].join(' ');
             //    }
 
-            //    //$("#VenueName").val(place.address_components[0].long_name);
+                //$("#VenueName").val(place.address_components[0].long_name);
 
-            //    //$("#City").val(place.address_components[1].long_name);
-            //    //$("#State").val(place.address_components[3].long_name);
-            //    //$("#Zip").val(place.address_components[5].long_name);
-            //    //$("#CountryID").val(place.address_components[4].long_name);
+                //$("#City").val(place.address_components[1].long_name);
+                //$("#State").val(place.address_components[3].long_name);
+                //$("#Zip").val(place.address_components[5].long_name);
+                //$("#CountryID").val(place.address_components[4].long_name);
 
-            //    //$("#VenueName").val(address.toString());
-            //    //$("#Address1").val(address[1].toString());
-            //    //$("#Address2").val(address[2].toString());
-            //});
+                //$("#VenueName").val(address.toString());
+                //$("#Address1").val(address[1].toString());
+                //$("#Address2").val(address[2].toString());
+           // });
             // --------------------Multiple Venue---------------------------
 
             function AddRow(TableId, ColumnValue, ColumnName, IncludeSNo) {
@@ -3022,7 +3122,7 @@
             $("#Zip").val('');
             $("#tblAddress").empty();
             $("#CountryID").val('1');
-
+            $(".pac-container").removeClass('map-drop-block');
         }
         
         function changetext(e) {

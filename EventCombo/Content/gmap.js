@@ -1,4 +1,6 @@
-﻿var geocoder;
+﻿
+
+var geocoder;
 var map;
 var marker;
 
@@ -149,7 +151,7 @@ function geocode_lookup( type, value, update ) {
 
 // initialise the jqueryUI autocomplete element
 function autocomplete_init_MultiVenue() {
-  $("#VenueName").autocomplete({
+  $("#VenueNamesss").autocomplete({
 
     // source is the list of input options shown in the autocomplete dropdown.
     // see documentation: http://jqueryui.com/demos/autocomplete/
