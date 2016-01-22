@@ -1088,14 +1088,14 @@ else
             <div class="event_detail_container mt10">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
-                    <div class="col-sm-12 col-xs-12 text-left no_pad">
+                    <div class="col-sm-12 col-xs-12 text-left no_pad"  >
                         <h2 class="fb_dis_head pt5">
                             EVENT SETTING
                         </h2>
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
-                <div class="evnt_details_body">
+                <div class="evnt_details_body" id="PrivaPub" tabindex="-1">
                     <div class="form-group">
                         <div class="col-sm-12 no_pad">
                             <label class="Pubpage label-control ev_tickt_lebel pl0">
@@ -1345,7 +1345,7 @@ else
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
-    <script src = "../Content/gmap.js" ></script>
+    <script src = "~/Scripts/gmap.js" ></script>
                   // ---------------------Event Creation Script -------------------
     <script>
         $(document).ready(function () {
@@ -1370,9 +1370,9 @@ else
                         //$("#lblDft").html("DRAFT");
                     }
                     $('#status').val(data.EventStatus);
-                  
-                        
-                    if (data.MultipleSchTime == "S") 
+
+
+                    if (data.MultipleSchTime == "S")
                     {
                         $("#txtStartDate").val(data.EventStartDate);
                         $("#txtStartTime").val(data.EventStartTime);
@@ -1380,7 +1380,7 @@ else
                         $("#txtEndTime").val(data.EventEndTime);
                         $("#hdSchType").val('Single');
                     }
-                    if (data.MultipleSchTime == "M") 
+                    if (data.MultipleSchTime == "M")
                     {
                         $(".SchmultiEvnt").click();
                         $("#dlSchOption").val(data.Frequency);
@@ -1417,7 +1417,7 @@ else
 
                         }
                     }
-                  
+
                     if (data.AddressStatus == "Online")
                     {
                         $("#dvAddress").hide();
@@ -1434,7 +1434,7 @@ else
                     $("#btSaveTimeZone").click();
                     //alert()
                     //$("#hdEventId").val(data.EventID);
-                  
+
                     if(data.Addresses!="")
                     {
                     $("#tblAddress").append(data.Addresses);
@@ -1444,7 +1444,7 @@ else
 
                     //Tickets start
                     //
-                   
+
                     if(data.Ticket!='')
                     {
 
@@ -1500,16 +1500,16 @@ else
                                 }).on('changeDate', function (ev) {
                                     $("#id_auto_hide_after_Date-" + i).datepicker('hide');
                                 });
-                                
+
                                 $("#id_saletimestart-" + i).timepicker();
-           
+
                                 $("#id_saletimeend-" + i).timepicker();
                                 $("#id_auto_hide_until_time-" + i).timepicker();
                                 $("#id_auto_hide_after_Time-" + i).timepicker();
                             }
 
                         }
-                    
+
 
 
                         $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
@@ -1521,7 +1521,7 @@ else
                     {
                         $('#hdimage').val(data.Image);
                     }
-                  
+
 
                     if(data.Variabledesc!='')
                     {
@@ -1529,7 +1529,7 @@ else
                         $('#id_Mainvariable').css('display','block');
                         $('#id_Mainvariable').append(data.Variabledesc);
                         $("input[id^='id_varsubprice']").mask('000,000.00', { reverse: true });
-                     
+
 
 
                     }else
@@ -1545,9 +1545,9 @@ else
 
             var privat="@Model.EventPrivacy";
             var privatefb="@Model.Private_ShareOnFB"
-            var privateguest="@Model.Private_GuestOnly" 
+            var privateguest="@Model.Private_GuestOnly"
             var privatepwd="@Model.Private_Password"
-          
+
             debugger;
             if(privat=="Private")
             {
@@ -1562,7 +1562,7 @@ else
             {
                 //$('#rdPrivate').prop("checked","false");
                 $('#rdPublic').prop("checked","true");
-                
+
                 $(".priv_cont").hide();
             }
 
@@ -1580,23 +1580,24 @@ else
             {
                 $('#chkReqPassword').prop("checked","true");
                 $('#txtReqPassword').attr('readonly', false);
-                
+
 
             }
             $(".cdisable").removeAttr("disabled");
-            //var msg=validatemain();
-            //alert(msg);
-            //if(msg=="")
-            //{
-            //    
+          
 
-            //}   
-
+         var temp="@TempData["Scroll"]"
+            if(temp!='')
+            {
+                var scroll="@TempData["Scroll"]";
+                $(window).scrollTop($("#"+scroll).offset().top);
+             $("#"+scroll).focus();
+           }
 
         });
 
         $("#rdPublic").click(function(){
-            
+
             //$("#rdPrivate").prop("checked","false");
 
             $("#chkShareOnFB").prop("checked",false);
@@ -1605,15 +1606,15 @@ else
             $("#txtReqPassword").val('');
             $('#txtReqPassword').attr('readonly', true);
             $(".priv_cont").hide();
-        
-        
+
+
         });
         $(".cbtPreview").click(function () {
             var msg = validatemain();
             if (msg != "") {
 
                 $('#diverroacc').css('display', 'block');
-               
+
                 $('#btndiverrsuc').focus();
                 $('#erraccmsg').html(msg);
                 $('html,body').animate({ scrollTop: 0 });
@@ -1621,7 +1622,7 @@ else
 
             }
             save("Preview");
-            
+
         });
 
 

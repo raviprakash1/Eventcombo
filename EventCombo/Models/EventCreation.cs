@@ -65,7 +65,22 @@ namespace EventCombo.Models
         public string EventExpired { get; set; }
 
         public long Eventid { get; set; }
+        public string Eventprivacy { get; set; }
+        public string Eventtransaction { get; set; }
+
+        public List<OrderAttendees> Order{ get; set; }
+        public List<OrderAttendees> Attendess { get; set; }
+        public string Eventcancel { get; set; }
 
 
+    }
+
+    public class OrderAttendees
+    {
+        public string Qty { get; set; }
+        public string Amount { get; set; }
+        public string OrderId { get; set; }
+        public string Name { get; set; }
+        public string Date { get; set; }
     }
 }

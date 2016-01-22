@@ -870,7 +870,7 @@ namespace EventCombo.Controllers
                         tickettype = "Donate";
                         fee = "";
                     }
-                    string xel = createxml(item.TPD_Order_Id, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, address.ConsolidateAddress, "", "");
+                    string xel = createxml(item.TPD_Order_Id, tickets.T_name, item.TPD_Purchased_Qty.ToString(), ticketP, fee, tickets.T_Discount.ToString(), tickettype, username, eventdetail.EventTitle, tQntydetail.TQD_StartDate, tQntydetail.TQD_StartTime, addresslist, "", "");
 
                     string qrImgPath = Server.MapPath("..") + "/Images/QR_Image.Png";
                    string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";

@@ -15,7 +15,7 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
         public ActionResult Index(long Eventid,string type)
         {
-            var TopAddress = ""; var Topvenue = ""; var Dayofweek = "";
+            var TopAddress = ""; var Topvenue = ""; 
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             ManageEvent Mevent = new ManageEvent();
@@ -132,13 +132,24 @@ namespace EventCombo.Controllers
                 Mevent.EventExpired = "Y";
             }
             //Get Event Date
-
+            //Trn
+            var transaction = db.Ticket_Purchased_Detail.Any(i => i.TPD_Event_Id == Eventid);
+            if(transaction)
+            {
+                Mevent.Eventtransaction = "Y";
+            }
+            else
+            {
+                Mevent.Eventtransaction = "N";
+            }
+            //Trn
 
             Mevent.Eventid = Eventid;
             Mevent.Eventstatus = Edetails.EventStatus;
             Mevent.Eventtitle = Edetails.EventTitle;
             Mevent.EventAddress = TopAddress;
             Mevent.Eventdate = startday.ToString() + " " + sDate_new + " " + starttime;
+            Mevent.Eventprivacy = Edetails.EventPrivacy;
             Session["Fromname"] = "events";
             ValidationMessageController vmc = new ValidationMessageController();
             vmc.ControllerContext = new ControllerContext(this.Request.RequestContext, vmc);
@@ -151,12 +162,77 @@ namespace EventCombo.Controllers
             {
                 TempData["Success"] = null;
             }
+            OrderAttendees CO = new OrderAttendees();
+            Mevent.Order = (from o in db.Order_Detail_T
+                          join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
+                          join a in db.Profiles on p.TPD_User_Id equals a.UserID
+                          where p.TPD_Event_Id == Eventid
+                          group new
+                          {
+                              OrderId = o.O_Order_Id,
+                              Price = o.O_TotalAmount,
+                              Qty = p.TPD_Purchased_Qty,
+                              Name = a.FirstName + " " + a.LastName,
+                              Date = o.O_OrderDateTime
+                          }
+                          by new
+                          {
+                              o.O_Order_Id,
+                              o.O_TotalAmount,
+                              p.TPD_Purchased_Qty,
+                              a.FirstName,
+                              a.LastName,
+                              o.O_OrderDateTime
+                          } into gc
+                     orderby gc.Key.O_Order_Id descending
+                    select new OrderAttendees()
+                    {
+                            OrderId = gc.Key.O_Order_Id,
+                        Amount  = gc.Key.O_TotalAmount.ToString(),
+                              Qty = gc.ToList().Sum(a => a.Qty).ToString(),
+                              Name = gc.Key.FirstName + " " + gc.Key.LastName,
+                        Date = gc.Key.O_OrderDateTime.ToString()
+                    }).Take(3).ToList();
+
+
+
+            Mevent.Attendess = (from o in db.Order_Detail_T
+                                join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
+                                join a in db.Profiles on p.TPD_User_Id equals a.UserID
+                                where p.TPD_Event_Id == Eventid
+                                group new
+                                {
+                                    OrderId = o.O_Order_Id,
+                                    Price = o.O_TotalAmount,
+                                    Qty = p.TPD_Purchased_Qty,
+                                    Name = a.FirstName + " " + a.LastName,
+                                    Date=o.O_OrderDateTime
+                                }
+                                by new
+                                {
+                                    o.O_Order_Id,
+                                    o.O_TotalAmount,
+                                    p.TPD_Purchased_Qty,
+                                    a.FirstName,
+                                    a.LastName,
+                                    o.O_OrderDateTime
+                                } into gc
+                                orderby gc.Key.O_Order_Id descending,gc.Key.FirstName ascending
+                                select new OrderAttendees()
+                                {
+                                    OrderId = gc.Key.O_Order_Id,
+                                    Amount = gc.Key.O_TotalAmount.ToString(),
+                                    Qty = gc.ToList().Sum(a => a.Qty).ToString(),
+                                    Name = gc.Key.FirstName + " " + gc.Key.LastName,
+                                    Date    =gc.Key.O_OrderDateTime.ToString()
+                                }).Take(3).ToList();
+
 
             DateTime dt = DateTime.Today.AddDays(-30);
             StringBuilder strDates = new StringBuilder();
             StringBuilder strSaleQty = new StringBuilder();
             long lHitCount = 0;
-            for(int i =1;dt <= DateTime.Today; i++)
+            for (int i = 1; dt <= DateTime.Today; i++)
             {
                 if (strDates.ToString().Equals(""))
                     strDates.Append(dt.ToShortDateString());
@@ -165,7 +241,7 @@ namespace EventCombo.Controllers
 
                 lHitCount = GetEventHitDayCount(Eventid, dt);
                 strDates.Append("-");
-                if (lHitCount >0)
+                if (lHitCount > 0)
                 {
                     strDates.Append(lHitCount.ToString());
                 }
@@ -195,9 +271,64 @@ namespace EventCombo.Controllers
             TempData["EventHits"] = strDates.ToString();
             TempData["SaleQty"] = strSaleQty.ToString();
             TempData["TicketSalePer"] = GetSalePer(Eventid);
+
             return View(Mevent);
         }
+        public string DeleteEvent(long eventid)
+        {
+            string msg = "";
+           
+                using (var transaction=db.Database.BeginTransaction())
+                {
+                try
+                {
+                    db.Event_Orgnizer_Detail.RemoveRange(db.Event_Orgnizer_Detail.Where(x => x.Orgnizer_Event_Id == eventid).ToList());
+                    db.Event_VariableDesc.RemoveRange(db.Event_VariableDesc.Where(x => x.Event_Id == eventid).ToList());
+                    db.EventImages.RemoveRange(db.EventImages.Where(x => x.EventID == eventid).ToList());
+                    db.EventFavourites.RemoveRange(db.EventFavourites.Where(x => x.eventId == eventid).ToList());
+                    db.Addresses.RemoveRange(db.Addresses.Where(x => x.EventId == eventid).ToList());
+                    db.EventVenues.RemoveRange(db.EventVenues.Where(x => x.EventID == eventid).ToList());
+                    db.EventVotes.RemoveRange(db.EventVotes.Where(x => x.eventId == eventid).ToList());
+                    db.MultipleEvents.RemoveRange(db.MultipleEvents.Where(x => x.EventID == eventid).ToList());
+                    db.Publish_Event_Detail.RemoveRange(db.Publish_Event_Detail.Where(x => x.PE_Event_Id == eventid).ToList());
+                    db.Ticket_Quantity_Detail.RemoveRange(db.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == eventid).ToList());
+                    db.Events_Hit.RemoveRange(db.Events_Hit.Where(x => x.EventHit_EventId == eventid).ToList());
+                    db.Tickets.RemoveRange(db.Tickets.Where(x => x.E_Id == eventid).ToList());
+                    db.Events.RemoveRange(db.Events.Where(x => x.EventID == eventid).ToList());
 
+                    //db.Database.ExecuteSqlCommand("Delete from Event_Orgnizer_Detail where Orgnizer_Event_Id='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Event_VariableDesc where Event_Id='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from EventImage where EventID='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from EventFavourite where eventId='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Address where EventId='" + eventid + "'");
+                    // db.Database.ExecuteSqlCommand("Delete from EventVenue where EventID='" + eventid + "'");
+                    // db.Database.ExecuteSqlCommand("Delete from EventVote where eventId='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from MultipleEvent where EventID='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Publish_Event_Detail where PE_Event_Id='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Ticket_Quantity_Detail where TQD_Event_Id='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Events_Hit where EventHit_EventId='" + eventid + "'");
+                    //db.Database.ExecuteSqlCommand("Delete from Ticket where E_Id='" + eventid + "'");
+                   // db.Database.ExecuteSqlCommand("Delete from Event where EventID='" + eventid + "'");
+
+
+
+
+                   
+                
+                    db.SaveChanges();
+                    transaction.Commit();
+                    msg = "Y";
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    msg = "N";
+                }
+            }
+          
+                return msg;
+        }
+    
         public long GetEventHitDayCount(long eventId, DateTime dt)
         {
             long lResult = 0;
@@ -533,6 +664,12 @@ namespace EventCombo.Controllers
                 return Eventid;
             }
             return Eventid;
+        }
+
+
+        public void SetScrollTemp()
+        {
+            TempData["Scroll"] = "PrivaPub";
         }
 
     }

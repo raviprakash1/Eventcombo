@@ -1235,26 +1235,28 @@ namespace EventCombo.Controllers
                     ObjEC.ModifyDate = DateTime.Now;
                    objEnt.Events.Add(ObjEC);
                     // Address info
-                 
-                    Address ObjAdd = new Models.Address();
-                      //  objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
-                    foreach (Address objA in model.AddressDetail)
+                    if (model.AddressDetail != null)
                     {
-                        if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
+                        Address ObjAdd = new Models.Address();
+                        //  objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                        foreach (Address objA in model.AddressDetail)
                         {
-                            ObjAdd = new Models.Address();
-                            ObjAdd.EventId = ObjEC.EventID;
-                            ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
-                            ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
-                            ObjAdd.City = objA.City == null ? "" : objA.City;
-                            ObjAdd.CountryID = objA.CountryID;
-                            ObjAdd.State = objA.State == null ? "" : objA.State;
-                            ObjAdd.UserId = strUserId;
-                            ObjAdd.VenueName = objA.VenueName;
-                            ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
-                            ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
-                            ObjAdd.Name = "";
-                           objEnt.Addresses.Add(ObjAdd);
+                            if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
+                            {
+                                ObjAdd = new Models.Address();
+                                ObjAdd.EventId = ObjEC.EventID;
+                                ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
+                                ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
+                                ObjAdd.City = objA.City == null ? "" : objA.City;
+                                ObjAdd.CountryID = objA.CountryID;
+                                ObjAdd.State = objA.State == null ? "" : objA.State;
+                                ObjAdd.UserId = strUserId;
+                                ObjAdd.VenueName = objA.VenueName;
+                                ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
+                                ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
+                                ObjAdd.Name = "";
+                                objEnt.Addresses.Add(ObjAdd);
+                            }
                         }
                     }
                     
