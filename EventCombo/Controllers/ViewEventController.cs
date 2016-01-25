@@ -397,6 +397,9 @@ namespace EventCombo.Controllers
                     //{
                         Events_Hit objEHI = new Events_Hit();
                         objEHI.EventHit_EventId = EventId;
+                        objEHI.EventHitDateTime = DateTime.Now;
+                        objEHI.EventHit_Hits = 1;
+                        
                         objEnt.Events_Hit.Add(objEHI);
                     //}
                     //else

@@ -1876,7 +1876,7 @@
           <Key>
             <PropertyRef Name="EventHit_Id" />
           </Key>
-          <Property Name="EventHit_Id" Type="Int64" Nullable="false" />
+          <Property Name="EventHit_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventHit_EventId" Type="Int64" />
           <Property Name="EventHit_Hits" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="EventHitDateTime" Type="DateTime" Precision="3" />

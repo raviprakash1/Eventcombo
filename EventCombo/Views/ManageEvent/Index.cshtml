@@ -11,6 +11,26 @@
 {
     <input type="hidden" value="@Model.Eventid" id="hdEventid" />
     <div class="event_container">
+        <div class="col-sm-12 pt10 bggrey clearfix">
+            <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+                <div class="er_UI_main">
+                    <div class="er_UI_img"></div>
+                    <div class="er_suc" id="erraccmsg"></div>
+                    <button class="close" type="button" id="btndiverrsuc">&#215;</button>
+
+                </div>
+            </div>
+            <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
+                <div class="er_suc_main">
+
+                    <div class="er_suc_img"></div>
+                    <div class="er_suc" id="succaccmsg"> </div>
+                    <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+
+                </div>
+            </div>
+        </div>
+
         <div class="event_inner_container event_top">
             <div class="col-sm-12 pt10 bggrey">
                 @if (@TempData["Success"] != null)
@@ -95,10 +115,16 @@
                 <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad bor_line"></div>
                 <div class="col-sm-12 no_pad pt10 pb10 text-right">
-                    <div class="col-sm-12 no_pad ev-mg-url">
-                        Page URL:<a href="#">www/eventclub.com/your event</a>
-                        <span class="ev-mng-edit"><a href="#">[Edit]</a></span>
+                    <div class="col-sm-12 no_pad ev-mg-url" id="dvLblurl">
+                        Page URL:<a href="@TempData["EventUrl"]">@TempData["EventUrl"]</a>
+                        <span class="ev-mng-edit"><button type="button" id="btEditUrl" value="Edit">Edit</button></span>
                     </div>
+
+                    <div class="col-sm-12 no_pad ev-mg-url" id="dvTexturl">
+                        Page URL:<input type="text" style="width:500px" value="@TempData["EventUrl"]" id="txtEventURl"  onkeypress="return IsAlphaNumeric(event);" /><span>.eventcombo.com</span>
+                        <span class="ev-mng-edit"><button type="button" id="btSaveUrl" value="Edit">Save</button><button type="button" id="btCancelUrl" value="Edit">Cancel</button></span>
+                    </div>
+
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad bor_line"></div>
@@ -517,8 +543,88 @@
 
         <script src="~/Scripts/Chart.js"></script>
         <script type="text/javascript">
+            var specialKeys = new Array();
+            specialKeys.push(8); //Backspace
+            specialKeys.push(9); //Tab
+            specialKeys.push(46); //Delete
+            specialKeys.push(36); //Home
+            specialKeys.push(35); //End
+            specialKeys.push(37); //Left
+            specialKeys.push(39); //Right
+            function IsAlphaNumeric(e) {
+                var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+                var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
 
+                return ret;
+            }
+            var msg = ajaxsetup('ManageEvent', 'MEDeleteEvent');
+            $("#hdmsgdelete").html(msg);
+            var EventId = $("#hdEventid").val();
+            function ajaxsetup(strname, strFormTag) {
+                var msgnew = "";
+
+                var request = $.ajax({
+                    url: '@Url.Action("Index", "ValidationMessage")',
+                    async: false,
+                    data: { strFormName: strname, strFormTag: strFormTag },
+                    type: 'Post'
+                });
+                request.done(function (msg) {
+                    msgnew += msg;
+                });
+
+                request.fail(function (jqXHR, textStatus) {
+                    msgnew += "Some Error occur!!";
+                });
+                return msgnew;
+            }
             $(document).ready(function () {
+                $("#dvTexturl").hide();
+                $("#dvLblurl").show();
+                $("#btEditUrl").click(function () {
+                    $("#dvTexturl").show();
+                    $("#dvLblurl").hide();
+                });
+                $("#btCancelUrl").click(function () {
+                    $("#dvTexturl").hide();
+                    $("#dvLblurl").show();
+                });
+                $("#btSaveUrl").click(function () {
+                    var EventId = $("#hdEventid").val();
+                    var vEvUrl = $("#txtEventURl").val();
+                    $.ajax({
+                        url: '@Url.Action("saveEventUrl", "ManageEvent")',
+                        data: { strEventUrl: vEvUrl, lEventId: EventId },
+                        type: "Post",
+                        success: function (response) {
+                            if (response == "N") {
+                                $('#diverroacc').css('display', 'block');
+                                $('#diverroacc').focus();
+                                var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
+                                $('#erraccmsg').html(msg);
+                                $("#txtEventUrl").val('');
+                                $("#txtEventUrl").focus();
+                            }
+                            else {
+                                $("#dvTexturl").hide();
+                                $("#dvLblurl").show();
+                            }
+                        }
+                    });
+                });
+                
+
+
+                $('#txtEventURl').bind('cut copy paste', function (event) {
+                    event.preventDefault();
+                    return false;
+                });
+
+           
+
+
+                
+
                 if ($("#hidSaleQty").val() != "") {
                     var vHitData = $("#hidSaleQty").val().split(",");
                     var vLables = [];
@@ -588,27 +694,7 @@
 
 
 
-                var msg = ajaxsetup('ManageEvent', 'MEDeleteEvent');
-                $("#hdmsgdelete").html(msg);
-                var EventId = $("#hdEventid").val();
-                function ajaxsetup(strname, strFormTag) {
-                    var msgnew = "";
-
-                    var request = $.ajax({
-                        url: '@Url.Action("Index", "ValidationMessage")',
-                        async: false,
-                        data: { strFormName: strname, strFormTag: strFormTag },
-                        type: 'Post'
-                    });
-                    request.done(function (msg) {
-                        msgnew += msg;
-                    });
-
-                    request.fail(function (jqXHR, textStatus) {
-                        msgnew += "Some Error occur!!";
-                    });
-                    return msgnew;
-                }
+               
 
 
                 $('#btndivaccsuc').click(function () {

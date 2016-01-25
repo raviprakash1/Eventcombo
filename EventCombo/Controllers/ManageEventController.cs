@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace EventCombo.Controllers
 {
@@ -276,12 +277,90 @@ namespace EventCombo.Controllers
             TempData["TotalQty"] = GetQuantity(Eventid, "T");
             TempData["PaidTicket"] = GetTicketQtyPer(Eventid, "P");
             TempData["FreeTicket"] = GetTicketQtyPer(Eventid, "F");
-
+            TempData["EventUrl"] = GetEventURL(Eventid);
 
 
 
 
             return View(Mevent);
+        }
+        public string SaveEventUrl(long lEventId,string strEventUrl)
+        {
+            string strResult = "N";
+            try
+            {
+                if (CheckEventUrl(strEventUrl,lEventId) == "Y")
+                {
+                    strResult = "N";
+                }
+                else
+                {
+                    strResult = "Y";
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+
+                        Event objEvt = objEnt.Events.First(i => i.EventID == lEventId);
+                        objEvt.EventUrl = strEventUrl;
+                        objEnt.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                strResult = "N";
+            }
+            return strResult;
+        }
+        public string CheckEventUrl(string strUserUrl,long EventId)
+        {
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var Eventurl = (from myRow in objEnt.Events
+                                    where myRow.EventUrl == strUserUrl && myRow.EventID != EventId
+                                    select myRow).SingleOrDefault();
+
+                    if (Eventurl == null) return "N";
+                    if (Eventurl.ToString().Equals(string.Empty))
+                        return "N"; // Not Exists
+                    else
+                        return "Y"; // Exists
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Y";
+
+            }
+        }
+        public string GetEventURL(long lEventId)
+        {
+            string strResult = "";
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var vEvent = (from myRow in objEnt.Events
+                                  where myRow.EventID == lEventId
+                                  select myRow).FirstOrDefault();
+                    
+
+                    if (vEvent.EventUrl != null && vEvent.EventUrl.Trim() != string.Empty)
+                    {
+                        strResult = vEvent.EventUrl.Trim();
+                    }
+                    else
+                    {
+                        strResult = @Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = vEvent.EventID.ToString() });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return strResult = "";
+            }
+            return strResult;
         }
         public string DeleteEvent(long eventid)
         {
