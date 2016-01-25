@@ -279,10 +279,41 @@ namespace EventCombo.Controllers
             TempData["FreeTicket"] = GetTicketQtyPer(Eventid, "F");
             TempData["EventUrl"] = GetEventURL(Eventid);
 
-
-
+            TempData["ForSale"] = GetSaleAmount(Eventid,"FORSALE");
+            TempData["NETSale"] = GetSaleAmount(Eventid, "NETSALE");
 
             return View(Mevent);
+        }
+
+
+        public string GetSaleAmount(long lEventId,string strAmtType)
+        {
+            string strResult = "";
+            CultureInfo us = new CultureInfo("en-US");
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                if (strAmtType == "FORSALE")
+                {
+
+                    var vEvent = (from myRow in objEnt.Ticket_Purchased_Detail
+                                  where myRow.TPD_Event_Id == lEventId
+                                  select myRow.TPD_Amount).Sum();
+
+                    strResult = Math.Round((vEvent == null ? 0 : Convert.ToDouble(vEvent)), 2).ToString("N",us);
+
+                }
+                else if (strAmtType == "NETSALE")
+                {
+                    var vEvent = (from myRow in objEnt.Ticket_Purchased_Detail
+                                  where myRow.TPD_Event_Id == lEventId
+                                  select myRow.TPD_Amount).Sum();
+
+                    strResult = Math.Round((vEvent == null ? 0 : Convert.ToDouble(vEvent)), 2).ToString("N", us);
+
+
+                }
+            }
+            return strResult; 
         }
         public string SaveEventUrl(long lEventId,string strEventUrl)
         {

@@ -116,7 +116,7 @@
                 <div class="col-sm-12 no_pad bor_line"></div>
                 <div class="col-sm-12 no_pad pt10 pb10 text-right">
                     <div class="col-sm-12 no_pad ev-mg-url" id="dvLblurl">
-                        Page URL:<a href="@TempData["EventUrl"]">@TempData["EventUrl"]</a>
+                        Page URL: <span id="spEventUrl">@TempData["EventUrl"]</span>@*<a href="@TempData["EventUrl"]" id="aEventUrl" > @TempData["EventUrl"]</a>*@
                         <span class="ev-mng-edit"><button type="button" id="btEditUrl" value="Edit">Edit</button></span>
                     </div>
 
@@ -242,14 +242,14 @@
                         <div class="col-sm-6 col-xs-12 no_pad ft_black">
                             <div class="col-sm-12 col-xs-12 for_total">
                                 <p class="ft22 mb0">For the total of</p>
-                                <p class="ft4em mb0 for_total_amont">$54,000.00</p>
+                                <p class="ft4em mb0 for_total_amont">$@TempData["ForSale"]</p>
                             </div>
                             <div class="col-sm-12 col-xs-12">
                                 <div class="col-sm-12 no_pad">
                                     <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Net Sales </p>
                                     <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">See Details</a></p>
                                 </div>
-                                <p class="ft4em mb0 for_net_amont">$54,000.00</p>
+                                <p class="ft4em mb0 for_net_amont">@TempData["NETSale"]</p>
                             </div>
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 <div class="col-sm-12 no_pad">
@@ -606,6 +606,7 @@
                                 $("#txtEventUrl").focus();
                             }
                             else {
+                                $("#spEventUrl").text(vEvUrl);
                                 $("#dvTexturl").hide();
                                 $("#dvLblurl").show();
                             }
