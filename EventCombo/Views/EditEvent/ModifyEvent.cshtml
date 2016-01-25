@@ -615,10 +615,10 @@
             <div class="event_detail_container">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
-                    <div class="col-sm-6 text-left no_pad">
+                    <div class="col-sm-6 col-xs-6 text-left no_pad">
                         <h2 class="fb_dis_head pt5">TICKETING INFORMATION</h2>
                     </div>
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-6 col-xs-6 text-right">
                         <label class="ev_fb_lable">Will Call <input type="radio" id="id_willcall" name="seating" checked="checked"></label>
                         <label class="ev_fb_lable">Seating <input type="radio" id="id_reservedseating" name="seating"></label>
                     </div>
@@ -697,7 +697,7 @@
 
                                         </div>*@
                                 </div>
-                                <div class="col-sm-2 no_pad">
+                                <div class="col-sm-2 no_pad xs768det-del">
                                     <div class="form-group paidticket-n" id="id_Disc-n">
                                         <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
                                         <div class="col-sm-8">
@@ -706,7 +706,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-1 no_pad evnt_sett_main ">
+                                <div class="col-sm-1 no_pad evnt_sett_main xs768detail">
                                     <div class="nav evnt_setting">
                                         <span class="evnt_set ev_set_more" id="id_setting-n" onclick="showsettingdiv(this.id);"> Detail </span>
                                         <!--  <a href="#evnt_set" class="evnt_set">More </a> -->
@@ -1370,9 +1370,9 @@ else
                         //$("#lblDft").html("DRAFT");
                     }
                     $('#status').val(data.EventStatus);
-                  
-                        
-                    if (data.MultipleSchTime == "S") 
+
+
+                    if (data.MultipleSchTime == "S")
                     {
                         $("#txtStartDate").val(data.EventStartDate);
                         $("#txtStartTime").val(data.EventStartTime);
@@ -1380,7 +1380,7 @@ else
                         $("#txtEndTime").val(data.EventEndTime);
                         $("#hdSchType").val('Single');
                     }
-                    if (data.MultipleSchTime == "M") 
+                    if (data.MultipleSchTime == "M")
                     {
                         $(".SchmultiEvnt").click();
                         $("#dlSchOption").val(data.Frequency);
@@ -1417,7 +1417,7 @@ else
 
                         }
                     }
-                  
+
                     if (data.AddressStatus == "Online")
                     {
                         $("#dvAddress").hide();
@@ -1434,7 +1434,7 @@ else
                     $("#btSaveTimeZone").click();
                     //alert()
                     //$("#hdEventId").val(data.EventID);
-                  
+
                     if(data.Addresses!="")
                     {
                     $("#tblAddress").append(data.Addresses);
@@ -1444,7 +1444,7 @@ else
 
                     //Tickets start
                     //
-                   
+
                     if(data.Ticket!='')
                     {
 
@@ -1500,16 +1500,16 @@ else
                                 }).on('changeDate', function (ev) {
                                     $("#id_auto_hide_after_Date-" + i).datepicker('hide');
                                 });
-                                
+
                                 $("#id_saletimestart-" + i).timepicker();
-           
+
                                 $("#id_saletimeend-" + i).timepicker();
                                 $("#id_auto_hide_until_time-" + i).timepicker();
                                 $("#id_auto_hide_after_Time-" + i).timepicker();
                             }
 
                         }
-                    
+
 
 
                         $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
@@ -1521,7 +1521,7 @@ else
                     {
                         $('#hdimage').val(data.Image);
                     }
-                  
+
 
                     if(data.Variabledesc!='')
                     {
@@ -1529,7 +1529,7 @@ else
                         $('#id_Mainvariable').css('display','block');
                         $('#id_Mainvariable').append(data.Variabledesc);
                         $("input[id^='id_varsubprice']").mask('000,000.00', { reverse: true });
-                     
+
 
 
                     }else
@@ -1545,9 +1545,9 @@ else
 
             var privat="@Model.EventPrivacy";
             var privatefb="@Model.Private_ShareOnFB"
-            var privateguest="@Model.Private_GuestOnly" 
+            var privateguest="@Model.Private_GuestOnly"
             var privatepwd="@Model.Private_Password"
-          
+
             debugger;
             if(privat=="Private")
             {
@@ -1562,7 +1562,7 @@ else
             {
                 //$('#rdPrivate').prop("checked","false");
                 $('#rdPublic').prop("checked","true");
-                
+
                 $(".priv_cont").hide();
             }
 
@@ -1580,7 +1580,7 @@ else
             {
                 $('#chkReqPassword').prop("checked","true");
                 $('#txtReqPassword').attr('readonly', false);
-                
+
 
             }
             $(".cdisable").removeAttr("disabled");
@@ -1588,19 +1588,22 @@ else
             //alert(msg);
             //if(msg=="")
             //{
-            //    
+            //
 
-            //}   
+            //}
             debugger;
-
+            var temp="@TempData["Scroll"]";
+            if(temp!='')
+            {
                 var scroll="@TempData["Scroll"]";
                 $(window).scrollTop($("#"+scroll).offset().top);
-             $("#"+scroll).focus();
+                $("#"+scroll).focus();
+            }
 
         });
 
         $("#rdPublic").click(function(){
-            
+
             //$("#rdPrivate").prop("checked","false");
 
             $("#chkShareOnFB").prop("checked",false);
@@ -1609,15 +1612,15 @@ else
             $("#txtReqPassword").val('');
             $('#txtReqPassword').attr('readonly', true);
             $(".priv_cont").hide();
-        
-        
+
+
         });
         $(".cbtPreview").click(function () {
             var msg = validatemain();
             if (msg != "") {
 
                 $('#diverroacc').css('display', 'block');
-               
+
                 $('#btndiverrsuc').focus();
                 $('#erraccmsg').html(msg);
                 $('html,body').animate({ scrollTop: 0 });
@@ -1625,7 +1628,7 @@ else
 
             }
             save("Preview");
-            
+
         });
 
 

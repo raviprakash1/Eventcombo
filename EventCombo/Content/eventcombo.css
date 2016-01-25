@@ -725,16 +725,19 @@ span.evnt_toltip{
 
 }
 @media (width: 768px) {
-.wid_1024{ width: 50%;
-        }
-.wid_get_buzz{ width: 47% !important; margin-right: 3%;
-        } 
+  .wid_1024{ width: 50%;}
+  .wid_get_buzz{ width: 47% !important; margin-right: 3%;} 
   .affix-top{top: 147px !important;}
    #scrollhome.con_scr0l_home{margin-top:156px !important;}
    #eventtopscoll.event_top{ margin-top:132px !important; } 
-  .cyan-line-new .stylish-input-group .form-control{ height:56px; }
+  .cyan-line-new .stylish-input-group .form-control{ height:56px; line-height:56px; }
   .cyan-line-new .psst{ line-height:56px; }
+
+  .xs768det-del {width: 150px;}
+  .xs768detail{    width: 110px;float: right; margin-top: 5px;}
+  .xs768-pl0{ padding:0px;}
 }
+
 
 @media (width: 800px) {
  .wid_get_buzz{ width: 47% !important; margin-right: 3%;}
@@ -871,6 +874,7 @@ span.evnt_toltip{
 .ev_btn_type .col12{ width:100%; float:left; }
 .xsmr0{ margin-right:0px !important}
 .xspad0{ padding:0px;}
+.xs375zip{ padding:0px; margin-bottom:10px; }
 }
 
 @media (width: 667px) {
@@ -945,6 +949,7 @@ span.evnt_toltip{
 .evnt_descp_cont .note-editor.panel .note-dialog .modal-body .note-image-input.form-control{ padding: 0px; border: 0px; box-shadow: none;}
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:138px;}
+
 
 
 .switch {

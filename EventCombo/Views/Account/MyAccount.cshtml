@@ -117,33 +117,33 @@
                 <label class="col-md-3 control-label acnt_form_label">Date of Birth</label>
                 <div class="col-md-9">
                     <div class="row">
-                        <div class="col-xs-4 add_form_bot mb0">
+                        <div class="col-xs-4 add_form_bot mb0 dropheight">
                             @Html.DropDownList("month", Enumerable.Range(1, 12).Select(i => new SelectListItem
                            {
                                Value = i.ToString(),
                                Text = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(i),
                                Selected = i == Model.month
 
-                           }), new { @class = "form-control" })
+                           }), new { @class = "form-control selectpicker" })
 
                         </div>
-                        <div class="col-xs-4 add_form_bot mb0">
+                        <div class="col-xs-4 add_form_bot mb0 dropheight">
                             @Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
                            {
                                Value = i.ToString(),
                                Text = i.ToString(),
                                Selected = i == Model.day
 
-                           }), new { @class = "form-control" })
+                           }), new { @class = "form-control selectpicker" })
                         </div>
-                        <div class="col-xs-4 add_form_bot mb0">
+                        <div class="col-xs-4 add_form_bot mb0 dropheight">
                             @Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
                            {
                                Value = i.ToString(),
                                Text = i.ToString(),
                                Selected = i == Model.year
 
-                           }), new { @class = "form-control" })
+                           }), new { @class = "form-control selectpicker" })
                         </div>
                     </div>
                 </div>
@@ -154,11 +154,11 @@
                 <label class="col-md-3 control-label acnt_form_label">Gender</label>
                 <div class="col-md-9">
                     <div class="row">
-                        <div class="col-xs-12 add_form_bot mb0">
+                        <div class="col-xs-12 add_form_bot mb0 dropheight">
                             @Html.DropDownList("Gender", new List<SelectListItem>{
         new SelectListItem{ Text="Male", Value="Male"},
         new SelectListItem{ Text="Female", Value="Female"}
-        }, "--- Select ---", new { @class = "form-control" }
+        }, "--- Select ---", new { @class = "form-control selectpicker" }
         )
                         </div>
                     </div>

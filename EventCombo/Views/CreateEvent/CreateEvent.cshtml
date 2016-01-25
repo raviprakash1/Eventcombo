@@ -281,9 +281,9 @@
                                                 <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Timezone & date setting</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="col-sm-12 no_pad">
+                                                <div class="col-sm-12 no_pad dropheight">
                                                     <div class="form-group mb5 ">
-                                                        @Html.DropDownList("dllTimeZone", ViewBag.Timezonelist as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                                        @Html.DropDownList("dllTimeZone", ViewBag.Timezonelist as List<SelectListItem>, new { @class = "form-control selectpicker evnt_inp_cont wd600" })
                                                       
                                                     </div>
                                                     <div class="clearfix"></div>
@@ -576,7 +576,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 pl0">
+                        <div class="col-sm-4 pl0 xs768-pl0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category*</label>
                                 <div class="col-sm-9 dropheight">
@@ -832,7 +832,7 @@
 
                                         </div>*@
                                 </div>
-                                <div class="col-sm-2 no_pad">
+                                <div class="col-sm-2 no_pad xs768det-del">
                                     <div class="form-group paidticket-n" id="id_Disc-n">
                                         <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
                                         <div class="col-sm-8">
@@ -841,7 +841,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-1 no_pad evnt_sett_main ">
+                                <div class="col-sm-1 no_pad evnt_sett_main xs768detai"l>
                                     <div class="nav evnt_setting">
                                         <span class="evnt_set ev_set_more" id="id_setting-n" onclick="showsettingdiv(this.id);"> Detail </span>
                                         <!--  <a href="#evnt_set" class="evnt_set">More </a> -->
