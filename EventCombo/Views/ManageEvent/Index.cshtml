@@ -281,12 +281,35 @@ else
                                     <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Payment Settings</a></p>
                                 </div>
                                 <div class="col-sm-12 no_pad">
+                                  
+                                   @if (Model.EventExpired == "N")
+                                   {
+                                       if (Model.Eventstatus == "Save")
+                                       {
+                                        <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
+                                        <div class="col-sm-11 col-xs-10 no_pad">
+                                            <p class="ft18 payout_desc">Please enter your payment details for the money to be transferred to your account when event goes live</p>
+                                        </div>
+                                       }
+                                       if (Model.Eventstatus == "Live")
+                                       {
+                                        <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
+                                      <div class="col-sm-11 col-xs-10 no_pad">
+                                        <p class="ft18 payout_desc">Please enter your payment details so we can send you your money.</p>
+                                    </div>
+                                       }
+                                   }
+                                   else
+                                    {
                                     <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
                                     <div class="col-sm-11 col-xs-10 no_pad">
-                                        <p class="ft18 payout_desc"><b>Payout was issued on Jan 5, 2016</b> to your <b>Chase Manhattan Bank</b> account ending in <b>3424</b></p>
+                                        <p class="ft18 payout_desc">Payout was issued on <b>date of amount transfer</b> to your <b>Bank Name</b> account ending in <b>last 4 digit of account number</b></p>
                                     </div>
+                                   }
                                     <p class="ft15">You have <span class="ft_red">3 days 21 hours </span>to issue any requested refunds. Allow 2-3 business days for the payout to arrive.(Longer for public holidays)</p>
-                                </div>
+
+
+                                 </div>
                             </div>
                         </div>
                     </div>
