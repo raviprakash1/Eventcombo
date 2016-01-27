@@ -497,6 +497,7 @@
           <Property Name="TPD_Amount" Type="numeric" Precision="9" Scale="2" />
           <Property Name="TPD_Donate" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TPD_GUID" Type="varchar" MaxLength="1000" />
+          <Property Name="TPD_EC_Fee" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -1404,6 +1405,7 @@
           <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
           <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -2356,6 +2358,7 @@
           <EntitySetMapping Name="Ticket_Purchased_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
               <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TPD_EC_Fee" ColumnName="TPD_EC_Fee" />
                 <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
                 <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
                 <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />

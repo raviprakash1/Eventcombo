@@ -292,25 +292,22 @@ namespace EventCombo.Controllers
             CultureInfo us = new CultureInfo("en-US");
             using (EventComboEntities objEnt = new EventComboEntities())
             {
+                var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
+                              where myRow.TPD_Event_Id == lEventId
+                              select myRow.TPD_Amount).Sum();
+
                 if (strAmtType == "FORSALE")
                 {
-
-                    var vEvent = (from myRow in objEnt.Ticket_Purchased_Detail
-                                  where myRow.TPD_Event_Id == lEventId
-                                  select myRow.TPD_Amount).Sum();
-
-                    strResult = Math.Round((vEvent == null ? 0 : Convert.ToDouble(vEvent)), 2).ToString("N",us);
-
+                    strResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)), 2).ToString("N",us);
                 }
                 else if (strAmtType == "NETSALE")
                 {
-                    var vEvent = (from myRow in objEnt.Ticket_Purchased_Detail
+                    var vEcFee = (from myRow in objEnt.Ticket_Purchased_Detail
                                   where myRow.TPD_Event_Id == lEventId
-                                  select myRow.TPD_Amount).Sum();
+                                  select myRow.TPD_EC_Fee).Sum();
 
-                    strResult = Math.Round((vEvent == null ? 0 : Convert.ToDouble(vEvent)), 2).ToString("N", us);
-
-
+                    double dResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)) - (vEcFee == null ? 0 : Convert.ToDouble(vEcFee)),2);
+                    strResult = dResult.ToString("N", us);
                 }
             }
             return strResult; 
