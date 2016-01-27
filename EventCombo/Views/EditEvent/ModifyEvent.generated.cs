@@ -4725,7 +4725,7 @@ WriteLiteral("></script>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    <script src = \"../Content/gmap.js\" ></script>\r\n");
+WriteLiteral("    <script src = \"~/Scripts/gmap.js\" ></script>\r\n");
 
             
             #line 1349 "..\..\Views\EditEvent\ModifyEvent.cshtml"
@@ -4754,106 +4754,103 @@ WriteLiteral("\', { lEventId: $(\"#hdEventId\").val()},\r\n                funct
 ";\r\n                        $(\"#lblLive\").hide();\r\n                        $(\"#lb" +
 "lDft\").show();\r\n                        $(\".SPview\").text(\"PREVIEW >\");\r\n       " +
 "                 //$(\"#lblDft\").html(\"DRAFT\");\r\n                    }\r\n         " +
-"           $(\'#status\').val(data.EventStatus);\r\n                  \r\n            " +
-"            \r\n                    if (data.MultipleSchTime == \"S\") \r\n           " +
-"         {\r\n                        $(\"#txtStartDate\").val(data.EventStartDate);" +
-"\r\n                        $(\"#txtStartTime\").val(data.EventStartTime);\r\n        " +
-"                $(\"#txtEndDate\").val(data.EventEndDate);\r\n                      " +
-"  $(\"#txtEndTime\").val(data.EventEndTime);\r\n                        $(\"#hdSchTyp" +
-"e\").val(\'Single\');\r\n                    }\r\n                    if (data.Multiple" +
-"SchTime == \"M\") \r\n                    {\r\n                        $(\".SchmultiEvn" +
-"t\").click();\r\n                        $(\"#dlSchOption\").val(data.Frequency);\r\n  " +
-"                      $(\"#dlSchOption\").change();\r\n                        if (d" +
-"ata.WeeklyDay != null) {\r\n                            var vTemp  = data.WeeklyDa" +
-"y.split(\',\');\r\n                            for(i =0; i< vTemp.length;i++)\r\n     " +
-"                       {\r\n                                $(\'#dllWeeklyDayChk\')." +
-"multiselect(\'select\', [vTemp[i].toString()]);\r\n                            }\r\n  " +
-"                      }\r\n                        $(\"#txtTimeStart\").val(data.Sta" +
-"rtTime);\r\n                        $(\"#txtTimeEnd\").val(data.EndTime);\r\n         " +
-"               $(\"#txtDateFrom\").val(data.StartingFrom);\r\n                      " +
-"  $(\"#txtDateTo\").val(data.StartingTo);\r\n                        $(\".multiselect" +
-"-selected-text\").val();\r\n                        if (data.MonthlyDay > 0) {\r\n   " +
-"                         $(\"#hdMonthlyType\").val(\'DM\');\r\n                       " +
-"     $(\"#btDayofMonth\").click();\r\n                            $(\"#dllMonth\").val" +
-"(data.MonthlyDay);\r\n                        }\r\n                        else {\r\n " +
-"                           $(\"#hdMonthlyType\").val(\'DW\');\r\n                     " +
-"       $(\"#btDayofWeek\").click();\r\n                            //$(\"#dllMonthlyW" +
-"eek\").val(data.MonthlyWeek);\r\n                            if(data.MonthlyWeekDay" +
-"s!=null)\r\n                            {\r\n                                var vTe" +
-"mp  = data.MonthlyWeekDays.split(\',\');\r\n                                for(i =0" +
-"; i< vTemp.length;i++)\r\n                                {\r\n                     " +
-"               $(\'#dllMonthlyWeekDay\').multiselect(\'select\', [vTemp[i].toString(" +
-")]);\r\n                                }\r\n                            }\r\n\r\n      " +
-"                  }\r\n                    }\r\n                  \r\n                " +
-"    if (data.AddressStatus == \"Online\")\r\n                    {\r\n                " +
-"        $(\"#dvAddress\").hide();\r\n                        $(\"#hidAddressStatus\")." +
-"val(\'Online\');\r\n                    }\r\n                    else\r\n               " +
-"     {\r\n                        $(\"#dvAddress\").show();\r\n                       " +
-" $(\"#hidAddressStatus\").val(data.AddressStatus);\r\n                    }\r\n       " +
-"             $(\"#edEventDesc\").code(data.EventDescription);\r\n                   " +
-" $(\"#UsepastLoc\").change();\r\n                    $(\"#btnAddSch\").click();\r\n     " +
-"               $(\"#btSaveTimeZone\").click();\r\n                    //alert()\r\n   " +
-"                 //$(\"#hdEventId\").val(data.EventID);\r\n                  \r\n     " +
+"           $(\'#status\').val(data.EventStatus);\r\n\r\n\r\n                    if (data" +
+".MultipleSchTime == \"S\")\r\n                    {\r\n                        $(\"#txt" +
+"StartDate\").val(data.EventStartDate);\r\n                        $(\"#txtStartTime\"" +
+").val(data.EventStartTime);\r\n                        $(\"#txtEndDate\").val(data.E" +
+"ventEndDate);\r\n                        $(\"#txtEndTime\").val(data.EventEndTime);\r" +
+"\n                        $(\"#hdSchType\").val(\'Single\');\r\n                    }\r\n" +
+"                    if (data.MultipleSchTime == \"M\")\r\n                    {\r\n   " +
+"                     $(\".SchmultiEvnt\").click();\r\n                        $(\"#dl" +
+"SchOption\").val(data.Frequency);\r\n                        $(\"#dlSchOption\").chan" +
+"ge();\r\n                        if (data.WeeklyDay != null) {\r\n                  " +
+"          var vTemp  = data.WeeklyDay.split(\',\');\r\n                            f" +
+"or(i =0; i< vTemp.length;i++)\r\n                            {\r\n                  " +
+"              $(\'#dllWeeklyDayChk\').multiselect(\'select\', [vTemp[i].toString()])" +
+";\r\n                            }\r\n                        }\r\n                   " +
+"     $(\"#txtTimeStart\").val(data.StartTime);\r\n                        $(\"#txtTim" +
+"eEnd\").val(data.EndTime);\r\n                        $(\"#txtDateFrom\").val(data.St" +
+"artingFrom);\r\n                        $(\"#txtDateTo\").val(data.StartingTo);\r\n   " +
+"                     $(\".multiselect-selected-text\").val();\r\n                   " +
+"     if (data.MonthlyDay > 0) {\r\n                            $(\"#hdMonthlyType\")" +
+".val(\'DM\');\r\n                            $(\"#btDayofMonth\").click();\r\n          " +
+"                  $(\"#dllMonth\").val(data.MonthlyDay);\r\n                        " +
+"}\r\n                        else {\r\n                            $(\"#hdMonthlyType" +
+"\").val(\'DW\');\r\n                            $(\"#btDayofWeek\").click();\r\n         " +
+"                   //$(\"#dllMonthlyWeek\").val(data.MonthlyWeek);\r\n              " +
+"              if(data.MonthlyWeekDays!=null)\r\n                            {\r\n   " +
+"                             var vTemp  = data.MonthlyWeekDays.split(\',\');\r\n    " +
+"                            for(i =0; i< vTemp.length;i++)\r\n                    " +
+"            {\r\n                                    $(\'#dllMonthlyWeekDay\').multi" +
+"select(\'select\', [vTemp[i].toString()]);\r\n                                }\r\n   " +
+"                         }\r\n\r\n                        }\r\n                    }\r\n" +
+"\r\n                    if (data.AddressStatus == \"Online\")\r\n                    {" +
+"\r\n                        $(\"#dvAddress\").hide();\r\n                        $(\"#h" +
+"idAddressStatus\").val(\'Online\');\r\n                    }\r\n                    els" +
+"e\r\n                    {\r\n                        $(\"#dvAddress\").show();\r\n     " +
+"                   $(\"#hidAddressStatus\").val(data.AddressStatus);\r\n            " +
+"        }\r\n                    $(\"#edEventDesc\").code(data.EventDescription);\r\n " +
+"                   $(\"#UsepastLoc\").change();\r\n                    $(\"#btnAddSch" +
+"\").click();\r\n                    $(\"#btSaveTimeZone\").click();\r\n                " +
+"    //alert()\r\n                    //$(\"#hdEventId\").val(data.EventID);\r\n\r\n     " +
 "               if(data.Addresses!=\"\")\r\n                    {\r\n                  " +
 "  $(\"#tblAddress\").append(data.Addresses);\r\n                    }\r\n             " +
 "       $(\"#txtEventLocation\").val(data.FirstAddress);\r\n                    $(\"#d" +
 "llTimezone\").val(data.timezone);\r\n\r\n                    //Tickets start\r\n       " +
-"             //\r\n                   \r\n                    if(data.Ticket!=\'\')\r\n " +
-"                   {\r\n\r\n                        $(\".ticket_panel\").show();\r\n    " +
-"                    //$(\".tab-content\").hide();\r\n                        $(\'#Mas" +
-"terDiv\').append(data.Ticket);\r\n                        $(\".tab-content\").hide();" +
-"\r\n\r\n                        var divlength=$(\'#MasterDiv\').length;\r\n             " +
-"           if(divlength>0)\r\n                        {\r\n                         " +
-"   for(var i=0;i<divlength;i++)\r\n                            {\r\n                " +
-"                $(\"#id_salestart-\" + i).datepicker({\r\n                          " +
-"          format: \"mm/dd/yyyy\",\r\n                                    minDate: \"0" +
-"\",\r\n                                    onSelect: function () {\r\n\r\n             " +
-"                           this.fireEvent && this.fireEvent(\'onchange\') || $(thi" +
-"s).change();\r\n                                    }\r\n                           " +
-"     }).on(\'changeDate\', function (ev) {\r\n                                    $(" +
-"\"#id_salestart-\" + i).datepicker(\'hide\');\r\n                                });\r\n" +
-"\r\n                                $(\"#id_saleend-\" + i).datepicker({\r\n          " +
-"                          format: \"mm/dd/yyyy\",\r\n                               " +
-"     minDate: \"0\",\r\n                                    onSelect: function () {\r" +
-"\n\r\n                                        this.fireEvent && this.fireEvent(\'onc" +
-"hange\') || $(this).change();\r\n                                    }\r\n           " +
-"                     }).on(\'changeDate\', function (ev) {\r\n                      " +
-"              $(\"#id_saleend-\" + i).datepicker(\'hide\');\r\n                       " +
-"         });\r\n\r\n                                $(\"#id_auto_hide_until_Date-\" + " +
-"i).datepicker({\r\n                                    format: \"mm/dd/yyyy\",\r\n    " +
-"                                minDate: \"0\",\r\n                                 " +
-"   onSelect: function () {\r\n\r\n                                        this.fireE" +
-"vent && this.fireEvent(\'onchange\') || $(this).change();\r\n                       " +
-"             }\r\n                                }).on(\'changeDate\', function (ev" +
-") {\r\n                                    $(\"#id_auto_hide_until_Date-\" + i).date" +
-"picker(\'hide\');\r\n                                });\r\n                          " +
-"      $(\"#id_auto_hide_after_Date-\" + i).datepicker({\r\n                         " +
-"           format: \"mm/dd/yyyy\",\r\n                                    minDate: \"" +
-"0\",\r\n                                    onSelect: function () {\r\n\r\n            " +
-"                            this.fireEvent && this.fireEvent(\'onchange\') || $(th" +
-"is).change();\r\n                                    }\r\n                          " +
-"      }).on(\'changeDate\', function (ev) {\r\n                                    $" +
-"(\"#id_auto_hide_after_Date-\" + i).datepicker(\'hide\');\r\n                         " +
-"       });\r\n                                \r\n                                $(" +
-"\"#id_saletimestart-\" + i).timepicker();\r\n           \r\n                          " +
-"      $(\"#id_saletimeend-\" + i).timepicker();\r\n                                $" +
-"(\"#id_auto_hide_until_time-\" + i).timepicker();\r\n                               " +
-" $(\"#id_auto_hide_after_Time-\" + i).timepicker();\r\n                            }" +
-"\r\n\r\n                        }\r\n                    \r\n\r\n\r\n                       " +
-" $(\"input[id^=\'id_cost\']\").mask(\'000,000.00\', { reverse: true });\r\n             " +
-"           $(\"input[id^=\'id_Discount\']\").mask(\'000,000.00\', { reverse: true });\r" +
-"\n                    }\r\n\r\n                    $(\'#id_totalqty\').html(data.capaci" +
-"ty);\r\n                    if (data.Image != null)\r\n                    {\r\n      " +
-"                  $(\'#hdimage\').val(data.Image);\r\n                    }\r\n       " +
-"           \r\n\r\n                    if(data.Variabledesc!=\'\')\r\n                  " +
-"  {\r\n                        $(\'.TicketFees\').show();\r\n                        $" +
-"(\'#id_Mainvariable\').css(\'display\',\'block\');\r\n                        $(\'#id_Mai" +
-"nvariable\').append(data.Variabledesc);\r\n                        $(\"input[id^=\'id" +
-"_varsubprice\']\").mask(\'000,000.00\', { reverse: true });\r\n                     \r\n" +
-"\r\n\r\n                    }else\r\n                    {\r\n\r\n                        " +
-"$(\'.TicketFees\').hide();\r\n                        $(\'#id_Mainvariable\').css(\'dis" +
-"play\',\'none\');\r\n                    }\r\n\r\n                }\r\n            );\r\n\r\n\r\n" +
-"            var privat=\"");
+"             //\r\n\r\n                    if(data.Ticket!=\'\')\r\n                    " +
+"{\r\n\r\n                        $(\".ticket_panel\").show();\r\n                       " +
+" //$(\".tab-content\").hide();\r\n                        $(\'#MasterDiv\').append(dat" +
+"a.Ticket);\r\n                        $(\".tab-content\").hide();\r\n\r\n               " +
+"         var divlength=$(\'#MasterDiv\').length;\r\n                        if(divle" +
+"ngth>0)\r\n                        {\r\n                            for(var i=0;i<di" +
+"vlength;i++)\r\n                            {\r\n                                $(\"" +
+"#id_salestart-\" + i).datepicker({\r\n                                    format: \"" +
+"mm/dd/yyyy\",\r\n                                    minDate: \"0\",\r\n               " +
+"                     onSelect: function () {\r\n\r\n                                " +
+"        this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n     " +
+"                               }\r\n                                }).on(\'changeD" +
+"ate\', function (ev) {\r\n                                    $(\"#id_salestart-\" + " +
+"i).datepicker(\'hide\');\r\n                                });\r\n\r\n                 " +
+"               $(\"#id_saleend-\" + i).datepicker({\r\n                             " +
+"       format: \"mm/dd/yyyy\",\r\n                                    minDate: \"0\",\r" +
+"\n                                    onSelect: function () {\r\n\r\n                " +
+"                        this.fireEvent && this.fireEvent(\'onchange\') || $(this)." +
+"change();\r\n                                    }\r\n                              " +
+"  }).on(\'changeDate\', function (ev) {\r\n                                    $(\"#i" +
+"d_saleend-\" + i).datepicker(\'hide\');\r\n                                });\r\n\r\n   " +
+"                             $(\"#id_auto_hide_until_Date-\" + i).datepicker({\r\n  " +
+"                                  format: \"mm/dd/yyyy\",\r\n                       " +
+"             minDate: \"0\",\r\n                                    onSelect: functi" +
+"on () {\r\n\r\n                                        this.fireEvent && this.fireEv" +
+"ent(\'onchange\') || $(this).change();\r\n                                    }\r\n   " +
+"                             }).on(\'changeDate\', function (ev) {\r\n              " +
+"                      $(\"#id_auto_hide_until_Date-\" + i).datepicker(\'hide\');\r\n  " +
+"                              });\r\n                                $(\"#id_auto_h" +
+"ide_after_Date-\" + i).datepicker({\r\n                                    format: " +
+"\"mm/dd/yyyy\",\r\n                                    minDate: \"0\",\r\n              " +
+"                      onSelect: function () {\r\n\r\n                               " +
+"         this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n    " +
+"                                }\r\n                                }).on(\'change" +
+"Date\', function (ev) {\r\n                                    $(\"#id_auto_hide_aft" +
+"er_Date-\" + i).datepicker(\'hide\');\r\n                                });\r\n\r\n     " +
+"                           $(\"#id_saletimestart-\" + i).timepicker();\r\n\r\n        " +
+"                        $(\"#id_saletimeend-\" + i).timepicker();\r\n               " +
+"                 $(\"#id_auto_hide_until_time-\" + i).timepicker();\r\n             " +
+"                   $(\"#id_auto_hide_after_Time-\" + i).timepicker();\r\n           " +
+"                 }\r\n\r\n                        }\r\n\r\n\r\n\r\n                        $" +
+"(\"input[id^=\'id_cost\']\").mask(\'000,000.00\', { reverse: true });\r\n               " +
+"         $(\"input[id^=\'id_Discount\']\").mask(\'000,000.00\', { reverse: true });\r\n " +
+"                   }\r\n\r\n                    $(\'#id_totalqty\').html(data.capacity" +
+");\r\n                    if (data.Image != null)\r\n                    {\r\n        " +
+"                $(\'#hdimage\').val(data.Image);\r\n                    }\r\n\r\n\r\n     " +
+"               if(data.Variabledesc!=\'\')\r\n                    {\r\n               " +
+"         $(\'.TicketFees\').show();\r\n                        $(\'#id_Mainvariable\')" +
+".css(\'display\',\'block\');\r\n                        $(\'#id_Mainvariable\').append(d" +
+"ata.Variabledesc);\r\n                        $(\"input[id^=\'id_varsubprice\']\").mas" +
+"k(\'000,000.00\', { reverse: true });\r\n\r\n\r\n\r\n                    }else\r\n          " +
+"          {\r\n\r\n                        $(\'.TicketFees\').hide();\r\n               " +
+"         $(\'#id_Mainvariable\').css(\'display\',\'none\');\r\n                    }\r\n\r\n" +
+"                }\r\n            );\r\n\r\n\r\n            var privat=\"");
 
             
             #line 1546 "..\..\Views\EditEvent\ModifyEvent.cshtml"
@@ -4880,7 +4877,7 @@ WriteLiteral("\"\r\n            var privateguest=\"");
             
             #line default
             #line hidden
-WriteLiteral("\" \r\n            var privatepwd=\"");
+WriteLiteral("\"\r\n            var privatepwd=\"");
 
             
             #line 1549 "..\..\Views\EditEvent\ModifyEvent.cshtml"
@@ -4890,7 +4887,7 @@ WriteLiteral("\" \r\n            var privatepwd=\"");
             #line default
             #line hidden
 WriteLiteral(@"""
-          
+
             debugger;
             if(privat==""Private"")
             {
@@ -4905,7 +4902,7 @@ WriteLiteral(@"""
             {
                 //$('#rdPrivate').prop(""checked"",""false"");
                 $('#rdPublic').prop(""checked"",""true"");
-                
+
                 $("".priv_cont"").hide();
             }
 
@@ -4923,23 +4920,25 @@ WriteLiteral(@"""
             {
                 $('#chkReqPassword').prop(""checked"",""true"");
                 $('#txtReqPassword').attr('readonly', false);
-                
+
 
             }
             $("".cdisable"").removeAttr(""disabled"");
-            //var msg=validatemain();
-            //alert(msg);
-            //if(msg=="""")
-            //{
-            //    
+          
 
-            //}   
-            debugger;
-
-                var scroll=""");
+         var temp=""");
 
             
-            #line 1596 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1589 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+              Write(TempData["Scroll"]);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"\r\n            if(temp!=\'\')\r\n            {\r\n                var scroll=\"");
+
+            
+            #line 1592 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                        Write(TempData["Scroll"]);
 
             
@@ -4948,11 +4947,12 @@ WriteLiteral(@"""
 WriteLiteral(@""";
                 $(window).scrollTop($(""#""+scroll).offset().top);
              $(""#""+scroll).focus();
+           }
 
         });
 
         $(""#rdPublic"").click(function(){
-            
+
             //$(""#rdPrivate"").prop(""checked"",""false"");
 
             $(""#chkShareOnFB"").prop(""checked"",false);
@@ -4961,15 +4961,15 @@ WriteLiteral(@""";
             $(""#txtReqPassword"").val('');
             $('#txtReqPassword').attr('readonly', true);
             $("".priv_cont"").hide();
-        
-        
+
+
         });
         $("".cbtPreview"").click(function () {
             var msg = validatemain();
             if (msg != """") {
 
                 $('#diverroacc').css('display', 'block');
-               
+
                 $('#btndiverrsuc').focus();
                 $('#erraccmsg').html(msg);
                 $('html,body').animate({ scrollTop: 0 });
@@ -4977,7 +4977,7 @@ WriteLiteral(@""";
 
             }
             save(""Preview"");
-            
+
         });
 
 
@@ -4985,7 +4985,7 @@ WriteLiteral(@""";
 ");
 
             
-            #line 1633 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1630 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     // ---------------------Event Creation Script -------------------
 
@@ -5361,7 +5361,7 @@ WriteLiteral("    <script>\r\n\r\n        $(\".chkvalidation\").blur(function ()
 " $.ajax({\r\n                    url: \'");
 
             
-            #line 2407 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2404 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("Draftmodemodification", "EditEvent"));
 
             
@@ -5383,7 +5383,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 2420 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2417 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -5401,7 +5401,7 @@ WriteLiteral(@"' + '?Eventid=' + response;
                             window.open('");
 
             
-            #line 2429 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2426 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                     Write(Url.Action("ViewCreateEvent", "CreateEvent",new { }));
 
             
@@ -5412,7 +5412,7 @@ WriteLiteral("?strUrlData=\' + vUrl, \"_blank\");\r\n                        }\r
 "ive\r\n\r\n                            window.location.href = \'");
 
             
-            #line 2435 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2432 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -5442,7 +5442,7 @@ WriteLiteral(@"?EventId=' +response;
                 url: '");
 
             
-            #line 2456 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2453 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetSubCat", "EditEvent"));
 
             
@@ -5468,7 +5468,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 2473 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2470 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetOrgnizerDetail", "EditEvent"));
 
             
@@ -5620,7 +5620,7 @@ WriteLiteral("\',\r\n                data: { lEventId: $(\"#hdEventId\").val() }
 "jax({\r\n                        url: \'");
 
             
-            #line 2767 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2764 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "CreateEvent"));
 
             
@@ -5648,7 +5648,7 @@ WriteLiteral("\',\r\n                        data: { strUserUrl: $(\"#txtEventUr
 "     url: \'");
 
             
-            #line 2800 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2797 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -5764,7 +5764,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 "----\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 2987 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2984 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetPreviousAddressForEditing", "CreateEvent"));
 
             
@@ -6004,7 +6004,7 @@ WriteLiteral("\',\r\n                data: { \"lEid\": $(\"#hdEventId\").val() }
 "");
 
             
-            #line 3463 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3460 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
     //Ticket Section Starts
@@ -6062,7 +6062,7 @@ WriteLiteral("    <script>\r\n        function CannotFindLocation() {\r\n       
 "           url: \'");
 
             
-            #line 3570 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3567 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -6796,14 +6796,14 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 "cript>\r\n");
 
             
-            #line 5109 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5106 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 5110 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5107 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      
 
             
@@ -6811,9 +6811,9 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 238218), Tuple.Create("\"", 238257)
-, Tuple.Create(Tuple.Create("", 238225), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 238225), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 237851), Tuple.Create("\"", 237890)
+, Tuple.Create(Tuple.Create("", 237858), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 237858), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6821,7 +6821,7 @@ WriteLiteral(" rel=\"stylesheet\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 5112 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5109 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -6829,9 +6829,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 238291), Tuple.Create("\"", 238348)
-, Tuple.Create(Tuple.Create("", 238298), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 238298), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 237924), Tuple.Create("\"", 237981)
+, Tuple.Create(Tuple.Create("", 237931), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 237931), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6840,15 +6840,15 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 238382), Tuple.Create("\"", 238419)
-, Tuple.Create(Tuple.Create("", 238388), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 238388), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 238015), Tuple.Create("\"", 238052)
+, Tuple.Create(Tuple.Create("", 238021), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 238021), false)
 );
 
 WriteLiteral("></script>\r\n");
 
             
-            #line 5115 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5112 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
 
@@ -6881,7 +6881,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            //
 "niqueguid\').val(uuid());\r\n\r\n\r\n        });\r\n    </script>\r\n");
 
             
-            #line 5164 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5161 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -6891,7 +6891,7 @@ WriteLiteral("    <script>\r\n        function ajaxsetup(strname, strFormTag) {\
 "msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url:\'");
 
             
-            #line 5170 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5167 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -7157,7 +7157,7 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "      });\r\n        });\r\n\r\n    </script>\r\n");
 
             
-            #line 5721 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5718 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7167,7 +7167,7 @@ WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n\r\n   
 "       var j= ");
 
             
-            #line 5726 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5723 "..\..\Views\EditEvent\ModifyEvent.cshtml"
           Write(Html.Raw(ViewData["Image"]));
 
             
@@ -7291,7 +7291,7 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 ";\r\n\r\n                }\r\n\r\n            }\r\n    });\r\n    </script>\r\n");
 
             
-            #line 5933 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5930 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 

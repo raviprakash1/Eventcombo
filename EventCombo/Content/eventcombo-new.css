@@ -26,7 +26,7 @@
 }
 /***********************GMap css ends****************************/
 textarea {resize: none;}
-.ev_date_icn{ background-image: url(../images/icon-date.png); width: 29px; height: 29px; margin-top: 7px; left: -15px; position: absolute; cursor: pointer;}
+.ev_date_icn{ background-image: url(../images/icon-date.png); width: 29px; height: 29px; margin-top: 7px; left: -20px; position: absolute; cursor: pointer;}
 .ev_loc_icn{ background-image: url(../images/icon-location.png); width: 26px; height: 35px; position: absolute;   left: 45px; cursor: pointer;}
 .ev_loca_check_main{ margin-top: 20%;}
 .ev_loca_check{ color: #aaa; font-size: 18px; font-weight: normal; }
@@ -571,3 +571,62 @@ textarea {resize: none;}
 .ft24{ font-size: 24px; }
 .ft4em{font-size: 4em; }
 .ft3em{font-size: 3em; }
+
+
+
+#tickets_sold_graph {
+    width: 100%;
+    height: 60px;
+    background: #c9c9c9;
+    overflow: visible;
+    white-space: nowrap;
+}
+
+#tickets_sold_graph .curved-left {
+    margin-left: -1px;
+}
+#tickets_sold_graph>div {
+    float: left;
+    overflow: visible;
+    height: 60px; line-height:60px;
+}
+.tickets_sold_paid {
+    background-color: #06acd6;
+}
+#tickets_sold_legend {
+    float: left;
+    margin-top: 6px;
+}
+#tickets_sold_legend>dd {
+    margin-right: 18px;
+    font-weight: 500;
+}
+#tickets_sold_legend > dt, #tickets_sold_legend > dd {
+        float: left;
+    }
+
+
+#tickets_sold_legend>dt {
+    margin: 6px 5px 0 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    text-indent: -9999px;
+}
+#tickets_sold_legend>dt, #tickets_sold_legend>dd {
+    float: left;
+}
+.tickets_sold_free {
+    position: relative;
+    background: url(../Images/free-pinstripe.png) #06acd6;
+}
+
+
+#tickets_sold_graph>figcaption {
+    float: right;
+    margin-right: -36px;
+    width: 24px;
+    font-weight: 500;}
+
+.tickets_sold_qyant{ position:absolute; font-size:50px; color:#000; }
+.tickets_total_tic{ position:absolute; font-size:15px; color:#000; right:5px; line-height:0 !important; bottom:0px; }

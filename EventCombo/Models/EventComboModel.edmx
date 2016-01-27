@@ -191,6 +191,7 @@
           <Property Name="ModifyDate" Type="datetime" />
           <Property Name="ShowMap" Type="varchar" MaxLength="1" />
           <Property Name="Parent_EventID" Type="bigint" />
+          <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1093,6 +1094,7 @@
           <Property Name="ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Parent_EventID" Type="Int64" />
+          <Property Name="EventCancel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -2008,6 +2010,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="EventCancel" ColumnName="EventCancel" />
                 <ScalarProperty Name="Parent_EventID" ColumnName="Parent_EventID" />
                 <ScalarProperty Name="ShowMap" ColumnName="ShowMap" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />

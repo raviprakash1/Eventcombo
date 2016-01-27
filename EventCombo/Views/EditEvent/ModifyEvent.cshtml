@@ -1345,7 +1345,7 @@ else
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
-    <script src = "../Content/gmap.js" ></script>
+    <script src = "~/Scripts/gmap.js" ></script>
                   // ---------------------Event Creation Script -------------------
     <script>
         $(document).ready(function () {
@@ -1584,22 +1584,13 @@ else
 
             }
             $(".cdisable").removeAttr("disabled");
-            //var msg=validatemain();
-            //alert(msg);
-            //if(msg=="")
-            //{
-            //
-
-            //}
-            debugger;
-            var temp="@TempData["Scroll"]";
+            var temp="@TempData["Scroll"]"
             if(temp!='')
             {
                 var scroll="@TempData["Scroll"]";
                 $(window).scrollTop($("#"+scroll).offset().top);
                 $("#"+scroll).focus();
-            }
-
+           }
         });
 
         $("#rdPublic").click(function(){
