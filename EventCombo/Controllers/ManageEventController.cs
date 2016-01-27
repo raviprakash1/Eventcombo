@@ -236,9 +236,9 @@ namespace EventCombo.Controllers
             for (int i = 1; dt <= DateTime.Today; i++)
             {
                 if (strDates.ToString().Equals(""))
-                    strDates.Append(dt.ToString("dd/MMM"));
+                    strDates.Append(dt.ToString("MM/dd"));
                 else
-                    strDates.Append("," + dt.ToString("dd/MMM"));
+                    strDates.Append("," + dt.ToString("MM/dd"));
 
                 lHitCount = GetEventHitDayCount(Eventid, dt);
                 strDates.Append("-");
@@ -253,9 +253,9 @@ namespace EventCombo.Controllers
 
 
                 if (strSaleQty.ToString().Equals(""))
-                    strSaleQty.Append(dt.ToString("dd/MMM"));
+                    strSaleQty.Append(dt.ToString("MM/dd"));
                 else
-                    strSaleQty.Append("," + dt.ToString("dd/MMM"));
+                    strSaleQty.Append("," + dt.ToString("MM/dd"));
 
                 SaleTickets objSale = GetTicketSalebyEvent(Eventid, dt);
                 strSaleQty.Append("-");
@@ -285,6 +285,62 @@ namespace EventCombo.Controllers
             return View(Mevent);
         }
 
+        public string GetAllTicketSale(long EventId)
+        {
+            StringBuilder strResult = new StringBuilder();
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                //where myRow.E_Id == EventId
+                var vTickets = (from myRow in objEnt.Tickets
+                                select myRow).ToList();
+                long dSoldQty = 0;
+                strResult.Append("<table id='tbSaleTicket' class='table ft_black table - bordered mb0'>");
+                strResult.Append("<thead>");
+                strResult.Append("<tr>");
+                strResult.Append("<th>Ticket Type</th>");
+                strResult.Append("<th>Price</th>");
+                strResult.Append("<th>Sold</th>");
+                strResult.Append("<th>Status</th>");
+                strResult.Append("<th>End Sales</th>");
+                strResult.Append("<th>View Sale</th>");
+                strResult.Append("</tr>");
+                strResult.Append("</thead>");
+                strResult.Append("<tbody>");
+                foreach (Ticket obj in vTickets)
+                {
+                    strResult.Append("<tr>");
+                    strResult.Append("<td>"); strResult.Append(obj.T_name); strResult.Append("</td>");
+                    strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
+
+                    var vRemQty = (from myRow in objEnt.Ticket_Quantity_Detail
+                                   where myRow.TQD_Event_Id == obj.E_Id && myRow.TQD_Ticket_Id == obj.T_Id
+                                   select myRow).FirstOrDefault();
+                    if (vRemQty != null)
+                    {
+                        dSoldQty = ((vRemQty.TQD_Quantity != null ? Convert.ToInt64(vRemQty.TQD_Quantity) :0) - (vRemQty.TQD_Remaining_Quantity != null ? Convert.ToInt64(vRemQty.TQD_Remaining_Quantity) : 0));
+                        strResult.Append("<td>"); strResult.Append(dSoldQty.ToString() + "/" + (vRemQty.TQD_Quantity != null ? vRemQty.TQD_Quantity.ToString() : "0")); strResult.Append("</td>");
+                    }
+                    else
+                    {
+                        strResult.Append("<td>"); strResult.Append("0/0"); strResult.Append("</td>");
+                    }
+                    if (dSoldQty == vRemQty.TQD_Quantity)
+                    {
+                        strResult.Append("<td>"); strResult.Append("Sold Out"); strResult.Append("</td>");
+                    }
+                    else
+                    {
+                        strResult.Append("<td>"); strResult.Append("On Sale"); strResult.Append("</td>");
+                    }
+                    strResult.Append("<td>"); strResult.Append((obj.Sale_End_Date != null ?  obj.Sale_End_Date.ToString() :"")); strResult.Append("</td>");
+                    strResult.Append("<td>"); strResult.Append(""); strResult.Append("</td>");
+                    strResult.Append("</tr>");
+                }
+                strResult.Append("</tbody>");
+                strResult.Append("</table>");
+            }
+            return strResult.ToString();
+        }
 
         public string GetSaleAmount(long lEventId,string strAmtType)
         {
