@@ -4,7 +4,9 @@
     ViewBag.Title = "TicketPayment";
     //Layout = "~/Views/Shared/_AccountLayout.cshtml";
     Layout = "~/Views/Shared/_Layout.cshtml";
+   
 }
+
 
 <link href="~/Content/flipclock.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.creditCardValidator.js"></script>
@@ -200,7 +202,7 @@
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" value="@Html.DisplayFor(m=>m.PhnNo)" id="accountphnno">
                             </div>
                             <div class="col-sm-10 col-xs-12 no_pad">
-                                <div class="col-sm-6 col-xs-12 mb10 pl0 xspad0">
+                                <div class="col-sm-6 col-xs-12 mb10 pl0 xspad0 xs375zip">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength=256 id="accCity" value="@Html.DisplayFor(m=>m.AccCity)">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 mb10 no_pad ">
@@ -210,7 +212,7 @@
 
                             </div>
                             <div class="col-sm-10 col-xs-12 no_pad">
-                                <div class="col-sm-6 col-xs-12 mb10 pl0 xspad0">
+                                <div class="col-sm-6 col-xs-12 mb10 pl0 xspad0 xs375zip">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="accZip" value="@Html.DisplayFor(m=>m.Acczip)">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 mb10 no_pad ">
@@ -287,7 +289,7 @@
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength=256 id="billaddress2">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0">
+                                <div class="col-sm-6 col-xs-12 pl0 xs375zip">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength=256 id="billcity">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
@@ -297,11 +299,11 @@
 
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0">
+                                <div class="col-sm-6 col-xs-12 pl0 xs375zip">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="billzip">
                                 </div>
-                                <div class="col-sm-6 col-xs-12 no_pad ">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label", @id = "billcountry" })
+                                <div class="col-sm-6 col-xs-12 no_pad dropheight"> 
+                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "billcountry" })
 
 
                                 </div>
@@ -356,8 +358,8 @@
                                 <div class="col-sm-6 col-xs-12 pl0">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="shipzip">
                                 </div>
-                                <div class="col-sm-6 col-xs-12 no_pad ">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label", @id = "shipcountry" })
+                                <div class="col-sm-6 col-xs-12 no_pad dropheight">
+                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "shipcountry" })
 
 
                                 </div>

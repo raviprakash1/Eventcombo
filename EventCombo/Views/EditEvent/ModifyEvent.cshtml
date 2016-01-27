@@ -615,10 +615,10 @@
             <div class="event_detail_container">
                 <div class="evnt_tile_head">
                     <div class="evnt_tile_bg_l"></div>
-                    <div class="col-sm-6 text-left no_pad">
+                    <div class="col-sm-6 col-xs-6 text-left no_pad">
                         <h2 class="fb_dis_head pt5">TICKETING INFORMATION</h2>
                     </div>
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-6 col-xs-6 text-right">
                         <label class="ev_fb_lable">Will Call <input type="radio" id="id_willcall" name="seating" checked="checked"></label>
                         <label class="ev_fb_lable">Seating <input type="radio" id="id_reservedseating" name="seating"></label>
                     </div>
@@ -697,7 +697,7 @@
 
                                         </div>*@
                                 </div>
-                                <div class="col-sm-2 no_pad">
+                                <div class="col-sm-2 no_pad xs768det-del">
                                     <div class="form-group paidticket-n" id="id_Disc-n">
                                         <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
                                         <div class="col-sm-8">
@@ -706,7 +706,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-1 no_pad evnt_sett_main ">
+                                <div class="col-sm-1 no_pad evnt_sett_main xs768detail">
                                     <div class="nav evnt_setting">
                                         <span class="evnt_set ev_set_more" id="id_setting-n" onclick="showsettingdiv(this.id);"> Detail </span>
                                         <!--  <a href="#evnt_set" class="evnt_set">More </a> -->
@@ -1584,16 +1584,13 @@ else
 
             }
             $(".cdisable").removeAttr("disabled");
-          
-
-         var temp="@TempData["Scroll"]"
+            var temp="@TempData["Scroll"]"
             if(temp!='')
             {
                 var scroll="@TempData["Scroll"]";
                 $(window).scrollTop($("#"+scroll).offset().top);
-             $("#"+scroll).focus();
+                $("#"+scroll).focus();
            }
-
         });
 
         $("#rdPublic").click(function(){
