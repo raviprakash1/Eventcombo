@@ -724,7 +724,8 @@ else
 
                 });
                 $("#aUnpublish").click(function () {
-                    $("#hdmsg").html("Are you sure you want to unpublish event?");
+                    var msg = ajaxsetup('ManageEvent', 'MEunPublish');
+                    $("#hdmsg").html(msg);
                     $("#btnyes").show();
                     $("#btnyesdelete").hide();
                     $("#btnyescancel").hide();
@@ -842,8 +843,8 @@ else
                 });
 
                 $("#aCancel").click(function () {
-
-                    $("#hdmsg").html("Are you sure you want to cancel the event?");
+                    var msg = ajaxsetup('ManageEvent', 'MECancel');
+                    $("#hdmsg").html(msg);
                     $("#btnyes").hide();
                     $("#btnyesdelete").hide();
                     $("#btnyescancel").show();
