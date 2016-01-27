@@ -30,7 +30,7 @@ namespace EventCombo
 
             routes.MapRoute(
                 name: "ViewEvent",
-                url: "Event/{strEventDs}-{strEventId}",
+                url: "e/{strEventDs}-{strEventId}",
                 defaults: new
                 {
                     controller = "ViewEvent",
