@@ -144,11 +144,16 @@ namespace EventCombo.Controllers
                 Mevent.Eventtransaction = "N";
             }
             //Trn
-
+            var url = Request.Url;
+            var baseurl = url.GetLeftPart(UriPartial.Authority);
+            string title = Regex.Replace(Edetails.EventTitle.Trim().Replace(" ", " - "), "[^ a - zA - Z0 - 9_ -] + ", "");
+            Mevent.url = baseurl + GetEventURL(Eventid);
+            Mevent.Descritption = Edetails.EventDescription;
             Mevent.Eventid = Eventid;
             Mevent.Eventstatus = Edetails.EventStatus;
             Mevent.Eventtitle = Edetails.EventTitle;
             Mevent.EventAddress = TopAddress;
+            Mevent.Eventcancel = Edetails.EventCancel;
             Mevent.Eventdate = startday.ToString() + " " + sDate_new + " " + starttime;
             Mevent.Eventprivacy = Edetails.EventPrivacy;
             Session["Fromname"] = "events";
@@ -415,19 +420,7 @@ namespace EventCombo.Controllers
                     db.Tickets.RemoveRange(db.Tickets.Where(x => x.E_Id == eventid).ToList());
                     db.Events.RemoveRange(db.Events.Where(x => x.EventID == eventid).ToList());
 
-                    //db.Database.ExecuteSqlCommand("Delete from Event_Orgnizer_Detail where Orgnizer_Event_Id='" + eventid + "'");
-                    //db.Database.ExecuteSqlCommand("Delete from Event_VariableDesc where Event_Id='" + eventid + "'");
-                    //db.Database.ExecuteSqlCommand("Delete from EventImage where EventID='" + eventid + "'");
-                    //db.Database.ExecuteSqlCommand("Delete from EventFavourite where eventId='" + eventid + "'");
-                    //db.Database.ExecuteSqlCommand("Delete from Address where EventId='" + eventid + "'");
-                    // db.Database.ExecuteSqlCommand("Delete from EventVenue where EventID='" + eventid + "'");
-                    // db.Database.ExecuteSqlCommand("Delete from EventVote where eventId='" + eventid + "'");
-                    //db.Database.ExecuteSqlCommand("Delete from MultipleEvent where EventID='" + eventid + "'");
-                    //db.Database.ExecuteSqlCommand("Delete from Publish_Event_Detail where PE_Event_Id='" + eventid + "'");
-                    //db.Database.ExecuteSqlCommand("Delete from Ticket_Quantity_Detail where TQD_Event_Id='" + eventid + "'");
-                    //db.Database.ExecuteSqlCommand("Delete from Events_Hit where EventHit_EventId='" + eventid + "'");
-                    //db.Database.ExecuteSqlCommand("Delete from Ticket where E_Id='" + eventid + "'");
-                   // db.Database.ExecuteSqlCommand("Delete from Event where EventID='" + eventid + "'");
+                
 
 
 
@@ -844,10 +837,31 @@ namespace EventCombo.Controllers
             return Eventid;
         }
 
-
         public void SetScrollTemp()
         {
             TempData["Scroll"] = "PrivaPub";
+        }
+
+
+
+
+        public string CancelEvent(long eventid)
+        {
+            string msg = "";
+
+            try {
+                Event objEvt = db.Events.First(i => i.EventID == eventid);
+                objEvt.EventCancel = "Y";
+                db.SaveChanges();
+                msg = "Y";
+            }
+            catch(Exception ex)
+            {
+                msg = "N";
+            }
+
+            return msg;
+
         }
 
     }

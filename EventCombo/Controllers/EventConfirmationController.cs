@@ -108,7 +108,8 @@ namespace EventCombo.Controllers
                 cms.Address = (evAdress != null ? evAdress.ConsolidateAddress : "");
                 var url = Request.Url;
                 var baseurl = url.GetLeftPart(UriPartial.Authority);
-                cms.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + cms.Title.Trim() + "­౼" + EventId + "౼N";
+                string title = Regex.Replace(cms.Title.Trim().Replace(" ", " - "), "[^ a - zA - Z0 - 9_ -] + ", "");
+                cms.url = baseurl + Url.Action("ViewEvent", "ViewEvent") + "?strEventDs= " + title + "&strEventId=" + EventId + "";
                 cms.Descritption = Eventdetails.EventDescription;
                 cms.EventId = EventId;
                 return View(cms);

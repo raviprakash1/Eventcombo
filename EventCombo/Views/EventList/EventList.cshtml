@@ -196,9 +196,19 @@
                                     <td class="text-center">
                                         <div class="event-btn-action">
                                             <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID, type="N" }, null)</p>
+                                           @if (item.EventCancel.ToString() == "Y")
+                                           {
+                                            <p class="btn-link manage"><text>Edit</text></p>
+                                                <p class="btn-link manage"><text>View</text> </p>
 
+                                           }
+                                           else
+                                           {
                                             <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
-                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
+                                                    <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>
+
+                                          
+                                           }
                                         </div>
                                     </td>
                                 </tr>
@@ -243,7 +253,7 @@
                                 {
                                     <tr>
                                         <td>@item.Name</td>
-                                        <td>@item.EMail</td>
+                                        <td>@item.Email</td>
                                         <td>@item.EventTitle</td>
                                         <td>@item.Date_Time</td>
                                         <td>@item.OrderId</td>

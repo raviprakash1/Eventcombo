@@ -34,5 +34,6 @@ namespace EventCombo.Models
         public string showmaponevent { get; set; }
         public string Linkedinlin { get;  set; }
         public string EventPrivacy { get; set; }
+        public string EventCancel { get; set; }
     }
 }
