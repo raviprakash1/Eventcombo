@@ -324,7 +324,7 @@ namespace EventCombo.Controllers
                     {
                         strResult.Append("<td>"); strResult.Append("0/0"); strResult.Append("</td>");
                     }
-                    if (dSoldQty == vRemQty.TQD_Quantity)
+                    if (vRemQty != null &&  dSoldQty == vRemQty.TQD_Quantity)
                     {
                         strResult.Append("<td>"); strResult.Append("Sold Out"); strResult.Append("</td>");
                     }
