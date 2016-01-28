@@ -602,22 +602,28 @@
         $("#spGrdTotal").text(vOrderTotal);
         $("#hdGrandTotal").val(vOrderTotal);
         $("#spSubTotal").text(vOrderTotal);
-
+        var totqty = $('#hidQty').val();
+     
         if (vOrderTotal > 0) {
             $('.divvisible').show();
 
             if (totqty <= 0) {
+
                 $('.divqtyvisible').hide();
+            } else {
+                $('.divqtyvisible').show();
             }
             //$('#cardshow').css('display', 'block');
         }
         else {
+            $('.divqtyvisible').hide();
             $('.divvisible').hide();
             //$('#cardshow').css('display', 'none');
         }
 
     }
     function calculateTickTotalOptional(vCount) {
+       
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
         if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
         for (i = 1; i <= vCount; i++) {
@@ -629,13 +635,20 @@
         $("#spGrdTotal").text(vOrderTotal.toFixed(2));
         $("#hdGrandTotal").val(vOrderTotal.toFixed(2));
         $("#spSubTotal").text(vOrderTotal.toFixed(2));
-
+        var totqty = $('#hidQty').val();
         if (vOrderTotal > 0) {
             $('.divvisible').show();
+            if (totqty <= 0) {
+               
+                $('.divqtyvisible').hide();
+            } else {
+                $('.divqtyvisible').show();
+            }
             //$('#cardshow').css('display', 'block');
         }
         else {
             $('.divvisible').hide();
+            $('.divqtyvisible').hide();
             //$('#cardshow').css('display', 'none');
         }
     }
@@ -1367,17 +1380,20 @@
                 $("#dvTicketInfo").append(response);
                 var vGrdTotal = parseFloat($("#spGrdTotal").text());
                 if (isNaN(vGrdTotal) == true) vGrdTotal = 0;
-                if (vGrdTotal > 0)
-                    $('.divvisible').show();
-                else
-                    $('.divvisible').hide();
-
                 var totqty = $('#hidQty').val();
 
-                if(totqty<=0)
-                {
+                if (totqty <= 0) {
                     $('.divqtyvisible').hide();
                 }
+                if (vGrdTotal > 0) {
+                    $('.divvisible').show();
+                }
+                else {
+                    $('.divvisible').hide();
+                    $('.divqtyvisible').hide();
+                }
+
+              
             },
         });
 
@@ -1533,21 +1549,7 @@
         $("#billingphno").mask("999-999-9999");
         $("#accountphnno").mask("999-999-9999");
 
-        //$("#cardno").validateCreditCard(function (result) {
 
-        //    //if (result.card_type.name == 'visa' || result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'amex') {
-        //    //    $('#imgcard').css('display', 'block');
-        //    //    $('#imgcard').attr('src', '/Images/' + result.card_type.name + '.png');
-
-        //    //} else {
-
-        //    //    $('#imgcard').css('display', 'none');
-        //    //}
-
-
-
-
-        //});
 
 
     });
@@ -1630,94 +1632,10 @@
 
 
     });
-    //$('#accZip').change(function () {
-    //    var country = $("#accCountry option:selected").text().trim();
+ 
 
-    //    var city = "";
-    //    var state = "";
+  
 
-    //    var pincode = $(this).val();
-
-
-    //    $.ajax({
-    //        url: 'http://maps.googleapis.com/maps/api/geocode/json',
-    //        data: '&address=' + pincode + '&sensor=true',
-    //        dataType: 'json',
-    //        cache: false,
-    //        success: function (data) {
-
-
-    //            if (data.status == 'OK') {
-
-    //                for (var i = 0; i < data.results[0].address_components.length; i++) {
-    //                    var obj = data.results[0].address_components[i];
-
-    //                    var obj2 = obj['types'];
-
-    //                    for (var j = 0; j < obj2.length; j++) {
-    //                        if (obj2[j] == 'locality') {
-    //                            city = obj['long_name'];
-
-
-    //                        }
-    //                        if (obj2[j] == 'sublocality_level_1') {
-    //                            city = obj['long_name'];
-
-
-    //                        }
-    //                        if (obj2[j] == 'postal_town') {
-    //                            city = obj['long_name'];
-
-
-    //                        }
-    //                        if (obj2[j] == 'administrative_area_level_1') {
-    //                            state = obj['long_name'];
-
-    //                        }
-    //                        if (obj2[j] == 'administrative_area_level_2') {
-    //                            state = obj['long_name'];
-
-    //                        }
-
-
-    //                        if (obj2[j] == 'country') {
-    //                            if (obj['long_name'] == country) {
-
-
-    //                                $('#accCity').val(city);
-    //                                $('#accState').val(state);
-    //                            } else {
-    //                                $('#accCity').val('');
-    //                                $('#accState').val('');
-    //                            }
-
-    //                        }
-
-    //                    }
-
-
-
-    //                }
-
-    //            }
-
-
-
-    //            else {
-    //                var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
-    //                $("#accState").val("");
-    //                $("#accCity").val("");
-    //                $('#accZip').addClass('err-bor');
-    //                ShowMessage('E', msg)
-
-    //                return false;
-    //            }
-    //        },
-    //        error: function (data) { alert(data) }
-    //    });
-
-
-    //});
 
     $("#accCountry").change(function () {
         $("#accZip").val("");

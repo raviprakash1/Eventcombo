@@ -158,7 +158,7 @@
                                                 {
                                                     <li>
 
-                                                        <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
+                                                        <a href="javascript:void(0)" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
 
                                                         @*@if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
                                                                                                                    {
@@ -312,11 +312,11 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
-                    <a href="#"><img src="/Images/mail.png"></a>
-                    <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
-                    <a href="#" id="fbshare"><img src="/Images/fac.png"></a>
+                    <a href="javascript:void(0)"><img src="/Images/mail.png"></a>
+                    <a href="javascript:void(0)" id="twittershare"><img src="/Images/twi.png"></a>
+                    <a href="javascript:void(0)" id="fbshare"><img src="/Images/fac.png"></a>
 
-                    <a href="#" id="linkshare"><img src="/Images/lin.png"></a>
+                    <a href="javascript:void(0)" id="linkshare"><img src="/Images/lin.png"></a>
                 </div>
 
                 <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -334,8 +334,8 @@
                         <div class="col-sm-12 inst_karm_box">
                             @Html.HiddenFor(m => m.organizerid, new { id = "hdorganiserid" })
                             <h4>@Html.DisplayFor(m => m.organizername)</h4>
-                            <p> <a data-target="#contorganizer" data-toggle="modal" href="#">Contact the Organizer </a></p>
-                            <p><a href="#">View organizer profile </a></p>
+                            <p> <a data-target="#contorganizer" data-toggle="modal" href="javascript:void(0)">Contact the Organizer </a></p>
+                            <p><a href="javascript:void(0)">View organizer profile </a></p>
                             @if (Html.DisplayFor(m => m.fblink).ToString() != "")
                             {
                                 <p><a href="@Html.DisplayFor(m => m.fblink)" target="_blank"><img src="/Images/facebook-icon.png">&nbsp;@Html.DisplayFor(m => m.fblink)</a></p>
@@ -353,7 +353,7 @@
                                 <p><a href="@Html.DisplayFor(m => m.Linkedinlin)" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Html.DisplayFor(m => m.Linkedinlin)</a></p>
                             }
 
-                            <p><span class="badge">5</span> <a href="#">&nbsp;Upcoming Event(s)</a> </p>
+                            <p><span class="badge">5</span> <a href="javascript:void(0)">&nbsp;Upcoming Event(s)</a> </p>
 
                         </div>
                     </div>
@@ -373,7 +373,7 @@
             <div class="evnt_details_body2">
                 <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
                     <label class="label-control evnt_ticket_label">
-                        <a href="#"><img src="~/Images/fb_connect.jpg" border="0" alt=""></a>
+                        <a href="javascript:void(0)"><img src="~/Images/fb_connect.jpg" border="0" alt=""></a>
                         @*<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
                             </fb:login-button>*@ @*<img src="/images/fb_connect.jpg"> to see which of your Facebook friends are going*@
                         </label>
@@ -476,9 +476,9 @@
 
                 <div class="evnt_details_body2">
                     <div class="row catgtype1 catgbg1">
-                        <div class="col-sm-4 col-xs-4 fs16"><a href="#">@TempData["EventType"]</a> </div>
-                        <div class="col-sm-4 col-xs-4 fs16"><a href="#">@TempData["EventCategory"]</a></div>
-                        <div class="col-sm-4 col-xs-4 fs16"><a href="#">@TempData["EventSubCategory"]</a> </div>
+                        <div class="col-sm-4 col-xs-4 fs16"><a href="javascript:void(0)">@TempData["EventType"]</a> </div>
+                        <div class="col-sm-4 col-xs-4 fs16"><a href="javascript:void(0)">@TempData["EventCategory"]</a></div>
+                        <div class="col-sm-4 col-xs-4 fs16"><a href="javascript:void(0)">@TempData["EventSubCategory"]</a> </div>
                     </div>
 
                 </div>
@@ -633,16 +633,16 @@
                     </div>
                     <div class="modal-body">
                         <div class="col-sm-6 text-center ev_calend_lebel">
-                            <i class="fa fa-windows"></i> <a href="#" id="ioutlook">Microsoft Outlook </a>
+                            <i class="fa fa-windows"></i> <a href="javascript:void(0)" id="ioutlook">Microsoft Outlook </a>
                         </div>
                         <div class="col-sm-6 text-center ev_calend_lebel">
-                            <i class="fa fa-apple"></i> <a href="#" id="icalender">Apple Ical </a>
+                            <i class="fa fa-apple"></i> <a href="javascript:void(0)" id="icalender">Apple Ical </a>
                         </div>
                         <div class="col-sm-6 text-center ev_calend_lebel">
-                            <i class="fa fa-google"></i> <a href="#" id="googlecal" target="_blank">Google Calendar </a>
+                            <i class="fa fa-google"></i> <a href="javascript:void(0)" id="googlecal" target="_blank">Google Calendar </a>
                         </div>
                         <div class="col-sm-6 text-center ev_calend_lebel">
-                            <i class="fa fa-yahoo"></i> <a href="#" target="_blank" id="yahoocal">Yahoo Calendar </a>
+                            <i class="fa fa-yahoo"></i> <a href="javascript:void(0)" target="_blank" id="yahoocal">Yahoo Calendar </a>
                         </div>
                         <div class="clearfix"></div>
 

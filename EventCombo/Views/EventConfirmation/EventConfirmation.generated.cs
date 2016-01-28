@@ -167,7 +167,7 @@ WriteAttribute("value", Tuple.Create(" value=\"", 1109), Tuple.Create("\"", 1146
             #line default
             #line hidden
 , 1130), false)
-, Tuple.Create(Tuple.Create("", 1144), Tuple.Create("౼Y", 1144), true)
+, Tuple.Create(Tuple.Create("", 1144), Tuple.Create("౼N", 1144), true)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n  " +
@@ -314,7 +314,7 @@ WriteLiteral("></div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"col-sm-12 no_pad mt20 text-right \"");
 
-WriteLiteral(">\r\n                <button");
+WriteLiteral(">\r\n                \r\n                <button");
 
 WriteLiteral(" class=\"btn ev_live_sub_btn mb5 mr0\"");
 
@@ -349,7 +349,7 @@ WriteLiteral(@">
             url: '");
 
             
-            #line 113 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            #line 114 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -371,20 +371,50 @@ WriteLiteral(@"',
     }
     $(document).ready(function () {
         $(""#btPreview"").click(function () {
-            window.location.href = '");
+           
+            ");
+
+WriteLiteral("\r\n            //var title =\'");
 
             
-            #line 129 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                               Write(Url.Action("ViewEvent", "CreateEvent", new { }));
+            #line 132 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+                     Write(Model.urlTitle.Replace(" ", "-"));
 
             
             #line default
             #line hidden
-WriteLiteral("\' + \'?strUrlData=\' + $(\"#hidVUrl\").val();\r\n            \r\n        });\r\n        $(\'" +
-".fbshare\').click(function () {\r\n            var title = \'");
+WriteLiteral("\';\r\n            window.location.href = \'");
 
             
             #line 133 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+                               Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.urlTitle.Replace(" ","") , strEventId = Model.EventId.ToString()}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n\r\n            //window.location.href = \'");
+
+            
+            #line 135 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+                                 Write(Url.Action("ViewEvent", "ViewEvent", new { }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\' + \'?strEventDs=\' + title + \'&strEventId = \' +");
+
+            
+            #line 135 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+                                                                                                                              Write(Model.EventId.ToString());
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" +\'\';\r\n        });\r\n        $(\'.fbshare\').click(function () {\r\n            var ti" +
+"tle = \'");
+
+            
+            #line 138 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
                     Write(Html.DisplayFor(m => m.Title));
 
             
@@ -393,7 +423,7 @@ WriteLiteral("\' + \'?strUrlData=\' + $(\"#hidVUrl\").val();\r\n            \r\n
 WriteLiteral("\';\r\n            var description = \'");
 
             
-            #line 134 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            #line 139 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
                           Write(Html.DisplayFor(m => m.Descritption).ToString().Trim());
 
             
@@ -402,7 +432,7 @@ WriteLiteral("\';\r\n            var description = \'");
 WriteLiteral("\';\r\n            var url = \'");
 
             
-            #line 135 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            #line 140 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
                   Write(Html.DisplayFor(m => m.url));
 
             
@@ -418,14 +448,14 @@ WriteLiteral(@"';
         });
 
 
-     
+
 
         $('#twittershare').click(function () {
 
             var title = '");
 
             
-            #line 149 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            #line 154 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
                     Write(Html.DisplayFor(m => m.Title));
 
             
@@ -434,7 +464,7 @@ WriteLiteral(@"';
 WriteLiteral("\';\r\n            var description = \'");
 
             
-            #line 150 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            #line 155 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
                           Write(Html.DisplayFor(m => m.Descritption).ToString().Trim());
 
             
@@ -443,7 +473,7 @@ WriteLiteral("\';\r\n            var description = \'");
 WriteLiteral("\';\r\n            var url = \'");
 
             
-            #line 151 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            #line 156 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
                   Write(Html.DisplayFor(m => m.url));
 
             
@@ -460,7 +490,7 @@ WriteLiteral(@"';
             var title = '");
 
             
-            #line 159 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            #line 164 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
                     Write(Html.DisplayFor(m => m.Title));
 
             
@@ -469,7 +499,7 @@ WriteLiteral(@"';
 WriteLiteral("\';\r\n            var description = \'");
 
             
-            #line 160 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            #line 165 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
                           Write(Html.DisplayFor(m => m.Descritption).ToString().Trim());
 
             
@@ -478,7 +508,7 @@ WriteLiteral("\';\r\n            var description = \'");
 WriteLiteral("\';\r\n            var url = \'");
 
             
-            #line 161 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            #line 166 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
                   Write(Html.DisplayFor(m => m.url));
 
             

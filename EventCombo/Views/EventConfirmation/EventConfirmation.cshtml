@@ -127,8 +127,12 @@
     }
     $(document).ready(function () {
         $("#btPreview").click(function () {
+           
             @*window.location.href = '@Url.Action("ViewEvent", "CreateEvent", new { })' + '?strUrlData=' + $("#hidVUrl").val();*@
-            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.urlTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
+            //var title ='@Model.urlTitle.Replace(" ", "-")';
+            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.urlTitle.Replace(" ","") , strEventId = Model.EventId.ToString()})';
+
+            //window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { })' + '?strEventDs=' + title + '&strEventId = ' +@Model.EventId.ToString() +'';
         });
         $('.fbshare').click(function () {
             var title = '@Html.DisplayFor(m => m.Title)';

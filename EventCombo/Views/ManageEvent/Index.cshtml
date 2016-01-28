@@ -119,7 +119,7 @@
                 <div class="col-sm-12 no_pad bor_line"></div>
                 <div class="col-sm-12 no_pad pt10 pb10 text-right">
                     <div class="col-sm-12 no_pad ev-mg-url" id="dvLblurl">
-                        Page URL: <span id="spEventUrl">@TempData["EventUrl"]</span>@*<a href="@TempData["EventUrl"]" id="aEventUrl" > @TempData["EventUrl"]</a>*@
+                        Page URL: <span id="spEventUrl">@Model.url</span>@*<a href="@TempData["EventUrl"]" id="aEventUrl" > @TempData["EventUrl"]</a>*@
                         <span class="ev-mng-edit"><button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btEditUrl" value="Edit">Edit</button></span>
                     </div>
 
@@ -127,7 +127,7 @@
                         <div class="col-sm-8 col-xs-12">
                             <div class="col-sm-3">Page URL:</div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" value="@TempData["EventUrl"]" id="txtEventURl" onkeypress="return IsAlphaNumeric(event);" />
+                                <input type="text" class="form-control" value=" " id="txtEventURl" onkeypress="return IsAlphaNumeric(event);" />
                                 <span>.eventcombo.com</span>
                             </div>
                         </div>
@@ -200,7 +200,10 @@ else
                                 }
                             }
 }
+                            @if (Model.EventExpired == "N")
+                            {
                             <li>@Html.ActionLink("Copy", "CopyEvent", new { Eventid = Model.Eventid })</li>
+                            }
                             @if (Model.Eventcancel != "Y")
                             {
                             <li><a href="#" id="aCancel" data-toggle="modal">Cancel</a></li>
@@ -503,11 +506,19 @@ else
                     <div class="clearfix"></div>
                     <div class="col-sm-12 no_pad mb20 mt20">
                         <div class="col-sm-12 traf_promo_bg">Your Link</div>
-                        <div class="col-sm-12 link_share">
-                            <p>Your Organizer URL <a href="#">http://eventcombo.com</a></p>
-                            <p>Share this event on Twitter <a href="#"  id="twittershare">@TempData["EventUrl"]</a></p>
-                            <p>Share this event on Facebook <a href="#"  id="fbshare">@TempData["EventUrl"]</a></p>
-                            <p>Share this event on Linkedin <a href="#" id="linkshare">@TempData["EventUrl"]</a></p>
+                        <div class="col-sm-12 link_share"> 
+                            @if (Model.Eventstatus == "Save")
+                            {
+                                <p>Your Organizer URL <a href="#">http://eventcombo.com</a></p>
+
+                            }
+                            else
+                            {
+                                <p>Your Organizer URL <a href="#">http://eventcombo.com</a></p>
+                                <p>Share this event on Twitter <a href="#" id="twittershare">@Model.url</a></p>
+                                <p>Share this event on Facebook <a href="#" id="fbshare">@Model.url</a></p>
+                                <p>Share this event on Linkedin <a href="#" id="linkshare">@Model.url</a></p>
+                            }
                         </div>
                     </div>
 
@@ -615,7 +626,7 @@ else
                             $("#hidTblvalue").val(6);
                         }
                     });
-                    
+
                 $("#btViewMore").click(function () {
                     debugger;
                     var startlen = $("#hidTblvalue").val();
@@ -641,6 +652,15 @@ else
                 $("#dvTexturl").hide();
                 $("#dvLblurl").show();
                 $("#btEditUrl").click(function () {
+                    var text = $("#spEventUrl").html();
+                    if (text.indexOf("/") > 0)
+                    {
+                        var full=text.length;
+                       var start=text.lastIndexOf("/");
+                       text = text.substr(start+1, full - start);
+
+                    }
+                    $("#txtEventURl").val(text);
                     $("#dvTexturl").show();
                     $("#dvLblurl").hide();
                 });
@@ -651,6 +671,15 @@ else
                 $("#btSaveUrl").click(function () {
                     var EventId = $("#hdEventid").val();
                     var vEvUrl = $("#txtEventURl").val();
+                    var VPath = "";
+                    var pathname = window.location.origin; // Returns path only
+                    if (vEvUrl.indexOf("/") > 0) {
+                         VPath = pathname + vEvUrl;
+                    } else
+                    {
+                        VPath = pathname +'/'+ vEvUrl;
+                    }
+
                     $.ajax({
                         url: '@Url.Action("saveEventUrl", "ManageEvent")',
                         data: { strEventUrl: vEvUrl, lEventId: EventId },
@@ -665,7 +694,7 @@ else
                                 $("#txtEventUrl").focus();
                             }
                             else {
-                                $("#spEventUrl").text(vEvUrl);
+                                $("#spEventUrl").text(VPath);
                                 $("#dvTexturl").hide();
                                 $("#dvLblurl").show();
                             }
@@ -904,11 +933,11 @@ else
             });
 
                $('#fbshare').click(function () {
-         
+
             var url = '@Html.DisplayFor(m => m.url)';
 
 
-        
+
 
            var title = '@Html.DisplayFor(m => m.Eventtitle)';
            var desc = '@Html.DisplayFor(m => m.Descritption).ToString().Trim()';
