@@ -90,7 +90,6 @@
                 <div class="col-sm-12 col-xs-12 text-left no_pad">
                     <h2 class="fb_dis_head pt5">YOUR ORDER INFORMATION</h2>
                 </div>
-
                 <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
             </div>
             <div class="evnt_details_body2">
@@ -99,7 +98,6 @@
                         <div id="dvAjxLoader">
                             <img src="~/Images/ajaxloader1.gif" />
                         </div>
-
                     </div>
                     @*<table class="table evnt_tkt_list_tbl">
                             <tfoot>
@@ -749,6 +747,7 @@
         });
     }
     $('#btPaypal').click(function () {
+        $("#hdIsPostBack").val("Y");
         SavePaypaldetail();
     });
 </script>

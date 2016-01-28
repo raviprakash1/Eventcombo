@@ -39,7 +39,7 @@ namespace EventCombo.Controllers
             ViewData["Amount"] = TicketPayment.strGrandTotal;
             return View();
         }
-        public ActionResult DoCheckoutPayment(string token, string PayerID)
+        public  ActionResult DoCheckoutPayment(string token, string PayerID)
         {
             string retMsg = "";
             TicketPayment TicketPayment = new TicketPayment();
@@ -59,9 +59,10 @@ namespace EventCombo.Controllers
                 //    TicketPaymentController objTc = new TicketPaymentController();
                 //    objTc.ControllerContext = new ControllerContext(this.Request.RequestContext, objTc);
                 //    //string strResult = await objTc.SaveDetails(objTP, objTP.strOrderTotal, objTP.strGrandTotal, objTP.strPromId, objTP.strVarChanges, objTP.strVarId, objTP.strPaymentType);
-                    
+
                 //    //RedirectToAction("PaymentConfirmation", "TicketPayment");
                 //}
+
             }
             else
             {

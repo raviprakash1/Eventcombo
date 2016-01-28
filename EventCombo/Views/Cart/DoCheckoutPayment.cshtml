@@ -5,10 +5,31 @@
 }
 <br /><br /><br />
 <br /><br /><br />
-<h2>Thank for payemnt</h2>
-@(ViewData["ReturnMessage"].ToString() == "" ? "Your payment is Successfully done." : "Your payement Unsuccess<br>" + ViewData["ReturnMessage"])<br />
-
- token: @ViewData["token"]<br />
- PayerID: @ViewData["PayerID"]<br />
- TRANSACTIONID: @ViewData["TRANSACTIONID"]<br />
-    Amount: @ViewData["Amount"]<br />
+<div class="event_container">
+    <div class="event_inner_container event_top" id="eventtopscoll">
+        <div class="col-sm-12 pt10 bggrey clearfix">
+            <div class="col-sm-12">
+                @(ViewData["ReturnMessage"].ToString() == "" ? "Your payment is Successfully done." : "Your payement Unsuccess<br>" + ViewData["ReturnMessage"])<br />                
+                <input id="hdResult" type="hidden" value="@ViewData["ReturnMessage"]" />
+            </div>
+            <div class="col-sm-12">
+                <div id="dvAjxLoader">
+                    Please wait ...<img src="~/Images/ajaxloader1.gif" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        $(document).ready(function () {
+            if ($("#hdResult").val().trim() == "") {
+                $.ajax({
+                    url: '@Url.Action("SaveDetailsForPaypal", "TicketPayment")',
+                    type: "Post",
+                    success: function (response) {
+                        window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
+                    }
+                });
+            }
+        });
+    </script>

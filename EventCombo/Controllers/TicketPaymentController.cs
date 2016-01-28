@@ -775,12 +775,18 @@ namespace EventCombo.Controllers
 
         #endregion
 
-
+        public async Task<string> SaveDetailsForPaypal()
+        {
+            TicketPayment objTP = (Session["TicketDatamodel"] != null ? (TicketPayment)Session["TicketDatamodel"] : null);
+            string strResult = await SaveDetails(objTP, objTP.strOrderTotal, objTP.strGrandTotal, objTP.strPromId, objTP.strVarChanges, objTP.strVarId, objTP.strPaymentType);
+            return strResult;
+        }
 
         public ActionResult PaymentConfirmation()
         {
             if (Session["AppId"] != null)
             {
+                Session["TicketDatamodel"] = null;
                 List<paymentdate> Dateofevent = new List<paymentdate>();
                 string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
                 List<Email_Tag> EmailTag = new List<Email_Tag>();
