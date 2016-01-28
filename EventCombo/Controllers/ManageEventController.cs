@@ -304,8 +304,9 @@ namespace EventCombo.Controllers
             StringBuilder strResult = new StringBuilder();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                //where myRow.E_Id == EventId
+                
                 var vTickets = (from myRow in objEnt.Tickets
+                                where myRow.E_Id == EventId
                                 select myRow).ToList();
                 long dSoldQty = 0;
                 strResult.Append("<table id='tbSaleTicket' class='table ft_black table - bordered mb0'>");
@@ -327,7 +328,7 @@ namespace EventCombo.Controllers
                     strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
 
                     var vRemQty = (from myRow in objEnt.Ticket_Quantity_Detail
-                                   where myRow.TQD_Event_Id == obj.E_Id && myRow.TQD_Ticket_Id == obj.T_Id
+                                   where myRow.TQD_Event_Id == EventId && myRow.TQD_Ticket_Id == obj.T_Id
                                    select myRow).FirstOrDefault();
                     if (vRemQty != null)
                     {

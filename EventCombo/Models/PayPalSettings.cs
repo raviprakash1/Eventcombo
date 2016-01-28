@@ -64,6 +64,21 @@ namespace EventCombo.Models
             }
         }
 
+        public static string MerchantAccountID
+        {
+            get
+            {
+                return Setting<string>("PayPal:MerchantAccountID");
+            }
+        }
+
+        public static string Environment
+        {
+            get
+            {
+                return Setting<string>("PayPal:Environment");
+            }
+        }
         private static T Setting<T>(string name)
         {
             string value = ConfigurationManager.AppSettings[name];
