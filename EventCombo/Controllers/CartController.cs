@@ -21,7 +21,6 @@ namespace EventCombo.Controllers
                 PayPalOrder objPay = new PayPalOrder();
                 objPay.Amount = Convert.ToDecimal(TicketPayment.strGrandTotal);
                 objPay.OrderId = "";
-
                 PayPalRedirect redirect = PayPal.ExpressCheckout(objPay);
 
                 return Json(redirect.Token, JsonRequestBehavior.AllowGet);
@@ -49,11 +48,20 @@ namespace EventCombo.Controllers
             if (PayPal.DoCheckoutPayment(TicketPayment.strGrandTotal, token, PayerID, ref retMsg))
             {
                 ViewData["ReturnMessage"] = "";
-
                 ViewData["token"] = token;
                 ViewData["PayerID"] = PayerID;
                 ViewData["TRANSACTIONID"] = retMsg;
                 ViewData["Amount"] = TicketPayment.strGrandTotal;
+
+                //TicketPayment objTP = (Session["TicketDatamodel"] != null ? (TicketPayment)Session["TicketDatamodel"] : null);
+                //if (objTP != null)
+                //{
+                //    TicketPaymentController objTc = new TicketPaymentController();
+                //    objTc.ControllerContext = new ControllerContext(this.Request.RequestContext, objTc);
+                //    //string strResult = await objTc.SaveDetails(objTP, objTP.strOrderTotal, objTP.strGrandTotal, objTP.strPromId, objTP.strVarChanges, objTP.strVarId, objTP.strPaymentType);
+                    
+                //    //RedirectToAction("PaymentConfirmation", "TicketPayment");
+                //}
             }
             else
             {
