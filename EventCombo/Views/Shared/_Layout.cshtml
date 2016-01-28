@@ -500,8 +500,8 @@ else
                             }
                         },
                         error: function (data) {
-                            alert("Sorry there is some problem.");
-                            return false
+                            //alert("Sorry there is some problem.");
+                            return false;
                         }
                     });
                    //get user email
@@ -511,8 +511,9 @@ else
                 });
 
             } else {
+                return false;
                 //user hit cancel button
-                alert('User cancelled login or did not fully authorize.');
+                //alert('User cancelled login or did not fully authorize.');
 
             }
         }, {
@@ -831,6 +832,8 @@ else
                 }
 
                 $("#btnSavelogin").click(function () {
+                    this.disabled = true;
+
                     var msgloginn = validationLogin();
 
                     var flag1login = true;
@@ -842,7 +845,7 @@ else
                         $('#diverro1login').css('display', 'none');
                         $('#dverrui').html(msgloginn);
                         $('#diverrologin').css("display", "block");
-
+                        this.disabled = false;
                         return false;
                     }
                     if (flag1login) {
@@ -1005,7 +1008,7 @@ else
 
 
                 $("#btnsave").click(function (event) {
-
+                    this.disabled = true;
                   var msg = validation();
                     var flag1 = true;
                     if (msg == "") {
@@ -1016,7 +1019,7 @@ else
                         $('#diverro1').css('display', 'none');
                         $('#dverrsignui').html(msg);
                         $('#diverro').css("display", "block");
-
+                        this.disabled = false;
                         return false;
                     }
                     if (flag1) {
@@ -1038,7 +1041,7 @@ else
 
                                                 } else if (data == "Found")
                                                 {
-                                                    
+                                                    $("#btnsave").attr('disabled', false);
                                                     $('#SignupEmail').focus();
                                                     $('#SignupEmail').addClass('err-bor');
                                                     $('#diverro').css("display", "none");

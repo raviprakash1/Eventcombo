@@ -14,16 +14,17 @@ namespace EventCombo.Models
     public partial class GetEventsListByStatus1_Result
     {
         public string Name { get; set; }
-        public string EMail { get; set; }
         public string Date_Time { get; set; }
         public string TicketType { get; set; }
-        public long TicketPurchased { get; set; }
+        public Nullable<long> TicketPurchased { get; set; }
         public string OrderId { get; set; }
         public long EventID { get; set; }
         public string EventTitle { get; set; }
         public string EventDate { get; set; }
         public string EventTime { get; set; }
-        public long TotalTicket { get; set; }
-        public long TicketSold { get; set; }
+        public Nullable<long> TotalTicket { get; set; }
+        public Nullable<long> TicketSold { get; set; }
+        public string Email { get; set; }
+        public string EventCancel { get; set; }
     }
 }

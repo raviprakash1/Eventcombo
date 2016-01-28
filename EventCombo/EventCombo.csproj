@@ -507,7 +507,6 @@
     <Content Include="EventTicket_HTML.html" />
     <Content Include="Images\ajaxloader1.gif" />
     <Content Include="Images\ana_graph.png" />
-    <Content Include="Images\Bar_Image.Png" />
     <Content Include="Images\cong-mark-mini.png" />
     <Content Include="Images\cong-mark.png" />
     <Content Include="Images\deal_img1.jpg" />
@@ -534,7 +533,6 @@
     <Content Include="Images\mail.png" />
     <Content Include="Images\org_prof.png" />
     <Content Include="Images\o_cal.png" />
-    <Content Include="Images\QR_Image.Png" />
     <Content Include="Images\slider1.jpg" />
     <Content Include="Images\slider2.png" />
     <Content Include="Images\slider3.png" />

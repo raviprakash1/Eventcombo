@@ -324,6 +324,7 @@ namespace EventCombo.Controllers
                     ObjEC.ShowMap = model.ShowMap;
                     ObjEC.Parent_EventID = 0;
                     ObjEC.CreateDate = DateTime.Now;
+                    ObjEC.EventCancel = "N";
                     //objEnt.Events.Add(ObjEC);
                     objEnt.Events.Add(ObjEC);
                     // Address info

@@ -11,27 +11,20 @@
 {
     <input type="hidden" value="@Model.Eventid" id="hdEventid" />
     <div class="event_container">
-        <div class="col-sm-12 pt10 bggrey clearfix">
-            <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
-                <div class="er_UI_main">
-                    <div class="er_UI_img"></div>
-                    <div class="er_suc" id="erraccmsg"></div>
-                    <button class="close" type="button" id="btndiverrsuc">&#215;</button>
-
-                </div>
-            </div>
-            <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
-                <div class="er_suc_main">
-
-                    <div class="er_suc_img"></div>
-                    <div class="er_suc" id="succaccmsg"> </div>
-                    <button class="close" type="button" id="btndivaccsuc">&#215;</button>
-
-                </div>
-            </div>
-        </div>
+        
 
         <div class="event_inner_container event_top">
+            <div class="col-sm-12 pt10 bggrey clearfix">
+                <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+                    <div class="er_UI_main">
+                        <div class="er_UI_img"></div>
+                        <div class="er_suc" id="erraccmsg"></div>
+                        <button class="close" type="button" id="btndiverrsuc">&#215;</button>
+
+                    </div>
+                </div>
+
+            </div>
             <div class="col-sm-12 pt10 bggrey">
                 @if (@TempData["Success"] != null)
                 {
@@ -49,7 +42,9 @@
                     <div class="col-sm-12 no_pad">
                         <p class="ev_mng_title">
                             @Model.Eventtitle
-                            @if (Model.EventExpired == "N")
+@if (Model.Eventcancel != "Y")
+{
+                            if (Model.EventExpired == "N")
                             {
                                 if (Model.Eventstatus == "Save")
                                 {
@@ -60,6 +55,7 @@
                             <label class="btn ev_live_sub_btn grn_live_btn ft24"> LIVE </label>
                                 }
                             }
+}
                         </p>
                         <p class="ev_mng_title_mini ">@Model.EventAddress </p>
                         <p class="ev_mng_title_mini">@Model.Eventdate </p>
@@ -67,7 +63,9 @@
 
                 </div>
                 <div class="col-sm-6 col-xs-6 pt10 text-right no_pad">
-                    @if (Model.EventExpired == "N")
+                    @if (Model.Eventcancel != "Y")
+                    {
+                    if (Model.EventExpired == "N")
                     {
                         if (Model.Eventstatus == "Save")
                         {
@@ -88,6 +86,7 @@
                         PREVIEW
                     </button>
                     }
+                    }
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad bor_line"></div>
@@ -95,16 +94,20 @@
                 <div class="col-sm-12 no_pad pt10 pb10">
                     <div class="col-sm-4 no_pad ev-pilot-font1">Event Pilot</div>
                     <div class="col-sm-4 no_pad">
-                        @if (Model.Eventprivacy == "Public")
+@if (Model.Eventcancel != "Y")
+{
+
+                        if (Model.Eventprivacy == "Public")
                         {
                         <div class="col-sm-12 no_pad ev-pilot-font"><a class="aPubPrivate" href="#">Public </a></div>
                         <div class="col-sm-12 no_pad ft15">Your event is listed and searchable. </div>
                         }
-                        @if (Model.Eventprivacy == "Private")
+                        if (Model.Eventprivacy == "Private")
                         {
                         <div class="col-sm-12 no_pad ev-pilot-font"><a class="aPubPrivate" href="#">Private</a> </div>
                         <div class="col-sm-12 no_pad ft15">Only people who receive your Eventcombo invitation will be able to register once your event is live.</div>
                         }
+}
                     </div>
                     <div class="col-sm-4 no_pad text-right">
                         <!-- <button class="btn ev_live_sub_btn grey_btn cap_l">Find Attendees</button> -->
@@ -136,8 +139,9 @@
                 <div class="col-sm-12 no_pad bor_line"></div>
                 <div class="col-sm-12 no_pad pt10 pb10">
                     <div class="col-sm-6 col-xs-12 no_pad">
-
-                        @if (Model.EventExpired == "N")
+@if (Model.Eventcancel != "Y")
+{
+                        if (Model.EventExpired == "N")
                         {
                             if (Model.Eventstatus == "Save")
                             {
@@ -167,11 +171,24 @@
 
 
                         </div>
-                        }
+    }
+}
+else
+{
+    <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/qwe.png"></div>
+    <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
+
+        <span> Canceled </span> <br>You have canceled your event.
+
+
+    </div>
+}
                     </div>
                     <div class="col-sm-6 col-xs-12 text-right no_pad">
                         <ul class="col-sm-12 col-xs-12 no_pad mang-ev-nav">
-                            @if (Model.EventExpired == "N")
+@if (Model.Eventcancel != "Y")
+{
+                            if (Model.EventExpired == "N")
                             {
                                 if (Model.Eventstatus == "Save")
                                 {
@@ -179,20 +196,27 @@
                                 }
                                 else
                                 {
-                            <li><a href="#cnfrmunpublish" id="aUnpublish" data-toggle="modal">Unpublish</a></li>
+                            <li><a href="#" id="aUnpublish" >Unpublish</a></li>
                                 }
                             }
+}
                             <li>@Html.ActionLink("Copy", "CopyEvent", new { Eventid = Model.Eventid })</li>
-                            <li><a href="#">Cancel</a></li>
+                            @if (Model.Eventcancel != "Y")
+                            {
+                            <li><a href="#" id="aCancel" data-toggle="modal">Cancel</a></li>
+                            }
 
                             @if (Model.Eventtransaction == "N")
                             {
-                            <li><a href="#cnfrmdelete" id="aDelete" data-toggle="modal">Delete</a></li>
+                            <li><a href="#" id="aDelete" >Delete</a></li>
                             }
-                            @if (Model.EventExpired == "N")
+@if (Model.Eventcancel != "Y")
+{
+                            if (Model.EventExpired == "N")
                             {
                             <li>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = Model.Eventid }, new { }) </li>
                             }
+}
                         </ul>
                     </div>
 
@@ -263,12 +287,35 @@
                                     <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Payment Settings</a></p>
                                 </div>
                                 <div class="col-sm-12 no_pad">
+                                  
+                                   @if (Model.EventExpired == "N")
+                                   {
+                                       if (Model.Eventstatus == "Save")
+                                       {
+                                        <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
+                                        <div class="col-sm-11 col-xs-10 no_pad">
+                                            <p class="ft18 payout_desc">Please enter your payment details for the money to be transferred to your account when event goes live</p>
+                                        </div>
+                                       }
+                                       if (Model.Eventstatus == "Live")
+                                       {
+                                        <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
+                                      <div class="col-sm-11 col-xs-10 no_pad">
+                                        <p class="ft18 payout_desc">Please enter your payment details so we can send you your money.</p>
+                                    </div>
+                                       }
+                                   }
+                                   else
+                                    {
                                     <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
                                     <div class="col-sm-11 col-xs-10 no_pad">
-                                        <p class="ft18 payout_desc"><b>Payout was issued on Jan 5, 2016</b> to your <b>Chase Manhattan Bank</b> account ending in <b>3424</b></p>
+                                        <p class="ft18 payout_desc">Payout was issued on <b>date of amount transfer</b> to your <b>Bank Name</b> account ending in <b>last 4 digit of account number</b></p>
                                     </div>
+                                   }
                                     <p class="ft15">You have <span class="ft_red">3 days 21 hours </span>to issue any requested refunds. Allow 2-3 business days for the payout to arrive.(Longer for public holidays)</p>
-                                </div>
+
+
+                                 </div>
                             </div>
                         </div>
                     </div>
@@ -458,8 +505,9 @@
                         <div class="col-sm-12 traf_promo_bg">Your Link</div>
                         <div class="col-sm-12 link_share">
                             <p>Your Organizer URL <a href="#">http://eventcombo.com</a></p>
-                            <p>Share this event on Twitter <a href="#">http://eventcombo.com/e/kk</a></p>
-                            <p>Share this event on Facebook <a href="#">http://eventcombo.com/e/kk</a></p>
+                            <p>Share this event on Twitter <a href="#"  id="twittershare">@TempData["EventUrl"]</a></p>
+                            <p>Share this event on Facebook <a href="#"  id="fbshare">@TempData["EventUrl"]</a></p>
+                            <p>Share this event on Linkedin <a href="#" id="linkshare">@TempData["EventUrl"]</a></p>
                         </div>
                     </div>
 
@@ -473,7 +521,10 @@
         
     </div>
     <div class="clearfix"></div>
-        <div class="modal fade" id="cnfrmunpublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <a href="#cnfrm" id="aclick" data-toggle="modal" style="display:none;"></a>
+        
+        <div class="modal fade" id="cnfrm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
                 <div class="modal-content">
                     <!-- <div class="modal-header custom">
@@ -481,27 +532,11 @@
                     </div> -->
                     <form id="contactForm" class="fullw1 add">
                         <div class="modal-body text-center pv50 txt-msg">
-                            <h4 id="hdmsg" class="msg">Are you sure you want to unpublish event?</h4>
+                            <h4  class="msg"><span id="hdmsg"></span></h4>
                         </div>
                         <div class="modal-footer msg-action-btn ok">
+                            <button type="button" class="btn btn-primary yes ok" id="btnyescancel" data-dismiss="modal">Yes</button>
                             <button type="button" class="btn btn-primary yes ok" id="btnyes" data-dismiss="modal">Yes</button>
-                            <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">No</button>
-                        </div>
-                    </form>
-                </div>
-            </div><!-- confirm-msg -->
-        </div>
-        <div class="modal fade" id="cnfrmdelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
-                <div class="modal-content">
-                    <!-- <div class="modal-header custom">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div> -->
-                    <form id="contactForm" class="fullw1 add">
-                        <div class="modal-body text-center pv50 txt-msg">
-                            <h4 id="hdmsgdelete" class="msg"></h4>
-                        </div>
-                        <div class="modal-footer msg-action-btn ok">
                             <button type="button" class="btn btn-primary yes ok" id="btnyesdelete" data-dismiss="modal">Yes</button>
                             <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">No</button>
 
@@ -546,8 +581,7 @@
 
                 return ret;
             }
-            var msg = ajaxsetup('ManageEvent', 'MEDeleteEvent');
-            $("#hdmsgdelete").html(msg);
+
             var EventId = $("#hdEventid").val();
             function ajaxsetup(strname, strFormTag) {
                 var msgnew = "";
@@ -727,6 +761,25 @@
                     $('#divaccsuc').css('display', 'none');
 
                 });
+                $("#aDelete").click(function () {
+                    var msg = ajaxsetup('ManageEvent', 'MEDeleteEvent');
+
+                    $("#hdmsg").html(msg);
+                    $("#btnyes").hide();
+                    $("#btnyesdelete").show();
+                    $("#btnyescancel").hide();
+                    $("#aclick").click();
+
+                });
+                $("#aUnpublish").click(function () {
+                    var msg = ajaxsetup('ManageEvent', 'MEunPublish');
+                    $("#hdmsg").html(msg);
+                    $("#btnyes").show();
+                    $("#btnyesdelete").hide();
+                    $("#btnyescancel").hide();
+                    $("#aclick").click();
+
+                });
                 $("#aPublish").click(function () {
                     var EventId = $("#hdEventid").val();
                     $.ajax({
@@ -785,7 +838,23 @@
                 });
 
 
+                $("#btnyescancel").click(function () {
 
+                    var EventId = $("#hdEventid").val();
+                    $.ajax({
+                        url: '@Url.Action("CancelEvent", "ManageEvent")',
+                        data: { eventid: EventId },
+                        type: "Post",
+                        success: function (response) {
+
+                          if (response == "Y") {
+                                window.location.href = '@Url.Action("EventList", "EventList")';
+
+                            }
+                        }
+                    });
+
+                });
 
 
 
@@ -820,6 +889,56 @@
                     });
 
                 });
+
+                $("#aCancel").click(function () {
+                    var msg = ajaxsetup('ManageEvent', 'MECancel');
+                    $("#hdmsg").html(msg);
+                    $("#btnyes").hide();
+                    $("#btnyesdelete").hide();
+                    $("#btnyescancel").show();
+                    $("#aclick").click();
+
+                });
+
+
             });
+
+               $('#fbshare').click(function () {
+         
+            var url = '@Html.DisplayFor(m => m.url)';
+
+
+        
+
+           var title = '@Html.DisplayFor(m => m.Eventtitle)';
+           var desc = '@Html.DisplayFor(m => m.Descritption).ToString().Trim()';
+         window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title.trim()) + '&p[summary]=' + encodeURIComponent(desc.trim()) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+           return false;
+
+
+        });
+
+
+
+
+        $('#twittershare').click(function () {
+
+            var title = '@Html.DisplayFor(m => m.Eventtitle)';
+            var description = '@Html.DisplayFor(m => m.Descritption).ToString().Trim()';
+            var url = '@Html.DisplayFor(m => m.url)';
+            window.open('https://twitter.com/home?status=I am attending' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+        });
+
+        $('#linkshare').click(function () {
+
+            var title = '@Html.DisplayFor(m => m.Eventtitle)';
+            var description = '@Html.DisplayFor(m => m.Descritption).ToString().Trim()';
+            var url = '@Html.DisplayFor(m => m.url)';
+            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+        });
+
 
         </script>

@@ -1854,18 +1854,19 @@
           <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="3" />
         </ComplexType>
         <ComplexType Name="GetEventsListByStatus1_Result">
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="EMail" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="102" />
           <Property Type="String" Name="Date_Time" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="TicketType" Nullable="false" MaxLength="1" />
-          <Property Type="Int64" Name="TicketPurchased" Nullable="false"/>
+          <Property Type="Int64" Name="TicketPurchased" Nullable="true"/>
           <Property Type="String" Name="OrderId" Nullable="false" MaxLength="1" />
           <Property Type="Int64" Name="EventID" Nullable="false" />
-          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
-          <Property Type="String" Name="EventDate" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="EventTime" Nullable="true" MaxLength="50" />
-          <Property Type="Int64" Name="TotalTicket" Nullable="false" />
-          <Property Type="Int64" Name="TicketSold" Nullable="false" />
+          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EventDate" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EventTime" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="TotalTicket" Nullable="true" />
+          <Property Type="Int64" Name="TicketSold" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="EventCancel" Nullable="true" MaxLength="2" />
         </ComplexType>
         <EntityType Name="Email_Tag">
           <Key>
@@ -2513,7 +2514,6 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="EventComboModel.GetEventsListByStatus1_Result">
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="EMail" ColumnName="EMail" />
                 <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
                 <ScalarProperty Name="TicketType" ColumnName="TicketType" />
                 <ScalarProperty Name="TicketPurchased" ColumnName="TicketPurchased" />
@@ -2524,6 +2524,8 @@
                 <ScalarProperty Name="EventTime" ColumnName="EventTime" />
                 <ScalarProperty Name="TotalTicket" ColumnName="TotalTicket" />
                 <ScalarProperty Name="TicketSold" ColumnName="TicketSold" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EventCancel" ColumnName="EventCancel" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

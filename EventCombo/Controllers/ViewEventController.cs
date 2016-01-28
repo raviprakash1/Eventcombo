@@ -118,7 +118,7 @@ namespace EventCombo.Controllers
 
 
 
-
+            viewEvent.EventCancel = EventDetail.EventCancel;
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
             viewEvent.showmaponevent = EventDetail.ShowMap;
@@ -261,6 +261,10 @@ namespace EventCombo.Controllers
                 TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy");
                 TempData["ForViewOnly"] = "Y";
             }
+            if (EventDetail.EventCancel=="Y")
+            {
+                TempData["EventCancel"] = "This event is canceled";
+             }
             viewEvent.typeofEvent = EventDetail.AddressStatus;
             viewEvent.Shareonfb = EventDetail.Private_ShareOnFB;
             viewEvent.showstarttime = displaystarttime;

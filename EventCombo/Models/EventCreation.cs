@@ -53,6 +53,7 @@ namespace EventCombo.Models
         public string DuplicateEvent { get; set; }
 
         public string ModifyDate { get; set; }
+        public string Cancelevent { get; set; }
     }
 
 
@@ -71,8 +72,8 @@ namespace EventCombo.Models
         public List<OrderAttendees> Order{ get; set; }
         public List<OrderAttendees> Attendess { get; set; }
         public string Eventcancel { get; set; }
-
-
+        public string url { get; internal set; }
+        public string Descritption { get; internal set; }
     }
 
     public class OrderAttendees

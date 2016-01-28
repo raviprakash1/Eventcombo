@@ -63,16 +63,30 @@
     <div class="event_container">
         <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
             <div class="col-sm-12 mt10 bggrey clearfix" id="buttonscroll">
-                @if (TempData["ExpiredEvent"] != null)
+                @if (TempData["EventCancel"] != null)
+                {
+                    <div class="Moderor" id="diverroacc" tabindex="-1">
+                        <div class="er_UI_main">
+                            <div class="er_warnui_img"></div>
+                            <div class="er_suc" id="erraccmsg">@TempData["EventCancel"]</div>
+                            @*<button class="close" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>*@
+
+                        </div>
+                    </div>
+                }
+                else
+                {
+                if (TempData["ExpiredEvent"] != null)
                 {
                     <div class="Moderor" id="diverroacc" tabindex="-1">
                         <div class="er_war_main">
                             <div class="er_war_img"></div>
                             <div class="er_war" id="erraccmsg">@TempData["ExpiredEvent"]</div>
-                            <button class="close" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>
+                            @*<button class="close" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>*@
 
                         </div>
                     </div>
+                }
                 }
                 <div class="Moderor" id="diverroacc" tabindex="-1" style="display:none;">
                     <div class="er_UI_main">
@@ -535,8 +549,15 @@
                     </div>
                     <div class="col-sm-12 mt20 ">
                         <div class="col-sm-12 text-right no_pad">
-                            @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
+                            @if (Model.EventCancel == "Y")
                             {
+                                <button type="button" id="btPayment"  disabled="disabled" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+
+                            }
+                            else
+                            {
+                                if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
+                                {
                                 <button type="button" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn" style="display:none;">PROCEED TO PAYMENT  > </button>
                             }
                             else
@@ -550,6 +571,7 @@
                                     <button type="button" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
 
                                 }
+                            }
                             }
 
                         </div>
