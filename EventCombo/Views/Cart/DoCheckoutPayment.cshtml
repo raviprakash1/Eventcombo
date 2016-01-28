@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "DoCheckoutPayment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br /><br />
+<br /><br /><br />
+<h2>Thank for payemnt</h2>
+@(ViewData["ReturnMessage"].ToString() == "" ? "Your payment is Successfully done." : "Your payement Unsuccess<br>" + ViewData["ReturnMessage"])<br />
+
+ token: @ViewData["token"]<br />
+ PayerID: @ViewData["PayerID"]<br />
+ TRANSACTIONID: @ViewData["TRANSACTIONID"]<br />
+    Amount: @ViewData["Amount"]<br />

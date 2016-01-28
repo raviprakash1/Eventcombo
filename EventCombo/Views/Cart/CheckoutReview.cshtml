@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "CheckoutReview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br /><br />
+<br /><br /><br />
+<h2>CheckoutReview</h2>
+@ViewData["ReturnMessage"]
+<br /><br />
+ Amount: @ViewData["Amount"]<br /><br />
+
+<a href="@Url.Action("DoCheckoutPayment","Cart",new {token=ViewData["token"],PayerID=ViewData["PayerID"] })">Confirm Payment</a>&nbsp;&nbsp;&nbsp;
+<a href="@Url.Action("Index","Home")">Cancel Payment</a>
+

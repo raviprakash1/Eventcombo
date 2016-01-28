@@ -428,8 +428,10 @@
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="btPaypal">
                             Paypal >
                         </button>
+                        <button type="button" style="display:none;" id="btPaypalCheckout">
+                            Checkout
+                        </button>
                         <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
-
                         </a>
                         @*@Ajax.ActionLink("Open popup", "Pay", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "PaypalCart", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })<br />*@
                     </div>
@@ -554,39 +556,201 @@
 @*<script src="~/Scripts/jquery.countdownTimer.js"></script>*@
 
 <script type="text/javascript">
-
-    window.paypalCheckoutReady = function() {
-        paypal.checkout.setup("6XF3MPZBZV6HU", {
-            environment: 'sandbox',
-            click: function(event) {
+    window.paypalCheckoutReady = function () {
+        paypal.checkout.setup("@PayPalSettings.MerchantAccountID", {
+            environment: '@PayPalSettings.Environment',
+            click: function (event) {
                 event.preventDefault();
-
                 paypal.checkout.initXO();
                 $.support.cors = true;
+
                 $.ajax({
-                    url: "http://166.78.8.98/cgi-bin/aries.cgi?sandbox=1&direct=1&returnurl=http://eventcombonew-qa.kiwireader.com/@Url.Action("PayPalReturn", "PayPalReturn")&cancelurl=http://eventcombonew-qa.kiwireader.com/@Url.Action("PayPalReturn", "PayPalReturn")",
+                    url: '@Html.Raw(Url.Action("PayPaltoken", "Cart"))',
                     type: "GET",
-                    data: '&ajax=1&onlytoken=1&AMT=100',
                     async: true,
                     crossDomain: true,
-
                     //Load the minibrowser with the redirection url in the success handler
                     success: function (token) {
-                        var url = paypal.checkout.urlPrefix +token;
+                        var url = paypal.checkout.urlPrefix + token;
                         //Loading Mini browser with redirect url, true for async AJAX calls
                         paypal.checkout.startFlow(url);
                     },
                     error: function (responseData, textStatus, errorThrown) {
-                        alert("Error in ajax post"+responseData.statusText);
+                        alert("Something going wrong ");
                         //Gracefully Close the minibrowser in case of AJAX errors
                         paypal.checkout.closeFlow();
                     }
                 });
             },
-            button: ['btPaypal1']
+            button: ['btPaypalCheckout']
         });
     }
+    function SavePaypaldetail() {
+        debugger;
+        var flag = true;
+        var Emaillogin = $("#Email").val();
+        var msg = validationpage();
 
+        var NameList = [];
+        if (msg != "") {
+            ShowMessage('E', msg)
+            //$('#diverroacc').css('display', 'block');
+            //$('#erraccmsg').html(msg);
+            return false;
+        }
+        else {
+            if ($("#confirmEmail").length > 0) {
+                $.ajax({
+                    url: "/Home/IsValid",
+                    async: true,
+                    data: 'Email=' + Emaillogin,
+                    dataType: "text",
+                    success: function (data, textStatus, xhr) {
+                        if (data != '') {
+                            if (data == "NotFound") {
+                                flag = true;
+
+                                $('#hdemailexist').val(true);
+
+                            } else if (data == "Found") {
+
+                                $('#Email').focus();
+                                $("#Email").addClass('err-bor');
+
+
+                                ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateEmailSy'))
+
+                                $('#hdemailexist').val(false);
+
+                            }
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                    }
+                });
+            }
+
+
+        }
+
+
+        var confirmemail = "", cardno = "", expirydate = "", cvv = "", cardtype = "";
+        var type = '';
+
+
+        $("#tblListitem tr").each(function () {
+            var Sno = $(this).find("td:first").html();
+
+            // Multiple Address
+            if (Sno != '') {
+                NameList.push({
+                    Name: $("#TicketName_" + Sno).text(),
+                    Email: $("#TicketEmail_" + Sno).text(),
+
+
+                });
+            }
+        });
+
+        if ($('#chkcarddetails').is(":checked") == true) {
+            cardno = $('#cardno').val();
+
+            expirydate = $('#expirationdate').val();
+            cvv = $('#cvvcode').val();
+            var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
+            cardtype = result.card_type.name;
+        }
+        if ($('#shippinginfo').is(":checked") == true) {
+
+
+
+        }
+        var totalorder = $('#hdOrderTotal').val();
+        var type = '';
+        if (totalorder > 0) {
+
+            type = 'Paid';
+        } else {
+
+            type = 'Free';
+
+        }
+
+        //-------------------------------------Saving Payment Detail---------------------------------------
+
+
+        var vOrderTotal = $("#hdOrderTotal").val();
+        var vGrandTotal = $("#hdGrandTotal").val();
+        var vPromoId = $("#hdPromoId").val();
+        var vVarChanges = $("#hdVarChanges").val();
+        var vVarId = $("#hdVarId").val();
+        debugger;
+        var model = {
+
+            'AccFname': $('#accfname').val(),
+            'AccLname': $('#accLname').val(),
+            'AccEmail': $('#Email').val(),
+            'AccconfirmEmail': $('#confirmEmail').val(),
+            'Accpassword': $('#password').val(),
+            'Accconfirmpassword': $('#confirmpassword').val(),
+            'Accountphnno': $('#accountphnno').val(),
+            'AccCity': $('#accCity').val(),
+            'AccState': $('#accState').val(),
+            'Acczip': $('#accZip').val(),
+            'Acccountry': $('#accCountry').val(),
+            'cardno': $('#cardno').val(),
+            'card_type': cardtype,
+            'expirydate': $('#expirationdate').val(),
+            'cvv': $('#cvvcode').val(),
+            'billfname': $('#billfname').val(),
+            'billLname': $('#billLname').val(),
+            'billingphno': $('#billingphno').val(),
+            'billaddress1': $('#billaddress1').val(),
+            'billaddress2': $('#billaddress2').val(),
+            'billcity': $('#billcity').val(),
+            'billzip': $('#billzip').val(),
+            'billstate': $('#billstate').val(),
+            'billcountry': $('#billcountry').val(),
+            'shipfname': $('#shipfname').val(),
+            'shipLname': $('#shipLname').val(),
+            'shipphno': $('#shippingphnno').val(),
+            'shipaddress1': $('#shipaddress1').val(),
+            'shipaddress2': $('#shipaddress2').val(),
+            'shipcity': $('#shipcity').val(),
+            'shipzip': $('#shipzip').val(),
+            'shipstate': $('#shipstate').val(),
+            'shipcountry': $('#shipcountry').val(),
+            'NameList': NameList,
+            'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
+            'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
+            'sameshipbilldetail': ($("#sameshipping").is(":checked") == true ? "Y" : "N"),
+            'Ticketname': type,
+            'strOrderTotal': vOrderTotal,
+            'strGrandTotal': vGrandTotal,
+            'strPromId': vPromoId,
+            'strVarChanges': vVarChanges,
+            'strVarId': vVarId,
+            'strPaymentType': PaymentType
+        }
+
+        var Eventid = $('#hdEventid').val();
+        var PaymentType = $("#selectcard").val();
+
+        $.ajax({
+            url: '@Url.Action("SetSessionPaypaldetail", "Cart")',
+            data: { model: model },
+            type: "Post",
+            success: function (response) {
+                if (response == "Y") {
+                    $("#btPaypalCheckout").click();
+                }
+            }
+        });
+    }
+    $('#btPaypal').click(function () {
+        SavePaypaldetail();
+    });
 </script>
 
 
@@ -1044,12 +1208,7 @@
         //    //$("#result").dialog("open");
         //}
 
-        $('#btPaypal').click(function () {
-            //$("#btOkMesPaypal").click();
-            window.open('@Url.Action("Pay", "Cart")', "Paypal", "height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=absolute");
-
-
-        });
+       
 
         $('#completeorder').click(function () {
             // $("#dvAjxSave").show();

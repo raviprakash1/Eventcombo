@@ -1110,6 +1110,8 @@
     <Content Include="Views\PayPal\PayPal.cshtml" />
     <Content Include="Views\ManageEvent\CopyEvent.cshtml" />
     <Content Include="Views\Inbetween\Index.cshtml" />
+    <Content Include="Views\Cart\CheckoutReview.cshtml" />
+    <Content Include="Views\Cart\DoCheckoutPayment.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
