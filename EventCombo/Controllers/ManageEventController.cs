@@ -147,7 +147,16 @@ namespace EventCombo.Controllers
             var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
             string title = Regex.Replace(Edetails.EventTitle.Trim().Replace(" ", " - "), "[^ a - zA - Z0 - 9_ -] + ", "");
-            Mevent.url = baseurl + GetEventURL(Eventid);
+            var urldb= GetEventURL(Eventid);
+            if(urldb.Contains("/"))
+            {
+                Mevent.url = baseurl + GetEventURL(Eventid);
+            }
+            else
+            {
+                Mevent.url = baseurl +"/"+ GetEventURL(Eventid);
+            }
+          
             Mevent.Descritption = Edetails.EventDescription;
             Mevent.Eventid = Eventid;
             Mevent.Eventstatus = Edetails.EventStatus;
@@ -661,6 +670,7 @@ namespace EventCombo.Controllers
                 var vEvent = (from myEnt in objEnt.Events where myEnt.EventID == Eventid select myEnt).FirstOrDefault();
                 strTitle = "Copy of "  +  vEvent.EventTitle;
             }
+            TempData["Title"] = strTitle;
             TempData["EventId"] = Eventid.ToString();
             return View();
         }
