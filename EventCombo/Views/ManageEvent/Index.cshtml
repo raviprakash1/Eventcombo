@@ -953,8 +953,8 @@ else
 
 
            var title = '@Html.DisplayFor(m => m.Eventtitle)';
-           var desc = '@Html.DisplayFor(m => m.Descritption).ToString().Trim()';
-         window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title.trim()) + '&p[summary]=' + encodeURIComponent(desc.trim()) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+          
+         window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title.trim()) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
            return false;
 
 
@@ -966,7 +966,7 @@ else
         $('#twittershare').click(function () {
 
             var title = '@Html.DisplayFor(m => m.Eventtitle)';
-            var description = '@Html.DisplayFor(m => m.Descritption).ToString().Trim()';
+       
             var url = '@Html.DisplayFor(m => m.url)';
             window.open('https://twitter.com/home?status=I am attending' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
@@ -976,9 +976,9 @@ else
         $('#linkshare').click(function () {
 
             var title = '@Html.DisplayFor(m => m.Eventtitle)';
-            var description = '@Html.DisplayFor(m => m.Descritption).ToString().Trim()';
+           
             var url = '@Html.DisplayFor(m => m.url)';
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
         });
 
