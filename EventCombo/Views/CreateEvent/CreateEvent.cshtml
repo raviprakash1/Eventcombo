@@ -1515,7 +1515,16 @@
         infowindow.open(map, marker);
     }
 
+    $(function () {
+        $("body").click(function (e) {
 
+            if (e.target.id == "aCantFind" || e.target.id == "divCNF" || e.target.id == "txtEventLocation") {
+            }
+            else {
+                $(".pac-container").removeClass('map-drop-block');
+            }
+        });
+    })
 
     </script>
 
@@ -2905,7 +2914,7 @@
                 $("#divCNF").addClass('map-drop-block');
                 $(".pac-container").slice(1).removeClass('map-drop-block');
                 setTimeout(function () {
-                    $(".pac-container").append("<div class='pac-item location-places-autocomplete-cant-find ' id='divCNF'><i class='ico-search'></i><b><span class='pac-item-query'><a data-target='#myModal' class='js-location-cant-find' onclick='CannotFindLocation();' href='javascript:void(0);'   style='cursor: pointer; cursor: hand; margin-left:7px; color:#3cf;' data-toggle='modal' draggable='false'>Can't find your location?</a></span></b></div>");
+                    $(".pac-container").append("<div class='pac-item location-places-autocomplete-cant-find ' id='divCNF'><i class='ico-search'></i><b><span class='pac-item-query'><a id='aCantFind' data-target='#myModal' class='js-location-cant-find' onclick='CannotFindLocation();' href='javascript:void(0);'   style='cursor: pointer; cursor: hand; margin-left:7px; color:#3cf;' data-toggle='modal' draggable='false'>Can't find your location?</a></span></b></div>");
                     $(".pac-container").on("click", function (event) {
                         $(this).removeClass('map-drop-block');
                         $("#divCNF").removeClass('map-drop-block');

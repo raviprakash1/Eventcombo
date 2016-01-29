@@ -304,10 +304,10 @@ namespace EventCombo.Controllers
             StringBuilder strResult = new StringBuilder();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                
+
                 var vTickets = (from myRow in objEnt.Tickets
                                 where myRow.E_Id == EventId
-                                select myRow).ToList();
+                                select myRow).ToList().OrderBy(y => y.T_name);
                 long dSoldQty = 0;
                 strResult.Append("<table id='tbSaleTicket' class='table ft_black table - bordered mb0'>");
                 strResult.Append("<thead>");

@@ -448,6 +448,9 @@ else
                             <div class="col-sm-6 col-xs-6 text-right ev_detail"><button id="btViewLess" class="btn ev_live_sub_btn mb5 sal_viw_mor_btn" type="button">View Less</button></div>
                             <input type="hidden" id="hidTblvalue" value="" />
                         </div>
+                        <div class="col-sm-12 no_pad ft18 mb10 clearfix">
+                              * Service fees will be deducted from your payout and depend on your ticket fees settings.
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 no_pad ">
@@ -640,12 +643,31 @@ else
                     var startlen = $("#hidTblvalue").val();
                     var endlen = parseInt(startlen) + 5;
                     var tblen = $("#tbSaleTicket tr").length
+                    $("#tbSaleTicket tr").slice(startlen, endlen).show();
                     if (endlen <= tblen) {
-                        $("#tbSaleTicket tr").slice(startlen, endlen).show();
                         $("#hidTblvalue").val(endlen);
                     }
+                    else {
+                        $("#hidTblvalue").val(tblen)
+                    }
+
                 });
 
+
+                $("#btViewLess").click(function () {
+                    debugger;
+                    var Endlen = $("#hidTblvalue").val();
+                    var startlen = Endlen - 5;
+                    if (startlen > 5) {
+                        $("#tbSaleTicket tr").slice(startlen, Endlen).hide();
+                        $("#hidTblvalue").val(startlen);
+                    }
+                    else {
+                        $("#tbSaleTicket tr").slice(6, Endlen).hide();
+                        $("#hidTblvalue").val(6);
+                    }
+
+                });
 
                 $("#btCopyEvt").click(function () {
                     var vEventId = $("#hdEventid").val();
@@ -668,16 +690,6 @@ else
                             window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
                         }
                     });*@
-                });
-
-                $("#btViewLess").click(function () {
-                    debugger;
-                    var Endlen = $("#hidTblvalue").val();
-                    var startlen = Endlen - 5;
-                    if (startlen > 2) {
-                        $("#tbSaleTicket tr").slice(startlen, Endlen).hide();
-                        $("#hidTblvalue").val(startlen);
-                    }
                 });
 
 
