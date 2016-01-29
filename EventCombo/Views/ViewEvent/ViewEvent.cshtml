@@ -1384,8 +1384,8 @@ function pad(n) { return n < 10 ? '0' + n : n };
         $('#fbshare').click(function () {
 
             var title = $('#evtitle').html();
-            var desc = $('#eventdesc').html();
-            window.open('https://www.facebook.com/sharer.php?s=100&p[title]='+encodeURIComponent(title.trim())+'&p[summary]='+encodeURIComponent(desc.trim())+'&p[url]=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+         
+            window.open('https://www.facebook.com/sharer.php?s=100&p[title]='+encodeURIComponent(title.trim())+'&p[url]=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
 
 
@@ -1395,7 +1395,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
         $('#twittershare').click(function () {
 
             var title = $('#evtitle').html();
-            var desc = $('#eventdesc').html();
+          
             window.open('https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
 
@@ -1404,8 +1404,8 @@ function pad(n) { return n < 10 ? '0' + n : n };
         $('#linkshare').click(function () {
 
             var title = $('#evtitle').html();
-            var desc = $('#eventdesc').html();
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+           
+            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
             return false;
         });
