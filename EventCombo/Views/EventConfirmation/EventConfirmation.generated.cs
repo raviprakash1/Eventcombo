@@ -420,16 +420,7 @@ WriteLiteral(" +\'\';\r\n        });\r\n        $(\'.fbshare\').click(function (
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n            var description = \'");
-
-            
-            #line 139 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                          Write(Html.DisplayFor(m => m.Descritption).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            var url = \'");
+WriteLiteral("\';\r\n          \r\n            var url = \'");
 
             
             #line 140 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
@@ -440,7 +431,7 @@ WriteLiteral("\';\r\n            var url = \'");
             #line hidden
 WriteLiteral(@"';
 
-            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
 
 
@@ -461,16 +452,7 @@ WriteLiteral(@"';
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n            var description = \'");
-
-            
-            #line 155 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                          Write(Html.DisplayFor(m => m.Descritption).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            var url = \'");
+WriteLiteral("\';\r\n           \r\n            var url = \'");
 
             
             #line 156 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
@@ -496,16 +478,7 @@ WriteLiteral(@"';
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n            var description = \'");
-
-            
-            #line 165 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                          Write(Html.DisplayFor(m => m.Descritption).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            var url = \'");
+WriteLiteral("\';\r\n            \r\n            var url = \'");
 
             
             #line 166 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
@@ -515,7 +488,7 @@ WriteLiteral("\';\r\n            var url = \'");
             #line default
             #line hidden
 WriteLiteral(@"';
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
             return false;
         });
