@@ -33,7 +33,7 @@
 
                         <div class="er_suc_img"></div>
                         <div class="er_suc" id="succaccmsg">@TempData["Success"] </div>
-                        <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+                        <button class="close" type="button" id="btndivaccsuce">&#215;</button>
 
                     </div>
                 </div>
@@ -795,12 +795,19 @@ else
 
 
 
+                $("#btndivaccsuce").click(function () {
 
-
-
-                $('#btndivaccsuc').click(function () {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'none');
+                });
+
+
+                $("#btndivaccsuc").click(function () {
+                    debugger;
+                    
+                    $('#divaccsuc').css('display', 'none');
+                    $('#diverroacc').css('display', 'none');
+                    
 
                 });
                 $("#aDelete").click(function () {

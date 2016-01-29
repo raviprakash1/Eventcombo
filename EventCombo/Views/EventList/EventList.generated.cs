@@ -753,7 +753,7 @@ WriteLiteral("\r\n                    </tbody>\r\n                </table><!-- m
             
             #line default
             #line hidden
-WriteLiteral("                    <span>You don\'t have any events drafts.</span>\r\n");
+WriteLiteral("                    <span>You don\'t have any events in drafts.</span>\r\n");
 
             
             #line 173 "..\..\Views\EventList\EventList.cshtml"
