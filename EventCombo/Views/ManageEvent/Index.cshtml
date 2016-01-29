@@ -10,10 +10,9 @@
 
 {
     <input type="hidden" value="@Model.Eventid" id="hdEventid" />
-    <div class="event_container">
-        
+    <div class="event_container" style="margin-top:-20px;">
+        <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
 
-        <div class="event_inner_container event_top">
             <div class="col-sm-12 pt10 bggrey clearfix">
                 <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
                     <div class="er_UI_main">
@@ -117,21 +116,30 @@
 
                 <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad bor_line"></div>
-                <div class="col-sm-12 no_pad pt10 pb10 text-right">
+                <div class="col-sm-12 no_pad pt10 pb10 text-left">
                     <div class="col-sm-12 no_pad ev-mg-url" id="dvLblurl">
-                        Page URL: <span id="spEventUrl">@Model.url</span>@*<a href="@TempData["EventUrl"]" id="aEventUrl" > @TempData["EventUrl"]</a>*@
-                        <span class="ev-mng-edit"><button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btEditUrl" value="Edit">Edit</button></span>
-                    </div>
+                        <div class="col-sm-9 col-xs-9">Page URL: <span id="spEventUrl">@Model.url</span>@*<a href="@TempData["EventUrl"]" id="aEventUrl" > @TempData["EventUrl"]</a>*@</div>
+                        <div class="col-sm-3 col-xs-12 text-right">
+                            <span class="ev-mng-edit"><button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btEditUrl" value="Edit">Edit</button></span>
+                         </div>
+
+                       </div>
 
                     <div class="col-sm-12 no_pad ev-mg-url" id="dvTexturl">
                         <div class="col-sm-8 col-xs-12">
-                            <div class="col-sm-3">Page URL:</div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-3 col-xs-3">Page URL:</div>
+                            <div class="col-sm-6 col-xs-6 no_pad ">
                                 <input type="text" class="form-control" value=" " id="txtEventURl" onkeypress="return IsAlphaNumeric(event);" />
-                                <span>.eventcombo.com</span>
+                             
                             </div>
+                            <div class="col-sm-3 col-xs-6 no_pad">
+                               .eventcombo.com
+                            </div>
+                            </div>
+                        <div class="col-sm-4 col-xs-12">
+                            <button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btSaveUrl" value="Edit">Save</button>
+                            <button type="button" id="btCancelUrl" class="btn ev_live_sub_btn mb5 ft24"  value="Edit">Cancel</button>
                         </div>
-                        <div class="col-sm-4 col-xs-12"><button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btSaveUrl" value="Edit">Save</button><button type="button" id="btCancelUrl" class="btn ev_live_sub_btn mb5 ft24"  value="Edit">Cancel</button></div>
                     </div>
 
                 </div>
@@ -258,7 +266,7 @@ else
 
                             </div>
                             <div class="col-sm-12 col-xs-12 no_pad">
-                                <canvas id="cnSaleQty" width="430px" height="300px"></canvas>
+                                <canvas id="cnSaleQty" ></canvas>
                                 @*<img src="/Images/gr1.png">*@
                             </div>
 
@@ -266,7 +274,7 @@ else
                                 <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Event Page Hits </p>
                                 <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Promotional Tools</a></p>
                                 <div class="col-sm-12 col-xs-12 no_pad">
-                                    <canvas id="cnEventHit" width="200px" height="200px"></canvas>
+                                    <canvas id="cnEventHit" ></canvas>
                                     @*<img src="/Images/gr1.png">*@
                                 </div>
                             </div>
@@ -284,7 +292,7 @@ else
                                 </div>
                                 <p class="ft4em mb0 for_net_amont">@TempData["NETSale"]</p>
                             </div>
-                            <div class="col-sm-12 col-xs-12 no_pad">
+                            <div class="col-sm-12 col-xs-12 ">
                                 <div class="col-sm-12 no_pad">
                                     <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Payment status </p>
                                     <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Payment Settings</a></p>
@@ -434,10 +442,10 @@ else
                             </div>
                         
                         </div>
-                        <div class="clearfix"></div>
-                        <div class="col-sm-12 no_pad ft18 mb10">
-                            <div class="col-sm-6 col-xs-6 text-left ev_detail"><button id="btViewMore" type="button">View More</button></div>
-                            <div class="col-sm-6 col-xs-6 text-right ev_detail"><button id="btViewLess" type="button">View Less</button></div>
+                       
+                        <div class="col-sm-12 no_pad ft18 mb10 clearfix">
+                            <div class="col-sm-6 col-xs-6 text-left ev_detail"><button id="btViewMore" class="btn ev_live_sub_btn mb5 sal_viw_mor_btn" type="button">View More</button></div>
+                            <div class="col-sm-6 col-xs-6 text-right ev_detail"><button id="btViewLess" class="btn ev_live_sub_btn mb5 sal_viw_mor_btn" type="button">View Less</button></div>
                             <input type="hidden" id="hidTblvalue" value="" />
                         </div>
                     </div>

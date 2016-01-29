@@ -630,3 +630,10 @@ textarea {resize: none;}
 
 .tickets_sold_qyant{ position:absolute; font-size:50px; color:#000; }
 .tickets_total_tic{ position:absolute; font-size:15px; color:#000; right:5px; line-height:0 !important; bottom:0px; }
+
+.sal_viw_mor_btn{background: none;
+    color: #00cfff !important;
+    font-size: 20px;}
+.sal_viw_mor_btn:hover{ text-decoration:underline; }
+.sal_viw_mor_btn:focus, .sal_viw_mor_btn:active:focus, .sal_viw_mor_btn.active:focus, .sal_viw_mor_btn.focus, .sal_viw_mor_btn:active.focus, .sal_viw_mor_btn.active.focus{ outline:none; }
+.sal_viw_mor_btn:active, .sal_viw_mor_btn.active{ box-shadow:none; }
