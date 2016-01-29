@@ -587,16 +587,10 @@
         debugger;
         var flag = true;
         var Emaillogin = $("#Email").val();
-        var msg = validationpage();
+    
 
         var NameList = [];
-        if (msg != "") {
-            ShowMessage('E', msg)
-            //$('#diverroacc').css('display', 'block');
-            //$('#erraccmsg').html(msg);
-            return false;
-        }
-        else {
+     
             if ($("#confirmEmail").length > 0) {
                 $.ajax({
                     url: "/Home/IsValid",
@@ -630,7 +624,7 @@
             }
 
 
-        }
+        
 
 
         var confirmemail = "", cardno = "", expirydate = "", cvv = "", cardtype = "";
@@ -748,7 +742,16 @@
     }
     $('#btPaypal').click(function () {
         $("#hdIsPostBack").val("Y");
-        SavePaypaldetail();
+        var msg = validationpage();
+        if (msg != "") {
+            ShowMessage('E', msg)
+            //$('#diverroacc').css('display', 'block');
+            //$('#erraccmsg').html(msg);
+            return false;
+        }
+        else {
+            SavePaypaldetail();
+        }
     });
 </script>
 

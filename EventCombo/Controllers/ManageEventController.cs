@@ -906,7 +906,7 @@ namespace EventCombo.Controllers
             TempData["Scroll"] = "PrivaPub";
         }
 
-
+   
 
 
         public string CancelEvent(long eventid)

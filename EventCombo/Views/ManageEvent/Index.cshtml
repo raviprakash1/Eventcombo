@@ -202,24 +202,24 @@ else
 }
                             @if (Model.EventExpired == "N")
                             {
-                            <li>@Html.ActionLink("Copy", "CopyEvent", new { Eventid = Model.Eventid })</li>
+                                <li><a href="#" id="btCopyEvt">Copy</a></li>
                             }
                             @if (Model.Eventcancel != "Y")
                             {
-                            <li><a href="#" id="aCancel" data-toggle="modal">Cancel</a></li>
+                                <li><a href="#" id="aCancel" data-toggle="modal">Cancel</a></li>
                             }
 
                             @if (Model.Eventtransaction == "N")
                             {
-                            <li><a href="#" id="aDelete" >Delete</a></li>
+                                <li><a href="#" id="aDelete" >Delete</a></li>
                             }
-@if (Model.Eventcancel != "Y")
-{
-                            if (Model.EventExpired == "N")
+                            @if (Model.Eventcancel != "Y")
                             {
-                            <li>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = Model.Eventid }, new { }) </li>
+                                if (Model.EventExpired == "N")
+                                {
+                                    <li>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = Model.Eventid }, new { }) </li>
+                                }
                             }
-}
                         </ul>
                     </div>
 
@@ -636,6 +636,30 @@ else
                         $("#tbSaleTicket tr").slice(startlen, endlen).show();
                         $("#hidTblvalue").val(endlen);
                     }
+                });
+
+
+                $("#btCopyEvt").click(function () {
+                    var vEventId = $("#hdEventid").val();
+                    var vEventTitle = 'Copy of ' + '@Model.Eventtitle';
+
+                    $.ajax({
+                        url: '@Url.Action("SaveEvent", "ManageEvent")',
+                        data: { Eventid: vEventId, strEventTitle: vEventTitle },
+                        type: "Post",
+                        success: function (response) {
+                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                        }
+                    });
+
+                    @*$.ajax({
+                        url: '@Url.Action("SaveEvent", "ManageEvent")',
+                        data: { Eventid: vEventId, strEventTitle: vEventTitle },
+                        type: "Post",
+                        success: function (response) {
+                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                        }
+                    });*@
                 });
 
                 $("#btViewLess").click(function () {
