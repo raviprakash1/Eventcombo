@@ -14,9 +14,7 @@
 <link href="~/Content/summernote.css" rel="stylesheet" />
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
-<style>
- 
-</style>
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
 
 @using (Html.BeginForm())
 {
@@ -169,7 +167,7 @@
                                     <div class="EntVenAdd col-sm-12 no_pad">
                                         <div class="ev_loc_icn"></div>
                                         <div class="col-sm-10 no_pad mb5 pull-right">
-                                            <input id="txtEventLocation" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address" />
+                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address" />
                                         </div>
                                     </div>
                                     <div class="PastLocat col-sm-12 no_pad">
@@ -1345,11 +1343,162 @@ else
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
-    <script src = "~/Scripts/gmap.js" ></script>
-                  // ---------------------Event Creation Script -------------------
+    @*<script src = "~/Scripts/gmap.js" ></script>*@
+    // ---------------------Event Creation Script -------------------
+
+    <script type="text/javascript">
+        var map_canvas ;
+        var mapProp;
+        google.maps.event.addDomListener(window, 'load', initialize);
+        function initialize() {
+            var autocomplete = new google.maps.places.Autocomplete(document.getElementById('VenueName'));
+
+            mapProp = {
+                center: new google.maps.LatLng(41.06000, 28.98700),
+                zoom: 17,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+
+
+
+
+                    var mapOptions = {
+                        center: new google.maps.LatLng(6.9167, 79.8473),
+                        zoom: 10,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+
+                    var map = new google.maps.Map(document.getElementById("map_canvas"),
+                      mapOptions);
+                    // create a marker
+                    var latlng = new google.maps.LatLng(6.9167, 79.8473);
+                    var marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                        title: 'My Place'
+
+                    });
+                    var place = autocomplete.getPlace();
+                    if (place.geometry.viewport) {
+                        map.fitBounds(place.geometry.viewport);
+                    }
+                    else {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(17);
+
+                    }
+                    marker.setIcon(({
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(35, 35)
+                    }));
+                    marker.setPosition(place.geometry.location);
+                    marker.setVisible(true);
+
+                    var address = '';
+                    if (place.address_components) {
+                        address = [
+                          (place.address_components[0] && place.address_components[0].short_name || ''),
+                          (place.address_components[1] && place.address_components[1].short_name || ''),
+                          (place.address_components[2] && place.address_components[2].short_name || '')
+                        ].join(' ');
+                    }
+
+                $("#VenueName").val(place.address_components[0].long_name);
+
+                $("#City").val(place.address_components[1].long_name);
+                $("#State").val(place.address_components[3].long_name);
+                $("#Zip").val(place.address_components[5].long_name);
+                $("#CountryID").val(place.address_components[4].long_name);
+
+                $("#VenueName").val(address.toString());
+                $("#Address1").val(address[1].toString());
+                $("#Address2").val(address[2].toString());
+                 });
+
+
+
+        //});
+    }
+
+
+    var pacContainerInitialized = false;
+    $('#VenueName').keypress(function () {
+        if (!pacContainerInitialized) {
+            $('.pac-container').css('z-index', '9999');
+            pacContainerInitialized = true;
+            $(".js-location-cant-find").slice(1).remove();
+            //js-location-cant-find
+        }
+    });
+    function moveMarker(placeName, latlng) {
+        marker.setIcon(image);
+        marker.setPosition(latlng);
+        infowindow.setContent(placeName);
+        infowindow.open(map, marker);
+    }
+
+    $(function () {
+        $("body").click(function (e) {
+
+            if (e.target.id == "aCantFind" || e.target.id == "divCNF" || e.target.id == "txtEventLocation") {
+            }
+            else {
+                $(".pac-container").removeClass('map-drop-block');
+            }
+        });
+    })
+    function txtEventLocation_KeyPress(e) {
+        if (e.keyCode === 13) {
+            $(".pac-container").removeClass('map-drop-block');
+        }
+        return false;
+    }
+
+    </script>
+
+    
+
+
     <script>
         $(document).ready(function () {
-            // alert("Chal pya");
+            
+            var input = document.getElementById('txtEventLocation');
+            var Eloc = new google.maps.places.Autocomplete(input);
+
+
+            $('#txtEventLocation').on('click', function () {
+                $(".pac-container").addClass('map-drop-block');
+                $("#divCNF").addClass('map-drop-block');
+                $(".pac-container").slice(1).removeClass('map-drop-block');
+            });
+
+            $('#txtEventLocation').on('focus', function () {
+                $(".pac-container").addClass('map-drop-block');
+                $("#divCNF").addClass('map-drop-block');
+                $(".pac-container").slice(1).removeClass('map-drop-block');
+                setTimeout(function () {
+                    $(".pac-container").append("<div class='pac-item location-places-autocomplete-cant-find ' id='divCNF'><i class='ico-search'></i><b><span class='pac-item-query'><a id='aCantFind' data-target='#myModal' class='js-location-cant-find' onclick='CannotFindLocation();' href='javascript:void(0);'   style='cursor: pointer; cursor: hand; margin-left:7px; color:#3cf;' data-toggle='modal' draggable='false'>Can't find your location?</a></span></b></div>");
+                    $(".pac-container").on("click", function (event) {
+                        $(this).removeClass('map-drop-block');
+                        $("#divCNF").removeClass('map-drop-block');
+                        $(this).hide();
+                        $(".pac-container").slice(1).removeClass('map-drop-block');
+                    });
+                }, 100);
+
+            });
+
+
+
+
+
+
             $.getJSON('@Url.Action("GetEventChildData", "EditEvent")', { lEventId: $("#hdEventId").val()},
                 function (data) {
                     debugger;
@@ -3468,7 +3617,8 @@ else
             $("#Zip").val('');
             $("#tblAddress").empty();
             $("#CountryID").val('1');
-
+            $(".pac-container").removeClass('map-drop-block');
+            $(".js-location-cant-find").slice(1).remove();
         }
         function changetext(e) {
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));

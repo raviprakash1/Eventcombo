@@ -304,6 +304,24 @@ namespace EventCombo.Controllers
             StringBuilder strResult = new StringBuilder();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
+                var vEvent = (from myRow in objEnt.Events
+                                where myRow.EventID == EventId
+                                select myRow).FirstOrDefault();
+
+                var timezone = "";
+                DateTime dateTime = new DateTime();
+                var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == vEvent.TimeZone select ev).FirstOrDefault();
+                if (Timezonedetail != null)
+                {
+                    timezone = Timezonedetail.TimeZone;
+                    TimeZoneInfo timeZoneInfo;
+
+
+                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezone);
+                    dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
+                    //Timezone value
+
+                }
 
                 var vTickets = (from myRow in objEnt.Tickets
                                 where myRow.E_Id == EventId
@@ -321,6 +339,9 @@ namespace EventCombo.Controllers
                 strResult.Append("</tr>");
                 strResult.Append("</thead>");
                 strResult.Append("<tbody>");
+                DateTime dtHideuntil = new DateTime(); DateTime dtHideafter = new DateTime();
+                string strHideUntil; string strHideUntilTime;
+                string strHideAfter; string strHideAfterTime;
                 foreach (Ticket obj in vTickets)
                 {
                     strResult.Append("<tr>");
@@ -339,11 +360,37 @@ namespace EventCombo.Controllers
                     {
                         strResult.Append("<td>"); strResult.Append("0/0"); strResult.Append("</td>");
                     }
+
+                    strHideUntil =  (obj.Hide_Untill_Date != null ? obj.Hide_Untill_Date.ToString():"");
+                    strHideUntilTime = (obj.Hide_Untill_Time != null ? obj.Hide_Untill_Time.ToString() : "");
+
+                    strHideAfter = (obj.Hide_After_Date != null ? obj.Hide_After_Date.ToString() : "");
+                    strHideAfterTime = (obj.Hide_After_Time != null ? obj.Hide_After_Time .ToString() : "");
+
+                    if (!strHideUntil.Equals(string.Empty))
+                    {
+                        dtHideuntil = DateTime.Parse(strHideUntil + " " + strHideUntilTime);
+                    }
+
+                    if (!strHideAfter.Equals(string.Empty))
+                    {
+                        dtHideafter = DateTime.Parse(strHideAfter + " " + strHideAfterTime);
+                    }
+
+
                     if (vRemQty != null &&  dSoldQty == vRemQty.TQD_Quantity)
                     {
                         strResult.Append("<td>"); strResult.Append("Sold Out"); strResult.Append("</td>");
                     }
-                    else
+                    else if (strHideUntil != "" && dateTime <= dtHideuntil)
+                    {
+                        strResult.Append("<td>"); strResult.Append("Hidden"); strResult.Append("</td>");
+                    }
+                    else if (strHideAfter != "" && dateTime > dtHideafter)
+                    {
+                        strResult.Append("<td>"); strResult.Append("Hidden"); strResult.Append("</td>");
+                    }
+                    else 
                     {
                         strResult.Append("<td>"); strResult.Append("On Sale"); strResult.Append("</td>");
                     }
