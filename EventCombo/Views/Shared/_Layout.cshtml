@@ -896,6 +896,7 @@ else
                                 }
                             },
                             error: function (xhr, textStatus, errorThrown) {
+                                this.disabled = false;
                                 alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
                             }
                         });

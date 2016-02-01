@@ -212,15 +212,20 @@ else
                             {
                                 <li><a href="#" id="btCopyEvt">Copy</a></li>
                             }
-                            @if (Model.Eventcancel != "Y")
+@if (Model.EventExpired == "N")
+{
+                           if (Model.Eventcancel != "Y")
                             {
                                 <li><a href="#" id="aCancel" data-toggle="modal">Cancel</a></li>
                             }
-
-                            @if (Model.Eventtransaction == "N")
+}
+@if (Model.Eventcancel != "Y")
+{
+                           if (Model.Eventtransaction == "N")
                             {
                                 <li><a href="#" id="aDelete" >Delete</a></li>
                             }
+}
                             @if (Model.Eventcancel != "Y")
                             {
                                 if (Model.EventExpired == "N")
