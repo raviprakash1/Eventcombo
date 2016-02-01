@@ -318,7 +318,7 @@
                                     <div class="EntVenAdd col-sm-12 no_pad">
                                         <div class="ev_loc_icn"></div>
                                         <div class="col-sm-10 no_pad mb5 pull-right">
-                                            <input id="txtEventLocation" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address" />
+                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address" />
                                         </div>
                                     </div>
                                     <div class="PastLocat col-sm-12 no_pad">
@@ -1424,19 +1424,12 @@
     google.maps.event.addDomListener(window, 'load', initialize);
         function initialize() {
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById('VenueName'));
-
             mapProp = {
                 center: new google.maps.LatLng(41.06000, 28.98700),
                 zoom: 17,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
-
-
             google.maps.event.addListener(autocomplete, 'place_changed', function () {
-
-
-          
-
                     var mapOptions = {
                         center: new google.maps.LatLng(6.9167, 79.8473),
                         zoom: 10,
@@ -1525,6 +1518,12 @@
             }
         });
     })
+    function txtEventLocation_KeyPress(e) {
+        if (e.keyCode === 13) {
+            $(".pac-container").removeClass('map-drop-block');
+        }
+        return false;
+    }
 
     </script>
 
@@ -1944,6 +1943,36 @@
         }
 
         $(document).ready(function () {
+
+
+            var input = document.getElementById('txtEventLocation');
+            var Eloc = new google.maps.places.Autocomplete(input);
+
+
+            $('#txtEventLocation').on('click', function () {
+                $(".pac-container").addClass('map-drop-block');
+                $("#divCNF").addClass('map-drop-block');
+                $(".pac-container").slice(1).removeClass('map-drop-block');
+
+            });
+            $('#txtEventLocation').on('focus', function () {
+                $(".pac-container").addClass('map-drop-block');
+                $("#divCNF").addClass('map-drop-block');
+                $(".pac-container").slice(1).removeClass('map-drop-block');
+                setTimeout(function () {
+                    $(".pac-container").append("<div class='pac-item location-places-autocomplete-cant-find ' id='divCNF'><i class='ico-search'></i><b><span class='pac-item-query'><a id='aCantFind' data-target='#myModal' class='js-location-cant-find' onclick='CannotFindLocation();' href='javascript:void(0);'   style='cursor: pointer; cursor: hand; margin-left:7px; color:#3cf;' data-toggle='modal' draggable='false'>Can't find your location?</a></span></b></div>");
+                    $(".pac-container").on("click", function (event) {
+                        $(this).removeClass('map-drop-block');
+                        $("#divCNF").removeClass('map-drop-block');
+                        $(this).hide();
+                        $(".pac-container").slice(1).removeClass('map-drop-block');
+                    });
+                }, 100);
+
+            });
+
+
+
 
             $(".cbtPreview").click(function () {
                 var msg = validatemain();
@@ -2894,37 +2923,6 @@
 
             // ---------------------------------Map Implemetation--------------------------------------------
 
-
-          
-
-
-
-            var input = document.getElementById('txtEventLocation');
-            var Eloc = new google.maps.places.Autocomplete(input);
-          
-
-            $('#txtEventLocation').on('click', function () {
-                $(".pac-container").addClass('map-drop-block');
-                $("#divCNF").addClass('map-drop-block');
-                $(".pac-container").slice(1).removeClass('map-drop-block');
-            
-            });
-            $('#txtEventLocation').on('focus', function () {
-                $(".pac-container").addClass('map-drop-block');
-                $("#divCNF").addClass('map-drop-block');
-                $(".pac-container").slice(1).removeClass('map-drop-block');
-                setTimeout(function () {
-                    $(".pac-container").append("<div class='pac-item location-places-autocomplete-cant-find ' id='divCNF'><i class='ico-search'></i><b><span class='pac-item-query'><a id='aCantFind' data-target='#myModal' class='js-location-cant-find' onclick='CannotFindLocation();' href='javascript:void(0);'   style='cursor: pointer; cursor: hand; margin-left:7px; color:#3cf;' data-toggle='modal' draggable='false'>Can't find your location?</a></span></b></div>");
-                    $(".pac-container").on("click", function (event) {
-                        $(this).removeClass('map-drop-block');
-                        $("#divCNF").removeClass('map-drop-block');
-                        $(this).hide();
-                        $(".pac-container").slice(1).removeClass('map-drop-block');
-                    });
-                }, 500);
-
-            });
-
             //$('#txtEventLocation').focusout(function () {
             //    $(".pac-container").removeClass('map-drop-block');
             //});
@@ -3190,6 +3188,7 @@
             $("#tblAddress").empty();
             $("#CountryID").val('1');
             $(".pac-container").removeClass('map-drop-block');
+            $(".js-location-cant-find").slice(1).remove();
         }
         
         function changetext(e) {
