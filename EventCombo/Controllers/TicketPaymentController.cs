@@ -944,7 +944,7 @@ namespace EventCombo.Controllers
                     pdf.EventStartDateID = tQntydetail.TQD_StartDate;
                     pdf.EventStartTimeID = tQntydetail.TQD_StartTime;
                     pdf.Eventtype = etype;
-                    pdf.EventVenueID = address.ConsolidateAddress;
+                    pdf.EventVenueID = addresslist;
                     pdf.EventOrganiserName = Organisername;
                     pdf.EventOrganiserEmail = Organiseremail;
                     pdf.EventDescription = eventdetail.EventDescription;
@@ -1040,7 +1040,7 @@ namespace EventCombo.Controllers
                                     }
                                     if (EmailTag[i].Tag_Name == "EventVenueID")
                                     {
-                                        subjectn = subjectn.Replace("¶¶EventVenueID¶¶", address.ConsolidateAddress);
+                                        subjectn = subjectn.Replace("¶¶EventVenueID¶¶", addresslist);
 
                                     }
                                     if (EmailTag[i].Tag_Name == "Tickettype")
