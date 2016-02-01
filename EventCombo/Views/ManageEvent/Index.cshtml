@@ -120,7 +120,12 @@
                     <div class="col-sm-12 no_pad ev-mg-url" id="dvLblurl">
                         <div class="col-sm-9 col-xs-9">Page URL: <span id="spEventUrl">@Model.url</span>@*<a href="@TempData["EventUrl"]" id="aEventUrl" > @TempData["EventUrl"]</a>*@</div>
                         <div class="col-sm-3 col-xs-12 text-right">
-                            <span class="ev-mng-edit"><button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btEditUrl" value="Edit">Edit</button></span>
+                            <span class="ev-mng-edit">
+                            @if (Model.Eventcancel != "Y")
+                            {
+                            <button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btEditUrl" value="Edit">Edit</button>
+                            }
+                          </span>
                          </div>
 
                        </div>
