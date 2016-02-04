@@ -751,6 +751,7 @@ namespace EventCombo.Controllers
                 //Tickets Section
                 long capacity = 00000;
 
+
                 var Tick = (from myEvent in objEnt.Tickets
                             where myEvent.E_Id == lEventId
                             select myEvent).ToList();
@@ -1099,12 +1100,17 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_after_Date-" + j + "' onchange='checkvalidDate(this.id)' value='" + afterdate + "' />");
                     strticketHtml.Append(" </div> <div class='col-sm-4 no_pad'><input type='hidden' value='0' id='id_hdautohideafter-" + j + "' value='" + ObjTick.Hide_After_Time + "' />");
                     strticketHtml.Append("<input id ='id_auto_hide_after_Time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_After_Time + "' />");
-                    strticketHtml.Append("</div></div></div></div></div></div><div class='clearfix'></div><div class='form-group'><label class='label-control pl0 ev_tickt_lebel wd600'>Tickets allowed per order</label>");
-                    strticketHtml.Append("<div class='evnt_time_cont wd280 mr5_p'><input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_min_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Min_T_Qty + "' />");
-                    strticketHtml.Append("<label class='label-control lbl_bot_minim'>Minimum</label></div><div class='evnt_time_cont wd280'>");
-                    strticketHtml.Append("<input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_max_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Max_T_Qty + "' />");
-                    strticketHtml.Append("<label class='label-control lbl_bot_minim '>Maximum</label><label class='col-sm-12 no_pad control-label' style='color:red;display:none' id='id_lblmax-" + j + "' >Please enter a valid number</label>");
-                    strticketHtml.Append(" </div></div><div class='clearfix'></div><div class='form-group'><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel mt5'>");
+                    strticketHtml.Append("</div></div></div></div></div></div>");
+                    if (ObjTick.TicketTypeID != 3)
+                    {
+                        strticketHtml.Append("<div class='clearfix donateshow-" + j + "' id='cleafix-" + j + "'></div><div class='form-group donateshow-" + j + "' id='maxmin-" + j + "'><label class='label-control pl0 ev_tickt_lebel wd600'>Tickets allowed per order</label>");
+                        strticketHtml.Append("<div class='evnt_time_cont wd280 mr5_p'><input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_min_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Min_T_Qty + "' />");
+                        strticketHtml.Append("<label class='label-control lbl_bot_minim'>Minimum</label></div><div class='evnt_time_cont wd280'>");
+                        strticketHtml.Append("<input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_max_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Max_T_Qty + "' />");
+                        strticketHtml.Append("<label class='label-control lbl_bot_minim '>Maximum</label><label class='col-sm-12 no_pad control-label' style='color:red;display:none' id='id_lblmax-" + j + "' >Please enter a valid number</label>");
+                        strticketHtml.Append(" </div></div>");
+                    }
+                    strticketHtml.Append("<div class='clearfix'></div><div class='form-group'><div class='col-sm-12 no_pad' style='display:none;'><label class='label-control pl0 ev_tickt_lebel mt5'>");
                     if (ObjTick.T_Disable == "1")
                     {
                         strticketHtml.Append("<input type='checkbox' class='' id='id_disableticket-" + j + "' checked='checked'/>");
@@ -1125,17 +1131,22 @@ namespace EventCombo.Controllers
                         strticketHtml.Append("<input type='checkbox' class='' id='id_marksoldout-" + j + "' />");
 
                     }
-                    strticketHtml.Append("Mark Sold Out</label> </div><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel mt5'>");
-                    if (ObjTick.T_Displayremaining == "1")
+                    strticketHtml.Append("Mark Sold Out</label> </div>");
+                    if (ObjTick.TicketTypeID != 3)
                     {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_displayremaining-" + j + "' checked='checked' />");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_displayremaining-" + j + "'  />");
+                        strticketHtml.Append("<div class='col-sm-12 no_pad donateshow - " + j + "' id='display - " + j + "'><label class='label-control pl0 ev_tickt_lebel mt5'>");
+                        if (ObjTick.T_Displayremaining == "1")
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_displayremaining-" + j + "' checked='checked' />");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_displayremaining-" + j + "'  />");
 
+                        }
+                        strticketHtml.Append("Display Remaining Tickets</label></div>");
                     }
-                    strticketHtml.Append("Display Remaining Tickets</label></div></div> </div><div class='clearfix'></div><div class='modal-footer no_pad mt5'>");
+                    strticketHtml.Append("</div> </div><div class='clearfix'></div><div class='modal-footer no_pad mt5'>");
                     strticketHtml.Append("<div class='col-sm-12 text-left mt10'><button class='EvntMinim ev_set_del_btn btn' id='id_Minimize-" + j + "'  onclick='minimize(this.id);' type='button'>");
                     strticketHtml.Append("<i class='fa fa-arrow-up'></i> Minimize Setting </button> </div></div> </div></div></div></div><div class='clearfix'></div>");
 
@@ -1393,362 +1404,369 @@ namespace EventCombo.Controllers
 
         public long Draftmodemodification(EventCreation model,string strDuplicate)
         {
-            long lEventId = model.EventID;
-            List<long> ids = new List<long>();
-            try
+            if (Session["AppId"] != null)
             {
-                if (strDuplicate == "Y")
+                long lEventId = model.EventID;
+                List<long> ids = new List<long>();
+                try
                 {
-                    CreateEventController objCE = new CreateEventController();
-                    objCE.ControllerContext = new ControllerContext(this.Request.RequestContext, objCE);
-                    lEventId = objCE.SaveEvent(model);
-                    return lEventId;
-                }
-                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-                using (EventComboEntities objEnt = new EventComboEntities())
-                {
-                    Event ObjEC = objEnt.Events.FirstOrDefault(i => i.EventID == lEventId);
-                    if (ObjEC != null)
+                    if (strDuplicate == "Y")
                     {
+                        CreateEventController objCE = new CreateEventController();
+                        objCE.ControllerContext = new ControllerContext(this.Request.RequestContext, objCE);
+                        lEventId = objCE.SaveEvent(model);
+                        return lEventId;
+                    }
+                    string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        Event ObjEC = objEnt.Events.FirstOrDefault(i => i.EventID == lEventId);
+                        if (ObjEC != null)
+                        {
 
-                        if (ObjEC.EventStatus == "Live")
-                        {
-                            lEventId = EditEventInfo(model);
-                        }
-                        else
-                        {
-                            objEnt.Publish_Event_Detail.RemoveRange(objEnt.Publish_Event_Detail.Where(x => x.PE_Event_Id == lEventId).ToList());
-                            objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId).ToList());
-                            //  var vParentEvt = (from myEnt in objEnt.Events where myEnt.EventID == lEventId select myEnt.Parent_EventID).FirstOrDefault();
-                            // if (vParentEvt == 0) vParentEvt = lEventId;
-                            var addressstatus = model.AddressStatus;
-                            if (model.AddressDetail == null)
+                            if (ObjEC.EventStatus == "Live")
                             {
-                                objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
-                                if (addressstatus != "PastLocation" && addressstatus != "Online")
+                                lEventId = EditEventInfo(model);
+                            }
+                            else
+                            {
+                                objEnt.Publish_Event_Detail.RemoveRange(objEnt.Publish_Event_Detail.Where(x => x.PE_Event_Id == lEventId).ToList());
+                                objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId).ToList());
+                                //  var vParentEvt = (from myEnt in objEnt.Events where myEnt.EventID == lEventId select myEnt.Parent_EventID).FirstOrDefault();
+                                // if (vParentEvt == 0) vParentEvt = lEventId;
+                                var addressstatus = model.AddressStatus;
+                                if (model.AddressDetail == null)
                                 {
-                                    model.AddressStatus = "";
+                                    objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                                    if (addressstatus != "PastLocation" && addressstatus != "Online")
+                                    {
+                                        model.AddressStatus = "";
+                                    }
                                 }
-                            }
-                            // Event ObjEC = new Event();
-                            ObjEC.Parent_EventID = 0;
-                            ObjEC.EventTypeID = model.EventTypeID;
-                            ObjEC.EventCategoryID = model.EventCategoryID;
-                            ObjEC.EventSubCategoryID = model.EventSubCategoryID;
-                            ObjEC.UserID = strUserId;
-                            ObjEC.EventTitle = model.EventTitle;
-                            ObjEC.DisplayStartTime = model.DisplayStartTime;
-                            ObjEC.DisplayEndTime = model.DisplayEndTime;
-                            ObjEC.DisplayTimeZone = model.DisplayTimeZone;
-                            ObjEC.EventDescription = model.EventDescription;
-                            ObjEC.EventPrivacy = model.EventPrivacy;
-                            ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
-                            ObjEC.Private_GuestOnly = model.Private_GuestOnly;
-                            ObjEC.Private_Password = model.Private_Password;
-                            ObjEC.EventUrl = model.EventUrl;
-                            ObjEC.PublishOnFB = model.PublishOnFB;
-                            ObjEC.EventStatus = model.EventStatus;
-                            ObjEC.IsMultipleEvent = model.IsMultipleEvent;
-                            ObjEC.TimeZone = model.TimeZone;
-                            ObjEC.DisplayStartTime = model.DisplayStartTime;
-                            ObjEC.DisplayEndTime = model.DisplayEndTime;
-                            ObjEC.DisplayTimeZone = model.DisplayTimeZone;
-                            ObjEC.FBUrl = model.FBUrl;
-                            ObjEC.TwitterUrl = model.TwitterUrl;
-                            ObjEC.LastLocationAddress = model.LastLocationAddress;
-                            ObjEC.AddressStatus = model.AddressStatus;
-                            ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
-                            ObjEC.Ticket_DAdress = model.Ticket_DAdress;
-                            ObjEC.Ticket_showremain = model.Ticket_showremain;
-                            ObjEC.Ticket_showvariable = model.Ticket_showvariable;
-                            ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
-                            ObjEC.Ticket_variabletype = model.Ticket_variabletype;
-                            ObjEC.ShowMap = model.ShowMap;
-                            ObjEC.ModifyDate = DateTime.Now;
-                            //objEnt.Events.Add(ObjEC);
-                            // Address info
+                                // Event ObjEC = new Event();
+                                ObjEC.Parent_EventID = 0;
+                                ObjEC.EventTypeID = model.EventTypeID;
+                                ObjEC.EventCategoryID = model.EventCategoryID;
+                                ObjEC.EventSubCategoryID = model.EventSubCategoryID;
+                                ObjEC.UserID = strUserId;
+                                ObjEC.EventTitle = model.EventTitle;
+                                ObjEC.DisplayStartTime = model.DisplayStartTime;
+                                ObjEC.DisplayEndTime = model.DisplayEndTime;
+                                ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                                ObjEC.EventDescription = model.EventDescription;
+                                ObjEC.EventPrivacy = model.EventPrivacy;
+                                ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
+                                ObjEC.Private_GuestOnly = model.Private_GuestOnly;
+                                ObjEC.Private_Password = model.Private_Password;
+                                ObjEC.EventUrl = model.EventUrl;
+                                ObjEC.PublishOnFB = model.PublishOnFB;
+                                ObjEC.EventStatus = model.EventStatus;
+                                ObjEC.IsMultipleEvent = model.IsMultipleEvent;
+                                ObjEC.TimeZone = model.TimeZone;
+                                ObjEC.DisplayStartTime = model.DisplayStartTime;
+                                ObjEC.DisplayEndTime = model.DisplayEndTime;
+                                ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                                ObjEC.FBUrl = model.FBUrl;
+                                ObjEC.TwitterUrl = model.TwitterUrl;
+                                ObjEC.LastLocationAddress = model.LastLocationAddress;
+                                ObjEC.AddressStatus = model.AddressStatus;
+                                ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
+                                ObjEC.Ticket_DAdress = model.Ticket_DAdress;
+                                ObjEC.Ticket_showremain = model.Ticket_showremain;
+                                ObjEC.Ticket_showvariable = model.Ticket_showvariable;
+                                ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
+                                ObjEC.Ticket_variabletype = model.Ticket_variabletype;
+                                ObjEC.ShowMap = model.ShowMap;
+                                ObjEC.ModifyDate = DateTime.Now;
+                                //objEnt.Events.Add(ObjEC);
+                                // Address info
 
-                            Address ObjAdd = new Models.Address();
-                            // 
-                            ids = new List<long>();
+                                Address ObjAdd = new Models.Address();
+                                // 
+                                ids = new List<long>();
 
-                            if (model.AddressStatus == "Online")
-                            {
-                                objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
-                            }
-                            else if (model.AddressStatus == "PastLocation")
-                            {
-                                objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
-                            }
-                          else
-                            {
-                                 if (model.AddressStatus == "Single")
+                                if (model.AddressStatus == "Online")
                                 {
                                     objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
                                 }
-                                if (model.AddressDetail != null)
+                                else if (model.AddressStatus == "PastLocation")
                                 {
-                                    foreach (Address objA in model.AddressDetail)
+                                    objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                                }
+                                else
+                                {
+                                    if (model.AddressStatus == "Single")
                                     {
-
-                                        if ((objA.VenueName != null && objA.VenueName.Trim() != "") || (objA.ConsolidateAddress != "" && objA.ConsolidateAddress != null))
+                                        objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                                    }
+                                    if (model.AddressDetail != null)
+                                    {
+                                        foreach (Address objA in model.AddressDetail)
                                         {
-                                            if (objA.AddressID == 0)
+
+                                            if ((objA.VenueName != null && objA.VenueName.Trim() != "") || (objA.ConsolidateAddress != "" && objA.ConsolidateAddress != null))
                                             {
-                                                ObjAdd = new Models.Address();
+                                                if (objA.AddressID == 0)
+                                                {
+                                                    ObjAdd = new Models.Address();
+                                                }
+                                                else
+                                                {
+                                                    ObjAdd = (from obj in objEnt.Addresses where obj.AddressID == objA.AddressID && obj.EventId == lEventId select obj).FirstOrDefault();
+                                                }
+                                                ObjAdd.EventId = lEventId;
+                                                ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
+                                                ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
+                                                ObjAdd.City = objA.City == null ? "" : objA.City;
+                                                ObjAdd.CountryID = objA.CountryID;
+                                                ObjAdd.State = objA.State == null ? "" : objA.State;
+                                                ObjAdd.UserId = strUserId;
+                                                ObjAdd.VenueName = objA.VenueName;
+                                                ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
+                                                ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
+                                                ObjAdd.Name = "";
+                                                if (objA.AddressID == 0)
+                                                {
+                                                    objEnt.Addresses.Add(ObjAdd);
+                                                }
+                                                ids.Add(ObjAdd.AddressID);
                                             }
-                                            else
-                                            {
-                                                ObjAdd = (from obj in objEnt.Addresses where obj.AddressID == objA.AddressID && obj.EventId == lEventId select obj).FirstOrDefault();
-                                            }
-                                            ObjAdd.EventId = lEventId;
-                                            ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
-                                            ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
-                                            ObjAdd.City = objA.City == null ? "" : objA.City;
-                                            ObjAdd.CountryID = objA.CountryID;
-                                            ObjAdd.State = objA.State == null ? "" : objA.State;
-                                            ObjAdd.UserId = strUserId;
-                                            ObjAdd.VenueName = objA.VenueName;
-                                            ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
-                                            ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
-                                            ObjAdd.Name = "";
-                                            if (objA.AddressID == 0)
-                                            {
-                                                objEnt.Addresses.Add(ObjAdd);
-                                            }
-                                            ids.Add(ObjAdd.AddressID);
+
                                         }
-
-                                    }
-                                    var results = objEnt.Addresses.Where(x => !ids.Contains(x.AddressID) && x.EventId == lEventId).ToList();
-                                    if (results != null)
-                                    {
-                                        objEnt.Addresses.RemoveRange(results);
+                                        var results = objEnt.Addresses.Where(x => !ids.Contains(x.AddressID) && x.EventId == lEventId).ToList();
+                                        if (results != null)
+                                        {
+                                            objEnt.Addresses.RemoveRange(results);
+                                        }
                                     }
                                 }
-                            }
 
 
-                          
-                            // Event on Single Timing 
-                            if (model.EventVenue != null)
-                            {
-                                //To be discuss  
-                                objEnt.MultipleEvents.RemoveRange(objEnt.MultipleEvents.Where(x => x.EventID == lEventId).ToList());
-                                objEnt.EventVenues.RemoveRange(objEnt.EventVenues.Where(x => x.EventID == lEventId).ToList());
-                                EventVenue objEVenue = new EventVenue();
 
-                                foreach (EventVenue objEv in model.EventVenue)
+                                // Event on Single Timing 
+                                if (model.EventVenue != null)
                                 {
+                                    //To be discuss  
+                                    objEnt.MultipleEvents.RemoveRange(objEnt.MultipleEvents.Where(x => x.EventID == lEventId).ToList());
+                                    objEnt.EventVenues.RemoveRange(objEnt.EventVenues.Where(x => x.EventID == lEventId).ToList());
+                                    EventVenue objEVenue = new EventVenue();
+
+                                    foreach (EventVenue objEv in model.EventVenue)
+                                    {
 
 
-                                    objEVenue.EventID = lEventId;
-                                    objEVenue.EventStartDate = objEv.EventStartDate;
-                                    objEVenue.EventEndDate = objEv.EventEndDate;
-                                    objEVenue.EventStartTime = objEv.EventStartTime;
-                                    objEVenue.EventEndTime = objEv.EventEndTime;
+                                        objEVenue.EventID = lEventId;
+                                        objEVenue.EventStartDate = objEv.EventStartDate;
+                                        objEVenue.EventEndDate = objEv.EventEndDate;
+                                        objEVenue.EventStartTime = objEv.EventStartTime;
+                                        objEVenue.EventEndTime = objEv.EventEndTime;
 
-                                    objEnt.EventVenues.Add(objEVenue);
+                                        objEnt.EventVenues.Add(objEVenue);
 
 
+                                    }
                                 }
-                            }
-                            // Event on Multiple timing 
-                            if (model.MultipleEvents != null)
-                            {
-                                objEnt.EventVenues.RemoveRange(objEnt.EventVenues.Where(x => x.EventID == lEventId).ToList());
-                                objEnt.MultipleEvents.RemoveRange(objEnt.MultipleEvents.Where(x => x.EventID == lEventId).ToList());
-
-                                MultipleEvent objMEvents = new MultipleEvent();
-                                foreach (MultipleEvent objME in model.MultipleEvents)
+                                // Event on Multiple timing 
+                                if (model.MultipleEvents != null)
                                 {
-                                    objMEvents.EventID = lEventId;
-                                    objMEvents.Frequency = objME.Frequency;
-                                    objMEvents.WeeklyDay = objME.WeeklyDay;
-                                    objMEvents.MonthlyDay = objME.MonthlyDay;
-                                    objMEvents.MonthlyWeek = objME.MonthlyWeek;
-                                    objMEvents.MonthlyWeekDays = objME.MonthlyWeekDays;
-                                    objMEvents.StartingFrom = objME.StartingFrom;
-                                    objMEvents.StartingTo = objME.StartingTo;
-                                    objMEvents.StartTime = objME.StartTime;
-                                    objMEvents.EndTime = objME.EndTime;
+                                    objEnt.EventVenues.RemoveRange(objEnt.EventVenues.Where(x => x.EventID == lEventId).ToList());
+                                    objEnt.MultipleEvents.RemoveRange(objEnt.MultipleEvents.Where(x => x.EventID == lEventId).ToList());
 
-                                    ObjEC.MultipleEvents.Add(objMEvents);
+                                    MultipleEvent objMEvents = new MultipleEvent();
+                                    foreach (MultipleEvent objME in model.MultipleEvents)
+                                    {
+                                        objMEvents.EventID = lEventId;
+                                        objMEvents.Frequency = objME.Frequency;
+                                        objMEvents.WeeklyDay = objME.WeeklyDay;
+                                        objMEvents.MonthlyDay = objME.MonthlyDay;
+                                        objMEvents.MonthlyWeek = objME.MonthlyWeek;
+                                        objMEvents.MonthlyWeekDays = objME.MonthlyWeekDays;
+                                        objMEvents.StartingFrom = objME.StartingFrom;
+                                        objMEvents.StartingTo = objME.StartingTo;
+                                        objMEvents.StartTime = objME.StartTime;
+                                        objMEvents.EndTime = objME.EndTime;
+
+                                        ObjEC.MultipleEvents.Add(objMEvents);
 
 
+                                    }
                                 }
-                            }
-                            // Orgnizer
-                            if (model.Orgnizer != null)
-                            {
-                                ids = new List<long>();
-                                Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
-                                foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
+                                // Orgnizer
+                                if (model.Orgnizer != null)
                                 {
-                                    if (objOr.Orgnizer_Id == 0)
+                                    ids = new List<long>();
+                                    Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
+                                    foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
                                     {
-                                        objEOrg = new Event_Orgnizer_Detail();
+                                        if (objOr.Orgnizer_Id == 0)
+                                        {
+                                            objEOrg = new Event_Orgnizer_Detail();
+                                        }
+                                        else
+                                        {
+                                            objEOrg = (from obj in objEnt.Event_Orgnizer_Detail where obj.Orgnizer_Id == objOr.Orgnizer_Id && obj.Orgnizer_Event_Id == lEventId select obj).FirstOrDefault();
+                                        }
+                                        objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                                        objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                        objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
+                                        objEOrg.FBLink = objOr.FBLink;
+                                        objEOrg.Twitter = objOr.Twitter;
+                                        objEOrg.Linkedin = objOr.Linkedin;
+                                        objEOrg.DefaultOrg = objOr.DefaultOrg;
+                                        objEOrg.UserId = strUserId;
+                                        if (objOr.Orgnizer_Id == 0)
+                                        {
+                                            objEnt.Event_Orgnizer_Detail.Add(objEOrg);
+                                        }
+                                        ids.Add(objOr.Orgnizer_Id);
                                     }
-                                    else
+                                    var resultorg = objEnt.Event_Orgnizer_Detail.Where(x => !ids.Contains(x.Orgnizer_Id) && x.Orgnizer_Event_Id == lEventId).ToList();
+                                    if (resultorg != null)
                                     {
-                                        objEOrg = (from obj in objEnt.Event_Orgnizer_Detail where obj.Orgnizer_Id == objOr.Orgnizer_Id && obj.Orgnizer_Event_Id == lEventId select obj).FirstOrDefault();
+                                        objEnt.Event_Orgnizer_Detail.RemoveRange(resultorg);
                                     }
-                                    objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                                    objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                                    objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
-                                    objEOrg.FBLink = objOr.FBLink;
-                                    objEOrg.Twitter = objOr.Twitter;
-                                    objEOrg.Linkedin = objOr.Linkedin;
-                                    objEOrg.DefaultOrg = objOr.DefaultOrg;
-                                    objEOrg.UserId = strUserId;
-                                    if (objOr.Orgnizer_Id == 0)
-                                    {
-                                        objEnt.Event_Orgnizer_Detail.Add(objEOrg);
-                                    }
-                                    ids.Add(objOr.Orgnizer_Id);
                                 }
-                                var resultorg = objEnt.Event_Orgnizer_Detail.Where(x => !ids.Contains(x.Orgnizer_Id) && x.Orgnizer_Event_Id == lEventId).ToList();
-                                if (resultorg != null)
+                                // Tickets
+
+
+
+
+                                if (model.Ticket != null)
                                 {
-                                    objEnt.Event_Orgnizer_Detail.RemoveRange(resultorg);
+                                    Ticket ticket = new Ticket();
+                                    ids = new List<long>();
+                                    // objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
+                                    //  objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
+                                    foreach (Ticket tick in model.Ticket)
+                                    {
+                                        if (tick.T_Id == 0)
+                                        {
+                                            ticket = new Ticket();
+                                        }
+                                        else
+                                        {
+                                            ticket = (from obj in objEnt.Tickets where obj.T_Id == tick.T_Id && obj.E_Id == lEventId select obj).FirstOrDefault();
+                                        }
+                                        ticket.E_Id = lEventId;
+                                        ticket.TicketTypeID = tick.TicketTypeID;
+                                        ticket.T_name = tick.T_name;
+                                        ticket.Qty_Available = tick.Qty_Available;
+                                        ticket.Price = tick.Price;
+                                        ticket.T_Desc = tick.T_Desc;
+                                        ticket.TicketTypeID = tick.TicketTypeID;
+                                        ticket.T_order = tick.T_order;
+                                        ticket.Show_T_Desc = tick.Show_T_Desc;
+                                        ticket.Fees_Type = tick.Fees_Type;
+                                        ticket.Sale_Start_Date = tick.Sale_Start_Date;
+                                        ticket.Sale_Start_Time = tick.Sale_Start_Time;
+                                        ticket.Sale_End_Date = tick.Sale_End_Date;
+                                        ticket.Sale_End_Time = tick.Sale_End_Time;
+                                        ticket.Hide_Ticket = tick.Hide_Ticket;
+                                        ticket.Auto_Hide_Sche = tick.Auto_Hide_Sche;
+                                        ticket.T_AutoSechduleType = tick.T_AutoSechduleType;
+                                        ticket.Hide_Untill_Date = tick.Hide_Untill_Date;
+                                        ticket.Hide_Untill_Time = tick.Hide_Untill_Time;
+                                        ticket.Hide_After_Date = tick.Hide_After_Date;
+                                        ticket.Hide_After_Time = tick.Hide_After_Time;
+                                        ticket.Min_T_Qty = tick.Min_T_Qty;
+                                        ticket.Max_T_Qty = tick.Max_T_Qty;
+                                        ticket.T_Disable = tick.T_Disable;
+                                        ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
+                                        ticket.T_Displayremaining = tick.T_Displayremaining;
+                                        ticket.EC_Fee = tick.EC_Fee;
+                                        ticket.Customer_Fee = tick.Customer_Fee;
+                                        ticket.TotalPrice = tick.TotalPrice;
+                                        ticket.T_Discount = tick.T_Discount;
+                                        if (tick.T_Id == 0)
+                                        {
+                                            objEnt.Tickets.Add(ticket);
+                                        }
+                                        ids.Add(ticket.T_Id);
+                                    }
+
+
+                                    //var ids = new HashSet<long>(objEnt.Tickets.Where(x => x.E_Id== lEventId).Select(x=>x.T_Id));
+
+                                    var resultticks = objEnt.Tickets.Where(x => !ids.Contains(x.T_Id) && x.E_Id == lEventId).ToList();
+                                    if (resultticks != null)
+                                    {
+                                        objEnt.Tickets.RemoveRange(resultticks);
+                                    }
+
+
                                 }
-                            }
-                            // Tickets
 
-
-
-
-                            if (model.Ticket != null)
-                            {
-                                Ticket ticket = new Ticket();
-                                ids = new List<long>();
-                                // objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
-                                //  objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
-                                foreach (Ticket tick in model.Ticket)
+                                if (model.EventImage != null)
                                 {
-                                    if (tick.T_Id == 0)
+                                    EventImage Image = new EventImage();
+                                    objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
+                                    foreach (EventImage img in model.EventImage)
                                     {
-                                        ticket = new Ticket();
+                                        Image = new EventImage();
+                                        Image.EventID = lEventId;
+                                        Image.EventImageUrl = img.EventImageUrl;
+                                        Image.ImageType = img.ImageType;
+                                        objEnt.EventImages.Add(Image);
                                     }
-                                    else
-                                    {
-                                        ticket = (from obj in objEnt.Tickets where obj.T_Id == tick.T_Id && obj.E_Id == lEventId select obj).FirstOrDefault();
-                                    }
-                                    ticket.E_Id = lEventId;
-                                    ticket.TicketTypeID = tick.TicketTypeID;
-                                    ticket.T_name = tick.T_name;
-                                    ticket.Qty_Available = tick.Qty_Available;
-                                    ticket.Price = tick.Price;
-                                    ticket.T_Desc = tick.T_Desc;
-                                    ticket.TicketTypeID = tick.TicketTypeID;
-                                    ticket.T_order = tick.T_order;
-                                    ticket.Show_T_Desc = tick.Show_T_Desc;
-                                    ticket.Fees_Type = tick.Fees_Type;
-                                    ticket.Sale_Start_Date = tick.Sale_Start_Date;
-                                    ticket.Sale_Start_Time = tick.Sale_Start_Time;
-                                    ticket.Sale_End_Date = tick.Sale_End_Date;
-                                    ticket.Sale_End_Time = tick.Sale_End_Time;
-                                    ticket.Hide_Ticket = tick.Hide_Ticket;
-                                    ticket.Auto_Hide_Sche = tick.Auto_Hide_Sche;
-                                    ticket.T_AutoSechduleType = tick.T_AutoSechduleType;
-                                    ticket.Hide_Untill_Date = tick.Hide_Untill_Date;
-                                    ticket.Hide_Untill_Time = tick.Hide_Untill_Time;
-                                    ticket.Hide_After_Date = tick.Hide_After_Date;
-                                    ticket.Hide_After_Time = tick.Hide_After_Time;
-                                    ticket.Min_T_Qty = tick.Min_T_Qty;
-                                    ticket.Max_T_Qty = tick.Max_T_Qty;
-                                    ticket.T_Disable = tick.T_Disable;
-                                    ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
-                                    ticket.T_Displayremaining = tick.T_Displayremaining;
-                                    ticket.EC_Fee = tick.EC_Fee;
-                                    ticket.Customer_Fee = tick.Customer_Fee;
-                                    ticket.TotalPrice = tick.TotalPrice;
-                                    ticket.T_Discount = tick.T_Discount;
-                                    if (tick.T_Id == 0)
-                                    {
-                                        objEnt.Tickets.Add(ticket);
-                                    }
-                                    ids.Add(ticket.T_Id);
                                 }
-
-
-                                //var ids = new HashSet<long>(objEnt.Tickets.Where(x => x.E_Id== lEventId).Select(x=>x.T_Id));
-
-                                var resultticks = objEnt.Tickets.Where(x => !ids.Contains(x.T_Id) && x.E_Id == lEventId).ToList();
-                                if (resultticks != null)
+                                else
                                 {
-                                    objEnt.Tickets.RemoveRange(resultticks);
+                                    objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
                                 }
 
-
-                            }
-                           
-                            if (model.EventImage != null)
-                            {
-                                EventImage Image = new EventImage();
-                                objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
-                                foreach (EventImage img in model.EventImage)
+                                if (model.EventVariable != null)
                                 {
-                                    Image = new EventImage();
-                                    Image.EventID = lEventId;
-                                    Image.EventImageUrl = img.EventImageUrl;
-                                    Image.ImageType = img.ImageType;
-                                    objEnt.EventImages.Add(Image);
-                                }
-                            }
-                            else
-                            {
-                                objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
-                            }
+                                    Event_VariableDesc var = new Event_VariableDesc();
+                                    ids = new List<long>();
+                                    foreach (Event_VariableDesc variable in model.EventVariable)
+                                    {
+                                        if (variable.Variable_Id == 0)
+                                        {
+                                            var = new Event_VariableDesc();
+                                        }
+                                        else
+                                        {
+                                            var = (from obj in objEnt.Event_VariableDesc where obj.Variable_Id == variable.Variable_Id && obj.Event_Id == lEventId select obj).FirstOrDefault();
 
-                            if (model.EventVariable != null)
-                            {
-                                Event_VariableDesc var = new Event_VariableDesc();
-                                ids = new List<long>();
-                                foreach (Event_VariableDesc variable in model.EventVariable)
+                                        }
+                                        var.Event_Id = lEventId;
+                                        var.VariableDesc = variable.VariableDesc;
+                                        var.Price = variable.Price;
+                                        if (variable.Variable_Id == 0)
+                                        {
+                                            objEnt.Event_VariableDesc.Add(var);
+
+                                        }
+                                        ids.Add(variable.Variable_Id);
+                                    }
+                                    var resultdesc = objEnt.Event_VariableDesc.Where(x => !ids.Contains(x.Variable_Id) && x.Event_Id == lEventId).ToList();
+                                    if (resultdesc != null)
+                                    {
+                                        objEnt.Event_VariableDesc.RemoveRange(resultdesc);
+                                    }
+
+                                }
+                                else
                                 {
-                                    if (variable.Variable_Id == 0)
-                                    {
-                                        var = new Event_VariableDesc();
-                                    }
-                                    else
-                                    {
-                                        var = (from obj in objEnt.Event_VariableDesc where obj.Variable_Id == variable.Variable_Id && obj.Event_Id == lEventId select obj).FirstOrDefault();
-
-                                    }
-                                    var.Event_Id = lEventId;
-                                    var.VariableDesc = variable.VariableDesc;
-                                    var.Price = variable.Price;
-                                    if (variable.Variable_Id == 0)
-                                    {
-                                        objEnt.Event_VariableDesc.Add(var);
-
-                                    }
-                                    ids.Add(variable.Variable_Id);
+                                    objEnt.Event_VariableDesc.RemoveRange(objEnt.Event_VariableDesc.Where(x => x.Event_Id == lEventId));
                                 }
-                                var resultdesc = objEnt.Event_VariableDesc.Where(x => !ids.Contains(x.Variable_Id) && x.Event_Id == lEventId).ToList();
-                                if (resultdesc != null)
-                                {
-                                    objEnt.Event_VariableDesc.RemoveRange(resultdesc);
-                                }
-
+                                objEnt.SaveChanges();
+                                lEventId = ObjEC.EventID;
+                                PublishEvent(lEventId);
                             }
-                            else
-                            {
-                                objEnt.Event_VariableDesc.RemoveRange(objEnt.Event_VariableDesc.Where(x => x.Event_Id == lEventId));
-                            }
-                            objEnt.SaveChanges();
-                            lEventId = ObjEC.EventID;
-                            PublishEvent(lEventId);
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    return 0;
+                }
+                return lEventId;
             }
-            catch (Exception ex)
+            else
             {
-                return 0;
+                return -1;
             }
-            return lEventId;
         }
      
      

@@ -480,6 +480,12 @@ namespace EventCombo.Controllers
                         badd.UserId = Userid;
                         badd.Guid = guid;
                         badd.OrderId = strOrderNo;
+                        badd.PaymentType = "C";
+                        badd.CardId = model.cardno;
+                        badd.card_type = model.card_type;
+                        badd.Cvv = model.cvv;
+                        badd.ExpirationDate = model.expirydate;
+
                         objEntity.BillingAddresses.Add(badd);
                         if (model.Saveshipdetail != "N")
                         {
@@ -657,7 +663,45 @@ namespace EventCombo.Controllers
             return strInfo.ToString();
 
         }
+        public void pdf(long eventid)
+        {
+            WebClient wc = new WebClient();
+            string htmlPath = Server.MapPath("..");
+            string htmlText = wc.DownloadString(htmlPath + "/email.html");
+            htmlText = htmlText.Replace("¶¶Email¶¶", "");
+            htmlText = htmlText.Replace("¶¶EventTitleId¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventStartDateID¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventVenueID¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventOrderNO¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶UserLastNameID¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶TicketOrderDateId¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventStartTimeID¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶Ticketname¶¶", "");
+            htmlText = htmlText.Replace("¶¶Tickettype¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventBarcodeId¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventQrCode¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventImage¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventdayId¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventLogo¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶Eventtype¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventDescription¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶TicketPrice¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶TicketQty¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventOrganiserName¶¶", "sdaasd");
+            htmlText = htmlText.Replace("¶¶EventOrganiserEmail¶¶", "sdaasd");
 
+            var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+            var pdfBytes = htmlToPdf.GeneratePdf(htmlText);
+            MemoryStream mms = new MemoryStream(pdfBytes);
+            byte[] byteInfo = mms.ToArray();
+            mms.Write(byteInfo, 0, byteInfo.Length);
+            mms.Position = 0;
+            Response.Buffer = true;
+            Response.AddHeader("Content-Disposition", "attachment; filename= " + Server.HtmlEncode("abc.pdf"));
+            Response.ContentType = "APPLICATION/pdf";
+            Response.BinaryWrite(byteInfo);
+        }
         public MemoryStream generateTicketPDF(Pdfgeneration pdf, string barcode1)
         {
             WebClient wc = new WebClient();
@@ -1074,138 +1118,15 @@ namespace EventCombo.Controllers
 
                             }
                         }
+                        string body = "";
                         if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
                         {
                             bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                            {
-
-
-                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                {
-
-
-
-                                    if (EmailTag[i].Tag_Name == "EventTitleId")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventTitleId¶¶", pdf.EventTitleId);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventStartDateID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventStartDateID¶¶", pdf.EventStartDateID);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventVenueID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventVenueID¶¶", pdf.EventVenueID);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", pdf.UserFirstNameID);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventOrderNO")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", pdf.EventOrderNO);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserLastNameID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserLastNameID¶¶", pdf.UserLastNameID);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "TicketOrderDateId")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶TicketOrderDateId¶¶", pdf.TicketOrderDateId);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventStartTimeID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventStartTimeID¶¶", pdf.EventStartTimeID);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "Ticketname")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶Ticketname¶¶", "");
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "Tickettype")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶Tickettype¶¶", pdf.Tickettype);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventBarcodeId")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventBarcodeId¶¶", barcodeimg);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventQrCode")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventQrCode¶¶", QrcodeImg);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventImage")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventImage¶¶", Imageeventimg);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventdayId")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventdayId¶¶", pdf.EventdayId);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventLogo")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventLogo¶¶", logoImageemail);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "Eventtype")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶Eventtype¶¶", pdf.Eventtype);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventDescription")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventDescription¶¶", pdf.EventDescription);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "TicketPrice")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶TicketPrice¶¶", pdf.TicketPrice);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "TicketQty")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶TicketQty¶¶", pdf.Purchased_Qty);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventOrganiserName")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", pdf.EventOrganiserName);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventOrganiserEmail")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶EventOrganiserEmail¶¶", pdf.EventOrganiserEmail);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserEmailID")
-                                    {
-                                        bodyn = bodyn.Replace("¶¶UserEmailID¶¶", email);
-
-                                    }
-                                    ////////////////////
-
-
-
-                                }
-
-                            }
+                           body=  ModifyEmailBody(bodyn, strGUID,Eventid, EmailTag);
+                        
                         }
                         //Mail 
-                        hmc.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, attachment, Imageevent, qrImgPath, barImgPath);
+                        hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, Imageevent, qrImgPath, barImgPath);
                         //Mail 
                     }
                 }
@@ -1242,6 +1163,377 @@ namespace EventCombo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        private string ModifyEmailBody(string bodyn, string gUID,long Eventid,List<Email_Tag> Emailtag)
+        {
+           
+
+            var Edtails = (from p in db.Events join user in db.Profiles on p.UserID equals user.UserID
+                           join org in db.Event_Orgnizer_Detail on p.EventID equals org.Orgnizer_Event_Id
+                           join orgprof in db.Profiles on org.UserId equals orgprof.UserID  
+                           where p.EventID == Eventid && org.DefaultOrg=="Y"
+                           select new {
+                                  EventTitle=p.EventTitle,
+                                  UserName=user.FirstName,
+                                  Organizername= orgprof.FirstName,
+                                  OrganiserEmail= orgprof.Email,
+                                  Addresstatus=p.AddressStatus,
+                                }).ToList().Distinct().FirstOrDefault();
+
+            var url = Request.Url;
+            var baseurl = url.GetLeftPart(UriPartial.Authority);
+            string createevent = baseurl + Url.Action("Index", "Home");
+            string discoverevents = baseurl + Url.Action("discoverevents", "Home");
+            string Downloadurl= baseurl + Url.Action("pdf", "TicketPayment")+ "?eventid = " + Eventid + "" ;
+            var itemQuery = from TqtId in db.Ticket_Purchased_Detail
+
+                                where TqtId.TPD_GUID== gUID && TqtId.TPD_Event_Id== Eventid
+
+                            select TqtId.TPD_TQD_Id;
+            var myOrderId = (from p in db.Ticket_Purchased_Detail where p.TPD_GUID== gUID && p.TPD_Event_Id== Eventid select p.TPD_Order_Id).ToList().Distinct().FirstOrDefault();
+            var myOrderDetails = (from p in db.Order_Detail_T where p.O_Order_Id == myOrderId select p).FirstOrDefault();
+
+            var myAddress = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p.TQD_AddressId).ToList().Distinct();
+            var myaddress = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p).ToList();
+            StringBuilder strHTML = new StringBuilder();
+
+            strHTML.Append("<table style='width: 100 %; '><tr><h1 style='font-size:22px;margin-bottom:5px;margin-top:0px;font-weight:normal;'> Order Summary </h1>");
+            strHTML.Append("<p style='margin:0px;padding:0px;margin-bottom:5px;font-size:15px;'>Order#:"+myOrderId+"</p></tr>");
+            var eventtype = "";
+            var eventname = "";
+            var startdate = "";
+            var enddate = "";
+
+           var singledate= (from date in db.EventVenues where date.EventID == Eventid select date).FirstOrDefault();
+            if(singledate!=null )
+            {
+                startdate = DateTime.Parse(singledate.EventStartDate).ToLongDateString() +" "+ singledate.EventStartTime;
+                enddate = DateTime.Parse(singledate.EventEndDate).ToLongDateString() + " " + singledate.EventEndTime;
+            }
+            else
+            {
+               var muldate =(from date in db.MultipleEvents where date.EventID== Eventid select date).FirstOrDefault();
+                startdate = DateTime.Parse(muldate.StartingFrom).ToLongDateString() + " " + muldate.StartTime;
+                enddate = DateTime.Parse(muldate.StartingTo).ToLongDateString() + " " + muldate.EndTime;
+
+            }
+
+
+            if (Edtails.Addresstatus == "Online")
+            {
+
+
+            }
+            else if(Edtails.Addresstatus == "PastLocation")
+            {
+
+
+              var Address=  (from add in db.Addresses where add.AddressID ==( from fb in db.Events where fb.EventID==Eventid select fb.LastLocationAddress).FirstOrDefault()
+                            select add).FirstOrDefault();
+
+                eventname = Address.ConsolidateAddress;
+
+            }
+            else
+            {
+                var Address = (from add in db.Addresses
+                               where add.EventId==Eventid
+                               select add).FirstOrDefault();
+                eventname = Address.ConsolidateAddress;
+            }
+            if (myAddress.Count()==1)
+            {
+               
+                foreach (var item in myAddress)
+                {
+                    if (item == 0)
+                     {
+                        var myDatescnt = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p.TQD_StartDate).ToList().Distinct();
+                        foreach (var vdate in myDatescnt)
+                        {
+                            var itemtoadd = (from p in db.Ticket_Quantity_Detail
+                                             join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
+                                             join l in db.Profiles on TP.TPD_User_Id equals l.UserID
+                                             join t in db.Tickets on p.TQD_Ticket_Id equals t.T_Id
+                                             where p.TQD_StartDate == vdate && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid 
+                                             select new
+                                             {
+                                                 username = l.FirstName,
+                                                 Ticketname = t.T_name,
+                                                 Quantity = TP.TPD_Purchased_Qty,
+                                                 Price = TP.TPD_Amount > 0 ? "$ " + TP.TPD_Amount.ToString() : TP.TPD_Donate > 0 ? "$ " + TP.TPD_Donate.ToString() : "Free"
+
+                                             }).ToList();
+
+                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + vdate + " </span></p ></tr > ");
+                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                            strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
+                            strHTML.Append("</tr>");
+                            foreach (var qty in itemtoadd)
+                            {
+                                strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                                strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
+                                strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
+                                strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
+                                strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
+                                strHTML.Append("</tr>");
+
+                            }
+
+
+
+                        }
+                    }
+                    else
+                    {
+                        var itemtoadd = (from p in db.Ticket_Quantity_Detail
+                                         join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
+                                         join l in db.Profiles on TP.TPD_User_Id equals l.UserID
+                                         join t in db.Tickets on p.TQD_Ticket_Id equals t.T_Id
+                                         where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid 
+                                         select new
+                                         {
+                                             username = l.FirstName,
+                                             Ticketname = t.T_name,
+                                             Quantity = TP.TPD_Purchased_Qty,
+                                             Price = TP.TPD_Amount > 0 ? "$ " + TP.TPD_Amount.ToString() : TP.TPD_Donate > 0 ? "$ " + TP.TPD_Donate.ToString() : "Free"
+
+                                         }).ToList();
+
+                        var dateofaddress = (from p in db.Ticket_Quantity_Detail
+                                             join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
+                                             where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
+                                             select p.TQD_StartDate).ToList().Distinct().FirstOrDefault();
+                        var addressdetail = (from p in db.Addresses where p.AddressID == item select p.ConsolidateAddress).FirstOrDefault();
+                        strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + dateofaddress.ToString() + " </span></p ></tr > ");
+                        strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                        strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
+                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
+                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
+                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
+                        strHTML.Append("</tr>");
+
+                        foreach (var qty in itemtoadd)
+                        {
+                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                            strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
+                            strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
+                            strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
+                            strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
+                            strHTML.Append("</tr>");
+
+                        }
+                    }
+
+                }
+
+              
+
+            }
+            else
+            {
+               
+                foreach (var item in myAddress)
+                {
+
+                    var itemtoadd = (from p in db.Ticket_Quantity_Detail
+                                     join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
+                                     join l in db.Profiles on TP.TPD_User_Id equals l.UserID
+                                     join t in db.Tickets on p.TQD_Ticket_Id equals t.T_Id
+                                    where p.TQD_AddressId==item && TP.TPD_GUID== gUID && TP.TPD_Event_Id== Eventid && p.TQD_AddressId==item
+                                    select new {username=l.FirstName,
+                                    Ticketname=t.T_name,
+                                    Quantity= TP.TPD_Purchased_Qty,
+                                    Price= TP.TPD_Amount>0?"$ "+ TP.TPD_Amount.ToString(): TP.TPD_Donate>0? "$ "+ TP.TPD_Donate.ToString():"Free"
+                                    
+                                    }).ToList();
+
+                    var dateofaddress = (from p in db.Ticket_Quantity_Detail
+                                    join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
+                                   where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
+                                    select p.TQD_StartDate).ToList().Distinct().FirstOrDefault();
+                    var addressdetail = (from p in db.Addresses where p.AddressID == item select p.ConsolidateAddress).FirstOrDefault();
+                    strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>"+ addressdetail + "<span style='float:right;'>"+ dateofaddress.ToString() + " </span></p ></tr > ");
+                    strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                    strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
+                    strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
+                    strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
+                    strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
+                    strHTML.Append("</tr>");
+
+                    foreach ( var qty in itemtoadd)
+                    {
+                        strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                        strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>"+qty.username+"</td>");
+                        strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
+                        strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
+                        strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
+                        strHTML.Append("</tr>");
+
+                    }
+
+                }
+
+
+            }
+
+            strHTML.Append("<tr align='right'> ");
+           strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>Total :"+ myOrderDetails .O_TotalAmount+ " </td></tr>");
+
+            var myBillingdeatils = (from p in db.BillingAddresses where p.Guid == gUID && p.OrderId == myOrderId select p).ToList().Distinct().FirstOrDefault();
+
+            if(Edtails.Addresstatus== "Multiple")
+            {
+                eventtype = "* This event has multiple venues ";
+            }
+            else
+            {
+                eventtype = "";
+            }
+
+         
+
+            var Scardnumber = myBillingdeatils.CardId.Trim();
+            var Icardlength = Scardnumber.Length;
+            var WrVS = "";
+            int k = 1;
+            for (int i = 0; i < Icardlength; i++)
+            {
+
+                WrVS += "X";
+                if (k == 4)
+                {
+                    WrVS += "-";
+                    k = 0;
+                }
+
+
+                k++;
+
+            }
+            if (WrVS.EndsWith("-"))
+            {
+                WrVS = WrVS.Substring(0, WrVS.LastIndexOf("-"));
+            }
+            var rvrs = WrVS.Substring(0, WrVS.LastIndexOf("-") + 1);
+            var rvrsd = rvrs.Replace("-", "");
+            var chrlength = Icardlength - rvrsd.Length;
+            var result = Scardnumber.Substring(Icardlength - Math.Min(chrlength, Icardlength));
+            var finalstr = rvrs + result;
+           
+            var touper = "";
+            if (!string.IsNullOrWhiteSpace(myBillingdeatils.card_type))
+            {
+                touper = char.ToUpper(myBillingdeatils.card_type[0]) + myBillingdeatils.card_type.Substring(1);
+            }
+            else
+            {
+                touper = "";
+            }
+           var cardtext = "Charge to :" + touper + "  " + finalstr;
+            strHTML.Append("<tr align='center'> ");
+            strHTML.Append("<td colspan='4' style='font-size:15px; padding:10px 5px;'>"+ cardtext + " </td></tr>");
+            strHTML.Append("<tr align='center'><td colspan='4' style='font-size:15px;'>");
+            strHTML.Append("<p style='background:#fff9cf; padding:10px 15px; display:inline-block; margin:0px;'>This charge will appear on your card statement as Eventcombo * { "+ Edtails .EventTitle + "}</p>");
+            strHTML.Append("<p style='color:#696564;' >This order is subject to Eventcombo '");
+            strHTML.Append("<a href='#' style='color:#0f90ba;'>Terms of Service </a> , <a style='color:#0f90ba;' href='#'>Privacy Policy </a> and <a style='color:#0f90ba;' href='#'>Cookie Policy </a></p>");
+            strHTML.Append("</td></tr></table > ");
+
+          
+
+
+            if (!string.IsNullOrEmpty(bodyn))
+            {
+
+
+               
+
+                for (int i = 0; i < Emailtag.Count; i++) // Loop with for.
+                {
+
+                    if (bodyn.Contains("¶¶" + Emailtag[i].Tag_Name.Trim() + "¶¶"))
+                    {
+                        
+                        if (Emailtag[i].Tag_Name == "UserFirstNameID")
+                        {
+                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", Edtails.UserName);
+
+                        }
+                        if (Emailtag[i].Tag_Name == "EventTitleId")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventTitleId¶¶", Edtails.EventTitle);
+
+                        }
+                        if (Emailtag[i].Tag_Name == "EventOrganiserName")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", Edtails.Organizername);
+
+                        }
+                        if (Emailtag[i].Tag_Name == "EventOrganiserName")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", Edtails.Organizername);
+
+                        }
+                        if (Emailtag[i].Tag_Name == "EventOrganiserEmail")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventOrganiserEmail¶¶", Edtails.OrganiserEmail);
+
+                        }
+                        if (Emailtag[i].Tag_Name == "EventDynamicTable")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventDynamicTable¶¶", strHTML.ToString());
+
+                        }
+                        if(Emailtag[i].Tag_Name == "CreateEventurl")
+                        {
+                            bodyn = bodyn.Replace("¶¶CreateEventurl¶¶", createevent);
+                        }
+                        if (Emailtag[i].Tag_Name == "DiscoverEventurl")
+                        {
+                            bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", discoverevents);
+                        }
+                        if (Emailtag[i].Tag_Name == "EventLogin")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventLogin¶¶", createevent);
+                        }
+                        if (Emailtag[i].Tag_Name == "Eventtype")
+                        {
+                            bodyn = bodyn.Replace("¶¶Eventtype¶¶", eventtype);
+                        }
+                        if (Emailtag[i].Tag_Name == "EventStartDateID")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventStartDateID¶¶", startdate);
+                        }
+                        if (Emailtag[i].Tag_Name == "EventEndDateID")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventEndDateID¶¶", enddate);
+                        }
+                        if (Emailtag[i].Tag_Name == "EventVenueID")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventVenueID¶¶", eventname);
+                        }
+                        if (Emailtag[i].Tag_Name == "EventMapImage")
+                        {
+                            bodyn = bodyn.Replace("¶¶EventMapImage¶¶", eventtype);
+                        }
+                        if (Emailtag[i].Tag_Name == "Downloadurl")
+                        {
+                            bodyn = bodyn.Replace("¶¶Downloadurl¶¶", Downloadurl);
+                        }
+
+                    }
+
+                }
+            }
+
+
+
+
+            return bodyn;
         }
 
         public string GetOrderDetailForConfirmation()

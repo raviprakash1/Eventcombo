@@ -971,8 +971,8 @@
 
                                                         </div>
                                                     </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="form-group">
+                                                    <div class="clearfix donateshow-n" id="cleafix-n"></div>
+                                                    <div class="form-group donateshow-n" id="maxmin-n">
                                                         <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
                                                         <div class="evnt_time_cont wd280 mr5_p">
                                                             <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n"  onkeypress="allownumber(this,event,this.id)" maxlength="6" />
@@ -1000,7 +1000,7 @@
                                                                 Mark Sold Out
                                                             </label>
                                                         </div>
-                                                        <div class="col-sm-12 no_pad">
+                                                        <div class="col-sm-12 no_pad donateshow-n" id="display-n">
                                                             <label class="label-control pl0 ev_tickt_lebel mt5">
                                                                 <input type="checkbox" class="" id="id_displayremaining-n" />
                                                                 Display Remaining Tickets
@@ -3720,11 +3720,16 @@
                     $(this).removeClass('normalticket-n');
                     $(this).addClass('normalticket-' + divlength + '');
                 }
+                if ($(this).hasClass("donateshow-n")) {
+                    $(this).removeClass('donateshow-n');
+                    $(this).addClass('donateshow-' + divlength + '');
+                }
 
             });
 
 
             $('#MasterDiv').append(data);
+            $(".donateshow-" + divlength).css('display', 'block');
             $(".normalticket-" + divlength).css('display', 'none');
             $(".paidticket-" + divlength).css('display', 'block');
             $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
@@ -3832,11 +3837,15 @@
                     $(this).removeClass('normalticket-n');
                     $(this).addClass('normalticket-' + divlength + '');
                 }
-
+                if ($(this).hasClass("donateshow-n")) {
+                    $(this).removeClass('donateshow-n');
+                    $(this).addClass('donateshow-' + divlength + '');
+                }
             });
 
 
             $(data).appendTo('#MasterDiv');
+            $(".donateshow-" + divlength).css('display', 'none');
             $(".normalticket-" + divlength).css('display', 'block');
             $(".paidticket-" + divlength).css('display', 'none');
             $("#id_feetype-" + divlength).css('display', 'block');
@@ -3938,11 +3947,16 @@
                     $(this).removeClass('normalticket-n');
                     $(this).addClass('normalticket-' + divlength + '');
                 }
+                if ($(this).hasClass("donateshow-n")) {
+                    $(this).removeClass('donateshow-n');
+                    $(this).addClass('donateshow-' + divlength + '');
+                }
 
             });
 
             //data.append('<span class="RemoveMoreHub" style="width:80%;"><a href="javascript:void(0);" style="float:right;color:#CE0009;font-size:13px;text-decoration:none;margin-right:5%;" >- Remove</a></span>');
             $('#MasterDiv').append(data);
+            $(".donateshow-" + divlength).css('display', 'block');
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $(".normalticket-" + divlength).css('display', 'block');
             $(".paidticket-" + divlength).css('display', 'none');
