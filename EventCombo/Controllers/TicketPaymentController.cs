@@ -413,7 +413,7 @@ namespace EventCombo.Controllers
                     objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
                     objOdr.O_User_Id = Userid;
                     objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
-                    objOdr.O_VariableId = CommanClasses.ConvertToLong(strVarId);
+                    objOdr.O_VariableId = strVarId;
                     objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
                     objOdr.O_PromoCodeId = CommanClasses.ConvertToLong(strPromId);
                     objOdr.O_OrderDateTime = DateTime.Now;

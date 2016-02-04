@@ -230,6 +230,7 @@
     <Compile Include="Controllers\EventConfirmationController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventListController.cs" />
+    <Compile Include="Controllers\EventViewCustomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
@@ -1113,6 +1114,7 @@
     <Content Include="Views\Inbetween\Index.cshtml" />
     <Content Include="Views\Cart\CheckoutReview.cshtml" />
     <Content Include="Views\Cart\DoCheckoutPayment.cshtml" />
+    <Content Include="Views\EventViewCustom\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

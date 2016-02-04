@@ -150,11 +150,11 @@ namespace EventCombo.Controllers
             var urldb= GetEventURL(Eventid);
             if(urldb.Contains("/"))
             {
-                Mevent.url = baseurl + GetEventURL(Eventid);
+                Mevent.url = baseurl + urldb;
             }
             else
             {
-                Mevent.url = baseurl +"/"+ GetEventURL(Eventid);
+                Mevent.url = baseurl + "/ev/" + urldb;
             }
           
             Mevent.Descritption = Edetails.EventDescription;

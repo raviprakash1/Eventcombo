@@ -388,6 +388,9 @@ namespace EventCombo.Controllers
             return View(viewEvent);
         }
 
+     
+
+     
         public void EventHit(long EventId)
         {
             try

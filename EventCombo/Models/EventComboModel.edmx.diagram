@@ -29,7 +29,6 @@
         <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="15.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Message" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.MultipleEvent" Width="1.5" PointX="5.25" PointY="19.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Order_Detail_T" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Permission_Detail" Width="1.5" PointX="11.75" PointY="17.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Profile" Width="1.5" PointX="12.25" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Publish_Event_Detail" Width="1.5" PointX="17.75" PointY="13.75" IsExpanded="true" />
@@ -64,6 +63,7 @@
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="EventComboModel.Email_Tag" Width="1.5" PointX="7.375" PointY="10.75" />
         <EntityTypeShape EntityType="EventComboModel.Events_Hit" Width="1.5" PointX="9.375" PointY="10.75" />
+        <EntityTypeShape EntityType="EventComboModel.Order_Detail_T" Width="1.5" PointX="10.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

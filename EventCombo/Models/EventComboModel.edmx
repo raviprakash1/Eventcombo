@@ -101,6 +101,11 @@
           <Property Name="State" Type="varchar" MaxLength="256" />
           <Property Name="Zip" Type="varchar" MaxLength="256" />
           <Property Name="Country" Type="varchar" MaxLength="26" />
+          <Property Name="PaymentType" Type="varchar" MaxLength="50" />
+          <Property Name="CardId" Type="varchar" MaxLength="50" />
+          <Property Name="card_type" Type="varchar" MaxLength="150" />
+          <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
+          <Property Name="Cvv" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CardDetails">
           <Key>
@@ -339,7 +344,7 @@
           <Property Name="O_User_Id" Type="nvarchar" MaxLength="256" />
           <Property Name="O_TotalAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="O_OrderAmount" Type="numeric" Precision="18" Scale="2" />
-          <Property Name="O_VariableId" Type="bigint" />
+          <Property Name="O_VariableId" Type="varchar" MaxLength="500" />
           <Property Name="O_VariableAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="O_PromoCodeId" Type="bigint" />
           <Property Name="O_OrderDateTime" Type="datetime" />
@@ -1003,6 +1008,11 @@
           <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CardDetail">
           <Key>
@@ -1234,20 +1244,6 @@
           <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
-        </EntityType>
-        <EntityType Name="Order_Detail_T">
-          <Key>
-            <PropertyRef Name="O_Id" />
-          </Key>
-          <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_VariableId" Type="Int64" />
-          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_PromoCodeId" Type="Int64" />
-          <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -1642,7 +1638,6 @@
           <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="MultipleEvents" EntityType="Self.MultipleEvent" />
-          <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" />
@@ -1766,6 +1761,7 @@
           </FunctionImport>
           <EntitySet Name="Email_Tag" EntityType="EventComboModel.Email_Tag" />
           <EntitySet Name="Events_Hit" EntityType="EventComboModel.Events_Hit" />
+          <EntitySet Name="Order_Detail_T" EntityType="EventComboModel.Order_Detail_T" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1884,6 +1880,20 @@
           <Property Name="EventHit_Hits" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="EventHitDateTime" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Order_Detail_T">
+          <Key>
+            <PropertyRef Name="O_Id" />
+          </Key>
+          <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="Int64" />
+          <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1948,6 +1958,11 @@
           <EntitySetMapping Name="BillingAddresses">
             <EntityTypeMapping TypeName="EventComboModel.BillingAddress">
               <MappingFragment StoreEntitySet="BillingAddress">
+                <ScalarProperty Name="Cvv" ColumnName="Cvv" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="card_type" ColumnName="card_type" />
+                <ScalarProperty Name="CardId" ColumnName="CardId" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="BillingId" ColumnName="BillingId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
@@ -2191,21 +2206,6 @@
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="MonthlyWeek" ColumnName="MonthlyWeek" />
                 <ScalarProperty Name="MonthlyWeekDays" ColumnName="MonthlyWeekDays" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Order_Detail_T">
-            <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
-              <MappingFragment StoreEntitySet="Order_Detail_T">
-                <ScalarProperty Name="O_OrderDateTime" ColumnName="O_OrderDateTime" />
-                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
-                <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
-                <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
-                <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
-                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
-                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
-                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
-                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2544,6 +2544,21 @@
                 <ScalarProperty Name="EventHit_Hits" ColumnName="EventHit_Hits" />
                 <ScalarProperty Name="EventHit_EventId" ColumnName="EventHit_EventId" />
                 <ScalarProperty Name="EventHit_Id" ColumnName="EventHit_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Detail_T">
+            <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
+              <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_OrderDateTime" ColumnName="O_OrderDateTime" />
+                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
+                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
+                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
+                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
+                <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
+                <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
+                <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
+                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

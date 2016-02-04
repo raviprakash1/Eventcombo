@@ -51,7 +51,6 @@ namespace EventCombo.Models
         public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
-        public virtual DbSet<Order_Detail_T> Order_Detail_T { get; set; }
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Publish_Event_Detail> Publish_Event_Detail { get; set; }
@@ -70,6 +69,7 @@ namespace EventCombo.Models
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Email_Tag> Email_Tag { get; set; }
         public virtual DbSet<Events_Hit> Events_Hit { get; set; }
+        public virtual DbSet<Order_Detail_T> Order_Detail_T { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

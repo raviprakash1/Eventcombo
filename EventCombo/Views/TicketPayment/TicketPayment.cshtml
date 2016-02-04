@@ -431,6 +431,7 @@
                         </button>
                         <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
                         </a>
+                        <input id="hdVChg" value="" type="hidden" />
                         @*@Ajax.ActionLink("Open popup", "Pay", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "PaypalCart", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })<br />*@
                     </div>
                     <div id="dvAjxSave" style="display:none">
@@ -444,7 +445,6 @@
     <div class="clearfix"></div>
     <div class="strat_timer_cont">
         <div class="col-sm-12 no_pad text-center">
-
             <p class="bg-green mb0 strt_tim_desc">
                 Please complete this purchase within 10:00 minutes.<br>
                 After 10:00 minutes, the reservation we're holding will be released to others.
@@ -507,10 +507,8 @@
     <div class="modal fade" id="SessionExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
             <div class="modal-content">
-
                 <form id="contactForm" class="fullw1 add">
                     <div class="modal-body text-center pv50 txt-msg">
-
                         <h4 class="msg" id="hId">Sorry, you took too long and we have to release your order. Please try again.</h4>
                     </div>
                     <div class="modal-footer msg-action-btn ok">
@@ -757,7 +755,11 @@
 
 
 <script>
-    function calculateTickTotal(vAmount) {
+    function calculateTickTotal(vAmount, vvarId) {
+
+        $("#hdVChg").val(vvarId);
+
+        alert($("#hdVarChanges").val());
 
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
         var vQty = parseInt($("#hidQty").val());
@@ -790,14 +792,32 @@
     }
     function calculateTickTotalOptional(vCount) {
        
+        var vVarValue = $("#hdVarId").val().split(',');
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
+        var vSel = '';
         if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
-        for (i = 1; i <= vCount; i++) {
-            if ($("#chk_" + i.toString()).is(":checked") == true) {
-                vAmt = parseFloat($("#sp_" + i.toString()).text());
+        for (i = 0; i <= vVarValue.length; i++) {
+            if ($("#chk_" + vVarValue[i]).is(":checked") == true) {
+                if (vSel == '')
+                    vSel = vVarValue[i];
+                else
+                    vSel = vSel + ',' + vVarValue[i];
+
+                vAmt = parseFloat($("#sp_" + vVarValue[i]).text());
                 if (isNaN(vAmt) == true) vAmt = 0; vOrderTotal = vOrderTotal + vAmt;
             }
         }
+
+        $("#hdVChg").val(vSel);
+
+        //for (i = 1; i <= vCount; i++) {
+        //    if ($("#chk_" + i.toString()).is(":checked") == true) {
+        //        vAmt = parseFloat($("#sp_" + i.toString()).text());
+        //        if (isNaN(vAmt) == true) vAmt = 0; vOrderTotal = vOrderTotal + vAmt;
+        //    }
+        //}
+
+
         $("#spGrdTotal").text(vOrderTotal.toFixed(2));
         $("#hdGrandTotal").val(vOrderTotal.toFixed(2));
         $("#spSubTotal").text(vOrderTotal.toFixed(2));
@@ -1343,8 +1363,7 @@
             var vGrandTotal = $("#hdGrandTotal").val();
             var vPromoId = $("#hdPromoId").val();
             var vVarChanges = $("#hdVarChanges").val();
-            var vVarId = $("#hdVarId").val();
-            debugger;
+            var vVarId = $("#hdVChg").val();
             var model = {
 
                 'AccFname': $('#accfname').val(),
