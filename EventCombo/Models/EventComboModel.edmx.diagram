@@ -64,6 +64,7 @@
         <EntityTypeShape EntityType="EventComboModel.Email_Tag" Width="1.5" PointX="7.375" PointY="10.75" />
         <EntityTypeShape EntityType="EventComboModel.Events_Hit" Width="1.5" PointX="9.375" PointY="10.75" />
         <EntityTypeShape EntityType="EventComboModel.Order_Detail_T" Width="1.5" PointX="10.375" PointY="20.75" />
+        <EntityTypeShape EntityType="EventComboModel.Payment_Info" Width="1.5" PointX="20.375" PointY="16.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

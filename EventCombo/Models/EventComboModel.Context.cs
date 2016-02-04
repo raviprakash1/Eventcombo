@@ -70,6 +70,7 @@ namespace EventCombo.Models
         public virtual DbSet<Email_Tag> Email_Tag { get; set; }
         public virtual DbSet<Events_Hit> Events_Hit { get; set; }
         public virtual DbSet<Order_Detail_T> Order_Detail_T { get; set; }
+        public virtual DbSet<Payment_Info> Payment_Info { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

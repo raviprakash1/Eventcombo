@@ -237,6 +237,7 @@
     <Compile Include="Controllers\InbetweenController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
+    <Compile Include="Controllers\PaymentInfoController.cs" />
     <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Controllers\PayPalReturnController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
@@ -372,6 +373,9 @@
     <Compile Include="Models\OrganizerMessages.cs" />
     <Compile Include="Models\PaymentConfirmation.cs" />
     <Compile Include="Models\PaymentProcess.cs" />
+    <Compile Include="Models\Payment_Info.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PayPal.cs" />
     <Compile Include="Models\PayPalSettings.cs" />
     <Compile Include="Models\Permission_Detail.cs">
@@ -1115,6 +1119,7 @@
     <Content Include="Views\Cart\CheckoutReview.cshtml" />
     <Content Include="Views\Cart\DoCheckoutPayment.cshtml" />
     <Content Include="Views\EventViewCustom\Index.cshtml" />
+    <Content Include="Views\PaymentInfo\PaymentInfo.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -349,6 +349,26 @@
           <Property Name="O_PromoCodeId" Type="bigint" />
           <Property Name="O_OrderDateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="Payment_Info">
+          <Key>
+            <PropertyRef Name="PaymentInfo_Id" />
+          </Key>
+          <Property Name="PaymentInfo_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PI_PaymentMethod" Type="varchar" MaxLength="1" />
+          <Property Name="PI_AccountHolderType" Type="varchar" MaxLength="1" />
+          <Property Name="PI_AccCompName" Type="varchar" MaxLength="1000" />
+          <Property Name="PI_Address" Type="nvarchar(max)" />
+          <Property Name="PI_City" Type="varchar" MaxLength="500" />
+          <Property Name="PI_State" Type="varchar" MaxLength="500" />
+          <Property Name="PI_Country" Type="int" />
+          <Property Name="PI_PostalCode" Type="varchar" MaxLength="10" />
+          <Property Name="PI_BankAccInfo" Type="varchar" MaxLength="1" />
+          <Property Name="PI_BankName" Type="varchar" MaxLength="500" />
+          <Property Name="PI_RoutingNumber" Type="varchar" MaxLength="100" />
+          <Property Name="PI_AccountNumber" Type="varchar" MaxLength="100" />
+          <Property Name="PI_ReAccountNumber" Type="varchar" MaxLength="100" />
+          <Property Name="PI_PayTo" Type="varchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
             <PropertyRef Name="Permission_Id" />
@@ -846,6 +866,7 @@
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment_Info" EntityType="Self.Payment_Info" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" Schema="dbo" store:Type="Tables" />
@@ -1762,6 +1783,7 @@
           <EntitySet Name="Email_Tag" EntityType="EventComboModel.Email_Tag" />
           <EntitySet Name="Events_Hit" EntityType="EventComboModel.Events_Hit" />
           <EntitySet Name="Order_Detail_T" EntityType="EventComboModel.Order_Detail_T" />
+          <EntitySet Name="Payment_Info" EntityType="EventComboModel.Payment_Info" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1893,6 +1915,26 @@
           <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="O_PromoCodeId" Type="Int64" />
           <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Payment_Info">
+          <Key>
+            <PropertyRef Name="PaymentInfo_Id" />
+          </Key>
+          <Property Name="PaymentInfo_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PI_PaymentMethod" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PI_AccountHolderType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PI_AccCompName" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PI_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PI_City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PI_State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PI_Country" Type="Int32" />
+          <Property Name="PI_PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PI_BankAccInfo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PI_BankName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PI_RoutingNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PI_AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PI_ReAccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PI_PayTo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2559,6 +2601,27 @@
                 <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
                 <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
                 <ScalarProperty Name="O_Id" ColumnName="O_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment_Info">
+            <EntityTypeMapping TypeName="EventComboModel.Payment_Info">
+              <MappingFragment StoreEntitySet="Payment_Info">
+                <ScalarProperty Name="PI_PayTo" ColumnName="PI_PayTo" />
+                <ScalarProperty Name="PI_ReAccountNumber" ColumnName="PI_ReAccountNumber" />
+                <ScalarProperty Name="PI_AccountNumber" ColumnName="PI_AccountNumber" />
+                <ScalarProperty Name="PI_RoutingNumber" ColumnName="PI_RoutingNumber" />
+                <ScalarProperty Name="PI_BankName" ColumnName="PI_BankName" />
+                <ScalarProperty Name="PI_BankAccInfo" ColumnName="PI_BankAccInfo" />
+                <ScalarProperty Name="PI_PostalCode" ColumnName="PI_PostalCode" />
+                <ScalarProperty Name="PI_Country" ColumnName="PI_Country" />
+                <ScalarProperty Name="PI_State" ColumnName="PI_State" />
+                <ScalarProperty Name="PI_City" ColumnName="PI_City" />
+                <ScalarProperty Name="PI_Address" ColumnName="PI_Address" />
+                <ScalarProperty Name="PI_AccCompName" ColumnName="PI_AccCompName" />
+                <ScalarProperty Name="PI_AccountHolderType" ColumnName="PI_AccountHolderType" />
+                <ScalarProperty Name="PI_PaymentMethod" ColumnName="PI_PaymentMethod" />
+                <ScalarProperty Name="PaymentInfo_Id" ColumnName="PaymentInfo_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
