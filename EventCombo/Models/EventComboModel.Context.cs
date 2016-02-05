@@ -55,6 +55,7 @@ namespace EventCombo.Models
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
         public virtual DbSet<Order_Detail_T> Order_Detail_T { get; set; }
+        public virtual DbSet<Payment_Info> Payment_Info { get; set; }
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Publish_Event_Detail> Publish_Event_Detail { get; set; }

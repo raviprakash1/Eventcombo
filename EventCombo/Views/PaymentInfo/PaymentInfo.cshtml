@@ -1,0 +1,276 @@
+﻿
+@{
+    ViewBag.Title = "PaymentInfo";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="container-fluid cont_margin">
+    <div class="row">
+        <div class="col-sm-10 ">
+            <div class="midd_cont">
+                <div class="col-sm-12">
+                    <h3 class="acnt_title">ACCOUNT</h3>
+                    <p class="p_info">Payment Information</p>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-8">
+                    <p>
+                        To collect payments online, Eventbrite offers you a choice of payment processors.
+                        You will be able to modify your choice of processor for each event, until you have made your first ticket sale.
+                    </p>
+                    <p><b>Collect payments from attendees</b></p>
+
+                    <div class="form-group">
+                        <div class="col-sm-3 no_pad mb10"> <p>Select payment processor :</p></div>
+                        <div class="col-sm-4 no_pad mb10 dropheight">
+                            <select class="form-control selectpicker">
+                                <option>Credit Card Processing</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-5 mb10 pay-card-icon">
+                            <img src="images/visa.png">
+                            <img src="images/mastercard.png">
+                            <img src="images/discover.png">
+                            <img src="images/amr-exp.png">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <p>We will collect payments on your behalf and begin issuing payment 5 days after your event ends. </p>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 no_pad">
+                        <label class="control-label   ">
+                            <input id="" type="checkbox">
+                            Enable Advance Payouts for my account.
+
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <p>By signing up for this program, I agree to the DesiClub  <a href="#">terms of service.</a></p>
+                    <div class="col-sm-12 no_pad">
+                        <p class="p_info">Receive payments</p>
+                    </div>
+                    <div class="col-sm-12 no_pad">
+                        <div class="form-group">
+                            <div class="col-sm-2 col-xs-12 no_pad mb10"> <p>Payout method:</p></div>
+                            <div class="col-sm-4 no_pad mb10 dropheight">
+                     
+                                    <select class="form-control selectpicker">
+                                        <option selected="selected">Direct Deposit</option>
+                                        <option>cheque</option>
+                                    </select>
+                             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 no_pad acnt_hold_text">
+                        Account holder information
+                    </div>
+                    <div class="col-sm-12 no_pad">
+                        <div class="form-group">
+                            <div class="col-sm-4 col-xs-12 no_pad">
+                                <label class="Indiv_cont label-control ev_tickt_lebel pl0 ">
+                                    <input type="radio" name="AccHoldInfo" />
+                                    Individual
+                                </label>
+                            </div>
+                            <div class="col-sm-4 col-xs-12 no_pad">
+                                <label class="Comp_chek label-control ev_tickt_lebel pl0">
+                                    <input type="radio" name="AccHoldInfo" />
+                                    Company
+                                </label>
+                            </div>
+                            <div class="clearfix"></div>
+
+
+                            <div class="comp_cont col-sm-6 col-xs-12 no_pad">
+                                <label class="col-sm-8 label-control comp_name no_pad">
+                                    Company Name*
+                                </label>
+                                <div class="col-sm-8 col-xs-12 no_pad">
+                                    <input type="text" class="form-control " placeholder="Company Name">
+                                    <p>Company name, as appears on bank statements</p>
+                                </div>
+                            </div>
+
+                            <div class="NameAcnt col-sm-8 col-xs-12 no_pad">
+                                <label class="col-sm-12 control-label comp_name no_pad ">Name on account*</label>
+                                <div class="col-sm-12 col-xs-12 no_pad">
+                                    <div class="row">
+                                        <div class="col-xs-12 ">
+                                            <input class="form-control"  placeholder="Name" type="text">
+                                        </div>
+                                    </div>
+                                    <p>Your full name, as appears on bank statements</p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-sm-8 col-xs-12 no_pad mt10">
+                                <label class="col-md-12 control-label comp_name no_pad ">Address*</label>
+                                <div class="col-md-12 col-xs-12 no_pad">
+                                    <input class="form-control" placeholder="Address 1" type="text">
+                                </div>
+                                <div class="col-md-12 col-xs-12 no_pad mt10">
+                                    <input class="form-control" placeholder="Address 2" type="text">
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-8 col-xs-12 no_pad mt10">
+                                <div class="col-xs-6 dropheight">
+                                    <input class="form-control" id="txtCity1" placeholder="City" type="text" />
+                                </div>
+                                <div class="col-xs-6 dropheight">
+                                    <input class="form-control" id="txtState1" placeholder="State" type="text" />
+                                </div>
+                            </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-8 col-xs-12 no_pad mt10">
+                                <div class="row">
+                                    <div class="col-xs-6 dropheight">
+                                        <select id="ddlCountry1" class="form-control selectpicker">
+                                            <option>Country</option>
+                                            <option>Country</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-6 ">
+                                        <input class="form-control" placeholder="Postal Code" type="text">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="col-md-8 col-xs-12 no_pad mt20">
+                                <div class="col-sm-12 no_pad acnt_hold_text">Bank account information</div>
+                                <div class="col-sm-4 col-xs-12 no_pad">
+                                    <label class="label-control ev_tickt_lebel pl0 ">
+                                        <input type="radio" />
+                                        Checking
+                                    </label>
+                                </div>
+                                <div class="col-sm-4 col-xs-12 no_pad">
+                                    <label class="label-control ev_tickt_lebel pl0">
+                                        <input type="radio" />
+                                        Savings
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="col-sm-8 col-xs-12 no_pad mt10">
+                                <label class="col-sm-12 label-control comp_name no_pad">
+                                    Bank Name*
+                                </label>
+                                <div class="col-sm-12 col-xs-12 no_pad">
+                                    <input type="text" class="form-control " placeholder="eg. Wells Fargo, Chase, Bank of America">
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-xs-12 no_pad mt10">
+                                <label class="col-sm-12 label-control comp_name no_pad">
+                                    Routing Number*
+                                </label>
+                                <div class="col-sm-12 col-xs-12 no_pad">
+                                    <input type="text" class="form-control " placeholder="Routing Number">
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-xs-12 no_pad mt10">
+                                <label class="col-sm-12 label-control comp_name no_pad">
+                                    Account Number*
+                                </label>
+                                <div class="col-sm-12 col-xs-12 no_pad">
+                                    <input type="text" class="form-control " placeholder="Account Number">
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-xs-12 no_pad mt10">
+                                <label class="col-sm-12 label-control comp_name no_pad">
+                                    Re-enter Account Number*
+                                </label>
+                                <div class="col-sm-12 col-xs-12 no_pad">
+                                    <input type="text" class="form-control " placeholder="Re-enter Account Number">
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-sm-8 mt10 no_pad ">
+                                <button type="button" class="btn btn-info acnt_btn">SAVE</button>
+                            </div>
+                            <div class="clearfix"></div>
+                            --------------------------
+                            <!-- Cheque Dropdown Div -->
+                            <div id="dvDirectDeposit" class="col-sm-12 no_pad">
+                                <div class="col-sm-8 col-xs-12 no_pad mt10">
+                                    <label class="col-md-12 control-label comp_name no_pad ">Name / Pay To*</label>
+                                    <div class="col-md-12 col-xs-12 no_pad">
+                                        <input class="form-control" placeholder="Payee Name" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 col-xs-12 no_pad mt10">
+                                    <label class="col-md-12 control-label comp_name no_pad ">Mailing Address*</label>
+                                    <div class="col-md-12 col-xs-12 no_pad">
+                                        <input class="form-control" placeholder="Address 1" type="text">
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 no_pad mt10">
+                                        <input class="form-control" placeholder="Address 2" type="text">
+
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-8 col-xs-12 no_pad mt10">
+                                    <div class="row">
+                                        <div class="col-xs-6 dropheight">
+                                            <input class="form-control" id="txtCity2" placeholder="City" type="text" />
+                                        </div>
+                                        <div class="col-xs-6 dropheight">
+                                            <input class="form-control" id="txtState2" placeholder="State" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-8 col-xs-12 no_pad mt10">
+                                    <div class="row">
+                                        <div class="col-xs-6 dropheight">
+                                            <select id="ddlCountry2" class="form-control selectpicker">
+                                                <option>Country</option>
+                                                <option>Country</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-6 ">
+                                            <input class="form-control" placeholder="Postal Code" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<script type="text/javascript" src="js/ec-select.js"></script>
+<script type="text/javascript">
+      $(".comp_cont").css("display", "none");
+      $(".Comp_chek").click(function(){
+        $(".comp_cont").css("display", "block");
+        $(".NameAcnt").css("display", "none");
+      });
+      $(".Indiv_cont").click(function(){
+        $(".comp_cont").css("display", "none");
+        $(".NameAcnt").css("display", "block");
+      });
+
+
+      $(document).ready(function () {
+            
+
+      });
+</script>
+
+
+
