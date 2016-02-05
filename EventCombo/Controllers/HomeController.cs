@@ -1336,6 +1336,8 @@ namespace EventCombo.Controllers
                 {
                     mailMessage.Bcc.Add(bcc);
                 }
+            if (attachment != null)
+            {
                 if (attachment.Length != 0)
                 {
                     System.Net.Mime.ContentType ct = new System.Net.Mime.ContentType(System.Net.Mime.MediaTypeNames.Application.Pdf);
@@ -1343,31 +1345,32 @@ namespace EventCombo.Controllers
                     attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
                     mailMessage.Attachments.Add(attach);
                 }
+            }
                 mailMessage.IsBodyHtml = true;
             AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
             mailMessage.AlternateViews.Add(htmlView);
-
+           
             //Add Image
-            LinkedResource theEmailImage = new LinkedResource(Server.MapPath("..") + "/Images/logo_vertical.png");
-            theEmailImage.ContentId = "myImageID";
+            LinkedResource theEmailImage = new LinkedResource(Server.MapPath("..") + "/Images/Imagemap.Png");
+            theEmailImage.ContentId = "myeventmapImageID";
             htmlView.LinkedResources.Add(theEmailImage);
 
 
-            //LinkedResource theQrImage = new LinkedResource(qrimage);
+            ////LinkedResource theQrImage = new LinkedResource(qrimage);
 
-            //theQrImage.ContentId = "myQrcodeImageID";
-            //htmlView.LinkedResources.Add(theQrImage);
+            ////theQrImage.ContentId = "myQrcodeImageID";
+            ////htmlView.LinkedResources.Add(theQrImage);
 
 
-            //LinkedResource thebarImage = new LinkedResource(brcode);
+            ////LinkedResource thebarImage = new LinkedResource(brcode);
 
-            //thebarImage.ContentId = "myBarcodeImageID";
-            //htmlView.LinkedResources.Add(thebarImage);
+            ////thebarImage.ContentId = "myBarcodeImageID";
+            ////htmlView.LinkedResources.Add(thebarImage);
 
-            LinkedResource theeventImage = new LinkedResource(Imageevent);
+            //LinkedResource theeventImage = new LinkedResource(Imageevent);
 
-            theeventImage.ContentId = "myeventImageID";
-            htmlView.LinkedResources.Add(theeventImage);
+            //theeventImage.ContentId = "myeventImageID";
+            //htmlView.LinkedResources.Add(theeventImage);
 
 
             mailMessage.To.Add(new MailAddress(To));

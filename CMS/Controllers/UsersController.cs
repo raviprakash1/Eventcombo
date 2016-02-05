@@ -7,6 +7,8 @@ using CMS.Models;
 using System.Data;
 using System.Text;
 using EventCombo;
+using System.Configuration;
+
 namespace CMS.Controllers
 {
     public class UsersController : Controller
@@ -50,10 +52,10 @@ namespace CMS.Controllers
             
             if ((Session["UserID"] != null))
             {
-               
-          
 
-            List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+                ViewData["EventComboClientDomain"] = ConfigurationManager.AppSettings["EventComboClientDomain"];
+
+                List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
                 if (objuser.Count == 0)
                     ViewData["SearchedUser"] = 0;
             foreach (var item in objuser)

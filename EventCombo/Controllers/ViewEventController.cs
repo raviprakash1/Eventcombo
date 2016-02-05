@@ -86,7 +86,9 @@ namespace EventCombo.Controllers
             string organizername = "", fblink = "", twitterlink = "", organizerid = "", tickettype = "", enablediscussion = "", linkedin = "";
             ViewEvent viewEvent = new ViewEvent();
             //EventDetails
-            TempData["EventType"] = EventDetail.EventType.EventType1;
+            var Evnttype = (from ev in db.EventTypes where ev.EventTypeID == EventDetail.EventTypeID select ev.EventType1).FirstOrDefault();
+
+            TempData["EventType"] = Evnttype;
 
             var EvntCtgry = (from ev in db.EventCategories where ev.EventCategoryID == EventDetail.EventCategoryID select ev.EventCategory1).FirstOrDefault();
             var EvntSubCtgry = (from ev in db.EventSubCategories where ev.EventCategoryID == EventDetail.EventCategoryID && ev.EventSubCategoryID == EventDetail.EventSubCategoryID select ev.EventSubCategory1).FirstOrDefault();
