@@ -275,7 +275,7 @@ namespace EventCombo.Controllers
             viewEvent.Title = EventDetail.EventTitle;
             viewEvent.eventId = EventDetail.EventID.ToString();
             viewEvent.TopVenue = Topvenue;
-            viewEvent.EventDescription = EventDescription;
+            viewEvent.EventDescription = HttpUtility.UrlDecode(EventDescription, System.Text.Encoding.Default); 
             viewEvent.organizername = organizername;
             viewEvent.organizerid = organizerid;
             viewEvent.fblink = fblink;

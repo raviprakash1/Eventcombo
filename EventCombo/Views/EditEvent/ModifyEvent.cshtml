@@ -2500,7 +2500,7 @@ else
                 varDescritpion = $('#id_vardesc').val();
                 optionalvariable = $('#variabletype').val();
             }
-
+            var evDec = escape($("#edEventDesc").code());
             var model = {
                 'EventID': $("#hdEventId").val(),
                 'EventTypeID': $("#EventType").val(),
@@ -2508,7 +2508,7 @@ else
                 'EventSubCategoryID': $("#ddlEventSubCategory").val(),
                 'UserID': '',
                 'EventTitle': $("#txtEventTitle").val(),
-                'EventDescription': $("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, ""),
+                'EventDescription': evDec,
                 'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
                 'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
                 'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),

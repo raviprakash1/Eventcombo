@@ -1440,7 +1440,7 @@ namespace EventCombo.Controllers
                             ObjEC.DisplayStartTime = model.DisplayStartTime;
                             ObjEC.DisplayEndTime = model.DisplayEndTime;
                             ObjEC.DisplayTimeZone = model.DisplayTimeZone;
-                            ObjEC.EventDescription = model.EventDescription;
+                            ObjEC.EventDescription = HttpUtility.UrlDecode(model.EventDescription, System.Text.Encoding.Default);
                             ObjEC.EventPrivacy = model.EventPrivacy;
                             ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
                             ObjEC.Private_GuestOnly = model.Private_GuestOnly;
