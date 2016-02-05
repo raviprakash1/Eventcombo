@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -926,7 +926,8 @@
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventComboModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -968,7 +969,7 @@
           </Key>
           <Property Name="Id" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="EventComboModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -978,7 +979,7 @@
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -989,7 +990,52 @@
           <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoginStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="BillingAddress">
+          <Key>
+            <PropertyRef Name="BillingId" />
+          </Key>
+          <Property Name="BillingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CardDetail">
           <Key>
@@ -1017,7 +1063,14 @@
           </Key>
           <Property Name="DeliveryMethodID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DeliveryMethod1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="TicketDeliveryMethods" Relationship="Self.FK__TicketDel__Deliv__1A69E950" FromRole="DeliveryMethod" ToRole="TicketDeliveryMethod" />
+          <NavigationProperty Name="TicketDeliveryMethods" Relationship="Self.FK__TicketDel__Deliv__08411774" FromRole="DeliveryMethod" ToRole="TicketDeliveryMethod" />
+        </EntityType>
+        <EntityType Name="Email_Tag">
+          <Key>
+            <PropertyRef Name="Tag_Id" />
+          </Key>
+          <Property Name="Tag_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tag_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Email_Template">
           <Key>
@@ -1070,19 +1123,18 @@
           <Property Name="Ticket_showvariable" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Ticket_variabledesc" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Ticket_variabletype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Parent_EventID" Type="Int64" />
+          <Property Name="EventCancel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_Event" FromRole="Event" ToRole="Address" />
-          <NavigationProperty Name="EventType" Relationship="Self.FK_Event_EventType" FromRole="Event" ToRole="EventType" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
           <NavigationProperty Name="Event_VariableDesc" Relationship="Self.FK_Event_VariableDesc_Event" FromRole="Event" ToRole="Event_VariableDesc" />
           <NavigationProperty Name="EventImages" Relationship="Self.FK_EventImage_Event" FromRole="Event" ToRole="EventImage" />
           <NavigationProperty Name="EventVenues" Relationship="Self.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
           <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
-          <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Parent_EventID" Type="Int64" />
-          <Property Name="EventCancel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1108,8 +1160,8 @@
           <Property Name="Twitter" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="DefaultOrg" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Event" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
           <Property Name="Linkedin" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -1127,7 +1179,7 @@
           </Key>
           <Property Name="EventCategoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventCategory1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="EventSubCategories" Relationship="Self.FK__EventSubC__Event__5F141958" FromRole="EventCategory" ToRole="EventSubCategory" />
+          <NavigationProperty Name="EventSubCategories" Relationship="Self.FK__EventSubC__Event__019419E5" FromRole="EventCategory" ToRole="EventSubCategory" />
         </EntityType>
         <EntityType Name="EventFavourite">
           <Key>
@@ -1147,6 +1199,15 @@
           <Property Name="ImageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_EventImage_Event" FromRole="EventImage" ToRole="Event" />
         </EntityType>
+        <EntityType Name="Events_Hit">
+          <Key>
+            <PropertyRef Name="EventHit_Id" />
+          </Key>
+          <Property Name="EventHit_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventHit_EventId" Type="Int64" />
+          <Property Name="EventHit_Hits" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EventHitDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="EventSubCategory">
           <Key>
             <PropertyRef Name="EventSubCategoryID" />
@@ -1154,7 +1215,7 @@
           <Property Name="EventSubCategoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventCategoryID" Type="Int64" Nullable="false" />
           <Property Name="EventSubCategory1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="EventCategory" Relationship="Self.FK__EventSubC__Event__5F141958" FromRole="EventSubCategory" ToRole="EventCategory" />
+          <NavigationProperty Name="EventCategory" Relationship="Self.FK__EventSubC__Event__019419E5" FromRole="EventSubCategory" ToRole="EventCategory" />
         </EntityType>
         <EntityType Name="EventType">
           <Key>
@@ -1162,7 +1223,6 @@
           </Key>
           <Property Name="EventTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventType1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Events" Relationship="Self.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
           <Property Name="EventHide" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="EventVenue">
@@ -1222,6 +1282,20 @@
           <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
         </EntityType>
+        <EntityType Name="Order_Detail_T">
+          <Key>
+            <PropertyRef Name="O_Id" />
+          </Key>
+          <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="Int64" />
+          <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
             <PropertyRef Name="Permission_Id" />
@@ -1266,10 +1340,10 @@
           <Property Name="Merchant" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="UserStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="SendCur_EventDetail" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUser" />
           <Property Name="Ipcountry" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IpState" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Ipcity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -1412,7 +1486,7 @@
           </Key>
           <Property Name="TicketDeliveryMethodID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DeliveryMethodID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="DeliveryMethod" Relationship="Self.FK__TicketDel__Deliv__1A69E950" FromRole="TicketDeliveryMethod" ToRole="DeliveryMethod" />
+          <NavigationProperty Name="DeliveryMethod" Relationship="Self.FK__TicketDel__Deliv__08411774" FromRole="TicketDeliveryMethod" ToRole="DeliveryMethod" />
         </EntityType>
         <EntityType Name="TicketType">
           <Key>
@@ -1425,9 +1499,9 @@
           <Key>
             <PropertyRef Name="TimeZone_Id" />
           </Key>
-          <Property Name="TimeZone_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TimeZone_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="TimeZone" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TimeZone_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="User_Permission_Detail">
           <Key>
@@ -1458,7 +1532,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__1A69E950">
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profile_Profile">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TicketDel__Deliv__08411774">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1467,18 +1581,6 @@
             </Principal>
             <Dependent Role="TicketDeliveryMethod">
               <PropertyRef Name="DeliveryMethodID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Event_EventType">
-          <End Role="EventType" Type="Self.EventType" Multiplicity="1" />
-          <End Role="Event" Type="Self.Event" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EventType">
-              <PropertyRef Name="EventTypeID" />
-            </Principal>
-            <Dependent Role="Event">
-              <PropertyRef Name="EventTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1554,7 +1656,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EventSubC__Event__5F141958">
+        <Association Name="FK__EventSubC__Event__019419E5">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1590,15 +1692,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="EventComboEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="BillingAddresses" EntityType="Self.BillingAddress" />
           <EntitySet Name="CardDetails" EntityType="Self.CardDetail" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
           <EntitySet Name="DeliveryMethods" EntityType="Self.DeliveryMethod" />
+          <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" />
@@ -1607,6 +1716,7 @@
           <EntitySet Name="EventCategories" EntityType="Self.EventCategory" />
           <EntitySet Name="EventFavourites" EntityType="Self.EventFavourite" />
           <EntitySet Name="EventImages" EntityType="Self.EventImage" />
+          <EntitySet Name="Events_Hit" EntityType="Self.Events_Hit" />
           <EntitySet Name="EventSubCategories" EntityType="Self.EventSubCategory" />
           <EntitySet Name="EventTypes" EntityType="Self.EventType" />
           <EntitySet Name="EventVenues" EntityType="Self.EventVenue" />
@@ -1614,6 +1724,7 @@
           <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="MultipleEvents" EntityType="Self.MultipleEvent" />
+          <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" />
@@ -1633,13 +1744,21 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="Address" EntitySet="Addresses" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__1A69E950" Association="Self.FK__TicketDel__Deliv__1A69E950">
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profile_Profile" Association="Self.FK_Profile_Profile">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TicketDel__Deliv__08411774" Association="Self.FK__TicketDel__Deliv__08411774">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethods" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethods" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Event_EventType" Association="Self.FK_Event_EventType">
-            <End Role="EventType" EntitySet="EventTypes" />
-            <End Role="Event" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Self.FK_Event_Orgnizer_Detail_Event">
             <End Role="Event" EntitySet="Events" />
@@ -1665,7 +1784,7 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="Ticket" EntitySet="Tickets" />
           </AssociationSet>
-          <AssociationSet Name="FK__EventSubC__Event__5F141958" Association="Self.FK__EventSubC__Event__5F141958">
+          <AssociationSet Name="FK__EventSubC__Event__019419E5" Association="Self.FK__EventSubC__Event__019419E5">
             <End Role="EventCategory" EntitySet="EventCategories" />
             <End Role="EventSubCategory" EntitySet="EventSubCategories" />
           </AssociationSet>
@@ -1677,12 +1796,30 @@
             <End Role="Ticket" EntitySet="Tickets" />
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
           <FunctionImport Name="func_Split" IsComposable="true" ReturnType="Collection(EventComboModel.func_Split_Result)">
             <Parameter Name="DelimitedString" Mode="In" Type="String" />
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEventDateList" ReturnType="Collection(EventComboModel.GetEventDateList_Result)">
-          <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
+            <Parameter Name="EventTitle" Mode="In" Type="String" />
+            <Parameter Name="EventType" Mode="In" Type="String" />
+            <Parameter Name="EventCat" Mode="In" Type="String" />
+            <Parameter Name="EventSubCat" Mode="In" Type="String" />
+            <Parameter Name="EventFeature" Mode="In" Type="String" />
+            <Parameter Name="EventStartdate" Mode="In" Type="String" />
+            <Parameter Name="EventTicket" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetEventsListByStatus1" ReturnType="Collection(EventComboModel.GetEventsListByStatus1_Result)">
+            <Parameter Name="EventTitle" Mode="In" Type="String" />
+            <Parameter Name="EventStatus" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetSelectedTicketListing" ReturnType="Collection(String)">
             <Parameter Name="GUID" Mode="In" Type="String" />
@@ -1694,51 +1831,12 @@
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
-          <Parameter Name="EventId" Mode="In" Type="Int64" />
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="PublishEvent">
             <Parameter Name="EventId" Mode="In" Type="Int64" />
             <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="AspNetUsers" EntityType="EventComboModel.AspNetUser" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="EventComboModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Profile_Profile" Association="EventComboModel.FK_Profile_Profile">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Profile" EntitySet="Profiles" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="EventComboModel.AspNetUserRoles">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
-            <Parameter Name="EventTitle" Mode="In" Type="String" />
-            <Parameter Name="EventType" Mode="In" Type="String" />
-            <Parameter Name="EventCat" Mode="In" Type="String" />
-            <Parameter Name="EventSubCat" Mode="In" Type="String" />
-            <Parameter Name="EventFeature" Mode="In" Type="String" />
-            <Parameter Name="EventStartdate" Mode="In" Type="String" />
-            <Parameter Name="EventTicket" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetEventsListByStatus">
-            <Parameter Name="EventTitle" Mode="In" Type="String" />
-            <Parameter Name="EventStatus" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetEventsListByStatus1" ReturnType="Collection(EventComboModel.GetEventsListByStatus1_Result)">
-            <Parameter Name="EventTitle" Mode="In" Type="String" />
-            <Parameter Name="EventStatus" Mode="In" Type="String" />
-            <Parameter Name="UserID" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="Email_Tag" EntityType="EventComboModel.Email_Tag" />
-          <EntitySet Name="Events_Hit" EntityType="EventComboModel.Events_Hit" />
-          <EntitySet Name="BillingAddresses" EntityType="EventComboModel.BillingAddress" />
-          <EntitySet Name="Order_Detail_T" EntityType="EventComboModel.Order_Detail_T" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1746,154 +1844,37 @@
           <Property Type="String" Name="Time" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="type" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="AspNetUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="LoginStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="EventComboModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
-          <NavigationProperty Name="Profiles" Relationship="EventComboModel.FK_Profile_Profile" FromRole="AspNetUser" ToRole="Profile" />
-          <NavigationProperty Name="AspNetRoles" Relationship="EventComboModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
-        </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="EventComboModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaim">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="EventComboModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogin">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Profile_Profile">
-          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="EventComboModel.Profile" Role="Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="EventComboModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-        </Association>
         <ComplexType Name="GetEventListing_Result">
           <Property Type="Int64" Name="EventID" Nullable="false" />
           <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="600" />
           <Property Type="String" Name="EventType" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventCategory" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="127" />
+          <Property Type="String" Name="EventTiming" Nullable="true" MaxLength="123" />
+          <Property Type="String" Name="StartingFrom" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="Feature" Nullable="false" />
           <Property Type="String" Name="Orgnizer_Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventAddress" Nullable="true" />
           <Property Type="String" Name="Venuename" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
-          <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="30" />
+          <Property Type="Int64" Name="Purchasedqty" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetEventsListByStatus1_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="102" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="Date_Time" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="TicketType" Nullable="false" MaxLength="1" />
-          <Property Type="Int64" Name="TicketPurchased" Nullable="true"/>
+          <Property Type="Int64" Name="TicketPurchased" Nullable="true" />
           <Property Type="String" Name="OrderId" Nullable="false" MaxLength="1" />
           <Property Type="Int64" Name="EventID" Nullable="false" />
           <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="EventDate" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="EventTime" Nullable="false" MaxLength="50" />
           <Property Type="Int64" Name="TotalTicket" Nullable="true" />
           <Property Type="Int64" Name="TicketSold" Nullable="true" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="EventTime" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="EventCancel" Nullable="true" MaxLength="2" />
         </ComplexType>
-        <EntityType Name="Email_Tag">
-          <Key>
-            <PropertyRef Name="Tag_Id" />
-          </Key>
-          <Property Name="Tag_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Tag_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Events_Hit">
-          <Key>
-            <PropertyRef Name="EventHit_Id" />
-          </Key>
-          <Property Name="EventHit_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventHit_EventId" Type="Int64" />
-          <Property Name="EventHit_Hits" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="EventHitDateTime" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="BillingAddress">
-          <Key>
-            <PropertyRef Name="BillingId" />
-          </Key>
-          <Property Name="BillingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Phone_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Address2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
-          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Order_Detail_T">
-          <Key>
-            <PropertyRef Name="O_Id" />
-          </Key>
-          <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_VariableId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_PromoCodeId" Type="Int64" />
-          <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1955,10 +1936,52 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="EventComboModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoginStatus" ColumnName="LoginStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BillingAddresses">
+            <EntityTypeMapping TypeName="EventComboModel.BillingAddress">
+              <MappingFragment StoreEntitySet="BillingAddress">
+                <ScalarProperty Name="BillingId" ColumnName="BillingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="CardId" ColumnName="CardId" />
+                <ScalarProperty Name="card_type" ColumnName="card_type" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="Cvv" ColumnName="Cvv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CardDetails">
             <EntityTypeMapping TypeName="EventComboModel.CardDetail">
               <MappingFragment StoreEntitySet="CardDetails">
-                <ScalarProperty Name="card_type" ColumnName="card_type" />
                 <ScalarProperty Name="CardId" ColumnName="CardId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
@@ -1966,6 +1989,7 @@
                 <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="Cvv" ColumnName="Cvv" />
+                <ScalarProperty Name="card_type" ColumnName="card_type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1985,11 +2009,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Email_Tag">
+            <EntityTypeMapping TypeName="EventComboModel.Email_Tag">
+              <MappingFragment StoreEntitySet="Email_Tag">
+                <ScalarProperty Name="Tag_Id" ColumnName="Tag_Id" />
+                <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Email_Template">
             <EntityTypeMapping TypeName="EventComboModel.Email_Template">
               <MappingFragment StoreEntitySet="Email_Template">
-                <ScalarProperty Name="From_Name" ColumnName="From_Name" />
-                <ScalarProperty Name="Template_Tag" ColumnName="Template_Tag" />
                 <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
                 <ScalarProperty Name="Template_Name" ColumnName="Template_Name" />
                 <ScalarProperty Name="To" ColumnName="To" />
@@ -1998,17 +2028,14 @@
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="TemplateHtml" ColumnName="TemplateHtml" />
                 <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="Template_Tag" ColumnName="Template_Tag" />
+                <ScalarProperty Name="From_Name" ColumnName="From_Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
-                <ScalarProperty Name="EventCancel" ColumnName="EventCancel" />
-                <ScalarProperty Name="Parent_EventID" ColumnName="Parent_EventID" />
-                <ScalarProperty Name="ShowMap" ColumnName="ShowMap" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
@@ -2041,6 +2068,11 @@
                 <ScalarProperty Name="Ticket_showvariable" ColumnName="Ticket_showvariable" />
                 <ScalarProperty Name="Ticket_variabledesc" ColumnName="Ticket_variabledesc" />
                 <ScalarProperty Name="Ticket_variabletype" ColumnName="Ticket_variabletype" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ShowMap" ColumnName="ShowMap" />
+                <ScalarProperty Name="Parent_EventID" ColumnName="Parent_EventID" />
+                <ScalarProperty Name="EventCancel" ColumnName="EventCancel" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2060,7 +2092,6 @@
           <EntitySetMapping Name="Event_Orgnizer_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Event_Orgnizer_Detail">
               <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
-                <ScalarProperty Name="Linkedin" ColumnName="Linkedin" />
                 <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
                 <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
@@ -2069,6 +2100,7 @@
                 <ScalarProperty Name="Twitter" ColumnName="Twitter" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="DefaultOrg" ColumnName="DefaultOrg" />
+                <ScalarProperty Name="Linkedin" ColumnName="Linkedin" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2109,6 +2141,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Events_Hit">
+            <EntityTypeMapping TypeName="EventComboModel.Events_Hit">
+              <MappingFragment StoreEntitySet="Events_Hit">
+                <ScalarProperty Name="EventHit_Id" ColumnName="EventHit_Id" />
+                <ScalarProperty Name="EventHit_EventId" ColumnName="EventHit_EventId" />
+                <ScalarProperty Name="EventHit_Hits" ColumnName="EventHit_Hits" />
+                <ScalarProperty Name="EventHitDateTime" ColumnName="EventHitDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="EventSubCategories">
             <EntityTypeMapping TypeName="EventComboModel.EventSubCategory">
               <MappingFragment StoreEntitySet="EventSubCategory">
@@ -2121,9 +2163,9 @@
           <EntitySetMapping Name="EventTypes">
             <EntityTypeMapping TypeName="EventComboModel.EventType">
               <MappingFragment StoreEntitySet="EventType">
-                <ScalarProperty Name="EventHide" ColumnName="EventHide" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventType1" ColumnName="EventType" />
+                <ScalarProperty Name="EventHide" ColumnName="EventHide" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2185,6 +2227,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Order_Detail_T">
+            <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
+              <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
+                <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
+                <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
+                <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
+                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
+                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
+                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
+                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
+                <ScalarProperty Name="O_OrderDateTime" ColumnName="O_OrderDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Permission_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Permission_Detail">
               <MappingFragment StoreEntitySet="Permission_Detail">
@@ -2197,10 +2254,6 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="EventComboModel.Profile">
               <MappingFragment StoreEntitySet="Profile">
-                <ScalarProperty Name="Ipcity" ColumnName="Ipcity" />
-                <ScalarProperty Name="IpState" ColumnName="IpState" />
-                <ScalarProperty Name="Ipcountry" ColumnName="Ipcountry" />
-                <ScalarProperty Name="SendCur_EventDetail" ColumnName="SendCur_EventDetail" />
                 <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -2232,6 +2285,10 @@
                 <ScalarProperty Name="Organiser" ColumnName="Organiser" />
                 <ScalarProperty Name="Merchant" ColumnName="Merchant" />
                 <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
+                <ScalarProperty Name="SendCur_EventDetail" ColumnName="SendCur_EventDetail" />
+                <ScalarProperty Name="Ipcountry" ColumnName="Ipcountry" />
+                <ScalarProperty Name="IpState" ColumnName="IpState" />
+                <ScalarProperty Name="Ipcity" ColumnName="Ipcity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2320,7 +2377,6 @@
           <EntitySetMapping Name="Ticket_Locked_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
               <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
-                <ScalarProperty Name="TicketAmount" ColumnName="TicketAmount" />
                 <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
                 <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />
                 <ScalarProperty Name="TLD_Locked_Qty" ColumnName="TLD_Locked_Qty" />
@@ -2329,13 +2385,13 @@
                 <ScalarProperty Name="Locktime" ColumnName="Locktime" />
                 <ScalarProperty Name="TLD_GUID" ColumnName="TLD_GUID" />
                 <ScalarProperty Name="TLD_Donate" ColumnName="TLD_Donate" />
+                <ScalarProperty Name="TicketAmount" ColumnName="TicketAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ticket_Purchased_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
               <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
-                <ScalarProperty Name="TPD_EC_Fee" ColumnName="TPD_EC_Fee" />
                 <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
                 <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
                 <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
@@ -2345,6 +2401,7 @@
                 <ScalarProperty Name="TPD_Amount" ColumnName="TPD_Amount" />
                 <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
                 <ScalarProperty Name="TPD_GUID" ColumnName="TPD_GUID" />
+                <ScalarProperty Name="TPD_EC_Fee" ColumnName="TPD_EC_Fee" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2394,9 +2451,9 @@
           <EntitySetMapping Name="TimeZoneDetails">
             <EntityTypeMapping TypeName="EventComboModel.TimeZoneDetail">
               <MappingFragment StoreEntitySet="TimeZoneDetail">
+                <ScalarProperty Name="TimeZone_Name" ColumnName="TimeZone_Name" />
                 <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
                 <ScalarProperty Name="TimeZone_Id" ColumnName="TimeZone_Id" />
-                <ScalarProperty Name="TimeZone_Name" ColumnName="TimeZone_Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2419,6 +2476,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EventComboModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
           <FunctionImportMapping FunctionName="EventComboModel.Store.func_Split" FunctionImportName="func_Split">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EventComboModel.func_Split_Result">
@@ -2437,37 +2502,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSelectedTicketListing" FunctionName="EventComboModel.Store.GetSelectedTicketListing" />
-          <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
-          <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
-          <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="EventComboModel.AspNetUser">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="LoginStatus" ColumnName="LoginStatus" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EventComboModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="GetEventListing" FunctionName="EventComboModel.Store.GetEventListing">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EventComboModel.GetEventListing_Result">
@@ -2477,19 +2511,22 @@
                 <ScalarProperty Name="EventCategory" ColumnName="EventCategory" />
                 <ScalarProperty Name="EventSubCategory" ColumnName="EventSubCategory" />
                 <ScalarProperty Name="EventTiming" ColumnName="EventTiming" />
+                <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
                 <ScalarProperty Name="Feature" ColumnName="Feature" />
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
                 <ScalarProperty Name="EventAddress" ColumnName="EventAddress" />
                 <ScalarProperty Name="Venuename" ColumnName="Venuename" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="TicketDetail" ColumnName="TicketDetail" />
+                <ScalarProperty Name="Purchasedqty" ColumnName="Purchasedqty" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetEventsListByStatus1" FunctionName="EventComboModel.Store.GetEventsListByStatus">
-            <ResultMapping>
+          <ResultMapping>
               <ComplexTypeMapping TypeName="EventComboModel.GetEventsListByStatus1_Result">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
                 <ScalarProperty Name="TicketType" ColumnName="TicketType" />
                 <ScalarProperty Name="TicketPurchased" ColumnName="TicketPurchased" />
@@ -2497,71 +2534,17 @@
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
                 <ScalarProperty Name="EventDate" ColumnName="EventDate" />
-                <ScalarProperty Name="EventTime" ColumnName="EventTime" />
                 <ScalarProperty Name="TotalTicket" ColumnName="TotalTicket" />
                 <ScalarProperty Name="TicketSold" ColumnName="TicketSold" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EventTime" ColumnName="EventTime" />
                 <ScalarProperty Name="EventCancel" ColumnName="EventCancel" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Email_Tag">
-            <EntityTypeMapping TypeName="EventComboModel.Email_Tag">
-              <MappingFragment StoreEntitySet="Email_Tag">
-                <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
-                <ScalarProperty Name="Tag_Id" ColumnName="Tag_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Events_Hit">
-            <EntityTypeMapping TypeName="EventComboModel.Events_Hit">
-              <MappingFragment StoreEntitySet="Events_Hit">
-                <ScalarProperty Name="EventHitDateTime" ColumnName="EventHitDateTime" />
-                <ScalarProperty Name="EventHit_Hits" ColumnName="EventHit_Hits" />
-                <ScalarProperty Name="EventHit_EventId" ColumnName="EventHit_EventId" />
-                <ScalarProperty Name="EventHit_Id" ColumnName="EventHit_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BillingAddresses">
-            <EntityTypeMapping TypeName="EventComboModel.BillingAddress">
-              <MappingFragment StoreEntitySet="BillingAddress">
-                <ScalarProperty Name="Cvv" ColumnName="Cvv" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="card_type" ColumnName="card_type" />
-                <ScalarProperty Name="CardId" ColumnName="CardId" />
-                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
-                <ScalarProperty Name="Lname" ColumnName="Lname" />
-                <ScalarProperty Name="Fname" ColumnName="Fname" />
-                <ScalarProperty Name="Guid" ColumnName="Guid" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="BillingId" ColumnName="BillingId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Order_Detail_T">
-            <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
-              <MappingFragment StoreEntitySet="Order_Detail_T">
-                <ScalarProperty Name="O_OrderDateTime" ColumnName="O_OrderDateTime" />
-                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
-                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
-                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
-                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
-                <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
-                <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
-                <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
-                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetSelectedTicketListing" FunctionName="EventComboModel.Store.GetSelectedTicketListing" />
+          <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
+          <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
+          <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

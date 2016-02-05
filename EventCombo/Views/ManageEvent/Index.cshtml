@@ -118,12 +118,12 @@
                 <div class="col-sm-12 no_pad bor_line"></div>
                 <div class="col-sm-12 no_pad pt10 pb10 text-left">
                     <div class="col-sm-12 no_pad ev-mg-url" id="dvLblurl">
-                        <div class="col-sm-9 col-xs-9">Page URL: <span id="spEventUrl">@Model.url</span>@*<a href="@TempData["EventUrl"]" id="aEventUrl" > @TempData["EventUrl"]</a>*@</div>
+                        <div class="col-sm-9 col-xs-9">Page URL: <span style="cursor:pointer;" id="spEventUrl">@Model.url</span>@*<a href="@TempData["EventUrl"]" id="aEventUrl" > @TempData["EventUrl"]</a>*@</div>
                         <div class="col-sm-3 col-xs-12 text-right">
                             <span class="ev-mng-edit">
                             @if (Model.Eventcancel != "Y")
                             {
-                            <button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btEditUrl" value="Edit">Edit</button>
+                                <button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btEditUrl" value="Edit">Edit</button>
                             }
                           </span>
                          </div>
@@ -134,7 +134,7 @@
                         <div class="col-sm-8 col-xs-12">
                             <div class="col-sm-3 col-xs-3">Page URL:</div>
                             <div class="col-sm-6 col-xs-6 no_pad ">
-                                <input type="text" class="form-control" value=" " id="txtEventURl" onkeypress="return IsAlphaNumeric(event);" />
+                                <input type="text" class="form-control" value="" id="txtEventURl" onkeypress="return IsAlphaNumeric(event);" />
                              
                             </div>
                             <div class="col-sm-3 col-xs-6 no_pad">
@@ -647,6 +647,11 @@ else
                         }
                     });
 
+                $("#spEventUrl").click(function () {
+                    var vUrl = $("#spEventUrl").text();
+                    window.open(vUrl, "_blank");
+                });
+
                 $("#btViewMore").click(function () {
                     debugger;
                     var startlen = $("#hidTblvalue").val();
@@ -742,7 +747,7 @@ else
                          VPath = pathname + vEvUrl;
                     } else
                     {
-                        VPath = pathname +'/'+ vEvUrl;
+                        VPath = pathname +'/ev/'+ vEvUrl;
                     }
 
                     $.ajax({
@@ -857,10 +862,10 @@ else
 
                 $("#btndivaccsuc").click(function () {
                     debugger;
-                    
+
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'none');
-                    
+
 
                 });
                 $("#aDelete").click(function () {
@@ -1013,7 +1018,7 @@ else
 
 
            var title = '@Html.DisplayFor(m => m.Eventtitle)';
-          
+
          window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title.trim()) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
            return false;
 
@@ -1026,7 +1031,7 @@ else
         $('#twittershare').click(function () {
 
             var title = '@Html.DisplayFor(m => m.Eventtitle)';
-       
+
             var url = '@Html.DisplayFor(m => m.url)';
             window.open('https://twitter.com/home?status=I am attending' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
@@ -1036,7 +1041,7 @@ else
         $('#linkshare').click(function () {
 
             var title = '@Html.DisplayFor(m => m.Eventtitle)';
-           
+
             var url = '@Html.DisplayFor(m => m.url)';
             window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;

@@ -14,8 +14,8 @@ namespace EventCombo.Models
     
     public partial class TimeZoneDetail
     {
-        public int TimeZone_Id { get; set; }
         public string TimeZone_Name { get; set; }
         public string TimeZone { get; set; }
+        public int TimeZone_Id { get; set; }
     }
 }

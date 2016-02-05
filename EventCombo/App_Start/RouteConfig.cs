@@ -27,6 +27,7 @@ namespace EventCombo
             // }
             //);
 
+  
 
             routes.MapRoute(
                 name: "ViewEvent",
@@ -38,22 +39,18 @@ namespace EventCombo
                 }
             );
 
-            //    routes.MapRoute(
-            //    name: "TPayment",
-            //    url: "Payment/{strUrl}",
-            //    defaults: new
-            //    {
-            //        controller = "TicketPayment",
-            //        action = "TicketPayment"
-            //    }
-            //);
+            routes.MapRoute(
+            "EventViewCustom",
+                "ev/{strCustomUrl}",
+                new { controller = "EventViewCustom", action = "Index", strCustomUrl = "" }
+                );
 
 
             routes.MapRoute(
                 name: "Default",
                 namespaces: new[] { "EventCombo.Controllers" },
                 url: "{controller}/{action}",
-                defaults: new { controller = "Home", action = "Index"}
+                defaults: new { controller = "Home", action = "Index" }
             );
             //routes.MapRoute("ViewEvent", "CreateEvent/{strUrlData} ", new { controller = "CreateEvent", action = "ViewEvent", strUrlData = UrlParameter.Optional });
         }

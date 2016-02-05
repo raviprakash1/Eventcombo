@@ -19,11 +19,13 @@ namespace EventCombo.Models
         public string EventCategory { get; set; }
         public string EventSubCategory { get; set; }
         public string EventTiming { get; set; }
+        public string StartingFrom { get; set; }
         public int Feature { get; set; }
         public string Orgnizer_Name { get; set; }
         public string EventAddress { get; set; }
         public string Venuename { get; set; }
         public string Email { get; set; }
         public string TicketDetail { get; set; }
+        public long Purchasedqty { get; set; }
     }
 }

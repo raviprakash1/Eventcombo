@@ -413,7 +413,7 @@ namespace EventCombo.Controllers
                     objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
                     objOdr.O_User_Id = Userid;
                     objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
-                    objOdr.O_VariableId = CommanClasses.ConvertToLong(strVarId);
+                    objOdr.O_VariableId = strVarId;
                     objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
                     objOdr.O_PromoCodeId = CommanClasses.ConvertToLong(strPromId);
                     objOdr.O_OrderDateTime = DateTime.Now;
@@ -698,9 +698,12 @@ namespace EventCombo.Controllers
             mms.Write(byteInfo, 0, byteInfo.Length);
             mms.Position = 0;
             Response.Buffer = true;
+            //Response.AddHeader("content-disposition","inline;filename=" + "output.pdf");
             Response.AddHeader("Content-Disposition", "attachment; filename= " + Server.HtmlEncode("abc.pdf"));
             Response.ContentType = "APPLICATION/pdf";
             Response.BinaryWrite(byteInfo);
+            mms.Close();
+            Response.End();
         }
         public MemoryStream generateTicketPDF(Pdfgeneration pdf, string barcode1)
         {
@@ -878,6 +881,10 @@ namespace EventCombo.Controllers
                 }
                 //
                 var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID && i.TPD_Event_Id == Eventid).ToList();
+                string to = "", from = "", cc = "", bcc = "", subjectn = "";
+                var bodyn = "";
+                var ticketP = "";
+                var eventdetail = db.Events.FirstOrDefault(i => i.EventID == Eventid);
                 foreach (var item in TicketPurchasedDetail)
                 {
                     //Detail to send on page
@@ -886,7 +893,7 @@ namespace EventCombo.Controllers
 
                     var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
                     var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
-                    var eventdetail = db.Events.FirstOrDefault(i => i.EventID == tQntydetail.TQD_Event_Id);
+                  
                     var eventid = tQntydetail.TQD_Event_Id;
                     var datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
                     var day = datetime.DayOfWeek;
@@ -912,9 +919,7 @@ namespace EventCombo.Controllers
                     string barcode1 = "<img src =https://www.barcodesinc.com/generator/image.php?code=" + item.TPD_Order_Id + "&style=196&type=C128B&width=219&height=50&xres=1&font=3 alt = 'BarCode' >";
 
 
-                    string to = "", from = "", cc = "", bcc = "", subjectn = "";
-                    var bodyn = "";
-                    var ticketP = "";
+                 
 
                     //Get Email tags
                     EmailTag = hmc.getTag();
@@ -954,7 +959,7 @@ namespace EventCombo.Controllers
                     string barImgPath = Server.MapPath("..") + "/Images/Bar_Image.Png";
                     string Imagelogo = Server.MapPath("..") + "/Images/logo_vertical.png";
                     generateQR(xel.ToString(), qrImgPath);
-                    generateBarCode(item.TPD_Order_Id, barImgPath);
+                       generateBarCode(item.TPD_Order_Id, barImgPath);
                     string Qrcode = "<img style = 'width:150px;height:150px' src ='" + qrImgPath + "' alt = 'QRCode' />";
                     string QrcodeImg = "<img  src = 'http://eventcombonew-qa.kiwireader.com/Images/QR_Image.png' alt = 'QrCode' >";
                     string barcode = "<img  src ='" + barImgPath + "' alt = 'BarCode' >";
@@ -999,6 +1004,7 @@ namespace EventCombo.Controllers
 
 
                     MemoryStream attachment = generateTicketPDF(pdf, barcode1);
+                }
 
                     var Emailtemplate = hmc.getEmail("eticket");
                     if (Emailtemplate != null)
@@ -1074,22 +1080,22 @@ namespace EventCombo.Controllers
                                     }
                                     if (EmailTag[i].Tag_Name == "EventOrderNO")
                                     {
-                                        subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", item.TPD_Order_Id);
+                                        subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", "");
 
                                     }
                                     if (EmailTag[i].Tag_Name == "EventStartDateID")
                                     {
-                                        subjectn = subjectn.Replace("¶¶EventStartDateID¶¶", tQntydetail.TQD_StartDate);
+                                        subjectn = subjectn.Replace("¶¶EventStartDateID¶¶","");
 
                                     }
                                     if (EmailTag[i].Tag_Name == "EventVenueID")
                                     {
-                                        subjectn = subjectn.Replace("¶¶EventVenueID¶¶", addresslist);
+                                        subjectn = subjectn.Replace("¶¶EventVenueID¶¶", "");
 
                                     }
                                     if (EmailTag[i].Tag_Name == "Tickettype")
                                     {
-                                        subjectn = subjectn.Replace("¶¶Tickettype¶¶", tickets.T_name);
+                                        subjectn = subjectn.Replace("¶¶Tickettype¶¶", "");
 
                                     }
                                     if (EmailTag[i].Tag_Name == "TicketOrderDateId")
@@ -1104,7 +1110,7 @@ namespace EventCombo.Controllers
                                     }
                                     if (EmailTag[i].Tag_Name == "EventStartTimeID")
                                     {
-                                        subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", tQntydetail.TQD_StartTime);
+                                        subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", "");
 
                                     }
                                     if (EmailTag[i].Tag_Name == "TicketPrice")
@@ -1126,10 +1132,10 @@ namespace EventCombo.Controllers
                         
                         }
                         //Mail 
-                        hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, Imageevent, qrImgPath, barImgPath);
+                        hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, null, "", "", "");
                         //Mail 
                     }
-                }
+              
 
                 //Send mail
 
@@ -1165,9 +1171,18 @@ namespace EventCombo.Controllers
             }
         }
 
+        private void generatemapimage(string url)
+        {
+            string filename = "";
+            WebClient client = new WebClient();
+            filename = "Imagemap.png";
+            client.DownloadFile(url, Server.MapPath("~/Images/" + filename));
+
+        }
+
         private string ModifyEmailBody(string bodyn, string gUID,long Eventid,List<Email_Tag> Emailtag)
         {
-           
+
 
             var Edtails = (from p in db.Events join user in db.Profiles on p.UserID equals user.UserID
                            join org in db.Event_Orgnizer_Detail on p.EventID equals org.Orgnizer_Event_Id
@@ -1185,7 +1200,9 @@ namespace EventCombo.Controllers
             var baseurl = url.GetLeftPart(UriPartial.Authority);
             string createevent = baseurl + Url.Action("Index", "Home");
             string discoverevents = baseurl + Url.Action("discoverevents", "Home");
-            string Downloadurl= baseurl + Url.Action("pdf", "TicketPayment")+ "?eventid = " + Eventid + "" ;
+            string Downloadurl= baseurl + Url.Action("pdf", "TicketPayment")+ "?eventid="+Eventid+"" ;
+
+                     
             var itemQuery = from TqtId in db.Ticket_Purchased_Detail
 
                                 where TqtId.TPD_GUID== gUID && TqtId.TPD_Event_Id== Eventid
@@ -1381,6 +1398,31 @@ namespace EventCombo.Controllers
 
             }
 
+            var variabledescid = myOrderDetails.O_VariableId;
+            if (!string.IsNullOrWhiteSpace(variabledescid))
+            {
+                if (variabledescid.Contains(','))
+                {
+                    string[] words = variabledescid.Split(',');
+                    foreach (string word in words)
+                    {
+                        var vardesc = (from p in db.Event_VariableDesc
+                                       where p.Variable_Id.ToString () == word && p.Event_Id == Eventid select p).FirstOrDefault();
+                        strHTML.Append("<tr align='right'> ");
+                        strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>"+ vardesc .VariableDesc+ ":$ "+vardesc.Price+" </td>");
+                        strHTML.Append("</tr> ");
+                    }
+                }
+                else
+                {
+                    var vardesc = (from p in db.Event_VariableDesc
+                                   where p.Variable_Id.ToString () == variabledescid && p.Event_Id == Eventid
+                                   select p).FirstOrDefault();
+                    strHTML.Append("<tr align='right'> ");
+                    strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>" + vardesc.VariableDesc + ":$ " + vardesc.Price + " </td>");
+                    strHTML.Append("</tr> ");
+                }
+            }
             strHTML.Append("<tr align='right'> ");
            strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>Total :"+ myOrderDetails .O_TotalAmount+ " </td></tr>");
 
@@ -1443,9 +1485,13 @@ namespace EventCombo.Controllers
             strHTML.Append("<a href='#' style='color:#0f90ba;'>Terms of Service </a> , <a style='color:#0f90ba;' href='#'>Privacy Policy </a> and <a style='color:#0f90ba;' href='#'>Cookie Policy </a></p>");
             strHTML.Append("</td></tr></table > ");
 
-          
+            var imagepath = "<img src=https://maps.googleapis.com/maps/api/staticmap?center='"+eventname+"'&zoom=13&size=400x400&maptype=roadmap&markers=color:red%7Clabel:C%7C'"+ eventname + "' style='width:100%' />";
 
+            generatemapimage("http://maps.google.com/maps/api/staticmap?center="+ eventname + "&zoom=14&size=400x400&maptype=roadmap&markers=color:red|color:red|label:C|"+ eventname + "&sensor=false");
 
+            string ImageMapPath = Server.MapPath("..") + "/Images/Imagemap.Png";
+            //string Imagecode = "<img style = 'width:200px;height:200px;' src ='" + ImageMapPath + "' alt = 'QRCode' />";
+            string Imageeventimg = "<img style='width:200px;height:200px;' src = cid:myeventmapImageID alt = 'Image' >";
             if (!string.IsNullOrEmpty(bodyn))
             {
 
@@ -1518,7 +1564,7 @@ namespace EventCombo.Controllers
                         }
                         if (Emailtag[i].Tag_Name == "EventMapImage")
                         {
-                            bodyn = bodyn.Replace("¶¶EventMapImage¶¶", eventtype);
+                            bodyn = bodyn.Replace("¶¶EventMapImage¶¶", Imageeventimg);
                         }
                         if (Emailtag[i].Tag_Name == "Downloadurl")
                         {

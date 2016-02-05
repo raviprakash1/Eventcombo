@@ -238,6 +238,7 @@
     <Compile Include="Controllers\EventConfirmationController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventListController.cs" />
+    <Compile Include="Controllers\EventViewCustomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
@@ -502,6 +503,16 @@
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
     <Content Include="Images\qwe.png" />
+    <Content Include="Models\EventComboModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EventComboModel.edmx</DependentUpon>
+      <LastGenOutput>EventComboModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\EventComboModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EventComboModel.edmx</DependentUpon>
+      <LastGenOutput>EventComboModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
@@ -553,16 +564,6 @@
     <Content Include="Images\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\ui.png" />
     <Content Include="Images\vote-icon.png" />
-    <Content Include="Models\EventComboModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EventComboModel.edmx</DependentUpon>
-      <LastGenOutput>EventComboModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\EventComboModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EventComboModel.edmx</DependentUpon>
-      <LastGenOutput>EventComboModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -784,6 +785,7 @@
     <Content Include="Content\Filer\assets\fonts\jquery.filer-icons\jquery-filer.ttf" />
     <Content Include="Content\Filer\assets\fonts\jquery.filer-icons\jquery-filer.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="ClassDiagram1.cd" />
     <EntityDeploy Include="Models\EventComboModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EventComboModel.Designer.cs</LastGenOutput>
@@ -791,7 +793,6 @@
     <Content Include="Models\EventComboModel.edmx.diagram">
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Content>
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
@@ -1117,6 +1118,7 @@
     <Content Include="Views\Inbetween\Index.cshtml" />
     <Content Include="Views\Cart\CheckoutReview.cshtml" />
     <Content Include="Views\Cart\DoCheckoutPayment.cshtml" />
+    <Content Include="Views\EventViewCustom\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
