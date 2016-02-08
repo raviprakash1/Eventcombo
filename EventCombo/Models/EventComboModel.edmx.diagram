@@ -64,6 +64,7 @@
         <AssociationConnector Association="EventComboModel.FK_EventVenue_EventVenue" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Ticket_Quantity_Info_Ticket" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EventComboModel.TicketOrderDetail" Width="1.5" PointX="17.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
