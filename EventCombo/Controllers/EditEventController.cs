@@ -26,6 +26,9 @@ namespace EventCombo.Controllers
             EventCreation objCr = new EventCreation();
             if ((Session["AppId"] != null))
             {
+
+
+
                 HomeController hmc = new HomeController();
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
@@ -147,8 +150,13 @@ namespace EventCombo.Controllers
             ValidationMessageController vmc = new ValidationMessageController();
             Eventid = vmc.GetLatestEventId(Eventid);
             EventCreation objCr = GetEventDataEditing(Eventid);
+            if (objCr == null) return RedirectToAction("Index", "Home");
             if ((Session["AppId"] != null))
             {
+                if (Session["AppId"].ToString().Trim() != objCr.UserID.Trim())
+                {
+                    return RedirectToAction("Index", "Home");
+                }
                 HomeController hmc = new HomeController();
                 hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
                 string usernme = hmc.getusername();
@@ -1423,7 +1431,6 @@ namespace EventCombo.Controllers
                         Event ObjEC = objEnt.Events.FirstOrDefault(i => i.EventID == lEventId);
                         if (ObjEC != null)
                         {
-
                             if (ObjEC.EventStatus == "Live")
                             {
                                 lEventId = EditEventInfo(model);
@@ -1453,7 +1460,7 @@ namespace EventCombo.Controllers
                                 ObjEC.DisplayStartTime = model.DisplayStartTime;
                                 ObjEC.DisplayEndTime = model.DisplayEndTime;
                                 ObjEC.DisplayTimeZone = model.DisplayTimeZone;
-                                ObjEC.EventDescription = model.EventDescription;
+                                ObjEC.EventDescription = HttpUtility.UrlDecode(model.EventDescription, System.Text.Encoding.Default);
                                 ObjEC.EventPrivacy = model.EventPrivacy;
                                 ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
                                 ObjEC.Private_GuestOnly = model.Private_GuestOnly;

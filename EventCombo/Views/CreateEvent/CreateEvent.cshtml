@@ -2034,8 +2034,6 @@
                 success: function (response) {
                     if (response != "Y") {
                         $("#btOkAc").click();
-
-
                     }
                 }
             });
@@ -2441,15 +2439,15 @@
                     optionalvariable = $('#variabletype').val();
 
                 }
-
-
+                //$("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "");
+                var evDec = escape($("#edEventDesc").code());
                 var model = {
                     'EventTypeID': $("#EventType").val(),
                     'EventCategoryID': $("#ddlEventCategory").val(),
                     'EventSubCategoryID': $("#ddlEventSubCategory").val(),
                     'UserID': '',
                     'EventTitle': $("#txtEventTitle").val(),
-                    'EventDescription': $("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, ""),
+                    'EventDescription': evDec,
                     'EventPrivacy': ($("#rdPublic").is(":checked") == true ? 'Public' : 'Private'),
                     'Private_ShareOnFB': ($("#chkShareOnFB").is(":checked") == true ? 'Y' : 'N'),
                     'Private_GuestOnly': ($("#chkGuestonly").is(":checked") == true ? 'Y' : 'N'),
@@ -2480,14 +2478,10 @@
                     'Ticket_variabletype': optionalvariable,
                     'ShowMap': ($("#chkShowMap").is(":checked") == true ? 'Y' : 'N'),
                     'DuplicateEvent': ($("#chkDuplicateEvent").is(":checked") == true ? 'Y' : 'N')
-
                 };
-
-
-                //if ($("#hdEventId").val() == '') {
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
-                        data: { model: model },
+                        data: { model: model},
                         type: "Post",
                         success: function (response) {
                             $("#hdEventId").val(response);
@@ -2509,14 +2503,7 @@
                             }
                         }
                     });
-                //}
-                //else {
-                //    $('#divaccsuc').css('display', 'none');
-                //    $('#diverroacc').css('display', 'block');
-                //    $('#diverroacc').focus();
-                //    $('#erraccmsg').html('Event already saved');
-                //}
-
+             
 
 
             

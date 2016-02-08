@@ -348,6 +348,9 @@
           <Property Name="O_VariableAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="O_PromoCodeId" Type="bigint" />
           <Property Name="O_OrderDateTime" Type="datetime" />
+          <Property Name="O_PayPal_TokenId" Type="varchar" MaxLength="100" />
+          <Property Name="O_PayPal_PayerId" Type="varchar" MaxLength="100" />
+          <Property Name="O_PayPal_TrancId" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -1325,6 +1328,9 @@
           <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="O_PromoCodeId" Type="Int64" />
           <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
+          <Property Name="O_PayPal_TokenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_PayPal_PayerId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -2306,6 +2312,9 @@
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_PayPal_TrancId" ColumnName="O_PayPal_TrancId" />
+                <ScalarProperty Name="O_PayPal_PayerId" ColumnName="O_PayPal_PayerId" />
+                <ScalarProperty Name="O_PayPal_TokenId" ColumnName="O_PayPal_TokenId" />
                 <ScalarProperty Name="O_Id" ColumnName="O_Id" />
                 <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
                 <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />

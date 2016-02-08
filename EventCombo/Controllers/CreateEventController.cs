@@ -273,7 +273,7 @@ namespace EventCombo.Controllers
 
         public long SaveEvent(EventCreation model)
         {
-            long lEventId = 0;
+            long lEventId = 0;  
             try
             {
                 //PayPalRedirect redirect = PayPal.ExpressCheckout(new PayPalOrder { Amount = 50 });
@@ -298,7 +298,7 @@ namespace EventCombo.Controllers
                     ObjEC.DisplayStartTime = model.DisplayStartTime;
                     ObjEC.DisplayEndTime = model.DisplayEndTime;
                     ObjEC.DisplayTimeZone = model.DisplayTimeZone;
-                    ObjEC.EventDescription = model.EventDescription;
+                    ObjEC.EventDescription = HttpUtility.UrlDecode(model.EventDescription, System.Text.Encoding.Default);
                     ObjEC.EventPrivacy = model.EventPrivacy;
                     ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
                     ObjEC.Private_GuestOnly = model.Private_GuestOnly;
@@ -494,6 +494,17 @@ namespace EventCombo.Controllers
             }
             return lEventId;
         }
+
+
+
+
+
+
+        
+
+
+
+
 
         //[Route("{strEventDs}/{strEventId}", Name ="ViewEvent",Order=1),HttpGet]
         //public ActionResult ViewEvent(string strUrlData)
