@@ -17,6 +17,13 @@ namespace EventCombo.Controllers
         {
             if (Session["AppId"] != null)
             {
+                var Eventdetails = db.Events.Where(x => x.EventID.ToString() == EventId.ToString()).FirstOrDefault();
+                if (Eventdetails == null) return RedirectToAction("Index", "Home");
+                if (Session["AppId"].ToString().Trim() != Eventdetails.UserID.Trim() || Eventdetails.EventStatus.ToUpper().Trim() == "SAVE")
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
                 HomeController hmc = new HomeController();
                 hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
                 string usernme = hmc.getusername();
@@ -26,7 +33,7 @@ namespace EventCombo.Controllers
                 }
                 EventConfirmation cms = new EventConfirmation();
                 var Image = db.EventImages.Where(x => x.EventID.ToString() == EventId.ToString()).FirstOrDefault();
-                var Eventdetails = db.Events.Where(x => x.EventID.ToString() == EventId.ToString()).FirstOrDefault();
+                
                 if (Image != null)
                 {
                     cms.Imageurl = "/Images/events/event_flyers/imagepath/" + Image.EventImageUrl;
