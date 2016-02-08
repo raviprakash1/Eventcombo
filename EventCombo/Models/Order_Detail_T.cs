@@ -23,5 +23,8 @@ namespace EventCombo.Models
         public Nullable<decimal> O_VariableAmount { get; set; }
         public Nullable<long> O_PromoCodeId { get; set; }
         public Nullable<System.DateTime> O_OrderDateTime { get; set; }
+        public string O_PayPal_TokenId { get; set; }
+        public string O_PayPal_PayerId { get; set; }
+        public string O_PayPal_TrancId { get; set; }
     }
 }

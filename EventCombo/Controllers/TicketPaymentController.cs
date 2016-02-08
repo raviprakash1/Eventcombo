@@ -333,7 +333,7 @@ namespace EventCombo.Controllers
             return strResult;
         }
 
-        public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId, string strPaymentType)
+        public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId, string strPaymentType, string strTranId = null, string strPayerId = null, string strTokenNo= null)
         {
             string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
             ApiLoginID = ""; ApiTransactionKey = ""; strCardNo = ""; strExpDate = ""; strCvvCode = ""; dAmount = 0;
@@ -417,7 +417,9 @@ namespace EventCombo.Controllers
                     objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
                     objOdr.O_PromoCodeId = CommanClasses.ConvertToLong(strPromId);
                     objOdr.O_OrderDateTime = DateTime.Now;
-
+                    objOdr.O_PayPal_PayerId = strPayerId;
+                    objOdr.O_PayPal_TokenId = strTokenNo;
+                    objOdr.O_PayPal_TrancId = strTranId;
                     objEntity.Order_Detail_T.Add(objOdr);
                     objEntity.SaveChanges();
                     string strOrderNo = GetOrderNo();
@@ -465,28 +467,28 @@ namespace EventCombo.Controllers
 
                         }
 
-
-                        BillingAddress badd = new BillingAddress();
-
-                        badd.Fname = model.billfname;
-                        badd.Lname = model.billLname;
-                        badd.Address1 = model.billaddress1;
-                        badd.Address2 = model.billaddress2;
-                        badd.City = model.billcity;
-                        badd.State = model.billstate;
-                        badd.Zip = model.billzip;
-                        badd.Country = model.billcountry;
-                        badd.Phone_Number = model.billingphno;
-                        badd.UserId = Userid;
-                        badd.Guid = guid;
-                        badd.OrderId = strOrderNo;
-                        badd.PaymentType = "C";
-                        badd.CardId = model.cardno;
-                        badd.card_type = model.card_type;
-                        badd.Cvv = model.cvv;
-                        badd.ExpirationDate = model.expirydate;
-
-                        objEntity.BillingAddresses.Add(badd);
+                        if (strTranId == "" || strTranId == null)
+                        {
+                            BillingAddress badd = new BillingAddress();
+                            badd.Fname = model.billfname;
+                            badd.Lname = model.billLname;
+                            badd.Address1 = model.billaddress1;
+                            badd.Address2 = model.billaddress2;
+                            badd.City = model.billcity;
+                            badd.State = model.billstate;
+                            badd.Zip = model.billzip;
+                            badd.Country = model.billcountry;
+                            badd.Phone_Number = model.billingphno;
+                            badd.UserId = Userid;
+                            badd.Guid = guid;
+                            badd.OrderId = strOrderNo;
+                            badd.PaymentType = "C";
+                            badd.CardId = model.cardno;
+                            badd.card_type = model.card_type;
+                            badd.Cvv = model.cvv;
+                            badd.ExpirationDate = model.expirydate;
+                            objEntity.BillingAddresses.Add(badd);
+                        }
                         if (model.Saveshipdetail != "N")
                         {
                             ShippingAddress shipadd = new ShippingAddress();
@@ -822,10 +824,11 @@ namespace EventCombo.Controllers
 
         #endregion
 
-        public async Task<string> SaveDetailsForPaypal()
+        public async Task<string> SaveDetailsForPaypal(string strTranId, string strPayerId, string strTokenNo)
         {
             TicketPayment objTP = (Session["TicketDatamodel"] != null ? (TicketPayment)Session["TicketDatamodel"] : null);
-            string strResult = await SaveDetails(objTP, objTP.strOrderTotal, objTP.strGrandTotal, objTP.strPromId, objTP.strVarChanges, objTP.strVarId, objTP.strPaymentType);
+            
+            string strResult = await SaveDetails(objTP, objTP.strOrderTotal, objTP.strGrandTotal, objTP.strPromId, objTP.strVarChanges, objTP.strVarId, objTP.strPaymentType,strTranId,strPayerId,strTokenNo);
             return strResult;
         }
 
@@ -1418,17 +1421,18 @@ namespace EventCombo.Controllers
                     var vardesc = (from p in db.Event_VariableDesc
                                    where p.Variable_Id.ToString () == variabledescid && p.Event_Id == Eventid
                                    select p).FirstOrDefault();
-                    strHTML.Append("<tr align='right'> ");
-                    strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>" + vardesc.VariableDesc + ":$ " + vardesc.Price + " </td>");
-                    strHTML.Append("</tr> ");
+
+                    if (vardesc != null)
+                    {
+                        strHTML.Append("<tr align='right'> ");
+                        strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>" + vardesc.VariableDesc + ":$ " + vardesc.Price + " </td>");
+                        strHTML.Append("</tr> ");
+                    }
                 }
             }
             strHTML.Append("<tr align='right'> ");
            strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>Total :"+ myOrderDetails .O_TotalAmount+ " </td></tr>");
-
-            var myBillingdeatils = (from p in db.BillingAddresses where p.Guid == gUID && p.OrderId == myOrderId select p).ToList().Distinct().FirstOrDefault();
-
-            if(Edtails.Addresstatus== "Multiple")
+            if (Edtails.Addresstatus == "Multiple")
             {
                 eventtype = "* This event has multiple venues ";
             }
@@ -1437,48 +1441,60 @@ namespace EventCombo.Controllers
                 eventtype = "";
             }
 
-         
 
-            var Scardnumber = myBillingdeatils.CardId.Trim();
-            var Icardlength = Scardnumber.Length;
-            var WrVS = "";
-            int k = 1;
-            for (int i = 0; i < Icardlength; i++)
+            var myBillingdeatils = (from p in db.BillingAddresses where p.Guid == gUID && p.OrderId == myOrderId select p).ToList().Distinct().FirstOrDefault();
+
+            var cardtext = "";
+
+
+            if (myBillingdeatils != null)
             {
-
-                WrVS += "X";
-                if (k == 4)
+                var Scardnumber = myBillingdeatils.CardId.Trim();
+                var Icardlength = Scardnumber.Length;
+                var WrVS = "";
+                int k = 1;
+                for (int i = 0; i < Icardlength; i++)
                 {
-                    WrVS += "-";
-                    k = 0;
+
+                    WrVS += "X";
+                    if (k == 4)
+                    {
+                        WrVS += "-";
+                        k = 0;
+                    }
+
+
+                    k++;
+
+                }
+                if (WrVS.EndsWith("-"))
+                {
+                    WrVS = WrVS.Substring(0, WrVS.LastIndexOf("-"));
+                }
+                var rvrs = WrVS.Substring(0, WrVS.LastIndexOf("-") + 1);
+                var rvrsd = rvrs.Replace("-", "");
+                var chrlength = Icardlength - rvrsd.Length;
+                var result = Scardnumber.Substring(Icardlength - Math.Min(chrlength, Icardlength));
+                var finalstr = rvrs + result;
+
+                var touper = "";
+                if (!string.IsNullOrWhiteSpace(myBillingdeatils.card_type))
+                {
+                    touper = char.ToUpper(myBillingdeatils.card_type[0]) + myBillingdeatils.card_type.Substring(1);
+                }
+                else
+                {
+                    touper = "";
                 }
 
-
-                k++;
-
-            }
-            if (WrVS.EndsWith("-"))
-            {
-                WrVS = WrVS.Substring(0, WrVS.LastIndexOf("-"));
-            }
-            var rvrs = WrVS.Substring(0, WrVS.LastIndexOf("-") + 1);
-            var rvrsd = rvrs.Replace("-", "");
-            var chrlength = Icardlength - rvrsd.Length;
-            var result = Scardnumber.Substring(Icardlength - Math.Min(chrlength, Icardlength));
-            var finalstr = rvrs + result;
-           
-            var touper = "";
-            if (!string.IsNullOrWhiteSpace(myBillingdeatils.card_type))
-            {
-                touper = char.ToUpper(myBillingdeatils.card_type[0]) + myBillingdeatils.card_type.Substring(1);
+                cardtext = "Charge to :" + touper + "  " + finalstr;
             }
             else
             {
-                touper = "";
+                cardtext = "Charge to : Paypal";
             }
-           var cardtext = "Charge to :" + touper + "  " + finalstr;
             strHTML.Append("<tr align='center'> ");
-            strHTML.Append("<td colspan='4' style='font-size:15px; padding:10px 5px;'>"+ cardtext + " </td></tr>");
+            strHTML.Append("<td colspan='4' style='font-size:15px; padding:10px 5px;'>" + cardtext + " </td></tr>");
             strHTML.Append("<tr align='center'><td colspan='4' style='font-size:15px;'>");
             strHTML.Append("<p style='background:#fff9cf; padding:10px 15px; display:inline-block; margin:0px;'>This charge will appear on your card statement as Eventcombo * { "+ Edtails .EventTitle + "}</p>");
             strHTML.Append("<p style='color:#696564;' >This order is subject to Eventcombo '");

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e1003d660e264b6e9e2ff7b77ce7c251" Name="Diagram1">
+      <Diagram DiagramId="e1003d660e264b6e9e2ff7b77ce7c251" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="EventComboModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Address" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.AspNetRole" Width="1.5" PointX="5.75" PointY="7.25" IsExpanded="true" />

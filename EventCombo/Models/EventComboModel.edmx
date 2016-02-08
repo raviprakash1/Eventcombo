@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EventComboModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -348,6 +348,9 @@
           <Property Name="O_VariableAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="O_PromoCodeId" Type="bigint" />
           <Property Name="O_OrderDateTime" Type="datetime" />
+          <Property Name="O_PayPal_TokenId" Type="varchar" MaxLength="100" />
+          <Property Name="O_PayPal_PayerId" Type="varchar" MaxLength="100" />
+          <Property Name="O_PayPal_TrancId" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -947,8 +950,7 @@
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EventComboModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1316,6 +1318,9 @@
           <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="O_PromoCodeId" Type="Int64" />
           <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
+          <Property Name="O_PayPal_TokenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_PayPal_PayerId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -1847,7 +1852,7 @@
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetEventDateList" ReturnType="Collection(EventComboModel.GetEventDateList_Result)">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="GetEventListing" ReturnType="Collection(EventComboModel.GetEventListing_Result)">
             <Parameter Name="EventTitle" Mode="In" Type="String" />
@@ -1873,7 +1878,7 @@
             <Parameter Name="Role_Id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetTicketListing" ReturnType="Collection(String)">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="PublishEvent">
             <Parameter Name="EventId" Mode="In" Type="Int64" />
@@ -2287,6 +2292,9 @@
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_PayPal_TrancId" ColumnName="O_PayPal_TrancId" />
+                <ScalarProperty Name="O_PayPal_PayerId" ColumnName="O_PayPal_PayerId" />
+                <ScalarProperty Name="O_PayPal_TokenId" ColumnName="O_PayPal_TokenId" />
                 <ScalarProperty Name="O_Id" ColumnName="O_Id" />
                 <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
                 <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />

@@ -582,7 +582,7 @@
         });
     }
     function SavePaypaldetail() {
-        debugger;
+        alert("In save Paypal detail")
         var flag = true;
         var Emaillogin = $("#Email").val();
     
@@ -637,24 +637,11 @@
                 NameList.push({
                     Name: $("#TicketName_" + Sno).text(),
                     Email: $("#TicketEmail_" + Sno).text(),
-
-
                 });
             }
         });
         debugger;
-        var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
-        cardtype = result.card_type.name;
     
-        if ($('#chkcarddetails').is(":checked") == true) {
-            cardno = $('#cardno').val();
-
-            expirydate = $('#expirationdate').val();
-            cvv = $('#cvvcode').val();
-            //    var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
-            //    cardtype = result.card_type.name;
-            //}
-        }
         if ($('#shippinginfo').is(":checked") == true)  {
 
 
@@ -743,8 +730,10 @@
         });
     }
     $('#btPaypal').click(function () {
+        alert("in click");
         $("#hdIsPostBack").val("Y");
         var msg = validationpage();
+        alert(msg);
         if (msg != "") {
             ShowMessage('E', msg)
             //$('#diverroacc').css('display', 'block');
@@ -1178,7 +1167,6 @@
         $("#selectcard").change(function () {
             if ($("#selectcard").val() == "P")
             {
-                $('#completeorder').click();
                 $("#dvBillingAddress").hide();
                 $("#completeorder").hide();
                 $("#btPaypal").show();

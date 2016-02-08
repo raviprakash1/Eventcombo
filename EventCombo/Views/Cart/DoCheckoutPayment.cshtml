@@ -23,8 +23,13 @@
     <script>
         $(document).ready(function () {
             if ($("#hdResult").val().trim() == "") {
+                var vTrasId = '@ViewData["TRANSACTIONID"].ToString()';
+                var vPayerId = '@ViewData["PayerID"].ToString()';
+                var vTokenId = '@ViewData["token"].ToString()';
+
                 $.ajax({
                     url: '@Url.Action("SaveDetailsForPaypal", "TicketPayment")',
+                    data: { strTranId: vTrasId, strPayerId: vPayerId, strTokenNo: vTokenId },
                     type: "Post",
                     success: function (response) {
                         window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
