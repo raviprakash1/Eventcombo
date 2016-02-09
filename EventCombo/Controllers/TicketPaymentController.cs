@@ -1228,6 +1228,7 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 Session["Fromname"] = "events";
+                Session["logo"] = "events";
                 //Send mail
                 var Userid = Session["AppId"].ToString();
 

@@ -204,6 +204,7 @@ namespace CMS.Controllers
             {
                 var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
                                      join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
+                                     orderby Pr.FirstName ascending
                                        select new UsersTemplate
                                      {
                                          EMail = UserTemp.Email,
