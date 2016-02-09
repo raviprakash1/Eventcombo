@@ -7404,30 +7404,31 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 "n_image_element).remove();\r\n                $(\'#input2\').click(function (e) {\r\n " +
 "                   e.preventDefault();\r\n\r\n                })\r\n                $(" +
 "\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n            },\r\n            onEmpty: function (" +
-"el) {\r\n               \r\n\r\n                if ($(\"#imageeror\").val() == 0) {\r\n   " +
-"                 if ($(\".jFiler-items ul li\").length == 2) { setTimeout(function" +
-" () { $(\".jFiler-input-inner\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'cli" +
-"ck\'); }, 200); };\r\n                }\r\n            },\r\n            captions: {\r\n " +
-"               button: \"Choose Files\",\r\n                feedback: \"Choose files " +
-"To Upload\",\r\n                feedback2: \"files were chosen\",\r\n                dr" +
-"op: \"Drop file here to Upload\",\r\n                removeConfirmation: \"Are you su" +
-"re you want to remove this file?\",\r\n                errors: {\r\n                 " +
-"   filesLimit: ajaxsetup(\'CreateEvent\', \'CreateEventImagecountUI\'),\r\n           " +
-"         filesType: ajaxsetup(\'CreateEvent\', \'CreateEventImageTypeUI\'),\r\n       " +
-"             filesSize: ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\'),\r\n   " +
-"                 filesSizeAll: ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\'" +
-")\r\n                }\r\n            },\r\n            files: j\r\n        });\r\n\r\n\r\n\r\n " +
-"           if(j!=\'\')\r\n            {\r\n                $(\'#image_count\').val(j.len" +
-"gth);\r\n                for(var i=0;i<j.length;i++)\r\n                {\r\n         " +
-"           var type=j[i].type;\r\n                    var img=j[i].name;\r\n        " +
-"            var imgdata = img + \'####\' + type;\r\n $(\'<input>\').attr({type: \'hidde" +
-"n\',id:\'image_hidden_\'+i,name: \'Eventpicture[\' + imgdata + \']\', value:imgdata}).a" +
-"ppendTo(\'form\');\r\n\r\n                }\r\n\r\n            }\r\n\r\n\r\n            $(\'#drag" +
-"-drop\').on(\'click\', function (e) {\r\n               \r\n                $(\'#input2\'" +
-").unbind(\'click\');\r\n\r\n            });\r\n    });\r\n    </script>\r\n");
+"el) {\r\n               \r\n            \r\n                if ($(\"#imageeror\").val() " +
+"== 0) {\r\n                    if ($(\".jFiler-items ul li\").length == 1 || $(\".jFi" +
+"ler-items ul li\").length == 2) { setTimeout(function () { $(\".jFiler-input-inner" +
+"\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); };\r\n\r\n       " +
+"         }\r\n            },\r\n            captions: {\r\n                button: \"Ch" +
+"oose Files\",\r\n                feedback: \"Choose files To Upload\",\r\n             " +
+"   feedback2: \"files were chosen\",\r\n                drop: \"Drop file here to Upl" +
+"oad\",\r\n                removeConfirmation: \"Are you sure you want to remove this" +
+" file?\",\r\n                errors: {\r\n                    filesLimit: ajaxsetup(\'" +
+"CreateEvent\', \'CreateEventImagecountUI\'),\r\n                    filesType: ajaxse" +
+"tup(\'CreateEvent\', \'CreateEventImageTypeUI\'),\r\n                    filesSize: aj" +
+"axsetup(\'CreateEvent\', \'CreateEventImageSizeUI\'),\r\n                    filesSize" +
+"All: ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\')\r\n                }\r\n    " +
+"        },\r\n            files: j\r\n        });\r\n\r\n\r\n\r\n            if(j!=\'\')\r\n    " +
+"        {\r\n                $(\'#image_count\').val(j.length);\r\n                for" +
+"(var i=0;i<j.length;i++)\r\n                {\r\n                    var type=j[i].t" +
+"ype;\r\n                    var img=j[i].name;\r\n                    var imgdata = " +
+"img + \'####\' + type;\r\n $(\'<input>\').attr({type: \'hidden\',id:\'image_hidden_\'+i,na" +
+"me: \'Eventpicture[\' + imgdata + \']\', value:imgdata}).appendTo(\'form\');\r\n\r\n      " +
+"          }\r\n\r\n            }\r\n\r\n\r\n            $(\'#drag-drop\').on(\'click\', functi" +
+"on (e) {\r\n               \r\n                $(\'#input2\').unbind(\'click\');\r\n\r\n    " +
+"        });\r\n    });\r\n    </script>\r\n");
 
             
-            #line 6111 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6112 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 

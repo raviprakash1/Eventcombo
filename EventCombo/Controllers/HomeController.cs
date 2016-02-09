@@ -1319,7 +1319,7 @@ namespace EventCombo.Controllers
                 smtp.Send(mailMessage);
             }
         }
-        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string Imageevent,string qrimage,string brcode)
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string ImageMapPath, string qrimage,string brcode)
         {
             MailMessage mailMessage = new MailMessage();
             
@@ -1347,13 +1347,13 @@ namespace EventCombo.Controllers
                 }
             }
                 mailMessage.IsBodyHtml = true;
-            AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
-            mailMessage.AlternateViews.Add(htmlView);
+            //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+            //mailMessage.AlternateViews.Add(htmlView);
            
             //Add Image
-            LinkedResource theEmailImage = new LinkedResource(Server.MapPath("..") + "/Images/Imagemap.Png");
-            theEmailImage.ContentId = "myeventmapImageID";
-            htmlView.LinkedResources.Add(theEmailImage);
+            //LinkedResource theEmailImage = new LinkedResource(ImageMapPath);
+            //theEmailImage.ContentId = "myeventmapImageID";
+            //htmlView.LinkedResources.Add(theEmailImage);
 
 
             ////LinkedResource theQrImage = new LinkedResource(qrimage);
