@@ -582,7 +582,6 @@
         });
     }
     function SavePaypaldetail() {
-        alert("In save Paypal detail")
         var flag = true;
         var Emaillogin = $("#Email").val();
     
@@ -730,10 +729,10 @@
         });
     }
     $('#btPaypal').click(function () {
-        alert("in click");
+      
         $("#hdIsPostBack").val("Y");
         var msg = validationpage();
-        alert(msg);
+      
         if (msg != "") {
             ShowMessage('E', msg)
             //$('#diverroacc').css('display', 'block');

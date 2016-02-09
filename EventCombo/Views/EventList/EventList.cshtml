@@ -322,6 +322,27 @@
         $("#DivSavedPager").hide();
     };
     $(document).ready(function () {
+        debugger;
+        $('#mgnav').click();
+       
+        $('#dvManage').addClass("menu_active");
+
+        var vhtml = $('#dvManage').html().replace("closed", "opened");
+        $('#dvManage').empty();
+        $('#dvManage').html(vhtml);
+       
+        
+        // #accordion .menu_title .active
+        //alert($('#mgnav').accordion());
+
+        //$("#collapse2").show().accordion({
+        //    active: false,
+        //    autoHeight: false,
+        //    navigation: true,
+        //    collapsible: true
+        //});
+
+        //$('#mgnav').attr("aria-expanded",true);
 
         //$(window).unload(function () {
         //    $.removeCookie("LastTab");
