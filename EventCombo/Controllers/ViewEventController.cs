@@ -76,6 +76,7 @@ namespace EventCombo.Controllers
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             Session["Fromname"] = "events";
+            Session["logo"] = "events";
             CreateEventController objCE = new CreateEventController();
             var EventDetail = objCE.GetEventdetail(EventId);
             if (EventDetail == null) return null;

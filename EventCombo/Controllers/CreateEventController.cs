@@ -33,6 +33,7 @@ namespace EventCombo.Controllers
         [HttpPost]
         public ActionResult CreateEvent(EventCreation Model)
         {
+            Session["logo"] = "events";
             Session["Fromname"] = "events";
             return View();
         }
@@ -48,7 +49,9 @@ namespace EventCombo.Controllers
                 if (string.IsNullOrEmpty(usernme))
                 {
                     return RedirectToAction("Index", "Home");
+
                 }
+                Session["logo"] = "events";
                 Session["Fromname"] = "events";
                 var url = Url.Action("CreateEvent", "CreateEvent");
                 Session["ReturnUrl"] = "CreateEvent~" + url;
@@ -553,6 +556,7 @@ namespace EventCombo.Controllers
 
             string sDate_new = "", eDate_new="";
             string startday="", endday="", starttime="", endtime="";
+            Session["logo"] = "events";
             Session["Fromname"] = "events";
             CreateEventController objCE = new CreateEventController();
             var EventDetail = objCE.GetEventdetail(EventId);
@@ -940,6 +944,7 @@ namespace EventCombo.Controllers
             EventId = vmc.GetLatestEventId(EventId);
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
+            Session["logo"] = "events";
             Session["Fromname"] = "events";
             var url = Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + eventTitle.Trim() + "౼" + EventId + "౼N";
             // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();

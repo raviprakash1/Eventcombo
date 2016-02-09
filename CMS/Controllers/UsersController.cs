@@ -56,6 +56,7 @@ namespace CMS.Controllers
                 ViewData["EventComboClientDomain"] = ConfigurationManager.AppSettings["EventComboClientDomain"];
 
                 List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+                ViewData["Userscount"] = objuser.Count();
                 if (objuser.Count == 0)
                     ViewData["SearchedUser"] = 0;
             foreach (var item in objuser)
@@ -176,7 +177,7 @@ namespace CMS.Controllers
 
             ViewBag.PageF = PageFilter;
                 var userid = Session["UserID"].ToString();
-            ViewData["Userscount"] = db.AspNetUsers.Where(x=>x.Id!= userid).Count();
+           
 
 
             // List<Permissions> objPerm = GetPermission("APP");
@@ -203,8 +204,8 @@ namespace CMS.Controllers
             {
                 var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
                                      join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
-                                     where UserTemp.Id != user
-                                     select new UsersTemplate
+                                     orderby Pr.FirstName ascending
+                                       select new UsersTemplate
                                      {
                                          EMail = UserTemp.Email,
                                          UserName = UserTemp.UserName,

@@ -38,6 +38,10 @@ namespace EventCombo.Controllers
                 {
                     cms.Imageurl = "/Images/events/event_flyers/imagepath/" + Image.EventImageUrl;
                 }
+                else
+                {
+                    cms.Imageurl = "/Images/default_event_image.jpg";
+                }
                 cms.Title = Eventdetails.EventTitle.ToString();
                 cms.urlTitle = Regex.Replace(Eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""); ;
                 var evid = long.Parse(EventId);

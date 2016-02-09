@@ -4755,63 +4755,63 @@ WriteLiteral("    <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n        var map_canvas ;\r\n        var mapProp;\r\n        google.maps.event.addD" +
-"omListener(window, \'load\', initialize);\r\n        function initialize() {\r\n      " +
-"      var autocomplete = new google.maps.places.Autocomplete(document.getElement" +
-"ById(\'VenueName\'));\r\n\r\n            mapProp = {\r\n                center: new goog" +
-"le.maps.LatLng(41.06000, 28.98700),\r\n                zoom: 17,\r\n                " +
-"mapTypeId: google.maps.MapTypeId.ROADMAP\r\n            };\r\n\r\n\r\n            google" +
-".maps.event.addListener(autocomplete, \'place_changed\', function () {\r\n\r\n\r\n\r\n\r\n  " +
-"                  var mapOptions = {\r\n                        center: new google" +
-".maps.LatLng(6.9167, 79.8473),\r\n                        zoom: 10,\r\n             " +
-"           mapTypeId: google.maps.MapTypeId.ROADMAP\r\n                    };\r\n\r\n " +
-"                   var map = new google.maps.Map(document.getElementById(\"map_ca" +
-"nvas\"),\r\n                      mapOptions);\r\n                    // create a mar" +
-"ker\r\n                    var latlng = new google.maps.LatLng(6.9167, 79.8473);\r\n" +
-"                    var marker = new google.maps.Marker({\r\n                     " +
-"   position: latlng,\r\n                        map: map,\r\n                       " +
-" title: \'My Place\'\r\n\r\n                    });\r\n                    var place = a" +
-"utocomplete.getPlace();\r\n                    if (place.geometry.viewport) {\r\n   " +
-"                     map.fitBounds(place.geometry.viewport);\r\n                  " +
-"  }\r\n                    else {\r\n                        map.setCenter(place.geo" +
-"metry.location);\r\n                        map.setZoom(17);\r\n\r\n                  " +
-"  }\r\n                    marker.setIcon(({\r\n                        url: place.i" +
-"con,\r\n                        size: new google.maps.Size(71, 71),\r\n             " +
-"           origin: new google.maps.Point(0, 0),\r\n                        anchor:" +
-" new google.maps.Point(17, 34),\r\n                        scaledSize: new google." +
-"maps.Size(35, 35)\r\n                    }));\r\n                    marker.setPosit" +
-"ion(place.geometry.location);\r\n                    marker.setVisible(true);\r\n\r\n " +
-"                   var address = \'\';\r\n                    if (place.address_comp" +
-"onents) {\r\n                        address = [\r\n                          (place" +
-".address_components[0] && place.address_components[0].short_name || \'\'),\r\n      " +
-"                    (place.address_components[1] && place.address_components[1]." +
-"short_name || \'\'),\r\n                          (place.address_components[2] && pl" +
-"ace.address_components[2].short_name || \'\')\r\n                        ].join(\' \')" +
-";\r\n                    }\r\n\r\n                $(\"#VenueName\").val(place.address_co" +
-"mponents[0].long_name);\r\n\r\n                $(\"#City\").val(place.address_componen" +
-"ts[1].long_name);\r\n                $(\"#State\").val(place.address_components[3].l" +
-"ong_name);\r\n                $(\"#Zip\").val(place.address_components[5].long_name)" +
-";\r\n                $(\"#CountryID\").val(place.address_components[4].long_name);\r\n" +
-"\r\n                $(\"#VenueName\").val(address.toString());\r\n                $(\"#" +
-"Address1\").val(address[1].toString());\r\n                $(\"#Address2\").val(addre" +
-"ss[2].toString());\r\n                 });\r\n\r\n\r\n\r\n        //});\r\n    }\r\n\r\n\r\n    va" +
-"r pacContainerInitialized = false;\r\n    $(\'#VenueName\').keypress(function () {\r\n" +
-"        if (!pacContainerInitialized) {\r\n            $(\'.pac-container\').css(\'z-" +
-"index\', \'9999\');\r\n            pacContainerInitialized = true;\r\n            $(\".j" +
-"s-location-cant-find\").slice(1).remove();\r\n            //js-location-cant-find\r\n" +
-"        }\r\n    });\r\n    function moveMarker(placeName, latlng) {\r\n        marker" +
-".setIcon(image);\r\n        marker.setPosition(latlng);\r\n        infowindow.setCon" +
-"tent(placeName);\r\n        infowindow.open(map, marker);\r\n    }\r\n\r\n    $(function" +
-" () {\r\n        $(\"body\").click(function (e) {\r\n\r\n            if (e.target.id == " +
-"\"aCantFind\" || e.target.id == \"divCNF\" || e.target.id == \"txtEventLocation\") {\r\n" +
-"            }\r\n            else {\r\n                $(\".pac-container\").removeCla" +
-"ss(\'map-drop-block\');\r\n            }\r\n        });\r\n    })\r\n    function txtEvent" +
-"Location_KeyPress(e) {\r\n        if (e.keyCode === 13) {\r\n            $(\".pac-con" +
-"tainer\").removeClass(\'map-drop-block\');\r\n        }\r\n        return false;\r\n    }" +
-"\r\n\r\n    </script>\r\n");
+WriteLiteral(">\r\n\r\n       \r\n\r\n        var map_canvas ;\r\n        var mapProp;\r\n        google.ma" +
+"ps.event.addDomListener(window, \'load\', initialize);\r\n        function initializ" +
+"e() {\r\n            var autocomplete = new google.maps.places.Autocomplete(docume" +
+"nt.getElementById(\'VenueName\'));\r\n\r\n            mapProp = {\r\n                cen" +
+"ter: new google.maps.LatLng(41.06000, 28.98700),\r\n                zoom: 17,\r\n   " +
+"             mapTypeId: google.maps.MapTypeId.ROADMAP\r\n            };\r\n\r\n\r\n     " +
+"       google.maps.event.addListener(autocomplete, \'place_changed\', function () " +
+"{\r\n\r\n\r\n\r\n\r\n                    var mapOptions = {\r\n                        cente" +
+"r: new google.maps.LatLng(6.9167, 79.8473),\r\n                        zoom: 10,\r\n" +
+"                        mapTypeId: google.maps.MapTypeId.ROADMAP\r\n              " +
+"      };\r\n\r\n                    var map = new google.maps.Map(document.getElemen" +
+"tById(\"map_canvas\"),\r\n                      mapOptions);\r\n                    //" +
+" create a marker\r\n                    var latlng = new google.maps.LatLng(6.9167" +
+", 79.8473);\r\n                    var marker = new google.maps.Marker({\r\n        " +
+"                position: latlng,\r\n                        map: map,\r\n          " +
+"              title: \'My Place\'\r\n\r\n                    });\r\n                    " +
+"var place = autocomplete.getPlace();\r\n                    if (place.geometry.vie" +
+"wport) {\r\n                        map.fitBounds(place.geometry.viewport);\r\n     " +
+"               }\r\n                    else {\r\n                        map.setCen" +
+"ter(place.geometry.location);\r\n                        map.setZoom(17);\r\n\r\n     " +
+"               }\r\n                    marker.setIcon(({\r\n                       " +
+" url: place.icon,\r\n                        size: new google.maps.Size(71, 71),\r\n" +
+"                        origin: new google.maps.Point(0, 0),\r\n                  " +
+"      anchor: new google.maps.Point(17, 34),\r\n                        scaledSize" +
+": new google.maps.Size(35, 35)\r\n                    }));\r\n                    ma" +
+"rker.setPosition(place.geometry.location);\r\n                    marker.setVisibl" +
+"e(true);\r\n\r\n                    var address = \'\';\r\n                    if (place" +
+".address_components) {\r\n                        address = [\r\n                   " +
+"       (place.address_components[0] && place.address_components[0].short_name ||" +
+" \'\'),\r\n                          (place.address_components[1] && place.address_c" +
+"omponents[1].short_name || \'\'),\r\n                          (place.address_compon" +
+"ents[2] && place.address_components[2].short_name || \'\')\r\n                      " +
+"  ].join(\' \');\r\n                    }\r\n\r\n                $(\"#VenueName\").val(pla" +
+"ce.address_components[0].long_name);\r\n\r\n                $(\"#City\").val(place.add" +
+"ress_components[1].long_name);\r\n                $(\"#State\").val(place.address_co" +
+"mponents[3].long_name);\r\n                $(\"#Zip\").val(place.address_components[" +
+"5].long_name);\r\n                $(\"#CountryID\").val(place.address_components[4]." +
+"long_name);\r\n\r\n                $(\"#VenueName\").val(address.toString());\r\n       " +
+"         $(\"#Address1\").val(address[1].toString());\r\n                $(\"#Address" +
+"2\").val(address[2].toString());\r\n                 });\r\n\r\n\r\n\r\n        //});\r\n    " +
+"}\r\n\r\n\r\n    var pacContainerInitialized = false;\r\n    $(\'#VenueName\').keypress(fu" +
+"nction () {\r\n        if (!pacContainerInitialized) {\r\n            $(\'.pac-contai" +
+"ner\').css(\'z-index\', \'9999\');\r\n            pacContainerInitialized = true;\r\n    " +
+"        $(\".js-location-cant-find\").slice(1).remove();\r\n            //js-locatio" +
+"n-cant-find\r\n        }\r\n    });\r\n    function moveMarker(placeName, latlng) {\r\n " +
+"       marker.setIcon(image);\r\n        marker.setPosition(latlng);\r\n        info" +
+"window.setContent(placeName);\r\n        infowindow.open(map, marker);\r\n    }\r\n\r\n " +
+"   $(function () {\r\n        $(\"body\").click(function (e) {\r\n\r\n            if (e." +
+"target.id == \"aCantFind\" || e.target.id == \"divCNF\" || e.target.id == \"txtEventL" +
+"ocation\") {\r\n            }\r\n            else {\r\n                $(\".pac-containe" +
+"r\").removeClass(\'map-drop-block\');\r\n            }\r\n        });\r\n    })\r\n    func" +
+"tion txtEventLocation_KeyPress(e) {\r\n        if (e.keyCode === 13) {\r\n          " +
+"  $(\".pac-container\").removeClass(\'map-drop-block\');\r\n        }\r\n        return " +
+"false;\r\n    }\r\n\r\n    </script>\r\n");
 
             
-            #line 1464 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1467 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
 
@@ -4820,31 +4820,31 @@ WriteLiteral(">\r\n        var map_canvas ;\r\n        var mapProp;\r\n        g
             
             #line default
             #line hidden
-WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n            \r\n            " +
-"var input = document.getElementById(\'txtEventLocation\');\r\n            var Eloc =" +
-" new google.maps.places.Autocomplete(input);\r\n\r\n\r\n            $(\'#txtEventLocati" +
-"on\').on(\'click\', function () {\r\n                $(\".pac-container\").addClass(\'ma" +
-"p-drop-block\');\r\n                $(\"#divCNF\").addClass(\'map-drop-block\');\r\n     " +
+WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n         \r\n            var" +
+" input = document.getElementById(\'txtEventLocation\');\r\n            var Eloc = ne" +
+"w google.maps.places.Autocomplete(input);\r\n\r\n\r\n            $(\'#txtEventLocation\'" +
+").on(\'click\', function () {\r\n                $(\".pac-container\").addClass(\'map-d" +
+"rop-block\');\r\n                $(\"#divCNF\").addClass(\'map-drop-block\');\r\n        " +
+"        $(\".pac-container\").slice(1).removeClass(\'map-drop-block\');\r\n           " +
+" });\r\n\r\n            $(\'#txtEventLocation\').on(\'focus\', function () {\r\n          " +
+"      $(\".pac-container\").addClass(\'map-drop-block\');\r\n                $(\"#divCN" +
+"F\").addClass(\'map-drop-block\');\r\n                $(\".pac-container\").slice(1).re" +
+"moveClass(\'map-drop-block\');\r\n                setTimeout(function () {\r\n        " +
+"            $(\".pac-container\").append(\"<div class=\'pac-item location-places-aut" +
+"ocomplete-cant-find \' id=\'divCNF\'><i class=\'ico-search\'></i><b><span class=\'pac-" +
+"item-query\'><a id=\'aCantFind\' data-target=\'#myModal\' class=\'js-location-cant-fin" +
+"d\' onclick=\'CannotFindLocation();\' href=\'javascript:void(0);\'   style=\'cursor: p" +
+"ointer; cursor: hand; margin-left:7px; color:#3cf;\' data-toggle=\'modal\' draggabl" +
+"e=\'false\'>Can\'t find your location?</a></span></b></div>\");\r\n                   " +
+" $(\".pac-container\").on(\"click\", function (event) {\r\n                        $(t" +
+"his).removeClass(\'map-drop-block\');\r\n                        $(\"#divCNF\").remove" +
+"Class(\'map-drop-block\');\r\n                        $(this).hide();\r\n             " +
 "           $(\".pac-container\").slice(1).removeClass(\'map-drop-block\');\r\n        " +
-"    });\r\n\r\n            $(\'#txtEventLocation\').on(\'focus\', function () {\r\n       " +
-"         $(\".pac-container\").addClass(\'map-drop-block\');\r\n                $(\"#di" +
-"vCNF\").addClass(\'map-drop-block\');\r\n                $(\".pac-container\").slice(1)" +
-".removeClass(\'map-drop-block\');\r\n                setTimeout(function () {\r\n     " +
-"               $(\".pac-container\").append(\"<div class=\'pac-item location-places-" +
-"autocomplete-cant-find \' id=\'divCNF\'><i class=\'ico-search\'></i><b><span class=\'p" +
-"ac-item-query\'><a id=\'aCantFind\' data-target=\'#myModal\' class=\'js-location-cant-" +
-"find\' onclick=\'CannotFindLocation();\' href=\'javascript:void(0);\'   style=\'cursor" +
-": pointer; cursor: hand; margin-left:7px; color:#3cf;\' data-toggle=\'modal\' dragg" +
-"able=\'false\'>Can\'t find your location?</a></span></b></div>\");\r\n                " +
-"    $(\".pac-container\").on(\"click\", function (event) {\r\n                        " +
-"$(this).removeClass(\'map-drop-block\');\r\n                        $(\"#divCNF\").rem" +
-"oveClass(\'map-drop-block\');\r\n                        $(this).hide();\r\n          " +
-"              $(\".pac-container\").slice(1).removeClass(\'map-drop-block\');\r\n     " +
-"               });\r\n                }, 100);\r\n\r\n            });\r\n\r\n\r\n\r\n\r\n\r\n\r\n   " +
-"         $.getJSON(\'");
+"            });\r\n                }, 100);\r\n\r\n            });\r\n\r\n\r\n\r\n\r\n\r\n\r\n      " +
+"      $.getJSON(\'");
 
             
-            #line 1502 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1505 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                   Write(Url.Action("GetEventChildData", "EditEvent"));
 
             
@@ -4960,7 +4960,7 @@ WriteLiteral("\', { lEventId: $(\"#hdEventId\").val()},\r\n                funct
 "r privat=\"");
 
             
-            #line 1695 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1698 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                    Write(Model.EventPrivacy);
 
             
@@ -4969,7 +4969,7 @@ WriteLiteral("\', { lEventId: $(\"#hdEventId\").val()},\r\n                funct
 WriteLiteral("\";\r\n            var privatefb=\"");
 
             
-            #line 1696 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1699 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                       Write(Model.Private_ShareOnFB);
 
             
@@ -4978,7 +4978,7 @@ WriteLiteral("\";\r\n            var privatefb=\"");
 WriteLiteral("\"\r\n            var privateguest=\"");
 
             
-            #line 1697 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1700 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Model.Private_GuestOnly);
 
             
@@ -4987,7 +4987,7 @@ WriteLiteral("\"\r\n            var privateguest=\"");
 WriteLiteral("\"\r\n            var privatepwd=\"");
 
             
-            #line 1698 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1701 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                        Write(Model.Private_Password);
 
             
@@ -5034,7 +5034,7 @@ WriteLiteral(@"""
             var temp=""");
 
             
-            #line 1736 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1739 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(TempData["Scroll"]);
 
             
@@ -5043,7 +5043,7 @@ WriteLiteral(@"""
 WriteLiteral("\"\r\n            if(temp!=\'\')\r\n            {\r\n                var scroll=\"");
 
             
-            #line 1739 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1742 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                        Write(TempData["Scroll"]);
 
             
@@ -5089,7 +5089,7 @@ WriteLiteral(@""";
 ");
 
             
-            #line 1776 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1779 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     // ---------------------Event Creation Script -------------------
 
@@ -5426,46 +5426,45 @@ WriteLiteral("    <script>\r\n\r\n        $(\".chkvalidation\").blur(function ()
 "(\"#edEventDesc\").code();\r\n\r\n            var varDescritpion = \'\';\r\n            va" +
 "r optionalvariable = \'\';\r\n            if ($(\"#id_variablecharge\").is(\":checked\")" +
 ") {\r\n\r\n                varDescritpion = $(\'#id_vardesc\').val();\r\n               " +
-" optionalvariable = $(\'#variabletype\').val();\r\n            }\r\n\r\n            var " +
-"model = {\r\n                \'EventID\': $(\"#hdEventId\").val(),\r\n                \'E" +
-"ventTypeID\': $(\"#EventType\").val(),\r\n                \'EventCategoryID\': $(\"#ddlE" +
-"ventCategory\").val(),\r\n                \'EventSubCategoryID\': $(\"#ddlEventSubCate" +
-"gory\").val(),\r\n                \'UserID\': \'\',\r\n                \'EventTitle\': $(\"#" +
-"txtEventTitle\").val(),\r\n                \'EventDescription\': $(\"#edEventDesc\").co" +
-"de().replace(/<\\/p>/gi, \"\\n\").replace(/<br\\/?>/gi, \"\\n\").replace(/<\\/?[^>]+(>|$)" +
-"/g, \"\"),\r\n                \'EventPrivacy\': ($(\"#rdPublic\").is(\":checked\") == true" +
-" ? \'Public\' : \'Private\'),\r\n                \'Private_ShareOnFB\': ($(\"#chkShareOnF" +
-"B\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Private_GuestOnly\': (" +
-"$(\"#chkGuestonly\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Privat" +
-"e_Password\': $(\"#txtReqPassword\").val(),\r\n                \'EventUrl\': $(\"#txtEve" +
-"ntUrl\").val().trim(),\r\n                \'PublishOnFB\': ($(\"#chkPublishEventOnFB\")" +
-".is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'EventStatus\': status,\r\n " +
-"               \'AddressDetail\': SubmitAddress,\r\n                \'EventVenue\': Si" +
-"ngleTiming,\r\n                \'TimeZone\': $(\"#dllTimeZone\").val(),\r\n             " +
-"   \'DisplayStartTime\': ($(\"#chkDisplayStartTime\").is(\":checked\") == true ? \"Y\" :" +
-" \"N\"),\r\n                \'DisplayEndTime\': ($(\"#chkDisplayEndTime\").is(\":checked\"" +
-") == true ? \"Y\" : \"N\"),\r\n                \'DisplayTimeZone\': ($(\"#chkTimeZone\").i" +
-"s(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'FBUrl\': \'\',\r\n             " +
-"   \'TwitterUrl\': \'\',\r\n                \'MultipleEvents\': MultipleSchedule,\r\n     " +
-"           \'Orgnizer\': Orgnizer,\r\n                \'AddressStatus\':  $(\'#hidAddre" +
-"ssStatus\').val(),\r\n                \'LastLocationAddress\': ($(\"#hidAddressStatus\"" +
-").val() == \"PastLocation\" ? $(\"#dllPastLocation\").val() : 0),\r\n                \'" +
-"EnableFBDiscussion\': ($(\"#chkAllowFBDis\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n" +
-"                \'Ticket\': Ticket,\r\n                \'EventImage\': EventImage,\r\n  " +
-"              \'EventVariable\': EventVariable,\r\n                \'Ticket_DAdress\':" +
-" ($(\"#id_ticketdeliveryaddr\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n            " +
-"    \'Ticket_showremain\': ($(\"#id_showremaningticket\").is(\":checked\") == true ? \'" +
-"Y\' : \'N\'),\r\n                \'Ticket_showvariable\': ($(\"#id_variablecharge\").is(\"" +
-":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket_variabledesc\': varDesc" +
-"ritpion,\r\n                \'Ticket_variabletype\': optionalvariable,\r\n            " +
-"    \'ShowMap\': ($(\"#chkShowMap\").is(\":checked\") == true ? \'Y\' : \'N\')\r\n\r\n        " +
-"    };\r\n\r\n            //var params = \'strEveDec :\' + $(\"#edEventDesc\").code();\r\n" +
-"\r\n            var vDuplicate  = ($(\"#chkDuplicateEvent\").is(\":checked\") == true " +
-"? \'Y\' : \'N\');\r\n            if ($(\"#hdEventId\").val() != \'\') {\r\n\r\n               " +
-" $.ajax({\r\n                    url: \'");
+" optionalvariable = $(\'#variabletype\').val();\r\n            }\r\n            var ev" +
+"Dec = escape($(\"#edEventDesc\").code());\r\n            var model = {\r\n            " +
+"    \'EventID\': $(\"#hdEventId\").val(),\r\n                \'EventTypeID\': $(\"#EventT" +
+"ype\").val(),\r\n                \'EventCategoryID\': $(\"#ddlEventCategory\").val(),\r\n" +
+"                \'EventSubCategoryID\': $(\"#ddlEventSubCategory\").val(),\r\n        " +
+"        \'UserID\': \'\',\r\n                \'EventTitle\': $(\"#txtEventTitle\").val(),\r" +
+"\n                \'EventDescription\': evDec,\r\n                \'EventPrivacy\': ($(" +
+"\"#rdPublic\").is(\":checked\") == true ? \'Public\' : \'Private\'),\r\n                \'P" +
+"rivate_ShareOnFB\': ($(\"#chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n   " +
+"             \'Private_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") == true ? \'" +
+"Y\' : \'N\'),\r\n                \'Private_Password\': $(\"#txtReqPassword\").val(),\r\n   " +
+"             \'EventUrl\': $(\"#txtEventUrl\").val().trim(),\r\n                \'Publi" +
+"shOnFB\': ($(\"#chkPublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n      " +
+"          \'EventStatus\': status,\r\n                \'AddressDetail\': SubmitAddress" +
+",\r\n                \'EventVenue\': SingleTiming,\r\n                \'TimeZone\': $(\"#" +
+"dllTimeZone\").val(),\r\n                \'DisplayStartTime\': ($(\"#chkDisplayStartTi" +
+"me\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'DisplayEndTime\': ($(" +
+"\"#chkDisplayEndTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'Dis" +
+"playTimeZone\': ($(\"#chkTimeZone\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n        " +
+"        \'FBUrl\': \'\',\r\n                \'TwitterUrl\': \'\',\r\n                \'Multip" +
+"leEvents\': MultipleSchedule,\r\n                \'Orgnizer\': Orgnizer,\r\n           " +
+"     \'AddressStatus\':  $(\'#hidAddressStatus\').val(),\r\n                \'LastLocat" +
+"ionAddress\': ($(\"#hidAddressStatus\").val() == \"PastLocation\" ? $(\"#dllPastLocati" +
+"on\").val() : 0),\r\n                \'EnableFBDiscussion\': ($(\"#chkAllowFBDis\").is(" +
+"\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket\': Ticket,\r\n          " +
+"      \'EventImage\': EventImage,\r\n                \'EventVariable\': EventVariable," +
+"\r\n                \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr\").is(\":checked\") " +
+"== true ? \'Y\' : \'N\'),\r\n                \'Ticket_showremain\': ($(\"#id_showremaning" +
+"ticket\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket_showvaria" +
+"ble\': ($(\"#id_variablecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n           " +
+"     \'Ticket_variabledesc\': varDescritpion,\r\n                \'Ticket_variabletyp" +
+"e\': optionalvariable,\r\n                \'ShowMap\': ($(\"#chkShowMap\").is(\":checked" +
+"\") == true ? \'Y\' : \'N\')\r\n\r\n            };\r\n\r\n            //var params = \'strEveD" +
+"ec :\' + $(\"#edEventDesc\").code();\r\n\r\n            var vDuplicate  = ($(\"#chkDupli" +
+"cateEvent\").is(\":checked\") == true ? \'Y\' : \'N\');\r\n            if ($(\"#hdEventId\"" +
+").val() != \'\') {\r\n\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 2550 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2553 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("Draftmodemodification", "EditEvent"));
 
             
@@ -5480,7 +5479,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 2556 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2559 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -5507,7 +5506,7 @@ WriteLiteral(@"';
                                 window.location.href = '");
 
             
-            #line 2574 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2577 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                    Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -5525,7 +5524,7 @@ WriteLiteral(@"' + '?Eventid=' + response;
                                 window.open('");
 
             
-            #line 2583 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2586 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         Write(Url.Action("ViewCreateEvent", "CreateEvent",new { }));
 
             
@@ -5536,7 +5535,7 @@ WriteLiteral("?strUrlData=\' + vUrl, \"_blank\");\r\n                           
 "             //live\r\n\r\n                                window.location.href = \'");
 
             
-            #line 2589 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2592 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                    Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -5567,7 +5566,7 @@ WriteLiteral(@"?EventId=' +response;
                 url: '");
 
             
-            #line 2611 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2614 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetSubCat", "EditEvent"));
 
             
@@ -5593,7 +5592,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 2628 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2631 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetOrgnizerDetail", "EditEvent"));
 
             
@@ -5745,7 +5744,7 @@ WriteLiteral("\',\r\n                data: { lEventId: $(\"#hdEventId\").val() }
 "jax({\r\n                        url: \'");
 
             
-            #line 2922 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2925 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "CreateEvent"));
 
             
@@ -5773,7 +5772,7 @@ WriteLiteral("\',\r\n                        data: { strUserUrl: $(\"#txtEventUr
 "     url: \'");
 
             
-            #line 2955 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2958 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -5889,7 +5888,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 "----\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 3142 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3145 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetPreviousAddressForEditing", "CreateEvent"));
 
             
@@ -6129,7 +6128,7 @@ WriteLiteral("\',\r\n                data: { \"lEid\": $(\"#hdEventId\").val() }
 "");
 
             
-            #line 3618 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3621 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
     //Ticket Section Starts
@@ -6188,7 +6187,7 @@ WriteLiteral("    <script>\r\n        function CannotFindLocation() {\r\n       
 "          });\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 3726 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3729 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -6932,14 +6931,14 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 "        }\r\n    </script>\r\n");
 
             
-            #line 5280 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5283 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 5281 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5284 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      
 
             
@@ -6947,9 +6946,9 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 245349), Tuple.Create("\"", 245388)
-, Tuple.Create(Tuple.Create("", 245356), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 245356), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 245314), Tuple.Create("\"", 245353)
+, Tuple.Create(Tuple.Create("", 245321), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 245321), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6957,7 +6956,7 @@ WriteLiteral(" rel=\"stylesheet\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 5283 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5286 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -6965,9 +6964,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 245422), Tuple.Create("\"", 245479)
-, Tuple.Create(Tuple.Create("", 245429), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 245429), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 245387), Tuple.Create("\"", 245444)
+, Tuple.Create(Tuple.Create("", 245394), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 245394), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6976,15 +6975,15 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 245513), Tuple.Create("\"", 245550)
-, Tuple.Create(Tuple.Create("", 245519), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 245519), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 245478), Tuple.Create("\"", 245515)
+, Tuple.Create(Tuple.Create("", 245484), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 245484), false)
 );
 
 WriteLiteral("></script>\r\n");
 
             
-            #line 5286 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5289 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
 
@@ -7017,7 +7016,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            //
 "niqueguid\').val(uuid());\r\n\r\n\r\n        });\r\n    </script>\r\n");
 
             
-            #line 5335 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5338 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7027,7 +7026,7 @@ WriteLiteral("    <script>\r\n        function ajaxsetup(strname, strFormTag) {\
 "msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url:\'");
 
             
-            #line 5341 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5344 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -7288,9 +7287,8 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "  return value\r\n                    .replace(/\\D/g, \"\")\r\n                    .re" +
 "place(/\\B(?=(\\d{3})+(?!\\d))/g, \",\")\r\n                    ;\r\n                });\r" +
 "\n            });\r\n            $(\'.close-model\').on(\'click\', function (e) {\r\n    " +
-"            $.modal.close();\r\n            });\r\n\r\n            $(\'#drag-drop\').on(" +
-"\'click\', function (e) {\r\n                $(\'#input2\').unbind(\'click\');\r\n\r\n      " +
-"      });\r\n        });\r\n\r\n    </script>\r\n");
+"            $.modal.close();\r\n            });\r\n\r\n           \r\n        });\r\n\r\n   " +
+" </script>\r\n");
 
             
             #line 5892 "..\..\Views\EditEvent\ModifyEvent.cshtml"
@@ -7299,8 +7297,8 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
             
             #line default
             #line hidden
-WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n\r\n        var image=\"\";\r\n " +
-"       var j= ");
+WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n      \r\n        var image=" +
+"\"\";\r\n        var j= ");
 
             
             #line 5897 "..\..\Views\EditEvent\ModifyEvent.cshtml"
@@ -7406,28 +7404,30 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 "n_image_element).remove();\r\n                $(\'#input2\').click(function (e) {\r\n " +
 "                   e.preventDefault();\r\n\r\n                })\r\n                $(" +
 "\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n            },\r\n            onEmpty: function (" +
-"el) {\r\n\r\n\r\n                if ($(\"#imageeror\").val() == 0) {\r\n                  " +
-"  if ($(\".jFiler-items ul li\").length == 2) { setTimeout(function () { $(\".jFile" +
-"r-input-inner\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); " +
-"};\r\n                }\r\n            },\r\n            captions: {\r\n                " +
-"button: \"Choose Files\",\r\n                feedback: \"Choose files To Upload\",\r\n  " +
-"              feedback2: \"files were chosen\",\r\n                drop: \"Drop file " +
-"here to Upload\",\r\n                removeConfirmation: \"Are you sure you want to " +
-"remove this file?\",\r\n                errors: {\r\n                    filesLimit: " +
-"ajaxsetup(\'CreateEvent\', \'CreateEventImagecountUI\'),\r\n                    filesT" +
-"ype: ajaxsetup(\'CreateEvent\', \'CreateEventImageTypeUI\'),\r\n                    fi" +
-"lesSize: ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\'),\r\n                  " +
-"  filesSizeAll: ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\')\r\n            " +
-"    }\r\n            },\r\n            files: j\r\n        });\r\n\r\n\r\n\r\n            if(j" +
-"!=\'\')\r\n            {\r\n                $(\'#image_count\').val(j.length);\r\n        " +
-"        for(var i=0;i<j.length;i++)\r\n                {\r\n                    var " +
-"type=j[i].type;\r\n                    var img=j[i].name;\r\n                    var" +
-" imgdata = img + \'####\' + type;\r\n $(\'<input>\').attr({type: \'hidden\',id:\'image_hi" +
-"dden_\'+i,name: \'Eventpicture[\' + imgdata + \']\', value:imgdata}).appendTo(\'form\')" +
-";\r\n\r\n                }\r\n\r\n            }\r\n    });\r\n    </script>\r\n");
+"el) {\r\n               \r\n\r\n                if ($(\"#imageeror\").val() == 0) {\r\n   " +
+"                 if ($(\".jFiler-items ul li\").length == 2) { setTimeout(function" +
+" () { $(\".jFiler-input-inner\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'cli" +
+"ck\'); }, 200); };\r\n                }\r\n            },\r\n            captions: {\r\n " +
+"               button: \"Choose Files\",\r\n                feedback: \"Choose files " +
+"To Upload\",\r\n                feedback2: \"files were chosen\",\r\n                dr" +
+"op: \"Drop file here to Upload\",\r\n                removeConfirmation: \"Are you su" +
+"re you want to remove this file?\",\r\n                errors: {\r\n                 " +
+"   filesLimit: ajaxsetup(\'CreateEvent\', \'CreateEventImagecountUI\'),\r\n           " +
+"         filesType: ajaxsetup(\'CreateEvent\', \'CreateEventImageTypeUI\'),\r\n       " +
+"             filesSize: ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\'),\r\n   " +
+"                 filesSizeAll: ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\'" +
+")\r\n                }\r\n            },\r\n            files: j\r\n        });\r\n\r\n\r\n\r\n " +
+"           if(j!=\'\')\r\n            {\r\n                $(\'#image_count\').val(j.len" +
+"gth);\r\n                for(var i=0;i<j.length;i++)\r\n                {\r\n         " +
+"           var type=j[i].type;\r\n                    var img=j[i].name;\r\n        " +
+"            var imgdata = img + \'####\' + type;\r\n $(\'<input>\').attr({type: \'hidde" +
+"n\',id:\'image_hidden_\'+i,name: \'Eventpicture[\' + imgdata + \']\', value:imgdata}).a" +
+"ppendTo(\'form\');\r\n\r\n                }\r\n\r\n            }\r\n\r\n\r\n            $(\'#drag" +
+"-drop\').on(\'click\', function (e) {\r\n               \r\n                $(\'#input2\'" +
+").unbind(\'click\');\r\n\r\n            });\r\n    });\r\n    </script>\r\n");
 
             
-            #line 6104 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6111 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 

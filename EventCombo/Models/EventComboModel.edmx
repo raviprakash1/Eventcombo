@@ -560,6 +560,15 @@
           <Property Name="TicketDeliveryMethodID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DeliveryMethodID" Type="bigint" Nullable="false" />
         </EntityType>
+        <EntityType Name="TicketOrderDetail">
+          <Key>
+            <PropertyRef Name="T_Id" />
+          </Key>
+          <Property Name="T_TQD_Id" Type="bigint" />
+          <Property Name="T_Guid" Type="varchar" MaxLength="1000" />
+          <Property Name="T_Id" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="T_Order_Id" Type="varchar" MaxLength="11" />
+        </EntityType>
         <EntityType Name="TicketType">
           <Key>
             <PropertyRef Name="TicketTypeID" />
@@ -882,6 +891,7 @@
           <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketBearer" EntityType="Self.TicketBearer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketDeliveryMethod" EntityType="Self.TicketDeliveryMethod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketOrderDetail" EntityType="Self.TicketOrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
@@ -1886,6 +1896,7 @@
             <Parameter Name="EventId" Mode="In" Type="Int64" />
             <Parameter Name="UserId" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="TicketOrderDetails" EntityType="EventComboModel.TicketOrderDetail" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1939,6 +1950,15 @@
           <Property Type="String" Name="EventTime" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="EventCancel" Nullable="true" MaxLength="2" />
         </ComplexType>
+        <EntityType Name="TicketOrderDetail">
+          <Key>
+            <PropertyRef Name="T_Id" />
+          </Key>
+          <Property Name="T_TQD_Id" Type="Int64" />
+          <Property Name="T_Guid" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="T_Id" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="T_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2634,6 +2654,16 @@
           <FunctionImportMapping FunctionImportName="GetSetUserRole" FunctionName="EventComboModel.Store.GetSetUserRole" />
           <FunctionImportMapping FunctionImportName="GetTicketListing" FunctionName="EventComboModel.Store.GetTicketListing" />
           <FunctionImportMapping FunctionImportName="PublishEvent" FunctionName="EventComboModel.Store.PublishEvent" />
+          <EntitySetMapping Name="TicketOrderDetails">
+            <EntityTypeMapping TypeName="EventComboModel.TicketOrderDetail">
+              <MappingFragment StoreEntitySet="TicketOrderDetail">
+                <ScalarProperty Name="T_Order_Id" ColumnName="T_Order_Id" />
+                <ScalarProperty Name="T_Id" ColumnName="T_Id" />
+                <ScalarProperty Name="T_Guid" ColumnName="T_Guid" />
+                <ScalarProperty Name="T_TQD_Id" ColumnName="T_TQD_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
