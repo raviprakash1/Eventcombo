@@ -98,6 +98,90 @@ namespace EventCombo.Controllers
          
             return View();
         }
+
+
+        public ActionResult EventList(string strID)
+        {
+
+            Session["AppId"] = strID;
+            Session["Fromname"] = "MyList";
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            string hdLastTab="1"; int page_live = 1; int page_saved = 1; int page_past = 1; int pageSize = 20;
+            string SearchStringEventTitle = "";
+            page_live = page_live > 0 ? page_live : 1;
+            page_saved = page_saved > 0 ? page_saved : 1;
+            page_past = page_past > 0 ? page_past : 1;
+            pageSize = pageSize > 0 ? pageSize : 2;
+            if (string.IsNullOrEmpty(SearchStringEventTitle))
+                SearchStringEventTitle = "";
+            List<GetEventsListByStatus1_Result> objLiveEventList = GetLiveEvents(SearchStringEventTitle);
+            List<GetEventsListByStatus1_Result> objSavedEventList = GetSavedEvents(SearchStringEventTitle);
+            List<GetEventsListByStatus1_Result> objPastEventList = GetPastEvents(SearchStringEventTitle);
+            List<GetEventsListByStatus1_Result> objGuestEventList = GetGuestsList(SearchStringEventTitle);
+
+            ViewBag.LiveEvent = objLiveEventList.ToPagedList(page_live, pageSize);
+            ViewBag.SavedEvent = objSavedEventList.ToPagedList(page_saved, pageSize);
+            ViewBag.PastEvent = objPastEventList.ToPagedList(page_past, pageSize);
+
+            TempData["LiveEvents"] = objLiveEventList.Count;
+            TempData["SavedEvents"] = objSavedEventList.Count;
+            TempData["PastEvents"] = objPastEventList.Count;
+
+            TempData["GuestList"] = objGuestEventList.Count;
+
+            if (!string.IsNullOrEmpty(SearchStringEventTitle) && SearchStringEventTitle != null)
+            {
+                TempData["LiveEventscnt"] = objLiveEventList.Count;
+                TempData["SavedEventscnt"] = objSavedEventList.Count;
+                TempData["PastEventscnt"] = objPastEventList.Count;
+
+                TempData["GuestListcnt"] = objGuestEventList.Count;
+                TempData["Allcount"] = 1;
+            }
+            else
+            {
+                TempData["LiveEventscnt"] = 10;
+                TempData["SavedEventscnt"] = 10;
+                TempData["PastEventscnt"] = 10;
+                TempData["GuestListcnt"] = 0;
+
+                if (objLiveEventList.Count == 0 && objSavedEventList.Count == 0 && objPastEventList.Count == 0 && objGuestEventList.Count == 0)
+                {
+                    TempData["Allcount"] = 0;
+                }
+                else
+                {
+                    TempData["Allcount"] = 1;
+                }
+            }
+
+            TempData["hdLastTab"] = hdLastTab;
+            if (objLiveEventList.Count == 0)
+                ViewData["LiveEvntCnt"] = 0;
+            if (objSavedEventList.Count == 0)
+                ViewData["SavedEvntCnt"] = 0;
+            if (objPastEventList.Count == 0)
+                ViewData["PastEvntCnt"] = 0;
+            if (objGuestEventList.Count == 0)
+                ViewData["GuestLstCnt"] = 0;
+
+            return View();
+        }
+
         public List<GetEventsListByStatus1_Result> GetLiveEvents(string SearchStringEventTitle)
         {
             using (EventComboEntities db = new EventComboEntities())

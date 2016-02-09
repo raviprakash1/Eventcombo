@@ -75,7 +75,7 @@
                                 <div class="col-sm-2 col-xs-12 no_pad mb10"> <p>Payout method:</p></div>
                                 <div class="col-sm-4 no_pad mb10 dropheight">
 
-                                    if (@Model.PI_PaymentMethod != null)
+                                    @if (Model != null && !String.IsNullOrEmpty(Model.PI_PaymentMethod))
                                     {
                                         <select id="ddlPaymentMethod" name="PaymentMethod" class="form-control selectpicker">
                                             <option @(Model.PI_PaymentMethod == "D" ? " selected=\"selected\" " : "") value="D">Direct Deposit</option>
@@ -107,20 +107,38 @@
                         <div class="col-sm-12 no_pad">
                             <div id="dvDirectDeposit" class="col-sm-12 no_pad">
                                 <div class="form-group">
-                                    <div class="col-sm-4 col-xs-12 no_pad">
-                                        <label class="Indiv_cont label-control ev_tickt_lebel pl0 ">
-                                            <input id="rdbAccHoldInfoI" type="radio" name="AccHoldInfo" value="I" checked="checked"
-                                                   @(Model.PI_AccountHolderType == "I" ? " checked=\"true\" " : "") />
-                                            Individual
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-12 no_pad">
-                                        <label class="Comp_chek label-control ev_tickt_lebel pl0">
-                                            <input id="rdbAccHoldInfoC" type="radio" name="AccHoldInfo" value="C"
-                                                   @(Model.PI_AccountHolderType == "C" ? " checked=\"true\" " : "") />
-                                            Company
-                                        </label>
-                                    </div>
+                                    @if (Model != null && !String.IsNullOrEmpty(Model.PI_AccountHolderType))
+                                    {
+                                        <div class="col-sm-4 col-xs-12 no_pad">
+                                            <label class="Indiv_cont label-control ev_tickt_lebel pl0 ">
+                                                <input id="rdbAccHoldInfoI" type="radio" name="AccHoldInfo" value="I"
+                                                       @(Model.PI_AccountHolderType == "I" ? " checked=\"true\" " : "") />
+                                                Individual
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-12 no_pad">
+                                            <label class="Comp_chek label-control ev_tickt_lebel pl0">
+                                                <input id="rdbAccHoldInfoC" type="radio" name="AccHoldInfo" value="C"
+                                                       @(Model.PI_AccountHolderType == "C" ? " checked=\"true\" " : "") />
+                                                Company
+                                            </label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-4 col-xs-12 no_pad">
+                                            <label class="Indiv_cont label-control ev_tickt_lebel pl0 ">
+                                                <input id="rdbAccHoldInfoI" type="radio" name="AccHoldInfo" value="I" checked="checked" />
+                                                Individual
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-12 no_pad">
+                                            <label class="Comp_chek label-control ev_tickt_lebel pl0">
+                                                <input id="rdbAccHoldInfoC" type="radio" name="AccHoldInfo" value="C" />
+                                                Company
+                                            </label>
+                                        </div>
+                                    }
                                     <div class="clearfix"></div>
 
 
@@ -129,8 +147,16 @@
                                             Company Name*
                                         </label>
                                         <div class="col-sm-8 col-xs-12 no_pad">
-                                            <input id="txtCompanyName" name="CompanyName" type="text" class="form-control "
-                                                   maxlength="1000" placeholder="Company Name" value="@Model.PI_AccCompName" required>
+                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_AccCompName))
+                                            {
+                                                <input id="txtCompanyName" name="CompanyName" type="text" class="form-control "
+                                                       maxlength="1000" placeholder="Company Name" value="@Model.PI_AccCompName" required>
+                                            }
+                                            else
+                                            {
+                                                <input id="txtCompanyName" name="CompanyName" type="text" class="form-control "
+                                                       maxlength="1000" placeholder="Company Name">
+                                            }
                                             <p>Company name, as appears on bank statements</p>
                                         </div>
                                     </div>
@@ -140,8 +166,16 @@
                                         <div class="col-sm-12 col-xs-12 no_pad">
                                             <div class="row">
                                                 <div class="col-xs-12 ">
-                                                    <input id="txtName" name="Name" class="form-control"
-                                                           placeholder="Name" type="text" value="@Model.PI_AccCompName" required>
+                                                    @if (Model != null && !String.IsNullOrEmpty(Model.PI_AccCompName))
+                                                    {
+                                                        <input id="txtName" name="Name" class="form-control"
+                                                               placeholder="Name" type="text" value="@Model.PI_AccCompName">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input id="txtName" name="Name" class="form-control"
+                                                               placeholder="Name" type="text">
+                                                    }
                                                 </div>
                                             </div>
                                             <p>Your full name, as appears on bank statements</p>
@@ -151,8 +185,16 @@
                                     <div class="col-sm-8 col-xs-12 no_pad mt10">
                                         <label class="col-md-12 control-label comp_name no_pad ">Address*</label>
                                         <div class="col-md-12 col-xs-12 no_pad">
-                                            <input id="txtAddress1" name="Address1" class="form-control" placeholder="Address 1"
-                                                   type="text" value="@Model.PI_Address" required>
+                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_Address))
+                                            {
+                                                <input id="txtAddress1" name="Address1" class="form-control" placeholder="Address 1"
+                                                       type="text" value="@Model.PI_Address" required>
+                                            }
+                                            else
+                                            {
+                                                <input id="txtAddress1" name="Address1" class="form-control" placeholder="Address 1"
+                                                       type="text">
+                                            }
                                         </div>
                                         <div class="col-md-12 col-xs-12 no_pad mt10">
                                             <input id="txtAddress2" name="Address2" class="form-control" placeholder="Address 2" type="text">
@@ -162,12 +204,28 @@
                                     <div class="clearfix"></div>
                                     <div class="col-md-8 col-xs-12 no_pad mt10">
                                         <div class="col-xs-6 dropheight">
-                                            <input id="txtCity1" name="City1" class="form-control" placeholder="City"
-                                                   maxlength="500" type="text" value="@Model.PI_City" />
+                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_City))
+                                            {
+                                                <input id="txtCity1" name="City1" class="form-control" placeholder="City"
+                                                       maxlength="500" type="text" value="@Model.PI_City" />
+                                            }
+                                            else
+                                            {
+                                                <input id="txtCity1" name="City1" class="form-control" placeholder="City"
+                                                       maxlength="500" type="text" />
+                                            }
                                         </div>
                                         <div class="col-xs-6 dropheight">
-                                            <input id="txtState1" name="State1" class="form-control" placeholder="State"
-                                                   maxlength="500" type="text" value="@Model.PI_State" />
+                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_State))
+                                            {
+                                                <input id="txtState1" name="State1" class="form-control" placeholder="State"
+                                                       maxlength="500" type="text" value="@Model.PI_State" />
+                                            }
+                                            else
+                                            {
+                                                <input id="txtState1" name="State1" class="form-control" placeholder="State"
+                                                       maxlength="500" type="text" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -179,7 +237,16 @@
                                                     <option @(Model.PI_Country == 1 ? " selected=\"selected\" " : "") value="1">Country1</option>
                                                     <option @(Model.PI_Country == 2 ? " selected=\"selected\" " : "") value="2">Country2</option>
                                                 </select>*@
-                                            @Html.DropDownList("Country1", ViewBag.CountryID as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "ddlCountry1" })
+                                            @if (ViewBag.CountryID != null)
+                                            {
+                                                @Html.DropDownList("Country1", ViewBag.CountryID as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "ddlCountry1" })
+                                            }
+                                            else
+                                            {
+                                                <select id="ddlCountry1" name="Country1" class="form-control selectpicker">
+                                                    <option value="1" selected>Select Country</option>
+                                                </select>
+                                            }
                                         </div>
                                         <div class="col-xs-6 ">
                                             <input id="txtPostalCode1" name="PostalCode1" class="form-control Number" placeholder="Postal Code" type="text"
@@ -192,20 +259,38 @@
 
                                 <div class="col-md-8 col-xs-12 no_pad mt20">
                                     <div class="col-sm-12 no_pad acnt_hold_text">Bank account information</div>
-                                    <div class="col-sm-4 col-xs-12 no_pad">
-                                        <label class="label-control ev_tickt_lebel pl0 ">
-                                            <input id="AccInfo1" name="AccInfo" type="radio" value="C"
-                                                   @(Model.PI_BankAccInfo == "C" ? " checked=\"true\" " : "") />
-                                            Checking
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-12 no_pad">
-                                        <label class="label-control ev_tickt_lebel pl0">
-                                            <input id="AccInfo2" name="AccInfo" type="radio" value="S" checked="checked"
-                                                   @(Model.PI_BankAccInfo == "S" ? " checked=\"true\" " : "") />
-                                            Savings
-                                        </label>
-                                    </div>
+                                    @if (Model != null && !String.IsNullOrEmpty(Model.PI_BankAccInfo))
+                                    {
+                                        <div class="col-sm-4 col-xs-12 no_pad">
+                                            <label class="label-control ev_tickt_lebel pl0 ">
+                                                <input id="AccInfo1" name="AccInfo" type="radio" value="C"
+                                                       @(Model.PI_BankAccInfo == "C" ? " checked=\"true\" " : "") />
+                                                Checking
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-12 no_pad">
+                                            <label class="label-control ev_tickt_lebel pl0">
+                                                <input id="AccInfo2" name="AccInfo" type="radio" value="S" checked="checked"
+                                                       @(Model.PI_BankAccInfo == "S" ? " checked=\"true\" " : "") />
+                                                Savings
+                                            </label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-4 col-xs-12 no_pad">
+                                            <label class="label-control ev_tickt_lebel pl0 ">
+                                                <input id="AccInfo1" name="AccInfo" type="radio" value="C" />
+                                                Checking
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-12 no_pad">
+                                            <label class="label-control ev_tickt_lebel pl0">
+                                                <input id="AccInfo2" name="AccInfo" type="radio" value="S" checked="checked" />
+                                                Savings
+                                            </label>
+                                        </div>
+                                    }
                                 </div>
 
                                 <div class="clearfix"></div>
@@ -214,8 +299,16 @@
                                         Bank Name*
                                     </label>
                                     <div class="col-sm-12 col-xs-12 no_pad">
-                                        <input id="txtBankName" name="BankName" type="text" class="form-control " placeholder="eg. Wells Fargo, Chase, Bank of America"
-                                               maxlength="500" value="@Model.PI_BankName" required>
+                                        @if (Model != null && !String.IsNullOrEmpty(Model.PI_BankName))
+                                        {
+                                            <input id="txtBankName" name="BankName" type="text" class="form-control " placeholder="eg. Wells Fargo, Chase, Bank of America"
+                                                   maxlength="500" value="@Model.PI_BankName">
+                                        }
+                                        else
+                                        {
+                                            <input id="txtBankName" name="BankName" type="text" class="form-control " placeholder="eg. Wells Fargo, Chase, Bank of America"
+                                                   maxlength="500">
+                                        }
                                     </div>
                                 </div>
                                 <div class="col-sm-8 col-xs-12 no_pad mt10">
@@ -223,8 +316,16 @@
                                         Routing Number*
                                     </label>
                                     <div class="col-sm-12 col-xs-12 no_pad">
-                                        <input id="txtRoutingNumber" name="RoutingNumber" type="text" class="form-control " placeholder="Routing Number"
-                                               maxlength="100" value="@Model.PI_RoutingNumber" required>
+                                        @if (Model != null && !String.IsNullOrEmpty(Model.PI_RoutingNumber))
+                                        {
+                                            <input id="txtRoutingNumber" name="RoutingNumber" type="text" class="form-control " placeholder="Routing Number"
+                                                   maxlength="100" value="@Model.PI_RoutingNumber">
+                                        }
+                                        else
+                                        {
+                                            <input id="txtRoutingNumber" name="RoutingNumber" type="text" class="form-control " placeholder="Routing Number"
+                                                   maxlength="100">
+                                        }
                                     </div>
                                 </div>
                                 <div class="col-sm-8 col-xs-12 no_pad mt10">
@@ -232,8 +333,16 @@
                                         Account Number*
                                     </label>
                                     <div class="col-sm-12 col-xs-12 no_pad">
-                                        <input id="txtAcNumber" name="AcNumber" type="text" class="form-control " placeholder="Account Number"
-                                               maxlength="100" value="@Model.PI_AccountNumber">
+                                        @if (Model != null && !String.IsNullOrEmpty(Model.PI_AccountNumber))
+                                        {
+                                            <input id="txtAcNumber" name="AcNumber" type="text" class="form-control " placeholder="Account Number"
+                                                   maxlength="100" value="@Model.PI_AccountNumber">
+                                        }
+                                        else
+                                        {
+                                            <input id="txtAcNumber" name="AcNumber" type="text" class="form-control " placeholder="Account Number"
+                                                   maxlength="100">
+                                        }
                                     </div>
                                 </div>
                                 <div class="col-sm-8 col-xs-12 no_pad mt10">
@@ -241,8 +350,16 @@
                                         Re-enter Account Number*
                                     </label>
                                     <div class="col-sm-12 col-xs-12 no_pad">
-                                        <input id="txtReEnterAcNumber" name="ReEnterAcNumber" type="text" class="form-control " placeholder="Re-enter Account Number"
-                                               maxlength="100" value="@Model.PI_ReAccountNumber">
+                                        @if (Model != null && !String.IsNullOrEmpty(Model.PI_ReAccountNumber))
+                                        {
+                                            <input id="txtReEnterAcNumber" name="ReEnterAcNumber" type="text" class="form-control " placeholder="Re-enter Account Number"
+                                                   maxlength="100" value="@Model.PI_ReAccountNumber">
+                                        }
+                                        else
+                                        {
+                                            <input id="txtReEnterAcNumber" name="ReEnterAcNumber" type="text" class="form-control " placeholder="Re-enter Account Number"
+                                                   maxlength="100">
+                                        }
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -253,15 +370,31 @@
                                 <div class="col-sm-8 col-xs-12 no_pad mt10">
                                     <label class="col-md-12 control-label comp_name no_pad ">Name / Pay To*</label>
                                     <div class="col-md-12 col-xs-12 no_pad">
-                                        <input id="txtPayeeName" name="PayeeName" class="form-control" placeholder="Payee Name"
-                                               maxlength="500" type="text" value="@Model.PI_PayTo">
+                                        @if (Model != null && !String.IsNullOrEmpty(Model.PI_PayTo))
+                                        {
+                                            <input id="txtPayeeName" name="PayeeName" class="form-control" placeholder="Payee Name"
+                                                   maxlength="500" type="text" value="@Model.PI_PayTo">
+                                        }
+                                        else
+                                        {
+                                            <input id="txtPayeeName" name="PayeeName" class="form-control" placeholder="Payee Name"
+                                                   maxlength="500" type="text">
+                                        }
                                     </div>
                                 </div>
                                 <div class="col-sm-8 col-xs-12 no_pad mt10">
                                     <label class="col-md-12 control-label comp_name no_pad ">Mailing Address*</label>
                                     <div class="col-md-12 col-xs-12 no_pad">
-                                        <input id="txtMailingAddress1" name="MailingAddress1" class="form-control" placeholder="Address 1"
-                                               type="text" value="@Model.PI_Address">
+                                        @if (Model != null && !String.IsNullOrEmpty(Model.PI_Address))
+                                        {
+                                            <input id="txtMailingAddress1" name="MailingAddress1" class="form-control" placeholder="Address 1"
+                                                   type="text" value="@Model.PI_Address">
+                                        }
+                                        else
+                                        {
+                                            <input id="txtMailingAddress1" name="MailingAddress1" class="form-control" placeholder="Address 1"
+                                                   type="text">
+                                        }
                                     </div>
                                     <div class="col-md-12 col-xs-12 no_pad mt10">
                                         <input id="txtMailingAddress2" name="MailingAddress2" class="form-control" placeholder="Address 2" type="text">
@@ -272,12 +405,28 @@
                                 <div class="col-md-8 col-xs-12 no_pad mt10">
                                     <div class="row">
                                         <div class="col-xs-6 dropheight">
-                                            <input id="txtCity2" name="City2" class="form-control" placeholder="City"
-                                                   maxlength="500" type="text" value="@Model.PI_City" />
+                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_City))
+                                            {
+                                                <input id="txtCity2" name="City2" class="form-control" placeholder="City"
+                                                       maxlength="500" type="text" value="@Model.PI_City" />
+                                            }
+                                            else
+                                            {
+                                                <input id="txtCity2" name="City2" class="form-control" placeholder="City"
+                                                       maxlength="500" type="text" />
+                                            }
                                         </div>
                                         <div class="col-xs-6 dropheight">
-                                            <input id="txtState2" name="State2" class="form-control" placeholder="State"
-                                                   maxlength="500" type="text" value="@Model.PI_State" />
+                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_State))
+                                            {
+                                                <input id="txtState2" name="State2" class="form-control" placeholder="State"
+                                                       maxlength="500" type="text" value="@Model.PI_State" />
+                                            }
+                                            else
+                                            {
+                                                <input id="txtState2" name="State2" class="form-control" placeholder="State"
+                                                       maxlength="500" type="text" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -289,11 +438,28 @@
                                                     <option @(Model.PI_Country == 1 ? " selected=\"selected\" " : "") value="1">Country1</option>
                                                     <option @(Model.PI_Country == 2 ? " selected=\"selected\" " : "") value="2">Country2</option>
                                                 </select>*@
-                                            @Html.DropDownList("Country2", ViewBag.CountryID as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "ddlCountry2" })
+                                            @if (ViewBag.CountryID != null)
+                                            {
+                                                @Html.DropDownList("Country2", ViewBag.CountryID as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "ddlCountry2" })
+                                            }
+                                            else
+                                            {
+                                                <select id="ddlCountry2" name="Country2" class="form-control selectpicker">
+                                                    <option value="0">Select Country</option>
+                                                </select>
+                                            }
                                         </div>
                                         <div class="col-xs-6 ">
-                                            <input id="txtPostalCode2" name="PostalCode2" class="form-control Number" placeholder="Postal Code"
-                                                   onkeypress="IsNumeric(event);" maxlength="5" type="text" value="@Model.PI_PostalCode">
+                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
+                                            {
+                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control Number" placeholder="Postal Code"
+                                                       onkeypress="IsNumeric(event);" maxlength="5" type="text" value="@Model.PI_PostalCode">
+                                            }
+                                            else
+                                            {
+                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control Number" placeholder="Postal Code"
+                                                       onkeypress="IsNumeric(event);" maxlength="5" type="text" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -301,8 +467,16 @@
 
                             <div class="clearfix"></div>
                             <div class="col-sm-8 mt10 no_pad ">
-                                <input id="hdfPaymentInfoId" name="PaymentInfoId" type="hidden" value="@Model.PaymentInfo_Id" />
-                                <input id="hdfEventId" name="EventId" type="hidden" value="@Model.PI_EventId" />
+                                @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
+                                {
+                                    <input id="hdfPaymentInfoId" name="PaymentInfoId" type="hidden" value="@Model.PaymentInfo_Id" />
+                                    <input id="hdfEventId" name="EventId" type="hidden" value="@Model.PI_EventId" />
+                                }
+                                else
+                                {
+                                    <input id="hdfPaymentInfoId" name="PaymentInfoId" type="hidden" />
+                                    <input id="hdfEventId" name="EventId" type="hidden" />
+                                }
                                 <button id="btnSave" name="Save" type="submit" class="btn btn-info acnt_btn"
                                         onclick="return FormValidate();">
                                     SAVE

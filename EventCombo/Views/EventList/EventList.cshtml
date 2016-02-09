@@ -322,14 +322,39 @@
         $("#DivSavedPager").hide();
     };
     $(document).ready(function () {
-        debugger;
         $('#mgnav').click();
-       
-        $('#dvManage').addClass("menu_active");
+        //$('#dvManage').addClass("menu_active");
 
-        var vhtml = $('#dvManage').html().replace("closed", "opened");
-        $('#dvManage').empty();
-        $('#dvManage').html(vhtml);
+        //$('#dvManage b').removeClass();
+        //$('#dvManage b').addClass('opened');
+
+        //$('.menu_title').click(function () {
+        //    $('#dvManage b').addClass('opened');
+        //    $('#dvManage b').removeClass('closed');
+
+        //});
+
+        $('#dvManage').click(function () {
+            var vclassname = $('#dvManage b').attr('class');
+            if (vclassname == "opened") {
+                $('#dvManage b').addClass('closed');
+            }
+            else {
+                $('#dvManage b').removeClass();
+            }
+
+            //$('#dvManage b').removeClass();
+            //$('#dvManage b').addClass('closed');
+
+            //$('#dvManage b').addClass('closed');
+            //$('#dvManage b').removeClass('opened');
+
+        });
+            
+        //var vhtml = $('#dvManage').html().replace("closed", "opened");
+
+        //$('#dvManage').empty();
+        //$('#dvManage').html(vhtml);
        
         
         // #accordion .menu_title .active
