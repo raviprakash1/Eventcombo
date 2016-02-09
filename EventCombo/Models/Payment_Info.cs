@@ -29,5 +29,6 @@ namespace EventCombo.Models
         public string PI_AccountNumber { get; set; }
         public string PI_ReAccountNumber { get; set; }
         public string PI_PayTo { get; set; }
+        public Nullable<long> PI_EventId { get; set; }
     }
 }

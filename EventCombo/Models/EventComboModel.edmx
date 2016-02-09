@@ -371,6 +371,7 @@
           <Property Name="PI_AccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="PI_ReAccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="PI_PayTo" Type="varchar" MaxLength="500" />
+          <Property Name="PI_EventId" Type="bigint" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -1351,6 +1352,7 @@
           <Property Name="PI_AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PI_ReAccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PI_PayTo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PI_EventId" Type="Int64" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -2330,6 +2332,7 @@
           <EntitySetMapping Name="Payment_Info">
             <EntityTypeMapping TypeName="EventComboModel.Payment_Info">
               <MappingFragment StoreEntitySet="Payment_Info">
+                <ScalarProperty Name="PI_EventId" ColumnName="PI_EventId" />
                 <ScalarProperty Name="PaymentInfo_Id" ColumnName="PaymentInfo_Id" />
                 <ScalarProperty Name="PI_PaymentMethod" ColumnName="PI_PaymentMethod" />
                 <ScalarProperty Name="PI_AccountHolderType" ColumnName="PI_AccountHolderType" />
