@@ -233,6 +233,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CMSController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
     <Compile Include="Controllers\EditEventController.cs" />
     <Compile Include="Controllers\EventConfirmationController.cs" />
@@ -1130,6 +1131,7 @@
     <Content Include="Views\Cart\DoCheckoutPayment.cshtml" />
     <Content Include="Views\EventViewCustom\Index.cshtml" />
     <Content Include="Views\PaymentInfo\PaymentInfo.cshtml" />
+    <Content Include="Views\CMS\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -101,6 +101,11 @@
           <Property Name="State" Type="varchar" MaxLength="256" />
           <Property Name="Zip" Type="varchar" MaxLength="256" />
           <Property Name="Country" Type="varchar" MaxLength="26" />
+          <Property Name="PaymentType" Type="varchar" MaxLength="50" />
+          <Property Name="CardId" Type="varchar" MaxLength="50" />
+          <Property Name="card_type" Type="varchar" MaxLength="150" />
+          <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
+          <Property Name="Cvv" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CardDetails">
           <Key>
@@ -191,6 +196,7 @@
           <Property Name="ModifyDate" Type="datetime" />
           <Property Name="ShowMap" Type="varchar" MaxLength="1" />
           <Property Name="Parent_EventID" Type="bigint" />
+          <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -250,6 +256,15 @@
           <Property Name="EventID" Type="bigint" Nullable="false" />
           <Property Name="EventImageUrl" Type="varchar" MaxLength="200" />
           <Property Name="ImageType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Events_Hit">
+          <Key>
+            <PropertyRef Name="EventHit_Id" />
+          </Key>
+          <Property Name="EventHit_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventHit_EventId" Type="bigint" />
+          <Property Name="EventHit_Hits" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="EventHitDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="EventSubCategory">
           <Key>
@@ -329,9 +344,35 @@
           <Property Name="O_User_Id" Type="nvarchar" MaxLength="256" />
           <Property Name="O_TotalAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="O_OrderAmount" Type="numeric" Precision="18" Scale="2" />
-          <Property Name="O_VariableId" Type="bigint" />
+          <Property Name="O_VariableId" Type="varchar" MaxLength="500" />
           <Property Name="O_VariableAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="O_PromoCodeId" Type="bigint" />
+          <Property Name="O_OrderDateTime" Type="datetime" />
+          <Property Name="O_PayPal_TokenId" Type="varchar" MaxLength="100" />
+          <Property Name="O_PayPal_PayerId" Type="varchar" MaxLength="100" />
+          <Property Name="O_PayPal_TrancId" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Payment_Info">
+          <Key>
+            <PropertyRef Name="PaymentInfo_Id" />
+          </Key>
+          <Property Name="PaymentInfo_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PI_PaymentMethod" Type="varchar" MaxLength="1" />
+          <Property Name="PI_AccountHolderType" Type="varchar" MaxLength="1" />
+          <Property Name="PI_AccCompName" Type="varchar" MaxLength="1000" />
+          <Property Name="PI_Address" Type="nvarchar(max)" />
+          <Property Name="PI_City" Type="varchar" MaxLength="500" />
+          <Property Name="PI_State" Type="varchar" MaxLength="500" />
+          <Property Name="PI_Country" Type="int" />
+          <Property Name="PI_PostalCode" Type="varchar" MaxLength="10" />
+          <Property Name="PI_BankAccInfo" Type="varchar" MaxLength="1" />
+          <Property Name="PI_BankName" Type="varchar" MaxLength="500" />
+          <Property Name="PI_RoutingNumber" Type="varchar" MaxLength="100" />
+          <Property Name="PI_AccountNumber" Type="varchar" MaxLength="100" />
+          <Property Name="PI_ReAccountNumber" Type="varchar" MaxLength="100" />
+          <Property Name="PI_PayTo" Type="varchar" MaxLength="500" />
+          <Property Name="PI_EventId" Type="bigint" />
+          <Property Name="PI_Address2" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -486,6 +527,7 @@
           <Property Name="TPD_Amount" Type="numeric" Precision="9" Scale="2" />
           <Property Name="TPD_Donate" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TPD_GUID" Type="varchar" MaxLength="1000" />
+          <Property Name="TPD_EC_Fee" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -518,6 +560,15 @@
           </Key>
           <Property Name="TicketDeliveryMethodID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DeliveryMethodID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TicketOrderDetail">
+          <Key>
+            <PropertyRef Name="T_Id" />
+          </Key>
+          <Property Name="T_TQD_Id" Type="bigint" />
+          <Property Name="T_Guid" Type="varchar" MaxLength="1000" />
+          <Property Name="T_Id" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="T_Order_Id" Type="varchar" MaxLength="11" />
         </EntityType>
         <EntityType Name="TicketType">
           <Key>
@@ -820,6 +871,7 @@
           <EntitySet Name="EventCategory" EntityType="Self.EventCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventFavourite" EntityType="Self.EventFavourite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventImage" EntityType="Self.EventImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events_Hit" EntityType="Self.Events_Hit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventSubCategory" EntityType="Self.EventSubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVenue" EntityType="Self.EventVenue" Schema="dbo" store:Type="Tables" />
@@ -828,6 +880,7 @@
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment_Info" EntityType="Self.Payment_Info" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" Schema="dbo" store:Type="Tables" />
@@ -839,6 +892,7 @@
           <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketBearer" EntityType="Self.TicketBearer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketDeliveryMethod" EntityType="Self.TicketDeliveryMethod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketOrderDetail" EntityType="Self.TicketOrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
@@ -1012,6 +1066,11 @@
           <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CardDetail">
           <Key>
@@ -1104,6 +1163,7 @@
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <Property Name="ShowMap" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Parent_EventID" Type="Int64" />
+          <Property Name="EventCancel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1242,19 +1302,6 @@
           <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
-        </EntityType>
-        <EntityType Name="Order_Detail_T">
-          <Key>
-            <PropertyRef Name="O_Id" />
-          </Key>
-          <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_VariableId" Type="Int64" />
-          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_PromoCodeId" Type="Int64" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -1412,6 +1459,7 @@
           <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
           <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -1693,7 +1741,6 @@
           <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="MultipleEvents" EntityType="Self.MultipleEvent" />
-          <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" />
@@ -1811,6 +1858,10 @@
             <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Email_Tag" EntityType="Cmsdata.Email_Tag" />
+          <EntitySet Name="Events_Hit" EntityType="Cmsdata.Events_Hit" />
+          <EntitySet Name="Payment_Info" EntityType="Cmsdata.Payment_Info" />
+          <EntitySet Name="TicketOrderDetails" EntityType="Cmsdata.TicketOrderDetail" />
+          <EntitySet Name="Order_Detail_T" EntityType="Cmsdata.Order_Detail_T" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1842,8 +1893,9 @@
           <Property Type="String" Name="EventAddress" Nullable="true" />
           <Property Type="String" Name="Venuename" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
-          <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="30" />
           <Property Type="Int64" Name="Purchasedqty" Nullable="false" />
+          <Property Type="String" Name="UserID" Nullable="true" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="GetEventsListByStatus_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="102" />
@@ -1865,6 +1917,63 @@
           </Key>
           <Property Name="Tag_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Tag_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Events_Hit">
+          <Key>
+            <PropertyRef Name="EventHit_Id" />
+          </Key>
+          <Property Name="EventHit_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventHit_EventId" Type="Int64" />
+          <Property Name="EventHit_Hits" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EventHitDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Payment_Info">
+          <Key>
+            <PropertyRef Name="PaymentInfo_Id" />
+          </Key>
+          <Property Name="PaymentInfo_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PI_PaymentMethod" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PI_AccountHolderType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PI_AccCompName" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PI_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PI_City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PI_State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PI_Country" Type="Int32" />
+          <Property Name="PI_PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PI_BankAccInfo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PI_BankName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PI_RoutingNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PI_AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PI_ReAccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PI_PayTo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PI_EventId" Type="Int64" />
+          <Property Name="PI_Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TicketOrderDetail">
+          <Key>
+            <PropertyRef Name="T_Id" />
+          </Key>
+          <Property Name="T_TQD_Id" Type="Int64" />
+          <Property Name="T_Guid" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="T_Id" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="T_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Order_Detail_T">
+          <Key>
+            <PropertyRef Name="O_Id" />
+          </Key>
+          <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="Int64" />
+          <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
+          <Property Name="O_PayPal_TokenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_PayPal_PayerId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1949,6 +2058,11 @@
           <EntitySetMapping Name="BillingAddresses">
             <EntityTypeMapping TypeName="Cmsdata.BillingAddress">
               <MappingFragment StoreEntitySet="BillingAddress">
+                <ScalarProperty Name="Cvv" ColumnName="Cvv" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="card_type" ColumnName="card_type" />
+                <ScalarProperty Name="CardId" ColumnName="CardId" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="BillingId" ColumnName="BillingId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
@@ -2014,6 +2128,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="Cmsdata.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="EventCancel" ColumnName="EventCancel" />
                 <ScalarProperty Name="Parent_EventID" ColumnName="Parent_EventID" />
                 <ScalarProperty Name="ShowMap" ColumnName="ShowMap" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
@@ -2194,20 +2309,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Order_Detail_T">
-            <EntityTypeMapping TypeName="Cmsdata.Order_Detail_T">
-              <MappingFragment StoreEntitySet="Order_Detail_T">
-                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
-                <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
-                <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
-                <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
-                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
-                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
-                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
-                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Permission_Detail">
             <EntityTypeMapping TypeName="Cmsdata.Permission_Detail">
               <MappingFragment StoreEntitySet="Permission_Detail">
@@ -2358,6 +2459,7 @@
           <EntitySetMapping Name="Ticket_Purchased_Detail">
             <EntityTypeMapping TypeName="Cmsdata.Ticket_Purchased_Detail">
               <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TPD_EC_Fee" ColumnName="TPD_EC_Fee" />
                 <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
                 <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
                 <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
@@ -2480,6 +2582,7 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="TicketDetail" ColumnName="TicketDetail" />
                 <ScalarProperty Name="Purchasedqty" ColumnName="Purchasedqty" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2510,6 +2613,67 @@
               <MappingFragment StoreEntitySet="Email_Tag">
                 <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
                 <ScalarProperty Name="Tag_Id" ColumnName="Tag_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events_Hit">
+            <EntityTypeMapping TypeName="Cmsdata.Events_Hit">
+              <MappingFragment StoreEntitySet="Events_Hit">
+                <ScalarProperty Name="EventHitDateTime" ColumnName="EventHitDateTime" />
+                <ScalarProperty Name="EventHit_Hits" ColumnName="EventHit_Hits" />
+                <ScalarProperty Name="EventHit_EventId" ColumnName="EventHit_EventId" />
+                <ScalarProperty Name="EventHit_Id" ColumnName="EventHit_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment_Info">
+            <EntityTypeMapping TypeName="Cmsdata.Payment_Info">
+              <MappingFragment StoreEntitySet="Payment_Info">
+                <ScalarProperty Name="PI_Address2" ColumnName="PI_Address2" />
+                <ScalarProperty Name="PI_EventId" ColumnName="PI_EventId" />
+                <ScalarProperty Name="PI_PayTo" ColumnName="PI_PayTo" />
+                <ScalarProperty Name="PI_ReAccountNumber" ColumnName="PI_ReAccountNumber" />
+                <ScalarProperty Name="PI_AccountNumber" ColumnName="PI_AccountNumber" />
+                <ScalarProperty Name="PI_RoutingNumber" ColumnName="PI_RoutingNumber" />
+                <ScalarProperty Name="PI_BankName" ColumnName="PI_BankName" />
+                <ScalarProperty Name="PI_BankAccInfo" ColumnName="PI_BankAccInfo" />
+                <ScalarProperty Name="PI_PostalCode" ColumnName="PI_PostalCode" />
+                <ScalarProperty Name="PI_Country" ColumnName="PI_Country" />
+                <ScalarProperty Name="PI_State" ColumnName="PI_State" />
+                <ScalarProperty Name="PI_City" ColumnName="PI_City" />
+                <ScalarProperty Name="PI_Address" ColumnName="PI_Address" />
+                <ScalarProperty Name="PI_AccCompName" ColumnName="PI_AccCompName" />
+                <ScalarProperty Name="PI_AccountHolderType" ColumnName="PI_AccountHolderType" />
+                <ScalarProperty Name="PI_PaymentMethod" ColumnName="PI_PaymentMethod" />
+                <ScalarProperty Name="PaymentInfo_Id" ColumnName="PaymentInfo_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketOrderDetails">
+            <EntityTypeMapping TypeName="Cmsdata.TicketOrderDetail">
+              <MappingFragment StoreEntitySet="TicketOrderDetail">
+                <ScalarProperty Name="T_Order_Id" ColumnName="T_Order_Id" />
+                <ScalarProperty Name="T_Id" ColumnName="T_Id" />
+                <ScalarProperty Name="T_Guid" ColumnName="T_Guid" />
+                <ScalarProperty Name="T_TQD_Id" ColumnName="T_TQD_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Detail_T">
+            <EntityTypeMapping TypeName="Cmsdata.Order_Detail_T">
+              <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_PayPal_TrancId" ColumnName="O_PayPal_TrancId" />
+                <ScalarProperty Name="O_PayPal_PayerId" ColumnName="O_PayPal_PayerId" />
+                <ScalarProperty Name="O_PayPal_TokenId" ColumnName="O_PayPal_TokenId" />
+                <ScalarProperty Name="O_OrderDateTime" ColumnName="O_OrderDateTime" />
+                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
+                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
+                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
+                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
+                <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
+                <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
+                <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
+                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

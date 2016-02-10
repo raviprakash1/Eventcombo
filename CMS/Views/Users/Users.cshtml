@@ -504,21 +504,25 @@
 
     function checkeventcount(id, UserID)
     {
+      
 
-        window.open('http://eventcombo.kiwireader.com//eventlist/eventlist?strID=19bdbd0b-6fa3-4461-9eab-6e99c789476c', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=900');
-
-        //var value = $('#' + id).text();
-        //if (parseInt(value) == 0) {
+        var value = $('#' + id).text();
+        if (parseInt(value) == 0) {
           
-        //    $('#btnYes').hide();
-        //    $('#hId').text(GetMess("CMSUsers", "NoEvents"));
-        //    $('#btnNo').hide();
-        //    $('#btOk').click();
-        //    return false;
-        //} else {
+            $('#btnYes').hide();
+            $('#hId').text(GetMess("CMSUsers", "NoEvents"));
+            $('#btnNo').hide();
+            $('#btOk').click();
+            return false;
+        } else {
 
-        //    OpenEventDialog(UserID);
-        //}
+            var appSetting = '@(System.Configuration.ConfigurationManager.AppSettings["EventComboClientDomain"].ToString())'
+            var url = appSetting + '/CMS/Index?e=' + UserID;
+            var w = 880, h = 600,
+            left = Number((screen.width / 2) - (w / 2)), tops = Number((screen.height / 2) - (h / 2)),
+            popupWindow = window.open(url, 'targetWindow', 'toolbar=no,location=Center,status=no,menubar=no,scrollbars=yes,resizable=yes,width=' + w + ',height=' + h + ', top=' + tops + ', left=' + left);
+            popupWindow.focus(); return false;
+        }
         //console.log($('#'+id).text());
         
     }
@@ -1004,7 +1008,7 @@
 
 </script>
 <script>
-    function OpenEventDialog(UserID) {
+    @*function OpenEventDialog(UserID) {
        
         $('#dvEventListDialog').dialog({
             autoOpen: true,
@@ -1024,6 +1028,6 @@
             }
         });
 
-    }
+    }*@
 </script>
 <!-- END: PAGE SCRIPTS -->

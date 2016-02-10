@@ -171,9 +171,9 @@
                                                     <a  href="mailto:@obj.Email">@obj.Email</a></td>
                                                     <td>@obj.EventAddress</td>
                                                     <td>
-                                                        <a href="#" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                                                        <a href="#" class="btn btn-success br2 btn-xs fs12" onclick="EditEvent('@obj.EventID','@obj.UserID');" ><i class="fa fa-edit"></i> </a>
                                                         @if (obj.Purchasedqty <= 0)
-                                            {
+                                                        {
                                                         <a class="td-btn" type="button" onclick="ConfirmDelete('@obj.EventID');" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
                                                             <i class="fa fa-remove"></i>
                                                         </a>
@@ -343,6 +343,17 @@
         </div>
         <!-- End: Content -->
         <script>
+            function EditEvent(eventId,UserID) {
+                var appSetting = '@(System.Configuration.ConfigurationManager.AppSettings["EventComboClientDomain"].ToString())';
+                var url = appSetting + '/CMS/Index?id=' + eventId + '&e=' + UserID;
+                var w = 880, h = 600,
+                left = Number((screen.width / 2) - (w / 2)), tops = Number((screen.height / 2) - (h / 2)),
+                popupWindow = window.open(url, 'targetWindow', 'toolbar=no,location=Center,status=no,menubar=no,scrollbars=yes,resizable=yes,width=' + w + ',height=' + h + ', top=' + tops + ', left=' + left);
+                popupWindow.focus(); return false;
+            }
+
+
+
             $('#btnReset').click(function () {
 
                 $('#SearchStringEventTitle').val('');
@@ -435,10 +446,9 @@
 
             }
             $(document).ready(function () {
+              
 
-
-
-             $("#btnYes").click(function () {
+        $("#btnYes").click(function () {
         $.ajax({
             url: '@Url.Action("Deleteevent","ManageEvent")',
             data: { Eventid: $("#hdUserId").val() },

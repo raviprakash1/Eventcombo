@@ -23,5 +23,6 @@ namespace CMS.Models
         public Nullable<decimal> TPD_Amount { get; set; }
         public Nullable<decimal> TPD_Donate { get; set; }
         public string TPD_GUID { get; set; }
+        public Nullable<decimal> TPD_EC_Fee { get; set; }
     }
 }

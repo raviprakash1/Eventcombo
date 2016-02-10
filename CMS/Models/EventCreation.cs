@@ -27,5 +27,6 @@ namespace CMS.Models
         public string Email { get; set; }
         public string TicketDetail { get; set; }
         public long Purchasedqty { get; set; }
+        public string UserID { get; set; }
     }
 }
