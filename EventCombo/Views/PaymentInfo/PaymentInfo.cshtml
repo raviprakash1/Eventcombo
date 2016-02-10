@@ -12,16 +12,37 @@
         display: block;
     }
 </style>
-<div class="container-fluid cont_margin">
-    <div class="row">
-        <div class="col-sm-10 ">
-            <div class="midd_cont">
-                <div class="col-sm-12">
-                    <h3 class="acnt_title">ACCOUNT</h3>
-                    <p class="p_info">Payment Information</p>
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<div class="event_container">
+
+    <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
+        <div class="event_detail_container">
+            <div class="col-sm-12 col-xs-12">
+                <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+                    <div class="er_UI_main">
+                        <div class="er_UI_img"></div>
+                        <div class="er_suc" id="erraccmsg"></div>
+                        <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+
+                    </div>
                 </div>
-                <div class="clearfix"></div>
-                <div class="col-sm-8">
+            </div>
+
+        </div>
+    </div>
+    <div class="event_detail_container">
+        <div class="evnt_tile_head">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5">Payment Information </h2>
+            </div>
+
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body2">
+            <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+                <div class="col-sm-12">
                     <p>
                         To collect payments online, Eventbrite offers you a choice of payment processors.
                         You will be able to modify your choice of processor for each event, until you have made your first ticket sale.
@@ -57,10 +78,10 @@
                                 </select>
                             </div>
                             <div class="col-sm-5 mb10 pay-card-icon">
-                                <img src="images/visa.png">
-                                <img src="images/mastercard.png">
-                                <img src="images/discover.png">
-                                <img src="images/amr-exp.png">
+                                <img src="/Images/visa.png">
+                                <img src="/Images/mastercard.png">
+                                <img src="/Images/discover.png">
+                                <img src="/Images/amr-exp.png">
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -269,9 +290,9 @@
                                     <div class="row">
                                         <div class="col-xs-6 dropheight">
                                             @*<select id="ddlCountry1" name="Country1" class="form-control selectpicker">
-                                                    <option @(Model.PI_Country == 1 ? " selected=\"selected\" " : "") value="1">Country1</option>
-                                                    <option @(Model.PI_Country == 2 ? " selected=\"selected\" " : "") value="2">Country2</option>
-                                                </select>*@
+                                        <option @(Model.PI_Country == 1 ? " selected=\"selected\" " : "") value="1">Country1</option>
+                                        <option @(Model.PI_Country == 2 ? " selected=\"selected\" " : "") value="2">Country2</option>
+                                    </select>*@
                                             @if (ViewBag.CountryID != null)
                                             {
                                                 @Html.DropDownList("Country1", ViewBag.CountryID as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "ddlCountry1" })
@@ -287,13 +308,13 @@
 
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
                                             {
-                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control Number" placeholder="Postal Code"
-                                                       onkeypress="IsNumeric(event);" maxlength="5" type="text" value="@Model.PI_PostalCode">
+                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Postal Code"
+                                                       maxlength="5" type="text" value="@Model.PI_PostalCode">
                                             }
                                             else
                                             {
-                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control Number" placeholder="Postal Code"
-                                                       onkeypress="IsNumeric(event);" maxlength="5" type="text" />
+                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Postal Code"
+                                                       maxlength="5" type="text" />
                                             }
                                         </div>
 
@@ -487,9 +508,9 @@
                                     <div class="row">
                                         <div class="col-xs-6 dropheight">
                                             @*<select id="ddlCountry2" name="Country2" class="form-control selectpicker">
-                                                    <option @(Model.PI_Country == 1 ? " selected=\"selected\" " : "") value="1">Country1</option>
-                                                    <option @(Model.PI_Country == 2 ? " selected=\"selected\" " : "") value="2">Country2</option>
-                                                </select>*@
+                                        <option @(Model.PI_Country == 1 ? " selected=\"selected\" " : "") value="1">Country1</option>
+                                        <option @(Model.PI_Country == 2 ? " selected=\"selected\" " : "") value="2">Country2</option>
+                                    </select>*@
                                             @if (ViewBag.CountryID != null)
                                             {
                                                 @Html.DropDownList("Country2", ViewBag.CountryID as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "ddlCountry2" })
@@ -504,13 +525,13 @@
                                         <div class="col-xs-6 ">
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
                                             {
-                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control Number" placeholder="Postal Code"
-                                                       onkeypress="IsNumeric(event);" maxlength="5" type="text" value="@Model.PI_PostalCode">
+                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control" placeholder="Postal Code"
+                                                       maxlength="5" type="text" value="@Model.PI_PostalCode">
                                             }
                                             else
                                             {
-                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control Number" placeholder="Postal Code"
-                                                       onkeypress="IsNumeric(event);" maxlength="5" type="text" />
+                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control" placeholder="Postal Code"
+                                                       maxlength="5" type="text" />
                                             }
                                         </div>
                                     </div>
@@ -546,13 +567,15 @@
                     </form>
 
                 </div>
-            </div>
-            <div class="col-sm-4"></div>
+                </div>
+                </div>
+                
 
+            </div>
         </div>
-    </div>
-</div>
-</div>
+
+<div class="clearfix"></div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -738,8 +761,44 @@
 
 
 <script>
+
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+    function ShowMessage(Type, Mess) {
+        if (Type == 'S') {
+            $('#divaccsuc').css('display', 'block');
+            $('#divaccsuc').focus();
+            $('#diverroacc').css('display', 'none');
+            $('#succaccmsg').html(Mess);
+        }
+        else {
+            $('#divaccsuc').css('display', 'none');
+            $('#diverroacc').css('display', 'block');
+            $('#diverroacc').focus();
+            $('#erraccmsg').html(Mess);
+
+        }
+    }
     function FormValidate() {
         debugger;
+        var addcount = 0;
+        var acccount = 0;
         var ErrorString = "";
         var flag = true;
         //alert($("#ddlPaymentMethod").val().trim());
@@ -755,44 +814,39 @@
             var PostalCode2 = $("#txtPostalCode2").val();
 
             if (PayeeName =='' ) {
-                ErrorString += GetMess();
-                $("#txtPayeeName").focus();
+                ShowMessage('E', ajaxsetup('PaymentInfo', 'PInameUI'));
+              
+                $("#txtPayeeName").addClass('err-bor');
                 return  false;
             }
-            //if(PayeeName.match(PN_SpChrNot))
-            //{
-            //    ErrorString += GetMess();
-            //    $("#txtPayeeName").focus();
-            //    return false;
-            //}
+         
             if (MailingAddress1 == '') {
-                ErrorString += GetMess();
-                $("#txtMailingAddress1").focus();
-                return false;
+                addcount = addcount + 1;
+                $("#txtMailingAddress1").addClass('err-bor');
+               
             }
             if (City2 == '') {
-                ErrorString += GetMess();
-                $("#txtCity2").focus();
-                return false;
+                addcount = addcount + 1;
+                $("#txtCity2").addClass('err-bor');
+              
             }
             if (State2 == '') {
-                ErrorString += GetMess();
-                $("#txtState2").focus();
-                return false;
+                addcount = addcount + 1;
+                $("#txtState2").addClass('err-bor');
+               
             }
             if (Country2 == '') {
-                ErrorString += GetMess();
-                $("#ddlCountry2").focus();
-                return false;
+                addcount = addcount + 1;
+                $("#ddlCountry2").addClass('err-bor');
+               
             }
             if (PostalCode2 == '') {
-                ErrorString += GetMess();
-                $("#txtPostalCode2").focus();
-                return false;
+                addcount = addcount + 1;
+                $("#txtPostalCode2").addClass('err-bor');
+               
             }
-            if (!$.isNumeric(PostalCode)) {
-                ErrorString += GetMess();
-                $("#txtPostalCode2").focus();
+            if (addcount > 0) {
+                ShowMessage('E', ajaxsetup('PaymentInfo', 'PIAddressUI'));
                 return false;
             }
             //$.isNumeric( "-10" );
@@ -808,23 +862,38 @@
             var Country1 = $("#ddlCountry1").val();
             var PostalCode1 = $("#txtPostalCode1").val();
             var RoutingNumber = $("#txtRoutingNumber").val();
+            var BankName = $("#txtBankName").val();
             var AcNumber = $("#txtAcNumber").val();
             var ReEnterAcNumber = $("#txtReEnterAcNumber").val();
-            alert()
-            if ($("AccHoldInfo").val() == "I")
+         
+            var accholder = '';
+          
+            if ($('#rdbAccHoldInfoI').is(':checked'))
+            {
+                accholder = "I";
+            }
+            if ($('#rdbAccHoldInfoC').is(':checked')) {
+                accholder = "C";
+            }
+            if (accholder == "I")
             {
                 if (Name == '') {
-                    ErrorString += GetMess();
-                    $("#txtName").focus();
+                    ShowMessage('E', ajaxsetup('PaymentInfo', 'PInameUI'));
+                    $("#txtName").addClass('err-bor');
                     return false;
                 }
-            }
-            else if ($("AccHoldInfo").val() == "C")
+                else {
+                    $("#txtName").removeClass('err-bor');
+                }
+            } 
+            if (accholder == "C")
             {
                 if (CompanyName == '') {
-                    ErrorString += GetMess();
-                    $("#txtCompanyName").focus();
+                    ShowMessage('E', ajaxsetup('PaymentInfo', 'PICompanynameUI'));
+                    $("#txtCompanyName").addClass('err-bor');
                     return false;
+                } else {
+                    $("#txtCompanyName").removeClass('err-bor');
                 }
             }
 
@@ -835,49 +904,85 @@
             //    return false;
             //}
             if (Address1 == '') {
-                ErrorString += GetMess();
-                $("#txtAddress1").focus();
-                return false;
-            }
-            if (City1 == '') {
-                ErrorString += GetMess();
-                $("#txtCity1").focus();
-                return false;
-            }
-            if (PayeeName == '') {
-                ErrorString += GetMess();
-                $("#txtState1").focus();
-                return false;
-            }
-            if (PayeeName == '') {
-                ErrorString += GetMess();
-                $("#ddlCountry1").focus();
-                return false;
+                addcount = addcount+1;
+                $("#txtAddress1").addClass('err-bor');
+                
+            } else {
+                $("#txtAddress1").removeClass('err-bor');
             }
             if (PostalCode1 == '') {
-                ErrorString += GetMess();
-                $("#txtPostalCode1").focus();
+                addcount = addcount + 1;
+                $("#txtPostalCode1").addClass('err-bor');
+              
+            } else {
+                $("#txtPostalCode1").removeClass('err-bor');
+            }
+            if (City1 == '') {
+                addcount = addcount + 1;
+                $("#txtCity1").addClass('err-bor');
+               
+            } else {
+                $("#txtCity1").removeClass('err-bor');
+            }
+            if (State1 == '') {
+                addcount = addcount + 1;
+                $("#txtState1").addClass('err-bor');
+             
+            } else {
+                $("#txtState1").removeClass('err-bor');
+            }
+           
+                
+            if (addcount > 0)
+            {
+                ShowMessage('E', ajaxsetup('PaymentInfo', 'PIAddressUI'));
                 return false;
+            }
+            //if (PayeeName == '') {
+            //    ErrorString += GetMess();
+            //    $("#ddlCountry1").focus();
+            //    return false;
+            //}
+          
+            if (BankName == '') {
+                ShowMessage('E', ajaxsetup('PaymentInfo', 'PIBankNameUI'));
+                $("#txtBankName").addClass('err-bor');
+                return false;
+            } else {
+                $("#txtBankName").removeClass('err-bor');
             }
             if (RoutingNumber == '') {
-                ErrorString += GetMess();
-                $("#txtRoutingNumber").focus();
+                ShowMessage('E', ajaxsetup('PaymentInfo', 'PIRoutingnoUI'));
+                $("#txtRoutingNumber").addClass('err-bor');
                 return false;
+            } else {
+                $("#txtRoutingNumber").removeClass('err-bor');
             }
             if (AcNumber == '') {
-                ErrorString += GetMess();
-                $("#txtAcNumber").focus();
-                return false;
+                acccount = acccount + 1;
+              
+                $("#txtAcNumber").addClass('err-bor');
+               
+            } else {
+                $("#txtAcNumber").removeClass('err-bor');
             }
             if (ReEnterAcNumber == '') {
-                ErrorString += GetMess();
-                $("#txtReEnterAcNumber").focus();
-                return false;
+                acccount = acccount + 1;
+                $("#txtReEnterAcNumber").addClass('err-bor');
+               
+            } else {
+                $("#txtReEnterAcNumber").removeClass('err-bor');
             }
             if(AcNumber!=ReEnterAcNumber)
             {
-                ErrorString += GetMess();
-                $("#txtReEnterAcNumber").focus();
+                ShowMessage('E', ajaxsetup('PaymentInfo', 'PIAccountinfocompUI'));
+                $("#txtReEnterAcNumber").addClass('err-bor');
+                return false;
+            } else {
+                $("#txtReEnterAcNumber").removeClass('err-bor');
+            }
+            if (acccount > 0) {
+                ShowMessage('E', ajaxsetup('PaymentInfo', 'PIAccountinfoUI'));
                 return false;
             }
 
@@ -1020,6 +1125,16 @@
     });
 </script>
 <script>
+
+
+    $('#btndivaccsuc').click(function () {
+
+        $('#diverroacc').css('display', 'none');
+         $('select').removeClass('err-bor');
+        $('input').removeClass('err-bor');
+
+    });
+
     $('#txtPostalCode2').change(function () {
         //alert('aaa');
         var country = $("#ddlCountry2 option:selected").text().trim();
