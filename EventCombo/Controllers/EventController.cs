@@ -22,6 +22,7 @@ namespace EventCombo.Controllers
         {
             if ((Session["AppId"] != null))
             {
+                Session["logo"] = "events";
                 Session["Fromname"] = "events";
                 Session["ReturnUrl"] = null;
                 //List<string> ListItems = new List<string>();

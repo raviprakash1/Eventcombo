@@ -46,7 +46,7 @@
                         <div class="col-sm-9 pl0">
                             <h2 class="th_tilte" id="h2tag">@Html.DisplayFor(m => m.Title)</h2>
 
-                            <div class="col-sm-12 col-xs-12 text-left">
+                            @*<div class="col-sm-12 col-xs-12 text-left">
                                 @*<div class="form-group mb0">
                                         <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
                                         <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
@@ -54,7 +54,7 @@
                                            Add Schedule to calendar
                                         </label>
                                     </div>*@
-                                <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
+                                @*<div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
                                     <div class="ev_time_zone_model date_time_modal">
                                         <div class="modal-content ev_tm_zon_cont">
                                             <div class="modal-header">
@@ -75,8 +75,8 @@
                                             <div class="clearfix"></div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                </div>*@
+                            @*</div>*@
                         </div>
                     </div>
                 </div>
@@ -1089,7 +1089,7 @@
         }
     }
     $(document).ready(function () {
-       $("#completeorder").hide();
+     
         $("#btPaypal").hide();
 
         $("#btAddList").click(function () {

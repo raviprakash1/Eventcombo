@@ -497,6 +497,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PaymentConfirmation.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TicketPayment\TicketPayment1.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TicketPayment.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\_ViewStart.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

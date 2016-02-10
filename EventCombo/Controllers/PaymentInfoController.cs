@@ -12,53 +12,61 @@ namespace EventCombo.Controllers
         public ActionResult PaymentInfo(long EventId)
         {
             //long EventId = 1;
-            ViewBag.EventId = EventId;
-            Payment_Info objPI = new Payment_Info();
-
-            EventComboEntities db = new EventComboEntities();
-            objPI = db.Payment_Info.Where(x => x.PI_EventId == EventId).SingleOrDefault();
-            string defaultCountry = "";
-
-            string Country = "";
-            if (objPI != null)
+            if (Session["logo"] != null)
             {
-                Country = Convert.ToString(objPI.PI_Country);
-            }
+                ViewBag.EventId = EventId;
+                Payment_Info objPI = new Payment_Info();
 
-            var countryQuery = (from c in db.Countries
-                                orderby c.Country1 ascending
-                                select c).Distinct();
+                EventComboEntities db = new EventComboEntities();
+                objPI = db.Payment_Info.Where(x => x.PI_EventId == EventId).SingleOrDefault();
+                string defaultCountry = "";
 
-            List<SelectListItem> countryList = new List<SelectListItem>();
-            if (!string.IsNullOrEmpty(Country))
-            {
-                defaultCountry = Country;
+                string Country = "";
+                if (objPI != null)
+                {
+                    Country = Convert.ToString(objPI.PI_Country);
+                }
+
+                var countryQuery = (from c in db.Countries
+                                    orderby c.Country1 ascending
+                                    select c).Distinct();
+
+                List<SelectListItem> countryList = new List<SelectListItem>();
+                if (!string.IsNullOrEmpty(Country))
+                {
+                    defaultCountry = Country;
+                }
+                else
+                {
+                    defaultCountry = "United States";
+                }
+                foreach (var item in countryQuery)
+                {
+                    countryList.Add(new SelectListItem()
+                    {
+                        Text = item.Country1,
+                        Value = item.CountryID.ToString(),
+                        Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
+                    });
+                }
+
+
+                ViewBag.CountryID = countryList;
+                return View(objPI);
             }
             else
             {
-                defaultCountry = "United States";
+                return RedirectToAction("Index", "Home");
             }
-            foreach (var item in countryQuery)
-            {
-                countryList.Add(new SelectListItem()
-                {
-                    Text = item.Country1,
-                    Value = item.CountryID.ToString(),
-                    Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
-                });
-            }
-
-
-            ViewBag.CountryID = countryList;
-            return View(objPI);
         }
         public ActionResult SavePaymentInfo()
         {
             EventComboEntities db = new EventComboEntities();
-
+            long Eventid = 0;
             Payment_Info objPI = new Payment_Info();
             try
             {
+                Eventid = Convert.ToInt32(Request["EventId"].ToString());
                 objPI.PI_EventId = Convert.ToInt32(Request["EventId"].ToString());
                 objPI.PaymentInfo_Id = Convert.ToInt32(Request["PaymentInfoId"].ToString());
 
@@ -173,7 +181,7 @@ namespace EventCombo.Controllers
             }
             ViewBag.CountryID = countryList;
 
-            return View("PaymentInfo", objPI);
+            return RedirectToAction("Index", "ManageEvent", new { Eventid = Eventid, type="N" });
         }
 
 

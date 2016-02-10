@@ -1319,11 +1319,11 @@ namespace EventCombo.Controllers
                 smtp.Send(mailMessage);
             }
         }
-        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string ImageMapPath, string qrimage,string brcode)
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string emailname, string qrimage,string brcode)
         {
             MailMessage mailMessage = new MailMessage();
             
-                mailMessage.From = new MailAddress(from, from);
+                mailMessage.From = new MailAddress(from, emailname);
 
           
             mailMessage.Subject = subject;

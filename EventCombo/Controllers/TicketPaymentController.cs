@@ -75,7 +75,16 @@ namespace EventCombo.Controllers
 
             CreateEventController cs = new CreateEventController();
             AccountController AccDetail = new AccountController();
-            tp.Imageurl = cs.GetImages(Eventid).FirstOrDefault();
+            var tt=cs.GetImages(Eventid).FirstOrDefault();
+            if(!string.IsNullOrWhiteSpace(tt))
+            {
+                tp.Imageurl = tt;
+            }
+            else
+            {
+                tp.Imageurl = "/Images/default_event_image.jpg";
+            }
+           
             var eventdetails = cs.GetEventdetail(Eventid);
             tp.Ticketdeliveraddress = eventdetails.Ticket_DAdress;
             tp.Title = eventdetails.EventTitle;
@@ -1301,6 +1310,7 @@ namespace EventCombo.Controllers
                     Dateofevent.Add(pdate);
                     //Detail to send on page
                 }
+                var emailname = "";
                 MemoryStream attachment = generateTicketPDF(strGUID, Eventid, EmailTag);
                 var Emailtemplate = hmc.getEmail("eticket");
                     if (Emailtemplate != null)
@@ -1348,7 +1358,15 @@ namespace EventCombo.Controllers
 
                             }
                         }
-                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                    if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                    {
+                        emailname = Emailtemplate.From_Name;
+                    }
+                    else
+                    {
+                        emailname = from;
+                    }
+                    if (!string.IsNullOrEmpty(Emailtemplate.Subject))
                         {
 
 
@@ -1430,7 +1448,7 @@ namespace EventCombo.Controllers
 
                      ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
                     //Mail 
-                    hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, "", "", "");
+                    hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, emailname, "", "");
                     //Mail 
 
 

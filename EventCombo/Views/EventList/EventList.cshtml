@@ -280,9 +280,14 @@
     </div><!-- event-tabs -->
     <!-- 3 tabs close -- -->
 
+@if (TempData["LiveEventscnt"] == null && TempData["SavedEventscnt"] == null && TempData["PastEventscnt"] == null && TempData["GuestListcnt"] == null)
+{
+    <div class="col-sm-12 no_pad mt10">
+        <span> No Results </span>
+        </div>
+        }
 
-
-</div>
+    </div>
 
 <script type="text/javascript">
     function DuplicateEvent(eventId,eventTitle)

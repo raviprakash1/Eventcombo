@@ -165,6 +165,7 @@ namespace EventCombo.Controllers
             Mevent.Eventcancel = Edetails.EventCancel;
             Mevent.Eventdate = startday.ToString() + " " + sDate_new + " " + starttime;
             Mevent.Eventprivacy = Edetails.EventPrivacy;
+            Session["logo"] = "events";
             Session["Fromname"] = "events";
             ValidationMessageController vmc = new ValidationMessageController();
             vmc.ControllerContext = new ControllerContext(this.Request.RequestContext, vmc);
