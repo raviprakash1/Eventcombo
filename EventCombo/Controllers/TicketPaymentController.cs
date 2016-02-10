@@ -1214,6 +1214,7 @@ namespace EventCombo.Controllers
             if (Session["AppId"] != null)
             {
                 Session["TicketDatamodel"] = null;
+                string ImageMapPath = "";
                 List<paymentdate> Dateofevent = new List<paymentdate>();
                 string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
                 List<Email_Tag> EmailTag = new List<Email_Tag>();
@@ -1426,11 +1427,16 @@ namespace EventCombo.Controllers
                            body=  ModifyEmailBody(bodyn, strGUID,Eventid, EmailTag);
                         
                         }
-                        //Mail 
-                        hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, "", "", "");
-                        //Mail 
-                    }
-              
+
+                     ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
+                    //Mail 
+                    hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, "", "", "");
+                    //Mail 
+
+
+
+                }
+
 
                 //Send mail
 
@@ -1458,6 +1464,41 @@ namespace EventCombo.Controllers
 
 
                 ViewBag.Timecal = Dateofevent;
+                System.GC.Collect();
+                System.GC.WaitForPendingFinalizers();
+
+
+                if (System.IO.File.Exists(ImageMapPath))
+                {
+                    Image image2 = Image.FromFile(ImageMapPath);
+                    image2.Dispose();
+                    System.IO.File.Delete(ImageMapPath);
+
+                }
+
+                var ticketdet = (from t in db.TicketOrderDetails where t.T_Guid== EvtOrDetail.TPD_GUID select t).ToList();
+                if (ticketdet != null)
+                {
+                    foreach (var item in ticketdet)
+                    {
+                        string barImgPath = Server.MapPath("..") + "/Images/br_" + item.T_Id + ".Png";
+
+                        string qrImgPath = Server.MapPath("..") + "/Images/QR_" + item.T_Id + ".Png";
+                        if (System.IO.File.Exists(barImgPath))
+                        {
+                            Image image2 = Image.FromFile(barImgPath);
+                            image2.Dispose();
+                            System.IO.File.Delete(barImgPath);
+                            
+                        }
+                        if (System.IO.File.Exists(qrImgPath))
+                        {
+                            Image image2 = Image.FromFile(qrImgPath);
+                            image2.Dispose();
+                            System.IO.File.Delete(qrImgPath);
+                        }
+                    }
+                }
                 return View(ps);
             }
             else
@@ -1466,11 +1507,11 @@ namespace EventCombo.Controllers
             }
         }
 
-        private void generatemapimage(string url)
+        private void generatemapimage(string url,string orderid)
         {
             string filename = "";
             WebClient client = new WebClient();
-            filename = "Imagemap.png";
+            filename = "Imagemap_"+orderid+".png";
             client.DownloadFile(url, Server.MapPath("~/Images/" + filename));
 
         }
@@ -1808,13 +1849,13 @@ namespace EventCombo.Controllers
             strHTML.Append("<a href='#' style='color:#0f90ba;'>Terms of Service </a> , <a style='color:#0f90ba;' href='#'>Privacy Policy </a> and <a style='color:#0f90ba;' href='#'>Cookie Policy </a></p>");
             strHTML.Append("</td></tr></table > ");
 
-            var imagepath = "<img src=https://maps.googleapis.com/maps/api/staticmap?center='"+eventname+"'&zoom=13&size=400x400&maptype=roadmap&markers=color:red%7Clabel:C%7C'"+ eventname + "' style='width:100%' />";
+            //var imagepath = "<img src=https://maps.googleapis.com/maps/api/staticmap?center='"+eventname+"'&zoom=13&size=400x400&maptype=roadmap&markers=color:red%7Clabel:C%7C'"+ eventname + "' style='width:100%' />";
 
-            generatemapimage("http://maps.google.com/maps/api/staticmap?center="+ eventname + "&zoom=14&size=400x400&maptype=roadmap&markers=color:red|color:red|label:C|"+ eventname + "&sensor=false");
+           generatemapimage("http://maps.google.com/maps/api/staticmap?center="+ eventname + "&zoom=14&size=400x400&maptype=roadmap&markers=color:red|color:red|label:C|"+ eventname + "&sensor=false", myOrderId);
 
-            string ImageMapPath = Server.MapPath("..") + "/Images/Imagemap.Png";
-            //string Imagecode = "<img style = 'width:200px;height:200px;' src ='" + ImageMapPath + "' alt = 'QRCode' />";
-            string Imageeventimg = "<img style='width:200px;height:200px;' src = cid:myeventmapImageID alt = 'Image' >";
+           string ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+myOrderId+".png";
+            string Imagecode = "<img style = 'width:200px;height:200px;' src ='" + ImageMapPath + "' alt = 'Map Image' />";
+            //string Imageeventimg = "<img style='width:200px;height:200px;' src = cid:myeventmapImageID alt = 'Image' >";
             if (!string.IsNullOrEmpty(bodyn))
             {
 
@@ -1887,7 +1928,7 @@ namespace EventCombo.Controllers
                         }
                         if (Emailtag[i].Tag_Name == "EventMapImage")
                         {
-                            bodyn = bodyn.Replace("¶¶EventMapImage¶¶", Imageeventimg);
+                            bodyn = bodyn.Replace("¶¶EventMapImage¶¶", Imagecode);
                         }
                         if (Emailtag[i].Tag_Name == "Downloadurl")
                         {

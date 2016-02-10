@@ -6063,9 +6063,10 @@ else
             },
             onEmpty: function (el) {
                
-
+            
                 if ($("#imageeror").val() == 0) {
-                    if ($(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                    if ($(".jFiler-items ul li").length == 1 || $(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+
                 }
             },
             captions: {
