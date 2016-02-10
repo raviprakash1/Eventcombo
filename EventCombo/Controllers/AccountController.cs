@@ -193,6 +193,7 @@ namespace EventCombo.Controllers
             string defaultCountry = "";
             HomeController hmc = new HomeController();
             hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+            Session["logo"] = "account";
             Session["Fromname"] = "account";
             string city = "", state = "", zipcode = "", country = "";
             if ((Session["AppId"] != null))

@@ -21,7 +21,7 @@ namespace EventCombo.Controllers
         [HttpGet]
         public ActionResult EventList(string SearchStringEventTitle, string hdLastTab , int page_live = 1, int page_saved = 1, int page_past = 1, int pageSize = 20)
         {
-
+            Session["logo"] = "events";
             Session["Fromname"] = "MyList";
             if ((Session["AppId"] != null))
             {

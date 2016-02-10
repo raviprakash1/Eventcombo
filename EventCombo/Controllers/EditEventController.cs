@@ -35,7 +35,7 @@ namespace EventCombo.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-
+                Session["logo"] = "events";
                 Session["Fromname"] = "events";
                 var url = Url.Action("CreateEvent", "CreateEvent");
                 Session["ReturnUrl"] = "CreateEvent~" + url;
@@ -164,6 +164,7 @@ namespace EventCombo.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
+                Session["logo"] = "events";
                 Session["Fromname"] = "events";
                 var url = Url.Action("CreateEvent", "CreateEvent");
                 Session["ReturnUrl"] = "CreateEvent~" + url;
