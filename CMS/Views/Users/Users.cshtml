@@ -504,21 +504,22 @@
 
     function checkeventcount(id, UserID)
     {
-        //console.log(id.substr(id.indexOf('-')+1,id.length-id.indexOf('-')));
-       
-        var value = $('#' + id).text();
-        if (parseInt(value) == 0) {
-          
-            $('#btnYes').hide();
-            $('#hId').text(GetMess("CMSUsers", "NoEvents"));
-            $('#btnNo').hide();
-            $('#btOk').click();
-            return false;
-        } else {
 
-            OpenEventDialog(UserID);
-        }
-        console.log($('#'+id).text());
+        window.open('http://eventcombo.kiwireader.com//eventlist/eventlist?strID=19bdbd0b-6fa3-4461-9eab-6e99c789476c', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=900');
+
+        //var value = $('#' + id).text();
+        //if (parseInt(value) == 0) {
+          
+        //    $('#btnYes').hide();
+        //    $('#hId').text(GetMess("CMSUsers", "NoEvents"));
+        //    $('#btnNo').hide();
+        //    $('#btOk').click();
+        //    return false;
+        //} else {
+
+        //    OpenEventDialog(UserID);
+        //}
+        //console.log($('#'+id).text());
         
     }
 
