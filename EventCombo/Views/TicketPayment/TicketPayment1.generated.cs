@@ -2285,44 +2285,44 @@ WriteLiteral("\',\r\n            async: false,\r\n            data: { strFormNam
 "\').html(Mess);\r\n        }\r\n        else {\r\n            $(\'#divaccsuc\').css(\'disp" +
 "lay\', \'none\');\r\n            $(\'#diverroacc\').css(\'display\', \'block\');\r\n         " +
 "   $(\'#diverroacc\').focus();\r\n            $(\'#erraccmsg\').html(Mess);\r\n\r\n       " +
-" }\r\n    }\r\n    $(document).ready(function () {\r\n       $(\"#completeorder\").hide(" +
-");\r\n        $(\"#btPaypal\").hide();\r\n\r\n        $(\"#btAddList\").click(function () " +
-"{\r\n\r\n            if ($(\"#nameofticket\").val().trim() == \'\') {\r\n                S" +
-"howMessage(\'E\', ajaxsetup(\'TicketPayment\', \'TPayValidatebearernameUI\'));\r\n      " +
-"          $(\"#nameofticket\").addClass(\'err-bor\');\r\n\r\n                return fals" +
-"e;\r\n            }\r\n\r\n            if ($(\'.Notifybox\').css(\'display\') == \'block\') " +
-"{\r\n                var email = $(\'#emailbearer\').val();\r\n                if (!va" +
-"lidateEmail(email)) {\r\n                    $(\'#emailbearer\').addClass(\'err-bor\')" +
-";\r\n                    ShowMessage(\'E\', ajaxsetup(\'TicketPayment\', \'TPayValidate" +
-"beareremailUI\'));\r\n                    //alert(\"Please enter valid Email.\");\r\n  " +
-"                  if ($(\'#ddlListitem option\').length < 0) {\r\n                  " +
-"      $(\'#blocklist\').css(\'display\', \'none\');\r\n                    }\r\n          " +
-"          return false;\r\n\r\n\r\n                } else {\r\n\r\n                    $(\'" +
-"#blocklist\').css(\'display\', \'block\');\r\n                }\r\n\r\n            }\r\n     " +
-"       else {\r\n\r\n                $(\'#blocklist\').css(\'display\', \'block\');\r\n     " +
-"       }\r\n\r\n\r\n\r\n\r\n            var qty = $(\'#hidQty\').val();\r\n\r\n\r\n\r\n\r\n           " +
-" if ($(\"#hidTicketbearer\").val() == \'\') {\r\n                var qty = parseInt($(" +
-"\'#hidQty\').val());\r\n                var ddlength = parseInt($(\"#ddlListitem opti" +
-"on\").length);\r\n                if (ddlength > (qty-1))\r\n                {\r\n     " +
-"               var msg = ajaxsetup(\'TicketPayment\', \'TpayMaxTicketReciepts\') + q" +
-"ty;\r\n                    $(\'#divaccsuc\').css(\'display\', \'none\');\r\n              " +
-"      $(\'#diverroacc\').css(\'display\', \'block\');\r\n\r\n                    $(\'#diver" +
-"roacc\').focus();\r\n                    $(\'#erraccmsg\').html(msg);\r\n              " +
-"      $(\'html,body\').animate({ scrollTop: 0 });\r\n                    return fals" +
-"e;\r\n                }\r\n                AddTicket();\r\n            }\r\n            " +
-"else\r\n                UpdateTicket($(\"#hidTicketbearer\").val());\r\n\r\n\r\n          " +
-"  $(\"#hidTicketbearer\").val(\'\');\r\n            $(\"#nameofticket\").val(\'\');\r\n     " +
-"       $(\"#emailbearer\").val(\'\');\r\n            if ($(\'.Notifybox\').css(\'display\'" +
-") == \'block\') {\r\n                $(\'.Notifybox\').css(\'display\', \'none\');\r\n      " +
-"      }\r\n\r\n        });\r\n\r\n\r\n\r\n        $(\"#selectcard\").change(function () {\r\n   " +
-"         if ($(\"#selectcard\").val() == \"P\")\r\n            {\r\n                $(\"#" +
-"dvBillingAddress\").hide();\r\n                $(\"#completeorder\").hide();\r\n       " +
-"         $(\"#btPaypal\").show();\r\n            }\r\n            else\r\n            {\r" +
-"\n                $(\"#dvBillingAddress\").show();\r\n                $(\"#completeord" +
-"er\").show();\r\n                $(\"#btPaypal\").hide();\r\n\r\n            }\r\n        }" +
-");\r\n\r\n\r\n        $(window).unload(function () {\r\n            if ($(\"#hdIsPostBack" +
-"\").val() != \"Y\") {\r\n                $(\"#hdIsPostBack\").val(\"N\");\r\n              " +
-"  $.ajax({\r\n                    url: \'");
+" }\r\n    }\r\n    $(document).ready(function () {\r\n     \r\n        $(\"#btPaypal\").hi" +
+"de();\r\n\r\n        $(\"#btAddList\").click(function () {\r\n\r\n            if ($(\"#name" +
+"ofticket\").val().trim() == \'\') {\r\n                ShowMessage(\'E\', ajaxsetup(\'Ti" +
+"cketPayment\', \'TPayValidatebearernameUI\'));\r\n                $(\"#nameofticket\")." +
+"addClass(\'err-bor\');\r\n\r\n                return false;\r\n            }\r\n\r\n        " +
+"    if ($(\'.Notifybox\').css(\'display\') == \'block\') {\r\n                var email " +
+"= $(\'#emailbearer\').val();\r\n                if (!validateEmail(email)) {\r\n      " +
+"              $(\'#emailbearer\').addClass(\'err-bor\');\r\n                    ShowMe" +
+"ssage(\'E\', ajaxsetup(\'TicketPayment\', \'TPayValidatebeareremailUI\'));\r\n          " +
+"          //alert(\"Please enter valid Email.\");\r\n                    if ($(\'#ddl" +
+"Listitem option\').length < 0) {\r\n                        $(\'#blocklist\').css(\'di" +
+"splay\', \'none\');\r\n                    }\r\n                    return false;\r\n\r\n\r\n" +
+"                } else {\r\n\r\n                    $(\'#blocklist\').css(\'display\', \'" +
+"block\');\r\n                }\r\n\r\n            }\r\n            else {\r\n\r\n            " +
+"    $(\'#blocklist\').css(\'display\', \'block\');\r\n            }\r\n\r\n\r\n\r\n\r\n           " +
+" var qty = $(\'#hidQty\').val();\r\n\r\n\r\n\r\n\r\n            if ($(\"#hidTicketbearer\").va" +
+"l() == \'\') {\r\n                var qty = parseInt($(\'#hidQty\').val());\r\n         " +
+"       var ddlength = parseInt($(\"#ddlListitem option\").length);\r\n              " +
+"  if (ddlength > (qty-1))\r\n                {\r\n                    var msg = ajax" +
+"setup(\'TicketPayment\', \'TpayMaxTicketReciepts\') + qty;\r\n                    $(\'#" +
+"divaccsuc\').css(\'display\', \'none\');\r\n                    $(\'#diverroacc\').css(\'d" +
+"isplay\', \'block\');\r\n\r\n                    $(\'#diverroacc\').focus();\r\n           " +
+"         $(\'#erraccmsg\').html(msg);\r\n                    $(\'html,body\').animate(" +
+"{ scrollTop: 0 });\r\n                    return false;\r\n                }\r\n      " +
+"          AddTicket();\r\n            }\r\n            else\r\n                UpdateT" +
+"icket($(\"#hidTicketbearer\").val());\r\n\r\n\r\n            $(\"#hidTicketbearer\").val(\'" +
+"\');\r\n            $(\"#nameofticket\").val(\'\');\r\n            $(\"#emailbearer\").val(" +
+"\'\');\r\n            if ($(\'.Notifybox\').css(\'display\') == \'block\') {\r\n            " +
+"    $(\'.Notifybox\').css(\'display\', \'none\');\r\n            }\r\n\r\n        });\r\n\r\n\r\n\r" +
+"\n        $(\"#selectcard\").change(function () {\r\n            if ($(\"#selectcard\")" +
+".val() == \"P\")\r\n            {\r\n                $(\"#dvBillingAddress\").hide();\r\n " +
+"               $(\"#completeorder\").hide();\r\n                $(\"#btPaypal\").show(" +
+");\r\n            }\r\n            else\r\n            {\r\n                $(\"#dvBillin" +
+"gAddress\").show();\r\n                $(\"#completeorder\").show();\r\n               " +
+" $(\"#btPaypal\").hide();\r\n\r\n            }\r\n        });\r\n\r\n\r\n        $(window).unl" +
+"oad(function () {\r\n            if ($(\"#hdIsPostBack\").val() != \"Y\") {\r\n         " +
+"       $(\"#hdIsPostBack\").val(\"N\");\r\n                $.ajax({\r\n                 " +
+"   url: \'");
 
             
             #line 1187 "..\..\Views\TicketPayment\TicketPayment.cshtml"
@@ -2944,9 +2944,9 @@ WriteLiteral("\',\r\n                data: { \'cardid\': selectvalue },\r\n     
 "   return false;\r\n                }\r\n            },\r\n            error: function" +
 " (data) { alert(data) }\r\n        });\r\n\r\n\r\n    });\r\n</script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 87501), Tuple.Create("\"", 87542)
-, Tuple.Create(Tuple.Create("", 87507), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 87507), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 87472), Tuple.Create("\"", 87513)
+, Tuple.Create(Tuple.Create("", 87478), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 87478), false)
 );
 
 WriteLiteral("></script>");

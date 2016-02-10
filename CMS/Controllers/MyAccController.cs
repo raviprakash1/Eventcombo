@@ -485,6 +485,7 @@ namespace CMS.Controllers
                             from = "shweta.sindhu@kiwitech.com";
 
                         }
+                     
                         if (!string.IsNullOrEmpty(Emailtemplate.Subject))
                         {
 
