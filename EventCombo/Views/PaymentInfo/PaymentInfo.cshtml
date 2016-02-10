@@ -3,7 +3,15 @@
     ViewBag.Title = "PaymentInfo";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+<style>
+    .AccHoldInfoHide {
+        display: none;
+    }
 
+    .AccHoldInfoShow {
+        display: block;
+    }
+</style>
 <div class="container-fluid cont_margin">
     <div class="row">
         <div class="col-sm-10 ">
@@ -123,6 +131,7 @@
                                                 Company
                                             </label>
                                         </div>
+
                                     }
                                     else
                                     {
@@ -141,46 +150,63 @@
                                     }
                                     <div class="clearfix"></div>
 
+                                    @if (Model != null && !String.IsNullOrEmpty(Model.PI_AccountHolderType))
+                                    {
+                                        <div class="comp_cont col-sm-6 col-xs-12 no_pad@(Model.PI_AccountHolderType == "C" ? " AccHoldInfoShow" : " AccHoldInfoHide")">
+                                            <label class="col-sm-8 label-control comp_name no_pad">
+                                                Company Name*
+                                            </label>
+                                            <div class="col-sm-8 col-xs-12 no_pad ">
 
-                                    <div class="comp_cont col-sm-6 col-xs-12 no_pad">
-                                        <label class="col-sm-8 label-control comp_name no_pad">
-                                            Company Name*
-                                        </label>
-                                        <div class="col-sm-8 col-xs-12 no_pad">
-                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_AccCompName))
-                                            {
-                                                <input id="txtCompanyName" name="CompanyName" type="text" class="form-control "
-                                                       maxlength="1000" placeholder="Company Name" value="@Model.PI_AccCompName" required>
-                                            }
-                                            else
-                                            {
-                                                <input id="txtCompanyName" name="CompanyName" type="text" class="form-control "
-                                                       maxlength="1000" placeholder="Company Name">
-                                            }
-                                            <p>Company name, as appears on bank statements</p>
+                                                <input id="txtCompanyName" name="CompanyName" type="text" class="form-control"
+                                                       maxlength="1000" placeholder="Company Name" value="@Model.PI_AccCompName">
+                                                <p>Company name, as appears on bank statements</p>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="NameAcnt col-sm-8 col-xs-12 no_pad">
-                                        <label class="col-sm-12 control-label comp_name no_pad ">Name on account*</label>
-                                        <div class="col-sm-12 col-xs-12 no_pad">
-                                            <div class="row">
-                                                <div class="col-xs-12 ">
-                                                    @if (Model != null && !String.IsNullOrEmpty(Model.PI_AccCompName))
-                                                    {
+                                    }
+                                    else
+                                    {
+                                        <div class="comp_cont col-sm-6 col-xs-12 no_pad AccHoldInfoHide">
+                                            <label class="col-sm-8 label-control comp_name no_pad">
+                                                Company Name*
+                                            </label>
+                                            <div class="col-sm-8 col-xs-12 no_pad">
+                                                <input id="txtCompanyName" name="CompanyName" type="text" class="form-control"
+                                                       maxlength="1000" placeholder="Company Name">
+                                                <p>Company name, as appears on bank statements</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (Model != null && !String.IsNullOrEmpty(Model.PI_AccountHolderType))
+                                    {
+                                        <div class="NameAcnt col-sm-8 col-xs-12 no_pad@(Model.PI_AccountHolderType == "I" ? " AccHoldInfoShow" : " AccHoldInfoHide")">
+                                            <label class="col-sm-12 control-label comp_name no_pad ">Name on account*</label>
+                                            <div class="col-sm-12 col-xs-12 no_pad">
+                                                <div class="row">
+                                                    <div class="col-xs-12 ">
                                                         <input id="txtName" name="Name" class="form-control"
                                                                placeholder="Name" type="text" value="@Model.PI_AccCompName">
-                                                    }
-                                                    else
-                                                    {
+                                                    </div>
+                                                </div>
+                                                <p>Your full name, as appears on bank statements</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="NameAcnt col-sm-8 col-xs-12 no_pad">
+                                            <label class="col-sm-12 control-label comp_name no_pad ">Name on account*</label>
+                                            <div class="col-sm-12 col-xs-12 no_pad">
+                                                <div class="row">
+                                                    <div class="col-xs-12 ">
                                                         <input id="txtName" name="Name" class="form-control"
                                                                placeholder="Name" type="text">
-                                                    }
+                                                    </div>
                                                 </div>
+                                                <p>Your full name, as appears on bank statements</p>
                                             </div>
-                                            <p>Your full name, as appears on bank statements</p>
                                         </div>
-                                    </div>
+                                    }
                                     <div class="clearfix"></div>
                                     <div class="col-sm-8 col-xs-12 no_pad mt10">
                                         <label class="col-md-12 control-label comp_name no_pad ">Address*</label>
@@ -197,7 +223,16 @@
                                             }
                                         </div>
                                         <div class="col-md-12 col-xs-12 no_pad mt10">
-                                            <input id="txtAddress2" name="Address2" class="form-control" placeholder="Address 2" type="text">
+                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_Address2))
+                                            {
+                                                <input id="txtAddress2" name="Address2" class="form-control" placeholder="Address 2"
+                                                       type="text" value="@Model.PI_Address2" required>
+                                            }
+                                            else
+                                            {
+                                                <input id="txtAddress2" name="Address2" class="form-control" placeholder="Address 2"
+                                                       type="text">
+                                            }
 
                                         </div>
                                     </div>
@@ -249,8 +284,17 @@
                                             }
                                         </div>
                                         <div class="col-xs-6 ">
-                                            <input id="txtPostalCode1" name="PostalCode1" class="form-control Number" placeholder="Postal Code" type="text"
-                                                   maxlength="5">
+
+                                            @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
+                                            {
+                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control Number" placeholder="Postal Code"
+                                                       onkeypress="IsNumeric(event);" maxlength="5" type="text" value="@Model.PI_PostalCode">
+                                            }
+                                            else
+                                            {
+                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control Number" placeholder="Postal Code"
+                                                       onkeypress="IsNumeric(event);" maxlength="5" type="text" />
+                                            }
                                         </div>
 
                                     </div>
@@ -397,7 +441,15 @@
                                         }
                                     </div>
                                     <div class="col-md-12 col-xs-12 no_pad mt10">
-                                        <input id="txtMailingAddress2" name="MailingAddress2" class="form-control" placeholder="Address 2" type="text">
+                                        @if (Model != null && !String.IsNullOrEmpty(Model.PI_Address2))
+                                        {
+                                            <input id="txtMailingAddress2" name="MailingAddress2" class="form-control" placeholder="Address 2" type="text"
+                                                   value="@Model.PI_Address2" />
+                                        }
+                                        else
+                                        {
+                                            <input id="txtMailingAddress2" name="MailingAddress2" class="form-control" placeholder="Address 2" type="text" />
+                                        }
 
                                     </div>
                                 </div>
@@ -470,11 +522,17 @@
                                 @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
                                 {
                                     <input id="hdfPaymentInfoId" name="PaymentInfoId" type="hidden" value="@Model.PaymentInfo_Id" />
-                                    <input id="hdfEventId" name="EventId" type="hidden" value="@Model.PI_EventId" />
                                 }
                                 else
                                 {
                                     <input id="hdfPaymentInfoId" name="PaymentInfoId" type="hidden" />
+                                }
+                                @if (ViewBag.EventId != null)
+                                {
+                                    <input id="hdfEventId" name="EventId" type="hidden" value="@ViewBag.EventId" />
+                                }
+                                else
+                                {
                                     <input id="hdfEventId" name="EventId" type="hidden" />
                                 }
                                 <button id="btnSave" name="Save" type="submit" class="btn btn-info acnt_btn"
@@ -501,18 +559,50 @@
 <script src="js/main.js"></script>
 <script type="text/javascript" src="js/ec-select.js"></script>
 <script type="text/javascript">
-      $(".comp_cont").css("display", "none");
+      //$(".comp_cont").css("display", "none");
       $(".Comp_chek").click(function(){
-        $(".comp_cont").css("display", "block");
-        $(".NameAcnt").css("display", "none");
+        //$(".comp_cont").css("display", "block");
+        //$(".NameAcnt").css("display", "none");
+
+        $(".comp_cont").removeClass("AccHoldInfoHide");
+        $(".comp_cont").addClass("AccHoldInfoShow");
+
+        $(".NameAcnt").removeClass("AccHoldInfoShow");
+        $(".NameAcnt").addClass("AccHoldInfoHide");
+
+        //$("#txtCompanyName").removeClass("AccHoldInfoHide");
+        //$("#txtCompanyName").addClass("AccHoldInfoShow");
+
+        //$("#txtName").removeClass("AccHoldInfoShow");
+        //$("#txtName").addClass("AccHoldInfoHide");
+
+
+
+
       });
       $(".Indiv_cont").click(function(){
-        $(".comp_cont").css("display", "none");
-        $(".NameAcnt").css("display", "block");
+        //$(".comp_cont").css("display", "none");
+        //$(".NameAcnt").css("display", "block");
+
+          $(".comp_cont").removeClass("AccHoldInfoShow");
+          $(".comp_cont").addClass("AccHoldInfoHide");
+
+          $(".NameAcnt").removeClass("AccHoldInfoHide");
+          $(".NameAcnt").addClass("AccHoldInfoShow");
+
+          //$("#txtCompanyName").removeClass("AccHoldInfoShow");
+          //$("#txtCompanyName").addClass("AccHoldInfoHide");
+
+          //$("#txtName").removeClass("AccHoldInfoHide");
+          //$("#txtName").addClass("AccHoldInfoShow");
+
+
+
       });
 
       //$("#dvCheque").css("display", "none");
       OnOfPaymentMethod();
+
       $("#ddlPaymentMethod").change(function () {
           OnOfPaymentMethod();
       });
@@ -528,7 +618,15 @@
           }
       }
 
+
+
+
+      //$(document).ready(function () {
+
+      //});
 </script>
+
+
 <script>
     //$(function () {
     //    // Setup form validation on the #register-form element
@@ -702,6 +800,7 @@
         }
         else if ($("#ddlPaymentMethod").val() == "D") {
             var Name = $("#txtName").val();
+            var CompanyName = $("#txtCompanyName").val();
             var N_SpChrNot = /^[a-zA-Z0-9!#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/
             var Address1 = $("#txtAddress1").val();
             var City1 = $("#txtCity1").val();
@@ -711,12 +810,24 @@
             var RoutingNumber = $("#txtRoutingNumber").val();
             var AcNumber = $("#txtAcNumber").val();
             var ReEnterAcNumber = $("#txtReEnterAcNumber").val();
-
-            if (Name == '') {
-                ErrorString += GetMess();
-                $("#txtName").focus();
-                return false;
+            alert()
+            if ($("AccHoldInfo").val() == "I")
+            {
+                if (Name == '') {
+                    ErrorString += GetMess();
+                    $("#txtName").focus();
+                    return false;
+                }
             }
+            else if ($("AccHoldInfo").val() == "C")
+            {
+                if (CompanyName == '') {
+                    ErrorString += GetMess();
+                    $("#txtCompanyName").focus();
+                    return false;
+                }
+            }
+
             //if(Name.match(N_SpChrNot))
             //{
             //    ErrorString += GetMess();
@@ -763,6 +874,12 @@
                 $("#txtReEnterAcNumber").focus();
                 return false;
             }
+            if(AcNumber!=ReEnterAcNumber)
+            {
+                ErrorString += GetMess();
+                $("#txtReEnterAcNumber").focus();
+                return false;
+            }
 
         }
         //alert(ErrorString);
@@ -777,6 +894,252 @@
         if (!(event.shiftKey == false && (keycode == 46 || keycode == 8 || keycode == 37 || keycode == 39 || (keycode >= 48 && keycode <= 57)))) {
             event.preventDefault();
         }
+    });
+</script>
+<script>
+    $('#txtPostalCode1').change(function () {
+        //alert('aaa');
+        var country = $("#ddlCountry1 option:selected").text().trim();
+
+        var city = "";
+        var state = "";
+
+        var pincode = $(this).val();
+
+
+        $.ajax({
+            url: 'http://maps.googleapis.com/maps/api/geocode/json',
+            data: '&address=' + pincode + '&sensor=true',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+
+
+                if (data.status == 'OK') {
+
+                    for (var i = 0; i < data.results[0].address_components.length; i++) {
+                        var obj = data.results[0].address_components[i];
+
+                        var obj2 = obj['types'];
+
+                        for (var j = 0; j < obj2.length; j++) {
+                            if (obj2[j] == 'locality') {
+                                city = obj['long_name'];
+
+
+                            }
+
+                            if (obj2[j] == 'sublocality_level_1') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_2') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_3') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_4') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'ward') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'postal_town') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_1') {
+                                state = obj['long_name'];
+
+                            }
+                            //if (obj2[j] == 'administrative_area_level_2') {
+                            //    state = obj['long_name'];
+
+                            //}
+
+                            //alert('city=' + city);
+                            if (obj2[j] == 'country') {
+                                if (obj['long_name'] == country) {
+
+
+                                    $('#txtCity1').val(city);
+                                    $('#txtState1').val(state);
+                                } else {
+                                    $('#txtCity1').val('');
+                                    $('#txtState1').val('');
+                                }
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+
+                else {
+                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                    $("#txtState1").val("");
+                    $("#txtCity1").val("");
+                    $('#txtPostalCode1').val("");
+                    $('#txtPostalCode1').addClass('err-bor');
+                    ShowMessage('E', msg)
+
+                    return false;
+                }
+            },
+            error: function (data) { alert(data) }
+        });
+
+
+    });
+</script>
+<script>
+    $('#txtPostalCode2').change(function () {
+        //alert('aaa');
+        var country = $("#ddlCountry2 option:selected").text().trim();
+
+        var city = "";
+        var state = "";
+
+        var pincode = $(this).val();
+
+
+        $.ajax({
+            url: 'http://maps.googleapis.com/maps/api/geocode/json',
+            data: '&address=' + pincode + '&sensor=true',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+
+
+                if (data.status == 'OK') {
+
+                    for (var i = 0; i < data.results[0].address_components.length; i++) {
+                        var obj = data.results[0].address_components[i];
+
+                        var obj2 = obj['types'];
+
+                        for (var j = 0; j < obj2.length; j++) {
+                            if (obj2[j] == 'locality') {
+                                city = obj['long_name'];
+
+
+                            }
+
+                            if (obj2[j] == 'sublocality_level_1') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_2') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_3') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_4') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'ward') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'sublocality_level_5') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'postal_town') {
+                                city = obj['long_name'];
+
+
+                            }
+                            if (obj2[j] == 'administrative_area_level_1') {
+                                state = obj['long_name'];
+
+                            }
+                            //if (obj2[j] == 'administrative_area_level_2') {
+                            //    state = obj['long_name'];
+
+                            //}
+
+                            //alert('city=' + city);
+                            if (obj2[j] == 'country') {
+                                if (obj['long_name'] == country) {
+
+
+                                    $('#txtCity2').val(city);
+                                    $('#txtState2').val(state);
+                                } else {
+                                    $('#txtCity2').val('');
+                                    $('#txtState2').val('');
+                                }
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+
+                else {
+                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                    $("#txtState2").val("");
+                    $("#txtCity2").val("");
+                    $('#txtPostalCode2').val("");
+                    $('#txtPostalCode2').addClass('err-bor');
+                    ShowMessage('E', msg)
+
+                    return false;
+                }
+            },
+            error: function (data) { alert(data) }
+        });
+
+
     });
 </script>
 

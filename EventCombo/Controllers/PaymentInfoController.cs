@@ -11,19 +11,23 @@ namespace EventCombo.Controllers
         // GET: PaymentInfo
         public ActionResult PaymentInfo(long EventId)
         {
+            //long EventId = 1;
+            ViewBag.EventId = EventId;
             Payment_Info objPI = new Payment_Info();
 
             EventComboEntities db = new EventComboEntities();
             objPI = db.Payment_Info.Where(x => x.PI_EventId == EventId).SingleOrDefault();
             string defaultCountry = "";
+
             string Country = "";
             if (objPI != null)
             {
                 Country = Convert.ToString(objPI.PI_Country);
             }
-                var countryQuery = (from c in db.Countries
-                                    orderby c.Country1 ascending
-                                    select c).Distinct();
+
+            var countryQuery = (from c in db.Countries
+                                orderby c.Country1 ascending
+                                select c).Distinct();
 
             List<SelectListItem> countryList = new List<SelectListItem>();
             if (!string.IsNullOrEmpty(Country))
@@ -44,7 +48,7 @@ namespace EventCombo.Controllers
                 });
             }
 
-           
+
             ViewBag.CountryID = countryList;
             return View(objPI);
         }
@@ -55,13 +59,14 @@ namespace EventCombo.Controllers
             Payment_Info objPI = new Payment_Info();
             try
             {
-                objPI.PaymentInfo_Id = Convert.ToInt32(Request["PaymentInfoId"].ToString());
                 objPI.PI_EventId = Convert.ToInt32(Request["EventId"].ToString());
+                objPI.PaymentInfo_Id = Convert.ToInt32(Request["PaymentInfoId"].ToString());
+
             }
             catch { }
 
             objPI.PI_PaymentMethod = Request["PaymentMethod"].ToString();
-            if (objPI.PI_PaymentMethod == "Direct Deposit")
+            if (objPI.PI_PaymentMethod == "D")
             {
                 objPI.PI_AccountHolderType = Request["AccHoldInfo"].ToString();
                 if (!string.IsNullOrEmpty(Request["CompanyName"].ToString()))
@@ -78,6 +83,7 @@ namespace EventCombo.Controllers
                 }
 
                 objPI.PI_Address = Request["Address1"].ToString();
+                objPI.PI_Address2 = Request["Address2"].ToString();
                 objPI.PI_City = Request["City1"].ToString();
                 objPI.PI_State = Request["State1"].ToString();
                 objPI.PI_Country = Convert.ToInt16(Request["Country1"].ToString());
@@ -90,11 +96,7 @@ namespace EventCombo.Controllers
                 objPI.PI_AccountNumber = Request["AcNumber"].ToString();
                 objPI.PI_ReAccountNumber = Request["ReEnterAcNumber"].ToString();
 
-                objPI.PI_PayTo = string.Empty;
-                objPI.PI_Address = string.Empty;
-                objPI.PI_City = string.Empty;
-                objPI.PI_State = string.Empty;
-                objPI.PI_Country = 0;
+
             }
             else
             {
@@ -117,6 +119,7 @@ namespace EventCombo.Controllers
 
                 objPI.PI_PayTo = Request["PayeeName"].ToString();
                 objPI.PI_Address = Request["MailingAddress1"].ToString();
+                objPI.PI_Address2 = Request["MailingAddress2"].ToString();
                 objPI.PI_City = Request["City2"].ToString();
                 objPI.PI_State = Request["State2"].ToString();
                 objPI.PI_Country = Convert.ToInt16(Request["Country2"].ToString());
@@ -125,7 +128,7 @@ namespace EventCombo.Controllers
             //db.Payment_Info.Add(objPI);
             //db.SaveChanges();
 
-            if (string.IsNullOrEmpty(objPI.PaymentInfo_Id.ToString()))
+            if (string.IsNullOrEmpty(objPI.PaymentInfo_Id.ToString()) || objPI.PaymentInfo_Id == 0)
             {
                 db.Payment_Info.Add(objPI);
                 db.SaveChanges();
