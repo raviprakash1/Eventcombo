@@ -1258,7 +1258,7 @@ namespace EventCombo.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
 
-            if (returnUrl.Trim() != "") result = SignInStatus.Success;
+            if (returnUrl != null && returnUrl.Trim() != "") result = SignInStatus.Success;
 
 
             switch (result)
