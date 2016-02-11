@@ -218,7 +218,12 @@
                                 $('#diverroacc').css('display', 'block');
                                 $('#diverroacc').focus();
                                 $('#diverro1acc').css('display', 'none');
-                                  $('#divsuccerr').css('display', 'block');
+                                $('#divsuccerr').css('display', 'block');
+                                $("#imageeror").val('1');
+                                setTimeout(function () {
+                                    // $('#diverroacc').fadeOut();
+                                    $("#imageeror").val('0');
+                                }, 200)
                                 $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesType, m));
                                 return false;
                                 break

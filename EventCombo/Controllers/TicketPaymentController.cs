@@ -1461,7 +1461,7 @@ namespace EventCombo.Controllers
                 CreateEventController cs = new CreateEventController();
                 PaymentConfirmation ps = new PaymentConfirmation();
                 var Eventdetails = cs.GetEventdetail(Eventid);
-                ps.imgurl = cs.GetImages(Eventid).FirstOrDefault();
+                ps.imgurl = (!string.IsNullOrEmpty(cs.GetImages(Eventid).FirstOrDefault())? cs.GetImages(Eventid).FirstOrDefault() : "/Images/default_event_image.jpg");
                 ps.Tilte = Eventdetails.EventTitle;
                 ps.description = Eventdetails.EventDescription;
                 ps.Eventid = Eventdetails.EventID.ToString();
@@ -1811,7 +1811,7 @@ namespace EventCombo.Controllers
             var myBillingdeatils = (from p in db.BillingAddresses where p.Guid == gUID && p.OrderId == myOrderId select p).ToList().Distinct().FirstOrDefault();
 
             var cardtext = "";
-
+         
 
             if (myBillingdeatils != null)
             {
@@ -1859,6 +1859,10 @@ namespace EventCombo.Controllers
             {
                 cardtext = "Charge to : Paypal";
             }
+            if (myOrderDetails.O_TotalAmount <= 0)
+            {
+                cardtext = "";
+            }
             strHTML.Append("<tr align='center'> ");
             strHTML.Append("<td colspan='4' style='font-size:15px; padding:10px 5px;'>" + cardtext + " </td></tr>");
             strHTML.Append("<tr align='center'><td colspan='4' style='font-size:15px;'>");
@@ -1870,8 +1874,9 @@ namespace EventCombo.Controllers
             //var imagepath = "<img src=https://maps.googleapis.com/maps/api/staticmap?center='"+eventname+"'&zoom=13&size=400x400&maptype=roadmap&markers=color:red%7Clabel:C%7C'"+ eventname + "' style='width:100%' />";
 
            generatemapimage("http://maps.google.com/maps/api/staticmap?center="+ eventname + "&zoom=14&size=400x400&maptype=roadmap&markers=color:red|color:red|label:C|"+ eventname + "&sensor=false", myOrderId);
-
-           string ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+myOrderId+".png";
+            var url1 = Request.Url;
+            var baseurl1 = url.GetLeftPart(UriPartial.Authority);
+            string ImageMapPath = "http://eventcombonew-qa.kiwireader.com/Images/Imagemap_" + myOrderId+".png";
             string Imagecode = "<img style = 'width:200px;height:200px;' src ='" + ImageMapPath + "' alt = 'Map Image' />";
             //string Imageeventimg = "<img style='width:200px;height:200px;' src = cid:myeventmapImageID alt = 'Image' >";
             if (!string.IsNullOrEmpty(bodyn))
@@ -2057,14 +2062,53 @@ namespace EventCombo.Controllers
         }
 
 
+        public string GetURL()
+        {
 
+            string URL = "";
+
+            try
+            {
+
+                string Port = Request.ServerVariables["SERVER_PORT"];
+
+                if ((Port == null) | Port == "80" | Port == "443")
+                {
+                    Port = "";
+                }
+
+                else
+                {
+                    Port = ":" + Port;
+                }
+
+                string Protocol = Request.ServerVariables["SERVER_PORT_SECURE"];
+
+                if ((Protocol == null) | Protocol == "0")
+                {
+                    Protocol = "http://";
+                }
+
+                else
+                {
+                    Protocol = "https://";
+                }
+                URL = Protocol + Request.ServerVariables["SERVER_NAME"] + Port + "";
+            }
+
+            catch (Exception ex)
+            {
+            }
+
+            return URL;
+        }
 
 
 
     }
 
 
-
+  
 
 
 

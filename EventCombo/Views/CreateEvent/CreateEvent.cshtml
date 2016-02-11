@@ -174,12 +174,24 @@
                     e.preventDefault();
 
                 })
+
+                var count = 0;
+                $("input[id^='image_hidden']").each(function () {
+
+                    var id = $(this).attr('id');
+                    ////console.log(id);
+                    var idn = 'image_hidden_' + (count);
+                    $(this).attr("id", idn);
+
+                    count = count + 1;
+
+                });
                 $('#ImagePresent').val("NO");
 
 
             },
             onEmpty: function (el) {
-
+             
 
                 if ($("#imageeror").val() == 0) {
                     if ($(".jFiler-items ul li").length == 2) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
@@ -1051,7 +1063,7 @@
                                 </div>
 
                             </div>
-                            @*<div class="clearfix"></div>*@
+                           <div class="clearfix"></div>
                             <div class="modal-footer ticket_footer mt10 text" id="id_ticket_footer">
                                 <div class="col-sm-12 text-right">
                                     <label class="ev_tickt_lebel">Total Capacity:<span id="id_totalqty">0</span></label>
@@ -5522,6 +5534,7 @@
             $(".StartDatemodal").hide();
             $(".StartDate").click(function () {
                 $(".StartDatemodal").slideToggle("fast");
+                $(".TmezoneSet").hide();
 
             });
 
@@ -5592,6 +5605,22 @@
 
             });
 
+        });
+
+
+        $(document).on('click', function () {
+            $('.StartDatemodal').hide();
+        });
+        $('.StartDatemodal, .StartDate').on('click', function (e) {
+            e.stopPropagation();
+        });
+
+
+        $(document).on('click', function () {
+            $('.TmezoneSet').hide();
+        });
+        $('.TmezoneSet, .Timezone').on('click', function (e) {
+            e.stopPropagation();
         });
         
     </script>

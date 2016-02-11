@@ -3359,9 +3359,11 @@ WriteLiteral(@">No</button>
                                 </div>
 
                             </div>
-                            ");
+                            <div");
 
-WriteLiteral("\r\n                            <div");
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral("></div>\r\n                            <div");
 
 WriteLiteral(" class=\"modal-footer ticket_footer mt10 text\"");
 
@@ -3625,14 +3627,14 @@ WriteLiteral(" placeholder=\"\"");
 
 WriteLiteral(" id=\"id_vardesc\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 71953), Tuple.Create("\"", 71987)
+WriteAttribute("value", Tuple.Create(" value=\"", 71949), Tuple.Create("\"", 71983)
             
             #line 978 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                                                 , Tuple.Create(Tuple.Create("", 71961), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
+                                                                 , Tuple.Create(Tuple.Create("", 71957), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
             
             #line default
             #line hidden
-, 71961), false)
+, 71957), false)
 );
 
 WriteLiteral(">\r\n                                    </div>\r\n                                </" +
@@ -3899,9 +3901,9 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 
 WriteLiteral(">\r\n                                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 76762), Tuple.Create("\"", 76783)
-, Tuple.Create(Tuple.Create("", 76768), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 76768), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 76758), Tuple.Create("\"", 76779)
+, Tuple.Create(Tuple.Create("", 76764), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 76764), false)
 );
 
 WriteLiteral("> ENABLE DISCUSSION\r\n");
@@ -4174,14 +4176,14 @@ WriteLiteral(" id=\"txtReqPassword\"");
 
 WriteLiteral(" readonly=\"readonly\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 82470), Tuple.Create("\"", 82501)
+WriteAttribute("value", Tuple.Create(" value=\"", 82466), Tuple.Create("\"", 82497)
             
             #line 1163 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                 , Tuple.Create(Tuple.Create("", 82478), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
+                 , Tuple.Create(Tuple.Create("", 82474), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
             
             #line default
             #line hidden
-, 82478), false)
+, 82474), false)
 );
 
 WriteLiteral(" class=\"form-control evnt_inp_cont mb10 wd500 chkvalidation\"");
@@ -4263,14 +4265,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hidAddressStatus\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 84244), Tuple.Create("\"", 84272)
+WriteAttribute("value", Tuple.Create(" value=\"", 84240), Tuple.Create("\"", 84268)
             
             #line 1198 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 84252), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
+, Tuple.Create(Tuple.Create("", 84248), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
             
             #line default
             #line hidden
-, 84252), false)
+, 84248), false)
 );
 
 WriteLiteral(" />\r\n                    <input");
@@ -4279,14 +4281,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 84333), Tuple.Create("\"", 84355)
+WriteAttribute("value", Tuple.Create(" value=\"", 84329), Tuple.Create("\"", 84351)
             
             #line 1199 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 84341), Tuple.Create<System.Object, System.Int32>(Model.EventID
+, Tuple.Create(Tuple.Create("", 84337), Tuple.Create<System.Object, System.Int32>(Model.EventID
             
             #line default
             #line hidden
-, 84341), false)
+, 84337), false)
 );
 
 WriteLiteral(" />\r\n\r\n                    <input");
@@ -5615,136 +5617,136 @@ WriteLiteral("\',\r\n                data: { lEventId: $(\"#hdEventId\").val() }
 "     $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                $(\'input\').removeC" +
 "lass(\'err-bor\');\r\n\r\n\r\n            });\r\n\r\n\r\n\r\n            $(\".StartDatemodal\").hi" +
 "de();\r\n            $(\".StartDate\").click(function () {\r\n                $(\".Star" +
-"tDatemodal\").slideToggle(\"fast\");\r\n\r\n            });\r\n\r\n            $(\"#btSchMul" +
-"tipleEv\").click(function () {\r\n                //$(\"#hdSchType\").val(\'Multiple\')" +
-";\r\n            });\r\n\r\n            $(\"#btSchSingleEv\").click(function () {\r\n     " +
-"           //$(\"#hdSchType\").val(\'Single\');\r\n            });\r\n\r\n            $(\"." +
-"cbtMakeElive\").click(function () {\r\n                var msg = validatemain();\r\n " +
-"               if (msg != \"\") {\r\n                    $(\'#diverroacc\').css(\'displ" +
-"ay\', \'block\');\r\n                    $(\'#erraccmsg\').html(msg);\r\n                " +
-"   \r\n                    $(\'html,body\').animate({ scrollTop: 0 });\r\n            " +
-"        return false;\r\n\r\n                }\r\n                save(\"Live\");\r\n\r\n\r\n " +
-"             \r\n\r\n            });\r\n            $(\'#chkReqPassword\').change(functi" +
-"on () {\r\n\r\n                if ($(\'#chkReqPassword\').is(\":checked\") == true) {\r\n\r" +
-"\n                    $(\'#txtReqPassword\').attr(\'readonly\', false);\r\n\r\n          " +
-"      } else {\r\n                    $(\'#txtReqPassword\').attr(\'readonly\', true);" +
-"\r\n                    $(\'#txtReqPassword\').val(\'\');\r\n                }\r\n\r\n      " +
-"      })\r\n\r\n            $(\"#btDayofMonth\").click(function () {\r\n                " +
-"$(\"#hdMonthlyType\").val(\'DM\');\r\n            });\r\n\r\n            $(\"#btDayofWeek\")" +
-".click(function () {\r\n                $(\"#hdMonthlyType\").val(\'DW\');\r\n          " +
-"  });\r\n\r\n\r\n            $(\'.cbtSave\').click(function () {\r\n                var ms" +
-"g = validatemain();\r\n                if (msg != \"\") {\r\n                    $(\'#d" +
-"iverroacc\').css(\'display\', \'block\');\r\n                    $(\'#erraccmsg\').html(m" +
-"sg);\r\n                    $(\'html,body\').animate({ scrollTop: 0 });\r\n           " +
-"         return false;\r\n\r\n                }\r\n\r\n                save(\"Save\");\r\n  " +
-"            \r\n            });\r\n\r\n          \r\n            $(\"#btMultiVenue\").clic" +
-"k(function () {\r\n                $(\"#dvAddFooter\").show();\r\n                //$(" +
-"\"#txtEventLocation\").val(\'\');\r\n                if ($(\"#tblAddress tr\").length <=" +
-" 0) {\r\n                    if ($(\"#txtEventLocation\").val().trim() != \'\') {\r\n   " +
-"                     $(\"#VenueName\").val($(\"#txtEventLocation\").val());\r\n       " +
-"                 var vCols = 0+\"¶\"+$(\"#VenueName\").val() + \"¶\" + $(\"#Address1\")." +
-"val() + \"¶\" + $(\"#Address2\").val() + \"¶\" + $(\"#City\").val() + \"¶\" + $(\"#State\")." +
-"val() + \"¶\" + $(\"#Zip\").val() + \"¶\" + \'\' + \"¶\" + \'\';\r\n                        va" +
-"r vColName = \"Venueid¶VenueName¶Address1¶Address2¶City¶State¶Zip¶CountryID¶CID\";" +
-"\r\n                        AddRow(\"tblAddress\", vCols, vColName, \"Y\");\r\n         " +
-"               $(\"#VenueName\").val(\"\");\r\n                        $(\"#hidAddSno\")" +
-".val(\"\");\r\n                    }\r\n                }\r\n                $(\"#VenueNa" +
-"me\").val(\"\");\r\n                $(\"#Address1\").val(\"\");\r\n                $(\"#Addr" +
-"ess2\").val(\"\");\r\n                $(\"#City\").val(\"\");\r\n                $(\"#State\"" +
-").val(\"\");\r\n                $(\"#Zip\").val(\"\");\r\n                $(\"#hidAddSno\")." +
-"val(\"\");\r\n                $(\"#CountryID\").val(\'1\');\r\n            });\r\n\r\n        " +
-"    $(\"#btOnlineEvent\").click(function () {\r\n                if ($(\"#btOnlineEve" +
-"nt\").is(\":checked\") == true) {\r\n                    $(\"#dvAddress\").hide();\r\n   " +
-"                 //$(\"#txtEventLocation\").prop(\'disabled\', true);\r\n             " +
-"       //$(\"#dllPastLocation\").prop(\'disabled\', true);\r\n                    //$(" +
-"\"#FindNewVen\").prop(\'disabled\', true);\r\n                    //$(\"#btMultiVenue\")" +
-".prop(\'disabled\', true);\r\n                    //$(\"#UsepastLoc\").prop(\'disabled\'" +
-", true);\r\n                    $(\"#hidAddressStatus\").val(\'Online\');\r\n           " +
-"     }\r\n                else {\r\n                    $(\"#dvAddress\").show();\r\n   " +
-"                 //$(\"#txtEventLocation\").prop(\'disabled\', false);\r\n            " +
-"        //$(\"#dllPastLocation\").prop(\'disabled\', false);\r\n                    //" +
-"$(\"#FindNewVen\").prop(\'disabled\', false);\r\n                    //$(\"#btMultiVenu" +
-"e\").prop(\'disabled\', false);\r\n                    //$(\"#UsepastLoc\").prop(\'disab" +
-"led\', false);\r\n                    $(\"#hidAddressStatus\").val(\'\');\r\n            " +
-"    }\r\n\r\n                //$(\"#dvAddress\").children().attr(\"disabled\", \"disabled" +
-"\");\r\n                //$(\"#dvAddress\").prop(\'disabled\', true);\r\n            });\r" +
-"\n\r\n\r\n\r\n\r\n            $(\"#btAddOrg\").click(function () {\r\n                //  ale" +
-"rt(\"Test\");\r\n                //  alert($(\'#dllOrganizer option\').length);\r\n     " +
-"           //    if (parseInt($(\'#dllOrganizer option\').length) < 25) {\r\n       " +
-"         //if ($(\"#hidOrgnizer\").val() == \"\") {\r\n                //var vval = $(" +
-"\"#edSummer2\").code();\r\n                //var vLenght = $(\"#dvOrganizer\").length;" +
-"\r\n\r\n                //var divlength = $(\"#dvOrg_0> div\").size();\r\n\r\n            " +
-"    //var data = $(\"#dvOrg_0\").clone();\r\n                //$(\"#dvOrganizer\").app" +
-"end(data);\r\n                //alert(parseInt($(\"#ddlOrgnizers option\").length));" +
-"\r\n                if ($(\"#txtOrgnizer\").val().trim() == \'\') {\r\n\r\n               " +
-"     //alert(\"Please enter valid organizer.\");\r\n\r\n                    var msg = " +
-"ajaxsetup(\'CreateEvent\', \'CreateEventOrganizerUI\');\r\n                    $(\'#div" +
-"accsuc\').css(\'display\', \'none\');\r\n                    $(\'#diverroacc\').css(\'disp" +
-"lay\', \'block\');\r\n                   \r\n                    $(\'#btndiverrsuc\').foc" +
-"us();\r\n                    $(\'#erraccmsg\').html(msg);\r\n                    $(\'ht" +
-"ml,body\').animate({ scrollTop: 0 });\r\n                    //$(\"#txtOrgnizer\").fo" +
-"cus();\r\n                    return false;\r\n                }\r\n\r\n                " +
-"//if ($(\"#txtOrgnizer\").val().trim() == \'\') {\r\n                //    alert(\"Plea" +
-"se enter valid organizer.\");\r\n                //    $(\"#txtOrgnizer\").focus();\r\n" +
-"                //    return false;\r\n                //}\r\n\r\n                debu" +
-"gger;\r\n\r\n                if ($(\"#hidOrgnizer\").val() == \'\') {\r\n                 " +
-"   if (parseInt($(\"#ddlOrgnizers option\").length) > 24) {\r\n                     " +
-"   var msg = ajaxsetup(\'CreateEvent\', \'CreateEventOrganizercountUI\');\r\n         " +
-"               $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                        " +
-"$(\'#diverroacc\').css(\'display\', \'block\');\r\n                    \r\n               " +
-"         $(\'#btndiverrsuc\').focus();\r\n                        $(\'#erraccmsg\').ht" +
-"ml(msg);\r\n                        $(\'html,body\').animate({ scrollTop: 0 });\r\n   " +
-"                     //alert(\"Limit Exceeded, System Allow Only 25 Orgnizer.\");\r" +
-"\n                        return false;\r\n                    }\r\n                 " +
-"   AddOrgnizer();\r\n                }\r\n                else\r\n                    " +
-"UpdateOrgnizer($(\"#hidOrgnizer\").val());\r\n\r\n\r\n                $(\"#hidOrgnizer\")." +
-"val(\'\');\r\n                $(\"#txtOrgnizer\").val(\'\');\r\n                $(\"#edOrgD" +
-"es\").code(\'\');\r\n                $(\"#txtOrgFBlink\").val(\'\');\r\n                $(\"" +
-"#txtOrgTWlink\").val(\'\');\r\n                $(\"#txtOrgLNlink\").val(\'\');\r\n         " +
-"       $(\"#Incsocial\").prop(\"checked\", false);\r\n                $(\"#dvOrgnizerFB" +
-"Tw\").hide();\r\n\r\n                var msg = disablebutton();\r\n              consol" +
-"e.log(msg);\r\n                //alert(msg);\r\n                if (msg == \" \") {\r\n " +
-"                   $(\".cdisable\").removeAttr(\"disabled\");\r\n                }\r\n  " +
-"              $(\"#txtOrgnizer\").removeClass(\"err-bor\");\r\n                //alert" +
-"(divlength);\r\n                //var addOption = \'<div class=\"list-group-item ev_" +
-"orgz_list\"></div> <div id = dvOrg_\' + vLenght.toString() + \'  class=\"col-sm-8 no" +
-"_pad\">\' + $(\"#txtOrgnizer\").val() + \'</div><div class=\"col-sm-4 no_pad text-righ" +
-"t ev_org_edt_main\"><a href=\"#\"><i class=\"fa fa-pencil\"></i> </a> | <a href=\"#\"><" +
-"i class=\"fa fa-trash\"></i></a></div>\';\r\n                //$(\"#dvOrganizer\").appe" +
-"nd(addOption)\r\n\r\n                //\'<option value=\"\' + vval + \'\" id=\"\' + $(\"#txt" +
-"Orgnizer\").val() + \'\">\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n              " +
-"  //$(\"#dllOrganizer\").append(addOption);\r\n\r\n                //}\r\n              " +
-"  //else {\r\n                //    //$(\'#dllOrganizer option:selected\').removeAtt" +
-"r(\'selected\');\r\n                //    var vval = $(\"#edSummer2\").code();\r\n      " +
-"          //    $(\"#dllOrganizer option\").each(function (i) {\r\n                /" +
-"/        //alert($(this).text());\r\n                //        //alert($(\"#hidOrgn" +
-"izer\").val());\r\n                //        if ($(\"#hidOrgnizer\").val() == $(this)" +
-".text()) {\r\n\r\n                //            $(this).remove();\r\n                /" +
-"/            //alert($(\"#hidOrgnizer\").val());\r\n                //            //" +
-"$(this).text($(\"#txtOrgnizer\").val());\r\n                //            //$(this)." +
-"val(vval);\r\n                //        }\r\n                //        //alert($(thi" +
-"s).text() + \" : \" + $(this).val());\r\n                //    });\r\n                " +
-"//    var vval = $(\"#edSummer2\").code();\r\n                //    var addOption = " +
-"\'<option value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'" +
-"</option>\';\r\n                //    $(\"#dllOrganizer\").append(addOption);\r\n\r\n\r\n\r\n" +
-"                //    //var addOption = \'<option value=\"\' + vval + \'\" id=\"\' + vv" +
-"al + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                //    //$(\"" +
-"#dllOrganizer\").append(addOption);\r\n                //}\r\n                //}\r\n  " +
-"              //else {\r\n                //    alert(\"Limit Exceeded, System Alow" +
-" Only 25 Orgnizer.\");\r\n\r\n                //}\r\n\r\n                //$(\"#hidOrgnize" +
-"r\").val(\'\');\r\n                //$(\"#txtOrgnizer\").val(\'\');\r\n                //$(" +
-"\"#edSummer2\").code(\'\');\r\n\r\n                // $(\"#txtOrgnizer\").focus();\r\n      " +
-"          //$(\"#dllOrganizer option\").each(function (i) {\r\n                //   " +
-" alert($(this).text() + \" : \" + $(this).val());\r\n                //});\r\n\r\n      " +
-"          //alert(vval);\r\n\r\n            });\r\n\r\n\r\n         \r\n\r\n\r\n            $(\'#" +
-"txtEventUrl\').bind(\'cut copy paste\', function (event) {\r\n                event.p" +
-"reventDefault();\r\n                return false;\r\n            });\r\n\r\n            " +
-"$(\"#txtEventUrl\").focusout(function () {\r\n                var vval = $(\"#txtEven" +
-"tUrl\").val().trim();\r\n                if (vval != \'\') {\r\n                    $.a" +
-"jax({\r\n                        url: \'");
+"tDatemodal\").slideToggle(\"fast\");\r\n                $(\".TmezoneSet\").hide();\r\n\r\n " +
+"           });\r\n\r\n            $(\"#btSchMultipleEv\").click(function () {\r\n       " +
+"         //$(\"#hdSchType\").val(\'Multiple\');\r\n            });\r\n\r\n            $(\"#" +
+"btSchSingleEv\").click(function () {\r\n                //$(\"#hdSchType\").val(\'Sing" +
+"le\');\r\n            });\r\n\r\n            $(\".cbtMakeElive\").click(function () {\r\n  " +
+"              var msg = validatemain();\r\n                if (msg != \"\") {\r\n     " +
+"               $(\'#diverroacc\').css(\'display\', \'block\');\r\n                    $(" +
+"\'#erraccmsg\').html(msg);\r\n                   \r\n                    $(\'html,body\'" +
+").animate({ scrollTop: 0 });\r\n                    return false;\r\n\r\n             " +
+"   }\r\n                save(\"Live\");\r\n\r\n\r\n              \r\n\r\n            });\r\n    " +
+"        $(\'#chkReqPassword\').change(function () {\r\n\r\n                if ($(\'#chk" +
+"ReqPassword\').is(\":checked\") == true) {\r\n\r\n                    $(\'#txtReqPasswor" +
+"d\').attr(\'readonly\', false);\r\n\r\n                } else {\r\n                    $(" +
+"\'#txtReqPassword\').attr(\'readonly\', true);\r\n                    $(\'#txtReqPasswo" +
+"rd\').val(\'\');\r\n                }\r\n\r\n            })\r\n\r\n            $(\"#btDayofMon" +
+"th\").click(function () {\r\n                $(\"#hdMonthlyType\").val(\'DM\');\r\n      " +
+"      });\r\n\r\n            $(\"#btDayofWeek\").click(function () {\r\n                " +
+"$(\"#hdMonthlyType\").val(\'DW\');\r\n            });\r\n\r\n\r\n            $(\'.cbtSave\').c" +
+"lick(function () {\r\n                var msg = validatemain();\r\n                i" +
+"f (msg != \"\") {\r\n                    $(\'#diverroacc\').css(\'display\', \'block\');\r\n" +
+"                    $(\'#erraccmsg\').html(msg);\r\n                    $(\'html,body" +
+"\').animate({ scrollTop: 0 });\r\n                    return false;\r\n\r\n            " +
+"    }\r\n\r\n                save(\"Save\");\r\n              \r\n            });\r\n\r\n     " +
+"     \r\n            $(\"#btMultiVenue\").click(function () {\r\n                $(\"#d" +
+"vAddFooter\").show();\r\n                //$(\"#txtEventLocation\").val(\'\');\r\n       " +
+"         if ($(\"#tblAddress tr\").length <= 0) {\r\n                    if ($(\"#txt" +
+"EventLocation\").val().trim() != \'\') {\r\n                        $(\"#VenueName\").v" +
+"al($(\"#txtEventLocation\").val());\r\n                        var vCols = 0+\"¶\"+$(\"" +
+"#VenueName\").val() + \"¶\" + $(\"#Address1\").val() + \"¶\" + $(\"#Address2\").val() + \"" +
+"¶\" + $(\"#City\").val() + \"¶\" + $(\"#State\").val() + \"¶\" + $(\"#Zip\").val() + \"¶\" + " +
+"\'\' + \"¶\" + \'\';\r\n                        var vColName = \"Venueid¶VenueName¶Addres" +
+"s1¶Address2¶City¶State¶Zip¶CountryID¶CID\";\r\n                        AddRow(\"tblA" +
+"ddress\", vCols, vColName, \"Y\");\r\n                        $(\"#VenueName\").val(\"\")" +
+";\r\n                        $(\"#hidAddSno\").val(\"\");\r\n                    }\r\n    " +
+"            }\r\n                $(\"#VenueName\").val(\"\");\r\n                $(\"#Add" +
+"ress1\").val(\"\");\r\n                $(\"#Address2\").val(\"\");\r\n                $(\"#C" +
+"ity\").val(\"\");\r\n                $(\"#State\").val(\"\");\r\n                $(\"#Zip\")." +
+"val(\"\");\r\n                $(\"#hidAddSno\").val(\"\");\r\n                $(\"#CountryI" +
+"D\").val(\'1\');\r\n            });\r\n\r\n            $(\"#btOnlineEvent\").click(function" +
+" () {\r\n                if ($(\"#btOnlineEvent\").is(\":checked\") == true) {\r\n      " +
+"              $(\"#dvAddress\").hide();\r\n                    //$(\"#txtEventLocatio" +
+"n\").prop(\'disabled\', true);\r\n                    //$(\"#dllPastLocation\").prop(\'d" +
+"isabled\', true);\r\n                    //$(\"#FindNewVen\").prop(\'disabled\', true);" +
+"\r\n                    //$(\"#btMultiVenue\").prop(\'disabled\', true);\r\n            " +
+"        //$(\"#UsepastLoc\").prop(\'disabled\', true);\r\n                    $(\"#hidA" +
+"ddressStatus\").val(\'Online\');\r\n                }\r\n                else {\r\n      " +
+"              $(\"#dvAddress\").show();\r\n                    //$(\"#txtEventLocatio" +
+"n\").prop(\'disabled\', false);\r\n                    //$(\"#dllPastLocation\").prop(\'" +
+"disabled\', false);\r\n                    //$(\"#FindNewVen\").prop(\'disabled\', fals" +
+"e);\r\n                    //$(\"#btMultiVenue\").prop(\'disabled\', false);\r\n        " +
+"            //$(\"#UsepastLoc\").prop(\'disabled\', false);\r\n                    $(\"" +
+"#hidAddressStatus\").val(\'\');\r\n                }\r\n\r\n                //$(\"#dvAddre" +
+"ss\").children().attr(\"disabled\", \"disabled\");\r\n                //$(\"#dvAddress\")" +
+".prop(\'disabled\', true);\r\n            });\r\n\r\n\r\n\r\n\r\n            $(\"#btAddOrg\").cl" +
+"ick(function () {\r\n                //  alert(\"Test\");\r\n                //  alert" +
+"($(\'#dllOrganizer option\').length);\r\n                //    if (parseInt($(\'#dllO" +
+"rganizer option\').length) < 25) {\r\n                //if ($(\"#hidOrgnizer\").val()" +
+" == \"\") {\r\n                //var vval = $(\"#edSummer2\").code();\r\n               " +
+" //var vLenght = $(\"#dvOrganizer\").length;\r\n\r\n                //var divlength = " +
+"$(\"#dvOrg_0> div\").size();\r\n\r\n                //var data = $(\"#dvOrg_0\").clone()" +
+";\r\n                //$(\"#dvOrganizer\").append(data);\r\n                //alert(pa" +
+"rseInt($(\"#ddlOrgnizers option\").length));\r\n                if ($(\"#txtOrgnizer\"" +
+").val().trim() == \'\') {\r\n\r\n                    //alert(\"Please enter valid organ" +
+"izer.\");\r\n\r\n                    var msg = ajaxsetup(\'CreateEvent\', \'CreateEventO" +
+"rganizerUI\');\r\n                    $(\'#divaccsuc\').css(\'display\', \'none\');\r\n    " +
+"                $(\'#diverroacc\').css(\'display\', \'block\');\r\n                   \r\n" +
+"                    $(\'#btndiverrsuc\').focus();\r\n                    $(\'#erraccm" +
+"sg\').html(msg);\r\n                    $(\'html,body\').animate({ scrollTop: 0 });\r\n" +
+"                    //$(\"#txtOrgnizer\").focus();\r\n                    return fal" +
+"se;\r\n                }\r\n\r\n                //if ($(\"#txtOrgnizer\").val().trim() =" +
+"= \'\') {\r\n                //    alert(\"Please enter valid organizer.\");\r\n        " +
+"        //    $(\"#txtOrgnizer\").focus();\r\n                //    return false;\r\n " +
+"               //}\r\n\r\n                debugger;\r\n\r\n                if ($(\"#hidOr" +
+"gnizer\").val() == \'\') {\r\n                    if (parseInt($(\"#ddlOrgnizers optio" +
+"n\").length) > 24) {\r\n                        var msg = ajaxsetup(\'CreateEvent\', " +
+"\'CreateEventOrganizercountUI\');\r\n                        $(\'#divaccsuc\').css(\'di" +
+"splay\', \'none\');\r\n                        $(\'#diverroacc\').css(\'display\', \'block" +
+"\');\r\n                    \r\n                        $(\'#btndiverrsuc\').focus();\r\n" +
+"                        $(\'#erraccmsg\').html(msg);\r\n                        $(\'h" +
+"tml,body\').animate({ scrollTop: 0 });\r\n                        //alert(\"Limit Ex" +
+"ceeded, System Allow Only 25 Orgnizer.\");\r\n                        return false;" +
+"\r\n                    }\r\n                    AddOrgnizer();\r\n                }\r\n" +
+"                else\r\n                    UpdateOrgnizer($(\"#hidOrgnizer\").val()" +
+");\r\n\r\n\r\n                $(\"#hidOrgnizer\").val(\'\');\r\n                $(\"#txtOrgni" +
+"zer\").val(\'\');\r\n                $(\"#edOrgDes\").code(\'\');\r\n                $(\"#tx" +
+"tOrgFBlink\").val(\'\');\r\n                $(\"#txtOrgTWlink\").val(\'\');\r\n            " +
+"    $(\"#txtOrgLNlink\").val(\'\');\r\n                $(\"#Incsocial\").prop(\"checked\"," +
+" false);\r\n                $(\"#dvOrgnizerFBTw\").hide();\r\n\r\n                var ms" +
+"g = disablebutton();\r\n              console.log(msg);\r\n                //alert(m" +
+"sg);\r\n                if (msg == \" \") {\r\n                    $(\".cdisable\").remo" +
+"veAttr(\"disabled\");\r\n                }\r\n                $(\"#txtOrgnizer\").remove" +
+"Class(\"err-bor\");\r\n                //alert(divlength);\r\n                //var ad" +
+"dOption = \'<div class=\"list-group-item ev_orgz_list\"></div> <div id = dvOrg_\' + " +
+"vLenght.toString() + \'  class=\"col-sm-8 no_pad\">\' + $(\"#txtOrgnizer\").val() + \'<" +
+"/div><div class=\"col-sm-4 no_pad text-right ev_org_edt_main\"><a href=\"#\"><i clas" +
+"s=\"fa fa-pencil\"></i> </a> | <a href=\"#\"><i class=\"fa fa-trash\"></i></a></div>\';" +
+"\r\n                //$(\"#dvOrganizer\").append(addOption)\r\n\r\n                //\'<o" +
+"ption value=\"\' + vval + \'\" id=\"\' + $(\"#txtOrgnizer\").val() + \'\">\' + $(\"#txtOrgni" +
+"zer\").val() + \'</option>\';\r\n                //$(\"#dllOrganizer\").append(addOptio" +
+"n);\r\n\r\n                //}\r\n                //else {\r\n                //    //$(" +
+"\'#dllOrganizer option:selected\').removeAttr(\'selected\');\r\n                //    " +
+"var vval = $(\"#edSummer2\").code();\r\n                //    $(\"#dllOrganizer optio" +
+"n\").each(function (i) {\r\n                //        //alert($(this).text());\r\n   " +
+"             //        //alert($(\"#hidOrgnizer\").val());\r\n                //    " +
+"    if ($(\"#hidOrgnizer\").val() == $(this).text()) {\r\n\r\n                //      " +
+"      $(this).remove();\r\n                //            //alert($(\"#hidOrgnizer\")" +
+".val());\r\n                //            //$(this).text($(\"#txtOrgnizer\").val());" +
+"\r\n                //            //$(this).val(vval);\r\n                //        " +
+"}\r\n                //        //alert($(this).text() + \" : \" + $(this).val());\r\n " +
+"               //    });\r\n                //    var vval = $(\"#edSummer2\").code(" +
+");\r\n                //    var addOption = \'<option value=\"\' + vval + \'\" id=\"\' + " +
+"vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                //    $(\"" +
+"#dllOrganizer\").append(addOption);\r\n\r\n\r\n\r\n                //    //var addOption " +
+"= \'<option value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() +" +
+" \'</option>\';\r\n                //    //$(\"#dllOrganizer\").append(addOption);\r\n  " +
+"              //}\r\n                //}\r\n                //else {\r\n              " +
+"  //    alert(\"Limit Exceeded, System Alow Only 25 Orgnizer.\");\r\n\r\n             " +
+"   //}\r\n\r\n                //$(\"#hidOrgnizer\").val(\'\');\r\n                //$(\"#tx" +
+"tOrgnizer\").val(\'\');\r\n                //$(\"#edSummer2\").code(\'\');\r\n\r\n           " +
+"     // $(\"#txtOrgnizer\").focus();\r\n                //$(\"#dllOrganizer option\")." +
+"each(function (i) {\r\n                //    alert($(this).text() + \" : \" + $(this" +
+").val());\r\n                //});\r\n\r\n                //alert(vval);\r\n\r\n          " +
+"  });\r\n\r\n\r\n         \r\n\r\n\r\n            $(\'#txtEventUrl\').bind(\'cut copy paste\', f" +
+"unction (event) {\r\n                event.preventDefault();\r\n                retu" +
+"rn false;\r\n            });\r\n\r\n            $(\"#txtEventUrl\").focusout(function ()" +
+" {\r\n                var vval = $(\"#txtEventUrl\").val().trim();\r\n                " +
+"if (vval != \'\') {\r\n                    $.ajax({\r\n                        url: \'");
 
             
-            #line 2925 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2926 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "CreateEvent"));
 
             
@@ -5772,7 +5774,7 @@ WriteLiteral("\',\r\n                        data: { strUserUrl: $(\"#txtEventUr
 "     url: \'");
 
             
-            #line 2958 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2959 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -5888,7 +5890,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 "----\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 3145 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3146 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetPreviousAddressForEditing", "CreateEvent"));
 
             
@@ -6128,7 +6130,7 @@ WriteLiteral("\',\r\n                data: { \"lEid\": $(\"#hdEventId\").val() }
 "");
 
             
-            #line 3621 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3622 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
     //Ticket Section Starts
@@ -6187,7 +6189,7 @@ WriteLiteral("    <script>\r\n        function CannotFindLocation() {\r\n       
 "          });\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 3729 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3730 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -6931,14 +6933,14 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 "        }\r\n    </script>\r\n");
 
             
-            #line 5283 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5284 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 5284 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5285 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      
 
             
@@ -6946,9 +6948,9 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 245314), Tuple.Create("\"", 245353)
-, Tuple.Create(Tuple.Create("", 245321), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 245321), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 245352), Tuple.Create("\"", 245391)
+, Tuple.Create(Tuple.Create("", 245359), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 245359), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6956,7 +6958,7 @@ WriteLiteral(" rel=\"stylesheet\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 5286 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5287 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -6964,9 +6966,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 245387), Tuple.Create("\"", 245444)
-, Tuple.Create(Tuple.Create("", 245394), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 245394), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 245425), Tuple.Create("\"", 245482)
+, Tuple.Create(Tuple.Create("", 245432), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 245432), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -6975,15 +6977,15 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 245478), Tuple.Create("\"", 245515)
-, Tuple.Create(Tuple.Create("", 245484), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 245484), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 245516), Tuple.Create("\"", 245553)
+, Tuple.Create(Tuple.Create("", 245522), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 245522), false)
 );
 
 WriteLiteral("></script>\r\n");
 
             
-            #line 5289 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5290 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
 
@@ -7016,7 +7018,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            //
 "niqueguid\').val(uuid());\r\n\r\n\r\n        });\r\n    </script>\r\n");
 
             
-            #line 5338 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5339 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7026,7 +7028,7 @@ WriteLiteral("    <script>\r\n        function ajaxsetup(strname, strFormTag) {\
 "msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url:\'");
 
             
-            #line 5344 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5345 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -7291,7 +7293,7 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 " </script>\r\n");
 
             
-            #line 5892 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5893 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7301,7 +7303,7 @@ WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n      \
 "\"\";\r\n        var j= ");
 
             
-            #line 5897 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5898 "..\..\Views\EditEvent\ModifyEvent.cshtml"
           Write(Html.Raw(ViewData["Image"]));
 
             
@@ -7364,71 +7366,82 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 "[0])\r\n                //       //   console.log(y);\r\n\r\n\r\n\r\n                //   " +
 "    // }\r\n                //        x.removeChild(el[0]);\r\n                //   " +
 "     return false;\r\n\r\n\r\n\r\n                success: function (data, el) {\r\n      " +
-"              console.log(data);\r\n                    var parent = el.find(\".jFi" +
-"ler-jProgressBar\").parent();\r\n                    el.find(\".jFiler-jProgressBar\"" +
-").fadeOut(\"slow\", function () {\r\n                        $(\"<div class=\\\"jFiler-" +
-"item-others text-success\\\"><i class=\\\"icon-jfi-check-circle\\\"></i> Success</div>" +
-"\").hide().appendTo(parent).fadeIn(\"slow\").remove();\r\n                    });\r\n\r\n" +
-"                    var image_count = $(\"#image_count\").val();\r\n                " +
-"    var imagejson = jQuery.parseJSON(JSON.stringify(data));\r\n                   " +
-" var imgdata = imagejson.image_name + \'####\' + imagejson.image_type;\r\n\r\n        " +
-"            $(\"#image_count\").val(el[0].jfiler_id)\r\n                    $(\'<inpu" +
-"t>\').attr({\r\n                        type: \'hidden\',\r\n                        id" +
-": \'image_hidden_\' + el[0].jfiler_id,\r\n                        name: \'Eventpictur" +
-"e[\' + imgdata + \']\',\r\n                        value: imgdata\r\n                  " +
-"  }).appendTo(\'form\');\r\n\r\n                    $(\'#ImagePresent\').val(\"Yes\");\r\n\r\n" +
-"                    if ($.trim(image_count) == \'\') {\r\n                        $(" +
-"\"#image_count\").val(\'1\');\r\n                    } else {\r\n                       " +
-" image_count = parseInt(image_count) + 1;\r\n                        $(\"#image_cou" +
-"nt\").val(image_count);\r\n                    }\r\n\r\n\r\n\r\n                },\r\n\r\n     " +
-"           error: function (el) {\r\n                    var input = document.getE" +
-"lementById(\"input2\");\r\n\r\n                    var parent = el.find(\".jFiler-jProg" +
-"ressBar\").parent();\r\n\r\n                    el.find(\".jFiler-jProgressBar\").fadeO" +
-"ut(\"slow\", function () {\r\n                        $(\"<div class=\\\"jFiler-item-ot" +
-"hers text-error\\\"><i class=\\\"icon-jfi-minus-circle\\\"></i> Error</div>\").hide().a" +
-"ppendTo(parent).fadeIn(\"slow\");\r\n                    });\r\n                },\r\n  " +
-"              statusCode: {},\r\n                onProgress: function () { },\r\n   " +
-"         },\r\n            dragDrop: {\r\n                dragEnter: function () { }" +
-",\r\n                dragLeave: function () { },\r\n                drop: function (" +
-") { },\r\n            },\r\n            addMore: true,\r\n            clipBoardPaste: " +
-"true,\r\n            excludeName: null,\r\n            beforeShow: function () { $(\"" +
-".jFiler-input-inner\").hide(); return true },\r\n            onSelect: function () " +
-"{ $(\".jFiler-input-inner\").hide(); },\r\n            afterShow: function () { $(\"." +
-"jFiler-input-inner\").hide(); $(\".fi-progressBar\").hide(); },\r\n\r\n            onRe" +
-"move: function (el) {\r\n                var image_count = $(\"#image_count\").val()" +
-";\r\n                image_count = parseInt(image_count) - 1;\r\n                var" +
-" id_div = el[0].jfiler_id;\r\n\r\n                var hidden_image_element = \'image_" +
-"hidden_\' + id_div;\r\n                if (image_count == 0) {\r\n                   " +
-" $(\"#image_count\").val(\'\');\r\n                } else {\r\n                    $(\"#i" +
-"mage_count\").val(image_count);\r\n                }\r\n                $(\"#\" + hidde" +
-"n_image_element).remove();\r\n                $(\'#input2\').click(function (e) {\r\n " +
-"                   e.preventDefault();\r\n\r\n                })\r\n                $(" +
-"\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n            },\r\n            onEmpty: function (" +
-"el) {\r\n               \r\n            \r\n                if ($(\"#imageeror\").val() " +
-"== 0) {\r\n                    if ($(\".jFiler-items ul li\").length == 1 || $(\".jFi" +
-"ler-items ul li\").length == 2) { setTimeout(function () { $(\".jFiler-input-inner" +
-"\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); };\r\n\r\n       " +
-"         }\r\n            },\r\n            captions: {\r\n                button: \"Ch" +
-"oose Files\",\r\n                feedback: \"Choose files To Upload\",\r\n             " +
-"   feedback2: \"files were chosen\",\r\n                drop: \"Drop file here to Upl" +
-"oad\",\r\n                removeConfirmation: \"Are you sure you want to remove this" +
-" file?\",\r\n                errors: {\r\n                    filesLimit: ajaxsetup(\'" +
-"CreateEvent\', \'CreateEventImagecountUI\'),\r\n                    filesType: ajaxse" +
-"tup(\'CreateEvent\', \'CreateEventImageTypeUI\'),\r\n                    filesSize: aj" +
-"axsetup(\'CreateEvent\', \'CreateEventImageSizeUI\'),\r\n                    filesSize" +
-"All: ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\')\r\n                }\r\n    " +
-"        },\r\n            files: j\r\n        });\r\n\r\n\r\n\r\n            if(j!=\'\')\r\n    " +
-"        {\r\n                $(\'#image_count\').val(j.length);\r\n                for" +
-"(var i=0;i<j.length;i++)\r\n                {\r\n                    var type=j[i].t" +
-"ype;\r\n                    var img=j[i].name;\r\n                    var imgdata = " +
-"img + \'####\' + type;\r\n $(\'<input>\').attr({type: \'hidden\',id:\'image_hidden_\'+i,na" +
-"me: \'Eventpicture[\' + imgdata + \']\', value:imgdata}).appendTo(\'form\');\r\n\r\n      " +
-"          }\r\n\r\n            }\r\n\r\n\r\n            $(\'#drag-drop\').on(\'click\', functi" +
-"on (e) {\r\n               \r\n                $(\'#input2\').unbind(\'click\');\r\n\r\n    " +
-"        });\r\n    });\r\n    </script>\r\n");
+"              debugger;\r\n                    console.log(data);\r\n               " +
+"     var parent = el.find(\".jFiler-jProgressBar\").parent();\r\n                   " +
+" el.find(\".jFiler-jProgressBar\").fadeOut(\"slow\", function () {\r\n                " +
+"        $(\"<div class=\\\"jFiler-item-others text-success\\\"><i class=\\\"icon-jfi-ch" +
+"eck-circle\\\"></i> Success</div>\").hide().appendTo(parent).fadeIn(\"slow\").remove(" +
+");\r\n                    });\r\n\r\n                    var image_count = $(\"#image_c" +
+"ount\").val();\r\n                    var imagejson = jQuery.parseJSON(JSON.stringi" +
+"fy(data));\r\n                    var imgdata = imagejson.image_name + \'####\' + im" +
+"agejson.image_type;\r\n\r\n                    $(\"#image_count\").val(el[0].jfiler_id" +
+")\r\n                    $(\'<input>\').attr({\r\n                        type: \'hidde" +
+"n\',\r\n                        id: \'image_hidden_\' + el[0].jfiler_id,\r\n           " +
+"             name: \'Eventpicture[\' + imgdata + \']\',\r\n                        val" +
+"ue: imgdata\r\n                    }).appendTo(\'form\');\r\n\r\n                    $(\'" +
+"#ImagePresent\').val(\"Yes\");\r\n\r\n                    if ($.trim(image_count) == \'\'" +
+") {\r\n                        $(\"#image_count\").val(\'1\');\r\n                    } " +
+"else {\r\n                        image_count = parseInt(image_count) + 1;\r\n      " +
+"                  $(\"#image_count\").val(image_count);\r\n                    }\r\n\r\n" +
+"\r\n\r\n                },\r\n\r\n                error: function (el) {\r\n              " +
+"      var input = document.getElementById(\"input2\");\r\n\r\n                    var " +
+"parent = el.find(\".jFiler-jProgressBar\").parent();\r\n\r\n                    el.fin" +
+"d(\".jFiler-jProgressBar\").fadeOut(\"slow\", function () {\r\n                       " +
+" $(\"<div class=\\\"jFiler-item-others text-error\\\"><i class=\\\"icon-jfi-minus-circl" +
+"e\\\"></i> Error</div>\").hide().appendTo(parent).fadeIn(\"slow\");\r\n                " +
+"    });\r\n                },\r\n                statusCode: {},\r\n                on" +
+"Progress: function () { },\r\n            },\r\n            dragDrop: {\r\n           " +
+"     dragEnter: function () { },\r\n                dragLeave: function () { },\r\n " +
+"               drop: function () { },\r\n            },\r\n            addMore: true" +
+",\r\n            clipBoardPaste: true,\r\n            excludeName: null,\r\n          " +
+"  beforeShow: function () { $(\".jFiler-input-inner\").hide(); return true },\r\n   " +
+"         onSelect: function () { $(\".jFiler-input-inner\").hide(); },\r\n          " +
+"  afterShow: function () { $(\".jFiler-input-inner\").hide(); $(\".fi-progressBar\")" +
+".hide(); },\r\n\r\n            onRemove: function (el) {\r\n            debugger;\r\n   " +
+"             var image_count = $(\"#image_count\").val();\r\n                image_c" +
+"ount = parseInt(image_count) - 1;\r\n                var id_div = el[0].jfiler_id;" +
+"\r\n\r\n                var hidden_image_element = \'image_hidden_\' + id_div;\r\n      " +
+"          if (image_count == 0) {\r\n                    $(\"#image_count\").val(\'\')" +
+";\r\n                } else {\r\n                    $(\"#image_count\").val(image_cou" +
+"nt);\r\n                }\r\n                $(\"#\" + hidden_image_element).remove();" +
+"\r\n               \r\n\r\n              \r\n                var count = 0;\r\n           " +
+"     $(\"input[id^=\'image_hidden\']\").each(function () {\r\n\r\n                    va" +
+"r id = $(this).attr(\'id\');\r\n                  ////console.log(id);\r\n            " +
+"        var idn = \'image_hidden_\'+(count);\r\n                    $(this).attr(\"id" +
+"\", idn);\r\n                \r\n                    count = count + 1;\r\n\r\n          " +
+"      });\r\n\r\n\r\n             \r\n                $(\'#input2\').click(function (e) {\r" +
+"\n                    e.preventDefault();\r\n\r\n                })\r\n                " +
+"$(\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n            },\r\n            onEmpty: function" +
+" (el) {\r\n               \r\n            \r\n                if ($(\"#imageeror\").val(" +
+") == 0) {\r\n                    if ($(\".jFiler-items ul li\").length == 1 || $(\".j" +
+"Filer-items ul li\").length == 2) { setTimeout(function () { $(\".jFiler-input-inn" +
+"er\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); };\r\n\r\n     " +
+"           }\r\n            },\r\n            captions: {\r\n                button: \"" +
+"Choose Files\",\r\n                feedback: \"Choose files To Upload\",\r\n           " +
+"     feedback2: \"files were chosen\",\r\n                drop: \"Drop file here to U" +
+"pload\",\r\n                removeConfirmation: \"Are you sure you want to remove th" +
+"is file?\",\r\n                errors: {\r\n                    filesLimit: ajaxsetup" +
+"(\'CreateEvent\', \'CreateEventImagecountUI\'),\r\n                    filesType: ajax" +
+"setup(\'CreateEvent\', \'CreateEventImageTypeUI\'),\r\n                    filesSize: " +
+"ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\'),\r\n                    filesSi" +
+"zeAll: ajaxsetup(\'CreateEvent\', \'CreateEventImageSizeUI\')\r\n                }\r\n  " +
+"          },\r\n            files: j\r\n        });\r\n\r\n\r\n\r\n            if(j!=\'\')\r\n  " +
+"          {\r\n                $(\'#image_count\').val(j.length);\r\n                f" +
+"or(var i=0;i<j.length;i++)\r\n                {\r\n                    var type=j[i]" +
+".type;\r\n                    var img=j[i].name;\r\n                    var imgdata " +
+"= img + \'####\' + type;\r\n $(\'<input>\').attr({type: \'hidden\',id:\'image_hidden_\'+i," +
+"name: \'Eventpicture[\' + imgdata + \']\', value:imgdata}).appendTo(\'form\');\r\n\r\n    " +
+"            }\r\n\r\n            }\r\n\r\n\r\n            $(\'#drag-drop\').on(\'click\', func" +
+"tion (e) {\r\n               \r\n                $(\'#input2\').unbind(\'click\');\r\n\r\n  " +
+"          });\r\n        });\r\n\r\n\r\n        $(document).on(\'click\', function(){\r\n   " +
+"         $(\'.StartDatemodal\').hide();\r\n        });\r\n        $(\'.StartDatemodal, " +
+".StartDate\').on(\'click\', function(e){\r\n            e.stopPropagation();\r\n       " +
+" });\r\n\r\n\r\n        $(document).on(\'click\', function(){\r\n            $(\'.TmezoneSe" +
+"t\').hide();\r\n        });\r\n        $(\'.TmezoneSet, .Timezone\').on(\'click\', functi" +
+"on(e){\r\n            e.stopPropagation();\r\n        });\r\n    </script>\r\n");
 
             
-            #line 6112 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6148 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 
