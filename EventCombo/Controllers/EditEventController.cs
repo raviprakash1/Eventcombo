@@ -1369,6 +1369,7 @@ namespace EventCombo.Controllers
                             ticket.Customer_Fee = tick.Customer_Fee;
                             ticket.TotalPrice = tick.TotalPrice;
                             ticket.T_Discount = tick.T_Discount;
+                            ticket.T_Displayremaining = tick.T_Displayremaining;
                             objEnt.Tickets.Add(ticket);
                         }
                     }
