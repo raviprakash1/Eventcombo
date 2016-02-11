@@ -288,6 +288,9 @@
     <Compile Include="Models\EventSubCategory.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Events_Hit.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventType.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -335,6 +338,9 @@
     <Compile Include="Models\Order_Detail_T.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Payment_Info.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Permissions.cs" />
     <Compile Include="Models\MessageTemplate.cs" />
     <Compile Include="Models\Permission_Detail.cs">
@@ -360,6 +366,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketDeliveryMethod.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TicketOrderDetail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketType.cs">

@@ -27,5 +27,10 @@ namespace CMS.Models
         public string State { get; set; }
         public string Zip { get; set; }
         public string Country { get; set; }
+        public string PaymentType { get; set; }
+        public string CardId { get; set; }
+        public string card_type { get; set; }
+        public string ExpirationDate { get; set; }
+        public string Cvv { get; set; }
     }
 }

@@ -100,10 +100,10 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult EventList(string strID)
+        public ActionResult EventList(string e)
         {
 
-            Session["AppId"] = strID;
+            Session["AppId"] = e;
             Session["Fromname"] = "MyList";
             if ((Session["AppId"] != null))
             {

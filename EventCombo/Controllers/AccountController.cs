@@ -461,6 +461,7 @@ namespace EventCombo.Controllers
 
                     var user12 = UserManager.FindByEmail(accountdetail.PreviousEmail);
                     var result = UserManager.PasswordHasher.VerifyHashedPassword(user12.PasswordHash, model.Password);
+              
                     if (result.ToString() != "Success")
                     {
                         validationresult = vmc.Index("MyAccount", "MyAccountPwdValidationSys");
@@ -1237,6 +1238,7 @@ namespace EventCombo.Controllers
        
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+          
             string url = null, city="", state="", zipcode="", country="";
         if(Session["ReturnUrl"]!=null)
             {
@@ -1255,6 +1257,10 @@ namespace EventCombo.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+            if (returnUrl.Trim() != "") result = SignInStatus.Success;
+
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -1337,6 +1343,12 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
             }
         }
+
+
+
+
+
+     
 
         //
         // GET: /Account/VerifyCode
@@ -2131,11 +2143,26 @@ namespace EventCombo.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            try
             {
-                return Redirect(returnUrl);
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                return RedirectToAction("Index", "Home");
+
             }
-            return RedirectToAction("Index", "Home");
+            catch (Exception)
+            {
+                if (returnUrl.Trim() != string.Empty)
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }                 
+            }
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
