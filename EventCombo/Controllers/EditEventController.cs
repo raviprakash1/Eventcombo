@@ -1252,7 +1252,23 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
                     ObjEC.Ticket_variabletype = model.Ticket_variabletype;
                     ObjEC.ShowMap = model.ShowMap;
-                    ObjEC.ModifyDate = DateTime.Now;
+
+                    var timezone = "";
+
+                    DateTime dateTime = new DateTime();
+                    var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == model.TimeZone select ev).FirstOrDefault();
+                    if (Timezonedetail != null)
+                    {
+                        timezone = Timezonedetail.TimeZone;
+                        TimeZoneInfo timeZoneInfo;
+
+
+                        timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezone);
+                        dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
+                        //Timezone value
+
+                    }
+                   ObjEC.ModifyDate = dateTime;
                    objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -1486,7 +1502,24 @@ namespace EventCombo.Controllers
                                 ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
                                 ObjEC.Ticket_variabletype = model.Ticket_variabletype;
                                 ObjEC.ShowMap = model.ShowMap;
-                                ObjEC.ModifyDate = DateTime.Now;
+
+                                var timezone = "";
+
+                                DateTime dateTime = new DateTime();
+                                var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == model.TimeZone select ev).FirstOrDefault();
+                                if (Timezonedetail != null)
+                                {
+                                    timezone = Timezonedetail.TimeZone;
+                                    TimeZoneInfo timeZoneInfo;
+
+
+                                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezone);
+                                    dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
+                                    //Timezone value
+
+                                }
+
+                                ObjEC.ModifyDate = dateTime;
                                 //objEnt.Events.Add(ObjEC);
                                 // Address info
 

@@ -914,7 +914,7 @@
                                 </div>
 
                             </div>
-                            @*<div class="clearfix"></div>*@
+                            <div class="clearfix"></div>
                             <div class="modal-footer ticket_footer mt10 text" id="id_ticket_footer">
                                 <div class="col-sm-12 text-right">
                                     <label class="ev_tickt_lebel">Total Capacity:<span id="id_totalqty">0</span></label>
@@ -2674,6 +2674,7 @@ else
             $(".StartDatemodal").hide();
             $(".StartDate").click(function () {
                 $(".StartDatemodal").slideToggle("fast");
+                $(".TmezoneSet").hide();
 
             });
 
@@ -5986,6 +5987,7 @@ else
 
 
                 success: function (data, el) {
+                    debugger;
                     console.log(data);
                     var parent = el.find(".jFiler-jProgressBar").parent();
                     el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
@@ -6042,6 +6044,7 @@ else
             afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
 
             onRemove: function (el) {
+            debugger;
                 var image_count = $("#image_count").val();
                 image_count = parseInt(image_count) - 1;
                 var id_div = el[0].jfiler_id;
@@ -6053,6 +6056,23 @@ else
                     $("#image_count").val(image_count);
                 }
                 $("#" + hidden_image_element).remove();
+               
+
+              
+                var count = 0;
+                $("input[id^='image_hidden']").each(function () {
+
+                    var id = $(this).attr('id');
+                  ////console.log(id);
+                    var idn = 'image_hidden_'+(count);
+                    $(this).attr("id", idn);
+                
+                    count = count + 1;
+
+                });
+
+
+             
                 $('#input2').click(function (e) {
                     e.preventDefault();
 
@@ -6107,7 +6127,23 @@ else
                 $('#input2').unbind('click');
 
             });
-    });
+        });
+
+
+        $(document).on('click', function(){
+            $('.StartDatemodal').hide();
+        });
+        $('.StartDatemodal, .StartDate').on('click', function(e){
+            e.stopPropagation();
+        });
+
+
+        $(document).on('click', function(){
+            $('.TmezoneSet').hide();
+        });
+        $('.TmezoneSet, .Timezone').on('click', function(e){
+            e.stopPropagation();
+        });
     </script>
 
 }
