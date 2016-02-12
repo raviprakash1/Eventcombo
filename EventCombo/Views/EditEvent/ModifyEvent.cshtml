@@ -2923,8 +2923,8 @@ else
                 var vval = $("#txtEventUrl").val().trim();
                 if (vval != '') {
                     $.ajax({
-                        url: '@Url.Action("CheckEventUrl", "CreateEvent")',
-                        data: { strUserUrl: $("#txtEventUrl").val().trim() },
+                        url: '@Url.Action("CheckEventUrl", "ManageEvent")',
+                        data: { strUserUrl: $("#txtEventUrl").val().trim(),EventId: $("#hdEventId").val()},
                         type: "Post",
                         success: function (data) {
                             if (data == "Y") {
