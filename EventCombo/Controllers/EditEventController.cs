@@ -144,12 +144,24 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult ModifyEvent(long Eventid)
+        public ActionResult ModifyEvent(string Eventid)
         {
+            long EventIid = 0;
+            string Isadmin = "N";
+            if (Eventid.Contains("ß"))
+            {
+                var res = Eventid.Split('ß');
 
+                EventIid = long.Parse(res[0]);
+                Isadmin = "Y";
+            }
+            else
+            {
+                EventIid = long.Parse(Eventid);
+            }
             ValidationMessageController vmc = new ValidationMessageController();
-            Eventid = vmc.GetLatestEventId(Eventid);
-            EventCreation objCr = GetEventDataEditing(Eventid);
+            EventIid = vmc.GetLatestEventId(EventIid);
+            EventCreation objCr = GetEventDataEditing(EventIid);
             if (objCr == null) return RedirectToAction("Index", "Home");
             if ((Session["AppId"] != null))
             {
@@ -273,7 +285,7 @@ namespace EventCombo.Controllers
                     ViewBag.ddlEventCategory = EventCategory;
                     ViewBag.Timezonelist = Timezonelist;
                     var Images = (from myEvent in db.EventImages
-                                  where myEvent.EventID == Eventid
+                                  where myEvent.EventID == EventIid
                                   select myEvent).ToList();
             
                     List<image> eList = new List<image>();
@@ -308,7 +320,7 @@ namespace EventCombo.Controllers
 
                 EventCreation ObjEV = new EventCreation();
                 ObjEV.EventTitle = "Form Editing";
-
+                objCr.Isadmin = Isadmin;
 
                 return View(objCr);
             }
@@ -678,15 +690,28 @@ namespace EventCombo.Controllers
             }
         }
         [HttpGet]
-        public ActionResult GetEventChildData(long lEventId)
+        public ActionResult GetEventChildData(string lEventId)
         {
+            long EventIid = 0;
+            string Isadmin = "N";
+            if (lEventId.Contains("ß"))
+            {
+                var res = lEventId.Split('ß');
+
+                EventIid = long.Parse(res[0]);
+                Isadmin = "Y";
+            }
+            else
+            {
+                EventIid = long.Parse(lEventId);
+            }
             GetEventData objJson = new GetEventData();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                var Event = (from myEnt in objEnt.Events where myEnt.EventID == lEventId select myEnt).FirstOrDefault();
+                var Event = (from myEnt in objEnt.Events where myEnt.EventID == EventIid select myEnt).FirstOrDefault();
 
                 var ev = (from myEvent in objEnt.EventVenues
-                          where myEvent.EventID == lEventId
+                          where myEvent.EventID == EventIid
                           select myEvent).FirstOrDefault();
                 if (ev != null)
                 {
@@ -704,7 +729,7 @@ namespace EventCombo.Controllers
 
 
                 var Mv = (from myEvent in objEnt.MultipleEvents
-                          where myEvent.EventID == lEventId
+                          where myEvent.EventID == EventIid
                           select myEvent).FirstOrDefault();
 
                 if (Mv != null)
@@ -723,7 +748,7 @@ namespace EventCombo.Controllers
 
 
                 var Addr = (from myEvent in objEnt.Addresses
-                            where myEvent.EventId == lEventId
+                            where myEvent.EventId == EventIid
                             select myEvent).ToList();
                 StringBuilder strHTML = new StringBuilder();
                 int i = 0;
@@ -762,7 +787,7 @@ namespace EventCombo.Controllers
 
 
                 var Tick = (from myEvent in objEnt.Tickets
-                            where myEvent.E_Id == lEventId
+                            where myEvent.E_Id == EventIid
                             select myEvent).ToList();
 
                 StringBuilder strticketHtml = new StringBuilder();
@@ -825,7 +850,7 @@ namespace EventCombo.Controllers
                     }
 
                     strticketHtml.Append("<div id='clonediv-" + j + "' class='ticket_haeding ev_ticket_haeding mt10 pb10' tabindex='-1'>");
-                    strticketHtml.Append("<div class='col-sm-1 text-center no_pad ev_row_mov'>");
+                    strticketHtml.Append("<div class='col-sm-10 col-xs-12' ><div class='col-sm-1 text-center no_pad ev_row_mov'>");
                     strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");
                     strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value='"+ObjTick.T_Id+"'/>");
                     strticketHtml.Append("<input type='hidden' id='id_order-" + j + "' value='" + ObjTick.T_order + "' />");
@@ -846,16 +871,16 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("</div>");
                     strticketHtml.Append("<div class='col-sm-3 no_pad'>");
                     strticketHtml.Append("<div class='form-group'>");
-                    strticketHtml.Append("<label class='col-sm-3 control-label ev_tickt_lebel'>Ticket</label>");
-                    strticketHtml.Append("<div class='col-sm-9'>");
+                    strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel'>Ticket</label>");
+                    strticketHtml.Append("<div class='col-sm-8'>");
                     if (ObjTick.TicketTypeID == 3)
                     {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont' id='id_ticket_type-" + j + "' placeholder='Dontion' maxlength='256' title='Donation'  value='" + ObjTick.T_name + "'  onblur='checkvalidatetkt(this.id)' />");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont chkvalidation' id='id_ticket_type-" + j + "' placeholder='Dontion' maxlength='256' title='Donation'  value='" + ObjTick.T_name + "'  onblur='checkvalidatetkt(this.id)' />");
 
                     }
                     else
                     {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont' id='id_ticket_type-" + j + "' placeholder='Early Bird, RSVP...' maxlength='256' title='Give your ticket a name, like General Admission, Early Bird, RSVP, etc.'  value='" + ObjTick.T_name + "' />");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont chkvalidation' id='id_ticket_type-" + j + "' placeholder='Early Bird, RSVP...' maxlength='256' title='Give your ticket a name, like General Admission, Early Bird, RSVP, etc.'  value='" + ObjTick.T_name + "' />");
 
                     }
                     strticketHtml.Append("</div>");
@@ -874,8 +899,8 @@ namespace EventCombo.Controllers
                     {
                         strticketHtml.Append("<div class='col-sm-3 no_pad'><div class='form-group paidticket-" + j + "' id='id_paid-" + j + "' style='display:none;'>");
                     }
-                    strticketHtml.Append("<label class='col-sm-4 no_pad control-label ev_tickt_lebel'>Price $</label>");
-                    strticketHtml.Append("<div class='col-sm-8'>");
+                    strticketHtml.Append("<label class='col-sm-5 no_pad control-label ev_tickt_lebel'>Price $</label>");
+                    strticketHtml.Append("<div class='col-sm-7'>");
                     if (ObjTick.TicketTypeID == 2)
                     {
                         strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='changefeetype(this, event, this.id)' onkeyup='validateforzero(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' value=" + Price + " />");
@@ -939,7 +964,7 @@ namespace EventCombo.Controllers
 
                     }
                     strticketHtml.Append("<label class='pull-right' style='color:red;display:none;' id='id_lblprice-" + j + "'>Please enter valid number</label>");
-                    strticketHtml.Append("</div></div><div class='col-sm-2 no_pad xs768det-del'>");
+                    strticketHtml.Append("</div>  <div class='clearfix'></div></div><div class='col-sm-3 no_pad xs768det-del'>");
                     if (ObjTick.TicketTypeID == 2)
                     {
                         strticketHtml.Append("<div class='form-group paidticket-" + j + "' id='id_Disc-" + j + "' style='display:block;'>");
@@ -953,12 +978,32 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='col-sm-8'>");
                     strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)'  onblur='tofixed(this.id)' maxlength='9' value='" + discount + "' />");
                     strticketHtml.Append("</div></div></div>");
-                    strticketHtml.Append("<div class='col-sm-1 no_pad evnt_sett_main xs768detail'>");
+                    strticketHtml.Append("<div class='clearfix'></div>");
+                    if (Isadmin == "Y")
+                    {
+                        strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad mt10 adminvis' id='isadmin-" + j + "' style='display:block;'>");
+                    }
+                    else
+                    {
+                        strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad mt10 adminvis' id='isadmin-" + j + "' style='display:none;'>");
+
+                    }
+                    strticketHtml.Append("<div class='col-sm-1 no_pad ev_row_mov'></div>");
+                    strticketHtml.Append("<div class='col-sm-3 no_pad '>");
+                    strticketHtml.Append("<div class='form-group'>");
+                    strticketHtml.Append("<label class='col-sm-5 no_pad control-label ev_tickt_lebel'>EC Fee</label>");
+                    strticketHtml.Append("<div class='col-sm-7'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_ecfee-" + j + "' /></div>");
+                    strticketHtml.Append("  </div></div>");
+                    strticketHtml.Append("<div class='col-sm-4 no_pad'><div class='form-group'>");
+                    strticketHtml.Append("<label class='col-sm-6 no_pad control-label ev_tickt_lebel'>Cutomer Fee</label>");
+                    strticketHtml.Append("<div class='col-sm-6'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_customerfee-" + j + "' /></div>");
+                    strticketHtml.Append("</div> </div></div></div>");
+                    strticketHtml.Append("<div class='col-sm-2 col-xs-12 text-right'><div class='col-sm-1 no_pad evnt_sett_main xs768detail'>");
                     strticketHtml.Append("<div class='nav evnt_setting'>");
                     strticketHtml.Append("<span class='evnt_set ev_set_more' id='id_setting-" + j + "' onclick='showsettingdiv(this.id);'> Detail</span>");
                     strticketHtml.Append("<a class='btn ev_set_del_btn evnt_set' id='btndelete-" + j + "' type='button' href='#cnfrmdelete-" + j + "' data-toggle='modal'>");
                     strticketHtml.Append(" <i class='fa fa-trash'></i></a>");
-                    strticketHtml.Append("</div></div><div class='clearfix'></div>");
+                    strticketHtml.Append("</div></div></div><div class='clearfix'></div>");
                     strticketHtml.Append("<div class='tab-content' id='evnt_set-" + j + "'>");
                     strticketHtml.Append("<div class='col-sm-12 no_pad'><div class='modal-content evnt_set_panel'><div class='modal-body pb0'> <div class='col-sm-12'>");
                     strticketHtml.Append("<div class='form-group'><label class='col-sm-2 control-label ev_tickt_lebel pl0'>Description</label><div class='col-sm-6'>");
@@ -1178,7 +1223,7 @@ namespace EventCombo.Controllers
 
 
                 var vardesc = (from myEvent in objEnt.Event_VariableDesc
-                               where myEvent.Event_Id == lEventId
+                               where myEvent.Event_Id == EventIid
                                select myEvent).ToList();
 
                 StringBuilder strvariableHtml = new StringBuilder();
@@ -1202,6 +1247,8 @@ namespace EventCombo.Controllers
                 }
 
                 objJson.Variabledesc = strvariableHtml.ToString();
+
+              
             }
             return Json(objJson, JsonRequestBehavior.AllowGet);
         }
