@@ -33,7 +33,7 @@ namespace EventCombo.Controllers
                 Session["ReturnUrl"] = Url.Action("EventList", "EventList");
 
 
-            
+            Session["CMSAdmin"] = "Y";
             LoginViewModel obj = new LoginViewModel();
             var userEmail = db.AspNetUsers.Where(x => x.Id == e).Select(y => y.Email).SingleOrDefault();
             obj.Email = userEmail;
