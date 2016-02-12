@@ -328,28 +328,20 @@
     };
     $(document).ready(function () {
         $('#mgnav').click();
-        //$('#dvManage').addClass("menu_active");
+        $('#dvManage').addClass("menu_active");
+        $('#dvManage b').addClass('opened new-opend');
 
-        //$('#dvManage b').removeClass();
-        //$('#dvManage b').addClass('opened');
-
-        //$('.menu_title').click(function () {
-        //    $('#dvManage b').addClass('opened');
-        //    $('#dvManage b').removeClass('closed');
-
-        //});
-
-        $('#dvManage').click(function () {
-            var vclassname = $('#dvManage b').attr('class');
-            if (vclassname == "opened") {
-                $('#dvManage b').addClass('closed');
+        $('#dvManage').click(function (e) {
+            var $dvEle = $('#dvManage b');
+            var vclassname = $dvEle.attr('class');
+            if ($dvEle.hasClass("new-opend")) {
+                $dvEle.removeClass('opened new-opend').addClass('closed');
             }
             else {
-                $('#dvManage b').removeClass();
+                $dvEle.addClass('opened new-opend');
             }
-
-
         });
+
         var vLastTab = $("#hdLastTab").val();
         var vLasttabdata ="";
        

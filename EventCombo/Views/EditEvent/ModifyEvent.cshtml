@@ -106,9 +106,9 @@
                                                 <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Timezone & date setting</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="col-sm-12 no_pad">
+                                                <div class="col-sm-12 no_pad dropheight">
                                                     <div class="form-group mb5 ">
-                                                        @Html.DropDownList("dllTimeZone", ViewBag.Timezonelist as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600" })
+                                                        @Html.DropDownList("dllTimeZone", ViewBag.Timezonelist as List<SelectListItem>, new { @class = "form-control selectpicker evnt_inp_cont wd600" })
                                                       
                                                     </div>
                                                     <div class="clearfix"></div>
@@ -638,282 +638,308 @@
 
                             </div>
                             <div id="clonediv-n" class="ticket_haeding ev_ticket_haeding mt10 pb10" style="display:none;" tabindex="-1">
-                                <div class="col-sm-1 text-center no_pad ev_row_mov">
+                                <div class="col-sm-10 col-xs-12 ">
+                                    <div class="col-sm-1 text-center no_pad ev_row_mov">
 
-                                    <span class="ev_row_icn"><i class="fa fa-ellipsis-v"></i></span>
-                                    <input type="hidden" id="id_ticket_id-n" />
-                                    <input type="hidden" id="id_order-n" />
-                                    <input type="hidden" id="id_Tickettype-n" />
-                                    <input type="hidden" id="id_fee-n" />
-                                    <input type="hidden" id="id_total-n" />
-                                    <input type="hidden" value="0" id="id_feetype-n" />
-                                    <input type="text" value="0" id="id_totalamt-n" hidden />
-                                    <input type="text" value="0" id="id_msg-n" hidden />
-                                </div>
-                                <div class="col-sm-3 no_pad">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label ev_tickt_lebel">Ticket*</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control evnt_inp_cont chkvalidation" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256"  onblur="checkvalidatetkt(this.id)"/>
+                                        <span class="ev_row_icn"><i class="fa fa-ellipsis-v"></i></span>
+                                        <input type="hidden" id="id_ticket_id-n" />
+                                        <input type="hidden" id="id_order-n" />
+                                        <input type="hidden" id="id_Tickettype-n" />
+                                        <input type="hidden" id="id_fee-n" />
+                                        <input type="hidden" id="id_total-n" />
+                                        <input type="hidden" value="0" id="id_feetype-n" />
+                                        <input type="text" value="0" id="id_totalamt-n" hidden />
+                                        <input type="text" value="0" id="id_msg-n" hidden />
+                                    </div>
+                                    <div class="col-sm-3 no_pad">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label ev_tickt_lebel">Ticket*</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control evnt_inp_cont chkvalidation" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256" onblur="checkvalidatetkt(this.id)" />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-2 no_pad">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label ev_tickt_lebel">Qty*</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control evnt_inp_cont txtsum numbers" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
+                                    <div class="col-sm-2 no_pad">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label ev_tickt_lebel">Qty*</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control evnt_inp_cont txtsum numbers" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-3 no_pad">
-                                    <div class="form-group paidticket-n" id="id_paid-n">
-                                        <label class="col-sm-4 no_pad control-label ev_tickt_lebel">Price $*</label>
-                                        <div class="col-sm-8 ">
-                                            <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="validateforzero(this.id, event)" onblur="tofixed(this.id)" placeholder="0.00" maxlength="9" />
+                                    <div class="col-sm-3 no_pad">
+                                        <div class="form-group paidticket-n" id="id_paid-n">
+                                            <label class="col-sm-5 no_pad control-label ev_tickt_lebel">Price $*</label>
+                                            <div class="col-sm-7 ">
+                                                <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="validateforzero(this.id, event)" onblur="tofixed(this.id)" placeholder="0.00" maxlength="9" />
+                                            </div>
+
                                         </div>
+                                        <div class="form-group normalticket-n" style="display:none; text-align:center;" id="id_normal-n">
+                                            <label class="col-sm-4 no_pad control-label ev_tickt_lebel" id="id_paymenttype-n" />
 
-                                    </div>
-                                    <div class="form-group normalticket-n" style="display:none; text-align:center;" id="id_normal-n">
-                                        <label class="col-sm-4 no_pad control-label ev_tickt_lebel" id="id_paymenttype-n" />
-
-                                    </div>
-                                    <div class="label-control lbl_bot_price paidticket-n" id="idlbuyertotal-n">
-                                        <span class="buyer_tot">Buyer(s) total: </span>
-                                        <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
-                                        <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
-
-                                        <div class="tooltip" id="id_tooltip-n">Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>
-                                        <label class="pull-right" style="color:red;display:none;" id="id_lblprice-n">Please enter valid number</label>
-                                    </div>
-                                    @*<div class="label-control lbl_bot_price  paidticket-n" id="idlbuyertotal-n">
-                                            <span class="buyer_tot">Buyer total: </span>
+                                        </div>
+                                        <div class="label-control lbl_bot_price paidticket-n" id="idlbuyertotal-n">
+                                            <span class="buyer_tot">Buyer(s) total: </span>
                                             <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
-                                            <p title="Ticket Price  $0.00 &#013;        Fee $0.00 &#013;           Buyer(s) Total $0.00" id="id_tooltip-n" class="masterTooltip"><span ><i class="fa fa-info-circle"></i></span></p>
-                                            @*<span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
-                                            <div class="tooltip" id="id_tooltip-n" >Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00</div
+                                            <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
 
-                                        </div>*@
-                                </div>
-                                <div class="col-sm-2 no_pad xs768det-del">
-                                    <div class="form-group paidticket-n" id="id_Disc-n">
-                                        <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="changefeetype(this, event, this.id)"  onblur="tofixed(this.id)" maxlength="9" />
+                                            <div class="tooltip" id="id_tooltip-n">Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>
+                                            <label class="pull-right" style="color:red;display:none;" id="id_lblprice-n">Please enter valid number</label>
+                                        </div>
+                                        @*<div class="label-control lbl_bot_price  paidticket-n" id="idlbuyertotal-n">
+                    <span class="buyer_tot">Buyer total: </span>
+                    <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
+                    <p title="Ticket Price  $0.00 &#013;        Fee $0.00 &#013;           Buyer(s) Total $0.00" id="id_tooltip-n" class="masterTooltip"><span ><i class="fa fa-info-circle"></i></span></p>
+                    @*<span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
+                    <div class="tooltip" id="id_tooltip-n" >Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyer's Total $0.00</div
 
+                </div>*@
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="col-sm-3 no_pad xs768det-del">
+                                        <div class="form-group paidticket-n" id="id_Disc-n">
+                                            <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="changefeetype(this, event, this.id)" onblur="tofixed(this.id)" maxlength="9" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-12 col-xs-12 no_pad mt10 adminvis" id="isadmin-n">
+                                        <div class="col-sm-1 no_pad ev_row_mov"></div>
+                                        <div class="col-sm-3 no_pad ">
+                                            <div class="form-group">
+                                                <label class="col-sm-5 no_pad control-label ev_tickt_lebel">EC Fee</label>
+                                                <div class="col-sm-7">
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfee-n" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 no_pad ">
+                                            <div class="form-group">
+                                                <label class="col-sm-6 no_pad control-label ev_tickt_lebel">Cutomer Fee</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_customerfee-n" />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-1 no_pad evnt_sett_main xs768detail">
-                                    <div class="nav evnt_setting">
-                                        <span class="evnt_set ev_set_more" id="id_setting-n" onclick="showsettingdiv(this.id);"> Detail </span>
-                                        <!--  <a href="#evnt_set" class="evnt_set">More </a> -->
-                                        @*<button class="btn ev_set_del_btn evnt_set" id="btndelete-n" type="button" onclick="deletediv(this.id);"><i class="fa fa-trash"></i></button>*@
-                                        <a class="btn ev_set_del_btn evnt_set" id="btndelete-n" type="button" href="#cnfrmdelete-n" data-toggle="modal">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                        @*<a href=""><i class="fa fa-trash"></i></a>*@
+                                <div class="col-sm-2 col-xs-12 text-right">
+                                    <div class="col-sm-1 no_pad evnt_sett_main xs768detail">
+                                        <div class="nav evnt_setting">
+                                            <span class="evnt_set ev_set_more" id="id_setting-n" onclick="showsettingdiv(this.id);"> Detail </span>
+                                            <!--  <a href="#evnt_set" class="evnt_set">More </a> -->
+                                            @*<button class="btn ev_set_del_btn evnt_set" id="btndelete-n" type="button" onclick="deletediv(this.id);"><i class="fa fa-trash"></i></button>*@
+                                            <a class="btn ev_set_del_btn evnt_set" id="btndelete-n" type="button" href="#cnfrmdelete-n" data-toggle="modal">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            @*<a href=""><i class="fa fa-trash"></i></a>*@
 
 
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="clearfix"></div>
-                                <!-- Event Setting Start  -->
-                                <div class="tab-content" id="evnt_set-n">
-                                    <div class="col-sm-12 no_pad ">
-                                        <div class="modal-content evnt_set_panel">
-                                            <div class="modal-body pb0">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label ev_tickt_lebel pl0">Description</label>
-                                                        <div class="col-sm-6">
-                                                            <input type="text" class="form-control evnt_inp_cont" id="id_descriptionclass-n" placeholder="Ticket description" maxlength="1000" />
+                                  </div>
+                                    <div class="clearfix"></div>
+                                    <!-- Event Setting Start  -->
+                                    <div class="tab-content" id="evnt_set-n">
+                                        <div class="col-sm-12 no_pad ">
+                                            <div class="modal-content evnt_set_panel">
+                                                <div class="modal-body pb0">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label ev_tickt_lebel pl0">Description</label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" class="form-control evnt_inp_cont" id="id_descriptionclass-n" placeholder="Ticket description" maxlength="1000" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="form-group">
-                                                        <label class="label-control pl0 ev_tickt_lebel mt5">
-                                                            <input type="checkbox" class="" id="id_show_description-n" />
-                                                            Show ticket description on event page
-                                                        </label>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="form-group" id="id_feestruct-n" style="display:none">
-                                                        <label class="col-sm-1 control-label ev_tickt_lebel pl0">Fees</label>
-                                                        <div class="col-sm-5">
-                                                            <select class="form-control ev_drop_label " id="id_include_ticket_fees-n" onchange="feechange(this.id)">
-                                                                <option value="0">customer pays the fees</option>
-                                                                <option value="1">I absorb the fee</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="form-group mt20">
-                                                        <div class="col-sm-6 ev_pad_l0">
-                                                            <div class="col-sm-12 no_pad">
-                                                                <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start</label>
-                                                            </div>
-                                                            <div class="col-sm-8 ev_pad_l0">
-                                                                <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
-                                                            </div>
-                                                            <div class="col-sm-4 no_pad">
-                                                                <input type="hidden" value="0" id="id_hdsaletimestart-n" />
-                                                                <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" />
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="col-sm-6 ev_pad_r0">
-                                                            <div class="col-sm-12 no_pad">
-                                                                <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End</label>
-                                                            </div>
-                                                            <div class="col-sm-8 ev_pad_l0">
-                                                                <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
-                                                            </div>
-                                                            <div class="col-sm-4 no_pad">
-                                                                <input type="hidden" value="0" id="id_hdsaletimeend-n" />
-                                                                <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="form-group">
-                                                        <div class="col-sm-12 mt10 no_pad">
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
                                                             <label class="label-control pl0 ev_tickt_lebel mt5">
-                                                                <input type="checkbox" class="" id="id_ticketshidden-n" onclick="showdiv(this.id)" />
-                                                                Hide this ticket type
+                                                                <input type="checkbox" class="" id="id_show_description-n" />
+                                                                Show ticket description on event page
                                                             </label>
                                                         </div>
-                                                        <label class="EvaddTkt lbl_bot_text " id="id_EvaddTkt-n" onclick="hideunhide(this.id);">Add ticket auto-hide schedule</label>
-                                                        <label class="RemvTkt label-control lbl_bot_text wd600" id="id_RemvTkt-n" onclick="hideunhide(this.id);" style="display:none;">Remove ticket auto-hide schedule</label>
-                                                        <div class="CusdateCont evnt_cus_date_cont" id="id_CusdateCont-n" style="display:none;">
-                                                            <div class="col-sm-12">
-                                                                <label class="label-control ev_tickt_lebel fs-13" id="id_TktnotSale-n" onclick="hideunhide(this.id)">
-                                                                    <input type="radio" id="id_auto_hide_type_0-n" checked="checked" />
-                                                                    When ticket is not on sale
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group" id="id_feestruct-n" style="display:none">
+                                                            <label class="col-sm-1 control-label ev_tickt_lebel pl0">Fees</label>
+                                                            <div class="col-sm-5">
+                                                                <select class="form-control ev_drop_label " id="id_include_ticket_fees-n" onchange="feechange(this.id)">
+                                                                    <option value="0">customer pays the fees</option>
+                                                                    <option value="1">I absorb the fee</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group mt20">
+                                                            <div class="col-sm-6 ev_pad_l0">
+                                                                <div class="col-sm-12 no_pad">
+                                                                    <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start</label>
+                                                                </div>
+                                                                <div class="col-sm-8 ev_pad_l0">
+                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
+                                                                </div>
+                                                                <div class="col-sm-4 no_pad">
+                                                                    <input type="hidden" value="0" id="id_hdsaletimestart-n" />
+                                                                    <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" />
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="col-sm-6 ev_pad_r0">
+                                                                <div class="col-sm-12 no_pad">
+                                                                    <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End</label>
+                                                                </div>
+                                                                <div class="col-sm-8 ev_pad_l0">
+                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
+                                                                </div>
+                                                                <div class="col-sm-4 no_pad">
+                                                                    <input type="hidden" value="0" id="id_hdsaletimeend-n" />
+                                                                    <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-12 mt10 no_pad">
+                                                                <label class="label-control pl0 ev_tickt_lebel mt5">
+                                                                    <input type="checkbox" class="" id="id_ticketshidden-n" onclick="showdiv(this.id)" />
+                                                                    Hide this ticket type
                                                                 </label>
                                                             </div>
-                                                            <div class="clearfix"></div>
-                                                            <div class="col-sm-12">
-                                                                <label class="label-control ev_tickt_lebel fs-13 mt5" id="id_CusdateTime-n" onclick="hideunhide(this.id)">
-                                                                    <input type="radio" id="id_auto_hide_type_1-n" />
-                                                                    For custom date and time
-                                                                </label>
-                                                            </div>
-                                                            <div class="hide_unt_aft" id="id_HideuntDiv-n" style="display:none;">
+                                                            <label class="EvaddTkt lbl_bot_text " id="id_EvaddTkt-n" onclick="hideunhide(this.id);">Add ticket auto-hide schedule</label>
+                                                            <label class="RemvTkt label-control lbl_bot_text wd600" id="id_RemvTkt-n" onclick="hideunhide(this.id);" style="display:none;">Remove ticket auto-hide schedule</label>
+                                                            <div class="CusdateCont evnt_cus_date_cont" id="id_CusdateCont-n" style="display:none;">
+                                                                <div class="col-sm-12">
+                                                                    <label class="label-control ev_tickt_lebel fs-13" id="id_TktnotSale-n" onclick="hideunhide(this.id)">
+                                                                        <input type="radio" id="id_auto_hide_type_0-n" checked="checked" />
+                                                                        When ticket is not on sale
+                                                                    </label>
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                                <div class="col-sm-12">
+                                                                    <label class="label-control ev_tickt_lebel fs-13 mt5" id="id_CusdateTime-n" onclick="hideunhide(this.id)">
+                                                                        <input type="radio" id="id_auto_hide_type_1-n" />
+                                                                        For custom date and time
+                                                                    </label>
+                                                                </div>
+                                                                <div class="hide_unt_aft" id="id_HideuntDiv-n" style="display:none;">
 
-                                                                <div class="form-group mt10">
-                                                                    <div class="col-sm-6 ev_pad_l0">
-                                                                        <div class="col-sm-12 no_pad">
-                                                                            <label class="label-control ev_tickt_lebel">Hide Untill</label>
+                                                                    <div class="form-group mt10">
+                                                                        <div class="col-sm-6 ev_pad_l0">
+                                                                            <div class="col-sm-12 no_pad">
+                                                                                <label class="label-control ev_tickt_lebel">Hide Untill</label>
+                                                                            </div>
+                                                                            <div class="col-sm-8 ev_pad_l0">
+                                                                                <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_until_Date-n" onchange="changetext(this.id); " />
+                                                                            </div>
+                                                                            <div class="col-sm-4 no_pad">
+                                                                                <input type="hidden" value="0" id="id_hdautohideuntil-n" />
+                                                                                <input id="id_auto_hide_until_time-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-sm-8 ev_pad_l0">
-                                                                            <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_until_Date-n" onchange="changetext(this.id); " />
-                                                                        </div>
-                                                                        <div class="col-sm-4 no_pad">
-                                                                            <input type="hidden" value="0" id="id_hdautohideuntil-n" />
-                                                                            <input id="id_auto_hide_until_time-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
-                                                                        </div>
-                                                                    </div>
 
-                                                                    <div class="col-sm-6 ev_pad_r0">
-                                                                        <div class="col-sm-12 no_pad">
-                                                                            <label class="label-control ev_tickt_lebel">Hide After</label>
-                                                                        </div>
-                                                                        <div class="col-sm-8 ev_pad_l0">
-                                                                            <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_after_Date-n" onchange="checkvalidDate(this.id)" />
-                                                                        </div>
-                                                                        <div class="col-sm-4 no_pad">
-                                                                            <input type="hidden" value="0" id="id_hdautohideafter-n" />
-                                                                            <input id="id_auto_hide_after_Time-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
+                                                                        <div class="col-sm-6 ev_pad_r0">
+                                                                            <div class="col-sm-12 no_pad">
+                                                                                <label class="label-control ev_tickt_lebel">Hide After</label>
+                                                                            </div>
+                                                                            <div class="col-sm-8 ev_pad_l0">
+                                                                                <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_after_Date-n" onchange="checkvalidDate(this.id)" />
+                                                                            </div>
+                                                                            <div class="col-sm-4 no_pad">
+                                                                                <input type="hidden" value="0" id="id_hdautohideafter-n" />
+                                                                                <input id="id_auto_hide_after_Time-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
                                                             </div>
-
                                                         </div>
-                                                    </div>
-                                                    <div class="clearfix donateshow-n" id="cleafix-n"></div>
-                                                    <div class="form-group donateshow-n" id="maxmin-n">
-                                                        <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
-                                                        <div class="evnt_time_cont wd280 mr5_p">
-                                                            <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n"  onkeypress="allownumber(this,event,this.id)" maxlength="6" />
-                                                            <label class="label-control lbl_bot_minim ">Minimum</label>
+                                                        <div class="clearfix donateshow-n" id="cleafix-n"></div>
+                                                        <div class="form-group donateshow-n" id="maxmin-n">
+                                                            <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
+                                                            <div class="evnt_time_cont wd280 mr5_p">
+                                                                <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                                <label class="label-control lbl_bot_minim ">Minimum</label>
 
+                                                            </div>
+                                                            <div class="evnt_time_cont wd280">
+                                                                <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                                <label class="label-control lbl_bot_minim ">Maximum</label>
+                                                                <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
+
+                                                            </div>
                                                         </div>
-                                                        <div class="evnt_time_cont wd280">
-                                                            <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n"  onkeypress="allownumber(this,event,this.id)" maxlength="6" />
-                                                            <label class="label-control lbl_bot_minim ">Maximum</label>
-                                                            <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
-
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group">
+                                                            @*<div class="col-sm-12 no_pad">
+                                        <label class="label-control pl0 ev_tickt_lebel mt5">
+                                            <input type="checkbox" class="" id="id_disableticket-n" />
+                                            Disable Ticket
+                                        </label>
+                                    </div>*@
+                                                            <div class="col-sm-12 no_pad">
+                                                                <label class="label-control pl0 ev_tickt_lebel mt5">
+                                                                    <input type="checkbox" class="" id="id_marksoldout-n" />
+                                                                    Mark Sold Out
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-sm-12 no_pad donateshow-n" id="display-n">
+                                                                <label class="label-control pl0 ev_tickt_lebel mt5">
+                                                                    <input type="checkbox" class="" id="id_displayremaining-n" />
+                                                                    Display Remaining Tickets
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
-                                                    <div class="form-group">
-                                                        @*<div class="col-sm-12 no_pad">
-                                                            <label class="label-control pl0 ev_tickt_lebel mt5">
-                                                                <input type="checkbox" class="" id="id_disableticket-n" />
-                                                                Disable Ticket
-                                                            </label>
-                                                        </div>*@
-                                                        <div class="col-sm-12 no_pad">
-                                                            <label class="label-control pl0 ev_tickt_lebel mt5">
-                                                                <input type="checkbox" class="" id="id_marksoldout-n" />
-                                                                Mark Sold Out
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-sm-12 no_pad donateshow-n" id="display-n">
-                                                            <label class="label-control pl0 ev_tickt_lebel mt5">
-                                                                <input type="checkbox" class="" id="id_displayremaining-n" />
-                                                                Display Remaining Tickets
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <div class="modal-footer no_pad mt5">
-                                                    <div class="col-sm-12 text-left mt10">
-                                                        <button class="EvntMinim ev_set_del_btn btn " id="id_Minimize-n" onclick="minimize(this.id);" type="button">
-                                                            <i class="fa fa-arrow-up"></i>
-                                                            Minimize Setting
-                                                        </button>
-                                                        @*<label class="EvntMinim evnt_set_minimise">
+                                                    <div class="modal-footer no_pad mt5">
+                                                        <div class="col-sm-12 text-left mt10">
+                                                            <button class="EvntMinim ev_set_del_btn btn " id="id_Minimize-n" onclick="minimize(this.id);" type="button">
                                                                 <i class="fa fa-arrow-up"></i>
-                                                                Minimize Ticket details
-                                                            </label>*@
+                                                                Minimize Setting
+                                                            </button>
+                                                            @*<label class="EvntMinim evnt_set_minimise">
+                                        <i class="fa fa-arrow-up"></i>
+                                        Minimize Ticket details
+                                    </label>*@
+                                                        </div>
                                                     </div>
                                                 </div>
+
+
+
                                             </div>
-
-
-
                                         </div>
+                                        <!-- Event Setting End  -->
                                     </div>
-                                    <!-- Event Setting End  -->
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="modal fade" id="cnfrmdelete-n" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
-                                        <div class="modal-content">
-                                            <!-- <div class="modal-header custom">
-                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            </div> -->
-                                            <form id="contactForm" class="fullw1 add">
-                                                <div class="modal-body text-center pv50 txt-msg">
-                                                    <h4 class="msg">Are you sure you want to delete?</h4>
-                                                </div>
-                                                <div class="modal-footer msg-action-btn ok">
-                                                    <button type="button" class="btn btn-primary yes ok" id="btnyes-n" onclick="deletediv(this.id);" data-dismiss="modal">Yes</button>
-                                                    <button type="button" class="btn btn-primary no" data-dismiss="modal">No</button>
+                                    <div class="clearfix"></div>
+                                    <div class="modal fade" id="cnfrmdelete-n" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                                            <div class="modal-content">
+                                                <!-- <div class="modal-header custom">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div> -->
+                                                <form id="contactForm" class="fullw1 add">
+                                                    <div class="modal-body text-center pv50 txt-msg">
+                                                        <h4 class="msg">Are you sure you want to delete?</h4>
+                                                    </div>
+                                                    <div class="modal-footer msg-action-btn ok">
+                                                        <button type="button" class="btn btn-primary yes ok" id="btnyes-n" onclick="deletediv(this.id);" data-dismiss="modal">Yes</button>
+                                                        <button type="button" class="btn btn-primary no" data-dismiss="modal">No</button>
 
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div><!-- confirm-msg -->
-                                </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div><!-- confirm-msg -->
+                                    </div>
 
-                            </div>
+                                </div>
                             <div class="clearfix"></div>
                             <div class="modal-footer ticket_footer mt10 text" id="id_ticket_footer">
                                 <div class="col-sm-12 text-right">
@@ -1470,7 +1496,7 @@ else
 
     <script>
         $(document).ready(function () {
-         
+
             var input = document.getElementById('txtEventLocation');
             var Eloc = new google.maps.places.Autocomplete(input);
 
@@ -1497,14 +1523,25 @@ else
 
             });
 
+            var isadmin="@Model.Isadmin";
+          
+            if(isadmin=="N")
+            {
+                var lEventId=$("#hdEventId").val();
+                $(".adminvis").css('display','none');
+
+            }else
+            {
+                var lEventId=$("#hdEventId").val()+"ßY";
+                $(".adminvis").css('display','block');
+            }
 
 
 
 
-
-            $.getJSON('@Url.Action("GetEventChildData", "EditEvent")', { lEventId: $("#hdEventId").val()},
+            $.getJSON('@Url.Action("GetEventChildData", "EditEvent")', { lEventId: lEventId},
                 function (data) {
-                   
+
                     console.log(data.EventStatus);
                     if (data.EventStatus.trim() == "Live")
                     {
@@ -1691,10 +1728,12 @@ else
                         $('#id_Mainvariable').css('display','none');
                     }
 
+
+
                 }
             );
 
-
+       
             var privat="@Model.EventPrivacy";
             var privatefb="@Model.Private_ShareOnFB"
             var privateguest="@Model.Private_GuestOnly"
@@ -2071,7 +2110,7 @@ else
 
             var Sno = $("#ddlOrgnizers").val();
            // alert(Sno);
-           
+
             $("#hidOrgnizer").val(Sno);
             var vOrgName = $("#OrgName_" + Sno).text();
             var vOrgDes = $("#OrgDes_" + Sno).text();
@@ -2376,7 +2415,7 @@ else
 
                 });
             }
-            
+
 
             // Single Timing
             if ($("#hdSchType").val() == 'Single') {
@@ -2566,15 +2605,25 @@ else
                        else
                         {
                             $("#hdEventId").val(response);
-                      
-                      
+
+
                             if(type=="Save")
                             {
                                 $('#divaccsuc').css('display', 'block');
                                 $('#divaccsuc').focus();
                                 $('#diverroacc').css('display', 'none');
                                 $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
-                                window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                                var isadmin="@Model.Isadmin";
+                                if(isadmin=="Y")
+                                {
+                                    response=response+"ßY";
+                                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+
+                                }else
+                                {
+                                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+
+                                }
                             }
 
 
@@ -2582,7 +2631,7 @@ else
                             if(type=="Preview")
                             {
                                 var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
-                         
+
                                 window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
                             }
                             if(type=="Live")
@@ -2598,8 +2647,8 @@ else
             else {
                 $('#divaccsuc').css('display', 'none');
                 $('#diverroacc').css('display', 'block');
-            
-               
+
+
                 $('#erraccmsg').html('There some problem occurs, Please check after some time.');
                 $('#btndiverrsuc').focus();
                 $('html,body').animate({ scrollTop: 0 });
@@ -2637,10 +2686,10 @@ else
                     $("#ddlOrgnizers").append(getHtml[1]);
 
                   var msg = disablebutton();
-                   
+
                     if(msg=="")
                     {
-                       
+
                         $(".cdisable").removeAttr("disabled");
 
                     }
@@ -2691,7 +2740,7 @@ else
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
                     $('#erraccmsg').html(msg);
-                   
+
                     $('html,body').animate({ scrollTop: 0 });
                     return false;
 
@@ -2699,7 +2748,7 @@ else
                 save("Live");
 
 
-              
+
 
             });
             $('#chkReqPassword').change(function () {
@@ -2735,10 +2784,10 @@ else
                 }
 
                 save("Save");
-              
+
             });
 
-          
+
             $("#btMultiVenue").click(function () {
                 $("#dvAddFooter").show();
                 //$("#txtEventLocation").val('');
@@ -2809,7 +2858,7 @@ else
                     var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                   
+
                     $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
                     $('html,body').animate({ scrollTop: 0 });
@@ -2830,7 +2879,7 @@ else
                         var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                    
+
                         $('#btndiverrsuc').focus();
                         $('#erraccmsg').html(msg);
                         $('html,body').animate({ scrollTop: 0 });
@@ -2911,7 +2960,7 @@ else
             });
 
 
-         
+
 
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
@@ -2930,7 +2979,7 @@ else
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
-                              
+
                                 $('#btndiverrsuc').focus();
                                 var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
                                 $('#erraccmsg').html(msg);
@@ -2971,8 +3020,8 @@ else
                     error: function (data) {
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                      
-                        
+
+
                         $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                         $('#diverroacc').focus();
                         $('html,body').animate({ scrollTop: 0 });
@@ -3053,7 +3102,7 @@ else
 
                     $('#hidAddressStatus').val('Single');
                     $("#txtEventLocation").val(vCols);
-                    
+
                 }
                 else
                 {
@@ -3062,8 +3111,8 @@ else
                     $('#hidAddressStatus').val('Multiple');
                     $("#txtEventLocation").val('');
                     //$("#txtEventLocation").val("Click here to enter venue address");
-               
-              
+
+
                     //$("#tblAddress tr").each(function () {
                     //    var Sno = $(this).find("td:first").html();
                     //    if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
@@ -3082,7 +3131,7 @@ else
                         }
                     });
                     $("#txtEventLocation").val(txt);
-                
+
                 }
             });
             $("#btSaveTimeZone").click(function () {
@@ -3107,12 +3156,12 @@ else
                         }
                         else if ($("#dlSchOption").val() == "Weekly") {
                             days= $("#dllWeeklyDayChk").val();
-                           
+
                             vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
                         }
                         else if ($("#dlSchOption").val() == "Monthly") {
-                            days=$("#dllMonthlyWeekDay").val(); 
+                            days=$("#dllMonthlyWeekDay").val();
 
                             vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
@@ -3158,8 +3207,8 @@ else
                 error: function (data) {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                      
-                        
+
+
                     $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                     $('#diverroacc').focus();
                     $('html,body').animate({ scrollTop: 0 });
@@ -3499,7 +3548,7 @@ else
                 }
             });
 
-           
+
             $(".Prvpage").click(function () {
                 $(".priv_cont").css("display", "block");
             });
@@ -4702,7 +4751,7 @@ else
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $(".normalticket-" + divlength).css('display', 'block');
             $(".paidticket-" + divlength).css('display', 'none');
-
+            $("#isadmin-"+divlength).css('display', 'none');
             $("#id_paymenttype-" + divlength).text("Free");
             $("#id_ticket_type-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
             $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
