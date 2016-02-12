@@ -13,31 +13,38 @@
  .divtabledrop .btn{ min-height: 38px; width: 70px; }
  .divtabledrop .bootstrap-select.form-control:not([class*="col-"]){ width: auto; }
  .divtabledrop .bootstrap-select .dropdown-toggle:focus{ outline: 0px !important; }
-
+ .divtabledrop .dropdown-menu.inner{ overflow-x:hidden; }
+ .divtabledrop .bootstrap-select.btn-group .dropdown-menu li{ padding-right:2px; }
 
   .divTable { width: 100%; display: table; }
   .divTablehead{width: 100%; height: 100%; display: table-row; background: #8c8c8c; padding: 10px 0; font-size: 16px; color: #fff; padding: 5px; }
-  .divticketdate{ display: table-caption; font-size: 22px; color: #000;  }
-  .divticketaddres{font-size: 18px; margin-bottom: 0px;  }
+  
+.divticketdate{ font-size: 22px; color: #000;  }
+.divticketaddres{font-size: 18px; margin-bottom: 0px;  }
+
+.ticket_tab_more{ background: #ebebeb ; padding-left: 5px; padding-bottom: 5px; margin-bottom:5px;  }
+.tick_ramin_quant_main{ background: #fff;   }
+.tick_ramin_quant{ font-size: 18px; color: #000; padding-top: 5px; padding-bottom: 5px;  }
+
   .divTableRow {width: 100%; height: 100%; display: table-row; background:#ebebeb; }
   .divTablehead .divTableCell{text-transform: uppercase; }
   .divTableCell { width: 20%; height: 100%; font-size: 16px;  display: table-cell; padding: 8px 5px;  }
   .table_input{ width: 90%; display: inline; font-size: 16px; }
   .divtable_sel_drop{min-width: 50%;}
-  .midtablecell{ width: 20%; height: 100%; font-size: 16px;  display: table-cell; padding: 8px 5px; vertical-align: top; }
+  .midtablecell{ width: 20%; height: 100%; font-size: 16px;  display: table-cell; padding: 8px 5px; vertical-align: middle; }
 
-  .ticketsubtotal{font-size: 18px; margin-bottom: 0px;  padding: 8px 10px;  text-transform: uppercase; }
+  .ticketsubtotal{font-size: 16px; margin-bottom: 0px;  padding: 3px 10px;  text-transform: uppercase; }
   .table_promo_input{ width: 150px; display: inline; font-size: 16px;  }
 
   .divticketdesc{ display: table-caption; font-size: 18px; color: #000;  }
 
   .divTablefoot {width: 100%; height: 100%; display: table-row; background:#ebebeb; }
   .midtablefootcell{ width: 100%; height: 100%; font-size: 16px;  display: table-cell; padding: 8px 5px; vertical-align: middle; }
-  .table_div_container{ margin-bottom: 20px; }
+  /*.table_div_container{ margin-bottom: 20px; }*/
   .tkt_more_desc_bot{ font-size: 16px; }
 
   .div_ord_total_new{ font-size:18px; color:#000; }
-
+ 
 .ui-autocomplete {
   z-index:2147483647 !important;
 }
