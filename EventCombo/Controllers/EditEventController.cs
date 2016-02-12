@@ -1697,7 +1697,7 @@ namespace EventCombo.Controllers
                                         }
                                         objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
                                         objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                                        objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
+                                        objEOrg.Orgnizer_Desc = HttpUtility.UrlDecode(objOr.Orgnizer_Desc, System.Text.Encoding.Default);
                                         objEOrg.FBLink = objOr.FBLink;
                                         objEOrg.Twitter = objOr.Twitter;
                                         objEOrg.Linkedin = objOr.Linkedin;
