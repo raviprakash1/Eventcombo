@@ -32,6 +32,8 @@ namespace EventCombo.Controllers
             else
                 Session["ReturnUrl"] = Url.Action("EventList", "EventList");
 
+
+            
             LoginViewModel obj = new LoginViewModel();
             var userEmail = db.AspNetUsers.Where(x => x.Id == e).Select(y => y.Email).SingleOrDefault();
             obj.Email = userEmail;
