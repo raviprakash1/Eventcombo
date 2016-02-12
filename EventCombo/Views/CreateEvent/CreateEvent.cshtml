@@ -5542,7 +5542,7 @@
             $(".StartDatemodal").hide();
             $(".StartDate").click(function () {
                 $(".StartDatemodal").slideToggle("fast");
-                $(".TmezoneSet").hide();
+               // $(".TmezoneSet").hide();
 
             });
 
@@ -5616,20 +5616,20 @@
         });
 
 
-        $(document).on('click', function () {
-            $('.StartDatemodal').hide();
-        });
-        $('.StartDatemodal, .StartDate').on('click', function (e) {
-            e.stopPropagation();
-        });
+        //$(document).on('click', function () {
+        //    $('.StartDatemodal').hide();
+        //});
+        //$('.StartDatemodal, .StartDate').on('click', function (e) {
+        //    e.stopPropagation();
+        //});
 
 
-        $(document).on('click', function () {
-            $('.TmezoneSet').hide();
-        });
-        $('.TmezoneSet, .Timezone').on('click', function (e) {
-            e.stopPropagation();
-        });
+        //$(document).on('click', function () {
+        //    $('.TmezoneSet').hide();
+        //});
+        //$('.TmezoneSet, .Timezone').on('click', function (e) {
+        //    e.stopPropagation();
+        //});
         
     </script>
 

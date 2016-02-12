@@ -1026,7 +1026,7 @@ namespace EventCombo.Controllers
                     {
                         Imageevent = Server.MapPath("..") + Images;
                     }
-                    string Imagevent = "<img style='width:200px' src ='" + Imageevent + "' alt = 'Image' >";
+                    string Imagevent = "<img style='width:200px;height:200px;' src ='" + Imageevent + "' alt = 'Image' >";
 
                     //Order Details
 
@@ -1446,7 +1446,7 @@ namespace EventCombo.Controllers
                         
                         }
 
-                     ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
+                    // ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
                     //Mail 
                     hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, emailname, "", "");
                     //Mail 
@@ -1486,13 +1486,13 @@ namespace EventCombo.Controllers
                 System.GC.WaitForPendingFinalizers();
 
 
-                if (System.IO.File.Exists(ImageMapPath))
-                {
-                    Image image2 = Image.FromFile(ImageMapPath);
-                    image2.Dispose();
-                    System.IO.File.Delete(ImageMapPath);
+                //if (System.IO.File.Exists(ImageMapPath))
+                //{
+                //    Image image2 = Image.FromFile(ImageMapPath);
+                //    image2.Dispose();
+                //    System.IO.File.Delete(ImageMapPath);
 
-                }
+                //}
 
                 var ticketdet = (from t in db.TicketOrderDetails where t.T_Guid== EvtOrDetail.TPD_GUID select t).ToList();
                 if (ticketdet != null)
@@ -1873,11 +1873,11 @@ namespace EventCombo.Controllers
 
             //var imagepath = "<img src=https://maps.googleapis.com/maps/api/staticmap?center='"+eventname+"'&zoom=13&size=400x400&maptype=roadmap&markers=color:red%7Clabel:C%7C'"+ eventname + "' style='width:100%' />";
 
-           generatemapimage("http://maps.google.com/maps/api/staticmap?center="+ eventname + "&zoom=14&size=400x400&maptype=roadmap&markers=color:red|color:red|label:C|"+ eventname + "&sensor=false", myOrderId);
+           //generatemapimage("http://maps.google.com/maps/api/staticmap?center="+ eventname + "&zoom=14&size=400x400&maptype=roadmap&markers=color:red|color:red|label:C|"+ eventname + "&sensor=false", myOrderId);
             var url1 = Request.Url;
             var baseurl1 = url.GetLeftPart(UriPartial.Authority);
-            string ImageMapPath = "http://eventcombonew-qa.kiwireader.com/Images/Imagemap_" + myOrderId+".png";
-            string Imagecode = "<img style = 'width:200px;height:200px;' src ='" + ImageMapPath + "' alt = 'Map Image' />";
+            //string ImageMapPath = "http://eventcombonew-qa.kiwireader.com/Images/Imagemap_"+myOrderId+".png";
+            string Imagecode = "<img style = 'width:200px;height:200px;' src ='http://maps.google.com/maps/api/staticmap?center="+eventname+"&zoom=14&size=400x400&maptype=roadmap&markers=color:red|color:red|label:C|"+eventname+"&sensor=false' alt = 'Map Image' />";
             //string Imageeventimg = "<img style='width:200px;height:200px;' src = cid:myeventmapImageID alt = 'Image' >";
             if (!string.IsNullOrEmpty(bodyn))
             {

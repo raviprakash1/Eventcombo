@@ -68,6 +68,33 @@ namespace EventCombo.Controllers
               
                 TempData["GuestListcnt"] = objGuestEventList.Count;
                 TempData["Allcount"] = 1;
+
+                if(objLiveEventList.Count>0 && objSavedEventList.Count>0 && objPastEventList.Count>0)
+                {
+                    hdLastTab = "L";
+                }
+                if (objLiveEventList.Count <= 0 && objSavedEventList.Count > 0 && objPastEventList.Count > 0)
+                {
+                    hdLastTab = "S";
+                }
+                if (objLiveEventList.Count <= 0 && objSavedEventList.Count <= 0 && objPastEventList.Count > 0)
+                {
+                    hdLastTab = "P";
+                }
+                if (objLiveEventList.Count <= 0 && objSavedEventList.Count <= 0 && objPastEventList.Count <= 0)
+                {
+                    hdLastTab = "";
+                }
+                if (objLiveEventList.Count <= 0 && objSavedEventList.Count > 0 && objPastEventList.Count <= 0)
+                {
+                    hdLastTab = "S";
+                }
+                if (objLiveEventList.Count > 0 && objSavedEventList.Count <= 0 && objPastEventList.Count <= 0)
+                {
+                    hdLastTab = "L";
+                }
+
+
             }
             else
             {

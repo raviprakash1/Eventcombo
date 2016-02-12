@@ -2700,7 +2700,7 @@ else
             $(".StartDatemodal").hide();
             $(".StartDate").click(function () {
                 $(".StartDatemodal").slideToggle("fast");
-                $(".TmezoneSet").hide();
+                //$(".TmezoneSet").hide();
 
             });
 
@@ -2958,7 +2958,8 @@ else
                                 $('#diverroacc').css('display', 'block');
                               
                                 $('#btndiverrsuc').focus();
-                                $('#erraccmsg').html("Event Url already exists.");
+                                var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
+                                $('#erraccmsg').html(msg);
 
                                 $("#txtEventUrl").val('');
                                 $("#txtEventUrl").focus();
@@ -6156,20 +6157,20 @@ else
         });
 
 
-        $(document).on('click', function(){
-            $('.StartDatemodal').hide();
-        });
-        $('.StartDatemodal, .StartDate').on('click', function(e){
-            e.stopPropagation();
-        });
+        //$(document).on('click', function(){
+        //    $('.StartDatemodal').hide();
+        //});
+        //$('.StartDatemodal, .StartDate').on('click', function(e){
+        //    e.stopPropagation();
+        //});
 
 
-        $(document).on('click', function(){
-            $('.TmezoneSet').hide();
-        });
-        $('.TmezoneSet, .Timezone').on('click', function(e){
-            e.stopPropagation();
-        });
+        //$(document).on('click', function(){
+        //    $('.TmezoneSet').hide();
+        //});
+        //$('.TmezoneSet, .Timezone').on('click', function(e){
+        //    e.stopPropagation();
+        //});
     </script>
 
 }

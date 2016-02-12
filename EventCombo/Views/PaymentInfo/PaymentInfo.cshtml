@@ -326,20 +326,36 @@
                                     <div class="col-sm-12 no_pad acnt_hold_text">Bank account information</div>
                                     @if (Model != null && !String.IsNullOrEmpty(Model.PI_BankAccInfo))
                                     {
+                                        if (Model.PI_BankAccInfo == "C")
+                                        {
                                         <div class="col-sm-4 col-xs-12 no_pad">
                                             <label class="label-control ev_tickt_lebel pl0 ">
-                                                <input id="AccInfo1" name="AccInfo" type="radio" value="C"
-                                                       @(Model.PI_BankAccInfo == "C" ? " checked=\"true\" " : "") />
+                                                <input id="AccInfo1" name="AccInfo" type="radio" value="C" checked ="checked"  />
                                                 Checking
                                             </label>
                                         </div>
                                         <div class="col-sm-4 col-xs-12 no_pad">
                                             <label class="label-control ev_tickt_lebel pl0">
-                                                <input id="AccInfo2" name="AccInfo" type="radio" value="S" checked="checked"
-                                                       @(Model.PI_BankAccInfo == "S" ? " checked=\"true\" " : "") />
+                                                <input id="AccInfo2" name="AccInfo" type="radio" value="S" />
                                                 Savings
                                             </label>
                                         </div>
+                                        }
+                                        if (Model.PI_BankAccInfo == "S")
+                                        {
+                                            <div class="col-sm-4 col-xs-12 no_pad">
+                                                <label class="label-control ev_tickt_lebel pl0 ">
+                                                    <input id="AccInfo1" name="AccInfo" type="radio" value="C" />
+                                                    Checking
+                                                </label>
+                                            </div>
+                                        <div class="col-sm-4 col-xs-12 no_pad">
+                                            <label class="label-control ev_tickt_lebel pl0">
+                                                <input id="AccInfo2" name="AccInfo" type="radio" value="S" checked="checked"/>
+                                                Savings
+                                            </label>
+                                        </div>
+                                        }
                                     }
                                     else
                                     {

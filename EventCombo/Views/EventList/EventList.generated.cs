@@ -1255,7 +1255,7 @@ WriteLiteral("    </div><!-- event-tabs -->\r\n    <!-- 3 tabs close -- -->\r\n\
 
             
             #line 283 "..\..\Views\EventList\EventList.cshtml"
- if (TempData["LiveEventscnt"] == null && TempData["SavedEventscnt"] == null && TempData["PastEventscnt"] == null && TempData["GuestListcnt"] == null)
+ if ((Convert.ToInt32(TempData["LiveEventscnt"]) <= 0 ) && (Convert.ToInt32(TempData["SavedEventscnt"]) <= 0 ) && (Convert.ToInt32(TempData["PastEventscnt"]) <= 0 ) && (Convert.ToInt32(TempData["GuestListcnt"]) <= 0))
 {
 
             
@@ -1265,7 +1265,7 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"col-sm-12 no_pad mt10\"");
 
-WriteLiteral(">\r\n        <span> No Results </span>\r\n        </div>\r\n");
+WriteLiteral(">\r\n        <span> No Results Found </span>\r\n        </div>\r\n");
 
             
             #line 288 "..\..\Views\EventList\EventList.cshtml"
@@ -1299,34 +1299,102 @@ WriteLiteral("\',\r\n            data: { Eventid: eventId, strEventTitle: vEvent
             
             #line default
             #line hidden
-WriteLiteral("\' + \'?Eventid=\' + response;\r\n            }\r\n        });\r\n\r\n\r\n    }\r\n\r\n    $(windo" +
-"w).load(function () {\r\n      //  $(\"#DivSavedPager\").hide();\r\n      //      $(\"#" +
-"DivPastPager\").hide();\r\n    });\r\n    function ShowLivePager() {\r\n        $(\"#Div" +
-"LivePager\").show();\r\n        $(\"#DivSavedPager\").hide();\r\n        $(\"#DivPastPag" +
-"er\").hide();\r\n    };\r\n    function ShowSavedPager() {\r\n        debugger;\r\n      " +
-"  $(\"#DivSavedPager\").show();\r\n        $(\"#DivLivePager\").hide();\r\n        $(\"#D" +
-"ivPastPager\").hide();\r\n    };\r\n    function ShowPastPager() {\r\n        $(\"#DivPa" +
-"stPager\").show();\r\n        $(\"#DivLivePager\").hide();\r\n        $(\"#DivSavedPager" +
-"\").hide();\r\n    };\r\n    $(document).ready(function () {\r\n        debugger;\r\n    " +
-"    $(\'#mgnav\').click();\r\n       \r\n        $(\'#dvManage\').addClass(\"menu_active\"" +
-");\r\n\r\n        var vhtml = $(\'#dvManage\').html().replace(\"closed\", \"opened\");\r\n  " +
-"      $(\'#dvManage\').empty();\r\n        $(\'#dvManage\').html(vhtml);\r\n       \r\n   " +
-"     \r\n        // #accordion .menu_title .active\r\n        //alert($(\'#mgnav\').ac" +
-"cordion());\r\n\r\n        //$(\"#collapse2\").show().accordion({\r\n        //    activ" +
-"e: false,\r\n        //    autoHeight: false,\r\n        //    navigation: true,\r\n  " +
-"      //    collapsible: true\r\n        //});\r\n\r\n        //$(\'#mgnav\').attr(\"aria" +
-"-expanded\",true);\r\n\r\n        //$(window).unload(function () {\r\n        //    $.r" +
-"emoveCookie(\"LastTab\");\r\n        //});\r\n\r\n\r\n        var vLastTab = $(\"#hdLastTab" +
-"\").val();\r\n        if (vLastTab == \"P\") {\r\n            $(\"#liPast\").addClass(\"ac" +
-"tive\");\r\n            $(\"#sectionC\").addClass(\"active\");\r\n            $(\"#DivPast" +
-"Pager\").show();\r\n            $(\"#DivLivePager\").hide();\r\n            $(\"#DivSave" +
-"dPager\").hide();\r\n        }\r\n        else if (vLastTab == \"S\") {\r\n            $(" +
-"\"#liSaved\").addClass(\"active\");\r\n            $(\"#sectionB\").addClass(\"active\");\r" +
-"\n            $(\"#DivSavedPager\").show();\r\n            $(\"#DivLivePager\").hide();" +
-"\r\n            $(\"#DivPastPager\").hide();\r\n        }\r\n        else {\r\n           " +
-" $(\"#liLive\").addClass(\"active\");\r\n            $(\"#sectionA\").addClass(\"active\")" +
-";\r\n            $(\"#DivLivePager\").show();\r\n            $(\"#DivSavedPager\").hide(" +
-");\r\n            $(\"#DivPastPager\").hide();\r\n        }\r\n    });\r\n\r\n</script>\r\n");
+WriteLiteral(@"' + '?Eventid=' + response;
+            }
+        });
+
+
+    }
+
+    $(window).load(function () {
+      //  $(""#DivSavedPager"").hide();
+      //      $(""#DivPastPager"").hide();
+    });
+    function ShowLivePager() {
+        $(""#DivLivePager"").show();
+        $(""#DivSavedPager"").hide();
+        $(""#DivPastPager"").hide();
+    };
+    function ShowSavedPager() {
+        debugger;
+        $(""#DivSavedPager"").show();
+        $(""#DivLivePager"").hide();
+        $(""#DivPastPager"").hide();
+    };
+    function ShowPastPager() {
+        $(""#DivPastPager"").show();
+        $(""#DivLivePager"").hide();
+        $(""#DivSavedPager"").hide();
+    };
+    $(document).ready(function () {
+        $('#mgnav').click();
+        //$('#dvManage').addClass(""menu_active"");
+
+        //$('#dvManage b').removeClass();
+        //$('#dvManage b').addClass('opened');
+
+        //$('.menu_title').click(function () {
+        //    $('#dvManage b').addClass('opened');
+        //    $('#dvManage b').removeClass('closed');
+
+        //});
+
+        $('#dvManage').click(function () {
+            var vclassname = $('#dvManage b').attr('class');
+            if (vclassname == ""opened"") {
+                $('#dvManage b').addClass('closed');
+            }
+            else {
+                $('#dvManage b').removeClass();
+            }
+
+
+        });
+        var vLastTab = $(""#hdLastTab"").val();
+        var vLasttabdata ="""";
+       
+            vLasttabdata =""");
+
+            
+            #line 356 "..\..\Views\EventList\EventList.cshtml"
+                      Write(TempData["hdLastTab"]);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@""";
+            if(vLasttabdata!="""")
+            {
+                vLastTab=vLasttabdata;
+            }
+       
+
+     
+        if (vLastTab == ""P"") {
+            $(""#liPast"").addClass(""active"");
+            $(""#sectionC"").addClass(""active"");
+            $(""#DivPastPager"").show();
+            $(""#DivLivePager"").hide();
+            $(""#DivSavedPager"").hide();
+        }
+        else if (vLastTab == ""S"") {
+            $(""#liSaved"").addClass(""active"");
+            $(""#sectionB"").addClass(""active"");
+            $(""#DivSavedPager"").show();
+            $(""#DivLivePager"").hide();
+            $(""#DivPastPager"").hide();
+        }
+        else {
+            $(""#liLive"").addClass(""active"");
+            $(""#sectionA"").addClass(""active"");
+            $(""#DivLivePager"").show();
+            $(""#DivSavedPager"").hide();
+            $(""#DivPastPager"").hide();
+        }
+    });
+
+</script>
+");
 
         }
     }
