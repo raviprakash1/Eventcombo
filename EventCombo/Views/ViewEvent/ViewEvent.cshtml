@@ -425,33 +425,25 @@
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
                 <div class="evnt_details_body2">
-                    <div class="col-sm-12 mt10">
-                        <div id="dvTicketInfo" class="table-responsive">
+                    <div id="dvTicketInfo" class="col-sm-12 mt10 no_pad">
+                       
                             <div id="dvAjxLoader">
                                 <img src="~/Images/ajaxloader1.gif" />
                             </div>
-                        </div>
+                       
 
-                        <div class="table-responsive">
-
-
-                            <table class="table evnt_tkt_list_tbl">
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="5">
-                                            @*<div class="col-sm-12 text-right mt10">Subtotal : $0.3333 </div>*@
-                                            @*<div id="dvSubTotal" class="col-sm-12 text-right mt10"></div>*@
-                                            <div id="dvOrderTotal" class="col-sm-12 text-right mt10"><strong><span id="spGTotal"></span> </strong></div>
-                                            <input id="hdGTotal" type="hidden" value="0" />
-                                        </td>
-
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
+                       
 
                     </div>
+                    <div class="clearfix"></div>
+                       
+                    <div id="dvOrderTotal" class="col-sm-12 col-xs-12 text-right  div_ord_total_new"><strong><span id="spGTotal"></span> </strong>
+                        <input id="hdGTotal" type="hidden" value="0" />
+                    </div>
+                   
+                          
+                        
+                
                 </div>
             </div>
 
@@ -1455,25 +1447,25 @@ function pad(n) { return n < 10 ? '0' + n : n };
                     $("#dvTicketInfo").append(data);
                     //alert($("#txtd_22").val());
 
-                    if ($.cookie("Selection") != undefined && $.cookie("Selection") != null && $.cookie("Selection") != '') {
-                        var vSelection = $.cookie("Selection")
-                        var vRow = vSelection.split('¶');
-                        for (i = 0; i <= vRow.length - 1; i++) {
-                            var vColm = vRow[i].split('~');
-                            vId = vColm[0].toString();
+                    //if ($.cookie("Selection") != undefined && $.cookie("Selection") != null && $.cookie("Selection") != '') {
+                    //    var vSelection = $.cookie("Selection")
+                    //    var vRow = vSelection.split('¶');
+                    //    for (i = 0; i <= vRow.length - 1; i++) {
+                    //        var vColm = vRow[i].split('~');
+                    //        vId = vColm[0].toString();
                             
-                            var vCol1 = vColm[1].toString();
-                            var vCol2 = parseInt(vColm[2]);
+                    //        var vCol1 = vColm[1].toString();
+                    //        var vCol2 = parseInt(vColm[2]);
 
-                            if (vCol2 == NaN) { vCol2 = 0 } else vCol1 = "1";
+                    //        if (vCol2 == NaN) { vCol2 = 0 } else vCol1 = "1";
 
-                            $("#d_" + vId.toString()).val(vCol1);
-                            if (vCol2 > 0) { $("#txtd_" + vId.toString()).val(vColm[2].toString()); }
+                    //        $("#d_" + vId.toString()).val(vCol1);
+                    //        if (vCol2 > 0) { $("#txtd_" + vId.toString()).val(vColm[2].toString()); }
                             
-                        }
-                        $.removeCookie("Selection");
-                        calculateTickTotal();
-                    }
+                    //    }
+                    //    $.removeCookie("Selection");
+                    //    calculateTickTotal();
+                    //}
 
                 },
                 error: function (data) {
