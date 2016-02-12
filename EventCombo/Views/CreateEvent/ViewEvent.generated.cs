@@ -2911,22 +2911,23 @@ WriteLiteral("\',\r\n                beforeSend: function () { $(\'#dvAjxLoader\
 "t = parseFloat($(\"#hid_\" + IdAry[i].toString()).val());\r\n                if (isN" +
 "aN(vDonate) == true) vDonate = 0;\r\n                if (isNaN(vTAmt) == true) vTA" +
 "mt = 0;\r\n\r\n                if (vLockQty > 0 || vDonate >0) {\r\n                  " +
-"  vflag = 1;\r\n                    if (vLockQty > 0 && vDonate <= 0 && vTAmt <= 0" +
-") {\r\n                        vLockQty = 0;\r\n                    }\r\n             " +
-"       TList.push({\r\n                        \'TLD_TQD_Id\': vId,\r\n               " +
-"         \'TLD_Locked_Qty\': vLockQty,\r\n                        \'TLD_Event_Id\': vE" +
-"ntid,\r\n                        \'TLD_Donate\': vDonate,\r\n                        \'" +
-"TicketAmount\': vTAmt\r\n                    });\r\n                    if (vSelectio" +
-"n == \"\")\r\n                        vSelection = vId + \"~\" + vLockQty + \"~\" + vDon" +
-"ate;\r\n                    else\r\n                        vSelection = vSelection " +
-"+ \"¶\" + (vId + \"~\" + vLockQty + \"~\" + vDonate);\r\n                }\r\n\r\n          " +
-"  }\r\n\r\n            var model = {\r\n                \'TLD_TQD_Id\': \'0\',\r\n          " +
-"      \'TLD_Locked_Qty\': \'0\',\r\n                \'TLD_List\': TList\r\n            }\r\n" +
-"            if (vflag > 0) {\r\n\r\n\r\n\r\n\r\n                $.ajax({\r\n                " +
-"    url: \'");
+"  if (vLockQty > 0 && vDonate <= 0 && vTAmt <= 0) {\r\n                        vLo" +
+"ckQty = 0;\r\n                    }\r\n                    else {\r\n                 " +
+"       vflag = 1;\r\n                        TList.push({\r\n                       " +
+"     \'TLD_TQD_Id\': vId,\r\n                            \'TLD_Locked_Qty\': vLockQty," +
+"\r\n                            \'TLD_Event_Id\': vEntid,\r\n                         " +
+"   \'TLD_Donate\': vDonate,\r\n                            \'TicketAmount\': vTAmt\r\n  " +
+"                      });\r\n                        if (vSelection == \"\")\r\n      " +
+"                      vSelection = vId + \"~\" + vLockQty + \"~\" + vDonate;\r\n      " +
+"                  else\r\n                            vSelection = vSelection + \"¶" +
+"\" + (vId + \"~\" + vLockQty + \"~\" + vDonate);\r\n                    }\r\n            " +
+"       \r\n                }\r\n\r\n            }\r\n\r\n            var model = {\r\n      " +
+"          \'TLD_TQD_Id\': \'0\',\r\n                \'TLD_Locked_Qty\': \'0\',\r\n          " +
+"      \'TLD_List\': TList\r\n            }\r\n            if (vflag > 0) {\r\n\r\n\r\n\r\n\r\n  " +
+"              $.ajax({\r\n                    url: \'");
 
             
-            #line 1507 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1510 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                      Write(Url.Action("LockTickets", "CreateEvent"));
 
             
@@ -2952,7 +2953,7 @@ WriteLiteral(@"',
                             var vUrl = '");
 
             
-            #line 1524 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1527 "..\..\Views\CreateEvent\ViewEvent.cshtml"
                                    Write(Url.Action("TicketPayment", "TicketPayment"));
 
             
@@ -2974,6 +2975,7 @@ WriteLiteral(@"
             } else
             {
                 $('#diverroacc').css('display', 'block');
+                $('html,body').animate({ scrollTop: 0 });
                 $('#diverroacc').focus();
                 $('#erraccmsg').html(ajaxsetup('ViewEvent', 'ViewEventNoQtyUI'));
             }
@@ -2993,7 +2995,7 @@ WriteLiteral(@"
             url: '");
 
             
-            #line 1555 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+            #line 1559 "..\..\Views\CreateEvent\ViewEvent.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             

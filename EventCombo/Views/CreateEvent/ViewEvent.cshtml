@@ -1539,6 +1539,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
             } else
             {
                 $('#diverroacc').css('display', 'block');
+                $('html,body').animate({ scrollTop: 0 });
                 $('#diverroacc').focus();
                 $('#erraccmsg').html(ajaxsetup('ViewEvent', 'ViewEventNoQtyUI'));
             }

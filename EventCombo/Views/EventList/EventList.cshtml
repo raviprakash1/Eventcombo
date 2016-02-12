@@ -280,10 +280,10 @@
     </div><!-- event-tabs -->
     <!-- 3 tabs close -- -->
 
-@if (TempData["LiveEventscnt"] == null && TempData["SavedEventscnt"] == null && TempData["PastEventscnt"] == null && TempData["GuestListcnt"] == null)
+@if ((Convert.ToInt32(TempData["LiveEventscnt"]) <= 0 ) && (Convert.ToInt32(TempData["SavedEventscnt"]) <= 0 ) && (Convert.ToInt32(TempData["PastEventscnt"]) <= 0 ) && (Convert.ToInt32(TempData["GuestListcnt"]) <= 0))
 {
     <div class="col-sm-12 no_pad mt10">
-        <span> No Results </span>
+        <span> No Results Found </span>
         </div>
         }
 
@@ -348,38 +348,19 @@
                 $('#dvManage b').removeClass();
             }
 
-            //$('#dvManage b').removeClass();
-            //$('#dvManage b').addClass('closed');
-
-            //$('#dvManage b').addClass('closed');
-            //$('#dvManage b').removeClass('opened');
 
         });
-            
-        //var vhtml = $('#dvManage').html().replace("closed", "opened");
-
-        //$('#dvManage').empty();
-        //$('#dvManage').html(vhtml);
-       
-        
-        // #accordion .menu_title .active
-        //alert($('#mgnav').accordion());
-
-        //$("#collapse2").show().accordion({
-        //    active: false,
-        //    autoHeight: false,
-        //    navigation: true,
-        //    collapsible: true
-        //});
-
-        //$('#mgnav').attr("aria-expanded",true);
-
-        //$(window).unload(function () {
-        //    $.removeCookie("LastTab");
-        //});
-
-
         var vLastTab = $("#hdLastTab").val();
+        var vLasttabdata ="";
+       
+            vLasttabdata ="@TempData["hdLastTab"]";
+            if(vLasttabdata!="")
+            {
+                vLastTab=vLasttabdata;
+            }
+       
+
+     
         if (vLastTab == "P") {
             $("#liPast").addClass("active");
             $("#sectionC").addClass("active");
