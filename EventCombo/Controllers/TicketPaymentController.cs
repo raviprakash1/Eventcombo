@@ -1026,7 +1026,7 @@ namespace EventCombo.Controllers
                     {
                         Imageevent = Server.MapPath("..") + Images;
                     }
-                    string Imagevent = "<img style='width:200px' src ='" + Imageevent + "' alt = 'Image' >";
+                    string Imagevent = "<img style='width:200px;height:200px;' src ='" + Imageevent + "' alt = 'Image' >";
 
                     //Order Details
 
