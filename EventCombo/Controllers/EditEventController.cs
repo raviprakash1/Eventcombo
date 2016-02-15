@@ -159,6 +159,7 @@ namespace EventCombo.Controllers
             {
                 EventIid = long.Parse(Eventid);
             }
+
             ValidationMessageController vmc = new ValidationMessageController();
             EventIid = vmc.GetLatestEventId(EventIid);
             EventCreation objCr = GetEventDataEditing(EventIid);
@@ -187,7 +188,7 @@ namespace EventCombo.Controllers
                 {
                     var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
                     List<SelectListItem> Timezonelist = new List<SelectListItem>();
-                  foreach(var item in Timezone)
+                    foreach(var item in Timezone)
                     {
                         Timezonelist.Add(new SelectListItem()
                         {
@@ -196,7 +197,6 @@ namespace EventCombo.Controllers
                             Selected = (item.TimeZone_Id.ToString().Trim() == timezone.Trim() ? true : false)
 
                         });
-
                     }
 
                     var countryQuery = (from c in db.Countries
@@ -1480,6 +1480,7 @@ namespace EventCombo.Controllers
             if (Session["AppId"] != null)
             {
                 long lEventId = model.EventID;
+                long Parent_EventID=0;
                 List<long> ids = new List<long>();
                 try
                 {
@@ -1841,6 +1842,8 @@ namespace EventCombo.Controllers
                                 }
                                 objEnt.SaveChanges();
                                 lEventId = ObjEC.EventID;
+                                Parent_EventID = (ObjEC.Parent_EventID ==null? lEventId : (long)ObjEC.Parent_EventID);
+
                                 PublishEvent(lEventId);
                             }
                         }
@@ -1850,7 +1853,7 @@ namespace EventCombo.Controllers
                 {
                     return 0;
                 }
-                return lEventId;
+                return Parent_EventID;
             }
             else
             {
