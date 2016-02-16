@@ -66,6 +66,7 @@ button:focus { outline: none;}
 #accordion .panel-heading{ background:#6a6b72; border-bottom:1px solid #797a80; }
 
 
+
 .head_left_nav{position: relative; top:8px;}
 .head_left_nav ul li{ list-style: none; float: left; border-right:1px solid #3cf; }
 .head_left_nav ul li a{ line-height: 21px; font-size: 1.3em;  padding: 0 7px; color:#3cf; }
