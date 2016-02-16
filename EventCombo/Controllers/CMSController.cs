@@ -27,8 +27,13 @@ namespace EventCombo.Controllers
         public async System.Threading.Tasks.Task<ActionResult> Index(string e, string id)
         {
             EventComboEntities db = new EventComboEntities();
+
             if (id != null && id.Trim() != string.Empty)
+            {
+                id = id + "ßY";
                 Session["ReturnUrl"] = Url.Action("ModifyEvent", "EditEvent", new { Eventid = id });
+            }
+
             else
                 Session["ReturnUrl"] = Url.Action("EventList", "EventList");
 

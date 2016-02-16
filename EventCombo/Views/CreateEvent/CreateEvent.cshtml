@@ -1883,7 +1883,9 @@
             var vOrgDes = $("#OrgDes_" + Sno).text();
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
-            var vOrgLn= $("#OrgLn_" + Sno).text();
+            var vOrgLn = $("#OrgLn_" + Sno).text();
+           
+
             $("#txtOrgnizer").val(vOrgName);
             $("#edOrgDes").code(vOrgDes);
             $("#txtOrgFBlink").val(vOrgFB);
@@ -1904,7 +1906,6 @@
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
             var Sno = $("#tblOrgnizer tr").length +1;
-
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
@@ -1934,14 +1935,14 @@
 
         function UpdateOrgnizer() {
             var Sno = $("#ddlOrgnizers").val();
-            //    alert(Sno);
+           
             vOrgName = $("#txtOrgnizer").val();
             vOrgDes = $("#edOrgDes").code();
             vOrgFB = $("#txtOrgFBlink").val();
             vOrgTw = $("#txtOrgTWlink").val();
             vOrgLn = $("#txtOrgLNlink").val();
          
-
+         
             $("#OrgName_" + Sno).text(vOrgName);
             $("#OrgDes_" + Sno).text(vOrgDes);
             $("#OrgFB_" + Sno).text(vOrgFB);
@@ -2436,7 +2437,7 @@
                     if (Sno != '') {
                         Orgnizer.push({
                             Orgnizer_Name: $("#OrgName_" + Sno).text(),
-                            Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
+                            Orgnizer_Desc: escape($("#OrgDes_" + Sno).text()),
                             FBLink: $("#OrgFB_" + Sno).text(),
                             Twitter: $("#OrgTw_" + Sno).text(),
                             Linkedin: $("#OrgLn_" + Sno).text(),
@@ -2461,6 +2462,7 @@
                 }
                 //$("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "");
                 var evDec = escape($("#edEventDesc").code());
+                
                 var model = {
                     'EventTypeID': $("#EventType").val(),
                     'EventCategoryID': $("#ddlEventCategory").val(),
@@ -5362,7 +5364,6 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
                 disableDragAndDrop: true

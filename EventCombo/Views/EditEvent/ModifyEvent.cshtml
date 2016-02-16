@@ -708,13 +708,13 @@
                                     </div>
 
                                     <div class="clearfix"></div>
-                                    <div class="col-sm-12 col-xs-12 no_pad mt10">
+                                    <div class="col-sm-12 col-xs-12 no_pad mt10 adminvis" id="isadmin-n">
                                         <div class="col-sm-1 no_pad ev_row_mov"></div>
                                         <div class="col-sm-3 no_pad ">
                                             <div class="form-group">
                                                 <label class="col-sm-5 no_pad control-label ev_tickt_lebel">EC Fee</label>
                                                 <div class="col-sm-7">
-                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" />
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfee-n" />
                                                 </div>
                                             </div>
                                         </div>
@@ -722,7 +722,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-6 no_pad control-label ev_tickt_lebel">Cutomer Fee</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" />
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_customerfee-n" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1496,7 +1496,7 @@ else
 
     <script>
         $(document).ready(function () {
-         
+
             var input = document.getElementById('txtEventLocation');
             var Eloc = new google.maps.places.Autocomplete(input);
 
@@ -1523,14 +1523,25 @@ else
 
             });
 
+            var isadmin="@Model.Isadmin";
+          
+            if(isadmin=="N")
+            {
+                var lEventId=$("#hdEventId").val();
+                $(".adminvis").css('display','none');
+
+            }else
+            {
+                var lEventId=$("#hdEventId").val()+"ßY";
+                $(".adminvis").css('display','block');
+            }
 
 
 
 
-
-            $.getJSON('@Url.Action("GetEventChildData", "EditEvent")', { lEventId: $("#hdEventId").val()},
+            $.getJSON('@Url.Action("GetEventChildData", "EditEvent")', { lEventId: lEventId},
                 function (data) {
-                   
+
                     console.log(data.EventStatus);
                     if (data.EventStatus.trim() == "Live")
                     {
@@ -1717,10 +1728,12 @@ else
                         $('#id_Mainvariable').css('display','none');
                     }
 
+
+
                 }
             );
 
-
+       
             var privat="@Model.EventPrivacy";
             var privatefb="@Model.Private_ShareOnFB"
             var privateguest="@Model.Private_GuestOnly"
@@ -2096,14 +2109,13 @@ else
         function editOrgnizer() {
 
             var Sno = $("#ddlOrgnizers").val();
-           // alert(Sno);
-           
             $("#hidOrgnizer").val(Sno);
             var vOrgName = $("#OrgName_" + Sno).text();
             var vOrgDes = $("#OrgDes_" + Sno).text();
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
             var vOrgLn= $("#OrgLn_" + Sno).text();
+     
             $("#txtOrgnizer").val(vOrgName);
             $("#edOrgDes").code(vOrgDes);
             $("#txtOrgFBlink").val(vOrgFB);
@@ -2131,7 +2143,7 @@ else
             var vOrgFB = $("#txtOrgFBlink").val();
             var vOrgTw = $("#txtOrgTWlink").val();
             var vOrgLn = $("#txtOrgLNlink").val();
-            //alert(Sno);
+ 
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
@@ -2402,7 +2414,7 @@ else
 
                 });
             }
-            
+
 
             // Single Timing
             if ($("#hdSchType").val() == 'Single') {
@@ -2504,7 +2516,7 @@ else
                     Orgnizer.push({
                         Orgnizer_Id: $("#OrgId_" + Sno).text(),
                         Orgnizer_Name: $("#OrgName_" + Sno).text(),
-                        Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
+                        Orgnizer_Desc: escape($("#OrgDes_" + Sno).text()),
                         FBLink: $("#OrgFB_" + Sno).text(),
                         Twitter: $("#OrgTw_" + Sno).text(),
                         Linkedin: $("#OrgLn_" + Sno).text(),
@@ -2592,15 +2604,25 @@ else
                        else
                         {
                             $("#hdEventId").val(response);
-                      
-                      
+
+
                             if(type=="Save")
                             {
                                 $('#divaccsuc').css('display', 'block');
                                 $('#divaccsuc').focus();
                                 $('#diverroacc').css('display', 'none');
                                 $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
-                                window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                                var isadmin="@Model.Isadmin";
+                                if(isadmin=="Y")
+                                {
+                                    response=response+"ßY";
+                                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+
+                                }else
+                                {
+                                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+
+                                }
                             }
 
 
@@ -2608,7 +2630,7 @@ else
                             if(type=="Preview")
                             {
                                 var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
-                         
+
                                 window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
                             }
                             if(type=="Live")
@@ -2624,8 +2646,8 @@ else
             else {
                 $('#divaccsuc').css('display', 'none');
                 $('#diverroacc').css('display', 'block');
-            
-               
+
+
                 $('#erraccmsg').html('There some problem occurs, Please check after some time.');
                 $('#btndiverrsuc').focus();
                 $('html,body').animate({ scrollTop: 0 });
@@ -2663,10 +2685,10 @@ else
                     $("#ddlOrgnizers").append(getHtml[1]);
 
                   var msg = disablebutton();
-                   
+
                     if(msg=="")
                     {
-                       
+
                         $(".cdisable").removeAttr("disabled");
 
                     }
@@ -2717,7 +2739,7 @@ else
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
                     $('#erraccmsg').html(msg);
-                   
+
                     $('html,body').animate({ scrollTop: 0 });
                     return false;
 
@@ -2725,7 +2747,7 @@ else
                 save("Live");
 
 
-              
+
 
             });
             $('#chkReqPassword').change(function () {
@@ -2761,10 +2783,10 @@ else
                 }
 
                 save("Save");
-              
+
             });
 
-          
+
             $("#btMultiVenue").click(function () {
                 $("#dvAddFooter").show();
                 //$("#txtEventLocation").val('');
@@ -2835,7 +2857,7 @@ else
                     var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                   
+
                     $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
                     $('html,body').animate({ scrollTop: 0 });
@@ -2856,7 +2878,7 @@ else
                         var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                    
+
                         $('#btndiverrsuc').focus();
                         $('#erraccmsg').html(msg);
                         $('html,body').animate({ scrollTop: 0 });
@@ -2937,7 +2959,7 @@ else
             });
 
 
-         
+
 
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
@@ -2949,14 +2971,14 @@ else
                 var vval = $("#txtEventUrl").val().trim();
                 if (vval != '') {
                     $.ajax({
-                        url: '@Url.Action("CheckEventUrl", "CreateEvent")',
-                        data: { strUserUrl: $("#txtEventUrl").val().trim() },
+                        url: '@Url.Action("CheckEventUrl", "ManageEvent")',
+                        data: { strUserUrl: $("#txtEventUrl").val().trim(),EventId: $("#hdEventId").val()},
                         type: "Post",
                         success: function (data) {
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
-                              
+
                                 $('#btndiverrsuc').focus();
                                 var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
                                 $('#erraccmsg').html(msg);
@@ -2997,8 +3019,8 @@ else
                     error: function (data) {
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                      
-                        
+
+
                         $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                         $('#diverroacc').focus();
                         $('html,body').animate({ scrollTop: 0 });
@@ -3079,7 +3101,7 @@ else
 
                     $('#hidAddressStatus').val('Single');
                     $("#txtEventLocation").val(vCols);
-                    
+
                 }
                 else
                 {
@@ -3088,8 +3110,8 @@ else
                     $('#hidAddressStatus').val('Multiple');
                     $("#txtEventLocation").val('');
                     //$("#txtEventLocation").val("Click here to enter venue address");
-               
-              
+
+
                     //$("#tblAddress tr").each(function () {
                     //    var Sno = $(this).find("td:first").html();
                     //    if (Sno != '' && Sno != undefined && Sno != null && Sno == 1) {
@@ -3108,7 +3130,7 @@ else
                         }
                     });
                     $("#txtEventLocation").val(txt);
-                
+
                 }
             });
             $("#btSaveTimeZone").click(function () {
@@ -3133,12 +3155,12 @@ else
                         }
                         else if ($("#dlSchOption").val() == "Weekly") {
                             days= $("#dllWeeklyDayChk").val();
-                           
+
                             vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
                         }
                         else if ($("#dlSchOption").val() == "Monthly") {
-                            days=$("#dllMonthlyWeekDay").val(); 
+                            days=$("#dllMonthlyWeekDay").val();
 
                             vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
@@ -3184,8 +3206,8 @@ else
                 error: function (data) {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                      
-                        
+
+
                     $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                     $('#diverroacc').focus();
                     $('html,body').animate({ scrollTop: 0 });
@@ -3525,7 +3547,7 @@ else
                 }
             });
 
-           
+
             $(".Prvpage").click(function () {
                 $(".priv_cont").css("display", "block");
             });
@@ -4728,7 +4750,7 @@ else
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $(".normalticket-" + divlength).css('display', 'block');
             $(".paidticket-" + divlength).css('display', 'none');
-
+            $("#isadmin-"+divlength).css('display', 'none');
             $("#id_paymenttype-" + divlength).text("Free");
             $("#id_ticket_type-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
             $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");

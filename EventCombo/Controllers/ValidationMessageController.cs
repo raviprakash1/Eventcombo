@@ -36,7 +36,7 @@ namespace EventCombo.Controllers
                                      select myEvt.EventID).Max();
                     }
                 }
-                if ( lParentID == null || lParentID <=0) lParentID = lEvntId;
+                if (lParentID == null || lParentID <=0) lParentID = lEvntId;
 
                 return (long)lParentID;                    
             }

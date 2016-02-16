@@ -10,3 +10,22 @@
     <div class="clearboth" style="margin:10px;"></div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $('#mgnav').click();
+        $('#dvManage').addClass("menu_active");
+        $('#dvManage b').addClass('opened new-opend');
+
+        $('#dvManage').click(function (e) {
+            var $dvEle = $('#dvManage b');
+            var vclassname = $dvEle.attr('class');
+            if ($dvEle.hasClass("new-opend")) {
+                $dvEle.removeClass('opened new-opend').addClass('closed');
+            }
+            else {
+                $dvEle.addClass('opened new-opend');
+            }
+        });
+    });
+
+</script>

@@ -4,6 +4,7 @@
     ViewBag.Title = "MyAccount";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+
 <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
 
 <link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
@@ -417,7 +418,6 @@
            
                     var $dvEle = $('#dvacmang b');
                     var vclassname = $dvEle.attr('class');
-                    //alert($dvEle.hasClass("new-opend"));
                     if ($dvEle.hasClass("new-opend")) {
                         $dvEle.removeClass('opened new-opend').addClass('closed');
                     }

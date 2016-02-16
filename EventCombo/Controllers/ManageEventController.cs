@@ -759,7 +759,7 @@ namespace EventCombo.Controllers
                     ObjEC.Private_ShareOnFB = vEvent.Private_ShareOnFB;
                     ObjEC.Private_GuestOnly = vEvent.Private_GuestOnly;
                     ObjEC.Private_Password = vEvent.Private_Password;
-                    ObjEC.EventUrl = vEvent.EventUrl;
+                    ObjEC.EventUrl = (vEvent.EventUrl.Trim() != string.Empty ? "copyof" + vEvent.EventUrl : "");
                     ObjEC.PublishOnFB = vEvent.PublishOnFB;
                     ObjEC.IsMultipleEvent = vEvent.IsMultipleEvent;
                     ObjEC.TimeZone = vEvent.TimeZone;

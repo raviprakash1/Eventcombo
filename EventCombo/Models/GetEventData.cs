@@ -43,5 +43,6 @@ namespace EventCombo.Models
         public string Variabledesc { get; set; }
 
         public string timezone { get; set; }
+        public string Isadmin { get; set; }
     }
 }
