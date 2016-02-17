@@ -1530,8 +1530,13 @@ namespace EventCombo.Controllers
                         {
                             if (ObjEC.EventStatus == "Live")
                             {
+                                ValidationMessageController vmc = new ValidationMessageController();
+                                model.EventID = vmc.GetLatestEventId(lEventId);
                                 lEventId = EditEventInfo(model);
-                                Parent_EventID = (ObjEC.Parent_EventID == null ? lEventId : (long)ObjEC.Parent_EventID);
+                                if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
+                                    Parent_EventID = lEventId;
+                                else
+                                    Parent_EventID = (long)ObjEC.Parent_EventID;
 
                             }
                             else
@@ -1875,7 +1880,12 @@ namespace EventCombo.Controllers
                                 }
                                 objEnt.SaveChanges();
                                 lEventId = ObjEC.EventID;
-                                Parent_EventID = (ObjEC.Parent_EventID ==null? lEventId : (long)ObjEC.Parent_EventID);
+
+                                if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
+                                    Parent_EventID = lEventId;
+                                else
+                                    Parent_EventID = (long)ObjEC.Parent_EventID;
+                                //Parent_EventID = (ObjEC.Parent_EventID ==null? lEventId : (long)ObjEC.Parent_EventID);
 
                                 PublishEvent(lEventId);
                             }

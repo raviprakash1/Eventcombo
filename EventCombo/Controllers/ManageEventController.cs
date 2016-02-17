@@ -304,56 +304,179 @@ namespace EventCombo.Controllers
 
         public string GetEventHitsChart(string strDurataion,long lEventId)
         {
-            DateTime dt = DateTime.Today.AddDays(-30);
-            if (strDurataion == "Week")
-            {
-                dt = DateTime.Today.AddDays(-7);
-            }
-            else if (strDurataion == "Year")
-            {
-                dt = DateTime.Today.AddYears(-1); 
-            }
-
+            DateTime dt = new DateTime();
             StringBuilder strDates = new StringBuilder();
             StringBuilder strSaleQty = new StringBuilder();
             long lHitCount = 0;
-            for (int i = 1; dt <= DateTime.Today; i++)
+
+            if (strDurataion == "Week" || strDurataion == "Month")
             {
-                if (strDates.ToString().Equals(""))
-                    strDates.Append(dt.ToString("MM/dd"));
+                if (strDurataion == "Week")
+                    dt = DateTime.Today.AddDays(-7);
                 else
-                    strDates.Append("," + dt.ToString("MM/dd"));
+                    dt = DateTime.Today.AddDays(-30);
 
-                lHitCount = GetEventHitDayCount(lEventId, dt);
-                strDates.Append("-");
-                if (lHitCount > 0)
+                for (int i = 1; dt <= DateTime.Today; i++)
                 {
-                    strDates.Append(lHitCount.ToString());
-                }
-                else
-                {
-                    strDates.Append(" ");
-                }
-                //if (strSaleQty.ToString().Equals(""))
-                //    strSaleQty.Append(dt.ToString("MM/dd"));
-                //else
-                //    strSaleQty.Append("," + dt.ToString("MM/dd"));
+                    if (strDates.ToString().Equals(""))
+                        strDates.Append(dt.ToString("MM/dd"));
+                    else
+                        strDates.Append("," + dt.ToString("MM/dd"));
 
-                //SaleTickets objSale = GetTicketSalebyEvent(lEventId,dt);
-                //strSaleQty.Append("-");
-                //if (objSale != null)
-                //{
-                //    strSaleQty.Append(objSale.SaleQty);
-                //}
-                //else
-                //{
-                //    strSaleQty.Append(" ");
-                //}
-                dt = dt.AddDays(1);
+                    lHitCount = GetEventHitDayCount(lEventId, dt);
+                    strDates.Append("-");
+                    if (lHitCount > 0)
+                    {
+                        strDates.Append(lHitCount.ToString());
+                    }
+                    else
+                    {
+                        strDates.Append(" ");
+                    }
+                    dt = dt.AddDays(1);
+                }
             }
+            else if (strDurataion == "Year")
+            {
+                dt = DateTime.Today.AddMonths(-11);
+                
+                for (int i = 1; i <= 12; i++)
+                {
+                    if (strDates.ToString().Equals(""))
+                        strDates.Append(dt.ToString("MM/yyy"));
+                    else
+                        strDates.Append("," + dt.ToString("MM/yyy"));
+
+                    lHitCount = GetEventHitDayCount(lEventId, dt.Month,dt.Year);
+                    strDates.Append("-");
+                    if (lHitCount > 0)
+                    {
+                        strDates.Append(lHitCount.ToString());
+                    }
+                    else
+                    {
+                        strDates.Append(" ");
+                    }
+                    dt = dt.AddMonths(1);
+                }
+            }
+            else if (strDurataion == "Day")
+            {
+                
+                dt = DateTime.Now.AddHours(-23);
+
+                for (int i = 1; i <= 24; i++)
+                {
+                    if (strDates.ToString().Equals(""))
+                        strDates.Append(dt.Hour.ToString());
+                    else
+                        strDates.Append("," + dt.Hour.ToString());
+
+                    lHitCount = GetEventHitDayCount(lEventId, dt, dt.Hour);
+                    strDates.Append("-");
+                    if (lHitCount > 0)
+                    {
+                        strDates.Append(lHitCount.ToString());
+                    }
+                    else
+                    {
+                        strDates.Append(" ");
+                    }
+                    dt = dt.AddHours(1);
+                }
+            }
+
+
             return strDates.ToString();
         }
 
+
+
+        public string GetEventSaleChart(string strDurataion, long lEventId)
+        {
+            DateTime dt = new DateTime();
+            StringBuilder strSaleQty = new StringBuilder();
+            long lHitCount = 0;
+
+            if (strDurataion == "Week" || strDurataion == "Month")
+            {
+                if (strDurataion == "Week")
+                    dt = DateTime.Today.AddDays(-7);
+                else
+                    dt = DateTime.Today.AddDays(-30);
+
+                for (int i = 1; dt <= DateTime.Today; i++)
+                {
+
+                    if (strSaleQty.ToString().Equals(""))
+                        strSaleQty.Append(dt.ToString("MM/dd"));
+                    else
+                        strSaleQty.Append("," + dt.ToString("MM/dd"));
+
+                    SaleTickets objSale = GetTicketSalebyEvent(lEventId, dt);
+                    strSaleQty.Append("-");
+                    if (objSale != null)
+                    {
+                        strSaleQty.Append(objSale.SaleQty);
+                    }
+                    else
+                    {
+                        strSaleQty.Append(" ");
+                    }
+                    dt = dt.AddDays(1);
+                }
+            }
+            else if (strDurataion == "Year")
+            {
+                dt = DateTime.Today.AddMonths(-11);
+
+                for (int i = 1; i <= 12; i++)
+                {
+                    if (strSaleQty.ToString().Equals(""))
+                        strSaleQty.Append(dt.ToString("MM/dd"));
+                    else
+                        strSaleQty.Append("," + dt.ToString("MM/dd"));
+
+                    SaleTickets objSale = GetTicketSalebyEvent(lEventId, dt.Month, dt.Year);
+                    strSaleQty.Append("-");
+                    if (objSale != null)
+                    {
+                        strSaleQty.Append(objSale.SaleQty);
+                    }
+                    else
+                    {
+                        strSaleQty.Append(" ");
+                    }
+                    dt = dt.AddMonths(1);
+                }
+            }
+            else if (strDurataion == "Day")
+            {
+                dt = DateTime.Now.AddHours(-23);
+                for (int i = 1; i <= 24; i++)
+                {
+                    if (strSaleQty.ToString().Equals(""))
+                        strSaleQty.Append(dt.ToString("MM/dd"));
+                    else
+                        strSaleQty.Append("," + dt.ToString("MM/dd"));
+
+                    SaleTickets objSale = GetTicketSalebyEvent(lEventId, dt, dt.Hour);
+                    strSaleQty.Append("-");
+                    if (objSale != null)
+                    {
+                        strSaleQty.Append(objSale.SaleQty);
+                    }
+                    else
+                    {
+                        strSaleQty.Append(" ");
+                    }
+                    dt = dt.AddHours(1);
+                }
+            }
+
+
+            return strSaleQty.ToString();
+        }
 
         public string GetAllTicketSale(long EventId)
         {
@@ -634,6 +757,45 @@ namespace EventCombo.Controllers
 
             return lResult;
         }
+        public long GetEventHitDayCount(long eventId, int iMonth,int iYear)
+        {
+            long lResult = 0;
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    
+                    var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId + " and Month(convert(date,EventHitDatetime)) = " + iMonth.ToString() + " And Year(convert(date,EventHitDatetime)) = " + iYear.ToString()).Count();
+                    
+                    lResult = vEvent;
+                }
+            }
+            catch (Exception ex)
+            {
+                lResult = 0;
+            }
+
+            return lResult;
+        }
+        public long GetEventHitDayCount(long eventId, DateTime dt, int iHour)
+        {
+            long lResult = 0;
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId + " and  convert(date,EventHitDatetime) = convert(date,'" + dt + "') And datepart(hour,EventHitDateTime) = " + iHour.ToString()).Count();
+
+                    lResult = vEvent;
+                }
+            }
+            catch (Exception ex)
+            {
+                lResult = 0;
+            }
+
+            return lResult;
+        }
         public long GetEventTotalHits(long eventId)
         {
             long lResult = 0;
@@ -752,6 +914,53 @@ namespace EventCombo.Controllers
 
             return objResult;
         }
+        public SaleTickets GetTicketSalebyEvent(long eventId, int iMonth, int iYear)
+        {
+            SaleTickets objResult = new SaleTickets();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+
+                 //   var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId + " and Month(convert(date,EventHitDatetime)) = " + iMonth.ToString() + " And Year(convert(date,EventHitDatetime)) = " + iYear.ToString()).Count();
+
+                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail LEFT JOIN Order_Detail_T On Ticket_Purchased_Detail.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND TPD_Event_Id = " + eventId + " and Month(Convert(date,O_OrderDateTime)) = " + iMonth.ToString() + " and Year(Convert(date,O_OrderDateTime)) = " + iYear.ToString() + " group by Convert(date,O_OrderDateTime) ";
+                    var vEvent = objEnt.Database.SqlQuery<SaleTickets>(strQuery).FirstOrDefault();
+                    
+                    objResult = vEvent;
+                }
+            }
+            catch (Exception ex)
+            {
+                return objResult;
+            }
+
+            return objResult;
+        }
+
+
+        public SaleTickets GetTicketSalebyEvent(long eventId, DateTime dt, int iHour)
+        {
+            SaleTickets objResult = new SaleTickets();
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail LEFT JOIN Order_Detail_T On Ticket_Purchased_Detail.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND TPD_Event_Id = " + eventId + " and COnvert(date,O_OrderDateTime) = convert(date,'" + dt + "')  And datepart(hour,EventHitDateTime) = " + iHour.ToString() + " group by Convert(date,O_OrderDateTime) ";
+
+                    var vEvent = objEnt.Database.SqlQuery<SaleTickets>(strQuery).FirstOrDefault();
+
+                    objResult = vEvent;
+                }
+            }
+            catch (Exception ex)
+            {
+                return objResult;
+            }
+
+            return objResult;
+        }
+
         public string PublishUnpublishEvent(string Tag, long id)
         {
             string result = "";
