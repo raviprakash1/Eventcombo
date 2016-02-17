@@ -410,13 +410,13 @@
             var files1 = '@(MvcHtmlString.Create(Json.Encode(ViewData["results"])))';
 
             $(document).ready(function () {
+                $('#mgacnt').click();
+                $('#dvacmang').addClass("active");
+                $('#dvacmang b').addClass('opened new-opend');
 
-                $('#dvacnt').click();
-                $('#dvmngacnt').addClass("menu_active");
-                $('#dvmngacnt b').addClass('opened new-opend');
-
-                $('#dvmngacnt').click(function (e) {
-                    var $dvEle = $('#dvmngacnt b');
+                $('#dvacmang').click(function (e) {
+           
+                    var $dvEle = $('#dvacmang b');
                     var vclassname = $dvEle.attr('class');
                     if ($dvEle.hasClass("new-opend")) {
                         $dvEle.removeClass('opened new-opend').addClass('closed');
