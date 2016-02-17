@@ -21,6 +21,7 @@ namespace EventCombo.Controllers
 {
 
     //[RoutePrefix("Payment")]
+  
     public class TicketPaymentController : Controller
     {
         EventComboEntities db = new EventComboEntities();

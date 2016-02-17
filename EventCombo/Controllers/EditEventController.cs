@@ -16,6 +16,7 @@ using System.Web.Script.Serialization;
 
 namespace EventCombo.Controllers
 {
+  
     public class EditEventController : Controller
     {
         // GET: EditEvent
@@ -1146,11 +1147,41 @@ namespace EventCombo.Controllers
                         strticketHtml.Append("For custom date and time</label> </div> <div class='hide_unt_aft' id='id_HideuntDiv-" + j + "' style='display:none;'>");
 
                     }
-                    strticketHtml.Append("<div class='form-group mt10'><div class='col-sm-6 ev_pad_l0'><div class='col-sm-12 no_pad'><label class='label-control ev_tickt_lebel'>Hide Untill</label>");
-                    strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_until_Date-" + j + "' onchange='changetext(this.id);' value='" + untilldate + "' />");
-                    strticketHtml.Append("</div><div class='col-sm-4 no_pad'> <input type='hidden' value='0' id='id_hdautohideuntil-" + j + "' value='" + ObjTick.Hide_Untill_Time + "' />");
+                    strticketHtml.Append("<div class='form-group mt10'><div class='col-sm-6 ev_pad_l0'><div class='col-sm-12 no_pad'>");
+                    if (!string.IsNullOrEmpty(ObjTick.Hide_Untill_Date.ToString()) && !string.IsNullOrEmpty(ObjTick.Hide_Untill_Time))
+                    {
+                        strticketHtml.Append("<input type='checkbox' checked='checked'  id='id_hideuntil-" + j + "' onchange='enablehideafteruntil(this.id)' />");
+                    }
+                    else
+                    {
+                        strticketHtml.Append("<input type='checkbox' id='id_hideuntil-" + j + "' onchange='enablehideafteruntil(this.id)' />");
+
+                    }
+                    strticketHtml.Append("<label class='label-control ev_tickt_lebel'>Hide Untill</label>");
+                    strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'>");
+                    if (!string.IsNullOrEmpty(ObjTick.Hide_Untill_Date.ToString()) && !string.IsNullOrEmpty(ObjTick.Hide_Untill_Time))
+                    {
+                        strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_until_Date-" + j + "' onchange='changetext(this.id);' value='" + untilldate + "' />");
+                    }
+                    else
+                    {
+                        strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_until_Date-" + j + "' onchange='changetext(this.id);' value='' readonly='readonly' />");
+
+                    }
+                    strticketHtml.Append("</div><div class='col-sm-4 no_pad'>");
+                    strticketHtml.Append("<input type='hidden' value='0' id='id_hdautohideuntil-" + j + "' value='" + ObjTick.Hide_Untill_Time + "' />");
                     strticketHtml.Append("<input id ='id_auto_hide_until_time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_Untill_Time + "' />");
-                    strticketHtml.Append("</div></div><div class='col-sm-6 ev_pad_r0'><div class='col-sm-12 no_pad'><label class='label-control ev_tickt_lebel'>Hide After</label>");
+                    strticketHtml.Append("</div></div><div class='col-sm-6 ev_pad_r0'><div class='col-sm-12 no_pad'>");
+                    if (!string.IsNullOrEmpty(ObjTick.Hide_After_Date.ToString()) && !string.IsNullOrEmpty(ObjTick.Hide_After_Time))
+                    {
+                        strticketHtml.Append("<input type='checkbox' checked='checked' id='id_hideafter-" + j + "' onchange='enablehideafteruntil(this.id)'/>");
+                    }
+                    else
+                    {
+                        strticketHtml.Append("<input type='checkbox' id='id_hideafter-" + j + "' onchange='enablehideafteruntil(this.id)'/>");
+
+                    }
+                    strticketHtml.Append("<label class='label-control ev_tickt_lebel'>Hide After</label>");
                     strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_after_Date-" + j + "' onchange='checkvalidDate(this.id)' value='" + afterdate + "' />");
                     strticketHtml.Append(" </div> <div class='col-sm-4 no_pad'><input type='hidden' value='0' id='id_hdautohideafter-" + j + "' value='" + ObjTick.Hide_After_Time + "' />");
                     strticketHtml.Append("<input id ='id_auto_hide_after_Time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_After_Time + "' />");

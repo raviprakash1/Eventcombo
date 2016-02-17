@@ -29,4 +29,10 @@ namespace CMS.Models
         public string Feature { get; set; }
 
     }
+
+    public class FeeSetting
+    {
+        public string percentage { get; set; }
+        public string value { get; set; }
+    }
 }

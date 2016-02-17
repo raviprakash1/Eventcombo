@@ -304,11 +304,12 @@
         </EntityType>
         <EntityType Name="Fee_Structure">
           <Key>
-            <PropertyRef Name="FeeId" />
+            <PropertyRef Name="FS_Id" />
           </Key>
-          <Property Name="FeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FeeType" Type="varchar" MaxLength="50" />
-          <Property Name="FeeAmount" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="FS_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FS_Type" Type="varchar" MaxLength="50" />
+          <Property Name="FS_Amount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="FS_Percentage" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Messages">
           <Key>
@@ -1269,14 +1270,6 @@
           <Property Name="eventId" Type="Int64" />
           <Property Name="VoteId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <EntityType Name="Fee_Structure">
-          <Key>
-            <PropertyRef Name="FeeId" />
-          </Key>
-          <Property Name="FeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FeeAmount" Type="Decimal" Precision="18" Scale="0" />
-        </EntityType>
         <EntityType Name="Message">
           <Key>
             <PropertyRef Name="Id" />
@@ -1738,7 +1731,6 @@
           <EntitySet Name="EventTypes" EntityType="Self.EventType" />
           <EntitySet Name="EventVenues" EntityType="Self.EventVenue" />
           <EntitySet Name="EventVotes" EntityType="Self.EventVote" />
-          <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="MultipleEvents" EntityType="Self.MultipleEvent" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
@@ -1862,6 +1854,7 @@
           <EntitySet Name="Payment_Info" EntityType="Cmsdata.Payment_Info" />
           <EntitySet Name="TicketOrderDetails" EntityType="Cmsdata.TicketOrderDetail" />
           <EntitySet Name="Order_Detail_T" EntityType="Cmsdata.Order_Detail_T" />
+          <EntitySet Name="Fee_Structure" EntityType="Cmsdata.Fee_Structure" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1974,6 +1967,15 @@
           <Property Name="O_PayPal_TokenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_PayPal_PayerId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Fee_Structure">
+          <Key>
+            <PropertyRef Name="FS_Id" />
+          </Key>
+          <Property Name="FS_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FS_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FS_Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FS_Percentage" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2270,15 +2272,6 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="eventId" ColumnName="eventId" />
                 <ScalarProperty Name="VoteId" ColumnName="VoteId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Fee_Structure">
-            <EntityTypeMapping TypeName="Cmsdata.Fee_Structure">
-              <MappingFragment StoreEntitySet="Fee_Structure">
-                <ScalarProperty Name="FeeId" ColumnName="FeeId" />
-                <ScalarProperty Name="FeeType" ColumnName="FeeType" />
-                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2674,6 +2667,16 @@
                 <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
                 <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
                 <ScalarProperty Name="O_Id" ColumnName="O_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fee_Structure">
+            <EntityTypeMapping TypeName="Cmsdata.Fee_Structure">
+              <MappingFragment StoreEntitySet="Fee_Structure">
+                <ScalarProperty Name="FS_Percentage" ColumnName="FS_Percentage" />
+                <ScalarProperty Name="FS_Amount" ColumnName="FS_Amount" />
+                <ScalarProperty Name="FS_Type" ColumnName="FS_Type" />
+                <ScalarProperty Name="FS_Id" ColumnName="FS_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -24,6 +24,7 @@ using System.Drawing.Drawing2D;
 namespace EventCombo.Controllers
 {
     [Authorize]
+   
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -187,6 +188,7 @@ namespace EventCombo.Controllers
             }
         }
         [HttpGet]
+    
         [Authorize]
         public ActionResult MyAccount()
         {

@@ -27,6 +27,7 @@ using Microsoft.Owin.Security.OAuth;
 
 namespace EventCombo.Controllers
 {
+    
     public class HomeController : Controller
     {
 

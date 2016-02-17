@@ -14,8 +14,9 @@ namespace EventCombo.Models
     
     public partial class Fee_Structure
     {
-        public long FeeId { get; set; }
-        public string FeeType { get; set; }
-        public Nullable<decimal> FeeAmount { get; set; }
+        public long FS_Id { get; set; }
+        public string FS_Type { get; set; }
+        public Nullable<decimal> FS_Amount { get; set; }
+        public Nullable<decimal> FS_Percentage { get; set; }
     }
 }

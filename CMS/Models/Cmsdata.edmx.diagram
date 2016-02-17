@@ -27,7 +27,6 @@
         <EntityTypeShape EntityType="Cmsdata.EventType" Width="1.5" PointX="0.75" PointY="16" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.EventVenue" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.EventVote" Width="1.5" PointX="13.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Cmsdata.Fee_Structure" Width="1.5" PointX="15.75" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Message" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.MultipleEvent" Width="1.5" PointX="5.25" PointY="19.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Permission_Detail" Width="1.5" PointX="17.75" PointY="13.75" IsExpanded="true" />
@@ -66,6 +65,7 @@
         <EntityTypeShape EntityType="Cmsdata.Payment_Info" Width="1.5" PointX="16.375" PointY="20.75" />
         <EntityTypeShape EntityType="Cmsdata.TicketOrderDetail" Width="1.5" PointX="20.375" PointY="17.75" />
         <EntityTypeShape EntityType="Cmsdata.Order_Detail_T" Width="1.5" PointX="18.375" PointY="20.75" />
+        <EntityTypeShape EntityType="Cmsdata.Fee_Structure" Width="1.5" PointX="20.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
