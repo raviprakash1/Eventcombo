@@ -165,6 +165,7 @@ namespace EventCombo.Controllers
             Mevent.Eventcancel = Edetails.EventCancel;
             Mevent.Eventdate = startday.ToString() + " " + sDate_new + " " + starttime;
             Mevent.Eventprivacy = Edetails.EventPrivacy;
+            Mevent.EventHits = GetEventTotalHits(Eventid);
             Session["logo"] = "events";
             Session["Fromname"] = "events";
             ValidationMessageController vmc = new ValidationMessageController();
@@ -300,6 +301,59 @@ namespace EventCombo.Controllers
             return View(Mevent);
         }
 
+        public string GetEventHitsChart(string strDurataion,long lEventId)
+        {
+            DateTime dt = DateTime.Today.AddDays(-30);
+            if (strDurataion == "Week")
+            {
+                dt = DateTime.Today.AddDays(-7);
+            }
+            else if (strDurataion == "Year")
+            {
+                dt = DateTime.Today.AddYears(-1); 
+            }
+
+            StringBuilder strDates = new StringBuilder();
+            StringBuilder strSaleQty = new StringBuilder();
+            long lHitCount = 0;
+            for (int i = 1; dt <= DateTime.Today; i++)
+            {
+                if (strDates.ToString().Equals(""))
+                    strDates.Append(dt.ToString("MM/dd"));
+                else
+                    strDates.Append("," + dt.ToString("MM/dd"));
+
+                lHitCount = GetEventHitDayCount(lEventId, dt);
+                strDates.Append("-");
+                if (lHitCount > 0)
+                {
+                    strDates.Append(lHitCount.ToString());
+                }
+                else
+                {
+                    strDates.Append(" ");
+                }
+                //if (strSaleQty.ToString().Equals(""))
+                //    strSaleQty.Append(dt.ToString("MM/dd"));
+                //else
+                //    strSaleQty.Append("," + dt.ToString("MM/dd"));
+
+                //SaleTickets objSale = GetTicketSalebyEvent(lEventId,dt);
+                //strSaleQty.Append("-");
+                //if (objSale != null)
+                //{
+                //    strSaleQty.Append(objSale.SaleQty);
+                //}
+                //else
+                //{
+                //    strSaleQty.Append(" ");
+                //}
+                dt = dt.AddDays(1);
+            }
+            return strDates.ToString();
+        }
+
+
         public string GetAllTicketSale(long EventId)
         {
             StringBuilder strResult = new StringBuilder();
@@ -347,7 +401,14 @@ namespace EventCombo.Controllers
                 {
                     strResult.Append("<tr>");
                     strResult.Append("<td>"); strResult.Append(obj.T_name); strResult.Append("</td>");
-                    strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
+                    if (obj.TicketTypeID == 1)
+                    {
+                        strResult.Append("<td>"); strResult.Append("FREE"); strResult.Append("</td>");
+                    }
+                    else
+                    {
+                        strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
+                    }
 
                     var vRemQty = (from myRow in objEnt.Ticket_Quantity_Detail
                                    where myRow.TQD_Event_Id == EventId && myRow.TQD_Ticket_Id == obj.T_Id
@@ -572,7 +633,23 @@ namespace EventCombo.Controllers
 
             return lResult;
         }
-
+        public long GetEventTotalHits(long eventId)
+        {
+            long lResult = 0;
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId).Count();
+                    lResult = vEvent;
+                }
+            }
+            catch (Exception ex)
+            {
+                lResult = 0;
+            }
+            return lResult;
+        }
         public double GetSalePer(long eventId)
         {
             double dResult = 0;

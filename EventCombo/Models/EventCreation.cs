@@ -75,6 +75,9 @@ namespace EventCombo.Models
         public string Eventcancel { get; set; }
         public string url { get; internal set; }
         public string Descritption { get; internal set; }
+
+        public long EventHits { get; set; }
+
     }
 
     public class OrderAttendees

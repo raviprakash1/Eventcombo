@@ -41,7 +41,16 @@ namespace EventCombo.Controllers
                 return (long)lParentID;                    
             }
         }
-
+        public static long GetParentEventId(long lEvntId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var lParentID = (from myEvt in db.Events
+                                 where myEvt.EventID == lEvntId
+                                 select myEvt.Parent_EventID).FirstOrDefault();
+                return (long)lParentID;
+            }
+        }
         public Event GetSelectedEventDetail(string strGuid)
         {
             using (EventComboEntities db = new EventComboEntities())

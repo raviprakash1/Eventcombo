@@ -1500,6 +1500,8 @@ namespace EventCombo.Controllers
                             if (ObjEC.EventStatus == "Live")
                             {
                                 lEventId = EditEventInfo(model);
+                                Parent_EventID = (ObjEC.Parent_EventID == null ? lEventId : (long)ObjEC.Parent_EventID);
+
                             }
                             else
                             {
