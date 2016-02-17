@@ -207,6 +207,7 @@
     <Compile Include="Controllers\EventCategoryController.cs" />
     <Compile Include="Controllers\EventListController.cs" />
     <Compile Include="Controllers\EventTypeController.cs" />
+    <Compile Include="Controllers\FeeSettingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
@@ -1111,6 +1112,7 @@
     <Content Include="Views\EventCategory\EventCategory.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="Views\EventList\ListEvent.cshtml" />
+    <Content Include="Views\FeeSetting\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,180 @@
+﻿@model CMS.Models.FeeSetting
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<section id="content_wrapper">
+    <div class="panel">
+        <div class="panel-heading">
+            <span class="panel-title">Fees Setting</span>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                <div class="alert alert-danger" hidden="hidden" id="diverr">
+                    <button class="close" aria-hidden="true"  type="button">&#215;</button>
+                    <i class="fa fa-info pr10"></i>
+                    <span id="iderrr"></span>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="alert alert-success" hidden="hidden" id="divsucc">
+                    <button class="close" aria-hidden="true" type="button">&#215;</button>
+                    <i class="fa fa-info pr10"></i>
+                    <span id="idsucc"></span>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+
+                <div class="col-md-8">
+                    <form class="form-horizontal" role="form">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-12">%</label>
+                                <div class="col-lg-6"> 
+                                    <input type="text" id="idpercentage" class="form-control" name="percentage" onkeypress="allownumber(event)" maxlength="3" value="@Model.percentage">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-lg-12">$</label>
+                                <div class="col-lg-6">
+                                    <input type="text" id="idvalue" class="form-control" name="value" maxlength="9" onkeypress="allownumberdec(this,event)" value="@Model.value" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <button class="btn btn-primary col-sm-3" type="button" id="btnsave">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    function allownumber(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+
+        if ((charCode < 48 || charCode > 57) && charCode > 31 && charCode != 44) {
+
+            evt.preventDefault();
+            return false;
+        }
+    }
+  
+    function allownumberdec(el,evt) {
+        debugger;
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+
+        var number = el.value.split('.');
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 44) {
+            evt.preventDefault();
+            return false;
+
+        }
+
+        if (number.length > 1 && charCode == 46) {
+            evt.preventDefault();
+            return false;
+        }
+
+
+
+    }
+    $(".close").click(function () {
+        $("#divsucc").hide();
+        $("#diverr").hide();
+        $("input").removeClass('err-bor');
+
+    });
+    $(document).ready(function () {
+        $("#btnsave").click(function () {
+            var msg = validatemain();
+          
+            if (msg != "")
+            {
+                $("#diverr").show();
+                $("#iderrr").html(msg);
+                return false;
+            }
+            var model = {
+                'percentage': $("#idpercentage").val(),
+                'value': $("#idvalue").val()
+            };
+
+            $.ajax({
+                url: '@Url.Action("savefee", "FeeSetting")',
+                data: { model: model },
+                type: "Post",
+                success: function (data) {
+                    if (data == "S") {
+                        $("#divsucc").show();
+                        $("#idsucc").html("Saved Successfully");
+                    } else {
+
+                    }
+
+                },
+                error: function (data) {
+                }
+            });
+        });
+
+    });
+    function validatemain() {
+        debugger;
+        var msg = "";
+        var count = 0;
+        var value = $('#idpercentage').val();
+        var percentage = $('#idvalue').val();
+        if (value == "" || parseFloat(value)==0) {
+            $('#idpercentage').addClass('err-bor');
+            count = count + 1;
+           
+
+        }
+        if (percentage == "" || parseFloat(percentage) == 0) {
+            $('#idvalue').addClass('err-bor');
+            count = count + 1;
+           
+
+        }
+
+        if(count>0)
+        {
+            msg += ajaxsetup("FeeSetting", "FSRequiredUI") + "<br/>";
+           
+        }
+
+        return msg;
+    }
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+</script>

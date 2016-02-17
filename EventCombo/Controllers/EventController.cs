@@ -14,6 +14,7 @@ using System.Drawing.Drawing2D;
 
 namespace EventCombo.Controllers
 {
+    
     public class EventController : Controller
     {
         // GET: Event

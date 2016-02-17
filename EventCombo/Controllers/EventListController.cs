@@ -9,6 +9,7 @@ using PagedList;
 
 namespace EventCombo.Controllers
 {
+
     public class EventListController : Controller
     {
         string UserId = string.Empty;

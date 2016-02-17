@@ -19,6 +19,7 @@ namespace EventCombo.Controllers
     //[RoutePrefix("event")]
     //[RouteArea("Event", AreaPrefix = "E")]
     //[RoutePrefix("Ev")]
+  
     public class ViewEventController : Controller
     {
         EventComboEntities db = new EventComboEntities();

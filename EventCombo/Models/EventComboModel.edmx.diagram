@@ -29,7 +29,6 @@
         <EntityTypeShape EntityType="EventComboModel.EventType" Width="1.5" PointX="7.75" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventVenue" Width="1.5" PointX="3" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventVote" Width="1.5" PointX="9.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Message" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.MultipleEvent" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Order_Detail_T" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
@@ -65,6 +64,7 @@
         <AssociationConnector Association="EventComboModel.FK_Ticket_Quantity_Info_Ticket" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EventComboModel.TicketOrderDetail" Width="1.5" PointX="17.375" PointY="20.75" />
+        <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="19.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

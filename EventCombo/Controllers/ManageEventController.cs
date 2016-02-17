@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace EventCombo.Controllers
 {
+   
     public class ManageEventController : Controller
     {
         // GET: ManageEvent

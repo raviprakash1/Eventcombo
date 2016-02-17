@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EventCombo.Models;
 namespace EventCombo.Controllers
 {
+    
     public class PaymentInfoController : Controller
     {
         // GET: PaymentInfo
