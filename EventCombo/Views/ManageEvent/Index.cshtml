@@ -281,7 +281,8 @@ else
                                 <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Promotional Tools</a></p>
                                 <div class="col-sm-12 col-xs-12 no_pad">
                                     <canvas id="cnEventHit"></canvas>
-                                    @*<input id="btWeek" type="button" value="Week" />*@
+                                    <input id="btWeek" type="button" value="Week" />
+                                    <input id="btMonth" type="button" value="Month" />
                                     @*<img src="/Images/gr1.png">*@
                                 </div>
                                 
@@ -887,6 +888,48 @@ else
                         Chart.defaults.global.showTooltips = false;
                         var ctx = $("#cnEventHit").get(0).getContext("2d");
                         var myLineChart = new Chart(ctx).Line(data, voption);
+                        }
+                    });
+                });
+
+
+
+                $("#btMonth").click(function () {
+                    $.ajax({
+                        url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
+                        data: { strDurataion: "Month", lEventId: EventId },
+                        type: "Post",
+                        success: function (response) {
+                            var vHitData = response.split(",");
+                            var vLables = [];
+                            var vValues = [];
+                            for (i = 0; i < vHitData.length; i++) {
+                                vHit = vHitData[i].split("-");
+                                vLables.push(vHit[0]);
+                                vValues.push(vHit[1]);
+                            }
+                            var voption = {
+                                scaleShowGridLines: false
+                            };
+                            var data = {
+                                labels: vLables,
+                                datasets: [
+                                    {
+                                        label: "Event Hits",
+                                        fillColor: "rgba(151,187,205,0.2)",
+                                        strokeColor: "rgba(151,187,205,1)",
+                                        pointColor: "rgba(151,187,205,1)",
+                                        pointStrokeColor: "#fff",
+                                        pointHighlightFill: "#fff",
+                                        pointHighlightStroke: "rgba(151,187,205,1)",
+                                        data: vValues
+                                    }
+                                ]
+                            };
+                            Chart.defaults.global.responsive = true;
+                            Chart.defaults.global.showTooltips = false;
+                            var ctx = $("#cnEventHit").get(0).getContext("2d");
+                            var myLineChart = new Chart(ctx).Line(data, voption);
                         }
                     });
                 });
