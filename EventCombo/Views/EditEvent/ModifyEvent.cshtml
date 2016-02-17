@@ -2123,14 +2123,13 @@ else
         function editOrgnizer() {
 
             var Sno = $("#ddlOrgnizers").val();
-           // alert(Sno);
-
             $("#hidOrgnizer").val(Sno);
             var vOrgName = $("#OrgName_" + Sno).text();
             var vOrgDes = $("#OrgDes_" + Sno).text();
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
             var vOrgLn= $("#OrgLn_" + Sno).text();
+     
             $("#txtOrgnizer").val(vOrgName);
             $("#edOrgDes").code(vOrgDes);
             $("#txtOrgFBlink").val(vOrgFB);
@@ -2158,7 +2157,7 @@ else
             var vOrgFB = $("#txtOrgFBlink").val();
             var vOrgTw = $("#txtOrgTWlink").val();
             var vOrgLn = $("#txtOrgLNlink").val();
-            //alert(Sno);
+ 
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
@@ -2531,7 +2530,7 @@ else
                     Orgnizer.push({
                         Orgnizer_Id: $("#OrgId_" + Sno).text(),
                         Orgnizer_Name: $("#OrgName_" + Sno).text(),
-                        Orgnizer_Desc: $("#OrgDes_" + Sno).text(),
+                        Orgnizer_Desc: escape($("#OrgDes_" + Sno).text()),
                         FBLink: $("#OrgFB_" + Sno).text(),
                         Twitter: $("#OrgTw_" + Sno).text(),
                         Linkedin: $("#OrgLn_" + Sno).text(),
@@ -2986,8 +2985,8 @@ else
                 var vval = $("#txtEventUrl").val().trim();
                 if (vval != '') {
                     $.ajax({
-                        url: '@Url.Action("CheckEventUrl", "CreateEvent")',
-                        data: { strUserUrl: $("#txtEventUrl").val().trim() },
+                        url: '@Url.Action("CheckEventUrl", "ManageEvent")',
+                        data: { strUserUrl: $("#txtEventUrl").val().trim(),EventId: $("#hdEventId").val()},
                         type: "Post",
                         success: function (data) {
                             if (data == "Y") {

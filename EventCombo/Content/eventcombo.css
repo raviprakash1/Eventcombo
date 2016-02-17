@@ -52,9 +52,9 @@ button:focus { outline: none;}
     border-right: 6px solid transparent;
     border-left: 6px solid transparent;
 }
-#accordion .menu_title .active {
+/*#accordion .menu_title .active {
     background: #00cfff !important;     
-}
+}*/
 #accordion .menu_title {
     color: #fff; font-size:16px;
 }
@@ -64,6 +64,7 @@ button:focus { outline: none;}
 }
 
 #accordion .panel-heading{ background:#6a6b72; border-bottom:1px solid #797a80; }
+
 
 
 .head_left_nav{position: relative; top:8px;}

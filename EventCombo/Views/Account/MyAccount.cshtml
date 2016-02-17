@@ -4,6 +4,7 @@
     ViewBag.Title = "MyAccount";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+
 <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
 
 <link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
@@ -409,6 +410,22 @@
             var files1 = '@(MvcHtmlString.Create(Json.Encode(ViewData["results"])))';
 
             $(document).ready(function () {
+                $('#mgacnt').click();
+                $('#dvacmang').addClass("active");
+                $('#dvacmang b').addClass('opened new-opend');
+
+                $('#dvacmang').click(function (e) {
+           
+                    var $dvEle = $('#dvacmang b');
+                    var vclassname = $dvEle.attr('class');
+                    if ($dvEle.hasClass("new-opend")) {
+                        $dvEle.removeClass('opened new-opend').addClass('closed');
+                    }
+                    else {
+                        $dvEle.addClass('opened new-opend');
+                    }
+                });
+
                 //$('#WebsiteURL').bind('keypress', function (event) {
                 //    var regex = new RegExp("^[a-zA-Z0-9]+$");
                 //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
