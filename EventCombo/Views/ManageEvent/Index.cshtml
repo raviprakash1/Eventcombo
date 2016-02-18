@@ -985,7 +985,7 @@ else
 
                 $("#btDay").click(function () {
                     var EventId = $("#hdEventid").val();
-                    
+          
                     $.ajax({
                         url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
                         data: { strDurataion: "Day", lEventId: EventId },
@@ -1031,7 +1031,7 @@ else
                 $("#btWeekSale").click(function () {
                     var EventId = $("#hdEventid").val();
                     $.ajax({
-                        url: '@Url.Action("GetTicketSalebyEvent", "ManageEvent")',
+                        url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
                         data: { strDurataion: "Week", lEventId: EventId },
                         type: "Post",
                         success: function (response) {
@@ -1074,7 +1074,7 @@ else
                 $("#btMonthSale").click(function () {
                     var EventId = $("#hdEventid").val();
                     $.ajax({
-                        url: '@Url.Action("GetTicketSalebyEvent", "ManageEvent")',
+                        url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
                         data: { strDurataion: "Month", lEventId: EventId },
                         type: "Post",
                         success: function (response) {
@@ -1115,7 +1115,7 @@ else
                 $("#btYearSale").click(function () {
                     var EventId = $("#hdEventid").val();
                     $.ajax({
-                        url: '@Url.Action("GetTicketSalebyEvent", "ManageEvent")',
+                        url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
                         data: { strDurataion: "Year", lEventId: EventId },
                         type: "Post",
                         success: function (response) {
@@ -1155,9 +1155,9 @@ else
 
                 $("#btDaySale").click(function () {
                     var EventId = $("#hdEventid").val();
-
+                 //   alert(EventId);
                     $.ajax({
-                        url: '@Url.Action("GetTicketSalebyEvent", "ManageEvent")',
+                        url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
                         data: { strDurataion: "Day", lEventId: EventId },
                         type: "Post",
                         success: function (response) {

@@ -343,9 +343,9 @@ namespace EventCombo.Controllers
                 for (int i = 1; i <= 12; i++)
                 {
                     if (strDates.ToString().Equals(""))
-                        strDates.Append(dt.ToString("MM/yyy"));
+                        strDates.Append(dt.ToString("MM/yy"));
                     else
-                        strDates.Append("," + dt.ToString("MM/yyy"));
+                        strDates.Append("," + dt.ToString("MM/yy"));
 
                     lHitCount = GetEventHitDayCount(lEventId, dt.Month,dt.Year);
                     strDates.Append("-");
@@ -433,11 +433,12 @@ namespace EventCombo.Controllers
                 for (int i = 1; i <= 12; i++)
                 {
                     if (strSaleQty.ToString().Equals(""))
-                        strSaleQty.Append(dt.ToString("MM/dd"));
+                        strSaleQty.Append(dt.ToString("MM/yy"));
                     else
-                        strSaleQty.Append("," + dt.ToString("MM/dd"));
+                        strSaleQty.Append("," + dt.ToString("MM/yy"));
 
-                    SaleTickets objSale = GetTicketSalebyEvent(lEventId, dt.Month, dt.Year);
+                    SaleTickets objSale = GetTicketSalebyEventYear(lEventId, dt.Month, dt.Year);
+                    //SaleTickets objSale = new SaleTickets();
                     strSaleQty.Append("-");
                     if (objSale != null)
                     {
@@ -456,11 +457,12 @@ namespace EventCombo.Controllers
                 for (int i = 1; i <= 24; i++)
                 {
                     if (strSaleQty.ToString().Equals(""))
-                        strSaleQty.Append(dt.ToString("MM/dd"));
+                        strSaleQty.Append(dt.Hour.ToString());
                     else
-                        strSaleQty.Append("," + dt.ToString("MM/dd"));
+                        strSaleQty.Append("," + dt.Hour.ToString());
 
-                    SaleTickets objSale = GetTicketSalebyEvent(lEventId, dt, dt.Hour);
+                    SaleTickets objSale = GetTicketSalebyEventDay(lEventId, dt, dt.Hour);
+                    //SaleTickets objSale = new SaleTickets();
                     strSaleQty.Append("-");
                     if (objSale != null)
                     {
@@ -914,7 +916,7 @@ namespace EventCombo.Controllers
 
             return objResult;
         }
-        public SaleTickets GetTicketSalebyEvent(long eventId, int iMonth, int iYear)
+        public SaleTickets GetTicketSalebyEventYear(long eventId, int iMonth, int iYear)
         {
             SaleTickets objResult = new SaleTickets();
             try
@@ -939,7 +941,7 @@ namespace EventCombo.Controllers
         }
 
 
-        public SaleTickets GetTicketSalebyEvent(long eventId, DateTime dt, int iHour)
+        public SaleTickets GetTicketSalebyEventDay(long eventId, DateTime dt, int iHour)
         {
             SaleTickets objResult = new SaleTickets();
             try
