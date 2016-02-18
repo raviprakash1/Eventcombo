@@ -147,6 +147,17 @@ namespace EventCombo.Controllers
 
         public ActionResult ModifyEvent(string Eventid)
         {
+
+            var vRefferer = ControllerContext.HttpContext.Request.UrlReferrer;
+            if (vRefferer.ToString().ToLower().Contains("createevent") == true)
+                TempData["IsNewEvent"] = "Y";
+            else if (vRefferer.ToString().ToLower().Contains("modifyevent") == true)
+                TempData["IsNewEvent"] = "M";
+            else
+                TempData["IsNewEvent"] = "N";
+
+
+
             long EventIid = 0;
             string Isadmin = "N";
             if (Eventid.Contains("ß"))

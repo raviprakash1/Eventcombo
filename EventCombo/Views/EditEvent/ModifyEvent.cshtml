@@ -1492,11 +1492,27 @@ else
 
     </script>
 
-    
+
 
 
     <script>
         $(document).ready(function () {
+            var vVal = '@TempData["IsNewEvent"].ToString()';
+            if (vVal == "Y")
+            {
+                debugger;
+                $('#divaccsuc').css('display', 'block');
+                $('#divaccsuc').focus();
+                $('#diverroacc').css('display', 'none');
+                $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateEventsavedsucc"));
+            }
+            else if (vVal == "M")
+            {
+                $('#divaccsuc').css('display', 'block');
+                $('#divaccsuc').focus();
+                $('#diverroacc').css('display', 'none');
+                $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
+            }
 
             var input = document.getElementById('txtEventLocation');
             var Eloc = new google.maps.places.Autocomplete(input);
@@ -1525,7 +1541,7 @@ else
             });
 
             var isadmin="@Model.Isadmin";
-          
+
             if(isadmin=="N")
             {
                 var lEventId=$("#hdEventId").val();
@@ -1702,13 +1718,13 @@ else
                                     });
                                    $("#id_auto_hide_after_Time-" + i).timepicker();
                                 }
-                             
+
 
                                 $("#id_saletimestart-" + i).timepicker();
 
                                 $("#id_saletimeend-" + i).timepicker();
-                              
-                               
+
+
                             }
 
                         }
@@ -1747,7 +1763,7 @@ else
                 }
             );
 
-       
+
             var privat="@Model.EventPrivacy";
             var privatefb="@Model.Private_ShareOnFB"
             var privateguest="@Model.Private_GuestOnly"
@@ -2622,10 +2638,10 @@ else
 
                             if(type=="Save")
                             {
-                                $('#divaccsuc').css('display', 'block');
-                                $('#divaccsuc').focus();
-                                $('#diverroacc').css('display', 'none');
-                                $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
+                            //    $('#divaccsuc').css('display', 'block');
+                            //    $('#divaccsuc').focus();
+                            //    $('#diverroacc').css('display', 'none');
+                            //    $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
                                 var isadmin="@Model.Isadmin";
                                 if(isadmin=="Y")
                                 {
@@ -2643,6 +2659,8 @@ else
                             //preview
                             if(type=="Preview")
                             {
+                                $('#divaccsuc').css('display', 'none');
+                                $('#diverroacc').css('display', 'none');
                                 var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
 
                                 window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");

@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<CMS.Models.Eventtype>
+    
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @{
     ViewBag.Title = "EventType";
     //Layout = "~/Views/Shared/_Layout.cshtml";
@@ -49,11 +51,12 @@
             height: 200px;
         }
 </style>*@
-<section id="content_wrapper">        
-    @using (Html.BeginForm())
+<section id="content_wrapper">  
+      
+    @using (Ajax.BeginForm("EventType", "EventType", new AjaxOptions { UpdateTargetId = "tabType", HttpMethod = "Post" })) { 
+
+    if (TempData["SuccessMessage"] != null)
     {
-        if (TempData["SuccessMessage"] != null)
-        {
             <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
@@ -102,7 +105,7 @@
                         <div class="clearfix"></div>
                         @if (int.Parse(TempData["Count"].ToString()) > 0)
                         {
-                        <div class="col-md-12 mt10 nopad">
+                            <div class="col-md-12 mt10 nopad">
 
                             <table id="tabType" width="100%">
                                 <tbody>
@@ -152,8 +155,13 @@
                                 </tbody>
                             </table>
 
+
+
+
+
+
                             </div>
-                                        }
+                        }
                         </div>
 
 
