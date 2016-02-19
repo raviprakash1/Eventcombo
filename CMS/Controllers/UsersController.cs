@@ -62,32 +62,32 @@ namespace CMS.Controllers
             foreach (var item in objuser)
             {
                 var ans = db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0", item.Id).FirstOrDefault();
-              
-                if(int.Parse(ans)==1)
-                {
-                    item.RoleType = "Super Admin";
-                }
-                if (int.Parse(ans) == 2)
-                {
-                    item.RoleType = "Admin";
-                }
-                if (int.Parse(ans) == 3)
-                {
-                    var countperrm = db.Permission_Detail.Where(x => x.Permission_Category == "APP").Count();
-                    var countuserperm = db.User_Permission_Detail.Where(x => x.UP_User_Id == item.Id).Count();
+                    ans = (ans != null ? ans : "0");
+                    if (int.Parse(ans) == 1)
+                    {
+                        item.RoleType = "Super Admin";
+                    }
+                    if (int.Parse(ans) == 2)
+                    {
+                        item.RoleType = "Admin";
+                    }
+                    if (int.Parse(ans) == 3)
+                    {
+                        var countperrm = db.Permission_Detail.Where(x => x.Permission_Category == "APP").Count();
+                        var countuserperm = db.User_Permission_Detail.Where(x => x.UP_User_Id == item.Id).Count();
 
-                    if (countuserperm < countperrm)
-                    {
-                        item.RoleType = "Member-Limited";
-                      
-                        ans = "4";
+                        if (countuserperm < countperrm)
+                        {
+                            item.RoleType = "Member-Limited";
+
+                            ans = "4";
+                        }
+                        else
+                        {
+                            item.RoleType = "Member";
+                        }
                     }
-                    else
-                    {
-                        item.RoleType = "Member";
-                    }
-                }
-                item.Role = ans;
+                    item.Role = ans;
                 var evtcount = db.Database.SqlQuery<Int32>("select count(*) from Event  where isnull(Parent_EventID,0)=0 and Userid=@p0", item.Id).FirstOrDefault();
                 item.EventCount = evtcount;
                 var ticketpurchased= db.Database.SqlQuery<Int64>("select isnull(sum(TPD_Purchased_Qty),0) from Ticket_Purchased_Detail  where TPD_User_Id=@p0", item.Id).FirstOrDefault();
@@ -215,8 +215,8 @@ namespace CMS.Controllers
                                          UserStatus = Pr.UserStatus.Trim(),
                                          FirstName = Pr.FirstName,
                                          LastName = Pr.LastName,
-                                         Online= UserTemp.LoginStatus,
-                                         Role="",
+                                         Online = (!string.IsNullOrEmpty(UserTemp.LoginStatus) ? UserTemp.LoginStatus : "N"),
+                                         Role ="",
                                          State=!string.IsNullOrEmpty(Pr.State)? Pr.State:"",
                                          OrganiserId= Pr.Organiser.Trim()=="Y"?"Yes":"No",
                                          MerchantId= Pr.Merchant.Trim()=="Y"?"Yes":"No",

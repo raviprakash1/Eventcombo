@@ -52,7 +52,7 @@
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
-                                <b><a href="#" onclick="checkPermission('3');">Member Management</a></b>
+                                <b><a href="#" onclick="checkPermission('10');">Member Management</a></b>
                             </span>
                         </div>
                     </div>
@@ -90,7 +90,9 @@
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
-                                <b><a href="@Url.Action("EventType", "EventType", new {Type="N"})">Event Type</a></b>
+                                <b><a href="#" onclick="checkPermission('8');">Event</a></b>
+
+                              
                             </span>
                         </div>
                     </div>
@@ -102,7 +104,8 @@
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
-                                <b><a  href="@Url.Action("EventCategory", "EventCategory", new {msg="N"})">Event Category</a></b>
+                                <b><a href="#" onclick="checkPermission('9');">Event Category</a></b>
+                              
                             </span>
                         </div>
                     </div>
@@ -154,13 +157,10 @@
                 if (response != "Y") {
                     alert("Access Denied !!!");
                     return false;
-                    //  $('#spanid').html("Record Updated.");
-                    // $('#divError').css('display', 'block');
-                    ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
                 }
                 else {
                     //  alert(vPerm);
-                    if (vPerm == "3")
+                    if (vPerm == "10")
                         window.location.href = '@Url.Action("Users", "Users")';
                     else if (vPerm == "6")
 
@@ -192,7 +192,10 @@
                         window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
                     else if (vPerm == "4")
                         window.location.href = '@Url.Action("Index", "ManageEvent")';
-
+                    else if (vPerm == "8")
+                        window.location.href = '@Url.Action("EventType", "EventType", new {Type="N"})';
+                    else if (vPerm == "9")
+                        window.location.href = '@Url.Action("EventCategory", "EventCategory", new { msg = "N"})';
 
                 }
             }
