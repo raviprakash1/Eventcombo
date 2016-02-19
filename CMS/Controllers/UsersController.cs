@@ -215,7 +215,7 @@ namespace CMS.Controllers
                                          UserStatus = Pr.UserStatus.Trim(),
                                          FirstName = Pr.FirstName,
                                          LastName = Pr.LastName,
-                                         Online= UserTemp.LoginStatus,
+                                         Online= !string.IsNullOrEmpty(UserTemp.LoginStatus)? UserTemp.LoginStatus : "N",
                                          Role="",
                                          State=!string.IsNullOrEmpty(Pr.State)? Pr.State:"",
                                          OrganiserId= Pr.Organiser.Trim()=="Y"?"Yes":"No",

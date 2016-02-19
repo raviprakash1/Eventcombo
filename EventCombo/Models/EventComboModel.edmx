@@ -310,6 +310,7 @@
           <Property Name="FS_Type" Type="varchar" MaxLength="50" />
           <Property Name="FS_Amount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="FS_Percentage" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="FS_Apply" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Messages">
           <Key>
@@ -500,6 +501,9 @@
           <Property Name="Additional_Fee" Type="decimal" Precision="9" Scale="2" />
           <Property Name="T_Discount" Type="decimal" Precision="9" Scale="2" />
           <Property Name="TotalPrice" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="T_Customize" Type="varchar" MaxLength="1" />
+          <Property Name="T_Ecpercent" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="T_EcAmount" Type="decimal" Precision="9" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Locked_Detail">
           <Key>
@@ -1477,6 +1481,9 @@
           <Property Name="TotalPrice" Type="Decimal" Precision="9" Scale="2" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Ticket_Event" FromRole="Ticket" ToRole="Event" />
           <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="Self.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket" ToRole="Ticket_Quantity_Detail" />
+          <Property Name="T_Customize" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="T_Ecpercent" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="T_EcAmount" Type="Decimal" Precision="9" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Locked_Detail">
           <Key>
@@ -1962,6 +1969,7 @@
           <Property Name="FS_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FS_Amount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="FS_Percentage" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FS_Apply" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2442,6 +2450,9 @@
           <EntitySetMapping Name="Tickets">
             <EntityTypeMapping TypeName="EventComboModel.Ticket">
               <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="T_EcAmount" ColumnName="T_EcAmount" />
+                <ScalarProperty Name="T_Ecpercent" ColumnName="T_Ecpercent" />
+                <ScalarProperty Name="T_Customize" ColumnName="T_Customize" />
                 <ScalarProperty Name="T_Id" ColumnName="T_Id" />
                 <ScalarProperty Name="E_Id" ColumnName="E_Id" />
                 <ScalarProperty Name="T_name" ColumnName="T_name" />
@@ -2663,6 +2674,7 @@
           <EntitySetMapping Name="Fee_Structure">
             <EntityTypeMapping TypeName="EventComboModel.Fee_Structure">
               <MappingFragment StoreEntitySet="Fee_Structure">
+                <ScalarProperty Name="FS_Apply" ColumnName="FS_Apply" />
                 <ScalarProperty Name="FS_Percentage" ColumnName="FS_Percentage" />
                 <ScalarProperty Name="FS_Amount" ColumnName="FS_Amount" />
                 <ScalarProperty Name="FS_Type" ColumnName="FS_Type" />

@@ -18,5 +18,6 @@ namespace CMS.Models
         public string FS_Type { get; set; }
         public Nullable<decimal> FS_Amount { get; set; }
         public Nullable<decimal> FS_Percentage { get; set; }
+        public string FS_Apply { get; set; }
     }
 }

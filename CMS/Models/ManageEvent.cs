@@ -34,5 +34,6 @@ namespace CMS.Models
     {
         public string percentage { get; set; }
         public string value { get; set; }
+        public string Apply { get; set; }
     }
 }
