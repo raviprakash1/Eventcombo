@@ -948,7 +948,7 @@ namespace EventCombo.Controllers
             {
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail LEFT JOIN Order_Detail_T On Ticket_Purchased_Detail.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND TPD_Event_Id = " + eventId + " and COnvert(date,O_OrderDateTime) = convert(date,'" + dt + "')  And datepart(hour,EventHitDateTime) = " + iHour.ToString() + " group by Convert(date,O_OrderDateTime) ";
+                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail LEFT JOIN Order_Detail_T On Ticket_Purchased_Detail.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND TPD_Event_Id = " + eventId + " and COnvert(date,O_OrderDateTime) = convert(date,'" + dt + "')  And datepart(hour,O_OrderDateTime) = " + iHour.ToString() + " group by Convert(date,O_OrderDateTime) ";
 
                     var vEvent = objEnt.Database.SqlQuery<SaleTickets>(strQuery).FirstOrDefault();
 
