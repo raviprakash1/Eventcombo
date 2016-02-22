@@ -66,6 +66,7 @@ public string savefee(FeeSetting model)
                                     select c).FirstOrDefault(); var ObjEC = db.Fee_Structure.FirstOrDefault();
                 feestructure.FS_Amount = decimal.Parse(model.value);
                 feestructure.FS_Percentage = decimal.Parse(model.percentage);
+                feestructure.FS_Apply = model.Apply;
                 db.SaveChanges();
 
                 msg= "S";

@@ -818,7 +818,7 @@
                                             <div class="form-group paidticket-n" id="id_paid-n">
                                                 <label class="col-sm-5 no_pad control-label ev_tickt_lebel">Price* $</label>
                                                 <div class="col-sm-7 ">
-                                                    <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="changefeetype(this, event, this.id)" onkeyup="validateforzero(this.id, event)" onblur="tofixed(this.id)"   placeholder="0.00" maxlength="9" />
+                                                    <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="validatenumdec(this, event, this.id)" onkeyup="changefee(this.id, event)" onblur="    tofixed(this.id)"   placeholder="0.00" maxlength="9" />
                                                 </div>
 
                                             </div>
@@ -848,7 +848,7 @@
                                             <div class="form-group paidticket-n" id="id_Disc-n">
                                                 <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="changefeetype(this, event, this.id)"  onblur="tofixed(this.id)" maxlength="9"/>
+                                                    <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="validatenumdec(this, event, this.id)"  onblur="    tofixed(this.id)" maxlength="9"/>
 
                                                 </div>
                                             </div>
@@ -1141,7 +1141,7 @@
                                             <div class="col-sm-4 col-xs-4">
                                                 <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
                                                 <div class="col-sm-10 no_pad">
-                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="changefeetype(this, event, this.id);" onblur="tofixed(this.id); checkvalidatetkt(this.id);" >
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="validatenumdec(this, event, this.id);" onblur="    tofixed(this.id); checkvalidatetkt(this.id);" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
@@ -2240,14 +2240,16 @@
                         } else {
                             Auto_Schedule = 0;
                         }
-                        if ($('#id_include_ticket_fees-' + i).val() == 0) {
-                            customerfee = $('#id_fee-' + i).val();
+                        customerfee = $('#id_fee-' + i).val();
+                        ecfee = $('#id_fee-' + i).val();
+                        //if ($('#id_include_ticket_fees-' + i).val() == 0) {
+                          
 
-                        }
-                        if ($('#id_include_ticket_fees-' + i).val() == 1) {
-                            ecfee = $('#id_fee-' + i).val();
+                        //}
+                        //if ($('#id_include_ticket_fees-' + i).val() == 1) {
+                          
 
-                        }
+                        //}
                         total = $('#id_total-' + i).val();
                         if ($('#id_Tickettype-' + i).val() == "Free") {
                             TicketTypeID = 1
@@ -3518,7 +3520,7 @@
             if (dropval.trim() == '0') {
 
                 var ccp = $('#id_percentage').val();
-                var ccpamount = ((((price * ccp) / 100).toFixed(2))+$('#id_value').val()).toFixed(2);
+                var ccpamount = (((amount * ccp) / 100) + parseFloat($('#id_value').val())).toFixed(2);
                 //var ccpamount = ((amount * ccp) / 100).toFixed(2)+;
 
                 var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
@@ -3535,7 +3537,7 @@
             if (dropval.trim() == '1') {
 
                 var ccp = $('#id_percentage').val();
-                var ccpamount = ((((price * ccp) / 100).toFixed(2)) + $('#id_value').val()).toFixed(2);
+                var ccpamount = (((amount * ccp) / 100) + parseFloat($('#id_value').val())).toFixed(2);
                 var ccpfinal = parseFloat(amount).toFixed(2);
                 $('#id_buyerprice-' + el).html("$" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -3589,7 +3591,7 @@
 
 
         }
-        function validateforzero(id, evt) {
+        function changefee(id, evt) {
             debugger;
             var price = parseFloat(parseFloat($('#' + id).val().replace(',', '')).toFixed(2));
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
@@ -3677,7 +3679,7 @@
                 if (val == 0) {
                     ccp = parseFloat($('#id_percentage').val()).toFixed(2);
 
-                    ccpamount = ((((price * ccp) / 100).toFixed(2))+$('#id_value').val()).toFixed(2);
+                    ccpamount = (((price * ccp) / 100) + parseFloat($('#id_value').val())).toFixed(2);
                     ccpamount = ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     ccpfinal = (parseFloat(ccpamount) + parseFloat(price)).toFixed(2);
                     ccpfinal = ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -3690,7 +3692,7 @@
                 }
                 if (val == 1) {
                     ccp = $('#id_percentage').val();
-                    ccpamount = ((((price * ccp) / 100).toFixed(2))+$('#id_value').val()).toFixed(2);
+                    ccpamount = (((price * ccp) / 100) + parseFloat($('#id_value').val())).toFixed(2);
                     ccpamount = ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     ccpfinal = price;
                     ccpfinal = ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -3712,7 +3714,7 @@
 
         }
 
-        function changefeetype(el, evt, id) {
+        function validatenumdec(el, evt, id) {
             var fee = 0;
             var total = 0;
 

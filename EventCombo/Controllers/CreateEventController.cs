@@ -462,6 +462,7 @@ namespace EventCombo.Controllers
                             ticket.TotalPrice = tick.TotalPrice;
                             ticket.T_Discount = tick.T_Discount;
                             ticket.T_Displayremaining = tick.T_Displayremaining;
+                            ticket.T_Customize = "0";
                             objEnt.Tickets.Add(ticket);
                         }
 

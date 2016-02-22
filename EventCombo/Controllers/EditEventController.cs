@@ -796,7 +796,7 @@ namespace EventCombo.Controllers
                 objJson.timezone = Event.TimeZone;
                 //Tickets Section
                 long capacity = 00000;
-
+                var feestruct = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
 
                 var Tick = (from myEvent in objEnt.Tickets
                             where myEvent.E_Id == EventIid
@@ -808,12 +808,14 @@ namespace EventCombo.Controllers
                 {
                     var type = "";
                     var fee = "";
+                    var ecfee = "";
                     var total = "";
                     var custdate = "0";
                     var Price = "";
                     var discount = "";
-                    var feen = "";
+                    var customerfee = "";
                     var totaoln = "";
+                    string ecfeepercentage = "", ecamount = "";
                     var startdate = String.Format("{0:MM/dd/yyyy}", ObjTick.Sale_Start_Date);
                     var enddate = String.Format("{0:MM/dd/yyyy}", ObjTick.Sale_End_Date);
                     var untilldate = String.Format("{0:MM/dd/yyyy}", ObjTick.Hide_Untill_Date);
@@ -835,29 +837,40 @@ namespace EventCombo.Controllers
                     }
                     if (ObjTick.TicketTypeID == 1)
                     {
+                        ecfee = "0";
                         fee = "0";
+                        customerfee = "0";
                         type = "Free";
                         total = "0";
+                        ecfeepercentage = "0";
+                        ecamount = "0";
                     }
                     if (ObjTick.TicketTypeID == 2)
                     {
 
                         total = ObjTick.TotalPrice.ToString();
-                        if (ObjTick.Fees_Type == "0")
+                        var ecfeenew = "";
+                         
+                        customerfee = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
+                        if(string.IsNullOrEmpty(ObjTick.EC_Fee.ToString()))
                         {
-                            fee = ObjTick.Customer_Fee.ToString();
-                            feen = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
+                            var ecnewcal = ((decimal.Parse(Price) * feestruct.FS_Percentage) / 100) + feestruct.FS_Amount;
+                            ecfeenew = String.Format("{0:#,###,###.00}", ecnewcal);
                         }
-                        if (ObjTick.Fees_Type == "1")
-                        {
-                            fee = ObjTick.EC_Fee.ToString();
-                            feen = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
-                        }
+                        ecfee= !string.IsNullOrEmpty(ObjTick.EC_Fee.ToString())? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee): ecfeenew;
+                        ecfeepercentage =!string.IsNullOrEmpty(ObjTick.T_Ecpercent.ToString())? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent): String.Format("{0:#,###,###.00}", feestruct.FS_Percentage);
+                        ecamount = !string.IsNullOrEmpty(ObjTick.T_EcAmount.ToString())?String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount): String.Format("{0:#,###,###.00}", feestruct.FS_Amount);
                         type = "Paid";
                     }
                     if (ObjTick.TicketTypeID == 3)
                     {
+                       
+
+                        ecfee = "0";
                         fee = "0";
+                        customerfee = (!string.IsNullOrEmpty(ObjTick.Customer_Fee.ToString()) ? String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee) : "0");
+                        ecfeepercentage = (!string.IsNullOrEmpty(ObjTick.T_Ecpercent.ToString()) ? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent) : String.Format("{0:#,###,###.00}", feestruct.FS_Percentage));
+                        ecamount = (!string.IsNullOrEmpty(ObjTick.T_EcAmount.ToString()) ? String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount) : String.Format("{0:#,###,###.00}", feestruct.FS_Amount));
                         type = "Donate";
                     }
 
@@ -865,11 +878,15 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='col-sm-10 col-xs-12' ><div class='col-sm-1 text-center no_pad ev_row_mov'>");
                     strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");
                     strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value='"+ObjTick.T_Id+"'/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ecfeeback_id-" + j + "'  value='" + ObjTick.EC_Fee + "'/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ecpercentback_id-" + j + "'  value='" + ObjTick.T_Ecpercent + "'/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ecammountback_id-" + j + "'  value='" + ObjTick.T_EcAmount + "'/>");
                     strticketHtml.Append("<input type='hidden' id='id_order-" + j + "' value='" + ObjTick.T_order + "' />");
-
                     strticketHtml.Append("<input type='hidden' id='id_Tickettype-" + j + "' value=" + type + " />");
-                    strticketHtml.Append("<input type='hidden' id=id_fee-" + j + " value=" + fee + " />");
+                    strticketHtml.Append("<input type='hidden' id=id_fee-" + j + " value=" + customerfee + " />");
                     strticketHtml.Append("<input type='hidden' id='id_total-" + j + "' value=" + total + " />");
+                    strticketHtml.Append("<input type='hidden' id='id_customize-" + j + "' value=" + ObjTick.T_Customize + " />");
+
                     if (ObjTick.TicketTypeID == 2)
                     {
                         strticketHtml.Append("<input type='hidden' id='id_feetype-" + j + "' value='" + ObjTick.Fees_Type + "' />");
@@ -915,11 +932,11 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='col-sm-7'>");
                     if (ObjTick.TicketTypeID == 2)
                     {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='changefeetype(this, event, this.id)' onkeyup='validateforzero(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' value=" + Price + " />");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' value=" + Price + " />");
                     }
                     else
                     {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='changefeetype(this, event, this.id)' onkeyup='validateforzero(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' />");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' />");
 
                     }
                     strticketHtml.Append("</div></div>");
@@ -967,7 +984,7 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<span class='evnt_toltip'><i class='fa fa-info-circle'></i></span>");
                     if (ObjTick.TicketTypeID == 2)
                     {
-                        strticketHtml.Append("<div class='tooltip' id='id_tooltip-" + j + "'>Ticket Price &nbsp; &nbsp; &nbsp; $" + Price + " <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $" + feen + " <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $" + totaoln + "</div>");
+                        strticketHtml.Append("<div class='tooltip' id='id_tooltip-" + j + "'>Ticket Price &nbsp; &nbsp; &nbsp; $" + Price + " <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $" + customerfee + " <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $" + totaoln + "</div>");
 
                     }
                     else
@@ -993,23 +1010,51 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='clearfix'></div>");
                     if (Isadmin == "Y")
                     {
-                        strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad mt10 adminvis' id='isadmin-" + j + "' style='display:block;'>");
+                        if (ObjTick.TicketTypeID == 1)
+                        {
+                            strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad  adminvis' id='isadmin-" + j + "' style='display:none;'>");
+
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad  adminvis' id='isadmin-" + j + "' style='display:block;'>");
+
+                        }
+
                     }
                     else
                     {
-                        strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad mt10 adminvis' id='isadmin-" + j + "' style='display:none;'>");
+                        strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad  adminvis' id='isadmin-" + j + "' style='display:none;'>");
 
                     }
                     strticketHtml.Append("<div class='col-sm-1 no_pad ev_row_mov'></div>");
-                    strticketHtml.Append("<div class='col-sm-3 no_pad '>");
+                    strticketHtml.Append("<div class='col-sm-4 no_pad '>");
                     strticketHtml.Append("<div class='form-group'>");
                     strticketHtml.Append("<label class='col-sm-5 no_pad control-label ev_tickt_lebel'>EC Fee</label>");
-                    strticketHtml.Append("<div class='col-sm-7'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_ecfee-" + j + "' /></div>");
-                    strticketHtml.Append("  </div></div>");
+                    strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>%</label>");
+                    strticketHtml.Append("<div class='col-sm-6'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_ecfeeper-" + j + "' value=" + ecfeepercentage + "  onkeypress='allownumber(this,event,this.id)' onblur='tofixed(this.id)' onkeyup='changeinecfee(this.id)'  />");
+                    strticketHtml.Append("  </div></div></div>");
+                    strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> + </div><div class='col-sm-2 no_pad'><div class='form-group'>");
+                    strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>");
+                    strticketHtml.Append("<div class='col-sm-11'><input type='text' class='form-control evnt_inp_cont'  id='id_ecfeeamt-" + j + "' value=" + ecamount + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id)'  onkeyup='changeinecfee(this.id)' >");
+                    strticketHtml.Append("</div> </div></div>");
+                    strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> =   </div>");
+                    strticketHtml.Append("<div class='col-sm-3 no_pad'>");
+                    strticketHtml.Append("<div class='form-group'> <label class='col-sm-3 no_pad control-label ev_tickt_lebel'>Total</label>");
+                    strticketHtml.Append(" <div class='col-sm-9'>   <input type='hidden' id='hd_ecfee-" + j + "' value="+ecfee+" />");
+                    strticketHtml.Append("<label class='form-control evnt_inp_cont' id='id_ecfee-" + j + "'> "+ecfee+" </label>");
+                    strticketHtml.Append("</div></div ></div >");
+                    strticketHtml.Append(" <div class='clearfix'></div>");
+                    strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad mt10'>");
+                    strticketHtml.Append("<div class='col-sm-1 no_pad ev_row_mov'></div>");
                     strticketHtml.Append("<div class='col-sm-4 no_pad'><div class='form-group'>");
                     strticketHtml.Append("<label class='col-sm-6 no_pad control-label ev_tickt_lebel'>Cutomer Fee</label>");
-                    strticketHtml.Append("<div class='col-sm-6'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_customerfee-" + j + "' /></div>");
-                    strticketHtml.Append("</div> </div></div></div>");
+                    strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>"); 
+                    strticketHtml.Append("<div class='col-sm-5'>");
+                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont'  id='id_customerfee-" + j + "' placeholder='' value=" + customerfee + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id)' onkeyup='reflectfeechange(this.id)' />");
+                    strticketHtml.Append("<input type='hidden'  id='hd_customerfee-" + j + "' value=" + customerfee + " />");
+                    strticketHtml.Append("<input type='hidden'  id='hd_customchange-" + j + "' value=0 />");
+                    strticketHtml.Append("</div></div ></div ></div ></div> </div>");
                     strticketHtml.Append("<div class='col-sm-2 col-xs-12 text-right'><div class='col-sm-1 no_pad evnt_sett_main xs768detail'>");
                     strticketHtml.Append("<div class='nav evnt_setting'>");
                     strticketHtml.Append("<span class='evnt_set ev_set_more' id='id_setting-" + j + "' onclick='showsettingdiv(this.id);'> Detail</span>");
@@ -1445,6 +1490,74 @@ namespace EventCombo.Controllers
                         foreach (Ticket tick in model.Ticket)
                         {
                             ticket = new Ticket();
+
+                            if (tick.Isadmin == "Y")
+                            {
+                                if (tick.TicketTypeID != 1)
+                                {
+                                    var mainfee = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
+                                    var oldamnt = 0m;
+
+                                    if (tick.Fees_Type == "0")
+                                    {
+                                        oldamnt = ((((tick.Price * mainfee.FS_Percentage) / 100) + mainfee.FS_Amount) + tick.Price) ?? 0;
+                                    }
+                                    else
+                                    {
+                                        oldamnt = tick.Price ?? 0;
+
+                                    }
+                                    var oldamount = Decimal.Round(oldamnt, 2);
+
+                                    var customizefee = false;
+                                    var customizeamt = false;
+
+                                    if (mainfee.FS_Percentage == tick.T_Ecpercent && mainfee.FS_Amount == tick.T_EcAmount)
+                                    {
+                                        customizefee = false;
+
+                                    }
+                                    else
+                                    {
+                                        customizefee = true;
+
+                                    }
+                                    if (oldamount == tick.TotalPrice)
+                                    {
+                                        customizeamt = false;
+                                    }
+                                    else
+                                    {
+                                        customizeamt = true;
+                                    }
+
+                                    if (customizefee == true || customizeamt == true)
+                                    {
+                                        tick.T_Customize = "1";
+                                    }
+                                    else
+                                    {
+                                        tick.T_Customize = "0";
+                                    }
+                                    if (tick.TicketTypeID == 3)
+                                    {
+                                        if(tick.Customer_Fee>0)
+                                            {
+                                            tick.T_Customize = "1";
+
+                                        }
+                                    }
+                                    
+
+
+                                        ticket.T_Customize = tick.T_Customize;
+
+                                    ticket.T_EcAmount = tick.T_EcAmount;
+                                    ticket.T_Ecpercent = tick.T_Ecpercent;
+                                }
+
+                            }
+
                             ticket.E_Id = ObjEC.EventID;
                             ticket.TicketTypeID = tick.TicketTypeID;
                             ticket.T_name = tick.T_name;
@@ -1475,6 +1588,9 @@ namespace EventCombo.Controllers
                             ticket.TotalPrice = tick.TotalPrice;
                             ticket.T_Discount = tick.T_Discount;
                             ticket.T_Displayremaining = tick.T_Displayremaining;
+                            ticket.T_EcAmount=tick.T_EcAmount;
+                            ticket.T_Ecpercent = tick.T_Ecpercent;
+                            ticket.T_Customize = tick.T_Customize;
                             objEnt.Tickets.Add(ticket);
                         }
                     }
@@ -1767,8 +1883,9 @@ namespace EventCombo.Controllers
                                 }
                                 // Tickets
 
-
-
+                                string customize ="0";
+                                var customizefee = false;
+                                var customizeamt = false;
 
                                 if (model.Ticket != null)
                                 {
@@ -1781,11 +1898,101 @@ namespace EventCombo.Controllers
                                         if (tick.T_Id == 0)
                                         {
                                             ticket = new Ticket();
+                                         
+                                            ticket.T_Customize = "0";
+                                            var mainfee = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
+                                            ticket.EC_Fee = tick.Customer_Fee;
+                                            ticket.T_Ecpercent = mainfee.FS_Percentage;
+                                            ticket.T_EcAmount = mainfee.FS_Amount;
+                                            if (tick.TicketTypeID == 2)
+                                            {
+                                                ticket.Customer_Fee = tick.Customer_Fee;
+                                            }
+                                            else
+                                            {
+                                                ticket.Customer_Fee = 0;
+                                            }
+
                                         }
                                         else
                                         {
                                             ticket = (from obj in objEnt.Tickets where obj.T_Id == tick.T_Id && obj.E_Id == lEventId select obj).FirstOrDefault();
+                                            customize = ticket.T_Customize;
+                                            if (tick.TicketTypeID == 2)
+                                            {
+                                                ticket.Customer_Fee = tick.Customer_Fee;
+                                            }
+                                        
                                         }
+                                        if (tick.Isadmin == "Y")
+                                        {
+                                            if (tick.TicketTypeID != 1)
+                                            {
+                                                var mainfee = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
+                                                var oldamnt=0m;
+
+                                                if (tick.Fees_Type == "0")
+                                                {
+                                                     oldamnt = ((((tick.Price * mainfee.FS_Percentage) / 100) + mainfee.FS_Amount) + tick.Price)??0;
+                                                }
+                                                else
+                                                {
+                                                     oldamnt = tick.Price??0 ;
+
+                                                }
+                                                var oldamount = Decimal.Round(oldamnt, 2);
+                                           
+                                              
+                                                
+                                                if (mainfee.FS_Percentage== tick.T_Ecpercent && mainfee.FS_Amount== tick.T_EcAmount)
+                                                {
+                                                    customizefee = false;
+                                                   
+                                                }
+                                                else
+                                                {
+                                                    customizefee = true;
+                                                   
+                                                }
+                                              if(oldamount==tick.TotalPrice)
+                                                {
+                                                    customizeamt = false;
+                                                }
+                                                else
+                                                {
+                                                    customizeamt = true;
+                                                }
+
+                                              if(customizefee==true || customizeamt == true)
+                                                {
+                                                    tick.T_Customize = "1";
+                                                }
+                                                else
+                                                {
+                                                    tick.T_Customize = "0";
+                                                }
+                                                if (tick.TicketTypeID == 3)
+                                                {
+                                                    if (tick.Customer_Fee > 0)
+                                                    {
+                                                        tick.T_Customize = "1";
+
+                                                    }
+                                                }
+
+
+                                                ticket.T_Customize = tick.T_Customize;
+
+                                                ticket.T_EcAmount = tick.T_EcAmount;
+                                                ticket.T_Ecpercent = tick.T_Ecpercent;
+                                            }
+
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                       
                                         ticket.E_Id = lEventId;
                                         ticket.TicketTypeID = tick.TicketTypeID;
                                         ticket.T_name = tick.T_name;
@@ -1812,8 +2019,12 @@ namespace EventCombo.Controllers
                                         ticket.T_Disable = tick.T_Disable;
                                         ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
                                         ticket.T_Displayremaining = tick.T_Displayremaining;
-                                        ticket.EC_Fee = tick.EC_Fee;
-                                        ticket.Customer_Fee = tick.Customer_Fee;
+                                        if (tick.Isadmin == "Y")
+                                        {
+                                            ticket.EC_Fee = tick.EC_Fee;
+                                            ticket.Customer_Fee = tick.Customer_Fee;
+                                        }
+                                     
                                         ticket.TotalPrice = tick.TotalPrice;
                                         ticket.T_Discount = tick.T_Discount;
                                         if (tick.T_Id == 0)

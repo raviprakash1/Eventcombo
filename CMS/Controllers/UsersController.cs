@@ -205,7 +205,7 @@ namespace CMS.Controllers
                 var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
                                      join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
                                      orderby Pr.FirstName ascending
-                                       select new UsersTemplate
+                                    select new UsersTemplate
                                      {
                                          EMail = UserTemp.Email,
                                          UserName = UserTemp.UserName,
@@ -222,7 +222,6 @@ namespace CMS.Controllers
                                          MerchantId= Pr.Merchant.Trim()=="Y"?"Yes":"No",
                                          UserStatusId= Pr.UserStatus.Trim()=="Y"?"Enable":"Disable",
                                          Ipcountry=Pr.Ipcountry
-                                        
                                      }
                                     );
 

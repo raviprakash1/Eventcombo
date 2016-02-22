@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace EventCombo.Models
 {
+    [MetadataType(typeof(Ticket))]
+    public partial class Ticket
+    {
+      public string Isadmin { get; set; }
+        public string hdecfee { get; set; }
+        public string hdcustomerfee { get; set; }
+        public string ecfeepercent { get; set; }
+        public string ecfeeamount { get; set; }
+    }
     public class TicketPayment
     {
         public string Imageurl{get;set;}
