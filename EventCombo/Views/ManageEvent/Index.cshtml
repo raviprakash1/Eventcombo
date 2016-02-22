@@ -150,6 +150,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad bor_line"></div>
+
                 <div class="col-sm-12 no_pad pt10 pb10">
                     <div class="col-sm-6 col-xs-12 no_pad">
 @if (Model.Eventcancel != "Y")
@@ -244,12 +245,14 @@ else
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad bor_line"></div>
+                <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad mt10">
                     <div class="col-sm-12 col-xs-12 no_pad">
                         <div class="col-sm-6 col-xs-12 no_pad for_total">
                             <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">@TempData["TicketSalePer"]% Ticket Sold </p>
                             <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Sales Report</a></p>
-                            <div class="col-sm-12 col-xs-12 mb10 no_pad">
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                               
                                     <figure id="tickets_sold_graph">
                                         <div class="tickets_sold_paid curved-left" style="width: @TempData["PaidTicket"]%;"></div>
                                         <div class="tickets_sold_free" style="width: @TempData["FreeTicket"]%;"></div>
@@ -258,7 +261,7 @@ else
                                         @*<figcaption>@TempData["TicketSalePer"]%</figcaption>*@
                                         <div class="tickets_total_tic">Total : @TempData["TotalQty"]</div>
                                     </figure>
-                                <dl id="tickets_sold_legend">
+                                <dl class="mng_dl" id="tickets_sold_legend">
                                     <dt class="tickets_sold_paid">
                                         Paid Tickets 1%
                                     </dt>
@@ -271,28 +274,35 @@ else
 
 
                             </div>
-                            <div class="col-sm-12 col-xs-12 no_pad">
-                                <canvas id="cnSaleQty" ></canvas>
-                                <input id="btDaySale" type="button" value="1 Day" />
-                                <input id="btWeekSale" type="button" value="Week" />
-                                <input id="btMonthSale" type="button" value="Month" />
-                                <input id="btYearSale" type="button" value="Year" />
+                           
+                            <div class="col-sm-12 col-xs-12 no_pad grp_white">
+                                <div class="col-sm-12 text-right">
+                                    <input class="btn graph_day_mnth_btn" id="btDaySale" type="button" value="1 Day" />
+                                    <input class="btn graph_day_mnth_btn" id="btWeekSale" type="button" value="Week" />
+                                    <input class="btn graph_day_mnth_btn" id="btMonthSale" type="button" value="Month" />
+                                    <input class="btn graph_day_mnth_btn" id="btYearSale" type="button" value="Year" />
+                                </div>
+                                <canvas class="" id="cnSaleQty" ></canvas>
+                                
                                 @*<img src="/Images/gr1.png">*@
                             </div>
 
-                            <div class="col-sm-12 col-xs-12 no_pad for_total">
+                            <div class="col-sm-12 col-xs-12 no_pad for_total mt10">
                                 <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Event Page Hits(@Model.EventHits.ToString()) </p>
                                 <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Promotional Tools</a></p>
-                                <div class="col-sm-12 col-xs-12 no_pad">
-                                    <canvas id="cnEventHit"></canvas>
-                                    <input id="btDay" type="button" value="1 Day" />
-                                    <input id="btWeek" type="button" value="Week" />
-                                    <input id="btMonth" type="button" value="Month" />
-                                    <input id="btYear" type="button" value="Year" />
-                                    @*<img src="/Images/gr1.png">*@
+                               
+                                    <div class="col-sm-12 col-xs-12 no_pad grp_white">
+                                        <div class="col-sm-12 col-xs-12 no_pad text-right">
+                                            <input class="btn graph_day_mnth_btn" id="btDay" type="button" value="1 Day" />
+                                            <input class="btn graph_day_mnth_btn" id="btWeek" type="button" value="Week" />
+                                            <input class="btn graph_day_mnth_btn" id="btMonth" type="button" value="Month" />
+                                            <input class="btn graph_day_mnth_btn" id="btYear" type="button" value="Year" />
+                                        </div>
+                                        <canvas id="cnEventHit"></canvas>
+                                        @*<img src="/Images/gr1.png">*@
+                                    </div>
+
                                 </div>
-                                
-                            </div>
 
                         </div>
                         <div class="col-sm-6 col-xs-12 no_pad ft_black">
@@ -347,6 +357,7 @@ else
                             </div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                     <div class="col-sm-12 no_pad mb20">
                         <ul class="nav nav-tabs ft18 cap_l recent_tab_ord">
                             <li class="active"><a data-toggle="tab" href="#home">Recent Order</a></li>

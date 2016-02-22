@@ -1180,3 +1180,15 @@ span.evnt_toltip{
  .dropheight .dropdown-menu.open .dropdown-menu.inner li a span.text{ width:100%; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
 /*Close NOV 10 -- 3 Tab Screen*/
 
+.mng_dl{ margin-bottom:0px !important; }
+.graph_day_mnth_btn {
+    background: none;
+    color: #c9c9c9;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: -6px;
+    padding: 0;
+}
+.btn.graph_day_mnth_btn:focus{ outline:none; box-shadow:none;color: #00cfff; }
+.graph_day_mnth_btn:hover{ color: #00cfff; }
+.grp_white{ background:#fff; padding:5px; }
