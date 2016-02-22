@@ -2597,14 +2597,12 @@
 
 
             $("#btAddOrg").click(function () {
-
                 @*var vTitle = $('#txtEventTitle').val().split(' ').join('-');
                 vTitle = vTitle.replace("[^a-zA-Z0-9_-]+", "");
                 alert(vTitle);
                 var vUrl = '@Url.RouteUrl("ViewEvent",new { strEventDs= "ß", strEventId ="~" })';
                 vUrl = vUrl.replace("%c3%9f", vTitle);
                 alert(vUrl)*@
-
                 if ($("#txtOrgnizer").val().trim() == '') {
 
                     //alert("Please enter valid organizer.");

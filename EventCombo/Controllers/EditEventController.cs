@@ -851,15 +851,15 @@ namespace EventCombo.Controllers
                         total = ObjTick.TotalPrice.ToString();
                         var ecfeenew = "";
                          
-                        customerfee = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
-                        if(string.IsNullOrEmpty(ObjTick.EC_Fee.ToString()))
+                        customerfee = String.Format("{0:#,###,###.00}", (ObjTick.Customer_Fee != null ? ObjTick.Customer_Fee :0));
+                        if(ObjTick.EC_Fee!=null)
                         {
                             var ecnewcal = ((decimal.Parse(Price) * feestruct.FS_Percentage) / 100) + feestruct.FS_Amount;
                             ecfeenew = String.Format("{0:#,###,###.00}", ecnewcal);
                         }
-                        ecfee= !string.IsNullOrEmpty(ObjTick.EC_Fee.ToString())? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee): ecfeenew;
-                        ecfeepercentage =!string.IsNullOrEmpty(ObjTick.T_Ecpercent.ToString())? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent): String.Format("{0:#,###,###.00}", feestruct.FS_Percentage);
-                        ecamount = !string.IsNullOrEmpty(ObjTick.T_EcAmount.ToString())?String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount): String.Format("{0:#,###,###.00}", feestruct.FS_Amount);
+                        ecfee = (ObjTick.EC_Fee != null ? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee) : ecfeenew);
+                        ecfeepercentage = (ObjTick.T_Ecpercent != null ? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent): String.Format("{0:#,###,###.00}", feestruct.FS_Percentage));
+                        ecamount = (ObjTick.T_EcAmount != null ? String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount): String.Format("{0:#,###,###.00}", feestruct.FS_Amount));
                         type = "Paid";
                     }
                     if (ObjTick.TicketTypeID == 3)
@@ -868,9 +868,9 @@ namespace EventCombo.Controllers
 
                         ecfee = "0";
                         fee = "0";
-                        customerfee = (!string.IsNullOrEmpty(ObjTick.Customer_Fee.ToString()) ? String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee) : "0");
-                        ecfeepercentage = (!string.IsNullOrEmpty(ObjTick.T_Ecpercent.ToString()) ? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent) : String.Format("{0:#,###,###.00}", feestruct.FS_Percentage));
-                        ecamount = (!string.IsNullOrEmpty(ObjTick.T_EcAmount.ToString()) ? String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount) : String.Format("{0:#,###,###.00}", feestruct.FS_Amount));
+                        customerfee = (ObjTick.Customer_Fee!=null ? String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee) : "0");
+                        ecfeepercentage = (ObjTick.T_Ecpercent != null ? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent) : String.Format("{0:#,###,###.00}", feestruct.FS_Percentage));
+                        ecamount = (ObjTick.T_EcAmount != null ? String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount) : String.Format("{0:#,###,###.00}", feestruct.FS_Amount));
                         type = "Donate";
                     }
 
