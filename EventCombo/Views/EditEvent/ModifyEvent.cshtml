@@ -643,11 +643,15 @@
 
                                         <span class="ev_row_icn"><i class="fa fa-ellipsis-v"></i></span>
                                         <input type="hidden" id="id_ticket_id-n" />
+                                        <input type="hidden" id="id_ecfeeback_id-n" />
+                                        <input type="hidden" id="id_ecpercentback_id-n" />
+                                        <input type="hidden" id="id_ecammountback_id-n" />
                                         <input type="hidden" id="id_order-n" />
                                         <input type="hidden" id="id_Tickettype-n" />
                                         <input type="hidden" id="id_fee-n" />
                                         <input type="hidden" id="id_total-n" />
-                                       
+                                        <input type="hidden" id="id_customize-n" />
+                                        
                                         <input type="hidden" value="0" id="id_feetype-n" />
                                         <input type="text" value="0" id="id_totalamt-n" hidden="hidden" />
                                         <input type="text" value="0" id="id_msg-n" hidden />
@@ -867,7 +871,7 @@
                                                                     <div class="form-group mt10">
                                                                         <div class="col-sm-6 ev_pad_l0">
                                                                             <div class="col-sm-12 no_pad">
-                                                                                <input type="checkbox" id="id_hideuntil-n" onchange="enablehideafteruntil(this.id)" />  <label class="label-control ev_tickt_lebel">Hide Untill</label>
+                                                                                <label class="label-control ev_tickt_lebel">Hide Untill</label>
                                                                             </div>
                                                                             <div class="col-sm-8 ev_pad_l0">
                                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_until_Date-n" onchange="changetext(this.id); " />
@@ -880,7 +884,7 @@
 
                                                                         <div class="col-sm-6 ev_pad_r0">
                                                                             <div class="col-sm-12 no_pad">
-                                                                                <input type="checkbox" id="id_hideafter-n" onchange="enablehideafteruntil(this.id)" /><label class="label-control ev_tickt_lebel">Hide After</label>
+                                                                                <label class="label-control ev_tickt_lebel">Hide After</label>
                                                                             </div>
                                                                             <div class="col-sm-8 ev_pad_l0">
                                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_after_Date-n" onchange="checkvalidDate(this.id)" />
@@ -989,6 +993,7 @@
                             <label class="label-control ev_tickt_lebel pl0">
                                 <input type="hidden" value="0" id="id_cc" />
                                 <input type="hidden" value="0" id="id_value" />
+                                 <input type="hidden" value="0" id="id_ec" />
                                 <input type="hidden" value="0" id="id_percentage" />
                                 @if (Model.Ticket_DAdress == "Y" || Model.Ticket_DAdress == "y")
                                 {
@@ -1527,11 +1532,27 @@ else
 
     </script>
 
-    
+
 
 
     <script>
         $(document).ready(function () {
+            var vVal = '@TempData["IsNewEvent"].ToString()';
+            if (vVal == "Y")
+            {
+                debugger;
+                $('#divaccsuc').css('display', 'block');
+                $('#divaccsuc').focus();
+                $('#diverroacc').css('display', 'none');
+                $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateEventsavedsucc"));
+            }
+            else if (vVal == "M")
+            {
+                $('#divaccsuc').css('display', 'block');
+                $('#divaccsuc').focus();
+                $('#diverroacc').css('display', 'none');
+                $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
+            }
 
             var input = document.getElementById('txtEventLocation');
             var Eloc = new google.maps.places.Autocomplete(input);
@@ -1560,7 +1581,7 @@ else
             });
 
             var isadmin="@Model.Isadmin";
-          
+
             if(isadmin=="N")
             {
                 var lEventId=$("#hdEventId").val();
@@ -1683,6 +1704,9 @@ else
                         {
                             for(var i=0;i<divlength;i++)
                             {
+
+
+
                                 $("#id_salestart-" + i).datepicker({
                                     format: "mm/dd/yyyy",
                                     minDate: "0",
@@ -1704,46 +1728,30 @@ else
                                 }).on('changeDate', function (ev) {
                                     $("#id_saleend-" + i).datepicker('hide');
                                 });
-                                var autountilhidedate=$("#id_auto_hide_until_Date-" + i).val();
-                                var autountilhidetime=$("#id_auto_hide_until_time-" + i).val();
-                                var autoafterhidedate=$("#id_auto_hide_after_Date-" + i).val();
-                                var autoafterhidetime=$("#id_auto_hide_after_Time-" + i).val();
 
-                                if(autountilhidedate!="" && autountilhidetime!="" )
-                                {
-                                    $("#id_auto_hide_until_Date-" + i).datepicker({
-                                        format: "mm/dd/yyyy",
-                                        minDate: "0",
-                                        onSelect: function () {
+                                $("#id_auto_hide_until_Date-" + i).datepicker({
+                                    format: "mm/dd/yyyy",
+                                    minDate: "0",
+                                    onSelect: function () {
 
-                                            this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                                        }
-                                    }).on('changeDate', function (ev) {
-                                        $("#id_auto_hide_until_Date-" + i).datepicker('hide');
-                                    });
-                                   $("#id_auto_hide_until_time-" + i).timepicker();
-                                }
-                                if(autoafterhidedate!="" && autoafterhidetime!="" )
-                                {
-                                    $("#id_auto_hide_after_Date-" + i).datepicker({
-                                        format: "mm/dd/yyyy",
-                                        minDate: "0",
-                                        onSelect: function () {
-
-                                            this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                                        }
-                                    }).on('changeDate', function (ev) {
-                                        $("#id_auto_hide_after_Date-" + i).datepicker('hide');
-                                    });
-                                   $("#id_auto_hide_after_Time-" + i).timepicker();
-                                }
-                             
-
+                                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                                    }
+                                }).on('changeDate', function (ev) {
+                                    $("#id_auto_hide_until_Date-" + i).datepicker('hide');
+                                });
+                                $("#id_auto_hide_after_Date-" + i).datepicker({
+                                    format: "mm/dd/yyyy",
+                                    minDate: "0",
+                                    onSelect: function () {
+                                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                                    }
+                                }).on('changeDate', function (ev) {
+                                    $("#id_auto_hide_after_Date-" + i).datepicker('hide');
+                                });
                                 $("#id_saletimestart-" + i).timepicker();
-
                                 $("#id_saletimeend-" + i).timepicker();
-                              
-                               
+                                $("#id_auto_hide_until_time-" + i).timepicker();
+                                $("#id_auto_hide_after_Time-" + i).timepicker();
                             }
 
                         }
@@ -1782,7 +1790,7 @@ else
                 }
             );
 
-       
+
             var privat="@Model.EventPrivacy";
             var privatefb="@Model.Private_ShareOnFB"
             var privateguest="@Model.Private_GuestOnly"
@@ -2318,9 +2326,10 @@ else
                 var total = 0;
                 var ecfeepercent=0;
                 var ecfeeamount=0;
+                var customize=0;
 
                 for (var i = 0; i < divlength; i++) {
-
+                    debugger;
                     if ($('#id_cost-' + i).css('display') == "block") {
                         TicketPrice = $('#id_cost-' + i).val().replace(',', '');
 
@@ -2341,6 +2350,55 @@ else
                     } else {
                         Auto_Schedule = 0;
                     }
+
+                    if ($('#id_Tickettype-' + i).val() == "Free") {
+                        total=0;
+                        TicketTypeID = 1
+
+                    } else if ($('#id_Tickettype-' + i).val() == "Paid") {
+                        total = $('#id_total-' + i).val();
+                        TicketTypeID = 2
+
+                    } else {
+                        TicketTypeID = 3
+                        var t_id=  $('#id_ticket_id-'+i).val();
+                        if(isadmin=="Y")
+                        {
+                            ecfee = $('#id_ecfee-'+i).html();
+                            customerfee = $('#id_customerfee-'+i).val();
+                            hdecfee=$('#hd_ecfee-'+i).val();
+                            hdcsfee=$('#hd_customerfee-'+i).val();
+                            ecfeepercent=$('#id_ecfeeper-'+i).val();
+                            ecfeeamount=$('#id_ecfeeamt-'+i).val();
+                            total=0;
+
+                        }else
+                        {
+                            if(t_id!=0)
+                            {
+                                ecfee=$('#id_ecfeeback_id-'+i).val();
+                              
+                                customerfee = $('#id_fee-'+i).val();
+                                ecfeepercent=$('#id_ecpercentback_id-'+i).val();;
+                                ecfeeamount=$('#id_ecammountback_id-'+i).val();;
+                                customize=$("#id_customize-"+i).val()
+
+                                total=0;
+
+                            }else
+                            {
+                                ecfee=0;
+                                customerfee = 0;
+                                ecfeepercent=$('#id_percentage').val();
+                                ecfeeamount=$('#id_value').val();;
+                                customize=0
+                            }
+                        }
+                    
+                     
+                    
+                      
+                    }
                     if($('#id_feestruct-'+i).css('display') == "block")
                     {
                         var val=$('#id_include_ticket_fees-' + i).val();
@@ -2355,15 +2413,35 @@ else
                             hdcsfee=$('#hd_customerfee-'+i).val();
                             ecfeepercent=$('#id_ecfeeper-'+i).val();
                             ecfeeamount=$('#id_ecfeeamt-'+i).val();
+                            customize=$("#id_customize-"+i).val();
 
                         }else
                         {
+
+                                
+                            var t_id=  $('#id_ticket_id-'+i).val();
+                            if(t_id!=0)
+                            {
+                                ecfee=$('#id_ecfeeback_id-'+i).val();
+                              
+                                customerfee = $('#id_fee-'+i).val();
+                                ecfeepercent=$('#id_ecpercentback_id-'+i).val();;
+                                ecfeeamount=$('#id_ecammountback_id-'+i).val();;
+                                customize=$("#id_customize-"+i).val()
+
+                            }else
+                            {
+
+                                ecfee=$('#id_fee-'+i).val();
+                                customerfee = $('#id_fee-'+i).val();
+                                ecfeepercent=$('#id_percentage').val();
+                                ecfeeamount=$('#id_value').val();;
+                                customize=0;
+                            }
                             hdecfee=0;
                             hdcsfee=0;
-                            ecfee=$('#id_fee-'+i).val();
-                            customerfee = $('#id_fee-'+i).val();
-                            ecfeepercent=0;
-                            ecfeeamount=0;
+                           
+                          
                         }
                         //if ($('#id_include_ticket_fees-' + i).val() == 0) {
                             
@@ -2375,18 +2453,7 @@ else
                         //}
                     }
                   
-                    if ($('#id_Tickettype-' + i).val() == "Free") {
-                        total=0;
-                        TicketTypeID = 1
-
-                    } else if ($('#id_Tickettype-' + i).val() == "Paid") {
-                        total = $('#id_total-' + i).val();
-                        TicketTypeID = 2
-
-                    } else {
-                        total=0;
-                        TicketTypeID = 3
-                    }
+                 
 
                     var Discount = $('#id_Discount-' + i).val().replace(',', '');
                     var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
@@ -2424,9 +2491,10 @@ else
                         TotalPrice: total,
                         hdecfee:hdecfee,
                         hdcustomerfee:hdcsfee,
-                        ecfeepercent:ecfeepercent,
-                        ecfeeamount:ecfeeamount,
-                        Isadmin:isadmin
+                        T_Ecpercent:ecfeepercent,
+                        T_EcAmount:ecfeeamount,
+                        Isadmin:isadmin,
+                        T_Customize:customize
 
 
                     });
@@ -2690,10 +2758,10 @@ else
 
                             if(type=="Save")
                             {
-                                $('#divaccsuc').css('display', 'block');
-                                $('#divaccsuc').focus();
-                                $('#diverroacc').css('display', 'none');
-                                $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
+                            //    $('#divaccsuc').css('display', 'block');
+                            //    $('#divaccsuc').focus();
+                            //    $('#diverroacc').css('display', 'none');
+                            //    $('#succaccmsg').html(ajaxsetup("CreateEvent", "CreateeventUpdated"));
                                 var isadmin="@Model.Isadmin";
                                 if(isadmin=="Y")
                                 {
@@ -2711,6 +2779,8 @@ else
                             //preview
                             if(type=="Preview")
                             {
+                                $('#divaccsuc').css('display', 'none');
+                                $('#diverroacc').css('display', 'none');
                                 var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
 
                                 window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
@@ -3781,12 +3851,11 @@ else
 
                     $('#id_auto_hide_until_Date-' + el).focus();
                     $('#id_auto_hide_until_Date-' + el).val("");
-                    //$('#id_auto_hide_after_Date-' + el).val("");
-                }
+                    $('#id_auto_hide_after_Date-' + el).val("");
 
-                //} else {
-                //    $('#id_auto_hide_after_Date-' + el).val($('#' + e).val());
-                //}
+                } else {
+                    $('#id_auto_hide_after_Date-' + el).val($('#' + e).val());
+                }
 
             }
             if (al == "id_salestart") {
@@ -3810,72 +3879,6 @@ else
 
 
         }
-        function enablehideafteruntil(e)
-        {
-            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            var al = e.substr(0, e.indexOf('-'));
-            if (al == "id_hideafter") {
-                if ($('#' + e).is(":checked") == true) {
-                    $("#id_auto_hide_after_Date-" + el).removeAttr("readonly");
-                    $("#id_auto_hide_after_Time-" + el).removeAttr("readonly");
-                    $("#id_auto_hide_after_Date-" + el).datepicker({
-                        format: "mm/dd/yyyy",
-                        minDate: "0",
-                        onSelect: function () {
-
-                            this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                        }
-                    }).on('changeDate', function (ev) {
-                        $("#id_auto_hide_after_Date-" + el).datepicker('hide');
-                    });
-                    $("#id_auto_hide_after_Time-" + el).timepicker();
-                    $("#id_auto_hide_after_Time-" + el).val("7:00pm");
-                    $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", 0);
-                    $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", null);
-                } else {
-                    $("#id_auto_hide_after_Date-" + el).val("");
-                    $("#id_auto_hide_after_Time-" + el).val("");
-                    $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
-                    $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
-                    $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
-                    $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
-                }
-            }
-
-            if (al == "id_hideuntil")
-            {
-                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-                var al = e.substr(0, e.indexOf('-'));
-                if ($('#' + e).is(":checked") == true) {
-                    $("#id_auto_hide_until_Date-" + el).removeAttr("readonly");
-                    $("#id_auto_hide_until_time-" + el).removeAttr("readonly");
-                    $("#id_auto_hide_until_time-" + el).val("7:00pm");
-                    $("#id_auto_hide_until_Date-" + el).datepicker({
-                        format: "mm/dd/yyyy",
-                        minDate: "0",
-                        onSelect: function () {
-
-                            this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                        }
-                    }).on('changeDate', function (ev) {
-                        $("#id_auto_hide_until_Date-" + el).datepicker('hide');
-                    });
-                    $("#id_auto_hide_until_time-" + el).timepicker();
-                    $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", 0);
-                    $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", null);
-                } else {
-                    $("#id_auto_hide_until_Date-" + el).val("");
-                    $("#id_auto_hide_until_time-" + el).val("");
-                    $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
-                    $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
-                    $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
-                    $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
-                }
-            }
-
-        }
-
-
         $(document).ready(function () {
             //$("#id_cost-n").each(function () {
             //    $(this).format({ format: "#,###", locale: "us" });
@@ -3924,16 +3927,14 @@ else
                     }
                 }
             });
-            $.ajax({
+              $.ajax({
                 url: '@Url.Action("returnfees", "Event")',
                 success: function (data) {
 
                     for (var i = 0; i < data.length; ++i) {
-                        $('#id_percentage').val(data[i].FS_Percentage);
-                        $('#id_value').val(data[i].FS_Amount);
                         //if (data[i].FeeType == "Customer Fee") {
 
-                        //    $('#id_cc').val(data[i].FeeAmount);
+                        //    $('#id_cc').val(data[i].FS_Percentage);
 
 
 
@@ -3941,10 +3942,11 @@ else
 
                         //if (data[i].FeeType == "EC Fee") {
 
-                        //    $('#id_ec').val(data[i].FeeAmount);
+                        $('#id_percentage').val(data[i].FS_Percentage);
 
                         //}
 
+                        $('#id_value').val(data[i].FS_Amount);
 
                     }
                 }
@@ -4043,7 +4045,55 @@ else
             //.toFixed() method will roundoff the final sum to 2 decimal places
             $("#id_totalqty").html(sum);
         }
-      
+
+        function feechange(e) {
+            debugger;
+            var fee = 0;
+            var total = 0;
+            var dropval = $('#' + e).val();
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var amount = parseFloat($('#id_cost-' + el).val().replace(',',''));
+            if (amount > 999999.99) {
+
+
+            }
+            if (dropval.trim() == '0') {
+
+                var ccp = $('#id_percentage').val();
+                var ccpamount = (((amount * ccp) / 100) + parseFloat($('#id_value').val())).toFixed(2);
+                //var ccpamount = ((amount * ccp) / 100).toFixed(2);
+
+                var ccpfinal = (parseFloat(ccpamount) + parseFloat(amount)).toFixed(2);
+
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Fee      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;       $" + ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                $('#id_buyerprice-' + el).html("$" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+                $('#id_tooltip-' + el).html(msg);
+                $('#id_feetype-' + el).val(0);
+                fee = ccpamount;
+                total = ccpfinal;
+
+            }
+            if (dropval.trim() == '1') {
+
+                var ccp = $('#id_percentage').val();
+                var ccpamount = (((amount * ccp) / 100) + parseFloat($('#id_value').val())).toFixed(2);
+                var ccpfinal = parseFloat(amount).toFixed(2);
+                $('#id_buyerprice-' + el).html("$" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ "<br />" + "Fee     &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;  &nbsp;&nbsp;    $" + ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "<br />" + "Buyer(s) Total    &nbsp;&nbsp; &nbsp;      $" + ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                $('#id_tooltip-' + el).html(msg);
+                //$('#id_tooltip-' + el).html(msg);
+                $('#id_feetype-' + el).val(1);
+                fee = ccpamount;
+                total = ccpfinal;
+
+            }
+
+            $("#id_fee-" + el).val(fee);
+            $("#id_total-" + el).val(total);
+
+        }
+
         function checkprice(el, evt, id) {
 
 
@@ -4087,7 +4137,7 @@ else
         }
         function reflectfeechange(id)
         {
-           
+
             var fee=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
             var price=parseFloat(parseFloat($('#id_cost-' + num).val().replace(',','')).toFixed(2));
@@ -4128,25 +4178,51 @@ else
         function changeinecfee(id)
         {
             var alstart = id.substr(0, id.indexOf('-'));
-            if(alstart=="id_ecfeeper")
+            var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+            var tickettype=$('#id_Tickettype-' + num).val();
+            if(tickettype=="Paid")
             {
-                var feepercentage=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
-                var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-                var amount=parseFloat(parseFloat($('#id_ecfeeamt-'+num).val().replace(',','')).toFixed(2));
-                var price= parseFloat( $('#id_cost-' + num).val().replace(',','')).toFixed(2);
-                var fee=(((price*feepercentage)/100)+amount).toFixed(2);
-                $('#id_ecfee-'+num).html(fee);
-            }
-            if(alstart=="id_ecfeeamt")
-            {
-                var feeamount=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
-                var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+                if(alstart=="id_ecfeeper")
+                {
+                    var feepercentage=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
+                    if(feepercentage>0)
+                    {
 
-                var feepercentage=parseFloat(parseFloat($('#id_ecfeeper-'+num).val().replace(',','')).toFixed(2));
-                var price= parseFloat( $('#id_cost-' + num).val().replace(',','')).toFixed(2);
-                var fee=(((price*feepercentage)/100)+feeamount).toFixed(2);
-                $('#id_ecfee-'+num).html(fee);
-        
+                        var amount=parseFloat(parseFloat($('#id_ecfeeamt-'+num).val().replace(',','')).toFixed(2));
+                        if(amount>0)
+                        {
+                            var price= parseFloat( $('#id_cost-' + num).val().replace(',','')).toFixed(2);
+                            if(price>0)
+                            {
+                                var fee=(((price*feepercentage)/100)+amount).toFixed(2);
+                                $('#id_ecfee-'+num).html(fee);
+                            }
+                        }
+                    }
+                }
+                if(alstart=="id_ecfeeamt")
+                {
+                    var feeamount=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
+                    if(feeamount>0)
+                    {
+                        var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
+
+                        var feepercentage=parseFloat(parseFloat($('#id_ecfeeper-'+num).val().replace(',','')).toFixed(2));
+                        if(feepercentage>0)
+                        {
+                            var price= parseFloat( $('#id_cost-' + num).val().replace(',','')).toFixed(2);
+                            if(price>0)
+                            {
+                                var fee=(((price*feepercentage)/100)+feeamount).toFixed(2);
+                                $('#id_ecfee-'+num).html(fee);
+                            }
+                        }
+                    }
+
+                }
+            }else
+            {
+                $('#id_ecfee-'+num).html("0");
             }
 
         }
@@ -4168,14 +4244,14 @@ else
             var tid=  $('#id_ticket_id-' + el).val();
             if(tid!=0)
             {
-                ccp=parseFloat($('#id_fee-' + el).val()).toFixed(2); 
+                ccp=parseFloat($('#id_fee-' + el).val()).toFixed(2);
                 ccpamount=ccp;
             }else
             {
                 if(isadmin=="Y")
                 {
                     var feeamount=$('#id_customerfee-'+el).val();
-                    
+
                     if(feeamount!="")
                     {
                         ccp = parseFloat($('#id_customerfee-'+el).val()).toFixed(2);
@@ -4217,7 +4293,7 @@ else
                 total = ccpfinal;
 
             }
-        
+
             if(isadmin=="Y")
             {
                 if($('#id_ecfee-' + el).val()=="")
@@ -4234,7 +4310,7 @@ else
         }
         function changefee(id, evt) {
             debugger;
-           
+
             var price = parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
             var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
             var discount =parseFloat( parseFloat($('#id_Discount-' + num).val().replace(',','')).toFixed(2));
@@ -4270,7 +4346,7 @@ else
                 $('#id_lblprice-' + num).css('display', 'none');
 
             }
-           
+
 
 
             if (isNaN(price)) {
@@ -4287,43 +4363,64 @@ else
                 $('#id_feestruct-' + num).css('display', 'block');
                 var val = $("#id_feetype-0").val();
                 var fee = 0;
+
                 var tid=  $('#id_ticket_id-' + num).val();
-             
+
                 if(tid!=0)
                 {
-                    
+
                     if(isadmin=="Y")
                     {
-                        
+
                         var hdchange=$('#hd_customchange-'+ num).val();
-                       
+                    
                         if(hdchange=="1")
                         {
-                            ccp=parseFloat($('#id_customerfee-'+num).val()).toFixed(2); 
+                            ccp=parseFloat($('#id_customerfee-'+num).val()).toFixed(2);
                             ccpamount=ccp;
                         }else
                         {
-                            ccp = parseFloat($('#id_percentage').val()).toFixed(2);
-                            ccpamount = (((price * ccp) / 100)+parseFloat($('#id_value').val())).toFixed(2);
+                            var customize=$('#id_customize-'+ num).val();
+                            if(customize==1)
+                            {
+                                ccp=parseFloat($('#id_customerfee-'+num).val()).toFixed(2);
+                                ccpamount=ccp;
+                            }else
+                            {
+
+                                ccp = parseFloat($('#id_percentage').val()).toFixed(2);
+                                ccpamount = parseFloat(((price * ccp) / 100)+parseFloat($('#id_value').val())).toFixed(2);
+                            }
                         }
-                       
+
                     }else
                     {
-                        ccp = parseFloat($('#id_percentage').val()).toFixed(2);
-                        ccpamount = (((price * ccp) / 100)+parseFloat($('#id_value').val())).toFixed(2);
+                        var customize=$('#id_customize-'+ num).val();
+                        if(customize==1)
+                        {
+                            ccp=parseFloat($('#id_customerfee-'+num).val()).toFixed(2);
+                            ccpamount=ccp;
+                        }else
+                        {
+
+                            ccp = parseFloat($('#id_percentage').val()).toFixed(2);
+                            ccpamount = parseFloat(((price * ccp) / 100)+parseFloat($('#id_value').val())).toFixed(2);
+                        }
+
                     }
                 }else
                 {
+
                     ccp = parseFloat($('#id_percentage').val()).toFixed(2);
                     ccpamount = (((price * ccp) / 100)+parseFloat($('#id_value').val())).toFixed(2);
                 }
-              
-               
-             
-                if (val == 0) {
-                  
 
-                    
+
+
+                if (val == 0) {
+
+
+
                     ccpamount = ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     ccpfinal = (parseFloat(ccpamount) + parseFloat(price)).toFixed(2);
                     ccpfinal = ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -4335,8 +4432,10 @@ else
                     fee = ccpamount;
                 }
                 if (val == 1) {
-                  
-                   
+
+                    ccp = parseFloat($('#id_percentage').val()).toFixed(2);
+                    ccpamount = ((price * ccp) / 100).toFixed(2);
+
                     ccpamount = ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     ccpfinal = price;
                     ccpfinal = ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -4347,14 +4446,14 @@ else
                     total = ccpfinal;
                     fee = ccpamount;
                 }
-              
+
                 if(isadmin=="Y")
                 {
                     //if($('#id_ecfee-' + num).val()=="")
                     //{
-                       
+
                     //}
-                    $('#id_ecfee-' + num).val(ccpamount.replace(',', ''));
+                    $('#id_ecfee-' + num).html(ccpamount.replace(',', ''));
                     $('#id_customerfee-' + num).val(ccpamount.replace(',', ''));
 
 
@@ -4792,6 +4891,16 @@ else
 
 
             $('#MasterDiv').append(data);
+            var isadmin="@Model.Isadmin";
+
+            if(isadmin=="Y")
+            {
+
+                $("#id_ecfeeper-"+divlength).val($("#id_percentage").val());
+                $("#id_ecfeeamt-"+divlength).val($("#id_value").val());
+                $("#id_ecfee-"+divlength).val("0");
+
+            }
             $(".donateshow-" + divlength).css('display', 'block');
             $(".normalticket-" + divlength).css('display', 'none');
             $(".paidticket-" + divlength).css('display', 'block');
@@ -4830,34 +4939,34 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-            //$("#id_auto_hide_until_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
+            $("#id_auto_hide_until_Date-" + divlength).datepicker({
+                format: "mm/dd/yyyy",
+                minDate: "0",
+                onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            //});
-            //$("#id_auto_hide_after_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
+                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                }
+            }).on('changeDate', function (ev) {
+                $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
+            });
+            $("#id_auto_hide_after_Date-" + divlength).datepicker({
+                format: "mm/dd/yyyy",
+                minDate: "0",
+                onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            //});
+                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                }
+            }).on('changeDate', function (ev) {
+                $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
+            });
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-            //$("#id_auto_hide_until_time-" + divlength).timepicker();
-            //$("#id_auto_hide_after_Time-" + divlength).timepicker();
-            //$("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            //$("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
+            $("#id_auto_hide_until_time-" + divlength).timepicker();
+            $("#id_auto_hide_after_Time-" + divlength).timepicker();
+            $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
+            $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
@@ -4904,6 +5013,17 @@ else
 
 
             $(data).appendTo('#MasterDiv');
+
+            var isadmin="@Model.Isadmin";
+
+            if(isadmin=="Y")
+            {
+
+                $("#id_ecfeeper-"+divlength).val($("#id_percentage").val());
+                $("#id_ecfeeamt-"+divlength).val($("#id_value").val());
+
+            }
+
             $(".donateshow-" + divlength).css('display', 'none');
             $(".normalticket-" + divlength).css('display', 'block');
             $(".paidticket-" + divlength).css('display', 'none');
@@ -4940,34 +5060,34 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-            //$("#id_auto_hide_until_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
+            $("#id_auto_hide_until_Date-" + divlength).datepicker({
+                format: "mm/dd/yyyy",
+                minDate: "0",
+                onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            //});
-            //$("#id_auto_hide_after_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
+                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                }
+            }).on('changeDate', function (ev) {
+                $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
+            });
+            $("#id_auto_hide_after_Date-" + divlength).datepicker({
+                format: "mm/dd/yyyy",
+                minDate: "0",
+                onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            //});
+                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                }
+            }).on('changeDate', function (ev) {
+                $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
+            });
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-            //$("#id_auto_hide_until_time-" + divlength).timepicker();
-            //$("#id_auto_hide_after_Time-" + divlength).timepicker();
-            //$("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            //$("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
+            $("#id_auto_hide_until_time-" + divlength).timepicker();
+            $("#id_auto_hide_after_Time-" + divlength).timepicker();
+            $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
+            $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
@@ -5050,34 +5170,34 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-            //$("#id_auto_hide_until_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
+            $("#id_auto_hide_until_Date-" + divlength).datepicker({
+                format: "mm/dd/yyyy",
+                minDate: "0",
+                onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            //});
-            //$("#id_auto_hide_after_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
+                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                }
+            }).on('changeDate', function (ev) {
+                $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
+            });
+            $("#id_auto_hide_after_Date-" + divlength).datepicker({
+                format: "mm/dd/yyyy",
+                minDate: "0",
+                onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            //});
+                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                }
+            }).on('changeDate', function (ev) {
+                $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
+            });
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-            //$("#id_auto_hide_until_time-" + divlength).timepicker();
-            //$("#id_auto_hide_after_Time-" + divlength).timepicker();
-            //$("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            //$("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
+            $("#id_auto_hide_until_time-" + divlength).timepicker();
+            $("#id_auto_hide_after_Time-" + divlength).timepicker();
+            $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
+            $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
@@ -5430,23 +5550,23 @@ else
 
 
                     $('#id_auto_hide_after_Date-' + el).focus();
-                    $('#id_auto_hide_after_Date-' + el).val("");
+                    $('#id_auto_hide_after_Date-' + el).val(startdate);
 
 
                 }
 
-                //errorMsg = compare(startdate, enddate);
+                errorMsg = compare(startdate, enddate);
 
-                //if (errorMsg != "") {
-
-
-
-                //    $('#id_auto_hide_after_Date-' + el).focus();
-                //    $('#id_auto_hide_after_Date-' + el).val(startdate);
-                //    // field.value = "";
+                if (errorMsg != "") {
 
 
-                //}
+
+                    $('#id_auto_hide_after_Date-' + el).focus();
+                    $('#id_auto_hide_after_Date-' + el).val(startdate);
+                    // field.value = "";
+
+
+                }
 
 
             }
@@ -5534,26 +5654,26 @@ else
                 $("#id_auto_hide_type_1-" + el).prop('checked', false);
                 $("#id_HideuntDiv-" + el).css("display", "none");
                 $("#id_ticketshidden-" + el).prop('checked', true);
-                //$("#id_auto_hide_until_Date-" + el).datepicker({
-                //    format: "mm/dd/yyyy",
-                //    minDate: "0",
-                //    onSelect: function () {
+                $("#id_auto_hide_until_Date-" + el).datepicker({
+                    format: "mm/dd/yyyy",
+                    minDate: "0",
+                    onSelect: function () {
 
-                //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                //    }
-                //}).on('changeDate', function (ev) {
-                //    $("#id_auto_hide_until_Date-" + el).datepicker('hide');
-                //});
-                //$("#id_auto_hide_after_Date-" + el).datepicker({
-                //    format: "mm/dd/yyyy",
-                //    minDate: "0",
-                //    onSelect: function () {
+                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                    }
+                }).on('changeDate', function (ev) {
+                    $("#id_auto_hide_until_Date-" + el).datepicker('hide');
+                });
+                $("#id_auto_hide_after_Date-" + el).datepicker({
+                    format: "mm/dd/yyyy",
+                    minDate: "0",
+                    onSelect: function () {
 
-                //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                //    }
-                //}).on('changeDate', function (ev) {
-                //    $("#id_auto_hide_after_Date-" + el).datepicker('hide');
-                //});
+                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                    }
+                }).on('changeDate', function (ev) {
+                    $("#id_auto_hide_after_Date-" + el).datepicker('hide');
+                });
             }
             if (al == "id_RemvTkt") {
                 $("#id_auto_hide_type_0-" + el).prop('checked', true);
@@ -5567,6 +5687,7 @@ else
                 $("#id_auto_hide_until_time-" + el).val('');
                 $("#id_auto_hide_after_Date-" + el).val('');
                 $("#id_auto_hide_after_Time-" + el).val('');
+
                 $("#id_hideuntil-"+ el).attr("checked", false);
                 $("#id_hideafter-"+ el).attr("checked", false);
                 $("#id_hideuntil-" + el).attr("checked", false);
@@ -5581,22 +5702,11 @@ else
                 $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
 
 
+
             }
             if (al == "id_CusdateTime") {
                 $("#id_HideuntDiv-" + el).css("display", "block");
                 $("#id_auto_hide_type_0-" + el).prop('checked', false);
-                $("#id_hideuntil-" + el).attr("checked", false);
-                $("#id_hideafter-" + el).attr("checked", false);
-                $("#id_hideuntil-" + el).attr("checked", false);
-                $("#id_hideafter-" + el).attr("checked", false);
-                $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
-                $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
-                $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
-                $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
-                $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
-                $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
-                $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
-                $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
             }
             if (al == "id_TktnotSale") {
                 $("#id_HideuntDiv-" + el).css("display", "none");
@@ -5605,6 +5715,7 @@ else
                 $("#id_auto_hide_until_time-" + el).val('');
                 $("#id_auto_hide_after_Date-" + el).val('');
                 $("#id_auto_hide_after_Time-" + el).val('');
+
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
                 $("#id_hideuntil-" + el).attr("checked", false);
@@ -5719,7 +5830,6 @@ else
             var countprice = 0;
             var countmax = 0;
             var countdiscount = 0;
-            var hidecount = 0;
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
@@ -5798,27 +5908,7 @@ else
                         } 
                     }
 
-                    if ($('#id_ticketshidden-' + i).is(":checked"))
-                    {
-                        if($('#id_hideuntil-'+i).is(":checked"))
-                        {
-                            if($('#id_auto_hide_until_Date-'+i).val()=="" || $("#id_auto_hide_until_time-"+i).val()=="")
-                            {
-                                $('#id_auto_hide_until_Date-' + i).addClass('err-bor');
-                                $("#id_auto_hide_until_time-" + i).addClass('err-bor');
-                                hidecount++;
-                            }
 
-                        }
-                       
-                        if ($('#id_hideafter-' + i).is(":checked")) {
-                            if ($('#id_auto_hide_after_Date-' + i).val() == "" || $("#id_auto_hide_after_Time-" + i).val() == "") {
-                                $('#id_auto_hide_after_Date-' + i).addClass('err-bor');
-                                $("#id_auto_hide_after_Time-" + i).addClass('err-bor');
-                                hidecount++;
-                            }
-                        }
-                    }
                     var min =parseFloat( $('#id_min_ticket-' + i).val());
                     var max =parseFloat( $('#id_max_ticket-' + i).val());
                     var discount = parseFloat($('#id_Discount-' + i).val().replace(',', ''));
@@ -5892,7 +5982,7 @@ else
             if (countqty > 0) {
                 msg += ajaxsetup("CreateEvent", "CreateEventQtyValidateUI") + "<br/>";
             }
-            if (countdesc > 0 || hidecount > 0)
+            if (countdesc > 0)
             {
                 msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
 

@@ -65,6 +65,33 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Confirm Msg OK Modal Box -->
+    <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
+
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+
+                        <h4 class="msg" id="hId"></h4>
+                    </div>
+                    <div class="modal-footer msg-action-btn ok">
+                        <button type="submit" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
+                        <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
+                    </div>
+                </form>
+                <input type="hidden" id="hdUserId" value="" />
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
+    <div>
+        <a class="td-btn" id="btOk" type="button" href="#confirm-delete-ok" data-toggle="modal" style="display:none">
+
+        </a>
+    </div>
+    <!-- Confirm Msg OK Modal Box -->
 </section>
 
 
@@ -105,18 +132,16 @@
 
     });
     $(document).ready(function () {
-        $("#btnsave").click(function () {
+        $("#btnYes").click(function () {
             var msg = validatemain();
-          
-            if (msg != "")
-            {
+
+            if (msg != "") {
                 $("#diverr").show();
                 $("#iderrr").html(msg);
                 return false;
             }
             var apply = "";
-            if ($("#id_appytoall").is(":checked"))
-            {
+            if ($("#id_appytoall").is(":checked")) {
                 apply = "A";
             }
             if ($("#id_appycustomise").is(":checked")) {
@@ -145,6 +170,19 @@
                 }
             });
         });
+
+
+        });
+    $("#btnsave").click(function () {
+        var apply = "";
+        if ($("#id_appytoall").is(":checked")) {
+            apply = "Do you want to  apply to all events ";
+        }
+        if ($("#id_appycustomise").is(":checked")) {
+            apply = "Do you want to  apply to only non customised events ";
+        }
+        $("#hId").html(apply);
+        $("#btOk").click();
 
     });
     function validatemain() {
