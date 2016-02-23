@@ -863,16 +863,17 @@ namespace EventCombo.Controllers
 
                         total = ObjTick.TotalPrice.ToString();
                         var ecfeenew = "";
-                         
-                        customerfee = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
+                        customerfee = String.Format("{0:#,###,###.00}", (ObjTick.Customer_Fee != null ? ObjTick.Customer_Fee :0));
                         if(ObjTick.EC_Fee!=null)
                         {
                             var ecnewcal = ((decimal.Parse(Price) * percent) / 100) + amount;
                             ecfeenew = String.Format("{0:#,###,###.00}", ecnewcal);
                         }
+
                         ecfee= (ObjTick.EC_Fee!=null? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee): ecfeenew);
                         ecfeepercentage =(ObjTick.T_Ecpercent!=null? String.Format("{0:#,###,###.00}", percent): String.Format("{0:#,###,###.00}", percent));
                         ecamount = (ObjTick.T_EcAmount!=null?String.Format("{0:#,###,###.00}", amount): String.Format("{0:#,###,###.00}", amount));
+
                         type = "Paid";
                     }
                     if (ObjTick.TicketTypeID == 3)
@@ -881,9 +882,11 @@ namespace EventCombo.Controllers
 
                         ecfee = "0";
                         fee = "0";
+
                         customerfee = (ObjTick.Customer_Fee!=null? String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee) : "0");
                         ecfeepercentage = (ObjTick.T_Ecpercent!=null ? String.Format("{0:#,###,###.00}", percent) : String.Format("{0:#,###,###.00}", percent));
                         ecamount = (ObjTick.T_EcAmount!=null? String.Format("{0:#,###,###.00}", amount) : String.Format("{0:#,###,###.00}",amount));
+
                         type = "Donate";
                     }
 

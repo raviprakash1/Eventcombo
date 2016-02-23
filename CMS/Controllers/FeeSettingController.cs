@@ -56,7 +56,8 @@ namespace CMS.Controllers
                 {
                     fee.percentage = "5";
                 }
-            }else
+            }
+            else
             {
                 fee.value = "0.99";
                 fee.percentage = "5";
@@ -64,7 +65,7 @@ namespace CMS.Controllers
             return View(fee);
         }
 
-public string savefee(FeeSetting model)
+        public string savefee(FeeSetting model)
         {
             var msg = "";
             try

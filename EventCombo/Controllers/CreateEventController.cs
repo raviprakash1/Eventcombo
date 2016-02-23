@@ -21,7 +21,7 @@ using System.Net;
 
 namespace EventCombo.Controllers
 {
- 
+    [OutputCacheAttribute(VaryByParam = "None", Duration = 0, NoStore = true)]
     public class CreateEventController : Controller
     {
         string facebook_urlAuthorize_base = "https://graph.facebook.com/oauth/authorize";
