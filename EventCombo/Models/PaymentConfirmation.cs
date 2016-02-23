@@ -16,6 +16,7 @@ namespace EventCombo.Models
         public string Email { get; set; }
         public string Eventid { get; set; }
         public string Organiserid { get; set; }
+        public string Guestlist { get; internal set; }
     }
 
     public class paymentdate

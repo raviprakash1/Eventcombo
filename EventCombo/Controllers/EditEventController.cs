@@ -850,7 +850,6 @@ namespace EventCombo.Controllers
 
                         total = ObjTick.TotalPrice.ToString();
                         var ecfeenew = "";
-                         
                         customerfee = String.Format("{0:#,###,###.00}", (ObjTick.Customer_Fee != null ? ObjTick.Customer_Fee :0));
                         if(ObjTick.EC_Fee!=null)
                         {
@@ -878,14 +877,14 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='col-sm-10 col-xs-12' ><div class='col-sm-1 text-center no_pad ev_row_mov'>");
                     strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");
                     strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value='"+ObjTick.T_Id+"'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_ecfeeback_id-" + j + "'  value='" + ObjTick.EC_Fee + "'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_ecpercentback_id-" + j + "'  value='" + ObjTick.T_Ecpercent + "'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_ecammountback_id-" + j + "'  value='" + ObjTick.T_EcAmount + "'/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ecfeeback_id-" + j + "'  value='" + ecfee + "'/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ecpercentback_id-" + j + "'  value='" + ecfeepercentage + "'/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ecammountback_id-" + j + "'  value='" + ecamount + "'/>");
                     strticketHtml.Append("<input type='hidden' id='id_order-" + j + "' value='" + ObjTick.T_order + "' />");
                     strticketHtml.Append("<input type='hidden' id='id_Tickettype-" + j + "' value=" + type + " />");
                     strticketHtml.Append("<input type='hidden' id=id_fee-" + j + " value=" + customerfee + " />");
                     strticketHtml.Append("<input type='hidden' id='id_total-" + j + "' value=" + total + " />");
-                    strticketHtml.Append("<input type='hidden' id='id_customize-" + j + "' value=" + ObjTick.T_Customize + " />");
+                    strticketHtml.Append("<input type='hidden' id='id_customize-" + j + "' value=" + (ObjTick.T_Customize!=null? ObjTick.T_Customize:"0") + " />");
 
                     if (ObjTick.TicketTypeID == 2)
                     {

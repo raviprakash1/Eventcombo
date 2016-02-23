@@ -756,7 +756,7 @@ namespace EventCombo.Controllers
                                    select new
                                    {
                                        EventTitle = p.EventTitle,
-                                       UserName = user.FirstName,
+                                       UserName = user.FirstName + " "+ user.LastName,
                                        Organizername = orgprof.FirstName,
                                        OrganiserEmail = orgprof.Email,
                                        Addresstatus = p.AddressStatus,
@@ -890,8 +890,8 @@ namespace EventCombo.Controllers
                     htmlText = htmlText.Replace("¶¶EventStartDateID¶¶", Sdate);
                     htmlText = htmlText.Replace("¶¶EventVenueID¶¶", add);
                     htmlText = htmlText.Replace("¶¶EventOrderNO¶¶", item.T_Order_Id);
-                    htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", userdetail.FirstName);
-                    htmlText = htmlText.Replace("¶¶UserLastNameID¶¶", userdetail.LastName);
+                    htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", Edtails.UserName);
+                    //htmlText = htmlText.Replace("¶¶UserLastNameID¶¶", userdetail.LastName);
                     htmlText = htmlText.Replace("¶¶TicketOrderDateId¶¶", System.DateTime.Now.ToLongDateString());
                     htmlText = htmlText.Replace("¶¶EventStartTimeID¶¶", time);
                     htmlText = htmlText.Replace("¶¶EventBarcodeId¶¶", barcode);
@@ -924,7 +924,7 @@ namespace EventCombo.Controllers
             mms.Close();
             Response.End();
         }
-        public MemoryStream generateTicketPDF(string guid,long eventid,List<Email_Tag> emailtag)
+        public MemoryStream generateTicketPDF(string guid,long eventid,List<Email_Tag> emailtag,string fname)
         {
             WebClient wc = new WebClient();
             MemoryStream mms = new MemoryStream();
@@ -1102,8 +1102,8 @@ namespace EventCombo.Controllers
                     htmlText = htmlText.Replace("¶¶EventStartDateID¶¶", Sdate);
                     htmlText = htmlText.Replace("¶¶EventVenueID¶¶", add);
                     htmlText = htmlText.Replace("¶¶EventOrderNO¶¶", item.T_Order_Id);
-                    htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", userdetail.FirstName);
-                    htmlText = htmlText.Replace("¶¶UserLastNameID¶¶", userdetail.LastName);
+                    htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", fname);
+                    //htmlText = htmlText.Replace("¶¶UserLastNameID¶¶", userdetail.LastName);
                     htmlText = htmlText.Replace("¶¶TicketOrderDateId¶¶", System.DateTime.Now.ToLongDateString());
                     htmlText = htmlText.Replace("¶¶EventStartTimeID¶¶", time);
                     htmlText = htmlText.Replace("¶¶EventBarcodeId¶¶", barcode);
@@ -1224,15 +1224,21 @@ namespace EventCombo.Controllers
             if (Session["AppId"] != null)
             {
                 Session["TicketDatamodel"] = null;
-                string ImageMapPath = "";
+                string body = "";
+                string to = "", from = "", cc = "", bcc = "", subjectn = "";
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                AccountController ac = new AccountController();
+                ac.ControllerContext = new ControllerContext(this.Request.RequestContext, ac);
+
+                var Emailtemplate = hmc.getEmail("eticket");
                 List<paymentdate> Dateofevent = new List<paymentdate>();
                 string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
                 List<Email_Tag> EmailTag = new List<Email_Tag>();
                 EventComboEntities objContent = new EventComboEntities();
                 var EvtOrDetail = (from Order in objContent.Ticket_Purchased_Detail where Order.TPD_GUID == strGUID select Order).FirstOrDefault();
                 long Eventid = (long)EvtOrDetail.TPD_Event_Id;
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+            
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1243,17 +1249,24 @@ namespace EventCombo.Controllers
                 //Send mail
                 var Userid = Session["AppId"].ToString();
 
-                var userdetail = db.AspNetUsers.FirstOrDefault(i => i.Id == Userid);
-                var profiledetail = db.Profiles.FirstOrDefault(i => i.UserID == Userid);
+                var guid = Session["TicketLockedId"].ToString();
+         
+                string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                var acountdedtails = ac.GetLoginDetails(strUsers);
 
-                var email = userdetail.Email;
-                var username = profiledetail.FirstName;
-                var lastname = profiledetail.LastName;
+
+                var email = acountdedtails.Email;
+                var username = acountdedtails.Firstname + " "+ acountdedtails.Lastname;
+             
+                string emailnames = "",emailonpayment="";
+
+
+
                 // Organiserdetail
+                var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
 
 
-                var Organiser = db.Event_Orgnizer_Detail.FirstOrDefault(i => i.Orgnizer_Event_Id == Eventid && i.DefaultOrg == "Y");
-                var Organiserdetail = db.Profiles.FirstOrDefault(i => i.UserID == Organiser.UserId);
+                 var Organiserdetail = db.Profiles.FirstOrDefault(i => i.UserID == OrganiserDetail.UserId);
                 var Organisername = Organiserdetail.FirstName;
                 var Organiseremail = Organiserdetail.Email;
 
@@ -1273,7 +1286,7 @@ namespace EventCombo.Controllers
                 }
                 //
                 var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID && i.TPD_Event_Id == Eventid).ToList();
-                string to = "", from = "", cc = "", bcc = "", subjectn = "";
+             
                 var bodyn = "";
                 var ticketP = "";
                 var eventdetail = db.Events.FirstOrDefault(i => i.EventID == Eventid);
@@ -1286,11 +1299,7 @@ namespace EventCombo.Controllers
                     //Detail to send on page
                     paymentdate pdate = new paymentdate();
                     var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
-
-                    var tickets = db.Tickets.FirstOrDefault(i => i.T_Id == tQntydetail.TQD_Ticket_Id);
                     var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
-                  
-                    var eventid = tQntydetail.TQD_Event_Id;
                     var datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
                     var day = datetime.DayOfWeek;
                     var Sdate = datetime.ToString("MMM dd, yyyy");
@@ -1312,8 +1321,8 @@ namespace EventCombo.Controllers
                     //Detail to send on page
                 }
                 var emailname = "";
-                MemoryStream attachment = generateTicketPDF(strGUID, Eventid, EmailTag);
-                var Emailtemplate = hmc.getEmail("eticket");
+                MemoryStream attachment = generateTicketPDF(strGUID, Eventid, EmailTag, username);
+               
                     if (Emailtemplate != null)
                     {
                         if (!string.IsNullOrEmpty(Emailtemplate.To))
@@ -1372,78 +1381,15 @@ namespace EventCombo.Controllers
 
 
                             subjectn = Emailtemplate.Subject;
+                        subjectn = modifysubject(subjectn, email, username, eventdetail.EventTitle, DateTime.Now.ToString(), ticketP, EmailTag);
 
-                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                            {
-
-                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-                                {
-                                    if (EmailTag[i].Tag_Name == "UserEmailID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶UserEmailID¶¶", email);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventTitleId")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventOrderNO")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", "");
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventStartDateID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶EventStartDateID¶¶","");
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventVenueID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶EventVenueID¶¶", "");
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "Tickettype")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶Tickettype¶¶", "");
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "TicketOrderDateId")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶TicketOrderDateId¶¶", DateTime.Now.ToString());
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventImageId")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶EventImageId¶¶", "");
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "EventStartTimeID")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", "");
-
-                                    }
-                                    if (EmailTag[i].Tag_Name == "TicketPrice")
-                                    {
-                                        subjectn = subjectn.Replace("¶¶TicketPrice¶¶", ticketP);
-
-                                    }
-
-
-                                }
-
-                            }
+                           
                         }
-                        string body = "";
+                       
                         if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
                         {
                             bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                           body=  ModifyEmailBody(bodyn, strGUID,Eventid, EmailTag);
+                           body=  ModifyEmailBody(bodyn, strGUID,Eventid, EmailTag,username);
                         
                         }
 
@@ -1459,6 +1405,47 @@ namespace EventCombo.Controllers
 
                 //Send mail
 
+                //email bearer
+                var Emailbearer = (from x in db.TicketBearers where x.Guid == strGUID && (x.Email ?? "") != ""  select x).ToList();
+
+                foreach (var item in Emailbearer)
+                {
+                    if (string.IsNullOrEmpty(emailnames))
+                    {
+                        emailnames += item.Email;
+                    }
+                    else
+                    {
+                        emailnames += "," + item.Email;
+
+                        if (Emailtemplate != null)
+                        {
+                            if (!string.IsNullOrEmpty(Emailtemplate.To))
+                            {
+
+                                to = item.Email;
+                            }
+                            
+                            //Mail 
+                            hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, emailname, "", "");
+                            //Mail 
+
+                        }   
+
+                    }
+
+                }
+                if (string.IsNullOrEmpty(emailnames))
+                {
+                    emailonpayment = "";
+                }
+                else
+                {
+                    emailonpayment = "Your invitation(s) have been sent to  " + emailnames;
+
+                }
+
+                //email bearer
                 CreateEventController cs = new CreateEventController();
                 PaymentConfirmation ps = new PaymentConfirmation();
                 var Eventdetails = cs.GetEventdetail(Eventid);
@@ -1467,20 +1454,16 @@ namespace EventCombo.Controllers
                 ps.description = Eventdetails.EventDescription;
                 ps.Eventid = Eventdetails.EventID.ToString();
 
-                var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
-
+               
                 ps.Organiserid = OrganiserDetail.Orgnizer_Id.ToString();
-                var guid = Session["TicketLockedId"].ToString();
-                AccountController ac = new AccountController();
-                string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-                var acountdedtails = ac.GetLoginDetails(strUsers);
+              
                 ps.sendlatestdetails = acountdedtails.SendLatestdetails;
-                ps.Username = acountdedtails.Firstname + " " + acountdedtails.Lastname;
-                ps.Email = acountdedtails.Email;
+                ps.Username = username;
+                ps.Email = email;
                 var url = Request.Url;
                 var baseurl = url.GetLeftPart(UriPartial.Authority);
                 ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
-
+                ps.Guestlist = emailonpayment;
 
                 ViewBag.Timecal = Dateofevent;
                 System.GC.Collect();
@@ -1526,6 +1509,76 @@ namespace EventCombo.Controllers
             }
         }
 
+        private string modifysubject(string subjectn, string email, string username, string eventTitle, string datenow, string ticketP, List<Email_Tag> Emailtag)
+        {
+            for (int i = 0; i < Emailtag.Count; i++) // Loop with for.
+            {
+
+                if (subjectn.Contains("¶¶" + Emailtag[i].Tag_Name.Trim() + "¶¶"))
+                {
+                    if (Emailtag[i].Tag_Name == "UserEmailID")
+                    {
+                        subjectn = subjectn.Replace("¶¶UserEmailID¶¶", email);
+
+                    }
+                    if (Emailtag[i].Tag_Name == "UserFirstNameID")
+                    {
+                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                    }
+                    if (Emailtag[i].Tag_Name == "EventTitleId")
+                    {
+                        subjectn = subjectn.Replace("¶¶EventTitleId¶¶", eventTitle);
+
+                    }
+                    if (Emailtag[i].Tag_Name == "EventOrderNO")
+                    {
+                        subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", "");
+
+                    }
+                    if (Emailtag[i].Tag_Name == "EventStartDateID")
+                    {
+                        subjectn = subjectn.Replace("¶¶EventStartDateID¶¶", "");
+
+                    }
+                    if (Emailtag[i].Tag_Name == "EventVenueID")
+                    {
+                        subjectn = subjectn.Replace("¶¶EventVenueID¶¶", "");
+
+                    }
+                    if (Emailtag[i].Tag_Name == "Tickettype")
+                    {
+                        subjectn = subjectn.Replace("¶¶Tickettype¶¶", "");
+
+                    }
+                    if (Emailtag[i].Tag_Name == "TicketOrderDateId")
+                    {
+                        subjectn = subjectn.Replace("¶¶TicketOrderDateId¶¶", datenow);
+
+                    }
+                    if (Emailtag[i].Tag_Name == "EventImageId")
+                    {
+                        subjectn = subjectn.Replace("¶¶EventImageId¶¶", "");
+
+                    }
+                    if (Emailtag[i].Tag_Name == "EventStartTimeID")
+                    {
+                        subjectn = subjectn.Replace("¶¶EventStartTimeID¶¶", "");
+
+                    }
+                    if (Emailtag[i].Tag_Name == "TicketPrice")
+                    {
+                        subjectn = subjectn.Replace("¶¶TicketPrice¶¶", ticketP);
+
+                    }
+
+
+                }
+
+            }
+            return subjectn;
+        }
+
         private void generatemapimage(string url,string orderid)
         {
             string filename = "";
@@ -1535,7 +1588,7 @@ namespace EventCombo.Controllers
 
         }
 
-        private string ModifyEmailBody(string bodyn, string gUID,long Eventid,List<Email_Tag> Emailtag)
+        private string ModifyEmailBody(string bodyn, string gUID,long Eventid,List<Email_Tag> Emailtag,string username)
         {
 
 
@@ -1894,7 +1947,7 @@ namespace EventCombo.Controllers
                         
                         if (Emailtag[i].Tag_Name == "UserFirstNameID")
                         {
-                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", Edtails.UserName);
+                            bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
 
                         }
                         if (Emailtag[i].Tag_Name == "EventTitleId")
@@ -1902,11 +1955,7 @@ namespace EventCombo.Controllers
                             bodyn = bodyn.Replace("¶¶EventTitleId¶¶", Edtails.EventTitle);
 
                         }
-                        if (Emailtag[i].Tag_Name == "EventOrganiserName")
-                        {
-                            bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", Edtails.Organizername);
-
-                        }
+                       
                         if (Emailtag[i].Tag_Name == "EventOrganiserName")
                         {
                             bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", Edtails.Organizername);
