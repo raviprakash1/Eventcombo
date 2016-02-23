@@ -96,6 +96,7 @@
                     <p id="ordertag">Your order has been saved to My E-Tickets </p>
                     <p><span id="spOrderNo"></span></p>
                     <p>Your tickets have been sent to @Html.DisplayFor(x=>x.Email) </p>
+                    <p>@Model.Guestlist</p>
                     <p>
                         <label>
                             <input type="checkbox" value="@Html.DisplayFor(m=>m.sendlatestdetails)" @(Html.DisplayFor(m=>m.sendlatestdetails).ToString()=="Y" ? "checked=\"checked\"" : "")  onchange="changesetting(this.id);" id="chkgetlatest"/>

@@ -852,14 +852,14 @@ namespace EventCombo.Controllers
                         var ecfeenew = "";
                          
                         customerfee = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
-                        if(string.IsNullOrEmpty(ObjTick.EC_Fee.ToString()))
+                        if(ObjTick.EC_Fee!=null)
                         {
                             var ecnewcal = ((decimal.Parse(Price) * feestruct.FS_Percentage) / 100) + feestruct.FS_Amount;
                             ecfeenew = String.Format("{0:#,###,###.00}", ecnewcal);
                         }
-                        ecfee= !string.IsNullOrEmpty(ObjTick.EC_Fee.ToString())? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee): ecfeenew;
-                        ecfeepercentage =!string.IsNullOrEmpty(ObjTick.T_Ecpercent.ToString())? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent): String.Format("{0:#,###,###.00}", feestruct.FS_Percentage);
-                        ecamount = !string.IsNullOrEmpty(ObjTick.T_EcAmount.ToString())?String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount): String.Format("{0:#,###,###.00}", feestruct.FS_Amount);
+                        ecfee= (ObjTick.EC_Fee.ToString()!=null? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee): ecfeenew);
+                        ecfeepercentage =(ObjTick.T_Ecpercent!=null? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent): String.Format("{0:#,###,###.00}", feestruct.FS_Percentage));
+                        ecamount = (ObjTick.T_EcAmount!=null?String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount): String.Format("{0:#,###,###.00}", feestruct.FS_Amount));
                         type = "Paid";
                     }
                     if (ObjTick.TicketTypeID == 3)
@@ -868,9 +868,9 @@ namespace EventCombo.Controllers
 
                         ecfee = "0";
                         fee = "0";
-                        customerfee = (!string.IsNullOrEmpty(ObjTick.Customer_Fee.ToString()) ? String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee) : "0");
-                        ecfeepercentage = (!string.IsNullOrEmpty(ObjTick.T_Ecpercent.ToString()) ? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent) : String.Format("{0:#,###,###.00}", feestruct.FS_Percentage));
-                        ecamount = (!string.IsNullOrEmpty(ObjTick.T_EcAmount.ToString()) ? String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount) : String.Format("{0:#,###,###.00}", feestruct.FS_Amount));
+                        customerfee = (ObjTick.Customer_Fee!=null? String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee) : "0");
+                        ecfeepercentage = (ObjTick.T_Ecpercent.ToString()!=null ? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent) : String.Format("{0:#,###,###.00}", feestruct.FS_Percentage));
+                        ecamount = (ObjTick.T_EcAmount.ToString()!=null? String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount) : String.Format("{0:#,###,###.00}", feestruct.FS_Amount));
                         type = "Donate";
                     }
 
@@ -878,14 +878,14 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='col-sm-10 col-xs-12' ><div class='col-sm-1 text-center no_pad ev_row_mov'>");
                     strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");
                     strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value='"+ObjTick.T_Id+"'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_ecfeeback_id-" + j + "'  value='" + ObjTick.EC_Fee + "'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_ecpercentback_id-" + j + "'  value='" + ObjTick.T_Ecpercent + "'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_ecammountback_id-" + j + "'  value='" + ObjTick.T_EcAmount + "'/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ecfeeback_id-" + j + "'  value='" + ecfee + "'/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ecpercentback_id-" + j + "'  value='" + ecfeepercentage + "'/>");
+                    strticketHtml.Append("<input type='hidden' id='id_ecammountback_id-" + j + "'  value='" + ecamount + "'/>");
                     strticketHtml.Append("<input type='hidden' id='id_order-" + j + "' value='" + ObjTick.T_order + "' />");
                     strticketHtml.Append("<input type='hidden' id='id_Tickettype-" + j + "' value=" + type + " />");
                     strticketHtml.Append("<input type='hidden' id=id_fee-" + j + " value=" + customerfee + " />");
                     strticketHtml.Append("<input type='hidden' id='id_total-" + j + "' value=" + total + " />");
-                    strticketHtml.Append("<input type='hidden' id='id_customize-" + j + "' value=" + ObjTick.T_Customize + " />");
+                    strticketHtml.Append("<input type='hidden' id='id_customize-" + j + "' value=" + (ObjTick.T_Customize!=null? ObjTick.T_Customize:"0") + " />");
 
                     if (ObjTick.TicketTypeID == 2)
                     {

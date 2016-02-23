@@ -17,41 +17,48 @@ namespace CMS.Controllers
                                 select c).FirstOrDefault();
 
             FeeSetting fee = new FeeSetting();
-        if(!string.IsNullOrEmpty(feestructure.FS_Amount.ToString()) )
+            if (feestructure != null)
             {
-                fee.value = feestructure.FS_Amount.ToString();
-
-            }
-            else
-            {
-                fee.value = "0.99";
-            }
-            if (!string.IsNullOrEmpty(feestructure.FS_Percentage.ToString()) )
-            {
-                string feeP = feestructure.FS_Percentage.ToString();
-                if (feeP.Contains("."))
+                if (feestructure.FS_Amount != null)
                 {
-                    var split = feeP.Split('.');
-                    var array1 = split[0];
-                    var array2= split[1];
-                    if(long.Parse(array2)>0)
-                    {
-                        fee.percentage = feestructure.FS_Percentage.ToString();
-                    }
-                    else
-                    {
-                        fee.percentage = array1;
-                    }
+                    fee.value = feestructure.FS_Amount.ToString();
+
                 }
                 else
                 {
-                    fee.percentage = feestructure.FS_Percentage.ToString();
+                    fee.value = "0.99";
                 }
+                if (feestructure.FS_Percentage != null)
+                {
+                    string feeP = feestructure.FS_Percentage.ToString();
+                    if (feeP.Contains("."))
+                    {
+                        var split = feeP.Split('.');
+                        var array1 = split[0];
+                        var array2 = split[1];
+                        if (long.Parse(array2) > 0)
+                        {
+                            fee.percentage = feestructure.FS_Percentage.ToString();
+                        }
+                        else
+                        {
+                            fee.percentage = array1;
+                        }
+                    }
+                    else
+                    {
+                        fee.percentage = feestructure.FS_Percentage.ToString();
+                    }
 
-               
-            }
-            else
+
+                }
+                else
+                {
+                    fee.percentage = "5";
+                }
+            }else
             {
+                fee.value = "0.99";
                 fee.percentage = "5";
             }
             return View(fee);
