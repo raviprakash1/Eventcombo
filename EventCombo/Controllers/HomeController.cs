@@ -1320,7 +1320,7 @@ namespace EventCombo.Controllers
                 smtp.Send(mailMessage);
             }
         }
-        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string emailname, string qrimage,string brcode)
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string emailname, string qrimage,string brcode,List<TicketBearer> GuestList)
         {
             MailMessage mailMessage = new MailMessage();
             
@@ -1350,7 +1350,7 @@ namespace EventCombo.Controllers
                 mailMessage.IsBodyHtml = true;
             //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
             //mailMessage.AlternateViews.Add(htmlView);
-           
+
             //Add Image
             //LinkedResource theEmailImage = new LinkedResource(ImageMapPath);
             //theEmailImage.ContentId = "myeventmapImageID";
@@ -1373,8 +1373,15 @@ namespace EventCombo.Controllers
             //theeventImage.ContentId = "myeventImageID";
             //htmlView.LinkedResources.Add(theeventImage);
 
-
+       
             mailMessage.To.Add(new MailAddress(To));
+            if(GuestList!=null)
+            {
+                foreach(var item in GuestList)
+                {
+                    mailMessage.To.Add(new MailAddress(item.Email,item.Name));
+                }
+            }
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = ConfigurationManager.AppSettings["Host"];
                 smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
