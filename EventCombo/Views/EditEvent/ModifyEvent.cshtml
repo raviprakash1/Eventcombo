@@ -1412,7 +1412,7 @@ else
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-body text-center pv50 txt-msg">
-                    <h4><img src="~/Images/ajaxloader1.gif" />Please wait, Preparing your order.</h4>
+                    <h4><img src="~/Images/ajaxloader1.gif" />Please wait ...</h4>
                 </div>
                 <div class="modal-footer msg-action-btn ok">
                     <button type="button" id="btokPrg" class="btn btn-primary yes ok" style="display:none;"  data-dismiss="modal">OK</button>
@@ -1798,7 +1798,7 @@ else
                         $('.TicketFees').hide();
                         $('#id_Mainvariable').css('display','none');
                     }
-                    $("#btokPrg").click();
+                    //$("#btokPrg").click();
                 }
             );
 
@@ -1850,7 +1850,8 @@ else
                 var scroll="@TempData["Scroll"]";
                 $(window).scrollTop($("#"+scroll).offset().top);
                 $("#"+scroll).focus();
-           }
+            }
+            $("#btokPrg").click();
         });
 
         $("#rdPublic").click(function(){
