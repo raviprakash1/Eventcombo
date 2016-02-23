@@ -1410,6 +1410,8 @@ namespace EventCombo.Controllers
 
                 foreach (var item in Emailbearer)
                 {
+                    //MemoryStream attachment1 = new MemoryStream();
+                    //attachment1= generateTicketPDF(strGUID, Eventid, EmailTag, username);
                     if (string.IsNullOrEmpty(emailnames))
                     {
                         emailnames += item.Email;
@@ -1425,7 +1427,30 @@ namespace EventCombo.Controllers
 
                                 to = item.Email;
                             }
-                            
+                            if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                            {
+                                emailname = Emailtemplate.From_Name;
+                            }
+                            else
+                            {
+                                emailname = from;
+                            }
+                            //if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                            //{
+
+
+                            //    subjectn = Emailtemplate.Subject;
+                            //    subjectn = modifysubject(subjectn, email, username, eventdetail.EventTitle, DateTime.Now.ToString(), ticketP, EmailTag);
+
+
+                            //}
+
+                            //if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                            //{
+                            //    bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                            //    body = ModifyEmailBody(bodyn, strGUID, Eventid, EmailTag, username);
+
+                            //}
                             //Mail 
                             hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, emailname, "", "");
                             //Mail 

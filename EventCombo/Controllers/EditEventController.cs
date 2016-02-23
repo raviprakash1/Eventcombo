@@ -796,8 +796,21 @@ namespace EventCombo.Controllers
                 objJson.timezone = Event.TimeZone;
                 //Tickets Section
                 long capacity = 00000;
+                decimal? percent=0m;
+                decimal? amount=0m;
                 var feestruct = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
+                if(feestruct!=null)
+                {
+                    percent = (feestruct.FS_Percentage!= null ? feestruct.FS_Percentage : 5);
+                    amount = (feestruct.FS_Amount!=null ? feestruct.FS_Amount:0.99m);
 
+                }
+                else
+                {
+                    percent = 5;
+                    amount = 0.99m;
+
+                }
                 var Tick = (from myEvent in objEnt.Tickets
                             where myEvent.E_Id == EventIid
                             select myEvent).ToList();
@@ -854,12 +867,12 @@ namespace EventCombo.Controllers
                         customerfee = String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee);
                         if(ObjTick.EC_Fee!=null)
                         {
-                            var ecnewcal = ((decimal.Parse(Price) * feestruct.FS_Percentage) / 100) + feestruct.FS_Amount;
+                            var ecnewcal = ((decimal.Parse(Price) * percent) / 100) + amount;
                             ecfeenew = String.Format("{0:#,###,###.00}", ecnewcal);
                         }
-                        ecfee= (ObjTick.EC_Fee.ToString()!=null? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee): ecfeenew);
-                        ecfeepercentage =(ObjTick.T_Ecpercent!=null? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent): String.Format("{0:#,###,###.00}", feestruct.FS_Percentage));
-                        ecamount = (ObjTick.T_EcAmount!=null?String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount): String.Format("{0:#,###,###.00}", feestruct.FS_Amount));
+                        ecfee= (ObjTick.EC_Fee!=null? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee): ecfeenew);
+                        ecfeepercentage =(ObjTick.T_Ecpercent!=null? String.Format("{0:#,###,###.00}", percent): String.Format("{0:#,###,###.00}", percent));
+                        ecamount = (ObjTick.T_EcAmount!=null?String.Format("{0:#,###,###.00}", amount): String.Format("{0:#,###,###.00}", amount));
                         type = "Paid";
                     }
                     if (ObjTick.TicketTypeID == 3)
@@ -869,8 +882,8 @@ namespace EventCombo.Controllers
                         ecfee = "0";
                         fee = "0";
                         customerfee = (ObjTick.Customer_Fee!=null? String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee) : "0");
-                        ecfeepercentage = (ObjTick.T_Ecpercent.ToString()!=null ? String.Format("{0:#,###,###.00}", ObjTick.T_Ecpercent) : String.Format("{0:#,###,###.00}", feestruct.FS_Percentage));
-                        ecamount = (ObjTick.T_EcAmount.ToString()!=null? String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount) : String.Format("{0:#,###,###.00}", feestruct.FS_Amount));
+                        ecfeepercentage = (ObjTick.T_Ecpercent!=null ? String.Format("{0:#,###,###.00}", percent) : String.Format("{0:#,###,###.00}", percent));
+                        ecamount = (ObjTick.T_EcAmount!=null? String.Format("{0:#,###,###.00}", amount) : String.Format("{0:#,###,###.00}",amount));
                         type = "Donate";
                     }
 
