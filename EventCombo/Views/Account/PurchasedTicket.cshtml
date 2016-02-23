@@ -12,3 +12,22 @@
     <div class="eventList odd"><span class="eventOrderNumber">5648465</span><span class="eventName"><a href="#" target="_blank">My test event</a></span><span class="eventDate">November 1, 2013</span><span class="eventQty">1</span><span class="eventTotal">$23.54</span><span class="eventLinks">View | Invite </span> </div>
     <div class="clearboth" style="margin:10px;"></div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#mgacnt').click();
+        $('#dvacmang').addClass("active");
+        $('#dvacmang b').addClass('opened new-opend');
+        $('#dvacmang').click(function (e) {
+            var $dvEle = $('#dvacmang b');
+            var vclassname = $dvEle.attr('class');
+            if ($dvEle.hasClass("new-opend")) {
+                $dvEle.removeClass('opened new-opend').addClass('closed');
+            }
+            else {
+                $dvEle.addClass('opened new-opend');
+            }
+        });
+    });
+
+
+</script>

@@ -9,3 +9,24 @@
     <div> <img src="~/Images/deal-impact-report-FPO.jpg" alt="FPO" width="881" height="873"></div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $('#dealnav').click();
+        $('#dvmngdeal').addClass("active");
+        $('#dvmngdeal b').addClass('opened new-opend');
+
+        $('#dvmngdeal').click(function (e) {
+            var $dvEle = $('#dvmngdeal b');
+            var vclassname = $dvEle.attr('class');
+            //alert($dvEle.hasClass("new-opend"));
+            if ($dvEle.hasClass("new-opend")) {
+                $dvEle.removeClass('opened new-opend').addClass('closed');
+            }
+            else {
+                $dvEle.addClass('opened new-opend');
+            }
+        });
+
+    });
+
+</script>

@@ -381,7 +381,6 @@
                                             <input type="checkbox" class="chkPermission" checked="" id="chk_2">
                                             <label for="chk_2">Deals</label>
                                         </div>
-
                                     </div>
 
                                     <div id="dvAdmin">
@@ -402,6 +401,19 @@
                                         <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
                                             <input type="checkbox" checked="" id="chk_7">
                                             <label for="chk_7">Messages</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
+                                            <input type="checkbox" checked="" id="chk_8">
+                                            <label for="chk_8">Event Type</label>
+                                        </div>
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
+                                            <input type="checkbox" checked="" id="chk_9">
+                                            <label for="chk_9">Event Category</label>
+                                        </div>
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
+                                            <input type="checkbox" checked="" id="chk_10">
+                                            <label for="chk_10">Member Management</label>
                                         </div>
                                     </div>
 
@@ -731,7 +743,7 @@
            var id = $("#HdId").val();
            var roletype = "";
             var Permisions = ""; var URole;
-            for (i = 1; i <= 7; i++) {
+            for (i = 1; i <= 10; i++) {
                 if ($("#chk_" + i).is(":checked") == true)
                 {
                     if (Permisions == "")
@@ -740,8 +752,6 @@
                         Permisions = Permisions + "#" + i.toString();
                 }
             }
-
-
 
             if ($("#rdAdmin").is(":checked") == true) {
                 URole = 2;
@@ -960,7 +970,7 @@
         document.getElementById("hdUName").value = userId;
         document.getElementById("HdId").value = id;
 
-        for (i = 1; i <= 7 ; i++) {
+        for (i = 1; i <= 10 ; i++) {
             $("#chk_" + i.toString()).prop("checked", false);
         }
         $("#rdAdmin").prop("checked", true);

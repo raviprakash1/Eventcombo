@@ -16,7 +16,7 @@ using System.Web.Script.Serialization;
 
 namespace EventCombo.Controllers
 {
-  
+    [OutputCacheAttribute(VaryByParam = "None", Duration = 0, NoStore = true)]
     public class EditEventController : Controller
     {
         // GET: EditEvent
@@ -144,40 +144,40 @@ namespace EventCombo.Controllers
             }
         }
 
-
+      
         public ActionResult ModifyEvent(string Eventid)
         {
-
-            var vRefferer = ControllerContext.HttpContext.Request.UrlReferrer;
-            if (vRefferer.ToString().ToLower().Contains("createevent") == true)
-                TempData["IsNewEvent"] = "Y";
-            else if (vRefferer.ToString().ToLower().Contains("modifyevent") == true)
-                TempData["IsNewEvent"] = "M";
-            else
-                TempData["IsNewEvent"] = "N";
-
-
-
-            long EventIid = 0;
-            string Isadmin = "N";
-            if (Eventid.Contains("ß"))
+            if ((Session["AppId"] != null))
             {
-                var res = Eventid.Split('ß');
+                var vRefferer = ControllerContext.HttpContext.Request.UrlReferrer;
+                if (vRefferer.ToString().ToLower().Contains("createevent") == true)
+                    TempData["IsNewEvent"] = "Y";
+                else if (vRefferer.ToString().ToLower().Contains("modifyevent") == true)
+                    TempData["IsNewEvent"] = "M";
+                else
+                    TempData["IsNewEvent"] = "N";
 
-                EventIid = long.Parse(res[0]);
-                Isadmin = "Y";
-            }
-            else
-            {
-                EventIid = long.Parse(Eventid);
-            }
+
+
+                long EventIid = 0;
+                string Isadmin = "N";
+                if (Eventid.Contains("ß"))
+                {
+                    var res = Eventid.Split('ß');
+
+                    EventIid = long.Parse(res[0]);
+                    Isadmin = "Y";
+                }
+                else
+                {
+                    EventIid = long.Parse(Eventid);
+                }
 
             ValidationMessageController vmc = new ValidationMessageController();
             EventIid = vmc.GetLatestEventId(EventIid);
             EventCreation objCr = GetEventDataEditing(EventIid);
             if (objCr == null) return RedirectToAction("Index", "Home");
-            if ((Session["AppId"] != null))
-            {
+          
                 if (Session["AppId"].ToString().Trim() != objCr.UserID.Trim())
                 {
                     return RedirectToAction("Index", "Home");

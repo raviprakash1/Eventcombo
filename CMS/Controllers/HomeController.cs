@@ -170,7 +170,7 @@ namespace CMS.Controllers
             {
                 case SignInStatus.Success:
                     var User = UserManager.FindByEmail(model.Email.ToString());
-                    var roleSuperAdmin = (from r in db.AspNetRoles  where r.Name.Contains("Super Admin")  select r).FirstOrDefault();
+                    var roleSuperAdmin = (from r in db.AspNetRoles  where r.Id.Equals("1")  select r).FirstOrDefault();
                     var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id ).Contains(roleSuperAdmin.Id)).ToList();
                     var status = db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
                     if (users.Find(x => x.Id == User.Id ) != null)
@@ -197,7 +197,7 @@ namespace CMS.Controllers
                     }
                     else
                     {
-                        var roleAdmin = (from r in db.AspNetRoles where r.Name.Contains("Admin") select r).FirstOrDefault();
+                        var roleAdmin = (from r in db.AspNetRoles where r.Id.Equals("2") select r).FirstOrDefault();
                         var usersAdmin = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleAdmin.Id)).ToList();
                         if (usersAdmin.Find(x => x.Id == User.Id) != null)
                         {

@@ -111,4 +111,27 @@
     <span class="btn1">SAVE</span>
     <div class="clearboth" style="margin:10px;"></div>
 </div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#mgacnt').click();
+        $('#dvacmang').addClass("active");
+        $('#dvacmang b').addClass('opened new-opend');
+        $('#dvacmang').click(function (e) {
+            var $dvEle = $('#dvacmang b');
+            var vclassname = $dvEle.attr('class');
+            if ($dvEle.hasClass("new-opend")) {
+                $dvEle.removeClass('opened new-opend').addClass('closed');
+            }
+            else {
+                $dvEle.addClass('opened new-opend');
+            }
+        });
+    });
+
+
+</script>
+
         

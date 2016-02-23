@@ -215,9 +215,7 @@
 </script>
 @*<script src="~/Scripts/jquery.numberformatter-1.2.4.jsmin.js"></script>*@
 @using (Html.BeginForm())
-
 {
-    
     <div class="event_container">
         <div class="event_inner_container event_top" id="eventtopscoll">
             <div class="col-sm-12 pt10 bggrey clearfix"  >
@@ -1550,7 +1548,7 @@
 
 
     <script>
-       
+
 
 
 
@@ -1559,12 +1557,12 @@
             var msg = disablebutton();
             if(msg=="")
             {
-               
+
                 $(".cdisable").removeAttr("disabled");
 
             }
-          
-           
+
+
             $(this).removeClass("err-bor");
 
         });
@@ -1580,7 +1578,7 @@
         function IsAlphaNumeric(e) {
             var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
             var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
-           
+
             return ret;
         }
         $(window).load(function () {
@@ -1593,7 +1591,7 @@
 
 
         });
-     
+
         function ValEventdate(e) {
             if (e.trim() == "txtDateFrom") {
 
@@ -1885,7 +1883,7 @@
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
             var vOrgLn = $("#OrgLn_" + Sno).text();
-           
+
 
             $("#txtOrgnizer").val(vOrgName);
             $("#edOrgDes").code(vOrgDes);
@@ -1912,7 +1910,7 @@
             var vOrgFB = $("#txtOrgFBlink").val();
             var vOrgTw = $("#txtOrgTWlink").val();
             var vOrgLn = $("#txtOrgLNlink").val();
-            
+
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
@@ -1936,21 +1934,21 @@
 
         function UpdateOrgnizer() {
             var Sno = $("#ddlOrgnizers").val();
-           
+
             vOrgName = $("#txtOrgnizer").val();
             vOrgDes = $("#edOrgDes").code();
             vOrgFB = $("#txtOrgFBlink").val();
             vOrgTw = $("#txtOrgTWlink").val();
             vOrgLn = $("#txtOrgLNlink").val();
-         
-         
+
+
             $("#OrgName_" + Sno).text(vOrgName);
             $("#OrgDes_" + Sno).text(vOrgDes);
             $("#OrgFB_" + Sno).text(vOrgFB);
             $("#OrgTw_" + Sno).text(vOrgTw);
             $("#OrgLn_" + Sno).text(vOrgLn);
 
-            
+
             $("#ddlOrgnizers option").each(function (i) {
                 if (Sno == $(this).val()) {
                     $(this).remove();
@@ -2004,7 +2002,7 @@
                     //$(document).scrollTo('#diverroacc');
 
                     $('html,body').animate({ scrollTop: 0 });
-                   
+
                     return false;
 
                 }
@@ -2019,7 +2017,7 @@
                     $('#diverroacc').css('display', 'block');
                     $('html,body').animate({ scrollTop: 0 });
                     $('#diverroacc').focus();
-                    
+
                     return false;
 
                 }
@@ -2090,7 +2088,7 @@
                         //    $("#txtEventLocation").val($("#consolidate" + Sno).text());
                         //}
                         if (i == 0) {
-                            
+
                             //if (Sno != '' && Sno != undefined && Sno != null ) {
                             $("#txtEventLocation").val($("#consolidate" + i).text());
                             //}
@@ -2124,7 +2122,7 @@
                 //$("#hdSchType").val('Single');
             });
 
-         
+
             $('#chkReqPassword').change(function () {
 
                 if ($('#chkReqPassword').is(":checked") == true) {
@@ -2147,7 +2145,7 @@
             });
 
 
-           
+
 
             function save(type)
             {
@@ -2221,7 +2219,7 @@
                     var customerfee = 0;
                     var total = 0;
                     for (var i = 0; i < divlength; i++) {
-                       
+
                         if ($('#id_cost-' + i).css('display') == "block") {
                             TicketPrice = $('#id_cost-' + i).val().replace(',', '');
 
@@ -2304,7 +2302,7 @@
 
                 }
 
-             
+
                 if ($("#tblAddress tr").length <= 1) {
                     if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
                         if ($("#txtEventLocation").val() != "") {
@@ -2428,7 +2426,7 @@
                     });
 
                 }
-            
+
 
                 var vDefaultOrg = $("#ddlOrgnizers").val();
 
@@ -2452,7 +2450,7 @@
 
 
                 // Basic Event Info
-            
+
                 var vEdesc = ''; //$("#edEventDesc").code();
 
                 var varDescritpion = '';
@@ -2464,7 +2462,7 @@
                 }
                 //$("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "");
                 var evDec = escape($("#edEventDesc").code());
-                
+
                 var model = {
                     'EventTypeID': $("#EventType").val(),
                     'EventCategoryID': $("#ddlEventCategory").val(),
@@ -2517,8 +2515,18 @@
                             }
                             if(type=="Preview")
                             {
-                                var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
-                                window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
+                                var vTitle = $('#txtEventTitle').val().split(' ').join('-');
+                                vTitle = vTitle.replace("[^a-zA-Z0-9_-]+", "");
+                                var vUrl = '@Url.RouteUrl("ViewEvent",new { strEventDs= "ß", strEventId ="~" })';
+                                vUrl = vUrl.replace("%c3%9f", vTitle);
+                                vUrl = vUrl.replace("~", response);
+                                @*var vUrl = '@Url.Action("ViewEvent", "ViewEvent", new { })?strEventDs=' + vTitle.replace("[^a-zA-Z0-9_]+", "") + '&strEventId=' + response;*@
+                                @*/var vUrl = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = " ", strEventId = " " })';*@
+                                //vUrl = vUrl + "/" + vTitle.replace("[^a-zA-Z0-9_]+", "") + "/" + response;
+                                //alert(vTitle);
+                                //alert(vUrl);
+                                @*window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");*@
+                                window.open(vUrl.toLowerCase());
                                 window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
                             }
                             if(type=="Live")
@@ -2527,11 +2535,11 @@
                             }
                         }
                     });
-             
 
 
-            
-              
+
+
+
 
 
 
@@ -2589,20 +2597,13 @@
 
 
             $("#btAddOrg").click(function () {
-               
-                //  alert("Test");
-                //  alert($('#dllOrganizer option').length);
-                //    if (parseInt($('#dllOrganizer option').length) < 25) {
-                //if ($("#hidOrgnizer").val() == "") {
-                //var vval = $("#edSummer2").code();
-                //var vLenght = $("#dvOrganizer").length;
 
-                //var divlength = $("#dvOrg_0> div").size();
-
-                //var data = $("#dvOrg_0").clone();
-                //$("#dvOrganizer").append(data);
-                //alert(parseInt($("#ddlOrgnizers option").length));
-
+                @*var vTitle = $('#txtEventTitle').val().split(' ').join('-');
+                vTitle = vTitle.replace("[^a-zA-Z0-9_-]+", "");
+                alert(vTitle);
+                var vUrl = '@Url.RouteUrl("ViewEvent",new { strEventDs= "ß", strEventId ="~" })';
+                vUrl = vUrl.replace("%c3%9f", vTitle);
+                alert(vUrl)*@
 
                 if ($("#txtOrgnizer").val().trim() == '') {
 
@@ -2611,7 +2612,7 @@
                     var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                 
+
                     $('#diverroacc').focus();
                     $('#erraccmsg').html(msg);
                     $('html,body').animate({ scrollTop: 0 });
@@ -2625,7 +2626,7 @@
                         var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                       
+
                         $('#diverroacc').focus();
                         $('#erraccmsg').html(msg);
                         $('html,body').animate({ scrollTop: 0 });
@@ -2750,7 +2751,7 @@
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
-                               
+
                                 $('#diverroacc').focus();
                                 var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
                                 $('#erraccmsg').html(msg);
@@ -2765,7 +2766,7 @@
                             $('#divaccsuc').css('display', 'none');
                             $('#diverroacc').css('display', 'block');
                             //$(document).scrollTo('#diverroacc');
-                          
+
                             $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                             $('html,body').animate({ scrollTop: 0 });
                             $('#btndiverrsuc').focus();
@@ -2794,8 +2795,8 @@
                     error: function (data) {
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-                      
-                        
+
+
                         $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                         $('#diverroacc').focus();
                         $('html,body').animate({ scrollTop: 0 });
@@ -2872,7 +2873,7 @@
                         }
 
                     }
-                
+
                     $("#btEnterDates").text(vSelecttextDates);
                 }
                 else {
@@ -2915,8 +2916,8 @@
                 error: function (data) {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-                    
-                   
+
+
                     $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                     $('#diverroacc').focus();
                     $('html,body').animate({ scrollTop: 0 });
@@ -2939,29 +2940,29 @@
             //});
             //var Vname = document.getElementById('VenueName');
             //var autocomplete = new google.maps.places.Autocomplete(Vname);
-           
-          
-       
+
+
+
             //$('#VenueName').on('click', function () {
-              
-              
-             
+
+
+
             //    $('.pac-container').each(function (i) {
             //        $(this).attr('id', 'idpac_' + (i + 1));
             //    });
             //    var div =$(".location-places-autocomplete-cant-find");
             //    console.log(div.parent());
 
-              
+
             //    $('#idpac_2 div:first').remove();
-              
+
             //    $("#idpac_2").addClass("zindex");
-              
+
             //});
 
 
 
-         
+
             //google.maps.event.addListener(autocomplete, 'place_changed', function () {
             //    var mapOptions = {
             //        center: new google.maps.LatLng(6.9167, 79.8473),
