@@ -1273,7 +1273,7 @@ else
                     <input type="hidden" id="hdSchType" value="" />
                     <input type="hidden" id="hdMonthlyType" value="DW" />
                     <input type="hidden" id="status" />
-                    <a class="td-btn" id="btProgress" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
+                    <a id="btProgress" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
                     </a>
                     <button type="button" class="btn btn-primary yes ok" id="btCloseProgress" style="display:none;" data-dismiss="modal">OK</button>
                     <a class="btn ev_set_del_btn evnt_set" id="anodelete"  href="#nodelete" style="display:none" data-toggle="modal"></a>
@@ -1408,19 +1408,17 @@ else
         </div>
     </div>
 
-    <div class="modal fade" id="dvProgress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm confirm-msg ok-msg custom wd-4 tdclickmodal">
+    <div class="modal fade" id="dvProgress" tabindex="-1" role="dialog" aria-labelledby="dvProgress" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form id="contactForm" class="fullw1 add">
-                    <div class="modal-body text-center pv50 txt-msg">
-                        <h4 class="msg"><img src="~/Images/ajaxloader1.gif" />Please wait, Preparing your order.</h4>
-                    </div>
-                    <div class="modal-footer msg-action-btn ok">
-                        <button type="button" class="btn btn-primary yes ok" data-dismiss="modal">OK</button>
-                    </div>
-                </form>
+                <div class="modal-body text-center pv50 txt-msg">
+                    <h4><img src="~/Images/ajaxloader1.gif" />Please wait, Preparing your order.</h4>
+                </div>
+                <div class="modal-footer msg-action-btn ok">
+                    <button type="button" id="btokPrg" class="btn btn-primary yes ok" style="display:none;"  data-dismiss="modal">OK</button>
+                </div>
             </div>
-        </div><!-- confirm-msg -->
+        </div>
     </div>
 
 
@@ -1800,7 +1798,7 @@ else
                         $('.TicketFees').hide();
                         $('#id_Mainvariable').css('display','none');
                     }
-                    //$("#btCloseProgress").click();
+                    $("#btokPrg").click();
                 }
             );
 
