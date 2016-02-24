@@ -1240,7 +1240,10 @@ namespace EventCombo.Controllers
        
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
           
+
+
             string url = null, city="", state="", zipcode="", country="";
         if(Session["ReturnUrl"]!=null)
             {
@@ -1307,7 +1310,8 @@ namespace EventCombo.Controllers
 
                     }
                     var status=  db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
-                        if (status == "Y" || status == "y")
+                    status = status != null ? status : "Y";
+                    if (status == "Y" || status == "y")
                         {
 
 
@@ -1786,7 +1790,7 @@ namespace EventCombo.Controllers
                                 prof.Ipcountry = country;
                                 prof.IpState = state;
                                 prof.Ipcity = city;
-
+                                prof.UserStatus = "Y";
                                 objEntity.Profiles.Add(prof);
 
                              objEntity.SaveChanges();
@@ -1909,6 +1913,7 @@ namespace EventCombo.Controllers
 
                 }
                 var status = db.Profiles.Where(x => x.UserID == user.Id).Select(x => x.UserStatus).FirstOrDefault();
+                status = status != null ? status : "Y";
                 if (status == "Y" || status == "y")
                 {
                     var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
@@ -2059,7 +2064,7 @@ namespace EventCombo.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult LogOff()
         {
             try {
@@ -2078,7 +2083,7 @@ namespace EventCombo.Controllers
 
                     }
                 }
-                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                AuthenticationManager.SignOut();
                 Session["Fromname"] = null;
                 Session["AppId"] = null;
                 Session["ReturnUrl"] = null;
