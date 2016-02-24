@@ -1,6 +1,4 @@
 ﻿@model IEnumerable<CMS.Models.Eventtype>
-    
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @{
     ViewBag.Title = "EventType";
     //Layout = "~/Views/Shared/_Layout.cshtml";
@@ -53,15 +51,15 @@
 </style>*@
 <section id="content_wrapper">  
       
-    @using (Ajax.BeginForm("EventType", "EventType", new AjaxOptions { UpdateTargetId = "tabType", HttpMethod = "Post" })) { 
+    @*@using (Ajax.BeginForm("EventType", "EventType", new AjaxOptions { UpdateTargetId = "tabType", HttpMethod = "Post" })) { 
 
     if (TempData["SuccessMessage"] != null)
-    {
-            <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
+    {*@
+            <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc" style="display:none;">
+                <button type="button" class="close" onclick="$('#divsuccc').hide();">×</button>
+                <i class="fa fa-info pr10"></i> <span id="spanid"> </span>
             </div>
-        }
+        @*}*@
 
         <div class="row" id="modal-content">
 
@@ -103,35 +101,36 @@
 
                             </div>
                         <div class="clearfix"></div>
-                        @if (int.Parse(TempData["Count"].ToString()) > 0)
-                        {
-                            <div class="col-md-12 mt10 nopad">
+                        <div id="dvEvnetTypeListContainer">
+                            @if (int.Parse(TempData["Count"].ToString()) > 0)
+                            {
+                                <div class="col-md-12 mt10 nopad">
 
-                            <table id="tabType" width="100%">
-                                <tbody>
-                                    @{
-                                        int i = 0;
+                                    <table id="tabType" width="100%">
+                                        <tbody>
+                                            @{
+                                                int i = 0;
 
-                                        foreach (var itemType in Model)
-                                        {
-                                            i = i + 1;
-                                            <tr class="col-sm-12 catbg">
-                                                <td class="col-sm-12">
-                                                    <label id="lblEvntTypeName-@i">@itemType.EventType1</label>
-                                                <input id="txtEvnttypename-@i" type="text" style="display:none;" class="form-control" maxlength="35"  />
-                                                </td>
-                                                <td class="pl5">
-                                                 <button class="btn btn-primary  br2 btn-xs fs12" style="display:none;" id="btnEditfinal-@i" type="button" onclick="EditTypefinal(this.id)"><i class="fa fa-edit"></i></button>
+                                                foreach (var itemType in Model)
+                                                {
+                                                    i = i + 1;
+                                    <tr class="col-sm-12 catbg">
+                                        <td class="col-sm-12">
+                                            <label id="lblEvntTypeName-@i">@itemType.EventType1</label>
+                                            <input id="txtEvnttypename-@i" type="text" style="display:none;" class="form-control" maxlength="35" />
+                                        </td>
+                                        <td class="pl5">
+                                            <button class="btn btn-primary  br2 btn-xs fs12" style="display:none;" id="btnEditfinal-@i" type="button" onclick="EditTypefinal(this.id)"><i class="fa fa-edit"></i></button>
 
-                                                <button class="btn btn-success  br2 btn-xs fs12" id="btnEdittype-@i" type="button" onclick="EditType('@itemType.EventTypeID',this.id)"><i class="fa fa-edit"></i></button>
-                                                </td>
-                                                @if (itemType.EventContains == false)
+                                            <button class="btn btn-success  br2 btn-xs fs12" id="btnEdittype-@i" type="button" onclick="EditType('@itemType.EventTypeID',this.id)"><i class="fa fa-edit"></i></button>
+                                        </td>
+                                        @if (itemType.EventContains == false)
                                                 {
                                                 <td class="pl5">
-                                                    <a class="btn btn-danger br2 btn-xs fs12"  onclick="ConfirmDelete('@itemType.EventTypeID');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="btnDeleteCat-@i">
+                                                    <a class="btn btn-danger br2 btn-xs fs12" onclick="ConfirmDelete('@itemType.EventTypeID');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="btnDeleteCat-@i">
                                                         <i class="fa fa-remove"></i>
                                                     </a>
-                                                @*<button id="btnDeleteCat-@i" type="button" onclick="DeleteType('@itemType.EventTypeID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>*@
+                                                    @*<button id="btnDeleteCat-@i" type="button" onclick="DeleteType('@itemType.EventTypeID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>*@
                                                 </td>
                                                 }
                                                 else
@@ -142,26 +141,27 @@
                                                     }
                                                     else
                                                     {
-                                                        <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-block br2 btn-xs fs12"><i class="fa fa-eye-slash"></i></button></td>
+                                                <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-block br2 btn-xs fs12"><i class="fa fa-eye-slash"></i></button></td>
 
                                                     }
                                                 }
-                                            </tr>
+                                    </tr>
 
 
 
                                         }
-                                    }
-                                </tbody>
-                            </table>
+                                            }
+                                        </tbody>
+                                    </table>
 
 
 
 
 
 
-                            </div>
-                        }
+                                </div>
+                                                }
+                        </div>
                         </div>
 
 
@@ -213,7 +213,7 @@
                     </div>
                 </div>
             </div>*@
-            }
+            @*}*@
 </section>
 
 <script type="text/javascript">
@@ -267,8 +267,9 @@
             type: "POST",
             success: function (response) {
 
-
-                window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
+                SuccessMessage(response);
+                LoadEventTypeListAsyn();
+               // window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
             },
             error: function (data) {
                 alert("Sorry! there is some problem.");
@@ -298,7 +299,9 @@
             data: { iType: $("#hdtypeid").val() },
             type: "POST",
             success: function (response) {
-                window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=D';
+                SuccessMessage(response);
+                LoadEventTypeListAsyn();
+               // window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=D';
             },
             error: function (data) {
                 alert("Sorry! there is some problem.");
@@ -319,8 +322,9 @@
 
                 $('#hdstate').val(response);
                 $("#txtEventType").val('');
-
-                window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
+                SuccessMessage(response);
+                LoadEventTypeListAsyn();
+                //window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
             },
             error: function (data) {
                 alert("Sorry! there is some problem.");
@@ -339,7 +343,9 @@
             data: { iType: Typeid },
             type: "POST",
             success: function (response) {
-                window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
+                SuccessMessage(response);
+                LoadEventTypeListAsyn();
+                //window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
             },
             error: function (data) {
                 alert("Sorry! there is some problem.");
@@ -389,4 +395,44 @@
             else { return true; }
         });
     });
+    function LoadEventTypeListAsyn() {
+        $('#dvEvnetTypeListContainer').load('@Url.Action("EventTypeList", "EventType")');
+    }
+    function SuccessMessage(Type) {
+        
+        if (Type == "S") {
+            $("#spanid").html("Type Created Successfully");
+
+        }
+        if (Type == "C") {
+            $("#spanid").html("Something going wrong!");
+
+        }
+        if (Type == "X") {
+            $("#spanid").html("Type already exist !!");
+
+        }
+        if (Type == "D") {
+            $("#spanid").html("Type deleted successfully !!");
+
+        }
+        if (Type == "E") {
+            $("#spanid").html("Type Updated successfully !!");
+
+        }
+        if (Type == "HN") {
+            $("#spanid").html("Type is visible to all !!");
+
+        }
+        if (Type == "HY") {
+            $("#spanid").html("Type is hidden successfully !!");
+
+        }
+        if (Type == "Y") {
+            $("#spanid").html("Event Sub Category Deleted.");
+
+        }        
+        $("#divsuccc").show();
+        $("#divsuccc").focus();
+    }
 </script>
