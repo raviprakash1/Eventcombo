@@ -72,9 +72,12 @@
                                                                     <button id="btnEditcat-@i" class="btn btn-success br2 btn-xs fs12" onclick="EditCategory('@itemCat.EventCategoryID',this.id)" type="button"><i class="fa fa-edit"></i></button>
                                                                 </td>
                                                                 <td class="pl5">
+                                                                    @if (!itemCat.CategoryPresent)
+                                                                    {
                                                                     <a class="btn btn-danger br2 btn-xs fs12" onclick="ConfirmDelete('@itemCat.EventCategoryID');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="btnDeleteCat-@i">
                                                                         <i class="fa fa-remove"></i>
                                                                     </a>
+                                                                    }
                                                                     @*<button id="btnDeleteCat-@i" type="button" onclick="DeleteCatgry('@itemCat.EventCategoryID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>*@
                                                                 </td>
                                                             </tr>
@@ -122,9 +125,12 @@
                                                                                         <button id="btnEditSubCat-@j" onclick="EditSubCat('@itemCat.EventCategoryID','@itemSubCat.EventSubCategoryID',this.id);" type="button" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i></button>
                                                                                     </td>
                                                                                     <td class="pl5">
+                                                                                        @if (!itemSubCat.EvntSubCatPresent)
+                                                                                        {
                                                                                         <a class="btn btn-danger br2 btn-xs fs12" onclick="ConfirmDeletesubcat('@itemCat.EventCategoryID','@itemSubCat.EventSubCategoryID');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="btnDeleteSubCat-@i">
                                                                                             <i class="fa fa-remove"></i>
                                                                                         </a>
+                                                                                        }
                                                                                         @*<button id="btnDeleteSubCat-@j" onclick="DeleteSubCat('@itemCat.EventCategoryID','@itemSubCat.EventSubCategoryID');" type="button" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>*@
                                                                                     </td>
                                                                                 </tr>
