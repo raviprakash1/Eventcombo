@@ -490,7 +490,7 @@ else
                         data: { id: access_token,email:email },
                         type: "Post",
                         success: function (data) {
-                        
+                           
                             if (data.indexOf('~') > -1) {
                                 urlarray = data.split('~');
                                 data = urlarray[1];

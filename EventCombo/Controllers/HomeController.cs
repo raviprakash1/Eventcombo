@@ -73,6 +73,7 @@ namespace EventCombo.Controllers
             var Strfirstname = "";
             var Strlastnmae = "";
             var Stremail = "";
+            var fbuserid = "";
           
 
             AccountController acc = new AccountController();
@@ -133,6 +134,7 @@ namespace EventCombo.Controllers
             Strfirstname = me.first_name;
             Strlastnmae = me.last_name;
             Stremail = me.email;
+            fbuserid = me.id;
 
             string HitURL = string.Format("https://graph.facebook.com/me?access_token={0}", id);
             HttpClient clienthd = new HttpClient();
@@ -144,7 +146,7 @@ namespace EventCombo.Controllers
                 string content = await response.Content.ReadAsStringAsync();
                 dynamic iObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
                 identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "1956731254551382", ClaimValueTypes.String, "Facebook", "Facebook"));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, fbuserid, ClaimValueTypes.String, "Facebook", "Facebook"));
             }
             Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
             var LoginProvider = providerKeyClaim.Issuer;
@@ -192,6 +194,7 @@ namespace EventCombo.Controllers
                                 prof.Ipcountry = country;
                                 prof.IpState = state;
                                 prof.Ipcity = city;
+                                prof.UserStatus = "Y";
 
                                 objEntity.Profiles.Add(prof);
 
@@ -271,6 +274,7 @@ namespace EventCombo.Controllers
                 exterlogin.Login = login;
                 exterlogin.ExternalIdentity = identity;
                 var status = db.Profiles.Where(x => x.UserID == user.Id).Select(x => x.UserStatus).FirstOrDefault();
+                status = status != null ? status : "Y";
                 if (status == "Y" || status == "y")
                 {
                     var result = await SignInManager.ExternalSignInAsync(exterlogin, isPersistent: false);
