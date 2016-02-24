@@ -20,18 +20,7 @@ namespace CMS.Controllers
                 {
                     item.ESubCat = GetSubCategories(item.EventCategoryID);
 
-                var checktype = (from eve in objEntity.Events where eve.EventCategoryID == item.EventCategoryID select eve).Any();
-                if (checktype == true)
-                {
-                    item.CategoryPresent = true;
-                }
-                else
-                {
-                    item.CategoryPresent = false;
-                }
-
-               
-            } 
+                } 
                 
                 if(msg== "SA")
             {
@@ -166,22 +155,8 @@ namespace CMS.Controllers
             {
 
                 var query = (from EventSubCategory in objEntity.EventSubCategories
-                             where EventSubCategory.EventCategoryID == iEvntCtgryId
-                             select EventSubCategory).OrderBy (x=>x.EventSubCategory1).ToList();   
-                
-                foreach(var item in query)
-                {
-                    var checktype = (from eve in objEntity.Events where eve.EventSubCategoryID == item.EventSubCategoryID select eve).Any();
-                    if (checktype == true)
-                    {
-                        item.EvntSubCatPresent = true;
-                    }
-                    else
-                    {
-                        item.EvntSubCatPresent = false;
-                    }
-                }
-                         
+                              where EventSubCategory.EventCategoryID == iEvntCtgryId
+                              select EventSubCategory).OrderBy (x=>x.EventSubCategory1).ToList();            
                 return query;
             }            
         }
@@ -349,16 +324,6 @@ namespace CMS.Controllers
             foreach (var item in modelPerm)
             {
                 item.ESubCat = GetSubCategories(item.EventCategoryID);
-
-                var checktype = (from eve in objEntity.Events where eve.EventCategoryID == item.EventCategoryID select eve).Any();
-                if (checktype == true)
-                {
-                    item.CategoryPresent = true;
-                }
-                else
-                {
-                    item.CategoryPresent = false;
-                }
 
             }
             return PartialView("EventCategoryListPartial", modelPerm);

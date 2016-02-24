@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CMS.Models.Eventtype>
+@if (Model.Count() > 0)
+{
+    <div class="col-md-12 mt10 nopad">
+
+        <table id="tabType" width="100%">
+            <tbody>
+                @{
+                    int i = 0;
+
+                    foreach (var itemType in Model)
+                    {
+                        i = i + 1;
+                        <tr class="col-sm-12 catbg">
+                            <td class="col-sm-12">
+                                <label id="lblEvntTypeName-@i">@itemType.EventType1</label>
+                                <input id="txtEvnttypename-@i" type="text" style="display:none;" class="form-control" maxlength="35" />
+                            </td>
+                            <td class="pl5">
+                                <button class="btn btn-primary  br2 btn-xs fs12" style="display:none;" id="btnEditfinal-@i" type="button" onclick="EditTypefinal(this.id)"><i class="fa fa-edit"></i></button>
+
+                                <button class="btn btn-success  br2 btn-xs fs12" id="btnEdittype-@i" type="button" onclick="EditType('@itemType.EventTypeID',this.id)"><i class="fa fa-edit"></i></button>
+                            </td>
+                            @if (itemType.EventContains == false)
+                            {
+                                <td class="pl5">
+                                    <a class="btn btn-danger br2 btn-xs fs12" onclick="ConfirmDelete('@itemType.EventTypeID');" type="button" href="#confirm-delete-ok" data-toggle="modal" id="btnDeleteCat-@i">
+                                        <i class="fa fa-remove"></i>
+                                    </a>
+                                    @*<button id="btnDeleteCat-@i" type="button" onclick="DeleteType('@itemType.EventTypeID');" class="btn btn-danger br2 btn-xs fs12"><i class="fa fa-remove"></i></button>*@
+                                </td>
+                            }
+                            else
+                            {
+                                if (itemType.EventHide == "N" || string.IsNullOrEmpty(itemType.EventHide))
+                                {
+                                    <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-block br2 btn-xs fs12"><i class="fa fa-eye"></i></button></td>
+                                }
+                                else
+                                {
+                                    <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-block br2 btn-xs fs12"><i class="fa fa-eye-slash"></i></button></td>
+
+                                }
+                            }
+                        </tr>
+
+
+
+                    }
+                }
+            </tbody>
+        </table>
+
+
+
+
+
+
+    </div>
+                    }
