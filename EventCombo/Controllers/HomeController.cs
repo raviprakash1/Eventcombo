@@ -66,6 +66,7 @@ namespace EventCombo.Controllers
 
 
         }
+        [AllowAnonymous]
         public async Task<string> FacebookLogin(string id,string email)
         {
             //current login details 
@@ -137,6 +138,7 @@ namespace EventCombo.Controllers
             fbuserid = me.id;
 
             string HitURL = string.Format("https://graph.facebook.com/me?access_token={0}", id);
+          
             HttpClient clienthd = new HttpClient();
             Uri uri = new Uri(HitURL);
             HttpResponseMessage response = await clienthd.GetAsync(uri);
@@ -204,6 +206,7 @@ namespace EventCombo.Controllers
 
 
                                 objEntity.SaveChanges();
+                                var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
 
                             }
                         }
@@ -269,6 +272,8 @@ namespace EventCombo.Controllers
                 }
                 var usernew = new ApplicationUser { UserName = email, Email = email };
                 ExternalLoginInfo exterlogin = new ExternalLoginInfo();
+                var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+
                 exterlogin.DefaultUserName = Strfirstname;
                 exterlogin.Email = email;
                 exterlogin.Login = login;
@@ -277,7 +282,8 @@ namespace EventCombo.Controllers
                 status = status != null ? status : "Y";
                 if (status == "Y" || status == "y")
                 {
-                    var result = await SignInManager.ExternalSignInAsync(exterlogin, isPersistent: false);
+                    await SignInManager.SignInAsync(user, true, true);
+                    //var result = await SignInManager.ExternalSignInAsync(exterlogin, isPersistent: false);
                     Session["AppId"] = user.Id;
                     return url;
                 }
