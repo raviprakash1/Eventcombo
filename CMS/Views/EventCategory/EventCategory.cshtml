@@ -12,10 +12,15 @@
         {
         if (TempData["SuccessMessage"] != null)
         {*@
-        <div class="alert alert-micro alert-border-left alert-success pastel alert-dismissable mn mb5" id="divsuccc" style="display:none;">
+        <div class="alert alert-micro alert-border-left  alert-danger pastel alert-dismissable mn mb5" id="diverr" style="display:none;">
+            <button type="button" class="close" onclick="$('#diverr').hide();">×</button>
+            <i class="fa fa-info pr10"></i> <span id="spanerr"></span>
+        </div>
+        <div class="alert alert-micro alert-border-left  alert-success pastel alert-dismissable mn mb5" id="divsuccc" style="display:none;">
             <button type="button" class="close"  onclick="$('#divsuccc').hide();">×</button>
             <i class="fa fa-info pr10"></i> <span id="spanid"> @TempData["SuccessMessage"]</span>
         </div>
+       
         @*}*@
         <div class="row" id="modal-content">
             <div class="col-md-12 mt10">
@@ -384,21 +389,28 @@
                 $('#btnAddCat').click(function () {
 
                     var txtcat = $('#txtEventCategory').val();
-                    $.ajax({
-                        url: '@Url.Action("AddCategories", "EventCategory")',
-                        data: { txtcat: txtcat },
-                        type: "POST",
-                        success: function (response) {
-                            $("#txtEventCategory").val('');
-                            SuccessMessage(response);
-                            LoadEventTypeListAsyn();
-                            //window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
-                        },
-                        error: function (data) {
-                            alert("Sorry! there is some problem.");
-                            return false
-                        }
-                    });
+                    if (txtcat != '') {
+                        $.ajax({
+                            url: '@Url.Action("AddCategories", "EventCategory")',
+                            data: { txtcat: txtcat },
+                            type: "POST",
+                            success: function (response) {
+                                $("#txtEventCategory").val('');
+                                SuccessMessage(response);
+                                LoadEventTypeListAsyn();
+                                //window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
+                            },
+                            error: function (data) {
+                                alert("Sorry! there is some problem.");
+                                return false
+                            }
+                        });
+                    } else {
+                        $("#spanerr").html("Please enter Category");
+                        $("#diverr").show();
+                   
+                        $("#divsuccc").hide();
+                    }
 
 
 
@@ -489,23 +501,32 @@
                         }
                     });
                 }
-                function AddSubCat(CatId,SubCatName)
-                {
-                    $.ajax({
-                        url: '@Url.Action("AddSubCategories", "EventCategory")',
-                        data: { iEvntCtgryId: CatId, strSubCatName: SubCatName },
-                        type: "POST",
-                        success: function (response) {
-                            $("#" + CatId).val('');
-                            SuccessMessage(response);
-                            LoadEventTypeListAsyn();
-                            //window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
-                        },
-                        error: function (data) {
-                            alert("Sorry! there is some problem.");
-                            return false
-                        }
-                    });
+        function AddSubCat(CatId,SubCatName)
+        {
+            if (SubCatName!='')
+            {
+            $.ajax({
+                url: '@Url.Action("AddSubCategories", "EventCategory")',
+                data: { iEvntCtgryId: CatId, strSubCatName: SubCatName },
+                type: "POST",
+                success: function (response) {
+                    $("#" + CatId).val('');
+                    SuccessMessage(response);
+                    LoadEventTypeListAsyn();
+                //window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
+            },
+                error: function (data) {
+                    alert("Sorry! there is some problem.");
+                    return false
+            }
+            });
+            } else {
+
+                $("#spanerr").html("Please enter sub Category");
+                $("#diverr").show();
+                $('html,body').animate({ scrollTop: 0 });
+                $("#divsuccc").hide();
+            }
                 }
                 function DeleteSubCat(CatId, EvntSubCatId)
                 {
@@ -610,6 +631,7 @@
                         $("#btnReset").show();
                         $("#btnEdit").show();
                         $("#btnDelete").show();
+                        $("#diverr").hide();
                         $("#divsuccc").hide();
                         var _this = $(this);
                         $("#EventCategory1").val($(_this).text());
@@ -677,8 +699,9 @@
                 $("#spanid").html("Category saved successfully ");
 
             }
- 
+         
             $("#divsuccc").show();
+            $("#diverr").hide();
             $("#divsuccc").focus();
         }
     </script>

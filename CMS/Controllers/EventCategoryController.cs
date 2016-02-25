@@ -311,9 +311,13 @@ namespace CMS.Controllers
             try
             {
                 EmsEntities objEntity = new EmsEntities();
-                objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "' and EventSubCategoryID='"+ iEvntSubCtgryId + "'");                
-               // TempData["SuccessMessage"] = "Event Sub Category Deleted.";
-                strResult = "DS";
+                var checktype = (from eve in objEntity.Events where eve.EventSubCategoryID == iEvntSubCtgryId select eve).Any();
+                if (!checktype)
+                {
+                    objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "' and EventSubCategoryID='" + iEvntSubCtgryId + "'");
+                    // TempData["SuccessMessage"] = "Event Sub Category Deleted.";
+                    strResult = "DS";
+                }
             }
             catch (Exception ex)
             {
@@ -328,10 +332,15 @@ namespace CMS.Controllers
             try
             {
                 EmsEntities objEntity = new EmsEntities();
-                objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "'");
-                objEntity.Database.ExecuteSqlCommand("Delete from EventCategory where EventCategoryID='" + iEvntCtgryId + "'");
-               // TempData["SuccessMessage"] = "Event Category Deleted.";
-                strResult = "DC";
+                var checktype = (from eve in objEntity.Events where eve.EventCategoryID == iEvntCtgryId select eve).Any();
+                if (!checktype)
+                {
+                    objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "'");
+                    objEntity.Database.ExecuteSqlCommand("Delete from EventCategory where EventCategoryID='" + iEvntCtgryId + "'");
+
+                    // TempData["SuccessMessage"] = "Event Category Deleted.";
+                    strResult = "DC";
+                }
             }
             catch (Exception ex)
             {
