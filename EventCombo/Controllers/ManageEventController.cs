@@ -312,7 +312,7 @@ namespace EventCombo.Controllers
             if (strDurataion == "Week" || strDurataion == "Month")
             {
                 if (strDurataion == "Week")
-                    dt = DateTime.Today.AddDays(-7);
+                    dt = DateTime.Today.AddDays(-6);
                 else
                     dt = DateTime.Today.AddDays(-30);
 
@@ -401,7 +401,7 @@ namespace EventCombo.Controllers
             if (strDurataion == "Week" || strDurataion == "Month")
             {
                 if (strDurataion == "Week")
-                    dt = DateTime.Today.AddDays(-7);
+                    dt = DateTime.Today.AddDays(-6);
                 else
                     dt = DateTime.Today.AddDays(-30);
 
