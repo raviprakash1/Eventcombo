@@ -2093,6 +2093,7 @@ namespace EventCombo.Controllers
             }
             catch(Exception exe)
             {
+                AuthenticationManager.SignOut();
                 Session.Abandon();
                 Session.Clear();
                 return RedirectToAction("Index", "Home");
