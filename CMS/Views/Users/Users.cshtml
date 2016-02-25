@@ -415,6 +415,11 @@
                                             <input type="checkbox" checked="" id="chk_10">
                                             <label for="chk_10">Member Management</label>
                                         </div>
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
+                                            <input type="checkbox" checked="" id="chk_11">
+                                            <label for="chk_11">Fee Setting</label>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -743,7 +748,7 @@
            var id = $("#HdId").val();
            var roletype = "";
             var Permisions = ""; var URole;
-            for (i = 1; i <= 10; i++) {
+            for (i = 1; i <= 11; i++) {
                 if ($("#chk_" + i).is(":checked") == true)
                 {
                     if (Permisions == "")
@@ -970,7 +975,7 @@
         document.getElementById("hdUName").value = userId;
         document.getElementById("HdId").value = id;
 
-        for (i = 1; i <= 10 ; i++) {
+        for (i = 1; i <= 11 ; i++) {
             $("#chk_" + i.toString()).prop("checked", false);
         }
         $("#rdAdmin").prop("checked", true);
