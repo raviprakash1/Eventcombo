@@ -556,7 +556,13 @@ namespace EventCombo.Controllers
                         // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
 
                     }
-                    objEntity.SaveChanges();
+                    try {
+                        objEntity.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                     if (strPaymentType == "A")
                     {
                         ApiLoginID = "354v9ZufxM6";
@@ -1259,16 +1265,19 @@ namespace EventCombo.Controllers
                 var username = acountdedtails.Firstname + " "+ acountdedtails.Lastname;
              
                 string emailnames = "",emailonpayment="";
+                string Organisername = "", Organiseremail = "";
 
 
-
-                // Organiserdetail
+               // Organiserdetail
                 var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
 
 
                  var Organiserdetail = db.Profiles.FirstOrDefault(i => i.UserID == OrganiserDetail.UserId);
-                var Organisername = Organiserdetail.FirstName;
-                var Organiseremail = Organiserdetail.Email;
+                if (Organiserdetail != null)
+                {
+                     Organisername = Organiserdetail.FirstName!=null? Organiserdetail.FirstName:"";
+                     Organiseremail = Organiserdetail.Email!=null ? Organiserdetail.Email:"";
+                }
 
                 //
 
@@ -1409,7 +1418,7 @@ namespace EventCombo.Controllers
 
 
                             subjectn = Emailtemplate.Subject;
-                        subjectn = modifysubject(subjectn, email, username, eventdetail.EventTitle, DateTime.Now.ToString(), ticketP, EmailTag);
+                        subjectn = modifysubject(subjectn, email, username, eventdetail.EventTitle, DateTime.Now.ToString(), EvtOrDetail.TPD_Order_Id, EmailTag);
 
                            
                         }
@@ -1497,7 +1506,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        private string modifysubject(string subjectn, string email, string username, string eventTitle, string datenow, string ticketP, List<Email_Tag> Emailtag)
+        private string modifysubject(string subjectn, string email, string username, string eventTitle, string datenow, string Ordernum, List<Email_Tag> Emailtag)
         {
             for (int i = 0; i < Emailtag.Count; i++) // Loop with for.
             {
@@ -1521,7 +1530,7 @@ namespace EventCombo.Controllers
                     }
                     if (Emailtag[i].Tag_Name == "EventOrderNO")
                     {
-                        subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", "");
+                        subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", Ordernum);
 
                     }
                     if (Emailtag[i].Tag_Name == "EventStartDateID")
@@ -1556,7 +1565,7 @@ namespace EventCombo.Controllers
                     }
                     if (Emailtag[i].Tag_Name == "TicketPrice")
                     {
-                        subjectn = subjectn.Replace("¶¶TicketPrice¶¶", ticketP);
+                        subjectn = subjectn.Replace("¶¶TicketPrice¶¶", "");
 
                     }
 

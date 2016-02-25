@@ -3159,6 +3159,10 @@ else
                                 $("#txtEventUrl").focus();
                                 $('html,body').animate({ scrollTop: 0 });
 
+                            }else
+                            {
+                                $('#diverroacc').css('display', 'none');
+                                $("#txtEventUrl").removeClass('err-bor');
                             }
                         },
                         error: function (data) {
