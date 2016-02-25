@@ -1261,6 +1261,7 @@ else
 
 
                     <input type="hidden" id="hidAddSno" value="" />
+
                     <input type="hidden" id="hidSchLastState" value="" />
                     <input type="hidden" id="hidOrgnizer" value="" />
                     <input type="hidden" id="hidAddressStatus" value="@Model.AddressStatus" />
@@ -2185,7 +2186,7 @@ else
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
             var vOrgLn= $("#OrgLn_" + Sno).text();
-     
+
             $("#txtOrgnizer").val(vOrgName);
             $("#edOrgDes").code(vOrgDes);
             $("#txtOrgFBlink").val(vOrgFB);
@@ -2213,7 +2214,7 @@ else
             var vOrgFB = $("#txtOrgFBlink").val();
             var vOrgTw = $("#txtOrgTWlink").val();
             var vOrgLn = $("#txtOrgLNlink").val();
- 
+
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
@@ -2390,7 +2391,7 @@ else
                             if(t_id!=0)
                             {
                                 ecfee=$('#id_ecfeeback_id-'+i).val();
-                              
+
                                 customerfee = $('#id_fee-'+i).val();
                                 ecfeepercent=$('#id_ecpercentback_id-'+i).val();;
                                 ecfeeamount=$('#id_ecammountback_id-'+i).val();;
@@ -2407,16 +2408,16 @@ else
                                 customize=0
                             }
                         }
-                    
-                     
-                    
-                      
+
+
+
+
                     }
                     if($('#id_feestruct-'+i).css('display') == "block")
                     {
                         var val=$('#id_include_ticket_fees-' + i).val();
                         var fee=$('#id_fee-'+i).val();
-                      
+
                         var isadmin="@Model.Isadmin";
                         if(isadmin=="Y")
                         {
@@ -2431,12 +2432,12 @@ else
                         }else
                         {
 
-                                
+
                             var t_id=  $('#id_ticket_id-'+i).val();
                             if(t_id!=0)
                             {
                                 ecfee=$('#id_ecfeeback_id-'+i).val();
-                              
+
                                 customerfee = $('#id_fee-'+i).val();
                                 ecfeepercent=$('#id_ecpercentback_id-'+i).val();;
                                 ecfeeamount=$('#id_ecammountback_id-'+i).val();;
@@ -2453,20 +2454,20 @@ else
                             }
                             hdecfee=0;
                             hdcsfee=0;
-                           
-                          
+
+
                         }
                         //if ($('#id_include_ticket_fees-' + i).val() == 0) {
-                            
+
 
                         //}
                         //if ($('#id_include_ticket_fees-' + i).val() == 1) {
-                        //   
+                        //
 
                         //}
                     }
-                  
-                 
+
+
 
                     var Discount = $('#id_Discount-' + i).val().replace(',', '');
                     var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
@@ -2766,6 +2767,7 @@ else
                         }
                        else
                         {
+                            var vMasterEventId =$("#hdEventId").val();
                             $("#hdEventId").val(response);
 
 
@@ -2794,14 +2796,19 @@ else
                             {
                                 $('#divaccsuc').css('display', 'none');
                                 $('#diverroacc').css('display', 'none');
-                                var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
+                                //var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
+                                var vTitle = $('#txtEventTitle').val().split(' ').join('-');
+                                vTitle = vTitle.replace("[^a-zA-Z0-9_-]+", "");
+                                var vUrl = '@Url.RouteUrl("ViewEvent",new { strEventDs= "ß", strEventId ="~" })';
+                                vUrl = vUrl.replace("%c3%9f", vTitle);
+                                vUrl = vUrl.replace("~", vMasterEventId);
+                                window.open(vUrl.toLowerCase());
 
-                                window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
+                                @*window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");*@
                             }
                             if(type=="Live")
                             {
-                                //live
-
+                                @*window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;*@
                                 window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;
                             }
                         }
