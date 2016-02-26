@@ -1983,7 +1983,7 @@
                     $(".pac-container").append("<div class='pac-item location-places-autocomplete-cant-find ' id='divCNF'><i class='ico-search'></i><b><span class='pac-item-query'><a id='aCantFind' data-target='#myModal' class='js-location-cant-find' onclick='CannotFindLocation();' href='javascript:void(0);'   style='cursor: pointer; cursor: hand; margin-left:7px; color:#3cf;' data-toggle='modal' draggable='false'>Can't find your location?</a></span></b></div>");
                     $(".pac-container").on("click", function (event) {
                         $(this).removeClass('map-drop-block');
-                        $("#divCNF").removeClass('map-drop-block');
+                        $("#divCNF").removeClass('map-drop-block'); 
                         $(this).hide();
                         $(".pac-container").slice(1).removeClass('map-drop-block');
                     });
@@ -2757,7 +2757,12 @@
                                 $("#txtEventUrl").val('');
                                 $("#txtEventUrl").focus();
 
-                            }
+                            
+                        }else
+                    {
+                                $('#diverroacc').css('display', 'none');
+                    $("#txtEventUrl").removeClass('err-bor');
+                }
                         },
                         error: function (data) {
 
@@ -4544,26 +4549,14 @@
                 $("#id_auto_hide_type_1-" + el).prop('checked', false);
                 $("#id_HideuntDiv-" + el).css("display", "none");
                 $("#id_ticketshidden-" + el).prop('checked', true);
-                //$("#id_auto_hide_until_Date-" + el).datepicker({
-                //    format: "mm/dd/yyyy",
-                //    minDate: "0",
-                //    onSelect: function () {
-
-                //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                //    }
-                //}).on('changeDate', function (ev) {
-                //    $("#id_auto_hide_until_Date-" + el).datepicker('hide');
-                //});
-                //$("#id_auto_hide_after_Date-" + el).datepicker({
-                //    format: "mm/dd/yyyy",
-                //    minDate: "0",
-                //    onSelect: function () {
-
-                //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                //    }
-                //}).on('changeDate', function (ev) {
-                //    $("#id_auto_hide_after_Date-" + el).datepicker('hide');
-                //});
+                $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
+                $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
+                $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
+                $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
             }
             if (al == "id_RemvTkt") {
                 $("#id_auto_hide_type_0-" + el).prop('checked', true);
@@ -4593,8 +4586,7 @@
                 $("#id_auto_hide_type_0-" + el).prop('checked', false);
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
-                $("#id_hideuntil-" + el).attr("checked", false);
-                $("#id_hideafter-" + el).attr("checked", false);
+             
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -4613,8 +4605,7 @@
                 $("#id_auto_hide_after_Time-" + el).val('');
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
-                $("#id_hideuntil-" + el).attr("checked", false);
-                $("#id_hideafter-" + el).attr("checked", false);
+             
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);

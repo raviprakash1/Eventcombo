@@ -556,7 +556,13 @@ namespace EventCombo.Controllers
                         // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
 
                     }
-                    objEntity.SaveChanges();
+                    try {
+                        objEntity.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                     if (strPaymentType == "A")
                     {
                         ApiLoginID = "354v9ZufxM6";
@@ -1259,16 +1265,19 @@ namespace EventCombo.Controllers
                 var username = acountdedtails.Firstname + " "+ acountdedtails.Lastname;
              
                 string emailnames = "",emailonpayment="";
+                string Organisername = "", Organiseremail = "";
 
 
-
-                // Organiserdetail
+               // Organiserdetail
                 var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
 
 
                  var Organiserdetail = db.Profiles.FirstOrDefault(i => i.UserID == OrganiserDetail.UserId);
-                var Organisername = Organiserdetail.FirstName;
-                var Organiseremail = Organiserdetail.Email;
+                if (Organiserdetail != null)
+                {
+                     Organisername = Organiserdetail.FirstName!=null? Organiserdetail.FirstName:"";
+                     Organiseremail = Organiserdetail.Email!=null ? Organiserdetail.Email:"";
+                }
 
                 //
 
@@ -1321,6 +1330,34 @@ namespace EventCombo.Controllers
                     //Detail to send on page
                 }
                 var emailname = "";
+                //email bearer
+                var Emailbearer = (from x in db.TicketBearers where x.Guid == strGUID && (x.Email ?? "") != "" select x).Distinct().ToList();
+
+                foreach (var item in Emailbearer)
+                {
+                    //MemoryStream attachment1 = new MemoryStream();
+                    //attachment1= generateTicketPDF(strGUID, Eventid, EmailTag, username);
+                    if (string.IsNullOrEmpty(emailnames))
+                    {
+                        emailnames += item.Email;
+                    }
+                    else
+                    {
+                        emailnames += "," + item.Email;
+                    }
+
+                }
+                if (string.IsNullOrEmpty(emailnames))
+                {
+                    emailonpayment = "";
+                }
+                else
+                {
+                    emailonpayment = "Your invitation(s) have been sent to  " + emailnames;
+
+                }
+
+                //email bearer
                 MemoryStream attachment = generateTicketPDF(strGUID, Eventid, EmailTag, username);
                
                     if (Emailtemplate != null)
@@ -1381,7 +1418,7 @@ namespace EventCombo.Controllers
 
 
                             subjectn = Emailtemplate.Subject;
-                        subjectn = modifysubject(subjectn, email, username, eventdetail.EventTitle, DateTime.Now.ToString(), ticketP, EmailTag);
+                        subjectn = modifysubject(subjectn, email, username, eventdetail.EventTitle, DateTime.Now.ToString(), EvtOrDetail.TPD_Order_Id, EmailTag);
 
                            
                         }
@@ -1395,7 +1432,7 @@ namespace EventCombo.Controllers
 
                     // ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
                     //Mail 
-                    hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, emailname, "", "");
+                    hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, emailname, "", "", Emailbearer);
                     //Mail 
 
 
@@ -1405,72 +1442,7 @@ namespace EventCombo.Controllers
 
                 //Send mail
 
-                //email bearer
-                var Emailbearer = (from x in db.TicketBearers where x.Guid == strGUID && (x.Email ?? "") != ""  select x).ToList();
-
-                foreach (var item in Emailbearer)
-                {
-                    //MemoryStream attachment1 = new MemoryStream();
-                    //attachment1= generateTicketPDF(strGUID, Eventid, EmailTag, username);
-                    if (string.IsNullOrEmpty(emailnames))
-                    {
-                        emailnames += item.Email;
-                    }
-                    else
-                    {
-                        emailnames += "," + item.Email;
-
-                        if (Emailtemplate != null)
-                        {
-                            if (!string.IsNullOrEmpty(Emailtemplate.To))
-                            {
-
-                                to = item.Email;
-                            }
-                            if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
-                            {
-                                emailname = Emailtemplate.From_Name;
-                            }
-                            else
-                            {
-                                emailname = from;
-                            }
-                            //if (!string.IsNullOrEmpty(Emailtemplate.Subject))
-                            //{
-
-
-                            //    subjectn = Emailtemplate.Subject;
-                            //    subjectn = modifysubject(subjectn, email, username, eventdetail.EventTitle, DateTime.Now.ToString(), ticketP, EmailTag);
-
-
-                            //}
-
-                            //if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
-                            //{
-                            //    bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-                            //    body = ModifyEmailBody(bodyn, strGUID, Eventid, EmailTag, username);
-
-                            //}
-                            //Mail 
-                            hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, emailname, "", "");
-                            //Mail 
-
-                        }   
-
-                    }
-
-                }
-                if (string.IsNullOrEmpty(emailnames))
-                {
-                    emailonpayment = "";
-                }
-                else
-                {
-                    emailonpayment = "Your invitation(s) have been sent to  " + emailnames;
-
-                }
-
-                //email bearer
+              
                 CreateEventController cs = new CreateEventController();
                 PaymentConfirmation ps = new PaymentConfirmation();
                 var Eventdetails = cs.GetEventdetail(Eventid);
@@ -1534,7 +1506,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        private string modifysubject(string subjectn, string email, string username, string eventTitle, string datenow, string ticketP, List<Email_Tag> Emailtag)
+        private string modifysubject(string subjectn, string email, string username, string eventTitle, string datenow, string Ordernum, List<Email_Tag> Emailtag)
         {
             for (int i = 0; i < Emailtag.Count; i++) // Loop with for.
             {
@@ -1558,7 +1530,7 @@ namespace EventCombo.Controllers
                     }
                     if (Emailtag[i].Tag_Name == "EventOrderNO")
                     {
-                        subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", "");
+                        subjectn = subjectn.Replace("¶¶EventOrderNO¶¶", Ordernum);
 
                     }
                     if (Emailtag[i].Tag_Name == "EventStartDateID")
@@ -1593,7 +1565,7 @@ namespace EventCombo.Controllers
                     }
                     if (Emailtag[i].Tag_Name == "TicketPrice")
                     {
-                        subjectn = subjectn.Replace("¶¶TicketPrice¶¶", ticketP);
+                        subjectn = subjectn.Replace("¶¶TicketPrice¶¶", "");
 
                     }
 

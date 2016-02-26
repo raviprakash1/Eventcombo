@@ -66,6 +66,7 @@ namespace EventCombo.Controllers
 
 
         }
+        [AllowAnonymous]
         public async Task<string> FacebookLogin(string id,string email)
         {
             //current login details 
@@ -73,6 +74,7 @@ namespace EventCombo.Controllers
             var Strfirstname = "";
             var Strlastnmae = "";
             var Stremail = "";
+            var fbuserid = "";
           
 
             AccountController acc = new AccountController();
@@ -133,8 +135,10 @@ namespace EventCombo.Controllers
             Strfirstname = me.first_name;
             Strlastnmae = me.last_name;
             Stremail = me.email;
+            fbuserid = me.id;
 
             string HitURL = string.Format("https://graph.facebook.com/me?access_token={0}", id);
+          
             HttpClient clienthd = new HttpClient();
             Uri uri = new Uri(HitURL);
             HttpResponseMessage response = await clienthd.GetAsync(uri);
@@ -144,7 +148,7 @@ namespace EventCombo.Controllers
                 string content = await response.Content.ReadAsStringAsync();
                 dynamic iObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
                 identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "1956731254551382", ClaimValueTypes.String, "Facebook", "Facebook"));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, fbuserid, ClaimValueTypes.String, "Facebook", "Facebook"));
             }
             Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
             var LoginProvider = providerKeyClaim.Issuer;
@@ -192,6 +196,7 @@ namespace EventCombo.Controllers
                                 prof.Ipcountry = country;
                                 prof.IpState = state;
                                 prof.Ipcity = city;
+                                prof.UserStatus = "Y";
 
                                 objEntity.Profiles.Add(prof);
 
@@ -201,6 +206,7 @@ namespace EventCombo.Controllers
 
 
                                 objEntity.SaveChanges();
+                                var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
 
                             }
                         }
@@ -266,14 +272,18 @@ namespace EventCombo.Controllers
                 }
                 var usernew = new ApplicationUser { UserName = email, Email = email };
                 ExternalLoginInfo exterlogin = new ExternalLoginInfo();
+                var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+
                 exterlogin.DefaultUserName = Strfirstname;
                 exterlogin.Email = email;
                 exterlogin.Login = login;
                 exterlogin.ExternalIdentity = identity;
                 var status = db.Profiles.Where(x => x.UserID == user.Id).Select(x => x.UserStatus).FirstOrDefault();
+                status = status != null ? status : "Y";
                 if (status == "Y" || status == "y")
                 {
-                    var result = await SignInManager.ExternalSignInAsync(exterlogin, isPersistent: false);
+                    await SignInManager.SignInAsync(user, true, true);
+                    //var result = await SignInManager.ExternalSignInAsync(exterlogin, isPersistent: false);
                     Session["AppId"] = user.Id;
                     return url;
                 }
@@ -1320,7 +1330,7 @@ namespace EventCombo.Controllers
                 smtp.Send(mailMessage);
             }
         }
-        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string emailname, string qrimage,string brcode)
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string emailname, string qrimage,string brcode,List<TicketBearer> GuestList)
         {
             MailMessage mailMessage = new MailMessage();
             
@@ -1350,7 +1360,7 @@ namespace EventCombo.Controllers
                 mailMessage.IsBodyHtml = true;
             //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
             //mailMessage.AlternateViews.Add(htmlView);
-           
+
             //Add Image
             //LinkedResource theEmailImage = new LinkedResource(ImageMapPath);
             //theEmailImage.ContentId = "myeventmapImageID";
@@ -1373,8 +1383,15 @@ namespace EventCombo.Controllers
             //theeventImage.ContentId = "myeventImageID";
             //htmlView.LinkedResources.Add(theeventImage);
 
-
+       
             mailMessage.To.Add(new MailAddress(To));
+            if(GuestList!=null)
+            {
+                foreach(var item in GuestList)
+                {
+                    mailMessage.To.Add(new MailAddress(item.Email,item.Name));
+                }
+            }
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = ConfigurationManager.AppSettings["Host"];
                 smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);

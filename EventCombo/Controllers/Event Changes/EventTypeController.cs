@@ -159,13 +159,9 @@ namespace CMS.Controllers
             try
             {
                 EmsEntities objEntity = new EmsEntities();
-                var checktype = (from eve in objEntity.Events where eve.EventTypeID == iType select eve).Any();
-                if (!checktype)
-                {
-                    objEntity.Database.ExecuteSqlCommand("Delete from EventType where EventTypeID='" + iType + "' ");
-                    TempData["SuccessMessage"] = "Event Sub Category Deleted.";
-                    strResult = "Y";
-                }
+                objEntity.Database.ExecuteSqlCommand("Delete from EventType where EventTypeID='" + iType + "' ");
+                TempData["SuccessMessage"] = "Event Sub Category Deleted.";
+                strResult = "Y";
             }
             catch (Exception ex)
             {

@@ -6,7 +6,12 @@ namespace CMS.Models
     public partial class EventCategory
     {
         public List<EventSubCategory> ESubCat { get; set; }
+        public bool CategoryPresent { get; set; }
 
+    }
+    public partial class EventSubCategory
+    {
+        public bool EvntSubCatPresent { get; set; }
     }
     public class ExternalLoginConfirmationViewModel
     {

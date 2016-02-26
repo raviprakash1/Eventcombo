@@ -312,7 +312,7 @@ namespace EventCombo.Controllers
             if (strDurataion == "Week" || strDurataion == "Month")
             {
                 if (strDurataion == "Week")
-                    dt = DateTime.Today.AddDays(-7);
+                    dt = DateTime.Today.AddDays(-6);
                 else
                     dt = DateTime.Today.AddDays(-30);
 
@@ -401,7 +401,7 @@ namespace EventCombo.Controllers
             if (strDurataion == "Week" || strDurataion == "Month")
             {
                 if (strDurataion == "Week")
-                    dt = DateTime.Today.AddDays(-7);
+                    dt = DateTime.Today.AddDays(-6);
                 else
                     dt = DateTime.Today.AddDays(-30);
 
@@ -1048,7 +1048,11 @@ namespace EventCombo.Controllers
                     ObjEC.Private_ShareOnFB = vEvent.Private_ShareOnFB;
                     ObjEC.Private_GuestOnly = vEvent.Private_GuestOnly;
                     ObjEC.Private_Password = vEvent.Private_Password;
-                    ObjEC.EventUrl = (vEvent.EventUrl.Trim() != string.Empty ? "copyof" + vEvent.EventUrl : "");
+                    if (vEvent.EventUrl != null && vEvent.EventUrl.Trim() != string.Empty)
+                        ObjEC.EventUrl = (vEvent.EventUrl != null ? "copyof" + vEvent.EventUrl : "");
+                    else
+                        ObjEC.EventUrl = "";
+
                     ObjEC.PublishOnFB = vEvent.PublishOnFB;
                     ObjEC.IsMultipleEvent = vEvent.IsMultipleEvent;
                     ObjEC.TimeZone = vEvent.TimeZone;

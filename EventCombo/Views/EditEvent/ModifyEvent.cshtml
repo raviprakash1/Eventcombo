@@ -872,7 +872,7 @@
                                                                     <div class="form-group mt10">
                                                                         <div class="col-sm-6 ev_pad_l0">
                                                                             <div class="col-sm-12 no_pad">
-                                                                                <label class="label-control ev_tickt_lebel">Hide Untill</label>
+                                                                                <input type="checkbox" id="id_hideuntil-n" onchange="enablehideafteruntil(this.id)" /> <label class="label-control ev_tickt_lebel">Hide Untill</label>
                                                                             </div>
                                                                             <div class="col-sm-8 ev_pad_l0">
                                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_until_Date-n" onchange="changetext(this.id); " />
@@ -885,7 +885,7 @@
 
                                                                         <div class="col-sm-6 ev_pad_r0">
                                                                             <div class="col-sm-12 no_pad">
-                                                                                <label class="label-control ev_tickt_lebel">Hide After</label>
+                                                                                <input type="checkbox" id="id_hideafter-n" onchange="enablehideafteruntil(this.id)" /> <label class="label-control ev_tickt_lebel">Hide After</label>
                                                                             </div>
                                                                             <div class="col-sm-8 ev_pad_l0">
                                                                                 <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_auto_hide_after_Date-n" onchange="checkvalidDate(this.id)" />
@@ -1261,6 +1261,7 @@ else
 
 
                     <input type="hidden" id="hidAddSno" value="" />
+
                     <input type="hidden" id="hidSchLastState" value="" />
                     <input type="hidden" id="hidOrgnizer" value="" />
                     <input type="hidden" id="hidAddressStatus" value="@Model.AddressStatus" />
@@ -1412,7 +1413,7 @@ else
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-body text-center pv50 txt-msg">
-                    <h4><img src="~/Images/ajaxloader1.gif" />Please wait ...</h4>
+                    <h4><img src="~/Images/ajaxloader1.gif" />Please wait ... </h4>
                 </div>
                 <div class="modal-footer msg-action-btn ok">
                     <button type="button" id="btokPrg" class="btn btn-primary yes ok" style="display:none;"  data-dismiss="modal">OK</button>
@@ -2185,7 +2186,7 @@ else
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
             var vOrgLn= $("#OrgLn_" + Sno).text();
-     
+
             $("#txtOrgnizer").val(vOrgName);
             $("#edOrgDes").code(vOrgDes);
             $("#txtOrgFBlink").val(vOrgFB);
@@ -2213,7 +2214,7 @@ else
             var vOrgFB = $("#txtOrgFBlink").val();
             var vOrgTw = $("#txtOrgTWlink").val();
             var vOrgLn = $("#txtOrgLNlink").val();
- 
+
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
@@ -2390,7 +2391,7 @@ else
                             if(t_id!=0)
                             {
                                 ecfee=$('#id_ecfeeback_id-'+i).val();
-                              
+
                                 customerfee = $('#id_fee-'+i).val();
                                 ecfeepercent=$('#id_ecpercentback_id-'+i).val();;
                                 ecfeeamount=$('#id_ecammountback_id-'+i).val();;
@@ -2407,16 +2408,16 @@ else
                                 customize=0
                             }
                         }
-                    
-                     
-                    
-                      
+
+
+
+
                     }
                     if($('#id_feestruct-'+i).css('display') == "block")
                     {
                         var val=$('#id_include_ticket_fees-' + i).val();
                         var fee=$('#id_fee-'+i).val();
-                      
+
                         var isadmin="@Model.Isadmin";
                         if(isadmin=="Y")
                         {
@@ -2431,12 +2432,12 @@ else
                         }else
                         {
 
-                                
+
                             var t_id=  $('#id_ticket_id-'+i).val();
                             if(t_id!=0)
                             {
                                 ecfee=$('#id_ecfeeback_id-'+i).val();
-                              
+
                                 customerfee = $('#id_fee-'+i).val();
                                 ecfeepercent=$('#id_ecpercentback_id-'+i).val();;
                                 ecfeeamount=$('#id_ecammountback_id-'+i).val();;
@@ -2453,20 +2454,20 @@ else
                             }
                             hdecfee=0;
                             hdcsfee=0;
-                           
-                          
+
+
                         }
                         //if ($('#id_include_ticket_fees-' + i).val() == 0) {
-                            
+
 
                         //}
                         //if ($('#id_include_ticket_fees-' + i).val() == 1) {
-                        //   
+                        //
 
                         //}
                     }
-                  
-                 
+
+
 
                     var Discount = $('#id_Discount-' + i).val().replace(',', '');
                     var showdesc = ($('#id_show_description-' + i).is(":checked") == true ? '1' : '0');
@@ -2766,6 +2767,7 @@ else
                         }
                        else
                         {
+                            var vMasterEventId =$("#hdEventId").val();
                             $("#hdEventId").val(response);
 
 
@@ -2794,14 +2796,19 @@ else
                             {
                                 $('#divaccsuc').css('display', 'none');
                                 $('#diverroacc').css('display', 'none');
-                                var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
+                                //var vUrl = $('#txtEventTitle').val() + "౼" + response + "౼Y";
+                                var vTitle = $('#txtEventTitle').val().split(' ').join('-');
+                                vTitle = vTitle.replace("[^a-zA-Z0-9_-]+", "");
+                                var vUrl = '@Url.RouteUrl("ViewEvent",new { strEventDs= "ß", strEventId ="~" })';
+                                vUrl = vUrl.replace("%c3%9f", vTitle);
+                                vUrl = vUrl.replace("~", vMasterEventId);
+                                window.open(vUrl.toLowerCase());
 
-                                window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
+                                @*window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");*@
                             }
                             if(type=="Live")
                             {
-                                //live
-
+                                @*window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;*@
                                 window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;
                             }
                         }
@@ -3152,6 +3159,10 @@ else
                                 $("#txtEventUrl").focus();
                                 $('html,body').animate({ scrollTop: 0 });
 
+                            }else
+                            {
+                                $('#diverroacc').css('display', 'none');
+                                $("#txtEventUrl").removeClass('err-bor');
                             }
                         },
                         error: function (data) {
@@ -4952,36 +4963,25 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-            $("#id_auto_hide_until_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            });
-            $("#id_auto_hide_after_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            });
+          
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
-            $("#id_auto_hide_after_Time-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
+           
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
+
+            $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
+            $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
+
+
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
 
 
@@ -5073,36 +5073,24 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-            $("#id_auto_hide_until_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            });
-            $("#id_auto_hide_after_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            });
-
+         
+           
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
-            $("#id_auto_hide_after_Time-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
+         
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
+            $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
+            $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
+
+
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
@@ -5183,36 +5171,24 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-            $("#id_auto_hide_until_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            });
-            $("#id_auto_hide_after_Date-" + divlength).datepicker({
-                format: "mm/dd/yyyy",
-                minDate: "0",
-                onSelect: function () {
-
-                    this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                }
-            }).on('changeDate', function (ev) {
-                $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            });
+         
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).timepicker();
-            $("#id_auto_hide_after_Time-" + divlength).timepicker();
-            $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
+        
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
+
+
+            $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
+            $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
@@ -5667,26 +5643,14 @@ else
                 $("#id_auto_hide_type_1-" + el).prop('checked', false);
                 $("#id_HideuntDiv-" + el).css("display", "none");
                 $("#id_ticketshidden-" + el).prop('checked', true);
-                $("#id_auto_hide_until_Date-" + el).datepicker({
-                    format: "mm/dd/yyyy",
-                    minDate: "0",
-                    onSelect: function () {
-
-                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                    }
-                }).on('changeDate', function (ev) {
-                    $("#id_auto_hide_until_Date-" + el).datepicker('hide');
-                });
-                $("#id_auto_hide_after_Date-" + el).datepicker({
-                    format: "mm/dd/yyyy",
-                    minDate: "0",
-                    onSelect: function () {
-
-                        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-                    }
-                }).on('changeDate', function (ev) {
-                    $("#id_auto_hide_after_Date-" + el).datepicker('hide');
-                });
+                $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
+                $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
+                $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
+                $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
             }
             if (al == "id_RemvTkt") {
                 $("#id_auto_hide_type_0-" + el).prop('checked', true);
@@ -5703,8 +5667,7 @@ else
 
                 $("#id_hideuntil-"+ el).attr("checked", false);
                 $("#id_hideafter-"+ el).attr("checked", false);
-                $("#id_hideuntil-" + el).attr("checked", false);
-                $("#id_hideafter-" + el).attr("checked", false);
+            
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -5720,6 +5683,17 @@ else
             if (al == "id_CusdateTime") {
                 $("#id_HideuntDiv-" + el).css("display", "block");
                 $("#id_auto_hide_type_0-" + el).prop('checked', false);
+                $("#id_hideuntil-"+ el).attr("checked", false);
+                $("#id_hideafter-"+ el).attr("checked", false);
+            
+                $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
+                $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
+                $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
+                $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
+                $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
             }
             if (al == "id_TktnotSale") {
                 $("#id_HideuntDiv-" + el).css("display", "none");
@@ -5731,8 +5705,7 @@ else
 
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
-                $("#id_hideuntil-" + el).attr("checked", false);
-                $("#id_hideafter-" + el).attr("checked", false);
+             
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -5843,6 +5816,8 @@ else
             var countprice = 0;
             var countmax = 0;
             var countdiscount = 0;
+
+            var hidecount = 0;
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
@@ -5921,7 +5896,35 @@ else
                         } 
                     }
 
+                    if ($('#id_ticketshidden-' + i).is(":checked"))
+                    {
+                        if($('#id_hideuntil-'+i).is(":checked"))
+                        {
+                            if($('#id_auto_hide_until_Date-'+i).val()=="" || $("#id_auto_hide_until_time-"+i).val()=="")
+                            {
+                                $('#id_auto_hide_until_Date-' + i).addClass('err-bor');
+                                $("#id_auto_hide_until_time-" + i).addClass('err-bor');
+                                hidecount++;
+                            }else
+                            {
+                                $('#id_auto_hide_until_Date-' + i).removeClass('err-bor');
+                                $("#id_auto_hide_until_time-" + i).removeClass('err-bor');
+                            }
 
+                        }
+                       
+                        if ($('#id_hideafter-' + i).is(":checked")) {
+                            if ($('#id_auto_hide_after_Date-' + i).val() == "" || $("#id_auto_hide_after_Time-" + i).val() == "") {
+                                $('#id_auto_hide_after_Date-' + i).addClass('err-bor');
+                                $("#id_auto_hide_after_Time-" + i).addClass('err-bor');
+                                hidecount++;
+                            }else
+                            {
+                                $('#id_auto_hide_after_Date-' + i).removeClass('err-bor');
+                                $("#id_auto_hide_after_Time-" + i).removeClass('err-bor');
+                            }
+                        }
+                    }
                     var min =parseFloat( $('#id_min_ticket-' + i).val());
                     var max =parseFloat( $('#id_max_ticket-' + i).val());
                     var discount = parseFloat($('#id_Discount-' + i).val().replace(',', ''));
@@ -5995,7 +5998,7 @@ else
             if (countqty > 0) {
                 msg += ajaxsetup("CreateEvent", "CreateEventQtyValidateUI") + "<br/>";
             }
-            if (countdesc > 0)
+            if (countdesc > 0 || hidecount > 0)
             {
                 msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
 
@@ -6604,7 +6607,70 @@ else
             });
         });
 
+        function enablehideafteruntil(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "id_hideafter") {
+                if ($('#' + e).is(":checked") == true) {
+                    $("#id_auto_hide_after_Date-" + el).removeAttr("readonly");
+                    $("#id_auto_hide_after_Time-" + el).removeAttr("readonly");
+                    $("#id_auto_hide_after_Date-" + el).datepicker({
+                        format: "mm/dd/yyyy",
+                        minDate: "0",
+                        onSelect: function () {
 
+                            this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                        }
+                    }).on('changeDate', function (ev) {
+                        $("#id_auto_hide_after_Date-" + el).datepicker('hide');
+                    });
+                    $("#id_auto_hide_after_Time-" + el).timepicker();
+                    $("#id_auto_hide_after_Time-" + el).val("7:00pm");
+                    $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", 0);
+                    $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", null);
+                } else {
+                    $("#id_auto_hide_after_Date-" + el).val("");
+                    $("#id_auto_hide_after_Time-" + el).val("");
+                    $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
+                    $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
+                    $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
+                    $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
+                }
+            }
+
+            if (al == "id_hideuntil")
+            {
+                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+                var al = e.substr(0, e.indexOf('-'));
+                if ($('#' + e).is(":checked") == true) {
+                    $("#id_auto_hide_until_Date-" + el).removeAttr("readonly");
+                    $("#id_auto_hide_until_time-" + el).removeAttr("readonly");
+                    $("#id_auto_hide_until_time-" + el).val("7:00pm");
+                    $("#id_auto_hide_until_Date-" + el).datepicker({
+                        format: "mm/dd/yyyy",
+                        minDate: "0",
+                        onSelect: function () {
+
+                            this.fireEvent && this.fireEvent('onchange') || $(this).change();
+                        }
+                    }).on('changeDate', function (ev) {
+                        $("#id_auto_hide_until_Date-" + el).datepicker('hide');
+                    });
+                    $("#id_auto_hide_until_time-" + el).timepicker();
+                    $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", 0);
+                    $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", null);
+                } else {
+                    $("#id_auto_hide_until_Date-" + el).val("");
+                    $("#id_auto_hide_until_time-" + el).val("");
+                    $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
+                    $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
+                    $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
+                    $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
+                }
+            }
+
+        }
         //$(document).on('click', function(){
         //    $('.StartDatemodal').hide();
         //});

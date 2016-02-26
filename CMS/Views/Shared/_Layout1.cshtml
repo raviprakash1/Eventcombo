@@ -158,7 +158,7 @@
 
                     </li>
                     <li>
-                        <a href="@Url.Action("Index", "FeeSetting")">
+                        <a href="#"  onclick="checkPermission('11');" >
                             <span class="fa fa-ticket"></span>
                             <span class="sidebar-title">Fee Settings</span>
                         </a>
@@ -354,7 +354,8 @@
                             window.location.href = '@Url.Action("EventType", "EventType", new {Type="N"})';
                         else if (vPerm == "9")
                             window.location.href = '@Url.Action("EventCategory", "EventCategory", new { msg = "N"})';
-
+                        else if (vPerm == "11")
+                            window.location.href = '@Url.Action("Index", "FeeSetting")';
                     }
                 }
             });

@@ -20,18 +20,7 @@ namespace CMS.Controllers
                 {
                     item.ESubCat = GetSubCategories(item.EventCategoryID);
 
-                var checktype = (from eve in objEntity.Events where eve.EventCategoryID == item.EventCategoryID select eve).Any();
-                if (checktype == true)
-                {
-                    item.CategoryPresent = true;
-                }
-                else
-                {
-                    item.CategoryPresent = false;
-                }
-
-               
-            } 
+                } 
                 
                 if(msg== "SA")
             {
@@ -166,22 +155,8 @@ namespace CMS.Controllers
             {
 
                 var query = (from EventSubCategory in objEntity.EventSubCategories
-                             where EventSubCategory.EventCategoryID == iEvntCtgryId
-                             select EventSubCategory).OrderBy (x=>x.EventSubCategory1).ToList();   
-                
-                foreach(var item in query)
-                {
-                    var checktype = (from eve in objEntity.Events where eve.EventSubCategoryID == item.EventSubCategoryID select eve).Any();
-                    if (checktype == true)
-                    {
-                        item.EvntSubCatPresent = true;
-                    }
-                    else
-                    {
-                        item.EvntSubCatPresent = false;
-                    }
-                }
-                         
+                              where EventSubCategory.EventCategoryID == iEvntCtgryId
+                              select EventSubCategory).OrderBy (x=>x.EventSubCategory1).ToList();            
                 return query;
             }            
         }
@@ -311,13 +286,9 @@ namespace CMS.Controllers
             try
             {
                 EmsEntities objEntity = new EmsEntities();
-                var checktype = (from eve in objEntity.Events where eve.EventSubCategoryID == iEvntSubCtgryId select eve).Any();
-                if (!checktype)
-                {
-                    objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "' and EventSubCategoryID='" + iEvntSubCtgryId + "'");
-                    // TempData["SuccessMessage"] = "Event Sub Category Deleted.";
-                    strResult = "DS";
-                }
+                objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "' and EventSubCategoryID='"+ iEvntSubCtgryId + "'");                
+               // TempData["SuccessMessage"] = "Event Sub Category Deleted.";
+                strResult = "DS";
             }
             catch (Exception ex)
             {
@@ -332,15 +303,10 @@ namespace CMS.Controllers
             try
             {
                 EmsEntities objEntity = new EmsEntities();
-                var checktype = (from eve in objEntity.Events where eve.EventCategoryID == iEvntCtgryId select eve).Any();
-                if (!checktype)
-                {
-                    objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "'");
-                    objEntity.Database.ExecuteSqlCommand("Delete from EventCategory where EventCategoryID='" + iEvntCtgryId + "'");
-
-                    // TempData["SuccessMessage"] = "Event Category Deleted.";
-                    strResult = "DC";
-                }
+                objEntity.Database.ExecuteSqlCommand("Delete from EventSubCategory where EventCategoryID='" + iEvntCtgryId + "'");
+                objEntity.Database.ExecuteSqlCommand("Delete from EventCategory where EventCategoryID='" + iEvntCtgryId + "'");
+               // TempData["SuccessMessage"] = "Event Category Deleted.";
+                strResult = "DC";
             }
             catch (Exception ex)
             {
@@ -358,16 +324,6 @@ namespace CMS.Controllers
             foreach (var item in modelPerm)
             {
                 item.ESubCat = GetSubCategories(item.EventCategoryID);
-
-                var checktype = (from eve in objEntity.Events where eve.EventCategoryID == item.EventCategoryID select eve).Any();
-                if (checktype == true)
-                {
-                    item.CategoryPresent = true;
-                }
-                else
-                {
-                    item.CategoryPresent = false;
-                }
 
             }
             return PartialView("EventCategoryListPartial", modelPerm);

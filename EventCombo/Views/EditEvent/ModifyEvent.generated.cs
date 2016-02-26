@@ -293,8 +293,8 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</span>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n" +
-"\r\n            <div");
+WriteLiteral("</span>\r\n                    </div>\r\n\r\n                </div>\r\n            </div>" +
+"\r\n\r\n            <div");
 
 WriteLiteral(" class=\"event-upload-container\"");
 
@@ -324,14 +324,14 @@ WriteLiteral(" class=\"form-control evnt_title_control evnt_placehold chkvalidat
 
 WriteLiteral(" placeholder=\"Click here to enter the name of the event*\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3540), Tuple.Create("\"", 3565)
+WriteAttribute("value", Tuple.Create(" value=\"", 3542), Tuple.Create("\"", 3567)
             
-            #line 75 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                                                                                                       , Tuple.Create(Tuple.Create("", 3548), Tuple.Create<System.Object, System.Int32>(Model.EventTitle
+            #line 76 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+                                                                                                                       , Tuple.Create(Tuple.Create("", 3550), Tuple.Create<System.Object, System.Int32>(Model.EventTitle
             
             #line default
             #line hidden
-, 3548), false)
+, 3550), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                    <div");
@@ -349,13 +349,13 @@ WriteLiteral(" class=\"label-control evnt_title_date evnt_title_online fs24\"");
 WriteLiteral(">\r\n");
 
             
-            #line 80 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 81 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 80 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 81 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.AddressStatus == "Online")
                                 {
 
@@ -373,7 +373,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 83 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 84 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
                                 else
                                 {
@@ -390,7 +390,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 87 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 88 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
 
             
@@ -475,7 +475,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                                        ");
 
             
-            #line 111 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 112 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                    Write(Html.DropDownList("dllTimeZone", ViewBag.Timezonelist as List<SelectListItem>, new { @class = "form-control selectpicker evnt_inp_cont wd600" }));
 
             
@@ -507,13 +507,13 @@ WriteLiteral(" class=\"col-sm-12 no_pad label-control ev_timezone_lebel\"");
 WriteLiteral(">\r\n");
 
             
-            #line 120 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 121 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                             
             
             #line default
             #line hidden
             
-            #line 120 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 121 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                              if (Model.DisplayStartTime == "Y")
                                                             {
 
@@ -531,7 +531,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 123 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 124 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                             }
                                                             else
                                                             {
@@ -548,7 +548,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 127 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 128 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                             }
 
             
@@ -563,13 +563,13 @@ WriteLiteral(" class=\"col-sm-12 no_pad label-control ev_timezone_lebel\"");
 WriteLiteral(">\r\n");
 
             
-            #line 131 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 132 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                             
             
             #line default
             #line hidden
             
-            #line 131 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 132 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                              if (Model.DisplayEndTime == "Y")
                                                             {
 
@@ -587,7 +587,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 134 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 135 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                             }
                                                             else
                                                             {
@@ -604,7 +604,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 138 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 139 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                             }
 
             
@@ -619,13 +619,13 @@ WriteLiteral(" class=\"col-sm-12 no_pad label-control ev_timezone_lebel\"");
 WriteLiteral(">\r\n");
 
             
-            #line 142 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 143 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                             
             
             #line default
             #line hidden
             
-            #line 142 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 143 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                              if (Model.DisplayTimeZone == "Y")
                                                             {
 
@@ -643,7 +643,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 145 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 146 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                             }
                                                             else
                                                             {
@@ -660,7 +660,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 149 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 150 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                             }
 
             
@@ -752,14 +752,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdPastLId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 11328), Tuple.Create("\"", 11362)
+WriteAttribute("value", Tuple.Create(" value=\"", 11330), Tuple.Create("\"", 11364)
             
-            #line 177 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-      , Tuple.Create(Tuple.Create("", 11336), Tuple.Create<System.Object, System.Int32>(Model.LastLocationAddress
+            #line 178 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+      , Tuple.Create(Tuple.Create("", 11338), Tuple.Create<System.Object, System.Int32>(Model.LastLocationAddress
             
             #line default
             #line hidden
-, 11336), false)
+, 11338), false)
 );
 
 WriteLiteral(" />\r\n                                            \r\n                              " +
@@ -805,13 +805,13 @@ WriteLiteral(" class=\"label-control evnt_title_multi pl0\"");
 WriteLiteral(">\r\n");
 
             
-            #line 194 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 195 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         
             
             #line default
             #line hidden
             
-            #line 194 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 195 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                          if (Model.ShowMap == "Y" || Model.ShowMap == "y")
                                         {
             
@@ -830,7 +830,7 @@ WriteLiteral(" checked=\"checked\"");
 WriteLiteral(">");
 
             
-            #line 195 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 196 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                                                                              }
                                         else
                                         {
@@ -849,7 +849,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(">\r\n");
 
             
-            #line 199 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 200 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         }
 
             
@@ -865,13 +865,13 @@ WriteLiteral(" id=\"lblusePast\"");
 WriteLiteral(">\r\n");
 
             
-            #line 204 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 205 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         
             
             #line default
             #line hidden
             
-            #line 204 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 205 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                          if (Model.LastLocationAddress > 0)
                                         {
 
@@ -891,7 +891,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(">\r\n");
 
             
-            #line 207 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 208 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         }
                                         else
                                         {
@@ -910,7 +910,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(">\r\n");
 
             
-            #line 211 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 212 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         }
 
             
@@ -1713,7 +1713,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 438 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 439 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                Write(Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" }));
 
             
@@ -1741,7 +1741,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 446 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 447 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                Write(Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" }));
 
             
@@ -1776,14 +1776,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hidSubCat\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 32421), Tuple.Create("\"", 32454)
+WriteAttribute("value", Tuple.Create(" value=\"", 32423), Tuple.Create("\"", 32456)
             
-            #line 455 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 32429), Tuple.Create<System.Object, System.Int32>(Model.EventSubCategoryID
+            #line 456 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 32431), Tuple.Create<System.Object, System.Int32>(Model.EventSubCategoryID
             
             #line default
             #line hidden
-, 32429), false)
+, 32431), false)
 );
 
 WriteLiteral(" />\r\n                                </div>\r\n                            </div>\r\n" +
@@ -1860,14 +1860,14 @@ WriteLiteral(" id=\"txtEventUrl\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 33915), Tuple.Create("\"", 33938)
+WriteAttribute("value", Tuple.Create(" value=\"", 33917), Tuple.Create("\"", 33940)
             
-            #line 482 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 33923), Tuple.Create<System.Object, System.Int32>(Model.EventUrl
+            #line 483 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+                                 , Tuple.Create(Tuple.Create("", 33925), Tuple.Create<System.Object, System.Int32>(Model.EventUrl
             
             #line default
             #line hidden
-, 33923), false)
+, 33925), false)
 );
 
 WriteLiteral(" placeholder=\"enter url name\"");
@@ -3251,7 +3251,15 @@ WriteLiteral(">\r\n                                                             
 WriteLiteral(" class=\"col-sm-12 no_pad\"");
 
 WriteLiteral(">\r\n                                                                              " +
-"  <label");
+"  <input");
+
+WriteLiteral(" type=\"checkbox\"");
+
+WriteLiteral(" id=\"id_hideuntil-n\"");
+
+WriteLiteral(" onchange=\"enablehideafteruntil(this.id)\"");
+
+WriteLiteral(" /> <label");
 
 WriteLiteral(" class=\"label-control ev_tickt_lebel\"");
 
@@ -3313,7 +3321,15 @@ WriteLiteral(">\r\n                                                             
 WriteLiteral(" class=\"col-sm-12 no_pad\"");
 
 WriteLiteral(">\r\n                                                                              " +
-"  <label");
+"  <input");
+
+WriteLiteral(" type=\"checkbox\"");
+
+WriteLiteral(" id=\"id_hideafter-n\"");
+
+WriteLiteral(" onchange=\"enablehideafteruntil(this.id)\"");
+
+WriteLiteral(" /> <label");
 
 WriteLiteral(" class=\"label-control ev_tickt_lebel\"");
 
@@ -3683,13 +3699,13 @@ WriteLiteral(" id=\"id_percentage\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 998 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 999 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 998 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 999 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.Ticket_DAdress == "Y" || Model.Ticket_DAdress == "y")
                                 {
 
@@ -3709,7 +3725,7 @@ WriteLiteral(" checked=\"checked\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1001 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1002 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
                                 else
                                 {
@@ -3728,7 +3744,7 @@ WriteLiteral(" id=\"id_ticketdeliveryaddr\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1005 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1006 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
 
             
@@ -3747,13 +3763,13 @@ WriteLiteral(" class=\"label-control ev_tickt_lebel pl0\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1011 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1012 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 1011 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1012 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.Ticket_showremain == "Y" || Model.Ticket_showremain == "y")
                                 {
 
@@ -3773,7 +3789,7 @@ WriteLiteral(" checked=\"checked\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1014 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1015 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
                                 else
                                 {
@@ -3792,7 +3808,7 @@ WriteLiteral(" id=\"id_showremaningticket\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1018 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1019 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
                                 }
 
@@ -3812,13 +3828,13 @@ WriteLiteral(" class=\"label-control ev_tickt_lebel pl0\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1025 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1026 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 1025 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1026 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.Ticket_showvariable == "Y" || Model.Ticket_showvariable == "y")
 {
 
@@ -3838,7 +3854,7 @@ WriteLiteral(" checked=\"checked\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1028 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1029 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 }
 else
 {
@@ -3857,7 +3873,7 @@ WriteLiteral(" id=\"id_variablecharge\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1032 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1033 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 
@@ -3896,14 +3912,14 @@ WriteLiteral(" placeholder=\"\"");
 
 WriteLiteral(" id=\"id_vardesc\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 77398), Tuple.Create("\"", 77432)
+WriteAttribute("value", Tuple.Create(" value=\"", 77574), Tuple.Create("\"", 77608)
             
-            #line 1045 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                                                 , Tuple.Create(Tuple.Create("", 77406), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
+            #line 1046 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+                                                                 , Tuple.Create(Tuple.Create("", 77582), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
             
             #line default
             #line hidden
-, 77406), false)
+, 77582), false)
 );
 
 WriteLiteral(">\r\n                                    </div>\r\n                                </" +
@@ -3922,13 +3938,13 @@ WriteLiteral(" class=\"col-sm-10\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1051 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1052 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         
             
             #line default
             #line hidden
             
-            #line 1051 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1052 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                          if (Model.Ticket_variabletype == "R")
                                         {
 
@@ -3954,7 +3970,7 @@ WriteLiteral(" selected=\"selected\"");
 WriteLiteral(">Required </option>\r\n\r\n                                            </select>\r\n");
 
             
-            #line 1058 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1059 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         }
                                         else if (Model.Ticket_variabletype == "O")
                                         {
@@ -3981,7 +3997,7 @@ WriteLiteral(" value=\"R\"");
 WriteLiteral(">Required </option>\r\n\r\n                                            </select>\r\n");
 
             
-            #line 1066 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1067 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         }
                                         else
                                         {
@@ -4006,7 +4022,7 @@ WriteLiteral(" value=\"R\"");
 WriteLiteral(">Required </option>\r\n\r\n                                            </select>\r\n");
 
             
-            #line 1074 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1075 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
                                         }
 
@@ -4170,21 +4186,21 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 
 WriteLiteral(">\r\n                                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 82212), Tuple.Create("\"", 82233)
-, Tuple.Create(Tuple.Create("", 82218), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 82218), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 82388), Tuple.Create("\"", 82409)
+, Tuple.Create(Tuple.Create("", 82394), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 82394), false)
 );
 
 WriteLiteral("> ENABLE DISCUSSION\r\n");
 
             
-            #line 1123 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1124 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 1123 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1124 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.EnableFBDiscussion == "Y" || Model.EnableFBDiscussion == "y")
                                 {
 
@@ -4202,7 +4218,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 1126 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1127 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
                                 else
                                 {
@@ -4219,7 +4235,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 1130 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1131 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
 
             
@@ -4232,13 +4248,13 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 WriteLiteral(">\r\n                                PUBLISH EVENT TO FACEBOOK\r\n");
 
             
-            #line 1137 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1138 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 1137 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1138 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.PublishOnFB == "Y"|| Model.PublishOnFB == "y")
                                 {
 
@@ -4256,7 +4272,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 1140 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1141 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
                                 else
                                 {
@@ -4273,7 +4289,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 1144 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1145 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
 
             
@@ -4445,14 +4461,14 @@ WriteLiteral(" id=\"txtReqPassword\"");
 
 WriteLiteral(" readonly=\"readonly\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 87920), Tuple.Create("\"", 87951)
+WriteAttribute("value", Tuple.Create(" value=\"", 88096), Tuple.Create("\"", 88127)
             
-            #line 1230 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                 , Tuple.Create(Tuple.Create("", 87928), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
+            #line 1231 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+                 , Tuple.Create(Tuple.Create("", 88104), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
             
             #line default
             #line hidden
-, 87928), false)
+, 88104), false)
 );
 
 WriteLiteral(" class=\"form-control evnt_inp_cont mb10 wd500 chkvalidation\"");
@@ -4512,7 +4528,7 @@ WriteLiteral(" id=\"hidAddSno\"");
 
 WriteLiteral(" value=\"\"");
 
-WriteLiteral(" />\r\n                    <input");
+WriteLiteral(" />\r\n\r\n                    <input");
 
 WriteLiteral(" type=\"hidden\"");
 
@@ -4534,14 +4550,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hidAddressStatus\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 89694), Tuple.Create("\"", 89722)
+WriteAttribute("value", Tuple.Create(" value=\"", 89872), Tuple.Create("\"", 89900)
             
-            #line 1265 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 89702), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
+            #line 1267 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 89880), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
             
             #line default
             #line hidden
-, 89702), false)
+, 89880), false)
 );
 
 WriteLiteral(" />\r\n                    <input");
@@ -4550,14 +4566,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 89783), Tuple.Create("\"", 89805)
+WriteAttribute("value", Tuple.Create(" value=\"", 89961), Tuple.Create("\"", 89983)
             
-            #line 1266 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 89791), Tuple.Create<System.Object, System.Int32>(Model.EventID
+            #line 1268 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 89969), Tuple.Create<System.Object, System.Int32>(Model.EventID
             
             #line default
             #line hidden
-, 89791), false)
+, 89969), false)
 );
 
 WriteLiteral(" />\r\n\r\n                    <input");
@@ -4613,6 +4629,30 @@ WriteLiteral(" type=\"hidden\"");
 WriteLiteral(" id=\"status\"");
 
 WriteLiteral(" />\r\n                    <a");
+
+WriteLiteral(" id=\"btProgress\"");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" href=\"#dvProgress\"");
+
+WriteLiteral(" data-toggle=\"modal\"");
+
+WriteLiteral(" style=\"display:none\"");
+
+WriteLiteral(">\r\n                    </a>\r\n                    <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" class=\"btn btn-primary yes ok\"");
+
+WriteLiteral(" id=\"btCloseProgress\"");
+
+WriteLiteral(" style=\"display:none;\"");
+
+WriteLiteral(" data-dismiss=\"modal\"");
+
+WriteLiteral(">OK</button>\r\n                    <a");
 
 WriteLiteral(" class=\"btn ev_set_del_btn evnt_set\"");
 
@@ -4681,7 +4721,7 @@ WriteLiteral(" class=\"btn btn-primary no\"");
 WriteLiteral(" data-dismiss=\"modal\"");
 
 WriteLiteral(@">OK</button>
-
+                                      
                                     </div>
                                 </form>
                             </div>
@@ -4695,7 +4735,7 @@ WriteLiteral(@">OK</button>
 ");
 
             
-            #line 1300 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1305 "..\..\Views\EditEvent\ModifyEvent.cshtml"
     //----------Model Starts Here------------------
 
 
@@ -4881,7 +4921,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 1346 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1351 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                        Write(Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" }));
 
             
@@ -4989,9 +5029,66 @@ WriteLiteral(">SAVE</button>\r\n                </div>\r\n\r\n            </div>
 " </div>\r\n");
 
             
-            #line 1406 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1411 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
+            
+            #line default
+            #line hidden
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"modal fade\"");
+
+WriteLiteral(" id=\"dvProgress\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(" role=\"dialog\"");
+
+WriteLiteral(" aria-labelledby=\"dvProgress\"");
+
+WriteLiteral(" aria-hidden=\"true\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"modal-dialog modal-sm\"");
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"modal-content\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"modal-body text-center pv50 txt-msg\"");
+
+WriteLiteral(">\r\n                    <h4><img");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 98580), Tuple.Create("\"", 98610)
+, Tuple.Create(Tuple.Create("", 98586), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 98586), false)
+);
+
+WriteLiteral(" />Please wait ... </h4>\r\n                </div>\r\n                <div");
+
+WriteLiteral(" class=\"modal-footer msg-action-btn ok\"");
+
+WriteLiteral(">\r\n                    <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" id=\"btokPrg\"");
+
+WriteLiteral(" class=\"btn btn-primary yes ok\"");
+
+WriteLiteral(" style=\"display:none;\"");
+
+WriteLiteral("  data-dismiss=\"modal\"");
+
+WriteLiteral(">OK</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </d" +
+"iv>\r\n");
+
+            
+            #line 1424 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
 
@@ -5007,14 +5104,14 @@ WriteLiteral(" src=\"https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=fals
 WriteLiteral("></script>\r\n");
 
             
-            #line 1412 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1428 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 1413 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1429 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                     
     // ---------------------Event Creation Script -------------------
 
@@ -5082,7 +5179,7 @@ WriteLiteral(">\r\n\r\n       \r\n\r\n        var map_canvas ;\r\n        var ma
 "false;\r\n    }\r\n\r\n    </script>\r\n");
 
             
-            #line 1534 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1550 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
 
@@ -5091,10 +5188,11 @@ WriteLiteral(">\r\n\r\n       \r\n\r\n        var map_canvas ;\r\n        var ma
             
             #line default
             #line hidden
-WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n            var vVal = \'");
+WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n            $(\"#btProgress" +
+"\").click();\r\n            var vVal = \'");
 
             
-            #line 1540 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1557 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                    Write(TempData["IsNewEvent"].ToString());
 
             
@@ -5131,7 +5229,7 @@ WriteLiteral("\';\r\n            if (vVal == \"Y\")\r\n            {\r\n        
 "   });\r\n\r\n            var isadmin=\"");
 
             
-            #line 1583 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1600 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -5150,128 +5248,129 @@ WriteLiteral(@""";
                 $("".adminvis"").css('display','block');
             }
 
+       
 
-
-
+           
             $.getJSON('");
 
             
-            #line 1599 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1616 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                   Write(Url.Action("GetEventChildData", "EditEvent"));
 
             
             #line default
             #line hidden
-WriteLiteral("\', { lEventId: lEventId},\r\n                function (data) {\r\n\r\n                 " +
-"   console.log(data.EventStatus);\r\n                    if (data.EventStatus.trim" +
-"() == \"Live\")\r\n                    {\r\n                        $(\".cbtMakeElive\")" +
-".hide();\r\n                        $(\"#lblLive\").show();\r\n                       " +
-" $(\"#lblDft\").hide();\r\n                        $(\".SPview\").text(\"VIEW >\");\r\n   " +
-"                 }\r\n                    else\r\n                    {\r\n           " +
-"             $(\".cbtMakeElive\").show();\r\n                        $(\"#lblLive\").h" +
-"ide();\r\n                        $(\"#lblDft\").show();\r\n                        $(" +
-"\".SPview\").text(\"PREVIEW >\");\r\n                        //$(\"#lblDft\").html(\"DRAF" +
-"T\");\r\n                    }\r\n                    $(\'#status\').val(data.EventStat" +
-"us);\r\n\r\n\r\n                    if (data.MultipleSchTime == \"S\")\r\n                " +
-"    {\r\n                        $(\"#txtStartDate\").val(data.EventStartDate);\r\n   " +
-"                     $(\"#txtStartTime\").val(data.EventStartTime);\r\n             " +
-"           $(\"#txtEndDate\").val(data.EventEndDate);\r\n                        $(\"" +
-"#txtEndTime\").val(data.EventEndTime);\r\n                        $(\"#hdSchType\").v" +
-"al(\'Single\');\r\n                    }\r\n                    if (data.MultipleSchTi" +
-"me == \"M\")\r\n                    {\r\n                        $(\".SchmultiEvnt\").cl" +
-"ick();\r\n                        $(\"#dlSchOption\").val(data.Frequency);\r\n        " +
-"                $(\"#dlSchOption\").change();\r\n                        if (data.We" +
-"eklyDay != null) {\r\n                            var vTemp  = data.WeeklyDay.spli" +
-"t(\',\');\r\n                            for(i =0; i< vTemp.length;i++)\r\n           " +
-"                 {\r\n                                $(\'#dllWeeklyDayChk\').multis" +
-"elect(\'select\', [vTemp[i].toString()]);\r\n                            }\r\n        " +
-"                }\r\n                        $(\"#txtTimeStart\").val(data.StartTime" +
-");\r\n                        $(\"#txtTimeEnd\").val(data.EndTime);\r\n               " +
-"         $(\"#txtDateFrom\").val(data.StartingFrom);\r\n                        $(\"#" +
-"txtDateTo\").val(data.StartingTo);\r\n                        $(\".multiselect-selec" +
-"ted-text\").val();\r\n                        if (data.MonthlyDay > 0) {\r\n         " +
-"                   $(\"#hdMonthlyType\").val(\'DM\');\r\n                            $" +
-"(\"#btDayofMonth\").click();\r\n                            $(\"#dllMonth\").val(data." +
-"MonthlyDay);\r\n                        }\r\n                        else {\r\n       " +
-"                     $(\"#hdMonthlyType\").val(\'DW\');\r\n                           " +
-" $(\"#btDayofWeek\").click();\r\n                            //$(\"#dllMonthlyWeek\")." +
-"val(data.MonthlyWeek);\r\n                            if(data.MonthlyWeekDays!=nul" +
-"l)\r\n                            {\r\n                                var vTemp  = " +
-"data.MonthlyWeekDays.split(\',\');\r\n                                for(i =0; i< v" +
-"Temp.length;i++)\r\n                                {\r\n                           " +
-"         $(\'#dllMonthlyWeekDay\').multiselect(\'select\', [vTemp[i].toString()]);\r\n" +
-"                                }\r\n                            }\r\n\r\n            " +
-"            }\r\n                    }\r\n\r\n                    if (data.AddressStat" +
-"us == \"Online\")\r\n                    {\r\n                        $(\"#dvAddress\")." +
-"hide();\r\n                        $(\"#hidAddressStatus\").val(\'Online\');\r\n        " +
-"            }\r\n                    else\r\n                    {\r\n                " +
-"        $(\"#dvAddress\").show();\r\n                        $(\"#hidAddressStatus\")." +
-"val(data.AddressStatus);\r\n                    }\r\n                    $(\"#edEvent" +
-"Desc\").code(data.EventDescription);\r\n                    $(\"#UsepastLoc\").change" +
-"();\r\n                    $(\"#btnAddSch\").click();\r\n                    $(\"#btSav" +
-"eTimeZone\").click();\r\n                    //alert()\r\n                    //$(\"#h" +
-"dEventId\").val(data.EventID);\r\n\r\n                    if(data.Addresses!=\"\")\r\n   " +
-"                 {\r\n                    $(\"#tblAddress\").append(data.Addresses);" +
-"\r\n                    }\r\n                    $(\"#txtEventLocation\").val(data.Fir" +
-"stAddress);\r\n                    $(\"#dllTimezone\").val(data.timezone);\r\n\r\n      " +
-"              //Tickets start\r\n                    //\r\n\r\n                    if(" +
-"data.Ticket!=\'\')\r\n                    {\r\n                        debugger;\r\n    " +
-"                    $(\".ticket_panel\").show();\r\n                        //$(\".ta" +
-"b-content\").hide();\r\n                        $(\'#MasterDiv\').append(data.Ticket)" +
-";\r\n                        $(\".tab-content\").hide();\r\n\r\n                        " +
-"var divlength=$(\'#MasterDiv>div\').length;\r\n                        if(divlength>" +
-"0)\r\n                        {\r\n                            for(var i=0;i<divleng" +
-"th;i++)\r\n                            {\r\n\r\n\r\n\r\n                                $(" +
-"\"#id_salestart-\" + i).datepicker({\r\n                                    format: " +
-"\"mm/dd/yyyy\",\r\n                                    minDate: \"0\",\r\n              " +
-"                      onSelect: function () {\r\n\r\n                               " +
-"         this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n    " +
-"                                }\r\n                                }).on(\'change" +
-"Date\', function (ev) {\r\n                                    $(\"#id_salestart-\" +" +
-" i).datepicker(\'hide\');\r\n                                });\r\n\r\n                " +
-"                $(\"#id_saleend-\" + i).datepicker({\r\n                            " +
-"        format: \"mm/dd/yyyy\",\r\n                                    minDate: \"0\"," +
-"\r\n                                    onSelect: function () {\r\n\r\n               " +
+WriteLiteral("\',\r\n                { lEventId: lEventId},\r\n                function (data) {\r\n\r\n" +
+"                    console.log(data.EventStatus);\r\n                    if (data" +
+".EventStatus.trim() == \"Live\")\r\n                    {\r\n                        $" +
+"(\".cbtMakeElive\").hide();\r\n                        $(\"#lblLive\").show();\r\n      " +
+"                  $(\"#lblDft\").hide();\r\n                        $(\".SPview\").tex" +
+"t(\"VIEW >\");\r\n                    }\r\n                    else\r\n                 " +
+"   {\r\n                        $(\".cbtMakeElive\").show();\r\n                      " +
+"  $(\"#lblLive\").hide();\r\n                        $(\"#lblDft\").show();\r\n         " +
+"               $(\".SPview\").text(\"PREVIEW >\");\r\n                        //$(\"#lb" +
+"lDft\").html(\"DRAFT\");\r\n                    }\r\n                    $(\'#status\').v" +
+"al(data.EventStatus);\r\n\r\n\r\n                    if (data.MultipleSchTime == \"S\")\r" +
+"\n                    {\r\n                        $(\"#txtStartDate\").val(data.Even" +
+"tStartDate);\r\n                        $(\"#txtStartTime\").val(data.EventStartTime" +
+");\r\n                        $(\"#txtEndDate\").val(data.EventEndDate);\r\n          " +
+"              $(\"#txtEndTime\").val(data.EventEndTime);\r\n                        " +
+"$(\"#hdSchType\").val(\'Single\');\r\n                    }\r\n                    if (d" +
+"ata.MultipleSchTime == \"M\")\r\n                    {\r\n                        $(\"." +
+"SchmultiEvnt\").click();\r\n                        $(\"#dlSchOption\").val(data.Freq" +
+"uency);\r\n                        $(\"#dlSchOption\").change();\r\n                  " +
+"      if (data.WeeklyDay != null) {\r\n                            var vTemp  = da" +
+"ta.WeeklyDay.split(\',\');\r\n                            for(i =0; i< vTemp.length;" +
+"i++)\r\n                            {\r\n                                $(\'#dllWeek" +
+"lyDayChk\').multiselect(\'select\', [vTemp[i].toString()]);\r\n                      " +
+"      }\r\n                        }\r\n                        $(\"#txtTimeStart\").v" +
+"al(data.StartTime);\r\n                        $(\"#txtTimeEnd\").val(data.EndTime);" +
+"\r\n                        $(\"#txtDateFrom\").val(data.StartingFrom);\r\n           " +
+"             $(\"#txtDateTo\").val(data.StartingTo);\r\n                        $(\"." +
+"multiselect-selected-text\").val();\r\n                        if (data.MonthlyDay " +
+"> 0) {\r\n                            $(\"#hdMonthlyType\").val(\'DM\');\r\n            " +
+"                $(\"#btDayofMonth\").click();\r\n                            $(\"#dll" +
+"Month\").val(data.MonthlyDay);\r\n                        }\r\n                      " +
+"  else {\r\n                            $(\"#hdMonthlyType\").val(\'DW\');\r\n          " +
+"                  $(\"#btDayofWeek\").click();\r\n                            //$(\"#" +
+"dllMonthlyWeek\").val(data.MonthlyWeek);\r\n                            if(data.Mon" +
+"thlyWeekDays!=null)\r\n                            {\r\n                            " +
+"    var vTemp  = data.MonthlyWeekDays.split(\',\');\r\n                             " +
+"   for(i =0; i< vTemp.length;i++)\r\n                                {\r\n          " +
+"                          $(\'#dllMonthlyWeekDay\').multiselect(\'select\', [vTemp[i" +
+"].toString()]);\r\n                                }\r\n                            " +
+"}\r\n\r\n                        }\r\n                    }\r\n\r\n                    if " +
+"(data.AddressStatus == \"Online\")\r\n                    {\r\n                       " +
+" $(\"#dvAddress\").hide();\r\n                        $(\"#hidAddressStatus\").val(\'On" +
+"line\');\r\n                    }\r\n                    else\r\n                    {\r" +
+"\n                        $(\"#dvAddress\").show();\r\n                        $(\"#hi" +
+"dAddressStatus\").val(data.AddressStatus);\r\n                    }\r\n              " +
+"      $(\"#edEventDesc\").code(data.EventDescription);\r\n                    $(\"#Us" +
+"epastLoc\").change();\r\n                    $(\"#btnAddSch\").click();\r\n            " +
+"        $(\"#btSaveTimeZone\").click();\r\n                    //alert()\r\n          " +
+"          //$(\"#hdEventId\").val(data.EventID);\r\n\r\n                    if(data.Ad" +
+"dresses!=\"\")\r\n                    {\r\n                    $(\"#tblAddress\").append" +
+"(data.Addresses);\r\n                    }\r\n                    $(\"#txtEventLocati" +
+"on\").val(data.FirstAddress);\r\n                    $(\"#dllTimezone\").val(data.tim" +
+"ezone);\r\n\r\n                    //Tickets start\r\n                    //\r\n\r\n      " +
+"              if(data.Ticket!=\'\')\r\n                    {\r\n                      " +
+"  debugger;\r\n                        $(\".ticket_panel\").show();\r\n               " +
+"         //$(\".tab-content\").hide();\r\n                        $(\'#MasterDiv\').ap" +
+"pend(data.Ticket);\r\n                        $(\".tab-content\").hide();\r\n\r\n       " +
+"                 var divlength=$(\'#MasterDiv>div\').length;\r\n                    " +
+"    if(divlength>0)\r\n                        {\r\n                            for(" +
+"var i=0;i<divlength;i++)\r\n                            {\r\n\r\n\r\n\r\n                 " +
+"               $(\"#id_salestart-\" + i).datepicker({\r\n                           " +
+"         format: \"mm/dd/yyyy\",\r\n                                    minDate: \"0\"" +
+",\r\n                                    onSelect: function () {\r\n\r\n              " +
+"                          this.fireEvent && this.fireEvent(\'onchange\') || $(this" +
+").change();\r\n                                    }\r\n                            " +
+"    }).on(\'changeDate\', function (ev) {\r\n                                    $(\"" +
+"#id_salestart-\" + i).datepicker(\'hide\');\r\n                                });\r\n\r" +
+"\n                                $(\"#id_saleend-\" + i).datepicker({\r\n           " +
+"                         format: \"mm/dd/yyyy\",\r\n                                " +
+"    minDate: \"0\",\r\n                                    onSelect: function () {\r\n" +
+"\r\n                                        this.fireEvent && this.fireEvent(\'onch" +
+"ange\') || $(this).change();\r\n                                    }\r\n            " +
+"                    }).on(\'changeDate\', function (ev) {\r\n                       " +
+"             $(\"#id_saleend-\" + i).datepicker(\'hide\');\r\n                        " +
+"        });\r\n\r\n                                $(\"#id_auto_hide_until_Date-\" + i" +
+").datepicker({\r\n                                    format: \"mm/dd/yyyy\",\r\n     " +
+"                               minDate: \"0\",\r\n                                  " +
+"  onSelect: function () {\r\n\r\n                                        this.fireEv" +
+"ent && this.fireEvent(\'onchange\') || $(this).change();\r\n                        " +
+"            }\r\n                                }).on(\'changeDate\', function (ev)" +
+" {\r\n                                    $(\"#id_auto_hide_until_Date-\" + i).datep" +
+"icker(\'hide\');\r\n                                });\r\n                           " +
+"     $(\"#id_auto_hide_after_Date-\" + i).datepicker({\r\n                          " +
+"          format: \"mm/dd/yyyy\",\r\n                                    minDate: \"0" +
+"\",\r\n                                    onSelect: function () {\r\n               " +
 "                         this.fireEvent && this.fireEvent(\'onchange\') || $(this)" +
 ".change();\r\n                                    }\r\n                             " +
 "   }).on(\'changeDate\', function (ev) {\r\n                                    $(\"#" +
-"id_saleend-\" + i).datepicker(\'hide\');\r\n                                });\r\n\r\n  " +
-"                              $(\"#id_auto_hide_until_Date-\" + i).datepicker({\r\n " +
-"                                   format: \"mm/dd/yyyy\",\r\n                      " +
-"              minDate: \"0\",\r\n                                    onSelect: funct" +
-"ion () {\r\n\r\n                                        this.fireEvent && this.fireE" +
-"vent(\'onchange\') || $(this).change();\r\n                                    }\r\n  " +
-"                              }).on(\'changeDate\', function (ev) {\r\n             " +
-"                       $(\"#id_auto_hide_until_Date-\" + i).datepicker(\'hide\');\r\n " +
-"                               });\r\n                                $(\"#id_auto_" +
-"hide_after_Date-\" + i).datepicker({\r\n                                    format:" +
-" \"mm/dd/yyyy\",\r\n                                    minDate: \"0\",\r\n             " +
-"                       onSelect: function () {\r\n                                " +
-"        this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n     " +
-"                               }\r\n                                }).on(\'changeD" +
-"ate\', function (ev) {\r\n                                    $(\"#id_auto_hide_afte" +
-"r_Date-\" + i).datepicker(\'hide\');\r\n                                });\r\n        " +
-"                        $(\"#id_saletimestart-\" + i).timepicker();\r\n             " +
-"                   $(\"#id_saletimeend-\" + i).timepicker();\r\n                    " +
-"            $(\"#id_auto_hide_until_time-\" + i).timepicker();\r\n                  " +
-"              $(\"#id_auto_hide_after_Time-\" + i).timepicker();\r\n                " +
-"            }\r\n\r\n                        }\r\n\r\n\r\n\r\n                        $(\"inp" +
-"ut[id^=\'id_cost\']\").mask(\'000,000.00\', { reverse: true });\r\n                    " +
-"    $(\"input[id^=\'id_Discount\']\").mask(\'000,000.00\', { reverse: true });\r\n      " +
-"              }\r\n\r\n                    $(\'#id_totalqty\').html(data.capacity);\r\n " +
-"                   if (data.Image != null)\r\n                    {\r\n             " +
-"           $(\'#hdimage\').val(data.Image);\r\n                    }\r\n\r\n\r\n          " +
-"          if(data.Variabledesc!=\'\')\r\n                    {\r\n                    " +
-"    $(\'.TicketFees\').show();\r\n                        $(\'#id_Mainvariable\').css(" +
-"\'display\',\'block\');\r\n                        $(\'#id_Mainvariable\').append(data.V" +
-"ariabledesc);\r\n                        $(\"input[id^=\'id_varsubprice\']\").mask(\'00" +
-"0,000.00\', { reverse: true });\r\n\r\n\r\n\r\n                    }else\r\n               " +
-"     {\r\n\r\n                        $(\'.TicketFees\').hide();\r\n                    " +
-"    $(\'#id_Mainvariable\').css(\'display\',\'none\');\r\n                    }\r\n\r\n\r\n\r\n " +
-"               }\r\n            );\r\n\r\n\r\n            var privat=\"");
+"id_auto_hide_after_Date-\" + i).datepicker(\'hide\');\r\n                            " +
+"    });\r\n                                $(\"#id_saletimestart-\" + i).timepicker(" +
+");\r\n                                $(\"#id_saletimeend-\" + i).timepicker();\r\n   " +
+"                             $(\"#id_auto_hide_until_time-\" + i).timepicker();\r\n " +
+"                               $(\"#id_auto_hide_after_Time-\" + i).timepicker();\r" +
+"\n                            }\r\n\r\n                        }\r\n\r\n\r\n\r\n             " +
+"           $(\"input[id^=\'id_cost\']\").mask(\'000,000.00\', { reverse: true });\r\n   " +
+"                     $(\"input[id^=\'id_Discount\']\").mask(\'000,000.00\', { reverse:" +
+" true });\r\n                    }\r\n\r\n                    $(\'#id_totalqty\').html(d" +
+"ata.capacity);\r\n                    if (data.Image != null)\r\n                   " +
+" {\r\n                        $(\'#hdimage\').val(data.Image);\r\n                    " +
+"}\r\n\r\n\r\n                    if(data.Variabledesc!=\'\')\r\n                    {\r\n   " +
+"                     $(\'.TicketFees\').show();\r\n                        $(\'#id_Ma" +
+"invariable\').css(\'display\',\'block\');\r\n                        $(\'#id_Mainvariabl" +
+"e\').append(data.Variabledesc);\r\n                        $(\"input[id^=\'id_varsubp" +
+"rice\']\").mask(\'000,000.00\', { reverse: true });\r\n\r\n                    }else\r\n  " +
+"                  {\r\n                        $(\'.TicketFees\').hide();\r\n         " +
+"               $(\'#id_Mainvariable\').css(\'display\',\'none\');\r\n                   " +
+" }\r\n                    //$(\"#btokPrg\").click();\r\n                }\r\n           " +
+" );\r\n\r\n\r\n            var privat=\"");
 
             
-            #line 1794 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1807 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                    Write(Model.EventPrivacy);
 
             
@@ -5280,7 +5379,7 @@ WriteLiteral("\', { lEventId: lEventId},\r\n                function (data) {\r\
 WriteLiteral("\";\r\n            var privatefb=\"");
 
             
-            #line 1795 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1808 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                       Write(Model.Private_ShareOnFB);
 
             
@@ -5289,7 +5388,7 @@ WriteLiteral("\";\r\n            var privatefb=\"");
 WriteLiteral("\"\r\n            var privateguest=\"");
 
             
-            #line 1796 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1809 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Model.Private_GuestOnly);
 
             
@@ -5298,7 +5397,7 @@ WriteLiteral("\"\r\n            var privateguest=\"");
 WriteLiteral("\"\r\n            var privatepwd=\"");
 
             
-            #line 1797 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1810 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                        Write(Model.Private_Password);
 
             
@@ -5345,7 +5444,7 @@ WriteLiteral(@"""
             var temp=""");
 
             
-            #line 1835 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1848 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(TempData["Scroll"]);
 
             
@@ -5354,7 +5453,7 @@ WriteLiteral(@"""
 WriteLiteral("\"\r\n            if(temp!=\'\')\r\n            {\r\n                var scroll=\"");
 
             
-            #line 1838 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1851 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                        Write(TempData["Scroll"]);
 
             
@@ -5363,7 +5462,8 @@ WriteLiteral("\"\r\n            if(temp!=\'\')\r\n            {\r\n             
 WriteLiteral(@""";
                 $(window).scrollTop($(""#""+scroll).offset().top);
                 $(""#""+scroll).focus();
-           }
+            }
+            $(""#btokPrg"").click();
         });
 
         $(""#rdPublic"").click(function(){
@@ -5400,7 +5500,7 @@ WriteLiteral(@""";
 ");
 
             
-            #line 1875 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1889 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     // ---------------------Event Creation Script -------------------
 
@@ -5509,127 +5609,125 @@ WriteLiteral("    <script>\r\n\r\n        $(\".chkvalidation\").blur(function ()
 "  var vOrgName = $(\"#OrgName_\" + Sno).text();\r\n            var vOrgDes = $(\"#Org" +
 "Des_\" + Sno).text();\r\n            var vOrgFB = $(\"#OrgFB_\" + Sno).text();\r\n     " +
 "       var vOrgTw = $(\"#OrgTw_\" + Sno).text();\r\n            var vOrgLn= $(\"#OrgL" +
-"n_\" + Sno).text();\r\n     \r\n            $(\"#txtOrgnizer\").val(vOrgName);\r\n       " +
-"     $(\"#edOrgDes\").code(vOrgDes);\r\n            $(\"#txtOrgFBlink\").val(vOrgFB);\r" +
-"\n            $(\"#txtOrgTWlink\").val(vOrgTw);\r\n            $(\"#txtOrgLNlink\").val" +
-"(vOrgLn);\r\n\r\n            if (vOrgFB != \'\' || vOrgTw != \'\'|| vOrgLn!=\'\') {\r\n     " +
-"           $(\"#Incsocial\").prop(\"checked\", true);\r\n                $(\"#dvOrgnize" +
-"rFBTw\").show();\r\n            }\r\n            else {\r\n                $(\"#Incsocia" +
-"l\").prop(\"checked\", false);\r\n                $(\"#dvOrgnizerFBTw\").hide();\r\n     " +
-"       }\r\n\r\n        }\r\n\r\n        function AddOrgnizer() {\r\n            debugger;" +
-"\r\n            $(\"#hidOrgnizer\").val(\'\');\r\n            var Sno = $(\"#tblOrgnizer " +
-"tr\").length+1;\r\n            //alert(Sno);\r\n            var vOrgName = $(\"#txtOrg" +
-"nizer\").val();\r\n            var vOrgDes = $(\"#edOrgDes\").code();\r\n            va" +
-"r vOrgFB = $(\"#txtOrgFBlink\").val();\r\n            var vOrgTw = $(\"#txtOrgTWlink\"" +
-").val();\r\n            var vOrgLn = $(\"#txtOrgLNlink\").val();\r\n \r\n            var" +
-" strHTML = \'<tr>\';\r\n            strHTML = strHTML + \'<td style=\"display:none\" wi" +
-"dth=\"92%\">\' + Sno + \'</td>\';\r\n            strHTML = strHTML + \'<td width=\"92%\"><" +
-"label id=OrgName_\' + Sno + \'>\' + vOrgName + \'</label></td>\';\r\n            strHTM" +
-"L = strHTML + \'<td style=\"display:none\"><label id=OrgId_\' + Sno + \'>0</label></t" +
-"d>\';\r\n            strHTML = strHTML + \'<td style=\"display:none\"><label id=OrgDes" +
-"_\' + Sno + \'>\' + vOrgDes + \'</label></td>\';\r\n            strHTML = strHTML + \'<t" +
-"d style=\"display:none\"><label id=OrgFB_\' + Sno + \'>\' + vOrgFB + \'</label></td>\';" +
-"\r\n            strHTML = strHTML + \'<td style=\"display:none\"><label id=OrgTw_\' + " +
-"Sno + \'>\' + vOrgTw + \'</label></td>\';\r\n            strHTML = strHTML + \'<td styl" +
-"e=\"display:none\"><label id=OrgLn_\' + Sno + \'>\' + vOrgLn + \'</label></td>\';\r\n    " +
-"        //strHTML = strHTML + \'<td align=\"right\"><a href=\"#\" onclick=\"editOrgniz" +
-"er(\' + Sno + \');\"><i class=\"fa fa-pencil\"></i> </a> | <a href=\"#\"  onclick=\"Dele" +
-"teOrgnizer(\' + Sno + \');\"><i class=\"fa fa-trash\"></i> </a></td>\';\r\n            s" +
-"trHTML = strHTML + \'<td align=\"right\"><i onclick=\"editOrgnizer(\' + Sno + \')\"; cl" +
-"ass=\"fa fa-pencil\"></i> | <i onclick=\"DeleteOrgnizer(\' + Sno + \');\" class=\"fa fa" +
-"-trash\"></i></td>\';\r\n\r\n            strHTML = strHTML + \'</tr>\';\r\n            // " +
-"               strHTML = strHTML + \'<td><div class=\"trigger mt5 ent_add\"><a href" +
-"=\"#\" onclick=\"editRow(\' + Sno + \');\"><i class=\"fa fa-map-marker\"></i> Edit</a>  " +
-"<a href=\"#\" id=\"btAddDelete\" onclick=\"DeleteTableRow(\' + Sno + \')\">Delete</a> </" +
-"div> </td>\';\r\n\r\n\r\n            $(\"#tblOrgnizer\").append(strHTML);\r\n            st" +
-"rHTML = \'<option value=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vOrgName + \'</option>\'" +
-";\r\n\r\n            $(\"#ddlOrgnizers\").append(strHTML);\r\n\r\n        }\r\n\r\n        fun" +
-"ction UpdateOrgnizer() {\r\n            var Sno = $(\"#ddlOrgnizers\").val();\r\n     " +
-"       //    alert(Sno);\r\n            vOrgName = $(\"#txtOrgnizer\").val();\r\n     " +
-"       vOrgDes = $(\"#edOrgDes\").code();\r\n            vOrgFB = $(\"#txtOrgFBlink\")" +
-".val();\r\n            vOrgTw = $(\"#txtOrgTWlink\").val();\r\n            vOrgLn = $(" +
-"\"#txtOrgLNlink\").val();\r\n            $(\"#OrgName_\" + Sno).text(vOrgName);\r\n     " +
-"       $(\"#OrgDes_\" + Sno).text(vOrgDes);\r\n            $(\"#OrgFB_\" + Sno).text(v" +
-"OrgFB);\r\n            $(\"#OrgTw_\" + Sno).text(vOrgTw);\r\n            $(\"#OrgLn_\" +" +
-" Sno).text(vOrgLn);\r\n\r\n            $(\"#ddlOrgnizers option\").each(function (i) {" +
-"\r\n                if (Sno == $(this).val()) {\r\n                    $(this).remov" +
-"e();\r\n                }\r\n            });\r\n            var addOption = \'<option v" +
-"alue=\"\' + Sno + \'\" id=\"\' + Sno + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r" +
-"\n            $(\"#ddlOrgnizers\").append(addOption);\r\n\r\n\r\n\r\n\r\n        }\r\n        f" +
-"unction save(type)\r\n        {\r\n            debugger;\r\n\r\n            var status=\"" +
-"\";\r\n            if(type==\"Preview\")\r\n            {\r\n                status=\"Save" +
-"\";\r\n            }\r\n            else\r\n            {\r\n                status=type;" +
-"\r\n            }\r\n            // Address Entry\r\n            var SubmitAddress = [" +
-"];\r\n            var SingleTiming = [];\r\n            var MultipleSchedule = [];\r\n" +
-"            var Orgnizer = [];\r\n            var EventImage = [];\r\n            va" +
-"r EventVariable = [];\r\n            //var table = $(\"#tblAddress\");\r\n\r\n\r\n        " +
-"    //Variable charges\r\n            var varlength = $(\"#id_Mainvariable> div\").s" +
-"ize();\r\n            if (varlength > 0) {\r\n                for (var i = 0; i < va" +
-"rlength; i++) {\r\n                    //alert($(\'#id_varsubprice-\' + i).val());\r\n" +
-"                    var varprice = $(\'#id_varsubprice-\' + i).val().replace(\',\', " +
-"\'\');\r\n                    //alert(varprice);\r\n                    EventVariable." +
-"push({\r\n                        Variable_Id:$(\'#id_varid-\' + i).val(),\r\n        " +
-"                VariableDesc: $(\'#id_varsubdesc-\' + i).val(),\r\n                 " +
-"       Price: varprice\r\n\r\n                    });\r\n                }\r\n\r\n\r\n      " +
-"      }\r\n\r\n            //Image Section\r\n\r\n            if ($(\"#image_count\").val(" +
-") > 0) {\r\n                var count = ($(\"#image_count\").val());\r\n              " +
-"  for (var i = 0; i < count; i++) {\r\n\r\n                    var image = $(\"#image" +
-"_hidden_\" + i).val();\r\n                    var res = image.split(\"####\");\r\n\r\n   " +
-"                 var imagename = res[0];\r\n                    var imagetype = re" +
-"s[1];\r\n\r\n                    EventImage.push({\r\n                        EventIma" +
-"geUrl: imagename,\r\n                        ImageType: imagetype,\r\n              " +
-"      });\r\n                }\r\n\r\n            }\r\n\r\n\r\n            // Ticket\r\n      " +
-"      var Ticket = [];\r\n            var divlength = $(\"#MasterDiv> div\").size();" +
-"\r\n            if (divlength > 0) {\r\n                var TicketPrice = 0;\r\n      " +
-"          var Auto_Schedule = 0;\r\n                var AutoSechduleType = 0;\r\n   " +
-"             var TicketTypeID = 0;\r\n                var ecfee = 0;\r\n            " +
-"    var hdecfee=0;\r\n                var hdcsfee=0;\r\n                var customer" +
-"fee = 0;\r\n                var total = 0;\r\n                var ecfeepercent=0;\r\n " +
-"               var ecfeeamount=0;\r\n                var customize=0;\r\n\r\n         " +
-"       for (var i = 0; i < divlength; i++) {\r\n                    debugger;\r\n   " +
-"                 if ($(\'#id_cost-\' + i).css(\'display\') == \"block\") {\r\n          " +
-"              TicketPrice = $(\'#id_cost-\' + i).val().replace(\',\', \'\');\r\n\r\n      " +
-"              } else { TicketPrice = 0; }\r\n                    if ($(\'#id_Cusdat" +
-"eCont-\' + i).css(\'display\') == \"block\") {\r\n\r\n                        Auto_Schedu" +
-"le = 1;\r\n\r\n                        if ($(\'#id_auto_hide_type_0-\' + i).is(\":check" +
-"ed\") == true) {\r\n                            AutoSechduleType = 0;\r\n\r\n          " +
-"              }\r\n                        if ($(\'#id_auto_hide_type_1-\' + i).is(\"" +
-":checked\") == true) {\r\n                            AutoSechduleType = 1;\r\n\r\n    " +
-"                    }\r\n\r\n                    } else {\r\n                        A" +
-"uto_Schedule = 0;\r\n                    }\r\n\r\n                    if ($(\'#id_Ticke" +
-"ttype-\' + i).val() == \"Free\") {\r\n                        total=0;\r\n             " +
-"           TicketTypeID = 1\r\n\r\n                    } else if ($(\'#id_Tickettype-" +
-"\' + i).val() == \"Paid\") {\r\n                        total = $(\'#id_total-\' + i).v" +
-"al();\r\n                        TicketTypeID = 2\r\n\r\n                    } else {\r" +
-"\n                        TicketTypeID = 3\r\n                        var t_id=  $(" +
-"\'#id_ticket_id-\'+i).val();\r\n                        if(isadmin==\"Y\")\r\n          " +
-"              {\r\n                            ecfee = $(\'#id_ecfee-\'+i).html();\r\n" +
-"                            customerfee = $(\'#id_customerfee-\'+i).val();\r\n      " +
-"                      hdecfee=$(\'#hd_ecfee-\'+i).val();\r\n                        " +
-"    hdcsfee=$(\'#hd_customerfee-\'+i).val();\r\n                            ecfeeper" +
-"cent=$(\'#id_ecfeeper-\'+i).val();\r\n                            ecfeeamount=$(\'#id" +
-"_ecfeeamt-\'+i).val();\r\n                            total=0;\r\n\r\n                 " +
-"       }else\r\n                        {\r\n                            if(t_id!=0)" +
-"\r\n                            {\r\n                                ecfee=$(\'#id_ec" +
-"feeback_id-\'+i).val();\r\n                              \r\n                        " +
-"        customerfee = $(\'#id_fee-\'+i).val();\r\n                                ec" +
-"feepercent=$(\'#id_ecpercentback_id-\'+i).val();;\r\n                               " +
-" ecfeeamount=$(\'#id_ecammountback_id-\'+i).val();;\r\n                             " +
-"   customize=$(\"#id_customize-\"+i).val()\r\n\r\n                                tota" +
-"l=0;\r\n\r\n                            }else\r\n                            {\r\n      " +
-"                          ecfee=0;\r\n                                customerfee " +
-"= 0;\r\n                                ecfeepercent=$(\'#id_percentage\').val();\r\n " +
-"                               ecfeeamount=$(\'#id_value\').val();;\r\n             " +
-"                   customize=0\r\n                            }\r\n                 " +
-"       }\r\n                    \r\n                     \r\n                    \r\n   " +
-"                   \r\n                    }\r\n                    if($(\'#id_feestr" +
-"uct-\'+i).css(\'display\') == \"block\")\r\n                    {\r\n                    " +
-"    var val=$(\'#id_include_ticket_fees-\' + i).val();\r\n                        va" +
-"r fee=$(\'#id_fee-\'+i).val();\r\n                      \r\n                        va" +
-"r isadmin=\"");
+"n_\" + Sno).text();\r\n\r\n            $(\"#txtOrgnizer\").val(vOrgName);\r\n            " +
+"$(\"#edOrgDes\").code(vOrgDes);\r\n            $(\"#txtOrgFBlink\").val(vOrgFB);\r\n    " +
+"        $(\"#txtOrgTWlink\").val(vOrgTw);\r\n            $(\"#txtOrgLNlink\").val(vOrg" +
+"Ln);\r\n\r\n            if (vOrgFB != \'\' || vOrgTw != \'\'|| vOrgLn!=\'\') {\r\n          " +
+"      $(\"#Incsocial\").prop(\"checked\", true);\r\n                $(\"#dvOrgnizerFBTw" +
+"\").show();\r\n            }\r\n            else {\r\n                $(\"#Incsocial\").p" +
+"rop(\"checked\", false);\r\n                $(\"#dvOrgnizerFBTw\").hide();\r\n          " +
+"  }\r\n\r\n        }\r\n\r\n        function AddOrgnizer() {\r\n            debugger;\r\n   " +
+"         $(\"#hidOrgnizer\").val(\'\');\r\n            var Sno = $(\"#tblOrgnizer tr\")." +
+"length+1;\r\n            //alert(Sno);\r\n            var vOrgName = $(\"#txtOrgnizer" +
+"\").val();\r\n            var vOrgDes = $(\"#edOrgDes\").code();\r\n            var vOr" +
+"gFB = $(\"#txtOrgFBlink\").val();\r\n            var vOrgTw = $(\"#txtOrgTWlink\").val" +
+"();\r\n            var vOrgLn = $(\"#txtOrgLNlink\").val();\r\n\r\n            var strHT" +
+"ML = \'<tr>\';\r\n            strHTML = strHTML + \'<td style=\"display:none\" width=\"9" +
+"2%\">\' + Sno + \'</td>\';\r\n            strHTML = strHTML + \'<td width=\"92%\"><label " +
+"id=OrgName_\' + Sno + \'>\' + vOrgName + \'</label></td>\';\r\n            strHTML = st" +
+"rHTML + \'<td style=\"display:none\"><label id=OrgId_\' + Sno + \'>0</label></td>\';\r\n" +
+"            strHTML = strHTML + \'<td style=\"display:none\"><label id=OrgDes_\' + S" +
+"no + \'>\' + vOrgDes + \'</label></td>\';\r\n            strHTML = strHTML + \'<td styl" +
+"e=\"display:none\"><label id=OrgFB_\' + Sno + \'>\' + vOrgFB + \'</label></td>\';\r\n    " +
+"        strHTML = strHTML + \'<td style=\"display:none\"><label id=OrgTw_\' + Sno + " +
+"\'>\' + vOrgTw + \'</label></td>\';\r\n            strHTML = strHTML + \'<td style=\"dis" +
+"play:none\"><label id=OrgLn_\' + Sno + \'>\' + vOrgLn + \'</label></td>\';\r\n          " +
+"  //strHTML = strHTML + \'<td align=\"right\"><a href=\"#\" onclick=\"editOrgnizer(\' +" +
+" Sno + \');\"><i class=\"fa fa-pencil\"></i> </a> | <a href=\"#\"  onclick=\"DeleteOrgn" +
+"izer(\' + Sno + \');\"><i class=\"fa fa-trash\"></i> </a></td>\';\r\n            strHTML" +
+" = strHTML + \'<td align=\"right\"><i onclick=\"editOrgnizer(\' + Sno + \')\"; class=\"f" +
+"a fa-pencil\"></i> | <i onclick=\"DeleteOrgnizer(\' + Sno + \');\" class=\"fa fa-trash" +
+"\"></i></td>\';\r\n\r\n            strHTML = strHTML + \'</tr>\';\r\n            //       " +
+"         strHTML = strHTML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#\" o" +
+"nclick=\"editRow(\' + Sno + \');\"><i class=\"fa fa-map-marker\"></i> Edit</a>  <a hre" +
+"f=\"#\" id=\"btAddDelete\" onclick=\"DeleteTableRow(\' + Sno + \')\">Delete</a> </div> <" +
+"/td>\';\r\n\r\n\r\n            $(\"#tblOrgnizer\").append(strHTML);\r\n            strHTML " +
+"= \'<option value=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vOrgName + \'</option>\';\r\n\r\n " +
+"           $(\"#ddlOrgnizers\").append(strHTML);\r\n\r\n        }\r\n\r\n        function " +
+"UpdateOrgnizer() {\r\n            var Sno = $(\"#ddlOrgnizers\").val();\r\n           " +
+" //    alert(Sno);\r\n            vOrgName = $(\"#txtOrgnizer\").val();\r\n           " +
+" vOrgDes = $(\"#edOrgDes\").code();\r\n            vOrgFB = $(\"#txtOrgFBlink\").val()" +
+";\r\n            vOrgTw = $(\"#txtOrgTWlink\").val();\r\n            vOrgLn = $(\"#txtO" +
+"rgLNlink\").val();\r\n            $(\"#OrgName_\" + Sno).text(vOrgName);\r\n           " +
+" $(\"#OrgDes_\" + Sno).text(vOrgDes);\r\n            $(\"#OrgFB_\" + Sno).text(vOrgFB)" +
+";\r\n            $(\"#OrgTw_\" + Sno).text(vOrgTw);\r\n            $(\"#OrgLn_\" + Sno)." +
+"text(vOrgLn);\r\n\r\n            $(\"#ddlOrgnizers option\").each(function (i) {\r\n    " +
+"            if (Sno == $(this).val()) {\r\n                    $(this).remove();\r\n" +
+"                }\r\n            });\r\n            var addOption = \'<option value=\"" +
+"\' + Sno + \'\" id=\"\' + Sno + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n     " +
+"       $(\"#ddlOrgnizers\").append(addOption);\r\n\r\n\r\n\r\n\r\n        }\r\n        functio" +
+"n save(type)\r\n        {\r\n            debugger;\r\n\r\n            var status=\"\";\r\n  " +
+"          if(type==\"Preview\")\r\n            {\r\n                status=\"Save\";\r\n  " +
+"          }\r\n            else\r\n            {\r\n                status=type;\r\n    " +
+"        }\r\n            // Address Entry\r\n            var SubmitAddress = [];\r\n  " +
+"          var SingleTiming = [];\r\n            var MultipleSchedule = [];\r\n      " +
+"      var Orgnizer = [];\r\n            var EventImage = [];\r\n            var Even" +
+"tVariable = [];\r\n            //var table = $(\"#tblAddress\");\r\n\r\n\r\n            //" +
+"Variable charges\r\n            var varlength = $(\"#id_Mainvariable> div\").size();" +
+"\r\n            if (varlength > 0) {\r\n                for (var i = 0; i < varlengt" +
+"h; i++) {\r\n                    //alert($(\'#id_varsubprice-\' + i).val());\r\n      " +
+"              var varprice = $(\'#id_varsubprice-\' + i).val().replace(\',\', \'\');\r\n" +
+"                    //alert(varprice);\r\n                    EventVariable.push({" +
+"\r\n                        Variable_Id:$(\'#id_varid-\' + i).val(),\r\n              " +
+"          VariableDesc: $(\'#id_varsubdesc-\' + i).val(),\r\n                       " +
+" Price: varprice\r\n\r\n                    });\r\n                }\r\n\r\n\r\n            " +
+"}\r\n\r\n            //Image Section\r\n\r\n            if ($(\"#image_count\").val() > 0)" +
+" {\r\n                var count = ($(\"#image_count\").val());\r\n                for " +
+"(var i = 0; i < count; i++) {\r\n\r\n                    var image = $(\"#image_hidde" +
+"n_\" + i).val();\r\n                    var res = image.split(\"####\");\r\n\r\n         " +
+"           var imagename = res[0];\r\n                    var imagetype = res[1];\r" +
+"\n\r\n                    EventImage.push({\r\n                        EventImageUrl:" +
+" imagename,\r\n                        ImageType: imagetype,\r\n                    " +
+"});\r\n                }\r\n\r\n            }\r\n\r\n\r\n            // Ticket\r\n            " +
+"var Ticket = [];\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n    " +
+"        if (divlength > 0) {\r\n                var TicketPrice = 0;\r\n            " +
+"    var Auto_Schedule = 0;\r\n                var AutoSechduleType = 0;\r\n         " +
+"       var TicketTypeID = 0;\r\n                var ecfee = 0;\r\n                va" +
+"r hdecfee=0;\r\n                var hdcsfee=0;\r\n                var customerfee = " +
+"0;\r\n                var total = 0;\r\n                var ecfeepercent=0;\r\n       " +
+"         var ecfeeamount=0;\r\n                var customize=0;\r\n\r\n               " +
+" for (var i = 0; i < divlength; i++) {\r\n                    debugger;\r\n         " +
+"           if ($(\'#id_cost-\' + i).css(\'display\') == \"block\") {\r\n                " +
+"        TicketPrice = $(\'#id_cost-\' + i).val().replace(\',\', \'\');\r\n\r\n            " +
+"        } else { TicketPrice = 0; }\r\n                    if ($(\'#id_CusdateCont-" +
+"\' + i).css(\'display\') == \"block\") {\r\n\r\n                        Auto_Schedule = 1" +
+";\r\n\r\n                        if ($(\'#id_auto_hide_type_0-\' + i).is(\":checked\") =" +
+"= true) {\r\n                            AutoSechduleType = 0;\r\n\r\n                " +
+"        }\r\n                        if ($(\'#id_auto_hide_type_1-\' + i).is(\":check" +
+"ed\") == true) {\r\n                            AutoSechduleType = 1;\r\n\r\n          " +
+"              }\r\n\r\n                    } else {\r\n                        Auto_Sc" +
+"hedule = 0;\r\n                    }\r\n\r\n                    if ($(\'#id_Tickettype-" +
+"\' + i).val() == \"Free\") {\r\n                        total=0;\r\n                   " +
+"     TicketTypeID = 1\r\n\r\n                    } else if ($(\'#id_Tickettype-\' + i)" +
+".val() == \"Paid\") {\r\n                        total = $(\'#id_total-\' + i).val();\r" +
+"\n                        TicketTypeID = 2\r\n\r\n                    } else {\r\n     " +
+"                   TicketTypeID = 3\r\n                        var t_id=  $(\'#id_t" +
+"icket_id-\'+i).val();\r\n                        if(isadmin==\"Y\")\r\n                " +
+"        {\r\n                            ecfee = $(\'#id_ecfee-\'+i).html();\r\n      " +
+"                      customerfee = $(\'#id_customerfee-\'+i).val();\r\n            " +
+"                hdecfee=$(\'#hd_ecfee-\'+i).val();\r\n                            hd" +
+"csfee=$(\'#hd_customerfee-\'+i).val();\r\n                            ecfeepercent=$" +
+"(\'#id_ecfeeper-\'+i).val();\r\n                            ecfeeamount=$(\'#id_ecfee" +
+"amt-\'+i).val();\r\n                            total=0;\r\n\r\n                       " +
+" }else\r\n                        {\r\n                            if(t_id!=0)\r\n    " +
+"                        {\r\n                                ecfee=$(\'#id_ecfeebac" +
+"k_id-\'+i).val();\r\n\r\n                                customerfee = $(\'#id_fee-\'+i" +
+").val();\r\n                                ecfeepercent=$(\'#id_ecpercentback_id-\'" +
+"+i).val();;\r\n                                ecfeeamount=$(\'#id_ecammountback_id" +
+"-\'+i).val();;\r\n                                customize=$(\"#id_customize-\"+i).v" +
+"al()\r\n\r\n                                total=0;\r\n\r\n                            " +
+"}else\r\n                            {\r\n                                ecfee=0;\r\n" +
+"                                customerfee = 0;\r\n                              " +
+"  ecfeepercent=$(\'#id_percentage\').val();\r\n                                ecfee" +
+"amount=$(\'#id_value\').val();;\r\n                                customize=0\r\n    " +
+"                        }\r\n                        }\r\n\r\n\r\n\r\n\r\n                  " +
+"  }\r\n                    if($(\'#id_feestruct-\'+i).css(\'display\') == \"block\")\r\n  " +
+"                  {\r\n                        var val=$(\'#id_include_ticket_fees-" +
+"\' + i).val();\r\n                        var fee=$(\'#id_fee-\'+i).val();\r\n\r\n       " +
+"                 var isadmin=\"");
 
             
-            #line 2407 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2421 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 Write(Model.Isadmin);
 
             
@@ -5642,198 +5740,196 @@ WriteLiteral("\";\r\n                        if(isadmin==\"Y\")\r\n             
 "erfee-\'+i).val();\r\n                            ecfeepercent=$(\'#id_ecfeeper-\'+i)" +
 ".val();\r\n                            ecfeeamount=$(\'#id_ecfeeamt-\'+i).val();\r\n  " +
 "                          customize=$(\"#id_customize-\"+i).val();\r\n\r\n            " +
-"            }else\r\n                        {\r\n\r\n                                " +
-"\r\n                            var t_id=  $(\'#id_ticket_id-\'+i).val();\r\n         " +
-"                   if(t_id!=0)\r\n                            {\r\n                 " +
-"               ecfee=$(\'#id_ecfeeback_id-\'+i).val();\r\n                          " +
-"    \r\n                                customerfee = $(\'#id_fee-\'+i).val();\r\n    " +
-"                            ecfeepercent=$(\'#id_ecpercentback_id-\'+i).val();;\r\n " +
-"                               ecfeeamount=$(\'#id_ecammountback_id-\'+i).val();;\r" +
-"\n                                customize=$(\"#id_customize-\"+i).val()\r\n\r\n      " +
-"                      }else\r\n                            {\r\n\r\n                  " +
-"              ecfee=$(\'#id_fee-\'+i).val();\r\n                                cust" +
-"omerfee = $(\'#id_fee-\'+i).val();\r\n                                ecfeepercent=$" +
-"(\'#id_percentage\').val();\r\n                                ecfeeamount=$(\'#id_va" +
-"lue\').val();;\r\n                                customize=0;\r\n                   " +
-"         }\r\n                            hdecfee=0;\r\n                            " +
-"hdcsfee=0;\r\n                           \r\n                          \r\n           " +
-"             }\r\n                        //if ($(\'#id_include_ticket_fees-\' + i)." +
-"val() == 0) {\r\n                            \r\n\r\n                        //}\r\n    " +
-"                    //if ($(\'#id_include_ticket_fees-\' + i).val() == 1) {\r\n     " +
-"                   //   \r\n\r\n                        //}\r\n                    }\r\n" +
-"                  \r\n                 \r\n\r\n                    var Discount = $(\'#" +
-"id_Discount-\' + i).val().replace(\',\', \'\');\r\n                    var showdesc = (" +
-"$(\'#id_show_description-\' + i).is(\":checked\") == true ? \'1\' : \'0\');\r\n\r\n         " +
-"           Ticket.push({\r\n                        T_Id:$(\'#id_ticket_id-\' + i).v" +
-"al(),\r\n                        T_name: $(\'#id_ticket_type-\' + i).val(),\r\n       " +
-"                 Qty_Available: $(\'#id_quantity_total-\' + i).val(),\r\n           " +
-"             T_Type: $(\'#id_Tickettype-\' + i).val(),\r\n                        Pr" +
-"ice: TicketPrice,\r\n                        \'T_Desc\': $(\'#id_descriptionclass-\' +" +
-" i).val(),\r\n                        \'Show_T_Desc\': parseInt(showdesc),\r\n        " +
-"                Sale_Start_Date: $(\'#id_salestart-\' + i).val(),\r\n               " +
-"         Sale_Start_Time: $(\'#id_saletimestart-\' + i).val(),\r\n                  " +
-"      Sale_End_Date: $(\'#id_saleend-\' + i).val(),\r\n                        Sale_" +
-"End_Time: $(\'#id_saletimeend-\' + i).val(),\r\n                        \'Hide_Ticket" +
-"\': parseInt(($(\"#id_ticketshidden-\" + i).is(\":checked\") == true ? \'1\' : \'0\')),\r\n" +
-"                        Auto_Hide_Sche: parseInt(Auto_Schedule),\r\n              " +
-"          Hide_Untill_Date: $(\'#id_auto_hide_until_Date-\' + i).val(),\r\n         " +
-"               Hide_Untill_Time: $(\'#id_auto_hide_until_time-\' + i).val(),\r\n    " +
-"                    Hide_After_Date: $(\'#id_auto_hide_after_Date-\' + i).val(),\r\n" +
-"                        Hide_After_Time: $(\'#id_auto_hide_after_Time-\' + i).val(" +
-"),\r\n                        Min_T_Qty: $(\'#id_min_ticket-\' + i).val(),\r\n        " +
-"                Max_T_Qty: $(\'#id_max_ticket-\' + i).val(),\r\n                    " +
-"    T_Disable: (($(\'#id_disableticket-\' + i).is(\":checked\") == true ? \'1\' : \'0\')" +
-"),\r\n                        T_Mark_SoldOut: parseInt(($(\'#id_marksoldout-\' + i)." +
-"is(\":checked\") == true ? \'1\' : \'0\')),\r\n                        T_Displayremainin" +
-"g: ($(\'#id_displayremaining-\' + i).is(\":checked\") == true ? \'1\' : \'0\'),\r\n       " +
-"                 Fees_Type: $(\'#id_include_ticket_fees-\' + i).val(),\r\n          " +
-"              \'T_Discount\': Discount,\r\n                        T_order: $(\'#id_o" +
-"rder-\' + i).val(),\r\n                        TicketTypeID: TicketTypeID,\r\n       " +
-"                 T_AutoSechduleType: AutoSechduleType,\r\n                        " +
-"EC_Fee: ecfee,\r\n                        Customer_Fee: customerfee,\r\n            " +
-"            TotalPrice: total,\r\n                        hdecfee:hdecfee,\r\n      " +
-"                  hdcustomerfee:hdcsfee,\r\n                        T_Ecpercent:ec" +
-"feepercent,\r\n                        T_EcAmount:ecfeeamount,\r\n                  " +
-"      Isadmin:isadmin,\r\n                        T_Customize:customize\r\n\r\n\r\n     " +
-"               });\r\n\r\n                }\r\n\r\n            }\r\n\r\n            //$(\'#tb" +
-"lAddress tr\').each(function () {\r\n\r\n\r\n            //});\r\n            debugger;\r\n" +
-"\r\n            //  alert($(\"#tblAddress tr\").length);\r\n            var addresssta" +
-"tus=$(\'#hidAddressStatus\').val();\r\n            if(addressstatus==\"\")\r\n          " +
-"  {\r\n                if($(\"#txtEventLocation\").val()!=\"\")\r\n                {\r\n  " +
-"                  SubmitAddress.push({\r\n                        VenueName: \' \',\r" +
-"\n                        Address1: \' \',\r\n                        Address2: \' \',\r" +
-"\n                        City: \' \',\r\n                        State: \' \',\r\n      " +
-"                  Zip: \' \',\r\n                        CountryID: \' \',\r\n          " +
-"              ConsolidateAddress: $(\"#txtEventLocation\").val()\r\n                " +
-"    })\r\n                    $(\'#hidAddressStatus\').val(\"Single\");\r\n             " +
-"   }\r\n            }\r\n            if(addressstatus==\"Single\")\r\n            {\r\n   " +
-"             SubmitAddress.push({\r\n                    VenueName: \' \',\r\n        " +
-"            Address1: \' \',\r\n                    Address2: \' \',\r\n                " +
-"    City: \' \',\r\n                    State: \' \',\r\n                    Zip: \' \',\r\n" +
-"                    CountryID: \' \',\r\n                    ConsolidateAddress: $(\"" +
-"#txtEventLocation\").val()\r\n                })\r\n            }\r\n            if(add" +
-"ressstatus==\"Multiple\")\r\n            {\r\n                $(\"#tblAddress tr\").each" +
-"(function () {\r\n\r\n                    var Sno = $(this).find(\"td:first\").html();" +
-"\r\n                    //  alert(Sno);\r\n                    // Multiple Address\r\n" +
-"                    if (Sno != \'\' && Sno != undefined && Sno != null) {\r\n       " +
-"                 SubmitAddress.push({\r\n                            AddressId:$(\"" +
-"#VenueId\"+Sno).val(),\r\n                            VenueName: $(\"#VenueName\" + S" +
-"no).val(),\r\n                            Address1: ($(\"#Address1\" + Sno).val() !=" +
-" null ? $(\"#Address1\" + Sno).val() : \'\'),\r\n                            Address2:" +
-" ($(\"#Address2\" + Sno).val() != null ? $(\"#Address2\" + Sno).val() : \'\'),\r\n      " +
-"                      City: ($(\"#City\" + Sno).val() != null ? $(\"#City\" + Sno).v" +
-"al() : \'\'),\r\n                            State: ($(\"#State\" + Sno).val() != null" +
-" ? $(\"#State\" + Sno).val() : \'\'),\r\n                            Zip: ($(\"#Zip\" + " +
-"Sno).val() != null ? $(\"#Zip\" + Sno).val() : \'\'),\r\n                            C" +
-"ountryID: ($(\"#CID\" + Sno).val() != null ? $(\"#CID\" + Sno).val() : \'\'),\r\n       " +
-"                     ConsolidateAddress: $(\"#consolidate\" + Sno).text()\r\n       " +
-"                 });\r\n                    }\r\n\r\n                });\r\n            " +
-"}\r\n\r\n\r\n            // Single Timing\r\n            if ($(\"#hdSchType\").val() == \'S" +
-"ingle\') {\r\n                SingleTiming.push({\r\n                    \'EventStartD" +
-"ate\': $(\"#txtStartDate\").val(),\r\n                    \'EventEndDate\': $(\"#txtEndD" +
-"ate\").val(),\r\n                    \'EventStartTime\': $(\"#txtStartTime\").val(),\r\n " +
-"                   \'EventEndTime\': $(\"#txtEndTime\").val()\r\n                });\r\n" +
-"            }\r\n\r\n            // Multiple Schedule\r\n\r\n\r\n            if ($(\"#hdSch" +
-"Type\").val() == \'Multiple\') {\r\n\r\n\r\n                var SchOption = $(\"#dlSchOpti" +
-"on\").val();\r\n                var vWeeklyDayAry = ($(\"#dllWeeklyDayChk\").val() ==" +
-" null ? \'\' : $(\"#dllWeeklyDayChk\").val());\r\n                var vMonthlyDay = ($" +
-"(\"#dllMonth\").val() == null ? \'\' : $(\"#dllMonth\").val());\r\n                var v" +
-"MonthlyWeek = ($(\"#dllMonthlyWeek\").val() == null ? \'\' : $(\"#dllMonthlyWeek\").va" +
-"l());\r\n                var vMonthlyWeekDaysAry = ($(\"#dllMonthlyWeekDay\").val() " +
-"== null ? \'\' : $(\"#dllMonthlyWeekDay\").val());\r\n\r\n                var vStartingF" +
-"rom = $(\"#txtDateFrom\").val();\r\n                var vStartingTo = $(\"#txtDateTo\"" +
-").val();\r\n                var vStartTime = $(\"#txtTimeStart\").val();\r\n          " +
-"      var vEndTime = $(\"#txtTimeEnd\").val();\r\n                var vMonthlyWeekDa" +
-"ys = \'\';\r\n                var vWeeklyDay = \'\';\r\n\r\n                if (SchOption " +
-"== \"Daily\") {\r\n                    vWeeklyDay = \'\';\r\n                    vMonthl" +
-"yDay = \'\';\r\n                    vMonthlyWeek = \'\';\r\n                    vMonthly" +
-"WeekDays = \'\';\r\n                    $(\"#hidSchLastState\").val(\"Daily\");\r\n       " +
-"         }\r\n                else if (SchOption == \"Weekly\") {\r\n                 " +
-"   vMonthlyDay = \'\';\r\n                    vMonthlyWeek = \'\';\r\n                  " +
-"  vMonthlyWeekDays = \'\';\r\n                    $(\"#hidSchLastState\").val(\"Weekly\"" +
-");\r\n                    for (i = 0; i < vWeeklyDayAry.length; i++) {\r\n          " +
-"              if (vWeeklyDay == \'\') vWeeklyDay = vWeeklyDayAry[i].toString();\r\n " +
-"                       else vWeeklyDay = vWeeklyDay + \',\' + vWeeklyDayAry[i].toS" +
-"tring();\r\n                    }\r\n                }\r\n                else if (Sch" +
-"Option == \"Monthly\") {\r\n                    vWeeklyDay = \'\';\r\n                  " +
-"  if ($(\"#hdMonthlyType\").val() == \"DM\") vMonthlyWeek = \'\'; vMonthlyWeekDays = \'" +
-"\';\r\n                    if ($(\"#hdMonthlyType\").val() == \"DW\") {\r\n              " +
-"          vMonthlyDay = \'\';\r\n                        for (i = 0; i < vMonthlyWee" +
-"kDaysAry.length; i++) {\r\n                            if (vMonthlyWeekDays == \'\')" +
-" vMonthlyWeekDays = vMonthlyWeekDaysAry[i].toString();\r\n                        " +
-"    else vMonthlyWeekDays = vMonthlyWeekDays + \',\' + vMonthlyWeekDaysAry[i].toSt" +
-"ring();\r\n                        }\r\n                    }\r\n\r\n                   " +
-" $(\"#hidSchLastState\").val(\"Monthly\");\r\n                }\r\n                else " +
-"if (SchOption == \"Custom\") {\r\n                    vWeeklyDay = \'\';\r\n            " +
-"        vMonthlyDay = \'\';\r\n                    vMonthlyWeek = \'\';\r\n             " +
-"       vMonthlyWeekDays = \'\';\r\n                    $(\"#hidSchLastState\").val(\"Cu" +
-"stom\");\r\n                }\r\n\r\n                MultipleSchedule.push({\r\n         " +
-"           \'Frequency\': SchOption,\r\n                    \'WeeklyDay\': vWeeklyDay," +
-"\r\n                    \'MonthlyDay\': vMonthlyDay,\r\n                    \'MonthlyWe" +
-"ek\': vMonthlyWeek,\r\n                    \'MonthlyWeekDays\': vMonthlyWeekDays,\r\n  " +
-"                  \'StartingFrom\': vStartingFrom,\r\n                    \'StartingT" +
-"o\': vStartingTo,\r\n                    \'StartTime\': vStartTime,\r\n                " +
-"    \'EndTime\': vEndTime\r\n                });\r\n\r\n            }\r\n            // Or" +
-"gnizer\r\n            //$(\"#tblOrgnizer option\").each(function (i) {\r\n            " +
-"//    Orgnizer.push({\r\n            //        \'Orgnizer_Name\': $(this).text(),\r\n " +
-"           //        \'Orgnizer_Desc\': $(this).val()\r\n            //    });\r\n    " +
-"        //    //alert($(this).text() + \" : \" + $(this).val());\r\n            //})" +
-";\r\n\r\n            var vDefaultOrg = $(\"#ddlOrgnizers\").val();\r\n            consol" +
-"e.log( $(\"#tblOrgnizer\"));\r\n            $(\"#tblOrgnizer tr\").each(function () {\r" +
-"\n                var Sno = $(this).find(\"td:first\").html();\r\n                //a" +
-"lert(Sno);\r\n                // Multiple Address\r\n                debugger;\r\n    " +
-"            if (Sno != \'\') {\r\n                    Orgnizer.push({\r\n             " +
-"           Orgnizer_Id: $(\"#OrgId_\" + Sno).text(),\r\n                        Orgn" +
-"izer_Name: $(\"#OrgName_\" + Sno).text(),\r\n                        Orgnizer_Desc: " +
-"escape($(\"#OrgDes_\" + Sno).text()),\r\n                        FBLink: $(\"#OrgFB_\"" +
-" + Sno).text(),\r\n                        Twitter: $(\"#OrgTw_\" + Sno).text(),\r\n  " +
-"                      Linkedin: $(\"#OrgLn_\" + Sno).text(),\r\n                    " +
-"    DefaultOrg: (vDefaultOrg == Sno ? \'Y\' : \'N\')\r\n\r\n                    });\r\n   " +
-"             }\r\n            });\r\n\r\n            console.log(Orgnizer);\r\n\r\n       " +
-"     // Basic Event Info\r\n            //alert($(\"#edSummer1\").code());\r\n        " +
-"    //debugger;\r\n            //$(\"#spEvDesc\").text();\r\n            var vEdesc = " +
-"\'\'; //$(\"#edEventDesc\").code();\r\n\r\n            var varDescritpion = \'\';\r\n       " +
-"     var optionalvariable = \'\';\r\n            if ($(\"#id_variablecharge\").is(\":ch" +
-"ecked\")) {\r\n\r\n                varDescritpion = $(\'#id_vardesc\').val();\r\n        " +
-"        optionalvariable = $(\'#variabletype\').val();\r\n            }\r\n           " +
-" var evDec = escape($(\"#edEventDesc\").code());\r\n            var model = {\r\n     " +
-"           \'EventID\': $(\"#hdEventId\").val(),\r\n                \'EventTypeID\': $(\"" +
-"#EventType\").val(),\r\n                \'EventCategoryID\': $(\"#ddlEventCategory\").v" +
-"al(),\r\n                \'EventSubCategoryID\': $(\"#ddlEventSubCategory\").val(),\r\n " +
-"               \'UserID\': \'\',\r\n                \'EventTitle\': $(\"#txtEventTitle\")." +
-"val(),\r\n                \'EventDescription\': evDec,\r\n                \'EventPrivac" +
-"y\': ($(\"#rdPublic\").is(\":checked\") == true ? \'Public\' : \'Private\'),\r\n           " +
-"     \'Private_ShareOnFB\': ($(\"#chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'" +
-"),\r\n                \'Private_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") == t" +
-"rue ? \'Y\' : \'N\'),\r\n                \'Private_Password\': $(\"#txtReqPassword\").val(" +
-"),\r\n                \'EventUrl\': $(\"#txtEventUrl\").val().trim(),\r\n               " +
-" \'PublishOnFB\': ($(\"#chkPublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r" +
-"\n                \'EventStatus\': status,\r\n                \'AddressDetail\': Submit" +
-"Address,\r\n                \'EventVenue\': SingleTiming,\r\n                \'TimeZone" +
-"\': $(\"#dllTimeZone\").val(),\r\n                \'DisplayStartTime\': ($(\"#chkDisplay" +
-"StartTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'DisplayEndTim" +
-"e\': ($(\"#chkDisplayEndTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n             " +
-"   \'DisplayTimeZone\': ($(\"#chkTimeZone\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n " +
-"               \'FBUrl\': \'\',\r\n                \'TwitterUrl\': \'\',\r\n                " +
-"\'MultipleEvents\': MultipleSchedule,\r\n                \'Orgnizer\': Orgnizer,\r\n    " +
-"            \'AddressStatus\':  $(\'#hidAddressStatus\').val(),\r\n                \'La" +
-"stLocationAddress\': ($(\"#hidAddressStatus\").val() == \"PastLocation\" ? $(\"#dllPas" +
-"tLocation\").val() : 0),\r\n                \'EnableFBDiscussion\': ($(\"#chkAllowFBDi" +
-"s\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket\': Ticket,\r\n   " +
-"             \'EventImage\': EventImage,\r\n                \'EventVariable\': EventVa" +
-"riable,\r\n                \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr\").is(\":che" +
-"cked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket_showremain\': ($(\"#id_showr" +
-"emaningticket\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket_sh" +
-"owvariable\': ($(\"#id_variablecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n    " +
-"            \'Ticket_variabledesc\': varDescritpion,\r\n                \'Ticket_vari" +
-"abletype\': optionalvariable,\r\n                \'ShowMap\': ($(\"#chkShowMap\").is(\":" +
-"checked\") == true ? \'Y\' : \'N\')\r\n\r\n            };\r\n\r\n            //var params = \'" +
-"strEveDec :\' + $(\"#edEventDesc\").code();\r\n\r\n            var vDuplicate  = ($(\"#c" +
-"hkDuplicateEvent\").is(\":checked\") == true ? \'Y\' : \'N\');\r\n            if ($(\"#hdE" +
-"ventId\").val() != \'\') {\r\n\r\n                $.ajax({\r\n                    url: \'");
+"            }else\r\n                        {\r\n\r\n\r\n                            va" +
+"r t_id=  $(\'#id_ticket_id-\'+i).val();\r\n                            if(t_id!=0)\r\n" +
+"                            {\r\n                                ecfee=$(\'#id_ecfe" +
+"eback_id-\'+i).val();\r\n\r\n                                customerfee = $(\'#id_fee" +
+"-\'+i).val();\r\n                                ecfeepercent=$(\'#id_ecpercentback_" +
+"id-\'+i).val();;\r\n                                ecfeeamount=$(\'#id_ecammountbac" +
+"k_id-\'+i).val();;\r\n                                customize=$(\"#id_customize-\"+" +
+"i).val()\r\n\r\n                            }else\r\n                            {\r\n\r\n" +
+"                                ecfee=$(\'#id_fee-\'+i).val();\r\n                  " +
+"              customerfee = $(\'#id_fee-\'+i).val();\r\n                            " +
+"    ecfeepercent=$(\'#id_percentage\').val();\r\n                                ecf" +
+"eeamount=$(\'#id_value\').val();;\r\n                                customize=0;\r\n " +
+"                           }\r\n                            hdecfee=0;\r\n          " +
+"                  hdcsfee=0;\r\n\r\n\r\n                        }\r\n                   " +
+"     //if ($(\'#id_include_ticket_fees-\' + i).val() == 0) {\r\n\r\n\r\n                " +
+"        //}\r\n                        //if ($(\'#id_include_ticket_fees-\' + i).val" +
+"() == 1) {\r\n                        //\r\n\r\n                        //}\r\n         " +
+"           }\r\n\r\n\r\n\r\n                    var Discount = $(\'#id_Discount-\' + i).va" +
+"l().replace(\',\', \'\');\r\n                    var showdesc = ($(\'#id_show_descripti" +
+"on-\' + i).is(\":checked\") == true ? \'1\' : \'0\');\r\n\r\n                    Ticket.pus" +
+"h({\r\n                        T_Id:$(\'#id_ticket_id-\' + i).val(),\r\n              " +
+"          T_name: $(\'#id_ticket_type-\' + i).val(),\r\n                        Qty_" +
+"Available: $(\'#id_quantity_total-\' + i).val(),\r\n                        T_Type: " +
+"$(\'#id_Tickettype-\' + i).val(),\r\n                        Price: TicketPrice,\r\n  " +
+"                      \'T_Desc\': $(\'#id_descriptionclass-\' + i).val(),\r\n         " +
+"               \'Show_T_Desc\': parseInt(showdesc),\r\n                        Sale_" +
+"Start_Date: $(\'#id_salestart-\' + i).val(),\r\n                        Sale_Start_T" +
+"ime: $(\'#id_saletimestart-\' + i).val(),\r\n                        Sale_End_Date: " +
+"$(\'#id_saleend-\' + i).val(),\r\n                        Sale_End_Time: $(\'#id_sale" +
+"timeend-\' + i).val(),\r\n                        \'Hide_Ticket\': parseInt(($(\"#id_t" +
+"icketshidden-\" + i).is(\":checked\") == true ? \'1\' : \'0\')),\r\n                     " +
+"   Auto_Hide_Sche: parseInt(Auto_Schedule),\r\n                        Hide_Untill" +
+"_Date: $(\'#id_auto_hide_until_Date-\' + i).val(),\r\n                        Hide_U" +
+"ntill_Time: $(\'#id_auto_hide_until_time-\' + i).val(),\r\n                        H" +
+"ide_After_Date: $(\'#id_auto_hide_after_Date-\' + i).val(),\r\n                     " +
+"   Hide_After_Time: $(\'#id_auto_hide_after_Time-\' + i).val(),\r\n                 " +
+"       Min_T_Qty: $(\'#id_min_ticket-\' + i).val(),\r\n                        Max_T" +
+"_Qty: $(\'#id_max_ticket-\' + i).val(),\r\n                        T_Disable: (($(\'#" +
+"id_disableticket-\' + i).is(\":checked\") == true ? \'1\' : \'0\')),\r\n                 " +
+"       T_Mark_SoldOut: parseInt(($(\'#id_marksoldout-\' + i).is(\":checked\") == tru" +
+"e ? \'1\' : \'0\')),\r\n                        T_Displayremaining: ($(\'#id_displayrem" +
+"aining-\' + i).is(\":checked\") == true ? \'1\' : \'0\'),\r\n                        Fees" +
+"_Type: $(\'#id_include_ticket_fees-\' + i).val(),\r\n                        \'T_Disc" +
+"ount\': Discount,\r\n                        T_order: $(\'#id_order-\' + i).val(),\r\n " +
+"                       TicketTypeID: TicketTypeID,\r\n                        T_Au" +
+"toSechduleType: AutoSechduleType,\r\n                        EC_Fee: ecfee,\r\n     " +
+"                   Customer_Fee: customerfee,\r\n                        TotalPric" +
+"e: total,\r\n                        hdecfee:hdecfee,\r\n                        hdc" +
+"ustomerfee:hdcsfee,\r\n                        T_Ecpercent:ecfeepercent,\r\n        " +
+"                T_EcAmount:ecfeeamount,\r\n                        Isadmin:isadmin" +
+",\r\n                        T_Customize:customize\r\n\r\n\r\n                    });\r\n\r" +
+"\n                }\r\n\r\n            }\r\n\r\n            //$(\'#tblAddress tr\').each(fu" +
+"nction () {\r\n\r\n\r\n            //});\r\n            debugger;\r\n\r\n            //  ale" +
+"rt($(\"#tblAddress tr\").length);\r\n            var addressstatus=$(\'#hidAddressSta" +
+"tus\').val();\r\n            if(addressstatus==\"\")\r\n            {\r\n                " +
+"if($(\"#txtEventLocation\").val()!=\"\")\r\n                {\r\n                    Sub" +
+"mitAddress.push({\r\n                        VenueName: \' \',\r\n                    " +
+"    Address1: \' \',\r\n                        Address2: \' \',\r\n                    " +
+"    City: \' \',\r\n                        State: \' \',\r\n                        Zip" +
+": \' \',\r\n                        CountryID: \' \',\r\n                        Consoli" +
+"dateAddress: $(\"#txtEventLocation\").val()\r\n                    })\r\n             " +
+"       $(\'#hidAddressStatus\').val(\"Single\");\r\n                }\r\n            }\r\n" +
+"            if(addressstatus==\"Single\")\r\n            {\r\n                SubmitAd" +
+"dress.push({\r\n                    VenueName: \' \',\r\n                    Address1:" +
+" \' \',\r\n                    Address2: \' \',\r\n                    City: \' \',\r\n     " +
+"               State: \' \',\r\n                    Zip: \' \',\r\n                    C" +
+"ountryID: \' \',\r\n                    ConsolidateAddress: $(\"#txtEventLocation\").v" +
+"al()\r\n                })\r\n            }\r\n            if(addressstatus==\"Multiple" +
+"\")\r\n            {\r\n                $(\"#tblAddress tr\").each(function () {\r\n\r\n   " +
+"                 var Sno = $(this).find(\"td:first\").html();\r\n                   " +
+" //  alert(Sno);\r\n                    // Multiple Address\r\n                    i" +
+"f (Sno != \'\' && Sno != undefined && Sno != null) {\r\n                        Subm" +
+"itAddress.push({\r\n                            AddressId:$(\"#VenueId\"+Sno).val()," +
+"\r\n                            VenueName: $(\"#VenueName\" + Sno).val(),\r\n         " +
+"                   Address1: ($(\"#Address1\" + Sno).val() != null ? $(\"#Address1\"" +
+" + Sno).val() : \'\'),\r\n                            Address2: ($(\"#Address2\" + Sno" +
+").val() != null ? $(\"#Address2\" + Sno).val() : \'\'),\r\n                           " +
+" City: ($(\"#City\" + Sno).val() != null ? $(\"#City\" + Sno).val() : \'\'),\r\n        " +
+"                    State: ($(\"#State\" + Sno).val() != null ? $(\"#State\" + Sno)." +
+"val() : \'\'),\r\n                            Zip: ($(\"#Zip\" + Sno).val() != null ? " +
+"$(\"#Zip\" + Sno).val() : \'\'),\r\n                            CountryID: ($(\"#CID\" +" +
+" Sno).val() != null ? $(\"#CID\" + Sno).val() : \'\'),\r\n                            " +
+"ConsolidateAddress: $(\"#consolidate\" + Sno).text()\r\n                        });\r" +
+"\n                    }\r\n\r\n                });\r\n            }\r\n\r\n\r\n            //" +
+" Single Timing\r\n            if ($(\"#hdSchType\").val() == \'Single\') {\r\n          " +
+"      SingleTiming.push({\r\n                    \'EventStartDate\': $(\"#txtStartDat" +
+"e\").val(),\r\n                    \'EventEndDate\': $(\"#txtEndDate\").val(),\r\n       " +
+"             \'EventStartTime\': $(\"#txtStartTime\").val(),\r\n                    \'E" +
+"ventEndTime\': $(\"#txtEndTime\").val()\r\n                });\r\n            }\r\n\r\n    " +
+"        // Multiple Schedule\r\n\r\n\r\n            if ($(\"#hdSchType\").val() == \'Mult" +
+"iple\') {\r\n\r\n\r\n                var SchOption = $(\"#dlSchOption\").val();\r\n        " +
+"        var vWeeklyDayAry = ($(\"#dllWeeklyDayChk\").val() == null ? \'\' : $(\"#dllW" +
+"eeklyDayChk\").val());\r\n                var vMonthlyDay = ($(\"#dllMonth\").val() =" +
+"= null ? \'\' : $(\"#dllMonth\").val());\r\n                var vMonthlyWeek = ($(\"#dl" +
+"lMonthlyWeek\").val() == null ? \'\' : $(\"#dllMonthlyWeek\").val());\r\n              " +
+"  var vMonthlyWeekDaysAry = ($(\"#dllMonthlyWeekDay\").val() == null ? \'\' : $(\"#dl" +
+"lMonthlyWeekDay\").val());\r\n\r\n                var vStartingFrom = $(\"#txtDateFrom" +
+"\").val();\r\n                var vStartingTo = $(\"#txtDateTo\").val();\r\n           " +
+"     var vStartTime = $(\"#txtTimeStart\").val();\r\n                var vEndTime = " +
+"$(\"#txtTimeEnd\").val();\r\n                var vMonthlyWeekDays = \'\';\r\n           " +
+"     var vWeeklyDay = \'\';\r\n\r\n                if (SchOption == \"Daily\") {\r\n      " +
+"              vWeeklyDay = \'\';\r\n                    vMonthlyDay = \'\';\r\n         " +
+"           vMonthlyWeek = \'\';\r\n                    vMonthlyWeekDays = \'\';\r\n     " +
+"               $(\"#hidSchLastState\").val(\"Daily\");\r\n                }\r\n         " +
+"       else if (SchOption == \"Weekly\") {\r\n                    vMonthlyDay = \'\';\r" +
+"\n                    vMonthlyWeek = \'\';\r\n                    vMonthlyWeekDays = " +
+"\'\';\r\n                    $(\"#hidSchLastState\").val(\"Weekly\");\r\n                 " +
+"   for (i = 0; i < vWeeklyDayAry.length; i++) {\r\n                        if (vWe" +
+"eklyDay == \'\') vWeeklyDay = vWeeklyDayAry[i].toString();\r\n                      " +
+"  else vWeeklyDay = vWeeklyDay + \',\' + vWeeklyDayAry[i].toString();\r\n           " +
+"         }\r\n                }\r\n                else if (SchOption == \"Monthly\") " +
+"{\r\n                    vWeeklyDay = \'\';\r\n                    if ($(\"#hdMonthlyTy" +
+"pe\").val() == \"DM\") vMonthlyWeek = \'\'; vMonthlyWeekDays = \'\';\r\n                 " +
+"   if ($(\"#hdMonthlyType\").val() == \"DW\") {\r\n                        vMonthlyDay" +
+" = \'\';\r\n                        for (i = 0; i < vMonthlyWeekDaysAry.length; i++)" +
+" {\r\n                            if (vMonthlyWeekDays == \'\') vMonthlyWeekDays = v" +
+"MonthlyWeekDaysAry[i].toString();\r\n                            else vMonthlyWeek" +
+"Days = vMonthlyWeekDays + \',\' + vMonthlyWeekDaysAry[i].toString();\r\n            " +
+"            }\r\n                    }\r\n\r\n                    $(\"#hidSchLastState\"" +
+").val(\"Monthly\");\r\n                }\r\n                else if (SchOption == \"Cus" +
+"tom\") {\r\n                    vWeeklyDay = \'\';\r\n                    vMonthlyDay =" +
+" \'\';\r\n                    vMonthlyWeek = \'\';\r\n                    vMonthlyWeekDa" +
+"ys = \'\';\r\n                    $(\"#hidSchLastState\").val(\"Custom\");\r\n            " +
+"    }\r\n\r\n                MultipleSchedule.push({\r\n                    \'Frequency" +
+"\': SchOption,\r\n                    \'WeeklyDay\': vWeeklyDay,\r\n                   " +
+" \'MonthlyDay\': vMonthlyDay,\r\n                    \'MonthlyWeek\': vMonthlyWeek,\r\n " +
+"                   \'MonthlyWeekDays\': vMonthlyWeekDays,\r\n                    \'St" +
+"artingFrom\': vStartingFrom,\r\n                    \'StartingTo\': vStartingTo,\r\n   " +
+"                 \'StartTime\': vStartTime,\r\n                    \'EndTime\': vEndTi" +
+"me\r\n                });\r\n\r\n            }\r\n            // Orgnizer\r\n            /" +
+"/$(\"#tblOrgnizer option\").each(function (i) {\r\n            //    Orgnizer.push({" +
+"\r\n            //        \'Orgnizer_Name\': $(this).text(),\r\n            //        " +
+"\'Orgnizer_Desc\': $(this).val()\r\n            //    });\r\n            //    //alert" +
+"($(this).text() + \" : \" + $(this).val());\r\n            //});\r\n\r\n            var " +
+"vDefaultOrg = $(\"#ddlOrgnizers\").val();\r\n            console.log( $(\"#tblOrgnize" +
+"r\"));\r\n            $(\"#tblOrgnizer tr\").each(function () {\r\n                var " +
+"Sno = $(this).find(\"td:first\").html();\r\n                //alert(Sno);\r\n         " +
+"       // Multiple Address\r\n                debugger;\r\n                if (Sno !" +
+"= \'\') {\r\n                    Orgnizer.push({\r\n                        Orgnizer_I" +
+"d: $(\"#OrgId_\" + Sno).text(),\r\n                        Orgnizer_Name: $(\"#OrgNam" +
+"e_\" + Sno).text(),\r\n                        Orgnizer_Desc: escape($(\"#OrgDes_\" +" +
+" Sno).text()),\r\n                        FBLink: $(\"#OrgFB_\" + Sno).text(),\r\n    " +
+"                    Twitter: $(\"#OrgTw_\" + Sno).text(),\r\n                       " +
+" Linkedin: $(\"#OrgLn_\" + Sno).text(),\r\n                        DefaultOrg: (vDef" +
+"aultOrg == Sno ? \'Y\' : \'N\')\r\n\r\n                    });\r\n                }\r\n     " +
+"       });\r\n\r\n            console.log(Orgnizer);\r\n\r\n            // Basic Event I" +
+"nfo\r\n            //alert($(\"#edSummer1\").code());\r\n            //debugger;\r\n    " +
+"        //$(\"#spEvDesc\").text();\r\n            var vEdesc = \'\'; //$(\"#edEventDesc" +
+"\").code();\r\n\r\n            var varDescritpion = \'\';\r\n            var optionalvari" +
+"able = \'\';\r\n            if ($(\"#id_variablecharge\").is(\":checked\")) {\r\n\r\n       " +
+"         varDescritpion = $(\'#id_vardesc\').val();\r\n                optionalvaria" +
+"ble = $(\'#variabletype\').val();\r\n            }\r\n            var evDec = escape($" +
+"(\"#edEventDesc\").code());\r\n            var model = {\r\n                \'EventID\':" +
+" $(\"#hdEventId\").val(),\r\n                \'EventTypeID\': $(\"#EventType\").val(),\r\n" +
+"                \'EventCategoryID\': $(\"#ddlEventCategory\").val(),\r\n              " +
+"  \'EventSubCategoryID\': $(\"#ddlEventSubCategory\").val(),\r\n                \'UserI" +
+"D\': \'\',\r\n                \'EventTitle\': $(\"#txtEventTitle\").val(),\r\n             " +
+"   \'EventDescription\': evDec,\r\n                \'EventPrivacy\': ($(\"#rdPublic\").i" +
+"s(\":checked\") == true ? \'Public\' : \'Private\'),\r\n                \'Private_ShareOn" +
+"FB\': ($(\"#chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'" +
+"Private_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n  " +
+"              \'Private_Password\': $(\"#txtReqPassword\").val(),\r\n                \'" +
+"EventUrl\': $(\"#txtEventUrl\").val().trim(),\r\n                \'PublishOnFB\': ($(\"#" +
+"chkPublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Eve" +
+"ntStatus\': status,\r\n                \'AddressDetail\': SubmitAddress,\r\n           " +
+"     \'EventVenue\': SingleTiming,\r\n                \'TimeZone\': $(\"#dllTimeZone\")." +
+"val(),\r\n                \'DisplayStartTime\': ($(\"#chkDisplayStartTime\").is(\":chec" +
+"ked\") == true ? \"Y\" : \"N\"),\r\n                \'DisplayEndTime\': ($(\"#chkDisplayEn" +
+"dTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'DisplayTimeZone\':" +
+" ($(\"#chkTimeZone\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'FBUrl" +
+"\': \'\',\r\n                \'TwitterUrl\': \'\',\r\n                \'MultipleEvents\': Mul" +
+"tipleSchedule,\r\n                \'Orgnizer\': Orgnizer,\r\n                \'AddressS" +
+"tatus\':  $(\'#hidAddressStatus\').val(),\r\n                \'LastLocationAddress\': (" +
+"$(\"#hidAddressStatus\").val() == \"PastLocation\" ? $(\"#dllPastLocation\").val() : 0" +
+"),\r\n                \'EnableFBDiscussion\': ($(\"#chkAllowFBDis\").is(\":checked\") ==" +
+" true ? \'Y\' : \'N\'),\r\n                \'Ticket\': Ticket,\r\n                \'EventIm" +
+"age\': EventImage,\r\n                \'EventVariable\': EventVariable,\r\n            " +
+"    \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr\").is(\":checked\") == true ? \'Y\' " +
+": \'N\'),\r\n                \'Ticket_showremain\': ($(\"#id_showremaningticket\").is(\":" +
+"checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket_showvariable\': ($(\"#id_" +
+"variablecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket_v" +
+"ariabledesc\': varDescritpion,\r\n                \'Ticket_variabletype\': optionalva" +
+"riable,\r\n                \'ShowMap\': ($(\"#chkShowMap\").is(\":checked\") == true ? \'" +
+"Y\' : \'N\')\r\n\r\n            };\r\n\r\n            //var params = \'strEveDec :\' + $(\"#ed" +
+"EventDesc\").code();\r\n\r\n            var vDuplicate  = ($(\"#chkDuplicateEvent\").is" +
+"(\":checked\") == true ? \'Y\' : \'N\');\r\n            if ($(\"#hdEventId\").val() != \'\')" +
+" {\r\n\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 2741 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2755 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("Draftmodemodification", "EditEvent"));
 
             
@@ -5848,7 +5944,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 2747 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2761 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -5863,6 +5959,7 @@ WriteLiteral(@"';
                         }
                        else
                         {
+                            var vMasterEventId =$(""#hdEventId"").val();
                             $(""#hdEventId"").val(response);
 
 
@@ -5875,7 +5972,7 @@ WriteLiteral(@"';
                                 var isadmin=""");
 
             
-            #line 2765 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2780 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         Write(Model.Isadmin);
 
             
@@ -5886,7 +5983,7 @@ WriteLiteral("\";\r\n                                if(isadmin==\"Y\")\r\n     
 "                         window.location.href = \'");
 
             
-            #line 2769 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2784 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                        Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -5897,7 +5994,7 @@ WriteLiteral("\' + \'?Eventid=\' + response;\r\n\r\n                            
 " = \'");
 
             
-            #line 2773 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2788 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                        Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -5914,23 +6011,30 @@ WriteLiteral(@"' + '?Eventid=' + response;
                             {
                                 $('#divaccsuc').css('display', 'none');
                                 $('#diverroacc').css('display', 'none');
-                                var vUrl = $('#txtEventTitle').val() + ""౼"" + response + ""౼Y"";
-
-                                window.open('");
+                                //var vUrl = $('#txtEventTitle').val() + ""౼"" + response + ""౼Y"";
+                                var vTitle = $('#txtEventTitle').val().split(' ').join('-');
+                                vTitle = vTitle.replace(""[^a-zA-Z0-9_-]+"", """");
+                                var vUrl = '");
 
             
-            #line 2786 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                        Write(Url.Action("ViewCreateEvent", "CreateEvent",new { }));
+            #line 2802 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+                                       Write(Url.RouteUrl("ViewEvent",new { strEventDs= "ß", strEventId ="~" }));
 
             
             #line default
             #line hidden
-WriteLiteral("?strUrlData=\' + vUrl, \"_blank\");\r\n                            }\r\n                " +
-"            if(type==\"Live\")\r\n                            {\r\n                   " +
-"             //live\r\n\r\n                                window.location.href = \'");
+WriteLiteral("\';\r\n                                vUrl = vUrl.replace(\"%c3%9f\", vTitle);\r\n     " +
+"                           vUrl = vUrl.replace(\"~\", vMasterEventId);\r\n          " +
+"                      window.open(vUrl.toLowerCase());\r\n\r\n                      " +
+"          ");
+
+WriteLiteral("\r\n                            }\r\n                            if(type==\"Live\")\r\n  " +
+"                          {\r\n                                ");
+
+WriteLiteral("\r\n                                window.location.href = \'");
 
             
-            #line 2792 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2812 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                    Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -5961,7 +6065,7 @@ WriteLiteral(@"?EventId=' +response;
                 url: '");
 
             
-            #line 2814 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2834 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetSubCat", "EditEvent"));
 
             
@@ -5987,7 +6091,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 2831 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2851 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetOrgnizerDetail", "EditEvent"));
 
             
@@ -6138,7 +6242,7 @@ WriteLiteral("\',\r\n                data: { lEventId: $(\"#hdEventId\").val() }
 "        url: \'");
 
             
-            #line 3126 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3146 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "ManageEvent"));
 
             
@@ -6154,20 +6258,22 @@ WriteLiteral("\',\r\n                        data: { strUserUrl: $(\"#txtEventUr
 "                           $(\'#erraccmsg\').html(msg);\r\n\r\n                       " +
 "         $(\"#txtEventUrl\").val(\'\');\r\n                                $(\"#txtEven" +
 "tUrl\").focus();\r\n                                $(\'html,body\').animate({ scroll" +
-"Top: 0 });\r\n\r\n                            }\r\n                        },\r\n       " +
-"                 error: function (data) {\r\n                            $(\'#divac" +
-"csuc\').css(\'display\', \'none\');\r\n                            $(\'#diverroacc\').css" +
-"(\'display\', \'block\');\r\n                            $(\'#erraccmsg\').html(ajaxsetu" +
-"p(\'CreateEvent\', \'CreateEventProbleminApllUI\'));\r\n                            $(" +
-"\'html,body\').animate({ scrollTop: 0 });\r\n                            $(\'#btndive" +
-"rrsuc\').focus();\r\n                        }\r\n                    });\r\n          " +
-"      }\r\n            });\r\n\r\n\r\n            $(\"#ddlEventCategory\").change(function" +
-" () {\r\n                //alert(\"change Fires\");\r\n                var vCatId = $(" +
-"\"#ddlEventCategory\").val();\r\n                $.ajax({\r\n                    url: " +
-"\'");
+"Top: 0 });\r\n\r\n                            }else\r\n                            {\r\n" +
+"                                $(\'#diverroacc\').css(\'display\', \'none\');\r\n      " +
+"                          $(\"#txtEventUrl\").removeClass(\'err-bor\');\r\n           " +
+"                 }\r\n                        },\r\n                        error: f" +
+"unction (data) {\r\n                            $(\'#divaccsuc\').css(\'display\', \'no" +
+"ne\');\r\n                            $(\'#diverroacc\').css(\'display\', \'block\');\r\n  " +
+"                          $(\'#erraccmsg\').html(ajaxsetup(\'CreateEvent\', \'CreateE" +
+"ventProbleminApllUI\'));\r\n                            $(\'html,body\').animate({ sc" +
+"rollTop: 0 });\r\n                            $(\'#btndiverrsuc\').focus();\r\n       " +
+"                 }\r\n                    });\r\n                }\r\n            });\r" +
+"\n\r\n\r\n            $(\"#ddlEventCategory\").change(function () {\r\n                //" +
+"alert(\"change Fires\");\r\n                var vCatId = $(\"#ddlEventCategory\").val(" +
+");\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 3160 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3184 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -6281,7 +6387,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 "-------------------------\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 3347 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3371 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetPreviousAddressForEditing", "CreateEvent"));
 
             
@@ -6520,7 +6626,7 @@ WriteLiteral("\',\r\n                data: { \"lEid\": $(\"#hdEventId\").val() }
 "   });\r\n    </script>\r\n");
 
             
-            #line 3823 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3847 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
     //Ticket Section Starts
@@ -6579,7 +6685,7 @@ WriteLiteral("    <script>\r\n        function CannotFindLocation() {\r\n       
 "          });\r\n              $.ajax({\r\n                url: \'");
 
             
-            #line 3931 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3955 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -6738,7 +6844,7 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 "admin=\"");
 
             
-            #line 4234 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4258 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -6794,7 +6900,7 @@ WriteLiteral("\";\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.lengt
 ",\',\'\')).toFixed(2));\r\n            var isadmin=\"");
 
             
-            #line 4317 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4341 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7042,7 +7148,7 @@ WriteLiteral("\";\r\n            if (price == 0) {\r\n\r\n                $(\'#i
 "        var isadmin=\"");
 
             
-            #line 4894 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4918 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7079,51 +7185,45 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
 ": \"0\",\r\n                onSelect: function () {\r\n\r\n                    this.fire" +
 "Event && this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n   " +
 "         }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_saleend-\" +" +
-" divlength).datepicker(\'hide\');\r\n            });\r\n\r\n            $(\"#id_auto_hide" +
-"_until_Date-\" + divlength).datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n" +
-"                minDate: \"0\",\r\n                onSelect: function () {\r\n\r\n      " +
-"              this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r" +
-"\n                }\r\n            }).on(\'changeDate\', function (ev) {\r\n           " +
-"     $(\"#id_auto_hide_until_Date-\" + divlength).datepicker(\'hide\');\r\n           " +
-" });\r\n            $(\"#id_auto_hide_after_Date-\" + divlength).datepicker({\r\n     " +
-"           format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n               " +
-" onSelect: function () {\r\n\r\n                    this.fireEvent && this.fireEvent" +
-"(\'onchange\') || $(this).change();\r\n                }\r\n            }).on(\'changeD" +
-"ate\', function (ev) {\r\n                $(\"#id_auto_hide_after_Date-\" + divlength" +
-").datepicker(\'hide\');\r\n            });\r\n\r\n            $(\"#id_saletimestart-\" + d" +
-"ivlength).timepicker();\r\n\r\n            $(\"#id_saletimeend-\" + divlength).timepic" +
-"ker();\r\n            $(\"#id_auto_hide_until_time-\" + divlength).timepicker();\r\n  " +
-"          $(\"#id_auto_hide_after_Time-\" + divlength).timepicker();\r\n            " +
-"$(\"#id_auto_hide_until_time-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_au" +
-"to_hide_after_Time-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_saletimesta" +
-"rt-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_saletimeend-\" + divlength)." +
-"val(\"7:00pm\");\r\n            $(\"#btndelete-\" + divlength).attr(\'href\', \'#cnfrmdel" +
-"ete-\' + divlength);\r\n\r\n\r\n            $(\"input[id^=\'id_cost\']\").mask(\'000,000.00\'" +
-", { reverse: true });\r\n            $(\"input[id^=\'id_Discount\']\").mask(\'000,000.0" +
-"0\', { reverse: true });\r\n            $(\"#clonediv-\" + divlength).focus();\r\n     " +
-"   });\r\n        $(\'.save_btndonation\').click(function () {\r\n            $(\".tick" +
-"et_panel\").show();\r\n            $(\"#id_ticket_footer\").css(\'display\', \'block\');\r" +
-"\n            var divlength = $(\"#MasterDiv> div\").size();\r\n\r\n            var dat" +
-"a = $(\'#clonediv-n\').clone();\r\n            data.attr(\'id\', \'clonediv-\' + divleng" +
-"th);\r\n            data.removeAttr(\"style\")\r\n            console.log(data.find(\'i" +
-"nput[type=text]\'));\r\n            data.find(\'*[id]\').andSelf().each(function () {" +
-"\r\n                //console.log($(this));\r\n\r\n                var id = $(this).at" +
-"tr(\'id\');\r\n                //console.log(id);\r\n                id1 = id.substr(0" +
-", id.indexOf(\'-\'));\r\n                ////console.log(id);\r\n                var i" +
-"dn = id1 + \"-\" + divlength;\r\n                $(this).attr(\"id\", idn);\r\n         " +
-"       $(this).val(\'\');\r\n\r\n                if ($(this).hasClass(\"paidticket-n\"))" +
-" {\r\n                    $(this).removeClass(\'paidticket-n\');\r\n                  " +
-"  $(this).addClass(\'paidticket-\' + divlength + \'\');\r\n                }\r\n        " +
-"        if ($(this).hasClass(\"normalticket-n\")) {\r\n                    $(this).r" +
-"emoveClass(\'normalticket-n\');\r\n                    $(this).addClass(\'normalticke" +
-"t-\' + divlength + \'\');\r\n                }\r\n                if ($(this).hasClass(" +
-"\"donateshow-n\")) {\r\n                    $(this).removeClass(\'donateshow-n\');\r\n  " +
-"                  $(this).addClass(\'donateshow-\' + divlength + \'\');\r\n           " +
-"     }\r\n\r\n            });\r\n\r\n\r\n            $(data).appendTo(\'#MasterDiv\');\r\n\r\n  " +
-"          var isadmin=\"");
+" divlength).datepicker(\'hide\');\r\n            });\r\n\r\n          \r\n\r\n            $(" +
+"\"#id_saletimestart-\" + divlength).timepicker();\r\n\r\n            $(\"#id_saletimeen" +
+"d-\" + divlength).timepicker();\r\n           \r\n            $(\"#id_saletimestart-\" " +
+"+ divlength).val(\"7:00pm\");\r\n            $(\"#id_saletimeend-\" + divlength).val(\"" +
+"7:00pm\");\r\n\r\n            $(\"#id_auto_hide_until_Date-\" + el).attr(\"readonly\", \"r" +
+"eadonly\");\r\n            $(\"#id_auto_hide_until_time-\" + el).attr(\"readonly\", \"re" +
+"adonly\");\r\n            $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", " +
+"\"minDate\", -1);\r\n            $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"opt" +
+"ion\", \"maxDate\", -2);\r\n            $(\"#id_auto_hide_after_Date-\" + el).attr(\"rea" +
+"donly\", \"readonly\");\r\n            $(\"#id_auto_hide_after_Time-\" + el).attr(\"read" +
+"only\", \"readonly\");\r\n            $(\"#id_auto_hide_after_Date-\" + el).datepicker(" +
+"\"option\", \"minDate\", -1);\r\n            $(\"#id_auto_hide_after_Date-\" + el).datep" +
+"icker(\"option\", \"maxDate\", -2);\r\n\r\n\r\n            $(\"#btndelete-\" + divlength).at" +
+"tr(\'href\', \'#cnfrmdelete-\' + divlength);\r\n\r\n\r\n            $(\"input[id^=\'id_cost\'" +
+"]\").mask(\'000,000.00\', { reverse: true });\r\n            $(\"input[id^=\'id_Discoun" +
+"t\']\").mask(\'000,000.00\', { reverse: true });\r\n            $(\"#clonediv-\" + divle" +
+"ngth).focus();\r\n        });\r\n        $(\'.save_btndonation\').click(function () {\r" +
+"\n            $(\".ticket_panel\").show();\r\n            $(\"#id_ticket_footer\").css(" +
+"\'display\', \'block\');\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n" +
+"\r\n            var data = $(\'#clonediv-n\').clone();\r\n            data.attr(\'id\', " +
+"\'clonediv-\' + divlength);\r\n            data.removeAttr(\"style\")\r\n            con" +
+"sole.log(data.find(\'input[type=text]\'));\r\n            data.find(\'*[id]\').andSelf" +
+"().each(function () {\r\n                //console.log($(this));\r\n\r\n              " +
+"  var id = $(this).attr(\'id\');\r\n                //console.log(id);\r\n            " +
+"    id1 = id.substr(0, id.indexOf(\'-\'));\r\n                ////console.log(id);\r\n" +
+"                var idn = id1 + \"-\" + divlength;\r\n                $(this).attr(\"" +
+"id\", idn);\r\n                $(this).val(\'\');\r\n\r\n                if ($(this).hasC" +
+"lass(\"paidticket-n\")) {\r\n                    $(this).removeClass(\'paidticket-n\')" +
+";\r\n                    $(this).addClass(\'paidticket-\' + divlength + \'\');\r\n      " +
+"          }\r\n                if ($(this).hasClass(\"normalticket-n\")) {\r\n        " +
+"            $(this).removeClass(\'normalticket-n\');\r\n                    $(this)." +
+"addClass(\'normalticket-\' + divlength + \'\');\r\n                }\r\n                " +
+"if ($(this).hasClass(\"donateshow-n\")) {\r\n                    $(this).removeClass" +
+"(\'donateshow-n\');\r\n                    $(this).addClass(\'donateshow-\' + divlengt" +
+"h + \'\');\r\n                }\r\n\r\n            });\r\n\r\n\r\n            $(data).appendTo" +
+"(\'#MasterDiv\');\r\n\r\n            var isadmin=\"");
 
             
-            #line 5017 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5030 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7152,358 +7252,351 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
 "nSelect: function () {\r\n\r\n                    this.fireEvent && this.fireEvent(\'" +
 "onchange\') || $(this).change();\r\n                }\r\n            }).on(\'changeDat" +
 "e\', function (ev) {\r\n                $(\"#id_saleend-\" + divlength).datepicker(\'h" +
-"ide\');\r\n            });\r\n\r\n            $(\"#id_auto_hide_until_Date-\" + divlength" +
-").datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDate: " +
-"\"0\",\r\n                onSelect: function () {\r\n\r\n                    this.fireEv" +
-"ent && this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n     " +
-"       }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_auto_hide_unt" +
-"il_Date-\" + divlength).datepicker(\'hide\');\r\n            });\r\n            $(\"#id_" +
-"auto_hide_after_Date-\" + divlength).datepicker({\r\n                format: \"mm/dd" +
-"/yyyy\",\r\n                minDate: \"0\",\r\n                onSelect: function () {\r" +
-"\n\r\n                    this.fireEvent && this.fireEvent(\'onchange\') || $(this).c" +
-"hange();\r\n                }\r\n            }).on(\'changeDate\', function (ev) {\r\n  " +
-"              $(\"#id_auto_hide_after_Date-\" + divlength).datepicker(\'hide\');\r\n  " +
-"          });\r\n\r\n            $(\"#id_saletimestart-\" + divlength).timepicker();\r\n" +
-"\r\n            $(\"#id_saletimeend-\" + divlength).timepicker();\r\n            $(\"#i" +
-"d_auto_hide_until_time-\" + divlength).timepicker();\r\n            $(\"#id_auto_hid" +
-"e_after_Time-\" + divlength).timepicker();\r\n            $(\"#id_auto_hide_until_ti" +
-"me-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_auto_hide_after_Time-\" + di" +
-"vlength).val(\"7:00pm\");\r\n            $(\"#id_saletimestart-\" + divlength).val(\"7:" +
-"00pm\");\r\n            $(\"#id_saletimeend-\" + divlength).val(\"7:00pm\");\r\n         " +
-"   $(\"#btndelete-\" + divlength).attr(\'href\', \'#cnfrmdelete-\' + divlength);\r\n    " +
-"        $(\"input[id^=\'id_cost\']\").mask(\'000,000.00\', { reverse: true });\r\n      " +
-"      $(\"input[id^=\'id_Discount\']\").mask(\'000,000.00\', { reverse: true });\r\n    " +
-"        $(\"#clonediv-\" + divlength).focus();\r\n\r\n        });\r\n        $(\'.save_bt" +
-"nfree\').click(function () {\r\n            debugger;\r\n            $(\".ticket_panel" +
-"\").show();\r\n            $(\"#id_ticket_footer\").css(\'display\', \'block\');\r\n       " +
-"     var divlength = $(\"#MasterDiv> div\").size();\r\n            var data = $(\'#cl" +
-"onediv-n\').clone();\r\n            data.attr(\'id\', \'clonediv-\' + divlength);\r\n    " +
-"        data.removeAttr(\"style\");\r\n            data.find(\'*[id]\').andSelf().each" +
-"(function () {\r\n\r\n\r\n                var id = $(this).attr(\'id\');\r\n              " +
-"  //console.log(id);\r\n                id1 = id.substr(0, id.indexOf(\'-\'));\r\n    " +
-"            ////console.log(id);\r\n                var idn = id1 + \"-\" + divlengt" +
-"h;\r\n                $(this).attr(\"id\", idn);\r\n                $(this).val(\'\');\r\n" +
-"\r\n                if ($(this).hasClass(\"paidticket-n\")) {\r\n                    $" +
-"(this).removeClass(\'paidticket-n\');\r\n                    $(this).addClass(\'paidt" +
-"icket-\' + divlength + \'\');\r\n                }\r\n                if ($(this).hasCl" +
-"ass(\"normalticket-n\")) {\r\n                    $(this).removeClass(\'normalticket-" +
-"n\');\r\n                    $(this).addClass(\'normalticket-\' + divlength + \'\');\r\n " +
-"               }\r\n                if ($(this).hasClass(\"donateshow-n\")) {\r\n     " +
-"               $(this).removeClass(\'donateshow-n\');\r\n                    $(this)" +
-".addClass(\'donateshow-\' + divlength + \'\');\r\n                }\r\n\r\n            });" +
-"\r\n\r\n            //data.append(\'<span class=\"RemoveMoreHub\" style=\"width:80%;\"><a" +
-" href=\"javascript:void(0);\" style=\"float:right;color:#CE0009;font-size:13px;text" +
-"-decoration:none;margin-right:5%;\" >- Remove</a></span>\');\r\n            $(\'#Mast" +
-"erDiv\').append(data);\r\n            $(\".donateshow-\" + divlength).css(\'display\', " +
-"\'block\');\r\n            $(\"#btndelete-\" + divlength).attr(\'href\', \'#cnfrmdelete-\'" +
-" + divlength);\r\n            $(\".normalticket-\" + divlength).css(\'display\', \'bloc" +
-"k\');\r\n            $(\".paidticket-\" + divlength).css(\'display\', \'none\');\r\n       " +
-"     $(\"#isadmin-\"+divlength).css(\'display\', \'none\');\r\n            $(\"#id_paymen" +
-"ttype-\" + divlength).text(\"Free\");\r\n            $(\"#id_ticket_type-\" + divlength" +
-").attr(\"title\", \"Give your ticket a name, like General Admission, Early Bird, RS" +
-"VP, etc.\");\r\n            $(\"#id_ticket_type-\" + divlength).attr(\"placeholder\", \"" +
-"Early Bird, RSVP...\");\r\n            $(\"#id_Discount-\" + divlength).prop(\"readonl" +
-"y\", true);\r\n            var randomValue = randomString(4);\r\n           $(\"#id_ti" +
-"cket_id-\" + divlength).val(0);\r\n            $(\"#id_order-\" + divlength).val(divl" +
-"ength);\r\n            //$(\"#id_feetype-\" + divlength).css(\'display\', \'none\');\r\n  " +
-"          $(\"#id_Tickettype-\" + divlength).val(\"Free\");\r\n            //$(\"cloned" +
-"iv-\" + divlength).css(\'display\', \'block\');\r\n\r\n            $(\"#id_feemethod\").val" +
-"(0);\r\n            $(\"#id_salestart-\" + divlength).datepicker({\r\n                " +
-"format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n                onSelect: " +
-"function () {\r\n\r\n                    this.fireEvent && this.fireEvent(\'onchange\'" +
-") || $(this).change();\r\n                }\r\n            }).on(\'changeDate\', funct" +
-"ion (ev) {\r\n                $(\"#id_salestart-\" + divlength).datepicker(\'hide\');\r" +
-"\n            });\r\n            $(\"#id_saleend-\" + divlength).datepicker({\r\n      " +
-"          format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r\n                " +
-"onSelect: function () {\r\n\r\n                    this.fireEvent && this.fireEvent(" +
-"\'onchange\') || $(this).change();\r\n                }\r\n            }).on(\'changeDa" +
-"te\', function (ev) {\r\n                $(\"#id_saleend-\" + divlength).datepicker(\'" +
-"hide\');\r\n            });\r\n\r\n            $(\"#id_auto_hide_until_Date-\" + divlengt" +
-"h).datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDate:" +
-" \"0\",\r\n                onSelect: function () {\r\n\r\n                    this.fireE" +
-"vent && this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n    " +
-"        }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_auto_hide_un" +
-"til_Date-\" + divlength).datepicker(\'hide\');\r\n            });\r\n            $(\"#id" +
-"_auto_hide_after_Date-\" + divlength).datepicker({\r\n                format: \"mm/d" +
-"d/yyyy\",\r\n                minDate: \"0\",\r\n                onSelect: function () {" +
-"\r\n\r\n                    this.fireEvent && this.fireEvent(\'onchange\') || $(this)." +
-"change();\r\n                }\r\n            }).on(\'changeDate\', function (ev) {\r\n " +
-"               $(\"#id_auto_hide_after_Date-\" + divlength).datepicker(\'hide\');\r\n " +
-"           });\r\n\r\n            $(\"#id_saletimestart-\" + divlength).timepicker();\r" +
-"\n\r\n            $(\"#id_saletimeend-\" + divlength).timepicker();\r\n            $(\"#" +
-"id_auto_hide_until_time-\" + divlength).timepicker();\r\n            $(\"#id_auto_hi" +
-"de_after_Time-\" + divlength).timepicker();\r\n            $(\"#id_auto_hide_until_t" +
-"ime-\" + divlength).val(\"7:00pm\");\r\n            $(\"#id_auto_hide_after_Time-\" + d" +
-"ivlength).val(\"7:00pm\");\r\n            $(\"#id_saletimestart-\" + divlength).val(\"7" +
-":00pm\");\r\n            $(\"#id_saletimeend-\" + divlength).val(\"7:00pm\");\r\n        " +
-"    $(\"#btndelete-\" + divlength).attr(\'href\', \'#cnfrmdelete-\' + divlength);\r\n   " +
-"         $(\"input[id^=\'id_cost\']\").mask(\'000,000.00\', { reverse: true });\r\n     " +
-"       $(\"input[id^=\'id_Discount\']\").mask(\'000,000.00\', { reverse: true });\r\n   " +
-"         $(\"#clonediv-\" + divlength).focus();\r\n        });\r\n        function ran" +
-"domString(len, charSet) {\r\n            charSet = charSet || \'ABCDEFGHIJKLMNOPQRS" +
-"TUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\';\r\n            var randomString = \'\'" +
-";\r\n            for (var i = 0; i < len; i++) {\r\n                var randomPoz = " +
-"Math.floor(Math.random() * charSet.length);\r\n                randomString += cha" +
-"rSet.substring(randomPoz, randomPoz + 1);\r\n            }\r\n            return ran" +
-"domString;\r\n        }\r\n        function deletevariable(e) {\r\n\r\n                v" +
-"ar divlength = $(\"#id_Mainvariable> div\").size();\r\n                if (divlength" +
-" == 1) {\r\n\r\n                } else {\r\n                    var id = e;\r\n         " +
-"           var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n" +
-"                    var div = document.getElementById(\"id_clonevariable-\" + el);" +
-"\r\n\r\n\r\n\r\n                    div.parentNode.removeChild(div);\r\n                  " +
-"  divlength = $(\"#id_Mainvariable> div\").size();\r\n\r\n                    var coun" +
-"t = 0;\r\n                    $(\'#id_Mainvariable\').children(\'div\').each(function " +
-"() {\r\n\r\n                        var id = $(this).attr(\'id\');\r\n\r\n                " +
-"        id1 = id.substr(0, id.indexOf(\'-\'));\r\n                        ////consol" +
-"e.log(id);\r\n                        var idn = id1 + \"-\" + (count);\r\n            " +
-"            $(this).attr(\"id\", idn);\r\n                        $(this).find(\'*[id" +
-"]\').andSelf().each(function () {\r\n\r\n\r\n                            var id = $(thi" +
-"s).attr(\'id\');\r\n                            //console.log(id);\r\n                " +
-"            id1 = id.substr(0, id.indexOf(\'-\'));\r\n                            co" +
-"nsole.log(id1);\r\n                            var idn = id1 + \"-\" + (count);\r\n   " +
-"                         $(this).attr(\"id\", idn);\r\n\r\n                           " +
-" if(id1==\"btn_vardelete\")\r\n                            {\r\n                      " +
-"          $(this).attr(\"href\", \"#cnfrmdeletevariable-\" + count);\r\n              " +
-"              }\r\n                            if (id1 == \"id_varsubdesc\") {\r\n    " +
-"                            $(this).attr(\"placeholder\", \"Variable Charges Descri" +
-"ption \" + parseInt(count+1));\r\n                            }\r\n\r\n                " +
-"        });\r\n                        count = count + 1;\r\n\r\n                    }" +
-");\r\n\r\n                    if (divlength == 0) {\r\n                        $(\'#id_" +
-"Mainvariable\').css(\'display\', \'none\');\r\n\r\n                    }\r\n               " +
-" }\r\n\r\n\r\n\r\n\r\n        }\r\n        function deletediv(e) {\r\n            {\r\n\r\n       " +
-"         var divlength = $(\"#MasterDiv> div\").size();\r\n                var statu" +
-"s = $(\'#status\').val();\r\n                console.log(status);\r\n                i" +
-"f (divlength == 1 && status==\"Live\")\r\n                {\r\n                    $(\'" +
-"#nodeleteH4\').text(\"You cannot delete the last ticket while your event is live. " +
-"Add another ticket or unpublish this event first\")\r\n                    $(\'#anod" +
-"elete\').click();\r\n                    $(\".tab-content\").hide();\r\n               " +
-"     //  alert(\'You cannot delete the last ticket while your event is live. Add " +
-"another ticket or unpublish this event first\');\r\n                    return fals" +
-"e;\r\n                }\r\n\r\n\r\n                var id = e;\r\n                var el =" +
-" e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n                var" +
-" div = document.getElementById(\"clonediv-\" + el);\r\n                // var div = " +
-"document.getElementById(\"clonediv-0\");\r\n                var toatlqty = $(\"#id_to" +
-"talqty\").html();\r\n                var qty = $(\"#id_quantity_total-\" + el).val();" +
-"\r\n                var leftqty = parseInt(toatlqty) - parseInt(qty);\r\n           " +
-"     if (!isNaN(leftqty)) {\r\n                    $(\"#id_totalqty\").html(leftqty)" +
-";\r\n                } else {\r\n\r\n                    $(\"#id_totalqty\").html(0);\r\n " +
-"               }\r\n\r\n\r\n                div.parentNode.removeChild(div);\r\n        " +
-"        divlength = $(\"#MasterDiv> div\").size();\r\n\r\n                var count = " +
-"0;\r\n                $(\'#MasterDiv\').children(\'div\').each(function () {\r\n\r\n      " +
-"              var id = $(this).attr(\'id\');\r\n\r\n                    id1 = id.subst" +
-"r(0, id.indexOf(\'-\'));\r\n                    ////console.log(id);\r\n              " +
-"      var idn = id1 + \"-\" + (count);\r\n                    $(this).attr(\"id\", idn" +
-");\r\n                    $(this).find(\'*[id]\').andSelf().each(function () {\r\n\r\n\r\n" +
-"                        var id = $(this).attr(\'id\');\r\n                        //" +
-"console.log(id);\r\n                        id1 = id.substr(0, id.indexOf(\'-\'));\r\n" +
-"                       // console.log(id);\r\n                        var idn = id" +
-"1 + \"-\" + (count);\r\n                        $(this).attr(\"id\", idn);\r\n          " +
-"              var al = $(this).attr(\"id\").substr(0, id.indexOf(\'-\'));\r\n\r\n       " +
-"                 if (al == \"id_order\") {\r\n\r\n                            $(this)." +
-"val(count);\r\n                        }\r\n\r\n                        if (al == \"btn" +
-"delete\")\r\n                        {\r\n\r\n                            $(this).attr(" +
-"\'href\', \'#cnfrmdelete-\' + (count));\r\n\r\n                        }\r\n              " +
-"          if ($(this).hasClass(\"paidticket-\" + (count + 1))) {\r\n                " +
-"            $(this).removeClass(\'paidticket-\' + (count + 1));\r\n                 " +
-"           $(this).addClass(\'paidticket-\' + (count) + \'\');\r\n                    " +
-"    }\r\n                        if ($(this).hasClass(\"normalticket-\" + (count + 1" +
-"))) {\r\n                            $(this).removeClass(\'normalticket-\' + (count " +
-"+ 1));\r\n                            $(this).addClass(\'normalticket-\' + (count) +" +
-" \'\');\r\n                        }\r\n\r\n                    });\r\n                   " +
-" count = count + 1;\r\n\r\n                });\r\n\r\n                if (divlength == 0" +
-") {\r\n                    $(\'#id_ticket_footer\').css(\'display\', \'none\');\r\n\r\n     " +
-"           }\r\n                calculateSum();\r\n\r\n                return true;\r\n " +
-"           }\r\n\r\n\r\n        }\r\n        $(\".tab-content\").hide();\r\n        function" +
-" showsettingdiv(e) {\r\n            var id = e;\r\n            var el = e.substr(e.i" +
-"ndexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n            $(\'#evnt_set-\' + el)" +
-".slideToggle(\"fast\");\r\n            //if ($(\'#evnt_set-\' + el).css(\'display\') == " +
-"\'none\') {\r\n            //    $(\'#evnt_set-\' + el).slideToggle(\"fast\");\r\n\r\n      " +
-"      //} else {\r\n\r\n            //    $(\'#evnt_set-\' + el).css(\'display\', \'none\'" +
-");\r\n\r\n            //}\r\n\r\n\r\n        }\r\n\r\n\r\n\r\n        $(\".evnt_doll_amnt\").hide();" +
-"\r\n        $(\".ev_tic_end\").click(function () {\r\n            $(\".evt_time\").css(\"" +
-"display\", \"none\");\r\n            $(\".evnt_doll_amnt\").css(\"display\", \"block\");\r\n " +
-"       });\r\n        $(\".ev_by_date\").click(function () {\r\n            $(\".evnt_d" +
-"oll_amnt\").css(\"display\", \"none\");\r\n            $(\".evt_time\").css(\"display\", \"b" +
-"lock\");\r\n        });\r\n        function checkdiscount(e) {\r\n            debugger;" +
-"\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r" +
-"\n            var price =parseFloat( parseFloat($(\'#id_cost-\' + el).val().replace" +
-"(\',\', \'\')).toFixed(2));\r\n            var discount =parseFloat( parseFloat($(\'#\' " +
-"+ e).val().replace(\',\', \'\')).toFixed(2));\r\n\r\n            if (!isNaN(price) && !i" +
-"sNaN(discount))\r\n            {\r\n                if (price != 0 && discount != 0)" +
-" {\r\n\r\n                    if (discount >= price) {\r\n                        $(\'#" +
-"\' + e).addClass(\'err-bor\');\r\n\r\n                        $(\'#hddiscount\').val(\'1\')" +
-";\r\n                        return false;\r\n\r\n                    } else {\r\n      " +
-"                  //$(\'#\' + e).val(discount);\r\n                        $(\'#hddis" +
-"count\').val(\'0\');\r\n                        $(\'#\' + e).removeClass(\'err-bor\');\r\n\r" +
-"\n                    }\r\n                }\r\n                else if (price == 0 &" +
-"& discount != 0) {\r\n                    $(\'#\' + e).addClass(\'err-bor\');\r\n\r\n     " +
-"               $(\'#hddiscount\').val(\'1\');\r\n                    return false;\r\n  " +
-"              }\r\n\r\n            } else if (isNaN(price) && !isNaN(discount)) {\r\n " +
-"               $(\'#\' + e).addClass(\'err-bor\');\r\n\r\n                $(\'#hddiscount" +
-"\').val(\'1\');\r\n                return false;\r\n\r\n            } else if (isNaN(disc" +
-"ount)) {\r\n                $(\'#hddiscount\').val(\'0\');\r\n                $(\'#\' + e)" +
-".removeClass(\'err-bor\');\r\n            }\r\n\r\n\r\n\r\n\r\n        }\r\n        function che" +
-"ckvalidtime(e) {\r\n            debugger;\r\n            var el = e.substr(e.indexOf" +
-"(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n            var al = e.substr(0, e.index" +
-"Of(\'-\'));\r\n\r\n            if (al == \"id_saletimestart\") {\r\n                errorM" +
-"sg = checkTime(e);\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n               " +
-"     $(\'#id_saletimestart-\' + el).focus();\r\n                    $(\'#id_saletimes" +
-"tart-\' + el).val(\"7:00pm\");\r\n                    $(\'#id_saletimeend-\' + el).val(" +
-"\"7:00pm\");\r\n\r\n                } else {\r\n                    var txt=$(\'#\' + e).v" +
-"al();\r\n                    $(\'#id_hdsaletimestart-\' + el).val(txt);\r\n           " +
-"         $(\'#id_hdsaletimeend-\' + el).val(txt);\r\n                    $(\'#id_sale" +
-"timeend-\' + el).val($(\'#\' + e).val());\r\n\r\n                }\r\n            }\r\n    " +
-"        if (al == \"id_saletimeend\") {\r\n                errorMsg = checkTime(e);\r" +
-"\n                if (errorMsg != \"\") {\r\n\r\n\r\n                    $(\'#id_saletimee" +
-"nd-\' + el).val($(\'#id_saletimestart-\' + el).val());\r\n                    $(\'#id_" +
-"saletimeend-\' + el).focus();\r\n                    $(\'#id_hdsaletimeend-\' + el).v" +
-"al($(\'#id_saletimestart-\' + el).val());\r\n\r\n                } else {\r\n           " +
-"         $(\'#id_hdsaletimeend-\' + el).val($(\'#\' + e).val());\r\n                }\r" +
-"\n            }\r\n            if (al == \"id_auto_hide_until_time\") {\r\n            " +
-"    errorMsg = checkTime(e);\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n     " +
-"               $(\'#id_auto_hide_until_time-\' + el).focus();\r\n                   " +
-" $(\'#id_auto_hide_until_time-\' + el).val(\"7:00pm\");\r\n                    $(\'#id_" +
-"auto_hide_after_Time-\' + el).val(\"7:00pm\");\r\n\r\n                } else {\r\n\r\n     " +
-"               $(\'#id_hdautohideuntil-\' + el).val($(\'#\' + e).val());\r\n          " +
-"          $(\'#id_hdautohideafter-\' + el).val($(\'#\' + e).val());\r\n               " +
-"     $(\'#id_auto_hide_after_Time-\' + el).val($(\'#\' + e).val());\r\n\r\n             " +
-"   }\r\n\r\n            }\r\n            if (al == \"id_auto_hide_after_Time\") {\r\n     " +
-"           errorMsg = checkTime(e);\r\n                if (errorMsg != \"\") {\r\n\r\n  " +
-"                  $(\'#id_auto_hide_after_Time-\' + el).val($(\'#id_auto_hide_until" +
-"_time-\' + el).val());\r\n\r\n                    $(\'#id_auto_hide_after_Time-\' + el)" +
-".focus();\r\n\r\n                    $(\'#id_hdautohideafter-\' + el).val($(\'#id_auto_" +
-"hide_until_time-\' + el).val());\r\n\r\n                } else {\r\n                   " +
-" $(\'#id_hdautohideafter-\' + el).val($(\'#\' + e).val());\r\n\r\n                }\r\n   " +
-"         }\r\n\r\n\r\n        }\r\n        function checkvalidDate(e) {\r\n\r\n            v" +
-"ar el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n            va" +
-"r al = e.substr(0, e.indexOf(\'-\'));\r\n\r\n            var errorMsg = checkDate(e);\r" +
-"\n            if (al == \"id_saleend\") {\r\n                var enddate = $(\'#id_sal" +
-"eend-\' + el).val();\r\n                var startdate = $(\'#id_salestart-\' + el).va" +
-"l();\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_sa" +
-"leend-\' + el).focus();\r\n                    $(\'#id_saleend-\' + el).val(startdate" +
-");\r\n\r\n\r\n                }\r\n\r\n                errorMsg = compare(startdate, endda" +
-"te);\r\n\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_" +
-"saleend-\' + el).focus();\r\n                    $(\'#id_saleend-\' + el).val(startda" +
-"te);\r\n                    // field.value = \"\";\r\n\r\n\r\n                }\r\n         " +
-"   }\r\n            if (al == \"id_auto_hide_after_Date\") {\r\n                var st" +
-"artdate = $(\'#id_auto_hide_until_Date-\' + el).val();\r\n                var enddat" +
-"e = $(\'#id_auto_hide_after_Date-\' + el).val();\r\n                if (errorMsg != " +
-"\"\") {\r\n\r\n\r\n\r\n                    $(\'#id_auto_hide_after_Date-\' + el).focus();\r\n " +
-"                   $(\'#id_auto_hide_after_Date-\' + el).val(startdate);\r\n\r\n\r\n    " +
-"            }\r\n\r\n                errorMsg = compare(startdate, enddate);\r\n\r\n    " +
-"            if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_auto_hide_af" +
-"ter_Date-\' + el).focus();\r\n                    $(\'#id_auto_hide_after_Date-\' + e" +
-"l).val(startdate);\r\n                    // field.value = \"\";\r\n\r\n\r\n              " +
-"  }\r\n\r\n\r\n            }\r\n            return true;\r\n\r\n        }\r\n        function " +
-"allownumber(el,evt, id) {\r\n\r\n\r\n\r\n            var charCode = (evt.which) ? evt.wh" +
-"ich : event.keyCode;\r\n\r\n            if ((charCode < 48 || charCode > 57) && char" +
-"Code > 31 && charCode != 44)\r\n            {\r\n\r\n                evt.preventDefaul" +
-"t();\r\n                return false;\r\n            }\r\n            //if (charCode =" +
-"= 46 && charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 188) {\r" +
-"\n            //    evt.preventDefault();\r\n            //    return false;\r\n\r\n   " +
-"         //}\r\n\r\n            //if (number.length > 1 && charCode == 46) {\r\n      " +
-"      //    evt.preventDefault();\r\n            //    return false;\r\n            " +
-"//}\r\n\r\n            //var code = event.charCode ? event.charCode : event.keyCode;" +
-"\r\n\r\n            ////  if (charCode == 46 && charCode > 31 && (charCode < 48 || c" +
-"harCode > 57) && charcode!=188) {\r\n            ////      evt.preventDefault();\r\n" +
-"            ////    return false;\r\n\r\n            ////}\r\n            //if ((!even" +
-"t.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) ||" +
-" (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and a" +
-"lt\r\n            //{\r\n\r\n            //}\r\n            //else if (code != 8 && code" +
-" != 46 && code != 37 && code != 39 && code != 9) // not esc, del, left or right\r" +
-"\n            //{\r\n            //    event.preventDefault();\r\n            //    r" +
-"eturn false;\r\n            //}\r\n\r\n\r\n\r\n        }\r\n        function showdiv(e)\r\n   " +
-"     {\r\n            debugger;\r\n            var id = e;\r\n            var el = e.s" +
-"ubstr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n            var al = e.su" +
-"bstr(0, e.indexOf(\'-\'));\r\n            if ($(\'#id_ticketshidden-\' + el).is(\":chec" +
-"ked\") == true) {\r\n                $(\"#id_CusdateCont-\" + el).css(\"display\", \"blo" +
-"ck\");\r\n                $(\"#id_RemvTkt-\" + el).css(\"display\", \"block\");\r\n        " +
-"        $(\"#id_EvaddTkt-\" + el).css(\"display\", \"none\");\r\n\r\n            } else {\r" +
-"\n                $(\"#id_CusdateCont-\" + el).css(\"display\", \"none\");\r\n           " +
-"     $(\"#id_RemvTkt-\" + el).css(\"display\", \"none\");\r\n                $(\"#id_Evad" +
-"dTkt-\" + el).css(\"display\", \"block\");\r\n            }\r\n            $(\"#id_auto_hi" +
-"de_type_0-\" + el).prop(\'checked\', true);\r\n            $(\"#id_auto_hide_type_1-\" " +
-"+ el).prop(\'checked\', false);\r\n            $(\"#id_HideuntDiv-\" + el).css(\"displa" +
-"y\", \"none\");\r\n        }\r\n\r\n        function hideunhide(e) {\r\n\r\n            debug" +
-"ger;\r\n            var id = e;\r\n            var el = e.substr(e.indexOf(\'-\') + 1," +
-" e.length - e.indexOf(\'-\'));\r\n            var al = e.substr(0, e.indexOf(\'-\'));\r" +
-"\n\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n            if (al " +
-"== \"id_EvaddTkt\") {\r\n\r\n                $(\"#id_RemvTkt-\" + el).css(\"display\", \"bl" +
-"ock\");\r\n                $(\"#id_EvaddTkt-\" + el).css(\"display\", \"none\");\r\n       " +
-"         $(\"#id_CusdateCont-\" + el).css(\"display\", \"block\");\r\n                $(" +
-"\"#id_auto_hide_type_0-\" + el).prop(\'checked\', true);\r\n                $(\"#id_aut" +
-"o_hide_type_1-\" + el).prop(\'checked\', false);\r\n                $(\"#id_HideuntDiv" +
-"-\" + el).css(\"display\", \"none\");\r\n                $(\"#id_ticketshidden-\" + el).p" +
-"rop(\'checked\', true);\r\n                $(\"#id_auto_hide_until_Date-\" + el).datep" +
-"icker({\r\n                    format: \"mm/dd/yyyy\",\r\n                    minDate:" +
-" \"0\",\r\n                    onSelect: function () {\r\n\r\n                        th" +
-"is.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n               " +
-"     }\r\n                }).on(\'changeDate\', function (ev) {\r\n                   " +
-" $(\"#id_auto_hide_until_Date-\" + el).datepicker(\'hide\');\r\n                });\r\n " +
-"               $(\"#id_auto_hide_after_Date-\" + el).datepicker({\r\n               " +
-"     format: \"mm/dd/yyyy\",\r\n                    minDate: \"0\",\r\n                 " +
-"   onSelect: function () {\r\n\r\n                        this.fireEvent && this.fir" +
-"eEvent(\'onchange\') || $(this).change();\r\n                    }\r\n                " +
-"}).on(\'changeDate\', function (ev) {\r\n                    $(\"#id_auto_hide_after_" +
-"Date-\" + el).datepicker(\'hide\');\r\n                });\r\n            }\r\n          " +
-"  if (al == \"id_RemvTkt\") {\r\n                $(\"#id_auto_hide_type_0-\" + el).pro" +
-"p(\'checked\', true);\r\n                $(\"#id_auto_hide_type_1-\" + el).prop(\'check" +
-"ed\', false);\r\n                $(\"#id_RemvTkt-\" + el).css(\"display\", \"none\");\r\n  " +
-"              $(\"#id_EvaddTkt-\" + el).css(\"display\", \"block\");\r\n                " +
-"$(\"#id_CusdateCont-\" + el).css(\"display\", \"none\");\r\n                $(\"#id_Hideu" +
-"ntDiv-\" + el).css(\"display\", \"none\");\r\n                $(\"#id_ticketshidden-\" + " +
-"el).prop(\'checked\', false);\r\n                $(\"#id_auto_hide_until_Date-\" + el)" +
-".val(\'\');\r\n                $(\"#id_auto_hide_until_time-\" + el).val(\'\');\r\n       " +
-"         $(\"#id_auto_hide_after_Date-\" + el).val(\'\');\r\n                $(\"#id_au" +
-"to_hide_after_Time-\" + el).val(\'\');\r\n\r\n                $(\"#id_hideuntil-\"+ el).a" +
-"ttr(\"checked\", false);\r\n                $(\"#id_hideafter-\"+ el).attr(\"checked\", " +
-"false);\r\n                $(\"#id_hideuntil-\" + el).attr(\"checked\", false);\r\n     " +
-"           $(\"#id_hideafter-\" + el).attr(\"checked\", false);\r\n                $(\"" +
-"#id_auto_hide_until_Date-\" + el).attr(\"readonly\", \"readonly\");\r\n                " +
-"$(\"#id_auto_hide_until_time-\" + el).attr(\"readonly\", \"readonly\");\r\n             " +
-"   $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"minDate\", -1);\r\n   " +
-"             $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"maxDate\"," +
-" -2);\r\n                $(\"#id_auto_hide_after_Date-\" + el).attr(\"readonly\", \"rea" +
-"donly\");\r\n                $(\"#id_auto_hide_after_Time-\" + el).attr(\"readonly\", \"" +
-"readonly\");\r\n                $(\"#id_auto_hide_after_Date-\" + el).datepicker(\"opt" +
-"ion\", \"minDate\", -1);\r\n                $(\"#id_auto_hide_after_Date-\" + el).datep" +
-"icker(\"option\", \"maxDate\", -2);\r\n\r\n\r\n\r\n            }\r\n            if (al == \"id_" +
-"CusdateTime\") {\r\n                $(\"#id_HideuntDiv-\" + el).css(\"display\", \"block" +
-"\");\r\n                $(\"#id_auto_hide_type_0-\" + el).prop(\'checked\', false);\r\n  " +
-"          }\r\n            if (al == \"id_TktnotSale\") {\r\n                $(\"#id_Hi" +
-"deuntDiv-\" + el).css(\"display\", \"none\");\r\n                $(\"#id_auto_hide_type_" +
-"1-\" + el).prop(\'checked\', false);\r\n                $(\"#id_auto_hide_until_Date-\"" +
-" + el).val(\'\');\r\n                $(\"#id_auto_hide_until_time-\" + el).val(\'\');\r\n " +
-"               $(\"#id_auto_hide_after_Date-\" + el).val(\'\');\r\n                $(\"" +
-"#id_auto_hide_after_Time-\" + el).val(\'\');\r\n\r\n                $(\"#id_hideuntil-\" " +
-"+ el).attr(\"checked\", false);\r\n                $(\"#id_hideafter-\" + el).attr(\"ch" +
-"ecked\", false);\r\n                $(\"#id_hideuntil-\" + el).attr(\"checked\", false)" +
-";\r\n                $(\"#id_hideafter-\" + el).attr(\"checked\", false);\r\n           " +
-"     $(\"#id_auto_hide_until_Date-\" + el).attr(\"readonly\", \"readonly\");\r\n        " +
-"        $(\"#id_auto_hide_until_time-\" + el).attr(\"readonly\", \"readonly\");\r\n     " +
-"           $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"minDate\", -" +
-"1);\r\n                $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"m" +
-"axDate\", -2);\r\n                $(\"#id_auto_hide_after_Date-\" + el).attr(\"readonl" +
-"y\", \"readonly\");\r\n                $(\"#id_auto_hide_after_Time-\" + el).attr(\"read" +
-"only\", \"readonly\");\r\n                $(\"#id_auto_hide_after_Date-\" + el).datepic" +
-"ker(\"option\", \"minDate\", -1);\r\n                $(\"#id_auto_hide_after_Date-\" + e" +
-"l).datepicker(\"option\", \"maxDate\", -2);\r\n\r\n\r\n            }\r\n\r\n        }\r\n       " +
-" function randomString(len, charSet) {\r\n            charSet = charSet || \'ABCDEF" +
-"GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\';\r\n            var rand" +
-"omString = \'\';\r\n            for (var i = 0; i < len; i++) {\r\n                var" +
-" randomPoz = Math.floor(Math.random() * charSet.length);\r\n                random" +
-"String += charSet.substring(randomPoz, randomPoz + 1);\r\n            }\r\n         " +
-"   return randomString;\r\n        }\r\n    </script>\r\n");
+"ide\');\r\n            });\r\n\r\n         \r\n           \r\n            $(\"#id_saletimest" +
+"art-\" + divlength).timepicker();\r\n\r\n            $(\"#id_saletimeend-\" + divlength" +
+").timepicker();\r\n         \r\n            $(\"#id_saletimestart-\" + divlength).val(" +
+"\"7:00pm\");\r\n            $(\"#id_saletimeend-\" + divlength).val(\"7:00pm\");\r\n      " +
+"      $(\"#id_auto_hide_until_Date-\" + el).attr(\"readonly\", \"readonly\");\r\n       " +
+"     $(\"#id_auto_hide_until_time-\" + el).attr(\"readonly\", \"readonly\");\r\n        " +
+"    $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"minDate\", -1);\r\n  " +
+"          $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"maxDate\", -2" +
+");\r\n            $(\"#id_auto_hide_after_Date-\" + el).attr(\"readonly\", \"readonly\")" +
+";\r\n            $(\"#id_auto_hide_after_Time-\" + el).attr(\"readonly\", \"readonly\");" +
+"\r\n            $(\"#id_auto_hide_after_Date-\" + el).datepicker(\"option\", \"minDate\"" +
+", -1);\r\n            $(\"#id_auto_hide_after_Date-\" + el).datepicker(\"option\", \"ma" +
+"xDate\", -2);\r\n\r\n\r\n            $(\"#btndelete-\" + divlength).attr(\'href\', \'#cnfrmd" +
+"elete-\' + divlength);\r\n            $(\"input[id^=\'id_cost\']\").mask(\'000,000.00\', " +
+"{ reverse: true });\r\n            $(\"input[id^=\'id_Discount\']\").mask(\'000,000.00\'" +
+", { reverse: true });\r\n            $(\"#clonediv-\" + divlength).focus();\r\n\r\n     " +
+"   });\r\n        $(\'.save_btnfree\').click(function () {\r\n            debugger;\r\n " +
+"           $(\".ticket_panel\").show();\r\n            $(\"#id_ticket_footer\").css(\'d" +
+"isplay\', \'block\');\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n  " +
+"          var data = $(\'#clonediv-n\').clone();\r\n            data.attr(\'id\', \'clo" +
+"nediv-\' + divlength);\r\n            data.removeAttr(\"style\");\r\n            data.f" +
+"ind(\'*[id]\').andSelf().each(function () {\r\n\r\n\r\n                var id = $(this)." +
+"attr(\'id\');\r\n                //console.log(id);\r\n                id1 = id.substr" +
+"(0, id.indexOf(\'-\'));\r\n                ////console.log(id);\r\n                var" +
+" idn = id1 + \"-\" + divlength;\r\n                $(this).attr(\"id\", idn);\r\n       " +
+"         $(this).val(\'\');\r\n\r\n                if ($(this).hasClass(\"paidticket-n\"" +
+")) {\r\n                    $(this).removeClass(\'paidticket-n\');\r\n                " +
+"    $(this).addClass(\'paidticket-\' + divlength + \'\');\r\n                }\r\n      " +
+"          if ($(this).hasClass(\"normalticket-n\")) {\r\n                    $(this)" +
+".removeClass(\'normalticket-n\');\r\n                    $(this).addClass(\'normaltic" +
+"ket-\' + divlength + \'\');\r\n                }\r\n                if ($(this).hasClas" +
+"s(\"donateshow-n\")) {\r\n                    $(this).removeClass(\'donateshow-n\');\r\n" +
+"                    $(this).addClass(\'donateshow-\' + divlength + \'\');\r\n         " +
+"       }\r\n\r\n            });\r\n\r\n            //data.append(\'<span class=\"RemoveMor" +
+"eHub\" style=\"width:80%;\"><a href=\"javascript:void(0);\" style=\"float:right;color:" +
+"#CE0009;font-size:13px;text-decoration:none;margin-right:5%;\" >- Remove</a></spa" +
+"n>\');\r\n            $(\'#MasterDiv\').append(data);\r\n            $(\".donateshow-\" +" +
+" divlength).css(\'display\', \'block\');\r\n            $(\"#btndelete-\" + divlength).a" +
+"ttr(\'href\', \'#cnfrmdelete-\' + divlength);\r\n            $(\".normalticket-\" + divl" +
+"ength).css(\'display\', \'block\');\r\n            $(\".paidticket-\" + divlength).css(\'" +
+"display\', \'none\');\r\n            $(\"#isadmin-\"+divlength).css(\'display\', \'none\');" +
+"\r\n            $(\"#id_paymenttype-\" + divlength).text(\"Free\");\r\n            $(\"#i" +
+"d_ticket_type-\" + divlength).attr(\"title\", \"Give your ticket a name, like Genera" +
+"l Admission, Early Bird, RSVP, etc.\");\r\n            $(\"#id_ticket_type-\" + divle" +
+"ngth).attr(\"placeholder\", \"Early Bird, RSVP...\");\r\n            $(\"#id_Discount-\"" +
+" + divlength).prop(\"readonly\", true);\r\n            var randomValue = randomStrin" +
+"g(4);\r\n           $(\"#id_ticket_id-\" + divlength).val(0);\r\n            $(\"#id_or" +
+"der-\" + divlength).val(divlength);\r\n            //$(\"#id_feetype-\" + divlength)." +
+"css(\'display\', \'none\');\r\n            $(\"#id_Tickettype-\" + divlength).val(\"Free\"" +
+");\r\n            //$(\"clonediv-\" + divlength).css(\'display\', \'block\');\r\n\r\n       " +
+"     $(\"#id_feemethod\").val(0);\r\n            $(\"#id_salestart-\" + divlength).dat" +
+"epicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minDate: \"0\",\r" +
+"\n                onSelect: function () {\r\n\r\n                    this.fireEvent &" +
+"& this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n          " +
+"  }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_salestart-\" + divl" +
+"ength).datepicker(\'hide\');\r\n            });\r\n            $(\"#id_saleend-\" + divl" +
+"ength).datepicker({\r\n                format: \"mm/dd/yyyy\",\r\n                minD" +
+"ate: \"0\",\r\n                onSelect: function () {\r\n\r\n                    this.f" +
+"ireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n                }\r\n" +
+"            }).on(\'changeDate\', function (ev) {\r\n                $(\"#id_saleend-" +
+"\" + divlength).datepicker(\'hide\');\r\n            });\r\n\r\n         \r\n\r\n            " +
+"$(\"#id_saletimestart-\" + divlength).timepicker();\r\n\r\n            $(\"#id_saletime" +
+"end-\" + divlength).timepicker();\r\n        \r\n            $(\"#id_saletimestart-\" +" +
+" divlength).val(\"7:00pm\");\r\n            $(\"#id_saletimeend-\" + divlength).val(\"7" +
+":00pm\");\r\n\r\n\r\n            $(\"#id_auto_hide_until_Date-\" + el).attr(\"readonly\", \"" +
+"readonly\");\r\n            $(\"#id_auto_hide_until_time-\" + el).attr(\"readonly\", \"r" +
+"eadonly\");\r\n            $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\"," +
+" \"minDate\", -1);\r\n            $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"op" +
+"tion\", \"maxDate\", -2);\r\n            $(\"#id_auto_hide_after_Date-\" + el).attr(\"re" +
+"adonly\", \"readonly\");\r\n            $(\"#id_auto_hide_after_Time-\" + el).attr(\"rea" +
+"donly\", \"readonly\");\r\n            $(\"#id_auto_hide_after_Date-\" + el).datepicker" +
+"(\"option\", \"minDate\", -1);\r\n            $(\"#id_auto_hide_after_Date-\" + el).date" +
+"picker(\"option\", \"maxDate\", -2);\r\n            $(\"#btndelete-\" + divlength).attr(" +
+"\'href\', \'#cnfrmdelete-\' + divlength);\r\n            $(\"input[id^=\'id_cost\']\").mas" +
+"k(\'000,000.00\', { reverse: true });\r\n            $(\"input[id^=\'id_Discount\']\").m" +
+"ask(\'000,000.00\', { reverse: true });\r\n            $(\"#clonediv-\" + divlength).f" +
+"ocus();\r\n        });\r\n        function randomString(len, charSet) {\r\n           " +
+" charSet = charSet || \'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234" +
+"56789\';\r\n            var randomString = \'\';\r\n            for (var i = 0; i < len" +
+"; i++) {\r\n                var randomPoz = Math.floor(Math.random() * charSet.len" +
+"gth);\r\n                randomString += charSet.substring(randomPoz, randomPoz + " +
+"1);\r\n            }\r\n            return randomString;\r\n        }\r\n        functio" +
+"n deletevariable(e) {\r\n\r\n                var divlength = $(\"#id_Mainvariable> di" +
+"v\").size();\r\n                if (divlength == 1) {\r\n\r\n                } else {\r\n" +
+"                    var id = e;\r\n                    var el = e.substr(e.indexOf" +
+"(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n\r\n                    var div = document" +
+".getElementById(\"id_clonevariable-\" + el);\r\n\r\n\r\n\r\n                    div.parent" +
+"Node.removeChild(div);\r\n                    divlength = $(\"#id_Mainvariable> div" +
+"\").size();\r\n\r\n                    var count = 0;\r\n                    $(\'#id_Mai" +
+"nvariable\').children(\'div\').each(function () {\r\n\r\n                        var id" +
+" = $(this).attr(\'id\');\r\n\r\n                        id1 = id.substr(0, id.indexOf(" +
+"\'-\'));\r\n                        ////console.log(id);\r\n                        va" +
+"r idn = id1 + \"-\" + (count);\r\n                        $(this).attr(\"id\", idn);\r\n" +
+"                        $(this).find(\'*[id]\').andSelf().each(function () {\r\n\r\n\r\n" +
+"                            var id = $(this).attr(\'id\');\r\n                      " +
+"      //console.log(id);\r\n                            id1 = id.substr(0, id.inde" +
+"xOf(\'-\'));\r\n                            console.log(id1);\r\n                     " +
+"       var idn = id1 + \"-\" + (count);\r\n                            $(this).attr(" +
+"\"id\", idn);\r\n\r\n                            if(id1==\"btn_vardelete\")\r\n           " +
+"                 {\r\n                                $(this).attr(\"href\", \"#cnfrm" +
+"deletevariable-\" + count);\r\n                            }\r\n                     " +
+"       if (id1 == \"id_varsubdesc\") {\r\n                                $(this).at" +
+"tr(\"placeholder\", \"Variable Charges Description \" + parseInt(count+1));\r\n       " +
+"                     }\r\n\r\n                        });\r\n                        c" +
+"ount = count + 1;\r\n\r\n                    });\r\n\r\n                    if (divlengt" +
+"h == 0) {\r\n                        $(\'#id_Mainvariable\').css(\'display\', \'none\');" +
+"\r\n\r\n                    }\r\n                }\r\n\r\n\r\n\r\n\r\n        }\r\n        functio" +
+"n deletediv(e) {\r\n            {\r\n\r\n                var divlength = $(\"#MasterDiv" +
+"> div\").size();\r\n                var status = $(\'#status\').val();\r\n             " +
+"   console.log(status);\r\n                if (divlength == 1 && status==\"Live\")\r\n" +
+"                {\r\n                    $(\'#nodeleteH4\').text(\"You cannot delete " +
+"the last ticket while your event is live. Add another ticket or unpublish this e" +
+"vent first\")\r\n                    $(\'#anodelete\').click();\r\n                    " +
+"$(\".tab-content\").hide();\r\n                    //  alert(\'You cannot delete the " +
+"last ticket while your event is live. Add another ticket or unpublish this event" +
+" first\');\r\n                    return false;\r\n                }\r\n\r\n\r\n           " +
+"     var id = e;\r\n                var el = e.substr(e.indexOf(\'-\') + 1, e.length" +
+" - e.indexOf(\'-\'));\r\n\r\n                var div = document.getElementById(\"cloned" +
+"iv-\" + el);\r\n                // var div = document.getElementById(\"clonediv-0\");" +
+"\r\n                var toatlqty = $(\"#id_totalqty\").html();\r\n                var " +
+"qty = $(\"#id_quantity_total-\" + el).val();\r\n                var leftqty = parseI" +
+"nt(toatlqty) - parseInt(qty);\r\n                if (!isNaN(leftqty)) {\r\n         " +
+"           $(\"#id_totalqty\").html(leftqty);\r\n                } else {\r\n\r\n       " +
+"             $(\"#id_totalqty\").html(0);\r\n                }\r\n\r\n\r\n                " +
+"div.parentNode.removeChild(div);\r\n                divlength = $(\"#MasterDiv> div" +
+"\").size();\r\n\r\n                var count = 0;\r\n                $(\'#MasterDiv\').ch" +
+"ildren(\'div\').each(function () {\r\n\r\n                    var id = $(this).attr(\'i" +
+"d\');\r\n\r\n                    id1 = id.substr(0, id.indexOf(\'-\'));\r\n              " +
+"      ////console.log(id);\r\n                    var idn = id1 + \"-\" + (count);\r\n" +
+"                    $(this).attr(\"id\", idn);\r\n                    $(this).find(\'" +
+"*[id]\').andSelf().each(function () {\r\n\r\n\r\n                        var id = $(thi" +
+"s).attr(\'id\');\r\n                        //console.log(id);\r\n                    " +
+"    id1 = id.substr(0, id.indexOf(\'-\'));\r\n                       // console.log(" +
+"id);\r\n                        var idn = id1 + \"-\" + (count);\r\n                  " +
+"      $(this).attr(\"id\", idn);\r\n                        var al = $(this).attr(\"i" +
+"d\").substr(0, id.indexOf(\'-\'));\r\n\r\n                        if (al == \"id_order\")" +
+" {\r\n\r\n                            $(this).val(count);\r\n                        }" +
+"\r\n\r\n                        if (al == \"btndelete\")\r\n                        {\r\n\r" +
+"\n                            $(this).attr(\'href\', \'#cnfrmdelete-\' + (count));\r\n\r" +
+"\n                        }\r\n                        if ($(this).hasClass(\"paidti" +
+"cket-\" + (count + 1))) {\r\n                            $(this).removeClass(\'paidt" +
+"icket-\' + (count + 1));\r\n                            $(this).addClass(\'paidticke" +
+"t-\' + (count) + \'\');\r\n                        }\r\n                        if ($(t" +
+"his).hasClass(\"normalticket-\" + (count + 1))) {\r\n                            $(t" +
+"his).removeClass(\'normalticket-\' + (count + 1));\r\n                            $(" +
+"this).addClass(\'normalticket-\' + (count) + \'\');\r\n                        }\r\n\r\n  " +
+"                  });\r\n                    count = count + 1;\r\n\r\n               " +
+" });\r\n\r\n                if (divlength == 0) {\r\n                    $(\'#id_ticket" +
+"_footer\').css(\'display\', \'none\');\r\n\r\n                }\r\n                calculat" +
+"eSum();\r\n\r\n                return true;\r\n            }\r\n\r\n\r\n        }\r\n        $" +
+"(\".tab-content\").hide();\r\n        function showsettingdiv(e) {\r\n            var " +
+"id = e;\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(" +
+"\'-\'));\r\n\r\n            $(\'#evnt_set-\' + el).slideToggle(\"fast\");\r\n            //i" +
+"f ($(\'#evnt_set-\' + el).css(\'display\') == \'none\') {\r\n            //    $(\'#evnt_" +
+"set-\' + el).slideToggle(\"fast\");\r\n\r\n            //} else {\r\n\r\n            //    " +
+"$(\'#evnt_set-\' + el).css(\'display\', \'none\');\r\n\r\n            //}\r\n\r\n\r\n        }\r\n" +
+"\r\n\r\n\r\n        $(\".evnt_doll_amnt\").hide();\r\n        $(\".ev_tic_end\").click(funct" +
+"ion () {\r\n            $(\".evt_time\").css(\"display\", \"none\");\r\n            $(\".ev" +
+"nt_doll_amnt\").css(\"display\", \"block\");\r\n        });\r\n        $(\".ev_by_date\").c" +
+"lick(function () {\r\n            $(\".evnt_doll_amnt\").css(\"display\", \"none\");\r\n  " +
+"          $(\".evt_time\").css(\"display\", \"block\");\r\n        });\r\n        function" +
+" checkdiscount(e) {\r\n            debugger;\r\n            var el = e.substr(e.inde" +
+"xOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n            var price =parseFloat( pa" +
+"rseFloat($(\'#id_cost-\' + el).val().replace(\',\', \'\')).toFixed(2));\r\n            v" +
+"ar discount =parseFloat( parseFloat($(\'#\' + e).val().replace(\',\', \'\')).toFixed(2" +
+"));\r\n\r\n            if (!isNaN(price) && !isNaN(discount))\r\n            {\r\n      " +
+"          if (price != 0 && discount != 0) {\r\n\r\n                    if (discount" +
+" >= price) {\r\n                        $(\'#\' + e).addClass(\'err-bor\');\r\n\r\n       " +
+"                 $(\'#hddiscount\').val(\'1\');\r\n                        return fals" +
+"e;\r\n\r\n                    } else {\r\n                        //$(\'#\' + e).val(dis" +
+"count);\r\n                        $(\'#hddiscount\').val(\'0\');\r\n                   " +
+"     $(\'#\' + e).removeClass(\'err-bor\');\r\n\r\n                    }\r\n              " +
+"  }\r\n                else if (price == 0 && discount != 0) {\r\n                  " +
+"  $(\'#\' + e).addClass(\'err-bor\');\r\n\r\n                    $(\'#hddiscount\').val(\'1" +
+"\');\r\n                    return false;\r\n                }\r\n\r\n            } else " +
+"if (isNaN(price) && !isNaN(discount)) {\r\n                $(\'#\' + e).addClass(\'er" +
+"r-bor\');\r\n\r\n                $(\'#hddiscount\').val(\'1\');\r\n                return f" +
+"alse;\r\n\r\n            } else if (isNaN(discount)) {\r\n                $(\'#hddiscou" +
+"nt\').val(\'0\');\r\n                $(\'#\' + e).removeClass(\'err-bor\');\r\n            " +
+"}\r\n\r\n\r\n\r\n\r\n        }\r\n        function checkvalidtime(e) {\r\n            debugger" +
+";\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));" +
+"\r\n            var al = e.substr(0, e.indexOf(\'-\'));\r\n\r\n            if (al == \"id" +
+"_saletimestart\") {\r\n                errorMsg = checkTime(e);\r\n                if" +
+" (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_saletimestart-\' + el).focu" +
+"s();\r\n                    $(\'#id_saletimestart-\' + el).val(\"7:00pm\");\r\n         " +
+"           $(\'#id_saletimeend-\' + el).val(\"7:00pm\");\r\n\r\n                } else {" +
+"\r\n                    var txt=$(\'#\' + e).val();\r\n                    $(\'#id_hdsa" +
+"letimestart-\' + el).val(txt);\r\n                    $(\'#id_hdsaletimeend-\' + el)." +
+"val(txt);\r\n                    $(\'#id_saletimeend-\' + el).val($(\'#\' + e).val());" +
+"\r\n\r\n                }\r\n            }\r\n            if (al == \"id_saletimeend\") {\r" +
+"\n                errorMsg = checkTime(e);\r\n                if (errorMsg != \"\") {" +
+"\r\n\r\n\r\n                    $(\'#id_saletimeend-\' + el).val($(\'#id_saletimestart-\' " +
+"+ el).val());\r\n                    $(\'#id_saletimeend-\' + el).focus();\r\n        " +
+"            $(\'#id_hdsaletimeend-\' + el).val($(\'#id_saletimestart-\' + el).val())" +
+";\r\n\r\n                } else {\r\n                    $(\'#id_hdsaletimeend-\' + el)." +
+"val($(\'#\' + e).val());\r\n                }\r\n            }\r\n            if (al == " +
+"\"id_auto_hide_until_time\") {\r\n                errorMsg = checkTime(e);\r\n        " +
+"        if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_auto_hide_until_" +
+"time-\' + el).focus();\r\n                    $(\'#id_auto_hide_until_time-\' + el).v" +
+"al(\"7:00pm\");\r\n                    $(\'#id_auto_hide_after_Time-\' + el).val(\"7:00" +
+"pm\");\r\n\r\n                } else {\r\n\r\n                    $(\'#id_hdautohideuntil-" +
+"\' + el).val($(\'#\' + e).val());\r\n                    $(\'#id_hdautohideafter-\' + e" +
+"l).val($(\'#\' + e).val());\r\n                    $(\'#id_auto_hide_after_Time-\' + e" +
+"l).val($(\'#\' + e).val());\r\n\r\n                }\r\n\r\n            }\r\n            if " +
+"(al == \"id_auto_hide_after_Time\") {\r\n                errorMsg = checkTime(e);\r\n " +
+"               if (errorMsg != \"\") {\r\n\r\n                    $(\'#id_auto_hide_aft" +
+"er_Time-\' + el).val($(\'#id_auto_hide_until_time-\' + el).val());\r\n\r\n             " +
+"       $(\'#id_auto_hide_after_Time-\' + el).focus();\r\n\r\n                    $(\'#i" +
+"d_hdautohideafter-\' + el).val($(\'#id_auto_hide_until_time-\' + el).val());\r\n\r\n   " +
+"             } else {\r\n                    $(\'#id_hdautohideafter-\' + el).val($(" +
+"\'#\' + e).val());\r\n\r\n                }\r\n            }\r\n\r\n\r\n        }\r\n        fun" +
+"ction checkvalidDate(e) {\r\n\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e" +
+".length - e.indexOf(\'-\'));\r\n            var al = e.substr(0, e.indexOf(\'-\'));\r\n\r" +
+"\n            var errorMsg = checkDate(e);\r\n            if (al == \"id_saleend\") {" +
+"\r\n                var enddate = $(\'#id_saleend-\' + el).val();\r\n                v" +
+"ar startdate = $(\'#id_salestart-\' + el).val();\r\n                if (errorMsg != " +
+"\"\") {\r\n\r\n\r\n\r\n                    $(\'#id_saleend-\' + el).focus();\r\n              " +
+"      $(\'#id_saleend-\' + el).val(startdate);\r\n\r\n\r\n                }\r\n\r\n         " +
+"       errorMsg = compare(startdate, enddate);\r\n\r\n                if (errorMsg !" +
+"= \"\") {\r\n\r\n\r\n\r\n                    $(\'#id_saleend-\' + el).focus();\r\n            " +
+"        $(\'#id_saleend-\' + el).val(startdate);\r\n                    // field.val" +
+"ue = \"\";\r\n\r\n\r\n                }\r\n            }\r\n            if (al == \"id_auto_h" +
+"ide_after_Date\") {\r\n                var startdate = $(\'#id_auto_hide_until_Date-" +
+"\' + el).val();\r\n                var enddate = $(\'#id_auto_hide_after_Date-\' + el" +
+").val();\r\n                if (errorMsg != \"\") {\r\n\r\n\r\n\r\n                    $(\'#i" +
+"d_auto_hide_after_Date-\' + el).focus();\r\n                    $(\'#id_auto_hide_af" +
+"ter_Date-\' + el).val(startdate);\r\n\r\n\r\n                }\r\n\r\n                error" +
+"Msg = compare(startdate, enddate);\r\n\r\n                if (errorMsg != \"\") {\r\n\r\n\r" +
+"\n\r\n                    $(\'#id_auto_hide_after_Date-\' + el).focus();\r\n           " +
+"         $(\'#id_auto_hide_after_Date-\' + el).val(startdate);\r\n                  " +
+"  // field.value = \"\";\r\n\r\n\r\n                }\r\n\r\n\r\n            }\r\n            re" +
+"turn true;\r\n\r\n        }\r\n        function allownumber(el,evt, id) {\r\n\r\n\r\n\r\n     " +
+"       var charCode = (evt.which) ? evt.which : event.keyCode;\r\n\r\n            if" +
+" ((charCode < 48 || charCode > 57) && charCode > 31 && charCode != 44)\r\n        " +
+"    {\r\n\r\n                evt.preventDefault();\r\n                return false;\r\n " +
+"           }\r\n            //if (charCode == 46 && charCode > 31 && (charCode < 4" +
+"8 || charCode > 57) && charCode != 188) {\r\n            //    evt.preventDefault(" +
+");\r\n            //    return false;\r\n\r\n            //}\r\n\r\n            //if (numb" +
+"er.length > 1 && charCode == 46) {\r\n            //    evt.preventDefault();\r\n   " +
+"         //    return false;\r\n            //}\r\n\r\n            //var code = event." +
+"charCode ? event.charCode : event.keyCode;\r\n\r\n            ////  if (charCode == " +
+"46 && charCode > 31 && (charCode < 48 || charCode > 57) && charcode!=188) {\r\n   " +
+"         ////      evt.preventDefault();\r\n            ////    return false;\r\n\r\n " +
+"           ////}\r\n            //if ((!event.shiftKey && !event.ctrlKey && !event" +
+".altKey) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 " +
+"or numpad 0-9, disallow shift, ctrl, and alt\r\n            //{\r\n\r\n            //}" +
+"\r\n            //else if (code != 8 && code != 46 && code != 37 && code != 39 && " +
+"code != 9) // not esc, del, left or right\r\n            //{\r\n            //    ev" +
+"ent.preventDefault();\r\n            //    return false;\r\n            //}\r\n\r\n\r\n\r\n " +
+"       }\r\n        function showdiv(e)\r\n        {\r\n            debugger;\r\n       " +
+"     var id = e;\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e" +
+".indexOf(\'-\'));\r\n            var al = e.substr(0, e.indexOf(\'-\'));\r\n            " +
+"if ($(\'#id_ticketshidden-\' + el).is(\":checked\") == true) {\r\n                $(\"#" +
+"id_CusdateCont-\" + el).css(\"display\", \"block\");\r\n                $(\"#id_RemvTkt-" +
+"\" + el).css(\"display\", \"block\");\r\n                $(\"#id_EvaddTkt-\" + el).css(\"d" +
+"isplay\", \"none\");\r\n\r\n            } else {\r\n                $(\"#id_CusdateCont-\" " +
+"+ el).css(\"display\", \"none\");\r\n                $(\"#id_RemvTkt-\" + el).css(\"displ" +
+"ay\", \"none\");\r\n                $(\"#id_EvaddTkt-\" + el).css(\"display\", \"block\");\r" +
+"\n            }\r\n            $(\"#id_auto_hide_type_0-\" + el).prop(\'checked\', true" +
+");\r\n            $(\"#id_auto_hide_type_1-\" + el).prop(\'checked\', false);\r\n       " +
+"     $(\"#id_HideuntDiv-\" + el).css(\"display\", \"none\");\r\n        }\r\n\r\n        fun" +
+"ction hideunhide(e) {\r\n\r\n            debugger;\r\n            var id = e;\r\n       " +
+"     var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n        " +
+"    var al = e.substr(0, e.indexOf(\'-\'));\r\n\r\n            var divlength = $(\"#Mas" +
+"terDiv> div\").size();\r\n            if (al == \"id_EvaddTkt\") {\r\n\r\n               " +
+" $(\"#id_RemvTkt-\" + el).css(\"display\", \"block\");\r\n                $(\"#id_EvaddTk" +
+"t-\" + el).css(\"display\", \"none\");\r\n                $(\"#id_CusdateCont-\" + el).cs" +
+"s(\"display\", \"block\");\r\n                $(\"#id_auto_hide_type_0-\" + el).prop(\'ch" +
+"ecked\', true);\r\n                $(\"#id_auto_hide_type_1-\" + el).prop(\'checked\', " +
+"false);\r\n                $(\"#id_HideuntDiv-\" + el).css(\"display\", \"none\");\r\n    " +
+"            $(\"#id_ticketshidden-\" + el).prop(\'checked\', true);\r\n               " +
+" $(\"#id_auto_hide_until_Date-\" + el).attr(\"readonly\", \"readonly\");\r\n            " +
+"    $(\"#id_auto_hide_until_time-\" + el).attr(\"readonly\", \"readonly\");\r\n         " +
+"       $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"minDate\", -1);\r" +
+"\n                $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"maxDa" +
+"te\", -2);\r\n                $(\"#id_auto_hide_after_Date-\" + el).attr(\"readonly\", " +
+"\"readonly\");\r\n                $(\"#id_auto_hide_after_Time-\" + el).attr(\"readonly" +
+"\", \"readonly\");\r\n                $(\"#id_auto_hide_after_Date-\" + el).datepicker(" +
+"\"option\", \"minDate\", -1);\r\n                $(\"#id_auto_hide_after_Date-\" + el).d" +
+"atepicker(\"option\", \"maxDate\", -2);\r\n            }\r\n            if (al == \"id_Re" +
+"mvTkt\") {\r\n                $(\"#id_auto_hide_type_0-\" + el).prop(\'checked\', true)" +
+";\r\n                $(\"#id_auto_hide_type_1-\" + el).prop(\'checked\', false);\r\n    " +
+"            $(\"#id_RemvTkt-\" + el).css(\"display\", \"none\");\r\n                $(\"#" +
+"id_EvaddTkt-\" + el).css(\"display\", \"block\");\r\n                $(\"#id_CusdateCont" +
+"-\" + el).css(\"display\", \"none\");\r\n                $(\"#id_HideuntDiv-\" + el).css(" +
+"\"display\", \"none\");\r\n                $(\"#id_ticketshidden-\" + el).prop(\'checked\'" +
+", false);\r\n                $(\"#id_auto_hide_until_Date-\" + el).val(\'\');\r\n       " +
+"         $(\"#id_auto_hide_until_time-\" + el).val(\'\');\r\n                $(\"#id_au" +
+"to_hide_after_Date-\" + el).val(\'\');\r\n                $(\"#id_auto_hide_after_Time" +
+"-\" + el).val(\'\');\r\n\r\n                $(\"#id_hideuntil-\"+ el).attr(\"checked\", fal" +
+"se);\r\n                $(\"#id_hideafter-\"+ el).attr(\"checked\", false);\r\n         " +
+"   \r\n                $(\"#id_auto_hide_until_Date-\" + el).attr(\"readonly\", \"reado" +
+"nly\");\r\n                $(\"#id_auto_hide_until_time-\" + el).attr(\"readonly\", \"re" +
+"adonly\");\r\n                $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"optio" +
+"n\", \"minDate\", -1);\r\n                $(\"#id_auto_hide_until_Date-\" + el).datepic" +
+"ker(\"option\", \"maxDate\", -2);\r\n                $(\"#id_auto_hide_after_Date-\" + e" +
+"l).attr(\"readonly\", \"readonly\");\r\n                $(\"#id_auto_hide_after_Time-\" " +
+"+ el).attr(\"readonly\", \"readonly\");\r\n                $(\"#id_auto_hide_after_Date" +
+"-\" + el).datepicker(\"option\", \"minDate\", -1);\r\n                $(\"#id_auto_hide_" +
+"after_Date-\" + el).datepicker(\"option\", \"maxDate\", -2);\r\n\r\n\r\n\r\n            }\r\n  " +
+"          if (al == \"id_CusdateTime\") {\r\n                $(\"#id_HideuntDiv-\" + e" +
+"l).css(\"display\", \"block\");\r\n                $(\"#id_auto_hide_type_0-\" + el).pro" +
+"p(\'checked\', false);\r\n                $(\"#id_hideuntil-\"+ el).attr(\"checked\", fa" +
+"lse);\r\n                $(\"#id_hideafter-\"+ el).attr(\"checked\", false);\r\n        " +
+"    \r\n                $(\"#id_auto_hide_until_Date-\" + el).attr(\"readonly\", \"read" +
+"only\");\r\n                $(\"#id_auto_hide_until_time-\" + el).attr(\"readonly\", \"r" +
+"eadonly\");\r\n                $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"opti" +
+"on\", \"minDate\", -1);\r\n                $(\"#id_auto_hide_until_Date-\" + el).datepi" +
+"cker(\"option\", \"maxDate\", -2);\r\n                $(\"#id_auto_hide_after_Date-\" + " +
+"el).attr(\"readonly\", \"readonly\");\r\n                $(\"#id_auto_hide_after_Time-\"" +
+" + el).attr(\"readonly\", \"readonly\");\r\n                $(\"#id_auto_hide_after_Dat" +
+"e-\" + el).datepicker(\"option\", \"minDate\", -1);\r\n                $(\"#id_auto_hide" +
+"_after_Date-\" + el).datepicker(\"option\", \"maxDate\", -2);\r\n            }\r\n       " +
+"     if (al == \"id_TktnotSale\") {\r\n                $(\"#id_HideuntDiv-\" + el).css" +
+"(\"display\", \"none\");\r\n                $(\"#id_auto_hide_type_1-\" + el).prop(\'chec" +
+"ked\', false);\r\n                $(\"#id_auto_hide_until_Date-\" + el).val(\'\');\r\n   " +
+"             $(\"#id_auto_hide_until_time-\" + el).val(\'\');\r\n                $(\"#i" +
+"d_auto_hide_after_Date-\" + el).val(\'\');\r\n                $(\"#id_auto_hide_after_" +
+"Time-\" + el).val(\'\');\r\n\r\n                $(\"#id_hideuntil-\" + el).attr(\"checked\"" +
+", false);\r\n                $(\"#id_hideafter-\" + el).attr(\"checked\", false);\r\n   " +
+"          \r\n                $(\"#id_auto_hide_until_Date-\" + el).attr(\"readonly\"," +
+" \"readonly\");\r\n                $(\"#id_auto_hide_until_time-\" + el).attr(\"readonl" +
+"y\", \"readonly\");\r\n                $(\"#id_auto_hide_until_Date-\" + el).datepicker" +
+"(\"option\", \"minDate\", -1);\r\n                $(\"#id_auto_hide_until_Date-\" + el)." +
+"datepicker(\"option\", \"maxDate\", -2);\r\n                $(\"#id_auto_hide_after_Dat" +
+"e-\" + el).attr(\"readonly\", \"readonly\");\r\n                $(\"#id_auto_hide_after_" +
+"Time-\" + el).attr(\"readonly\", \"readonly\");\r\n                $(\"#id_auto_hide_aft" +
+"er_Date-\" + el).datepicker(\"option\", \"minDate\", -1);\r\n                $(\"#id_aut" +
+"o_hide_after_Date-\" + el).datepicker(\"option\", \"maxDate\", -2);\r\n\r\n\r\n            " +
+"}\r\n\r\n        }\r\n        function randomString(len, charSet) {\r\n            charS" +
+"et = charSet || \'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\'" +
+";\r\n            var randomString = \'\';\r\n            for (var i = 0; i < len; i++)" +
+" {\r\n                var randomPoz = Math.floor(Math.random() * charSet.length);\r" +
+"\n                randomString += charSet.substring(randomPoz, randomPoz + 1);\r\n " +
+"           }\r\n            return randomString;\r\n        }\r\n    </script>\r\n");
 
             
-            #line 5746 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5732 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 5747 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5733 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      
 
             
@@ -7511,9 +7604,9 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 267183), Tuple.Create("\"", 267222)
-, Tuple.Create(Tuple.Create("", 267190), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 267190), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 268074), Tuple.Create("\"", 268113)
+, Tuple.Create(Tuple.Create("", 268081), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 268081), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -7521,7 +7614,7 @@ WriteLiteral(" rel=\"stylesheet\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 5749 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5735 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7529,9 +7622,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 267256), Tuple.Create("\"", 267313)
-, Tuple.Create(Tuple.Create("", 267263), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 267263), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 268147), Tuple.Create("\"", 268204)
+, Tuple.Create(Tuple.Create("", 268154), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 268154), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -7540,15 +7633,15 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 267347), Tuple.Create("\"", 267384)
-, Tuple.Create(Tuple.Create("", 267353), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 267353), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 268238), Tuple.Create("\"", 268275)
+, Tuple.Create(Tuple.Create("", 268244), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 268244), false)
 );
 
 WriteLiteral("></script>\r\n");
 
             
-            #line 5752 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5738 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
 
@@ -7581,7 +7674,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            //
 "niqueguid\').val(uuid());\r\n\r\n\r\n        });\r\n    </script>\r\n");
 
             
-            #line 5801 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5787 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7591,7 +7684,7 @@ WriteLiteral("    <script>\r\n        function ajaxsetup(strname, strFormTag) {\
 "msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url:\'");
 
             
-            #line 5807 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5793 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -7606,257 +7699,278 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "  var msg = \"\";\r\n            var count = 0;\r\n            var countqty = 0;\r\n    " +
 "        var countdesc = 0;\r\n            var countvardesc = 0;\r\n            var c" +
 "ountvarqty = 0;\r\n            var countprice = 0;\r\n            var countmax = 0;\r" +
-"\n            var countdiscount = 0;\r\n            var title = $(\'#txtEventTitle\')" +
-".val();\r\n\r\n            if (title == \"\") {\r\n                $(\'#txtEventTitle\').a" +
-"ddClass(\'err-bor\');\r\n                \r\n                msg += ajaxsetup(\"CreateE" +
-"vent\", \"CreateEventTitileUI\")+\"<br/>\";\r\n\r\n            }\r\n\r\n            if ($(\'#d" +
-"dlOrgnizers option\').length <= 0) {\r\n                $(\'#txtOrgnizer\').addClass(" +
-"\'err-bor\');\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventOrganiz" +
-"erUI\") + \"<br/>\";;\r\n\r\n\r\n            }\r\n            var type = $(\"#EventType\").va" +
-"l();\r\n            var cat = $(\"#ddlEventCategory\").val();\r\n            if (type " +
-"<= 0) {\r\n                $(\'#EventType\').addClass(\'err-bor\');\r\n                m" +
-"sg += ajaxsetup(\"CreateEvent\", \"CreateEventtypeUI\") + \"<br/>\";;\r\n            }\r\n" +
-"            if (cat <= 0) {\r\n                $(\'#ddlEventCategory\').addClass(\'er" +
-"r-bor\');\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventCategoryUI" +
-"\") + \"<br/>\";;\r\n            }\r\n\r\n\r\n\r\n            var divlength = $(\"#MasterDiv> " +
-"div\").size();\r\n            if (divlength <= 0) {\r\n                msg += \"Please" +
-" Enter atleast one ticket\";\r\n\r\n            }\r\n            if (divlength > 0) {\r\n" +
-"\r\n                for (var i = 0; i < divlength; i++) {\r\n\r\n                    v" +
-"ar ticket_name = $(\'#id_ticket_type-\' + i).val();\r\n                    var ticke" +
-"t_Qty = $(\'#id_quantity_total-\' + i).val();\r\n                    if (ticket_name" +
-" == \"\") {\r\n                        $(\'#id_ticket_type-\' + i).addClass(\'err-bor\')" +
-";\r\n\r\n                        countdesc++;\r\n                    } else {\r\n       " +
-"                 $(\'#id_ticket_type-\' + i).removeClass(\'err-bor\');\r\n\r\n          " +
-"          }\r\n                    if (ticket_Qty == \"\") {\r\n\r\n                    " +
-"    $(\'#id_quantity_total-\' + i).addClass(\'err-bor\');\r\n                        c" +
-"ountqty++;\r\n                    } else {\r\n                        if (ticket_Qty" +
-" <= 0) {\r\n                            $(\'#id_quantity_total-\' + i).addClass(\'err" +
-"-bor\');\r\n                            countqty++;\r\n\r\n                        } el" +
-"se {\r\n                            $(\'#id_quantity_total-\' + i).removeClass(\'err-" +
-"bor\');\r\n                        }\r\n                    }\r\n\r\n                    " +
-"if ($(\'#id_paid-\' + i).css(\'display\') == \"block\") {\r\n\r\n                        v" +
-"ar price = parseFloat($(\'#id_cost-\' + i).val());\r\n                        if (is" +
-"NaN(price)) {\r\n                            $(\'#id_cost-\' + i).addClass(\'err-bor\'" +
-");\r\n                            countprice++;\r\n                        }\r\n      " +
-"                  if (price <= 0) {\r\n                            $(\'#id_cost-\' +" +
-" i).addClass(\'err-bor\');\r\n                            countprice++;\r\n           " +
-"             }\r\n                        if (price > 999999.99) {\r\n              " +
-"              $(\'#id_cost-\' + i).addClass(\'err-bor\');\r\n                         " +
-"   countprice++;\r\n                        } \r\n                    }\r\n\r\n\r\n       " +
-"             var min =parseFloat( $(\'#id_min_ticket-\' + i).val());\r\n            " +
-"        var max =parseFloat( $(\'#id_max_ticket-\' + i).val());\r\n                 " +
-"   var discount = parseFloat($(\'#id_Discount-\' + i).val().replace(\',\', \'\'));\r\n  " +
-"                  var cost = parseFloat($(\'#id_cost-\' + i).val().replace(\',\', \'\'" +
-"));\r\n                    if(!isNaN(min) && !isNaN(max) && min!=0 && max!=0 )\r\n  " +
-"                  {\r\n                        if(min>max)\r\n                      " +
-"  {\r\n                            $(\'#id_min_ticket-\' + i).addClass(\'err-bor\');\r\n" +
-"                            $(\'#evnt_set-\' + i).css(\'display\', \'block\');\r\n      " +
-"                      countmax++;\r\n                        }\r\n                  " +
-"      else {\r\n                            $(\'#id_min_ticket-\' + i).removeClass(\'" +
-"err-bor\');\r\n                        }\r\n\r\n                    }\r\n                " +
-"    if (!isNaN(max) && max != 0)\r\n                    {\r\n                       " +
-" if(max>ticket_Qty)\r\n                        {\r\n                            $(\'#" +
-"id_max_ticket-\' + i).addClass(\'err-bor\');\r\n                            $(\'#evnt_" +
-"set-\' + i).css(\'display\', \'block\');\r\n                            countmax++;\r\n  " +
-"                      }\r\n                    }\r\n                    if (!isNaN(m" +
-"in) && min != 0) {\r\n                        if (min > ticket_Qty) {\r\n           " +
-"                 $(\'#id_min_ticket-\' + i).addClass(\'err-bor\');\r\n                " +
-"            $(\'#evnt_set-\' + i).css(\'display\', \'block\');\r\n                      " +
-"      countmax++;\r\n                        }\r\n                    }\r\n           " +
-"         if (!isNaN(cost) && !isNaN(discount) && cost != 0 && discount != 0) {\r\n" +
-"                        if (cost <= discount) {\r\n                            $(\'" +
-"#id_Discount-\' + i).addClass(\'err-bor\');\r\n                            countdisco" +
-"unt++;\r\n                        }\r\n                       \r\n\r\n                  " +
-"  }\r\n                    if(isNaN(cost)&& !isNaN(discount))\r\n                   " +
-" {\r\n                        $(\'#id_Discount-\' + i).addClass(\'err-bor\');\r\n       " +
-"                 countdiscount++;\r\n                    }\r\n                    \r\n" +
-"                }\r\n\r\n\r\n            }\r\n            if ($(\'#hddiscount\').val() == " +
-"1) {\r\n                count++;\r\n\r\n            }\r\n            if (parseInt($(\'#hd" +
-"Maxerr\').val()) == 1)\r\n            {\r\n                count++;\r\n            }\r\n " +
-"           if (countdiscount > 0)\r\n            {\r\n                msg += \"Please" +
-" Enter valid discount price <br/>\";\r\n            }\r\n            if (countmax > 0" +
-")\r\n            {\r\n                msg+=\"Please Enter valid qty <br/>\";\r\n        " +
-"    }\r\n            if (countprice > 0) {\r\n                msg += ajaxsetup(\"Crea" +
-"teEvent\", \"PriceNotzeroUI\") + \"<br/>\";\r\n            }\r\n            if (countqty " +
-"> 0) {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventQtyValidateU" +
-"I\") + \"<br/>\";\r\n            }\r\n            if (countdesc > 0)\r\n            {\r\n  " +
-"              msg += ajaxsetup(\"CreateEvent\", \"CreateEventHighlightFieldsUI\") + " +
-"\"<br/>\";\r\n\r\n            }\r\n          \r\n            if ($(\'#id_variablecharge\').i" +
-"s(\":checked\") == true) {\r\n                if ($(\'#id_vardesc\').val() == \"\") {\r\n " +
-"                   $(\'#id_vardesc\').addClass(\'err-bor\');\r\n                    ms" +
-"g += ajaxsetup(\"CreateEvent\", \"CreateEventvariabledescUI\") + \"<br/>\";;\r\n\r\n\r\n\r\n  " +
-"              } else {\r\n                    $(\'#id_vardesc\').removeClass(\'err-bo" +
-"r\');\r\n\r\n                }\r\n                var divvar = $(\"#id_Mainvariable>div\"" +
-").size();\r\n                if(divvar<=0)\r\n                {\r\n                   " +
-" msg += \"Please enter Variable valid charges by clicking on Add button\"+ \"<br/>\"" +
-";;\r\n\r\n                }\r\n                if (divvar > 0) {\r\n\r\n                  " +
-"  for (var i = 0; i < divvar; i++) {\r\n                        var subdesc_name =" +
-" $(\'#id_varsubdesc-\' + i).val();\r\n                        var subprice_Qty = $(\'" +
-"#id_varsubprice-\' + i).val();\r\n\r\n                        if (subdesc_name == \"\")" +
-" {\r\n\r\n                            $(\'#id_varsubdesc-\' + i).addClass(\'err-bor\');\r" +
-"\n\r\n                            countvardesc++;\r\n                        } else {" +
-"\r\n                            $(\'#id_varsubdesc-\' + i).removeClass(\'err-bor\');\r\n" +
-"\r\n                        }\r\n                        if (subprice_Qty == \"\") {\r\n" +
-"\r\n                            $(\'#id_varsubprice-\' + i).addClass(\'err-bor\');\r\n  " +
-"                          countvarqty++;\r\n                        } else {\r\n    " +
-"                        if (subprice_Qty <= 0) {\r\n                              " +
-"  $(\'#id_varsubprice-\' + i).addClass(\'err-bor\');\r\n                              " +
-"  countvarqty++;\r\n\r\n                            } else {\r\n                      " +
-"          $(\'#id_varsubprice-\' + i).removeClass(\'err-bor\');\r\n                   " +
-"         }\r\n\r\n\r\n                        }\r\n\r\n                    }\r\n\r\n          " +
-"      }\r\n            }\r\n           \r\n\r\n         \r\n            if (count > 0)\r\n  " +
-"          {\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventHighl" +
-"ightFieldsUI\") + \"<br/>\";\r\n            }\r\n            if (countvardesc > 0)\r\n   " +
-"         {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubDescU" +
-"I\") + \"<br/>\";\r\n\r\n            }\r\n            if (countvarqty > 0) {\r\n           " +
-"     msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubQtyUI\") + \"<br/>\";\r\n\r\n      " +
-"      }\r\n            if ($(\'#chkReqPassword\').is(\":checked\") == true) {\r\n       " +
-"         if ($(\'#txtReqPassword\').val() == \"\") {\r\n                    $(\'#txtReq" +
-"Password\').addClass(\'err-bor\');\r\n                    msg += ajaxsetup(\"CreateEve" +
-"nt\", \"CreateEventPwdUI\") + \"<br/>\";;\r\n\r\n                } else {\r\n              " +
-"      $(\'#txtReqPassword\').removeClass(\'err-bor\');\r\n                }\r\n\r\n       " +
-"     }\r\n            var weekcnt = 0;\r\n            var weekdaily = 0;\r\n          " +
-"  var weekmnth = 0;\r\n            var custom = 0;\r\n            var days;\r\n       " +
-"     var single = 0;\r\n            var type=  $(\"#dlSchOption\").val();\r\n         " +
-"   if ($(\"#hdSchType\").val() == \'Multiple\') {\r\n\r\n                if ($(\"#dlSchOp" +
-"tion\").val() == \"Weekly\") {\r\n                    days = $(\"#dllWeeklyDayChk\").va" +
-"l();\r\n\r\n                    if (days == null) {\r\n                        weekcnt" +
-"++;\r\n                        $(\"#dvWeeklyDayChk button\").addClass(\'err-bor\');\r\n " +
-"                   } else {\r\n                        $(\"#dvWeeklyDayChk button\")" +
-".removeClass(\'err-bor\');\r\n                    }\r\n                    if ($(\"#txt" +
-"TimeStart\").val() == \"\") {\r\n                        weekcnt++;\r\n                " +
-"        $(\"#txtTimeStart\").addClass(\'err-bor\');\r\n                    } else {\r\n " +
-"                       $(\"#txtTimeStart\").removeClass(\'err-bor\');\r\n             " +
+"\n            var countdiscount = 0;\r\n\r\n            var hidecount = 0;\r\n         " +
+"   var title = $(\'#txtEventTitle\').val();\r\n\r\n            if (title == \"\") {\r\n   " +
+"             $(\'#txtEventTitle\').addClass(\'err-bor\');\r\n                \r\n       " +
+"         msg += ajaxsetup(\"CreateEvent\", \"CreateEventTitileUI\")+\"<br/>\";\r\n\r\n    " +
+"        }\r\n\r\n            if ($(\'#ddlOrgnizers option\').length <= 0) {\r\n         " +
+"       $(\'#txtOrgnizer\').addClass(\'err-bor\');\r\n                msg += ajaxsetup(" +
+"\"CreateEvent\", \"CreateEventOrganizerUI\") + \"<br/>\";;\r\n\r\n\r\n            }\r\n       " +
+"     var type = $(\"#EventType\").val();\r\n            var cat = $(\"#ddlEventCatego" +
+"ry\").val();\r\n            if (type <= 0) {\r\n                $(\'#EventType\').addCl" +
+"ass(\'err-bor\');\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventtyp" +
+"eUI\") + \"<br/>\";;\r\n            }\r\n            if (cat <= 0) {\r\n                $" +
+"(\'#ddlEventCategory\').addClass(\'err-bor\');\r\n                msg += ajaxsetup(\"Cr" +
+"eateEvent\", \"CreateEventCategoryUI\") + \"<br/>\";;\r\n            }\r\n\r\n\r\n\r\n         " +
+"   var divlength = $(\"#MasterDiv> div\").size();\r\n            if (divlength <= 0)" +
+" {\r\n                msg += \"Please Enter atleast one ticket\";\r\n\r\n            }\r\n" +
+"            if (divlength > 0) {\r\n\r\n                for (var i = 0; i < divlengt" +
+"h; i++) {\r\n\r\n                    var ticket_name = $(\'#id_ticket_type-\' + i).val" +
+"();\r\n                    var ticket_Qty = $(\'#id_quantity_total-\' + i).val();\r\n " +
+"                   if (ticket_name == \"\") {\r\n                        $(\'#id_tick" +
+"et_type-\' + i).addClass(\'err-bor\');\r\n\r\n                        countdesc++;\r\n   " +
+"                 } else {\r\n                        $(\'#id_ticket_type-\' + i).rem" +
+"oveClass(\'err-bor\');\r\n\r\n                    }\r\n                    if (ticket_Qt" +
+"y == \"\") {\r\n\r\n                        $(\'#id_quantity_total-\' + i).addClass(\'err" +
+"-bor\');\r\n                        countqty++;\r\n                    } else {\r\n    " +
+"                    if (ticket_Qty <= 0) {\r\n                            $(\'#id_q" +
+"uantity_total-\' + i).addClass(\'err-bor\');\r\n                            countqty+" +
+"+;\r\n\r\n                        } else {\r\n                            $(\'#id_quant" +
+"ity_total-\' + i).removeClass(\'err-bor\');\r\n                        }\r\n           " +
+"         }\r\n\r\n                    if ($(\'#id_paid-\' + i).css(\'display\') == \"bloc" +
+"k\") {\r\n\r\n                        var price = parseFloat($(\'#id_cost-\' + i).val()" +
+");\r\n                        if (isNaN(price)) {\r\n                            $(\'" +
+"#id_cost-\' + i).addClass(\'err-bor\');\r\n                            countprice++;\r" +
+"\n                        }\r\n                        if (price <= 0) {\r\n         " +
+"                   $(\'#id_cost-\' + i).addClass(\'err-bor\');\r\n                    " +
+"        countprice++;\r\n                        }\r\n                        if (pr" +
+"ice > 999999.99) {\r\n                            $(\'#id_cost-\' + i).addClass(\'err" +
+"-bor\');\r\n                            countprice++;\r\n                        } \r\n" +
+"                    }\r\n\r\n                    if ($(\'#id_ticketshidden-\' + i).is(" +
+"\":checked\"))\r\n                    {\r\n                        if($(\'#id_hideuntil" +
+"-\'+i).is(\":checked\"))\r\n                        {\r\n                            if" +
+"($(\'#id_auto_hide_until_Date-\'+i).val()==\"\" || $(\"#id_auto_hide_until_time-\"+i)." +
+"val()==\"\")\r\n                            {\r\n                                $(\'#i" +
+"d_auto_hide_until_Date-\' + i).addClass(\'err-bor\');\r\n                            " +
+"    $(\"#id_auto_hide_until_time-\" + i).addClass(\'err-bor\');\r\n                   " +
+"             hidecount++;\r\n                            }else\r\n                  " +
+"          {\r\n                                $(\'#id_auto_hide_until_Date-\' + i)." +
+"removeClass(\'err-bor\');\r\n                                $(\"#id_auto_hide_until_" +
+"time-\" + i).removeClass(\'err-bor\');\r\n                            }\r\n\r\n          " +
+"              }\r\n                       \r\n                        if ($(\'#id_hid" +
+"eafter-\' + i).is(\":checked\")) {\r\n                            if ($(\'#id_auto_hid" +
+"e_after_Date-\' + i).val() == \"\" || $(\"#id_auto_hide_after_Time-\" + i).val() == \"" +
+"\") {\r\n                                $(\'#id_auto_hide_after_Date-\' + i).addClas" +
+"s(\'err-bor\');\r\n                                $(\"#id_auto_hide_after_Time-\" + i" +
+").addClass(\'err-bor\');\r\n                                hidecount++;\r\n          " +
+"                  }else\r\n                            {\r\n                        " +
+"        $(\'#id_auto_hide_after_Date-\' + i).removeClass(\'err-bor\');\r\n            " +
+"                    $(\"#id_auto_hide_after_Time-\" + i).removeClass(\'err-bor\');\r\n" +
+"                            }\r\n                        }\r\n                    }\r" +
+"\n                    var min =parseFloat( $(\'#id_min_ticket-\' + i).val());\r\n    " +
+"                var max =parseFloat( $(\'#id_max_ticket-\' + i).val());\r\n         " +
+"           var discount = parseFloat($(\'#id_Discount-\' + i).val().replace(\',\', \'" +
+"\'));\r\n                    var cost = parseFloat($(\'#id_cost-\' + i).val().replace" +
+"(\',\', \'\'));\r\n                    if(!isNaN(min) && !isNaN(max) && min!=0 && max!" +
+"=0 )\r\n                    {\r\n                        if(min>max)\r\n              " +
+"          {\r\n                            $(\'#id_min_ticket-\' + i).addClass(\'err-" +
+"bor\');\r\n                            $(\'#evnt_set-\' + i).css(\'display\', \'block\');" +
+"\r\n                            countmax++;\r\n                        }\r\n          " +
+"              else {\r\n                            $(\'#id_min_ticket-\' + i).remov" +
+"eClass(\'err-bor\');\r\n                        }\r\n\r\n                    }\r\n        " +
+"            if (!isNaN(max) && max != 0)\r\n                    {\r\n               " +
+"         if(max>ticket_Qty)\r\n                        {\r\n                        " +
+"    $(\'#id_max_ticket-\' + i).addClass(\'err-bor\');\r\n                            $" +
+"(\'#evnt_set-\' + i).css(\'display\', \'block\');\r\n                            countma" +
+"x++;\r\n                        }\r\n                    }\r\n                    if (" +
+"!isNaN(min) && min != 0) {\r\n                        if (min > ticket_Qty) {\r\n   " +
+"                         $(\'#id_min_ticket-\' + i).addClass(\'err-bor\');\r\n        " +
+"                    $(\'#evnt_set-\' + i).css(\'display\', \'block\');\r\n              " +
+"              countmax++;\r\n                        }\r\n                    }\r\n   " +
+"                 if (!isNaN(cost) && !isNaN(discount) && cost != 0 && discount !" +
+"= 0) {\r\n                        if (cost <= discount) {\r\n                       " +
+"     $(\'#id_Discount-\' + i).addClass(\'err-bor\');\r\n                            co" +
+"untdiscount++;\r\n                        }\r\n                       \r\n\r\n          " +
+"          }\r\n                    if(isNaN(cost)&& !isNaN(discount))\r\n           " +
+"         {\r\n                        $(\'#id_Discount-\' + i).addClass(\'err-bor\');\r" +
+"\n                        countdiscount++;\r\n                    }\r\n              " +
+"      \r\n                }\r\n\r\n\r\n            }\r\n            if ($(\'#hddiscount\').v" +
+"al() == 1) {\r\n                count++;\r\n\r\n            }\r\n            if (parseIn" +
+"t($(\'#hdMaxerr\').val()) == 1)\r\n            {\r\n                count++;\r\n        " +
+"    }\r\n            if (countdiscount > 0)\r\n            {\r\n                msg +=" +
+" \"Please Enter valid discount price <br/>\";\r\n            }\r\n            if (coun" +
+"tmax > 0)\r\n            {\r\n                msg+=\"Please Enter valid qty <br/>\";\r\n" +
+"            }\r\n            if (countprice > 0) {\r\n                msg += ajaxset" +
+"up(\"CreateEvent\", \"PriceNotzeroUI\") + \"<br/>\";\r\n            }\r\n            if (c" +
+"ountqty > 0) {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventQtyV" +
+"alidateUI\") + \"<br/>\";\r\n            }\r\n            if (countdesc > 0 || hidecoun" +
+"t > 0)\r\n            {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEv" +
+"entHighlightFieldsUI\") + \"<br/>\";\r\n\r\n            }\r\n          \r\n            if (" +
+"$(\'#id_variablecharge\').is(\":checked\") == true) {\r\n                if ($(\'#id_va" +
+"rdesc\').val() == \"\") {\r\n                    $(\'#id_vardesc\').addClass(\'err-bor\')" +
+";\r\n                    msg += ajaxsetup(\"CreateEvent\", \"CreateEventvariabledescU" +
+"I\") + \"<br/>\";;\r\n\r\n\r\n\r\n                } else {\r\n                    $(\'#id_vard" +
+"esc\').removeClass(\'err-bor\');\r\n\r\n                }\r\n                var divvar =" +
+" $(\"#id_Mainvariable>div\").size();\r\n                if(divvar<=0)\r\n             " +
+"   {\r\n                    msg += \"Please enter Variable valid charges by clickin" +
+"g on Add button\"+ \"<br/>\";;\r\n\r\n                }\r\n                if (divvar > 0" +
+") {\r\n\r\n                    for (var i = 0; i < divvar; i++) {\r\n                 " +
+"       var subdesc_name = $(\'#id_varsubdesc-\' + i).val();\r\n                     " +
+"   var subprice_Qty = $(\'#id_varsubprice-\' + i).val();\r\n\r\n                      " +
+"  if (subdesc_name == \"\") {\r\n\r\n                            $(\'#id_varsubdesc-\' +" +
+" i).addClass(\'err-bor\');\r\n\r\n                            countvardesc++;\r\n       " +
+"                 } else {\r\n                            $(\'#id_varsubdesc-\' + i)." +
+"removeClass(\'err-bor\');\r\n\r\n                        }\r\n                        if" +
+" (subprice_Qty == \"\") {\r\n\r\n                            $(\'#id_varsubprice-\' + i)" +
+".addClass(\'err-bor\');\r\n                            countvarqty++;\r\n             " +
+"           } else {\r\n                            if (subprice_Qty <= 0) {\r\n     " +
+"                           $(\'#id_varsubprice-\' + i).addClass(\'err-bor\');\r\n     " +
+"                           countvarqty++;\r\n\r\n                            } else " +
+"{\r\n                                $(\'#id_varsubprice-\' + i).removeClass(\'err-bo" +
+"r\');\r\n                            }\r\n\r\n\r\n                        }\r\n\r\n          " +
+"          }\r\n\r\n                }\r\n            }\r\n           \r\n\r\n         \r\n     " +
+"       if (count > 0)\r\n            {\r\n\r\n                msg += ajaxsetup(\"Create" +
+"Event\", \"CreateEventHighlightFieldsUI\") + \"<br/>\";\r\n            }\r\n            i" +
+"f (countvardesc > 0)\r\n            {\r\n                msg += ajaxsetup(\"CreateEve" +
+"nt\", \"CreateEventSubDescUI\") + \"<br/>\";\r\n\r\n            }\r\n            if (countv" +
+"arqty > 0) {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubQty" +
+"UI\") + \"<br/>\";\r\n\r\n            }\r\n            if ($(\'#chkReqPassword\').is(\":chec" +
+"ked\") == true) {\r\n                if ($(\'#txtReqPassword\').val() == \"\") {\r\n     " +
+"               $(\'#txtReqPassword\').addClass(\'err-bor\');\r\n                    ms" +
+"g += ajaxsetup(\"CreateEvent\", \"CreateEventPwdUI\") + \"<br/>\";;\r\n\r\n               " +
+" } else {\r\n                    $(\'#txtReqPassword\').removeClass(\'err-bor\');\r\n   " +
+"             }\r\n\r\n            }\r\n            var weekcnt = 0;\r\n            var w" +
+"eekdaily = 0;\r\n            var weekmnth = 0;\r\n            var custom = 0;\r\n     " +
+"       var days;\r\n            var single = 0;\r\n            var type=  $(\"#dlSchO" +
+"ption\").val();\r\n            if ($(\"#hdSchType\").val() == \'Multiple\') {\r\n\r\n      " +
+"          if ($(\"#dlSchOption\").val() == \"Weekly\") {\r\n                    days =" +
+" $(\"#dllWeeklyDayChk\").val();\r\n\r\n                    if (days == null) {\r\n      " +
+"                  weekcnt++;\r\n                        $(\"#dvWeeklyDayChk button\"" +
+").addClass(\'err-bor\');\r\n                    } else {\r\n                        $(" +
+"\"#dvWeeklyDayChk button\").removeClass(\'err-bor\');\r\n                    }\r\n      " +
+"              if ($(\"#txtTimeStart\").val() == \"\") {\r\n                        wee" +
+"kcnt++;\r\n                        $(\"#txtTimeStart\").addClass(\'err-bor\');\r\n      " +
+"              } else {\r\n                        $(\"#txtTimeStart\").removeClass(\'" +
+"err-bor\');\r\n                    }\r\n                    if ($(\"#txtTimeEnd\").val(" +
+") == \"\") {\r\n                        weekcnt++;\r\n                        $(\"#txtT" +
+"imeEnd\").addClass(\'err-bor\');\r\n                    }\r\n                    if ($(" +
+"\"#txtTimeEnd\").val() == \"\") {\r\n                        weekcnt++;\r\n             " +
+"           $(\"#txtTimeEnd\").addClass(\'err-bor\');\r\n                    }\r\n       " +
+"             if ($(\"#txtDateFrom\").val() == \"\") {\r\n                        weekc" +
+"nt++;\r\n                        $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n         " +
+"           }\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n          " +
+"              weekcnt++;\r\n                        $(\"#txtDateTo\").addClass(\'err-" +
+"bor\');\r\n                    }\r\n                }\r\n\r\n                if ($(\"#dlSc" +
+"hOption\").val() == \"Daily\") {\r\n                    $(\"#txtDateFrom\").length;\r\n  " +
+"                  if ($(\"#txtDateFrom\").val() == \"\") {\r\n                        " +
+"weekdaily++;\r\n                        $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n  " +
+"                  }\r\n                    $(\"#txtDateTo\").length;\r\n              " +
+"      if ($(\"#txtDateTo\").val() == \"\") {\r\n                        weekdaily++;\r\n" +
+"                        $(\"#txtDateTo\").addClass(\'err-bor\');\r\n                  " +
+"  }\r\n                    $(\"#txtTimeStart\").length;\r\n                    if ($(\"" +
+"#txtTimeStart\").val() == \"\") {\r\n                        weekdaily++;\r\n          " +
+"              $(\"#txtTimeStart\").addClass(\'err-bor\');\r\n                    }\r\n  " +
+"                  $(\"#txtTimeEnd\").length;\r\n                    if ($(\"#txtTimeE" +
+"nd\").val() == \"\") {\r\n                        weekdaily++;\r\n                     " +
+"   $(\"#txtTimeEnd\").addClass(\'err-bor\');\r\n                    }\r\n\r\n             " +
+"   }\r\n                if ($(\"#dlSchOption\").val() == \"Monthly\") {\r\n             " +
+"       days = $(\"#dllMonthlyWeekDay\").val();\r\n                    if (days == nu" +
+"ll) {\r\n\r\n                        weekmnth++;\r\n                        $(\"#dvmont" +
+"hchk button\").addClass(\'err-bor\');\r\n                    }\r\n                    i" +
+"f ($(\"#txtDateFrom\").val() == \"\") {\r\n                        weekmnth++;\r\n      " +
+"                  $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n                    }\r" +
+"\n                    if ($(\"#txtDateFrom\").val() == \"\") {\r\n                     " +
+"   weekmnth++;\r\n                        $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n" +
+"                    }\r\n                    if ($(\"#txtTimeStart\").val() == \"\") {" +
+"\r\n                        weekmnth++;\r\n                        $(\"#txtTimeStart\"" +
+").addClass(\'err-bor\');\r\n                    }\r\n                    if ($(\"#txtDa" +
+"teTo\").val() == \"\") {\r\n                        weekmnth++;\r\n                    " +
+"    $(\"#txtDateTo\").addClass(\'err-bor\');\r\n                    }\r\n\r\n             " +
+"   }\r\n                if ($(\"#dlSchOption\").val() == \"Custom\") {\r\n\r\n            " +
+"        if ($(\"#txtTimeStart\").val() == \"\") {\r\n                        custom++;" +
+"\r\n                        $(\"#txtTimeStart\").addClass(\'err-bor\');\r\n             " +
 "       }\r\n                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n             " +
-"           weekcnt++;\r\n                        $(\"#txtTimeEnd\").addClass(\'err-bo" +
-"r\');\r\n                    }\r\n                    if ($(\"#txtTimeEnd\").val() == \"" +
-"\") {\r\n                        weekcnt++;\r\n                        $(\"#txtTimeEnd" +
+"           custom++;\r\n                        $(\"#txtTimeEnd\").addClass(\'err-bor" +
+"\');\r\n                    }\r\n                    if ($(\"#txtDateFrom\").val() == \"" +
+"\") {\r\n                        custom++;\r\n                        $(\"#txtDateFrom" +
 "\").addClass(\'err-bor\');\r\n                    }\r\n                    if ($(\"#txtD" +
-"ateFrom\").val() == \"\") {\r\n                        weekcnt++;\r\n                  " +
-"      $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n                    }\r\n           " +
-"         if ($(\"#txtDateTo\").val() == \"\") {\r\n                        weekcnt++;\r" +
-"\n                        $(\"#txtDateTo\").addClass(\'err-bor\');\r\n                 " +
-"   }\r\n                }\r\n\r\n                if ($(\"#dlSchOption\").val() == \"Daily" +
-"\") {\r\n                    $(\"#txtDateFrom\").length;\r\n                    if ($(\"" +
-"#txtDateFrom\").val() == \"\") {\r\n                        weekdaily++;\r\n           " +
-"             $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n                    }\r\n    " +
-"                $(\"#txtDateTo\").length;\r\n                    if ($(\"#txtDateTo\")" +
-".val() == \"\") {\r\n                        weekdaily++;\r\n                        $" +
-"(\"#txtDateTo\").addClass(\'err-bor\');\r\n                    }\r\n                    " +
-"$(\"#txtTimeStart\").length;\r\n                    if ($(\"#txtTimeStart\").val() == " +
-"\"\") {\r\n                        weekdaily++;\r\n                        $(\"#txtTime" +
-"Start\").addClass(\'err-bor\');\r\n                    }\r\n                    $(\"#txt" +
-"TimeEnd\").length;\r\n                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n    " +
-"                    weekdaily++;\r\n                        $(\"#txtTimeEnd\").addCl" +
-"ass(\'err-bor\');\r\n                    }\r\n\r\n                }\r\n                if " +
-"($(\"#dlSchOption\").val() == \"Monthly\") {\r\n                    days = $(\"#dllMont" +
-"hlyWeekDay\").val();\r\n                    if (days == null) {\r\n\r\n                " +
-"        weekmnth++;\r\n                        $(\"#dvmonthchk button\").addClass(\'e" +
-"rr-bor\');\r\n                    }\r\n                    if ($(\"#txtDateFrom\").val(" +
-") == \"\") {\r\n                        weekmnth++;\r\n                        $(\"#txt" +
-"DateFrom\").addClass(\'err-bor\');\r\n                    }\r\n                    if (" +
-"$(\"#txtDateFrom\").val() == \"\") {\r\n                        weekmnth++;\r\n         " +
-"               $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n                    }\r\n  " +
-"                  if ($(\"#txtTimeStart\").val() == \"\") {\r\n                       " +
-" weekmnth++;\r\n                        $(\"#txtTimeStart\").addClass(\'err-bor\');\r\n " +
-"                   }\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n  " +
-"                      weekmnth++;\r\n                        $(\"#txtDateTo\").addCl" +
-"ass(\'err-bor\');\r\n                    }\r\n\r\n                }\r\n                if " +
-"($(\"#dlSchOption\").val() == \"Custom\") {\r\n\r\n                    if ($(\"#txtTimeSt" +
-"art\").val() == \"\") {\r\n                        custom++;\r\n                       " +
-" $(\"#txtTimeStart\").addClass(\'err-bor\');\r\n                    }\r\n               " +
-"     if ($(\"#txtTimeEnd\").val() == \"\") {\r\n                        custom++;\r\n   " +
-"                     $(\"#txtTimeEnd\").addClass(\'err-bor\');\r\n                    " +
-"}\r\n                    if ($(\"#txtDateFrom\").val() == \"\") {\r\n                   " +
-"     custom++;\r\n                        $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n" +
-"                    }\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n " +
-"                       custom++;\r\n                        $(\"#txtDateTo\").addCla" +
-"ss(\'err-bor\');\r\n                    }\r\n\r\n                }\r\n\r\n            } else" +
-" {\r\n\r\n                var str=   $(\"#txtStartDate\").val();\r\n                if (" +
-"$(\"#txtStartDate\").val()==\"\") {\r\n                    single++;\r\n                " +
-"    $(\"#txtStartDate\").addClass(\'err-bor\');\r\n                }\r\n                " +
-"str = $(\"#txtStartTime\").val();\r\n                if ($(\"#txtStartTime\").val() ==" +
-" \"\") {\r\n                    single++;\r\n                    $(\"#txtStartTime\").ad" +
-"dClass(\'err-bor\');\r\n                }\r\n                str=$(\"#txtEndDate\").val(" +
-");\r\n                if ($(\"#txtEndDate\").val() == \"\") {\r\n                    sin" +
-"gle++;\r\n                    $(\"#txtEndDate\").addClass(\'err-bor\');\r\n             " +
-"   }\r\n                str=  $(\"#txtEndTime\").val();\r\n                if ($(\"#txt" +
-"EndTime\").val() == \"\") {\r\n                    single++;\r\n                    $(\"" +
-"#txtEndTime\").addClass(\'err-bor\');\r\n                }\r\n\r\n            }\r\n\r\n      " +
-"      if (weekcnt > 0) {\r\n                $(\"#btEnterDates\").click();\r\n         " +
-"       msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n            }\r" +
-"\n            if (weekdaily > 0) {\r\n                $(\"#btEnterDates\").click();\r\n" +
-"                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n     " +
-"       }\r\n            if (weekmnth > 0) {\r\n                $(\"#btEnterDates\").cl" +
-"ick();\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r" +
-"\n\r\n            }\r\n            if (custom > 0) {\r\n                $(\"#btEnterDate" +
-"s\").click();\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<b" +
-"r/>\";\r\n            }\r\n            if (single > 0) {\r\n                $(\"#btEnter" +
-"Dates\").click();\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") +" +
-" \"<br/>\";\r\n            }\r\n            return msg;\r\n        }\r\n        function c" +
-"ompare(DateA, DateB) {\r\n            var errorMsg = \"\";\r\n            var a = new " +
-"Date(DateA);\r\n            var b = new Date(DateB);\r\n\r\n            var msDateA = " +
-"Date.UTC(a.getFullYear(), a.getMonth() + 1, a.getDate());\r\n            var msDat" +
-"eB = Date.UTC(b.getFullYear(), b.getMonth() + 1, b.getDate());\r\n\r\n            if" +
-" (parseFloat(msDateA) < parseFloat(msDateB))\r\n                return errorMsg = " +
-"\"\";  // less than\r\n            else if (parseFloat(msDateA) == parseFloat(msDate" +
-"B))\r\n                return errorMsg = \"\";  // equal\r\n            else if (parse" +
-"Float(msDateA) > parseFloat(msDateB))\r\n                return errorMsg =  ajaxse" +
-"tup(\"CreateEvent\", \"CreateEventCompareDateUI\") +\"<br/>\"; // greater than\r\n      " +
-"      else\r\n                return null;  // error\r\n\r\n\r\n        }\r\n        funct" +
-"ion checkTime(field) {\r\n            var errorMsg = \"\";\r\n            debugger;\r\n " +
-"           // regular expression to match required time format\r\n            re =" +
-" /^(\\d{1,2}):(\\d{2})(:00)?([ap]m)?$/;\r\n            var value = $(\"#\" + field).va" +
-"l();\r\n            if (value != \'\') {\r\n                if (regs = value.match(re)" +
-") {\r\n                    if (regs[4]) {\r\n                        // 12-hour time" +
-" format with am/pm\r\n                        if (regs[1] < 1 || regs[1] > 12) {\r\n" +
-"                            errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInva" +
-"lidTimeUI\") +\"<br/>\";;\r\n                        }\r\n                    } else {\r" +
-"\n                        // 24-hour time format\r\n                        if (reg" +
-"s[1] > 23) {\r\n                            errorMsg = ajaxsetup(\"CreateEvent\", \"C" +
-"reateEventInvalidTimeUI\")+\"<br/>\";;\r\n                        }\r\n                " +
-"    }\r\n                    if (!errorMsg && regs[2] > 59) {\r\n                   " +
-"     errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n" +
-"                    }\r\n                } else {\r\n                    errorMsg = " +
-"ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n                " +
-"}\r\n            }\r\n\r\n            return errorMsg;\r\n        }\r\n        function ch" +
-"eckDate(field) {\r\n            var allowBlank = true;\r\n            var minYear = " +
-"(new Date()).getFullYear();\r\n            var maxYear = (new Date()).getFullYear(" +
-") + 10;\r\n            var d = new Date();\r\n\r\n            var errorMsg = \"\";\r\n    " +
-"        var value = $(\"#\" + field).val();\r\n            var datelast = new Date(v" +
-"alue);\r\n\r\n            var msDateA = Date.UTC(d.getFullYear(), d.getMonth() + 1, " +
-"d.getDate());\r\n            var msDateB = Date.UTC(datelast.getFullYear(), datela" +
-"st.getMonth() + 1, datelast.getDate());\r\n\r\n\r\n\r\n            // regular expression" +
-" to match required date format\r\n            re = /^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})" +
-"$/;\r\n\r\n            if (value != \'\') {\r\n                if (regs = value.match(re" +
-")) {\r\n                    if (regs[2] != \'\' && regs[2] != \'\' && regs[3] != \'\') {" +
-"\r\n                        if (regs[2] < 1 || regs[2] > 31) {\r\n                  " +
-"          errorMsg = \"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateU" +
-"I\");\r\n                        } else if (regs[1] < 1 || regs[1] > 12) {\r\n       " +
-"                     errorMsg = \"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEventI" +
-"nvalidDateUI\");\r\n                        } else if (regs[3] < minYear || regs[3]" +
-" > maxYear) {\r\n                            errorMsg = \"<br/>\" + ajaxsetup(\"Creat" +
-"eEvent\", \"CreateEventInvalidDateUI\");\r\n                        }\r\n              " +
-"      }\r\n                } else {\r\n                    errorMsg = ajaxsetup(\"Cre" +
-"ateEvent\", \"CreateEventInvalidDateUI\")+\"<br/>\" ;\r\n                }\r\n           " +
-" } else if (!allowBlank) {\r\n                errorMsg = ajaxsetup(\"CreateEvent\", " +
-"\"CreateEventInvalidDateUI\") + \"<br/>\";\r\n            }\r\n\r\n            if (parseFl" +
-"oat(msDateB) < parseFloat(msDateA)) {\r\n\r\n                errorMsg = ajaxsetup(\"C" +
-"reateEvent\", \"CreateEventInvalidDateUI\") + \"<br/>\";\r\n            }\r\n            " +
-"return errorMsg;\r\n\r\n            //if (errorMsg != \"\") {\r\n            //    retur" +
-"n errorMsg;\r\n\r\n\r\n            //    field.focus();\r\n            //    field.value" +
-" = \"\";\r\n\r\n            //}\r\n\r\n            //return true;\r\n        }\r\n\r\n        $(" +
-"document).ready(function () {\r\n            $(\'input.number\').keyup(function (eve" +
-"nt) {\r\n\r\n                // skip for arrow keys\r\n\r\n\r\n                // format n" +
-"umber\r\n                $(this).val(function (index, value) {\r\n                  " +
-"  return value\r\n                    .replace(/\\D/g, \"\")\r\n                    .re" +
-"place(/\\B(?=(\\d{3})+(?!\\d))/g, \",\")\r\n                    ;\r\n                });\r" +
-"\n            });\r\n            $(\'.close-model\').on(\'click\', function (e) {\r\n    " +
-"            $.modal.close();\r\n            });\r\n\r\n           \r\n        });\r\n\r\n   " +
-" </script>\r\n");
+"ateTo\").val() == \"\") {\r\n                        custom++;\r\n                     " +
+"   $(\"#txtDateTo\").addClass(\'err-bor\');\r\n                    }\r\n\r\n              " +
+"  }\r\n\r\n            } else {\r\n\r\n                var str=   $(\"#txtStartDate\").val" +
+"();\r\n                if ($(\"#txtStartDate\").val()==\"\") {\r\n                    si" +
+"ngle++;\r\n                    $(\"#txtStartDate\").addClass(\'err-bor\');\r\n          " +
+"      }\r\n                str = $(\"#txtStartTime\").val();\r\n                if ($(" +
+"\"#txtStartTime\").val() == \"\") {\r\n                    single++;\r\n                " +
+"    $(\"#txtStartTime\").addClass(\'err-bor\');\r\n                }\r\n                " +
+"str=$(\"#txtEndDate\").val();\r\n                if ($(\"#txtEndDate\").val() == \"\") {" +
+"\r\n                    single++;\r\n                    $(\"#txtEndDate\").addClass(\'" +
+"err-bor\');\r\n                }\r\n                str=  $(\"#txtEndTime\").val();\r\n  " +
+"              if ($(\"#txtEndTime\").val() == \"\") {\r\n                    single++;" +
+"\r\n                    $(\"#txtEndTime\").addClass(\'err-bor\');\r\n                }\r\n" +
+"\r\n            }\r\n\r\n            if (weekcnt > 0) {\r\n                $(\"#btEnterDa" +
+"tes\").click();\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"" +
+"<br/>\";\r\n\r\n            }\r\n            if (weekdaily > 0) {\r\n                $(\"#" +
+"btEnterDates\").click();\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validd" +
+"ate\") + \"<br/>\";\r\n\r\n            }\r\n            if (weekmnth > 0) {\r\n            " +
+"    $(\"#btEnterDates\").click();\r\n                msg += ajaxsetup(\"CreateEvent\"," +
+" \"Validdate\") + \"<br/>\";\r\n\r\n            }\r\n            if (custom > 0) {\r\n      " +
+"          $(\"#btEnterDates\").click();\r\n                msg += ajaxsetup(\"CreateE" +
+"vent\", \"Validdate\") + \"<br/>\";\r\n            }\r\n            if (single > 0) {\r\n  " +
+"              $(\"#btEnterDates\").click();\r\n                msg += ajaxsetup(\"Cre" +
+"ateEvent\", \"Validdate\") + \"<br/>\";\r\n            }\r\n            return msg;\r\n    " +
+"    }\r\n        function compare(DateA, DateB) {\r\n            var errorMsg = \"\";\r" +
+"\n            var a = new Date(DateA);\r\n            var b = new Date(DateB);\r\n\r\n " +
+"           var msDateA = Date.UTC(a.getFullYear(), a.getMonth() + 1, a.getDate()" +
+");\r\n            var msDateB = Date.UTC(b.getFullYear(), b.getMonth() + 1, b.getD" +
+"ate());\r\n\r\n            if (parseFloat(msDateA) < parseFloat(msDateB))\r\n         " +
+"       return errorMsg = \"\";  // less than\r\n            else if (parseFloat(msDa" +
+"teA) == parseFloat(msDateB))\r\n                return errorMsg = \"\";  // equal\r\n " +
+"           else if (parseFloat(msDateA) > parseFloat(msDateB))\r\n                " +
+"return errorMsg =  ajaxsetup(\"CreateEvent\", \"CreateEventCompareDateUI\") +\"<br/>\"" +
+"; // greater than\r\n            else\r\n                return null;  // error\r\n\r\n\r" +
+"\n        }\r\n        function checkTime(field) {\r\n            var errorMsg = \"\";\r" +
+"\n            debugger;\r\n            // regular expression to match required time" +
+" format\r\n            re = /^(\\d{1,2}):(\\d{2})(:00)?([ap]m)?$/;\r\n            var " +
+"value = $(\"#\" + field).val();\r\n            if (value != \'\') {\r\n                i" +
+"f (regs = value.match(re)) {\r\n                    if (regs[4]) {\r\n              " +
+"          // 12-hour time format with am/pm\r\n                        if (regs[1]" +
+" < 1 || regs[1] > 12) {\r\n                            errorMsg = ajaxsetup(\"Creat" +
+"eEvent\", \"CreateEventInvalidTimeUI\") +\"<br/>\";;\r\n                        }\r\n    " +
+"                } else {\r\n                        // 24-hour time format\r\n      " +
+"                  if (regs[1] > 23) {\r\n                            errorMsg = aj" +
+"axsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n                  " +
+"      }\r\n                    }\r\n                    if (!errorMsg && regs[2] > 5" +
+"9) {\r\n                        errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventIn" +
+"validTimeUI\")+\"<br/>\";;\r\n                    }\r\n                } else {\r\n      " +
+"              errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\")+\"<" +
+"br/>\";;\r\n                }\r\n            }\r\n\r\n            return errorMsg;\r\n     " +
+"   }\r\n        function checkDate(field) {\r\n            var allowBlank = true;\r\n " +
+"           var minYear = (new Date()).getFullYear();\r\n            var maxYear = " +
+"(new Date()).getFullYear() + 10;\r\n            var d = new Date();\r\n\r\n           " +
+" var errorMsg = \"\";\r\n            var value = $(\"#\" + field).val();\r\n            " +
+"var datelast = new Date(value);\r\n\r\n            var msDateA = Date.UTC(d.getFullY" +
+"ear(), d.getMonth() + 1, d.getDate());\r\n            var msDateB = Date.UTC(datel" +
+"ast.getFullYear(), datelast.getMonth() + 1, datelast.getDate());\r\n\r\n\r\n\r\n        " +
+"    // regular expression to match required date format\r\n            re = /^(\\d{" +
+"1,2})\\/(\\d{1,2})\\/(\\d{4})$/;\r\n\r\n            if (value != \'\') {\r\n                " +
+"if (regs = value.match(re)) {\r\n                    if (regs[2] != \'\' && regs[2] " +
+"!= \'\' && regs[3] != \'\') {\r\n                        if (regs[2] < 1 || regs[2] > " +
+"31) {\r\n                            errorMsg = \"<br/>\" + ajaxsetup(\"CreateEvent\"," +
+" \"CreateEventInvalidDateUI\");\r\n                        } else if (regs[1] < 1 ||" +
+" regs[1] > 12) {\r\n                            errorMsg = \"<br/>\" + ajaxsetup(\"Cr" +
+"eateEvent\", \"CreateEventInvalidDateUI\");\r\n                        } else if (reg" +
+"s[3] < minYear || regs[3] > maxYear) {\r\n                            errorMsg = \"" +
+"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\");\r\n                " +
+"        }\r\n                    }\r\n                } else {\r\n                    " +
+"errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\")+\"<br/>\" ;\r\n     " +
+"           }\r\n            } else if (!allowBlank) {\r\n                errorMsg = " +
+"ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\") + \"<br/>\";\r\n            }\r\n" +
+"\r\n            if (parseFloat(msDateB) < parseFloat(msDateA)) {\r\n\r\n              " +
+"  errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\") + \"<br/>\";\r\n  " +
+"          }\r\n            return errorMsg;\r\n\r\n            //if (errorMsg != \"\") {" +
+"\r\n            //    return errorMsg;\r\n\r\n\r\n            //    field.focus();\r\n    " +
+"        //    field.value = \"\";\r\n\r\n            //}\r\n\r\n            //return true;" +
+"\r\n        }\r\n\r\n        $(document).ready(function () {\r\n            $(\'input.num" +
+"ber\').keyup(function (event) {\r\n\r\n                // skip for arrow keys\r\n\r\n\r\n  " +
+"              // format number\r\n                $(this).val(function (index, val" +
+"ue) {\r\n                    return value\r\n                    .replace(/\\D/g, \"\")" +
+"\r\n                    .replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\")\r\n                  " +
+"  ;\r\n                });\r\n            });\r\n            $(\'.close-model\').on(\'cli" +
+"ck\', function (e) {\r\n                $.modal.close();\r\n            });\r\n\r\n      " +
+"     \r\n        });\r\n\r\n    </script>\r\n");
 
             
-            #line 6355 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6371 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7866,7 +7980,7 @@ WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n      \
 "\"\";\r\n        var j= ");
 
             
-            #line 6360 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6376 "..\..\Views\EditEvent\ModifyEvent.cshtml"
           Write(Html.Raw(ViewData["Image"]));
 
             
@@ -7996,16 +8110,61 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 "name: \'Eventpicture[\' + imgdata + \']\', value:imgdata}).appendTo(\'form\');\r\n\r\n    " +
 "            }\r\n\r\n            }\r\n\r\n\r\n            $(\'#drag-drop\').on(\'click\', func" +
 "tion (e) {\r\n               \r\n                $(\'#input2\').unbind(\'click\');\r\n\r\n  " +
-"          });\r\n        });\r\n\r\n\r\n        //$(document).on(\'click\', function(){\r\n " +
-"       //    $(\'.StartDatemodal\').hide();\r\n        //});\r\n        //$(\'.StartDat" +
-"emodal, .StartDate\').on(\'click\', function(e){\r\n        //    e.stopPropagation()" +
-";\r\n        //});\r\n\r\n\r\n        //$(document).on(\'click\', function(){\r\n        // " +
-"   $(\'.TmezoneSet\').hide();\r\n        //});\r\n        //$(\'.TmezoneSet, .Timezone\'" +
-").on(\'click\', function(e){\r\n        //    e.stopPropagation();\r\n        //});\r\n " +
-"   </script>\r\n");
+"          });\r\n        });\r\n\r\n        function enablehideafteruntil(e)\r\n        " +
+"{\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));" +
+"\r\n            var al = e.substr(0, e.indexOf(\'-\'));\r\n            if (al == \"id_h" +
+"ideafter\") {\r\n                if ($(\'#\' + e).is(\":checked\") == true) {\r\n        " +
+"            $(\"#id_auto_hide_after_Date-\" + el).removeAttr(\"readonly\");\r\n       " +
+"             $(\"#id_auto_hide_after_Time-\" + el).removeAttr(\"readonly\");\r\n      " +
+"              $(\"#id_auto_hide_after_Date-\" + el).datepicker({\r\n                " +
+"        format: \"mm/dd/yyyy\",\r\n                        minDate: \"0\",\r\n          " +
+"              onSelect: function () {\r\n\r\n                            this.fireEv" +
+"ent && this.fireEvent(\'onchange\') || $(this).change();\r\n                        " +
+"}\r\n                    }).on(\'changeDate\', function (ev) {\r\n                    " +
+"    $(\"#id_auto_hide_after_Date-\" + el).datepicker(\'hide\');\r\n                   " +
+" });\r\n                    $(\"#id_auto_hide_after_Time-\" + el).timepicker();\r\n   " +
+"                 $(\"#id_auto_hide_after_Time-\" + el).val(\"7:00pm\");\r\n           " +
+"         $(\"#id_auto_hide_after_Date-\" + el).datepicker(\"option\", \"minDate\", 0);" +
+"\r\n                    $(\"#id_auto_hide_after_Date-\" + el).datepicker(\"option\", \"" +
+"maxDate\", null);\r\n                } else {\r\n                    $(\"#id_auto_hide" +
+"_after_Date-\" + el).val(\"\");\r\n                    $(\"#id_auto_hide_after_Time-\" " +
+"+ el).val(\"\");\r\n                    $(\"#id_auto_hide_after_Date-\" + el).attr(\"re" +
+"adonly\", \"readonly\");\r\n                    $(\"#id_auto_hide_after_Time-\" + el).a" +
+"ttr(\"readonly\", \"readonly\");\r\n                    $(\"#id_auto_hide_after_Date-\" " +
+"+ el).datepicker(\"option\", \"minDate\", -1);\r\n                    $(\"#id_auto_hide" +
+"_after_Date-\" + el).datepicker(\"option\", \"maxDate\", -2);\r\n                }\r\n   " +
+"         }\r\n\r\n            if (al == \"id_hideuntil\")\r\n            {\r\n            " +
+"    var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.indexOf(\'-\'));\r\n         " +
+"       var al = e.substr(0, e.indexOf(\'-\'));\r\n                if ($(\'#\' + e).is(" +
+"\":checked\") == true) {\r\n                    $(\"#id_auto_hide_until_Date-\" + el)." +
+"removeAttr(\"readonly\");\r\n                    $(\"#id_auto_hide_until_time-\" + el)" +
+".removeAttr(\"readonly\");\r\n                    $(\"#id_auto_hide_until_time-\" + el" +
+").val(\"7:00pm\");\r\n                    $(\"#id_auto_hide_until_Date-\" + el).datepi" +
+"cker({\r\n                        format: \"mm/dd/yyyy\",\r\n                        m" +
+"inDate: \"0\",\r\n                        onSelect: function () {\r\n\r\n               " +
+"             this.fireEvent && this.fireEvent(\'onchange\') || $(this).change();\r\n" +
+"                        }\r\n                    }).on(\'changeDate\', function (ev)" +
+" {\r\n                        $(\"#id_auto_hide_until_Date-\" + el).datepicker(\'hide" +
+"\');\r\n                    });\r\n                    $(\"#id_auto_hide_until_time-\" " +
+"+ el).timepicker();\r\n                    $(\"#id_auto_hide_until_Date-\" + el).dat" +
+"epicker(\"option\", \"minDate\", 0);\r\n                    $(\"#id_auto_hide_until_Dat" +
+"e-\" + el).datepicker(\"option\", \"maxDate\", null);\r\n                } else {\r\n    " +
+"                $(\"#id_auto_hide_until_Date-\" + el).val(\"\");\r\n                  " +
+"  $(\"#id_auto_hide_until_time-\" + el).val(\"\");\r\n                    $(\"#id_auto_" +
+"hide_until_Date-\" + el).attr(\"readonly\", \"readonly\");\r\n                    $(\"#i" +
+"d_auto_hide_until_time-\" + el).attr(\"readonly\", \"readonly\");\r\n                  " +
+"  $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"minDate\", -1);\r\n    " +
+"                $(\"#id_auto_hide_until_Date-\" + el).datepicker(\"option\", \"maxDat" +
+"e\", -2);\r\n                }\r\n            }\r\n\r\n        }\r\n        //$(document).o" +
+"n(\'click\', function(){\r\n        //    $(\'.StartDatemodal\').hide();\r\n        //})" +
+";\r\n        //$(\'.StartDatemodal, .StartDate\').on(\'click\', function(e){\r\n        " +
+"//    e.stopPropagation();\r\n        //});\r\n\r\n\r\n        //$(document).on(\'click\'," +
+" function(){\r\n        //    $(\'.TmezoneSet\').hide();\r\n        //});\r\n        //$" +
+"(\'.TmezoneSet, .Timezone\').on(\'click\', function(e){\r\n        //    e.stopPropaga" +
+"tion();\r\n        //});\r\n    </script>\r\n");
 
             
-            #line 6610 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6689 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 
