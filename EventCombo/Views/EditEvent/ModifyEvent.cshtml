@@ -1880,6 +1880,7 @@ else
 
                 $('#diverroacc').css('display', 'block');
                 $('#divaccsuc').css('display', 'none');
+                $('#divaccsuc').css('display', 'none');
                 $('#btndiverrsuc').focus();
                 $('#erraccmsg').html(msg);
                 $('html,body').animate({ scrollTop: 0 });
@@ -2945,7 +2946,7 @@ else
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
                     $('#erraccmsg').html(msg);
-
+                    $('#divaccsuc').css('display', 'none');
                     $('html,body').animate({ scrollTop: 0 });
                     return false;
 
@@ -2983,6 +2984,7 @@ else
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
                     $('#erraccmsg').html(msg);
+                    $('#divaccsuc').css('display', 'none');
                     $('html,body').animate({ scrollTop: 0 });
                     return false;
 
@@ -6001,7 +6003,7 @@ else
                   
                       if( customer<=0)
                       {
-                       
+                        
                                 $("#id_customerfee-"+i).addClass('err-bor');
                                 eccount=eccount+1;
                             }
