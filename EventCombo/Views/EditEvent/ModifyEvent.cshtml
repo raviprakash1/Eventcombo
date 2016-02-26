@@ -435,16 +435,16 @@
                         <div class="col-sm-4 pl0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type*</label>
-                                <div class="col-sm-9">
-                                    @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" })
+                                <div class="col-sm-9 dropheight">
+                                    @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control selectpicker  wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4 pl0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category*</label>
-                                <div class="col-sm-9">
-                                    @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" })
+                                <div class="col-sm-9 dropheight">
+                                    @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control selectpicker  wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
@@ -3875,10 +3875,8 @@ else
 
                     $('#id_auto_hide_until_Date-' + el).focus();
                     $('#id_auto_hide_until_Date-' + el).val("");
-                    $('#id_auto_hide_after_Date-' + el).val("");
+                  
 
-                } else {
-                    $('#id_auto_hide_after_Date-' + el).val($('#' + e).val());
                 }
 
             }
@@ -5469,14 +5467,14 @@ else
 
 
                     $('#id_auto_hide_until_time-' + el).focus();
-                    $('#id_auto_hide_until_time-' + el).val("7:00pm");
-                    $('#id_auto_hide_after_Time-' + el).val("7:00pm");
+                    $('#id_auto_hide_until_time-' + el).val("");
+                   
 
                 } else {
 
                     $('#id_hdautohideuntil-' + el).val($('#' + e).val());
-                    $('#id_hdautohideafter-' + el).val($('#' + e).val());
-                    $('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
+                  
+                  
 
                 }
 
@@ -5485,11 +5483,11 @@ else
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
 
-                    $('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
+                    $('#id_auto_hide_after_Time-' + el).val('');
 
                     $('#id_auto_hide_after_Time-' + el).focus();
 
-                    $('#id_hdautohideafter-' + el).val($('#id_auto_hide_until_time-' + el).val());
+                    $('#id_hdautohideafter-' + el).val('');
 
                 } else {
                     $('#id_hdautohideafter-' + el).val($('#' + e).val());
@@ -5532,30 +5530,30 @@ else
                 }
             }
             if (al == "id_auto_hide_after_Date") {
-                var startdate = $('#id_auto_hide_until_Date-' + el).val();
-                var enddate = $('#id_auto_hide_after_Date-' + el).val();
+                //var startdate = $('#id_auto_hide_until_Date-' + el).val();
+                //var enddate = $('#id_auto_hide_after_Date-' + el).val();
                 if (errorMsg != "") {
 
 
 
                     $('#id_auto_hide_after_Date-' + el).focus();
-                    $('#id_auto_hide_after_Date-' + el).val(startdate);
+                    $('#id_auto_hide_after_Date-' + el).val("");
 
 
                 }
 
-                errorMsg = compare(startdate, enddate);
+                ////errorMsg = compare(startdate, enddate);
 
-                if (errorMsg != "") {
-
-
-
-                    $('#id_auto_hide_after_Date-' + el).focus();
-                    $('#id_auto_hide_after_Date-' + el).val(startdate);
-                    // field.value = "";
+                //if (errorMsg != "") {
 
 
-                }
+
+                //    $('#id_auto_hide_after_Date-' + el).focus();
+                //    $('#id_auto_hide_after_Date-' + el).val(startdate);
+                //    // field.value = "";
+
+
+                //}
 
 
             }

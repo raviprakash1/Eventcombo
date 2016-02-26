@@ -369,7 +369,7 @@
 
                     </div>
 
-                    <div class="col-sm-6 divqtyvisible">
+                    <div class="col-sm-6 divqtyvisible" style="display:none;">
                         <div class="form-group ">
 
                             <div class="col-sm-12 col-xs-12 no_pad mt20">
@@ -1546,7 +1546,7 @@
 
         });
         //------------------------------------------------LoadSelectedTickets--------------------------------------------------
-
+        debugger;
         $.ajax({
             url: '@Url.Action("LoadTickets", "TicketPayment")',
             beforeSend: function () { $('#dvAjxLoader').show(); },
@@ -1562,6 +1562,9 @@
 
                 if (totqty <= 0) {
                     $('.divqtyvisible').hide();
+                } else
+                {
+                    $('.divqtyvisible').show();
                 }
                 if (vGrdTotal > 0) {
                     $('.divvisible').show();
