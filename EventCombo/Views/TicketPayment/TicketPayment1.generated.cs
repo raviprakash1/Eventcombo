@@ -1358,6 +1358,8 @@ WriteLiteral("\r\n\r\n\r\n                                </div>\r\n\r\n\r\n    
 
 WriteLiteral(" class=\"col-sm-6 divqtyvisible\"");
 
+WriteLiteral(" style=\"display:none;\"");
+
 WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"form-group \"");
@@ -1569,9 +1571,9 @@ WriteLiteral(" style=\"display:none\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 27169), Tuple.Create("\"", 27199)
-, Tuple.Create(Tuple.Create("", 27175), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 27175), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 27191), Tuple.Create("\"", 27221)
+, Tuple.Create(Tuple.Create("", 27197), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 27197), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n            </div>\r\n  " +
@@ -1780,9 +1782,9 @@ WriteLiteral(" class=\"msg\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 29780), Tuple.Create("\"", 29810)
-, Tuple.Create(Tuple.Create("", 29786), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 29786), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 29802), Tuple.Create("\"", 29832)
+, Tuple.Create(Tuple.Create("", 29808), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 29808), false)
 );
 
 WriteLiteral(" />Please wait, Preparing your order.</h4>\r\n                    </div>\r\n         " +
@@ -1958,37 +1960,37 @@ WriteLiteral(">\r\n\r\n    </div>\r\n");
             #line hidden
 WriteLiteral("<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 31954), Tuple.Create("\"", 31987)
-, Tuple.Create(Tuple.Create("", 31960), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/Commonfunction.js")
-, 31960), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 31976), Tuple.Create("\"", 32009)
+, Tuple.Create(Tuple.Create("", 31982), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/Commonfunction.js")
+, 31982), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32007), Tuple.Create("\"", 32035)
-, Tuple.Create(Tuple.Create("", 32013), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/flipclock.js")
-, 32013), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32029), Tuple.Create("\"", 32057)
+, Tuple.Create(Tuple.Create("", 32035), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/flipclock.js")
+, 32035), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32055), Tuple.Create("\"", 32087)
-, Tuple.Create(Tuple.Create("", 32061), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.cookie.js")
-, 32061), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32077), Tuple.Create("\"", 32109)
+, Tuple.Create(Tuple.Create("", 32083), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.cookie.js")
+, 32083), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32107), Tuple.Create("\"", 32135)
-, Tuple.Create(Tuple.Create("", 32113), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
-, 32113), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32129), Tuple.Create("\"", 32157)
+, Tuple.Create(Tuple.Create("", 32135), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
+, 32135), false)
 );
 
 WriteLiteral("></script>\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 32153), Tuple.Create("\"", 32211)
-, Tuple.Create(Tuple.Create("", 32160), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css")
-, 32160), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 32175), Tuple.Create("\"", 32233)
+, Tuple.Create(Tuple.Create("", 32182), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css")
+, 32182), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -2641,7 +2643,7 @@ WriteLiteral(@"';
 
         });
         //------------------------------------------------LoadSelectedTickets--------------------------------------------------
-
+        debugger;
         $.ajax({
             url: '");
 
@@ -2659,77 +2661,78 @@ WriteLiteral("\',\r\n            beforeSend: function () { $(\'#dvAjxLoader\').s
 "Info\").append(response);\r\n                var vGrdTotal = parseFloat($(\"#spGrdTo" +
 "tal\").text());\r\n                if (isNaN(vGrdTotal) == true) vGrdTotal = 0;\r\n  " +
 "              var totqty = $(\'#hidQty\').val();\r\n\r\n                if (totqty <= " +
-"0) {\r\n                    $(\'.divqtyvisible\').hide();\r\n                }\r\n      " +
-"          if (vGrdTotal > 0) {\r\n                    $(\'.divvisible\').show();\r\n  " +
-"              }\r\n                else {\r\n                    $(\'.divvisible\').hi" +
-"de();\r\n                  \r\n                }\r\n\r\n              \r\n            },\r\n" +
-"        });\r\n\r\n\r\n\r\n\r\n\r\n\r\n    });\r\n    function checkMore(QtyId) {\r\n        $(\"#S" +
-"p_\" + QtyId.toString()).slideToggle(\"fast\");\r\n        //$(\".TktdescDetl\").slideT" +
-"oggle(\"fast\");\r\n    }\r\n    function checknumber(event) {\r\n\r\n        var code = e" +
-"vent.charCode ? event.charCode : event.keyCode;\r\n\r\n        if ((!event.shiftKey " +
-"&& !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) || (code >= 9" +
-"6 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and alt\r\n       " +
-" {\r\n            return true;\r\n        }\r\n        else if (code != 8 && code != 4" +
-"6 && code != 37 && code != 39 && code != 9 && code != 190) // not esc, del, left" +
-" or right\r\n        {\r\n\r\n            event.preventDefault();\r\n            return " +
-"false;\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n\r\n    function AddTicket() {\r\n\r\n\r\n        " +
-"$(\"#hidTicketbearer\").val(\'\');\r\n        var qty = parseInt($(\'#hidQty\').val());\r" +
-"\n        var ddlength = parseInt($(\"#ddlListitem option\").length);\r\n        if (" +
-"ddlength < qty) {\r\n            var Sno = $(\"#tblListitem tr\").length;\r\n         " +
-"   var vTicketName = $(\"#nameofticket\").val();\r\n            var vTicketEmailDes " +
-"= $(\"#emailbearer\").val();\r\n            if ($(\'.Notifybox\').css(\'display\') == \'b" +
-"lock\') {\r\n                vTicketEmailDes = $(\"#emailbearer\").val();\r\n          " +
-"  } else {\r\n\r\n                vTicketEmailDes = \"\";\r\n            }\r\n            " +
-"//strHTML = strHTML + \'<td align=\"right\"><i onclick=\"editOrgnizer(\' + Sno + \')\";" +
-" class=\"fa fa-pencil\"></i> | <i onclick=\"DeleteOrgnizer(\' + Sno + \');\" class=\"fa" +
-" fa-trash\"></i></td>\';\r\n\r\n            var strHTML = \'<tr>\';\r\n            strHTML" +
-" = strHTML + \'<td style=\"display:none\" width=\"92%\">\' + Sno + \'</td>\';\r\n         " +
-"   strHTML = strHTML + \'<td width=\"92%\"><label id=TicketName_\' + Sno + \'>\' + vTi" +
-"cketName + \'</label></td>\';\r\n            strHTML = strHTML + \'<td style=\"display" +
-":none\"><label id=TicketEmail_\' + Sno + \'>\' + vTicketEmailDes + \'</label></td>\';\r" +
-"\n            strHTML = strHTML + \'</tr>\';\r\n            //                strHTML" +
-" = strHTML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#\" onclick=\"editRow(" +
-"\' + Sno + \');\"><i class=\"fa fa-map-marker\"></i> Edit</a>  <a href=\"#\" id=\"btAddD" +
-"elete\" onclick=\"DeleteTableRow(\' + Sno + \')\">Delete</a> </div> </td>\';\r\n\r\n\r\n    " +
-"        $(\"#tblListitem\").append(strHTML);\r\n            strHTML = \'<option value" +
-"=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vTicketName + \'</option>\';\r\n\r\n            $(" +
-"\"#ddlListitem\").append(strHTML);\r\n        }\r\n\r\n    }\r\n    $(\"#editlist\").click(f" +
-"unction () {\r\n        var Sno = $(\"#ddlListitem\").val();\r\n\r\n        $(\"#hidTicke" +
-"tbearer\").val(Sno);\r\n        var vOrgName = $(\"#TicketName_\" + Sno).text();\r\n   " +
-"     var vOrgDes = $(\"#TicketEmail_\" + Sno).text();\r\n        if (vOrgDes != \"\") " +
-"{\r\n            if ($(\'.Notifybox\').css(\'display\') == \'none\') {\r\n                " +
-"$(\'.Notifybox\').css(\'display\', \'block\');\r\n            }\r\n        }\r\n\r\n        $(" +
-"\"#nameofticket\").val(vOrgName);\r\n        $(\"#emailbearer\").val(vOrgDes);\r\n    })" +
-";\r\n    var cardlength = $(\"#cardno\").val();\r\n    if (cardlength == \"\") {\r\n      " +
-"  $(\'#imgcard\').css(\'display\', \'none\');\r\n\r\n    }\r\n    $(\"#deletelist\").click(fun" +
-"ction () {\r\n        var Sno = $(\"#ddlListitem\").val();\r\n        $(\'#tblListitem " +
-"tr\').each(function () {\r\n            if (Sno == $(this).find(\"td:first\").html())" +
-" {\r\n                $(this).remove();\r\n            }\r\n        });\r\n\r\n        //$" +
-"(\"#dllOrganizer\")\r\n        $(\"#ddlListitem option\").each(function (i) {\r\n       " +
-"     if (Sno == $(this).val()) {\r\n                $(this).remove();\r\n           " +
-" }\r\n        });\r\n\r\n\r\n\r\n        $(\"#hidTicketbearer\").val(\'\');\r\n        $(\"#nameo" +
-"fticket\").val(\'\');\r\n        $(\"#emailbearer\").val(\'\');\r\n        if ($(\'#ddlListi" +
-"tem option\').length <= 0) {\r\n            $(\'#blocklist\').css(\'display\', \'none\');" +
-"\r\n\r\n        } else {\r\n            $(\'#blocklist\').css(\'display\', \'block\');\r\n    " +
-"    }\r\n\r\n\r\n    });\r\n    function UpdateTicket() {\r\n        var Sno = $(\"#ddlList" +
-"item\").val();\r\n        //    alert(Sno);\r\n        vOrgName = $(\"#nameofticket\")." +
-"val();\r\n        vOrgDes = $(\"#emailbearer\").val();\r\n        //vOrgFB = $(\"#txtOr" +
-"gFBlink\").val();\r\n        //vOrgTw = $(\"#txtOrgTWlink\").val();\r\n\r\n        $(\"#Ti" +
-"cketName_\" + Sno).text(vOrgName);\r\n        $(\"#TicketEmail_\" + Sno).text(vOrgDes" +
-");\r\n\r\n\r\n\r\n        $(\"#ddlListitem option\").each(function (i) {\r\n            if (" +
-"Sno == $(this).val()) {\r\n                $(this).remove();\r\n            }\r\n     " +
-"   });\r\n        var addOption = \'<option value=\"\' + Sno + \'\" id=\"\' + Sno + \'\" >\'" +
-" + vOrgName + \'</option>\';\r\n        $(\"#ddlListitem\").append(addOption);\r\n\r\n\r\n\r\n" +
-"\r\n    }\r\n    jQuery(function ($) {\r\n        if ($(\'#ddlListitem option\').length " +
-"<= 0) {\r\n            $(\'#blocklist\').css(\'display\', \'none\');\r\n\r\n        } else {" +
-"\r\n            $(\'#blocklist\').css(\'display\', \'block\');\r\n        }\r\n\r\n        $(\"" +
-"#expirationdate\").mask(\"99/99\");\r\n        $(\"#shippingphnno\").mask(\"999-999-9999" +
-"\");\r\n        $(\"#billingphno\").mask(\"999-999-9999\");\r\n        $(\"#accountphnno\")" +
-".mask(\"999-999-9999\");\r\n\r\n\r\n\r\n\r\n    });\r\n    function NullSession(e) {\r\n        " +
-"$(\"#hdIsPostBack\").val(\"Y\");\r\n        $.ajax({\r\n            url: \'");
+"0) {\r\n                    $(\'.divqtyvisible\').hide();\r\n                } else\r\n " +
+"               {\r\n                    $(\'.divqtyvisible\').show();\r\n             " +
+"   }\r\n                if (vGrdTotal > 0) {\r\n                    $(\'.divvisible\')" +
+".show();\r\n                }\r\n                else {\r\n                    $(\'.div" +
+"visible\').hide();\r\n                  \r\n                }\r\n\r\n              \r\n    " +
+"        },\r\n        });\r\n\r\n\r\n\r\n\r\n\r\n\r\n    });\r\n    function checkMore(QtyId) {\r\n " +
+"       $(\"#Sp_\" + QtyId.toString()).slideToggle(\"fast\");\r\n        //$(\".TktdescD" +
+"etl\").slideToggle(\"fast\");\r\n    }\r\n    function checknumber(event) {\r\n\r\n        " +
+"var code = event.charCode ? event.charCode : event.keyCode;\r\n\r\n        if ((!eve" +
+"nt.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= 48 && code <= 57) |" +
+"| (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallow shift, ctrl, and " +
+"alt\r\n        {\r\n            return true;\r\n        }\r\n        else if (code != 8 " +
+"&& code != 46 && code != 37 && code != 39 && code != 9 && code != 190) // not es" +
+"c, del, left or right\r\n        {\r\n\r\n            event.preventDefault();\r\n       " +
+"     return false;\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n\r\n    function AddTicket() {\r\n" +
+"\r\n\r\n        $(\"#hidTicketbearer\").val(\'\');\r\n        var qty = parseInt($(\'#hidQt" +
+"y\').val());\r\n        var ddlength = parseInt($(\"#ddlListitem option\").length);\r\n" +
+"        if (ddlength < qty) {\r\n            var Sno = $(\"#tblListitem tr\").length" +
+";\r\n            var vTicketName = $(\"#nameofticket\").val();\r\n            var vTic" +
+"ketEmailDes = $(\"#emailbearer\").val();\r\n            if ($(\'.Notifybox\').css(\'dis" +
+"play\') == \'block\') {\r\n                vTicketEmailDes = $(\"#emailbearer\").val();" +
+"\r\n            } else {\r\n\r\n                vTicketEmailDes = \"\";\r\n            }\r\n" +
+"            //strHTML = strHTML + \'<td align=\"right\"><i onclick=\"editOrgnizer(\' " +
+"+ Sno + \')\"; class=\"fa fa-pencil\"></i> | <i onclick=\"DeleteOrgnizer(\' + Sno + \')" +
+";\" class=\"fa fa-trash\"></i></td>\';\r\n\r\n            var strHTML = \'<tr>\';\r\n       " +
+"     strHTML = strHTML + \'<td style=\"display:none\" width=\"92%\">\' + Sno + \'</td>\'" +
+";\r\n            strHTML = strHTML + \'<td width=\"92%\"><label id=TicketName_\' + Sno" +
+" + \'>\' + vTicketName + \'</label></td>\';\r\n            strHTML = strHTML + \'<td st" +
+"yle=\"display:none\"><label id=TicketEmail_\' + Sno + \'>\' + vTicketEmailDes + \'</la" +
+"bel></td>\';\r\n            strHTML = strHTML + \'</tr>\';\r\n            //           " +
+"     strHTML = strHTML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#\" oncli" +
+"ck=\"editRow(\' + Sno + \');\"><i class=\"fa fa-map-marker\"></i> Edit</a>  <a href=\"#" +
+"\" id=\"btAddDelete\" onclick=\"DeleteTableRow(\' + Sno + \')\">Delete</a> </div> </td>" +
+"\';\r\n\r\n\r\n            $(\"#tblListitem\").append(strHTML);\r\n            strHTML = \'<" +
+"option value=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vTicketName + \'</option>\';\r\n\r\n  " +
+"          $(\"#ddlListitem\").append(strHTML);\r\n        }\r\n\r\n    }\r\n    $(\"#editli" +
+"st\").click(function () {\r\n        var Sno = $(\"#ddlListitem\").val();\r\n\r\n        " +
+"$(\"#hidTicketbearer\").val(Sno);\r\n        var vOrgName = $(\"#TicketName_\" + Sno)." +
+"text();\r\n        var vOrgDes = $(\"#TicketEmail_\" + Sno).text();\r\n        if (vOr" +
+"gDes != \"\") {\r\n            if ($(\'.Notifybox\').css(\'display\') == \'none\') {\r\n    " +
+"            $(\'.Notifybox\').css(\'display\', \'block\');\r\n            }\r\n        }\r\n" +
+"\r\n        $(\"#nameofticket\").val(vOrgName);\r\n        $(\"#emailbearer\").val(vOrgD" +
+"es);\r\n    });\r\n    var cardlength = $(\"#cardno\").val();\r\n    if (cardlength == \"" +
+"\") {\r\n        $(\'#imgcard\').css(\'display\', \'none\');\r\n\r\n    }\r\n    $(\"#deletelist" +
+"\").click(function () {\r\n        var Sno = $(\"#ddlListitem\").val();\r\n        $(\'#" +
+"tblListitem tr\').each(function () {\r\n            if (Sno == $(this).find(\"td:fir" +
+"st\").html()) {\r\n                $(this).remove();\r\n            }\r\n        });\r\n\r" +
+"\n        //$(\"#dllOrganizer\")\r\n        $(\"#ddlListitem option\").each(function (i" +
+") {\r\n            if (Sno == $(this).val()) {\r\n                $(this).remove();\r" +
+"\n            }\r\n        });\r\n\r\n\r\n\r\n        $(\"#hidTicketbearer\").val(\'\');\r\n     " +
+"   $(\"#nameofticket\").val(\'\');\r\n        $(\"#emailbearer\").val(\'\');\r\n        if (" +
+"$(\'#ddlListitem option\').length <= 0) {\r\n            $(\'#blocklist\').css(\'displa" +
+"y\', \'none\');\r\n\r\n        } else {\r\n            $(\'#blocklist\').css(\'display\', \'bl" +
+"ock\');\r\n        }\r\n\r\n\r\n    });\r\n    function UpdateTicket() {\r\n        var Sno =" +
+" $(\"#ddlListitem\").val();\r\n        //    alert(Sno);\r\n        vOrgName = $(\"#nam" +
+"eofticket\").val();\r\n        vOrgDes = $(\"#emailbearer\").val();\r\n        //vOrgFB" +
+" = $(\"#txtOrgFBlink\").val();\r\n        //vOrgTw = $(\"#txtOrgTWlink\").val();\r\n\r\n  " +
+"      $(\"#TicketName_\" + Sno).text(vOrgName);\r\n        $(\"#TicketEmail_\" + Sno)." +
+"text(vOrgDes);\r\n\r\n\r\n\r\n        $(\"#ddlListitem option\").each(function (i) {\r\n    " +
+"        if (Sno == $(this).val()) {\r\n                $(this).remove();\r\n        " +
+"    }\r\n        });\r\n        var addOption = \'<option value=\"\' + Sno + \'\" id=\"\' +" +
+" Sno + \'\" >\' + vOrgName + \'</option>\';\r\n        $(\"#ddlListitem\").append(addOpti" +
+"on);\r\n\r\n\r\n\r\n\r\n    }\r\n    jQuery(function ($) {\r\n        if ($(\'#ddlListitem opti" +
+"on\').length <= 0) {\r\n            $(\'#blocklist\').css(\'display\', \'none\');\r\n\r\n    " +
+"    } else {\r\n            $(\'#blocklist\').css(\'display\', \'block\');\r\n        }\r\n\r" +
+"\n        $(\"#expirationdate\").mask(\"99/99\");\r\n        $(\"#shippingphnno\").mask(\"" +
+"999-999-9999\");\r\n        $(\"#billingphno\").mask(\"999-999-9999\");\r\n        $(\"#ac" +
+"countphnno\").mask(\"999-999-9999\");\r\n\r\n\r\n\r\n\r\n    });\r\n    function NullSession(e)" +
+" {\r\n        $(\"#hdIsPostBack\").val(\"Y\");\r\n        $.ajax({\r\n            url: \'");
 
             
-            #line 1737 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1740 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("Nullsession", "TicketPayment"));
 
             
@@ -2740,7 +2743,7 @@ WriteLiteral("\',\r\n            type: \"Get\",\r\n            success: function
 "dow.location.href = \'");
 
             
-            #line 1744 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1747 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                            Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
@@ -2792,7 +2795,7 @@ WriteLiteral(@"' + '?Eventid=' + eventid;
                 url: '");
 
             
-            #line 1787 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1790 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("returncardetail", "TicketPayment"));
 
             
@@ -2944,9 +2947,9 @@ WriteLiteral("\',\r\n                data: { \'cardid\': selectvalue },\r\n     
 "   return false;\r\n                }\r\n            },\r\n            error: function" +
 " (data) { alert(data) }\r\n        });\r\n\r\n\r\n    });\r\n</script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 87488), Tuple.Create("\"", 87529)
-, Tuple.Create(Tuple.Create("", 87494), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 87494), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 87619), Tuple.Create("\"", 87660)
+, Tuple.Create(Tuple.Create("", 87625), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 87625), false)
 );
 
 WriteLiteral("></script>");
