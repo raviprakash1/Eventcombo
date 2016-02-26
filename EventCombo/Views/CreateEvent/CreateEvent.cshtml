@@ -5754,6 +5754,16 @@
         //$('.TmezoneSet, .Timezone').on('click', function (e) {
         //    e.stopPropagation();
         //});
+
+        $(document).on('click', function (e) {
+            var $target = $(e.target);
+            if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
+                $(".StartDatemodal").hide();
+            };
+            if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
+                $(".TmezoneSet").hide();
+            }
+        });
         
     </script>
 
