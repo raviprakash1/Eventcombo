@@ -491,7 +491,9 @@
                         data: { iEvntCtgryId: CatId},
                         type: "POST",
                         success: function (response) {
-                            SuccessMessage(response);
+                            if (response != '') {
+                                SuccessMessage(response);
+                            }
                             LoadEventTypeListAsyn();
                             //window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
                         },
@@ -536,7 +538,9 @@
                         data: { iEvntCtgryId: CatId, iEvntSubCtgryId: EvntSubCatId},
                         type: "POST",
                         success: function (response) {
-                            SuccessMessage(response);
+                            if (response != '') {
+                                SuccessMessage(response);
+                            }
                             LoadEventTypeListAsyn();
                             // window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
                         },
@@ -667,6 +671,7 @@
             $('#dvEventCategoryListContainer').load('@Url.Action("EventCategoryList", "EventCategory")');
        }
         function SuccessMessage(msg) {
+            
             if (msg == "SA") {
                 $("#spanid").html("Event subcategory added successfully");
 
