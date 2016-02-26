@@ -695,7 +695,8 @@ namespace EventCombo.Controllers
                                Ticket_variabledesc = myEvent.Ticket_variabledesc,
                                Ticket_variabletype = myEvent.Ticket_variabletype,
                                ModifyDate =  "(Last Saved at " + (myEvent.ModifyDate.ToString().Trim() != "" ? myEvent.ModifyDate.ToString().Trim() : myEvent.CreateDate.ToString().Trim()) + ")" ,
-                               ShowMap=myEvent.ShowMap
+                               ShowMap=myEvent.ShowMap,
+                               Parent_EventID = myEvent.Parent_EventID
                            }
                         ).FirstOrDefault();
                 return vEC;

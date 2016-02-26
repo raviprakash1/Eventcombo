@@ -739,8 +739,8 @@
                                         </div>
                                         <div class="col-sm-3 no_pad ">
                                             <div class="form-group">
-                                                <label class="col-sm-3 no_pad control-label ev_tickt_lebel">Total</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-sm-3 no_pad control-label ev_tickt_lebel">Total </label>
+                                                <div class="col-sm-9">
                                                     <input type="hidden" id="hd_ecfee-n" value="0" />
                                                     <label class="form-control evnt_inp_cont" id="id_ecfee-n"> 0 </label>
                                                 </div>
@@ -1266,6 +1266,7 @@ else
                     <input type="hidden" id="hidOrgnizer" value="" />
                     <input type="hidden" id="hidAddressStatus" value="@Model.AddressStatus" />
                     <input type="hidden" id="hdEventId" value="@Model.EventID" />
+                    <input type="hidden" id="hdParentEventId" value="@Model.Parent_EventID" />
 
                     <input id="imageeror" type="hidden" value="0" />
                     <input id="image_count" type="hidden" />
@@ -2802,10 +2803,10 @@ else
                         }
                        else
                         {
-                            var vMasterEventId =$("#hdEventId").val();
+                            // alert(type);
+
+                            var vMasterEventId =$("#hdParentEventId").val();
                             $("#hdEventId").val(response);
-
-
                             if(type=="Save")
                             {
                             //    $('#divaccsuc').css('display', 'block');
@@ -2989,8 +2990,10 @@ else
                     return false;
 
                 }
-
-                save("Save");
+                if ($("#status").val().trim().toUpperCase() == "LIVE")
+                    save("Live");
+                else
+                    save("Save");
 
             });
 
