@@ -3220,7 +3220,7 @@
 
                     $('#id_auto_hide_until_Date-' + el).focus();
                     $('#id_auto_hide_until_Date-' + el).val("");
-                    $('#id_auto_hide_after_Date-' + el).val("");
+                  
                 }
 
                 //} else {
@@ -4377,7 +4377,7 @@
 
 
                     //$('#id_auto_hide_until_time-' + el).focus();
-                    $('#id_auto_hide_until_time-' + el).val("7:00pm");
+                    $('#id_auto_hide_until_time-' + el).val("");
                     //$('#id_auto_hide_after_Time-' + el).val("7:00pm");
 
                 } else {
@@ -4392,12 +4392,12 @@
             if (al == "id_auto_hide_after_Time") {
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
-                    $("#id_auto_hide_after_Time-" + el).val("7:00pm");
+                    $("#id_auto_hide_after_Time-" + el).val("");
                     //$('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
                   
                     //$('#id_auto_hide_after_Time-' + el).focus();
 
-                    $('#id_hdautohideafter-' + el).val("7:00pm");
+                    $('#id_hdautohideafter-' + el).val("");
 
                 } else {
                     $('#id_hdautohideafter-' + el).val($('#' + e).val());
