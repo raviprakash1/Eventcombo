@@ -55,6 +55,9 @@ namespace EventCombo.Models
         public string ModifyDate { get; set; }
         public string Cancelevent { get; set; }
         public string Isadmin { get; set; }
+
+        public long? Parent_EventID { get; set; }
+
     }
 
 

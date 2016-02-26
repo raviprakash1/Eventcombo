@@ -10,6 +10,7 @@ using PagedList;
 namespace EventCombo.Controllers
 {
 
+    [OutputCacheAttribute(VaryByParam = "None", Duration = 0, NoStore = true)]
     public class EventListController : Controller
     {
         string UserId = string.Empty;

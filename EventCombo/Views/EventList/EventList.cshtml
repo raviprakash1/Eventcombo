@@ -109,10 +109,13 @@
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
                             {
                                 <tr>
+
                                     <td class="evnt_mng_tit_200">@item.EventTitle</td>
+
                                     <td>@item.EventDate / @item.EventTime</td>
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
+
                                         <div class="event-btn-action">
                                             <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid =  item.EventID, type = "N" }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = ValidationMessageController.GetParentEventId(item.EventID) }, null)</p>

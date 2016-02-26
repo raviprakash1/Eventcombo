@@ -683,3 +683,4 @@ textarea {resize: none;}
 .sal_viw_mor_btn:hover{ text-decoration:underline; }
 .sal_viw_mor_btn:focus, .sal_viw_mor_btn:active:focus, .sal_viw_mor_btn.active:focus, .sal_viw_mor_btn.focus, .sal_viw_mor_btn:active.focus, .sal_viw_mor_btn.active.focus{ outline:none; }
 .sal_viw_mor_btn:active, .sal_viw_mor_btn.active{ box-shadow:none; }
+.view_sec_text{ word-break:break-all; }
