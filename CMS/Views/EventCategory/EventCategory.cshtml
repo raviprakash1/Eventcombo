@@ -473,7 +473,9 @@
                          data: { iEvntCtgryId: $("#hdCatid").val() },
                         type: "POST",
                         success: function (response) {
-                            SuccessMessage(response);
+                            if (response != '') {
+                                SuccessMessage(response);
+                            }
                             LoadEventTypeListAsyn();
                             //window.location.href = '@Url.Action("EventCategory", "EventCategory", new { })?msg=' + response;
                         },

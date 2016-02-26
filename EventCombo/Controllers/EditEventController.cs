@@ -872,8 +872,8 @@ namespace EventCombo.Controllers
                         }
 
                         ecfee= (ObjTick.EC_Fee!=null? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee): ecfeenew);
-                        ecfeepercentage =(ObjTick.T_Ecpercent!=null? String.Format("{0:#,###,###.00}", percent): String.Format("{0:#,###,###.00}", percent));
-                        ecamount = (ObjTick.T_EcAmount!=null?String.Format("{0:#,###,###.00}", amount): String.Format("{0:#,###,###.00}", amount));
+                        ecfeepercentage =(ObjTick.T_Ecpercent!=null? ObjTick.T_Ecpercent.ToString():  percent.ToString());
+                        ecamount = (ObjTick.T_EcAmount!=null?String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount) : String.Format("{0:#,###,###.00}", amount));
 
                         type = "Paid";
                     }
@@ -1049,15 +1049,15 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<div class='form-group'>");
                     strticketHtml.Append("<label class='col-sm-5 no_pad control-label ev_tickt_lebel'>EC Fee</label>");
                     strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>%</label>");
-                    strticketHtml.Append("<div class='col-sm-6'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_ecfeeper-" + j + "' value=" + ecfeepercentage + "  onkeypress='allownumber(this,event,this.id)' onblur='tofixed(this.id)' onkeyup='changeinecfee(this.id)'  />");
+                    strticketHtml.Append("<div class='col-sm-6'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_ecfeeper-" + j + "' value=" + ecfeepercentage + "  onkeypress='allownumber(this,event,this.id)' onblur='tofixed(this.id)' onfocusout='changeinecfee(this.id)' maxlength=3  />");
                     strticketHtml.Append("  </div></div></div>");
                     strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> + </div><div class='col-sm-2 no_pad'><div class='form-group'>");
                     strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>");
-                    strticketHtml.Append("<div class='col-sm-11'><input type='text' class='form-control evnt_inp_cont'  id='id_ecfeeamt-" + j + "' value=" + ecamount + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id)'  onkeyup='changeinecfee(this.id)' >");
+                    strticketHtml.Append("<div class='col-sm-11'><input type='text' class='form-control evnt_inp_cont'  id='id_ecfeeamt-" + j + "' value=" + ecamount + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id)'  onfocusout='changeinecfee(this.id)' maxlength=8 >");
                     strticketHtml.Append("</div> </div></div>");
                     strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> =   </div>");
                     strticketHtml.Append("<div class='col-sm-3 no_pad'>");
-                    strticketHtml.Append("<div class='form-group'> <label class='col-sm-3 no_pad control-label ev_tickt_lebel'>Total</label>");
+                    strticketHtml.Append("<div class='form-group'> <label class='col-sm-3 no_pad control-label ev_tickt_lebel'>Total:</label>");
                     strticketHtml.Append(" <div class='col-sm-9'>   <input type='hidden' id='hd_ecfee-" + j + "' value="+ecfee+" />");
                     strticketHtml.Append("<label class='form-control evnt_inp_cont' id='id_ecfee-" + j + "'> "+ecfee+" </label>");
                     strticketHtml.Append("</div></div ></div >");
@@ -1068,7 +1068,7 @@ namespace EventCombo.Controllers
                     strticketHtml.Append("<label class='col-sm-6 no_pad control-label ev_tickt_lebel'>Cutomer Fee</label>");
                     strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>"); 
                     strticketHtml.Append("<div class='col-sm-5'>");
-                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont'  id='id_customerfee-" + j + "' placeholder='' value=" + customerfee + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id)' onkeyup='reflectfeechange(this.id)' />");
+                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont'  id='id_customerfee-" + j + "' placeholder='' value=" + customerfee + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id)' onfocusout='reflectfeechange(this.id)' maxlength=8 />");
                     strticketHtml.Append("<input type='hidden'  id='hd_customerfee-" + j + "' value=" + customerfee + " />");
                     strticketHtml.Append("<input type='hidden'  id='hd_customchange-" + j + "' value=0 />");
                     strticketHtml.Append("</div></div ></div ></div ></div> </div>");

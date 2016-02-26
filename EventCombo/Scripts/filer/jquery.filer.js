@@ -189,11 +189,13 @@
                         var s = 0;
                         if (n.limit && f.files.length + f._itFl.length > n.limit) {
                             $('#diverroacc').css('display', 'block');
+                            $('#divaccsuc').css('display', 'none');
                             $('#diverroacc').focus();
                             $('#diverro1acc').css('display', 'none');
                             $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesLimit));
                             $("#imageeror").val('1');
                             $('#divsuccerr').css('display', 'block');
+
                             setTimeout(function () {
                                // $('#diverroacc').fadeOut();
                                 $("#imageeror").val('0');
@@ -219,6 +221,7 @@
                                 $('#diverroacc').focus();
                                 $('#diverro1acc').css('display', 'none');
                                 $('#divsuccerr').css('display', 'block');
+                                $('#divaccsuc').css('display', 'none');
                                 $("#imageeror").val('1');
                                 setTimeout(function () {
                                     // $('#diverroacc').fadeOut();
@@ -239,7 +242,7 @@
                                 $('#diverro1acc').css('display', 'none');
                                 $('#divsuccerr').css('display', 'block');
                                 $("#imageeror").val('1');
-                           
+                                $('#divaccsuc').css('display', 'none');
                                 setTimeout(function () {
                                     // $('#diverroacc').fadeOut();
                                     $("#imageeror").val('0');
@@ -265,7 +268,7 @@
                             $('#divsuccerr').css('display', 'block');
                             $('#erraccmsg').html(f._assets.textParse(n.captions.errors.filesSizeAll));
                             $("#imageeror").val('1');
-
+                            $('#divaccsuc').css('display', 'none');
                             setTimeout(function () {
                                 // $('#diverroacc').fadeOut();
                                 $("#imageeror").val('0');

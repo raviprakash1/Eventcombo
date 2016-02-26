@@ -346,7 +346,7 @@
             function EditEvent(eventId,UserID) {
                 var appSetting = '@(System.Configuration.ConfigurationManager.AppSettings["EventComboClientDomain"].ToString())';
                 var url = appSetting + '/CMS/Index?id=' + eventId + '&e=' + UserID;
-                var w = 880, h = 600,
+                var w = 960, h = 600,
                 left = Number((screen.width / 2) - (w / 2)), tops = Number((screen.height / 2) - (h / 2)),
                 popupWindow = window.open(url, 'targetWindow', 'toolbar=no,location=Center,status=no,menubar=no,scrollbars=yes,resizable=yes,width=' + w + ',height=' + h + ', top=' + tops + ', left=' + left);
                 popupWindow.focus(); return false;

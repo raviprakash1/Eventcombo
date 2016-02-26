@@ -165,7 +165,7 @@ WriteLiteral(" class=\"er_suc\"");
 
 WriteLiteral(" id=\"erraccmsg\"");
 
-WriteLiteral(">\r\n                            <button");
+WriteLiteral(">\r\n                        </div>\r\n                        <button");
 
 WriteLiteral(" class=\"close\"");
 
@@ -173,8 +173,8 @@ WriteLiteral(" type=\"button\"");
 
 WriteLiteral(" id=\"btndivaccerr\"");
 
-WriteLiteral(">&#215;</button>\r\n                        </div>\r\n                    </div>\r\n   " +
-"             </div>\r\n                <div");
+WriteLiteral(">&#215;</button>\r\n                    </div>\r\n                </div>\r\n           " +
+"     <div");
 
 WriteLiteral(" class=\"Moderor\"");
 
@@ -227,14 +227,14 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" class=\"img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1909), Tuple.Create("\"", 1946)
+WriteAttribute("src", Tuple.Create(" src=\"", 1905), Tuple.Create("\"", 1942)
             
             #line 44 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-, Tuple.Create(Tuple.Create("", 1915), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Imageurl)
+, Tuple.Create(Tuple.Create("", 1911), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Imageurl)
             
             #line default
             #line hidden
-, 1915), false)
+, 1911), false)
 );
 
 WriteLiteral(">\r\n                        </div>\r\n                        <div");
@@ -307,9 +307,9 @@ WriteLiteral(" id=\"dvAjxLoader\"");
 
 WriteLiteral(">\r\n                            <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5239), Tuple.Create("\"", 5269)
-, Tuple.Create(Tuple.Create("", 5245), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 5245), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 5235), Tuple.Create("\"", 5265)
+, Tuple.Create(Tuple.Create("", 5241), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 5241), false)
 );
 
 WriteLiteral(" />\r\n                        </div>\r\n                    </div>\r\n                " +
@@ -445,14 +445,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"FIRST NAME\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8592), Tuple.Create("\"", 8628)
+WriteAttribute("value", Tuple.Create(" value=\"", 8588), Tuple.Create("\"", 8624)
             
             #line 157 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                      , Tuple.Create(Tuple.Create("", 8600), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.FName)
+                                      , Tuple.Create(Tuple.Create("", 8596), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.FName)
             
             #line default
             #line hidden
-, 8600), false)
+, 8596), false)
 );
 
 WriteLiteral(" maxlength=35");
@@ -471,14 +471,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"LAST NAME\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8881), Tuple.Create("\"", 8917)
+WriteAttribute("value", Tuple.Create(" value=\"", 8877), Tuple.Create("\"", 8913)
             
             #line 160 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                     , Tuple.Create(Tuple.Create("", 8889), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.LName)
+                                     , Tuple.Create(Tuple.Create("", 8885), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.LName)
             
             #line default
             #line hidden
-, 8889), false)
+, 8885), false)
 );
 
 WriteLiteral(" id=\"accLname\"");
@@ -497,14 +497,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"EMAIL\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 9166), Tuple.Create("\"", 9202)
+WriteAttribute("value", Tuple.Create(" value=\"", 9162), Tuple.Create("\"", 9198)
             
             #line 163 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 9174), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Email)
+                                 , Tuple.Create(Tuple.Create("", 9170), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Email)
             
             #line default
             #line hidden
-, 9174), false)
+, 9170), false)
 );
 
 WriteLiteral(" id=\"Email\"");
@@ -677,14 +677,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"PHONE NUMBER\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 11649), Tuple.Create("\"", 11685)
+WriteAttribute("value", Tuple.Create(" value=\"", 11645), Tuple.Create("\"", 11681)
             
             #line 200 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                       , Tuple.Create(Tuple.Create("", 11657), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.PhnNo)
+                                       , Tuple.Create(Tuple.Create("", 11653), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.PhnNo)
             
             #line default
             #line hidden
-, 11657), false)
+, 11653), false)
 );
 
 WriteLiteral(" id=\"accountphnno\"");
@@ -709,14 +709,14 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"accCity\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 12039), Tuple.Create("\"", 12077)
+WriteAttribute("value", Tuple.Create(" value=\"", 12035), Tuple.Create("\"", 12073)
             
             #line 204 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                                              , Tuple.Create(Tuple.Create("", 12047), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.AccCity)
+                                                              , Tuple.Create(Tuple.Create("", 12043), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.AccCity)
             
             #line default
             #line hidden
-, 12047), false)
+, 12043), false)
 );
 
 WriteLiteral(">\r\n                                </div>\r\n                                <div");
@@ -735,14 +735,14 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"accState\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 12337), Tuple.Create("\"", 12376)
+WriteAttribute("value", Tuple.Create(" value=\"", 12333), Tuple.Create("\"", 12372)
             
             #line 207 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 12345), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.AccState)
+                                                                , Tuple.Create(Tuple.Create("", 12341), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.AccState)
             
             #line default
             #line hidden
-, 12345), false)
+, 12341), false)
 );
 
 WriteLiteral(">\r\n                                </div>\r\n\r\n\r\n                            </div>" +
@@ -766,14 +766,14 @@ WriteLiteral(" maxlength=5");
 
 WriteLiteral(" id=\"accZip\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 12752), Tuple.Create("\"", 12789)
+WriteAttribute("value", Tuple.Create(" value=\"", 12748), Tuple.Create("\"", 12785)
             
             #line 214 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                                          , Tuple.Create(Tuple.Create("", 12760), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Acczip)
+                                                          , Tuple.Create(Tuple.Create("", 12756), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Acczip)
             
             #line default
             #line hidden
-, 12760), false)
+, 12756), false)
 );
 
 WriteLiteral(">\r\n                                </div>\r\n                                <div");
@@ -836,14 +836,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                        <option");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 13977), Tuple.Create("\"", 13996)
+WriteAttribute("value", Tuple.Create(" value=\"", 13973), Tuple.Create("\"", 13992)
             
             #line 239 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-, Tuple.Create(Tuple.Create("", 13985), Tuple.Create<System.Object, System.Int32>(item.value
+, Tuple.Create(Tuple.Create("", 13981), Tuple.Create<System.Object, System.Int32>(item.value
             
             #line default
             #line hidden
-, 13985), false)
+, 13981), false)
 );
 
 WriteLiteral(">");
@@ -1571,9 +1571,9 @@ WriteLiteral(" style=\"display:none\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 27191), Tuple.Create("\"", 27221)
-, Tuple.Create(Tuple.Create("", 27197), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 27197), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 27187), Tuple.Create("\"", 27217)
+, Tuple.Create(Tuple.Create("", 27193), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 27193), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n            </div>\r\n  " +
@@ -1782,9 +1782,9 @@ WriteLiteral(" class=\"msg\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 29802), Tuple.Create("\"", 29832)
-, Tuple.Create(Tuple.Create("", 29808), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 29808), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 29798), Tuple.Create("\"", 29828)
+, Tuple.Create(Tuple.Create("", 29804), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 29804), false)
 );
 
 WriteLiteral(" />Please wait, Preparing your order.</h4>\r\n                    </div>\r\n         " +
@@ -1960,37 +1960,37 @@ WriteLiteral(">\r\n\r\n    </div>\r\n");
             #line hidden
 WriteLiteral("<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 31976), Tuple.Create("\"", 32009)
-, Tuple.Create(Tuple.Create("", 31982), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/Commonfunction.js")
-, 31982), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 31972), Tuple.Create("\"", 32005)
+, Tuple.Create(Tuple.Create("", 31978), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/Commonfunction.js")
+, 31978), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32029), Tuple.Create("\"", 32057)
-, Tuple.Create(Tuple.Create("", 32035), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/flipclock.js")
-, 32035), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32025), Tuple.Create("\"", 32053)
+, Tuple.Create(Tuple.Create("", 32031), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/flipclock.js")
+, 32031), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32077), Tuple.Create("\"", 32109)
-, Tuple.Create(Tuple.Create("", 32083), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.cookie.js")
-, 32083), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32073), Tuple.Create("\"", 32105)
+, Tuple.Create(Tuple.Create("", 32079), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.cookie.js")
+, 32079), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32129), Tuple.Create("\"", 32157)
-, Tuple.Create(Tuple.Create("", 32135), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
-, 32135), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32125), Tuple.Create("\"", 32153)
+, Tuple.Create(Tuple.Create("", 32131), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
+, 32131), false)
 );
 
 WriteLiteral("></script>\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 32175), Tuple.Create("\"", 32233)
-, Tuple.Create(Tuple.Create("", 32182), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css")
-, 32182), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 32171), Tuple.Create("\"", 32229)
+, Tuple.Create(Tuple.Create("", 32178), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css")
+, 32178), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -2947,9 +2947,9 @@ WriteLiteral("\',\r\n                data: { \'cardid\': selectvalue },\r\n     
 "   return false;\r\n                }\r\n            },\r\n            error: function" +
 " (data) { alert(data) }\r\n        });\r\n\r\n\r\n    });\r\n</script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 87619), Tuple.Create("\"", 87660)
-, Tuple.Create(Tuple.Create("", 87625), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 87625), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 87615), Tuple.Create("\"", 87656)
+, Tuple.Create(Tuple.Create("", 87621), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 87621), false)
 );
 
 WriteLiteral("></script>");

@@ -3,6 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
+<script src="~/Scripts/jquery.masked.js"></script>
 <section id="content_wrapper">
     <div class="panel">
         <div class="panel-heading">
@@ -42,19 +43,24 @@
                             <div class="form-group">
                                 <label class="col-lg-12">$</label>
                                 <div class="col-lg-6">
-                                    <input type="text" id="idvalue" class="form-control" name="value" maxlength="7" onkeypress="allownumberdec(this,event)" value="@Model.value" />
+                                    <input type="text" id="idvalue" class="form-control" name="value" maxlength="8" onkeypress="allownumberdec(this,event)" value="@Model.value" onblur="tofixed(this.id)" />
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12 mb10">
+                            <div class="radio-custom radio-primary mt5 fl-lft mr10">
+                                <input id="id_appycustomise"  type="radio" name="cust" checked="checked">
+                                <label for="id_appycustomise">apply only to non-customized events</label>
 
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="col-lg-6"><input type="radio" name="cust" id="id_appycustomise" checked="checked" />apply only to non-customized events</label>
+                            </div>
 
-                              <label class="col-lg-6"><input type="radio" name="cust" id="id_appytoall" />  apply to all events</label>
-                              
+                            <div class="radio-custom radio-primary mt5 fl-lft mr10">
+                                <input id="id_appytoall" type="radio" name="cust" checked="checked">
+                                <label for="id_appytoall">apply to all events</label>
+
                             </div>
                         </div>
+                        
                         <div class="col-md-12">
                             <button class="btn btn-primary col-sm-3" type="button" id="btnsave">Save</button>
                         </div>
@@ -97,6 +103,27 @@
 
 
 <script type="text/javascript">
+
+    function tofixed(id) {
+        debugger;
+        var price = $('#' + id).val().replace(',', '');
+     
+        if (id == "") {
+
+        } else {
+
+            var price = parseFloat(price).toFixed(2);
+
+            if (!isNaN(price)) {
+
+                price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                document.getElementById(id).value = price;
+            }
+
+        }
+
+
+    }
     function allownumber(evt) {
         var charCode = (evt.which) ? evt.which : event.keyCode;
 
@@ -133,6 +160,8 @@
 
     });
     $(document).ready(function () {
+       
+     
         $("#btnYes").click(function () {
            
             var apply = "";
