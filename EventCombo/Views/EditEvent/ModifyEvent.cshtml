@@ -717,7 +717,7 @@
                                                 <label class="col-sm-1 no_pad control-label ev_tickt_lebel">%</label>
                                                 <div class="col-sm-6">
 
-                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeper-n" onkeypress="allownumber(this,event,this.id)" onfocusout="changeinecfee(this.id)" maxlength="3" />
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeper-n" onkeypress="allownumber(this,event,this.id)" onblur="changeinecfee(this.id)" maxlength="3" />
                                                 </div>
                                             </div>
                                         </div>
@@ -730,7 +730,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-1 no_pad control-label ev_tickt_lebel">$</label>
                                                 <div class="col-sm-11">
-                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeamt-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id)"  onfocusout="changeinecfee(this.id)" maxlength="8"/>
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeamt-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);changeinecfee(this.id)"   maxlength="8"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -756,7 +756,7 @@
                                                     <label class="col-sm-1 no_pad control-label ev_tickt_lebel">$</label>
                                                     <div class="col-sm-5">
                                                       
-                                                        <input type="text" class="form-control evnt_inp_cont"  id="id_customerfee-n" placeholder=""  onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id)" onfocusout="reflectfeechange(this.id)" maxlength="8"/>
+                                                        <input type="text" class="form-control evnt_inp_cont"  id="id_customerfee-n" placeholder=""  onkeypress="validatenumdec(this, event, this.id)" onblur="    tofixed(this.id);reflectfeechange(this.id)"  maxlength="8"/>
                                                         <input type="hidden"  id="hd_customerfee-n" value="0" />
                                                         <input type="hidden" id="hd_customchange-n" value="0" />
                                                     </div>
@@ -1877,6 +1877,7 @@ else
         });
         $(".cbtPreview").click(function () {
             var msg = validatemain();
+       
             if (msg != "") {
 
                 $('#diverroacc').css('display', 'block');
@@ -2855,7 +2856,7 @@ else
                 $('#divaccsuc').css('display', 'none');
                 $('#diverroacc').css('display', 'block');
 
-
+                $('#divaccsuc').css('display', 'none');
                 $('#erraccmsg').html('There some problem occurs, Please check after some time.');
                 $('#btndiverrsuc').focus();
                 $('html,body').animate({ scrollTop: 0 });
@@ -2946,6 +2947,7 @@ else
                 var msg = validatemain();
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
+
                     $('#erraccmsg').html(msg);
                     $('#divaccsuc').css('display', 'none');
                     $('html,body').animate({ scrollTop: 0 });
@@ -2982,6 +2984,7 @@ else
 
             $('.cbtSave').click(function () {
                 var msg = validatemain();
+               
                 if (msg != "") {
                     $('#diverroacc').css('display', 'block');
                     $('#erraccmsg').html(msg);
@@ -3068,7 +3071,7 @@ else
                     var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizerUI');
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-
+                    $('#divaccsuc').css('display', 'none');
                     $('#btndiverrsuc').focus();
                     $('#erraccmsg').html(msg);
                     $('html,body').animate({ scrollTop: 0 });
@@ -3089,7 +3092,7 @@ else
                         var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-
+                        $('#divaccsuc').css('display', 'none');
                         $('#btndiverrsuc').focus();
                         $('#erraccmsg').html(msg);
                         $('html,body').animate({ scrollTop: 0 });
@@ -3189,7 +3192,7 @@ else
                             if (data == "Y") {
                                 $("#txtEventUrl").addClass('err-bor');
                                 $('#diverroacc').css('display', 'block');
-
+                                $('#divaccsuc').css('display', 'none');
                                 $('#btndiverrsuc').focus();
                                 var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
                                 $('#erraccmsg').html(msg);
@@ -3207,6 +3210,7 @@ else
                         error: function (data) {
                             $('#divaccsuc').css('display', 'none');
                             $('#diverroacc').css('display', 'block');
+                            $('#divaccsuc').css('display', 'none');
                             $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                             $('html,body').animate({ scrollTop: 0 });
                             $('#btndiverrsuc').focus();
@@ -3234,7 +3238,7 @@ else
                     error: function (data) {
                         $('#divaccsuc').css('display', 'none');
                         $('#diverroacc').css('display', 'block');
-
+                        $('#divaccsuc').css('display', 'none');
 
                         $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                         $('#diverroacc').focus();
@@ -3421,7 +3425,7 @@ else
                 error: function (data) {
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
-
+                    $('#divaccsuc').css('display', 'none');
 
                     $('#erraccmsg').html(ajaxsetup('CreateEvent', 'CreateEventProbleminApllUI'));
                     $('#diverroacc').focus();
@@ -4207,7 +4211,7 @@ else
                 if(isNaN(fee))
                 {
                     $('#diverroacc').show();
-              
+                    $('#divaccsuc').css('display', 'none');
                     $('#erraccmsg').html("Please Enter Customer fee");
                     $('html,body').animate({ scrollTop: 0 });
                     $('#' + id).addClass('err-bor');
@@ -4221,7 +4225,7 @@ else
                 {
                     $('#' + id).addClass('err-bor');
                     $('#diverroacc').show();
-              
+                    $('#divaccsuc').css('display', 'none');
                     $('#erraccmsg').html("Please Enter Customer fee");
                     $('html,body').animate({ scrollTop: 0 });
                     return false;
@@ -4295,7 +4299,7 @@ else
                     {
                         $('#' + id).addClass('err-bor');
                         $('#diverroacc').show();
-              
+                        $('#divaccsuc').css('display', 'none');
                         $('#erraccmsg').html("Please Enter EC percentage");
                         $('html,body').animate({ scrollTop: 0 });
                         $('#id_ecfee-'+num).html(0);
@@ -4322,7 +4326,7 @@ else
                     {
                         $('#' + id).addClass('err-bor');
                         $('#diverroacc').show();
-              
+                        $('#divaccsuc').css('display', 'none');
                         $('#erraccmsg').html("Please Enter EC Amount");
                         $('html,body').animate({ scrollTop: 0 });
                         $('#id_ecfee-'+num).html(0);
@@ -5982,6 +5986,7 @@ else
                         } 
                     }
                     var isadmin="@Model.Isadmin";
+                   
                     if(isadmin=="Y")
                     {
                         var tickettype=$('#id_Tickettype-' + i).val();
@@ -5990,26 +5995,29 @@ else
                         {
                             
                             var percent=parseFloat($("#id_ecfeeper-"+i).val());
-                         var amount=  parseFloat($("#id_ecfeeamt-"+i).val());
-                          var customer=  parseFloat($("#id_customerfee-"+i).val());
-                           
-                      if(  percent<=0)
+                            if (isNaN(percent) == true) percent = 0;
+                            var amount=  parseFloat($("#id_ecfeeamt-"+i).val());
+                            if (isNaN(amount) == true) amount = 0;
+                         var customer=  parseFloat($("#id_customerfee-"+i).val());
+                         if (isNaN(customer) == true) customer = 0;
+                        
+                      if(percent<=0)
                             {
                                 $("#id_ecfeeper-"+i).addClass('err-bor');
                                 eccount=eccount+1;
                             }
-                      if(  amount<=0)
+                      if(amount<=0)
                             {
                                 $("#id_ecfeeamt-"+i).addClass('err-bor');
                                 eccount=eccount+1;
                             }
                   
-                      if( customer<=0)
+                      if(customer<=0)
                       {
-                        
-                                $("#id_customerfee-"+i).addClass('err-bor');
-                                eccount=eccount+1;
-                            }
+                       
+                          $("#id_customerfee-"+i).addClass('err-bor');
+                          eccount=eccount+1;
+                      }
                         }
                     }
                     if ($('#id_ticketshidden-' + i).is(":checked"))
@@ -6101,9 +6109,10 @@ else
             {
                 count++;
             }
+          
             if(eccount>0)
             {
-              
+               
                 msg += "Please Enter Valid Fee and Price<br/>";
             }
             if (countdiscount > 0)
