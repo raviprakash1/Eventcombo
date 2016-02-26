@@ -941,8 +941,12 @@ namespace EventCombo.Controllers
                                 select Ord).ToList();
             if (TicketDetail != null)
             {
-                foreach(var item in TicketDetail)
+                var count = 0;
+                var lastcount = TicketDetail.Count();
+                foreach (var item in TicketDetail)
                 {
+                    count = count + 1;
+
                     string barImgPath = Server.MapPath("..") + "/Images/br_"+item .T_Id+".Png";
 
                     string qrImgPath = Server.MapPath("..") + "/Images/QR_"+item.T_Id+".Png";
@@ -1123,6 +1127,14 @@ namespace EventCombo.Controllers
                     htmlText = htmlText.Replace("¶¶OrderDetail¶¶", orderdet);
                     htmlText = htmlText.Replace("¶¶EventOrganiserName¶¶", Edtails.Organizername);
                     htmlText = htmlText.Replace("¶¶EventOrganiserEmail¶¶", Edtails.OrganiserEmail);
+                    if(count== lastcount)
+                    {
+                        htmlText = htmlText.Replace("¶¶Linebreak¶¶","");
+                    }
+                    else
+                    {
+                        htmlText = htmlText.Replace("¶¶Linebreak¶¶", "<div style='page-break-before: always;width:100% text - align: center></div>");
+                    }
                 }
                
 

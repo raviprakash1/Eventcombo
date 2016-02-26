@@ -21,12 +21,12 @@ namespace CMS.Controllers
             {
                 if (feestructure.FS_Amount != null)
                 {
-                    fee.value = feestructure.FS_Amount.ToString();
+                    fee.value = String.Format("{0:#,###,###.00}", feestructure.FS_Amount); 
 
                 }
                 else
                 {
-                    fee.value = "0.99";
+                    fee.value = String.Format("{0:#,###,###.00}", "0.99");
                 }
                 if (feestructure.FS_Percentage != null)
                 {
@@ -59,7 +59,7 @@ namespace CMS.Controllers
             }
             else
             {
-                fee.value = "0.99";
+                fee.value = String.Format("{0:#,###,###.00}", "0.99");
                 fee.percentage = "5";
             }
             return View(fee);
