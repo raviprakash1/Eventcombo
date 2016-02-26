@@ -435,16 +435,16 @@
                         <div class="col-sm-4 pl0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type*</label>
-                                <div class="col-sm-9">
-                                    @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" })
+                                <div class="col-sm-9 dropheight">
+                                    @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control selectpicker  wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4 pl0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category*</label>
-                                <div class="col-sm-9">
-                                    @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control evnt_inp_cont wd600 chkvalidation" })
+                                <div class="col-sm-9 dropheight">
+                                    @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control selectpicker  wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
