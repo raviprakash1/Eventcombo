@@ -349,6 +349,23 @@ namespace EventCombo.Controllers
             return View();
 
         }
+
+        public ActionResult DiscoverEventsTiles()
+        {
+            if ((Session["AppId"] != null))
+            {
+                HomeController hmc = new HomeController();
+                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                string usernme = hmc.getusername();
+                if (string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            Session["Fromname"] = "DiscoverEvents";
+            return View();
+
+        }
         public ActionResult GetBuzz()
         {
             if ((Session["AppId"] != null))

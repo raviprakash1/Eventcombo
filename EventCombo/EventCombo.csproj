@@ -531,6 +531,7 @@
     <Content Include="Content\ec-select.css" />
     <Content Include="Content\eventcombo-new.css" />
     <Content Include="Content\eventcombo.css" />
+    <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
     <Content Include="email-content-pdf%281%29.html" />
     <Content Include="Images\dgd.png" />
@@ -1157,6 +1158,7 @@
     <Content Include="Views\EventViewCustom\Index.cshtml" />
     <Content Include="Views\PaymentInfo\PaymentInfo.cshtml" />
     <Content Include="Views\CMS\Index.cshtml" />
+    <Content Include="Views\Home\DiscoverEventsTiles.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
