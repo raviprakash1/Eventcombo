@@ -9,6 +9,7 @@
 
 <link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
 <script src="~/Scripts/filer/jquery.filer.js"></script>
+
 <style>
 .jFiler-input-dragDrop{width:200px; height:auto; padding:0px; }
 .jFiler-item-thumb-image{ }
@@ -921,22 +922,8 @@
                     return false;
                 }
             });
-            function returnleap(yr) {
-                return (yr % 400) ? ((yr % 100) ? ((yr % 4) ? false : true) : false) : true;
-            }
-            function validateEmail(sEmail) {
-                var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
-
-                if (filter.test(sEmail)) {
-
-                    return true;
-                }
-                else {
-
-
-                    return false;
-                }
-            }
+         
+          
             var val1, val2;
             $('#Zip').change(function () {
                 var country = $("#Country option:selected").text().trim();
@@ -961,77 +948,16 @@
                                 var obj2 = obj['types'];
 
                                 for (var j = 0; j < obj2.length; j++) {
-                                    if (obj2[j] == 'locality') {
+                                    if (obj2[j] == 'locality' || obj2[j] == 'postal_town' || obj2[j] == 'sublocality_level_1' || obj2[j] == 'sublocality_level_2' || obj2[j] == 'sublocality_level_3' || obj2[j] == 'sublocality_level_4' || obj2[j] == 'sublocality_level_5' || obj2[j] == 'ward')
+                                    {
                                         city = obj['long_name'];
 
 
                                     }
-                                    if (obj2[j] == 'postal_town') {
-                                        city = obj['long_name'];
-
-
-                                    }
-                                    if (obj2[j] == 'sublocality_level_1') {
-                                        city = obj['long_name'];
-
-
-                                    }
-                                    if (obj2[j] == 'sublocality_level_2') {
-                                        city = obj['long_name'];
-
-
-                                    }
-                                    if (obj2[j] == 'sublocality_level_3') {
-                                        city = obj['long_name'];
-
-
-                                    }
-                                    if (obj2[j] == 'sublocality_level_4') {
-                                        city = obj['long_name'];
-
-
-                                    }
-                                    if (obj2[j] == 'sublocality_level_5') {
-                                        city = obj['long_name'];
-
-
-                                    }
-                                    if (obj2[j] == 'ward') {
-                                        city = obj['long_name'];
-
-
-                                    }
-                                    if (obj2[j] == 'sublocality_level_5') {
-                                        city = obj['long_name'];
-
-
-                                    }
-                                    if (obj2[j] == 'administrative_area_level_1') {
+                                     if (obj2[j] == 'administrative_area_level_1') {
                                         state = obj['long_name'];
 
                                     }
-                                    //if (obj2[j] == 'administrative_area_level_2') {
-
-                                    //    state = obj['long_name'];
-
-                                    //}
-                                    //if (obj2[j] == 'administrative_area_level_3') {
-
-                                    //    state = obj['long_name'];
-
-                                    //}
-                                    //if (obj2[j] == 'administrative_area_level_4') {
-
-                                    //    state = obj['long_name'];
-
-                                    //}
-                                    //if (obj2[j] == 'administrative_area_level_5') {
-
-                                    //    state = obj['long_name'];
-
-                                    //}
-
-
                                     if (obj2[j] == 'country') {
                                         if (obj['long_name'] == country) {
                                             $('#City').val(city);
@@ -1059,8 +985,7 @@
                             $('#divaccsuc').css("display", "none");
 
                             $('#diverroacc').css("display", "block");
-                            //$('body').scrollTo('#btndiverroacc');
-                            //$('#btndiverroacc').focus();
+                         
 
                             $('#Zip').addClass('err-bor');
                             return false;

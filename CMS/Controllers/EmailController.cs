@@ -12,26 +12,34 @@ namespace CMS.Controllers
         // GET: Email
         public ActionResult Index(string templatetag,string templatename)
         {
-            if (templatename == null)
+            if ((Session["UserID"] != null))
             {
-                templatename = "Welcome";
+                if (templatename == null)
+                {
+                    templatename = "Welcome";
+                }
+                ViewBag.EmailTags = db.Email_Tag.Select(x => x.Tag_Name).ToList();
+                EmailTemplate obj = new EmailTemplate();
+                obj = EmailData(templatetag);
+                if (obj != null)
+                {
+                    obj.Template_Name = templatename + " Template";
+                    obj.emailtag = templatetag;
+                    return View(obj);
+
+                }
+                else
+                {
+                    EmailTemplate obj1 = new EmailTemplate();
+                    obj1.Template_Name = templatename + " Template";
+                    obj1.emailtag = templatetag;
+                    return View(obj1);
+
+                }
             }
-            ViewBag.EmailTags = db.Email_Tag.Select(x => x.Tag_Name).ToList();
-            EmailTemplate obj = new EmailTemplate();
-            obj = EmailData(templatetag);
-            if(obj!=null)
+            else
             {
-                obj.Template_Name = templatename + " Template";
-                obj.emailtag = templatetag;
-                return View(obj);
-
-            }else
-            {
-                EmailTemplate obj1 = new EmailTemplate();
-                obj1.Template_Name = templatename + " Template";
-                obj1.emailtag = templatetag;
-                return View(obj1);
-
+                return RedirectToAction("Login", "Home");
             }
             
         }

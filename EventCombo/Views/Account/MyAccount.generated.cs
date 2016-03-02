@@ -53,36 +53,37 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\r\n<link");
+WriteLiteral("\r\n\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 161), Tuple.Create("\"", 200)
-, Tuple.Create(Tuple.Create("", 168), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 168), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 163), Tuple.Create("\"", 202)
+, Tuple.Create(Tuple.Create("", 170), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 170), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 230), Tuple.Create("\"", 287)
-, Tuple.Create(Tuple.Create("", 237), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 237), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 232), Tuple.Create("\"", 289)
+, Tuple.Create(Tuple.Create("", 239), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 239), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 317), Tuple.Create("\"", 354)
-, Tuple.Create(Tuple.Create("", 323), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 323), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 319), Tuple.Create("\"", 356)
+, Tuple.Create(Tuple.Create("", 325), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 325), false)
 );
 
 WriteLiteral(@"></script>
+
 <style>
 .jFiler-input-dragDrop{width:200px; height:auto; padding:0px; }
 .jFiler-item-thumb-image{ }
-.jFiler-item-thumb-image img{ width:100%;}
+.jFiler-item-thumb-image img{ width:100%; height:150px; }
 .jFiler-item-list{ margin:0px;}
 .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 150px;}
 .jFiler-item .jFiler-item-container{ margin:0px; padding:0px; }
@@ -101,7 +102,7 @@ WriteLiteral(@"></script>
 ");
 
             
-            #line 30 "..\..\Views\Account\MyAccount.cshtml"
+            #line 32 "..\..\Views\Account\MyAccount.cshtml"
   Html.EnableClientValidation();
             
             #line default
@@ -109,7 +110,7 @@ WriteLiteral(@"></script>
 WriteLiteral("\r\n");
 
             
-            #line 31 "..\..\Views\Account\MyAccount.cshtml"
+            #line 33 "..\..\Views\Account\MyAccount.cshtml"
   Html.EnableUnobtrusiveJavaScript();
             
             #line default
@@ -133,7 +134,7 @@ WriteLiteral(" class=\"clearfix\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 38 "..\..\Views\Account\MyAccount.cshtml"
+            #line 40 "..\..\Views\Account\MyAccount.cshtml"
  using (Html.BeginForm("MyAccount", "Account", FormMethod.Post, new { role = "form", @class = "form-horizontal",autocomplete="off" }))
 {
     
@@ -141,14 +142,14 @@ WriteLiteral("></div>\r\n");
             #line default
             #line hidden
             
-            #line 40 "..\..\Views\Account\MyAccount.cshtml"
+            #line 42 "..\..\Views\Account\MyAccount.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 40 "..\..\Views\Account\MyAccount.cshtml"
+            #line 42 "..\..\Views\Account\MyAccount.cshtml"
                             
     if (ViewData["Message"] != null)
                             {
@@ -177,7 +178,7 @@ WriteLiteral(" class=\"er_suc\"");
 WriteLiteral(">");
 
             
-            #line 47 "..\..\Views\Account\MyAccount.cshtml"
+            #line 49 "..\..\Views\Account\MyAccount.cshtml"
                                Write(ViewData["Message"]);
 
             
@@ -196,7 +197,7 @@ WriteLiteral(" tabindex=\"-1\"");
 WriteLiteral(">&#215;</button>\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 51 "..\..\Views\Account\MyAccount.cshtml"
+            #line 53 "..\..\Views\Account\MyAccount.cshtml"
     }
     if (!ViewData.ModelState.IsValid)
     {
@@ -228,7 +229,7 @@ WriteLiteral(" id=\"erraccsucc\"");
 WriteLiteral(">");
 
             
-            #line 60 "..\..\Views\Account\MyAccount.cshtml"
+            #line 62 "..\..\Views\Account\MyAccount.cshtml"
                                                Write(Html.ValidationMessage("Error"));
 
             
@@ -247,7 +248,7 @@ WriteLiteral(" tabindex=\"-1\"");
 WriteLiteral(">&#215;</button>\r\n            </div>\r\n\r\n         </div>\r\n");
 
             
-            #line 65 "..\..\Views\Account\MyAccount.cshtml"
+            #line 67 "..\..\Views\Account\MyAccount.cshtml"
             }
 
             
@@ -255,7 +256,7 @@ WriteLiteral(">&#215;</button>\r\n            </div>\r\n\r\n         </div>\r\n"
             #line default
             #line hidden
             
-            #line 73 "..\..\Views\Account\MyAccount.cshtml"
+            #line 75 "..\..\Views\Account\MyAccount.cshtml"
                    
 
 
@@ -321,7 +322,7 @@ WriteLiteral(" id=\"input2\"");
 WriteLiteral(">\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 96 "..\..\Views\Account\MyAccount.cshtml"
+            #line 98 "..\..\Views\Account\MyAccount.cshtml"
 
 
 
@@ -357,7 +358,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 104 "..\..\Views\Account\MyAccount.cshtml"
+            #line 106 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.Firstname, new { @maxlength = 35, @class = "form-control" }));
 
             
@@ -377,7 +378,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 108 "..\..\Views\Account\MyAccount.cshtml"
+            #line 110 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.Lastname, new { @maxlength = 35, @class = "form-control" }));
 
             
@@ -410,63 +411,63 @@ WriteLiteral(" class=\"row\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"col-xs-4 add_form_bot mb0\"");
+WriteLiteral(" class=\"col-xs-4 add_form_bot mb0 dropheight\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("                            ");
 
             
-            #line 121 "..\..\Views\Account\MyAccount.cshtml"
+            #line 123 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("month", Enumerable.Range(1, 12).Select(i => new SelectListItem
                            {
                                Value = i.ToString(),
                                Text = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(i),
                                Selected = i == Model.month
 
-                           }), new { @class = "form-control" }));
+                           }), new { @class = "form-control selectpicker" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n                        </div>\r\n                        <div");
 
-WriteLiteral(" class=\"col-xs-4 add_form_bot mb0\"");
+WriteLiteral(" class=\"col-xs-4 add_form_bot mb0 dropheight\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("                            ");
 
             
-            #line 131 "..\..\Views\Account\MyAccount.cshtml"
+            #line 133 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
                            {
                                Value = i.ToString(),
                                Text = i.ToString(),
                                Selected = i == Model.day
 
-                           }), new { @class = "form-control" }));
+                           }), new { @class = "form-control selectpicker" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                        </div>\r\n                        <div");
 
-WriteLiteral(" class=\"col-xs-4 add_form_bot mb0\"");
+WriteLiteral(" class=\"col-xs-4 add_form_bot mb0 dropheight\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("                            ");
 
             
-            #line 140 "..\..\Views\Account\MyAccount.cshtml"
+            #line 142 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
                            {
                                Value = i.ToString(),
                                Text = i.ToString(),
                                Selected = i == Model.year
 
-                           }), new { @class = "form-control" }));
+                           }), new { @class = "form-control selectpicker" }));
 
             
             #line default
@@ -494,18 +495,18 @@ WriteLiteral(" class=\"row\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"col-xs-12 add_form_bot mb0\"");
+WriteLiteral(" class=\"col-xs-12 add_form_bot mb0 dropheight\"");
 
 WriteLiteral(">\r\n");
 
 WriteLiteral("                            ");
 
             
-            #line 158 "..\..\Views\Account\MyAccount.cshtml"
+            #line 160 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("Gender", new List<SelectListItem>{
         new SelectListItem{ Text="Male", Value="Male"},
         new SelectListItem{ Text="Female", Value="Female"}
-        }, "--- Select ---", new { @class = "form-control" }
+        }, "--- Select ---", new { @class = "form-control selectpicker" }
         ));
 
             
@@ -541,7 +542,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 173 "..\..\Views\Account\MyAccount.cshtml"
+            #line 175 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.StreetAddress1, new { @maxlength = 256, @class = "form-control" }));
 
             
@@ -567,7 +568,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 178 "..\..\Views\Account\MyAccount.cshtml"
+            #line 180 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.StreeAddress2, new { @maxlength = 256, @class = "form-control" }));
 
             
@@ -597,7 +598,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 185 "..\..\Views\Account\MyAccount.cshtml"
+            #line 187 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.City, new { @maxlength = 256, @class = "form-control" }));
 
             
@@ -623,7 +624,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 191 "..\..\Views\Account\MyAccount.cshtml"
+            #line 193 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.State, new { @maxlength = 256, @class = "form-control" }));
 
             
@@ -653,7 +654,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 199 "..\..\Views\Account\MyAccount.cshtml"
+            #line 201 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.Zip, new { @maxlength = 5, @class = "form-control" }));
 
             
@@ -672,7 +673,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 203 "..\..\Views\Account\MyAccount.cshtml"
+            #line 205 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker" }));
 
             
@@ -712,7 +713,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 216 "..\..\Views\Account\MyAccount.cshtml"
+            #line 218 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.MainPhone, new { @class = "form-control" }));
 
             
@@ -744,7 +745,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 226 "..\..\Views\Account\MyAccount.cshtml"
+            #line 228 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.SecondPhone, new { @class = "form-control" }));
 
             
@@ -776,7 +777,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 236 "..\..\Views\Account\MyAccount.cshtml"
+            #line 238 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" }));
 
             
@@ -808,7 +809,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 246 "..\..\Views\Account\MyAccount.cshtml"
+            #line 248 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.HiddenFor(m => m.PreviousEmail, new { id = "hdEmail" }));
 
             
@@ -819,7 +820,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 247 "..\..\Views\Account\MyAccount.cshtml"
+            #line 249 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.Email, new { @class = "form-control", @maxlength = 256 }));
 
             
@@ -851,7 +852,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 257 "..\..\Views\Account\MyAccount.cshtml"
+            #line 259 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control", @maxlength = 256 }));
 
             
@@ -883,7 +884,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 267 "..\..\Views\Account\MyAccount.cshtml"
+            #line 269 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control", @maxlength = 256 }));
 
             
@@ -915,7 +916,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 277 "..\..\Views\Account\MyAccount.cshtml"
+            #line 279 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 15 }));
 
             
@@ -947,7 +948,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 287 "..\..\Views\Account\MyAccount.cshtml"
+            #line 289 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @maxlength = 15 }));
 
             
@@ -979,7 +980,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 297 "..\..\Views\Account\MyAccount.cshtml"
+            #line 299 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @maxlength = 15 }));
 
             
@@ -1001,7 +1002,7 @@ WriteLiteral(" />\r\n");
 WriteLiteral("            ");
 
             
-            #line 303 "..\..\Views\Account\MyAccount.cshtml"
+            #line 305 "..\..\Views\Account\MyAccount.cshtml"
        Write(Html.HiddenFor(m => m.ImagePresent));
 
             
@@ -1012,7 +1013,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 304 "..\..\Views\Account\MyAccount.cshtml"
+            #line 306 "..\..\Views\Account\MyAccount.cshtml"
        Write(Html.HiddenFor(m => m.userimage));
 
             
@@ -1027,7 +1028,7 @@ WriteLiteral(" type=\"hidden\"");
 WriteLiteral(" />\r\n\r\n        </div>\r\n");
 
             
-            #line 308 "..\..\Views\Account\MyAccount.cshtml"
+            #line 310 "..\..\Views\Account\MyAccount.cshtml"
 
         }
 
@@ -1046,55 +1047,64 @@ WriteLiteral(" />\r\n\r\n\r\n\r\n        <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n            $(document).click(function () {\r\n                $(\'#diverro1acc\')" +
-".css(\'display\', \'none\');\r\n                $(\'#diverroacc\').css(\'display\', \'none\'" +
-");\r\n                $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                $(\"" +
-"input\").removeClass(\'err-bor\');\r\n                $(\"#month\").removeClass(\'err-bo" +
-"r\');\r\n                $(\"#day\").removeClass(\'err-bor\');\r\n                $(\"#yea" +
-"r\").removeClass(\'err-bor\');\r\n            });\r\n            $(\'#btndivaccsuc\').cli" +
-"ck(function () {\r\n                $(\'#diverro1acc\').css(\'display\', \'none\');\r\n   " +
-"             $(\'#diverroacc\').css(\'display\', \'none\');\r\n                $(\'#divac" +
-"csuc\').css(\'display\', \'none\');\r\n                $(\"input\").removeClass(\'err-bor\'" +
-");\r\n                $(\"#month\").removeClass(\'err-bor\');\r\n                $(\"#day" +
-"\").removeClass(\'err-bor\');\r\n                $(\"#year\").removeClass(\'err-bor\');\r\n" +
-"\r\n            })\r\n            $(\'#btndiverro1acc\').click(function () {\r\n        " +
-"        $(\'#diverro1acc\').css(\'display\', \'none\');\r\n                $(\'#diverroac" +
-"c\').css(\'display\', \'none\');\r\n                $(\"input\").removeClass(\'err-bor\');\r" +
-"\n                $(\"#month\").removeClass(\'err-bor\');\r\n                $(\"#day\")." +
-"removeClass(\'err-bor\');\r\n                $(\"#year\").removeClass(\'err-bor\');\r\n\r\n " +
-"           })\r\n            $(\'#btndiverroacc\').click(function () {\r\n            " +
-"    $(\"#imageeror\").val(\'0\');\r\n                $(\'#diverro1acc\').css(\'display\', " +
-"\'none\');\r\n                $(\'#diverroacc\').css(\'display\', \'none\');\r\n            " +
-"    $(\"input\").removeClass(\'err-bor\');\r\n                $(\"#month\").removeClass(" +
-"\'err-bor\');\r\n                $(\"#day\").removeClass(\'err-bor\');\r\n                " +
-"$(\"#year\").removeClass(\'err-bor\');\r\n\r\n\r\n            })\r\n\r\n            $(window)." +
-"load(function () {\r\n                var cntstreet2 = 256 - $(\"#StreeAddress2\").v" +
-"al().length;\r\n                var cntstreet2 = 256 - $(\"#StreetAddress1\").val()." +
-"length;\r\n                var cntcity = 256 - $(\"#City\").val().length;\r\n         " +
-"       var cntstate = 256 - $(\"#State\").val().length;\r\n\r\n                $(\'#cnt" +
-"streetadd2\').html(\"Count left  \" + cntstreet2);\r\n                $(\'#cntstreetad" +
-"d1\').html(\"Count left  \" + cntstreet2);\r\n                $(\'#cntcityadd1\').html(" +
-"\"Count left  \" + cntcity);\r\n                $(\'#cntcitystate\').html(\"Count left " +
-" \" + cntstate);\r\n            });\r\n\r\n            $(\"#StreeAddress2\").keyup(functi" +
-"on () {\r\n                var cs = $(this).val().length;\r\n                var lef" +
-"t = 256 - cs;\r\n\r\n                $(\'#cntstreetadd2\').html(\"Count left  \" + left)" +
-";\r\n            });\r\n            $(\"#StreetAddress1\").keyup(function () {\r\n      " +
-"          var cs = $(this).val().length;\r\n                var left = 256 - cs;\r\n" +
-"\r\n                $(\'#cntstreetadd1\').html(\"Count left  \" + left);\r\n            " +
-"});\r\n            $(\"#City\").keyup(function () {\r\n                var cs = $(this" +
-").val().length;\r\n                var left = 256 - cs;\r\n\r\n                $(\'#cnt" +
-"cityadd1\').html(\"Count left  \" + left);\r\n            });\r\n            $(\"#State\"" +
-").keyup(function () {\r\n                var cs = $(this).val().length;\r\n         " +
-"       var left = 256 - cs;\r\n\r\n                $(\'#cntcitystate\').html(\"Count le" +
-"ft  \" + left);\r\n            });\r\n            $(\"#Country\").change(function () {\r" +
-"\n                $(\"#Zip\").val(\"\");\r\n                $(\"#State\").val(\"\");\r\n     " +
-"           $(\"#City\").val(\"\");\r\n\r\n\r\n            });\r\n            jQuery(function" +
-" ($) {\r\n                $(\"#MainPhone\").mask(\"999-999-9999\");\r\n                $" +
-"(\"#SecondPhone\").mask(\"999-999-9999\");\r\n                $(\"#WorkPhone\").mask(\"99" +
-"9-999-9999\");\r\n\r\n            });\r\n            var Model = \"");
+WriteLiteral(">\r\n\r\n            $(document).ready(function () {\r\n                $(\'#mgacnt\').cl" +
+"ick();\r\n                $(\'#dvacmang\').addClass(\"active\");\r\n                $(\'#" +
+"dvacmang b\').addClass(\'opened new-opend\');\r\n\r\n                $(\'#dvacmang\').cli" +
+"ck(function (e) {\r\n\r\n                    var $dvEle = $(\'#dvacmang b\');\r\n       " +
+"             var vclassname = $dvEle.attr(\'class\');\r\n                    if ($dv" +
+"Ele.hasClass(\"new-opend\")) {\r\n                        $dvEle.removeClass(\'opened" +
+" new-opend\').addClass(\'closed\');\r\n                    }\r\n                    els" +
+"e {\r\n                        $dvEle.addClass(\'opened new-opend\');\r\n             " +
+"       }\r\n                });\r\n            });\r\n\r\n\r\n            $(document).clic" +
+"k(function () {\r\n                $(\'#diverro1acc\').css(\'display\', \'none\');\r\n    " +
+"            $(\'#diverroacc\').css(\'display\', \'none\');\r\n                $(\'#divacc" +
+"suc\').css(\'display\', \'none\');\r\n                $(\"input\").removeClass(\'err-bor\')" +
+";\r\n                $(\"#month\").removeClass(\'err-bor\');\r\n                $(\"#day\"" +
+").removeClass(\'err-bor\');\r\n                $(\"#year\").removeClass(\'err-bor\');\r\n " +
+"           });\r\n            $(\'#btndivaccsuc\').click(function () {\r\n            " +
+"    $(\'#diverro1acc\').css(\'display\', \'none\');\r\n                $(\'#diverroacc\')." +
+"css(\'display\', \'none\');\r\n                $(\'#divaccsuc\').css(\'display\', \'none\');" +
+"\r\n                $(\"input\").removeClass(\'err-bor\');\r\n                $(\"#month\"" +
+").removeClass(\'err-bor\');\r\n                $(\"#day\").removeClass(\'err-bor\');\r\n  " +
+"              $(\"#year\").removeClass(\'err-bor\');\r\n\r\n            })\r\n            " +
+"$(\'#btndiverro1acc\').click(function () {\r\n                $(\'#diverro1acc\').css(" +
+"\'display\', \'none\');\r\n                $(\'#diverroacc\').css(\'display\', \'none\');\r\n " +
+"               $(\"input\").removeClass(\'err-bor\');\r\n                $(\"#month\").r" +
+"emoveClass(\'err-bor\');\r\n                $(\"#day\").removeClass(\'err-bor\');\r\n     " +
+"           $(\"#year\").removeClass(\'err-bor\');\r\n\r\n            })\r\n            $(\'" +
+"#btndiverroacc\').click(function () {\r\n                $(\"#imageeror\").val(\'0\');\r" +
+"\n                $(\'#diverro1acc\').css(\'display\', \'none\');\r\n                $(\'#" +
+"diverroacc\').css(\'display\', \'none\');\r\n                $(\"input\").removeClass(\'er" +
+"r-bor\');\r\n                $(\"#month\").removeClass(\'err-bor\');\r\n                $" +
+"(\"#day\").removeClass(\'err-bor\');\r\n                $(\"#year\").removeClass(\'err-bo" +
+"r\');\r\n\r\n\r\n            })\r\n\r\n            $(window).load(function () {\r\n          " +
+"      var cntstreet2 = 256 - $(\"#StreeAddress2\").val().length;\r\n                " +
+"var cntstreet2 = 256 - $(\"#StreetAddress1\").val().length;\r\n                var c" +
+"ntcity = 256 - $(\"#City\").val().length;\r\n                var cntstate = 256 - $(" +
+"\"#State\").val().length;\r\n\r\n                $(\'#cntstreetadd2\').html(\"Count left " +
+" \" + cntstreet2);\r\n                $(\'#cntstreetadd1\').html(\"Count left  \" + cnt" +
+"street2);\r\n                $(\'#cntcityadd1\').html(\"Count left  \" + cntcity);\r\n  " +
+"              $(\'#cntcitystate\').html(\"Count left  \" + cntstate);\r\n            }" +
+");\r\n\r\n            $(\"#StreeAddress2\").keyup(function () {\r\n                var c" +
+"s = $(this).val().length;\r\n                var left = 256 - cs;\r\n\r\n             " +
+"   $(\'#cntstreetadd2\').html(\"Count left  \" + left);\r\n            });\r\n          " +
+"  $(\"#StreetAddress1\").keyup(function () {\r\n                var cs = $(this).val" +
+"().length;\r\n                var left = 256 - cs;\r\n\r\n                $(\'#cntstree" +
+"tadd1\').html(\"Count left  \" + left);\r\n            });\r\n            $(\"#City\").ke" +
+"yup(function () {\r\n                var cs = $(this).val().length;\r\n             " +
+"   var left = 256 - cs;\r\n\r\n                $(\'#cntcityadd1\').html(\"Count left  \"" +
+" + left);\r\n            });\r\n            $(\"#State\").keyup(function () {\r\n       " +
+"         var cs = $(this).val().length;\r\n                var left = 256 - cs;\r\n\r" +
+"\n                $(\'#cntcitystate\').html(\"Count left  \" + left);\r\n            })" +
+";\r\n            $(\"#Country\").change(function () {\r\n                $(\"#Zip\").val" +
+"(\"\");\r\n                $(\"#State\").val(\"\");\r\n                $(\"#City\").val(\"\");" +
+"\r\n\r\n\r\n            });\r\n            jQuery(function ($) {\r\n                $(\"#Ma" +
+"inPhone\").mask(\"999-999-9999\");\r\n                $(\"#SecondPhone\").mask(\"999-999" +
+"-9999\");\r\n                $(\"#WorkPhone\").mask(\"999-999-9999\");\r\n\r\n            }" +
+");\r\n            var Model = \"");
 
             
-            #line 407 "..\..\Views\Account\MyAccount.cshtml"
+            #line 429 "..\..\Views\Account\MyAccount.cshtml"
                     Write(Html.Raw(Model.editsave));
 
             
@@ -1103,7 +1113,7 @@ WriteLiteral(">\r\n            $(document).click(function () {\r\n              
 WriteLiteral("\";\r\n\r\n            var files1 = \'");
 
             
-            #line 409 "..\..\Views\Account\MyAccount.cshtml"
+            #line 431 "..\..\Views\Account\MyAccount.cshtml"
                       Write(MvcHtmlString.Create(Json.Encode(ViewData["results"])));
 
             
@@ -1112,6 +1122,7 @@ WriteLiteral("\";\r\n\r\n            var files1 = \'");
 WriteLiteral(@"';
 
             $(document).ready(function () {
+                
                 //$('#WebsiteURL').bind('keypress', function (event) {
                 //    var regex = new RegExp(""^[a-zA-Z0-9]+$"");
                 //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -1125,7 +1136,7 @@ WriteLiteral(@"';
                 var userProfileImage = """);
 
             
-            #line 422 "..\..\Views\Account\MyAccount.cshtml"
+            #line 445 "..\..\Views\Account\MyAccount.cshtml"
                                    Write(Html.Raw(Model.UserProfileImage));
 
             
@@ -1134,7 +1145,7 @@ WriteLiteral(@"';
 WriteLiteral("\";\r\n                var modelcontent = \"");
 
             
-            #line 423 "..\..\Views\Account\MyAccount.cshtml"
+            #line 446 "..\..\Views\Account\MyAccount.cshtml"
                                Write(Html.Raw(Model.contentype));
 
             
@@ -1354,7 +1365,7 @@ WriteLiteral("\r\n\r\n                    $(\'#userimage\').val(imgdata);\r\n   
 ",\r\n                        files: [{\r\n                            \"type\": \"");
 
             
-            #line 718 "..\..\Views\Account\MyAccount.cshtml"
+            #line 741 "..\..\Views\Account\MyAccount.cshtml"
                                 Write(Model.contentype);
 
             
@@ -1363,7 +1374,7 @@ WriteLiteral("\r\n\r\n                    $(\'#userimage\').val(imgdata);\r\n   
 WriteLiteral("\",\r\n                            \"name\": \"");
 
             
-            #line 719 "..\..\Views\Account\MyAccount.cshtml"
+            #line 742 "..\..\Views\Account\MyAccount.cshtml"
                                 Write(Model.UserProfileImage);
 
             
@@ -1372,7 +1383,7 @@ WriteLiteral("\",\r\n                            \"name\": \"");
 WriteLiteral("\",\r\n                            \"file\": \"");
 
             
-            #line 720 "..\..\Views\Account\MyAccount.cshtml"
+            #line 743 "..\..\Views\Account\MyAccount.cshtml"
                                 Write(Model.ImagePath);
 
             
@@ -1453,78 +1464,45 @@ WriteLiteral(">\r\n            function isleap(leapyear) {\r\n                va
 "    $(\'#diverroacc\').css(\"display\", \"block\");\r\n                    $(\'html,body\'" +
 ").animate({ scrollTop: 0 });\r\n                    //$(\'#btndiverroacc\').focus();" +
 "\r\n                    return false;\r\n                }\r\n            });\r\n       " +
-"     function returnleap(yr) {\r\n                return (yr % 400) ? ((yr % 100) " +
-"? ((yr % 4) ? false : true) : false) : true;\r\n            }\r\n            functio" +
-"n validateEmail(sEmail) {\r\n                var filter = /^[\\w\\-\\.\\+]+\\");
-
-WriteLiteral("@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/;\r\n\r\n                if (filter.test(sEmail)" +
-") {\r\n\r\n                    return true;\r\n                }\r\n                else" +
-" {\r\n\r\n\r\n                    return false;\r\n                }\r\n            }\r\n   " +
-"         var val1, val2;\r\n            $(\'#Zip\').change(function () {\r\n          " +
-"      var country = $(\"#Country option:selected\").text().trim();\r\n\r\n            " +
-"    var city = \"\";\r\n                var state = \"\";\r\n\r\n                var pinco" +
-"de = $(this).val();\r\n                $.ajax({\r\n                    url: \'http://" +
-"maps.googleapis.com/maps/api/geocode/json\',\r\n                    data: \'&address" +
-"=\' + pincode + \'&sensor=true\',\r\n                    dataType: \'json\',\r\n         " +
-"           cache: false,\r\n                    success: function (data) {\r\n\r\n\r\n  " +
-"                      if (data.status == \'OK\') {\r\n\r\n                            " +
-"for (var i = 0; i < data.results[0].address_components.length; i++) {\r\n         " +
-"                       var obj = data.results[0].address_components[i];\r\n\r\n     " +
-"                           var obj2 = obj[\'types\'];\r\n\r\n                         " +
-"       for (var j = 0; j < obj2.length; j++) {\r\n                                " +
-"    if (obj2[j] == \'locality\') {\r\n                                        city =" +
-" obj[\'long_name\'];\r\n\r\n\r\n                                    }\r\n                 " +
-"                   if (obj2[j] == \'postal_town\') {\r\n                            " +
-"            city = obj[\'long_name\'];\r\n\r\n\r\n                                    }\r" +
-"\n                                    if (obj2[j] == \'sublocality_level_1\') {\r\n  " +
-"                                      city = obj[\'long_name\'];\r\n\r\n\r\n            " +
-"                        }\r\n                                    if (obj2[j] == \'s" +
-"ublocality_level_2\') {\r\n                                        city = obj[\'long" +
-"_name\'];\r\n\r\n\r\n                                    }\r\n                           " +
-"         if (obj2[j] == \'sublocality_level_3\') {\r\n                              " +
-"          city = obj[\'long_name\'];\r\n\r\n\r\n                                    }\r\n " +
-"                                   if (obj2[j] == \'sublocality_level_4\') {\r\n    " +
-"                                    city = obj[\'long_name\'];\r\n\r\n\r\n              " +
-"                      }\r\n                                    if (obj2[j] == \'sub" +
-"locality_level_5\') {\r\n                                        city = obj[\'long_n" +
-"ame\'];\r\n\r\n\r\n                                    }\r\n                             " +
-"       if (obj2[j] == \'ward\') {\r\n                                        city = " +
-"obj[\'long_name\'];\r\n\r\n\r\n                                    }\r\n                  " +
-"                  if (obj2[j] == \'sublocality_level_5\') {\r\n                     " +
-"                   city = obj[\'long_name\'];\r\n\r\n\r\n                               " +
-"     }\r\n                                    if (obj2[j] == \'administrative_area_" +
-"level_1\') {\r\n                                        state = obj[\'long_name\'];\r\n" +
-"\r\n                                    }\r\n                                    //i" +
-"f (obj2[j] == \'administrative_area_level_2\') {\r\n\r\n                              " +
-"      //    state = obj[\'long_name\'];\r\n\r\n                                    //}" +
-"\r\n                                    //if (obj2[j] == \'administrative_area_leve" +
-"l_3\') {\r\n\r\n                                    //    state = obj[\'long_name\'];\r\n" +
-"\r\n                                    //}\r\n                                    /" +
-"/if (obj2[j] == \'administrative_area_level_4\') {\r\n\r\n                            " +
-"        //    state = obj[\'long_name\'];\r\n\r\n                                    /" +
-"/}\r\n                                    //if (obj2[j] == \'administrative_area_le" +
-"vel_5\') {\r\n\r\n                                    //    state = obj[\'long_name\'];" +
-"\r\n\r\n                                    //}\r\n\r\n\r\n                               " +
-"     if (obj2[j] == \'country\') {\r\n                                        if (ob" +
-"j[\'long_name\'] == country) {\r\n                                            $(\'#Ci" +
-"ty\').val(city);\r\n                                            $(\'#State\').val(sta" +
-"te);\r\n\r\n\r\n                                        }\r\n\r\n                         " +
-"           }\r\n\r\n                                }\r\n\r\n\r\n\r\n                       " +
-"     }\r\n\r\n                        }\r\n\r\n\r\n\r\n                        else {\r\n     " +
-"                       var msg = ajaxsetup(\'MyAccount\', \'MyAccountZipValidationU" +
-"I\');\r\n                            $(\'#erraccmsg\').html(msg);\r\n                  " +
-"          $(\'#diverro1acc\').css(\"display\", \"none\");\r\n                           " +
-" $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                            $(\'#dive" +
-"rroacc\').css(\"display\", \"block\");\r\n                            //$(\'body\').scrol" +
-"lTo(\'#btndiverroacc\');\r\n                            //$(\'#btndiverroacc\').focus(" +
-");\r\n\r\n                            $(\'#Zip\').addClass(\'err-bor\');\r\n              " +
-"              return false;\r\n                        }\r\n                    }\r\n " +
-"               });\r\n            });\r\n\r\n            function ajaxsetup(strname, s" +
-"trFormTag) {\r\n                var msgnew = \"\";\r\n\r\n                var request = " +
-"$.ajax({\r\n                    url: \'");
+"  \r\n          \r\n            var val1, val2;\r\n            $(\'#Zip\').change(functi" +
+"on () {\r\n                var country = $(\"#Country option:selected\").text().trim" +
+"();\r\n\r\n                var city = \"\";\r\n                var state = \"\";\r\n\r\n      " +
+"          var pincode = $(this).val();\r\n                $.ajax({\r\n              " +
+"      url: \'http://maps.googleapis.com/maps/api/geocode/json\',\r\n                " +
+"    data: \'&address=\' + pincode + \'&sensor=true\',\r\n                    dataType:" +
+" \'json\',\r\n                    cache: false,\r\n                    success: functi" +
+"on (data) {\r\n\r\n\r\n                        if (data.status == \'OK\') {\r\n\r\n         " +
+"                   for (var i = 0; i < data.results[0].address_components.length" +
+"; i++) {\r\n                                var obj = data.results[0].address_comp" +
+"onents[i];\r\n\r\n                                var obj2 = obj[\'types\'];\r\n\r\n      " +
+"                          for (var j = 0; j < obj2.length; j++) {\r\n             " +
+"                       if (obj2[j] == \'locality\' || obj2[j] == \'postal_town\' || " +
+"obj2[j] == \'sublocality_level_1\' || obj2[j] == \'sublocality_level_2\' || obj2[j] " +
+"== \'sublocality_level_3\' || obj2[j] == \'sublocality_level_4\' || obj2[j] == \'subl" +
+"ocality_level_5\' || obj2[j] == \'ward\')\r\n                                    {\r\n " +
+"                                       city = obj[\'long_name\'];\r\n\r\n\r\n           " +
+"                         }\r\n                                     if (obj2[j] == " +
+"\'administrative_area_level_1\') {\r\n                                        state " +
+"= obj[\'long_name\'];\r\n\r\n                                    }\r\n                  " +
+"                  if (obj2[j] == \'country\') {\r\n                                 " +
+"       if (obj[\'long_name\'] == country) {\r\n                                     " +
+"       $(\'#City\').val(city);\r\n                                            $(\'#St" +
+"ate\').val(state);\r\n\r\n\r\n                                        }\r\n\r\n            " +
+"                        }\r\n\r\n                                }\r\n\r\n\r\n\r\n          " +
+"                  }\r\n\r\n                        }\r\n\r\n\r\n\r\n                        " +
+"else {\r\n                            var msg = ajaxsetup(\'MyAccount\', \'MyAccountZ" +
+"ipValidationUI\');\r\n                            $(\'#erraccmsg\').html(msg);\r\n     " +
+"                       $(\'#diverro1acc\').css(\"display\", \"none\");\r\n              " +
+"              $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                       " +
+"     $(\'#diverroacc\').css(\"display\", \"block\");\r\n                         \r\n\r\n   " +
+"                         $(\'#Zip\').addClass(\'err-bor\');\r\n                       " +
+"     return false;\r\n                        }\r\n                    }\r\n          " +
+"      });\r\n            });\r\n\r\n            function ajaxsetup(strname, strFormTag" +
+") {\r\n                var msgnew = \"\";\r\n\r\n                var request = $.ajax({\r" +
+"\n                    url: \'");
 
             
-            #line 1054 "..\..\Views\Account\MyAccount.cshtml"
+            #line 1001 "..\..\Views\Account\MyAccount.cshtml"
                      Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -1547,9 +1525,9 @@ WriteLiteral(@"',
         </script>
         <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 47537), Tuple.Create("\"", 47578)
-, Tuple.Create(Tuple.Create("", 47543), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 47543), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 45799), Tuple.Create("\"", 45840)
+, Tuple.Create(Tuple.Create("", 45805), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 45805), false)
 );
 
 WriteLiteral("></script>\r\n\r\n");

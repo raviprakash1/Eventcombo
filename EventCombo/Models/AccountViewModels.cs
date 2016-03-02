@@ -222,4 +222,6 @@ namespace EventCombo.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+     
 }

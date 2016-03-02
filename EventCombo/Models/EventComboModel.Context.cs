@@ -72,6 +72,7 @@ namespace EventCombo.Models
         public virtual DbSet<Venue> Venues { get; set; }
         public virtual DbSet<TicketOrderDetail> TicketOrderDetails { get; set; }
         public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
+        public virtual DbSet<Organizer_Master> Organizer_Master { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

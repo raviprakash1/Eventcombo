@@ -12,17 +12,15 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Event_Orgnizer_Detail
+    public partial class Organizer_Master
     {
         public long Orgnizer_Id { get; set; }
-        public Nullable<long> Orgnizer_Event_Id { get; set; }
         public string Orgnizer_Name { get; set; }
-        public string Orgnizer_Desc { get; set; }
-        public string FBLink { get; set; }
-        public string Twitter { get; set; }
+        public string Organizer_Desc { get; set; }
+        public string Organizer_FBLink { get; set; }
+        public string Organizer_Twitter { get; set; }
+        public string Organizer_Linkedin { get; set; }
         public string UserId { get; set; }
-        public string DefaultOrg { get; set; }
-        public string Linkedin { get; set; }
         public string Organizer_Image { get; set; }
         public string Organizer_Address1 { get; set; }
         public string Organizer_Address2 { get; set; }
@@ -33,7 +31,7 @@ namespace EventCombo.Models
         public string Organizer_Email { get; set; }
         public string Organizer_Phoneno { get; set; }
         public string Organizer_Websiteurl { get; set; }
-    
-        public virtual Event Event { get; set; }
+        public string Organizer_Status { get; set; }
+        public string contenttype { get; set; }
     }
 }

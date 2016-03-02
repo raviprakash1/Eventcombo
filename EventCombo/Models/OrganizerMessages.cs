@@ -15,4 +15,9 @@ namespace EventCombo.Models
         public string mesasges { get; set; }
         public string organiserid { get; set; }
     }
+
+    public class OrganizerProfile
+    {
+        public List<Organizer_Master> Organizerdetail { get; set; }
+    }
 }

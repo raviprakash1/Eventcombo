@@ -837,17 +837,17 @@ namespace EventCombo.Controllers
                     capacity += ObjTick.Qty_Available;
                     if (ObjTick.Price != null)
                     {
-                        Price = String.Format("{0:#,###,###.00}", ObjTick.Price);
+                        Price = String.Format("{0:#,###,##0.00}", ObjTick.Price);
 
                     }
                     if (ObjTick.T_Discount != null)
                     {
-                        discount = String.Format("{0:#,###,###.00}", ObjTick.T_Discount);
+                        discount = String.Format("{0:#,###,##0.00}", ObjTick.T_Discount);
 
                     }
                     if (ObjTick.TotalPrice != null)
                     {
-                        totaoln = String.Format("{0:#,###,###.00}", ObjTick.TotalPrice);
+                        totaoln = String.Format("{0:#,###,##0.00}", ObjTick.TotalPrice);
                     }
                     if (ObjTick.TicketTypeID == 1)
                     {
@@ -863,18 +863,15 @@ namespace EventCombo.Controllers
                     {
 
                         total = ObjTick.TotalPrice.ToString();
-                        var ecfeenew = "";
-                        customerfee = String.Format("{0:#,###,###.00}", (ObjTick.Customer_Fee != null ? ObjTick.Customer_Fee :0));
+                        var ecfeenew= 0m;
                         if(ObjTick.EC_Fee!=null)
                         {
-                            var ecnewcal = ((decimal.Parse(Price) * percent) / 100) + amount;
-                            ecfeenew = String.Format("{0:#,###,###.00}", ecnewcal);
+                            ecfeenew = ((decimal.Parse(Price) * percent) / 100) + amount??0;
+                           
                         }
 
-                        ecfee= (ObjTick.EC_Fee!=null? String.Format("{0:#,###,###.00}", ObjTick.EC_Fee): ecfeenew);
-                        ecfeepercentage =(ObjTick.T_Ecpercent!=null? ObjTick.T_Ecpercent.ToString():  percent.ToString());
-                        ecamount = (ObjTick.T_EcAmount!=null?String.Format("{0:#,###,###.00}", ObjTick.T_EcAmount) : String.Format("{0:#,###,###.00}", amount));
-
+                        ecfee= String.Format("{0:#,###,##0.00}",(ObjTick.EC_Fee!=null?  ObjTick.EC_Fee: ecfeenew));
+                      
                         type = "Paid";
                     }
                     if (ObjTick.TicketTypeID == 3)
@@ -883,14 +880,15 @@ namespace EventCombo.Controllers
 
                         ecfee = "0";
                         fee = "0";
-
-                        customerfee = (ObjTick.Customer_Fee!=null? String.Format("{0:#,###,###.00}", ObjTick.Customer_Fee) : "0");
-                        ecfeepercentage = (ObjTick.T_Ecpercent!=null ? String.Format("{0:#,###,###.00}", percent) : String.Format("{0:#,###,###.00}", percent));
-                        ecamount = (ObjTick.T_EcAmount!=null? String.Format("{0:#,###,###.00}", amount) : String.Format("{0:#,###,###.00}",amount));
-
                         type = "Donate";
                     }
+                    if (ObjTick.TicketTypeID != 1)
+                    {
+                        customerfee = String.Format("{0:#,###,##0.00}", (ObjTick.Customer_Fee != null ? ObjTick.Customer_Fee : 0));
 
+                        ecfeepercentage = (ObjTick.T_Ecpercent != null ? ObjTick.T_Ecpercent.ToString() : percent.ToString());
+                        ecamount = String.Format("{0:#,###,##0.00}", (ObjTick.T_EcAmount != null ? ObjTick.T_EcAmount : amount));
+                    }
                     strticketHtml.Append("<div id='clonediv-" + j + "' class='ticket_haeding ev_ticket_haeding mt10 pb10' tabindex='-1'>");
                     strticketHtml.Append("<div class='col-sm-10 col-xs-12' ><div class='col-sm-1 text-center no_pad ev_row_mov'>");
                     strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");

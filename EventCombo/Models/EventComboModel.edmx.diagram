@@ -65,6 +65,7 @@
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EventComboModel.TicketOrderDetail" Width="1.5" PointX="17.375" PointY="20.75" />
         <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="19.375" PointY="20.75" />
+        <EntityTypeShape EntityType="EventComboModel.Organizer_Master" Width="1.5" PointX="21.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
