@@ -26,6 +26,8 @@ namespace EventCombo.Models
         public string UserId { get; set; }
         public Nullable<long> EventId { get; set; }
         public string ConsolidateAddress { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
     
         public virtual Event Event { get; set; }
     }

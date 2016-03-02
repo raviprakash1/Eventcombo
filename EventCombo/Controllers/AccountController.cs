@@ -20,6 +20,8 @@ using System.Web.Security;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace EventCombo.Controllers
 {
@@ -99,7 +101,34 @@ namespace EventCombo.Controllers
         [HttpGet]
         public ActionResult OrganizerProfile()
         {
-            return View();
+            if ((Session["AppId"] != null))
+            {
+                OrganizerProfile org = new Models.OrganizerProfile();
+                var defaultCountry = "United States";
+                string userid = Session["AppId"].ToString();
+                var organiserdetail = (from x in db.Organizer_Master where x.UserId == userid && (x.Orgnizer_Name ?? string.Empty) != string.Empty select x).OrderBy(x=>x.Orgnizer_Name).ToList ();
+                org.Organizerdetail = organiserdetail;
+
+                var countryQuery = (from c in db.Countries
+                                    orderby c.Country1 ascending
+                                    select c).Distinct();
+                List<SelectListItem> countryList = new List<SelectListItem>();
+               foreach (var item in countryQuery)
+                {
+                    countryList.Add(new SelectListItem()
+                    {
+                        Text = item.Country1,
+                        Value = item.CountryID.ToString(),
+                        Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
+                    });
+                }
+                ViewBag.Country = countryList;
+                return View(org);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
         }
         [HttpGet]
@@ -954,7 +983,80 @@ namespace EventCombo.Controllers
             }
 
         }
-        public ActionResult SaveUploadedFile()
+
+        public JsonResult SaveOrganizerImage()
+        {
+            if (Session["AppId"] != null)
+            {
+                Random rnd = new Random();
+                var pathnew = "";
+                var rndnumber = Guid.NewGuid().ToString().GetHashCode().ToString("x"); 
+
+                string Userid = Session["AppId"].ToString();
+                bool isSavedSuccessfully = true;
+                string fName = "";
+                var NFilename = "";
+                string content_type = "";
+                try
+                {
+                    foreach (string fileName in Request.Files)
+                    {
+                        HttpPostedFileBase file = Request.Files[fileName];
+                      
+                        fName = file.FileName;
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            fName = file.FileName;
+                            content_type = file.ContentType;
+                            var originalDirectory = new DirectoryInfo(string.Format("{0}\\Images\\Organizer", Server.MapPath(@"\")));
+
+                            string pathString = System.IO.Path.Combine(originalDirectory.ToString(), "Organizer_Images");
+
+                            var fileName1 = Path.GetFileName(file.FileName);
+
+                            //var format=    getImageFormat(fileName1);
+
+                            bool isExists = System.IO.Directory.Exists(pathString);
+
+                            if (!isExists)
+                                System.IO.Directory.CreateDirectory(pathString);
+
+                            var path = string.Format("{0}\\{1}", pathString, file.FileName);
+                            var imageformat = getImageFormat(path);
+                            NFilename =   "OrgImage_"+rndnumber+"."+imageformat;
+                            pathnew = string.Format("{0}\\{1}", pathString, NFilename);
+                          
+                            HandleImageUpload(file, pathnew);
+                        }
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    isSavedSuccessfully = false;
+                }
+
+
+                if (isSavedSuccessfully)
+                {
+                    return Json(new { image_name = NFilename, image_type = content_type, image_path = pathnew });
+                }
+                else
+                {
+                    return Json(new { Message = "Error" });
+                }
+            }
+            else
+            {
+                return Json(new { Message = "Session_Out" });
+
+            }
+        }
+    
+
+
+    public ActionResult SaveUploadedFile()
         {
             if (Session["AppId"] != null)
             {
@@ -2013,11 +2115,7 @@ namespace EventCombo.Controllers
 
         }
 
-        public void FacebookLogin(string id)
-        {
-
-        }
-
+      
         [AllowAnonymous]
         public ActionResult Confirm(string Email)
         {
@@ -2171,6 +2269,87 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }                 
             }
+        }
+
+        public JsonResult saveOrganizer(Organizer_Master model )
+        {
+            var userid = "";
+            var msg = "";
+            string UserProfileImage = "", ContentType = "", ImagePath = "";
+            if (Session["AppId"] != null)
+            {
+                userid = Session["AppId"].ToString();
+               if(model.Organizer_Image!=null)
+                {
+                    string[] images = model.Organizer_Image.Split('¶');
+
+                    UserProfileImage = images[0];
+                    ContentType = images[1];
+                    ImagePath = "Images/Organizer/Organizer_Images/" + images[0];
+                }
+
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    Organizer_Master org = new Organizer_Master();
+                    org.Orgnizer_Name = model.Orgnizer_Name;
+                    org.Organizer_Desc = model.Organizer_Desc;
+                    org.Organizer_FBLink = model.Organizer_FBLink;
+                    org.Organizer_Twitter = model.Organizer_Twitter;
+                    org.Organizer_Linkedin = model.Organizer_Linkedin;
+                    org.UserId = userid;
+                    org.Organizer_Image = UserProfileImage;
+                    org.contenttype = ContentType;
+                    org.Organizer_Address1 = model.Organizer_Address1;
+                    org.Organizer_Address2 = model.Organizer_Address2;
+                    org.Organizer_City = model.Organizer_City;
+                    org.Organizer_State = model.Organizer_State;
+                    org.Organizer_CountryId = model.Organizer_CountryId;
+                    org.Organizer_Zipcode = model.Organizer_Zipcode;
+                    org.Organizer_Email = model.Organizer_Email;
+                    org.Organizer_Phoneno = model.Organizer_Phoneno;
+                    org.Organizer_Websiteurl = model.Organizer_Websiteurl;
+                    org.Organizer_Status = "A";
+                  
+                   
+                   
+
+                
+
+                    db.Organizer_Master.Add(org);
+                    try {
+                        int i = db.SaveChanges();
+                        msg = "S";
+                        
+                    }
+                    catch(Exception ex)
+                    {
+                        msg = "N";
+                    }
+
+
+
+                }
+            }
+            else
+            {
+                msg = "O";
+            }
+
+            if (msg == "S")
+            {
+                var orglist = db.Organizer_Master.Where(x => x.UserId == userid && (x.Orgnizer_Name??string.Empty)!=string.Empty).Select(item => new
+                {
+                    Id = item.Orgnizer_Id,
+                    Name = item.Orgnizer_Name
+                }).OrderBy(x=>x.Name).ToList();
+                return Json(orglist, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Message = msg });
+            }
+
+
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

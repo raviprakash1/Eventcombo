@@ -756,7 +756,7 @@
                                                     <label class="col-sm-1 no_pad control-label ev_tickt_lebel">$</label>
                                                     <div class="col-sm-5">
                                                       
-                                                        <input type="text" class="form-control evnt_inp_cont"  id="id_customerfee-n" placeholder=""  onkeypress="validatenumdec(this, event, this.id)" onblur="    tofixed(this.id);reflectfeechange(this.id)"  maxlength="8"/>
+                                                        <input type="text" class="form-control evnt_inp_cont"  id="id_customerfee-n" placeholder=""  onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);reflectfeechange(this.id)"  maxlength="8"/>
                                                         <input type="hidden"  id="hd_customerfee-n" value="0" />
                                                         <input type="hidden" id="hd_customchange-n" value="0" />
                                                     </div>
@@ -4207,20 +4207,9 @@ else
             if(tickettype=="Paid")
             {
                 var fee=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
-                debugger;
-                if(isNaN(fee))
-                {
-                    $('#diverroacc').show();
-                    $('#divaccsuc').css('display', 'none');
-                    $('#erraccmsg').html("Please Enter Customer fee");
-                    $('html,body').animate({ scrollTop: 0 });
-                    $('#' + id).addClass('err-bor');
-                    return false;
-                }else
-                {
-                    $('#diverroacc').hide();
-                    $('#' + id).removeClass('err-bor');
-                }
+              
+              
+                if (isNaN(fee) == true) fee = 0;
                 if(fee==0)
                 {
                     $('#' + id).addClass('err-bor');
@@ -4281,10 +4270,15 @@ else
             {
                 if(alstart=="id_ecfeeper")
                 {
-                    var feepercentage=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
+                    var feepercentage=$('#' + id).val();
+                    if (isNaN(feepercentage) == true) feepercentage = 0;
+                   
+                   
                     if(feepercentage>0)
                     {
-
+                        $('#' + id).removeClass('err-bor');
+                        $('#diverroacc').hide();
+                        feepercentage=parseFloat(parseFloat(feepercentage.replace(',','')).toFixed(2));
                         var amount=parseFloat(parseFloat($('#id_ecfeeamt-'+num).val().replace(',','')).toFixed(2));
                         if(amount>0)
                         {
@@ -4307,9 +4301,13 @@ else
                 }
                 if(alstart=="id_ecfeeamt")
                 {
-                    var feeamount=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
+                    var feeamount=$('#' + id).val();
+                    if (isNaN(feeamount) == true) feeamount = 0;
                     if(feeamount>0)
                     {
+                        $('#' + id).removeClass('err-bor');
+                        $('#diverroacc').hide();
+                        feeamount= parseFloat(parseFloat(feeamount.replace(',','')).toFixed(2));
                         var num = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
 
                         var feepercentage=parseFloat(parseFloat($('#id_ecfeeper-'+num).val().replace(',','')).toFixed(2));
@@ -5061,14 +5059,14 @@ else
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
 
-            $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
-            $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
-            $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
-            $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
+            $("#id_auto_hide_until_Date-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_until_time-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_until_Date-" + divlength).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_until_Date-" + divlength).datepicker("option", "maxDate", -2);
+            $("#id_auto_hide_after_Date-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Time-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Date-" + divlength).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_after_Date-" + divlength).datepicker("option", "maxDate", -2);
 
 
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
@@ -5170,14 +5168,14 @@ else
          
             $("#id_saletimestart-" + divlength).val("7:00pm");
             $("#id_saletimeend-" + divlength).val("7:00pm");
-            $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
-            $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
-            $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
-            $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
+            $("#id_auto_hide_until_Date-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_until_time-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_until_Date-" + divlength).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_until_Date-" + divlength).datepicker("option", "maxDate", -2);
+            $("#id_auto_hide_after_Date-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Time-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Date-" + divlength).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_after_Date-" + divlength).datepicker("option", "maxDate", -2);
 
 
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
@@ -5270,14 +5268,14 @@ else
             $("#id_saletimeend-" + divlength).val("7:00pm");
 
 
-            $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
-            $("#id_auto_hide_until_Date-" + el).datepicker("option", "maxDate", -2);
-            $("#id_auto_hide_after_Date-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_after_Time-" + el).attr("readonly", "readonly");
-            $("#id_auto_hide_after_Date-" + el).datepicker("option", "minDate", -1);
-            $("#id_auto_hide_after_Date-" + el).datepicker("option", "maxDate", -2);
+            $("#id_auto_hide_until_Date-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_until_time-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_until_Date-" + divlength).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_until_Date-" + divlength).datepicker("option", "maxDate", -2);
+            $("#id_auto_hide_after_Date-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Time-" + divlength).attr("readonly", "readonly");
+            $("#id_auto_hide_after_Date-" + divlength).datepicker("option", "minDate", -1);
+            $("#id_auto_hide_after_Date-" + divlength).datepicker("option", "maxDate", -2);
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
@@ -6005,18 +6003,27 @@ else
                             {
                                 $("#id_ecfeeper-"+i).addClass('err-bor');
                                 eccount=eccount+1;
+                            }else
+                             {
+                              $("#id_ecfeeper-"+i).removeClass('err-bor');
                             }
                       if(amount<=0)
                             {
                                 $("#id_ecfeeamt-"+i).addClass('err-bor');
                                 eccount=eccount+1;
-                            }
+                      }else
+                      {
+                          $("#id_ecfeeamt-"+i).removeClass('err-bor');
+                      }
                   
                       if(customer<=0)
                       {
                        
                           $("#id_customerfee-"+i).addClass('err-bor');
                           eccount=eccount+1;
+                      }else
+                      {
+                          $("#id_customerfee-"+i).removeClass('err-bor');
                       }
                         }
                     }

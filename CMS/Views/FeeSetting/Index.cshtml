@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label class="col-lg-12">$</label>
                                 <div class="col-lg-6">
-                                    <input type="text" id="idvalue" class="form-control" name="value" maxlength="8" onkeypress="allownumberdec(this,event)" value="@Model.value" onblur="tofixed(this.id)" />
+                                    <input type="text" id="idvalue" class="form-control" name="value" maxlength="7" onkeypress="allownumberdec(this,event)" value="@Model.value" onblur="tofixed(this.id)" />
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="radio-custom radio-primary mt5 fl-lft mr10">
-                                <input id="id_appytoall" type="radio" name="cust" checked="checked">
+                                <input id="id_appytoall" type="radio" name="cust" >
                                 <label for="id_appytoall">apply to all events</label>
 
                             </div>
@@ -184,6 +184,7 @@
                 success: function (data) {
                     if (data == "S") {
                         $("#divsucc").show();
+                        $("#diverr").hide();
                         $("#idsucc").html(ajaxsetup("FeeSetting", "FSSuccess"));
                     } else {
 
@@ -202,6 +203,7 @@
         var msg = validatemain();
 
         if (msg != "") {
+            $("#divsucc").hide();
             $("#diverr").show();
             $("#iderrr").html(msg);
             return false;
@@ -228,12 +230,16 @@
             count = count + 1;
            
 
+        } else {
+            $('#idpercentage').removeClass('err-bor');
         }
         if (percentage == "" || parseFloat(percentage) == 0) {
             $('#idvalue').addClass('err-bor');
             count = count + 1;
            
 
+        } else {
+            $('#idvalue').removeClass('err-bor');
         }
 
         if(count>0)

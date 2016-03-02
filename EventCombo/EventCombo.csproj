@@ -388,6 +388,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrganizerMessages.cs" />
+    <Compile Include="Models\Organizer_Master.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PaymentConfirmation.cs" />
     <Compile Include="Models\PaymentProcess.cs" />
     <Compile Include="Models\Payment_Info.cs">
@@ -451,6 +454,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MyAccount.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\OrganizerProfile.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrganizerProfile.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateEvent\ViewCreateEvent.generated.cs">
       <AutoGen>True</AutoGen>
@@ -921,6 +929,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\summernote.min.js" />
+    <Content Include="Scripts\Validation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ticketpdf.html" />
     <Content Include="Views\_ViewStart.cshtml">
@@ -1042,6 +1051,7 @@
     </Content>
     <Content Include="Views\Account\OrganizerProfile.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>OrganizerProfile.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\DealsDashboard.cshtml">
       <Generator>RazorGenerator</Generator>

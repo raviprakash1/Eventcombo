@@ -13,56 +13,64 @@ namespace CMS.Controllers
         EmsEntities db = new EmsEntities();
         public ActionResult Index()
         {
-            var feestructure = (from c in db.Fee_Structure
-                                select c).FirstOrDefault();
 
-            FeeSetting fee = new FeeSetting();
-            if (feestructure != null)
+            if ((Session["UserID"] != null))
             {
-                if (feestructure.FS_Amount != null)
-                {
-                    fee.value = String.Format("{0:#,###,###.00}", feestructure.FS_Amount); 
+                var feestructure = (from c in db.Fee_Structure
+                                    select c).FirstOrDefault();
 
+                FeeSetting fee = new FeeSetting();
+                if (feestructure != null)
+                {
+                    if (feestructure.FS_Amount != null)
+                    {
+                        fee.value = String.Format("{0:#,###,##0.00}", feestructure.FS_Amount);
+
+                    }
+                    else
+                    {
+                        fee.value = String.Format("{0:#,###,##0.00}", "0.99");
+                    }
+                    if (feestructure.FS_Percentage != null)
+                    {
+                        string feeP = feestructure.FS_Percentage.ToString();
+                        if (feeP.Contains("."))
+                        {
+                            var split = feeP.Split('.');
+                            var array1 = split[0];
+                            var array2 = split[1];
+                            if (long.Parse(array2) > 0)
+                            {
+                                fee.percentage = feestructure.FS_Percentage.ToString();
+                            }
+                            else
+                            {
+                                fee.percentage = array1;
+                            }
+                        }
+                        else
+                        {
+                            fee.percentage = feestructure.FS_Percentage.ToString();
+                        }
+
+
+                    }
+                    else
+                    {
+                        fee.percentage = "5";
+                    }
                 }
                 else
                 {
                     fee.value = String.Format("{0:#,###,###.00}", "0.99");
-                }
-                if (feestructure.FS_Percentage != null)
-                {
-                    string feeP = feestructure.FS_Percentage.ToString();
-                    if (feeP.Contains("."))
-                    {
-                        var split = feeP.Split('.');
-                        var array1 = split[0];
-                        var array2 = split[1];
-                        if (long.Parse(array2) > 0)
-                        {
-                            fee.percentage = feestructure.FS_Percentage.ToString();
-                        }
-                        else
-                        {
-                            fee.percentage = array1;
-                        }
-                    }
-                    else
-                    {
-                        fee.percentage = feestructure.FS_Percentage.ToString();
-                    }
-
-
-                }
-                else
-                {
                     fee.percentage = "5";
                 }
+                return View(fee);
             }
             else
             {
-                fee.value = String.Format("{0:#,###,###.00}", "0.99");
-                fee.percentage = "5";
+                return RedirectToAction("Login", "Home");
             }
-            return View(fee);
         }
 
         public string savefee(FeeSetting model)

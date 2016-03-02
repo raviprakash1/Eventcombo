@@ -1192,3 +1192,38 @@ span.evnt_toltip{
 .btn.graph_day_mnth_btn:focus{ outline:none; box-shadow:none;color: #00cfff; }
 .graph_day_mnth_btn:hover{ color: #00cfff; }
 .grp_white{ background:#fff; padding:5px; }
+
+
+/*Organiser css*/
+
+.org_event_img{ margin-right: 10px; margin-top: 20px; margin-bottom: 10px;  width: 200px; height: 180px; float: left;   }
+.org_evnt_desc_top{ font-size: 16px;  }
+.org_evnt_list_title{ margin: 0px 0px 15px 0; font-size: 25px; }
+.org_evnt_list{ font-size: 18px;  }
+.org_evnt_list_main{ color: #3cf;   }
+.org_evnt_list_main:hover{ color: #777;  }
+.org_evnt_border{ border-bottom: 1px dashed #000; margin-bottom: 10px; }
+
+.ev_org_add_btn {
+    background: #00cfff;
+    border: 0 none;
+    border-radius: 3px !important;
+    font-size: 1.2em;
+    line-height: .85 !important;
+    margin-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px; min-width: 100%; color: #fff !important;
+}
+.ev_org_add_btn:hover{background: #00cfff;  }
+
+.ev_orgnz_lebel {
+    font-size: 1.4em;
+    font-weight: normal;
+    padding-left: 6px; 
+}
+
+.mb20{ margin-bottom:20px;}
+
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn.active.focus{ outline: none; }
+.orgaz_editor .note-codable{ display:none;}
+.orgdisnone{display:none;}
