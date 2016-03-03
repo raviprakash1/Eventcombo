@@ -1,0 +1,102 @@
+.accordion {
+  width: 100%;
+  background: #FFF;
+  padding: 0px;
+}
+
+.accordion li{ list-style: none; width: 100%; float: left;  }
+.accordion .link {
+  cursor: pointer;
+  display: block;
+  padding: 15px;
+  color: #4D4D4D;
+  font-size: 16px;
+  font-weight: 300;
+  border-bottom: 1px solid #e5e5e5;
+  position: relative;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.accordion li:last-child .link { border-bottom: 0; }
+
+.accordion li i {
+  position: absolute;
+  top: 16px;
+  left: 12px;
+  font-size: 18px;
+  color: #595959;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.accordion li i.fa-chevron-down {
+  right: 12px;
+  left: auto;
+  font-size: 16px;
+}
+.accordion li.open {border-bottom: 1px solid #e5e5e5;}
+.accordion li.open .link { color: #3cf; border-bottom: 0px; border-color: #e5e5e5; }
+
+.accordion li.open i { color: #3cf; }
+
+.accordion li.open i.fa-chevron-down {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+/**
+ * Submenu
+ -----------------------------*/
+
+
+.submenu {
+  display: none; margin: 5px 0 0 0 ; padding-left: 10px;
+/*  font-size: 14px; padding: 0px; margin: 10px 0;*/
+}
+
+.submenu li { width: auto; float: left;  }
+
+
+
+/**---------Sidemenu filter start--------------------*/
+
+.accordion.side_accordian .link {
+  cursor: pointer;
+  display: block;
+  padding: 0;
+  line-height: 40px;
+  color: #4D4D4D;
+  font-size: 16px;
+  font-weight: 300;
+  border-bottom: 1px solid #e5e5e5;
+  position: relative;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.submenu.submenu_side {
+  display: none; margin:0 ; padding-left:0px;
+/*  font-size: 14px; padding: 0px; margin: 10px 0;*/
+}
+
+.submenu.submenu_side li { width: auto; float: none;  }
+.submenu.submenu_side a {
+  display: block;
+  text-decoration: none;
+  color: #ccc; font-size: 16px;
+  padding: 5px;
+  -webkit-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+.submenu.submenu_side a:hover {
+  color: #000;
+}
+
+.accordion.side_accordian li.open .link { text-transform: uppercase; }

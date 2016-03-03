@@ -187,8 +187,11 @@ WriteLiteral(" class=\"form-control evnt_inp_cont selectpicker\"");
 
 WriteLiteral(" id=\"id_selectorg\"");
 
-WriteLiteral(" >\r\n                        <option> Select </option>\r\n                        <o" +
-"ption");
+WriteLiteral(" >\r\n                        <option");
+
+WriteLiteral(" value=\"0\"");
+
+WriteLiteral("> Select </option>\r\n                        <option");
 
 WriteLiteral(" value=\"A\"");
 
@@ -210,14 +213,14 @@ WriteLiteral("> Add Organizer </option>\r\n");
             #line hidden
 WriteLiteral("                        <option");
 
-WriteAttribute("value", Tuple.Create(" value=", 2697), Tuple.Create("", 2721)
+WriteAttribute("value", Tuple.Create(" value=", 2707), Tuple.Create("", 2731)
             
             #line 67 "..\..\Views\Account\OrganizerProfile.cshtml"
-, Tuple.Create(Tuple.Create("", 2704), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
+, Tuple.Create(Tuple.Create("", 2714), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
             
             #line default
             #line hidden
-, 2704), false)
+, 2714), false)
 );
 
 WriteLiteral(">");
@@ -261,6 +264,8 @@ WriteLiteral(" type=\"button\"");
 
 WriteLiteral(" class=\"btn btn-lg ev_org_add_btn xs_btn_orgz\"");
 
+WriteLiteral(" id=\"btndelete\"");
+
 WriteLiteral(">Delete </button>\r\n                </div>\r\n\r\n\r\n\r\n            </div>\r\n        </di" +
 "v>\r\n        <div");
 
@@ -272,661 +277,188 @@ WriteLiteral(" id=\"divorgprofile\"");
 
 WriteLiteral(" style=\"display:none;\"");
 
-WriteLiteral("></div>\r\n        <div");
+WriteLiteral("></div>\r\n        \r\n  <!-- Confirm Msg OK Modal Box -->\r\n<input");
 
-WriteLiteral(" class=\"col-sm-3 orgdisnone\"");
+WriteLiteral(" type=\"hidden\"");
 
-WriteLiteral(">\r\n            <input");
+WriteLiteral(" id=\"orgid\"");
 
-WriteLiteral(" type=\"file\"");
+WriteLiteral(" />\r\n<div");
 
-WriteLiteral(" name=\"image\"");
+WriteLiteral(" class=\"modal fade\"");
 
-WriteLiteral(" id=\"input2\"");
+WriteLiteral(" id=\"confirm-delete-ok\"");
 
-WriteLiteral(">\r\n        </div>\r\n        <div");
+WriteLiteral(" tabindex=\"-1\"");
 
-WriteLiteral(" class=\"col-sm-7 orgdisnone\"");
+WriteLiteral(" role=\"dialog\"");
+
+WriteLiteral(" aria-labelledby=\"myModalLabel\"");
+
+WriteLiteral(" aria-hidden=\"true\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"modal-dialog modal-sm confirm-msg ok-msg custom\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"modal-content\"");
 
 WriteLiteral(">\r\n\r\n            <form");
 
-WriteLiteral(" class=\"form-horizontal acnt_form\"");
+WriteLiteral(" id=\"contactForm\"");
+
+WriteLiteral(" class=\"fullw1 add\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"modal-body text-center pv50 txt-msg\"");
 
-WriteLiteral(">\r\n                    <label");
+WriteLiteral(">\r\n\r\n                    <h4");
 
-WriteLiteral(" class=\"col-md-3 control-label acnt_form_label \"");
+WriteLiteral(" class=\"msg\"");
 
-WriteLiteral(">Name</label>\r\n                    <div");
+WriteLiteral(" id=\"hId\"");
 
-WriteLiteral(" class=\"col-md-9\"");
+WriteLiteral("></h4>\r\n                </div>\r\n                <div");
 
-WriteLiteral(">\r\n                        <div");
+WriteLiteral(" class=\"modal-footer msg-action-btn ok\"");
 
-WriteLiteral(" class=\"row\"");
+WriteLiteral(">\r\n                    <button");
 
-WriteLiteral(">\r\n                            <div");
+WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" class=\"col-xs-12\"");
+WriteLiteral(" id=\"btnYes\"");
 
-WriteLiteral(">\r\n                                <input");
+WriteLiteral(" class=\"btn btn-primary no\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" data-dismiss=\"modal\"");
 
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_name\"");
-
-WriteLiteral(" maxlength=\"256\"");
-
-WriteLiteral(">\r\n                                <small");
-
-WriteLiteral(" class=\"acnt_form_name_mini\"");
-
-WriteLiteral(">First Name</small>\r\n                            </div>\r\n\r\n                      " +
-"  </div>\r\n                    </div>\r\n                </div>\r\n                <d" +
-"iv");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <label");
-
-WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
-
-WriteLiteral(">Address</label>\r\n                    <div");
-
-WriteLiteral(" class=\"col-md-9\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"row\"");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_streetadd1\"");
-
-WriteLiteral(" maxlength=\"256\"");
-
-WriteLiteral(">\r\n                                <small");
-
-WriteLiteral(" class=\"acnt_form_name_mini\"");
-
-WriteLiteral(">Street Address</small>\r\n                            </div>\r\n                    " +
-"        <div");
-
-WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_streetaddr2\"");
-
-WriteLiteral(" maxlength=\"256\"");
-
-WriteLiteral(">\r\n                                <small");
-
-WriteLiteral(" class=\"acnt_form_name_mini\"");
-
-WriteLiteral(">Street Address 2</small>\r\n                            </div>\r\n                  " +
-"      </div>\r\n                        <div");
-
-WriteLiteral(" class=\"row\"");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"col-xs-6\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_city\"");
-
-WriteLiteral(" maxlength=\"256\"");
-
-WriteLiteral(">\r\n                                <small");
-
-WriteLiteral(" class=\"acnt_form_name_mini\"");
-
-WriteLiteral(">City</small>\r\n                            </div>\r\n                            <d" +
-"iv");
-
-WriteLiteral(" class=\"col-xs-6\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_state\"");
-
-WriteLiteral(" maxlength=\"256\"");
-
-WriteLiteral(">\r\n                                <small");
-
-WriteLiteral(" class=\"acnt_form_name_mini\"");
-
-WriteLiteral(">State</small>\r\n                            </div>\r\n\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"row mt10\"");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"col-xs-6\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_zip\"");
-
-WriteLiteral(" maxlength=\"5\"");
-
-WriteLiteral(">\r\n                                <small");
-
-WriteLiteral(" class=\"acnt_form_name_mini\"");
-
-WriteLiteral(">Postal / ZipCode</small>\r\n                            </div>\r\n                  " +
-"          <div");
-
-WriteLiteral(" class=\"col-xs-6\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                                ");
-
-            
-            #line 136 "..\..\Views\Account\OrganizerProfile.cshtml"
-                           Write(Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                            \r\n                                <small");
-
-WriteLiteral(" class=\"acnt_form_name_mini\"");
-
-WriteLiteral(">Country</small>\r\n                            </div>\r\n\r\n                        <" +
-"/div>\r\n                    </div>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <label");
-
-WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
-
-WriteLiteral(">Email</label>\r\n                    <div");
-
-WriteLiteral(" class=\"col-md-9\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"row\"");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_email\"");
-
-WriteLiteral(" maxlength=\"100\"");
-
-WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
-"          </div>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <label");
-
-WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
-
-WriteLiteral(">Phone Number </label>\r\n                    <div");
-
-WriteLiteral(" class=\"col-md-9\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"row\"");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_phnno\"");
-
-WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
-"          </div>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <label");
-
-WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
-
-WriteLiteral(">Website URL</label>\r\n                    <div");
-
-WriteLiteral(" class=\"col-md-9\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"row\"");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_websiteurl\"");
-
-WriteLiteral(" maxlength=\"256\"");
-
-WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
-"          </div>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <label");
-
-WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
-
-WriteLiteral(">Facebook URL </label>\r\n                    <div");
-
-WriteLiteral(" class=\"col-md-9\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"row\"");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_fburl\"");
-
-WriteLiteral(" maxlength=\"200\"");
-
-WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
-"          </div>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <label");
-
-WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
-
-WriteLiteral(">Twitter URL</label>\r\n                    <div");
-
-WriteLiteral(" class=\"col-md-9\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"row\"");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_twitterurl\"");
-
-WriteLiteral(" maxlength=\"200\"");
-
-WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
-"          </div>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <label");
-
-WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
-
-WriteLiteral(">LinkedIn URL</label>\r\n                    <div");
-
-WriteLiteral(" class=\"col-md-9\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"row\"");
-
-WriteLiteral(">\r\n                            <div");
-
-WriteLiteral(" class=\"col-xs-12 add_form_bot\"");
-
-WriteLiteral(">\r\n                                <input");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" placeholder=\"\"");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"txt_linkedinurl\"");
-
-WriteLiteral(" maxlength=\"200\"");
-
-WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
-"          </div>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <label");
-
-WriteLiteral(" class=\"col-md-3 control-label acnt_form_label\"");
-
-WriteLiteral(">Description </label>\r\n                    <div");
-
-WriteLiteral(" class=\"col-md-9 orgaz_editor\"");
-
-WriteLiteral(@">
-                        <!-- <div class=""row"">
-                          <div class=""col-xs-12 add_form_bot"">
-                            <textarea class=""form-control""></textarea>
-                          </div>
-                        </div> -->
-                        <div");
-
-WriteLiteral(" class=\"summernote\"");
-
-WriteLiteral(" id=\"txt_desc\"");
-
-WriteLiteral("></div>\r\n                    </div>\r\n                </div>\r\n                <inp" +
-"ut");
-
-WriteLiteral(" type=\"hidden\"");
-
-WriteLiteral(" id=\"ImagePresent\"");
-
-WriteLiteral(" />\r\n                <input");
-
-WriteLiteral(" type=\"hidden\"");
-
-WriteLiteral(" id=\"userimage\"");
-
-WriteLiteral(" />\r\n                <input");
-
-WriteLiteral(" type=\"hidden\"");
-
-WriteLiteral(" value=\"0\"");
-
-WriteLiteral(" id=\"imageeror\"");
-
-WriteLiteral(" />\r\n                <input");
-
-WriteLiteral(" id=\"image_count\"");
-
-WriteLiteral(" type=\"hidden\"");
-
-WriteLiteral(" />\r\n                <button");
-
-WriteLiteral(" class=\"btn btn-info col-md-offset-3 acnt_btn\"");
-
-WriteLiteral(" title=\"\"");
+WriteLiteral(">Yes</button>\r\n                    <button");
 
 WriteLiteral(" type=\"button\"");
 
-WriteLiteral(" id=\"btnadd\"");
+WriteLiteral(" id=\"btnNo\"");
 
-WriteLiteral(">Add</button>\r\n            </form>\r\n        </div>\r\n\r\n\r\n\r\n\r\n\r\n<script");
+WriteLiteral(" class=\"btn btn-primary no\"");
+
+WriteLiteral(" data-dismiss=\"modal\"");
+
+WriteLiteral(">No</button>\r\n                </div>\r\n            </form>\r\n            <input");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" id=\"hdUserId\"");
+
+WriteLiteral(" value=\"\"");
+
+WriteLiteral(" />\r\n        </div>\r\n    </div><!-- confirm-msg -->\r\n</div>\r\n<div>\r\n    <a");
+
+WriteLiteral(" class=\"td-btn\"");
+
+WriteLiteral(" id=\"btOk\"");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" href=\"#confirm-delete-ok\"");
+
+WriteLiteral(" data-toggle=\"modal\"");
+
+WriteLiteral(" style=\"display:none\"");
+
+WriteLiteral(">\r\n\r\n    </a>\r\n</div>\r\n<!-- Confirm Msg OK Modal Box -->\r\n\r\n\r\n\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n    function LoadOrganiserAsyn(id) {\r\n        $(\".orgdisnone\").hide();\r\n\r\n    " +
-"    $(\".maindivnonvis\").hide();\r\n        $(\'#divorgprofile\').show();\r\n        $(" +
-"\'#divorgprofile\').load(\'");
+WriteLiteral(">\r\n    function LoadOrganiserAsyn(id) {\r\n    \r\n        $(\".maindivnonvis\").hide()" +
+";\r\n        $(\'#divorgprofile\').show();\r\n        $(\'#divorgprofile\').load(\'");
 
             
-            #line 240 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 123 "..\..\Views\Account\OrganizerProfile.cshtml"
                              Write(Url.Action("OrganiserEdit", "Account", new { }));
 
             
             #line default
             #line hidden
-WriteLiteral("?id=\' + id + \'\');\r\n    }\r\n    $(document).ready(function () {\r\n        $(\'.summer" +
-"note\').summernote({\r\n            height: 70,   //set editable area\'s height\r\n   " +
-"         disableDragAndDrop: true\r\n        });\r\n\r\n        $(\"#txt_phnno\").mask(\"" +
-"999-999-9999\");\r\n\r\n        $(\'#input2\').filer({\r\n            limit: \'1\',\r\n      " +
-"      maxSize: \'2\',\r\n            extensions: [\'jpg\', \'jpeg\', \'png\'],\r\n          " +
-"  changeInput: \'<div class=\"jFiler-input-dragDrop\" id=\"drag-drop2\"><div class=\"j" +
-"Filer-input-inner\"><div class=\"jFiler-input-icon\"><i class=\"icon-jfi-cloud-up-o\"" +
-"></i></div><div class=\"jFiler-input-text\"><h3>Drag  photo or normal upload</h3> " +
-"</div></div></div>\',\r\n            showThumbs: true,\r\n            appendTo: \"#dra" +
-"g-drop2\",\r\n            theme: \"dragdropbox\",\r\n            onChange: false,\r\n    " +
-"        templates: {\r\n                box: \'<ul class=\"jFiler-item-list profile-" +
-"views clearfix\"></ul>\',\r\n                item: \'<li class=\"jFiler-item\">\\\r\n     " +
-"                               <div class=\"\">\\\r\n                                " +
-"            {{fi-image}}\\\r\n                                             <div cla" +
-"ss=\"jFiler-item-container\">\\\r\n                                <div class=\"jFiler" +
-"-item-inner\">\\\r\n                                     <div class=\"jFiler-item-ass" +
-"ets jFiler-row\">\\\r\n                                        <ul class=\"list-inlin" +
-"e pull-left\">\\\r\n                                            <li>{{fi-progressBar" +
-"}}</li>\\\r\n                                        </ul>\\\r\n                      " +
-"              </div>\\\r\n                                    </div>\\\r\n            " +
-"                </div>\\\r\n                                            <span></spa" +
-"n>\\\r\n                                             <button class=\"btn  jFiler-ite" +
-"m-trash-action can_btn\" type=\"button\">\\\r\n                                       " +
-"         <i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n                   " +
-"                          </button>\\\r\n                                       </d" +
-"iv>\\\r\n                        </li>\',\r\n                itemAppend: \'<li class=\"j" +
-"Filer-item\">\\\r\n                                    <div class=\"\">\\\r\n            " +
-"                                {{fi-image}}\\\r\n                                 " +
-"            <button class=\"btn  jFiler-item-trash-action can_btn\" type=\"button\">" +
-"\\\r\n                                                <i class=\"glyphicon glyphicon" +
-"-remove-circle\"></i>\\\r\n                                             </button>\\\r\n" +
-"                                       </div>\\\r\n                        </li>\',\r" +
-"\n\r\n\r\n                progressBar: \'<div class=\"bar\"></div>\',\r\n                it" +
-"emAppendToEnd: true,\r\n                removeConfirmation: false,\r\n              " +
-"  _selectors: {\r\n                    list: \'#drag-drop2 .jFiler-item-list\',\r\n   " +
-"                 item: \'#drag-drop2 .jFiler-item\',\r\n                    progress" +
-"Bar: \'#drag-drop2 .bar\',\r\n                    remove: \'#drag-drop2 .jFiler-item-" +
-"trash-action\',\r\n                }\r\n            },\r\n            uploadFile: {\r\n  " +
-"              url: \"/Account/SaveOrganizerImage\",\r\n                data: {},\r\n  " +
-"              type: \'POST\',\r\n                enctype: \'multipart/form-data\',\r\n  " +
-"              beforeSend: function () { },\r\n                success: function (d" +
-"ata, el) {\r\n\r\n                    var parent = el.find(\"#drag-drop2 .jFiler-jPro" +
-"gressBar\").parent();\r\n                    el.find(\"#drag-drop2 .jFiler-jProgress" +
-"Bar\").fadeOut(\"slow\", function () {\r\n                        $(\"<div class=\\\"jFi" +
-"ler-item-others text-success\\\"><i class=\\\"icon-jfi-check-circle\\\"></i> Success</" +
-"div>\").hide().appendTo(parent).fadeIn(\"slow\").remove();\r\n                    });" +
-"\r\n                    console.log(data);\r\n                    var image_count = " +
-"$(\"#image_count\").val();\r\n                    var imagejson = jQuery.parseJSON(J" +
-"SON.stringify(data));\r\n                    var imgdata = imagejson.image_name + " +
-"\'¶\' + imagejson.image_type;\r\n\r\n                    $(\'#userimage\').val(imgdata);" +
-"\r\n\r\n\r\n                    $(\'#ImagePresent\').val(\"Yes\");\r\n\r\n                    " +
-"if ($.trim(image_count) == \'\') {\r\n                        $(\"#image_count\").val(" +
-"\'1\');\r\n                    } else {\r\n                        image_count = parse" +
-"Int(image_count) + 1;\r\n                        $(\"#image_count\").val(image_count" +
-");\r\n                    }\r\n\r\n                },\r\n                error: function" +
-" (el) {\r\n\r\n                    //var parent = el.find(\".jFiler-jProgressBar\").pa" +
-"rent();\r\n                    //el.find(\".jFiler-jProgressBar\").fadeOut(\"slow\", f" +
-"unction(){\r\n                    //    $(\"<div class=\\\"jFiler-item-others text-er" +
-"ror\\\"><i class=\\\"icon-jfi-minus-circle\\\"></i> Error</div>\").hide().appendTo(pare" +
-"nt).fadeIn(\"slow\");\r\n                    //});\r\n                },\r\n            " +
-"    statusCode: {},\r\n                onProgress: function () { },\r\n            }" +
-",\r\n            dragDrop: {\r\n                dragEnter: function () { },\r\n       " +
-"         dragLeave: function () { },\r\n                drop: function () { },\r\n  " +
-"          },\r\n            addMore: false,\r\n            clipBoardPaste: true,\r\n  " +
-"          excludeName: null,\r\n            beforeShow: function () { $(\"#drag-dro" +
-"p2 .jFiler-input-inner\").hide(); return true },\r\n            onSelect: function " +
-"() { $(\"#drag-drop2 .jFiler-input-inner\").hide(); },\r\n            afterShow: fun" +
-"ction () { $(\"#drag-drop2 .jFiler-input-inner\").hide(); $(\"#drag-drop2 .fi-progr" +
-"essBar\").hide(); },\r\n            onRemove: function (el) {\r\n                var " +
-"image_count = $(\"#image_count\").val();\r\n                image_count = parseInt(i" +
-"mage_count) - 1;\r\n                var id_div = el[0].jfiler_id;\r\n               " +
-" var hidden_image_element = \'image_hidden_\' + id_div;\r\n\r\n                $(\'#use" +
-"rimage\').val(\'\');\r\n                $(\'#input2\').click(function (e) {\r\n          " +
-"          e.preventDefault();\r\n\r\n                })\r\n                $(\'#ImagePr" +
-"esent\').val(\"NO\");\r\n            },\r\n            onEmpty: function (el) {\r\n      " +
-"          if ($(\"#imageeror\").val() == 0) {\r\n                  \r\n               " +
-"     if ($(\"#drag-drop2 .jFiler-items\").length == 1) { setTimeout(function () { " +
-"$(\"#drag-drop2 .jFiler-input-inner\").css(\'display\', \'block\'); $(\'#input2\').unbin" +
-"d(\'click\'); }, 200); };\r\n                }\r\n            },\r\n            captions" +
-": {\r\n                button: \"Choose Files\",\r\n                feedback: \"Choose " +
-"files To Upload\",\r\n                feedback2: \"files were chosen\",\r\n            " +
-"    drop: \"Drop file here to Upload\",\r\n                removeConfirmation: \"Are " +
-"you sure you want to remove this file?\",\r\n                errors: {\r\n           " +
-"         filesLimit: \'\',\r\n                    filesType: \'\',\r\n                  " +
-"  filesSize: \'\',\r\n                    filesSizeAll: \'\'\r\n                }\r\n     " +
-"       }\r\n\r\n\r\n\r\n        });\r\n\r\n        $(\"#id_selectorg\").change(function () {\r\n" +
-"            var selectval = $(this).val();\r\n\r\n            if (selectval == \"A\") " +
-"{\r\n                $(\".orgdisnone\").show();\r\n                $(\".maindivnonvis\")" +
-".hide();\r\n            } else {\r\n                $(\".orgdisnone\").hide();\r\n      " +
-"          $(\".maindivnonvis\").show();\r\n            }\r\n\r\n        });\r\n        $(d" +
-"ocument).on(\'change\', \'#txt_zip\', function () {\r\n      \r\n            var country" +
-" = $(\"#Country option:selected\").text().trim();\r\n\r\n            var city = \"\";\r\n " +
-"           var state = \"\";\r\n\r\n            var pincode = $(this).val();\r\n        " +
-"    $.ajax({\r\n                url: \'http://maps.googleapis.com/maps/api/geocode/" +
-"json\',\r\n                data: \'&address=\' + pincode + \'&sensor=true\',\r\n         " +
-"       dataType: \'json\',\r\n                cache: false,\r\n                success" +
-": function (data) {\r\n\r\n\r\n                    if (data.status == \'OK\') {\r\n       " +
-"                 $(\'#txt_zip\').removeClass(\'err-bor\');\r\n\r\n                      " +
-"  for (var i = 0; i < data.results[0].address_components.length; i++) {\r\n       " +
-"                     var obj = data.results[0].address_components[i];\r\n\r\n       " +
-"                     var obj2 = obj[\'types\'];\r\n\r\n                            for" +
-" (var j = 0; j < obj2.length; j++) {\r\n                                if (obj2[j" +
-"] == \'locality\' || obj2[j] == \'postal_town\' || obj2[j] == \'sublocality_level_1\' " +
-"|| obj2[j] == \'sublocality_level_2\' || obj2[j] == \'sublocality_level_3\' || obj2[" +
-"j] == \'sublocality_level_4\' || obj2[j] == \'sublocality_level_5\' || obj2[j] == \'w" +
-"ard\') {\r\n                                    city = obj[\'long_name\'];\r\n\r\n\r\n     " +
-"                           }\r\n                                if (obj2[j] == \'ad" +
-"ministrative_area_level_1\') {\r\n                                    state = obj[\'" +
-"long_name\'];\r\n\r\n                                }\r\n                             " +
-"   if (obj2[j] == \'country\') {\r\n                                    if (obj[\'lon" +
-"g_name\'] == country) {\r\n                                        $(\'#txt_city\').v" +
-"al(city);\r\n                                        $(\'#txt_state\').val(state);\r\n" +
-"\r\n\r\n                                    }\r\n\r\n                                }\r\n" +
-"\r\n                            }\r\n\r\n\r\n\r\n                        }\r\n\r\n            " +
-"        } else {\r\n\r\n                        $(\'#erraccmsg\').html(ajaxsetup(\'Orga" +
-"nizerMaster\', \'OrgvalidZipUi\'));\r\n                        $(\'#diverroacc\').show(" +
-");\r\n                        $(\'html,body\').animate({ scrollTop: 0 });\r\n\r\n\r\n     " +
-"                   $(\'#txt_zip\').addClass(\'err-bor\');\r\n                        r" +
-"eturn false;\r\n                    }\r\n                }\r\n            });\r\n       " +
-" });\r\n        $(\"#btnadd\").click(function () {\r\n\r\n            var msg = validate" +
-"main();\r\n            if (msg != \'\') {\r\n                $(\"#dveruimain\").addClass" +
-"(\"er_UI_main\");\r\n                $(\"#dveruiimg\").addClass(\"er_UI_img\");\r\n       " +
-"         $(\"#dveruimain\").removeClass(\"er_suc_main\");\r\n                $(\"#dveru" +
-"iimg\").removeClass(\"er_suc_img\");\r\n                $(\'#erraccmsg\').html(msg);\r\n " +
-"               $(\'#diverroacc\').show();\r\n                $(\'html,body\').animate(" +
-"{ scrollTop: 0 });\r\n\r\n                return false;\r\n            }\r\n            " +
-"var code = $(\"#txt_desc\").code();\r\n            var text = code.replace(/<p>/gi, " +
-"\" \");\r\n            var plainText = $(\"<div />\").html(text).text();\r\n            " +
-"var model = {\r\n                \'Orgnizer_Name\': $(\"#txt_name\").val(),\r\n         " +
-"       \'Organizer_Desc\': plainText,\r\n                \'Organizer_FBLink\': $(\"#txt" +
-"_fburl\").val(),\r\n                \'Organizer_Twitter\': $(\"#txt_twitterurl\").val()" +
-",\r\n                \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").val(),\r\n         " +
-"       \'UserId\': \'\',\r\n                \'Organizer_Image\': $(\"#userimage\").val(),\r" +
-"\n                \'Organizer_Address1\': $(\"#txt_streetadd1\").val(),\r\n            " +
-"    \'Organizer_Address2\': $(\"#txt_streetaddr2\").val(),\r\n                \'Organiz" +
-"er_City\': $(\"#txt_city\").val(),\r\n                \'Organizer_State\': $(\"#txt_stat" +
-"e\").val(),\r\n                \'Organizer_CountryId\': $(\"#Country\").val(),\r\n       " +
-"         \'Organizer_Zipcode\': $(\"#txt_zip\").val(),\r\n                \'Organizer_E" +
-"mail\': $(\"#txt_email\").val(),\r\n                \'Organizer_Phoneno\': $(\"#txt_phnn" +
-"o\").val(),\r\n                \'Organizer_Websiteurl\': $(\"#txt_websiteurl\").val(),\r" +
-"\n\r\n            };\r\n            $.ajax({\r\n                url: \'");
+WriteLiteral("?id=\' + id + \'\');\r\n    }\r\n    function LoadOrganiserAddAsyn() {\r\n\r\n        $(\".ma" +
+"indivnonvis\").hide();\r\n        $(\'#divorgprofile\').show();\r\n        $(\'#divorgpr" +
+"ofile\').load(\'");
 
             
-            #line 499 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 129 "..\..\Views\Account\OrganizerProfile.cshtml"
+                             Write(Url.Action("AddOrganiser", "Account"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\');\r\n    }\r\n    $(document).ready(function () {\r\n       \r\n        $(\'#mgacnt\').cl" +
+"ick();\r\n        $(\'#dvacmang\').addClass(\"active\");\r\n        $(\'#dvacmang b\').add" +
+"Class(\'opened new-opend\');\r\n\r\n        $(\'#dvacmang\').click(function (e) {\r\n\r\n   " +
+"         var $dvEle = $(\'#dvacmang b\');\r\n            var vclassname = $dvEle.att" +
+"r(\'class\');\r\n            if ($dvEle.hasClass(\"new-opend\")) {\r\n                $d" +
+"vEle.removeClass(\'opened new-opend\').addClass(\'closed\');\r\n            }\r\n       " +
+"     else {\r\n                $dvEle.addClass(\'opened new-opend\');\r\n            }" +
+"\r\n        });\r\n  \r\n\r\n        $(\"#txt_phnno\").mask(\"999-999-9999\");\r\n\r\n       \r\n\r" +
+"\n        $(\"#id_selectorg\").change(function () {\r\n            var selectval = $(" +
+"this).val();\r\n\r\n            if (selectval == \"A\") {\r\n                LoadOrganis" +
+"erAddAsyn();\r\n                $(\".maindivnonvis\").hide();\r\n            } else {\r" +
+"\n               \r\n                $(\".maindivnonvis\").show();\r\n            }\r\n\r\n" +
+"        });\r\n        $(document).on(\'change\', \'#txt_zip\', function () {\r\n      \r" +
+"\n            var country = $(\"#Country option:selected\").text().trim();\r\n\r\n     " +
+"       var city = \"\";\r\n            var state = \"\";\r\n\r\n            var pincode = " +
+"$(this).val();\r\n            $.ajax({\r\n                url: \'http://maps.googleap" +
+"is.com/maps/api/geocode/json\',\r\n                data: \'&address=\' + pincode + \'&" +
+"sensor=true\',\r\n                dataType: \'json\',\r\n                cache: false,\r" +
+"\n                success: function (data) {\r\n\r\n\r\n                    if (data.st" +
+"atus == \'OK\') {\r\n                        $(\'#txt_zip\').removeClass(\'err-bor\');\r\n" +
+"\r\n                        for (var i = 0; i < data.results[0].address_components" +
+".length; i++) {\r\n                            var obj = data.results[0].address_c" +
+"omponents[i];\r\n\r\n                            var obj2 = obj[\'types\'];\r\n\r\n       " +
+"                     for (var j = 0; j < obj2.length; j++) {\r\n                  " +
+"              if (obj2[j] == \'locality\' || obj2[j] == \'postal_town\' || obj2[j] =" +
+"= \'sublocality_level_1\' || obj2[j] == \'sublocality_level_2\' || obj2[j] == \'sublo" +
+"cality_level_3\' || obj2[j] == \'sublocality_level_4\' || obj2[j] == \'sublocality_l" +
+"evel_5\' || obj2[j] == \'ward\') {\r\n                                    city = obj[" +
+"\'long_name\'];\r\n\r\n\r\n                                }\r\n                          " +
+"      if (obj2[j] == \'administrative_area_level_1\') {\r\n                         " +
+"           state = obj[\'long_name\'];\r\n\r\n                                }\r\n     " +
+"                           if (obj2[j] == \'country\') {\r\n                        " +
+"            if (obj[\'long_name\'] == country) {\r\n                                " +
+"        $(\'#txt_city\').val(city);\r\n                                        $(\'#t" +
+"xt_state\').val(state);\r\n\r\n\r\n                                    }\r\n\r\n           " +
+"                     }\r\n\r\n                            }\r\n\r\n\r\n\r\n                 " +
+"       }\r\n\r\n                    } else {\r\n\r\n                        $(\'#erraccms" +
+"g\').html(ajaxsetup(\'OrganizerMaster\', \'OrgvalidZipUi\'));\r\n                      " +
+"  $(\'#diverroacc\').show();\r\n                        $(\'html,body\').animate({ scr" +
+"ollTop: 0 });\r\n\r\n\r\n                        $(\'#txt_zip\').addClass(\'err-bor\');\r\n " +
+"                       return false;\r\n                    }\r\n                }\r\n" +
+"            });\r\n        });\r\n        $(document).on(\'click\', \'#btnadd\', functio" +
+"n () {\r\n        \r\n            var msg = validatemain();\r\n            if (msg != " +
+"\'\') {\r\n                $(\"#dveruimain\").addClass(\"er_UI_main\");\r\n               " +
+" $(\"#dveruiimg\").addClass(\"er_UI_img\");\r\n                $(\"#dveruimain\").remove" +
+"Class(\"er_suc_main\");\r\n                $(\"#dveruiimg\").removeClass(\"er_suc_img\")" +
+";\r\n                $(\'#erraccmsg\').html(msg);\r\n                $(\'#diverroacc\')." +
+"show();\r\n                $(\'html,body\').animate({ scrollTop: 0 });\r\n\r\n          " +
+"      return false;\r\n            }\r\n            var code = $(\"#txt_desc\").code()" +
+";\r\n            var text = code.replace(/<p>/gi, \" \");\r\n            var plainText" +
+" = $(\"<div />\").html(text).text();\r\n            var model = {\r\n                \'" +
+"Orgnizer_Name\': $(\"#txt_name\").val(),\r\n                \'Organizer_Desc\': plainTe" +
+"xt,\r\n                \'Organizer_FBLink\': $(\"#txt_fburl\").val(),\r\n               " +
+" \'Organizer_Twitter\': $(\"#txt_twitterurl\").val(),\r\n                \'Organizer_Li" +
+"nkedin\': $(\"#txt_linkedinurl\").val(),\r\n                \'UserId\': \'\',\r\n          " +
+"      \'Organizer_Image\': $(\"#userimage\").val(),\r\n                \'Organizer_Addr" +
+"ess1\': $(\"#txt_streetadd1\").val(),\r\n                \'Organizer_Address2\': $(\"#tx" +
+"t_streetaddr2\").val(),\r\n                \'Organizer_City\': $(\"#txt_city\").val(),\r" +
+"\n                \'Organizer_State\': $(\"#txt_state\").val(),\r\n                \'Org" +
+"anizer_CountryId\': $(\"#Country\").val(),\r\n                \'Organizer_Zipcode\': $(" +
+"\"#txt_zip\").val(),\r\n                \'Organizer_Email\': $(\"#txt_email\").val(),\r\n " +
+"               \'Organizer_Phoneno\': $(\"#txt_phnno\").val(),\r\n                \'Org" +
+"anizer_Websiteurl\': $(\"#txt_websiteurl\").val(),\r\n\r\n            };\r\n            $" +
+".ajax({\r\n                url: \'");
+
+            
+            #line 266 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("saveOrganizer", "Account"));
 
             
@@ -951,49 +483,136 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 515 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 282 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                    }\r\n                    $" +
-"(\"#dveruimain\").removeClass(\"er_UI_main\");\r\n                    $(\"#dveruiimg\")." +
-"removeClass(\"er_UI_img\");\r\n                    $(\"#dveruimain\").addClass(\"er_suc" +
-"_main\");\r\n                    $(\"#dveruiimg\").addClass(\"er_suc_img\");\r\n         " +
-"           $(\'#erraccmsg\').html(ajaxsetup(\'OrganizerMaster\', \'OrgsaveSucc\'));\r\n " +
-"                   $(\'#diverroacc\').show();\r\n                    $(\'html,body\')." +
-"animate({ scrollTop: 0 });\r\n                    $(\".orgdisnone\").hide();\r\n      " +
-"              $(\".maindivnonvis\").show();\r\n\r\n\r\n                }\r\n            })" +
-";\r\n\r\n\r\n\r\n        });\r\n\r\n        $(\'#btnedit\').click(function () {\r\n\r\n           " +
-" var txtcat = $(\'#id_selectorg\').val();\r\n            alert(\'hiedit\');\r\n         " +
-"   if (txtcat != 0 && txtcat != \'A\') {\r\n\r\n                LoadOrganiserAsyn(txtc" +
-"at);\r\n            }\r\n        });\r\n        $(document).on(\'click\', \'#btnsave\', fu" +
-"nction () {\r\n\r\n            var msg = validatemain();\r\n            if (msg != \'\')" +
-" {\r\n                $(\"#dveruimain\").addClass(\"er_UI_main\");\r\n                $(" +
-"\"#dveruiimg\").addClass(\"er_UI_img\");\r\n                $(\"#dveruimain\").removeCla" +
-"ss(\"er_suc_main\");\r\n                $(\"#dveruiimg\").removeClass(\"er_suc_img\");\r\n" +
-"                $(\'#erraccmsg\').html(msg);\r\n                $(\'#diverroacc\').sho" +
-"w();\r\n                $(\'html,body\').animate({ scrollTop: 0 });\r\n\r\n             " +
-"   return false;\r\n            }\r\n            var code = $(\"#txt_desc\").code();\r\n" +
-"            var text = code.replace(/<p>/gi, \" \");\r\n            var plainText = " +
-"$(\"<div />\").html(text).text();\r\n            var model = {\r\n                \'Org" +
-"nizer_Id\': $(\'#hd_ID\').val(),\r\n                \'Orgnizer_Name\': $(\"#txt_name\").v" +
-"al(),\r\n                \'Organizer_Desc\': plainText,\r\n                \'Organizer_" +
-"FBLink\': $(\"#txt_fburl\").val(),\r\n                \'Organizer_Twitter\': $(\"#txt_tw" +
-"itterurl\").val(),\r\n                \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").v" +
-"al(),\r\n                \'UserId\': \'\',\r\n                \'Organizer_Image\': $(\"#use" +
-"rimage\").val(),\r\n                \'Organizer_Address1\': $(\"#txt_streetadd1\").val(" +
-"),\r\n                \'Organizer_Address2\': $(\"#txt_streetaddr2\").val(),\r\n        " +
-"        \'Organizer_City\': $(\"#txt_city\").val(),\r\n                \'Organizer_Stat" +
-"e\': $(\"#txt_state\").val(),\r\n                \'Organizer_CountryId\': $(\"#Country\")" +
-".val(),\r\n                \'Organizer_Zipcode\': $(\"#txt_zip\").val(),\r\n            " +
-"    \'Organizer_Email\': $(\"#txt_email\").val(),\r\n                \'Organizer_Phonen" +
-"o\': $(\"#txt_phnno\").val(),\r\n                \'Organizer_Websiteurl\': $(\"#txt_webs" +
-"iteurl\").val(),\r\n\r\n            };\r\n            $.ajax({\r\n                url: \'");
+WriteLiteral(@"';
+
+                        }
+
+
+                    }
+                    $(""#dveruimain"").removeClass(""er_UI_main"");
+                    $(""#dveruiimg"").removeClass(""er_UI_img"");
+                    $(""#dveruimain"").addClass(""er_suc_main"");
+                    $(""#dveruiimg"").addClass(""er_suc_img"");
+                    $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgsaveSucc'));
+                    $('#diverroacc').show();
+                    $('html,body').animate({ scrollTop: 0 });
+                    $('#divorgprofile').empty();
+                    $('#divorgprofile').hide();
+                    $("".maindivnonvis"").show();
+
+
+                }
+            });
+
+
+
+        });
+
+        $('#btnedit').click(function () {
+
+            var txtcat = $('#id_selectorg').val();
+           
+            if (txtcat != 0 && txtcat != 'A') {
+
+                LoadOrganiserAsyn(txtcat);
+            }
+        });
+        $('#btndelete').click(function () {
+          
+            var Id = $('#id_selectorg').val();
+         
+            if (Id != 0 && Id != 'A') {
+
+                $(""#hId"").html(ajaxsetup('OrganizerMaster', 'OrgDeleteMessage'));
+                $(""#btOk"").click();
+
+
+                $(""#orgid"").val(Id);
+            }
+        });
+        $(""#btnYes"").click(function(){
+            var Id = $(""#orgid"").val();
+
+            if (Id != 0 && Id != 'A') {
+
+                $.ajax({
+                    url: '");
 
             
-            #line 586 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 335 "..\..\Views\Account\OrganizerProfile.cshtml"
+                     Write(Url.Action("DeleteOrganizer", "Account"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"',
+                    data: { Id: Id },
+                    type: ""Post"",
+                    success: function (data) {
+
+                        if (typeof (data.Message) === ""undefined"") {
+                            $(""#id_selectorg"").empty();
+                            $(""#id_selectorg"").append(""<option value='0'>Select</option>"");
+                            $(""#id_selectorg"").append(""<option value='A'>Add Organizer</option>"");
+                            $.each(data, function (index, optiondata) {
+
+                                $(""#id_selectorg"").append(""<option value='"" + optiondata.Id + ""'>"" + optiondata.Name + ""</option>"");
+                            });
+                            $('.selectpicker').selectpicker('refresh');
+
+                        } else {
+                            if (data.Message == ""O"") {
+                                window.location.href = '");
+
+            
+            #line 352 "..\..\Views\Account\OrganizerProfile.cshtml"
+                                                   Write(Url.Action("Index", "Home"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n\r\n                            }\r\n\r\n\r\n                        }\r\n             " +
+"         \r\n                        $(\"#dveruimain\").removeClass(\"er_UI_main\");\r\n" +
+"                        $(\"#dveruiimg\").removeClass(\"er_UI_img\");\r\n             " +
+"           $(\"#dveruimain\").addClass(\"er_suc_main\");\r\n                        $(" +
+"\"#dveruiimg\").addClass(\"er_suc_img\");\r\n                        $(\'#erraccmsg\').h" +
+"tml(ajaxsetup(\'OrganizerMaster\', \'OrgDelete\'));\r\n                        $(\'#div" +
+"erroacc\').show();\r\n                        $(\'html,body\').animate({ scrollTop: 0" +
+" });\r\n                      \r\n                        $(\".maindivnonvis\").show()" +
+";\r\n                        $(\"#divorgprofile\").empty();\r\n                       " +
+" $(\"#divorgprofile\").hide();\r\n\r\n                    }\r\n\r\n                });\r\n  " +
+"          }\r\n\r\n\r\n        });\r\n        $(document).on(\'click\', \'#btnsave\', functi" +
+"on () {\r\n\r\n            var msg = validatemain();\r\n            if (msg != \'\') {\r\n" +
+"                $(\"#dveruimain\").addClass(\"er_UI_main\");\r\n                $(\"#dv" +
+"eruiimg\").addClass(\"er_UI_img\");\r\n                $(\"#dveruimain\").removeClass(\"" +
+"er_suc_main\");\r\n                $(\"#dveruiimg\").removeClass(\"er_suc_img\");\r\n    " +
+"            $(\'#erraccmsg\').html(msg);\r\n                $(\'#diverroacc\').show();" +
+"\r\n                $(\'html,body\').animate({ scrollTop: 0 });\r\n\r\n                r" +
+"eturn false;\r\n            }\r\n            var code = $(\"#txt_desc\").code();\r\n    " +
+"        var text = code.replace(/<p>/gi, \" \");\r\n            var plainText = $(\"<" +
+"div />\").html(text).text();\r\n            var model = {\r\n                \'Orgnize" +
+"r_Id\': $(\'#hd_ID\').val(),\r\n                \'Orgnizer_Name\': $(\"#txt_name\").val()" +
+",\r\n                \'Organizer_Desc\': plainText,\r\n                \'Organizer_FBLi" +
+"nk\': $(\"#txt_fburl\").val(),\r\n                \'Organizer_Twitter\': $(\"#txt_twitte" +
+"rurl\").val(),\r\n                \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").val()" +
+",\r\n                \'UserId\': \'\',\r\n                \'Organizer_Image\': $(\"#userima" +
+"ge\").val(),\r\n                \'Organizer_Address1\': $(\"#txt_streetadd1\").val(),\r\n" +
+"                \'Organizer_Address2\': $(\"#txt_streetaddr2\").val(),\r\n            " +
+"    \'Organizer_City\': $(\"#txt_city\").val(),\r\n                \'Organizer_State\': " +
+"$(\"#txt_state\").val(),\r\n                \'Organizer_CountryId\': $(\"#Country\").val" +
+"(),\r\n                \'Organizer_Zipcode\': $(\"#txt_zip\").val(),\r\n                " +
+"\'Organizer_Email\': $(\"#txt_email\").val(),\r\n                \'Organizer_Phoneno\': " +
+"$(\"#txt_phnno\").val(),\r\n                \'Organizer_Websiteurl\': $(\"#txt_websiteu" +
+"rl\").val(),\r\n\r\n            };\r\n            $.ajax({\r\n                url: \'");
+
+            
+            #line 416 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("EditOrganizer", "Account"));
 
             
@@ -1019,7 +638,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 603 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 433 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -1027,35 +646,34 @@ WriteLiteral(@"',
             #line hidden
 WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                    }\r\n                    $" +
 "(\'#userimage\').val(\"\");\r\n                    $(\"#image_count\").val(\"0\");\r\n      " +
-"              $(\'#ImagePresent\').val(\"No\");\r\n                    alert($(\"#image" +
-"_count\").val());\r\n                    $(\"#dveruimain\").removeClass(\"er_UI_main\")" +
-";\r\n                    $(\"#dveruiimg\").removeClass(\"er_UI_img\");\r\n              " +
-"      $(\"#dveruimain\").addClass(\"er_suc_main\");\r\n                    $(\"#dveruii" +
-"mg\").addClass(\"er_suc_img\");\r\n                    $(\'#erraccmsg\').html(ajaxsetup" +
-"(\'OrganizerMaster\', \'OrgsaveEdit\'));\r\n                    $(\'#diverroacc\').show(" +
-");\r\n                    $(\'html,body\').animate({ scrollTop: 0 });\r\n             " +
-"       $(\".orgdisnone\").hide();\r\n                    $(\".maindivnonvis\").show();" +
-"\r\n                    $(\"#divorgprofile\").empty();\r\n                    $(\"#divo" +
-"rgprofile\").hide();\r\n\r\n                }\r\n\r\n            });\r\n\r\n\r\n\r\n\r\n        });" +
-"\r\n\r\n\r\n\r\n    });\r\n\r\n        function validatemain()\r\n        {\r\n            debug" +
-"ger;\r\n            var msg = \"\";\r\n            var organizername = $(\"#txt_name\")." +
-"val();\r\n            var organizeremail = $(\'#txt_email\').val();\r\n            if(" +
-"organizername==\"\")\r\n            {\r\n                $(\"#txt_name\").addClass(\'err-" +
-"bor\');\r\n                msg+= ajaxsetup(\'OrganizerMaster\',\'OrgNameUi\') +\"</br>\";" +
-"\r\n\r\n            } else {\r\n                $(\"#txt_name\").removeClass(\'err-bor\');" +
-"\r\n            }\r\n\r\n            if (organizeremail != \"\") {\r\n                if (" +
-"!validateEmail(organizeremail)) {\r\n\r\n                    $(\'#txt_email\').addClas" +
-"s(\'err-bor\');\r\n                    msg += ajaxsetup(\'OrganizerMaster\', \'Orgvalid" +
-"EmailUi\') + \"</br>\";\r\n\r\n                } else {\r\n\r\n\r\n                    $(\'#tx" +
-"t_email\').removeClass(\'err-bor\');\r\n                }\r\n            } else {\r\n    " +
-"            $(\'#txt_email\').addClass(\'err-bor\');\r\n                msg += ajaxset" +
-"up(\'OrganizerMaster\', \'OrgEmailUi\') + \"</br>\";;\r\n\r\n            }\r\n            re" +
-"turn msg;\r\n        }\r\n        function ajaxsetup(strname, strFormTag) {\r\n       " +
-"     var msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url" +
-": \'");
+"              $(\'#ImagePresent\').val(\"No\");\r\n                    $(\"#dveruimain\"" +
+").removeClass(\"er_UI_main\");\r\n                    $(\"#dveruiimg\").removeClass(\"e" +
+"r_UI_img\");\r\n                    $(\"#dveruimain\").addClass(\"er_suc_main\");\r\n    " +
+"                $(\"#dveruiimg\").addClass(\"er_suc_img\");\r\n                    $(\'" +
+"#erraccmsg\').html(ajaxsetup(\'OrganizerMaster\', \'OrgsaveEdit\'));\r\n               " +
+"     $(\'#diverroacc\').show();\r\n                    $(\'html,body\').animate({ scro" +
+"llTop: 0 });\r\n                   \r\n                    $(\".maindivnonvis\").show(" +
+");\r\n                    $(\"#divorgprofile\").empty();\r\n                    $(\"#di" +
+"vorgprofile\").hide();\r\n\r\n                }\r\n\r\n            });\r\n\r\n\r\n\r\n\r\n        }" +
+");\r\n\r\n\r\n\r\n    });\r\n\r\n        function validatemain()\r\n        {\r\n            deb" +
+"ugger;\r\n            var msg = \"\";\r\n            var organizername = $(\"#txt_name\"" +
+").val();\r\n            var organizeremail = $(\'#txt_email\').val();\r\n            i" +
+"f(organizername==\"\")\r\n            {\r\n                $(\"#txt_name\").addClass(\'er" +
+"r-bor\');\r\n                msg+= ajaxsetup(\'OrganizerMaster\',\'OrgNameUi\') +\"</br>" +
+"\";\r\n\r\n            } else {\r\n                $(\"#txt_name\").removeClass(\'err-bor\'" +
+");\r\n            }\r\n\r\n            if (organizeremail != \"\") {\r\n                if" +
+" (!validateEmail(organizeremail)) {\r\n\r\n                    $(\'#txt_email\').addCl" +
+"ass(\'err-bor\');\r\n                    msg += ajaxsetup(\'OrganizerMaster\', \'Orgval" +
+"idEmailUi\') + \"</br>\";\r\n\r\n                } else {\r\n\r\n\r\n                    $(\'#" +
+"txt_email\').removeClass(\'err-bor\');\r\n                }\r\n            } else {\r\n  " +
+"              $(\'#txt_email\').addClass(\'err-bor\');\r\n                msg += ajaxs" +
+"etup(\'OrganizerMaster\', \'OrgEmailUi\') + \"</br>\";;\r\n\r\n            }\r\n            " +
+"return msg;\r\n        }\r\n        function ajaxsetup(strname, strFormTag) {\r\n     " +
+"       var msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                u" +
+"rl: \'");
 
             
-            #line 675 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 504 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("Index", "ValidationMessage"));
 
             

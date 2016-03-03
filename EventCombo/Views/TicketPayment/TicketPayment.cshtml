@@ -13,7 +13,6 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
-
     <input type="hidden" id="hdemailexist" />
     <input id="hidTicketbearer" type="hidden" />
     @Html.HiddenFor(m => m.EventId, new { id = "hdEventid" })
@@ -84,7 +83,7 @@
             </div>
         </div>
 
-        <div class="event_detail_container">
+        <div id="dvVarHash" class="event_detail_container">
             <div class="evnt_tile_head">
                 <div class="evnt_tile_bg_l"></div>
                 <div class="col-sm-12 col-xs-12 text-left no_pad">
@@ -123,7 +122,8 @@
                 </div>
             </div>
         </div>
-        <div class="event_detail_container">
+        
+        <div id="dvOrderInfo" class="event_detail_container">
             <div class="evnt_tile_head">
                 <div class="evnt_tile_bg_l"></div>
                 <div class="col-sm-12 col-xs-12 text-left no_pad">
@@ -1089,9 +1089,7 @@
         }
     }
     $(document).ready(function () {
-     
         $("#btPaypal").hide();
-
         $("#btAddList").click(function () {
 
             if ($("#nameofticket").val().trim() == '') {
@@ -1573,6 +1571,14 @@
                     $('.divvisible').hide();
                   
                 }
+
+                if ($("#hdVarId").val() != "") {
+                    window.location.hash = "dvVarHash";
+                }
+                else {
+                    window.location.hash = "dvHash";
+                }
+
 
               
             },

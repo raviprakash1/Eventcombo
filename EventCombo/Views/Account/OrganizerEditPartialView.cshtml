@@ -219,11 +219,11 @@
                 beforeSend: function () { },
                 success: function (data, el) {
 
-                    var parent = el.find(".jFiler-jProgressBar").parent();
-                    el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                    var parent = $("#drag-drop").find( ".jFiler-jProgressBar").parent();
+                    $("#drag-drop").find(".jFiler-jProgressBar").fadeOut("slow", function () {
                         $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
                     });
-                    console.log(data);
+                   
                     var image_count = $("#image_count").val();
                     var imagejson = jQuery.parseJSON(JSON.stringify(data));
                     var imgdata = imagejson.image_name + '¶' + imagejson.image_type;
@@ -256,9 +256,9 @@
             addMore: false,
             clipBoardPaste: true,
             excludeName: null,
-            beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
-            onSelect: function () { $(".jFiler-input-inner").hide(); },
-            afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
+            beforeShow: function () { $("#drag-drop .jFiler-input-inner").hide(); return true },
+            onSelect: function () { $("#drag-drop.jFiler-input-inner").hide(); },
+            afterShow: function () { $("#drag-drop.jFiler-input-inner").hide(); $("#drag-drop .fi-progressBar").hide(); },
             onRemove: function (el) {
                 var image_count = $("#image_count").val();
                 image_count = parseInt(image_count) - 1;
@@ -274,7 +274,7 @@
             },
             onEmpty: function (el) {
                 if ($("#imageeror").val() == 0) {
-                    if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input1').unbind('click'); }, 200); };
+                    if ($("#drag-drop .jFiler-items").length == 1) { setTimeout(function () { $("#drag-drop .jFiler-input-inner").css('display', 'block'); $('#input1').unbind('click'); }, 200); };
                 }
             },
             captions: {

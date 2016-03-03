@@ -1,0 +1,288 @@
+﻿<div class="col-sm-3 ">
+    <input type="file" name="image" id="input2">
+</div>
+<div class="col-sm-7">
+
+    <form class="form-horizontal acnt_form">
+        <div class="form-group">
+            <label class="col-md-3 control-label acnt_form_label ">Name</label>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input class="form-control" placeholder="" type="text" id="txt_name" maxlength="256">
+                        <small class="acnt_form_name_mini">First Name</small>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <label class="col-md-3 control-label acnt_form_label">Address</label>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-12 add_form_bot">
+                        <input class="form-control" placeholder="" type="text" id="txt_streetadd1" maxlength="256">
+                        <small class="acnt_form_name_mini">Street Address</small>
+                    </div>
+                    <div class="col-xs-12 add_form_bot">
+                        <input class="form-control" placeholder="" type="text" id="txt_streetaddr2" maxlength="256">
+                        <small class="acnt_form_name_mini">Street Address 2</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <input class="form-control" placeholder="" type="text" id="txt_city" maxlength="256">
+                        <small class="acnt_form_name_mini">City</small>
+                    </div>
+                    <div class="col-xs-6">
+                        <input class="form-control" placeholder="" type="text" id="txt_state" maxlength="256">
+                        <small class="acnt_form_name_mini">State</small>
+                    </div>
+
+                </div>
+                <div class="row mt10">
+                    <div class="col-xs-6">
+                        <input class="form-control" placeholder="" type="text" id="txt_zip" maxlength="5">
+                        <small class="acnt_form_name_mini">Postal / ZipCode</small>
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker" })
+
+                        <small class="acnt_form_name_mini">Country</small>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <label class="col-md-3 control-label acnt_form_label">Email</label>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-12 add_form_bot">
+                        <input class="form-control" placeholder="" type="text" id="txt_email" maxlength="100">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <label class="col-md-3 control-label acnt_form_label">Phone Number </label>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-12 add_form_bot">
+                        <input class="form-control" placeholder="" type="text" id="txt_phnno">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <label class="col-md-3 control-label acnt_form_label">Website URL</label>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-12 add_form_bot">
+                        <input class="form-control" placeholder="" type="text" id="txt_websiteurl" maxlength="256">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <label class="col-md-3 control-label acnt_form_label">Facebook URL </label>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-12 add_form_bot">
+                        <input class="form-control" placeholder="" type="text" id="txt_fburl" maxlength="200">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <label class="col-md-3 control-label acnt_form_label">Twitter URL</label>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-12 add_form_bot">
+                        <input class="form-control" placeholder="" type="text" id="txt_twitterurl" maxlength="200">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <label class="col-md-3 control-label acnt_form_label">LinkedIn URL</label>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-12 add_form_bot">
+                        <input class="form-control" placeholder="" type="text" id="txt_linkedinurl" maxlength="200">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group">
+            <label class="col-md-3 control-label acnt_form_label">Description </label>
+            <div class="col-md-9 orgaz_editor">
+                <!-- <div class="row">
+                  <div class="col-xs-12 add_form_bot">
+                    <textarea class="form-control"></textarea>
+                  </div>
+                </div> -->
+                <div class="summernote" id="txt_desc"></div>
+            </div>
+        </div>
+        <input type="hidden" id="ImagePresent" />
+        <input type="hidden" id="userimage" />
+        <input type="hidden" value="0" id="imageeror" />
+        <input id="image_count" type="hidden" />
+        <button class="btn btn-info col-md-offset-3 acnt_btn" title="" type="button" id="btnadd">Add</button>
+    </form>
+</div>
+
+
+<script>
+
+    $('.summernote').summernote({
+        height: 70,   //set editable area's height
+        disableDragAndDrop: true
+    });
+    $('#input2').filer({
+        limit: '1',
+        maxSize: '2',
+        extensions: ['jpg', 'jpeg', 'png'],
+        changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop2"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
+        showThumbs: true,
+        appendTo: "#drag-drop2",
+        theme: "dragdropbox",
+        onChange: false,
+        templates: {
+            box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
+            item: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <div class="jFiler-item-container">\
+                                <div class="jFiler-item-inner">\
+                                     <div class="jFiler-item-assets jFiler-row">\
+                                        <ul class="list-inline pull-left">\
+                                            <li>{{fi-progressBar}}</li>\
+                                        </ul>\
+                                    </div>\
+                                    </div>\
+                            </div>\
+                                            <span></span>\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+            itemAppend: '<li class="jFiler-item">\
+                                    <div class="">\
+                                            {{fi-image}}\
+                                             <button class="btn  jFiler-item-trash-action can_btn" type="button">\
+                                                <i class="glyphicon glyphicon-remove-circle"></i>\
+                                             </button>\
+                                       </div>\
+                        </li>',
+
+
+            progressBar: '<div class="bar"></div>',
+            itemAppendToEnd: true,
+            removeConfirmation: false,
+            _selectors: {
+                list: '.jFiler-item-list',
+                item: '.jFiler-item',
+                progressBar: '.bar',
+                remove: '.jFiler-item-trash-action',
+            }
+        },
+        uploadFile: {
+            url: "/Account/SaveOrganizerImage",
+            data: {},
+            type: 'POST',
+            enctype: 'multipart/form-data',
+            beforeSend: function () { },
+            success: function (data, el) {
+                debugger;
+                console.log(el);
+                var parent = $("#drag-drop2").find(".jFiler-jProgressBar").parent();
+                $("#drag-drop2").find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                    $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                });
+                console.log(data);
+                var image_count = $("#image_count").val();
+                var imagejson = jQuery.parseJSON(JSON.stringify(data));
+                var imgdata = imagejson.image_name + '¶' + imagejson.image_type;
+
+                $('#userimage').val(imgdata);
+
+
+                $('#ImagePresent').val("Yes");
+
+                if ($.trim(image_count) == '') {
+                    $("#image_count").val('1');
+                } else {
+                    image_count = parseInt(image_count) + 1;
+                    $("#image_count").val(image_count);
+                }
+
+            },
+            error: function (el) {
+
+                //var parent = el.find(".jFiler-jProgressBar").parent();
+                //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                //});
+            },
+            statusCode: {},
+            onProgress: function () { },
+        },
+        dragDrop: {
+            dragEnter: function () { },
+            dragLeave: function () { },
+            drop: function () { },
+        },
+        addMore: false,
+        clipBoardPaste: true,
+        excludeName: null,
+        beforeShow: function () { $("#drag-drop2 .jFiler-input-inner").hide(); return true },
+        onSelect: function () { $("#drag-drop2 .jFiler-input-inner").hide(); },
+        afterShow: function () { $("#drag-drop2 .jFiler-input-inner").hide(); $("#drag-drop2 .fi-progressBar").hide(); },
+        onRemove: function (el) {
+            var image_count = $("#image_count").val();
+            image_count = parseInt(image_count) - 1;
+            var id_div = el[0].jfiler_id;
+            var hidden_image_element = 'image_hidden_' + id_div;
+
+            $('#userimage').val('');
+            $('#input2').click(function (e) {
+                e.preventDefault();
+
+            })
+            $('#ImagePresent').val("NO");
+        },
+        onEmpty: function (el) {
+            if ($("#imageeror").val() == 0) {
+
+                if ($("#drag-drop2 .jFiler-items").length == 1) { setTimeout(function () { $("#drag-drop2 .jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+            }
+        },
+        captions: {
+            button: "Choose Files",
+            feedback: "Choose files To Upload",
+            feedback2: "files were chosen",
+            drop: "Drop file here to Upload",
+            removeConfirmation: "Are you sure you want to remove this file?",
+            errors: {
+                filesLimit: '',
+                filesType: '',
+                filesSize: '',
+                filesSizeAll: ''
+            }
+        }
+
+
+
+    });
+</script>

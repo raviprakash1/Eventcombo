@@ -1,0 +1,315 @@
+﻿
+@{
+    ViewBag.Title = "DiscoverEventsTiles";
+}
+
+<link href="~/Content/filter-dropdown.css" rel="stylesheet" />
+
+<div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
+    <div class="col-md-12 col-sm-12">
+        <div class="col-sm-12 no_pad">
+            <div class="dis_event_title mb5"><h2>New York Events</h2></div>
+        </div>
+        <div class="col-sm-12 no_pad filter_head_bor">
+            <div class="col-sm-6  col-xs-6 no_pad mb10">
+                <button class="btn btn-lg list_fiter_btn " data-toggle="modal" data-target="#myfilter"> <i class="fa fa-tasks"></i> Filter</button>
+            </div>
+            <div class="col-sm-6 col-xs-6 text-right mb10 no_pad">
+                <button class="btnclik btn btn-lg list_fiter_btn dropdown"> Sort by <i class="fa fa-angle-down"></i> </button>
+                <div id="divshwhide" class="filt_down">
+                    <ul class="filt_down_list">
+                        <li><a href="">Relevance</a></li>
+                        <li><a href="">Date </a></li>
+                    </ul>
+                </div>
+                <button class="btn btn-lg list_fiter_btn text-right"> <i class="fa fa-bars"></i> </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 no_pad">
+        <div class="col-md-12 col-xs-12 col-sm-12 mb10">
+            <ul class="nav nav-pills dis_fliter_tag">
+                <li>
+                    <a href="#" class="Dissearch_edit active">
+                        Business Unit
+                        <span class="badge dis_badge"><i class="fa fa-pencil"></i> </span>
+                    </a>
+                    <div class="Dissearch dis_search_container">
+                        <form>
+                            <div class="input-group stylish-input-group">
+                                <input type="text" class="form-control dis_search_control">
+                                <span class="input-group-addon dis_search_addon">
+                                    <button type="submit dis_search_sub">
+                                        <i class="fa fa-map-marker"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li><a href="#">Business Unit <span class="badge dis_badge">X</span></a></li>
+
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 col-sm-6 ">
+            <div class="col-sm-12 col-xs-12 no_pad">
+                <div class="col-sm-12 col-xs-12 no_pad">
+                    <div class="col-sm-3 no_pad">
+                        <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
+                    </div>
+                    <div class="col-sm-9 no_pad">
+                        <p class="list_event_desc_title"> New Delhi Innovative Business Ideas</p>
+                        <p class="list_event_desc">
+                            <a href="#">
+                                Sun National Bank Arena
+                                81 Hamilton Avenue
+                                Trenton, NJ , 08611
+                                New York, New York
+                            </a>
+                        </p>
+                        <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                    <div class="col-sm-3 no_pad text-center desc_list_event_type">Free</div>
+                    <div class="col-sm-7 no_pad">
+                        <ul class="nav nav-pills list_inner_cat_tag">
+                            <li><a href="">#category1 </a></li>
+                            <li><a href="">#category2 </a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 no_pad text-right">
+                        <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                            <i class="fa fa-share-alt"></i>
+                        </button>
+                        <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12 col-sm-6 ">
+            <div class="col-sm-12 col-xs-12 no_pad">
+                <div class="col-sm-12 col-xs-12 no_pad">
+                    <div class="col-sm-3 no_pad">
+                        <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
+                    </div>
+                    <div class="col-sm-9 no_pad">
+                        <p class="list_event_desc_title"> New Delhi Innovative Business</p>
+                        <p class="list_event_desc">
+                            <a href="#">
+                                Sun National Bank Arena
+                                81 Hamilton Avenue
+                                Trenton, NJ , 08611
+                                New York, New York
+                            </a>
+                        </p>
+                        <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                    <div class="col-sm-3 no_pad text-center desc_list_event_type">Free</div>
+                    <div class="col-sm-7 no_pad">
+                        <ul class="nav nav-pills list_inner_cat_tag">
+                            <li><a href="">#category1 </a></li>
+                            <li><a href="">#category2 </a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 no_pad text-right">
+                        <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                            <i class="fa fa-share-alt"></i>
+                        </button>
+                        <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12 col-sm-6 ">
+            <div class="col-sm-12 col-xs-12 no_pad">
+                <div class="col-sm-12 col-xs-12 no_pad">
+                    <div class="col-sm-3 no_pad">
+                        <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
+                    </div>
+                    <div class="col-sm-9 no_pad">
+                        <p class="list_event_desc_title"> New Delhi Innovative Business </p>
+                        <p class="list_event_desc">
+                            <a href="#">
+                                Sun National Bank Arena
+                                81 Hamilton Avenue
+                                Trenton, NJ , 08611
+                                New York, New York
+                            </a>
+                        </p>
+                        <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                    <div class="col-sm-3 no_pad text-center desc_list_event_type">Free</div>
+                    <div class="col-sm-7 no_pad">
+                        <ul class="nav nav-pills list_inner_cat_tag">
+                            <li><a href="">#category1 </a></li>
+                            <li><a href="">#category2 </a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 no_pad text-right">
+                        <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                            <i class="fa fa-share-alt"></i>
+                        </button>
+                        <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12 col-sm-6 ">
+            <div class="col-sm-12 col-xs-12 no_pad">
+                <div class="col-sm-12 col-xs-12 no_pad">
+                    <div class="col-sm-3 no_pad">
+                        <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
+                    </div>
+                    <div class="col-sm-9 no_pad">
+                        <p class="list_event_desc_title"> New Delhi Innovative Business Ideas</p>
+                        <p class="list_event_desc">
+                            <a href="#">
+                                Sun National Bank Arena
+                                81 Hamilton Avenue
+                                Trenton, NJ , 08611
+                                New York, New York
+                            </a>
+                        </p>
+                        <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                    <div class="col-sm-3 no_pad text-center desc_list_event_type">Free</div>
+                    <div class="col-sm-7 no_pad">
+                        <ul class="nav nav-pills list_inner_cat_tag">
+                            <li><a href="">#category1 </a></li>
+                            <li><a href="">#category2 </a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 no_pad text-right">
+                        <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                            <i class="fa fa-share-alt"></i>
+                        </button>
+                        <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12 col-sm-6 ">
+            <div class="col-sm-12 col-xs-12 no_pad">
+                <div class="col-sm-12 col-xs-12 no_pad">
+                    <div class="col-sm-3 no_pad">
+                        <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
+                    </div>
+                    <div class="col-sm-9 no_pad">
+                        <p class="list_event_desc_title"> New Delhi Innovative Business</p>
+                        <p class="list_event_desc">
+                            <a href="#">
+                                Sun National Bank Arena
+                                81 Hamilton Avenue
+                                Trenton, NJ , 08611
+                                New York, New York
+                            </a>
+                        </p>
+                        <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                    <div class="col-sm-3 no_pad text-center desc_list_event_type">Free</div>
+                    <div class="col-sm-7 no_pad">
+                        <ul class="nav nav-pills list_inner_cat_tag">
+                            <li><a href="">#category1 </a></li>
+                            <li><a href="">#category2 </a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 no_pad text-right">
+                        <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                            <i class="fa fa-share-alt"></i>
+                        </button>
+                        <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12 col-sm-6 ">
+            <div class="col-sm-12 col-xs-12 no_pad">
+                <div class="col-sm-12 col-xs-12 no_pad">
+                    <div class="col-sm-3 no_pad">
+                        <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
+                    </div>
+                    <div class="col-sm-9 no_pad">
+                        <p class="list_event_desc_title"> New Delhi Innovative Business </p>
+                        <p class="list_event_desc">
+                            <a href="#">
+                                Sun National Bank Arena
+                                81 Hamilton Avenue
+                                Trenton, NJ , 08611
+                                New York, New York
+                            </a>
+                        </p>
+                        <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                    <div class="col-sm-3 no_pad text-center desc_list_event_type">Free</div>
+                    <div class="col-sm-7 no_pad">
+                        <ul class="nav nav-pills list_inner_cat_tag">
+                            <li><a href="">#category1 </a></li>
+                            <li><a href="">#category2 </a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 no_pad text-right">
+                        <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                            <i class="fa fa-share-alt"></i>
+                        </button>
+                        <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 col-xs-12 text-center">
+            <nav>
+                <ul class="pagination desc_pagination">
+                    <li>
+                        <a href="#">
+                            <span><i class="fa fa-angle-left"></i> </span>
+                        </a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#">
+                            <span><i class="fa fa-angle-right"></i> </span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="col-sm-12 pagination_desc">
+                1 - 12 of 95 Mumbai Events
+            </div>
+        </div>
+
+    </div> 
+</div>

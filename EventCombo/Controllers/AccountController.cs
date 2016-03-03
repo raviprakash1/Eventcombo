@@ -101,28 +101,16 @@ namespace EventCombo.Controllers
         [HttpGet]
         public ActionResult OrganizerProfile()
         {
+            Session["logo"] = "account";
+            Session["Fromname"] = "account";
             if ((Session["AppId"] != null))
             {
                 OrganizerProfile org = new Models.OrganizerProfile();
-                var defaultCountry = "United States";
+              
                 string userid = Session["AppId"].ToString();
-                var organiserdetail = (from x in db.Organizer_Master where x.UserId == userid && (x.Orgnizer_Name ?? string.Empty) != string.Empty select x).OrderBy(x=>x.Orgnizer_Name).ToList ();
+                var organiserdetail = (from x in db.Organizer_Master where x.UserId == userid && (x.Orgnizer_Name ?? string.Empty) != string.Empty && x.Organizer_Status == "A" select x).OrderBy(x=>x.Orgnizer_Name).ToList ();
                 org.Organizerdetail = organiserdetail;
 
-                var countryQuery = (from c in db.Countries
-                                    orderby c.Country1 ascending
-                                    select c).Distinct();
-                List<SelectListItem> countryList = new List<SelectListItem>();
-               foreach (var item in countryQuery)
-                {
-                    countryList.Add(new SelectListItem()
-                    {
-                        Text = item.Country1,
-                        Value = item.CountryID.ToString(),
-                        Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
-                    });
-                }
-                ViewBag.Country = countryList;
                 return View(org);
             }
             else
@@ -163,6 +151,28 @@ namespace EventCombo.Controllers
             }
             ViewBag.Country = countryList;
             return PartialView("OrganizerEditPartialView", modelPerm);
+        }
+
+        public PartialViewResult AddOrganiser()
+        {
+
+            var countryQuery = (from c in db.Countries
+                                orderby c.Country1 ascending
+                                select c).Distinct();
+            List<SelectListItem> countryList = new List<SelectListItem>();
+            string defaultCountry = "1";
+            foreach (var item in countryQuery)
+            {
+                countryList.Add(new SelectListItem()
+                {
+                    Text = item.Country1,
+                    Value = item.CountryID.ToString(),
+                    Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
+                });
+            }
+            ViewBag.Country = countryList;
+
+            return PartialView("OrganizerAddPartialView");
         }
 
         public JsonResult EditOrganizer(Organizer_Master model)
@@ -232,7 +242,7 @@ namespace EventCombo.Controllers
 
             if (msg == "S")
             {
-                var orglist = db.Organizer_Master.Where(x => x.UserId == userid && (x.Orgnizer_Name ?? string.Empty) != string.Empty).Select(item => new
+                var orglist = db.Organizer_Master.Where(x => x.UserId == userid && (x.Orgnizer_Name ?? string.Empty) != string.Empty && x.Organizer_Status == "A").Select(item => new
                 {
                     Id = item.Orgnizer_Id,
                     Name = item.Orgnizer_Name
@@ -247,7 +257,48 @@ namespace EventCombo.Controllers
 
 
         }
+        public JsonResult DeleteOrganizer(int id)
+        {
+            var msg = "";
+            var userid = "";
+            if (Session["AppId"] != null)
+            {
+                userid = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    Organizer_Master org = (from o in db.Organizer_Master where o.Orgnizer_Id == id && o.UserId== userid select o).FirstOrDefault();
+                    org.Organizer_Status = "N";
+                    try
+                    {
+                        int i = db.SaveChanges();
+                        msg = "S";
 
+                    }
+                    catch (Exception ex)
+                    {
+                        msg = "N";
+                    }
+
+                }
+            }
+            else
+            {
+                msg = "O";
+            }
+            if (msg == "S")
+            {
+                var orglist = db.Organizer_Master.Where(x => x.UserId == userid && (x.Orgnizer_Name ?? string.Empty) != string.Empty && x.Organizer_Status=="A").Select(item => new
+                {
+                    Id = item.Orgnizer_Id,
+                    Name = item.Orgnizer_Name
+                }).OrderBy(x => x.Name).ToList();
+                return Json(orglist, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Message = msg });
+            }
+        }
         [HttpGet]
         public ActionResult DealsDashboard()
         {
