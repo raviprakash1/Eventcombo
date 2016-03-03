@@ -131,6 +131,123 @@ namespace EventCombo.Controllers
             }
 
         }
+        public PartialViewResult OrganiserEdit(int id)
+        {
+
+
+            var modelPerm = (from Org in db.Organizer_Master
+                             where Org.Orgnizer_Id == id
+                             select Org).FirstOrDefault();
+            if (string.IsNullOrEmpty(modelPerm.Organizer_Image))
+            {
+
+                modelPerm.Organizer_Image = "";
+                modelPerm.contenttype = "";
+                modelPerm.Imagepath = "";
+
+            }
+           
+            var countryQuery = (from c in db.Countries
+                                orderby c.Country1 ascending
+                                select c).Distinct();
+            List<SelectListItem> countryList = new List<SelectListItem>();
+            string defaultCountry = modelPerm.Organizer_CountryId.ToString();
+            foreach (var item in countryQuery)
+            {
+                countryList.Add(new SelectListItem()
+                {
+                    Text = item.Country1,
+                    Value = item.CountryID.ToString(),
+                    Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
+                });
+            }
+            ViewBag.Country = countryList;
+            return PartialView("OrganizerEditPartialView", modelPerm);
+        }
+
+        public JsonResult EditOrganizer(Organizer_Master model)
+        {
+            var userid = "";
+            var msg = "";
+            string UserProfileImage = "", ContentType = "", ImagePath = "";
+            if (Session["AppId"] != null)
+            {
+                userid = Session["AppId"].ToString();
+                if (model.Organizer_Image != null)
+                {
+                    string[] images = model.Organizer_Image.Split('¶');
+
+                    UserProfileImage = images[0];
+                    ContentType = images[1];
+                    ImagePath = "/Images/Organizer/Organizer_Images/" + images[0];
+                }
+
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    Organizer_Master org = (from o in db.Organizer_Master where o.Orgnizer_Id==model.Orgnizer_Id select o).FirstOrDefault();
+                    org.Orgnizer_Name = model.Orgnizer_Name;
+                    org.Organizer_Desc = model.Organizer_Desc;
+                    org.Organizer_FBLink = model.Organizer_FBLink;
+                    org.Organizer_Twitter = model.Organizer_Twitter;
+                    org.Organizer_Linkedin = model.Organizer_Linkedin;
+                    org.UserId = userid;
+                    org.Organizer_Image = UserProfileImage;
+                    org.contenttype = ContentType;
+                    org.Organizer_Address1 = model.Organizer_Address1;
+                    org.Organizer_Address2 = model.Organizer_Address2;
+                    org.Organizer_City = model.Organizer_City;
+                    org.Organizer_State = model.Organizer_State;
+                    org.Organizer_CountryId = model.Organizer_CountryId;
+                    org.Organizer_Zipcode = model.Organizer_Zipcode;
+                    org.Organizer_Email = model.Organizer_Email;
+                    org.Organizer_Phoneno = model.Organizer_Phoneno;
+                    org.Organizer_Websiteurl = model.Organizer_Websiteurl;
+                    org.Organizer_Status = "A";
+                    org.Imagepath = ImagePath;
+
+
+
+
+
+                   
+                    try
+                    {
+                        int i = db.SaveChanges();
+                        msg = "S";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        msg = "N";
+                    }
+
+
+
+                }
+            }
+            else
+            {
+                msg = "O";
+            }
+
+            if (msg == "S")
+            {
+                var orglist = db.Organizer_Master.Where(x => x.UserId == userid && (x.Orgnizer_Name ?? string.Empty) != string.Empty).Select(item => new
+                {
+                    Id = item.Orgnizer_Id,
+                    Name = item.Orgnizer_Name
+                }).OrderBy(x => x.Name).ToList();
+                return Json(orglist, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Message = msg });
+            }
+
+
+
+        }
+
         [HttpGet]
         public ActionResult DealsDashboard()
         {
@@ -2285,7 +2402,7 @@ namespace EventCombo.Controllers
 
                     UserProfileImage = images[0];
                     ContentType = images[1];
-                    ImagePath = "Images/Organizer/Organizer_Images/" + images[0];
+                    ImagePath = "/Images/Organizer/Organizer_Images/" + images[0];
                 }
 
                 using (EventComboEntities db = new EventComboEntities())
@@ -2309,11 +2426,11 @@ namespace EventCombo.Controllers
                     org.Organizer_Phoneno = model.Organizer_Phoneno;
                     org.Organizer_Websiteurl = model.Organizer_Websiteurl;
                     org.Organizer_Status = "A";
-                  
-                   
-                   
+                    org.Imagepath = ImagePath;
 
-                
+
+
+
 
                     db.Organizer_Master.Add(org);
                     try {

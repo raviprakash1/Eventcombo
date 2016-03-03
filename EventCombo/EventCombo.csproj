@@ -1157,6 +1157,7 @@
     <Content Include="Views\EventViewCustom\Index.cshtml" />
     <Content Include="Views\PaymentInfo\PaymentInfo.cshtml" />
     <Content Include="Views\CMS\Index.cshtml" />
+    <Content Include="Views\Account\OrganizerEditPartialView.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

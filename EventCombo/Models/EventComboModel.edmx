@@ -386,9 +386,10 @@
           <Property Name="Organizer_CountryId" Type="tinyint" />
           <Property Name="Organizer_Email" Type="varchar" MaxLength="100" />
           <Property Name="Organizer_Phoneno" Type="varchar" MaxLength="20" />
-          <Property Name="Organizer_Websiteurl" Type="varchar" MaxLength="100" />
+          <Property Name="Organizer_Websiteurl" Type="varchar" MaxLength="256" />
           <Property Name="Organizer_Status" Type="varchar" MaxLength="2" />
           <Property Name="contenttype" Type="varchar" MaxLength="50" />
+          <Property Name="Imagepath" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -2041,9 +2042,10 @@
           <Property Name="Organizer_CountryId" Type="Byte" />
           <Property Name="Organizer_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Phoneno" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Websiteurl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Organizer_Websiteurl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Status" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="contenttype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Imagepath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2771,6 +2773,7 @@
           <EntitySetMapping Name="Organizer_Master">
             <EntityTypeMapping TypeName="EventComboModel.Organizer_Master">
               <MappingFragment StoreEntitySet="Organizer_Master">
+                <ScalarProperty Name="Imagepath" ColumnName="Imagepath" />
                 <ScalarProperty Name="contenttype" ColumnName="contenttype" />
                 <ScalarProperty Name="Organizer_Status" ColumnName="Organizer_Status" />
                 <ScalarProperty Name="Organizer_Websiteurl" ColumnName="Organizer_Websiteurl" />

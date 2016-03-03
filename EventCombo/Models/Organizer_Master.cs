@@ -33,5 +33,6 @@ namespace EventCombo.Models
         public string Organizer_Websiteurl { get; set; }
         public string Organizer_Status { get; set; }
         public string contenttype { get; set; }
+        public string Imagepath { get; set; }
     }
 }

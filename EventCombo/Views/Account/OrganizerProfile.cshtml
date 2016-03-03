@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="col-sm-3 col-xs-4 mt5 ">
-                    <button type="button" class="btn btn-lg ev_org_add_btn xs_btn_orgz">Edit </button>
+                    <button type="button" class="btn btn-lg ev_org_add_btn xs_btn_orgz" id="btnedit">Edit </button>
                 </div>
                 <div class="col-sm-3 col-xs-4 mt5 ">
                     <button type="button" class="btn btn-lg ev_org_add_btn xs_btn_orgz">Delete </button>
@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="clearfix"></div>
-        <div id="divorgprofile"></div>
+        <div id="divorgprofile" style="display:none;"></div>
         <div class="col-sm-3 orgdisnone">
             <input type="file" name="image" id="input2">
         </div>
@@ -232,7 +232,13 @@
 
 
 <script type="text/javascript">
+    function LoadOrganiserAsyn(id) {
+        $(".orgdisnone").hide();
 
+        $(".maindivnonvis").hide();
+        $('#divorgprofile').show();
+        $('#divorgprofile').load('@Url.Action("OrganiserEdit", "Account", new { })?id=' + id + '');
+    }
     $(document).ready(function () {
         $('.summernote').summernote({
             height: 70,   //set editable area's height
@@ -240,20 +246,19 @@
         });
 
         $("#txt_phnno").mask("999-999-9999");
-        
 
-             $('#input2').filer({
-                 limit: '1',
-                 maxSize: '2',
-                 extensions: ['jpg', 'jpeg', 'png'],
-                 changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
-                 showThumbs: true,
-                 appendTo: "#drag-drop",
-                 theme: "dragdropbox",
-                 onChange: false,
-                 templates: {
-                     box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
-                     item: '<li class="jFiler-item">\
+        $('#input2').filer({
+            limit: '1',
+            maxSize: '2',
+            extensions: ['jpg', 'jpeg', 'png'],
+            changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop2"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
+            showThumbs: true,
+            appendTo: "#drag-drop2",
+            theme: "dragdropbox",
+            onChange: false,
+            templates: {
+                box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
+                item: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <div class="jFiler-item-container">\
@@ -271,7 +276,7 @@
                                              </button>\
                                        </div>\
                         </li>',
-                     itemAppend: '<li class="jFiler-item">\
+                itemAppend: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <button class="btn  jFiler-item-trash-action can_btn" type="button">\
@@ -281,305 +286,405 @@
                         </li>',
 
 
-                     progressBar: '<div class="bar"></div>',
-                     itemAppendToEnd: true,
-                     removeConfirmation: false,
-                     _selectors: {
-                         list: '.jFiler-item-list',
-                         item: '.jFiler-item',
-                         progressBar: '.bar',
-                         remove: '.jFiler-item-trash-action',
-                     }
-                 },
-                 uploadFile: {
-                     url: "/Account/SaveOrganizerImage",
-                     data: {},
-                     type: 'POST',
-                     enctype: 'multipart/form-data',
-                     beforeSend: function () { },
-                     success: function (data, el) {
+                progressBar: '<div class="bar"></div>',
+                itemAppendToEnd: true,
+                removeConfirmation: false,
+                _selectors: {
+                    list: '#drag-drop2 .jFiler-item-list',
+                    item: '#drag-drop2 .jFiler-item',
+                    progressBar: '#drag-drop2 .bar',
+                    remove: '#drag-drop2 .jFiler-item-trash-action',
+                }
+            },
+            uploadFile: {
+                url: "/Account/SaveOrganizerImage",
+                data: {},
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                beforeSend: function () { },
+                success: function (data, el) {
 
-                         var parent = el.find(".jFiler-jProgressBar").parent();
-                         el.find(".jFiler-jProgressBar").fadeOut("slow", function () {
-                             $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
-                         });
-                         console.log(data);
-                         var image_count = $("#image_count").val();
-                         var imagejson = jQuery.parseJSON(JSON.stringify(data));
-                         var imgdata = imagejson.image_name + '¶' + imagejson.image_type ;
+                    var parent = el.find("#drag-drop2 .jFiler-jProgressBar").parent();
+                    el.find("#drag-drop2 .jFiler-jProgressBar").fadeOut("slow", function () {
+                        $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                    });
+                    console.log(data);
+                    var image_count = $("#image_count").val();
+                    var imagejson = jQuery.parseJSON(JSON.stringify(data));
+                    var imgdata = imagejson.image_name + '¶' + imagejson.image_type;
 
-                         $('#userimage').val(imgdata);
-
-
-                         $('#ImagePresent').val("Yes");
-
-                         if ($.trim(image_count) == '') {
-                             $("#image_count").val('1');
-                         } else {
-                             image_count = parseInt(image_count) + 1;
-                             $("#image_count").val(image_count);
-                         }
-
-                     },
-                     error: function (el) {
-
-                         //var parent = el.find(".jFiler-jProgressBar").parent();
-                         //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                         //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
-                         //});
-                     },
-                     statusCode: {},
-                     onProgress: function () { },
-                 },
-                 dragDrop: {
-                     dragEnter: function () { },
-                     dragLeave: function () { },
-                     drop: function () { },
-                 },
-                 addMore: false,
-                 clipBoardPaste: true,
-                 excludeName: null,
-                 beforeShow: function () { $(".jFiler-input-inner").hide(); return true },
-                 onSelect: function () { $(".jFiler-input-inner").hide(); },
-                 afterShow: function () { $(".jFiler-input-inner").hide(); $(".fi-progressBar").hide(); },
-                 onRemove: function (el) {
-                     var image_count = $("#image_count").val();
-                     image_count = parseInt(image_count) - 1;
-                     var id_div = el[0].jfiler_id;
-                     var hidden_image_element = 'image_hidden_' + id_div;
-
-                     $('#userimage').val('');
-                     $('#input2').click(function (e) {
-                         e.preventDefault();
-
-                     })
-                     $('#ImagePresent').val("NO");
-                 },
-                 onEmpty: function (el) {
-                     if ($("#imageeror").val() == 0) {
-                         if ($(".jFiler-items").length == 1) { setTimeout(function () { $(".jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
-                     }
-                 },
-                 captions: {
-                     button: "Choose Files",
-                     feedback: "Choose files To Upload",
-                     feedback2: "files were chosen",
-                     drop: "Drop file here to Upload",
-                     removeConfirmation: "Are you sure you want to remove this file?",
-                     errors: {
-                         filesLimit: '',
-                         filesType: '',
-                         filesSize: '',
-                         filesSizeAll: ''
-                     }
-                 }
-
-             });
-
-             $("#id_selectorg").change(function () {
-               var selectval= $(this).val();
-
-               if(selectval=="A")
-               {
-                   $(".orgdisnone").show();
-                   $(".maindivnonvis").hide();
-               } else {
-                   $(".orgdisnone").hide();
-                   $(".maindivnonvis").show();
-               }
-
-             });
-             $('#txt_zip').change(function () {
-                 var country = $("#Country option:selected").text().trim();
-
-                 var city = "";
-                 var state = "";
-
-                 var pincode = $(this).val();
-                 $.ajax({
-                     url: 'http://maps.googleapis.com/maps/api/geocode/json',
-                     data: '&address=' + pincode + '&sensor=true',
-                     dataType: 'json',
-                     cache: false,
-                     success: function (data) {
+                    $('#userimage').val(imgdata);
 
 
-                         if (data.status == 'OK') {
-                             $('#txt_zip').removeClass('err-bor');
+                    $('#ImagePresent').val("Yes");
 
-                             for (var i = 0; i < data.results[0].address_components.length; i++) {
-                                 var obj = data.results[0].address_components[i];
+                    if ($.trim(image_count) == '') {
+                        $("#image_count").val('1');
+                    } else {
+                        image_count = parseInt(image_count) + 1;
+                        $("#image_count").val(image_count);
+                    }
 
-                                 var obj2 = obj['types'];
+                },
+                error: function (el) {
 
-                                 for (var j = 0; j < obj2.length; j++) {
-                                     if (obj2[j] == 'locality' || obj2[j] == 'postal_town' || obj2[j] == 'sublocality_level_1' || obj2[j] == 'sublocality_level_2' || obj2[j] == 'sublocality_level_3' || obj2[j] == 'sublocality_level_4' || obj2[j] == 'sublocality_level_5' || obj2[j] == 'ward' ) {
-                                         city = obj['long_name'];
+                    //var parent = el.find(".jFiler-jProgressBar").parent();
+                    //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                    //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                    //});
+                },
+                statusCode: {},
+                onProgress: function () { },
+            },
+            dragDrop: {
+                dragEnter: function () { },
+                dragLeave: function () { },
+                drop: function () { },
+            },
+            addMore: false,
+            clipBoardPaste: true,
+            excludeName: null,
+            beforeShow: function () { $("#drag-drop2 .jFiler-input-inner").hide(); return true },
+            onSelect: function () { $("#drag-drop2 .jFiler-input-inner").hide(); },
+            afterShow: function () { $("#drag-drop2 .jFiler-input-inner").hide(); $("#drag-drop2 .fi-progressBar").hide(); },
+            onRemove: function (el) {
+                var image_count = $("#image_count").val();
+                image_count = parseInt(image_count) - 1;
+                var id_div = el[0].jfiler_id;
+                var hidden_image_element = 'image_hidden_' + id_div;
 
+                $('#userimage').val('');
+                $('#input2').click(function (e) {
+                    e.preventDefault();
 
-                                     }
-                                     if (obj2[j] == 'administrative_area_level_1') {
-                                         state = obj['long_name'];
-
-                                     }
-                                    if (obj2[j] == 'country') {
-                                         if (obj['long_name'] == country) {
-                                             $('#txt_city').val(city);
-                                             $('#txt_state').val(state);
-
-
-                                         }
-
-                                     }
-
-                                 }
+                })
+                $('#ImagePresent').val("NO");
+            },
+            onEmpty: function (el) {
+                if ($("#imageeror").val() == 0) {
+                  
+                    if ($("#drag-drop2 .jFiler-items").length == 1) { setTimeout(function () { $("#drag-drop2 .jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                }
+            },
+            captions: {
+                button: "Choose Files",
+                feedback: "Choose files To Upload",
+                feedback2: "files were chosen",
+                drop: "Drop file here to Upload",
+                removeConfirmation: "Are you sure you want to remove this file?",
+                errors: {
+                    filesLimit: '',
+                    filesType: '',
+                    filesSize: '',
+                    filesSizeAll: ''
+                }
+            }
 
 
 
-                             }
+        });
 
-                         }else {
-                            
-                             $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgvalidZipUi'));
-                             $('#diverroacc').show();
-                             $('html,body').animate({ scrollTop: 0 });
+        $("#id_selectorg").change(function () {
+            var selectval = $(this).val();
+
+            if (selectval == "A") {
+                $(".orgdisnone").show();
+                $(".maindivnonvis").hide();
+            } else {
+                $(".orgdisnone").hide();
+                $(".maindivnonvis").show();
+            }
+
+        });
+        $(document).on('change', '#txt_zip', function () {
+      
+            var country = $("#Country option:selected").text().trim();
+
+            var city = "";
+            var state = "";
+
+            var pincode = $(this).val();
+            $.ajax({
+                url: 'http://maps.googleapis.com/maps/api/geocode/json',
+                data: '&address=' + pincode + '&sensor=true',
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
 
 
-                             $('#txt_zip').addClass('err-bor');
-                             return false;
-                         }
-                     }
-                 });
-             });
-             $("#btnadd").click(function () {
-                
-                 var msg = validatemain();
-                 if (msg != '')
-                 {
-                     $("#dveruimain").addClass("er_UI_main");
-                     $("#dveruiimg").addClass("er_UI_img");
-                     $("#dveruimain").removeClass("er_suc_main");
-                     $("#dveruiimg").removeClass("er_suc_img");
-                     $('#erraccmsg').html(msg);
-                      $('#diverroacc').show();
-                     $('html,body').animate({ scrollTop: 0 });
-                    
-                     return false;
-                 }
-                 var code = $("#txt_desc").code();
-                 var text = code.replace(/<p>/gi, " ");
-                 var plainText = $("<div />").html(text).text();
-                 var model = {
-                     'Orgnizer_Name': $("#txt_name").val(),
-                     'Organizer_Desc': plainText,
-                     'Organizer_FBLink': $("#txt_fburl").val(),
-                     'Organizer_Twitter': $("#txt_twitterurl").val(),
-                     'Organizer_Linkedin': $("#txt_linkedinurl").val(),
-                     'UserId': '',
-                     'Organizer_Image': $("#userimage").val(),
-                     'Organizer_Address1': $("#txt_streetadd1").val(),
-                     'Organizer_Address2': $("#txt_streetaddr2").val(),
-                     'Organizer_City': $("#txt_city").val(),
-                     'Organizer_State': $("#txt_state").val(),
-                     'Organizer_CountryId': $("#Country").val(),
-                     'Organizer_Zipcode': $("#txt_zip").val(),
-                     'Organizer_Email': $("#txt_email").val(),
-                     'Organizer_Phoneno': $("#txt_phnno").val(),
-                     'Organizer_Websiteurl': $("#txt_websiteurl").val(),
+                    if (data.status == 'OK') {
+                        $('#txt_zip').removeClass('err-bor');
 
-                 };
-                 $.ajax({
-                     url: '@Url.Action("saveOrganizer", "Account")',
-                     data: { model: model},
-                     type: "Post",
-                     success: function (data) {
-                         if (typeof (data.Message) === "undefined") {
-                             $("#id_selectorg").empty();
-                             $("#id_selectorg").append("<option value='0'>Select</option>");
-                             $("#id_selectorg").append("<option value='A'>Add Organizer</option>");
-                             $.each(data, function (index, optiondata) {
+                        for (var i = 0; i < data.results[0].address_components.length; i++) {
+                            var obj = data.results[0].address_components[i];
 
-                                 $("#id_selectorg").append("<option value='" + optiondata.Id + "'>" + optiondata.Name + "</option>");
-                             });
-                             $('.selectpicker').selectpicker('refresh');
+                            var obj2 = obj['types'];
 
-                         } else {
-                             if(data.Message=="O")
-                             {
-                                 window.location.href = '@Url.Action("Index", "Home")' ;
+                            for (var j = 0; j < obj2.length; j++) {
+                                if (obj2[j] == 'locality' || obj2[j] == 'postal_town' || obj2[j] == 'sublocality_level_1' || obj2[j] == 'sublocality_level_2' || obj2[j] == 'sublocality_level_3' || obj2[j] == 'sublocality_level_4' || obj2[j] == 'sublocality_level_5' || obj2[j] == 'ward') {
+                                    city = obj['long_name'];
 
-                             }
-                           
-                            
-                         }
-                         $("#dveruimain").removeClass("er_UI_main");
-                         $("#dveruiimg").removeClass("er_UI_img");
-                         $("#dveruimain").addClass("er_suc_main");
-                         $("#dveruiimg").addClass("er_suc_img");
-                         $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgsaveSucc'));
-                         $('#diverroacc').show();
-                         $('html,body').animate({ scrollTop: 0 });
-                         $(".orgdisnone").hide();
-                         $(".maindivnonvis").show();
 
-                         
-                     }
-                 });
+                                }
+                                if (obj2[j] == 'administrative_area_level_1') {
+                                    state = obj['long_name'];
+
+                                }
+                                if (obj2[j] == 'country') {
+                                    if (obj['long_name'] == country) {
+                                        $('#txt_city').val(city);
+                                        $('#txt_state').val(state);
+
+
+                                    }
+
+                                }
+
+                            }
 
 
 
-             });
+                        }
+
+                    } else {
+
+                        $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgvalidZipUi'));
+                        $('#diverroacc').show();
+                        $('html,body').animate({ scrollTop: 0 });
+
+
+                        $('#txt_zip').addClass('err-bor');
+                        return false;
+                    }
+                }
+            });
+        });
+        $("#btnadd").click(function () {
+
+            var msg = validatemain();
+            if (msg != '') {
+                $("#dveruimain").addClass("er_UI_main");
+                $("#dveruiimg").addClass("er_UI_img");
+                $("#dveruimain").removeClass("er_suc_main");
+                $("#dveruiimg").removeClass("er_suc_img");
+                $('#erraccmsg').html(msg);
+                $('#diverroacc').show();
+                $('html,body').animate({ scrollTop: 0 });
+
+                return false;
+            }
+            var code = $("#txt_desc").code();
+            var text = code.replace(/<p>/gi, " ");
+            var plainText = $("<div />").html(text).text();
+            var model = {
+                'Orgnizer_Name': $("#txt_name").val(),
+                'Organizer_Desc': plainText,
+                'Organizer_FBLink': $("#txt_fburl").val(),
+                'Organizer_Twitter': $("#txt_twitterurl").val(),
+                'Organizer_Linkedin': $("#txt_linkedinurl").val(),
+                'UserId': '',
+                'Organizer_Image': $("#userimage").val(),
+                'Organizer_Address1': $("#txt_streetadd1").val(),
+                'Organizer_Address2': $("#txt_streetaddr2").val(),
+                'Organizer_City': $("#txt_city").val(),
+                'Organizer_State': $("#txt_state").val(),
+                'Organizer_CountryId': $("#Country").val(),
+                'Organizer_Zipcode': $("#txt_zip").val(),
+                'Organizer_Email': $("#txt_email").val(),
+                'Organizer_Phoneno': $("#txt_phnno").val(),
+                'Organizer_Websiteurl': $("#txt_websiteurl").val(),
+
+            };
+            $.ajax({
+                url: '@Url.Action("saveOrganizer", "Account")',
+                data: { model: model },
+                type: "Post",
+                success: function (data) {
+                    if (typeof (data.Message) === "undefined") {
+                        $("#id_selectorg").empty();
+                        $("#id_selectorg").append("<option value='0'>Select</option>");
+                        $("#id_selectorg").append("<option value='A'>Add Organizer</option>");
+                        $.each(data, function (index, optiondata) {
+
+                            $("#id_selectorg").append("<option value='" + optiondata.Id + "'>" + optiondata.Name + "</option>");
+                        });
+                        $('.selectpicker').selectpicker('refresh');
+
+                    } else {
+                        if (data.Message == "O") {
+                            window.location.href = '@Url.Action("Index", "Home")';
+
+                        }
+
+
+                    }
+                    $("#dveruimain").removeClass("er_UI_main");
+                    $("#dveruiimg").removeClass("er_UI_img");
+                    $("#dveruimain").addClass("er_suc_main");
+                    $("#dveruiimg").addClass("er_suc_img");
+                    $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgsaveSucc'));
+                    $('#diverroacc').show();
+                    $('html,body').animate({ scrollTop: 0 });
+                    $(".orgdisnone").hide();
+                    $(".maindivnonvis").show();
+
+
+                }
+            });
+
+
+
+        });
+
+        $('#btnedit').click(function () {
+
+            var txtcat = $('#id_selectorg').val();
+            alert('hiedit');
+            if (txtcat != 0 && txtcat != 'A') {
+
+                LoadOrganiserAsyn(txtcat);
+            }
+        });
+        $(document).on('click', '#btnsave', function () {
+
+            var msg = validatemain();
+            if (msg != '') {
+                $("#dveruimain").addClass("er_UI_main");
+                $("#dveruiimg").addClass("er_UI_img");
+                $("#dveruimain").removeClass("er_suc_main");
+                $("#dveruiimg").removeClass("er_suc_img");
+                $('#erraccmsg').html(msg);
+                $('#diverroacc').show();
+                $('html,body').animate({ scrollTop: 0 });
+
+                return false;
+            }
+            var code = $("#txt_desc").code();
+            var text = code.replace(/<p>/gi, " ");
+            var plainText = $("<div />").html(text).text();
+            var model = {
+                'Orgnizer_Id': $('#hd_ID').val(),
+                'Orgnizer_Name': $("#txt_name").val(),
+                'Organizer_Desc': plainText,
+                'Organizer_FBLink': $("#txt_fburl").val(),
+                'Organizer_Twitter': $("#txt_twitterurl").val(),
+                'Organizer_Linkedin': $("#txt_linkedinurl").val(),
+                'UserId': '',
+                'Organizer_Image': $("#userimage").val(),
+                'Organizer_Address1': $("#txt_streetadd1").val(),
+                'Organizer_Address2': $("#txt_streetaddr2").val(),
+                'Organizer_City': $("#txt_city").val(),
+                'Organizer_State': $("#txt_state").val(),
+                'Organizer_CountryId': $("#Country").val(),
+                'Organizer_Zipcode': $("#txt_zip").val(),
+                'Organizer_Email': $("#txt_email").val(),
+                'Organizer_Phoneno': $("#txt_phnno").val(),
+                'Organizer_Websiteurl': $("#txt_websiteurl").val(),
+
+            };
+            $.ajax({
+                url: '@Url.Action("EditOrganizer", "Account")',
+                data: { model: model },
+                type: "Post",
+                success: function (data) {
+
+                    if (typeof (data.Message) === "undefined") {
+                        $("#id_selectorg").empty();
+                        $("#id_selectorg").append("<option value='0'>Select</option>");
+                        $("#id_selectorg").append("<option value='A'>Add Organizer</option>");
+                        $.each(data, function (index, optiondata) {
+
+                            $("#id_selectorg").append("<option value='" + optiondata.Id + "'>" + optiondata.Name + "</option>");
+                        });
+                        $('.selectpicker').selectpicker('refresh');
+
+                    } else {
+                        if (data.Message == "O") {
+                            window.location.href = '@Url.Action("Index", "Home")';
+
+                        }
+
+
+                    }
+                    $('#userimage').val("");
+                    $("#image_count").val("0");
+                    $('#ImagePresent').val("No");
+                    alert($("#image_count").val());
+                    $("#dveruimain").removeClass("er_UI_main");
+                    $("#dveruiimg").removeClass("er_UI_img");
+                    $("#dveruimain").addClass("er_suc_main");
+                    $("#dveruiimg").addClass("er_suc_img");
+                    $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgsaveEdit'));
+                    $('#diverroacc').show();
+                    $('html,body').animate({ scrollTop: 0 });
+                    $(".orgdisnone").hide();
+                    $(".maindivnonvis").show();
+                    $("#divorgprofile").empty();
+                    $("#divorgprofile").hide();
+
+                }
+
+            });
+
+
+
+
+        });
+
+
 
     });
-    function validatemain()
-    {
-        debugger;
-        var msg = "";
-        var organizername = $("#txt_name").val();
-        var organizeremail = $('#txt_email').val();
-        if(organizername=="")
+
+        function validatemain()
         {
-            $("#txt_name").addClass('err-bor');
-            msg+= ajaxsetup('OrganizerMaster','OrgNameUi') +"</br>";
-
-        } else {
-            $("#txt_name").removeClass('err-bor');
-        }
-
-        if (organizeremail != "") {
-            if (!validateEmail(organizeremail)) {
-               
-                $('#txt_email').addClass('err-bor');
-                msg += ajaxsetup('OrganizerMaster', 'OrgvalidEmailUi') + "</br>";
+            debugger;
+            var msg = "";
+            var organizername = $("#txt_name").val();
+            var organizeremail = $('#txt_email').val();
+            if(organizername=="")
+            {
+                $("#txt_name").addClass('err-bor');
+                msg+= ajaxsetup('OrganizerMaster','OrgNameUi') +"</br>";
 
             } else {
-
-
-                $('#txt_email').removeClass('err-bor');
+                $("#txt_name").removeClass('err-bor');
             }
-        } else {
-            $('#txt_email').addClass('err-bor');
-            msg += ajaxsetup('OrganizerMaster', 'OrgEmailUi') + "</br>";;
 
+            if (organizeremail != "") {
+                if (!validateEmail(organizeremail)) {
+
+                    $('#txt_email').addClass('err-bor');
+                    msg += ajaxsetup('OrganizerMaster', 'OrgvalidEmailUi') + "</br>";
+
+                } else {
+
+
+                    $('#txt_email').removeClass('err-bor');
+                }
+            } else {
+                $('#txt_email').addClass('err-bor');
+                msg += ajaxsetup('OrganizerMaster', 'OrgEmailUi') + "</br>";;
+
+            }
+            return msg;
         }
-        return msg;
-    }
-    function ajaxsetup(strname, strFormTag) {
-        var msgnew = "";
+        function ajaxsetup(strname, strFormTag) {
+            var msgnew = "";
 
-        var request = $.ajax({
-            url: '@Url.Action("Index", "ValidationMessage")',
-            async: false,
-            data: { strFormName: strname, strFormTag: strFormTag },
-            type: 'Post'
-        });
-        request.done(function (msg) {
-            msgnew += msg;
-        });
+            var request = $.ajax({
+                url: '@Url.Action("Index", "ValidationMessage")',
+                async: false,
+                data: { strFormName: strname, strFormTag: strFormTag },
+                type: 'Post'
+            });
+            request.done(function (msg) {
+                msgnew += msg;
+            });
 
-        request.fail(function (jqXHR, textStatus) {
-            msgnew += "Some Error occur!!";
-        });
-        return msgnew;
-    }
+            request.fail(function (jqXHR, textStatus) {
+                msgnew += "Some Error occur!!";
+            });
+            return msgnew;
+        }
+
 </script>
