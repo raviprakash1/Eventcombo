@@ -16,24 +16,11 @@ namespace EventCombo.Models
     {
         public long Orgnizer_Id { get; set; }
         public Nullable<long> Orgnizer_Event_Id { get; set; }
-        public string Orgnizer_Name { get; set; }
-        public string Orgnizer_Desc { get; set; }
-        public string FBLink { get; set; }
-        public string Twitter { get; set; }
         public string UserId { get; set; }
         public string DefaultOrg { get; set; }
-        public string Linkedin { get; set; }
-        public string Organizer_Image { get; set; }
-        public string Organizer_Address1 { get; set; }
-        public string Organizer_Address2 { get; set; }
-        public string Organizer_City { get; set; }
-        public string Organizer_State { get; set; }
-        public string Organizer_Zipcode { get; set; }
-        public Nullable<byte> Organizer_CountryId { get; set; }
-        public string Organizer_Email { get; set; }
-        public string Organizer_Phoneno { get; set; }
-        public string Organizer_Websiteurl { get; set; }
+        public long OrganizerMaster_Id { get; set; }
     
         public virtual Event Event { get; set; }
+        public virtual Organizer_Master Organizer_Master { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace EventCombo.Models
         public Address[] AddressDetail { get; set; }
         public EventVenue[] EventVenue { get; set; }
         public MultipleEvent[] MultipleEvents { get; set; }
-        public Event_Orgnizer_Detail[] Orgnizer { get; set; }
+        public Organizer_Master[] Orgnizer { get; set; }
         public Ticket[] Ticket { get; set; }
         public EventImage[] EventImage { get; set; }
         public Event_VariableDesc[] EventVariable { get; set; }
@@ -60,7 +60,11 @@ namespace EventCombo.Models
 
     }
 
-
+    public partial class Organizer_Master
+    {
+        public string DefaultOrg { get; set; }
+        public string EditOrg { get; set; }
+    }
     public class ManageEvent
     {
         public string Eventstatus { get; set; }

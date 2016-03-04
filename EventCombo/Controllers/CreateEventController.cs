@@ -407,19 +407,129 @@ namespace EventCombo.Controllers
                     // Orgnizer
                     if (model.Orgnizer != null)
                     {
-                        Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
-                        foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
+                        Organizer_Master objEOrg = new Organizer_Master();
+                        Event_Orgnizer_Detail evntorg = new Event_Orgnizer_Detail();
+                        var neworg=model.Orgnizer.Where(x => x.Orgnizer_Id == 0).Any();
+                        if (neworg)
                         {
-                            objEOrg = new Event_Orgnizer_Detail();
-                            objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                            objEOrg.Orgnizer_Desc = HttpUtility.UrlDecode(objOr.Orgnizer_Desc,System.Text.Encoding.Default);
-                            objEOrg.FBLink = objOr.FBLink;
-                            objEOrg.Twitter = objOr.Twitter;
-                            objEOrg.DefaultOrg = objOr.DefaultOrg;
-                            objEOrg.Linkedin = objOr.Linkedin;
-                            objEOrg.UserId = strUserId;
-                            objEnt.Event_Orgnizer_Detail.Add(objEOrg);
+                            var defaultorg = model.Orgnizer.Where(x => x.Orgnizer_Id == 0 && x.DefaultOrg=="Y").Any();
+                            if (defaultorg)
+                            {
+                                var orgnew = model.Orgnizer.Where(x => x.Orgnizer_Id == 0).ToList();
+                                foreach (Organizer_Master objOr in orgnew)
+                                {
+                                    
+                                        objEOrg = new Organizer_Master();
+                                        // objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                                        objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                        objEOrg.Organizer_Desc = HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default);
+                                        objEOrg.Organizer_FBLink = objOr.Organizer_FBLink;
+                                        objEOrg.Organizer_Twitter = objOr.Organizer_Twitter;
+                                        //objEOrg.DefaultOrg = objOr.DefaultOrg;
+                                        objEOrg.Organizer_Linkedin = objOr.Organizer_Linkedin;
+                                        objEOrg.UserId = strUserId;
+                                          objEOrg.Organizer_Status = "A";
+                                    objEnt.Organizer_Master.Add(objEOrg);
+                                        if (objOr.DefaultOrg == "Y")
+                                        {
+                                            evntorg = new Event_Orgnizer_Detail();
+                                            evntorg.DefaultOrg = objOr.DefaultOrg;
+                                            evntorg.OrganizerMaster_Id = objEOrg.Orgnizer_Id;
+                                            evntorg.Orgnizer_Event_Id = ObjEC.EventID;
+                                            evntorg.UserId = strUserId;
+                                            objEnt.Event_Orgnizer_Detail.Add(evntorg);
+                                        }
+
+                                    
+
+                                }
+                            }
+                            else
+                            {
+                                var orgnew = model.Orgnizer.Where(x => x.Orgnizer_Id == 0).ToList();
+                                foreach (Organizer_Master objOr in orgnew)
+                                {
+                                   
+                                        objEOrg = new Organizer_Master();
+                                        // objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                                        objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                        objEOrg.Organizer_Desc = HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default);
+                                        objEOrg.Organizer_FBLink = objOr.Organizer_FBLink;
+                                        objEOrg.Organizer_Twitter = objOr.Organizer_Twitter;
+                                        objEOrg.Organizer_Linkedin = objOr.Organizer_Linkedin;
+                                        objEOrg.UserId = strUserId;
+                                        objEOrg.Organizer_Status = "A";
+                                    objEnt.Organizer_Master.Add(objEOrg);
+                                      
+
+                                    
+
+                                }
+                                var defaultorgold = model.Orgnizer.Where(x => x.DefaultOrg == "Y").ToList();
+                                foreach (Organizer_Master objOr in defaultorgold)
+                                {
+                                    evntorg = new Event_Orgnizer_Detail();
+                                    evntorg.DefaultOrg = objOr.DefaultOrg;
+                                    evntorg.OrganizerMaster_Id = objOr.Orgnizer_Id;
+                                    evntorg.Orgnizer_Event_Id = ObjEC.EventID;
+                                    evntorg.UserId = strUserId;
+                                    objEnt.Event_Orgnizer_Detail.Add(evntorg);
+                                }
+                                var editoldorg = model.Orgnizer.Where(x => x.EditOrg == "1").ToList();
+                                if (editoldorg != null)
+                                {
+                                    foreach (Organizer_Master objOr in editoldorg)
+                                    {
+                                        string sql = @"update Organizer_Master set Orgnizer_Name={0},Organizer_Desc={1},Organizer_FBLink={2},Organizer_Twitter={3},Organizer_Linkedin={4} where Orgnizer_Id={5}";
+                                        List<Object> sqlParamsList = new List<object>();
+                                        sqlParamsList.Add(objOr.Orgnizer_Name);
+                                        sqlParamsList.Add(HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default));
+                                        sqlParamsList.Add(objOr.Organizer_FBLink);
+                                        sqlParamsList.Add(objOr.Organizer_Twitter);
+                                        sqlParamsList.Add(objOr.Organizer_Linkedin);
+                                       sqlParamsList.Add(objOr.Orgnizer_Id);
+
+                                        objEnt.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                                       
+                                    }
+                                }
+                               
+
+
+
+                            }
+                     
+                        }
+                        else
+                        {
+                            var defaultorg = model.Orgnizer.Where(x => x.DefaultOrg == "Y").ToList();
+                            foreach (Organizer_Master objOr in defaultorg)
+                            {
+                                evntorg = new Event_Orgnizer_Detail();
+                                evntorg.DefaultOrg = objOr.DefaultOrg;
+                                evntorg.OrganizerMaster_Id = objOr.Orgnizer_Id;
+                                evntorg.Orgnizer_Event_Id = ObjEC.EventID;
+                                evntorg.UserId = strUserId;
+                                objEnt.Event_Orgnizer_Detail.Add(evntorg);
+                            }
+
+                            var editoldorg = model.Orgnizer.Where(x => x.EditOrg == "1").ToList();
+                            if (editoldorg != null)
+                            {
+                                foreach (Organizer_Master objOr in editoldorg)
+                                {
+                                    string sql = @"update Organizer_Master set Orgnizer_Name={0},Organizer_Desc={1},Organizer_FBLink={2},Organizer_Twitter={3},Organizer_Linkedin={4} where Orgnizer_Id={5}";
+                                    List<Object> sqlParamsList = new List<object>();
+                                    sqlParamsList.Add(objOr.Orgnizer_Name);
+                                    sqlParamsList.Add(HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default));
+                                    sqlParamsList.Add(objOr.Organizer_FBLink);
+                                    sqlParamsList.Add(objOr.Organizer_Twitter);
+                                    sqlParamsList.Add(objOr.Organizer_Linkedin);
+                                    sqlParamsList.Add(objOr.Orgnizer_Id);
+
+                                    objEnt.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                                }
+                            }
                         }
                     }
                     // Tickets
@@ -496,9 +606,13 @@ namespace EventCombo.Controllers
                         }
                     }
 
-                  objEnt.SaveChanges();
+                    objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
                     PublishEvent(lEventId);
+
+
+
+
                     //if (strIsLive == "Y")
                     //    UpdateEventStatus(lEventId.ToString());
                 }
@@ -594,7 +708,18 @@ namespace EventCombo.Controllers
             TempData["EventCategory"] = EvntCtgry;
             TempData["EventSubCategory"] = EvntSubCtgry;
 
-            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
+            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail
+                                   join pfd in db.Organizer_Master on ev.Orgnizer_Id equals pfd.Orgnizer_Id
+                                   where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y"
+                                   select new
+                                   {
+                                       Orgnizer_Name = pfd.Orgnizer_Name,
+                                       FBLink = pfd.Organizer_FBLink,
+                                       Twitter = pfd.Organizer_Twitter,
+                                       Linkedin = pfd.Organizer_Linkedin,
+                                       Orgnizer_Id = pfd.Orgnizer_Id
+
+                                   }).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
             var EventDescription = EventDetail.EventDescription;
@@ -870,27 +995,34 @@ namespace EventCombo.Controllers
         {
             StringBuilder strHTML = new StringBuilder();
             string strtemp;
+            long MaxEventId = 0;
             string strUserId = Session["AppId"] != null ? Session["AppId"].ToString() : "";
             StringBuilder strDropDown = new StringBuilder();
             if (strUserId != "")
             {
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                    var MaxEventId = (from Org in objEnt.Event_Orgnizer_Detail
+                    var OrgEventId = (from Org in objEnt.Event_Orgnizer_Detail
                                       where Org.UserId == strUserId
-                                      select Org.Orgnizer_Event_Id).Max();
+                                      select Org.Orgnizer_Id).Any();
+                    if(OrgEventId)
+                    {
+                        MaxEventId =db.Event_Orgnizer_Detail.Where(x=>x.Orgnizer_Event_Id== (db.Event_Orgnizer_Detail.Where(y => y.UserId == strUserId).Max(d => d.Orgnizer_Event_Id) ?? 0)).Select(x=>x.OrganizerMaster_Id).FirstOrDefault();
+                    }
+                   
 
-                    var EventOrg = (from Org in objEnt.Event_Orgnizer_Detail
-                                    where Org.Orgnizer_Event_Id == MaxEventId
-                                    select Org).ToList();
+                    var EventOrg = (from Org in objEnt.Organizer_Master
+                                    where Org.UserId == strUserId  && (Org.Orgnizer_Name ?? string.Empty) != string.Empty && Org.Organizer_Status == "A"
+                                    select Org).OrderBy(x=>x.Orgnizer_Name).ToList();
 
                     int i = 0;
-                    foreach (Event_Orgnizer_Detail EOD in EventOrg)
+                    foreach (Organizer_Master EOD in EventOrg)
                     {
                         i = i + 1;
                         strHTML.Append("<tr>");
                         strHTML.Append("<td style='display: none' width='92%'>");
                         strHTML.Append(i);
+                      
                         strHTML.Append("</td>");
 
                         strHTML.Append("<td width='92 %'><label id=OrgName_");
@@ -899,38 +1031,59 @@ namespace EventCombo.Controllers
                         strHTML.Append(EOD.Orgnizer_Name);
                         strHTML.Append("</label></td>");
 
-                        strHTML.Append("<td style='display: none'><label id=OrgDes_");
+                        strHTML.Append("<td style='display: none'>");
+                         strHTML.Append("<label id=OrgId_");
                         strHTML.Append(i);
                         strHTML.Append(">");
-                        strHTML.Append(EOD.Orgnizer_Desc);
+                        strHTML.Append(EOD.Orgnizer_Id);
+                        strHTML.Append("</label>");
+                        strHTML.Append("<label id=OrgEdit_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append("0");
+                        strHTML.Append("</label>");
+                        strHTML.Append("<label id=OrgDes_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Organizer_Desc);
                         strHTML.Append("</label></td>");
 
                         strHTML.Append("<td style='display: none'><label id=OrgFB_");
                         strHTML.Append(i);
                         strHTML.Append(">");
-                        strHTML.Append(EOD.FBLink);
+                        strHTML.Append(EOD.Organizer_FBLink);
                         strHTML.Append("</label></td>");
 
 
                         strHTML.Append("<td style='display: none'><label id=OrgTw_");
                         strHTML.Append(i);
                         strHTML.Append(">");
-                        strHTML.Append(EOD.Twitter);
+                        strHTML.Append(EOD.Organizer_Twitter);
                         strHTML.Append("</label></td>");
                         strHTML.Append("<td style='display: none'><label id=OrgLn_");
                         strHTML.Append(i);
                         strHTML.Append(">");
-                        strHTML.Append(EOD.Linkedin);
+                        strHTML.Append(EOD.Organizer_Linkedin);
                         strHTML.Append("</label></td>");
                         strtemp = "<td align='right'><i onclick='editOrgnizer(" + i + ")'; class='fa fa-pencil'></i> | <i onclick='DeleteOrgnizer(" + i + ");' class='fa fa-trash'></i></td>";
                         strHTML.Append(strtemp);
                         strHTML.Append("</tr>");
 
-                        if (EOD.DefaultOrg == "Y")
-                            strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                        if (MaxEventId != 0)
+                        {
+
+
+                            if (EOD.Orgnizer_Id == MaxEventId)
+                                strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                            else
+                                strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+
+                        }
                         else
+                        {
                             strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
 
+                        }
 
                     }
                 }
@@ -980,7 +1133,17 @@ namespace EventCombo.Controllers
             TempData["EventCategory"] = EvntCtgry;
             TempData["EventSubCategory"] = EvntSubCtgry;
 
-            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
+            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail
+                                   join pfd in db.Organizer_Master on ev.OrganizerMaster_Id equals pfd.Orgnizer_Id
+                                   where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select new
+                                   {
+                                       Orgnizer_Name=pfd.Orgnizer_Name,
+                                       FBLink=pfd.Organizer_FBLink,
+                                       Twitter=pfd.Organizer_Twitter,
+                                       Linkedin=pfd.Organizer_Linkedin,
+                                       Orgnizer_Id = pfd.Orgnizer_Id
+
+                                   }).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
             var EventDescription = EventDetail.EventDescription;

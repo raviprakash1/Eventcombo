@@ -19,7 +19,6 @@
         <EntityTypeShape EntityType="EventComboModel.Email_Template" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Event" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Event_OrganizerMessages" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Event_Orgnizer_Detail" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Event_VariableDesc" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventCategory" Width="1.5" PointX="12.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventFavourite" Width="1.5" PointX="14.75" PointY="10.75" IsExpanded="true" />
@@ -53,7 +52,6 @@
         <AssociationConnector Association="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Profile_Profile" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK__TicketDel__Deliv__08411774" ManuallyRouted="false" />
-        <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Event_VariableDesc_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_EventImage_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_EventVenue_Event" ManuallyRouted="false" />
@@ -66,6 +64,9 @@
         <EntityTypeShape EntityType="EventComboModel.TicketOrderDetail" Width="1.5" PointX="17.375" PointY="20.75" />
         <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="19.375" PointY="20.75" />
         <EntityTypeShape EntityType="EventComboModel.Organizer_Master" Width="1.5" PointX="21.375" PointY="3.75" />
+        <EntityTypeShape EntityType="EventComboModel.Event_Orgnizer_Detail" Width="1.5" PointX="23.625" PointY="11.5" />
+        <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Event" />
+        <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

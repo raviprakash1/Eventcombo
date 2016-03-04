@@ -553,7 +553,7 @@ WriteLiteral("</p>\r\n                                                <p>");
 
             
             #line 115 "..\..\Views\Shared\_AccountLayout.cshtml"
-                                              Write(Html.ActionLink("Organizer Profile", "OrganizerProfile", "Account"));
+                                              Write(Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account"));
 
             
             #line default

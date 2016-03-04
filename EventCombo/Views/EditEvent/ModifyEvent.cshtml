@@ -586,7 +586,7 @@
                                     <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
                                 <div class="col-sm-2 col-xs-4">
-                                    <button type="button" onclick="DeleteOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
+                                    <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
                             </div>
@@ -1279,26 +1279,47 @@ else
                     </a>
                     <button type="button" class="btn btn-primary yes ok" id="btCloseProgress" style="display:none;" data-dismiss="modal">OK</button>
                     <a class="btn ev_set_del_btn evnt_set" id="anodelete"  href="#nodelete" style="display:none" data-toggle="modal"></a>
-                    <div class="modal fade" id="nodelete"  tabindex="-1" role="dialog" aria-labelledby="nodelete" aria-hidden="true">
+                    <a class="td-btn" id="btdeOrg" type="button" href="#confirm-deleteorg-ok" data-toggle="modal" style="display:none"></a>
+                        <div class="modal fade" id="nodelete" tabindex="-1" role="dialog" aria-labelledby="nodelete" aria-hidden="true">
+                            <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                                <div class="modal-content">
+                                    <!-- <div class="modal-header custom">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div> -->
+                                    <form id="contactForm" class="fullw1 add">
+                                        <div class="modal-body text-center pv50 txt-msg">
+                                            <h4 class="msg" id="nodeleteH4">You cannot delete the last ticket while your event is live. Add another ticket or unpublish this event first</h4>
+                                        </div>
+                                        <div class="modal-footer msg-action-btn ok">
+
+                                            <button type="button" class="btn btn-primary no" data-dismiss="modal">OK</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div><!-- confirm-msg -->
+                        </div>
+
+                    <div class="modal fade" id="confirm-deleteorg-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
                             <div class="modal-content">
-                                <!-- <div class="modal-header custom">
-                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div> -->
+
                                 <form id="contactForm" class="fullw1 add">
                                     <div class="modal-body text-center pv50 txt-msg">
-                                        <h4 class="msg" id="nodeleteH4">You cannot delete the last ticket while your event is live. Add another ticket or unpublish this event first</h4>
+
+                                        <h4 class="msg" id="hId"></h4>
                                     </div>
                                     <div class="modal-footer msg-action-btn ok">
-
-                                        <button type="button" class="btn btn-primary no" data-dismiss="modal">OK</button>
-                                      
+                                        <button type="button" id="btnYes" onclick="DeleteOrgnizer();"  class="btn btn-primary no" data-dismiss="modal">Yes</button>
+                                        <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
                                     </div>
                                 </form>
+                                <input type="hidden" id="hdUserId" value="" />
                             </div>
                         </div><!-- confirm-msg -->
                     </div>
-                </div>
+
+</div>
             </div>
 
         </div>
@@ -2127,6 +2148,32 @@ else
 
         function DeleteOrgnizer() {
             var Sno = $("#ddlOrgnizers").val();
+            var id = $("#OrgId_" + Sno).html();
+            alert(id);
+            if (id != 0)
+            {
+                $.ajax({
+                    url: '@Url.Action("deleteOrg", "EditEvent")',
+                    data: { id: id },
+                    type: "Post",
+                    success: function (data) {
+
+
+                        if (data.Message == "O") {
+                            window.location.href = '@Url.Action("Index", "Home")';
+
+                        }
+                    }
+
+
+                      
+
+                });
+            } else
+            {
+                
+            }
+        
             $('#tblOrgnizer tr').each(function () {
                 if (Sno == $(this).find("td:first").html()) {
                     $(this).remove();
@@ -2227,8 +2274,8 @@ else
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
-            strHTML = strHTML + '<td style="display:none"><label id=OrgId_' + Sno + '>0</label></td>';
-            strHTML = strHTML + '<td style="display:none"><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
+         
+            strHTML = strHTML + '<td style="display:none"><label id=OrgId_' + Sno + '>0</label><label id=OrgEdit_' + Sno + '>0</label><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgFB_' + Sno + '>' + vOrgFB + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgTw_' + Sno + '>' + vOrgTw + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgLn_' + Sno + '>' + vOrgLn + '</label></td>';
@@ -2259,6 +2306,10 @@ else
             $("#OrgFB_" + Sno).text(vOrgFB);
             $("#OrgTw_" + Sno).text(vOrgTw);
             $("#OrgLn_" + Sno).text(vOrgLn);
+            var id = $("#OrgId_" + Sno);
+            if (id != 0) {
+                $("#OrgEdit_" + Sno).text(1);
+            }
 
             $("#ddlOrgnizers option").each(function (i) {
                 if (Sno == $(this).val()) {
@@ -2709,20 +2760,20 @@ else
             var vDefaultOrg = $("#ddlOrgnizers").val();
             console.log( $("#tblOrgnizer"));
             $("#tblOrgnizer tr").each(function () {
-                var Sno = $(this).find("td:first").html();
+                var Sno = $(this).find("td:first").html().trim();
                 //alert(Sno);
                 // Multiple Address
                 debugger;
                 if (Sno != '') {
                     Orgnizer.push({
-                        Orgnizer_Id: $("#OrgId_" + Sno).text(),
-                        Orgnizer_Name: $("#OrgName_" + Sno).text(),
-                        Orgnizer_Desc: escape($("#OrgDes_" + Sno).text()),
-                        FBLink: $("#OrgFB_" + Sno).text(),
-                        Twitter: $("#OrgTw_" + Sno).text(),
-                        Linkedin: $("#OrgLn_" + Sno).text(),
-                        DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
-
+                        Orgnizer_Id: $("#OrgId_"+Sno).text(),
+                        Orgnizer_Name: $("#OrgName_"+Sno).html(),
+                        Organizer_Desc: escape($("#OrgDes_" + Sno).text()),
+                        Organizer_FBLink: $("#OrgFB_" + Sno).text(),
+                        Organizer_Twitter: $("#OrgTw_" + Sno).text(),
+                        Organizer_Linkedin: $("#OrgLn_" + Sno).text(),
+                        DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N'),
+                        EditOrg: $("#OrgEdit_" + Sno).text()
                     });
                 }
             });
@@ -6510,6 +6561,12 @@ else
     <script>
         $(document).ready(function () {
       
+            $("#btndeleteorg").click(function()
+            {
+                $("#hId").html(ajaxsetup('OrganizerMaster', 'OrgDeleteMessage'));
+                $("#btdeOrg").click();
+            });
+
         var image="";
         var j= @Html.Raw(ViewData["Image"]);
 

@@ -1149,7 +1149,15 @@ WriteLiteral(" href=\"#\"");
 
 WriteLiteral(">Contact the Organizer </a></p>\r\n                        <p><a");
 
-WriteLiteral(" href=\"#\"");
+WriteAttribute("href", Tuple.Create(" href=\"", 16121), Tuple.Create("\"", 16193)
+            
+            #line 324 "..\..\Views\CreateEvent\ViewEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 16128), Tuple.Create<System.Object, System.Int32>(Url.Action("Index","OrganizerInfo", new {id=Model.organizerid })
+            
+            #line default
+            #line hidden
+, 16128), false)
+);
 
 WriteLiteral(">View organizer profile </a></p>\r\n");
 
@@ -1169,14 +1177,14 @@ WriteLiteral(">View organizer profile </a></p>\r\n");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 16303), Tuple.Create("\"", 16341)
+WriteAttribute("href", Tuple.Create(" href=\"", 16367), Tuple.Create("\"", 16405)
             
             #line 327 "..\..\Views\CreateEvent\ViewEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 16310), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
+, Tuple.Create(Tuple.Create("", 16374), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
             
             #line default
             #line hidden
-, 16310), false)
+, 16374), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -1218,14 +1226,14 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("                        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 16616), Tuple.Create("\"", 16659)
+WriteAttribute("href", Tuple.Create(" href=\"", 16680), Tuple.Create("\"", 16723)
             
             #line 334 "..\..\Views\CreateEvent\ViewEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 16623), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
+, Tuple.Create(Tuple.Create("", 16687), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
             
             #line default
             #line hidden
-, 16623), false)
+, 16687), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -1265,23 +1273,23 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("                        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 16935), Tuple.Create("\"", 16978)
+WriteAttribute("href", Tuple.Create(" href=\"", 16999), Tuple.Create("\"", 17042)
             
             #line 339 "..\..\Views\CreateEvent\ViewEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 16942), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
+, Tuple.Create(Tuple.Create("", 17006), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
             
             #line default
             #line hidden
-, 16942), false)
+, 17006), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 17000), Tuple.Create("\"", 17025)
-, Tuple.Create(Tuple.Create("", 17006), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
-, 17006), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 17064), Tuple.Create("\"", 17089)
+, Tuple.Create(Tuple.Create("", 17070), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
+, 17070), false)
 );
 
 WriteLiteral(" />&nbsp; ");
@@ -1353,9 +1361,9 @@ WriteLiteral(" href=\"#\"");
 
 WriteLiteral(" ><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 17880), Tuple.Create("\"", 17909)
-, Tuple.Create(Tuple.Create("", 17886), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb_connect.jpg")
-, 17886), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 17944), Tuple.Create("\"", 17973)
+, Tuple.Create(Tuple.Create("", 17950), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb_connect.jpg")
+, 17950), false)
 );
 
 WriteLiteral(" border=\"0\"");
@@ -1544,9 +1552,9 @@ WriteLiteral(" id=\"dvAjxLoader\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 20685), Tuple.Create("\"", 20715)
-, Tuple.Create(Tuple.Create("", 20691), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 20691), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 20749), Tuple.Create("\"", 20779)
+, Tuple.Create(Tuple.Create("", 20755), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 20755), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n                <div");

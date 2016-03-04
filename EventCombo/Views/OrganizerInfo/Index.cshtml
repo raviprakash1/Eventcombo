@@ -1,0 +1,222 @@
+﻿@model EventCombo.Models.Organizer_Master
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<meta property="og:type" content="article" />
+<meta property="og:title" content='' />
+<meta property="og:description" content='' />
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<div class="event_container ">
+    <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
+        <div class="event_detail_container">
+            <div class="evnt_details_body2">
+                <div class="col-sm-12 no_pad"> </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="event_detail_container">
+        <div class="evnt_tile_head">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="col-sm-6 col-xs-6 text-left no_pad">
+                <h2 class="fb_dis_head pt5">ORGANIZER INFO </h2>
+            </div>
+            <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
+                <a href="javascript:void(0)"><img src="/Images/mail.png"></a>
+                <a href="javascript:void(0)" id="twittershare"><img src="/Images/twi.png"></a>
+                <a href="javascript:void(0)" id="fbshare"><img src="/Images/fac.png"></a>
+
+                <a href="javascript:void(0)" id="linkshare"><img src="/Images/lin.png"></a>
+            </div>
+
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body2">
+            <div class="col-sm-12 ev_white_bg pb10 mt20">
+                <div class="col-sm-9 org_evnt_desc_top">
+                    <img class="org_event_img" src="@Model.Imagepath" />
+
+                    <h3>@Model.Orgnizer_Name Presents</h3>
+                      @Model.Organizer_Desc
+                </div>
+                <div class="col-sm-3 no_pad mt20">
+                    <div class="col-sm-12 inst_karm_box">
+                        <h4>@Model.Orgnizer_Name</h4>
+                        <p> <a data-target="#contorganizer" data-toggle="modal" href="#">Contact the Organizer </a></p>
+                        @if (!String.IsNullOrEmpty(Model.Organizer_FBLink) )
+                        {
+                        <p><a href="@Model.Organizer_FBLink" target="_blank"><img src="Images/facebook-icon.png"> @Model.Organizer_FBLink</a></p>
+                        }
+@if (!String.IsNullOrEmpty(Model.Organizer_Twitter))
+{
+                        <p><a href="@Model.Organizer_Twitter" target="_blank"><img src="Images/twitter-icon.png"> 
+                            @Model.Organizer_Twitter </a></p>
+}
+@if (!String.IsNullOrEmpty(Model.Organizer_Linkedin))
+{
+    <p><a href="@Model.Organizer_Linkedin" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Model.Organizer_Linkedin</a></p>
+}
+                        <p><a href="#past_event">Past Event <span class="badge">5</span> </a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="event_detail_container">
+        <div class="evnt_tile_head">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5">ORGANIZER'S CURRENT EVENTS </h2>
+            </div>
+
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body2">
+            <div class="col-sm-12 mt20 org_evnt_border no_pad">
+                <div class="col-sm-3 no_pad ">
+                    <img class="img-responsive" src="Images/ev1.jpg" alt="">
+                </div>
+                <a class="org_evnt_list_main" href="#">
+                    <div class="col-sm-9">
+                        <h1 class="org_evnt_list_title">Rang de Basanti Featuring Remix King DJ Akbar Sami</h1>
+                        <p class="org_evnt_list">
+                            81 Hamilton Avenue <br>
+                            Trenton, NJ , 08611 <br>
+                            New York, New York
+                        </p>
+                    </div>
+                </a>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="event_detail_container" id="past_event">
+        <div class="evnt_tile_head">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5">ORGANIZER'S PAST EVENTS  </h2>
+            </div>
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body2">
+            <div class="col-sm-12 mt20 org_evnt_border no_pad">
+                <div class="col-sm-3 no_pad ">
+                    <img class="img-responsive" src="Images/ev1.jpg" alt="">
+                </div>
+
+                <div class="col-sm-9">
+                    <h1 class="org_evnt_list_title">Rang de Basanti Featuring Remix King DJ Akbar Sami</h1>
+                    <p class="org_evnt_list">
+                        81 Hamilton Avenue <br>
+                        Trenton, NJ , 08611 <br>
+                        New York, New York
+                    </p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-sm-12 mt20 org_evnt_border no_pad">
+                <div class="col-sm-3 no_pad ">
+                    <img class="img-responsive" src="Images/ev1.jpg" alt="">
+                </div>
+
+                <div class="col-sm-9">
+                    <h1 class="org_evnt_list_title">Rang de Basanti Featuring Remix King DJ Akbar Sami</h1>
+                    <p class="org_evnt_list">
+                        81 Hamilton Avenue <br>
+                        Trenton, NJ , 08611 <br>
+                        New York, New York
+                    </p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-sm-12 mt20 org_evnt_border no_pad">
+                <div class="col-sm-3 no_pad ">
+                    <img class="img-responsive" src="Images/ev1.jpg" alt="">
+                </div>
+
+                <div class="col-sm-9">
+                    <h1 class="org_evnt_list_title">Rang de Basanti Featuring Remix King DJ Akbar Sami</h1>
+                    <p class="org_evnt_list">
+                        81 Hamilton Avenue <br>
+                        Trenton, NJ , 08611 <br>
+                        New York, New York
+                    </p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="schcalender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Add to Calendar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 no_pad">
+                        <div class="col-md-6 text-center ev_calend_lebel">
+                            <i class="fa fa-windows"></i> <a href="#">Microsoft Outlook </a>
+                        </div>
+                        <div class="col-md-6 text-center ev_calend_lebel">
+                            <i class="fa fa-apple"></i> <a href="#">Apple Ical </a>
+                        </div>
+                        <div class="col-md-6 text-center ev_calend_lebel">
+                            <i class="fa fa-google"></i> <a href="#">Google Calendar </a>
+                        </div>
+                        <div class="col-md-6 text-center ev_calend_lebel">
+                            <i class="fa fa-yahoo"></i> <a href="#">Yahoo Calendar </a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#fbshare').click(function () {
+
+           
+
+            window.open('https://www.facebook.com/sharer.php?s=100&&p[url]=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+
+
+        });
+
+        $('#twittershare').click(function () {
+
+           
+
+            window.open('https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&via=twitterdev&related=twitterapi%2Ctwitter', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+        });
+
+        $('#linkshare').click(function () {
+
+           
+
+            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
+            return false;
+        });
+
+
+    });
+
+</script>
+
