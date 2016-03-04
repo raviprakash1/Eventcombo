@@ -7,6 +7,7 @@
 <meta property="og:title" content='' />
 <meta property="og:description" content='' />
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+
 <div class="event_container ">
     <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
         <div class="event_detail_container">
@@ -44,7 +45,7 @@
                 <div class="col-sm-3 no_pad mt20">
                     <div class="col-sm-12 inst_karm_box">
                         <h4>@Model.Orgnizer_Name</h4>
-                        <p> <a data-target="#contorganizer" data-toggle="modal" href="#">Contact the Organizer </a></p>
+                        <p><a data-target="#contorganizer" data-toggle="modal" href="#">Contact the Organizer </a></p>
                         @if (!String.IsNullOrEmpty(Model.Organizer_FBLink) )
                         {
                         <p><a href="@Model.Organizer_FBLink" target="_blank"><img src="Images/facebook-icon.png"> @Model.Organizer_FBLink</a></p>
@@ -151,6 +152,48 @@
 
         </div>
     </div>
+    <div class="modal fade" id="contorganizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Contact the Organizer</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div id="orgerror" class="alert-danger" style="display:none;">Please fill out the missing information</div>
+                        <div class="col-xs-12 form-group mb10">
+                            <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
+                            <div class="col-sm-8">
+                                <input class="form-control evnt_inp_cont" type="text" id="id_orgname">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12 form-group mb10">
+                            <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
+                            <div class="col-sm-8">
+                                <input class="form-control evnt_inp_cont" type="text" id="id_orgemail">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12 form-group mb10">
+                            <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" rows="4" id="id_orgtext"></textarea>
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="schcalender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog " role="document">
             <div class="modal-content">
@@ -185,10 +228,90 @@
 
 <script>
     $(document).ready(function () {
+        $('#saveorgaizermsg').click(function () {
+
+
+            var errormsg = "", erroremail = "";
+            var name = $('#id_orgname').val();
+            var mail = $('#id_orgemail').val();
+            var txt = $('#id_orgtext').val();
+            var orgid=@Model.Orgnizer_Id;
+            var eventid=@Model.Eventid;
+            var count = 0;
+      
+            if (name != '') {
+                $('#id_orgname').removeClass('err-bor');
+
+            } else {
+
+                count++;
+                $('#id_orgname').addClass('err-bor');
+
+            }
+
+
+
+            if (!validateEmail(mail)) {
+                $('#id_orgemail').addClass('err-bor');
+                errormsg += "Invalid Email</br>";
+            }
+
+
+
+            if (txt != '') {
+                $('#id_orgtext').removeClass('err-bor');
+
+            } else {
+                count++;
+                $('#id_orgtext').addClass('err-bor');
+
+            }
+            if (erroremail != "") {
+                errormsg += erroremail;
+
+            }
+            if (count > 0)
+            {
+                errormsg = "Fill the missing details"
+            }
+            if (errormsg != "") {
+
+                $('#orgerror').css('display', 'block');
+                $('#orgerror').html(errormsg);
+                return false;
+            }
+            else {
+            
+                var model = {
+                    'email': mail,
+                    'name': name,
+                    'mesasges': txt,
+                    'organiserid':orgid,
+                    'EventId':eventid
+
+                    }
+                $.ajax({
+                    url: '@Url.Action("saveorganizermsg", "CreateEvent")',
+                    data: model,
+                    type: "Post",
+                    success: function (response) {
+                        $('#orgerror').css('display', 'block');
+                        $('#orgerror').addClass('alert-success');
+                        $('#orgerror').removeClass('alert-danger ');
+                        $('#orgerror').html("Message has been successfully send!!");
+                        $('#id_orgname').val('');
+                        $('#id_orgemail').val('');
+                        $('#id_orgtext').val('');
+                    }
+                });
+            }
+
+
+        });
 
         $('#fbshare').click(function () {
 
-           
+
 
             window.open('https://www.facebook.com/sharer.php?s=100&&p[url]=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
@@ -199,7 +322,7 @@
 
         $('#twittershare').click(function () {
 
-           
+
 
             window.open('https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&via=twitterdev&related=twitterapi%2Ctwitter', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
@@ -208,7 +331,7 @@
 
         $('#linkshare').click(function () {
 
-           
+
 
             window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);

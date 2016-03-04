@@ -64,6 +64,8 @@ namespace EventCombo.Models
     {
         public string DefaultOrg { get; set; }
         public string EditOrg { get; set; }
+
+        public long Eventid { get; set; }
     }
     public class ManageEvent
     {

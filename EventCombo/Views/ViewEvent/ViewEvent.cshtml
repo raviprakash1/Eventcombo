@@ -335,7 +335,7 @@
                             @Html.HiddenFor(m => m.organizerid, new { id = "hdorganiserid" })
                             <h4>@Html.DisplayFor(m => m.organizername)</h4>
                             <p> <a data-target="#contorganizer" data-toggle="modal" href="javascript:void(0)">Contact the Organizer </a></p>
-                            <p><a href="@Url.Action("Index","OrganizerInfo", new {id=Model.organizerid })">View organizer profile </a></p>
+                            <p><a href="@Url.Action("Index","OrganizerInfo", new {id=Model.organizerid,eventid=Model.eventId })">View organizer profile </a></p>
                             @if (Html.DisplayFor(m => m.fblink).ToString() != "")
                             {
                                 <p><a href="@Html.DisplayFor(m => m.fblink)" target="_blank"><img src="/Images/facebook-icon.png">&nbsp;@Html.DisplayFor(m => m.fblink)</a></p>

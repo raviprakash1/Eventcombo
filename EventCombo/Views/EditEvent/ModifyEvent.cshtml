@@ -3139,17 +3139,17 @@ else
                 debugger;
 
                 if ($("#hidOrgnizer").val() == '') {
-                    if (parseInt($("#ddlOrgnizers option").length) > 24) {
-                        var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
-                        $('#divaccsuc').css('display', 'none');
-                        $('#diverroacc').css('display', 'block');
-                        $('#divaccsuc').css('display', 'none');
-                        $('#btndiverrsuc').focus();
-                        $('#erraccmsg').html(msg);
-                        $('html,body').animate({ scrollTop: 0 });
-                        //alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
-                        return false;
-                    }
+                    //if (parseInt($("#ddlOrgnizers option").length) > 24) {
+                    //    var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
+                    //    $('#divaccsuc').css('display', 'none');
+                    //    $('#diverroacc').css('display', 'block');
+                    //    $('#divaccsuc').css('display', 'none');
+                    //    $('#btndiverrsuc').focus();
+                    //    $('#erraccmsg').html(msg);
+                    //    $('html,body').animate({ scrollTop: 0 });
+                    //    //alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
+                    //    return false;
+                    //}
                     AddOrgnizer();
                 }
                 else

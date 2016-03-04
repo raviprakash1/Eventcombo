@@ -6348,61 +6348,61 @@ WriteLiteral("\',\r\n                data: { lEventId: $(\"#hdEventId\").val() }
 "    alert(\"Please enter valid organizer.\");\r\n                //    $(\"#txtOrgniz" +
 "er\").focus();\r\n                //    return false;\r\n                //}\r\n\r\n     " +
 "           debugger;\r\n\r\n                if ($(\"#hidOrgnizer\").val() == \'\') {\r\n  " +
-"                  if (parseInt($(\"#ddlOrgnizers option\").length) > 24) {\r\n      " +
-"                  var msg = ajaxsetup(\'CreateEvent\', \'CreateEventOrganizercountU" +
-"I\');\r\n                        $(\'#divaccsuc\').css(\'display\', \'none\');\r\n         " +
-"               $(\'#diverroacc\').css(\'display\', \'block\');\r\n                      " +
-"  $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                        $(\'#btndiverr" +
-"suc\').focus();\r\n                        $(\'#erraccmsg\').html(msg);\r\n            " +
-"            $(\'html,body\').animate({ scrollTop: 0 });\r\n                        /" +
-"/alert(\"Limit Exceeded, System Allow Only 25 Orgnizer.\");\r\n                     " +
-"   return false;\r\n                    }\r\n                    AddOrgnizer();\r\n   " +
-"             }\r\n                else\r\n                    UpdateOrgnizer($(\"#hid" +
-"Orgnizer\").val());\r\n\r\n\r\n                $(\"#hidOrgnizer\").val(\'\');\r\n            " +
-"    $(\"#txtOrgnizer\").val(\'\');\r\n                $(\"#edOrgDes\").code(\'\');\r\n      " +
-"          $(\"#txtOrgFBlink\").val(\'\');\r\n                $(\"#txtOrgTWlink\").val(\'\'" +
-");\r\n                $(\"#txtOrgLNlink\").val(\'\');\r\n                $(\"#Incsocial\")" +
-".prop(\"checked\", false);\r\n                $(\"#dvOrgnizerFBTw\").hide();\r\n\r\n      " +
-"          var msg = disablebutton();\r\n              console.log(msg);\r\n         " +
-"       //alert(msg);\r\n                if (msg == \" \") {\r\n                    $(\"" +
-".cdisable\").removeAttr(\"disabled\");\r\n                }\r\n                $(\"#txtO" +
-"rgnizer\").removeClass(\"err-bor\");\r\n                //alert(divlength);\r\n        " +
-"        //var addOption = \'<div class=\"list-group-item ev_orgz_list\"></div> <div" +
-" id = dvOrg_\' + vLenght.toString() + \'  class=\"col-sm-8 no_pad\">\' + $(\"#txtOrgni" +
-"zer\").val() + \'</div><div class=\"col-sm-4 no_pad text-right ev_org_edt_main\"><a " +
-"href=\"#\"><i class=\"fa fa-pencil\"></i> </a> | <a href=\"#\"><i class=\"fa fa-trash\">" +
-"</i></a></div>\';\r\n                //$(\"#dvOrganizer\").append(addOption)\r\n\r\n     " +
-"           //\'<option value=\"\' + vval + \'\" id=\"\' + $(\"#txtOrgnizer\").val() + \'\">" +
-"\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                //$(\"#dllOrganizer\")" +
-".append(addOption);\r\n\r\n                //}\r\n                //else {\r\n          " +
-"      //    //$(\'#dllOrganizer option:selected\').removeAttr(\'selected\');\r\n      " +
-"          //    var vval = $(\"#edSummer2\").code();\r\n                //    $(\"#dl" +
-"lOrganizer option\").each(function (i) {\r\n                //        //alert($(thi" +
-"s).text());\r\n                //        //alert($(\"#hidOrgnizer\").val());\r\n      " +
-"          //        if ($(\"#hidOrgnizer\").val() == $(this).text()) {\r\n\r\n        " +
-"        //            $(this).remove();\r\n                //            //alert($" +
-"(\"#hidOrgnizer\").val());\r\n                //            //$(this).text($(\"#txtOr" +
-"gnizer\").val());\r\n                //            //$(this).val(vval);\r\n          " +
-"      //        }\r\n                //        //alert($(this).text() + \" : \" + $(" +
-"this).val());\r\n                //    });\r\n                //    var vval = $(\"#e" +
-"dSummer2\").code();\r\n                //    var addOption = \'<option value=\"\' + vv" +
-"al + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n         " +
-"       //    $(\"#dllOrganizer\").append(addOption);\r\n\r\n\r\n\r\n                //    " +
-"//var addOption = \'<option value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOr" +
-"gnizer\").val() + \'</option>\';\r\n                //    //$(\"#dllOrganizer\").append" +
-"(addOption);\r\n                //}\r\n                //}\r\n                //else {" +
-"\r\n                //    alert(\"Limit Exceeded, System Alow Only 25 Orgnizer.\");\r" +
-"\n\r\n                //}\r\n\r\n                //$(\"#hidOrgnizer\").val(\'\');\r\n        " +
-"        //$(\"#txtOrgnizer\").val(\'\');\r\n                //$(\"#edSummer2\").code(\'\')" +
-";\r\n\r\n                // $(\"#txtOrgnizer\").focus();\r\n                //$(\"#dllOrg" +
-"anizer option\").each(function (i) {\r\n                //    alert($(this).text() " +
-"+ \" : \" + $(this).val());\r\n                //});\r\n\r\n                //alert(vval" +
-");\r\n\r\n            });\r\n\r\n\r\n\r\n\r\n\r\n            $(\'#txtEventUrl\').bind(\'cut copy pa" +
-"ste\', function (event) {\r\n                event.preventDefault();\r\n             " +
-"   return false;\r\n            });\r\n\r\n            $(\"#txtEventUrl\").focusout(func" +
-"tion () {\r\n                var vval = $(\"#txtEventUrl\").val().trim();\r\n         " +
-"       if (vval != \'\') {\r\n                    $.ajax({\r\n                        " +
-"url: \'");
+"                  //if (parseInt($(\"#ddlOrgnizers option\").length) > 24) {\r\n    " +
+"                //    var msg = ajaxsetup(\'CreateEvent\', \'CreateEventOrganizerco" +
+"untUI\');\r\n                    //    $(\'#divaccsuc\').css(\'display\', \'none\');\r\n   " +
+"                 //    $(\'#diverroacc\').css(\'display\', \'block\');\r\n              " +
+"      //    $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                    //    $" +
+"(\'#btndiverrsuc\').focus();\r\n                    //    $(\'#erraccmsg\').html(msg);" +
+"\r\n                    //    $(\'html,body\').animate({ scrollTop: 0 });\r\n         " +
+"           //    //alert(\"Limit Exceeded, System Allow Only 25 Orgnizer.\");\r\n   " +
+"                 //    return false;\r\n                    //}\r\n                 " +
+"   AddOrgnizer();\r\n                }\r\n                else\r\n                    " +
+"UpdateOrgnizer($(\"#hidOrgnizer\").val());\r\n\r\n\r\n                $(\"#hidOrgnizer\")." +
+"val(\'\');\r\n                $(\"#txtOrgnizer\").val(\'\');\r\n                $(\"#edOrgD" +
+"es\").code(\'\');\r\n                $(\"#txtOrgFBlink\").val(\'\');\r\n                $(\"" +
+"#txtOrgTWlink\").val(\'\');\r\n                $(\"#txtOrgLNlink\").val(\'\');\r\n         " +
+"       $(\"#Incsocial\").prop(\"checked\", false);\r\n                $(\"#dvOrgnizerFB" +
+"Tw\").hide();\r\n\r\n                var msg = disablebutton();\r\n              consol" +
+"e.log(msg);\r\n                //alert(msg);\r\n                if (msg == \" \") {\r\n " +
+"                   $(\".cdisable\").removeAttr(\"disabled\");\r\n                }\r\n  " +
+"              $(\"#txtOrgnizer\").removeClass(\"err-bor\");\r\n                //alert" +
+"(divlength);\r\n                //var addOption = \'<div class=\"list-group-item ev_" +
+"orgz_list\"></div> <div id = dvOrg_\' + vLenght.toString() + \'  class=\"col-sm-8 no" +
+"_pad\">\' + $(\"#txtOrgnizer\").val() + \'</div><div class=\"col-sm-4 no_pad text-righ" +
+"t ev_org_edt_main\"><a href=\"#\"><i class=\"fa fa-pencil\"></i> </a> | <a href=\"#\"><" +
+"i class=\"fa fa-trash\"></i></a></div>\';\r\n                //$(\"#dvOrganizer\").appe" +
+"nd(addOption)\r\n\r\n                //\'<option value=\"\' + vval + \'\" id=\"\' + $(\"#txt" +
+"Orgnizer\").val() + \'\">\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n              " +
+"  //$(\"#dllOrganizer\").append(addOption);\r\n\r\n                //}\r\n              " +
+"  //else {\r\n                //    //$(\'#dllOrganizer option:selected\').removeAtt" +
+"r(\'selected\');\r\n                //    var vval = $(\"#edSummer2\").code();\r\n      " +
+"          //    $(\"#dllOrganizer option\").each(function (i) {\r\n                /" +
+"/        //alert($(this).text());\r\n                //        //alert($(\"#hidOrgn" +
+"izer\").val());\r\n                //        if ($(\"#hidOrgnizer\").val() == $(this)" +
+".text()) {\r\n\r\n                //            $(this).remove();\r\n                /" +
+"/            //alert($(\"#hidOrgnizer\").val());\r\n                //            //" +
+"$(this).text($(\"#txtOrgnizer\").val());\r\n                //            //$(this)." +
+"val(vval);\r\n                //        }\r\n                //        //alert($(thi" +
+"s).text() + \" : \" + $(this).val());\r\n                //    });\r\n                " +
+"//    var vval = $(\"#edSummer2\").code();\r\n                //    var addOption = " +
+"\'<option value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'" +
+"</option>\';\r\n                //    $(\"#dllOrganizer\").append(addOption);\r\n\r\n\r\n\r\n" +
+"                //    //var addOption = \'<option value=\"\' + vval + \'\" id=\"\' + vv" +
+"al + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                //    //$(\"" +
+"#dllOrganizer\").append(addOption);\r\n                //}\r\n                //}\r\n  " +
+"              //else {\r\n                //    alert(\"Limit Exceeded, System Alow" +
+" Only 25 Orgnizer.\");\r\n\r\n                //}\r\n\r\n                //$(\"#hidOrgnize" +
+"r\").val(\'\');\r\n                //$(\"#txtOrgnizer\").val(\'\');\r\n                //$(" +
+"\"#edSummer2\").code(\'\');\r\n\r\n                // $(\"#txtOrgnizer\").focus();\r\n      " +
+"          //$(\"#dllOrganizer option\").each(function (i) {\r\n                //   " +
+" alert($(this).text() + \" : \" + $(this).val());\r\n                //});\r\n\r\n      " +
+"          //alert(vval);\r\n\r\n            });\r\n\r\n\r\n\r\n\r\n\r\n            $(\'#txtEventU" +
+"rl\').bind(\'cut copy paste\', function (event) {\r\n                event.preventDef" +
+"ault();\r\n                return false;\r\n            });\r\n\r\n            $(\"#txtEv" +
+"entUrl\").focusout(function () {\r\n                var vval = $(\"#txtEventUrl\").va" +
+"l().trim();\r\n                if (vval != \'\') {\r\n                    $.ajax({\r\n  " +
+"                      url: \'");
 
             
             #line 3239 "..\..\Views\EditEvent\ModifyEvent.cshtml"
@@ -7796,9 +7796,9 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 274521), Tuple.Create("\"", 274560)
-, Tuple.Create(Tuple.Create("", 274528), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 274528), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 274543), Tuple.Create("\"", 274582)
+, Tuple.Create(Tuple.Create("", 274550), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 274550), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -7814,9 +7814,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 274594), Tuple.Create("\"", 274651)
-, Tuple.Create(Tuple.Create("", 274601), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 274601), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 274616), Tuple.Create("\"", 274673)
+, Tuple.Create(Tuple.Create("", 274623), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 274623), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -7825,9 +7825,9 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 274685), Tuple.Create("\"", 274722)
-, Tuple.Create(Tuple.Create("", 274691), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 274691), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 274707), Tuple.Create("\"", 274744)
+, Tuple.Create(Tuple.Create("", 274713), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 274713), false)
 );
 
 WriteLiteral("></script>\r\n");
