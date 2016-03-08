@@ -395,6 +395,50 @@ namespace EventCombo.Controllers
                 return vEventType;
             }
         }
+        public string GetPriceLabel(long lEventId)
+        {
+            string strResult = "";
+
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var vFree = (from et in db.Tickets where et.E_Id == lEventId && et.TicketTypeID == 1 select et).FirstOrDefault();
+                var vDonate = (from et in db.Tickets where et.E_Id == lEventId && et.TicketTypeID == 3 select et).FirstOrDefault();
+                var vMinPrice = (from et in db.Tickets where et.E_Id == lEventId && et.TicketTypeID == 2 select et.TotalPrice).Min();
+                var vMaxPrice = (from et in db.Tickets where et.E_Id == lEventId && et.TicketTypeID == 2 select et.TotalPrice).Max();
+
+                if (vMaxPrice == null) vMaxPrice = 0;
+                if (vMinPrice == null) vMinPrice = 0;
+                if (vFree != null && vDonate == null && vMaxPrice == 0 && vMinPrice == 0)
+                {
+                    strResult = "FREE";
+                }
+                else if (vFree == null && vDonate != null && vMaxPrice == 0 && vMinPrice == 0)
+                {
+                    strResult = "DONATE";
+                }
+                else if (vFree == null && vDonate == null && vMaxPrice == vMinPrice)
+                {
+                    strResult = vMaxPrice.ToString();
+                }
+                else if (vFree == null && vDonate == null && vMaxPrice > vMinPrice)
+                {
+                    strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
+                }
+                else if (vFree != null && vDonate == null && vMaxPrice > 0)
+                {
+                    strResult = "FREE - $" + vMaxPrice.ToString();
+                }
+                else if (vFree != null && vDonate != null && vMaxPrice > 0)
+                {
+                    strResult = "FREE - $" + vMaxPrice.ToString();
+                }
+                else if (vFree == null && vDonate != null && vMaxPrice > vMinPrice)
+                {
+                    strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
+                }
+            }
+                return strResult;
+        }
         public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId)
         {
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
@@ -424,7 +468,7 @@ namespace EventCombo.Controllers
                     objDisEv.EventType = GetDiscoverEventTypebyId(objEv.EventTypeID);
                     objDisEv.EventCatId = objEv.EventCategoryID;
                     objDisEv.EventTypeId = objEv.EventTypeID;
-
+                    objDisEv.PriceLable = GetPriceLabel(objEv.EventID);
                     foreach (Address objadd in objEv.Addresses)
                     {
                         if (objadd.ConsolidateAddress.Trim() != string.Empty)
