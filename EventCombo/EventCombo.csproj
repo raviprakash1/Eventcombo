@@ -1165,6 +1165,7 @@
     <Content Include="Views\Home\DiscoverEventsTiles.cshtml" />
     <Content Include="Views\Account\OrganizerAddPartialView.cshtml" />
     <Content Include="Views\OrganizerInfo\Index.cshtml" />
+    <Content Include="Views\OrganizerInfo\OrganiserPresentPartialView.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

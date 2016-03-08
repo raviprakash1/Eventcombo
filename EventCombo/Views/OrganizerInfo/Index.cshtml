@@ -59,13 +59,14 @@
 {
     <p><a href="@Model.Organizer_Linkedin" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Model.Organizer_Linkedin</a></p>
 }
-                        <p><a href="#past_event">Past Event <span class="badge">5</span> </a></p>
+                        <p><a href="#past_event">Past Event <span class="badge">@Model.pasteventcount</span> </a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    @if (Model.presentevtcount > 0)
+    {
     <div class="event_detail_container">
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
@@ -75,26 +76,46 @@
 
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
-        <div class="evnt_details_body2">
-            <div class="col-sm-12 mt20 org_evnt_border no_pad">
-                <div class="col-sm-3 no_pad ">
-                    <img class="img-responsive" src="Images/ev1.jpg" alt="">
-                </div>
-                <a class="org_evnt_list_main" href="#">
-                    <div class="col-sm-9">
-                        <h1 class="org_evnt_list_title">Rang de Basanti Featuring Remix King DJ Akbar Sami</h1>
-                        <p class="org_evnt_list">
-                            81 Hamilton Avenue <br>
-                            Trenton, NJ , 08611 <br>
-                            New York, New York
-                        </p>
+        <div class="evnt_details_body2" >
+            <div class="col-sm-12 no_pad" id="dvpresent">
+                @foreach (var item in Model.presentevent)
+                {
+                    <div class="col-sm-12 mt20 org_evnt_border no_pad">
+                        <div class="col-sm-3 no_pad ">
+                            <img class="img-responsive" src=@item.FirstImage alt="">
+                        </div>
+                        <a class="org_evnt_list_main" href="@item.eventpath">
+                            <div class="col-sm-9">
+                                <h1 class="org_evnt_list_title">@item.Eventtitle</h1>
+                                <p class="org_evnt_list">
+                                    @item.Dateofevent<br />
+                                    <span class="col-sm-6 no_pad">@item.Venue</span>
+                                </p>
+                            </div>
+                        </a>
+                        <div class="clearfix"></div>
                     </div>
-                </a>
-                <div class="clearfix"></div>
+                }
+            </div>
+
+            <div class="col-sm-12 no_pad">
+
+@if (Model.presentevtcount > Model.maxsetcount)
+{
+    <div class=" col-sm-6 no_pad"><input class="btn sal_viw_mor_btn org_info_btn_link" type="button" id="btnviewmore" value="View More" /> </div>
+
+    <div class="col-sm-6 text-right no_pad"><input class="btn sal_viw_mor_btn org_info_btn_link" type="button" id="btnviewless" value="View Less" style="visibility:hidden" /></div>
+}
             </div>
 
         </div>
-    </div>
+
+       
+
+     </div>
+    }
+    @if (Model.pasteventcount > 0)
+    {
     <div class="event_detail_container" id="past_event">
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
@@ -104,54 +125,41 @@
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
         <div class="evnt_details_body2">
-            <div class="col-sm-12 mt20 org_evnt_border no_pad">
-                <div class="col-sm-3 no_pad ">
-                    <img class="img-responsive" src="Images/ev1.jpg" alt="">
-                </div>
-
-                <div class="col-sm-9">
-                    <h1 class="org_evnt_list_title">Rang de Basanti Featuring Remix King DJ Akbar Sami</h1>
-                    <p class="org_evnt_list">
-                        81 Hamilton Avenue <br>
-                        Trenton, NJ , 08611 <br>
-                        New York, New York
-                    </p>
-                </div>
-                <div class="clearfix"></div>
+          <div  class="col-sm-12 no_pad" id="dvpast">
+@foreach (var item in Model.pastevent)
+{
+    <div class="col-sm-12 mt20 org_evnt_border no_pad">
+        <div class="col-sm-3 no_pad ">
+            <img class="img-responsive" src=@item.FirstImage alt="">
+        </div>
+        <a class="org_evnt_list_main" href="@item.eventpath">
+            <div class="col-sm-9">
+                <h1 class="org_evnt_list_title">@item.Eventtitle</h1>
+                <p class="org_evnt_list">
+                    @item.Dateofevent<br />
+                    <span class="col-sm-6 no_pad">@item.Venue</span>
+                </p>
             </div>
-            <div class="col-sm-12 mt20 org_evnt_border no_pad">
-                <div class="col-sm-3 no_pad ">
-                    <img class="img-responsive" src="Images/ev1.jpg" alt="">
-                </div>
+            </a>
+            <div class="clearfix"></div>
+</div>
+}
+          </div>
 
-                <div class="col-sm-9">
-                    <h1 class="org_evnt_list_title">Rang de Basanti Featuring Remix King DJ Akbar Sami</h1>
-                    <p class="org_evnt_list">
-                        81 Hamilton Avenue <br>
-                        Trenton, NJ , 08611 <br>
-                        New York, New York
-                    </p>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="col-sm-12 mt20 org_evnt_border no_pad">
-                <div class="col-sm-3 no_pad ">
-                    <img class="img-responsive" src="Images/ev1.jpg" alt="">
-                </div>
+            <div class="col-sm-12 no_pad">
 
-                <div class="col-sm-9">
-                    <h1 class="org_evnt_list_title">Rang de Basanti Featuring Remix King DJ Akbar Sami</h1>
-                    <p class="org_evnt_list">
-                        81 Hamilton Avenue <br>
-                        Trenton, NJ , 08611 <br>
-                        New York, New York
-                    </p>
-                </div>
-                <div class="clearfix"></div>
+                @if (Model.pasteventcount > Model.maxsetcount)
+                {
+                    <div class=" col-sm-6 no_pad"><input class="btn sal_viw_mor_btn org_info_btn_link" type="button" id="btnviewmorepast" value="View More" /> </div>
+
+                    <div class="col-sm-6 text-right no_pad"><input class="btn sal_viw_mor_btn org_info_btn_link" type="button" id="btnviewlesspast" value="View Less" style="visibility:hidden" /></div>
+                }
             </div>
 
         </div>
+      
     </div>
+    }
     <div class="modal fade" id="contorganizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -194,7 +202,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="schcalender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <input id="hdtotpresentcount" value="@Model.presentevtcount" type="hidden" />
+    <input id="hdtotpastcount" value="@Model.pasteventcount" type="hidden" />
+    <input id="hdpresentcount" value="@Model.maxsetcount" type="hidden" />
+    <input id="hdpastcount" value="@Model.maxsetcount" type="hidden" />
+    <input id="hdmaxsetcount" value="@Model.maxsetcount" type="hidden" />
+       <div class="modal fade" id="schcalender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog " role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -228,6 +241,78 @@
 
 <script>
     $(document).ready(function () {
+        $("#btnviewmorepast").click(function(){
+            debugger;
+            var hdpresentcount=parseInt( $("#hdpastcount").val());
+            var hdtotcount=parseInt($("#hdtotpastcount").val());
+            var maxsetcount=parseInt($("#hdmaxsetcount").val());
+            $("#btnviewlesspast").css('visibility','visible');
+            if(hdpresentcount<hdtotcount)
+            {
+                var orgid=@Model.Orgnizer_Id;
+                var countpresent=$("#hdpastcount").val();
+                countpresent= parseInt(countpresent)+maxsetcount;
+                $("#hdpastcount").val(countpresent);
+                $('#dvpast').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Past');
+            }
+        
+        
+        });
+        $("#btnviewlesspast").click(function(){
+            debugger;
+            var hdpresentcount=parseInt($("#hdpastcount").val());
+            var hdtotcount=parseInt($("#hdtotpastcount").val());
+            var maxsetcount=parseInt($("#hdmaxsetcount").val());
+          
+            var orgid=@Model.Orgnizer_Id;
+            var countpresent=$("#hdpastcount").val();
+            countpresent= parseInt(countpresent)-maxsetcount;
+            $("#hdpastcount").val(countpresent);
+            $('#dvpast').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Past');
+            var hdpresentcount=parseInt($("#hdpastcount").val());
+            if(hdpresentcount==maxsetcount)
+            {
+                $("#btnviewlesspast").css('visibility','hidden');
+           
+            }
+
+        });
+
+        $("#btnviewmore").click(function(){
+           
+            var hdpresentcount=parseInt( $("#hdpresentcount").val());
+            var hdtotcount=parseInt($("#hdtotpresentcount").val());
+            var maxsetcount=parseInt($("#hdmaxsetcount").val());
+            $("#btnviewless").css('visibility','visible');
+            if(hdpresentcount<hdtotcount)
+            {
+                var orgid=@Model.Orgnizer_Id;
+                var countpresent=$("#hdpresentcount").val();
+                countpresent= parseInt(countpresent)+maxsetcount;
+                $("#hdpresentcount").val(countpresent);
+                $('#dvpresent').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Present');
+            }
+
+        });
+        $("#btnviewless").click(function(){
+            debugger;
+            var hdpresentcount=parseInt($("#hdpresentcount").val());
+            var hdtotcount=parseInt($("#hdtotpresentcount").val());
+            var maxsetcount=parseInt($("#hdmaxsetcount").val());
+          
+                var orgid=@Model.Orgnizer_Id;
+                var countpresent=$("#hdpresentcount").val();
+                countpresent= parseInt(countpresent)-maxsetcount;
+                $("#hdpresentcount").val(countpresent);
+                $('#dvpresent').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Present');
+            var hdpresentcount=parseInt($("#hdpresentcount").val());
+            if(hdpresentcount==maxsetcount)
+            {
+                $("#btnviewless").css('visibility','hidden');
+           
+            }
+
+        });
         $('#saveorgaizermsg').click(function () {
 
 
@@ -238,7 +323,7 @@
             var orgid=@Model.Orgnizer_Id;
             var eventid=@Model.Eventid;
             var count = 0;
-      
+
             if (name != '') {
                 $('#id_orgname').removeClass('err-bor');
 
@@ -281,7 +366,7 @@
                 return false;
             }
             else {
-            
+
                 var model = {
                     'email': mail,
                     'name': name,

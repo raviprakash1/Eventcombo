@@ -66,6 +66,13 @@ namespace EventCombo.Models
         public string EditOrg { get; set; }
 
         public long Eventid { get; set; }
+
+        public List<Organiserevent> presentevent { get; set; }
+        public List<Organiserevent> pastevent { get; set; }
+        public int pasteventcount { get; set; }
+        public int presentevtcount { get; set; }
+     
+        public int maxsetcount { get; set; }
     }
     public class ManageEvent
     {
@@ -96,5 +103,15 @@ namespace EventCombo.Models
         public string OrderId { get; set; }
         public string Name { get; set; }
         public string Date { get; set; }
+    }
+
+    public class Organiserevent
+    {
+        public string FirstImage { get; set; }
+        public string Eventtitle { get; set; }
+        public string Dateofevent { get; set; }
+        public DateTime Dateofeventsort { get; set; }
+        public string Venue { get; set; }
+        public string eventpath { get; set; }
     }
 }

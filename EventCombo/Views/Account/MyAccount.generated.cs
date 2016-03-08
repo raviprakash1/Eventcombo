@@ -81,22 +81,22 @@ WriteAttribute("src", Tuple.Create(" src=\"", 319), Tuple.Create("\"", 356)
 WriteLiteral(@"></script>
 
 <style>
-.jFiler-input-dragDrop{width:200px; height:auto; padding:0px; }
-.jFiler-item-thumb-image{ }
-.jFiler-item-thumb-image img{ width:100%; height:150px; }
-.jFiler-item-list{ margin:0px;}
-.jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 150px;}
-.jFiler-item .jFiler-item-container{ margin:0px; padding:0px; }
-.jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
-.jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:226px;  margin-left:0px; }
-.can_btn i{ font-size:25px;}
-.can_btn{ padding:0px;}
-.jFiler-input-text{ margin-bottom:5px;}
-.jFiler-input-icon i{position: relative;
-    top: 35px;}
-.coun_lef{ color:#000; margin-top:5px;}
+    .jFiler-input-dragDrop{width:200px; height:auto; padding:0px; }
+    .jFiler-item-thumb-image{ }
+    .jFiler-item-thumb-image img{ width:100%; height:150px; }
+    .jFiler-item-list{ margin:0px;}
+    .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 150px;}
+    .jFiler-item .jFiler-item-container{ margin:0px; padding:0px; }
+    .jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
+    .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:226px;  margin-left:0px; }
+    .can_btn i{ font-size:25px;}
+    .can_btn{ padding:0px;}
+    .jFiler-input-text{ margin-bottom:5px;}
+    .jFiler-input-icon i{position: relative;
+        top: 35px;}
+    .coun_lef{ color:#000; margin-top:5px;}
 
-   
+
 </style>
 
 ");
@@ -135,7 +135,7 @@ WriteLiteral("></div>\r\n");
 
             
             #line 40 "..\..\Views\Account\MyAccount.cshtml"
- using (Html.BeginForm("MyAccount", "Account", FormMethod.Post, new { role = "form", @class = "form-horizontal",autocomplete="off" }))
+ using (Html.BeginForm("MyAccount", "Account", FormMethod.Post, new { role = "form", @class = "form-horizontal", autocomplete = "off" }))
 {
     
             
@@ -152,7 +152,7 @@ Write(Html.AntiForgeryToken());
             #line 42 "..\..\Views\Account\MyAccount.cshtml"
                             
     if (ViewData["Message"] != null)
-                            {
+    {
 
             
             #line default
@@ -163,11 +163,11 @@ WriteLiteral(" class=\"col-sm-10 mb10 col-xs-12\"");
 
 WriteLiteral(" id=\"divaccsuc\"");
 
-WriteLiteral(" >\r\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"er_suc_main \"");
 
-WriteLiteral(" >\r\n            \r\n                <div");
+WriteLiteral(">\r\n\r\n                <div");
 
 WriteLiteral(" class=\"er_suc_img\"");
 
@@ -212,11 +212,11 @@ WriteLiteral(" class=\"col-sm-10 mb10 col-xs-12\"");
 
 WriteLiteral(" id=\"diverro1acc\"");
 
-WriteLiteral(" >\r\n            <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"er_UI_main\"");
 
-WriteLiteral(" >\r\n\r\n\r\n                <div");
+WriteLiteral(">\r\n\r\n\r\n                <div");
 
 WriteLiteral(" class=\"er_sys_img\"");
 
@@ -245,49 +245,49 @@ WriteLiteral(" id=\"btndiverro1acc\"");
 
 WriteLiteral(" tabindex=\"-1\"");
 
-WriteLiteral(">&#215;</button>\r\n            </div>\r\n\r\n         </div>\r\n");
+WriteLiteral(">&#215;</button>\r\n            </div>\r\n\r\n        </div>\r\n");
 
             
             #line 67 "..\..\Views\Account\MyAccount.cshtml"
-            }
+    }
 
-            
+    
             
             #line default
             #line hidden
             
             #line 75 "..\..\Views\Account\MyAccount.cshtml"
-                   
+           
 
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"col-sm-10 mb10 col-xs-12\"");
 
-WriteLiteral("  id=\"diverroacc\"");
+WriteLiteral(" id=\"diverroacc\"");
 
 WriteLiteral(" style=\"display :none;\"");
 
-WriteLiteral(" >\r\n            <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"er_UI_main\"");
 
-WriteLiteral(">\r\n\r\n                ");
+WriteLiteral(">\r\n\r\n            ");
 
-WriteLiteral("\r\n\r\n                <div");
+WriteLiteral("\r\n\r\n            <div");
 
 WriteLiteral(" class=\"er_UI_img\"");
 
-WriteLiteral("></div>\r\n                <div");
+WriteLiteral("></div>\r\n            <div");
 
 WriteLiteral(" class=\"er_suc\"");
 
 WriteLiteral(" id=\"erraccmsg\"");
 
-WriteLiteral(">  </div>\r\n                <button");
+WriteLiteral(">  </div>\r\n            <button");
 
 WriteLiteral(" class=\"close\"");
 
@@ -297,9 +297,9 @@ WriteLiteral(" id=\"btndiverroacc\"");
 
 WriteLiteral(" tabindex=\"-1\"");
 
-WriteLiteral(">&#215;</button>\r\n                ");
+WriteLiteral(">&#215;</button>\r\n            ");
 
-WriteLiteral("\r\n\r\n\r\n            </div>\r\n\r\n        </div>\r\n");
+WriteLiteral("\r\n\r\n\r\n        </div>\r\n\r\n    </div>\r\n");
 
 WriteLiteral("        <div");
 
@@ -420,12 +420,12 @@ WriteLiteral("                            ");
             
             #line 123 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("month", Enumerable.Range(1, 12).Select(i => new SelectListItem
-                           {
-                               Value = i.ToString(),
-                               Text = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(i),
-                               Selected = i == Model.month
+                       {
+                           Value = i.ToString(),
+                           Text = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(i),
+                           Selected = i == Model.month
 
-                           }), new { @class = "form-control selectpicker" }));
+                       }), new { @class = "form-control selectpicker" }));
 
             
             #line default
@@ -441,12 +441,12 @@ WriteLiteral("                            ");
             
             #line 133 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
-                           {
-                               Value = i.ToString(),
-                               Text = i.ToString(),
-                               Selected = i == Model.day
+                       {
+                           Value = i.ToString(),
+                           Text = i.ToString(),
+                           Selected = i == Model.day
 
-                           }), new { @class = "form-control selectpicker" }));
+                       }), new { @class = "form-control selectpicker" }));
 
             
             #line default
@@ -462,12 +462,12 @@ WriteLiteral("                            ");
             
             #line 142 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
-                           {
-                               Value = i.ToString(),
-                               Text = i.ToString(),
-                               Selected = i == Model.year
+                       {
+                           Value = i.ToString(),
+                           Text = i.ToString(),
+                           Selected = i == Model.year
 
-                           }), new { @class = "form-control selectpicker" }));
+                       }), new { @class = "form-control selectpicker" }));
 
             
             #line default
@@ -1030,12 +1030,12 @@ WriteLiteral(" />\r\n\r\n        </div>\r\n");
             
             #line 310 "..\..\Views\Account\MyAccount.cshtml"
 
-        }
+}
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n\r\n        <input");
+WriteLiteral("\r\n\r\n\r\n<input");
 
 WriteLiteral(" type=\"hidden\"");
 
@@ -1043,491 +1043,442 @@ WriteLiteral(" value=\"0\"");
 
 WriteLiteral(" id=\"imageeror\"");
 
-WriteLiteral(" />\r\n\r\n\r\n\r\n        <script");
+WriteLiteral(" />\r\n\r\n\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n\r\n            $(document).ready(function () {\r\n                $(\'#mgacnt\').cl" +
-"ick();\r\n                $(\'#dvacmang\').addClass(\"active\");\r\n                $(\'#" +
-"dvacmang b\').addClass(\'opened new-opend\');\r\n\r\n                $(\'#dvacmang\').cli" +
-"ck(function (e) {\r\n\r\n                    var $dvEle = $(\'#dvacmang b\');\r\n       " +
-"             var vclassname = $dvEle.attr(\'class\');\r\n                    if ($dv" +
-"Ele.hasClass(\"new-opend\")) {\r\n                        $dvEle.removeClass(\'opened" +
-" new-opend\').addClass(\'closed\');\r\n                    }\r\n                    els" +
-"e {\r\n                        $dvEle.addClass(\'opened new-opend\');\r\n             " +
-"       }\r\n                });\r\n            });\r\n\r\n\r\n            $(document).clic" +
-"k(function () {\r\n                $(\'#diverro1acc\').css(\'display\', \'none\');\r\n    " +
-"            $(\'#diverroacc\').css(\'display\', \'none\');\r\n                $(\'#divacc" +
-"suc\').css(\'display\', \'none\');\r\n                $(\"input\").removeClass(\'err-bor\')" +
-";\r\n                $(\"#month\").removeClass(\'err-bor\');\r\n                $(\"#day\"" +
-").removeClass(\'err-bor\');\r\n                $(\"#year\").removeClass(\'err-bor\');\r\n " +
-"           });\r\n            $(\'#btndivaccsuc\').click(function () {\r\n            " +
-"    $(\'#diverro1acc\').css(\'display\', \'none\');\r\n                $(\'#diverroacc\')." +
-"css(\'display\', \'none\');\r\n                $(\'#divaccsuc\').css(\'display\', \'none\');" +
-"\r\n                $(\"input\").removeClass(\'err-bor\');\r\n                $(\"#month\"" +
-").removeClass(\'err-bor\');\r\n                $(\"#day\").removeClass(\'err-bor\');\r\n  " +
-"              $(\"#year\").removeClass(\'err-bor\');\r\n\r\n            })\r\n            " +
-"$(\'#btndiverro1acc\').click(function () {\r\n                $(\'#diverro1acc\').css(" +
-"\'display\', \'none\');\r\n                $(\'#diverroacc\').css(\'display\', \'none\');\r\n " +
-"               $(\"input\").removeClass(\'err-bor\');\r\n                $(\"#month\").r" +
-"emoveClass(\'err-bor\');\r\n                $(\"#day\").removeClass(\'err-bor\');\r\n     " +
-"           $(\"#year\").removeClass(\'err-bor\');\r\n\r\n            })\r\n            $(\'" +
-"#btndiverroacc\').click(function () {\r\n                $(\"#imageeror\").val(\'0\');\r" +
-"\n                $(\'#diverro1acc\').css(\'display\', \'none\');\r\n                $(\'#" +
-"diverroacc\').css(\'display\', \'none\');\r\n                $(\"input\").removeClass(\'er" +
-"r-bor\');\r\n                $(\"#month\").removeClass(\'err-bor\');\r\n                $" +
-"(\"#day\").removeClass(\'err-bor\');\r\n                $(\"#year\").removeClass(\'err-bo" +
-"r\');\r\n\r\n\r\n            })\r\n\r\n            $(window).load(function () {\r\n          " +
-"      var cntstreet2 = 256 - $(\"#StreeAddress2\").val().length;\r\n                " +
-"var cntstreet2 = 256 - $(\"#StreetAddress1\").val().length;\r\n                var c" +
-"ntcity = 256 - $(\"#City\").val().length;\r\n                var cntstate = 256 - $(" +
-"\"#State\").val().length;\r\n\r\n                $(\'#cntstreetadd2\').html(\"Count left " +
-" \" + cntstreet2);\r\n                $(\'#cntstreetadd1\').html(\"Count left  \" + cnt" +
-"street2);\r\n                $(\'#cntcityadd1\').html(\"Count left  \" + cntcity);\r\n  " +
-"              $(\'#cntcitystate\').html(\"Count left  \" + cntstate);\r\n            }" +
-");\r\n\r\n            $(\"#StreeAddress2\").keyup(function () {\r\n                var c" +
-"s = $(this).val().length;\r\n                var left = 256 - cs;\r\n\r\n             " +
-"   $(\'#cntstreetadd2\').html(\"Count left  \" + left);\r\n            });\r\n          " +
-"  $(\"#StreetAddress1\").keyup(function () {\r\n                var cs = $(this).val" +
-"().length;\r\n                var left = 256 - cs;\r\n\r\n                $(\'#cntstree" +
-"tadd1\').html(\"Count left  \" + left);\r\n            });\r\n            $(\"#City\").ke" +
-"yup(function () {\r\n                var cs = $(this).val().length;\r\n             " +
-"   var left = 256 - cs;\r\n\r\n                $(\'#cntcityadd1\').html(\"Count left  \"" +
-" + left);\r\n            });\r\n            $(\"#State\").keyup(function () {\r\n       " +
-"         var cs = $(this).val().length;\r\n                var left = 256 - cs;\r\n\r" +
-"\n                $(\'#cntcitystate\').html(\"Count left  \" + left);\r\n            })" +
-";\r\n            $(\"#Country\").change(function () {\r\n                $(\"#Zip\").val" +
-"(\"\");\r\n                $(\"#State\").val(\"\");\r\n                $(\"#City\").val(\"\");" +
-"\r\n\r\n\r\n            });\r\n            jQuery(function ($) {\r\n                $(\"#Ma" +
-"inPhone\").mask(\"999-999-9999\");\r\n                $(\"#SecondPhone\").mask(\"999-999" +
-"-9999\");\r\n                $(\"#WorkPhone\").mask(\"999-999-9999\");\r\n\r\n            }" +
-");\r\n            var Model = \"");
+WriteLiteral(">\r\n\r\n    $(document).ready(function () {\r\n        $(\'#mgacnt\').click();\r\n        " +
+"$(\'#dvacmang\').addClass(\"active\");\r\n        $(\'#dvacmang b\').addClass(\'opened ne" +
+"w-opend\');\r\n\r\n        $(\'#dvacmang\').click(function (e) {\r\n\r\n            var $dv" +
+"Ele = $(\'#dvacmang b\');\r\n            var vclassname = $dvEle.attr(\'class\');\r\n   " +
+"         if ($dvEle.hasClass(\"new-opend\")) {\r\n                $dvEle.removeClass" +
+"(\'opened new-opend\').addClass(\'closed\');\r\n            }\r\n            else {\r\n   " +
+"             $dvEle.addClass(\'opened new-opend\');\r\n            }\r\n        });\r\n " +
+"   });\r\n\r\n\r\n    $(document).click(function () {\r\n        $(\'#diverro1acc\').css(\'" +
+"display\', \'none\');\r\n        $(\'#diverroacc\').css(\'display\', \'none\');\r\n        $(" +
+"\'#divaccsuc\').css(\'display\', \'none\');\r\n        $(\"input\").removeClass(\'err-bor\')" +
+";\r\n        $(\"#month\").removeClass(\'err-bor\');\r\n        $(\"#day\").removeClass(\'e" +
+"rr-bor\');\r\n        $(\"#year\").removeClass(\'err-bor\');\r\n    });\r\n    $(\'#btndivac" +
+"csuc\').click(function () {\r\n        $(\'#diverro1acc\').css(\'display\', \'none\');\r\n " +
+"       $(\'#diverroacc\').css(\'display\', \'none\');\r\n        $(\'#divaccsuc\').css(\'di" +
+"splay\', \'none\');\r\n        $(\"input\").removeClass(\'err-bor\');\r\n        $(\"#month\"" +
+").removeClass(\'err-bor\');\r\n        $(\"#day\").removeClass(\'err-bor\');\r\n        $(" +
+"\"#year\").removeClass(\'err-bor\');\r\n\r\n    })\r\n    $(\'#btndiverro1acc\').click(funct" +
+"ion () {\r\n        $(\'#diverro1acc\').css(\'display\', \'none\');\r\n        $(\'#diverro" +
+"acc\').css(\'display\', \'none\');\r\n        $(\"input\").removeClass(\'err-bor\');\r\n     " +
+"   $(\"#month\").removeClass(\'err-bor\');\r\n        $(\"#day\").removeClass(\'err-bor\')" +
+";\r\n        $(\"#year\").removeClass(\'err-bor\');\r\n\r\n    })\r\n    $(\'#btndiverroacc\')" +
+".click(function () {\r\n        $(\"#imageeror\").val(\'0\');\r\n        $(\'#diverro1acc" +
+"\').css(\'display\', \'none\');\r\n        $(\'#diverroacc\').css(\'display\', \'none\');\r\n  " +
+"      $(\"input\").removeClass(\'err-bor\');\r\n        $(\"#month\").removeClass(\'err-b" +
+"or\');\r\n        $(\"#day\").removeClass(\'err-bor\');\r\n        $(\"#year\").removeClass" +
+"(\'err-bor\');\r\n\r\n\r\n    })\r\n\r\n    $(window).load(function () {\r\n        var cntstr" +
+"eet2 = 256 - $(\"#StreeAddress2\").val().length;\r\n        var cntstreet2 = 256 - $" +
+"(\"#StreetAddress1\").val().length;\r\n        var cntcity = 256 - $(\"#City\").val()." +
+"length;\r\n        var cntstate = 256 - $(\"#State\").val().length;\r\n\r\n        $(\'#c" +
+"ntstreetadd2\').html(\"Count left  \" + cntstreet2);\r\n        $(\'#cntstreetadd1\').h" +
+"tml(\"Count left  \" + cntstreet2);\r\n        $(\'#cntcityadd1\').html(\"Count left  \"" +
+" + cntcity);\r\n        $(\'#cntcitystate\').html(\"Count left  \" + cntstate);\r\n    }" +
+");\r\n\r\n    $(\"#StreeAddress2\").keyup(function () {\r\n        var cs = $(this).val(" +
+").length;\r\n        var left = 256 - cs;\r\n\r\n        $(\'#cntstreetadd2\').html(\"Cou" +
+"nt left  \" + left);\r\n    });\r\n    $(\"#StreetAddress1\").keyup(function () {\r\n    " +
+"    var cs = $(this).val().length;\r\n        var left = 256 - cs;\r\n\r\n        $(\'#" +
+"cntstreetadd1\').html(\"Count left  \" + left);\r\n    });\r\n    $(\"#City\").keyup(func" +
+"tion () {\r\n        var cs = $(this).val().length;\r\n        var left = 256 - cs;\r" +
+"\n\r\n        $(\'#cntcityadd1\').html(\"Count left  \" + left);\r\n    });\r\n    $(\"#Stat" +
+"e\").keyup(function () {\r\n        var cs = $(this).val().length;\r\n        var lef" +
+"t = 256 - cs;\r\n\r\n        $(\'#cntcitystate\').html(\"Count left  \" + left);\r\n    })" +
+";\r\n    $(\"#Country\").change(function () {\r\n        $(\"#Zip\").val(\"\");\r\n        $" +
+"(\"#State\").val(\"\");\r\n        $(\"#City\").val(\"\");\r\n\r\n\r\n    });\r\n    jQuery(functi" +
+"on ($) {\r\n        $(\"#MainPhone\").mask(\"999-999-9999\");\r\n        $(\"#SecondPhone" +
+"\").mask(\"999-999-9999\");\r\n        $(\"#WorkPhone\").mask(\"999-999-9999\");\r\n\r\n    }" +
+");\r\n    var Model = \"");
 
             
             #line 429 "..\..\Views\Account\MyAccount.cshtml"
-                    Write(Html.Raw(Model.editsave));
+            Write(Html.Raw(Model.editsave));
 
             
             #line default
             #line hidden
-WriteLiteral("\";\r\n\r\n            var files1 = \'");
+WriteLiteral("\";\r\n\r\n    var files1 = \'");
 
             
             #line 431 "..\..\Views\Account\MyAccount.cshtml"
-                      Write(MvcHtmlString.Create(Json.Encode(ViewData["results"])));
+              Write(MvcHtmlString.Create(Json.Encode(ViewData["results"])));
 
             
             #line default
             #line hidden
 WriteLiteral(@"';
 
-            $(document).ready(function () {
-                
-                //$('#WebsiteURL').bind('keypress', function (event) {
-                //    var regex = new RegExp(""^[a-zA-Z0-9]+$"");
-                //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-                //    if (!regex.test(key)) {
-                //        event.preventDefault();
-                //        return false;
-                //    }
-                //});
+    $(document).ready(function () {
 
-                console.log(Model);
-                var userProfileImage = """);
+        //$('#WebsiteURL').bind('keypress', function (event) {
+        //    var regex = new RegExp(""^[a-zA-Z0-9]+$"");
+        //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        //    if (!regex.test(key)) {
+        //        event.preventDefault();
+        //        return false;
+        //    }
+        //});
+
+        console.log(Model);
+        var userProfileImage = """);
 
             
             #line 445 "..\..\Views\Account\MyAccount.cshtml"
-                                   Write(Html.Raw(Model.UserProfileImage));
+                           Write(Html.Raw(Model.UserProfileImage));
 
             
             #line default
             #line hidden
-WriteLiteral("\";\r\n                var modelcontent = \"");
+WriteLiteral("\";\r\n        var modelcontent = \"");
 
             
             #line 446 "..\..\Views\Account\MyAccount.cshtml"
-                               Write(Html.Raw(Model.contentype));
+                       Write(Html.Raw(Model.contentype));
 
             
             #line default
             #line hidden
-WriteLiteral("\";\r\n                if (Model == \"Save\") {\r\n\r\n                } else {\r\n         " +
-"           var imgdata = userProfileImage + \'¶\' + modelcontent;\r\n               " +
-" }\r\n\r\n                console.log(imgdata);\r\n                //$(\'#WebsiteURL\')." +
-"bind(\'cut copy paste\', function (event) {\r\n                //    event.preventDe" +
-"fault();\r\n                //    return false;\r\n                //});\r\n\r\n\r\n      " +
-"          if (Model == \"Save\") {\r\n                    $(\'#input2\').filer({\r\n    " +
-"                    limit: \'1\',\r\n                        maxSize: \'2\',\r\n        " +
-"                extensions: [\'jpg\', \'jpeg\', \'png\'],\r\n                        cha" +
-"ngeInput: \'<div class=\"jFiler-input-dragDrop\" id=\"drag-drop\"><div class=\"jFiler-" +
-"input-inner\"><div class=\"jFiler-input-icon\"><i class=\"icon-jfi-cloud-up-o\"></i><" +
-"/div><div class=\"jFiler-input-text\"><h3>Drag  photo or normal upload</h3> </div>" +
-"</div></div>\',\r\n                        showThumbs: true,\r\n                     " +
-"   appendTo: \"#drag-drop\",\r\n                        theme: \"dragdropbox\",\r\n     " +
-"                   onChange: false,\r\n                        templates: {\r\n     " +
-"                       box: \'<ul class=\"jFiler-item-list profile-views clearfix\"" +
-"></ul>\',\r\n                            item: \'<li class=\"jFiler-item\">\\\r\n        " +
-"                            <div class=\"\">\\\r\n                                   " +
-"         {{fi-image}}\\\r\n                                             <div class=" +
-"\"jFiler-item-container\">\\\r\n                                <div class=\"jFiler-it" +
-"em-inner\">\\\r\n                                     <div class=\"jFiler-item-assets" +
-" jFiler-row\">\\\r\n                                        <ul class=\"list-inline p" +
-"ull-left\">\\\r\n                                            <li>{{fi-progressBar}}<" +
-"/li>\\\r\n                                        </ul>\\\r\n                         " +
-"           </div>\\\r\n                                    </div>\\\r\n               " +
-"             </div>\\\r\n                                            <span></span>\\" +
-"\r\n                                             <button class=\"btn  jFiler-item-t" +
-"rash-action can_btn\" type=\"button\">\\\r\n                                          " +
-"      <i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n                      " +
-"                       </button>\\\r\n                                       </div>" +
-"\\\r\n                        </li>\',\r\n                            itemAppend: \'<li" +
-" class=\"jFiler-item\">\\\r\n                                    <div class=\"\">\\\r\n   " +
-"                                         {{fi-image}}\\\r\n                        " +
-"                     <button class=\"btn  jFiler-item-trash-action can_btn\" type=" +
-"\"button\">\\\r\n                                                <i class=\"glyphicon " +
-"glyphicon-remove-circle\"></i>\\\r\n                                             </b" +
-"utton>\\\r\n                                       </div>\\\r\n                       " +
-" </li>\',\r\n\r\n\r\n                            progressBar: \'<div class=\"bar\"></div>\'" +
-",\r\n                            itemAppendToEnd: true,\r\n                         " +
-"   removeConfirmation: false,\r\n                            _selectors: {\r\n      " +
-"                          list: \'.jFiler-item-list\',\r\n                          " +
-"      item: \'.jFiler-item\',\r\n                                progressBar: \'.bar\'" +
-",\r\n                                remove: \'.jFiler-item-trash-action\',\r\n       " +
-"                     }\r\n                        },\r\n                        uplo" +
-"adFile: {\r\n                            url: \"/Account/SaveUploadedFile\",\r\n      " +
-"                      data: {},\r\n                            type: \'POST\',\r\n    " +
-"                        enctype: \'multipart/form-data\',\r\n                       " +
-"     beforeSend: function () { },\r\n                            success: function" +
-" (data, el) {\r\n\r\n                                var parent = el.find(\".jFiler-j" +
-"ProgressBar\").parent();\r\n                                el.find(\".jFiler-jProgr" +
-"essBar\").fadeOut(\"slow\", function () {\r\n                                    $(\"<" +
-"div class=\\\"jFiler-item-others text-success\\\"><i class=\\\"icon-jfi-check-circle\\\"" +
-"></i> Success</div>\").hide().appendTo(parent).fadeIn(\"slow\").remove();\r\n        " +
-"                        });\r\n                                var image_count = $" +
-"(\"#image_count\").val();\r\n                                var imagejson = jQuery." +
-"parseJSON(JSON.stringify(data));\r\n                                var imgdata = " +
-"imagejson.image_name + \'¶\' + imagejson.image_type;\r\n                            " +
-"    //$(\"#image_count\").val(el[0].jfiler_id)\r\n                                $(" +
-"\'#userimage\').val(imgdata);\r\n                                //$(\'<input>\').attr" +
-"({\r\n                                //    type: \'hidden\',\r\n                     " +
-"           //    id: \'image_hidden_\' + el[0].jfiler_id,\r\n                       " +
-"         //    name: \'Eventpicture[\' + imgdata + \']\',\r\n                         " +
-"       //    value: imgdata\r\n                                //}).appendTo(\'form" +
-"\');\r\n\r\n                                $(\'#ImagePresent\').val(\"Yes\");\r\n\r\n       " +
-"                         if ($.trim(image_count) == \'\') {\r\n                     " +
-"               $(\"#image_count\").val(\'1\');\r\n                                } el" +
-"se {\r\n                                    image_count = parseInt(image_count) + " +
-"1;\r\n                                    $(\"#image_count\").val(image_count);\r\n   " +
-"                             }\r\n\r\n                            },\r\n              " +
-"              error: function (el) {\r\n\r\n                                //var pa" +
-"rent = el.find(\".jFiler-jProgressBar\").parent();\r\n                              " +
-"  //el.find(\".jFiler-jProgressBar\").fadeOut(\"slow\", function(){\r\n               " +
-"                 //    $(\"<div class=\\\"jFiler-item-others text-error\\\"><i class=" +
-"\\\"icon-jfi-minus-circle\\\"></i> Error</div>\").hide().appendTo(parent).fadeIn(\"slo" +
-"w\");\r\n                                //});\r\n                            },\r\n   " +
-"                         statusCode: {},\r\n                            onProgress" +
-": function () { },\r\n                        },\r\n                        dragDrop" +
-": {\r\n                            dragEnter: function () { },\r\n                  " +
-"          dragLeave: function () { },\r\n                            drop: functio" +
-"n () { },\r\n                        },\r\n                        addMore: false,\r\n" +
-"                        clipBoardPaste: true,\r\n                        excludeNa" +
-"me: null,\r\n                        beforeShow: function () { $(\".jFiler-input-in" +
-"ner\").hide(); return true },\r\n                        onSelect: function () { $(" +
-"\".jFiler-input-inner\").hide(); },\r\n                        afterShow: function (" +
-") { $(\".jFiler-input-inner\").hide(); $(\".fi-progressBar\").hide(); },\r\n          " +
-"              onRemove: function (el) {\r\n                            var image_c" +
-"ount = $(\"#image_count\").val();\r\n                            image_count = parse" +
-"Int(image_count) - 1;\r\n                            var id_div = el[0].jfiler_id;" +
-"\r\n                            var hidden_image_element = \'image_hidden_\' + id_di" +
-"v;\r\n\r\n                            $(\'#userimage\').val(\'\');\r\n                    " +
-"        $(\'#input2\').click(function (e) {\r\n                                e.pre" +
-"ventDefault();\r\n\r\n                            })\r\n                            $(" +
-"\'#ImagePresent\').val(\"NO\");\r\n                        },\r\n                       " +
-" onEmpty: function (el) {\r\n                            if ($(\"#imageeror\").val()" +
-" == 0) {\r\n                                if ($(\".jFiler-items\").length == 1) { " +
-"setTimeout(function () { $(\".jFiler-input-inner\").css(\'display\', \'block\'); $(\'#i" +
-"nput2\').unbind(\'click\'); }, 200); };\r\n                            }\r\n           " +
-"             },\r\n                        captions: {\r\n                          " +
-"  button: \"Choose Files\",\r\n                            feedback: \"Choose files T" +
-"o Upload\",\r\n                            feedback2: \"files were chosen\",\r\n       " +
-"                     drop: \"Drop file here to Upload\",\r\n                        " +
-"    removeConfirmation: \"Are you sure you want to remove this file?\",\r\n         " +
-"                   errors: {\r\n                                filesLimit: ajaxse" +
-"tup(\'MyAccount\', \'MyAccountImageCountValidationUI\'),\r\n                          " +
-"      filesType: ajaxsetup(\'MyAccount\', \'MyAccountImagestypeValidationUI\'),\r\n   " +
-"                             filesSize: ajaxsetup(\'MyAccount\', \'MyAccountImagesi" +
-"zeValidationUI\'),\r\n                                filesSizeAll: ajaxsetup(\'MyAc" +
-"count\', \'MyAccountImagesizeValidationUI\')\r\n                            }\r\n      " +
-"                  }\r\n\r\n                    });\r\n                }\r\n             " +
-"   else if (Model == \"Edit\") {\r\n                    $(\"#image_count\").val(\"1\");\r" +
-"\n                    ");
+WriteLiteral("\";\r\n        if (Model == \"Save\") {\r\n\r\n        } else {\r\n            var imgdata =" +
+" userProfileImage + \'¶\' + modelcontent;\r\n        }\r\n\r\n        console.log(imgdat" +
+"a);\r\n        //$(\'#WebsiteURL\').bind(\'cut copy paste\', function (event) {\r\n     " +
+"   //    event.preventDefault();\r\n        //    return false;\r\n        //});\r\n\r\n" +
+"\r\n        if (Model == \"Save\") {\r\n            $(\'#input2\').filer({\r\n            " +
+"    limit: \'1\',\r\n                maxSize: \'2\',\r\n                extensions: [\'jp" +
+"g\', \'jpeg\', \'png\'],\r\n                changeInput: \'<div class=\"jFiler-input-drag" +
+"Drop\" id=\"drag-drop\"><div class=\"jFiler-input-inner\"><div class=\"jFiler-input-ic" +
+"on\"><i class=\"icon-jfi-cloud-up-o\"></i></div><div class=\"jFiler-input-text\"><h3>" +
+"Drag  photo or normal upload</h3> </div></div></div>\',\r\n                showThum" +
+"bs: true,\r\n                appendTo: \"#drag-drop\",\r\n                theme: \"drag" +
+"dropbox\",\r\n                onChange: false,\r\n                templates: {\r\n     " +
+"               box: \'<ul class=\"jFiler-item-list profile-views clearfix\"></ul>\'," +
+"\r\n                    item: \'<li class=\"jFiler-item\">\\\r\n                        " +
+"            <div class=\"\">\\\r\n                                            {{fi-im" +
+"age}}\\\r\n                                             <div class=\"jFiler-item-con" +
+"tainer\">\\\r\n                                <div class=\"jFiler-item-inner\">\\\r\n   " +
+"                                  <div class=\"jFiler-item-assets jFiler-row\">\\\r\n" +
+"                                        <ul class=\"list-inline pull-left\">\\\r\n   " +
+"                                         <li>{{fi-progressBar}}</li>\\\r\n         " +
+"                               </ul>\\\r\n                                    </div" +
+">\\\r\n                                    </div>\\\r\n                            </d" +
+"iv>\\\r\n                                            <span></span>\\\r\n              " +
+"                               <button class=\"btn  jFiler-item-trash-action can_" +
+"btn\" type=\"button\">\\\r\n                                                <i class=\"" +
+"glyphicon glyphicon-remove-circle\"></i>\\\r\n                                      " +
+"       </button>\\\r\n                                       </div>\\\r\n             " +
+"           </li>\',\r\n                    itemAppend: \'<li class=\"jFiler-item\">\\\r\n" +
+"                                    <div class=\"\">\\\r\n                           " +
+"                 {{fi-image}}\\\r\n                                             <bu" +
+"tton class=\"btn  jFiler-item-trash-action can_btn\" type=\"button\">\\\r\n            " +
+"                                    <i class=\"glyphicon glyphicon-remove-circle\"" +
+"></i>\\\r\n                                             </button>\\\r\n               " +
+"                        </div>\\\r\n                        </li>\',\r\n\r\n\r\n          " +
+"          progressBar: \'<div class=\"bar\"></div>\',\r\n                    itemAppen" +
+"dToEnd: true,\r\n                    removeConfirmation: false,\r\n                 " +
+"   _selectors: {\r\n                        list: \'.jFiler-item-list\',\r\n          " +
+"              item: \'.jFiler-item\',\r\n                        progressBar: \'.bar\'" +
+",\r\n                        remove: \'.jFiler-item-trash-action\',\r\n               " +
+"     }\r\n                },\r\n                uploadFile: {\r\n                    u" +
+"rl: \"/Account/SaveUploadedFile\",\r\n                    data: {},\r\n               " +
+"     type: \'POST\',\r\n                    enctype: \'multipart/form-data\',\r\n       " +
+"             beforeSend: function () { },\r\n                    success: function" +
+" (data, el) {\r\n\r\n                        var parent = el.find(\".jFiler-jProgress" +
+"Bar\").parent();\r\n                        el.find(\".jFiler-jProgressBar\").fadeOut" +
+"(\"slow\", function () {\r\n                            $(\"<div class=\\\"jFiler-item-" +
+"others text-success\\\"><i class=\\\"icon-jfi-check-circle\\\"></i> Success</div>\").hi" +
+"de().appendTo(parent).fadeIn(\"slow\").remove();\r\n                        });\r\n   " +
+"                     var image_count = $(\"#image_count\").val();\r\n               " +
+"         var imagejson = jQuery.parseJSON(JSON.stringify(data));\r\n              " +
+"          var imgdata = imagejson.image_name + \'¶\' + imagejson.image_type;\r\n    " +
+"                    //$(\"#image_count\").val(el[0].jfiler_id)\r\n                  " +
+"      $(\'#userimage\').val(imgdata);\r\n                        //$(\'<input>\').attr" +
+"({\r\n                        //    type: \'hidden\',\r\n                        //   " +
+" id: \'image_hidden_\' + el[0].jfiler_id,\r\n                        //    name: \'Ev" +
+"entpicture[\' + imgdata + \']\',\r\n                        //    value: imgdata\r\n   " +
+"                     //}).appendTo(\'form\');\r\n\r\n                        $(\'#Image" +
+"Present\').val(\"Yes\");\r\n\r\n                        if ($.trim(image_count) == \'\') " +
+"{\r\n                            $(\"#image_count\").val(\'1\');\r\n                    " +
+"    } else {\r\n                            image_count = parseInt(image_count) + " +
+"1;\r\n                            $(\"#image_count\").val(image_count);\r\n           " +
+"             }\r\n\r\n                    },\r\n                    error: function (e" +
+"l) {\r\n\r\n                        //var parent = el.find(\".jFiler-jProgressBar\").p" +
+"arent();\r\n                        //el.find(\".jFiler-jProgressBar\").fadeOut(\"slo" +
+"w\", function(){\r\n                        //    $(\"<div class=\\\"jFiler-item-other" +
+"s text-error\\\"><i class=\\\"icon-jfi-minus-circle\\\"></i> Error</div>\").hide().appe" +
+"ndTo(parent).fadeIn(\"slow\");\r\n                        //});\r\n                   " +
+" },\r\n                    statusCode: {},\r\n                    onProgress: functi" +
+"on () { },\r\n                },\r\n                dragDrop: {\r\n                   " +
+" dragEnter: function () { },\r\n                    dragLeave: function () { },\r\n " +
+"                   drop: function () { },\r\n                },\r\n                a" +
+"ddMore: false,\r\n                clipBoardPaste: true,\r\n                excludeNa" +
+"me: null,\r\n                beforeShow: function () { $(\".jFiler-input-inner\").hi" +
+"de(); return true },\r\n                onSelect: function () { $(\".jFiler-input-i" +
+"nner\").hide(); },\r\n                afterShow: function () { $(\".jFiler-input-inn" +
+"er\").hide(); $(\".fi-progressBar\").hide(); },\r\n                onRemove: function" +
+" (el) {\r\n                    var image_count = $(\"#image_count\").val();\r\n       " +
+"             image_count = parseInt(image_count) - 1;\r\n                    var i" +
+"d_div = el[0].jfiler_id;\r\n                    var hidden_image_element = \'image_" +
+"hidden_\' + id_div;\r\n\r\n                    $(\'#userimage\').val(\'\');\r\n            " +
+"        $(\'#input2\').click(function (e) {\r\n                        e.preventDefa" +
+"ult();\r\n\r\n                    })\r\n                    $(\'#ImagePresent\').val(\"NO" +
+"\");\r\n                },\r\n                onEmpty: function (el) {\r\n             " +
+"       if ($(\"#imageeror\").val() == 0) {\r\n                        if ($(\".jFiler" +
+"-items\").length == 1) { setTimeout(function () { $(\".jFiler-input-inner\").css(\'d" +
+"isplay\', \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); };\r\n                  " +
+"  }\r\n                },\r\n                captions: {\r\n                    button" +
+": \"Choose Files\",\r\n                    feedback: \"Choose files To Upload\",\r\n    " +
+"                feedback2: \"files were chosen\",\r\n                    drop: \"Drop" +
+" file here to Upload\",\r\n                    removeConfirmation: \"Are you sure yo" +
+"u want to remove this file?\",\r\n                    errors: {\r\n                  " +
+"      filesLimit: ajaxsetup(\'MyAccount\', \'MyAccountImageCountValidationUI\'),\r\n  " +
+"                      filesType: ajaxsetup(\'MyAccount\', \'MyAccountImagestypeVali" +
+"dationUI\'),\r\n                        filesSize: ajaxsetup(\'MyAccount\', \'MyAccoun" +
+"tImagesizeValidationUI\'),\r\n                        filesSizeAll: ajaxsetup(\'MyAc" +
+"count\', \'MyAccountImagesizeValidationUI\')\r\n                    }\r\n              " +
+"  }\r\n\r\n            });\r\n        }\r\n        else if (Model == \"Edit\") {\r\n        " +
+"    $(\"#image_count\").val(\"1\");\r\n            ");
 
-WriteLiteral("\r\n\r\n                    $(\'#userimage\').val(imgdata);\r\n                    $(\'#in" +
-"put2\').filer({\r\n                        limit: \'1\',\r\n                        max" +
-"Size: \'2\',\r\n                        extensions: [\'jpg\', \'jpeg\', \'png\'],\r\n       " +
-"                 changeInput: \'<div class=\"jFiler-input-dragDrop\" id=\"drag-drop\"" +
-"><div class=\"jFiler-input-inner\"><div class=\"jFiler-input-icon\"><i class=\"icon-j" +
-"fi-cloud-up-o\"></i></div><div class=\"jFiler-input-text\"><h3>Drag  photo or norma" +
-"l upload</h3> </div></div></div>\',\r\n                        showThumbs: true,\r\n " +
-"                       appendTo: \"#drag-drop\",\r\n                        theme: \"" +
-"dragdropbox\",\r\n                        onChange: false,\r\n                       " +
-" templates: {\r\n                            box: \'<ul class=\"jFiler-item-list pro" +
-"file-views clearfix\"></ul>\',\r\n                            item: \'<li class=\"jFil" +
+WriteLiteral("\r\n\r\n            $(\'#userimage\').val(imgdata);\r\n            $(\'#input2\').filer({\r\n" +
+"                limit: \'1\',\r\n                maxSize: \'2\',\r\n                exte" +
+"nsions: [\'jpg\', \'jpeg\', \'png\'],\r\n                changeInput: \'<div class=\"jFile" +
+"r-input-dragDrop\" id=\"drag-drop\"><div class=\"jFiler-input-inner\"><div class=\"jFi" +
+"ler-input-icon\"><i class=\"icon-jfi-cloud-up-o\"></i></div><div class=\"jFiler-inpu" +
+"t-text\"><h3>Drag  photo or normal upload</h3> </div></div></div>\',\r\n            " +
+"    showThumbs: true,\r\n                appendTo: \"#drag-drop\",\r\n                " +
+"theme: \"dragdropbox\",\r\n                onChange: false,\r\n                templat" +
+"es: {\r\n                    box: \'<ul class=\"jFiler-item-list profile-views clear" +
+"fix\"></ul>\',\r\n                    item: \'<li class=\"jFiler-item\">\\\r\n            " +
+"                        <div class=\"\">\\\r\n                                       " +
+"     {{fi-image}}\\\r\n                                             <div class=\"jFi" +
+"ler-item-container\">\\\r\n                                <div class=\"jFiler-item-i" +
+"nner\">\\\r\n                                     <div class=\"jFiler-item-assets jFi" +
+"ler-row\">\\\r\n                                        <ul class=\"list-inline pull-" +
+"left\">\\\r\n                                            <li>{{fi-progressBar}}</li>" +
+"\\\r\n                                        </ul>\\\r\n                             " +
+"       </div>\\\r\n                                    </div>\\\r\n                   " +
+"         </div>\\\r\n                                            <span></span>\\\r\n  " +
+"                                           <button class=\"btn  jFiler-item-trash" +
+"-action can_btn\" type=\"button\">\\\r\n                                              " +
+"  <i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n                          " +
+"                   </button>\\\r\n                                       </div>\\\r\n " +
+"                       </li>\',\r\n                    itemAppend: \'<li class=\"jFil" +
 "er-item\">\\\r\n                                    <div class=\"\">\\\r\n               " +
 "                             {{fi-image}}\\\r\n                                    " +
-"         <div class=\"jFiler-item-container\">\\\r\n                                <" +
-"div class=\"jFiler-item-inner\">\\\r\n                                     <div class" +
-"=\"jFiler-item-assets jFiler-row\">\\\r\n                                        <ul " +
-"class=\"list-inline pull-left\">\\\r\n                                            <li" +
-">{{fi-progressBar}}</li>\\\r\n                                        </ul>\\\r\n     " +
-"                               </div>\\\r\n                                    </di" +
-"v>\\\r\n                            </div>\\\r\n                                      " +
-"      <span></span>\\\r\n                                             <button class" +
-"=\"btn  jFiler-item-trash-action can_btn\" type=\"button\">\\\r\n                      " +
-"                          <i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n  " +
-"                                           </button>\\\r\n                         " +
-"              </div>\\\r\n                        </li>\',\r\n                        " +
-"    itemAppend: \'<li class=\"jFiler-item\">\\\r\n                                    " +
-"<div class=\"\">\\\r\n                                            {{fi-image}}\\\r\n    " +
-"                                         <button class=\"btn  jFiler-item-trash-a" +
-"ction can_btn\" type=\"button\">\\\r\n                                                " +
-"<i class=\"glyphicon glyphicon-remove-circle\"></i>\\\r\n                            " +
-"                 </button>\\\r\n                                       </div>\\\r\n   " +
-"                     </li>\',\r\n\r\n\r\n                            progressBar: \'<div" +
-" class=\"bar\"></div>\',\r\n                            itemAppendToEnd: false,\r\n    " +
-"                        removeConfirmation: false,\r\n                            " +
-"_selectors: {\r\n                                list: \'.jFiler-item-list\',\r\n     " +
-"                           item: \'.jFiler-item\',\r\n                              " +
-"  progressBar: \'.bar\',\r\n                                remove: \'.jFiler-item-tr" +
-"ash-action\',\r\n                            }\r\n                        },\r\n       " +
-"                 uploadFile: {\r\n                            url: \"/Account/SaveU" +
-"ploadedFile\",\r\n                            data: {},\r\n                          " +
-"  type: \'POST\',\r\n                            enctype: \'multipart/form-data\',\r\n  " +
-"                          beforeSend: function () { },\r\n                        " +
-"    success: function (data, el) {\r\n\r\n                                var parent" +
-" = el.find(\".jFiler-jProgressBar\").parent();\r\n                                el" +
-".find(\".jFiler-jProgressBar\").fadeOut(\"slow\", function () {\r\n                   " +
-"                 $(\"<div class=\\\"jFiler-item-others text-success\\\"><i class=\\\"ic" +
-"on-jfi-check-circle\\\"></i> Success</div>\").hide().appendTo(parent).fadeIn(\"slow\"" +
-").remove();\r\n                                });\r\n                              " +
-"  var image_count = $(\"#image_count\").val();\r\n                                va" +
-"r imagejson = jQuery.parseJSON(JSON.stringify(data));\r\n                         " +
-"       var imgdata = imagejson.image_name + \'¶\' + imagejson.image_type;\r\n       " +
-"                         $(\"#image_count\").val(el[0].jfiler_id)\r\n               " +
-"                 $(\'#userimage\').val(imgdata);\r\n\r\n                              " +
-"  $(\'#ImagePresent\').val(\"Yes\");\r\n\r\n                                if ($.trim(i" +
-"mage_count) == \'\') {\r\n                                    $(\"#image_count\").val(" +
-"\'1\');\r\n                                } else {\r\n                               " +
-"     image_count = parseInt(image_count) + 1;\r\n                                 " +
-"   $(\"#image_count\").val(image_count);\r\n                                }\r\n\r\n\r\n " +
-"                           },\r\n                            error: function (el) " +
-"{\r\n                                //var parent = el.find(\".jFiler-jProgressBar\"" +
-").parent();\r\n                                //el.find(\".jFiler-jProgressBar\").f" +
-"adeOut(\"slow\", function(){\r\n                                //    $(\"<div class=" +
-"\\\"jFiler-item-others text-error\\\"><i class=\\\"icon-jfi-minus-circle\\\"></i> Error<" +
-"/div>\").hide().appendTo(parent).fadeIn(\"slow\");\r\n                               " +
-" //});\r\n                            },\r\n                            statusCode: " +
-"{},\r\n                            onProgress: function () { },\r\n                 " +
-"       },\r\n                        dragDrop: {\r\n                            drag" +
-"Enter: function () { },\r\n                            dragLeave: function () { }," +
-"\r\n                            drop: function () { },\r\n                        }," +
-"\r\n                        addMore: false,\r\n                        clipBoardPast" +
-"e: true,\r\n                        excludeName: null,\r\n                        be" +
-"foreShow: function () { $(\".jFiler-input-inner\").hide(); return true },\r\n       " +
-"                 onSelect: function () { $(\".jFiler-input-inner\").hide(); },\r\n  " +
-"                      afterShow: function () { $(\".jFiler-input-inner\").hide(); " +
-"},\r\n                        onRemove: function (el) {\r\n                         " +
-"   var image_count = $(\"#image_count\").val();\r\n                            image" +
-"_count = parseInt(image_count) - 1;\r\n                            var id_div = el" +
-"[0].jfiler_id;\r\n                            var hidden_image_element = \'image_hi" +
-"dden_\' + id_div;\r\n                            $(\'#userimage\').val(\'\');\r\n        " +
-"                    $(\"#\" + hidden_image_element).remove();\r\n                   " +
-"         $(\'#input2\').click(function (e) {\r\n                                e.pr" +
-"eventDefault();\r\n\r\n                            })\r\n                            $" +
-"(\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n                        },\r\n                  " +
-"      onEmpty: function (el) {\r\n                            console.log(el);\r\n\r\n" +
-"                            // alert($(\"#drag-drop div\").hasClass(\"jFiler-items\"" +
-"))\r\n                            if ($(\"#imageeror\").val() == 0) {\r\n             " +
-"                   if ($(\".jFiler-items\").length == 1) { setTimeout(function () " +
-"{ $(\".jFiler-input-inner\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'click\')" +
-"; }, 200); };\r\n                            }\r\n                        },\r\n      " +
-"                  captions: {\r\n                            button: \"Choose Files" +
-"\",\r\n                            feedback: \"Choose files To Upload\",\r\n           " +
-"                 feedback2: \"files were chosen\",\r\n                            dr" +
-"op: \"Drop file here to Upload\",\r\n                            removeConfirmation:" +
-" \"Are you sure you want to remove this file?\",\r\n                            erro" +
-"rs: {\r\n\r\n\r\n                                filesLimit: ajaxsetup(\'MyAccount\', \'M" +
-"yAccountImageCountValidationUI\'),\r\n                                filesType: aj" +
-"axsetup(\'MyAccount\', \'MyAccountImagestypeValidationUI\'),\r\n                      " +
-"          filesSize: ajaxsetup(\'MyAccount\', \'MyAccountImagesizeValidationUI\'),\r\n" +
-"                                filesSizeAll: ajaxsetup(\'MyAccount\', \'MyAccountI" +
-"magesizeValidationUI\')\r\n                            }\r\n                        }" +
-",\r\n                        files: [{\r\n                            \"type\": \"");
+"         <button class=\"btn  jFiler-item-trash-action can_btn\" type=\"button\">\\\r\n" +
+"                                                <i class=\"glyphicon glyphicon-re" +
+"move-circle\"></i>\\\r\n                                             </button>\\\r\n   " +
+"                                    </div>\\\r\n                        </li>\',\r\n\r\n" +
+"\r\n                    progressBar: \'<div class=\"bar\"></div>\',\r\n                 " +
+"   itemAppendToEnd: false,\r\n                    removeConfirmation: false,\r\n    " +
+"                _selectors: {\r\n                        list: \'.jFiler-item-list\'" +
+",\r\n                        item: \'.jFiler-item\',\r\n                        progre" +
+"ssBar: \'.bar\',\r\n                        remove: \'.jFiler-item-trash-action\',\r\n  " +
+"                  }\r\n                },\r\n                uploadFile: {\r\n        " +
+"            url: \"/Account/SaveUploadedFile\",\r\n                    data: {},\r\n  " +
+"                  type: \'POST\',\r\n                    enctype: \'multipart/form-da" +
+"ta\',\r\n                    beforeSend: function () { },\r\n                    succ" +
+"ess: function (data, el) {\r\n\r\n                        var parent = el.find(\".jFi" +
+"ler-jProgressBar\").parent();\r\n                        el.find(\".jFiler-jProgress" +
+"Bar\").fadeOut(\"slow\", function () {\r\n                            $(\"<div class=\\" +
+"\"jFiler-item-others text-success\\\"><i class=\\\"icon-jfi-check-circle\\\"></i> Succe" +
+"ss</div>\").hide().appendTo(parent).fadeIn(\"slow\").remove();\r\n                   " +
+"     });\r\n                        var image_count = $(\"#image_count\").val();\r\n  " +
+"                      var imagejson = jQuery.parseJSON(JSON.stringify(data));\r\n " +
+"                       var imgdata = imagejson.image_name + \'¶\' + imagejson.imag" +
+"e_type;\r\n                        $(\"#image_count\").val(el[0].jfiler_id)\r\n       " +
+"                 $(\'#userimage\').val(imgdata);\r\n\r\n                        $(\'#Im" +
+"agePresent\').val(\"Yes\");\r\n\r\n                        if ($.trim(image_count) == \'" +
+"\') {\r\n                            $(\"#image_count\").val(\'1\');\r\n                 " +
+"       } else {\r\n                            image_count = parseInt(image_count)" +
+" + 1;\r\n                            $(\"#image_count\").val(image_count);\r\n        " +
+"                }\r\n\r\n\r\n                    },\r\n                    error: functi" +
+"on (el) {\r\n                        //var parent = el.find(\".jFiler-jProgressBar\"" +
+").parent();\r\n                        //el.find(\".jFiler-jProgressBar\").fadeOut(\"" +
+"slow\", function(){\r\n                        //    $(\"<div class=\\\"jFiler-item-ot" +
+"hers text-error\\\"><i class=\\\"icon-jfi-minus-circle\\\"></i> Error</div>\").hide().a" +
+"ppendTo(parent).fadeIn(\"slow\");\r\n                        //});\r\n                " +
+"    },\r\n                    statusCode: {},\r\n                    onProgress: fun" +
+"ction () { },\r\n                },\r\n                dragDrop: {\r\n                " +
+"    dragEnter: function () { },\r\n                    dragLeave: function () { }," +
+"\r\n                    drop: function () { },\r\n                },\r\n              " +
+"  addMore: false,\r\n                clipBoardPaste: true,\r\n                exclud" +
+"eName: null,\r\n                beforeShow: function () { $(\".jFiler-input-inner\")" +
+".hide(); return true },\r\n                onSelect: function () { $(\".jFiler-inpu" +
+"t-inner\").hide(); },\r\n                afterShow: function () { $(\".jFiler-input-" +
+"inner\").hide(); },\r\n                onRemove: function (el) {\r\n                 " +
+"   var image_count = $(\"#image_count\").val();\r\n                    image_count =" +
+" parseInt(image_count) - 1;\r\n                    var id_div = el[0].jfiler_id;\r\n" +
+"                    var hidden_image_element = \'image_hidden_\' + id_div;\r\n      " +
+"              $(\'#userimage\').val(\'\');\r\n                    $(\"#\" + hidden_image" +
+"_element).remove();\r\n                    $(\'#input2\').click(function (e) {\r\n    " +
+"                    e.preventDefault();\r\n\r\n                    })\r\n             " +
+"       $(\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n                },\r\n                on" +
+"Empty: function (el) {\r\n                    console.log(el);\r\n\r\n                " +
+"    // alert($(\"#drag-drop div\").hasClass(\"jFiler-items\"))\r\n                    " +
+"if ($(\"#imageeror\").val() == 0) {\r\n                        if ($(\".jFiler-items\"" +
+").length == 1) { setTimeout(function () { $(\".jFiler-input-inner\").css(\'display\'" +
+", \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); };\r\n                    }\r\n  " +
+"              },\r\n                captions: {\r\n                    button: \"Choo" +
+"se Files\",\r\n                    feedback: \"Choose files To Upload\",\r\n           " +
+"         feedback2: \"files were chosen\",\r\n                    drop: \"Drop file h" +
+"ere to Upload\",\r\n                    removeConfirmation: \"Are you sure you want " +
+"to remove this file?\",\r\n                    errors: {\r\n\r\n\r\n                     " +
+"   filesLimit: ajaxsetup(\'MyAccount\', \'MyAccountImageCountValidationUI\'),\r\n     " +
+"                   filesType: ajaxsetup(\'MyAccount\', \'MyAccountImagestypeValidat" +
+"ionUI\'),\r\n                        filesSize: ajaxsetup(\'MyAccount\', \'MyAccountIm" +
+"agesizeValidationUI\'),\r\n                        filesSizeAll: ajaxsetup(\'MyAccou" +
+"nt\', \'MyAccountImagesizeValidationUI\')\r\n                    }\r\n                }" +
+",\r\n                files: [{\r\n                    \"type\": \"");
 
             
             #line 741 "..\..\Views\Account\MyAccount.cshtml"
-                                Write(Model.contentype);
+                        Write(Model.contentype);
 
             
             #line default
             #line hidden
-WriteLiteral("\",\r\n                            \"name\": \"");
+WriteLiteral("\",\r\n                    \"name\": \"");
 
             
             #line 742 "..\..\Views\Account\MyAccount.cshtml"
-                                Write(Model.UserProfileImage);
+                        Write(Model.UserProfileImage);
 
             
             #line default
             #line hidden
-WriteLiteral("\",\r\n                            \"file\": \"");
+WriteLiteral("\",\r\n                    \"file\": \"");
 
             
             #line 743 "..\..\Views\Account\MyAccount.cshtml"
-                                Write(Model.ImagePath);
+                        Write(Model.ImagePath);
 
             
             #line default
             #line hidden
-WriteLiteral("\"\r\n                        }]\r\n\r\n                    });\r\n                }\r\n\r\n  " +
-"          });\r\n\r\n\r\n        </script>\r\n        <script");
+WriteLiteral("\"\r\n                }]\r\n\r\n            });\r\n        }\r\n\r\n    });\r\n\r\n\r\n</script>\r\n<s" +
+"cript");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n            function isleap(leapyear) {\r\n                var yr = leapyear;\r\n " +
-"               if ((parseInt(yr) % 4) == 0) {\r\n                    if (parseInt(" +
-"yr) % 100 == 0) {\r\n                        if (parseInt(yr) % 400 != 0) {\r\n\r\n   " +
-"                         return \"false\";\r\n                        }\r\n           " +
-"             if (parseInt(yr) % 400 == 0) {\r\n\r\n                            retur" +
-"n \"true\";\r\n                        }\r\n                    }\r\n                   " +
-" if (parseInt(yr) % 100 != 0) {\r\n\r\n                        return \"true\";\r\n     " +
-"               }\r\n                }\r\n                if ((parseInt(yr) % 4) != 0" +
-") {\r\n\r\n                    return \"false\";\r\n                }\r\n            }\r\n  " +
-"          $(\'#btnsave\').click(function () {\r\n                debugger;\r\n        " +
-"        var msg = \"\";\r\n                var firstnmae = $(\"#Firstname\").val();\r\n " +
-"               var emailcount = 0, pwdcount = 0;;\r\n                var lastname " +
-"= $(\"#Lastname\").val();\r\n                var ConfirmPassword = $(\"#ConfirmPasswo" +
-"rd\").val();\r\n\r\n                var Email = $(\"#Email\").val();\r\n                v" +
-"ar NewPassword = $(\"#NewPassword\").val();\r\n                var ConfirmEmail = $(" +
-"\"#ConfirmEmail\").val();\r\n                var Websiteurl = $(\"#WebsiteURL\").val()" +
-";\r\n                var Password = $(\"#Password\").val();\r\n                var Con" +
-"firmPassword = $(\"#ConfirmPassword\").val();\r\n\r\n                var NewPassword =" +
-" $(\"#NewPassword\").val();\r\n                var month = $(\"#month\").val();\r\n\r\n   " +
-"             var year = $(\"#year\").val();\r\n                var day = $(\"#day\").v" +
-"al();\r\n                var ily = returnleap(year);\r\n\r\n                if (ily ==" +
-" true) {\r\n\r\n                    if (day > 29 && month == 2) {\r\n                 " +
+WriteLiteral(">\r\n    function isleap(leapyear) {\r\n        var yr = leapyear;\r\n        if ((pars" +
+"eInt(yr) % 4) == 0) {\r\n            if (parseInt(yr) % 100 == 0) {\r\n             " +
+"   if (parseInt(yr) % 400 != 0) {\r\n\r\n                    return \"false\";\r\n      " +
+"          }\r\n                if (parseInt(yr) % 400 == 0) {\r\n\r\n                 " +
+"   return \"true\";\r\n                }\r\n            }\r\n            if (parseInt(yr" +
+") % 100 != 0) {\r\n\r\n                return \"true\";\r\n            }\r\n        }\r\n   " +
+"     if ((parseInt(yr) % 4) != 0) {\r\n\r\n            return \"false\";\r\n        }\r\n " +
+"   }\r\n    $(\'#btnsave\').click(function () {\r\n        debugger;\r\n        var msg " +
+"= \"\";\r\n        var firstnmae = $(\"#Firstname\").val();\r\n        var emailcount = " +
+"0, pwdcount = 0;;\r\n        var lastname = $(\"#Lastname\").val();\r\n        var Con" +
+"firmPassword = $(\"#ConfirmPassword\").val();\r\n\r\n        var Email = $(\"#Email\").v" +
+"al();\r\n        var NewPassword = $(\"#NewPassword\").val();\r\n        var ConfirmEm" +
+"ail = $(\"#ConfirmEmail\").val();\r\n        var Websiteurl = $(\"#WebsiteURL\").val()" +
+";\r\n        var Password = $(\"#Password\").val();\r\n        var ConfirmPassword = $" +
+"(\"#ConfirmPassword\").val();\r\n\r\n        var NewPassword = $(\"#NewPassword\").val()" +
+";\r\n        var month = $(\"#month\").val();\r\n\r\n        var year = $(\"#year\").val()" +
+";\r\n        var day = $(\"#day\").val();\r\n        var ily = returnleap(year);\r\n\r\n  " +
+"      if (ily == true) {\r\n\r\n            if (day > 29 && month == 2) {\r\n         " +
 "       msg += ajaxsetup(\'MyAccount\', \'MyAccountDateValidationUI\');\r\n\r\n          " +
-"              $(\'#month\').addClass(\'err-bor\');\r\n                        $(\'#year" +
-"\').addClass(\'err-bor\');\r\n                        $(\'#day\').addClass(\'err-bor\');\r" +
-"\n                    }\r\n\r\n                }\r\n                else {\r\n           " +
-"         if (day > 28 && month == 2) {\r\n\r\n                        msg += ajaxset" +
-"up(\'MyAccount\', \'MyAccountDateValidationUI\');\r\n                        $(\'#month" +
-"\').addClass(\'err-bor\');\r\n                        $(\'#year\').addClass(\'err-bor\');" +
-"\r\n                        $(\'#day\').addClass(\'err-bor\');\r\n                    }\r" +
-"\n                }\r\n                if (day > 30 && (month == 4 || month == 6 ||" +
-" month == 9 || month == 11)) {\r\n\r\n                    msg += ajaxsetup(\'MyAccoun" +
-"t\', \'MyAccountDateValidationUI\');\r\n                    $(\'#month\').addClass(\'err" +
-"-bor\');\r\n                    $(\'#year\').addClass(\'err-bor\');\r\n                  " +
-"  $(\'#day\').addClass(\'err-bor\');\r\n\r\n                }\r\n\r\n                if (fir" +
-"stnmae == \"\") {\r\n                    msg = ajaxsetup(\'MyAccount\', \'MyAccountFnam" +
-"eRequiredUI\');\r\n\r\n                    $(\'#Firstname\').addClass(\'err-bor\');\r\n    " +
-"            } else {\r\n\r\n                    $(\'#Firstname\').removeClass(\'err-bor" +
-"\');\r\n                }\r\n\r\n\r\n\r\n\r\n                if (Email != \"\") {\r\n            " +
-"        if (!validateEmail(Email)) {\r\n                        emailcount += 1;\r\n" +
-"                        $(\'#Email\').addClass(\'err-bor\');\r\n\r\n\r\n                  " +
-"  } else {\r\n\r\n\r\n                        $(\'#Email\').removeClass(\'err-bor\');\r\n   " +
-"                 }\r\n                } else {\r\n                    $(\'#Email\').ad" +
-"dClass(\'err-bor\');\r\n                    msg += ajaxsetup(\'MyAccount\', \'MyAccount" +
-"EmailRequiredUI\');\r\n\r\n                }\r\n\r\n\r\n                if (ConfirmEmail !=" +
-" \"\") {\r\n\r\n                    if (!validateEmail(ConfirmEmail)) {\r\n             " +
-"           emailcount += 1;\r\n                        $(\'#ConfirmEmail\').addClass" +
-"(\'err-bor\');\r\n\r\n\r\n                    } else {\r\n                        $(\'#Conf" +
-"irmEmail\').removeClass(\'err-bor\');\r\n\r\n                    }\r\n\r\n\r\n               " +
-" }\r\n                if (Password != \"\") {\r\n                    if (Password.leng" +
-"th < 4) {\r\n                        pwdcount += 1;\r\n                        $(\'#P" +
-"assword\').addClass(\'err-bor\');\r\n\r\n\r\n                    }\r\n                }\r\n  " +
-"              if (NewPassword != \"\") {\r\n                    if (NewPassword.leng" +
-"th < 4) {\r\n                        pwdcount += 1;\r\n                        $(\'#N" +
-"ewPassword\').addClass(\'err-bor\');\r\n\r\n\r\n                    }\r\n\r\n\r\n              " +
-"  }\r\n                if (ConfirmPassword != \"\") {\r\n                    if (Confi" +
-"rmPassword.length < 4) {\r\n                        pwdcount += 1;\r\n              " +
-"          $(\'#ConfirmPassword\').addClass(\'err-bor\');\r\n\r\n                    }\r\n\r" +
-"\n\r\n                }\r\n\r\n                if (emailcount > 0) {\r\n                 " +
-"   msg += ajaxsetup(\'MyAccount\', \'MyAccountEmailValidationUI\');\r\n\r\n             " +
-"   }\r\n                if (pwdcount > 0) {\r\n                    msg = ajaxsetup(\'" +
-"MyAccount\', \'MyAccountPasswordValidationUI\');\r\n\r\n                }\r\n            " +
-"    if (msg == \"\") {\r\n                    $(\'#diverroacc\').css(\"display\", \"none\"" +
-");\r\n                    $(\"#imageeror\").val(\'0\');\r\n                    return tr" +
-"ue;\r\n                }\r\n                else {\r\n\r\n                    $(\'#erracc" +
-"msg\').html(msg);\r\n                    $(\'#diverro1acc\').css(\"display\", \"none\");\r" +
-"\n                    $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                " +
-"    $(\'#diverroacc\').css(\"display\", \"block\");\r\n                    $(\'html,body\'" +
-").animate({ scrollTop: 0 });\r\n                    //$(\'#btndiverroacc\').focus();" +
-"\r\n                    return false;\r\n                }\r\n            });\r\n       " +
-"  \r\n          \r\n            var val1, val2;\r\n            $(\'#Zip\').change(functi" +
-"on () {\r\n                var country = $(\"#Country option:selected\").text().trim" +
-"();\r\n\r\n                var city = \"\";\r\n                var state = \"\";\r\n\r\n      " +
-"          var pincode = $(this).val();\r\n                $.ajax({\r\n              " +
-"      url: \'http://maps.googleapis.com/maps/api/geocode/json\',\r\n                " +
-"    data: \'&address=\' + pincode + \'&sensor=true\',\r\n                    dataType:" +
-" \'json\',\r\n                    cache: false,\r\n                    success: functi" +
-"on (data) {\r\n\r\n\r\n                        if (data.status == \'OK\') {\r\n\r\n         " +
-"                   for (var i = 0; i < data.results[0].address_components.length" +
-"; i++) {\r\n                                var obj = data.results[0].address_comp" +
-"onents[i];\r\n\r\n                                var obj2 = obj[\'types\'];\r\n\r\n      " +
-"                          for (var j = 0; j < obj2.length; j++) {\r\n             " +
-"                       if (obj2[j] == \'locality\' || obj2[j] == \'postal_town\' || " +
-"obj2[j] == \'sublocality_level_1\' || obj2[j] == \'sublocality_level_2\' || obj2[j] " +
-"== \'sublocality_level_3\' || obj2[j] == \'sublocality_level_4\' || obj2[j] == \'subl" +
-"ocality_level_5\' || obj2[j] == \'ward\')\r\n                                    {\r\n " +
-"                                       city = obj[\'long_name\'];\r\n\r\n\r\n           " +
-"                         }\r\n                                     if (obj2[j] == " +
-"\'administrative_area_level_1\') {\r\n                                        state " +
-"= obj[\'long_name\'];\r\n\r\n                                    }\r\n                  " +
-"                  if (obj2[j] == \'country\') {\r\n                                 " +
-"       if (obj[\'long_name\'] == country) {\r\n                                     " +
-"       $(\'#City\').val(city);\r\n                                            $(\'#St" +
-"ate\').val(state);\r\n\r\n\r\n                                        }\r\n\r\n            " +
-"                        }\r\n\r\n                                }\r\n\r\n\r\n\r\n          " +
-"                  }\r\n\r\n                        }\r\n\r\n\r\n\r\n                        " +
-"else {\r\n                            var msg = ajaxsetup(\'MyAccount\', \'MyAccountZ" +
-"ipValidationUI\');\r\n                            $(\'#erraccmsg\').html(msg);\r\n     " +
-"                       $(\'#diverro1acc\').css(\"display\", \"none\");\r\n              " +
-"              $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n                       " +
-"     $(\'#diverroacc\').css(\"display\", \"block\");\r\n                         \r\n\r\n   " +
-"                         $(\'#Zip\').addClass(\'err-bor\');\r\n                       " +
-"     return false;\r\n                        }\r\n                    }\r\n          " +
-"      });\r\n            });\r\n\r\n            function ajaxsetup(strname, strFormTag" +
-") {\r\n                var msgnew = \"\";\r\n\r\n                var request = $.ajax({\r" +
-"\n                    url: \'");
+"      $(\'#month\').addClass(\'err-bor\');\r\n                $(\'#year\').addClass(\'err" +
+"-bor\');\r\n                $(\'#day\').addClass(\'err-bor\');\r\n            }\r\n\r\n      " +
+"  }\r\n        else {\r\n            if (day > 28 && month == 2) {\r\n\r\n              " +
+"  msg += ajaxsetup(\'MyAccount\', \'MyAccountDateValidationUI\');\r\n                $" +
+"(\'#month\').addClass(\'err-bor\');\r\n                $(\'#year\').addClass(\'err-bor\');" +
+"\r\n                $(\'#day\').addClass(\'err-bor\');\r\n            }\r\n        }\r\n    " +
+"    if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11)) {\r\n" +
+"\r\n            msg += ajaxsetup(\'MyAccount\', \'MyAccountDateValidationUI\');\r\n     " +
+"       $(\'#month\').addClass(\'err-bor\');\r\n            $(\'#year\').addClass(\'err-bo" +
+"r\');\r\n            $(\'#day\').addClass(\'err-bor\');\r\n\r\n        }\r\n\r\n        if (fir" +
+"stnmae == \"\") {\r\n            msg = ajaxsetup(\'MyAccount\', \'MyAccountFnameRequire" +
+"dUI\');\r\n\r\n            $(\'#Firstname\').addClass(\'err-bor\');\r\n        } else {\r\n\r\n" +
+"            $(\'#Firstname\').removeClass(\'err-bor\');\r\n        }\r\n\r\n\r\n\r\n\r\n        " +
+"if (Email != \"\") {\r\n            if (!validateEmail(Email)) {\r\n                em" +
+"ailcount += 1;\r\n                $(\'#Email\').addClass(\'err-bor\');\r\n\r\n\r\n          " +
+"  } else {\r\n\r\n\r\n                $(\'#Email\').removeClass(\'err-bor\');\r\n           " +
+" }\r\n        } else {\r\n            $(\'#Email\').addClass(\'err-bor\');\r\n            " +
+"msg += ajaxsetup(\'MyAccount\', \'MyAccountEmailRequiredUI\');\r\n\r\n        }\r\n\r\n\r\n   " +
+"     if (ConfirmEmail != \"\") {\r\n\r\n            if (!validateEmail(ConfirmEmail)) " +
+"{\r\n                emailcount += 1;\r\n                $(\'#ConfirmEmail\').addClass" +
+"(\'err-bor\');\r\n\r\n\r\n            } else {\r\n                $(\'#ConfirmEmail\').remov" +
+"eClass(\'err-bor\');\r\n\r\n            }\r\n\r\n\r\n        }\r\n        if (Password != \"\") " +
+"{\r\n            if (Password.length < 4) {\r\n                pwdcount += 1;\r\n     " +
+"           $(\'#Password\').addClass(\'err-bor\');\r\n\r\n\r\n            }\r\n        }\r\n  " +
+"      if (NewPassword != \"\") {\r\n            if (NewPassword.length < 4) {\r\n     " +
+"           pwdcount += 1;\r\n                $(\'#NewPassword\').addClass(\'err-bor\')" +
+";\r\n\r\n\r\n            }\r\n\r\n\r\n        }\r\n        if (ConfirmPassword != \"\") {\r\n     " +
+"       if (ConfirmPassword.length < 4) {\r\n                pwdcount += 1;\r\n      " +
+"          $(\'#ConfirmPassword\').addClass(\'err-bor\');\r\n\r\n            }\r\n\r\n\r\n     " +
+"   }\r\n\r\n        if (emailcount > 0) {\r\n            msg += ajaxsetup(\'MyAccount\'," +
+" \'MyAccountEmailValidationUI\');\r\n\r\n        }\r\n        if (pwdcount > 0) {\r\n     " +
+"       msg = ajaxsetup(\'MyAccount\', \'MyAccountPasswordValidationUI\');\r\n\r\n       " +
+" }\r\n        if (msg == \"\") {\r\n            $(\'#diverroacc\').css(\"display\", \"none\"" +
+");\r\n            $(\"#imageeror\").val(\'0\');\r\n            return true;\r\n        }\r\n" +
+"        else {\r\n\r\n            $(\'#erraccmsg\').html(msg);\r\n            $(\'#diverr" +
+"o1acc\').css(\"display\", \"none\");\r\n            $(\'#divaccsuc\').css(\"display\", \"non" +
+"e\");\r\n\r\n            $(\'#diverroacc\').css(\"display\", \"block\");\r\n            $(\'ht" +
+"ml,body\').animate({ scrollTop: 0 });\r\n            //$(\'#btndiverroacc\').focus();" +
+"\r\n            return false;\r\n        }\r\n    });\r\n\r\n\r\n    var val1, val2;\r\n    $(" +
+"\'#Zip\').change(function () {\r\n        var country = $(\"#Country option:selected\"" +
+").text().trim();\r\n\r\n        var city = \"\";\r\n        var state = \"\";\r\n\r\n        v" +
+"ar pincode = $(this).val();\r\n        $.ajax({\r\n            url: \'http://maps.goo" +
+"gleapis.com/maps/api/geocode/json\',\r\n            data: \'&address=\' + pincode + \'" +
+"&sensor=true\',\r\n            dataType: \'json\',\r\n            cache: false,\r\n      " +
+"      success: function (data) {\r\n\r\n\r\n                if (data.status == \'OK\') {" +
+"\r\n\r\n                    for (var i = 0; i < data.results[0].address_components.l" +
+"ength; i++) {\r\n                        var obj = data.results[0].address_compone" +
+"nts[i];\r\n\r\n                        var obj2 = obj[\'types\'];\r\n\r\n                 " +
+"       for (var j = 0; j < obj2.length; j++) {\r\n                            if (" +
+"obj2[j] == \'locality\' || obj2[j] == \'postal_town\' || obj2[j] == \'sublocality_lev" +
+"el_1\' || obj2[j] == \'sublocality_level_2\' || obj2[j] == \'sublocality_level_3\' ||" +
+" obj2[j] == \'sublocality_level_4\' || obj2[j] == \'sublocality_level_5\' || obj2[j]" +
+" == \'ward\') {\r\n                                city = obj[\'long_name\'];\r\n\r\n\r\n   " +
+"                         }\r\n                            if (obj2[j] == \'administ" +
+"rative_area_level_1\') {\r\n                                state = obj[\'long_name\'" +
+"];\r\n\r\n                            }\r\n                            if (obj2[j] == " +
+"\'country\') {\r\n                                if (obj[\'long_name\'] == country) {" +
+"\r\n                                    $(\'#City\').val(city);\r\n                   " +
+"                 $(\'#State\').val(state);\r\n\r\n\r\n                                }\r" +
+"\n\r\n                            }\r\n\r\n                        }\r\n\r\n\r\n\r\n           " +
+"         }\r\n\r\n                }\r\n\r\n\r\n\r\n                else {\r\n                 " +
+"   var msg = ajaxsetup(\'MyAccount\', \'MyAccountZipValidationUI\');\r\n              " +
+"      $(\'#erraccmsg\').html(msg);\r\n                    $(\'#diverro1acc\').css(\"dis" +
+"play\", \"none\");\r\n                    $(\'#divaccsuc\').css(\"display\", \"none\");\r\n\r\n" +
+"                    $(\'#diverroacc\').css(\"display\", \"block\");\r\n\r\n\r\n             " +
+"       $(\'#Zip\').addClass(\'err-bor\');\r\n                    return false;\r\n      " +
+"          }\r\n            }\r\n        });\r\n    });\r\n\r\n    function ajaxsetup(strna" +
+"me, strFormTag) {\r\n        var msgnew = \"\";\r\n\r\n        var request = $.ajax({\r\n " +
+"           url: \'");
 
             
-            #line 1001 "..\..\Views\Account\MyAccount.cshtml"
-                     Write(Url.Action("Index", "ValidationMessage"));
+            #line 1000 "..\..\Views\Account\MyAccount.cshtml"
+             Write(Url.Action("Index", "ValidationMessage"));
 
             
             #line default
             #line hidden
 WriteLiteral(@"',
-                    async: false,
-                    data: { strFormName: strname, strFormTag: strFormTag },
-                    type: 'Post'
-                });
-                request.done(function (msg) {
-                    msgnew += msg;
-                });
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
 
-                request.fail(function (jqXHR, textStatus) {
-                    msgnew += ""Some Error occur!!"";
-                });
-                return msgnew;
-            }
-        </script>
-        <script");
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += ""Some Error occur!!"";
+        });
+        return msgnew;
+    }
+</script>
+<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 45799), Tuple.Create("\"", 45840)
-, Tuple.Create(Tuple.Create("", 45805), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 45805), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 41402), Tuple.Create("\"", 41443)
+, Tuple.Create(Tuple.Create("", 41408), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 41408), false)
 );
 
 WriteLiteral("></script>\r\n\r\n");
