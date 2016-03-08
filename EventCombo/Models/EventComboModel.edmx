@@ -218,23 +218,8 @@
           </Key>
           <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orgnizer_Event_Id" Type="bigint" />
-          <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
-          <Property Name="Orgnizer_Desc" Type="nvarchar(max)" />
-          <Property Name="FBLink" Type="varchar" MaxLength="100" />
-          <Property Name="Twitter" Type="varchar" MaxLength="100" />
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
           <Property Name="DefaultOrg" Type="varchar" MaxLength="1" />
-          <Property Name="Linkedin" Type="varchar" MaxLength="100" />
-          <Property Name="Organizer_Image" Type="varchar" MaxLength="300" />
-          <Property Name="Organizer_Address1" Type="varchar" MaxLength="256" />
-          <Property Name="Organizer_Address2" Type="varchar" MaxLength="256" />
-          <Property Name="Organizer_City" Type="varchar" MaxLength="256" />
-          <Property Name="Organizer_State" Type="varchar" MaxLength="256" />
-          <Property Name="Organizer_Zipcode" Type="varchar" MaxLength="8" />
-          <Property Name="Organizer_CountryId" Type="tinyint" />
-          <Property Name="Organizer_Email" Type="varchar" MaxLength="100" />
-          <Property Name="Organizer_Phoneno" Type="varchar" MaxLength="20" />
-          <Property Name="Organizer_Websiteurl" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -1209,12 +1194,12 @@
           <Property Name="Parent_EventID" Type="Int64" />
           <Property Name="EventCancel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_Event" FromRole="Event" ToRole="Address" />
-          <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
           <NavigationProperty Name="Event_VariableDesc" Relationship="Self.FK_Event_VariableDesc_Event" FromRole="Event" ToRole="Event_VariableDesc" />
           <NavigationProperty Name="EventImages" Relationship="Self.FK_EventImage_Event" FromRole="Event" ToRole="EventImage" />
           <NavigationProperty Name="EventVenues" Relationship="Self.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
           <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
+          <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1227,31 +1212,6 @@
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MessageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="Event_Orgnizer_Detail">
-          <Key>
-            <PropertyRef Name="Orgnizer_Id" />
-          </Key>
-          <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Orgnizer_Event_Id" Type="Int64" />
-          <Property Name="Orgnizer_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Orgnizer_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FBLink" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Twitter" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultOrg" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Linkedin" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Event" Relationship="Self.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
-          <Property Name="Organizer_Image" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Address2" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Zipcode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_CountryId" Type="Byte" />
-          <Property Name="Organizer_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Phoneno" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Websiteurl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -1694,18 +1654,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Event_Orgnizer_Detail_Event">
-          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
-          <End Role="Event_Orgnizer_Detail" Type="Self.Event_Orgnizer_Detail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="Event_Orgnizer_Detail">
-              <PropertyRef Name="Orgnizer_Event_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Event_VariableDesc_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Event_VariableDesc" Type="Self.Event_VariableDesc" Multiplicity="*" />
@@ -1821,7 +1769,6 @@
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" />
-          <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" />
           <EntitySet Name="Event_VariableDesc" EntityType="Self.Event_VariableDesc" />
           <EntitySet Name="EventCategories" EntityType="Self.EventCategory" />
           <EntitySet Name="EventFavourites" EntityType="Self.EventFavourite" />
@@ -1869,10 +1816,6 @@
           <AssociationSet Name="FK__TicketDel__Deliv__08411774" Association="Self.FK__TicketDel__Deliv__08411774">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethods" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethods" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Self.FK_Event_Orgnizer_Detail_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
           </AssociationSet>
           <AssociationSet Name="FK_Event_VariableDesc_Event" Association="Self.FK_Event_VariableDesc_Event">
             <End Role="Event" EntitySet="Events" />
@@ -1950,6 +1893,11 @@
           <EntitySet Name="TicketOrderDetails" EntityType="EventComboModel.TicketOrderDetail" />
           <EntitySet Name="Fee_Structure" EntityType="EventComboModel.Fee_Structure" />
           <EntitySet Name="Organizer_Master" EntityType="EventComboModel.Organizer_Master" />
+          <EntitySet Name="Event_Orgnizer_Detail" EntityType="EventComboModel.Event_Orgnizer_Detail" />
+          <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="EventComboModel.FK_Event_Orgnizer_Detail_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2047,6 +1995,28 @@
           <Property Name="contenttype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Imagepath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Event_Orgnizer_Detail">
+          <Key>
+            <PropertyRef Name="Orgnizer_Id" />
+          </Key>
+          <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orgnizer_Event_Id" Type="Int64" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultOrg" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
+        </EntityType>
+        <Association Name="FK_Event_Orgnizer_Detail_Event">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Event_Orgnizer_Detail" Role="Event_Orgnizer_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_Orgnizer_Detail">
+              <PropertyRef Name="Orgnizer_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2260,31 +2230,6 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Event_Orgnizer_Detail">
-            <EntityTypeMapping TypeName="EventComboModel.Event_Orgnizer_Detail">
-              <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
-                <ScalarProperty Name="Organizer_Websiteurl" ColumnName="Organizer_Websiteurl" />
-                <ScalarProperty Name="Organizer_Phoneno" ColumnName="Organizer_Phoneno" />
-                <ScalarProperty Name="Organizer_Email" ColumnName="Organizer_Email" />
-                <ScalarProperty Name="Organizer_CountryId" ColumnName="Organizer_CountryId" />
-                <ScalarProperty Name="Organizer_Zipcode" ColumnName="Organizer_Zipcode" />
-                <ScalarProperty Name="Organizer_State" ColumnName="Organizer_State" />
-                <ScalarProperty Name="Organizer_City" ColumnName="Organizer_City" />
-                <ScalarProperty Name="Organizer_Address2" ColumnName="Organizer_Address2" />
-                <ScalarProperty Name="Organizer_Address1" ColumnName="Organizer_Address1" />
-                <ScalarProperty Name="Organizer_Image" ColumnName="Organizer_Image" />
-                <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
-                <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
-                <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
-                <ScalarProperty Name="Orgnizer_Desc" ColumnName="Orgnizer_Desc" />
-                <ScalarProperty Name="FBLink" ColumnName="FBLink" />
-                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="DefaultOrg" ColumnName="DefaultOrg" />
-                <ScalarProperty Name="Linkedin" ColumnName="Linkedin" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2792,6 +2737,16 @@
                 <ScalarProperty Name="Organizer_FBLink" ColumnName="Organizer_FBLink" />
                 <ScalarProperty Name="Organizer_Desc" ColumnName="Organizer_Desc" />
                 <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
+                <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event_Orgnizer_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Event_Orgnizer_Detail">
+              <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
+                <ScalarProperty Name="DefaultOrg" ColumnName="DefaultOrg" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
                 <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
               </MappingFragment>
             </EntityTypeMapping>

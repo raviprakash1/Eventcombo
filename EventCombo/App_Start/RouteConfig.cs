@@ -45,6 +45,14 @@ namespace EventCombo
                 new { controller = "EventViewCustom", action = "Index", strCustomUrl = "" }
                 );
 
+            routes.MapRoute(
+                name: "EvType",
+                namespaces: new[] { "EventCombo.Controllers" },
+                url: "et/{strEt}/{strEc}",
+                defaults: new { controller = "Home", action = "DiscoverEvents",strEt = UrlParameter.Optional, strEc = UrlParameter.Optional }
+            );
+
+
 
             routes.MapRoute(
                 name: "Default",

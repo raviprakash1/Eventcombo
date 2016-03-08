@@ -82,6 +82,20 @@ namespace EventCombo.Models
         public DateTime orderDate { get; set; }
         
     }
+    public class DiscoverEvent
+    {
+        public string EventTitle { get; set; }
+        public string EventAddress { get; set; }
+        public string EventTimings { get; set; }
+        public string EventCat { get; set; }
+        public string EventType { get; set; }
+        public string PriceLable { get; set; }
+        public string EventImage { get; set; }
+        public long EventTypeId { get; set; }
+        public long EventCatId { get; set; }
+        //public DiscoverEvent[] DiscoverEventList { get; set; }
+
+    }
 
 
 }

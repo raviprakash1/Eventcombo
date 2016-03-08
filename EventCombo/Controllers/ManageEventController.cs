@@ -1147,12 +1147,12 @@ namespace EventCombo.Controllers
                         {
                             objEOrg = new Event_Orgnizer_Detail();
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                            objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
-                            objEOrg.FBLink = objOr.FBLink;
-                            objEOrg.Twitter = objOr.Twitter;
+                            //objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                            //objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
+                            //objEOrg.FBLink = objOr.FBLink;
+                            //objEOrg.Twitter = objOr.Twitter;
                             objEOrg.DefaultOrg = objOr.DefaultOrg;
-                            objEOrg.Linkedin = objOr.Linkedin;
+                            //objEOrg.Linkedin = objOr.Linkedin;
                             objEOrg.UserId = strUserId;
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }

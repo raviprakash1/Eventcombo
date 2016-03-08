@@ -41,7 +41,6 @@ namespace EventCombo.Models
         public virtual DbSet<Email_Template> Email_Template { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Event_OrganizerMessages> Event_OrganizerMessages { get; set; }
-        public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
         public virtual DbSet<Event_VariableDesc> Event_VariableDesc { get; set; }
         public virtual DbSet<EventCategory> EventCategories { get; set; }
         public virtual DbSet<EventFavourite> EventFavourites { get; set; }
@@ -73,6 +72,7 @@ namespace EventCombo.Models
         public virtual DbSet<TicketOrderDetail> TicketOrderDetails { get; set; }
         public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
         public virtual DbSet<Organizer_Master> Organizer_Master { get; set; }
+        public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

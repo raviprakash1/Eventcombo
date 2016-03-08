@@ -554,10 +554,10 @@ namespace EventCombo.Controllers
                         {
                             objEOrg = new Event_Orgnizer_Detail();
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                            objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
-                            objEOrg.FBLink = objOr.FBLink;
-                            objEOrg.Twitter = objOr.Twitter;
+                            //objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                            //objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
+                            //objEOrg.FBLink = objOr.FBLink;
+                            //objEOrg.Twitter = objOr.Twitter;
                             objEOrg.DefaultOrg = objOr.DefaultOrg;
                             objEOrg.UserId = strUserId;
 
@@ -1486,10 +1486,10 @@ namespace EventCombo.Controllers
                         {
                             objEOrg = new Event_Orgnizer_Detail();
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                            objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
-                            objEOrg.FBLink = objOr.FBLink;
-                            objEOrg.Twitter = objOr.Twitter;
+                            //objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                            //objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
+                            //objEOrg.FBLink = objOr.FBLink;
+                            //objEOrg.Twitter = objOr.Twitter;
                             objEOrg.DefaultOrg = objOr.DefaultOrg;
                             objEOrg.UserId = strUserId;
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
@@ -1877,11 +1877,11 @@ namespace EventCombo.Controllers
                                             objEOrg = (from obj in objEnt.Event_Orgnizer_Detail where obj.Orgnizer_Id == objOr.Orgnizer_Id && obj.Orgnizer_Event_Id == lEventId select obj).FirstOrDefault();
                                         }
                                         objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                                        objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                                        objEOrg.Orgnizer_Desc = HttpUtility.UrlDecode(objOr.Orgnizer_Desc, System.Text.Encoding.Default);
-                                        objEOrg.FBLink = objOr.FBLink;
-                                        objEOrg.Twitter = objOr.Twitter;
-                                        objEOrg.Linkedin = objOr.Linkedin;
+                                        //objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                        //objEOrg.Orgnizer_Desc = HttpUtility.UrlDecode(objOr.Orgnizer_Desc, System.Text.Encoding.Default);
+                                        //objEOrg.FBLink = objOr.FBLink;
+                                        //objEOrg.Twitter = objOr.Twitter;
+                                        //objEOrg.Linkedin = objOr.Linkedin;
                                         objEOrg.DefaultOrg = objOr.DefaultOrg;
                                         objEOrg.UserId = strUserId;
                                         if (objOr.Orgnizer_Id == 0)
@@ -2184,11 +2184,11 @@ namespace EventCombo.Controllers
                     strHTML.Append(i);
                     strHTML.Append("</td>");
 
-                    strHTML.Append("<td width='92 %'><label id=OrgName_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Orgnizer_Name);
-                    strHTML.Append("</label></td>");
+                    //strHTML.Append("<td width='92 %'><label id=OrgName_");
+                    //strHTML.Append(i);
+                    //strHTML.Append(">");
+                    //strHTML.Append(EOD.Orgnizer_Name);
+                    //strHTML.Append("</label></td>");
 
                     strHTML.Append("<td style='display: none'><label id=OrgId_");
                     strHTML.Append(i);
@@ -2196,38 +2196,38 @@ namespace EventCombo.Controllers
                     strHTML.Append(EOD.Orgnizer_Id);
                     strHTML.Append("</label></td>");
 
-                    strHTML.Append("<td style='display: none'><label id=OrgDes_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Orgnizer_Desc);
-                    strHTML.Append("</label></td>");
+                    //strHTML.Append("<td style='display: none'><label id=OrgDes_");
+                    //strHTML.Append(i);
+                    //strHTML.Append(">");
+                    //strHTML.Append(EOD.Orgnizer_Desc);
+                    //strHTML.Append("</label></td>");
 
-                    strHTML.Append("<td style='display: none'><label id=OrgFB_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.FBLink);
-                    strHTML.Append("</label></td>");
+                    //strHTML.Append("<td style='display: none'><label id=OrgFB_");
+                    //strHTML.Append(i);
+                    //strHTML.Append(">");
+                    //strHTML.Append(EOD.FBLink);
+                    //strHTML.Append("</label></td>");
 
 
-                    strHTML.Append("<td style='display: none'><label id=OrgTw_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Twitter);
-                    strHTML.Append("</label></td>");
+                    //strHTML.Append("<td style='display: none'><label id=OrgTw_");
+                    //strHTML.Append(i);
+                    //strHTML.Append(">");
+                    //strHTML.Append(EOD.Twitter);
+                    //strHTML.Append("</label></td>");
 
-                    strHTML.Append("<td style='display: none'><label id=OrgLn_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Linkedin);
-                    strHTML.Append("</label></td>");
+                    //strHTML.Append("<td style='display: none'><label id=OrgLn_");
+                    //strHTML.Append(i);
+                    //strHTML.Append(">");
+                    //strHTML.Append(EOD.Linkedin);
+                    //strHTML.Append("</label></td>");
                     strtemp = "<td align='right'><i onclick='editOrgnizer(" + i + ")'; class='fa fa-pencil'></i> | <i onclick='DeleteOrgnizer(" + i + ");' class='fa fa-trash'></i></td>";
                     strHTML.Append(strtemp);
                     strHTML.Append("</tr>");
 
-                    if (EOD.DefaultOrg == "Y")
-                        strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
-                    else
-                        strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                    //if (EOD.DefaultOrg == "Y")
+                    //    strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                    //else
+                    //    strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
 
 
                 }
@@ -2272,9 +2272,9 @@ namespace EventCombo.Controllers
             //Organiser
             if (OrganiserDetail != null)
             {
-                organizername = OrganiserDetail.Orgnizer_Name;
-                fblink = OrganiserDetail.FBLink;
-                twitterlink = OrganiserDetail.Twitter;
+                //organizername = OrganiserDetail.Orgnizer_Name;
+                //fblink = OrganiserDetail.FBLink;
+                //twitterlink = OrganiserDetail.Twitter;
                 organizerid = OrganiserDetail.Orgnizer_Id.ToString();
 
             }

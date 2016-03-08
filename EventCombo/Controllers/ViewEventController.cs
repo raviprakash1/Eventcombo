@@ -153,11 +153,11 @@ namespace EventCombo.Controllers
             //Organiser
             if (OrganiserDetail != null)
             {
-                organizername = OrganiserDetail.Orgnizer_Name;
-                fblink = OrganiserDetail.FBLink;
-                twitterlink = OrganiserDetail.Twitter;
+                //organizername = OrganiserDetail.Orgnizer_Name;
+                //fblink = OrganiserDetail.FBLink;
+                //twitterlink = OrganiserDetail.Twitter;
                 organizerid = OrganiserDetail.Orgnizer_Id.ToString();
-                linkedin = OrganiserDetail.Linkedin;
+                //linkedin = OrganiserDetail.Linkedin;
 
             }
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();

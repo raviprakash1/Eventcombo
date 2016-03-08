@@ -210,8 +210,8 @@ namespace EventCombo.Controllers
                         foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
                         {
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                            objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
+                            //objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                            //objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
                     }
