@@ -276,7 +276,9 @@ namespace EventCombo.Controllers
 
         public long SaveEvent(EventCreation model)
         {
-            long lEventId = 0;  
+            long lEventId = 0;
+            string lat="", lon="";
+            ViewEvent vc = new ViewEvent();
             try
             {
                 //PayPalRedirect redirect = PayPal.ExpressCheckout(new PayPalOrder { Amount = 50 });
@@ -346,13 +348,28 @@ namespace EventCombo.Controllers
                     //objEnt.Events.Add(ObjEC);
                     objEnt.Events.Add(ObjEC);
                     // Address info
+                 
+                   
                     if (model.AddressDetail != null)
                     {
                         Address ObjAdd = new Models.Address();
                         foreach (Address objA in model.AddressDetail)
                         {
+                           
                             if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
                             {
+                                try
+                                {
+                                    var geocode = vc.Geocode(objA.ConsolidateAddress);
+                                    lat = geocode.Latitude.ToString();
+                                    lon = geocode.Longitude.ToString();
+                                }
+                                catch (Exception ex)
+                                {
+                                    lat = "";
+                                    lon = "";
+
+                                }
                                 ObjAdd = new Models.Address();
                                 ObjAdd.EventId = ObjEC.EventID;
                                 ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
@@ -365,6 +382,8 @@ namespace EventCombo.Controllers
                                 ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
                                 ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
                                 ObjAdd.Name = "";
+                                ObjAdd.Latitude = lat;
+                                ObjAdd.Longitude = lon;
                                 objEnt.Addresses.Add(ObjAdd);
                             }
                         }

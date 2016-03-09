@@ -2505,7 +2505,7 @@ namespace EventCombo.Controllers
 
             if (msg == "S")
             {
-                var orglist = db.Organizer_Master.Where(x => x.UserId == userid && (x.Orgnizer_Name??string.Empty)!=string.Empty).Select(item => new
+                var orglist = db.Organizer_Master.Where(x => x.UserId == userid && (x.Orgnizer_Name??string.Empty)!=string.Empty && x.Organizer_Status=="A").Select(item => new
                 {
                     Id = item.Orgnizer_Id,
                     Name = item.Orgnizer_Name

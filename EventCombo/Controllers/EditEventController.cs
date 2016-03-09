@@ -445,6 +445,8 @@ namespace EventCombo.Controllers
         public long SaveEvent(EventCreation model)
         {
             long lEventId = 0;
+            string lat = "", lon = "";
+            ViewEvent vc = new ViewEvent();
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
@@ -494,6 +496,19 @@ namespace EventCombo.Controllers
                         {
                             if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
                             {
+                                try
+                                {
+                                    var geocode = vc.Geocode(objA.ConsolidateAddress);
+                                    lat = geocode.Latitude.ToString();
+                                    lon = geocode.Longitude.ToString();
+                                }
+                                catch (Exception ex)
+                                {
+                                    lat = "";
+                                    lon = "";
+
+                                }
+
                                 ObjAdd = new Models.Address();
                                 ObjAdd.EventId = ObjEC.EventID;
                                 ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
@@ -506,6 +521,8 @@ namespace EventCombo.Controllers
                                 ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
                                 ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
                                 ObjAdd.Name = "";
+                                ObjAdd.Latitude = lat;
+                                ObjAdd.Longitude = lon;
                                 objEnt.Addresses.Add(ObjAdd);
                             }
 
@@ -1464,6 +1481,8 @@ namespace EventCombo.Controllers
         public long EditEventInfo(EventCreation model)
         {
             long lEventId = model.EventID;
+            string lat = "", lon = "";
+            ViewEvent vc = new ViewEvent();
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
@@ -1534,6 +1553,19 @@ namespace EventCombo.Controllers
                         {
                             if ((objA.VenueName != null && objA.VenueName.Trim() != "") || objA.ConsolidateAddress != "")
                             {
+
+                                try
+                                {
+                                    var geocode = vc.Geocode(objA.ConsolidateAddress);
+                                    lat = geocode.Latitude.ToString();
+                                    lon = geocode.Longitude.ToString();
+                                }
+                                catch (Exception ex)
+                                {
+                                    lat = "";
+                                    lon = "";
+
+                                }
                                 ObjAdd = new Models.Address();
                                 ObjAdd.EventId = ObjEC.EventID;
                                 ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
@@ -1546,6 +1578,8 @@ namespace EventCombo.Controllers
                                 ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
                                 ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
                                 ObjAdd.Name = "";
+                                ObjAdd.Latitude = lat;
+                                ObjAdd.Longitude = lon;
                                 objEnt.Addresses.Add(ObjAdd);
                             }
                         }
@@ -1864,6 +1898,8 @@ namespace EventCombo.Controllers
 
         public long Draftmodemodification(EventCreation model,string strDuplicate)
         {
+            string lat = "", lon = "";
+            ViewEvent vc = new ViewEvent();
             if (Session["AppId"] != null)
             {
                 long lEventId = model.EventID;
@@ -1988,8 +2024,21 @@ namespace EventCombo.Controllers
                                         foreach (Address objA in model.AddressDetail)
                                         {
 
+
                                             if ((objA.VenueName != null && objA.VenueName.Trim() != "") || (objA.ConsolidateAddress != "" && objA.ConsolidateAddress != null))
                                             {
+                                                try
+                                                {
+                                                    var geocode = vc.Geocode(objA.ConsolidateAddress);
+                                                    lat = geocode.Latitude.ToString();
+                                                    lon = geocode.Longitude.ToString();
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    lat = "";
+                                                    lon = "";
+
+                                                }
                                                 if (objA.AddressID == 0)
                                                 {
                                                     ObjAdd = new Models.Address();
@@ -2009,6 +2058,8 @@ namespace EventCombo.Controllers
                                                 ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
                                                 ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
                                                 ObjAdd.Name = "";
+                                                ObjAdd.Latitude = lat;
+                                                ObjAdd.Longitude = lon;
                                                 if (objA.AddressID == 0)
                                                 {
                                                     objEnt.Addresses.Add(ObjAdd);

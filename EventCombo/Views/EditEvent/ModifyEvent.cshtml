@@ -1513,8 +1513,9 @@ else
                     }));
                     marker.setPosition(place.geometry.location);
                     marker.setVisible(true);
-
+                    console.log(place)
                     var address = '';
+                   
                     if (place.address_components) {
                         address = [
                           (place.address_components[0] && place.address_components[0].short_name || ''),
@@ -1523,12 +1524,72 @@ else
                         ].join(' ');
                     }
 
-                $("#VenueName").val(place.address_components[0].long_name);
+                    for(var i=0;i<place.address_components.length;i++)
+                    {
+                        console.log(place.address_components[i].types[0]);
+                        if(place.address_components[i].types[0].trim()=="postal_code")
+                        {
+                            if (typeof place.address_components[i] === "undefined") 
+                            {
+                        
+                            }else
+                            {
+                                $("#Zip").val(place.address_components[i].long_name);
+                            }
+                        }
+                        if(place.address_components[i].types[0].trim()=="locality" || place.address_components[i].types[0].trim()=="administrative_area_level_3")
+                        {
+                            if (typeof place.address_components[i] === "undefined") 
+                            {
+                        
+                            }else
+                            {
+                                $("#City").val(place.address_components[i].long_name);
+                            }
+                        }
+                        if(place.address_components[i].types[0].trim()=="administrative_area_level_1")
+                        {
+                            if (typeof place.address_components[i] === "undefined") 
+                            {
+                        
+                            }else
+                            {
+                                $("#State").val(place.address_components[i].long_name);
+                            }
+                        }
+                        if(place.address_components[i].types[0].trim()=="country")
+                        {
+                            if (typeof place.address_components[i] === "undefined") 
+                            {
+                        
+                            }else
+                            {
+                                $('#CountryID option').each(function(){
+                                    if($(this).text().trim() == place.address_components[i].long_name){
+                                        $(this).prop('selected', true).trigger('change');
+                                    }
+                                });
+                             
+                            }
+                        }
+                       
+                       
 
-                $("#City").val(place.address_components[1].long_name);
-                $("#State").val(place.address_components[3].long_name);
-                $("#Zip").val(place.address_components[5].long_name);
-                $("#CountryID").val(place.address_components[4].long_name);
+                    }
+                   
+                  
+                   
+                    if (typeof place.address_components[0] === "undefined") 
+                    {
+                        
+                    }else
+                    {
+                        $("#VenueName").val(place.address_components[0].long_name);
+                    }
+                   
+             
+               
+               
 
                 $("#VenueName").val(address.toString());
                 $("#Address1").val(address[1].toString());
@@ -2613,6 +2674,7 @@ else
 
             //  alert($("#tblAddress tr").length);
             var addressstatus=$('#hidAddressStatus').val();
+        
             if(addressstatus=="")
             {
                 if($("#txtEventLocation").val()!="")
@@ -2651,8 +2713,9 @@ else
                     //  alert(Sno);
                     // Multiple Address
                     if (Sno != '' && Sno != undefined && Sno != null) {
+                       
                         SubmitAddress.push({
-                            AddressId:$("#VenueId"+Sno).val(),
+                            AddressId:$("#VenueId"+Sno).val(),  
                             VenueName: $("#VenueName" + Sno).val(),
                             Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() : ''),
                             Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
@@ -3388,7 +3451,7 @@ else
                     //        $("#txtEventLocation").val($("#consolidate" + Sno).text());
                     //    }
                     //});
-
+                    debugger;
                     $("#tblAddress tr").each(function (i) {
                         console.log( $("#tblAddress tr"));
                         Sno = $(this).find("td:first").html();
@@ -3566,7 +3629,7 @@ else
                 debugger;
                 var ColAry = ColumnValue.split('¶');
                 var ColName = ColumnName.split('¶');
-                var Sno = $("#" + TableId + " tr").length;
+                var Sno = parseInt(($("#" + TableId + " tr").length))+1;
                 var cval = ColumnValue;
                 var strHTML = '<tr>';
                 strHTML = strHTML + '<td style="display:none">' + Sno + '</td>';
@@ -3668,7 +3731,7 @@ else
             });
 
             $("#btAddMore").click(function () {
-
+                debugger;
                 if (validateAddress() == false) return false;
 
                 var vCols = $("#VenueId").val()+ "¶" +$("#VenueName").val() + "¶" + $("#Address1").val() + "¶" + $("#Address2").val() + "¶" + $("#City").val() + "¶" + $("#State").val() + "¶" + $("#Zip").val() + "¶" + $("#CountryID option:selected").text() + "¶" + $("#CountryID").val();
@@ -3686,6 +3749,8 @@ else
                 $("#Zip").val("");
                 $("#hidAddSno").val("");
                 $("#CountryID").val('1');
+
+                
             });
 
 
