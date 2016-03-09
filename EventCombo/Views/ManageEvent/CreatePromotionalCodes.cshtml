@@ -9,21 +9,25 @@
         <div id="accordion" class="panel-group">
 
             <div class="panel panel-default menu_list">
-                <a id="mgacnt" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                    <div id="dvacmang" class="panel-heading">
-                        Account <b class="closed"></b>
+                <a class="menu_title"  href="#">
+                    <div class="panel-heading">
+                        My Account 
+                    </div>
+                </a>  
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        My Account
                     </div>
                 </a>
-
-                <div id="collapse1" class="panel-collapse collapse">
-                    <div class="panel-body no-padding">
-                        <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
-                        <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
-                        <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
-                        <p>@Html.ActionLink("Payment Information", "PaymentInformation", "Account")</p>
-                        <p>@Html.ActionLink("Promotional code", "CreatePromotionalCodes", "ManageEvent")</p>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        My Account
                     </div>
-                </div>
+                </a>
             </div>
             <div class="panel panel-default menu_list">
 
@@ -134,6 +138,7 @@
                 <div class="form-group dropheight">
                     <select class="form-control selectpicker">
                         <option>$</option>
+                        <option>%</option>
                     </select>
                 </div>
             </div>
@@ -142,7 +147,7 @@
         <div class="col-sm-12 no_pad mt10">
             <div class="col-sm-2 no_pad">
                 <div class="form-group">
-                    Uses (Blank for Unlimited)
+                   Uses (Blank for Unlimited)
                 </div>
             </div>
             <div class="mid_or_width"></div>
@@ -154,14 +159,16 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-sm-12 no_pad mt10">
-            <div class="col-md-6 col-sm-12  no_pad">
+            <div class="col-md-6 col-sm-12  no_pad promo_checkbox">
                 <div class="col-sm-4 no_pad">
                     <div class="col-sm-12 no_pad">
-                        <label class="label-control prm_cd_level">
-                            Start:
-                            <input type="checkbox" class="pro_cd_left">
-                            before event
-                        </label>
+                        <div class="prm_befor_level"> Start</div>
+                        <div class="squaredOne">
+
+                            <input type="checkbox" value="None" id="befstrtdevnt" name="check" />
+                            <label for="befstrtdevnt"></label>
+                        </div>
+                        <div class="prm_cd_level"> before event</div>
                     </div>
                     <div class="col-sm-12 no_pad">
                         <div class="form-group">
@@ -174,11 +181,12 @@
                 <div class="col-sm-1 colsm1"></div>
                 <div class="col-sm-4 no_pad">
                     <div class="col-sm-12 no_pad">
-                        <label class="label-control prm_cd_level">
-                            End:
-                            <input type="checkbox" class="pro_cd_left">
-                            before event
-                        </label>
+                        <div class="prm_befor_level"> End</div>
+                        <div class="squaredOne">
+                            <input type="checkbox" value="None" id="befendevnt" name="check" />
+                            <label for="befendevnt"></label>
+                        </div>
+                        <div class="prm_cd_level"> before event</div>
                     </div>
                     <div class="col-sm-12 no_pad">
 
@@ -195,27 +203,30 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-sm-12 no_pad mt10">
-            <div class="col-md-6 col-sm-12 no_pad">
+            <div class="col-md-6 col-sm-12 no_pad promo_checkbox">
                 <div class="col-sm-12 apply_code_head">
                     Apply Codes To These Tickets
                 </div>
                 <div class="col-sm-12 no_pad">
-                    <label class="label-control prm_cd_level">
-                        <input type="checkbox" class="pro_cd_left">
-                        All
-                    </label>
+                    <div class="squaredOne">
+                        <input type="checkbox" value="None" id="all_ticket" name="check" />
+                        <label for="all_ticket"></label>
+                    </div>
+                    <div class="prm_cd_level"> All</div>
                 </div>
                 <div class="col-sm-12 no_pad">
-                    <label class="label-control prm_cd_level">
-                        <input type="checkbox" class="pro_cd_left">
-                        Certian Tickets Type
-                    </label>
+                    <div class="squaredOne">
+                        <input type="checkbox" value="None" id="certn_ticket" name="check" />
+                        <label for="certn_ticket"></label>
+                    </div>
+                    <div class="prm_cd_level"> Certian Tickets Type</div>
                 </div>
                 <div class="col-sm-12 no_pad">
-                    <label class="label-control prm_cd_level">
-                        <input type="checkbox" class="pro_cd_left">
-                        Certian Tickets Type
-                    </label>
+                    <div class="squaredOne">
+                        <input type="checkbox" value="None" id="anoth_ticket" name="check" />
+                        <label for="anoth_ticket"></label>
+                    </div>
+                    <div class="prm_cd_level"> Another Tickets Type</div>
                 </div>
 
             </div>
