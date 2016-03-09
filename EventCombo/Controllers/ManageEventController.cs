@@ -1274,5 +1274,11 @@ namespace EventCombo.Controllers
             return View();
         }
 
+
+        public ActionResult CreatePromotionalCodes()
+        {
+            return View();
+        }
+
     }
 }

@@ -1357,7 +1357,7 @@ span.evnt_toltip{
 
 /*Discount page Listing*/
    .dropheight .dropdown-menu.open .dropdown-menu.inner{ max-height: 150px !important; }
-    
+   .bootstrap-select .dropdown-toggle:focus{ outline: none !important }
 
     .discTable { width: 100%; display: table; }
     .discTablehead{width: 100%; height: 100%; display: table-row; background: #8c8c8c; padding: 10px 0; font-size: 16px; color: #fff; padding: 5px; }
@@ -1494,3 +1494,6 @@ div.file_upload input {
 .soc_btn_active{ background-color: #ccc; color: #fff;  }
 .soc_btn_active:hover,.soc_btn_active:focus,.soc_btn_active.focus{ background-color: #ccc; color: #fff;  }
 .disnt_srh_right{ float: right; }
+
+
+       

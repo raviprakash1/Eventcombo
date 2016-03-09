@@ -1169,6 +1169,7 @@
     <Content Include="Views\OrganizerInfo\Index.cshtml" />
     <Content Include="Views\OrganizerInfo\OrganiserPresentPartialView.cshtml" />
     <Content Include="Views\ManageEvent\PromotionalCodes.cshtml" />
+    <Content Include="Views\ManageEvent\CreatePromotionalCodes.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
