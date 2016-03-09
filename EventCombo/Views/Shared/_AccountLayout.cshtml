@@ -97,9 +97,9 @@
 
                         </div>
                         <div id="navbar" class="navbar-collapse collapse nav_cus">
-                            @if (IsSectionDefined("Sidebar"))
+                            @if (IsSectionDefined("sidenav"))
                             {
-                                RenderSection("Sidebar");
+                                @RenderSection("sidenav", false)
                             }
                             else
                             {

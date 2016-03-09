@@ -473,9 +473,22 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 100 "..\..\Views\Shared\_AccountLayout.cshtml"
-                             if (IsSectionDefined("Sidebar"))
+                             if (IsSectionDefined("sidenav"))
                             {
-                                RenderSection("Sidebar");
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 102 "..\..\Views\Shared\_AccountLayout.cshtml"
+                           Write(RenderSection("sidenav", false));
+
+            
+            #line default
+            #line hidden
+            
+            #line 102 "..\..\Views\Shared\_AccountLayout.cshtml"
+                                                                
                             }
                             else
                             {

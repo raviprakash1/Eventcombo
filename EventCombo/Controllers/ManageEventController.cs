@@ -168,7 +168,7 @@ namespace EventCombo.Controllers
             Mevent.Eventprivacy = Edetails.EventPrivacy;
             Mevent.EventHits = GetEventTotalHits(Eventid);
             Session["logo"] = "events";
-            Session["Fromname"] = "events";
+            Session["Fromname"] = "myevents";
             ValidationMessageController vmc = new ValidationMessageController();
             vmc.ControllerContext = new ControllerContext(this.Request.RequestContext, vmc);
           
@@ -1267,6 +1267,11 @@ namespace EventCombo.Controllers
 
             return msg;
 
+        }
+
+        public ActionResult PromotionalCodes()
+        {
+            return View();
         }
 
     }

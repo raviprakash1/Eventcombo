@@ -529,6 +529,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-multiselect.css" />
+    <Content Include="Content\DateTimePicker.css" />
     <Content Include="Content\ec-select.css" />
     <Content Include="Content\eventcombo-new.css" />
     <Content Include="Content\eventcombo.css" />
@@ -551,6 +552,7 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
@@ -1166,6 +1168,7 @@
     <Content Include="Views\Account\OrganizerAddPartialView.cshtml" />
     <Content Include="Views\OrganizerInfo\Index.cshtml" />
     <Content Include="Views\OrganizerInfo\OrganiserPresentPartialView.cshtml" />
+    <Content Include="Views\ManageEvent\PromotionalCodes.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
