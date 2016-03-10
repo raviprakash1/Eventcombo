@@ -85,7 +85,7 @@
                     {
                         foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
                         {
-                            <li><a href="javascript:void(0);" class="active" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a> <span class="badge dis_badge" onclick="DeleteFilterEventType('@item.EventTypeID');">X</span></li>
+                            <li class="active"><a href="javascript:void(0);"  onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a> <a href="javascript:void(0);" class="can_badg " onclick="DeleteFilterEventType('@item.EventTypeID');">X</a></li>
                         }
                     }
                     <li><a href="javascript:void(0);" onclick="GetAllEventType();" ><b>All Event Types</b></a></li>
@@ -136,7 +136,7 @@
                                         @item.EventAddress
                                     </span>
                                 </p>
-                                <p class="list_event_date_time"><a href="javascript:void(0);">@item.EventTimings</a> </p>
+                                <p class="list_event_date_time">@item.EventTimings </p>
                             </div>
                         </div>
                         <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
