@@ -7,7 +7,7 @@ namespace EventCombo.Models
 {
     public class CommanClasses
     {
-        public string GetMessage(string strFormName,string strFormTag)
+        public string GetMessage(string strFormName, string strFormTag)
         {
             string result = "";
             try
@@ -61,7 +61,7 @@ namespace EventCombo.Models
     {
         public Ticket_Locked_Detail[] TLD_List { get; set; }
     }
- 
+
     public class Ticket_Locked_Detail_List
     {
         public long TLD_Id { get; set; }
@@ -80,7 +80,7 @@ namespace EventCombo.Models
     {
         public long SaleQty { get; set; }
         public DateTime orderDate { get; set; }
-        
+
     }
     public class DiscoverEvent
     {
@@ -96,6 +96,8 @@ namespace EventCombo.Models
         //public DiscoverEvent[] DiscoverEventList { get; set; }
 
     }
-
-
+    public partial class Address
+    {
+        public string discoverdistance { get; set; }
+    }
 }
