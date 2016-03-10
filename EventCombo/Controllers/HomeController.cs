@@ -335,7 +335,7 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult DiscoverEvents(string strEt, string strEc)
+        public ActionResult DiscoverEvents(string strEt, string strEc,string strPrice)
         {
             if ((Session["AppId"] != null))
             {
@@ -348,33 +348,119 @@ namespace EventCombo.Controllers
                 }
             }
 
+            if (strEt == null || strEt == "~") strEt = string.Empty;
+            if (strEc == null || strEc == "~") strEc = string.Empty;
+
             Session["Fromname"] = "DiscoverEvents";
-            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt,strEc);
+            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc,strPrice);
             ViewBag.DisEvnt = objDiscEvt.ToPagedList(1, 100);
-            ViewBag.Eventtype = GetDiscoverEventType();
-            ViewBag.EventCat = GetDiscoverEventCategory();
+            ViewBag.Eventtype = GetDiscoverEventType(strEt);
+            ViewBag.EventCat = GetDiscoverEventCategory(strEc);
+            if (strEt != null && strEt != string.Empty)
+                ViewBag.ETSelected = GetEventTypeSelected(strEt);
+            else
+                ViewBag.ETSelected = null;
+
+            if (strEc != null && strEc != string.Empty)
+                ViewBag.ECatSelected = GetEventCategorySelected(strEc);
+            else
+                ViewBag.ECatSelected = null;
+
             TempData["ETypeSelected"] = strEt;
             TempData["ECatSelected"] = strEc;
-
+            TempData["tempPrice"] = strPrice;
+            
             return View();
 
         }
-        public List<EventType> GetDiscoverEventType()
+    
+        public List<EventType> GetDiscoverEventType(string strSelectedTypes)
         {
             using (EventComboEntities db = new EventComboEntities())
             {
-                var vEventtype = (from et in db.EventTypes where et.EventHide == "Y" select et).ToList().OrderBy(m => m.EventTypeID); 
-                return vEventtype.ToList();
+                if (strSelectedTypes != null && strSelectedTypes != string.Empty)
+                {
+                    //List<EventType> objETSelected = GetEventTypeSelected(strSelectedTypes);
+                    string[] str = strSelectedTypes.Split(',');
+                    long[] iAry = Array.ConvertAll(str, s => long.Parse(s));
+                    List<EventType> objETRest = db.EventTypes.Where(e => e.EventHide != "Y" && !iAry.Contains(e.EventTypeID)).OrderBy(m => m.EventType1).ToList();
+                    return objETRest;
+                    
+                }
+                else
+                {
+                    return db.EventTypes.Where(e => e.EventHide != "Y").OrderBy(m => m.EventType1).ToList();
+                }
+                //if (strSelectedTypes != null && strSelectedTypes != string.Empty)
+                //{
+                //    var vEt = db.EventTypes.SqlQuery("select * From EventType where EventHide != 'Y' and EventTypeID in (" + strSelectedTypes + ")").Concat(db.EventTypes.SqlQuery("select * From EventType where EventHide != 'Y' and EventTypeID not in (" + strSelectedTypes + ") "));
+                //    return vEt.ToList();
+                //}
+                //else
+                //{
+                //var vEtype = (from et in db.EventTypes where et.EventHide != "Y" select et).ToList().OrderBy(m => m.EventType1).ToList();
+                //if (strSelectedTypes != null && strSelectedTypes != string.Empty)
+                //{
+                //    List<EventType> objETSelected = new List<EventType>();
+                //    List<EventType> objETRest = new List<EventType>();
+                //    foreach (EventType ev in vEtype)
+                //    {
+                //        if (strSelectedTypes.Contains(ev.EventTypeID.ToString()) == true)
+                //        {
+                //            objETSelected.Add(ev);
+                //        }
+                //        else
+                //        {
+                //            objETRest.Add(ev);
+                //        }
+                //    }
+                //    return objETSelected.Concat(objETRest).ToList();
+                //}
+                //else {
+
+                    //    return vEtype;
+                    //}
             }
         }
 
 
-        public List<EventCategory> GetDiscoverEventCategory()
+        public List<EventType> GetEventTypeSelected(string strSelectedTypes)
         {
             using (EventComboEntities db = new EventComboEntities())
             {
-                var vEventCategory = (from et in db.EventCategories select et).ToList().OrderBy(m => m.EventCategoryID);
-                return vEventCategory.ToList();
+                string[] str = strSelectedTypes.Split(',');
+                long[] iAry = Array.ConvertAll(str, s => long.Parse(s));
+                return db.EventTypes.Where(e => e.EventHide != "Y" && iAry.Contains(e.EventTypeID)).ToList();
+            }
+        }
+        public List<EventCategory> GetEventCategorySelected(string strSelectedCat)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                string[] str = strSelectedCat.Split(',');
+                long[] iAry = Array.ConvertAll(str, s => long.Parse(s));
+                return db.EventCategories.Where(e => iAry.Contains(e.EventCategoryID)).ToList();
+            }
+        }
+        public List<EventCategory> GetDiscoverEventCategory(string strCat)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                if (strCat != null && strCat != string.Empty)
+                {
+                    //List<EventType> objETSelected = GetEventTypeSelected(strSelectedTypes);
+                    string[] str = strCat.Split(',');
+                    long[] iAry = Array.ConvertAll(str, s => long.Parse(s));
+                    List<EventCategory> objEcat = db.EventCategories.Where(e => !iAry.Contains(e.EventCategoryID)).OrderBy(m => m.EventCategory1).ToList();
+                    return objEcat;
+
+                }
+                else
+                {
+                    return db.EventCategories.OrderBy(m => m.EventCategory1).ToList();
+                }
+                //var vEventCategory = (from et in db.EventCategories select et).ToList().OrderBy(m => m.EventCategory1);
+                //return vEventCategory.ToList();
             }
         }
         public string GetDiscoverEventCategorybyId(long lid)
@@ -385,6 +471,16 @@ namespace EventCombo.Controllers
                 return vEventCategory;
             }
         }
+        //public string GetDiscoverEventTimings(long lEvent)
+        //{
+
+        //    using (EventComboEntities db = new EventComboEntities())
+        //    {
+        //        var vEventCategory = (from et in db.EventCategories where et.EventCategoryID == lid select et.EventCategory1).FirstOrDefault();
+        //        return vEventCategory;
+        //    }
+
+        //}
 
 
         public string GetDiscoverEventTypebyId(long lid)
@@ -418,7 +514,7 @@ namespace EventCombo.Controllers
                 }
                 else if (vFree == null && vDonate == null && vMaxPrice == vMinPrice)
                 {
-                    strResult = vMaxPrice.ToString();
+                    strResult = "$" + vMaxPrice.ToString();
                 }
                 else if (vFree == null && vDonate == null && vMaxPrice > vMinPrice)
                 {
@@ -426,20 +522,20 @@ namespace EventCombo.Controllers
                 }
                 else if (vFree != null && vDonate == null && vMaxPrice > 0)
                 {
-                    strResult = "FREE - $" + vMaxPrice.ToString();
+                    strResult = "$0 - $" + vMaxPrice.ToString();
                 }
                 else if (vFree != null && vDonate != null && vMaxPrice > 0)
                 {
-                    strResult = "FREE - $" + vMaxPrice.ToString();
+                    strResult = "$0 - $" + vMaxPrice.ToString();
                 }
                 else if (vFree == null && vDonate != null && vMaxPrice > vMinPrice)
                 {
                     strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
                 }
             }
-                return strResult;
+            return strResult;
         }
-        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId)
+        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId,string strPrice)
         {
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
             using (EventComboEntities db = new EventComboEntities())
@@ -447,44 +543,89 @@ namespace EventCombo.Controllers
                 StringBuilder sbQuery = new StringBuilder();
                 if (strEventTypeId == null || strEventTypeId == "~") strEventTypeId = string.Empty;
                 if (strEventCatId == null || strEventCatId == "~") strEventCatId = string.Empty;
+                if (strPrice == null || strPrice == "~") strPrice = "ALL";
+                
                 DiscoverEvent objDisEv = new DiscoverEvent();
-                sbQuery.Append("Select * from Event where 0=0 ") ;
+                sbQuery.Append("Select * from Event where 0=0 ");
 
                 if (strEventTypeId.Trim() != string.Empty)
-                    sbQuery.Append(" And EventTypeID in (" + strEventTypeId + ")");
+                    sbQuery.Append(" AND EventTypeID in (" + strEventTypeId + ")");
 
                 if (strEventCatId.Trim() != string.Empty)
-                    sbQuery.Append(" And EventCategoryID in (" + strEventCatId + ")");
+                    sbQuery.Append(" AND EventCategoryID in (" + strEventCatId + ")");
+
+                if (strPrice.ToUpper() == "FREE")
+                {
+                    sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID = 1)");
+                }
+
+                if (strPrice.ToUpper() == "PAID")
+                {
+                    sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (2,3))");
+                }
 
 
                 var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
                 CreateEventController objCEv = new CreateEventController();
+                string strImageUrl = "";
                 foreach (Event objEv in vEventList)
                 {
+                    //if (strPrice.ToUpper() == "FREE")
+                    //{
+                    //    var vTicket = db.Tickets.Where(ev => ev.TicketTypeID == 1).FirstOrDefault();
+                    //    if (vTicket == null) continue;
+                    //}
+                    //if (strPrice.ToUpper() == "PAID")
+                    //{
+
+                    //    var vTicket = db.Tickets.Where(ev => ev.TicketTypeID == 2).FirstOrDefault();
+                    //    var vDontion = db.Tickets.Where(ev => ev.TicketTypeID == 3).FirstOrDefault();
+                    //    if (vTicket == null && vDontion == null) continue;
+                    //}
+
+
+
+                    strImageUrl = objCEv.GetImages(objEv.EventID).FirstOrDefault();
+                    if (strImageUrl == null) strImageUrl = "/Images/default_event_image.jpg";
                     objDisEv = new DiscoverEvent();
                     objDisEv.EventTitle = objEv.EventTitle;
-                    objDisEv.EventImage = objCEv.GetImages(objEv.EventID).FirstOrDefault();
+                    objDisEv.EventImage = strImageUrl;
                     objDisEv.EventCat = GetDiscoverEventCategorybyId(objEv.EventCategoryID);
                     objDisEv.EventType = GetDiscoverEventTypebyId(objEv.EventTypeID);
                     objDisEv.EventCatId = objEv.EventCategoryID;
                     objDisEv.EventTypeId = objEv.EventTypeID;
                     objDisEv.PriceLable = GetPriceLabel(objEv.EventID);
-                    foreach (Address objadd in objEv.Addresses)
+                    var vAddress = objEv.Addresses.FirstOrDefault();
+                    if (vAddress != null)
                     {
-                        if (objadd.ConsolidateAddress.Trim() != string.Empty)
-                            objDisEv.EventAddress = objadd.ConsolidateAddress;
+                        if (vAddress.ConsolidateAddress.Trim() != string.Empty)
+                            objDisEv.EventAddress = vAddress.ConsolidateAddress;
                         else
                         {
-                            objDisEv.EventAddress = objadd.VenueName.Trim() + " " + objadd.Address1.Trim() + " " + objadd.Address2.Trim() + " " + objadd.City.Trim() + " " + objadd.Zip;
+                            objDisEv.EventAddress = vAddress.VenueName.Trim() + " " + vAddress.Address1.Trim() + " " + vAddress.Address2.Trim() + " " + vAddress.City.Trim() + " " + vAddress.Zip;
                         }
-                        break;
                     }
+                    var vTimings = objEv.EventVenues.FirstOrDefault();
+                    if (vTimings != null)
+                    {
+                        objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
+                    }
+                    else
+                    {
+                        long lMin; long lMax;
+                        lMin = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == objEv.EventID select evt.PE_Id).Min();
+                        lMax = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == objEv.EventID select evt.PE_Id).Max();
+                        var vMin = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMin select evt).FirstOrDefault();
+                        var vMax = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMax select evt).FirstOrDefault();
+                        objDisEv.EventTimings = vMin.PE_Scheduled_Date + " " + vMin.PE_Start_Time + " - " + vMax.PE_Scheduled_Date + " " + vMax.PE_End_Time;
+                    }
+
                     lsDisEvt.Add(objDisEv);
                 }
                 return lsDisEvt;
             }
         }
-         
+
         public ActionResult DiscoverEventsTiles()
         {
             if ((Session["AppId"] != null))

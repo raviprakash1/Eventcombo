@@ -1284,7 +1284,9 @@ span.evnt_toltip{
 .nav.list_inner_cat_tag > li{ margin-right: 10px; }
 .nav.list_inner_cat_tag > li > a{  padding: 0; color: #cdcdcd;  border-radius: 0px; font-size: 13px; background:none; }
 .nav.list_inner_cat_tag > li > a:hover, .nav.list_inner_cat_tag > li > a:focus{  background:none; color: #000; text-decoration: underline;  }
-.de_ev_li_border{ border-bottom: 1px solid #ccc; background-color: #f5f5f5; }
+
+.de_ev_li_border{ border-bottom: 1px solid #f5f5f5;  }
+.de_ev_li_border:hover{background-color: #f5f5f5;}
 
 .desc_btn_bg_none {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0; margin-top: 0px;
@@ -1329,7 +1331,11 @@ span.evnt_toltip{
 .ot_main_pad{ padding: 0px 10px; }
 .ot_pad{ padding: 0px 5px; margin-bottom: 10px; }
 .in_pad{ padding: 5px 8px; }
-.in_shadw{ box-shadow: 0 0 5px #ccc;}
+
+
+.in_shadw{ border: 1px solid #f5f5f5;}
+.in_shadw:hover{ box-shadow: 0 0 5px #ccc; border: 1px solid #fff;}
+.in_shadw:hover > .de_ev_li_border{background-color: #f5f5f5;}
 
 .desc_date_lebel {
     font-size: 1.2em;
@@ -1356,11 +1362,27 @@ span.evnt_toltip{
 /*.nav.dis_side_fliter_tag > li > a:hover, .nav.dis_side_fliter_tag > li > a:focus{background:none;  }*/
 .badge.dis_badge{ background: none; color: #3cf;  }
 
-.nav.dis_side_fliter_tag > li > a:hover, .nav.dis_side_fliter_tag > li > a.active{background:#efefef; color: #3cf;  }
+/*.nav.dis_side_fliter_tag > li > a:hover, .nav.dis_side_fliter_tag > li > a.active{background:#efefef; color: #3cf;  }
 .nav.dis_side_fliter_tag > li > a span{ display: none;  }
 .nav.dis_side_fliter_tag > li > a:hover span{ color: #000; display: block;  }
-.nav.dis_side_fliter_tag > li > a.active span{ color: #000; display: block; }
+.nav.dis_side_fliter_tag > li > a.active span{ color: #000; display: block; }*/
 .nav-pills.dis_side_fliter_tag > li > a > .badge{ float: right; }
+
+.nav.dis_side_fliter_tag > li > a:hover{background:none; color: #000;}
+.nav.dis_side_fliter_tag > li > a.active{background:#f1f1f1; color: #3cf;  }
+.nav.dis_side_fliter_tag > li > a.active:hover{background:#e4e4e4;   }
+.nav.dis_side_fliter_tag > li > a span{ display: none;  }
+.nav.dis_side_fliter_tag > li > a:hover span{ color: #000; display: none;  }
+.nav.dis_side_fliter_tag > li > a.active span{ color: #000; display: none; }
+
+.nav.dis_side_fliter_tag > li > a.active:hover span{display: block; }
+
+
+
+
+
+
+
 .dis_side_fliter_scrol{ min-height: 50px; max-height: 100px; overflow-y:auto; }
 
 .side_dis_event_desc{ font-size: 1.1em; color: #000; margin-bottom:5px; }
