@@ -73,9 +73,24 @@
             <div class="col-sm-12 no_pad">
                 <div class="col-sm-12 no_pad">
                     <ul class="side_fliter_by_type">
-                        <li><a href="#" class="active">All Prices</a></li>
-                        <li><a href="javascript:void(0);" onclick="GetPriceFilter('FREE');">Free</a></li>
-                        <li><a href="javascript:void(0);" onclick="GetPriceFilter('PAID');">Paid</a></li>
+                        @if (@ViewData["tempPrice"].ToString() == "FREE")
+                        {
+                            <li><a href="javascript:void(0);" onclick="GetPriceFilter('ALL');">All Prices</a></li>
+                            <li><a href="javascript:void(0);" class="active" onclick="GetPriceFilter('FREE');">Free</a></li>
+                            <li><a href="javascript:void(0);" onclick="GetPriceFilter('PAID');">Paid</a></li>
+                        }
+                        else if (@ViewData["tempPrice"].ToString() == "PAID")
+                        {
+                            <li><a href="javascript:void(0);" onclick="GetPriceFilter('ALL');">All Prices</a></li>
+                            <li><a href="javascript:void(0);" onclick="GetPriceFilter('FREE');">Free</a></li>
+                            <li><a href="javascript:void(0);" class="active" onclick="GetPriceFilter('PAID');">Paid</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="javascript:void(0);" onclick="GetPriceFilter('ALL');" class="active">All Prices</a></li>
+                            <li><a href="javascript:void(0);" onclick="GetPriceFilter('FREE');">Free</a></li>
+                            <li><a href="javascript:void(0);" onclick="GetPriceFilter('PAID');">Paid</a></li>
+                        }
                     </ul>
                 </div>
                 <div class="col-sm-12 no_pad">
@@ -204,7 +219,6 @@
         vUrl = vUrl.replace("all", Price);
         vUrl = vUrl.replace("evc", vECat);
         vUrl = vUrl.replace("evt", vEtype);
-        alert(vUrl);
         window.location.href = vUrl;
 
     }

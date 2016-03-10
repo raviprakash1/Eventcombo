@@ -368,7 +368,7 @@ namespace EventCombo.Controllers
 
             TempData["ETypeSelected"] = strEt;
             TempData["ECatSelected"] = strEc;
-            TempData["tempPrice"] = strPrice;
+            ViewData["tempPrice"] = (strPrice != null ? strPrice.ToUpper() : "ALL");
             
             return View();
 
