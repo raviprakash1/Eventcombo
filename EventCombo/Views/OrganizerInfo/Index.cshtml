@@ -40,7 +40,7 @@
                     <img class="org_event_img" src="@Model.Imagepath" />
 
                     <h3>@Model.Orgnizer_Name Presents</h3>
-                      @Model.Organizer_Desc
+                     <p> @Model.Organizer_Desc </p>
                 </div>
                 <div class="col-sm-3 no_pad mt20">
                     <div class="col-sm-12 inst_karm_box">
@@ -59,7 +59,15 @@
 {
     <p><a href="@Model.Organizer_Linkedin" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Model.Organizer_Linkedin</a></p>
 }
-                        <p><a href="#past_event">Past Event <span class="badge">@Model.pasteventcount</span> </a></p>
+@if(Model.pasteventcount<=0)
+{ 
+                        <p>Past Event <span class="badge">@Model.pasteventcount</span></p>
+}
+else
+{
+    <p><a href="#past_event">Past Event <span class="badge">@Model.pasteventcount</span> </a></p>
+
+}
                     </div>
                 </div>
             </div>
@@ -160,6 +168,34 @@
       
     </div>
     }
+
+    <div class="event_detail_container">
+
+        <div class="EveDisRib evnt_tile_dis_head evnt_cursor">
+            <div class="evnt_tile_dis_bg_l"></div>
+            <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5"><img src="images/fb-dis.png" class="img_top"> Facebook Comment</h2>
+            </div>
+            <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+
+        <div class="EveActRib evnt_tile_head evnt_cursor">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
+                <h2 class="fb_dis_head pt5"><img src="images/fb.png" class="img_top"> Facebook Comment</h2>
+            </div>
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+
+        <div class="evnt_details_body2">
+            <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10">
+                <label class="label-control evnt_ticket_label">
+                    <img src="images/fb_connect.jpg"> to see which of your Facebook friends are going
+                </label>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="contorganizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -241,12 +277,33 @@
 
 <script>
     $(document).ready(function () {
+        $(".EveActRib").css("display", "none");
+        $(".FacdisComm").click(function(){
+            $(".EveActRib").show();
+            $(".EveDisRib").hide();
+        });
+
+        $(".FacdactComm").click(function(){
+            $(".EveActRib").hide();
+            $(".EveDisRib").show();
+
+        });
+
+        $(".Evenfaccomment").css("display", "none");
+        $(".EveDisRib").click(function(){
+            $(".Evenfaccomment").slideToggle("fast");
+        });
+        $(".EveActRib").click(function(){
+            $(".Evenfaccomment").slideToggle("fast");
+        });
+
         $("#btnviewmorepast").click(function(){
-            debugger;
+    
             var hdpresentcount=parseInt( $("#hdpastcount").val());
             var hdtotcount=parseInt($("#hdtotpastcount").val());
             var maxsetcount=parseInt($("#hdmaxsetcount").val());
             $("#btnviewlesspast").css('visibility','visible');
+           
             if(hdpresentcount<hdtotcount)
             {
                 var orgid=@Model.Orgnizer_Id;
@@ -255,11 +312,14 @@
                 $("#hdpastcount").val(countpresent);
                 $('#dvpast').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Past');
             }
-        
+            if(hdpresentcount>=hdtotcount)
+            {
+                $("#btnviewmorepast").css('visibility','hidden');
+            }
         
         });
         $("#btnviewlesspast").click(function(){
-            debugger;
+         
             var hdpresentcount=parseInt($("#hdpastcount").val());
             var hdtotcount=parseInt($("#hdtotpastcount").val());
             var maxsetcount=parseInt($("#hdmaxsetcount").val());
@@ -267,6 +327,7 @@
             var orgid=@Model.Orgnizer_Id;
             var countpresent=$("#hdpastcount").val();
             countpresent= parseInt(countpresent)-maxsetcount;
+            $("#btnviewmorepast").css('visibility','visible');
             $("#hdpastcount").val(countpresent);
             $('#dvpast').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Past');
             var hdpresentcount=parseInt($("#hdpastcount").val());
@@ -284,6 +345,7 @@
             var hdtotcount=parseInt($("#hdtotpresentcount").val());
             var maxsetcount=parseInt($("#hdmaxsetcount").val());
             $("#btnviewless").css('visibility','visible');
+          
             if(hdpresentcount<hdtotcount)
             {
                 var orgid=@Model.Orgnizer_Id;
@@ -292,14 +354,17 @@
                 $("#hdpresentcount").val(countpresent);
                 $('#dvpresent').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Present');
             }
-
+            if(hdpresentcount>=hdtotcount)
+            {
+                $("#btnviewmore").css('visibility','hidden');
+            }
         });
         $("#btnviewless").click(function(){
             debugger;
             var hdpresentcount=parseInt($("#hdpresentcount").val());
             var hdtotcount=parseInt($("#hdtotpresentcount").val());
             var maxsetcount=parseInt($("#hdmaxsetcount").val());
-          
+            $("#btnviewmore").css('visibility','visible');
                 var orgid=@Model.Orgnizer_Id;
                 var countpresent=$("#hdpresentcount").val();
                 countpresent= parseInt(countpresent)-maxsetcount;

@@ -189,7 +189,7 @@ namespace EventCombo.Controllers
 
                     UserProfileImage = images[0];
                     ContentType = images[1];
-                    ImagePath = "Images/Organizer/Organizer_Images/" + images[0];
+                    ImagePath = "/Images/Organizer/Organizer_Images/" + images[0];
                 }
 
                 using (EventComboEntities db = new EventComboEntities())
@@ -2519,7 +2519,21 @@ namespace EventCombo.Controllers
 
 
         }
+        public bool chkOrganizerName(string Name,int id)
+        {
+            bool type = false;
+            if (id == 0)
+            {
+                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) select x).Any();
 
+            }
+            else
+            {
+                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) && x.Orgnizer_Id!=id select x).Any();
+
+            }
+            return type;
+        }
         internal class ChallengeResult : HttpUnauthorizedResult
         {
             public ChallengeResult(string provider, string redirectUri)

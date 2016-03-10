@@ -1198,6 +1198,7 @@ span.evnt_toltip{
 
 .org_event_img{ margin-right: 10px; margin-top: 20px; margin-bottom: 10px;  width: 200px; height: 180px; float: left;   }
 .org_evnt_desc_top{ font-size: 16px;  }
+.org_evnt_desc_top p{ word-break:break-all;}
 .org_evnt_list_title{ margin: 0px 0px 15px 0; font-size: 25px; }
 .org_evnt_list{ font-size: 18px;  }
 .org_evnt_list_main{ color: #3cf;   }

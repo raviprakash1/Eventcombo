@@ -9,7 +9,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input class="form-control" placeholder="" type="text" id="txt_name" maxlength="256">
+                        <input class="form-control" placeholder="" type="text" id="txt_name" maxlength="256" onkeypress="return onlyAlphabets(event,this);" >
                         <small class="acnt_form_name_mini">First Name</small>
                     </div>
 
@@ -72,7 +72,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12 add_form_bot">
-                        <input class="form-control" placeholder="" type="text" id="txt_phnno">
+                        <input class="form-control" placeholder="" type="text" id="txt_phnno" maxlength="10">
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12 add_form_bot">
-                        <input class="form-control" placeholder="" type="text" id="txt_fburl" maxlength="200">
+                        <input class="form-control" placeholder="" type="text" id="txt_fburl" maxlength="256">
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12 add_form_bot">
-                        <input class="form-control" placeholder="" type="text" id="txt_twitterurl" maxlength="200">
+                        <input class="form-control" placeholder="" type="text" id="txt_twitterurl" maxlength="256">
                     </div>
                 </div>
             </div>
@@ -116,7 +116,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12 add_form_bot">
-                        <input class="form-control" placeholder="" type="text" id="txt_linkedinurl" maxlength="200">
+                        <input class="form-control" placeholder="" type="text" id="txt_linkedinurl" maxlength="256">
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@
 
 
 <script>
-
+    $("#txt_phnno").mask("999-999-9999");
     $('.summernote').summernote({
         height: 70,   //set editable area's height
         disableDragAndDrop: true
@@ -285,4 +285,33 @@
 
 
     });
+
+
+    function onlyAlphabets(e, t) {
+
+
+
+        if (window.event) {
+
+            var charCode = window.event.keyCode;
+
+        }
+
+        else if (e) {
+
+            var charCode = e.which;
+
+        }
+
+        else { return true; }
+
+        if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+
+            return true;
+
+        else
+
+            return false;
+
+    }
 </script>

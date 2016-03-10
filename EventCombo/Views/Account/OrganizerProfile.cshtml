@@ -72,10 +72,10 @@
                 </div>
 
                 <div class="col-sm-3 col-xs-4 mt5 ">
-                    <button type="button" class="btn btn-lg ev_org_add_btn xs_btn_orgz" id="btnedit">Edit </button>
+                    <button type="button" class="btn btn-lg ev_org_add_btn xs_btn_orgz" id="btnedit" disabled>Edit </button>
                 </div>
                 <div class="col-sm-3 col-xs-4 mt5 ">
-                    <button type="button" class="btn btn-lg ev_org_add_btn xs_btn_orgz" id="btndelete">Delete </button>
+                    <button type="button" class="btn btn-lg ev_org_add_btn xs_btn_orgz" id="btndelete" disabled>Delete </button>
                 </div>
 
 
@@ -116,6 +116,10 @@
 
 
 <script type="text/javascript">
+
+    $(document).click(function () {
+        $('#diverroacc').hide();
+    });
     function LoadOrganiserAsyn(id) {
     
         $(".maindivnonvis").hide();
@@ -129,7 +133,7 @@
         $('#divorgprofile').load('@Url.Action("AddOrganiser", "Account")');
     }
     $(document).ready(function () {
-       
+      
         $('#mgacnt').click();
         $('#dvacmang').addClass("active");
         $('#dvacmang b').addClass('opened new-opend');
@@ -149,18 +153,61 @@
 
         $("#txt_phnno").mask("999-999-9999");
 
-       
+      
 
         $("#id_selectorg").change(function () {
+            $('#diverroacc').hide();
             var selectval = $(this).val();
-
-            if (selectval == "A") {
-                LoadOrganiserAddAsyn();
-                $(".maindivnonvis").hide();
-            } else {
-               
-                $(".maindivnonvis").show();
+            if (selectval != 0) {
+                if (selectval == "A") {
+                    LoadOrganiserAddAsyn();
+                    $(".maindivnonvis").hide();
+                } else {
+                    $("#btnedit").prop("disabled", false);
+                    $("#btndelete").prop("disabled", false);
+                    $(".maindivnonvis").show();
+                }
             }
+
+        });
+
+        $(document).on('blur', '#txt_name', function () {
+            debugger;
+            var name = $('#txt_name').val();
+            var orgid = 0;
+         
+                orgid = $('#hd_ID').val();
+                if (typeof orgid === "undefined")
+                {
+                    orgid = 0;
+                }
+          
+            $.ajax({
+                url: '@Url.Action("chkOrganizerName", "Account")',
+                data: { Name: name, id: orgid },
+                type: "Post",
+                success: function (data) {
+                    
+                    if(data=="True")
+                    {
+                        $('#txt_name').addClass('err-bor');
+                        $("#dveruimain").addClass("er_UI_main");
+                        $("#dveruiimg").addClass("er_UI_img");
+                        $("#dveruimain").removeClass("er_suc_main");
+                        $("#dveruiimg").removeClass("er_suc_img");
+                        $('#erraccmsg').html('Name already exist!!');
+                        $('#diverroacc').show();
+                        $('html,body').animate({ scrollTop: 0 });
+                        $('#txt_name').val('');
+                        return false;
+                    } else {
+                        $('#txt_name').removeClass('err-bor');
+                        $('#diverroacc').hide();
+                    }
+
+                }
+            });
+
 
         });
         $(document).on('change', '#txt_zip', function () {
@@ -240,12 +287,13 @@
 
                 return false;
             }
-            var code = $("#txt_desc").code();
-            var text = code.replace(/<p>/gi, " ");
-            var plainText = $("<div />").html(text).text();
+            
+            var code = escape($("#txt_desc").code());
+            //var text = code.replace(/<p>/gi, " ");
+            //var plainText = $("<div />").html(text).text();
             var model = {
                 'Orgnizer_Name': $("#txt_name").val(),
-                'Organizer_Desc': plainText,
+                'Organizer_Desc': code,
                 'Organizer_FBLink': $("#txt_fburl").val(),
                 'Organizer_Twitter': $("#txt_twitterurl").val(),
                 'Organizer_Linkedin': $("#txt_linkedinurl").val(),
@@ -276,6 +324,7 @@
                             $("#id_selectorg").append("<option value='" + optiondata.Id + "'>" + optiondata.Name + "</option>");
                         });
                         $('.selectpicker').selectpicker('refresh');
+
 
                     } else {
                         if (data.Message == "O") {
@@ -389,13 +438,12 @@
 
                 return false;
             }
-            var code = $("#txt_desc").code();
-            var text = code.replace(/<p>/gi, " ");
-            var plainText = $("<div />").html(text).text();
+            var code = escape($("#txt_desc").code());
+          
             var model = {
                 'Orgnizer_Id': $('#hd_ID').val(),
                 'Orgnizer_Name': $("#txt_name").val(),
-                'Organizer_Desc': plainText,
+                'Organizer_Desc': code,
                 'Organizer_FBLink': $("#txt_fburl").val(),
                 'Organizer_Twitter': $("#txt_twitterurl").val(),
                 'Organizer_Linkedin': $("#txt_linkedinurl").val(),
@@ -436,6 +484,8 @@
 
 
                     }
+                    $("#btnedit").prop("disabled", true);
+                    $("#btndelete").prop("disabled", true);
                     $('#userimage').val("");
                     $("#image_count").val("0");
                     $('#ImagePresent').val("No");
@@ -463,10 +513,14 @@
 
 
     });
+   
 
+       
+
+     
         function validatemain()
         {
-            debugger;
+       
             var msg = "";
             var organizername = $("#txt_name").val();
             var organizeremail = $('#txt_email').val();

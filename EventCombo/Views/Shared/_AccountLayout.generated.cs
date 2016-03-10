@@ -852,7 +852,11 @@ WriteLiteral("\r\n\r\n                    </div>\r\n                </div>\r\n  
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n\r\n    <script");
+WriteLiteral("\r\n    </div>\r\n    <div");
+
+WriteLiteral(" id=\"dtBox\"");
+
+WriteLiteral("></div>\r\n\r\n    <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 

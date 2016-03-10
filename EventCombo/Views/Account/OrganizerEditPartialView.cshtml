@@ -12,7 +12,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input class="form-control" placeholder="" type="text" id="txt_name" maxlength="256" value="@Model.Orgnizer_Name">
+                        <input class="form-control" placeholder="" type="text" id="txt_name" maxlength="256" value="@Model.Orgnizer_Name" onkeypress="return onlyAlphabets(event,this);">
                         <small class="acnt_form_name_mini">First Name</small>
                     </div>
 
@@ -75,7 +75,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12 add_form_bot">
-                        <input class="form-control" placeholder="" type="text" id="txt_phnno" value="@Model.Organizer_Phoneno">
+                        <input class="form-control" placeholder="" type="text" id="txt_phnno" value="@Model.Organizer_Phoneno" maxlength="10">
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12 add_form_bot">
-                        <input class="form-control" placeholder="" type="text" id="txt_fburl" maxlength="200" value="@Model.Organizer_FBLink">
+                        <input class="form-control" placeholder="" type="text" id="txt_fburl" maxlength="256" value="@Model.Organizer_FBLink">
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12 add_form_bot">
-                        <input class="form-control" placeholder="" type="text" id="txt_twitterurl" maxlength="200" value="@Model.Organizer_Twitter">
+                        <input class="form-control" placeholder="" type="text" id="txt_twitterurl" maxlength="256" value="@Model.Organizer_Twitter">
                     </div>
                 </div>
             </div>
@@ -119,7 +119,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12 add_form_bot">
-                        <input class="form-control" placeholder="" type="text" id="txt_linkedinurl" maxlength="200" value="@Model.Organizer_Linkedin">
+                        <input class="form-control" placeholder="" type="text" id="txt_linkedinurl" maxlength="256" value="@Model.Organizer_Linkedin">
                     </div>
                 </div>
             </div>
@@ -145,7 +145,34 @@
 </div>
 
 <script>
+    $("#txt_phnno").mask("999-999-9999");
+    function onlyAlphabets(e, t) {
 
+
+
+        if (window.event) {
+
+            var charCode = window.event.keyCode;
+
+        }
+
+        else if (e) {
+
+            var charCode = e.which;
+
+        }
+
+        else { return true; }
+
+        if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+
+            return true;
+
+        else
+
+            return false;
+
+    }
     $(document).ready(function () {
        
         var userProfileImage = "@Html.Raw(Model.Organizer_Image)";
