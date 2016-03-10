@@ -732,7 +732,7 @@
                                     <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
                                 <div class="col-sm-2 col-xs-4">
-                                    <button type="button" onclick="DeleteOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
+                                    <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
                             </div>
@@ -1382,7 +1382,25 @@
             </div>
         </div>
     </div>
+    <a class="td-btn" id="btdeOrg" type="button" href="#confirm-deleteorg-ok" data-toggle="modal" style="display:none"></a>
+    <div class="modal fade" id="confirm-deleteorg-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
 
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+
+                        <h4 class="msg" id="hId"></h4>
+                    </div>
+                    <div class="modal-footer msg-action-btn ok">
+                        <button type="button" id="btnYes" onclick="DeleteOrgnizer();" class="btn btn-primary no" data-dismiss="modal">Yes</button>
+                        <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
+                    </div>
+                </form>
+                <input type="hidden" id="hdUserId" value="" />
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
        <!-- Confirm Msg OK Modal Box -->
     @*<div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
@@ -1815,8 +1833,33 @@
 
         function DeleteOrgnizer() {
             var Sno = $("#ddlOrgnizers").val();
+            var id = $("#OrgId_" + Sno).html();
+            if (id != 0)
+            {
+                $.ajax({
+                    url: '@Url.Action("deleteOrg", "EditEvent")',
+                    data: { id: id },
+                    type: "Post",
+                    success: function (data) {
+
+
+                        if (data.Message == "O") {
+                            window.location.href = '@Url.Action("Index", "Home")';
+
+                        }
+                    }
+
+
+
+
+                });
+            } else
+            {
+               
+            }
             $('#tblOrgnizer tr').each(function () {
                 if (Sno == $(this).find("td:first").html()) {
+
                     $(this).remove();
                 }
             });
@@ -1904,7 +1947,8 @@
 
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
-            var Sno = $("#tblOrgnizer tr").length +1;
+            var Sno = $("#tblOrgnizer tr").length + 1;
+          
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
@@ -1912,9 +1956,9 @@
             var vOrgLn = $("#txtOrgLNlink").val();
 
             var strHTML = '<tr>';
-            strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
-            strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
-            strHTML = strHTML + '<td style="display:none"><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
+            strHTML = strHTML + '<td style="display:none" width="92%"> ' + Sno + ' </td>';
+            strHTML = strHTML + '<td width="92%"><label id=OrgName_'+Sno+'>' + vOrgName + '</label></td>';
+            strHTML = strHTML + '<td style="display:none"><label id=OrgId_' + Sno + '>0</label><label id=OrgEdit_' + Sno + '>0</label> <label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgFB_' + Sno + '>' + vOrgFB + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgTw_' + Sno + '>' + vOrgTw + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgLn_' + Sno + '>' + vOrgLn + '</label></td>';
@@ -1929,7 +1973,7 @@
             strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vOrgName + '</option>';
 
             $("#ddlOrgnizers").append(strHTML);
-            console.log($("#tblOrgnizer"));
+            
         }
 
         function UpdateOrgnizer() {
@@ -1941,13 +1985,15 @@
             vOrgTw = $("#txtOrgTWlink").val();
             vOrgLn = $("#txtOrgLNlink").val();
 
-
+            var id = $("#OrgId_" + Sno);
             $("#OrgName_" + Sno).text(vOrgName);
             $("#OrgDes_" + Sno).text(vOrgDes);
             $("#OrgFB_" + Sno).text(vOrgFB);
             $("#OrgTw_" + Sno).text(vOrgTw);
             $("#OrgLn_" + Sno).text(vOrgLn);
-
+            if (id != 0) {
+                $("#OrgEdit_" + Sno).text(1);
+            }
 
             $("#ddlOrgnizers option").each(function (i) {
                 if (Sno == $(this).val()) {
@@ -1963,7 +2009,10 @@
         }
 
         $(document).ready(function () {
-
+            $("#btndeleteorg").click(function () {
+                $("#hId").html(ajaxsetup('OrganizerMaster', 'OrgDeleteMessage'));
+                $("#btdeOrg").click();
+            });
 
             var input = document.getElementById('txtEventLocation');
             var Eloc = new google.maps.places.Autocomplete(input);
@@ -2324,7 +2373,7 @@
                     $('#hidAddressStatus').val('Multiple');
                     $("#tblAddress tr").each(function () {
 
-                        var Sno = $(this).find("td:first").html();
+                        var Sno = $(this).find("td:first").html().trim();
                         //  alert(Sno);
                         // Multiple Address
                         if (Sno != '' && Sno != undefined && Sno != null) {
@@ -2426,22 +2475,24 @@
                     });
 
                 }
-
+                debugger;
 
                 var vDefaultOrg = $("#ddlOrgnizers").val();
-
+                
                 $("#tblOrgnizer tr").each(function () {
-                    var Sno = $(this).find("td:first").html();
-
+                    var Sno = $(this).find("td:first").html().trim();
+                  
                     // Multiple Address
                     if (Sno != '') {
                         Orgnizer.push({
-                            Orgnizer_Name: $("#OrgName_" + Sno).text(),
-                            Orgnizer_Desc: escape($("#OrgDes_" + Sno).text()),
-                            FBLink: $("#OrgFB_" + Sno).text(),
-                            Twitter: $("#OrgTw_" + Sno).text(),
-                            Linkedin: $("#OrgLn_" + Sno).text(),
-                            DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N')
+                            Orgnizer_Id: $("#OrgId_"+Sno).text(),
+                            Orgnizer_Name: $("#OrgName_"+Sno).html(),
+                            Organizer_Desc: escape($("#OrgDes_" + Sno).text()),
+                            Organizer_FBLink: $("#OrgFB_" + Sno).text(),
+                            Organizer_Twitter: $("#OrgTw_" + Sno).text(),
+                            Organizer_Linkedin: $("#OrgLn_" + Sno).text(),
+                            DefaultOrg: (vDefaultOrg == Sno ? 'Y' : 'N'),
+                            EditOrg: $("#OrgEdit_" + Sno).text()
 
                         });
                     }
@@ -2620,16 +2671,16 @@
 
 
                 if ($("#hidOrgnizer").val() == '') {
-                    if (parseInt($("#ddlOrgnizers option").length) > 24) {
-                        var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
-                        $('#divaccsuc').css('display', 'none');
-                        $('#diverroacc').css('display', 'block');
+                    //if (parseInt($("#ddlOrgnizers option").length) > 24) {
+                    //    var msg = ajaxsetup('CreateEvent', 'CreateEventOrganizercountUI');
+                    //    $('#divaccsuc').css('display', 'none');
+                    //    $('#diverroacc').css('display', 'block');
 
-                        $('#diverroacc').focus();
-                        $('#erraccmsg').html(msg);
-                        $('html,body').animate({ scrollTop: 0 });
-                        return false;
-                    }
+                    //    $('#diverroacc').focus();
+                    //    $('#erraccmsg').html(msg);
+                    //    $('html,body').animate({ scrollTop: 0 });
+                    //    return false;
+                    //}
                     AddOrgnizer();
                 }
                 else

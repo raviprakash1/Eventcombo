@@ -1,0 +1,21 @@
+﻿@model List<EventCombo.Models.Organiserevent>
+@foreach (var obj in Model)
+{
+
+    <div class="col-sm-12 mt20 org_evnt_border no_pad">
+        <div class="col-sm-3 no_pad ">
+            <img class="img-responsive" src=@obj.FirstImage alt="">
+        </div>
+        <a class="org_evnt_list_main" href="@obj.eventpath">
+            <div class="col-sm-9">
+                <h1 class="org_evnt_list_title">@obj.Eventtitle</h1>
+                <p class="org_evnt_list">
+                    @obj.Dateofevent<br />
+                    <span class="col-sm-6 no_pad">@obj.Venue</span>
+                </p>
+            </div>
+        </a>
+        <div class="clearfix"></div>
+    </div>
+
+}

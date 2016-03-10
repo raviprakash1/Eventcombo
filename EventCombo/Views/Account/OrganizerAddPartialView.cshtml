@@ -275,10 +275,10 @@
             drop: "Drop file here to Upload",
             removeConfirmation: "Are you sure you want to remove this file?",
             errors: {
-                filesLimit: '',
-                filesType: '',
-                filesSize: '',
-                filesSizeAll: ''
+                filesLimit: ajaxsetup('OrganizerMaster', 'OrgImageCountValidationUI'),
+                filesType: ajaxsetup('OrganizerMaster', 'OrgImagestypeValidationUI'),
+                filesSize: ajaxsetup('OrganizerMaster', 'OrgImagesizeValidationUI'),
+                filesSizeAll: ajaxsetup('OrganizerMaster', 'OrgImagesizeValidationUI')
             }
         }
 

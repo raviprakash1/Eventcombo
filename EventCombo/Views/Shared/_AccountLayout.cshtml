@@ -13,12 +13,12 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-
+   
     <link href="~/Content/eventcombo.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
     <link href="~/Content/ec-select.css" rel="stylesheet" />
     <link href="~/Content/summernote.css" rel="stylesheet" />
-
+   
     <link href="~/Content/datepicker.css" rel="stylesheet" />
     <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
     <!--  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
@@ -34,11 +34,12 @@
     <script src="~/Scripts/summernote.min.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/jquery.timepicker.js"></script>
+    <script  src="~/Scripts/DateTimePicker.js"></script>
+
     <script src="~/Scripts/bootstrap-multiselect.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/ec-select.js"></script>
     <script src="~/Scripts/jquery.cookie.js"></script>
-  
 </head>
 <body>
     @*Header Section*@
@@ -97,76 +98,86 @@
 
                         </div>
                         <div id="navbar" class="navbar-collapse collapse nav_cus">
-                            <div id="sidebar" class="nav nav-stacked">
-                                <div id="accordion" class="panel-group">
-                                    <div class="panel panel-default menu_list">
-                                        <a id="mgacnt" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                            <div id="dvacmang" class="panel-heading">
-                                                Account <b class="closed"></b>
-                                            </div>
-                                        </a>
-                                        
-                                        <div id="collapse1" class="panel-collapse collapse">
-                                            <div class="panel-body no-padding">
-                                                <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
-                                                <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
-                                                <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
-                                                <p>@Html.ActionLink("Payment Information", "PaymentInformation", "Account")</p>
-                                                <p>@Html.ActionLink("Organizer Profile", "OrganizerProfile", "Account")</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-default menu_list">
-                                        
-                                        <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                                            <div id="dvManage" class="panel-heading">
-                                                Manage Events <b class="closed"></b>
-                                            </div>
-                                        </a>
-                                        
-                                        <div id="collapse2" class="panel-collapse collapse">
-                                            <div class="panel-body no-padding">
-                                                <p>@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")</p>
-                                                <p>@Html.ActionLink("My Events", "EventList", "EventList")</p>
-                                                @*<p>@Html.ActionLink("Live Events", "LiveEvents", "Account")</p>*@
-                                                @*<p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>*@
-                                                <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
-                                               
-                                                @*<p>@Html.ActionLink("Pay Pal", "Pay", "Cart")</p>*@
-                                                @*<p>@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")</p>*@
-                                                @*<p>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = 169 }, null)</p>*@
-                                                @*<p>@Html.ActionLink("Manage Event", "EventList", "EventList")</p>*@
+                            @if (IsSectionDefined("sidenav"))
+                            {
+                                @RenderSection("sidenav", false)
+                            }
+                            else
+                            {
+                                <div id="sidebar" class="nav nav-stacked">
+                                    <div id="accordion" class="panel-group">
+
+                                        <div class="panel panel-default menu_list">
+                                            <a id="mgacnt" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                                <div id="dvacmang" class="panel-heading">
+                                                    Account <b class="closed"></b>
+                                                </div>
+                                            </a>
+
+                                            <div id="collapse1" class="panel-collapse collapse">
+                                                <div class="panel-body no-padding">
+                                                    <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
+                                                    <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
+                                                    <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
+                                                    <p>@Html.ActionLink("Payment Information", "PaymentInformation", "Account")</p>
+                                                    <p>@Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account")</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="panel panel-default menu_list">
-                                        
+                                        <div class="panel panel-default menu_list">
+
+                                            <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                                <div id="dvManage" class="panel-heading">
+                                                    Manage Events <b class="closed"></b>
+                                                </div>
+                                            </a>
+
+                                            <div id="collapse2" class="panel-collapse collapse">
+                                                <div class="panel-body no-padding">
+                                                    <p>@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")</p>
+                                                    <p>@Html.ActionLink("My Events", "EventList", "EventList")</p>
+                                                    @*<p>@Html.ActionLink("Live Events", "LiveEvents", "Account")</p>*@
+                                                    @*<p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>*@
+                                                    <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
+
+                                                    @*<p>@Html.ActionLink("Pay Pal", "Pay", "Cart")</p>*@
+                                                    @*<p>@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")</p>*@
+                                                    @*<p>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = 169 }, null)</p>*@
+                                                    @*<p>@Html.ActionLink("Manage Event", "EventList", "EventList")</p>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default menu_list">
+
                                             <a id="dealnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
                                                 <div id="dvmngdeal" class="panel-heading">
                                                     Manage Deals <b class="closed"></b>
                                                 </div>
                                             </a>
-                                        
-                                        <div id="collapse3" class="panel-collapse collapse">
-                                            <div class="panel-body no-padding">
-                                                <p>Create Deal</p>
-                                                <p>@Html.ActionLink("Deals Dashboard", "DealsDashboard", "Account")</p>
-                                                <p>@Html.ActionLink("Current Deals", "CurrentDeals", "Account")</p>
-                                                <p>@Html.ActionLink("Past Deals", "PastDeals", "Account")</p>
-                                                <p>@Html.ActionLink("Feedback", "Feedback", "Account")</p>
-                                                <p>@Html.ActionLink("Overview", "Overview", "Account")</p>
-                                                <p>@Html.ActionLink("Impact Report", "ImpactReport", "Account")</p>
-                                                <p>@Html.ActionLink("Invoice History", "InvoiceHistory", "Account")</p>
-                                                <p>@Html.ActionLink("Customers", "Customers", "Account")</p>
-                                                <p>@Html.ActionLink("Deals Help", "DealsHelp", "Account")</p>
-                                                <p>@Html.ActionLink("Merchant Profile", "MerchantProfile", "Account")</p>
+
+                                            <div id="collapse3" class="panel-collapse collapse">
+                                                <div class="panel-body no-padding">
+                                                    <p>Create Deal</p>
+                                                    <p>@Html.ActionLink("Deals Dashboard", "DealsDashboard", "Account")</p>
+                                                    <p>@Html.ActionLink("Current Deals", "CurrentDeals", "Account")</p>
+                                                    <p>@Html.ActionLink("Past Deals", "PastDeals", "Account")</p>
+                                                    <p>@Html.ActionLink("Feedback", "Feedback", "Account")</p>
+                                                    <p>@Html.ActionLink("Overview", "Overview", "Account")</p>
+                                                    <p>@Html.ActionLink("Impact Report", "ImpactReport", "Account")</p>
+                                                    <p>@Html.ActionLink("Invoice History", "InvoiceHistory", "Account")</p>
+                                                    <p>@Html.ActionLink("Customers", "Customers", "Account")</p>
+                                                    <p>@Html.ActionLink("Deals Help", "DealsHelp", "Account")</p>
+                                                    <p>@Html.ActionLink("Merchant Profile", "MerchantProfile", "Account")</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </nav>
+                            }
+                                  
+                                  
+                    </div>
+            </nav>
                 </div>
             </div>
             <div class="col-sm-10 ">

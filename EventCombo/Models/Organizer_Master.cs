@@ -14,6 +14,12 @@ namespace EventCombo.Models
     
     public partial class Organizer_Master
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Organizer_Master()
+        {
+            this.Event_Orgnizer_Detail = new HashSet<Event_Orgnizer_Detail>();
+        }
+    
         public long Orgnizer_Id { get; set; }
         public string Orgnizer_Name { get; set; }
         public string Organizer_Desc { get; set; }
@@ -34,5 +40,8 @@ namespace EventCombo.Models
         public string Organizer_Status { get; set; }
         public string contenttype { get; set; }
         public string Imagepath { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
     }
 }

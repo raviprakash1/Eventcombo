@@ -251,6 +251,7 @@
     <Compile Include="Controllers\InbetweenController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
+    <Compile Include="Controllers\OrganizerInfoController.cs" />
     <Compile Include="Controllers\PaymentInfoController.cs" />
     <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Controllers\PayPalReturnController.cs" />
@@ -528,13 +529,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-multiselect.css" />
+    <Content Include="Content\DateTimePicker.css" />
     <Content Include="Content\ec-select.css" />
     <Content Include="Content\eventcombo-new.css" />
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="Images\default_org_image.jpg" />
     <Content Include="Images\dgd.png" />
+    <Content Include="Images\em_ven_time.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
     <Content Include="Images\qwe.png" />
@@ -548,6 +552,7 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
@@ -1161,6 +1166,10 @@
     <Content Include="Views\Account\OrganizerEditPartialView.cshtml" />
     <Content Include="Views\Home\DiscoverEventsTiles.cshtml" />
     <Content Include="Views\Account\OrganizerAddPartialView.cshtml" />
+    <Content Include="Views\OrganizerInfo\Index.cshtml" />
+    <Content Include="Views\OrganizerInfo\OrganiserPresentPartialView.cshtml" />
+    <Content Include="Views\ManageEvent\PromotionalCodes.cshtml" />
+    <Content Include="Views\ManageEvent\CreatePromotionalCodes.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

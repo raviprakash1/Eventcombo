@@ -5,14 +5,85 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+@section sidenav{
+ <div id="sidebar" class="nav nav-stacked">
+    <div id="accordion" class="panel-group">
+
+        <div class="panel panel-default menu_list">
+            <a id="mgacnt" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                <div id="dvacmang" class="panel-heading">
+                    Account <b class="closed"></b>
+                </div>
+            </a>
+
+            <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body no-padding">
+                    <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
+                    <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
+                    <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
+                    <p>@Html.ActionLink("Payment Information", "PaymentInformation", "Account")</p>
+                    <p>@Html.ActionLink("Promotional code", "CreatePromotionalCodes", "ManageEvent")</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default menu_list">
+
+            <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                <div id="dvManage" class="panel-heading">
+                    Manage Events <b class="closed"></b>
+                </div>
+            </a>
+
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body no-padding">
+                    <p>@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")</p>
+                    <p>@Html.ActionLink("My Events", "EventList", "EventList")</p>
+                    @*<p>@Html.ActionLink("Live Events", "LiveEvents", "Account")</p>*@
+                    @*<p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>*@
+                    <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
+
+                    @*<p>@Html.ActionLink("Pay Pal", "Pay", "Cart")</p>*@
+                    @*<p>@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")</p>*@
+                    @*<p>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = 169 }, null)</p>*@
+                    @*<p>@Html.ActionLink("Manage Event", "EventList", "EventList")</p>*@
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default menu_list">
+
+            <a id="dealnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                <div id="dvmngdeal" class="panel-heading">
+                    Manage Deals <b class="closed"></b>
+                </div>
+            </a>
+
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body no-padding">
+                    <p>Create Deal</p>
+                    <p>@Html.ActionLink("Deals Dashboard", "DealsDashboard", "Account")</p>
+                    <p>@Html.ActionLink("Current Deals", "CurrentDeals", "Account")</p>
+                    <p>@Html.ActionLink("Past Deals", "PastDeals", "Account")</p>
+                    <p>@Html.ActionLink("Feedback", "Feedback", "Account")</p>
+                    <p>@Html.ActionLink("Overview", "Overview", "Account")</p>
+                    <p>@Html.ActionLink("Impact Report", "ImpactReport", "Account")</p>
+                    <p>@Html.ActionLink("Invoice History", "InvoiceHistory", "Account")</p>
+                    <p>@Html.ActionLink("Customers", "Customers", "Account")</p>
+                    <p>@Html.ActionLink("Deals Help", "DealsHelp", "Account")</p>
+                    <p>@Html.ActionLink("Merchant Profile", "MerchantProfile", "Account")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
 
 @using (Html.BeginForm())
-
 {
-    <input type="hidden" value="@Model.Eventid" id="hdEventid" />
-    <div class="event_container" style="margin-top:-20px;">
-        <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
 
+  
+    <input type="hidden" value="@Model.Eventid" id="hdEventid" />
+    
             <div class="col-sm-12 pt10 bggrey clearfix">
                 <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
                     <div class="er_UI_main">
@@ -563,9 +634,7 @@ else
                 <input type="hidden" value="@TempData["EventHits"]" id="hidEventhit" />
                 <input type="hidden" value="@TempData["SaleQty"]" id="hidSaleQty" />
             </div>
-        </div>
-        
-    </div>
+       
     <div class="clearfix"></div>
 
     <a href="#cnfrm" id="aclick" data-toggle="modal" style="display:none;"></a>

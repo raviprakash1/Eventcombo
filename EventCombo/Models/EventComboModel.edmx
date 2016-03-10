@@ -220,6 +220,7 @@
           <Property Name="Orgnizer_Event_Id" Type="bigint" />
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
           <Property Name="DefaultOrg" Type="varchar" MaxLength="1" />
+          <Property Name="OrganizerMaster_Id" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -733,6 +734,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Event_Orgnizer_Detail_Organizer_Master">
+          <End Role="Organizer_Master" Type="Self.Organizer_Master" Multiplicity="1" />
+          <End Role="Event_Orgnizer_Detail" Type="Self.Event_Orgnizer_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizer_Master">
+              <PropertyRef Name="Orgnizer_Id" />
+            </Principal>
+            <Dependent Role="Event_Orgnizer_Detail">
+              <PropertyRef Name="OrganizerMaster_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Event_VariableDesc_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Event_VariableDesc" Type="Self.Event_VariableDesc" Multiplicity="*" />
@@ -955,6 +968,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Self.FK_Event_Orgnizer_Detail_Event">
             <End Role="Event" EntitySet="Event" />
+            <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Orgnizer_Detail_Organizer_Master" Association="Self.FK_Event_Orgnizer_Detail_Organizer_Master">
+            <End Role="Organizer_Master" EntitySet="Organizer_Master" />
             <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
           </AssociationSet>
           <AssociationSet Name="FK_Event_VariableDesc_Event" Association="Self.FK_Event_VariableDesc_Event">
@@ -1898,6 +1915,10 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
           </AssociationSet>
+          <AssociationSet Name="FK_Event_Orgnizer_Detail_Organizer_Master" Association="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master">
+            <End Role="Organizer_Master" EntitySet="Organizer_Master" />
+            <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1994,6 +2015,7 @@
           <Property Name="Organizer_Status" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="contenttype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Imagepath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" FromRole="Organizer_Master" ToRole="Event_Orgnizer_Detail" />
         </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
@@ -2003,7 +2025,9 @@
           <Property Name="Orgnizer_Event_Id" Type="Int64" />
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="DefaultOrg" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizerMaster_Id" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Event" FromRole="Event_Orgnizer_Detail" ToRole="Event" />
+          <NavigationProperty Name="Organizer_Master" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" FromRole="Event_Orgnizer_Detail" ToRole="Organizer_Master" />
         </EntityType>
         <Association Name="FK_Event_Orgnizer_Detail_Event">
           <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
@@ -2014,6 +2038,18 @@
             </Principal>
             <Dependent Role="Event_Orgnizer_Detail">
               <PropertyRef Name="Orgnizer_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Orgnizer_Detail_Organizer_Master">
+          <End Type="EventComboModel.Organizer_Master" Role="Organizer_Master" Multiplicity="1" />
+          <End Type="EventComboModel.Event_Orgnizer_Detail" Role="Event_Orgnizer_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizer_Master">
+              <PropertyRef Name="Orgnizer_Id" />
+            </Principal>
+            <Dependent Role="Event_Orgnizer_Detail">
+              <PropertyRef Name="OrganizerMaster_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2744,6 +2780,7 @@
           <EntitySetMapping Name="Event_Orgnizer_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Event_Orgnizer_Detail">
               <MappingFragment StoreEntitySet="Event_Orgnizer_Detail">
+                <ScalarProperty Name="OrganizerMaster_Id" ColumnName="OrganizerMaster_Id" />
                 <ScalarProperty Name="DefaultOrg" ColumnName="DefaultOrg" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />

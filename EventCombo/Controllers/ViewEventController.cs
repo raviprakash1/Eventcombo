@@ -97,7 +97,18 @@ namespace EventCombo.Controllers
             TempData["EventCategory"] = EvntCtgry;
             TempData["EventSubCategory"] = EvntSubCtgry;
 
-            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
+            var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail
+                                   join pfd in db.Organizer_Master on ev.OrganizerMaster_Id equals pfd.Orgnizer_Id
+                                   where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y"
+                                   select new
+                                   {
+                                       Orgnizer_Name = pfd.Orgnizer_Name,
+                                       FBLink = pfd.Organizer_FBLink,
+                                       Twitter = pfd.Organizer_Twitter,
+                                       Linkedin = pfd.Organizer_Linkedin,
+                                       Orgnizer_Id = pfd.Orgnizer_Id
+
+                                   }).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
             var EventDescription = EventDetail.EventDescription;

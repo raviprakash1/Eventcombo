@@ -206,13 +206,91 @@ namespace EventCombo.Controllers
                     // Orgnizer
                     if (model.Orgnizer != null)
                     {
-                        Event_Orgnizer_Detail objEOrg = new Event_Orgnizer_Detail();
-                        foreach (Event_Orgnizer_Detail objOr in model.Orgnizer)
+                        Organizer_Master objEOrg = new Organizer_Master();
+                        Event_Orgnizer_Detail evntorg = new Event_Orgnizer_Detail();
+                        var neworg = model.Orgnizer.Where(x => x.Orgnizer_Id == 0).Any();
+                        if (neworg)
                         {
-                            objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            //objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                            //objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
-                            objEnt.Event_Orgnizer_Detail.Add(objEOrg);
+
+                            var defaultorg = model.Orgnizer.Where(x => x.Orgnizer_Id == 0 && x.DefaultOrg == "Y").Any();
+                            if (defaultorg)
+                            {
+                                var orgnew = model.Orgnizer.Where(x => x.Orgnizer_Id == 0).ToList();
+                                foreach (Organizer_Master objOr in orgnew)
+                                {
+
+                                    objEOrg = new Organizer_Master();
+                                    // objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                                    objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                    objEOrg.Organizer_Desc = HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default);
+                                    objEOrg.Organizer_FBLink = objOr.Organizer_FBLink;
+                                    objEOrg.Organizer_Twitter = objOr.Organizer_Twitter;
+                                    //objEOrg.DefaultOrg = objOr.DefaultOrg;
+                                    objEOrg.Organizer_Linkedin = objOr.Organizer_Linkedin;
+                                    objEOrg.UserId = strUserId;
+                                    objEnt.Organizer_Master.Add(objEOrg);
+                                    if (objOr.DefaultOrg == "Y")
+                                    {
+                                        evntorg = new Event_Orgnizer_Detail();
+                                        evntorg.DefaultOrg = objOr.DefaultOrg;
+                                        evntorg.Orgnizer_Id = objEOrg.Orgnizer_Id;
+                                        evntorg.Orgnizer_Event_Id = ObjEC.EventID;
+                                        evntorg.UserId = strUserId;
+                                        objEnt.Event_Orgnizer_Detail.Add(evntorg);
+                                    }
+
+
+
+                                }
+                            }
+                            else
+                            {
+                                var orgnew = model.Orgnizer.Where(x => x.Orgnizer_Id == 0).ToList();
+                                foreach (Organizer_Master objOr in orgnew)
+                                {
+
+                                    objEOrg = new Organizer_Master();
+                                    // objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                                    objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                    objEOrg.Organizer_Desc = HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default);
+                                    objEOrg.Organizer_FBLink = objOr.Organizer_FBLink;
+                                    objEOrg.Organizer_Twitter = objOr.Organizer_Twitter;
+                                    //objEOrg.DefaultOrg = objOr.DefaultOrg;
+                                    objEOrg.Organizer_Linkedin = objOr.Organizer_Linkedin;
+                                    objEOrg.UserId = strUserId;
+                                    objEnt.Organizer_Master.Add(objEOrg);
+
+
+
+
+                                }
+                                var defaultorgold = model.Orgnizer.Where(x => x.DefaultOrg == "Y").ToList();
+                                foreach (Organizer_Master objOr in defaultorgold)
+                                {
+                                    evntorg = new Event_Orgnizer_Detail();
+                                    evntorg.DefaultOrg = objOr.DefaultOrg;
+                                    evntorg.Orgnizer_Id = objOr.Orgnizer_Id;
+                                    evntorg.Orgnizer_Event_Id = ObjEC.EventID;
+                                    evntorg.UserId = strUserId;
+                                    objEnt.Event_Orgnizer_Detail.Add(evntorg);
+                                }
+
+
+                            }
+
+                        }
+                        else
+                        {
+                            var defaultorg = model.Orgnizer.Where(x => x.DefaultOrg == "Y").ToList();
+                            foreach (Organizer_Master objOr in defaultorg)
+                            {
+                                evntorg = new Event_Orgnizer_Detail();
+                                evntorg.DefaultOrg = objOr.DefaultOrg;
+                                evntorg.Orgnizer_Id = objOr.Orgnizer_Id;
+                                evntorg.Orgnizer_Event_Id = ObjEC.EventID;
+                                evntorg.UserId = strUserId;
+                                objEnt.Event_Orgnizer_Detail.Add(evntorg);
+                            }
                         }
                     }
                     objEnt.SaveChanges();

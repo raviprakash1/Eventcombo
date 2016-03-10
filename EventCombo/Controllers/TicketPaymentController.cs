@@ -1281,14 +1281,14 @@ namespace EventCombo.Controllers
 
 
                // Organiserdetail
-                var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select ev).FirstOrDefault();
+                var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail join pfd in db.Organizer_Master on ev.OrganizerMaster_Id equals pfd.Orgnizer_Id where ev.Orgnizer_Event_Id == Eventid && ev.DefaultOrg == "Y" select pfd).FirstOrDefault();
 
 
                  var Organiserdetail = db.Profiles.FirstOrDefault(i => i.UserID == OrganiserDetail.UserId);
                 if (Organiserdetail != null)
                 {
-                     Organisername = Organiserdetail.FirstName!=null? Organiserdetail.FirstName:"";
-                     Organiseremail = Organiserdetail.Email!=null ? Organiserdetail.Email:"";
+                     Organisername = !String.IsNullOrEmpty( OrganiserDetail.Orgnizer_Name)? OrganiserDetail.Orgnizer_Name: Organiserdetail.FirstName!=null? Organiserdetail.FirstName:"";
+                     Organiseremail = !String.IsNullOrEmpty(OrganiserDetail.Organizer_Email) ? OrganiserDetail.Organizer_Email : Organiserdetail.Email!=null ? Organiserdetail.Email:"";
                 }
 
                 //

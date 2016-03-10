@@ -1,0 +1,313 @@
+﻿
+@{
+    ViewBag.Title = "CreatePromotionalCodes";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<link href="~/Content/DateTimePicker.css" rel="stylesheet" />
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+        <div id="accordion" class="panel-group">
+
+            <div class="panel panel-default menu_list">
+                <a class="menu_title"  href="#">
+                    <div class="panel-heading">
+                        My Account 
+                    </div>
+                </a>  
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        My Account
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        My Account
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+
+                <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                    <div id="dvManage" class="panel-heading">
+                        Manage Events <b class="closed"></b>
+                    </div>
+                </a>
+
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body no-padding">
+                        <p>@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")</p>
+                        <p>@Html.ActionLink("My Events", "EventList", "EventList")</p>
+                        @*<p>@Html.ActionLink("Live Events", "LiveEvents", "Account")</p>*@
+                        @*<p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>*@
+                        <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
+
+                        @*<p>@Html.ActionLink("Pay Pal", "Pay", "Cart")</p>*@
+                        @*<p>@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")</p>*@
+                        @*<p>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = 169 }, null)</p>*@
+                        @*<p>@Html.ActionLink("Manage Event", "EventList", "EventList")</p>*@
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default menu_list">
+
+                <a id="dealnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                    <div id="dvmngdeal" class="panel-heading">
+                        Manage Deals <b class="closed"></b>
+                    </div>
+                </a>
+
+                <div id="collapse3" class="panel-collapse collapse">
+                    <div class="panel-body no-padding">
+                        <p>Create Deal</p>
+                        <p>@Html.ActionLink("Deals Dashboard", "DealsDashboard", "Account")</p>
+                        <p>@Html.ActionLink("Current Deals", "CurrentDeals", "Account")</p>
+                        <p>@Html.ActionLink("Past Deals", "PastDeals", "Account")</p>
+                        <p>@Html.ActionLink("Feedback", "Feedback", "Account")</p>
+                        <p>@Html.ActionLink("Overview", "Overview", "Account")</p>
+                        <p>@Html.ActionLink("Impact Report", "ImpactReport", "Account")</p>
+                        <p>@Html.ActionLink("Invoice History", "InvoiceHistory", "Account")</p>
+                        <p>@Html.ActionLink("Customers", "Customers", "Account")</p>
+                        <p>@Html.ActionLink("Deals Help", "DealsHelp", "Account")</p>
+                        <p>@Html.ActionLink("Merchant Profile", "MerchantProfile", "Account")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+    <div class="col-sm-12 ">
+        <h3 class="acnt_title">Create Promotional Code</h3>
+        <!--  <p class="p_info">Payment Information</p> -->
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 col-xs-12 ">
+        <div class="col-sm-12 no_pad">
+            <ul class="cod_dis_type">
+                <li><a href="#">Coded Discount</a></li>
+                <li><a href="#">Public Discount</a></li>
+                <li><a href="#">Special Access</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 no_pad mt20">
+
+            <div class="col-sm-2 no_pad">
+                <div class="form-group">
+                    <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Single Promo Code">
+                </div>
+            </div>
+            <div class="mid_or_width">or</div>
+            <div class="custom_file_upload">
+                <div class="form-group">
+                    <div class="file_upload">
+                        <input type="file" id="file_upload" name="file_upload">
+                    </div>
+                </div>
+            </div>
+
+            <div class="upload_help_icn">
+                <div class="tip">
+                    <img class="help_icon_hov" src="images/icon-question.gif" />
+                    <span class="upload_help_icn_inner">
+                        Spaces apostrophes and non alphanumeric characters
+                        (except '-','_' and',' are not allowed. File must be in plain text
+                        ( CSV or TXT)
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 no_pad mt10">
+            <div class="col-sm-2 no_pad">
+                <div class="form-group">
+                    <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Single Promo Code">
+                </div>
+            </div>
+            <div class="mid_or_width"></div>
+            <div class="col-sm-1 no_pad">
+                <div class="form-group dropheight">
+                    <select class="form-control selectpicker">
+                        <option>$</option>
+                        <option>%</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 no_pad mt10">
+            <div class="col-sm-2 no_pad">
+                <div class="form-group">
+                   Uses (Blank for Unlimited)
+                </div>
+            </div>
+            <div class="mid_or_width"></div>
+            <div class="col-sm-1 no_pad">
+                <div class="form-group">
+                    <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited">
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 no_pad mt10">
+            <div class="col-md-6 col-sm-12  no_pad promo_checkbox">
+                <div class="col-sm-4 no_pad">
+                    <div class="col-sm-12 no_pad">
+                        <div class="prm_befor_level"> Start</div>
+                        <div class="squaredOne">
+
+                            <input type="checkbox" value="None" id="befstrtdevnt" name="check" />
+                            <label for="befstrtdevnt"></label>
+                        </div>
+                        <div class="prm_cd_level"> before event</div>
+                    </div>
+                    <div class="col-sm-12 no_pad">
+                        <div class="form-group">
+                            <!-- <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" > -->
+                            <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-1 colsm1"></div>
+                <div class="col-sm-4 no_pad">
+                    <div class="col-sm-12 no_pad">
+                        <div class="prm_befor_level"> End</div>
+                        <div class="squaredOne">
+                            <input type="checkbox" value="None" id="befendevnt" name="check" />
+                            <label for="befendevnt"></label>
+                        </div>
+                        <div class="prm_cd_level"> before event</div>
+                    </div>
+                    <div class="col-sm-12 no_pad">
+
+                        <div class="form-group">
+                            <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 no_pad mt10">
+            <div class="col-md-6 col-sm-12 no_pad promo_checkbox">
+                <div class="col-sm-12 apply_code_head">
+                    Apply Codes To These Tickets
+                </div>
+                <div class="col-sm-12 no_pad">
+                    <div class="squaredOne">
+                        <input type="checkbox" value="None" id="all_ticket" name="check" />
+                        <label for="all_ticket"></label>
+                    </div>
+                    <div class="prm_cd_level"> All</div>
+                </div>
+                <div class="col-sm-12 no_pad">
+                    <div class="squaredOne">
+                        <input type="checkbox" value="None" id="certn_ticket" name="check" />
+                        <label for="certn_ticket"></label>
+                    </div>
+                    <div class="prm_cd_level"> Certian Tickets Type</div>
+                </div>
+                <div class="col-sm-12 no_pad">
+                    <div class="squaredOne">
+                        <input type="checkbox" value="None" id="anoth_ticket" name="check" />
+                        <label for="anoth_ticket"></label>
+                    </div>
+                    <div class="prm_cd_level"> Another Tickets Type</div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 no_pad mt10">
+            <div class="col-md-6 col-sm-12 no_pad">
+                <div class="col-sm-12 apply_code_head">
+                    <div class="col-sm-11 no_pad">Discout URL </div>
+                    <div class="col-sm-1 no_pad text-right">
+                        <img src="images/icon-question.gif" />
+                    </div>
+
+                </div>
+                <div class="col-sm-12 no_pad mb10">
+                    <div class="col-sm-8 "> <a class="link_url" href="#">http://eventcombo.net/event-names?discount=</a> </div>
+                    <div class="col-sm-4  text-right">
+                        <button class="btn soc_btn_dis soc_btn_active"><i class="fa fa-facebook"></i></button>
+                        <button class="btn soc_btn_dis  "><i class="fa fa-twitter"></i></button>
+                        <button class="btn soc_btn_dis"><i class="fa fa-envelope"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 no_pad mt10 mb10">
+            <button class="btn btn-info acnt_btn" type="submit" title="">Save</button>
+        </div>
+    </div>
+
+<div id="dtBox"></div>
+
+<script type="text/javascript">
+      $(".upload_help_icn_inner").css("display", "none");
+         $('.help_icon_hov').hover(
+          function () {
+            $(".upload_help_icn_inner").show();
+          },
+          function () {
+            $(".upload_help_icn_inner").hide();
+          }
+        );
+
+
+</script>
+<script type="text/javascript">
+
+      $(document).ready(function()
+      {
+        var bIsPopup = displayPopup();
+
+        $("#dtBox").DateTimePicker(
+
+        {
+          isPopup: bIsPopup,
+
+          addEventHandlers: function()
+          {
+            var dtPickerObj = this;
+
+            $(window).resize(function()
+            {
+              bIsPopup = displayPopup();
+              dtPickerObj.setIsPopup(bIsPopup);
+            });
+
+            dtPickerObj.setDateTimeStringInInputField($(".fillDateTime"));
+          }
+        });
+
+
+      });
+
+
+
+      function displayPopup()
+      {
+        if($(document).width() >= 768)
+          return false;
+        else
+          return true;
+      }
+
+</script>
