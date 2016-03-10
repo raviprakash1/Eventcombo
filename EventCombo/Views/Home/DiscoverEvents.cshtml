@@ -4,8 +4,9 @@
 }
 <link href="~/Content/filter-dropdown.css" rel="stylesheet" />
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
-
+<div id="dvProgress" class="loding_bg"><img src="~/Images/loading.gif" /></div>
 <div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
+    
     <div class="col-sm-12 col-xs-12 ot_main_pad mb10">
         <div class="col-sm-9 no_pad">
             <div class="dis_event_ser_title "><h2>New Delhi Business Events </h2></div>
@@ -52,16 +53,12 @@
                 </ul>
             </div>
             <div class="clearfix"></div>
-            <div class="col-sm-12 no_pad">
-                <p class="event_desc side_dis_event_desc">
-                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                </p>
-                <img class="img-responsive" src="images/gmap.png" alt="">
+            <div id="dvMap" class="col-sm-12 no_pad mt10 map_height">
             </div>
             <div class="col-sm-12 no_pad mt10">
                 <form>
                     <div class="input-group stylish-input-group">
-                        <input type="text" class="form-control dis_search_control">
+                        <input type="text" id="txtAddress" class="form-control dis_search_control">
                         <span class="input-group-addon dis_search_addon">
                             <button type="submit dis_search_sub">
                                 <i class="fa fa-map-marker"></i>
@@ -100,10 +97,15 @@
                     {
                         foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
                         {
-                            <li><a href="javascript:void(0);" class="active" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a> <span class="badge dis_badge" onclick="DeleteFilterEventType('@item.EventTypeID');">X</span></li>
+                            <li class="active"><a href="javascript:void(0);"  onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a> <a href="javascript:void(0);" class="can_badg " onclick="DeleteFilterEventType('@item.EventTypeID');">X</a></li>
                         }
+                        <li><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>
                     }
-                    <li><a href="javascript:void(0);" onclick="GetAllEventType();" ><b>All Event Types</b></a></li>
+                    else
+                    {
+                        <li class="active"><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>
+                    }
+                    
                     @foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.Eventtype)
                     {
                         <li><a href="javascript:void(0);" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a></li>
@@ -118,10 +120,15 @@
                         {
                             foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.ECatSelected)
                             {
-                                <li><a href="javascript:void(0);" class="active" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a><span class="badge dis_badge" onclick="DeleteFilterEventCategory('@item.EventCategoryID')">X</span></li>
+                                <li class="active"><a href="javascript:void(0);"  onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a> <a href="javascript:void(0);" class="can_badg " onclick="DeleteFilterEventCategory('@item.EventCategoryID');">X</a></li>
                             }
+                            <li><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>
                         }
-                        <li><a href="javascript:void(0);" onclick="GetAllEventCategories();"><b>All Categories </b></a></li>
+                        else
+                        {
+                            <li class="active"><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>
+                        }
+                        
                         @foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.EventCat)
                         {
                             <li><a href="javascript:void(0);" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a></li>
@@ -151,7 +158,10 @@
                                         @item.EventAddress
                                     </span>
                                 </p>
-                                <p class="list_event_date_time"><a href="javascript:void(0);">@item.EventTimings</a> </p>
+                                <p class="list_event_date_time">@item.EventTimings </p>
+                                @*<div class="desc_hide">
+
+                                </div>*@
                             </div>
                         </div>
                         <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
@@ -183,11 +193,16 @@
                             <span><i class="fa fa-angle-left"></i> </span>
                         </a>
                     </li>
-                    <li><a href="javascript:void(0)">1</a></li>
-                    <li><a href="javascript:void(0)">2</a></li>
-                    <li><a href="javascript:void(0)">3</a></li>
-                    <li><a href="javascript:void(0)">4</a></li>
-                    <li><a href="javascript:void(0)">5</a></li>
+                    @for(int i=1;i<= Convert.ToInt32(@TempData["TotalPages"]);i++)
+                    {
+                        <li><a href="javascript:void(0)" onclick="NextPage(@i);">@i</a></li>
+                    }
+
+                    @*<li><a href="javascript:void(0)" onclick="NextPage(1);">1</a></li>
+                    <li><a href="javascript:void(0)" onclick="NextPage(2);">2</a></li>
+                    <li><a href="javascript:void(0)" onclick="NextPage(3);">3</a></li>
+                    <li><a href="javascript:void(0)" onclick="NextPage(4);">4</a></li>
+                    <li><a href="javascript:void(0)" onclick="NextPage(5);">5</a></li>*@
                     <li>
                         <a href="javascript:void(0)">
                             <span><i class="fa fa-angle-right"></i> </span>
@@ -196,7 +211,7 @@
                 </ul>
             </nav>
             <div class="col-sm-12 pagination_desc">
-                1 - 12 of 95 Mumbai Events
+                @*1 - 12 of 95 Mumbai Events*@
             </div>
         </div>
 
@@ -206,13 +221,29 @@
     <input type="hidden" id="hdPrice" value="@TempData["tempPrice"]" />
 </div>
 
+
+
 <script src="~/Scripts/bootstrap-datepicker.js"></script>
 <script src="~/Scripts/jquery-ui.js"></script>
 
-
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
+
+    function NextPage(vIndex)
+    {
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page" })';
+
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
+        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
+        var vPrice = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        vUrl = vUrl.replace("all", vPrice);
+        vUrl = vUrl.replace("evc", vECat);
+        vUrl = vUrl.replace("evt", vEtype);
+        vUrl = vUrl.replace("page", vIndex);
+        window.location.href = vUrl;
+    }
     function GetPriceFilter(strPrice) {
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="ALL" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="ALL", strPageIndex = "Page" })';
         var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
         var Price = (strPrice != '' ? strPrice : "ALL");
         var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
@@ -220,28 +251,23 @@
         vUrl = vUrl.replace("evc", vECat);
         vUrl = vUrl.replace("evt", vEtype);
         window.location.href = vUrl;
-
     }
 
     function GetAllEventType() {
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "~", strEc = "evc", strPrice="ALL" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "~", strEc = "evc", strPrice="ALL", strPageIndex = "Page" })';
         var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
         vUrl = vUrl.replace("ALL", Price);
         vUrl = vUrl.replace("evc", vECat);
-        
         window.location.href = vUrl;
-
     }
     function GetAllEventCategories() {
-         var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "~", strPrice = "ALL" })';
+         var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "~", strPrice = "ALL", strPageIndex = "Page" })';
         var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
         vUrl = vUrl.replace("ALL", Price);
-
         vUrl = vUrl.replace("evt", vEtype);
         window.location.href = vUrl;
-
     }
     function DeleteFilterEventType(vEvTypeId)
     {
@@ -257,7 +283,7 @@
                     vValue = vValue + "," + vAry[i];
             }
         }
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
         var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
         vUrl = vUrl.replace("evt", (vValue == "" ? "~" : vValue));
         vUrl = vUrl.replace("evc", vECat);
@@ -278,7 +304,7 @@
                     vValue = vValue + "," + vAry[i];
             }
         }
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
         var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
         vUrl = vUrl.replace("evc", (vValue == "" ? "~" : vValue));
         vUrl = vUrl.replace("evt", vEtype);
@@ -300,7 +326,7 @@
                 $("#hdEventType").val(vIds);
             }
         }
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
         var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
         vUrl = vUrl.replace("evt", $("#hdEventType").val());
         vUrl = vUrl.replace("evc", vECat);
@@ -323,7 +349,7 @@
             }
         }
 
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
         var vEType = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
         vUrl = vUrl.replace("evt", vEType);
         vUrl = vUrl.replace("evc", $("#hdEventCat").val());
@@ -337,7 +363,7 @@
     }
 
     function FilterbySingleEventCategory(vEvCatId) {
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
         vUrl = vUrl.replace("evt", "~");
         vUrl = vUrl.replace("evc", vEvCatId);
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
@@ -348,7 +374,7 @@
 
 
     function FilterbySingleEventType(vEvTypeId) {
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "", strPrice = "ALL" })';
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "", strPrice = "ALL", strPageIndex = "Page" })';
         vUrl = vUrl.replace("evt", vEvTypeId);
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
         vUrl = vUrl.replace("ALL", Price);
@@ -358,8 +384,69 @@
     }
 
 
-
+    
     $(document).ready(function () {
+
+        var input = document.getElementById('txtAddress');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(6.9167, 79.8473),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("dvMap"),
+              mapOptions);
+            // create a marker
+            var latlng = new google.maps.LatLng(6.9167, 79.8473);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: 'My Place'
+
+            });
+            var place = autocomplete.getPlace();
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            }
+            else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);
+
+            }
+            marker.setIcon(({
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(35, 35)
+            }));
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+
+            var address = '';
+            if (place.address_components) {
+                address = [
+                  (place.address_components[0] && place.address_components[0].short_name || ''),
+                  (place.address_components[1] && place.address_components[1].short_name || ''),
+                  (place.address_components[2] && place.address_components[2].short_name || '')
+                ].join(' ');
+            }
+        });
+
+
+
+
+
+
+
+
+        $("#dvProgress").hide();
+
+
+
+
 
 
         $('.date_picker').datepicker({

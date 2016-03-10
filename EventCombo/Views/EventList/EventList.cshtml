@@ -351,7 +351,64 @@
     };
     $(document).ready(function () {
        
+        var input = document.getElementById('txtEventLocation');
+        var autocomplete = new google.maps.places.Autocomplete(input);
 
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(6.9167, 79.8473),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+              mapOptions);
+            // create a marker
+            var latlng = new google.maps.LatLng(6.9167, 79.8473);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: 'My Place'
+
+            });
+            var place = autocomplete.getPlace();
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            }
+            else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);
+
+            }
+            marker.setIcon(({
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(35, 35)
+            }));
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+
+            var address = '';
+            if (place.address_components) {
+                address = [
+                  (place.address_components[0] && place.address_components[0].short_name || ''),
+                  (place.address_components[1] && place.address_components[1].short_name || ''),
+                  (place.address_components[2] && place.address_components[2].short_name || '')
+                ].join(' ');
+            }
+
+            $("#VenueName").val(place.address_components[0].long_name);
+
+            $("#City").val(place.address_components[1].long_name);
+            $("#State").val(place.address_components[3].long_name);
+            $("#Zip").val(place.address_components[5].long_name);
+            $("#CountryID").val(place.address_components[4].long_name);
+
+            //$("#VenueName").val(address.toString());
+            //$("#Address1").val(address[1].toString());
+            //$("#Address2").val(address[2].toString());
+        });
 
         var vLastTab = $("#hdLastTab").val();
         var vLasttabdata ="";
