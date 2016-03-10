@@ -26,16 +26,18 @@ namespace EventCombo.Controllers
             mst.Imagepath = !string.IsNullOrEmpty(mst.Imagepath) ? mst.Imagepath : "Images/default_org_image.jpg";
             mst.Eventid = eventid;
 
-            var OrganizerEvents = (from x in db.Event_Orgnizer_Detail where x.OrganizerMaster_Id == id select x.Orgnizer_Event_Id).ToList();
+            var OrganizerEvents = (from x in db.Event_Orgnizer_Detail join e in db.Events on x.Orgnizer_Event_Id equals e.EventID where x.OrganizerMaster_Id == id && e.Parent_EventID==0   select x.Orgnizer_Event_Id).ToList();
             mst.pastevent = new List<Organiserevent>();
             mst.presentevent = new List<Organiserevent>();
+
             foreach (var item in OrganizerEvents)
             {
                 Organiserevent orgev = new Organiserevent();
                 CreateEventController cms = new CreateEventController();
-
-                var EventDetail = cms.GetEventdetail(item ?? 0);
-                var image = cms.GetImages(item ?? 0).FirstOrDefault();
+                long ?Eventid = item;
+                var EventDetail = cms.GetEventdetail(Eventid??0);
+               
+                var image = cms.GetImages(Eventid ?? 0).FirstOrDefault();
                 if (image != null)
                 {
                     orgev.FirstImage = image;
@@ -162,14 +164,14 @@ namespace EventCombo.Controllers
             }
             mst.pasteventcount = mst.pastevent.Count();
             mst.presentevtcount = mst.presentevent.Count();
-            mst.maxsetcount = 3;
+            mst.maxsetcount = 20;
             if (mst.presentevent != null)
             {
-                mst.presentevent= mst.presentevent.Take(3).OrderBy(x => x.Dateofeventsort).ToList().ToList();
+                mst.presentevent= mst.presentevent.Take(mst.maxsetcount).OrderBy(x => x.Dateofeventsort).ToList().ToList();
             }
             if (mst.pastevent != null)
             {
-                mst.pastevent= mst.pastevent.Take(3).OrderBy(x => x.Dateofeventsort).ToList().ToList();
+                mst.pastevent= mst.pastevent.Take(mst.maxsetcount).OrderBy(x => x.Dateofeventsort).ToList().ToList();
             }
 
 

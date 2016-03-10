@@ -59,7 +59,15 @@
 {
     <p><a href="@Model.Organizer_Linkedin" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Model.Organizer_Linkedin</a></p>
 }
-                        <p><a href="#past_event">Past Event <span class="badge">@Model.pasteventcount</span> </a></p>
+@if(Model.pasteventcount<=0)
+{ 
+                        <p>Past Event <span class="badge">@Model.pasteventcount</span></p>
+}
+else
+{
+    <p><a href="#past_event">Past Event <span class="badge">@Model.pasteventcount</span> </a></p>
+
+}
                     </div>
                 </div>
             </div>
@@ -242,11 +250,12 @@
 <script>
     $(document).ready(function () {
         $("#btnviewmorepast").click(function(){
-            debugger;
+    
             var hdpresentcount=parseInt( $("#hdpastcount").val());
             var hdtotcount=parseInt($("#hdtotpastcount").val());
             var maxsetcount=parseInt($("#hdmaxsetcount").val());
             $("#btnviewlesspast").css('visibility','visible');
+           
             if(hdpresentcount<hdtotcount)
             {
                 var orgid=@Model.Orgnizer_Id;
@@ -255,11 +264,14 @@
                 $("#hdpastcount").val(countpresent);
                 $('#dvpast').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Past');
             }
-        
+            if(hdpresentcount>=hdtotcount)
+            {
+                $("#btnviewmorepast").css('visibility','hidden');
+            }
         
         });
         $("#btnviewlesspast").click(function(){
-            debugger;
+         
             var hdpresentcount=parseInt($("#hdpastcount").val());
             var hdtotcount=parseInt($("#hdtotpastcount").val());
             var maxsetcount=parseInt($("#hdmaxsetcount").val());
@@ -267,6 +279,7 @@
             var orgid=@Model.Orgnizer_Id;
             var countpresent=$("#hdpastcount").val();
             countpresent= parseInt(countpresent)-maxsetcount;
+            $("#btnviewmorepast").css('visibility','visible');
             $("#hdpastcount").val(countpresent);
             $('#dvpast').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Past');
             var hdpresentcount=parseInt($("#hdpastcount").val());
@@ -284,6 +297,7 @@
             var hdtotcount=parseInt($("#hdtotpresentcount").val());
             var maxsetcount=parseInt($("#hdmaxsetcount").val());
             $("#btnviewless").css('visibility','visible');
+          
             if(hdpresentcount<hdtotcount)
             {
                 var orgid=@Model.Orgnizer_Id;
@@ -292,14 +306,17 @@
                 $("#hdpresentcount").val(countpresent);
                 $('#dvpresent').load('@Url.Action("Organiserlist", "OrganizerInfo", new { })?OrganizerID=' + orgid + '&lengthorg='+countpresent+'&type=Present');
             }
-
+            if(hdpresentcount>=hdtotcount)
+            {
+                $("#btnviewmore").css('visibility','hidden');
+            }
         });
         $("#btnviewless").click(function(){
             debugger;
             var hdpresentcount=parseInt($("#hdpresentcount").val());
             var hdtotcount=parseInt($("#hdtotpresentcount").val());
             var maxsetcount=parseInt($("#hdmaxsetcount").val());
-          
+            $("#btnviewmore").css('visibility','visible');
                 var orgid=@Model.Orgnizer_Id;
                 var countpresent=$("#hdpresentcount").val();
                 countpresent= parseInt(countpresent)-maxsetcount;
