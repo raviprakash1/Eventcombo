@@ -111,7 +111,7 @@
     </a>
 </div>
 <!-- Confirm Msg OK Modal Box -->
-
+<div class="col-sm-12 text-center" id="loader"><img src="~/Images/ajax-loader.gif" /></div>
 
 
 
@@ -133,7 +133,7 @@
         $('#divorgprofile').load('@Url.Action("AddOrganiser", "Account")');
     }
     $(document).ready(function () {
-      
+        $("#loader").hide();
         $('#mgacnt').click();
         $('#dvacmang').addClass("active");
         $('#dvacmang b').addClass('opened new-opend');
@@ -160,7 +160,9 @@
             var selectval = $(this).val();
             if (selectval != 0) {
                 if (selectval == "A") {
+                    $("#loader").show();
                     LoadOrganiserAddAsyn();
+                    $("#loader").hide();
                     $(".maindivnonvis").hide();
                 } else {
                     $("#btnedit").prop("disabled", false);
@@ -358,8 +360,9 @@
             var txtcat = $('#id_selectorg').val();
            
             if (txtcat != 0 && txtcat != 'A') {
-
+                $("#loader").show();
                 LoadOrganiserAsyn(txtcat);
+                $("#loader").hide();
             }
         });
         $('#btndelete').click(function () {

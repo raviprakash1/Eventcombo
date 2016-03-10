@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Data.Entity.SqlServer;
 
 namespace EventCombo.Controllers
 {
@@ -74,7 +75,7 @@ namespace EventCombo.Controllers
 
 
 
-            string sDate_new = "", eDate_new = "";
+            string sDate_new = "", eDate_new = "", orgevents="";
             string startday = "", endday = "", starttime = "", endtime = "";
             Session["Fromname"] = "events";
             Session["logo"] = "events";
@@ -164,11 +165,15 @@ namespace EventCombo.Controllers
             //Organiser
             if (OrganiserDetail != null)
             {
-                //organizername = OrganiserDetail.Orgnizer_Name;
-                //fblink = OrganiserDetail.FBLink;
-                //twitterlink = OrganiserDetail.Twitter;
+                organizername = OrganiserDetail.Orgnizer_Name;
+                fblink = OrganiserDetail.FBLink;
+                twitterlink = OrganiserDetail.Twitter;
                 organizerid = OrganiserDetail.Orgnizer_Id.ToString();
-                //linkedin = OrganiserDetail.Linkedin;
+               linkedin = OrganiserDetail.Linkedin;
+                var exceptionList = db.EventVenues.Where(x=> SqlFunctions.DateDiff("s", x.EventEndDate + " " + x.EventEndTime, DateTime.Now) > 0 ).Select(e => e.EventID).ToList();
+                var exceptionList1 = db.MultipleEvents.Where(x => SqlFunctions.DateDiff("s", x.StartingTo + " " + x.EndTime, DateTime.Now) > 0 ).Select(e => e.EventID);
+                orgevents = (from x in db.Event_Orgnizer_Detail where x.OrganizerMaster_Id == OrganiserDetail.Orgnizer_Id && !exceptionList.Contains(x.Orgnizer_Event_Id??0) && !exceptionList1.Contains(x.Orgnizer_Event_Id ?? 0)  select x).Count().ToString();
+
 
             }
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
@@ -296,6 +301,7 @@ namespace EventCombo.Controllers
             viewEvent.fblink = fblink;
             viewEvent.twitterlink = twitterlink;
             viewEvent.Linkedinlin = linkedin;
+            viewEvent.Orgevents = orgevents;
             if (Session["AppId"] != null)
             {
                 var userid = Session["AppId"].ToString();

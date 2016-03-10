@@ -17,6 +17,7 @@ namespace EventCombo.Controllers
         {
             var TopAddress = "";
             var Topvenue = "";
+            Session["logo"] = "Organizer";
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             DateTime ENDATE = new DateTime();

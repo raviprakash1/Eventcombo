@@ -42,8 +42,7 @@ namespace EventCombo.Models
         public string Linkedinlin { get;  set; }
         public string EventPrivacy { get; set; }
         public string EventCancel { get; set; }
-
-
+        public string Orgevents { get; internal set; }
 
         public Coordinates Geocode(string address)
         {

@@ -367,7 +367,20 @@ WriteLiteral(" data-toggle=\"modal\"");
 
 WriteLiteral(" style=\"display:none\"");
 
-WriteLiteral(">\r\n\r\n    </a>\r\n</div>\r\n<!-- Confirm Msg OK Modal Box -->\r\n\r\n\r\n\r\n\r\n<script");
+WriteLiteral(">\r\n\r\n    </a>\r\n</div>\r\n<!-- Confirm Msg OK Modal Box -->\r\n<div");
+
+WriteLiteral(" class=\"col-sm-12 text-center\"");
+
+WriteLiteral(" id=\"loader\"");
+
+WriteLiteral("><img");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 4645), Tuple.Create("\"", 4675)
+, Tuple.Create(Tuple.Create("", 4651), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
+, 4651), false)
+);
+
+WriteLiteral(" /></div>\r\n\r\n\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
@@ -393,29 +406,31 @@ WriteLiteral("?id=\' + id + \'\');\r\n    }\r\n    function LoadOrganiserAddAsyn
             
             #line default
             #line hidden
-WriteLiteral("\');\r\n    }\r\n    $(document).ready(function () {\r\n      \r\n        $(\'#mgacnt\').cli" +
-"ck();\r\n        $(\'#dvacmang\').addClass(\"active\");\r\n        $(\'#dvacmang b\').addC" +
-"lass(\'opened new-opend\');\r\n\r\n        $(\'#dvacmang\').click(function (e) {\r\n\r\n    " +
-"        var $dvEle = $(\'#dvacmang b\');\r\n            var vclassname = $dvEle.attr" +
-"(\'class\');\r\n            if ($dvEle.hasClass(\"new-opend\")) {\r\n                $dv" +
-"Ele.removeClass(\'opened new-opend\').addClass(\'closed\');\r\n            }\r\n        " +
-"    else {\r\n                $dvEle.addClass(\'opened new-opend\');\r\n            }\r" +
-"\n        });\r\n  \r\n\r\n        $(\"#txt_phnno\").mask(\"999-999-9999\");\r\n\r\n      \r\n\r\n " +
-"       $(\"#id_selectorg\").change(function () {\r\n            $(\'#diverroacc\').hid" +
-"e();\r\n            var selectval = $(this).val();\r\n            if (selectval != 0" +
-") {\r\n                if (selectval == \"A\") {\r\n                    LoadOrganiserA" +
-"ddAsyn();\r\n                    $(\".maindivnonvis\").hide();\r\n                } el" +
-"se {\r\n                    $(\"#btnedit\").prop(\"disabled\", false);\r\n              " +
-"      $(\"#btndelete\").prop(\"disabled\", false);\r\n                    $(\".maindivn" +
-"onvis\").show();\r\n                }\r\n            }\r\n\r\n        });\r\n\r\n        $(do" +
-"cument).on(\'blur\', \'#txt_name\', function () {\r\n            debugger;\r\n          " +
-"  var name = $(\'#txt_name\').val();\r\n            var orgid = 0;\r\n         \r\n     " +
-"           orgid = $(\'#hd_ID\').val();\r\n                if (typeof orgid === \"und" +
-"efined\")\r\n                {\r\n                    orgid = 0;\r\n                }\r\n" +
-"          \r\n            $.ajax({\r\n                url: \'");
+WriteLiteral("\');\r\n    }\r\n    $(document).ready(function () {\r\n        $(\"#loader\").hide();\r\n  " +
+"      $(\'#mgacnt\').click();\r\n        $(\'#dvacmang\').addClass(\"active\");\r\n       " +
+" $(\'#dvacmang b\').addClass(\'opened new-opend\');\r\n\r\n        $(\'#dvacmang\').click(" +
+"function (e) {\r\n\r\n            var $dvEle = $(\'#dvacmang b\');\r\n            var vc" +
+"lassname = $dvEle.attr(\'class\');\r\n            if ($dvEle.hasClass(\"new-opend\")) " +
+"{\r\n                $dvEle.removeClass(\'opened new-opend\').addClass(\'closed\');\r\n " +
+"           }\r\n            else {\r\n                $dvEle.addClass(\'opened new-op" +
+"end\');\r\n            }\r\n        });\r\n  \r\n\r\n        $(\"#txt_phnno\").mask(\"999-999-" +
+"9999\");\r\n\r\n      \r\n\r\n        $(\"#id_selectorg\").change(function () {\r\n          " +
+"  $(\'#diverroacc\').hide();\r\n            var selectval = $(this).val();\r\n        " +
+"    if (selectval != 0) {\r\n                if (selectval == \"A\") {\r\n            " +
+"        $(\"#loader\").show();\r\n                    LoadOrganiserAddAsyn();\r\n     " +
+"               $(\"#loader\").hide();\r\n                    $(\".maindivnonvis\").hid" +
+"e();\r\n                } else {\r\n                    $(\"#btnedit\").prop(\"disabled" +
+"\", false);\r\n                    $(\"#btndelete\").prop(\"disabled\", false);\r\n      " +
+"              $(\".maindivnonvis\").show();\r\n                }\r\n            }\r\n\r\n " +
+"       });\r\n\r\n        $(document).on(\'blur\', \'#txt_name\', function () {\r\n       " +
+"     debugger;\r\n            var name = $(\'#txt_name\').val();\r\n            var or" +
+"gid = 0;\r\n         \r\n                orgid = $(\'#hd_ID\').val();\r\n               " +
+" if (typeof orgid === \"undefined\")\r\n                {\r\n                    orgid" +
+" = 0;\r\n                }\r\n          \r\n            $.ajax({\r\n                url:" +
+" \'");
 
             
-            #line 186 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 188 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("chkOrganizerName", "Account"));
 
             
@@ -488,7 +503,7 @@ WriteLiteral("\',\r\n                data: { Name: name, id: orgid },\r\n       
 "     $.ajax({\r\n                url: \'");
 
             
-            #line 314 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 316 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("saveOrganizer", "Account"));
 
             
@@ -514,69 +529,35 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 331 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 333 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
             #line default
             #line hidden
-WriteLiteral(@"';
-
-                        }
-
-
-                    }
-                    $(""#dveruimain"").removeClass(""er_UI_main"");
-                    $(""#dveruiimg"").removeClass(""er_UI_img"");
-                    $(""#dveruimain"").addClass(""er_suc_main"");
-                    $(""#dveruiimg"").addClass(""er_suc_img"");
-                    $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgsaveSucc'));
-                    $('#diverroacc').show();
-                    $('html,body').animate({ scrollTop: 0 });
-                    $('#divorgprofile').empty();
-                    $('#divorgprofile').hide();
-                    $("".maindivnonvis"").show();
-
-
-                }
-            });
-
-
-
-        });
-
-        $('#btnedit').click(function () {
-
-            var txtcat = $('#id_selectorg').val();
-           
-            if (txtcat != 0 && txtcat != 'A') {
-
-                LoadOrganiserAsyn(txtcat);
-            }
-        });
-        $('#btndelete').click(function () {
-          
-            var Id = $('#id_selectorg').val();
-         
-            if (Id != 0 && Id != 'A') {
-
-                $(""#hId"").html(ajaxsetup('OrganizerMaster', 'OrgDeleteMessage'));
-                $(""#btOk"").click();
-
-
-                $(""#orgid"").val(Id);
-            }
-        });
-        $(""#btnYes"").click(function(){
-            var Id = $(""#orgid"").val();
-
-            if (Id != 0 && Id != 'A') {
-
-                $.ajax({
-                    url: '");
+WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                    }\r\n                    $" +
+"(\"#dveruimain\").removeClass(\"er_UI_main\");\r\n                    $(\"#dveruiimg\")." +
+"removeClass(\"er_UI_img\");\r\n                    $(\"#dveruimain\").addClass(\"er_suc" +
+"_main\");\r\n                    $(\"#dveruiimg\").addClass(\"er_suc_img\");\r\n         " +
+"           $(\'#erraccmsg\').html(ajaxsetup(\'OrganizerMaster\', \'OrgsaveSucc\'));\r\n " +
+"                   $(\'#diverroacc\').show();\r\n                    $(\'html,body\')." +
+"animate({ scrollTop: 0 });\r\n                    $(\'#divorgprofile\').empty();\r\n  " +
+"                  $(\'#divorgprofile\').hide();\r\n                    $(\".maindivno" +
+"nvis\").show();\r\n\r\n\r\n                }\r\n            });\r\n\r\n\r\n\r\n        });\r\n\r\n   " +
+"     $(\'#btnedit\').click(function () {\r\n\r\n            var txtcat = $(\'#id_select" +
+"org\').val();\r\n           \r\n            if (txtcat != 0 && txtcat != \'A\') {\r\n    " +
+"            $(\"#loader\").show();\r\n                LoadOrganiserAsyn(txtcat);\r\n  " +
+"              $(\"#loader\").hide();\r\n            }\r\n        });\r\n        $(\'#btnd" +
+"elete\').click(function () {\r\n          \r\n            var Id = $(\'#id_selectorg\')" +
+".val();\r\n         \r\n            if (Id != 0 && Id != \'A\') {\r\n\r\n                $" +
+"(\"#hId\").html(ajaxsetup(\'OrganizerMaster\', \'OrgDeleteMessage\'));\r\n              " +
+"  $(\"#btOk\").click();\r\n\r\n\r\n                $(\"#orgid\").val(Id);\r\n            }\r\n" +
+"        });\r\n        $(\"#btnYes\").click(function(){\r\n            var Id = $(\"#or" +
+"gid\").val();\r\n\r\n            if (Id != 0 && Id != \'A\') {\r\n\r\n                $.aja" +
+"x({\r\n                    url: \'");
 
             
-            #line 384 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 387 "..\..\Views\Account\OrganizerProfile.cshtml"
                      Write(Url.Action("DeleteOrganizer", "Account"));
 
             
@@ -602,7 +583,7 @@ WriteLiteral(@"',
                                 window.location.href = '");
 
             
-            #line 401 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 404 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                    Write(Url.Action("Index", "Home"));
 
             
@@ -642,7 +623,7 @@ WriteLiteral("\';\r\n\r\n                            }\r\n\r\n\r\n              
 "         };\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 464 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 467 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("EditOrganizer", "Account"));
 
             
@@ -668,7 +649,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 481 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 484 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -704,7 +685,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                  
 "        var request = $.ajax({\r\n                url: \'");
 
             
-            #line 558 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 561 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("Index", "ValidationMessage"));
 
             

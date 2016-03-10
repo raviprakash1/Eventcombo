@@ -1384,7 +1384,13 @@ span.evnt_toltip{
 .nav.dis_side_fliter_tag > li.active:hover .can_badg{display: block; }
 
 
-
+.crt_inn_event{ float: right; width: auto;  margin-top: 5px; }  
+.crt_inn_event a{ 
+    background: #3cf;
+    color: #fff;
+    font-size: 17px;
+    padding: 3px 10px; border-radius: 4px; }  
+.crt_inn_event a:hover{ text-decoration: none; }
 
 
 
