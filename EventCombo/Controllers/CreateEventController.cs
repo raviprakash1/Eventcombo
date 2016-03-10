@@ -431,6 +431,7 @@ namespace EventCombo.Controllers
                         var neworg=model.Orgnizer.Where(x => x.Orgnizer_Id == 0).Any();
                         if (neworg)
                         {
+
                             var defaultorg = model.Orgnizer.Where(x => x.Orgnizer_Id == 0 && x.DefaultOrg=="Y").Any();
                             if (defaultorg)
                             {
@@ -789,11 +790,11 @@ namespace EventCombo.Controllers
             //Organiser
             if (OrganiserDetail != null)
             {
-                organizername = OrganiserDetail.Orgnizer_Name;
-                fblink = OrganiserDetail.FBLink;
-                twitterlink = OrganiserDetail.Twitter;
+                //organizername = OrganiserDetail.Orgnizer_Name;
+                //fblink = OrganiserDetail.FBLink;
+                //twitterlink = OrganiserDetail.Twitter;
                 organizerid = OrganiserDetail.Orgnizer_Id.ToString();
-                linkedin = OrganiserDetail.Linkedin;
+                //linkedin = OrganiserDetail.Linkedin;
 
             }
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
@@ -1041,9 +1042,7 @@ namespace EventCombo.Controllers
                         strHTML.Append("<tr>");
                         strHTML.Append("<td style='display: none' width='92%'>");
                         strHTML.Append(i);
-                      
                         strHTML.Append("</td>");
-
                         strHTML.Append("<td width='92 %'><label id=OrgName_");
                         strHTML.Append(i);
                         strHTML.Append(">");
@@ -1101,7 +1100,6 @@ namespace EventCombo.Controllers
                         else
                         {
                             strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
-
                         }
 
                     }
@@ -1206,11 +1204,11 @@ namespace EventCombo.Controllers
             //Organiser
             if (OrganiserDetail != null)
             {
-                organizername = OrganiserDetail.Orgnizer_Name;
-                fblink = OrganiserDetail.FBLink;
-                twitterlink = OrganiserDetail.Twitter;
+                //organizername = OrganiserDetail.Orgnizer_Name;
+                //fblink = OrganiserDetail.FBLink;
+                //twitterlink = OrganiserDetail.Twitter;
                 organizerid = OrganiserDetail.Orgnizer_Id.ToString();
-                Linkedin = OrganiserDetail.Linkedin;
+                //Linkedin = OrganiserDetail.Linkedin;
 
             }
             var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();

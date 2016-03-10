@@ -1,176 +1,442 @@
 ﻿
 @{
     ViewBag.Title = "DiscoverEvents";
-    
 }
-
 <link href="~/Content/filter-dropdown.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
 <div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
-    <div class="col-md-3 col-sm-12 ">
-        <div class="col-sm-12 no-padding">
-            <div class="dis_event_title "><h2>New York Events</h2></div>
-
-            <p class="event_desc dis_event_desc">
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-            </p>
-            <p>
-                <img class="img-responsive" src="~/Images/gmap.png" alt="">
-            </p>
-
+    <div class="col-sm-12 col-xs-12 ot_main_pad mb10">
+        <div class="col-sm-9 no_pad">
+            <div class="dis_event_ser_title "><h2>New Delhi Business Events </h2></div>
+        </div>
+        <div class="col-sm-3 text-right no_pad">
+            <ul class="nav nav-pills dis_fil_nav_right">
+                <li>Sort by:</li>
+                <li><a href="#">Relevence</a></li>
+                <li><a href="#" class="active">Date</a></li>
+            </ul>
         </div>
     </div>
-    <div class="col-sm-9 col-xs-12 no-padding ">
-        <div class="col-sm-12 col-xs-12">
-            <div class="rows"><div class="dis_event_ser_title "><h2>New Delhi Business Events </h2></div></div>
-        </div>
-        <div class="col-sm-12 col-xs-12 mt10">
-            <ul class="nav nav-pills dis_fliter_tag">
-                <li><a href="#">Business Unit <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Business Unit <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Business Unit <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Buness <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Business Unit <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Business Unit <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Buness <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Business <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Business it <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Busin nit <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Busi<span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Bus<span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Bus Unit <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Busint <span class="badge dis_badge">X</span></a></li>
-                <li><a href="#">Busines<span class="badge dis_badge">X</span></a></li>
-            </ul>
-        </div>
-        <div class="col-sm-12 col-xs-12 mb10 text-right">
-            <ul class="nav nav-pills dis_fil_nav_right">
-                <li><a href="#" class="active">Relevence</a></li>
-                <li><a href="#">Date</a></li>
-                <li><a href="#"><i class="fa fa-th"></i></a></li>
-            </ul>
-        </div>
-        <div class="col-sm-12 col-xs-12 mb10">
+    <div class="clearfix"></div>
+    <div class="col-sm-3 col-xs-12 ot_main_pad">
+        <div class="col-sm-12 no-padding">
+            <div class="col-sm-12 no_pad">
+                <ul id="accordion" class="accordion side_accordian">
+                    <li>
+                        <div class="link">All Dates<i class="glyphicon  glyphicon-triangle-bottom"></i></div>
+                        <ul class="submenu submenu_side">
+                            <li><a href="#">Today</a></li>
+                            <li><a href="#">Tomorrow</a></li>
+                            <li><a href="#">This Week</a></li>
+                            <li><a href="#">This Weekend</a></li>
+                            <li><a href="#">Next Week</a></li>
+                            <li><a href="#">This Month</a></li>
+                            <li>
+                                <a href="#">Custome Date</a>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-12 ot_main_pad mb10">
+                                    <div class="col-sm-10 no_pad mb10">
+                                        <label class="label-control desc_date_lebel">Start Date</label>
+                                        <input class="date_picker form-control" placeholder="mm/dd/yyyy" />
+                                    </div>
+                                    <div class="col-sm-10 no_pad mb10">
+                                        <label class="label-control desc_date_lebel">End Date</label>
+                                        <input class="date_picker form-control" placeholder="mm/dd/yyyy" />
+                                    </div>
+                                    <button class="btn btn-lg fiter_btn_pop_sub " type="submit">Search</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12 no_pad">
+                <p class="event_desc side_dis_event_desc">
+                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                </p>
+                <img class="img-responsive" src="images/gmap.png" alt="">
+            </div>
+            <div class="col-sm-12 no_pad mt10">
+                <form>
+                    <div class="input-group stylish-input-group">
+                        <input type="text" class="form-control dis_search_control">
+                        <span class="input-group-addon dis_search_addon">
+                            <button type="submit dis_search_sub">
+                                <i class="fa fa-map-marker"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 no_pad">
+                <div class="col-sm-12 no_pad">
+                    <ul class="side_fliter_by_type">
+                        <li><a href="#" class="active">All Prices</a></li>
+                        <li><a href="javascript:void(0);" onclick="GetPriceFilter('FREE');">Free</a></li>
+                        <li><a href="javascript:void(0);" onclick="GetPriceFilter('PAID');">Paid</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-12 no_pad">
+                    <p class="side_desc_fil_head">Event Type</p>
+                    <ul class="nav nav-pills dis_side_fliter_tag dis_side_fliter_scrol">
+                    @if (ViewBag.ETSelected != null)
+                    {
+                        foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
+                        {
+                            <li class="active"><a href="javascript:void(0);"  onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a> <a href="javascript:void(0);" class="can_badg " onclick="DeleteFilterEventType('@item.EventTypeID');">X</a></li>
+                        }
+                    }
+                    <li><a href="javascript:void(0);" onclick="GetAllEventType();" ><b>All Event Types</b></a></li>
+                    @foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.Eventtype)
+                    {
+                        <li><a href="javascript:void(0);" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a></li>
+                    }
+                    </ul>
 
-            <div class="col-sm-12 col-xs-12 no_pad">
-                <div class="col-sm-12 col-xs-12 no_pad mb5 desc_day_title">This Week</div>
-                <div class="col-sm-12 col-xs-12 no_pad">
-                    <div class="col-sm-12 col-xs-12 no_pad">
-                        <div class="col-sm-3 no_pad">
-                            <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
-                        </div>
-                        <div class="col-sm-9 no_pad">
-                            <p class="list_event_desc_title"> New Delhi Innovative Business Ideas from Ancient India New Delhi Innovative Business Ideas from Ancient India New Delhi Innovative Business Ideas from Ancient India </p>
-                            <p class="list_event_desc">
-                                <a href="#">
-                                    Sun National Bank Arena
-                                    81 Hamilton Avenue
-                                    Trenton, NJ , 08611
-                                    New York, New York
-                                </a>
-                            </p>
-                            <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
-                        <div class="col-sm-3 no_pad text-center desc_list_event_type">Free</div>
-                        <div class="col-sm-7 no_pad">
-                            <ul class="nav nav-pills list_inner_cat_tag">
-                                <li><a href="">#category1 </a></li>
-                                <li><a href="">#category2 </a></li>
-                                <li><a href="">#category3 </a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-2 no_pad text-right">
-                            <button class="desc_btn_bg_none " title="Your Favourite" type="button">
-                                <i class="fa fa-share-alt"></i>
-                            </button>
-                            <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
-                                <i class="fa fa-heart"></i>
-                            </button>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-sm-12 col-xs-12 no_pad">
-                    <div class="col-sm-12 col-xs-12 no_pad">
-                        <div class="col-sm-3 no_pad">
-                            <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
-                        </div>
-                        <div class="col-sm-9 no_pad">
-                            <p class="list_event_desc_title"> New Delhi Innovative Business Ideas from Ancient India New Delhi Innovative Business Ideas from Ancient India New Delhi Innovative Business Ideas from Ancient India </p>
-                            <p class="list_event_desc">
-                                <a href="#">
-                                    Sun National Bank Arena
-                                    81 Hamilton Avenue
-                                    Trenton, NJ , 08611
-                                    New York, New York
-                                </a>
-                            </p>
-                            <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
-                        <div class="col-sm-3 no_pad text-center desc_list_event_type">Free</div>
-                        <div class="col-sm-7 no_pad">
-                            <ul class="nav nav-pills list_inner_cat_tag">
-                                <li><a href="">#category1 </a></li>
-                                <li><a href="">#category2 </a></li>
-                                <li><a href="">#category3 </a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-2 no_pad text-right">
-                            <button class="desc_btn_bg_none " title="Your Favourite" type="button">
-                                <i class="fa fa-share-alt"></i>
-                            </button>
-                            <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
-                                <i class="fa fa-heart"></i>
-                            </button>
-                        </div>
-                    </div>
+                <div class="col-sm-12 no_pad mt10">
+                    <p class="side_desc_fil_head">Category</p>
+                    <ul class="nav nav-pills dis_side_fliter_tag dis_side_fliter_scrol">
+                        @if(ViewBag.ECatSelected != null)
+                        {
+                            foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.ECatSelected)
+                            {
+                                <li><a href="javascript:void(0);" class="active" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a><span class="badge dis_badge" onclick="DeleteFilterEventCategory('@item.EventCategoryID')">X</span></li>
+                            }
+                        }
+                        <li><a href="javascript:void(0);" onclick="GetAllEventCategories();"><b>All Categories </b></a></li>
+                        @foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.EventCat)
+                        {
+                            <li><a href="javascript:void(0);" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a></li>
+                        }
+                    </ul>
                 </div>
-                <div class="col-sm-12 col-xs-12 no_pad">
-                    <div class="col-sm-12 col-xs-12 no_pad">
-                        <div class="col-sm-3 no_pad">
-                            <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
-                        </div>
-                        <div class="col-sm-9 no_pad">
-                            <p class="list_event_desc_title"> New Delhi Innovative Business Ideas from Ancient India New Delhi Innovative Business Ideas from Ancient India New Delhi Innovative Business Ideas from Ancient India </p>
-                            <p class="list_event_desc">
-                                <a href="#">
-                                    Sun National Bank Arena
-                                    81 Hamilton Avenue
-                                    Trenton, NJ , 08611
-                                    New York, New York
-                                </a>
-                            </p>
-                            <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
-                        <div class="col-sm-3 no_pad text-center desc_list_event_type">Free</div>
-                        <div class="col-sm-7 no_pad">
-                            <ul class="nav nav-pills list_inner_cat_tag">
-                                <li><a href="">#category1 </a></li>
-                                <li><a href="">#category2 </a></li>
-                                <li><a href="">#category3 </a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-2 no_pad text-right">
-                            <button class="desc_btn_bg_none " title="Your Favourite" type="button">
-                                <i class="fa fa-share-alt"></i>
-                            </button>
-                            <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
-                                <i class="fa fa-heart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>
-
-
     </div>
+    <div class="col-sm-9 col-xs-12 ot_main_pad">
+        <div class="col-sm-12 no_pad">
+            @foreach (var item in (PagedList.IPagedList<EventCombo.Models.DiscoverEvent>)ViewBag.DisEvnt)
+            {
+                <div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
+                    <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+                        <div class="col-sm-12 col-xs-12 in_pad">
+                            <div class="col-sm-4 no_pad">
+                                <div class="dis_evnt_img"><img  src="@item.EventImage" alt=""></div>
+                                <div class="col-sm-12 no_pad text-center desc_list_event_type">@item.PriceLable</div>
+                            </div>
+                            <div class="col-sm-8 no_pad">
+                                <h1 class="list_event_desc_title"> @item.EventTitle </h1>
+                                <p class="list_event_desc">
+                                    <span class="des_hover">@item.EventAddress </span>
+                                    <span class="desc_hide">
+                                        @item.EventAddress
+                                    </span>
+                                </p>
+                                <p class="list_event_date_time">@item.EventTimings </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                            <div class="col-sm-10 no_pad">
+                                <ul class="nav nav-pills list_inner_cat_tag">
+                                    <li><a href="javascript:void(0);" onclick="FilterbySingleEventType(@item.EventTypeId);">#@item.EventType </a></li>
+                                    <li><a href="javascript:void(0);" onclick="FilterbySingleEventCategory(@item.EventCatId);">#@item.EventCat </a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-2 no_pad text-right">
+                                <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                                    <i class="fa fa-share-alt"></i>
+                                </button>
+                                <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
 
 </div>
+        <div class="col-sm-12 col-xs-12 text-center">
+            <nav>
+                <ul class="pagination desc_pagination">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <span><i class="fa fa-angle-left"></i> </span>
+                        </a>
+                    </li>
+                    <li><a href="javascript:void(0)">1</a></li>
+                    <li><a href="javascript:void(0)">2</a></li>
+                    <li><a href="javascript:void(0)">3</a></li>
+                    <li><a href="javascript:void(0)">4</a></li>
+                    <li><a href="javascript:void(0)">5</a></li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <span><i class="fa fa-angle-right"></i> </span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="col-sm-12 pagination_desc">
+                1 - 12 of 95 Mumbai Events
+            </div>
+        </div>
+
+    </div>
+    <input type="hidden" id="hdEventType" value="@TempData["ETypeSelected"]" />
+    <input type="hidden" id="hdEventCat" value="@TempData["ECatSelected"]" />
+    <input type="hidden" id="hdPrice" value="@TempData["tempPrice"]" />
+</div>
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+
+<script>
+    function GetPriceFilter(strPrice) {
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="ALL" })';
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
+        var Price = (strPrice != '' ? strPrice : "ALL");
+        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
+        vUrl = vUrl.replace("all", Price);
+        vUrl = vUrl.replace("evc", vECat);
+        vUrl = vUrl.replace("evt", vEtype);
+        alert(vUrl);
+        window.location.href = vUrl;
+
+    }
+
+    function GetAllEventType() {
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "~", strEc = "evc", strPrice="ALL" })';
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        vUrl = vUrl.replace("ALL", Price);
+        vUrl = vUrl.replace("evc", vECat);
+        
+        window.location.href = vUrl;
+
+    }
+    function GetAllEventCategories() {
+         var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "~", strPrice = "ALL" })';
+        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        vUrl = vUrl.replace("ALL", Price);
+
+        vUrl = vUrl.replace("evt", vEtype);
+        window.location.href = vUrl;
+
+    }
+    function DeleteFilterEventType(vEvTypeId)
+    {
+        var vValue="";
+        var vAry = $("#hdEventType").val().split(',');
+        for (i = 0; i < vAry.length; i++)
+        {
+            if (vAry[i] != vEvTypeId)
+            {
+                if (vValue == "")
+                    vValue = vAry[i];
+                else
+                    vValue = vValue + "," + vAry[i];
+            }
+        }
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
+        vUrl = vUrl.replace("evt", (vValue == "" ? "~" : vValue));
+        vUrl = vUrl.replace("evc", vECat);
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        vUrl = vUrl.replace("ALL", Price);
+
+        window.location.href = vUrl;
+
+    }
+    function DeleteFilterEventCategory(vEvCatId) {
+        var vValue = "";
+        var vAry = $("#hdEventCat").val().split(',');
+        for (i = 0; i < vAry.length; i++) {
+            if (vAry[i] != vEvCatId) {
+                if (vValue == "")
+                    vValue = vAry[i];
+                else
+                    vValue = vValue + "," + vAry[i];
+            }
+        }
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
+        vUrl = vUrl.replace("evc", (vValue == "" ? "~" : vValue));
+        vUrl = vUrl.replace("evt", vEtype);
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        vUrl = vUrl.replace("ALL", Price);
+
+        window.location.href = vUrl;
+
+    }
+    function FilterEventType(vEvTypeId) {
+        if ($("#hdEventType").val() == "" || $("#hdEventType").val() == "~") {
+            $("#hdEventType").val(vEvTypeId);
+        }
+        else {
+            vIds = $("#hdEventType").val();
+            // alert(vIds.indexOf(vEvTypeId));
+            if (vIds.indexOf(vEvTypeId) < 0) {
+                vIds = vIds.concat(",", vEvTypeId);
+                $("#hdEventType").val(vIds);
+            }
+        }
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
+        vUrl = vUrl.replace("evt", $("#hdEventType").val());
+        vUrl = vUrl.replace("evc", vECat);
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        vUrl = vUrl.replace("ALL", Price);
+
+        window.location.href = vUrl;
+        // alert($("#hdEventType").val());
+
+    }
+    function FilterEventCategory(vEvCatId) {
+        if ($("#hdEventCat").val() == "" || $("#hdEventCat").val() == "~") {
+            $("#hdEventCat").val(vEvCatId);
+        }
+        else {
+            vIds = $("#hdEventCat").val();
+            if (vIds.indexOf(vEvCatId) < 0) {
+                vIds = vIds.concat(",", vEvCatId);
+                $("#hdEventCat").val(vIds);
+            }
+        }
+
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        var vEType = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
+        vUrl = vUrl.replace("evt", vEType);
+        vUrl = vUrl.replace("evc", $("#hdEventCat").val());
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        vUrl = vUrl.replace("ALL", Price);
+
+        window.location.href = vUrl;
+
+        // alert($("#hdEventType").val());
+
+    }
+
+    function FilterbySingleEventCategory(vEvCatId) {
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL" })';
+        vUrl = vUrl.replace("evt", "~");
+        vUrl = vUrl.replace("evc", vEvCatId);
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        vUrl = vUrl.replace("ALL", Price);
+
+        window.location.href = vUrl;
+    }
+
+
+    function FilterbySingleEventType(vEvTypeId) {
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "", strPrice = "ALL" })';
+        vUrl = vUrl.replace("evt", vEvTypeId);
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        vUrl = vUrl.replace("ALL", Price);
+
+        //vUrl = vUrl.replace("evc", "");
+        window.location.href = vUrl;
+    }
+
+
+
+    $(document).ready(function () {
+
+
+        $('.date_picker').datepicker({
+            format: "mm/dd/yyyy",
+        })
+          .on('changeDate', function (ev) {
+              $('.date_picker').datepicker('hide');
+          });
+
+        $(".desc_hide").css({ "display": "none" });
+        $(".des_hover").mouseover(function () {
+            $(".des_hover").css({ "display": "none" });
+            $(".desc_hide").css({ "display": "block" });
+        });
+        $(".desc_hide").mouseout(function () {
+            $(".des_hover").css({ "display": "block" });
+            $(".desc_hide").css({ "display": "none" });
+        });
+
+    });
+
+
+    $(function () {
+
+        var Accordion = function (el, multiple) {
+            this.el = el || {};
+            this.multiple = multiple || false;
+
+            // Variables privadas
+            var links = this.el.find('.link');
+            // Evento
+            links.on('click', { el: this.el, multiple: this.multiple }, this.dropdown)
+        }
+
+        Accordion.prototype.dropdown = function (e) {
+            var $el = e.data.el;
+            $this = $(this),
+            $next = $this.next();
+
+            $next.slideToggle();
+            $this.parent().toggleClass('open');
+
+            if (!e.data.multiple) {
+                $el.find('.submenu').not($next).slideUp().parent().removeClass('open');
+            };
+        }
+
+        var accordion = new Accordion($('#accordion'), false);
+    });
+</script>
+
+
+
+
+
+@*<div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
+    <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+        <div class="col-sm-12 col-xs-12 in_pad">
+            <div class="col-sm-4 no_pad">
+                <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
+                <div class="col-sm-12 no_pad text-center desc_list_event_type">Free</div>
+            </div>
+            <div class="col-sm-8 no_pad">
+                <h1 class="list_event_desc_title"> New Delhi Innovative Business Ideas</h1>
+                <p class="list_event_desc">
+                    <span class="des_hover">New Delhi Innovative Business Ideas </span>
+                    <span class="desc_hide">
+                        Sun National Bank Arena
+                        81 Hamilton Avenue Sun National Bank Arena
+                        81 Hamilton Avenue
+                    </span>
+                </p>
+                <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+            <div class="col-sm-10 no_pad">
+                <ul class="nav nav-pills list_inner_cat_tag">
+                    <li><a href="">#category1 </a></li>
+                    <li><a href="">#category2 </a></li>
+
+                </ul>
+            </div>
+            <div class="col-sm-2 no_pad text-right">
+                <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                    <i class="fa fa-share-alt"></i>
+                </button>
+                <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                    <i class="fa fa-heart"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>*@

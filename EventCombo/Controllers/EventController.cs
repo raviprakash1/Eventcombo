@@ -211,6 +211,7 @@ namespace EventCombo.Controllers
                         var neworg = model.Orgnizer.Where(x => x.Orgnizer_Id == 0).Any();
                         if (neworg)
                         {
+
                             var defaultorg = model.Orgnizer.Where(x => x.Orgnizer_Id == 0 && x.DefaultOrg == "Y").Any();
                             if (defaultorg)
                             {

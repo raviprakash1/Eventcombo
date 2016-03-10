@@ -19,7 +19,6 @@ namespace EventCombo.Models
         public string UserId { get; set; }
         public string DefaultOrg { get; set; }
         public long OrganizerMaster_Id { get; set; }
-    
         public virtual Event Event { get; set; }
         public virtual Organizer_Master Organizer_Master { get; set; }
     }

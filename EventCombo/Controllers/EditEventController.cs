@@ -1714,6 +1714,7 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
+
                             var defaultorg = model.Orgnizer.Where(x => x.DefaultOrg == "Y").ToList();
                             foreach (Organizer_Master objOr in defaultorg)
                             {
@@ -2223,6 +2224,7 @@ namespace EventCombo.Controllers
                                             }
 
 
+
                                         }
 
                                     }
@@ -2596,8 +2598,6 @@ namespace EventCombo.Controllers
                         strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
                     else
                         strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
-
-
                 }
             }
 
@@ -2681,9 +2681,9 @@ namespace EventCombo.Controllers
             //Organiser
             if (OrganiserDetail != null)
             {
-                organizername = OrganiserDetail.Orgnizer_Name;
-                fblink = OrganiserDetail.FBLink;
-                twitterlink = OrganiserDetail.Twitter;
+                //organizername = OrganiserDetail.Orgnizer_Name;
+                //fblink = OrganiserDetail.FBLink;
+                //twitterlink = OrganiserDetail.Twitter;
                 organizerid = OrganiserDetail.Orgnizer_Id.ToString();
 
             }

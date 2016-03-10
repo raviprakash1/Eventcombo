@@ -24,10 +24,10 @@ using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using Microsoft.Owin.Security.OAuth;
-
+using PagedList;
 namespace EventCombo.Controllers
 {
-    
+
     public class HomeController : Controller
     {
 
@@ -67,7 +67,7 @@ namespace EventCombo.Controllers
 
         }
         [AllowAnonymous]
-        public async Task<string> FacebookLogin(string id,string email)
+        public async Task<string> FacebookLogin(string id, string email)
         {
             //current login details 
             string city = "", state = "", zipcode = "", country = "";
@@ -75,7 +75,7 @@ namespace EventCombo.Controllers
             var Strlastnmae = "";
             var Stremail = "";
             var fbuserid = "";
-          
+
 
             AccountController acc = new AccountController();
             try
@@ -138,7 +138,7 @@ namespace EventCombo.Controllers
             fbuserid = me.id;
 
             string HitURL = string.Format("https://graph.facebook.com/me?access_token={0}", id);
-          
+
             HttpClient clienthd = new HttpClient();
             Uri uri = new Uri(HitURL);
             HttpResponseMessage response = await clienthd.GetAsync(uri);
@@ -162,7 +162,7 @@ namespace EventCombo.Controllers
             {
                 var user1 = new ApplicationUser { UserName = email, Email = email };
                 var result1 = await UserManager.CreateAsync(user1);
-               
+
 
                 if (result1.Succeeded)
                 {
@@ -183,7 +183,7 @@ namespace EventCombo.Controllers
                                 objEntity.User_Permission_Detail.Add(permdetail);
                                 objEntity.SaveChanges();
                             }
-                           
+
                             bool getprofstatus = acc.Getprofiledetails(user1.Id);
                             if (getprofstatus == false)
                             {
@@ -200,7 +200,7 @@ namespace EventCombo.Controllers
 
                                 objEntity.Profiles.Add(prof);
 
-                              
+
                                 AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user1.Id);
                                 aspuser.LoginStatus = "Y";
 
@@ -217,7 +217,8 @@ namespace EventCombo.Controllers
                     {
                         return Url.Action("Index", "Home");
                     }
-                }else
+                }
+                else
                 {
                     return Url.Action("Index", "Home");
                 }
@@ -225,7 +226,7 @@ namespace EventCombo.Controllers
             else
             {
                 bool getstatus = acc.GetExternalLogindetails(user.Id, LoginProvider);
-                if(!getstatus)
+                if (!getstatus)
                 {
                     using (EventComboEntities objEntity = new EventComboEntities())
                     {
@@ -245,7 +246,7 @@ namespace EventCombo.Controllers
                 bool getprofstatus = acc.Getprofiledetails(user.Id);
                 using (EventComboEntities objEntity = new EventComboEntities())
                 {
-                    
+
                     if (getprofstatus == false)
                     {
 
@@ -255,16 +256,17 @@ namespace EventCombo.Controllers
                         prof.Email = email;
                         prof.UserID = user.Id;
                         objEntity.Profiles.Add(prof);
-                        
 
-                    }else
+
+                    }
+                    else
                     {
                         Profile prof = db.Profiles.First(i => i.UserID == user.Id);
                         prof.Ipcountry = country;
                         prof.IpState = state;
                         prof.Ipcity = city;
                     }
-                   
+
                     AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user.Id);
                     aspuser.LoginStatus = "Y";
 
@@ -292,17 +294,17 @@ namespace EventCombo.Controllers
                     return Url.Action("Index", "Home");
                 }
             }
-                
-              
-          
-
-            
 
 
-           
+
+
+
+
+
+
 
         }
-        public string IsValidID(string Email,string Password)
+        public string IsValidID(string Email, string Password)
         {
 
             var user = UserManager.FindByEmail(Email);
@@ -314,9 +316,9 @@ namespace EventCombo.Controllers
             }
             else
             {
-             var   result = UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, Password);
+                var result = UserManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, Password);
 
-          if(result.ToString()=="Success")
+                if (result.ToString() == "Success")
                 {
                     return "PasswordMatch";
 
@@ -326,14 +328,14 @@ namespace EventCombo.Controllers
                     return "PasswordNotMatch";
 
                 }
-               
+
             }
 
 
         }
-       
 
-        public ActionResult DiscoverEvents()
+
+        public ActionResult DiscoverEvents(string strEt, string strEc,string strPrice)
         {
             if ((Session["AppId"] != null))
             {
@@ -345,9 +347,283 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+
+            if (strEt == null || strEt == "~") strEt = string.Empty;
+            if (strEc == null || strEc == "~") strEc = string.Empty;
+
             Session["Fromname"] = "DiscoverEvents";
+            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc,strPrice);
+            ViewBag.DisEvnt = objDiscEvt.ToPagedList(1, 100);
+            ViewBag.Eventtype = GetDiscoverEventType(strEt);
+            ViewBag.EventCat = GetDiscoverEventCategory(strEc);
+            if (strEt != null && strEt != string.Empty)
+                ViewBag.ETSelected = GetEventTypeSelected(strEt);
+            else
+                ViewBag.ETSelected = null;
+
+            if (strEc != null && strEc != string.Empty)
+                ViewBag.ECatSelected = GetEventCategorySelected(strEc);
+            else
+                ViewBag.ECatSelected = null;
+
+            TempData["ETypeSelected"] = strEt;
+            TempData["ECatSelected"] = strEc;
+            TempData["tempPrice"] = strPrice;
+            
             return View();
 
+        }
+    
+        public List<EventType> GetDiscoverEventType(string strSelectedTypes)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                if (strSelectedTypes != null && strSelectedTypes != string.Empty)
+                {
+                    //List<EventType> objETSelected = GetEventTypeSelected(strSelectedTypes);
+                    string[] str = strSelectedTypes.Split(',');
+                    long[] iAry = Array.ConvertAll(str, s => long.Parse(s));
+                    List<EventType> objETRest = db.EventTypes.Where(e => e.EventHide != "Y" && !iAry.Contains(e.EventTypeID)).OrderBy(m => m.EventType1).ToList();
+                    return objETRest;
+                    
+                }
+                else
+                {
+                    return db.EventTypes.Where(e => e.EventHide != "Y").OrderBy(m => m.EventType1).ToList();
+                }
+                //if (strSelectedTypes != null && strSelectedTypes != string.Empty)
+                //{
+                //    var vEt = db.EventTypes.SqlQuery("select * From EventType where EventHide != 'Y' and EventTypeID in (" + strSelectedTypes + ")").Concat(db.EventTypes.SqlQuery("select * From EventType where EventHide != 'Y' and EventTypeID not in (" + strSelectedTypes + ") "));
+                //    return vEt.ToList();
+                //}
+                //else
+                //{
+                //var vEtype = (from et in db.EventTypes where et.EventHide != "Y" select et).ToList().OrderBy(m => m.EventType1).ToList();
+                //if (strSelectedTypes != null && strSelectedTypes != string.Empty)
+                //{
+                //    List<EventType> objETSelected = new List<EventType>();
+                //    List<EventType> objETRest = new List<EventType>();
+                //    foreach (EventType ev in vEtype)
+                //    {
+                //        if (strSelectedTypes.Contains(ev.EventTypeID.ToString()) == true)
+                //        {
+                //            objETSelected.Add(ev);
+                //        }
+                //        else
+                //        {
+                //            objETRest.Add(ev);
+                //        }
+                //    }
+                //    return objETSelected.Concat(objETRest).ToList();
+                //}
+                //else {
+
+                    //    return vEtype;
+                    //}
+            }
+        }
+
+
+        public List<EventType> GetEventTypeSelected(string strSelectedTypes)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                string[] str = strSelectedTypes.Split(',');
+                long[] iAry = Array.ConvertAll(str, s => long.Parse(s));
+                return db.EventTypes.Where(e => e.EventHide != "Y" && iAry.Contains(e.EventTypeID)).ToList();
+            }
+        }
+        public List<EventCategory> GetEventCategorySelected(string strSelectedCat)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                string[] str = strSelectedCat.Split(',');
+                long[] iAry = Array.ConvertAll(str, s => long.Parse(s));
+                return db.EventCategories.Where(e => iAry.Contains(e.EventCategoryID)).ToList();
+            }
+        }
+        public List<EventCategory> GetDiscoverEventCategory(string strCat)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                if (strCat != null && strCat != string.Empty)
+                {
+                    //List<EventType> objETSelected = GetEventTypeSelected(strSelectedTypes);
+                    string[] str = strCat.Split(',');
+                    long[] iAry = Array.ConvertAll(str, s => long.Parse(s));
+                    List<EventCategory> objEcat = db.EventCategories.Where(e => !iAry.Contains(e.EventCategoryID)).OrderBy(m => m.EventCategory1).ToList();
+                    return objEcat;
+
+                }
+                else
+                {
+                    return db.EventCategories.OrderBy(m => m.EventCategory1).ToList();
+                }
+                //var vEventCategory = (from et in db.EventCategories select et).ToList().OrderBy(m => m.EventCategory1);
+                //return vEventCategory.ToList();
+            }
+        }
+        public string GetDiscoverEventCategorybyId(long lid)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var vEventCategory = (from et in db.EventCategories where et.EventCategoryID == lid select et.EventCategory1).FirstOrDefault();
+                return vEventCategory;
+            }
+        }
+        //public string GetDiscoverEventTimings(long lEvent)
+        //{
+
+        //    using (EventComboEntities db = new EventComboEntities())
+        //    {
+        //        var vEventCategory = (from et in db.EventCategories where et.EventCategoryID == lid select et.EventCategory1).FirstOrDefault();
+        //        return vEventCategory;
+        //    }
+
+        //}
+
+
+        public string GetDiscoverEventTypebyId(long lid)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var vEventType = (from et in db.EventTypes where et.EventTypeID == lid select et.EventType1).FirstOrDefault();
+                return vEventType;
+            }
+        }
+        public string GetPriceLabel(long lEventId)
+        {
+            string strResult = "";
+
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var vFree = (from et in db.Tickets where et.E_Id == lEventId && et.TicketTypeID == 1 select et).FirstOrDefault();
+                var vDonate = (from et in db.Tickets where et.E_Id == lEventId && et.TicketTypeID == 3 select et).FirstOrDefault();
+                var vMinPrice = (from et in db.Tickets where et.E_Id == lEventId && et.TicketTypeID == 2 select et.TotalPrice).Min();
+                var vMaxPrice = (from et in db.Tickets where et.E_Id == lEventId && et.TicketTypeID == 2 select et.TotalPrice).Max();
+
+                if (vMaxPrice == null) vMaxPrice = 0;
+                if (vMinPrice == null) vMinPrice = 0;
+                if (vFree != null && vDonate == null && vMaxPrice == 0 && vMinPrice == 0)
+                {
+                    strResult = "FREE";
+                }
+                else if (vFree == null && vDonate != null && vMaxPrice == 0 && vMinPrice == 0)
+                {
+                    strResult = "DONATE";
+                }
+                else if (vFree == null && vDonate == null && vMaxPrice == vMinPrice)
+                {
+                    strResult = "$" + vMaxPrice.ToString();
+                }
+                else if (vFree == null && vDonate == null && vMaxPrice > vMinPrice)
+                {
+                    strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
+                }
+                else if (vFree != null && vDonate == null && vMaxPrice > 0)
+                {
+                    strResult = "$0 - $" + vMaxPrice.ToString();
+                }
+                else if (vFree != null && vDonate != null && vMaxPrice > 0)
+                {
+                    strResult = "$0 - $" + vMaxPrice.ToString();
+                }
+                else if (vFree == null && vDonate != null && vMaxPrice > vMinPrice)
+                {
+                    strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
+                }
+            }
+            return strResult;
+        }
+        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId,string strPrice)
+        {
+            List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                StringBuilder sbQuery = new StringBuilder();
+                if (strEventTypeId == null || strEventTypeId == "~") strEventTypeId = string.Empty;
+                if (strEventCatId == null || strEventCatId == "~") strEventCatId = string.Empty;
+                if (strPrice == null || strPrice == "~") strPrice = "ALL";
+                
+                DiscoverEvent objDisEv = new DiscoverEvent();
+                sbQuery.Append("Select * from Event where 0=0 ");
+
+                if (strEventTypeId.Trim() != string.Empty)
+                    sbQuery.Append(" AND EventTypeID in (" + strEventTypeId + ")");
+
+                if (strEventCatId.Trim() != string.Empty)
+                    sbQuery.Append(" AND EventCategoryID in (" + strEventCatId + ")");
+
+                if (strPrice.ToUpper() == "FREE")
+                {
+                    sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID = 1)");
+                }
+
+                if (strPrice.ToUpper() == "PAID")
+                {
+                    sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (2,3))");
+                }
+
+
+                var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
+                CreateEventController objCEv = new CreateEventController();
+                string strImageUrl = "";
+                foreach (Event objEv in vEventList)
+                {
+                    //if (strPrice.ToUpper() == "FREE")
+                    //{
+                    //    var vTicket = db.Tickets.Where(ev => ev.TicketTypeID == 1).FirstOrDefault();
+                    //    if (vTicket == null) continue;
+                    //}
+                    //if (strPrice.ToUpper() == "PAID")
+                    //{
+
+                    //    var vTicket = db.Tickets.Where(ev => ev.TicketTypeID == 2).FirstOrDefault();
+                    //    var vDontion = db.Tickets.Where(ev => ev.TicketTypeID == 3).FirstOrDefault();
+                    //    if (vTicket == null && vDontion == null) continue;
+                    //}
+
+
+
+                    strImageUrl = objCEv.GetImages(objEv.EventID).FirstOrDefault();
+                    if (strImageUrl == null) strImageUrl = "/Images/default_event_image.jpg";
+                    objDisEv = new DiscoverEvent();
+                    objDisEv.EventTitle = objEv.EventTitle;
+                    objDisEv.EventImage = strImageUrl;
+                    objDisEv.EventCat = GetDiscoverEventCategorybyId(objEv.EventCategoryID);
+                    objDisEv.EventType = GetDiscoverEventTypebyId(objEv.EventTypeID);
+                    objDisEv.EventCatId = objEv.EventCategoryID;
+                    objDisEv.EventTypeId = objEv.EventTypeID;
+                    objDisEv.PriceLable = GetPriceLabel(objEv.EventID);
+                    var vAddress = objEv.Addresses.FirstOrDefault();
+                    if (vAddress != null)
+                    {
+                        if (vAddress.ConsolidateAddress.Trim() != string.Empty)
+                            objDisEv.EventAddress = vAddress.ConsolidateAddress;
+                        else
+                        {
+                            objDisEv.EventAddress = vAddress.VenueName.Trim() + " " + vAddress.Address1.Trim() + " " + vAddress.Address2.Trim() + " " + vAddress.City.Trim() + " " + vAddress.Zip;
+                        }
+                    }
+                    var vTimings = objEv.EventVenues.FirstOrDefault();
+                    if (vTimings != null)
+                    {
+                        objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
+                    }
+                    else
+                    {
+                        long lMin; long lMax;
+                        lMin = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == objEv.EventID select evt.PE_Id).Min();
+                        lMax = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == objEv.EventID select evt.PE_Id).Max();
+                        var vMin = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMin select evt).FirstOrDefault();
+                        var vMax = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMax select evt).FirstOrDefault();
+                        objDisEv.EventTimings = vMin.PE_Scheduled_Date + " " + vMin.PE_Start_Time + " - " + vMax.PE_Scheduled_Date + " " + vMax.PE_End_Time;
+                    }
+
+                    lsDisEvt.Add(objDisEv);
+                }
+                return lsDisEvt;
+            }
         }
 
         public ActionResult DiscoverEventsTiles()
@@ -419,10 +695,10 @@ namespace EventCombo.Controllers
         public ActionResult Index()
         {
             Session["Fromname"] = "Home";
-            if(Session["AppId"]!=null)
+            if (Session["AppId"] != null)
             {
-              string var=  getusername();
-                if(string.IsNullOrEmpty(var))
+                string var = getusername();
+                if (string.IsNullOrEmpty(var))
                 {
                     Session["AppId"] = null;
                 }
@@ -451,16 +727,16 @@ namespace EventCombo.Controllers
             Session["Fromname"] = "PasswordReset";
             if (code == null)
             {
-              return  RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
 
             }
             else
             {
                 Session["code"] = code;
-             return  View();
+                return View();
 
             }
-        
+
 
         }
         [HttpPost]
@@ -473,7 +749,7 @@ namespace EventCombo.Controllers
             var success = "";
             Session["Fromname"] = "PasswordReset";
             ValidationMessageController vmc = new ValidationMessageController();
-            if (model.Password!=model .ConfirmPassword)
+            if (model.Password != model.ConfirmPassword)
             {
                 error = vmc.Index("ResetPassword", "PwdResetPwdValidationSys");
                 ViewData["Error"] = error;
@@ -515,7 +791,7 @@ namespace EventCombo.Controllers
             var token = await UserManager.GeneratePasswordResetTokenAsync(code);
 
             var result = await UserManager.ResetPasswordAsync(code, token, model.Password);
-           // var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            // var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
                 success = vmc.Index("ResetPassword", "PwdResetSuccessInitSY");
@@ -527,7 +803,7 @@ namespace EventCombo.Controllers
 
         }
         [AllowAnonymous]
-       public ActionResult ForgetPassword()
+        public ActionResult ForgetPassword()
         {
             Session["Fromname"] = "ForgetPassword";
             return View();
@@ -544,31 +820,31 @@ namespace EventCombo.Controllers
             var username = "";
             string id = user.Id;
             var profile = db.Profiles.Where(x => x.UserID == id).FirstOrDefault();
-            if(profile!=null)
+            if (profile != null)
             {
-                username = !string.IsNullOrEmpty(profile.FirstName)? profile.FirstName : "";
+                username = !string.IsNullOrEmpty(profile.FirstName) ? profile.FirstName : "";
 
             }
-          
+
             //string readFile = "";
-           // using (StreamReader reader = new StreamReader(Server.MapPath("~/ForgotPassword.html")))
-           // {
-           //     readFile = reader.ReadToEnd();
-           // }
-           var url = Request.Url;
+            // using (StreamReader reader = new StreamReader(Server.MapPath("~/ForgotPassword.html")))
+            // {
+            //     readFile = reader.ReadToEnd();
+            // }
+            var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
-           string url1 = baseurl + Url.Action("PasswordReset", "Home") + "?code=" + id +" ";
+            string url1 = baseurl + Url.Action("PasswordReset", "Home") + "?code=" + id + " ";
 
-           // string myString = "";
-           // myString = readFile;
-           // myString = myString.Replace("¶¶Email¶¶", model.Email);
-           // myString = myString.Replace("¶¶Website¶¶", url1);
+            // string myString = "";
+            // myString = readFile;
+            // myString = myString.Replace("¶¶Email¶¶", model.Email);
+            // myString = myString.Replace("¶¶Website¶¶", url1);
 
-           // SendMail(model.Email, myString.ToString(), "The Eventcombo Team");
+            // SendMail(model.Email, myString.ToString(), "The Eventcombo Team");
 
             /// to send email////
             /// 
-            string to = "", from = "", cc = "", bcc = "", subjectn = "",emailname="";
+            string to = "", from = "", cc = "", bcc = "", subjectn = "", emailname = "";
             var bodyn = "";
             List<Email_Tag> EmailTag = new List<Email_Tag>();
             EmailTag = getTag();
@@ -577,7 +853,7 @@ namespace EventCombo.Controllers
             if (Emailtemplate != null)
             {
 
-                string tag = "UserEmailID:"+model.Email + "¶" + "UserFirstNameID:"+username+ "ResetPwdUrl:"+ url1;
+                string tag = "UserEmailID:" + model.Email + "¶" + "UserFirstNameID:" + username + "ResetPwdUrl:" + url1;
                 if (!string.IsNullOrEmpty(Emailtemplate.To))
                 {
 
@@ -603,7 +879,7 @@ namespace EventCombo.Controllers
                     from = "shweta.sindhu@kiwitech.com";
 
                 }
-                if(!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
                 {
                     emailname = Emailtemplate.From_Name;
                 }
@@ -764,8 +1040,8 @@ namespace EventCombo.Controllers
 
                             }
                             // All tags
-                           
-                         
+
+
 
 
                         }
@@ -845,7 +1121,7 @@ namespace EventCombo.Controllers
                                 bodyn = bodyn.Replace("¶¶DealOrderNumberID¶¶", "");
 
                             }
-                         
+
                             if (EmailTag[i].Tag_Name == "EventOrderNO")
                             {
                                 bodyn = bodyn.Replace("¶¶EventOrderNO¶¶", "");
@@ -901,16 +1177,16 @@ namespace EventCombo.Controllers
 
                     }
                 }
-                SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag, emailname);
+                SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag, emailname);
             }
             ValidationMessageController vmc = new ValidationMessageController();
-           var msg= vmc.Index("ForgotPassword", "ForgotPwdSuccessInitSY");
+            var msg = vmc.Index("ForgotPassword", "ForgotPwdSuccessInitSY");
             ViewData["Message"] = msg;
             return View();
         }
 
 
-        public void SendMail(string toaddress,string messagebody,string messageSubject)
+        public void SendMail(string toaddress, string messagebody, string messageSubject)
         {
             //var fromAddress = new MailAddress("shweta.sindhu@kiwitech.com", "Shweta");
             //var toAddress = new MailAddress(toaddress);
@@ -946,7 +1222,7 @@ namespace EventCombo.Controllers
                 smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
                 smtp.Send(mailMessage);
             }
-          
+
 
         }
 
@@ -954,7 +1230,7 @@ namespace EventCombo.Controllers
         {
             string result = getusername();
 
-            if(string.IsNullOrEmpty (result))
+            if (string.IsNullOrEmpty(result))
             { Session["AppId"] = null; }
             return Content(result);
         }
@@ -965,22 +1241,23 @@ namespace EventCombo.Controllers
 
 
 
-                Session["ReturnUrl"]= Url.Action("DiscoverEvents", "Home");
+                Session["ReturnUrl"] = Url.Action("DiscoverEvents", "Home");
 
             }
 
             if (id == "GetBuzz")
             {
                 Session["ReturnUrl"] = Url.Action("GetBuzz", "Home");
-            
-             
+
+
 
             }
-         
+
 
 
         }
-        public string checkid() {
+        public string checkid()
+        {
             Session["ReturnUrl"] = "CreateEvent~" + Url.Action("CreateEvent", "CreateEvent");
 
 
@@ -995,7 +1272,7 @@ namespace EventCombo.Controllers
                 return "N";
 
             }
-                }
+        }
 
         public List<Email_Tag> getTag()
         {
@@ -1005,11 +1282,11 @@ namespace EventCombo.Controllers
         }
         public Email_Template getEmail(string template)
         {
-           
+
             var userEmail = db.Email_Template.Where(x => x.Template_Tag == template).SingleOrDefault();
-            
-                return userEmail;
-            
+
+            return userEmail;
+
 
         }
 
@@ -1021,31 +1298,31 @@ namespace EventCombo.Controllers
                 var userEmail = db.AspNetUsers.Where(x => x.Id == userid).Select(y => y.Email).SingleOrDefault();
                 if (userEmail != null)
                 {
-                    return userEmail.Substring(0, userEmail.IndexOf("@")+1);
+                    return userEmail.Substring(0, userEmail.IndexOf("@") + 1);
                 }
                 else
                 {
-                  
+
                     return "";
                 }
 
             }
             else
             {
-                
+
                 return "";
 
             }
         }
 
-      
+
 
         [HttpPost]
         [AllowAnonymous]
-       
+
         public async Task<ActionResult> Signup(LoginViewModel model)
         {
-            string city = "", state = "", country = "", zipcode="";
+            string city = "", state = "", country = "", zipcode = "";
             string url = null;
             if (Session["ReturnUrl"] != null)
             {
@@ -1067,7 +1344,7 @@ namespace EventCombo.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    await this.UserManager.AddToRoleAsync(user.Id,"Member");
+                    await this.UserManager.AddToRoleAsync(user.Id, "Member");
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -1093,7 +1370,7 @@ namespace EventCombo.Controllers
                             {
                                 string ip = GetLanIPAddress().Replace("::ffff:", "");
 
-                                
+
                                 var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
                                 dynamic stuff = JsonConvert.DeserializeObject(json);
                                 if (stuff != null)
@@ -1133,7 +1410,7 @@ namespace EventCombo.Controllers
                         objEntity.Profiles.Add(prof);
 
 
-                     
+
 
                         objEntity.SaveChanges();
 
@@ -1143,7 +1420,7 @@ namespace EventCombo.Controllers
                             AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == Userid.Id);
 
                             aspuser.LoginStatus = "Y";
-                         
+
                             db.SaveChanges();
 
                         }
@@ -1154,10 +1431,10 @@ namespace EventCombo.Controllers
 
                         /// to send email////
                         /// 
-                        string to = "", from ="",cc="",bcc="",subjectn="",emailname="";
+                        string to = "", from = "", cc = "", bcc = "", subjectn = "", emailname = "";
                         var bodyn = "";
                         List<Email_Tag> EmailTag = new List<Email_Tag>();
-                         EmailTag = getTag();
+                        EmailTag = getTag();
                         string tag = "UserEmailID:" + model.Email;
                         var Emailtemplate = getEmail("email_welcome");
                         if (!string.IsNullOrEmpty(Emailtemplate.To))
@@ -1172,7 +1449,7 @@ namespace EventCombo.Controllers
                             }
                         }
                         if (!(string.IsNullOrEmpty(Emailtemplate.From)))
-                         {
+                        {
                             from = Emailtemplate.From;
                             if (from.Contains("¶¶UserEmailID¶¶"))
                             {
@@ -1185,7 +1462,7 @@ namespace EventCombo.Controllers
                             from = "shweta.sindhu@kiwitech.com";
 
                         }
-                        if(!(string.IsNullOrEmpty (Emailtemplate.From_Name)))
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
                         {
                             emailname = Emailtemplate.From_Name;
                         }
@@ -1219,31 +1496,31 @@ namespace EventCombo.Controllers
 
                             subjectn = Emailtemplate.Subject;
 
-                          
+
                         }
                         if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
                         {
                             bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
 
 
-                        
 
-                            
+
+
                         }
-                        SendHtmlFormattedEmail(to, from, subjectn, bodyn,cc,bcc, tag, emailname);
+                        SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag, emailname);
 
 
                     }
                     //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                  //  await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //  await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToLocal(url);
 
                 }
                 AddErrors(result);
             }
-           
+
             return RedirectToAction("Index", "Home");
         }
         public String GetLanIPAddress()
@@ -1258,33 +1535,33 @@ namespace EventCombo.Controllers
             }
             return strIpAddress;
         }
-        public void SendHtmlFormattedEmail(string To,string from, string subject, string body,string cc,string bcc,string tags,string emailname)
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc, string tags, string emailname)
         {
             using (MailMessage mailMessage = new MailMessage())
             {
                 mailMessage.From = new MailAddress(from, emailname);
-              string[] arr= tags.Split('¶');
+                string[] arr = tags.Split('¶');
                 int length = arr.Length;
                 List<Email_Tag> EmailTag = new List<Email_Tag>();
                 EmailTag = getTag();
 
-                if (!string.IsNullOrEmpty(subject) && subject!=null)
+                if (!string.IsNullOrEmpty(subject) && subject != null)
                 {
-                  
-                   
-                       for(int j=0;j<length;j++)
-                        {
+
+
+                    for (int j = 0; j < length; j++)
+                    {
                         for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
                         {
                             string[] arrtag = arr[j].Split(':');
-                            if (arrtag[0]==EmailTag[i].Tag_Name)
+                            if (arrtag[0] == EmailTag[i].Tag_Name)
                             {
-                                if(subject.Contains(EmailTag[i].Tag_Name))
+                                if (subject.Contains(EmailTag[i].Tag_Name))
                                 {
                                     subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
                                 }
                             }
-                        } 
+                        }
                     }
                     for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
                     {
@@ -1294,16 +1571,16 @@ namespace EventCombo.Controllers
                         }
                     }
 
-                       
+
 
                 }
-                if(body!=null && !string.IsNullOrEmpty( body))
+                if (body != null && !string.IsNullOrEmpty(body))
                 {
                     for (int j = 0; j < length; j++)
                     {
                         for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                    {
-                       
+                        {
+
                             string[] arrtag = arr[j].Split(':');
                             if (arrtag[0] == EmailTag[i].Tag_Name)
                             {
@@ -1324,7 +1601,7 @@ namespace EventCombo.Controllers
 
                 }
                 mailMessage.Subject = subject;
-                mailMessage.Body = body;    
+                mailMessage.Body = body;
                 if (!string.IsNullOrEmpty(cc))
                 {
                     mailMessage.CC.Add(cc);
@@ -1347,23 +1624,23 @@ namespace EventCombo.Controllers
                 smtp.Send(mailMessage);
             }
         }
-        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc,MemoryStream attachment, string emailname, string qrimage,string brcode,List<TicketBearer> GuestList)
+        public void SendHtmlFormattedEmail(string To, string from, string subject, string body, string cc, string bcc, MemoryStream attachment, string emailname, string qrimage, string brcode, List<TicketBearer> GuestList)
         {
             MailMessage mailMessage = new MailMessage();
-            
-                mailMessage.From = new MailAddress(from, emailname);
 
-          
+            mailMessage.From = new MailAddress(from, emailname);
+
+
             mailMessage.Subject = subject;
-                mailMessage.Body = body;
-                if (!string.IsNullOrEmpty(cc))
-                {
-                    mailMessage.CC.Add(cc);
-                }
-                if (!string.IsNullOrEmpty(bcc))
-                {
-                    mailMessage.Bcc.Add(bcc);
-                }
+            mailMessage.Body = body;
+            if (!string.IsNullOrEmpty(cc))
+            {
+                mailMessage.CC.Add(cc);
+            }
+            if (!string.IsNullOrEmpty(bcc))
+            {
+                mailMessage.Bcc.Add(bcc);
+            }
             if (attachment != null)
             {
                 if (attachment.Length != 0)
@@ -1374,7 +1651,7 @@ namespace EventCombo.Controllers
                     mailMessage.Attachments.Add(attach);
                 }
             }
-                mailMessage.IsBodyHtml = true;
+            mailMessage.IsBodyHtml = true;
             //AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
             //mailMessage.AlternateViews.Add(htmlView);
 
@@ -1400,26 +1677,26 @@ namespace EventCombo.Controllers
             //theeventImage.ContentId = "myeventImageID";
             //htmlView.LinkedResources.Add(theeventImage);
 
-       
+
             mailMessage.To.Add(new MailAddress(To));
-            if(GuestList!=null)
+            if (GuestList != null)
             {
-                foreach(var item in GuestList)
+                foreach (var item in GuestList)
                 {
-                    mailMessage.To.Add(new MailAddress(item.Email,item.Name));
+                    mailMessage.To.Add(new MailAddress(item.Email, item.Name));
                 }
             }
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = ConfigurationManager.AppSettings["Host"];
-                smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
-                System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
-                NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
-                smtp.UseDefaultCredentials = true;
-                smtp.Credentials = NetworkCred;
-                smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
-                smtp.Send(mailMessage);
-            
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = ConfigurationManager.AppSettings["Host"];
+            smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+            System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+            NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
+            NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+            smtp.UseDefaultCredentials = true;
+            smtp.Credentials = NetworkCred;
+            smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
+            smtp.Send(mailMessage);
+
         }
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -1438,6 +1715,6 @@ namespace EventCombo.Controllers
         }
 
     }
-  
+
 
 }
