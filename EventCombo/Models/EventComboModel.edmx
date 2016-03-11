@@ -447,6 +447,22 @@
           <Property Name="IpState" Type="varchar" MaxLength="100" />
           <Property Name="Ipcity" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Promo_Code">
+          <Key>
+            <PropertyRef Name="PC_id" />
+          </Key>
+          <Property Name="PC_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_Type" Type="nchar" MaxLength="10" />
+          <Property Name="PC_Code" Type="nvarchar(max)" />
+          <Property Name="PC_Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PC_Percentage" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PC_Uses" Type="nchar" MaxLength="10" />
+          <Property Name="PC_Start" Type="varchar" MaxLength="50" />
+          <Property Name="PC_End" Type="varchar" MaxLength="50" />
+          <Property Name="PC_Apply" Type="varchar" MaxLength="50" />
+          <Property Name="PC_URL" Type="varchar" MaxLength="150" />
+          <Property Name="PC_Eventid" Type="bigint" />
+        </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
             <PropertyRef Name="PE_Id" />
@@ -875,6 +891,9 @@
           <Parameter Name="Lat" Type="varchar" Mode="In" />
           <Parameter Name="Long" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetOrganizerEventid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Masterid" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GUID" Type="varchar" Mode="In" />
           <Parameter Name="EventId" Type="bigint" Mode="In" />
@@ -928,6 +947,7 @@
           <EntitySet Name="Payment_Info" EntityType="Self.Payment_Info" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Promo_Code" EntityType="Self.Promo_Code" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShippingAddress" EntityType="Self.ShippingAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
@@ -1923,9 +1943,15 @@
             <End Role="Organizer_Master" EntitySet="Organizer_Master" />
             <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
           </AssociationSet>
+
           <FunctionImport Name="GetLantLong" ReturnType="Collection(String)">
             <Parameter Name="Lat" Mode="In" Type="String" />
             <Parameter Name="Long" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Promo_Code" EntityType="EventComboModel.Promo_Code" />
+          <FunctionImport Name="GetOrganizerEventid" ReturnType="Collection(EventComboModel.GetOrganizerEventid_Result)">
+            <Parameter Name="Masterid" Mode="In" Type="Int64" />
+
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -2061,6 +2087,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Promo_Code">
+          <Key>
+            <PropertyRef Name="PC_id" />
+          </Key>
+          <Property Name="PC_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PC_Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PC_Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PC_Percentage" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PC_Uses" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PC_Start" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PC_End" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PC_Apply" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PC_URL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PC_Eventid" Type="Int64" />
+        </EntityType>
+        <ComplexType Name="GetOrganizerEventid_Result">
+          <Property Type="Int64" Name="Orgnizer_Id" Nullable="false" />
+          <Property Type="Int64" Name="Orgnizer_Event_Id" Nullable="true" />
+          <Property Type="String" Name="UserId" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="DefaultOrg" Nullable="true" MaxLength="1" />
+          <Property Type="Int64" Name="OrganizerMaster_Id" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2796,7 +2845,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
           <FunctionImportMapping FunctionImportName="GetLantLong" FunctionName="EventComboModel.Store.GetLantLong" />
+
+          <EntitySetMapping Name="Promo_Code">
+            <EntityTypeMapping TypeName="EventComboModel.Promo_Code">
+              <MappingFragment StoreEntitySet="Promo_Code">
+                <ScalarProperty Name="PC_Eventid" ColumnName="PC_Eventid" />
+                <ScalarProperty Name="PC_URL" ColumnName="PC_URL" />
+                <ScalarProperty Name="PC_Apply" ColumnName="PC_Apply" />
+                <ScalarProperty Name="PC_End" ColumnName="PC_End" />
+                <ScalarProperty Name="PC_Start" ColumnName="PC_Start" />
+                <ScalarProperty Name="PC_Uses" ColumnName="PC_Uses" />
+                <ScalarProperty Name="PC_Percentage" ColumnName="PC_Percentage" />
+                <ScalarProperty Name="PC_Amount" ColumnName="PC_Amount" />
+                <ScalarProperty Name="PC_Code" ColumnName="PC_Code" />
+                <ScalarProperty Name="PC_Type" ColumnName="PC_Type" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetOrganizerEventid" FunctionName="EventComboModel.Store.GetOrganizerEventid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EventComboModel.GetOrganizerEventid_Result">
+                <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
+                <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DefaultOrg" ColumnName="DefaultOrg" />
+                <ScalarProperty Name="OrganizerMaster_Id" ColumnName="OrganizerMaster_Id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

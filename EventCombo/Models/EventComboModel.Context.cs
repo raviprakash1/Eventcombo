@@ -73,6 +73,7 @@ namespace EventCombo.Models
         public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
         public virtual DbSet<Organizer_Master> Organizer_Master { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        public virtual DbSet<Promo_Code> Promo_Code { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
@@ -198,18 +199,27 @@ namespace EventCombo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishEvent", eventIdParameter, userIdParameter);
         }
-    
+
+
         public virtual ObjectResult<string> GetLantLong(string lat, string @long)
         {
             var latParameter = lat != null ?
                 new ObjectParameter("Lat", lat) :
                 new ObjectParameter("Lat", typeof(string));
-    
+
             var longParameter = @long != null ?
                 new ObjectParameter("Long", @long) :
                 new ObjectParameter("Long", typeof(string));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetLantLong", latParameter, longParameter);
+        }
+        public virtual ObjectResult<GetOrganizerEventid_Result> GetOrganizerEventid(Nullable<long> masterid)
+        {
+            var masteridParameter = masterid.HasValue ?
+                new ObjectParameter("Masterid", masterid) :
+                new ObjectParameter("Masterid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOrganizerEventid_Result>("GetOrganizerEventid", masteridParameter);
         }
     }
 }

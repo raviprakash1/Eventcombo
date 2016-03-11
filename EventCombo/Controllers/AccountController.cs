@@ -121,9 +121,13 @@ namespace EventCombo.Controllers
         }
         public PartialViewResult OrganiserEdit(int id)
         {
+            string userid = "";
+            if (Session["AppId"] != null)
+            {
+                userid = Session["AppId"].ToString();
+            }
 
-
-            var modelPerm = (from Org in db.Organizer_Master
+                var modelPerm = (from Org in db.Organizer_Master
                              where Org.Orgnizer_Id == id
                              select Org).FirstOrDefault();
             if (string.IsNullOrEmpty(modelPerm.Organizer_Image))
@@ -133,8 +137,23 @@ namespace EventCombo.Controllers
                 modelPerm.contenttype = "";
                 modelPerm.Imagepath = "";
 
+
             }
-           
+            else
+            {
+                modelPerm.Imagepath = "/Images/Organizer/Organizer_Images/" + modelPerm.Organizer_Image;
+            }
+            if (!string.IsNullOrEmpty(modelPerm.Organizer_Email))
+            { modelPerm.Organizer_Email = modelPerm.Organizer_Email; }
+            else
+            {
+                var user = (from x in db.AspNetUsers where x.Id == userid select x).FirstOrDefault();
+                if (user != null)
+                {
+                    modelPerm.Organizer_Email = user.Email;
+                }
+
+            }
             var countryQuery = (from c in db.Countries
                                 orderby c.Country1 ascending
                                 select c).Distinct();
@@ -210,6 +229,8 @@ namespace EventCombo.Controllers
                     org.Organizer_CountryId = model.Organizer_CountryId;
                     org.Organizer_Zipcode = model.Organizer_Zipcode;
                     org.Organizer_Email = model.Organizer_Email;
+                   
+                   
                     org.Organizer_Phoneno = model.Organizer_Phoneno;
                     org.Organizer_Websiteurl = model.Organizer_Websiteurl;
                     org.Organizer_Status = "A";
@@ -2453,7 +2474,7 @@ namespace EventCombo.Controllers
 
                     UserProfileImage = images[0];
                     ContentType = images[1];
-                    ImagePath = "Images/Organizer/Organizer_Images/" + images[0];
+                    ImagePath = "/Images/Organizer/Organizer_Images/" + images[0];
                 }
 
                 using (EventComboEntities db = new EventComboEntities())
@@ -2524,12 +2545,12 @@ namespace EventCombo.Controllers
             bool type = false;
             if (id == 0)
             {
-                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) select x).Any();
+                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) && x.Organizer_Status == "A" select x).Any();
 
             }
             else
             {
-                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) && x.Orgnizer_Id!=id select x).Any();
+                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) && x.Orgnizer_Id!=id && x.Organizer_Status == "A"  select x).Any();
 
             }
             return type;

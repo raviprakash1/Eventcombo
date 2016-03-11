@@ -353,7 +353,7 @@
                                 <p><a href="@Html.DisplayFor(m => m.Linkedinlin)" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Html.DisplayFor(m => m.Linkedinlin)</a></p>
                             }
 
-                            <p><span class="badge">5</span> <a href="javascript:void(0)">&nbsp;Upcoming Event(s)</a> </p>
+                            <p><span class="badge">@Model.Orgevents</span> <a  href="@Url.Action("Index","OrganizerInfo", new {id=Model.organizerid,eventid=Model.eventId })">&nbsp;Upcoming Event(s)</a> </p>
 
                         </div>
                     </div>

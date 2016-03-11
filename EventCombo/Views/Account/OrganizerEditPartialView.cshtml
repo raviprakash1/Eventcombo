@@ -12,7 +12,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input class="form-control" placeholder="" type="text" id="txt_name" maxlength="256" value="@Model.Orgnizer_Name" onkeypress="return onlyAlphabets(event,this);">
+                        <input class="form-control" placeholder="" type="text" id="txt_name" maxlength="256" value="@Model.Orgnizer_Name" onkeypress="return onlyAlphabets(event, this);" >
                         <small class="acnt_form_name_mini">First Name</small>
                     </div>
 
@@ -164,7 +164,7 @@
 
         else { return true; }
 
-        if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+        if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode==32)
 
             return true;
 
@@ -173,8 +173,12 @@
             return false;
 
     }
+   
     $(document).ready(function () {
        
+        $('#txt_name').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
         var userProfileImage = "@Html.Raw(Model.Organizer_Image)";
         var modelcontent = "@Html.Raw(Model.contenttype)";
         var imgdata = userProfileImage + '¶' + modelcontent;

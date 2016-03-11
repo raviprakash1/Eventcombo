@@ -42,8 +42,7 @@ namespace EventCombo.Models
         public string Linkedinlin { get;  set; }
         public string EventPrivacy { get; set; }
         public string EventCancel { get; set; }
-
-
+        public string Orgevents { get; internal set; }
 
         public Coordinates Geocode(string address)
         {
@@ -99,8 +98,16 @@ namespace EventCombo.Models
                     throw new Exception("Unkown status code: " + status + ".");
             }
         }
-
         
+        
+    }
+
+    public partial class Promo_Code
+    {
+        public string Eventitle{ get; set; }
+        public List<Ticket> Ticketdata { get; set; }
+        public string Discount_Type { get; set; }
+
     }
     public class Coordinates
         {

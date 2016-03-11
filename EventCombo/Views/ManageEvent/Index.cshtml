@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
 @section sidenav{
  <div id="sidebar" class="nav nav-stacked">
     <div id="accordion" class="panel-group">
@@ -12,14 +14,14 @@
         <div class="panel panel-default menu_list">
             <a class="menu_title" href="#">
                 <div class="panel-heading">
-                   My Account
+                  < My Account
                 </div>
             </a>
         </div>
         <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                    @Model.Eventtitle
+            <a class="menu_title" href="#" title="@Model.Eventtitle">
+                <div class="panel-heading activeyellow act_ellipses">
+                   @Model.Eventtitle
                 </div>
             </a>
         </div>
@@ -62,7 +64,7 @@
             <div id="collapse2" class="panel-collapse collapse">
                 <div class="panel-body no-padding">
                     <p>Email Invitations</p>
-                    <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent")</p>
+                    <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new {Eventid=Model.Eventid },null)</p>
                     <p>Facebook Integration</p>
                     <p>Website Integration</p>
                     <p>Tracing Links</p>
@@ -684,6 +686,13 @@ else
         }
 
         <script src="~/Scripts/Chart.js"></script>
+
+        <script>
+          $(function() {
+            $( document ).tooltip();
+          });
+        </script>
+
         <script type="text/javascript">
             var specialKeys = new Array();
             specialKeys.push(8); //Backspace

@@ -1,31 +1,56 @@
-﻿
+﻿@model EventCombo.Models.Promo_Code
 @{
     ViewBag.Title = "CreatePromotionalCodes";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/DateTimePicker.css" rel="stylesheet" />
+
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
         <div id="accordion" class="panel-group">
 
             <div class="panel panel-default menu_list">
+
                 <a class="menu_title"  href="#">
-                    <div class="panel-heading">
-                        My Account 
+                    <div class="panel-heading ">
+                        < My Account 
+
                     </div>
-                </a>  
+                </a>
             </div>
             <div class="panel panel-default menu_list">
-                <a class="menu_title" href="#">
-                    <div class="panel-heading">
-                        My Account
+                <a class="menu_title" href="#" title="@Model.Eventitle">
+                    <div class="panel-heading activeyellow act_ellipses">
+                        @Model.Eventitle
                     </div>
                 </a>
             </div>
             <div class="panel panel-default menu_list">
                 <a class="menu_title" href="#">
                     <div class="panel-heading">
-                        My Account
+                        Event Help
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        Event Bundles
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        Event Dashboard
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        Modify Order Options
                     </div>
                 </a>
             </div>
@@ -33,49 +58,27 @@
 
                 <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
                     <div id="dvManage" class="panel-heading">
-                        Manage Events <b class="closed"></b>
+                        Invite and Promote <b class="closed"></b>
                     </div>
                 </a>
 
                 <div id="collapse2" class="panel-collapse collapse">
                     <div class="panel-body no-padding">
-                        <p>@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")</p>
-                        <p>@Html.ActionLink("My Events", "EventList", "EventList")</p>
-                        @*<p>@Html.ActionLink("Live Events", "LiveEvents", "Account")</p>*@
-                        @*<p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>*@
-                        <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
+                        <p>Email Invitations</p>
+                        <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.PC_Eventid })</p>
+                        <p>Facebook Integration</p>
+                        <p>Website Integration</p>
+                        <p>Tracing Links</p>
+                        <p>Affialate Programs</p>
+                        <p>Social Stream</p>
 
-                        @*<p>@Html.ActionLink("Pay Pal", "Pay", "Cart")</p>*@
-                        @*<p>@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")</p>*@
-                        @*<p>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = 169 }, null)</p>*@
-                        @*<p>@Html.ActionLink("Manage Event", "EventList", "EventList")</p>*@
+
+
+
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default menu_list">
 
-                <a id="dealnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                    <div id="dvmngdeal" class="panel-heading">
-                        Manage Deals <b class="closed"></b>
-                    </div>
-                </a>
-
-                <div id="collapse3" class="panel-collapse collapse">
-                    <div class="panel-body no-padding">
-                        <p>Create Deal</p>
-                        <p>@Html.ActionLink("Deals Dashboard", "DealsDashboard", "Account")</p>
-                        <p>@Html.ActionLink("Current Deals", "CurrentDeals", "Account")</p>
-                        <p>@Html.ActionLink("Past Deals", "PastDeals", "Account")</p>
-                        <p>@Html.ActionLink("Feedback", "Feedback", "Account")</p>
-                        <p>@Html.ActionLink("Overview", "Overview", "Account")</p>
-                        <p>@Html.ActionLink("Impact Report", "ImpactReport", "Account")</p>
-                        <p>@Html.ActionLink("Invoice History", "InvoiceHistory", "Account")</p>
-                        <p>@Html.ActionLink("Customers", "Customers", "Account")</p>
-                        <p>@Html.ActionLink("Deals Help", "DealsHelp", "Account")</p>
-                        <p>@Html.ActionLink("Merchant Profile", "MerchantProfile", "Account")</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 }
@@ -85,13 +88,16 @@
 
 
 
-    <div class="col-sm-12 ">
-        <h3 class="acnt_title">Create Promotional Code</h3>
-        <!--  <p class="p_info">Payment Information</p> -->
-    </div>
-    <div class="clearfix"></div>
+<div class="col-sm-12 ">
+    <h3 class="acnt_title">Create Promotional Code</h3>
+    <!--  <p class="p_info">Payment Information</p> -->
+</div>
+<div class="clearfix"></div>
+
+@using (Html.BeginForm("CreatePromotionalCodes", "ManageEvent", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     <div class="col-sm-12 col-xs-12 ">
-        <div class="col-sm-12 no_pad mb10">
+        <div class="col-sm-12 no_pad mb20">
             <ul class="cod_dis_type">
                 <li><a class="active" href="#">Coded Discount</a></li>
                 <li><a href="#">Public Discount</a></li>
@@ -100,165 +106,258 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-sm-12 no_pad mt20">
-
-            <div class="col-sm-2 no_pad">
-                <div class="form-group">
-                    <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Single Promo Code">
-                </div>
-            </div>
-            <div class="mid_or_width">or</div>
-            <div class="custom_file_upload">
-                <div class="form-group">
-                    <div class="file_upload">
-                        <input type="file" id="file_upload" name="file_upload">
+                <div class="col-sm-2 no_pad">
+                    <div class="form-group">
+                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code">
                     </div>
                 </div>
-            </div>
+                <div class="mid_or_width">or</div>
+                <div class="custom_file_upload">
+                    <div class="form-group">
+                        <div class="file_upload">
+                            <input type="file" id="file_upload" name="file">
+                        </div>
+                    </div>
+                </div>
 
-            <div class="upload_help_icn">
-                <div class="tip">
-                    <img class="help_icon_hov" src="images/icon-question.gif" />
-                    <span class="upload_help_icn_inner">
-                        Spaces apostrophes and non alphanumeric characters
-                        (except '-','_' and',' are not allowed. File must be in plain text
-                        ( CSV or TXT)
-                    </span>
+                <div class="upload_help_icn">
+                    <div class="tip">
+                        <img class="help_icon_hov" src="/Images/icon-question.gif" />
+                        <span class="upload_help_icn_inner">
+                            Spaces apostrophes and non alphanumeric characters
+                            (except '-','_' and',' are not allowed. File must be in plain text
+                            ( CSV or TXT)
+                        </span>
+                    </div>
                 </div>
+        </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10">
+      <input type="hidden" id="hd_eventid" name="PC_Eventid" value="@Model.PC_Eventid" />
+        <input type="hidden" id="hd_pctype" name="PC_Type"  value="C"/>
+        <input type="hidden" id="hd_discounttype" name="Discount_Type" value="A" />
+        
+        <input type="hidden" name="PC_Apply" id="hd_pcapply"/>     
+           <div class="col-sm-2 no_pad">
+            <div class="form-group">
+                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Amount" id="txt_discountmnt" name="PC_Amount">
+
             </div>
         </div>
-        <div class="clearfix"></div>
-        <div class="col-sm-12 no_pad mt10">
-            <div class="col-sm-2 no_pad">
-                <div class="form-group">
-                    <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Single Promo Code">
-                </div>
-            </div>
-            <div class="mid_or_width"></div>
-            <div class="col-sm-1 no_pad">
-                <div class="form-group dropheight">
-                    <select class="form-control selectpicker">
-                        <option>$</option>
-                        <option>%</option>
-                    </select>
-                </div>
+        <div class="mid_or_width"></div>
+        <div class="col-sm-1 no_pad">
+            <div class="form-group dropheight">
+                <select class="form-control selectpicker" id="ddl_discounttype">
+                    <option value="0">$</option>
+                    <option value="1">%</option>
+                </select>
             </div>
         </div>
-        <div class="clearfix"></div>
+    </div>
+     <div class="clearfix"></div>
         <div class="col-sm-12 no_pad mt10">
             <div class="col-sm-2 no_pad">
-                <div class="form-group">
+                <div class="form-group mt10">
                    Uses (Blank for Unlimited)
                 </div>
             </div>
-            <div class="mid_or_width"></div>
-            <div class="col-sm-1 no_pad">
-                <div class="form-group">
-                    <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited">
-                </div>
+        
+        <div class="mid_or_width"></div>
+        <div class="col-sm-1 no_pad">
+            <div class="form-group">
+                <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" id="txt_use" name="PC_Uses">
             </div>
         </div>
-        <div class="clearfix"></div>
-        <div class="col-sm-12 no_pad mt10">
-            <div class="col-md-6 col-sm-12  no_pad promo_checkbox">
-                <div class="col-sm-4 no_pad">
-                    <div class="col-sm-12 no_pad">
-                        <div class="prm_befor_level"> Start</div>
-                        <div class="squaredOne">
+     </div>
+   
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10">
+        <div class="col-md-6 col-sm-12  no_pad promo_checkbox">
+            <div class="col-sm-4 no_pad">
+                <div class="col-sm-12 no_pad">
+                    <div class="prm_befor_level"> Start</div>
+                    <div class="squaredOne">
 
-                            <input type="checkbox" value="None" id="befstrtdevnt" name="check" />
-                            <label for="befstrtdevnt"></label>
-                        </div>
-                        <div class="prm_cd_level"> before event</div>
+                        <input type="checkbox" value="None" id="befstrtdevnt" name="check" />
+                        <label for="befstrtdevnt"></label>
                     </div>
-                    <div class="col-sm-12 no_pad">
-                        <div class="form-group">
-                            <!-- <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" > -->
-                            <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime">
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-sm-1 colsm1"></div>
-                <div class="col-sm-4 no_pad">
-                    <div class="col-sm-12 no_pad">
-                        <div class="prm_befor_level"> End</div>
-                        <div class="squaredOne">
-                            <input type="checkbox" value="None" id="befendevnt" name="check" />
-                            <label for="befendevnt"></label>
-                        </div>
-                        <div class="prm_cd_level"> before event</div>
-                    </div>
-                    <div class="col-sm-12 no_pad">
-
-                        <div class="form-group">
-                            <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime">
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-
-
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-sm-12 no_pad mt10">
-            <div class="col-md-6 col-sm-12 no_pad promo_checkbox">
-                <div class="col-sm-12 apply_code_head">
-                    Apply Codes To These Tickets
+                    <div class="prm_cd_level"> before event</div>
                 </div>
                 <div class="col-sm-12 no_pad">
-                    <div class="squaredOne">
-                        <input type="checkbox" value="None" id="all_ticket" name="check" />
-                        <label for="all_ticket"></label>
-                    </div>
-                    <div class="prm_cd_level"> All</div>
-                </div>
-                <div class="col-sm-12 no_pad">
-                    <div class="squaredOne">
-                        <input type="checkbox" value="None" id="certn_ticket" name="check" />
-                        <label for="certn_ticket"></label>
-                    </div>
-                    <div class="prm_cd_level"> Certian Tickets Type</div>
-                </div>
-                <div class="col-sm-12 no_pad">
-                    <div class="squaredOne">
-                        <input type="checkbox" value="None" id="anoth_ticket" name="check" />
-                        <label for="anoth_ticket"></label>
-                    </div>
-                    <div class="prm_cd_level"> Another Tickets Type</div>
-                </div>
-
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-sm-12 no_pad mt10">
-            <div class="col-md-6 col-sm-12 no_pad">
-                <div class="col-sm-12 apply_code_head">
-                    <div class="col-sm-11 no_pad">Discout URL </div>
-                    <div class="col-sm-1 no_pad text-right">
-                        <img src="images/icon-question.gif" />
+                    <div class="form-group">
+                        <!-- <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" > -->
+                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start">
                     </div>
 
                 </div>
-                <div class="col-sm-12 no_pad mb10">
-                    <div class="col-sm-8 "> <a class="link_url" href="#">http://eventcombo.net/event-names?discount=</a> </div>
-                    <div class="col-sm-4  text-right">
-                        <button class="btn soc_btn_dis soc_btn_active"><i class="fa fa-facebook"></i></button>
-                        <button class="btn soc_btn_dis  "><i class="fa fa-twitter"></i></button>
-                        <button class="btn soc_btn_dis"><i class="fa fa-envelope"></i></button>
+            </div>
+            <div class="col-sm-1 colsm1"></div>
+            <div class="col-sm-4 no_pad">
+                <div class="col-sm-12 no_pad">
+                    <div class="prm_befor_level"> End</div>
+                    <div class="squaredOne">
+                        <input type="checkbox" value="None" id="befendevnt" name="check" />
+                        <label for="befendevnt"></label>
                     </div>
+                    <div class="prm_cd_level"> before event</div>
+                </div>
+                <div class="col-sm-12 no_pad">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End">
+                    </div>
+
                 </div>
             </div>
+
         </div>
-        <div class="clearfix"></div>
-        <div class="col-sm-12 no_pad mt10 mb10">
-            <button class="btn btn-info acnt_btn" type="submit" title="">Save</button>
-        </div>
+
+
+
     </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10">
+        <div class="col-md-6 col-sm-12 no_pad promo_checkbox">
+            <div class="col-sm-12 apply_code_head">
+                Apply Codes To These Tickets
+            </div>
+            <div class="col-sm-12 no_pad">
+                <div class="squaredOne">
+                    <input type="checkbox" value="None" id="all_ticket" name="check" />
+                    <label for="all_ticket"></label>
+                </div>
+                <div class="prm_cd_level"> All</div>
+            </div>
+            @{ int i = 0;
+                foreach (var item in Model.Ticketdata)
+                {
+                    <div class="col-sm-12 no_pad">
+                        <div class="squaredOne">
+                            @if (item.Fees_Type == "2")
+                            {
+                                <input type="checkbox" value="None" id="chk_@i" name="check" />
+
+                            }
+                            else
+                            {
+                                <input type="checkbox" value="None" id="chk_@i" name="check" disabled />
+                            }
+                            <label for=" @item.T_name"></label>
+                        </div>
+                            
+                            <div class="prm_cd_level">
+                           @if (item.Fees_Type == "2")
+                           {
+                                <label>@item.T_name ($ @item.Price)</label>
+                           }
+                           else
+                           {
+
+                                    @item.T_name
+                           }
+                                    <input type="hidden" value="@item.T_Id" id="hdticket_@i" />
+                                </div>
+                            </div>
+                }
+                        }
+                        
 
 
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-12 no_pad mt10">
+                    <div class="col-md-6 col-sm-12 no_pad">
+                        <div class="col-sm-12 apply_code_head">
+                            <div class="col-sm-11 no_pad">Discout URL </div>
+                            <div class="col-sm-1 no_pad text-right">
+                                <img src="/Images/icon-question.gif" />
+                            </div>
 
+                        </div>
+                        <div class="col-sm-12 no_pad mb10">
+                            <div class="col-sm-8 "> <a class="link_url" name="PC_URL" href="#">http://eventcombo.net/event-names?discount=</a> </div>
+                            <div class="col-sm-4  text-right">
+                                <button class="btn soc_btn_dis "><i class="fa fa-facebook"></i></button>
+                                <button class="btn soc_btn_dis"><i class="fa fa-twitter"></i></button>
+                                <button class="btn soc_btn_dis"><i class="fa fa-envelope"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-12 no_pad mt10 mb10">
+                    <button class="btn btn-info acnt_btn" type="submit" title="" id="btnsave">Save</button>
+                </div>
+            </div>
+ }
+
+
+<script>
+          $(function() {
+            $( document ).tooltip();
+          });
+</script>
+            <script type="text/javascript">
+                $(".upload_help_icn_inner").css("display", "none");
+                $('.help_icon_hov').hover(
+                 function () {
+                     $(".upload_help_icn_inner").show();
+                 },
+                 function () {
+                     $(".upload_help_icn_inner").hide();
+                 }
+               );
+
+
+            </script>
+            <script type="text/javascript">
+
+                $(document).ready(function () {
+                    $("#ddl_discounttype").change(function () {
+
+                        if( $("#ddl_discounttype").val()==0)
+                        {
+                            $("#hd_discounttype").val("A");
+                        } else {
+                            $("#hd_discounttype").val("P");
+                        }
+
+                    });
+                    @*$("#btnsave").click(function () {
+                    
+
+
+                        var model = {
+                            'PC_Eventid': $('#hd_eventid').val(),
+                            'PC_Type': 'C',
+                            'PC_Code': $('#txt_Promocode').val(),
+                            'PC_Amount': $("#txt_discountmnt").val(),
+                            'PC_Percentage': $("#txt_discountmnt").val(),
+                            'PC_Uses': $("#txt_use").val(),
+                            'UserId': '',
+                            'PC_Start': $("#txtstartdate").val(),
+                            'PC_End': $("#txtenddate").val(),
+                            'PC_Apply':''
+
+                        };
+                        $.ajax({
+                            url: '@Url.Action("SavePromocode", "ManageEvent")',
+                            data: { model: model },
+                            type: "Post",
+                            success: function (data) {
+
+<<<<<<< HEAD
+                                if (typeof (data.Message) === "undefined") {
+                                    $("#id_selectorg").empty();
+                                    $("#id_selectorg").append("<option value='0'>Select</option>");
+                                    $("#id_selectorg").append("<option value='A'>Add Organizer</option>");
+                                    $.each(data, function (index, optiondata) {
+
+                                        $("#id_selectorg").append("<option value='" + optiondata.Id + "'>" + optiondata.Name + "</option>");
+                                    });
+                                    $('.selectpicker').selectpicker('refresh');
+=======
 <script type="text/javascript">
       $(".upload_help_icn_inner").css("display", "none");
          $('.help_icon_hov').hover(
@@ -269,45 +368,71 @@
             $(".upload_help_icn_inner").hide();
           }
         );
+        
+>>>>>>> 3b81ee1ea1edd131f8a290bbb238ca6b0ef8ad32
+
+                                } else {
+                                    if (data.Message == "O") {
+                                        window.location.href = '@Url.Action("Index", "Home")';
+
+                                    }
 
 
-</script>
-<script type="text/javascript">
+                                }
+                                $("#btnedit").prop("disabled", true);
+                                $("#btndelete").prop("disabled", true);
+                                $('#userimage').val("");
+                                $("#image_count").val("0");
+                                $('#ImagePresent').val("No");
+                                $("#dveruimain").removeClass("er_UI_main");
+                                $("#dveruiimg").removeClass("er_UI_img");
+                                $("#dveruimain").addClass("er_suc_main");
+                                $("#dveruiimg").addClass("er_suc_img");
+                                $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgsaveEdit'));
+                                $('#diverroacc').show();
+                                $('html,body').animate({ scrollTop: 0 });
 
-      $(document).ready(function()
-      {
-        var bIsPopup = displayPopup();
+                                $(".maindivnonvis").show();
+                                $("#divorgprofile").empty();
+                                $("#divorgprofile").hide();
 
-        $("#dtBox").DateTimePicker(
+                            }
 
-        {
-          isPopup: bIsPopup,
+                        });
+                    
+                    
+                    });*@
+                    var bIsPopup = displayPopup();
 
-          addEventHandlers: function()
-          {
-            var dtPickerObj = this;
+                    $("#dtBox").DateTimePicker(
 
-            $(window).resize(function()
-            {
-              bIsPopup = displayPopup();
-              dtPickerObj.setIsPopup(bIsPopup);
-            });
+                    {
+                        isPopup: bIsPopup,
 
-            dtPickerObj.setDateTimeStringInInputField($(".fillDateTime"));
-          }
-        });
+                        addEventHandlers: function () {
+                            var dtPickerObj = this;
+
+                            $(window).resize(function () {
+                                bIsPopup = displayPopup();
+                                dtPickerObj.setIsPopup(bIsPopup);
+                            });
+
+                            dtPickerObj.setDateTimeStringInInputField($(".fillDateTime"));
+                        }
+                    });
 
 
-      });
+                });
 
 
 
-      function displayPopup()
-      {
-        if($(document).width() >= 768)
-          return false;
-        else
-          return true;
-      }
+                function displayPopup() {
+                    if ($(document).width() >= 768)
+                        return false;
+                    else
+                        return true;
+                }
 
-</script>
+            </script>
+
+

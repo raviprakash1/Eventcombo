@@ -245,6 +245,12 @@
                                     <span class="sidebar-title act">Messages Form</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7H');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">Organizer Master Form</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
@@ -295,7 +301,7 @@
             //  alert(vPerm);
 
 
-            if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G")
+            if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G" || PermisionId == "7H")
             {
 
                 PermisionId = "7";
@@ -348,6 +354,9 @@
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "CMSUsers" })';
                         else if (vPerm == "7G")
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
+                        else if (vPerm == "7H")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "OrganizerMaster" })';
+
                         else if (vPerm == "4")
                             window.location.href = '@Url.Action("Index", "ManageEvent")';
                         else if (vPerm == "8")

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace EventCombo.Controllers
 {
@@ -1275,10 +1276,180 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult CreatePromotionalCodes()
+        public ActionResult CreatePromotionalCodes(long Eventid)
         {
-            return View();
+            CreateEventController cms = new CreateEventController();
+         var Eventdetail=   cms.GetEventdetail(Eventid);
+
+            Promo_Code pm = new Promo_Code();
+            pm.PC_Eventid = Eventid;
+            pm.Eventitle = Eventdetail.EventTitle;
+            pm.Ticketdata = (from x in db.Tickets where x.E_Id == Eventid select x).ToList();
+            pm.Eventitle = Eventdetail.EventTitle;
+
+
+            return View(pm);
+        }
+        [HttpPost]
+        public ActionResult CreatePromotionalCodes(HttpPostedFileBase file,Promo_Code model)
+        {
+            var msg = "";
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    string ext = System.IO.Path.GetExtension(file.FileName);
+                    string[] allowedExtenstions = new string[] { ".txt", ".csv" };
+                    if (allowedExtenstions.Contains(ext))
+                    {
+                        StreamReader csvreader = new StreamReader(file.InputStream);
+                        while (!csvreader.EndOfStream)
+                        {
+                            var line = csvreader.ReadLine();
+                            Promo_Code org = new Promo_Code();
+                            org.PC_Eventid = model.PC_Eventid;
+                            org.PC_Type = model.PC_Type;
+                            org.PC_Code = line;
+                            if (org.Discount_Type == "A")
+                            {
+                                org.PC_Amount = model.PC_Amount;
+                            }
+                            else
+                            {
+                                org.PC_Percentage = model.PC_Amount;
+
+                            }
+
+
+                            org.PC_Uses = model.PC_Uses;
+                            org.PC_Start = model.PC_Start;
+                            org.PC_End = model.PC_End;
+                            org.PC_Apply = model.PC_Apply;
+                            org.PC_Eventid = model.PC_Eventid;
+
+
+
+
+
+                            db.Promo_Code.Add(org);
+                            try
+                            {
+                                int i = db.SaveChanges();
+                                msg = "S";
+
+                            }
+                            catch (Exception ex)
+                            {
+                                msg = "N";
+                            }
+                        }
+
+
+
+                        }
+                    else
+                    {
+                        return RedirectToAction("CreatePromotionalCodes", "ManageEvent", new { Eventid = model.PC_Eventid });
+                    }
+                }
+                else
+                {
+
+
+
+
+                    Promo_Code org = new Promo_Code();
+                    org.PC_Eventid = model.PC_Eventid;
+                    org.PC_Type = model.PC_Type;
+                    org.PC_Code = model.PC_Code;
+                    if (org.Discount_Type == "A")
+                    {
+                        org.PC_Amount = model.PC_Amount;
+                    }
+                    else
+                    {
+                        org.PC_Percentage = model.PC_Amount;
+
+                    }
+
+
+                    org.PC_Uses = model.PC_Uses;
+                    org.PC_Start = model.PC_Start;
+                    org.PC_End = model.PC_End;
+                    org.PC_Apply = model.PC_Apply;
+                    org.PC_Eventid = model.PC_Eventid;
+
+
+
+
+
+                    db.Promo_Code.Add(org);
+                    try
+                    {
+                        int i = db.SaveChanges();
+                        msg = "S";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        msg = "N";
+                    }
+                }
+            }
+
+            return RedirectToAction("CreatePromotionalCodes", "ManageEvent", new { Eventid = model.PC_Eventid });
+
+        }
+
+        public string SavePromocode(Promo_Code model)
+        {
+            var msg = "";
+            if (Session["AppId"] != null)
+            {
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    Promo_Code org = new Promo_Code();
+                    org.PC_Eventid = model.PC_Eventid;
+                    org.PC_Type = model.PC_Type;
+                    org.PC_Code = model.PC_Code;
+                    org.PC_Amount = model.PC_Amount;
+                    org.PC_Percentage = model.PC_Percentage;
+              
+                    org.PC_Uses = model.PC_Uses;
+                    org.PC_Start = model.PC_Start; 
+                    org.PC_End = model.PC_End;
+                    org.PC_Apply = model.PC_Apply;
+                    org.PC_Eventid = model.PC_Eventid;
+                   
+
+
+
+
+                    db.Promo_Code.Add(org);
+                    try
+                    {
+                        int i = db.SaveChanges();
+                        msg = "S";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        msg = "N";
+                    }
+                }
+
+                    return "s";
+            }
+            else
+            {
+                return "o";
+
+            }
         }
 
     }
+
+
+   
 }
