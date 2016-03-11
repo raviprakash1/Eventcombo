@@ -1595,6 +1595,6 @@ div.file_upload input {
     width: 0 auto; }
 
 
-/*.desc_hide{ width: 100%; float: left; background:rgba(0, 0, 0, 0.6); z-index: 99; color: #fff; position: absolute; top: 0px; display: block; height: 100% }
-.desc_hide p{ padding: 5px; font-size: 16px; }*/
+.desc_hide{ width: 100%; float: left; background:rgba(0, 0, 0, 0.6); z-index: 99; color: #fff; position: absolute; top: 0px; display: block; height: 100% }
+.desc_hide p{ padding: 5px; font-size: 16px; }
 .map_height{ min-height:200px;}

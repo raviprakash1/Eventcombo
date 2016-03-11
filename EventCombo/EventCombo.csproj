@@ -536,6 +536,7 @@
     <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\default_org_image.jpg" />
     <Content Include="Images\dgd.png" />
     <Content Include="Images\em_ven_time.png" />

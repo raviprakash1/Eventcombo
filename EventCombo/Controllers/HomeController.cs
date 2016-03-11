@@ -25,6 +25,7 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using Microsoft.Owin.Security.OAuth;
 using PagedList;
+
 namespace EventCombo.Controllers
 {
 
@@ -335,7 +336,7 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult DiscoverEvents(string strEt, string strEc,string strPrice, string strPageIndex)
+        public ActionResult DiscoverEvents(string strEt, string strEc,string strPrice, string strPageIndex, string strLat,string strLong)
         {
             if ((Session["AppId"] != null))
             {
@@ -353,11 +354,11 @@ namespace EventCombo.Controllers
                 pageIndex = Convert.ToInt32(strPageIndex);
             
 
-            if (strEt == null || strEt == "~") strEt = string.Empty;
-            if (strEc == null || strEc == "~") strEc = string.Empty;
+            if (strEt == null || strEt == "~" || strEt == "evt") strEt = string.Empty;
+            if (strEc == null || strEc == "~" || strEc == "evc") strEc = string.Empty;
 
             Session["Fromname"] = "DiscoverEvents";
-            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc,strPrice);
+            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc,strPrice,strLat,strLong);
             double dPageCount = objDiscEvt.Count;
             double dTotalPages = dPageCount / pageSize;
             int lTotalPages = (objDiscEvt.Count / pageSize);
@@ -380,6 +381,8 @@ namespace EventCombo.Controllers
             TempData["ETypeSelected"] = strEt;
             TempData["ECatSelected"] = strEc;
             TempData["TotalPages"] = lTotalPages;
+            TempData["tLat"] = strLat;
+            TempData["tLng"] = strLong;
             ViewData["tempPrice"] = (strPrice != null ? strPrice.ToUpper() : "ALL");
             
             return View();
@@ -547,8 +550,9 @@ namespace EventCombo.Controllers
             }
             return strResult;
         }
-        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId,string strPrice)
+        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId,string strPrice, string strLat, string strLong)
         {
+         
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
             using (EventComboEntities db = new EventComboEntities())
             {
@@ -557,98 +561,120 @@ namespace EventCombo.Controllers
                 if (strEventCatId == null || strEventCatId == "~") strEventCatId = string.Empty;
                 if (strPrice == null || strPrice == "~") strPrice = "ALL";
 
-                var vValue = db.Addresses.SqlQuery("select dbo.distance(28.6139, 77.2090, Latitude, Longitude) discoverdistance,* from Address").ToList().Where(m=> (m.discoverdistance!= null ? Convert.ToInt64(m.discoverdistance) : 21)<=20);
+                //var vValue = db.Addresses.SqlQuery("select dbo.distance(28.6139, 77.2090, Latitude, Longitude) discoverdistance,* from Address").Where(m=> (m.discoverdistance!= null ? Convert.ToInt64(m.discoverdistance) : 21)<=20).ToList();
+                //var vValue = db.Addresses.SqlQuery("select dbo.distance(28.6139, 77.2090, Latitude, Longitude) discoverdistance,* from Address").ToList();
+
                 //select dbo.distance(28.6139, 77.2090, Latitude, Longitude) dis from Address
                 string strEventIds = "";
-
-                foreach(Address objAdd in vValue)
-                {
-                    if (strEventIds == "")
-                    {
-                        strEventIds = objAdd.EventId.ToString();
-                    }
-                    else
-                    {
-                        strEventIds = strEventIds + "," + objAdd.EventId.ToString();
-                    }
-                }
+                strEventIds = db.GetLantLong(strLat, strLong).FirstOrDefault();
+                //foreach (Address objAdd in vValue)
+                //{
+                //    if (objAdd.discoverdistance != null && Convert.ToInt32(objAdd.discoverdistance) <=20)
+                //    {
+                //        if (strEventIds == "")
+                //        {
+                //            strEventIds = objAdd.EventId.ToString();
+                //        }
+                //        else
+                //        {
+                //            strEventIds = strEventIds + "," + objAdd.EventId.ToString();
+                //        }
+                //    }
+                //}
 
                 DiscoverEvent objDisEv = new DiscoverEvent();
-                sbQuery.Append("Select * from Event where EventID in (" + strEventIds + ")");
 
-                if (strEventTypeId.Trim() != string.Empty)
-                    sbQuery.Append(" AND EventTypeID in (" + strEventTypeId + ")");
 
-                if (strEventCatId.Trim() != string.Empty)
-                    sbQuery.Append(" AND EventCategoryID in (" + strEventCatId + ")");
+                //sbQuery.Append("Select * from Event where EventID in (" + strEventIds + ")");
 
-                if (strPrice.ToUpper() == "FREE")
+                if (strEventIds.Trim() != "")
                 {
-                    sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID = 1)");
-                }
-
-                if (strPrice.ToUpper() == "PAID")
-                {
-                    sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (2,3))");
-                }
+                    sbQuery.Append("Select * from Event where EventStatus = 'Live' and EventID in (" + strEventIds + ")");
 
 
-                var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
-                CreateEventController objCEv = new CreateEventController();
-                string strImageUrl = "";
-                foreach (Event objEv in vEventList)
-                {
-                    //if (strPrice.ToUpper() == "FREE")
-                    //{
-                    //    var vTicket = db.Tickets.Where(ev => ev.TicketTypeID == 1).FirstOrDefault();
-                    //    if (vTicket == null) continue;
-                    //}
-                    //if (strPrice.ToUpper() == "PAID")
-                    //{
+                    if (strEventTypeId.Trim() != string.Empty)
+                        sbQuery.Append(" AND EventTypeID in (" + strEventTypeId + ")");
 
-                    //    var vTicket = db.Tickets.Where(ev => ev.TicketTypeID == 2).FirstOrDefault();
-                    //    var vDontion = db.Tickets.Where(ev => ev.TicketTypeID == 3).FirstOrDefault();
-                    //    if (vTicket == null && vDontion == null) continue;
-                    //}
+                    if (strEventCatId.Trim() != string.Empty)
+                        sbQuery.Append(" AND EventCategoryID in (" + strEventCatId + ")");
 
-
-
-                    strImageUrl = objCEv.GetImages(objEv.EventID).FirstOrDefault();
-                    if (strImageUrl == null) strImageUrl = "/Images/default_event_image.jpg";
-                    objDisEv = new DiscoverEvent();
-                    objDisEv.EventTitle = objEv.EventTitle;
-                    objDisEv.EventImage = strImageUrl;
-                    objDisEv.EventCat = GetDiscoverEventCategorybyId(objEv.EventCategoryID);
-                    objDisEv.EventType = GetDiscoverEventTypebyId(objEv.EventTypeID);
-                    objDisEv.EventCatId = objEv.EventCategoryID;
-                    objDisEv.EventTypeId = objEv.EventTypeID;
-                    objDisEv.PriceLable = GetPriceLabel(objEv.EventID);
-                    var vAddress = objEv.Addresses.FirstOrDefault();
-                    if (vAddress != null)
+                    if (strPrice.ToUpper() == "FREE")
                     {
-                        if (vAddress.ConsolidateAddress.Trim() != string.Empty)
-                            objDisEv.EventAddress = vAddress.ConsolidateAddress;
+                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID = 1)");
+                    }
+
+                    if (strPrice.ToUpper() == "PAID")
+                    {
+                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (2,3))");
+                    }
+
+
+                    var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
+                    CreateEventController objCEv = new CreateEventController();
+                    string strImageUrl = "";
+                    foreach (Event objEv in vEventList)
+                    {
+                        //if (strPrice.ToUpper() == "FREE")
+                        //{
+                        //    var vTicket = db.Tickets.Where(ev => ev.TicketTypeID == 1).FirstOrDefault();
+                        //    if (vTicket == null) continue;
+                        //}
+                        //if (strPrice.ToUpper() == "PAID")
+                        //{
+
+                        //    var vTicket = db.Tickets.Where(ev => ev.TicketTypeID == 2).FirstOrDefault();
+                        //    var vDontion = db.Tickets.Where(ev => ev.TicketTypeID == 3).FirstOrDefault();
+                        //    if (vTicket == null && vDontion == null) continue;
+                        //}
+
+
+
+                        strImageUrl = objCEv.GetImages(objEv.EventID).FirstOrDefault();
+                        if (strImageUrl == null) strImageUrl = "/Images/default_event_image.jpg";
+                        objDisEv = new DiscoverEvent();
+                        objDisEv.EventTitle = objEv.EventTitle;
+                        objDisEv.EventImage = strImageUrl;
+                        objDisEv.EventCat = GetDiscoverEventCategorybyId(objEv.EventCategoryID);
+                        objDisEv.EventType = GetDiscoverEventTypebyId(objEv.EventTypeID);
+                        objDisEv.EventCatId = objEv.EventCategoryID;
+                        objDisEv.EventTypeId = objEv.EventTypeID;
+                        objDisEv.PriceLable = GetPriceLabel(objEv.EventID);
+                        var vAddress = objEv.Addresses.FirstOrDefault();
+                        if (vAddress != null)
+                        {
+                            if (vAddress.ConsolidateAddress.Trim() != string.Empty)
+                                objDisEv.EventAddress = vAddress.ConsolidateAddress;
+                            else
+                            {
+                                objDisEv.EventAddress = vAddress.VenueName.Trim() + " " + vAddress.Address1.Trim() + " " + vAddress.Address2.Trim() + " " + vAddress.City.Trim() + " " + vAddress.Zip;
+                            }
+                        }
+                        var vTimings = objEv.EventVenues.FirstOrDefault();
+                        if (vTimings != null)
+                        {
+                            objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
+                        }
                         else
                         {
-                            objDisEv.EventAddress = vAddress.VenueName.Trim() + " " + vAddress.Address1.Trim() + " " + vAddress.Address2.Trim() + " " + vAddress.City.Trim() + " " + vAddress.Zip;
+                            //long? lMin; long? lMax;
+                            //lMin = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == objEv.EventID select evt.PE_Id).Min();
+                            //lMax = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == objEv.EventID select evt.PE_Id).Max();
+                            string strTiming = "";
+                            //if (lMin != null)
+                            //{
+                            //    var vMin = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMin select evt).FirstOrDefault();
+                            //    strTiming = vMin.PE_Scheduled_Date + " " + vMin.PE_Start_Time;
+                            //}
+                            //if (lMax != null)
+                            //{
+                            //    var vMax = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMax select evt).FirstOrDefault();
+                            //    strTiming = strTiming + " - " + vMax.PE_Scheduled_Date + " " + vMax.PE_End_Time;
+                            //}
+                            objDisEv.EventTimings = strTiming;
                         }
-                    }
-                    var vTimings = objEv.EventVenues.FirstOrDefault();
-                    if (vTimings != null)
-                    {
-                        objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
-                    }
-                    else
-                    {
-                        long lMin; long lMax;
-                        lMin = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == objEv.EventID select evt.PE_Id).Min();
-                        lMax = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == objEv.EventID select evt.PE_Id).Max();
-                        var vMin = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMin select evt).FirstOrDefault();
-                        var vMax = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMax select evt).FirstOrDefault();
-                        objDisEv.EventTimings = vMin.PE_Scheduled_Date + " " + vMin.PE_Start_Time + " - " + vMax.PE_Scheduled_Date + " " + vMax.PE_End_Time;
-                    }
 
-                    lsDisEvt.Add(objDisEv);
+                        lsDisEvt.Add(objDisEv);
+                    }
                 }
                 return lsDisEvt;
             }

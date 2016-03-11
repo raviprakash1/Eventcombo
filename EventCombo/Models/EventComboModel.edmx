@@ -357,7 +357,7 @@
             <PropertyRef Name="Orgnizer_Id" />
           </Key>
           <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Orgnizer_Name" Type="varchar" MaxLength="300" />
           <Property Name="Organizer_Desc" Type="nvarchar(max)" />
           <Property Name="Organizer_FBLink" Type="varchar" MaxLength="256" />
           <Property Name="Organizer_Twitter" Type="varchar" MaxLength="256" />
@@ -870,6 +870,10 @@
           <Parameter Name="EventTitle" Type="nvarchar" Mode="In" />
           <Parameter Name="EventStatus" Type="varchar" Mode="In" />
           <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetLantLong" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Lat" Type="varchar" Mode="In" />
+          <Parameter Name="Long" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GUID" Type="varchar" Mode="In" />
@@ -1919,6 +1923,10 @@
             <End Role="Organizer_Master" EntitySet="Organizer_Master" />
             <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
           </AssociationSet>
+          <FunctionImport Name="GetLantLong" ReturnType="Collection(String)">
+            <Parameter Name="Lat" Mode="In" Type="String" />
+            <Parameter Name="Long" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -1996,7 +2004,7 @@
             <PropertyRef Name="Orgnizer_Id" />
           </Key>
           <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Orgnizer_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Orgnizer_Name" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Organizer_FBLink" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Twitter" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
@@ -2788,6 +2796,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetLantLong" FunctionName="EventComboModel.Store.GetLantLong" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

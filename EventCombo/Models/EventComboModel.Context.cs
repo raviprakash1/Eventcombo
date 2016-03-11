@@ -198,5 +198,18 @@ namespace EventCombo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishEvent", eventIdParameter, userIdParameter);
         }
+    
+        public virtual ObjectResult<string> GetLantLong(string lat, string @long)
+        {
+            var latParameter = lat != null ?
+                new ObjectParameter("Lat", lat) :
+                new ObjectParameter("Lat", typeof(string));
+    
+            var longParameter = @long != null ?
+                new ObjectParameter("Long", @long) :
+                new ObjectParameter("Long", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetLantLong", latParameter, longParameter);
+        }
     }
 }

@@ -456,6 +456,7 @@ else
         </div>
 </body>
 </html>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script type="text/javascript">
 
     var WindowObjectReference;
@@ -491,13 +492,13 @@ else
         FB.login(function (response) {
 
             if (response.authResponse) {
-             
+
                 console.log(response); // dump complete info
                 access_token = response.authResponse.accessToken; //get access token
                 user_id = response.authResponse.userID; //get FB UID
                 console.log(user_id);
                 console.log(access_token);
-               
+
 
                 FB.api('/me?fields=email,first_name,last_name', function (response) {
                     var name = response.name;
@@ -507,7 +508,7 @@ else
                         data: { id: access_token,email:email },
                         type: "Post",
                         success: function (data) {
-                           
+
                             if (data.indexOf('~') > -1) {
                                 urlarray = data.split('~');
                                 data = urlarray[1];
@@ -522,8 +523,8 @@ else
                         }
                     });
                    //get user email
-                    // you can store this data into your database     
-                 
+                    // you can store this data into your database
+
 
                 });
 
@@ -580,7 +581,7 @@ else
             $('#divmain').removeClass('home_fixed_header');
             $('#buttonscroll').removeClass('mt5');
             $('#divcontmain').removeClass('mt15');
-           
+
             $('#eventtopscoll').removeClass('viewevent_container');
         }
     }
@@ -597,10 +598,38 @@ else
                 return false
             }
         });
-   
+
         if (e == "discover") {
 
-            window.location.href = '@Url.Action("DiscoverEvents", "Home")';
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (p) {
+                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                    var geocoder = new google.maps.Geocoder;
+                    var infowindow = new google.maps.InfoWindow;
+
+                    var mapOptions = {
+                        center: { lat: p.coords.latitude, lng: p.coords.longitude },
+                        zoom: 13,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var vLat = p.coords.latitude;
+                    var vLong = p.coords.longitude;
+                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page", strLat = "lat", strLong = "long" })';
+                    vUrl = vUrl.replace("lat", vLat);
+                    vUrl = vUrl.replace("long", vLong);
+                    
+                    window.location.href = vUrl;
+                   // window.location.href = '@Url.Action("DiscoverEvents", "Home")';
+                });
+
+            } else {
+                alert('Geo Location feature is not supported in this browser.');
+            }
+
+
+
+            @*window.location.href = '@Url.Action("DiscoverEvents", "Home")';*@
 
 
 
@@ -608,7 +637,7 @@ else
 
         if (e == "GetBuzz") {
             window.location.href = '@Url.Action("GetBuzz", "Home")';
-      
+
 
 
 
@@ -637,14 +666,14 @@ else
       $("#sign_up").css({"display":"none"});
 
     });
-   
+
     function checksession()
     {
         $.ajax({
             url: '@Url.Action("checkid", "Home")',
             type: "Post",
             success: function (data) {
-              
+
                 if (data == "Y") {
                     $("#loginPopup").click();
                    // url.val('@Url.Action("CreateEvent", "CreateEvent")');
