@@ -229,7 +229,7 @@ WriteAttribute("src", Tuple.Create(" src=\"", 2091), Tuple.Create("\"", 2123)
 , 2097), false)
 );
 
-WriteLiteral("></script>\r\n</head>\r\n<body>\r\n    ");
+WriteLiteral("></script>\r\n\r\n</head>\r\n<body>\r\n    ");
 
 WriteLiteral("\r\n    <div");
 
@@ -253,9 +253,9 @@ WriteLiteral(" href=\"/Home/Index\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2364), Tuple.Create("\"", 2387)
-, Tuple.Create(Tuple.Create("", 2370), Tuple.Create<System.Object, System.Int32>(Href("~/Images/logo.png")
-, 2370), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 2366), Tuple.Create("\"", 2389)
+, Tuple.Create(Tuple.Create("", 2372), Tuple.Create<System.Object, System.Int32>(Href("~/Images/logo.png")
+, 2372), false)
 );
 
 WriteLiteral(" /></a>\r\n            </div>\r\n            <div");
@@ -267,7 +267,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 52 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 53 "..\..\Views\Shared\_AccountLayout.cshtml"
            Write(Html.Partial("_Logout"));
 
             
@@ -289,9 +289,9 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2714), Tuple.Create("\"", 2735)
-, Tuple.Create(Tuple.Create("", 2720), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 2720), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 2716), Tuple.Create("\"", 2737)
+, Tuple.Create(Tuple.Create("", 2722), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 2722), false)
 );
 
 WriteLiteral(" /></a>\r\n                    <a");
@@ -302,9 +302,9 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2829), Tuple.Create("\"", 2850)
-, Tuple.Create(Tuple.Create("", 2835), Tuple.Create<System.Object, System.Int32>(Href("~/Images/tw.png")
-, 2835), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 2831), Tuple.Create("\"", 2852)
+, Tuple.Create(Tuple.Create("", 2837), Tuple.Create<System.Object, System.Int32>(Href("~/Images/tw.png")
+, 2837), false)
 );
 
 WriteLiteral(" /></a>\r\n                    ");
@@ -352,17 +352,17 @@ WriteLiteral(" class=\"col-sm-12 filter_sep cont_margin\"");
 
 WriteLiteral(">\r\n            <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3624), Tuple.Create("\"", 3707)
-, Tuple.Create(Tuple.Create("", 3630), Tuple.Create<System.Object, System.Int32>(Href("~/Images/desi-")
-, 3630), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 3626), Tuple.Create("\"", 3709)
+, Tuple.Create(Tuple.Create("", 3632), Tuple.Create<System.Object, System.Int32>(Href("~/Images/desi-")
+, 3632), false)
             
-            #line 73 "..\..\Views\Shared\_AccountLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 3644), Tuple.Create<System.Object, System.Int32>(HttpContext.Current.Session["logo"].ToString().Trim()
+            #line 74 "..\..\Views\Shared\_AccountLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 3646), Tuple.Create<System.Object, System.Int32>(HttpContext.Current.Session["logo"].ToString().Trim()
             
             #line default
             #line hidden
-, 3644), false)
-, Tuple.Create(Tuple.Create("", 3698), Tuple.Create("-logo.gif", 3698), true)
+, 3646), false)
+, Tuple.Create(Tuple.Create("", 3700), Tuple.Create("-logo.gif", 3700), true)
 );
 
 WriteLiteral(">\r\n            <div");
@@ -378,13 +378,13 @@ WriteLiteral(" id=\"bodysec\"");
 WriteLiteral(">\r\n");
 
             
-            #line 80 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 81 "..\..\Views\Shared\_AccountLayout.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 80 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 81 "..\..\Views\Shared\_AccountLayout.cshtml"
          if (HttpContext.Current.Session["Fromname"].ToString() == "events" || HttpContext.Current.Session["Fromname"].ToString() == "deals")
         {
             
@@ -392,14 +392,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 82 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 83 "..\..\Views\Shared\_AccountLayout.cshtml"
        Write(RenderBody());
 
             
             #line default
             #line hidden
             
-            #line 82 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 83 "..\..\Views\Shared\_AccountLayout.cshtml"
                          
 
         }
@@ -473,13 +473,13 @@ WriteLiteral(" class=\"navbar-collapse collapse nav_cus\"");
 WriteLiteral(">\r\n");
 
             
-            #line 103 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 104 "..\..\Views\Shared\_AccountLayout.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 103 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 104 "..\..\Views\Shared\_AccountLayout.cshtml"
                              if (IsSectionDefined("sidenav"))
                             {
                                 
@@ -487,14 +487,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 105 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 106 "..\..\Views\Shared\_AccountLayout.cshtml"
                            Write(RenderSection("sidenav", false));
 
             
             #line default
             #line hidden
             
-            #line 105 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 106 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                                 
                             }
                             else
@@ -556,7 +556,7 @@ WriteLiteral(" class=\"panel-body no-padding\"");
 WriteLiteral(">\r\n                                                    <p>");
 
             
-            #line 121 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 122 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Personal Information", "MyAccount", "Account"));
 
             
@@ -565,7 +565,7 @@ WriteLiteral(">\r\n                                                    <p>");
 WriteLiteral(" </p>\r\n                                                    <p>");
 
             
-            #line 122 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 123 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account"));
 
             
@@ -574,7 +574,7 @@ WriteLiteral(" </p>\r\n                                                    <p>")
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 123 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 124 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account"));
 
             
@@ -583,7 +583,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 124 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 125 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Payment Information", "PaymentInformation", "Account"));
 
             
@@ -592,7 +592,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 125 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 126 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account"));
 
             
@@ -641,7 +641,7 @@ WriteLiteral(" class=\"panel-body no-padding\"");
 WriteLiteral(">\r\n                                                    <p>");
 
             
-            #line 139 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 140 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Create Event", "CreateEvent", "CreateEvent"));
 
             
@@ -650,7 +650,7 @@ WriteLiteral(">\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 140 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 141 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("My Events", "EventList", "EventList"));
 
             
@@ -663,7 +663,7 @@ WriteLiteral("\r\n                                                    ");
 WriteLiteral("\r\n                                                    <p>");
 
             
-            #line 143 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 144 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Events Help", "EventHelp", "Account"));
 
             
@@ -721,7 +721,7 @@ WriteLiteral(">\r\n                                                    <p>Create
 "                                              <p>");
 
             
-            #line 163 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 164 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Deals Dashboard", "DealsDashboard", "Account"));
 
             
@@ -730,7 +730,7 @@ WriteLiteral(">\r\n                                                    <p>Create
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 164 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 165 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Current Deals", "CurrentDeals", "Account"));
 
             
@@ -739,7 +739,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 165 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 166 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Past Deals", "PastDeals", "Account"));
 
             
@@ -748,7 +748,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 166 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 167 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Feedback", "Feedback", "Account"));
 
             
@@ -757,7 +757,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 167 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 168 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Overview", "Overview", "Account"));
 
             
@@ -766,7 +766,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 168 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 169 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Impact Report", "ImpactReport", "Account"));
 
             
@@ -775,7 +775,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 169 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 170 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Invoice History", "InvoiceHistory", "Account"));
 
             
@@ -784,7 +784,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 170 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 171 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Customers", "Customers", "Account"));
 
             
@@ -793,7 +793,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 171 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 172 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Deals Help", "DealsHelp", "Account"));
 
             
@@ -802,7 +802,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 172 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 173 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Merchant Profile", "MerchantProfile", "Account"));
 
             
@@ -814,7 +814,7 @@ WriteLiteral("</p>\r\n                                                </div>\r\n
 "iv>\r\n");
 
             
-            #line 178 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 179 "..\..\Views\Shared\_AccountLayout.cshtml"
                             }
 
             
@@ -837,7 +837,7 @@ WriteLiteral(">\r\n                    \r\n");
 WriteLiteral("                    ");
 
             
-            #line 188 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 189 "..\..\Views\Shared\_AccountLayout.cshtml"
                Write(RenderBody());
 
             
@@ -846,7 +846,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n\r\n                    </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 193 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 194 "..\..\Views\Shared\_AccountLayout.cshtml"
         }
 
             
@@ -856,7 +856,7 @@ WriteLiteral("\r\n    </div>\r\n    <div");
 
 WriteLiteral(" id=\"dtBox\"");
 
-WriteLiteral("></div>\r\n\r\n    <script");
+WriteLiteral("></div>\r\n\r\n\r\n    <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 

@@ -144,22 +144,24 @@
 
 <script>
     $("#txt_phnno").mask("999-999-9999");
-    $('.summernote').summernote({
-        height: 70,   //set editable area's height
-        disableDragAndDrop: true
-    });
-    $('#input2').filer({
-        limit: '1',
-        maxSize: '2',
-        extensions: ['jpg', 'jpeg', 'png'],
-        changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop2"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
-        showThumbs: true,
-        appendTo: "#drag-drop2",
-        theme: "dragdropbox",
-        onChange: false,
-        templates: {
-            box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
-            item: '<li class="jFiler-item">\
+    $(document).ready(function () {
+     
+        $('.summernote').summernote({
+            height: 70,   //set editable area's height
+            disableDragAndDrop: true
+        });
+        $('#input2').filer({
+            limit: '1',
+            maxSize: '2',
+            extensions: ['jpg', 'jpeg', 'png'],
+            changeInput: '<div class="jFiler-input-dragDrop" id="drag-drop2"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div><div class="jFiler-input-text"><h3>Drag  photo or normal upload</h3> </div></div></div>',
+            showThumbs: true,
+            appendTo: "#drag-drop2",
+            theme: "dragdropbox",
+            onChange: false,
+            templates: {
+                box: '<ul class="jFiler-item-list profile-views clearfix"></ul>',
+                item: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <div class="jFiler-item-container">\
@@ -177,7 +179,7 @@
                                              </button>\
                                        </div>\
                         </li>',
-            itemAppend: '<li class="jFiler-item">\
+                itemAppend: '<li class="jFiler-item">\
                                     <div class="">\
                                             {{fi-image}}\
                                              <button class="btn  jFiler-item-trash-action can_btn" type="button">\
@@ -187,106 +189,108 @@
                         </li>',
 
 
-            progressBar: '<div class="bar"></div>',
-            itemAppendToEnd: true,
-            removeConfirmation: false,
-            _selectors: {
-                list: '.jFiler-item-list',
-                item: '.jFiler-item',
-                progressBar: '.bar',
-                remove: '.jFiler-item-trash-action',
-            }
-        },
-        uploadFile: {
-            url: "/Account/SaveOrganizerImage",
-            data: {},
-            type: 'POST',
-            enctype: 'multipart/form-data',
-            beforeSend: function () { },
-            success: function (data, el) {
-                debugger;
-                console.log(el);
-                var parent = $("#drag-drop2").find(".jFiler-jProgressBar").parent();
-                $("#drag-drop2").find(".jFiler-jProgressBar").fadeOut("slow", function () {
-                    $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
-                });
-                console.log(data);
-                var image_count = $("#image_count").val();
-                var imagejson = jQuery.parseJSON(JSON.stringify(data));
-                var imgdata = imagejson.image_name + '¶' + imagejson.image_type;
-
-                $('#userimage').val(imgdata);
-
-
-                $('#ImagePresent').val("Yes");
-
-                if ($.trim(image_count) == '') {
-                    $("#image_count").val('1');
-                } else {
-                    image_count = parseInt(image_count) + 1;
-                    $("#image_count").val(image_count);
+                progressBar: '<div class="bar"></div>',
+                itemAppendToEnd: true,
+                removeConfirmation: false,
+                _selectors: {
+                    list: '.jFiler-item-list',
+                    item: '.jFiler-item',
+                    progressBar: '.bar',
+                    remove: '.jFiler-item-trash-action',
                 }
-
             },
-            error: function (el) {
+            uploadFile: {
+                url: "/Account/SaveOrganizerImage",
+                data: {},
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                beforeSend: function () { },
+                success: function (data, el) {
+                    debugger;
+                    console.log(el);
+                    var parent = $("#drag-drop2").find(".jFiler-jProgressBar").parent();
+                    $("#drag-drop2").find(".jFiler-jProgressBar").fadeOut("slow", function () {
+                        $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow").remove();
+                    });
+                    console.log(data);
+                    var image_count = $("#image_count").val();
+                    var imagejson = jQuery.parseJSON(JSON.stringify(data));
+                    var imgdata = imagejson.image_name + '¶' + imagejson.image_type;
 
-                //var parent = el.find(".jFiler-jProgressBar").parent();
-                //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-                //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
-                //});
+                    $('#userimage').val(imgdata);
+
+
+                    $('#ImagePresent').val("Yes");
+
+                    if ($.trim(image_count) == '') {
+                        $("#image_count").val('1');
+                    } else {
+                        image_count = parseInt(image_count) + 1;
+                        $("#image_count").val(image_count);
+                    }
+
+                },
+                error: function (el) {
+
+                    //var parent = el.find(".jFiler-jProgressBar").parent();
+                    //el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                    //    $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+                    //});
+                },
+                statusCode: {},
+                onProgress: function () { },
             },
-            statusCode: {},
-            onProgress: function () { },
-        },
-        dragDrop: {
-            dragEnter: function () { },
-            dragLeave: function () { },
-            drop: function () { },
-        },
-        addMore: false,
-        clipBoardPaste: true,
-        excludeName: null,
-        beforeShow: function () { $("#drag-drop2 .jFiler-input-inner").hide(); return true },
-        onSelect: function () { $("#drag-drop2 .jFiler-input-inner").hide(); },
-        afterShow: function () { $("#drag-drop2 .jFiler-input-inner").hide(); $("#drag-drop2 .fi-progressBar").hide(); },
-        onRemove: function (el) {
-            var image_count = $("#image_count").val();
-            image_count = parseInt(image_count) - 1;
-            var id_div = el[0].jfiler_id;
-            var hidden_image_element = 'image_hidden_' + id_div;
+            dragDrop: {
+                dragEnter: function () { },
+                dragLeave: function () { },
+                drop: function () { },
+            },
+            addMore: false,
+            clipBoardPaste: true,
+            excludeName: null,
+            beforeShow: function () { $("#drag-drop2 .jFiler-input-inner").hide(); return true },
+            onSelect: function () { $("#drag-drop2 .jFiler-input-inner").hide(); },
+            afterShow: function () { $("#drag-drop2 .jFiler-input-inner").hide(); $("#drag-drop2 .fi-progressBar").hide(); },
+            onRemove: function (el) {
+                var image_count = $("#image_count").val();
+                image_count = parseInt(image_count) - 1;
+                var id_div = el[0].jfiler_id;
+                var hidden_image_element = 'image_hidden_' + id_div;
 
-            $('#userimage').val('');
-            $('#input2').click(function (e) {
-                e.preventDefault();
+                $('#userimage').val('');
+                $('#input2').click(function (e) {
+                    e.preventDefault();
 
-            })
-            $('#ImagePresent').val("NO");
-        },
-        onEmpty: function (el) {
-            if ($("#imageeror").val() == 0) {
+                })
+                $('#ImagePresent').val("NO");
+            },
+            onEmpty: function (el) {
+                if ($("#imageeror").val() == 0) {
 
-                if ($("#drag-drop2 .jFiler-items").length == 1) { setTimeout(function () { $("#drag-drop2 .jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                    if ($("#drag-drop2 .jFiler-items").length == 1) { setTimeout(function () { $("#drag-drop2 .jFiler-input-inner").css('display', 'block'); $('#input2').unbind('click'); }, 200); };
+                }
+            },
+            captions: {
+                button: "Choose Files",
+                feedback: "Choose files To Upload",
+                feedback2: "files were chosen",
+                drop: "Drop file here to Upload",
+                removeConfirmation: "Are you sure you want to remove this file?",
+                errors: {
+                    filesLimit: ajaxsetup('OrganizerMaster', 'OrgImageCountValidationUI'),
+                    filesType: ajaxsetup('OrganizerMaster', 'OrgImagestypeValidationUI'),
+                    filesSize: ajaxsetup('OrganizerMaster', 'OrgImagesizeValidationUI'),
+                    filesSizeAll: ajaxsetup('OrganizerMaster', 'OrgImagesizeValidationUI')
+                }
             }
-        },
-        captions: {
-            button: "Choose Files",
-            feedback: "Choose files To Upload",
-            feedback2: "files were chosen",
-            drop: "Drop file here to Upload",
-            removeConfirmation: "Are you sure you want to remove this file?",
-            errors: {
-                filesLimit: ajaxsetup('OrganizerMaster', 'OrgImageCountValidationUI'),
-                filesType: ajaxsetup('OrganizerMaster', 'OrgImagestypeValidationUI'),
-                filesSize: ajaxsetup('OrganizerMaster', 'OrgImagesizeValidationUI'),
-                filesSizeAll: ajaxsetup('OrganizerMaster', 'OrgImagesizeValidationUI')
-            }
-        }
 
 
 
+        });
+        $('#txt_name').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
     });
-
-
     function onlyAlphabets(e, t) {
 
 
@@ -314,4 +318,5 @@
             return false;
 
     }
+ 
 </script>

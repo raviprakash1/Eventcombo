@@ -887,6 +887,9 @@
           <Parameter Name="EventStatus" Type="varchar" Mode="In" />
           <Parameter Name="UserID" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetOrganizerEventid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Masterid" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetSelectedTicketListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GUID" Type="varchar" Mode="In" />
           <Parameter Name="EventId" Type="bigint" Mode="In" />
@@ -1937,6 +1940,9 @@
             <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
           </AssociationSet>
           <EntitySet Name="Promo_Code" EntityType="EventComboModel.Promo_Code" />
+          <FunctionImport Name="GetOrganizerEventid" ReturnType="Collection(EventComboModel.GetOrganizerEventid_Result)">
+            <Parameter Name="Masterid" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2087,6 +2093,13 @@
           <Property Name="PC_URL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="PC_Eventid" Type="Int64" />
         </EntityType>
+        <ComplexType Name="GetOrganizerEventid_Result">
+          <Property Type="Int64" Name="Orgnizer_Id" Nullable="false" />
+          <Property Type="Int64" Name="Orgnizer_Event_Id" Nullable="true" />
+          <Property Type="String" Name="UserId" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="DefaultOrg" Nullable="true" MaxLength="1" />
+          <Property Type="Int64" Name="OrganizerMaster_Id" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2839,6 +2852,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetOrganizerEventid" FunctionName="EventComboModel.Store.GetOrganizerEventid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EventComboModel.GetOrganizerEventid_Result">
+                <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
+                <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DefaultOrg" ColumnName="DefaultOrg" />
+                <ScalarProperty Name="OrganizerMaster_Id" ColumnName="OrganizerMaster_Id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

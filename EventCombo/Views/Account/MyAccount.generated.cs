@@ -88,7 +88,7 @@ WriteLiteral(@"></script>
     .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 150px;}
     .jFiler-item .jFiler-item-container{ margin:0px; padding:0px; }
     .jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
-    .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:226px;  margin-left:0px; }
+    .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:auto;  margin-left:0px; }
     .can_btn i{ font-size:25px;}
     .can_btn{ padding:0px;}
     .jFiler-input-text{ margin-bottom:5px;}
@@ -1476,9 +1476,9 @@ WriteLiteral(@"',
 </script>
 <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 41402), Tuple.Create("\"", 41443)
-, Tuple.Create(Tuple.Create("", 41408), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 41408), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 41401), Tuple.Create("\"", 41442)
+, Tuple.Create(Tuple.Create("", 41407), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 41407), false)
 );
 
 WriteLiteral("></script>\r\n\r\n");

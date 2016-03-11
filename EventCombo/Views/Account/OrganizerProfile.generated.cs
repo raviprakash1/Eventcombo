@@ -95,7 +95,7 @@ WriteLiteral(@"></script>
 .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 150px;}
 .jFiler-item .jFiler-item-container{ margin:0px; padding:0px; }
 .jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
-.jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:226px;  margin-left:0px; }
+.jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:auto;  margin-left:0px; }
 .can_btn i{ font-size:25px;}
 .can_btn{ padding:0px;}
 .jFiler-input-text{ margin-bottom:5px;}
@@ -122,9 +122,9 @@ WriteLiteral(" id=\"loader\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1530), Tuple.Create("\"", 1560)
-, Tuple.Create(Tuple.Create("", 1536), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
-, 1536), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 1529), Tuple.Create("\"", 1559)
+, Tuple.Create(Tuple.Create("", 1535), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
+, 1535), false)
 );
 
 WriteLiteral(" /></div>\r\n\r\n        <div");
@@ -196,7 +196,7 @@ WriteLiteral(" class=\"col-sm-6 no_pad col-xs-12 dropheight mt5\"");
 
 WriteLiteral(">\r\n                    <select");
 
-WriteLiteral(" class=\"form-control evnt_inp_cont selectpicker\"");
+WriteLiteral(" class=\"form-control evnt_inp_cont selectpicker org_prof_drop\"");
 
 WriteLiteral(" id=\"id_selectorg\"");
 
@@ -226,14 +226,14 @@ WriteLiteral("> Add Organizer </option>\r\n");
             #line hidden
 WriteLiteral("                        <option");
 
-WriteAttribute("value", Tuple.Create(" value=", 2802), Tuple.Create("", 2826)
+WriteAttribute("value", Tuple.Create(" value=", 2815), Tuple.Create("", 2839)
             
             #line 69 "..\..\Views\Account\OrganizerProfile.cshtml"
-, Tuple.Create(Tuple.Create("", 2809), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
+, Tuple.Create(Tuple.Create("", 2822), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
             
             #line default
             #line hidden
-, 2809), false)
+, 2822), false)
 );
 
 WriteLiteral(">");
@@ -426,87 +426,89 @@ WriteLiteral("\');\r\n    }\r\n    $(document).ready(function () {\r\n        $(
 ";\r\n                }\r\n            }else\r\n            {\r\n                $(\"#btne" +
 "dit\").prop(\"disabled\", true);\r\n                $(\"#btndelete\").prop(\"disabled\", " +
 "true);\r\n            }\r\n\r\n        });\r\n\r\n        $(document).on(\'blur\', \'#txt_nam" +
-"e\', function () {\r\n            debugger;\r\n            var name = $(\'#txt_name\')." +
-"val();\r\n            var orgid = 0;\r\n         \r\n                orgid = $(\'#hd_ID" +
-"\').val();\r\n                if (typeof orgid === \"undefined\")\r\n                {\r" +
-"\n                    orgid = 0;\r\n                }\r\n          \r\n            $.aj" +
-"ax({\r\n                url: \'");
+"e\', function () {\r\n            debugger;\r\n            var isValid = false;\r\n    " +
+"     \r\n            var name = $(\'#txt_name\').val();\r\n            var regex = /^[" +
+"a-zA-Z ]*$/;\r\n            isValid = regex.test(name);\r\n            if (isValid) " +
+"{\r\n                var orgid = 0;\r\n\r\n                orgid = $(\'#hd_ID\').val();\r" +
+"\n                if (typeof orgid === \"undefined\") {\r\n                    orgid " +
+"= 0;\r\n                }\r\n\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 196 "..\..\Views\Account\OrganizerProfile.cshtml"
-                 Write(Url.Action("chkOrganizerName", "Account"));
+            #line 200 "..\..\Views\Account\OrganizerProfile.cshtml"
+                     Write(Url.Action("chkOrganizerName", "Account"));
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n                data: { Name: name, id: orgid },\r\n                type: \"Post" +
-"\",\r\n                success: function (data) {\r\n                    \r\n          " +
-"          if(data==\"True\")\r\n                    {\r\n                        $(\'#t" +
-"xt_name\').addClass(\'err-bor\');\r\n                        $(\"#dveruimain\").addClas" +
-"s(\"er_UI_main\");\r\n                        $(\"#dveruiimg\").addClass(\"er_UI_img\");" +
-"\r\n                        $(\"#dveruimain\").removeClass(\"er_suc_main\");\r\n        " +
-"                $(\"#dveruiimg\").removeClass(\"er_suc_img\");\r\n                    " +
-"    $(\'#erraccmsg\').html(\'Name already exist!!\');\r\n                        $(\'#d" +
-"iverroacc\').show();\r\n                        $(\'html,body\').animate({ scrollTop:" +
-" 0 });\r\n                        $(\'#txt_name\').val(\'\');\r\n                       " +
-" return false;\r\n                    } else {\r\n                        $(\'#txt_na" +
-"me\').removeClass(\'err-bor\');\r\n                        $(\'#diverroacc\').hide();\r\n" +
-"                    }\r\n\r\n                }\r\n            });\r\n\r\n\r\n        });\r\n  " +
-"      $(document).on(\'change\', \'#txt_zip\', function () {\r\n      \r\n            va" +
-"r country = $(\"#Country option:selected\").text().trim();\r\n\r\n            var city" +
-" = \"\";\r\n            var state = \"\";\r\n\r\n            var pincode = $(this).val();\r" +
-"\n            $.ajax({\r\n                url: \'http://maps.googleapis.com/maps/api" +
-"/geocode/json\',\r\n                data: \'&address=\' + pincode + \'&sensor=true\',\r\n" +
-"                dataType: \'json\',\r\n                cache: false,\r\n              " +
-"  success: function (data) {\r\n\r\n\r\n                    if (data.status == \'OK\') {" +
-"\r\n                        $(\'#txt_zip\').removeClass(\'err-bor\');\r\n\r\n             " +
-"           for (var i = 0; i < data.results[0].address_components.length; i++) {" +
-"\r\n                            var obj = data.results[0].address_components[i];\r\n" +
-"\r\n                            var obj2 = obj[\'types\'];\r\n\r\n                      " +
-"      for (var j = 0; j < obj2.length; j++) {\r\n                                i" +
-"f (obj2[j] == \'locality\' || obj2[j] == \'postal_town\' || obj2[j] == \'sublocality_" +
-"level_1\' || obj2[j] == \'sublocality_level_2\' || obj2[j] == \'sublocality_level_3\'" +
-" || obj2[j] == \'sublocality_level_4\' || obj2[j] == \'sublocality_level_5\' || obj2" +
-"[j] == \'ward\') {\r\n                                    city = obj[\'long_name\'];\r\n" +
-"\r\n\r\n                                }\r\n                                if (obj2[" +
-"j] == \'administrative_area_level_1\') {\r\n                                    stat" +
-"e = obj[\'long_name\'];\r\n\r\n                                }\r\n                    " +
-"            if (obj2[j] == \'country\') {\r\n                                    if " +
-"(obj[\'long_name\'] == country) {\r\n                                        $(\'#txt" +
-"_city\').val(city);\r\n                                        $(\'#txt_state\').val(" +
-"state);\r\n\r\n\r\n                                    }\r\n\r\n                          " +
-"      }\r\n\r\n                            }\r\n\r\n\r\n\r\n                        }\r\n\r\n   " +
-"                 } else {\r\n\r\n                        $(\'#erraccmsg\').html(ajaxse" +
-"tup(\'OrganizerMaster\', \'OrgvalidZipUi\'));\r\n                        $(\'#diverroac" +
-"c\').show();\r\n                        $(\'html,body\').animate({ scrollTop: 0 });\r\n" +
-"\r\n\r\n                        $(\'#txt_zip\').addClass(\'err-bor\');\r\n                " +
-"        return false;\r\n                    }\r\n                }\r\n            });" +
-"\r\n        });\r\n        $(document).on(\'click\', \'#btnadd\', function () {\r\n       " +
-" \r\n            var msg = validatemain();\r\n            if (msg != \'\') {\r\n        " +
-"        $(\"#dveruimain\").addClass(\"er_UI_main\");\r\n                $(\"#dveruiimg\"" +
-").addClass(\"er_UI_img\");\r\n                $(\"#dveruimain\").removeClass(\"er_suc_m" +
-"ain\");\r\n                $(\"#dveruiimg\").removeClass(\"er_suc_img\");\r\n            " +
-"    $(\'#erraccmsg\').html(msg);\r\n                $(\'#diverroacc\').show();\r\n      " +
-"          $(\'html,body\').animate({ scrollTop: 0 });\r\n\r\n                return fa" +
-"lse;\r\n            }\r\n            \r\n            var code = escape($(\"#txt_desc\")." +
-"code());\r\n            //var text = code.replace(/<p>/gi, \" \");\r\n            //va" +
-"r plainText = $(\"<div />\").html(text).text();\r\n            var model = {\r\n      " +
-"          \'Orgnizer_Name\': $(\"#txt_name\").val(),\r\n                \'Organizer_Des" +
-"c\': code,\r\n                \'Organizer_FBLink\': $(\"#txt_fburl\").val(),\r\n         " +
-"       \'Organizer_Twitter\': $(\"#txt_twitterurl\").val(),\r\n                \'Organi" +
-"zer_Linkedin\': $(\"#txt_linkedinurl\").val(),\r\n                \'UserId\': \'\',\r\n    " +
-"            \'Organizer_Image\': $(\"#userimage\").val(),\r\n                \'Organize" +
-"r_Address1\': $(\"#txt_streetadd1\").val(),\r\n                \'Organizer_Address2\': " +
-"$(\"#txt_streetaddr2\").val(),\r\n                \'Organizer_City\': $(\"#txt_city\").v" +
-"al(),\r\n                \'Organizer_State\': $(\"#txt_state\").val(),\r\n              " +
-"  \'Organizer_CountryId\': $(\"#Country\").val(),\r\n                \'Organizer_Zipcod" +
-"e\': $(\"#txt_zip\").val(),\r\n                \'Organizer_Email\': $(\"#txt_email\").val" +
-"(),\r\n                \'Organizer_Phoneno\': $(\"#txt_phnno\").val(),\r\n              " +
-"  \'Organizer_Websiteurl\': $(\"#txt_websiteurl\").val(),\r\n\r\n            };\r\n       " +
-"     $.ajax({\r\n                url: \'");
+WriteLiteral("\',\r\n                    data: { Name: name, id: orgid },\r\n                    typ" +
+"e: \"Post\",\r\n                    success: function (data) {\r\n\r\n                  " +
+"      if (data == \"True\") {\r\n                            $(\'#txt_name\').addClass" +
+"(\'err-bor\');\r\n                            $(\"#dveruimain\").addClass(\"er_UI_main\"" +
+");\r\n                            $(\"#dveruiimg\").addClass(\"er_UI_img\");\r\n        " +
+"                    $(\"#dveruimain\").removeClass(\"er_suc_main\");\r\n              " +
+"              $(\"#dveruiimg\").removeClass(\"er_suc_img\");\r\n                      " +
+"      $(\'#erraccmsg\').html(\'Name already exist!!\');\r\n                           " +
+" $(\'#diverroacc\').show();\r\n                            $(\'html,body\').animate({ " +
+"scrollTop: 0 });\r\n                            $(\'#txt_name\').val(\'\');\r\n         " +
+"                   return false;\r\n                        } else {\r\n            " +
+"                $(\'#txt_name\').removeClass(\'err-bor\');\r\n                        " +
+"    $(\'#diverroacc\').hide();\r\n                        }\r\n\r\n                    }" +
+"\r\n                });\r\n            } else {\r\n                $(\'#txt_name\').val(" +
+"\'\');\r\n            }\r\n\r\n\r\n        });\r\n        $(document).on(\'change\', \'#txt_zip" +
+"\', function () {\r\n      \r\n            var country = $(\"#Country option:selected\"" +
+").text().trim();\r\n\r\n            var city = \"\";\r\n            var state = \"\";\r\n\r\n " +
+"           var pincode = $(this).val();\r\n            $.ajax({\r\n                u" +
+"rl: \'http://maps.googleapis.com/maps/api/geocode/json\',\r\n                data: \'" +
+"&address=\' + pincode + \'&sensor=true\',\r\n                dataType: \'json\',\r\n     " +
+"           cache: false,\r\n                success: function (data) {\r\n\r\n\r\n      " +
+"              if (data.status == \'OK\') {\r\n                        $(\'#txt_zip\')." +
+"removeClass(\'err-bor\');\r\n\r\n                        for (var i = 0; i < data.resu" +
+"lts[0].address_components.length; i++) {\r\n                            var obj = " +
+"data.results[0].address_components[i];\r\n\r\n                            var obj2 =" +
+" obj[\'types\'];\r\n\r\n                            for (var j = 0; j < obj2.length; j" +
+"++) {\r\n                                if (obj2[j] == \'locality\' || obj2[j] == \'" +
+"postal_town\' || obj2[j] == \'sublocality_level_1\' || obj2[j] == \'sublocality_leve" +
+"l_2\' || obj2[j] == \'sublocality_level_3\' || obj2[j] == \'sublocality_level_4\' || " +
+"obj2[j] == \'sublocality_level_5\' || obj2[j] == \'ward\') {\r\n                      " +
+"              city = obj[\'long_name\'];\r\n\r\n\r\n                                }\r\n " +
+"                               if (obj2[j] == \'administrative_area_level_1\') {\r\n" +
+"                                    state = obj[\'long_name\'];\r\n\r\n               " +
+"                 }\r\n                                if (obj2[j] == \'country\') {\r" +
+"\n                                    if (obj[\'long_name\'] == country) {\r\n       " +
+"                                 $(\'#txt_city\').val(city);\r\n                    " +
+"                    $(\'#txt_state\').val(state);\r\n\r\n\r\n                           " +
+"         }\r\n\r\n                                }\r\n\r\n                            }" +
+"\r\n\r\n\r\n\r\n                        }\r\n\r\n                    } else {\r\n\r\n           " +
+"             $(\'#erraccmsg\').html(ajaxsetup(\'OrganizerMaster\', \'OrgvalidZipUi\'))" +
+";\r\n                        $(\'#diverroacc\').show();\r\n                        $(\'" +
+"html,body\').animate({ scrollTop: 0 });\r\n\r\n\r\n                        $(\'#txt_zip\'" +
+").addClass(\'err-bor\');\r\n                        return false;\r\n                 " +
+"   }\r\n                }\r\n            });\r\n        });\r\n        $(document).on(\'c" +
+"lick\', \'#btnadd\', function () {\r\n        \r\n            var msg = validatemain();" +
+"\r\n            if (msg != \'\') {\r\n                $(\"#dveruimain\").addClass(\"er_UI" +
+"_main\");\r\n                $(\"#dveruiimg\").addClass(\"er_UI_img\");\r\n              " +
+"  $(\"#dveruimain\").removeClass(\"er_suc_main\");\r\n                $(\"#dveruiimg\")." +
+"removeClass(\"er_suc_img\");\r\n                $(\'#erraccmsg\').html(msg);\r\n        " +
+"        $(\'#diverroacc\').show();\r\n                $(\'html,body\').animate({ scrol" +
+"lTop: 0 });\r\n\r\n                return false;\r\n            }\r\n            \r\n     " +
+"       var code = escape($(\"#txt_desc\").code());\r\n            //var text = code." +
+"replace(/<p>/gi, \" \");\r\n            //var plainText = $(\"<div />\").html(text).te" +
+"xt();\r\n            var model = {\r\n                \'Orgnizer_Name\': $(\"#txt_name\"" +
+").val(),\r\n                \'Organizer_Desc\': code,\r\n                \'Organizer_FB" +
+"Link\': $(\"#txt_fburl\").val(),\r\n                \'Organizer_Twitter\': $(\"#txt_twit" +
+"terurl\").val(),\r\n                \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").val" +
+"(),\r\n                \'UserId\': \'\',\r\n                \'Organizer_Image\': $(\"#useri" +
+"mage\").val(),\r\n                \'Organizer_Address1\': $(\"#txt_streetadd1\").val()," +
+"\r\n                \'Organizer_Address2\': $(\"#txt_streetaddr2\").val(),\r\n          " +
+"      \'Organizer_City\': $(\"#txt_city\").val(),\r\n                \'Organizer_State\'" +
+": $(\"#txt_state\").val(),\r\n                \'Organizer_CountryId\': $(\"#Country\").v" +
+"al(),\r\n                \'Organizer_Zipcode\': $(\"#txt_zip\").val(),\r\n              " +
+"  \'Organizer_Email\': $(\"#txt_email\").val(),\r\n                \'Organizer_Phoneno\'" +
+": $(\"#txt_phnno\").val(),\r\n                \'Organizer_Websiteurl\': $(\"#txt_websit" +
+"eurl\").val(),\r\n\r\n            };\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 324 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 330 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("saveOrganizer", "Account"));
 
             
@@ -532,7 +534,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 341 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 347 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -560,7 +562,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                  
 "x({\r\n                    url: \'");
 
             
-            #line 395 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 401 "..\..\Views\Account\OrganizerProfile.cshtml"
                      Write(Url.Action("DeleteOrganizer", "Account"));
 
             
@@ -586,7 +588,7 @@ WriteLiteral(@"',
                                 window.location.href = '");
 
             
-            #line 412 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 418 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                    Write(Url.Action("Index", "Home"));
 
             
@@ -626,7 +628,7 @@ WriteLiteral("\';\r\n\r\n                            }\r\n\r\n\r\n              
 "         };\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 475 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 481 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("EditOrganizer", "Account"));
 
             
@@ -652,7 +654,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 492 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 498 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -688,7 +690,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                  
 "        var request = $.ajax({\r\n                url: \'");
 
             
-            #line 569 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 575 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("Index", "ValidationMessage"));
 
             

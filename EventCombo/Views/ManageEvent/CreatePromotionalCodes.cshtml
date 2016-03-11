@@ -3,21 +3,25 @@
     ViewBag.Title = "CreatePromotionalCodes";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/DateTimePicker.css" rel="stylesheet" />
+
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
         <div id="accordion" class="panel-group">
 
             <div class="panel panel-default menu_list">
-                <a class="menu_title" href="#">
-                    <div class="panel-heading">
-                        My Account
+
+                <a class="menu_title"  href="#">
+                    <div class="panel-heading ">
+                        < My Account 
+
                     </div>
                 </a>
             </div>
             <div class="panel panel-default menu_list">
-                <a class="menu_title" href="#">
-                    <div class="panel-heading">
+                <a class="menu_title" href="#" title="@Model.Eventitle">
+                    <div class="panel-heading activeyellow act_ellipses">
                         @Model.Eventitle
                     </div>
                 </a>
@@ -93,7 +97,7 @@
 @using (Html.BeginForm("CreatePromotionalCodes", "ManageEvent", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="col-sm-12 col-xs-12 ">
-        <div class="col-sm-12 no_pad mb10">
+        <div class="col-sm-12 no_pad mb20">
             <ul class="cod_dis_type">
                 <li><a class="active" href="#">Coded Discount</a></li>
                 <li><a href="#">Public Discount</a></li>
@@ -102,33 +106,31 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-sm-12 no_pad mt20">
-
-
-        <div class="col-sm-2 no_pad">
-            <div class="form-group">
-                <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code">
-            </div>
-        </div>
-        <div class="mid_or_width">or</div>
-        <div class="custom_file_upload">
-            <div class="form-group">
-                <div class="file_upload">
-                    <input type="file" id="file_upload" name="file">
+                <div class="col-sm-2 no_pad">
+                    <div class="form-group">
+                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code">
+                    </div>
                 </div>
-            </div>
-        </div>
+                <div class="mid_or_width">or</div>
+                <div class="custom_file_upload">
+                    <div class="form-group">
+                        <div class="file_upload">
+                            <input type="file" id="file_upload" name="file">
+                        </div>
+                    </div>
+                </div>
 
-        <div class="upload_help_icn">
-            <div class="tip">
-                <img class="help_icon_hov" src="/Images/icon-question.gif" />
-                <span class="upload_help_icn_inner">
-                    Spaces apostrophes and non alphanumeric characters
-                    (except '-','_' and',' are not allowed. File must be in plain text
-                    ( CSV or TXT)
-                </span>
-            </div>
+                <div class="upload_help_icn">
+                    <div class="tip">
+                        <img class="help_icon_hov" src="/Images/icon-question.gif" />
+                        <span class="upload_help_icn_inner">
+                            Spaces apostrophes and non alphanumeric characters
+                            (except '-','_' and',' are not allowed. File must be in plain text
+                            ( CSV or TXT)
+                        </span>
+                    </div>
+                </div>
         </div>
-    </div>
     <div class="clearfix"></div>
     <div class="col-sm-12 no_pad mt10">
       <input type="hidden" id="hd_eventid" name="PC_Eventid" value="@Model.PC_Eventid" />
@@ -139,6 +141,7 @@
            <div class="col-sm-2 no_pad">
             <div class="form-group">
                 <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Amount" id="txt_discountmnt" name="PC_Amount">
+
             </div>
         </div>
         <div class="mid_or_width"></div>
@@ -151,20 +154,22 @@
             </div>
         </div>
     </div>
-    <div class="clearfix"></div>
-    <div class="col-sm-12 no_pad mt10">
-        <div class="col-sm-2 no_pad">
-            <div class="form-group">
-                Uses (Blank for Unlimited)
+     <div class="clearfix"></div>
+        <div class="col-sm-12 no_pad mt10">
+            <div class="col-sm-2 no_pad">
+                <div class="form-group mt10">
+                   Uses (Blank for Unlimited)
+                </div>
             </div>
-        </div>
+        
         <div class="mid_or_width"></div>
         <div class="col-sm-1 no_pad">
             <div class="form-group">
                 <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" id="txt_use" name="PC_Uses">
             </div>
         </div>
-    </div>
+     </div>
+   
     <div class="clearfix"></div>
     <div class="col-sm-12 no_pad mt10">
         <div class="col-md-6 col-sm-12  no_pad promo_checkbox">
@@ -206,6 +211,7 @@
             </div>
 
         </div>
+
 
 
     </div>
@@ -287,7 +293,11 @@
  }
 
 
-
+<script>
+          $(function() {
+            $( document ).tooltip();
+          });
+</script>
             <script type="text/javascript">
                 $(".upload_help_icn_inner").css("display", "none");
                 $('.help_icon_hov').hover(
@@ -337,6 +347,7 @@
                             type: "Post",
                             success: function (data) {
 
+<<<<<<< HEAD
                                 if (typeof (data.Message) === "undefined") {
                                     $("#id_selectorg").empty();
                                     $("#id_selectorg").append("<option value='0'>Select</option>");
@@ -346,6 +357,19 @@
                                         $("#id_selectorg").append("<option value='" + optiondata.Id + "'>" + optiondata.Name + "</option>");
                                     });
                                     $('.selectpicker').selectpicker('refresh');
+=======
+<script type="text/javascript">
+      $(".upload_help_icn_inner").css("display", "none");
+         $('.help_icon_hov').hover(
+          function () {
+            $(".upload_help_icn_inner").show();
+          },
+          function () {
+            $(".upload_help_icn_inner").hide();
+          }
+        );
+        
+>>>>>>> 3b81ee1ea1edd131f8a290bbb238ca6b0ef8ad32
 
                                 } else {
                                     if (data.Message == "O") {
@@ -410,3 +434,5 @@
                 }
 
             </script>
+
+

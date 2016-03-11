@@ -199,5 +199,14 @@ namespace EventCombo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishEvent", eventIdParameter, userIdParameter);
         }
+    
+        public virtual ObjectResult<GetOrganizerEventid_Result> GetOrganizerEventid(Nullable<long> masterid)
+        {
+            var masteridParameter = masterid.HasValue ?
+                new ObjectParameter("Masterid", masterid) :
+                new ObjectParameter("Masterid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOrganizerEventid_Result>("GetOrganizerEventid", masteridParameter);
+        }
     }
 }

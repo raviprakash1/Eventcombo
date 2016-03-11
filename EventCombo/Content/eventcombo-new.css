@@ -688,6 +688,7 @@ textarea {resize: none;}
 .sal_viw_mor_btn:active, .sal_viw_mor_btn.active{ box-shadow:none; }
 .view_sec_text{ word-break:break-all; }
 .org_info_btn_link{ font-size:16px; padding:0px;}
+
 .crt_inn_event{ float: right; width: auto;  margin-top: 5px; }  
 .crt_inn_event a{ 
     background: #3cf;
@@ -695,3 +696,19 @@ textarea {resize: none;}
     font-size: 17px;
     padding: 3px 10px; border-radius: 4px; }  
 .crt_inn_event a:hover{ text-decoration: none; }
+
+
+.ui-tooltip, .arrow:after {
+        background: #fff;
+        border: 0px;
+    }
+
+    .ui-tooltip {
+        padding: 5px !important;
+        color: white;       
+        font-size: .9em;
+        border-radius: 3px;
+        border: 0px !important;
+        color: #000;
+    }
+

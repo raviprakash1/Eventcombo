@@ -20,7 +20,7 @@
 .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 150px;}
 .jFiler-item .jFiler-item-container{ margin:0px; padding:0px; }
 .jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
-.jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:226px;  margin-left:0px; }
+.jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:auto;  margin-left:0px; }
 .can_btn i{ font-size:25px;}
 .can_btn{ padding:0px;}
 .jFiler-input-text{ margin-bottom:5px;}
@@ -61,7 +61,7 @@
                     Select Organizer
                 </div>
                 <div class="col-sm-6 no_pad col-xs-12 dropheight mt5">
-                    <select class="form-control evnt_inp_cont selectpicker" id="id_selectorg" >
+                    <select class="form-control evnt_inp_cont selectpicker org_prof_drop" id="id_selectorg" >
                         <option value="0"> Select </option>
                         <option value="A"> Add Organizer </option>
                        @foreach (var item in Model.Organizerdetail)
@@ -183,40 +183,46 @@
 
         $(document).on('blur', '#txt_name', function () {
             debugger;
-            var name = $('#txt_name').val();
-            var orgid = 0;
+            var isValid = false;
          
+            var name = $('#txt_name').val();
+            var regex = /^[a-zA-Z ]*$/;
+            isValid = regex.test(name);
+            if (isValid) {
+                var orgid = 0;
+
                 orgid = $('#hd_ID').val();
-                if (typeof orgid === "undefined")
-                {
+                if (typeof orgid === "undefined") {
                     orgid = 0;
                 }
-          
-            $.ajax({
-                url: '@Url.Action("chkOrganizerName", "Account")',
-                data: { Name: name, id: orgid },
-                type: "Post",
-                success: function (data) {
-                    
-                    if(data=="True")
-                    {
-                        $('#txt_name').addClass('err-bor');
-                        $("#dveruimain").addClass("er_UI_main");
-                        $("#dveruiimg").addClass("er_UI_img");
-                        $("#dveruimain").removeClass("er_suc_main");
-                        $("#dveruiimg").removeClass("er_suc_img");
-                        $('#erraccmsg').html('Name already exist!!');
-                        $('#diverroacc').show();
-                        $('html,body').animate({ scrollTop: 0 });
-                        $('#txt_name').val('');
-                        return false;
-                    } else {
-                        $('#txt_name').removeClass('err-bor');
-                        $('#diverroacc').hide();
-                    }
 
-                }
-            });
+                $.ajax({
+                    url: '@Url.Action("chkOrganizerName", "Account")',
+                    data: { Name: name, id: orgid },
+                    type: "Post",
+                    success: function (data) {
+
+                        if (data == "True") {
+                            $('#txt_name').addClass('err-bor');
+                            $("#dveruimain").addClass("er_UI_main");
+                            $("#dveruiimg").addClass("er_UI_img");
+                            $("#dveruimain").removeClass("er_suc_main");
+                            $("#dveruiimg").removeClass("er_suc_img");
+                            $('#erraccmsg').html('Name already exist!!');
+                            $('#diverroacc').show();
+                            $('html,body').animate({ scrollTop: 0 });
+                            $('#txt_name').val('');
+                            return false;
+                        } else {
+                            $('#txt_name').removeClass('err-bor');
+                            $('#diverroacc').hide();
+                        }
+
+                    }
+                });
+            } else {
+                $('#txt_name').val('');
+            }
 
 
         });

@@ -2474,7 +2474,7 @@ namespace EventCombo.Controllers
 
                     UserProfileImage = images[0];
                     ContentType = images[1];
-                    ImagePath = "Images/Organizer/Organizer_Images/" + images[0];
+                    ImagePath = "/Images/Organizer/Organizer_Images/" + images[0];
                 }
 
                 using (EventComboEntities db = new EventComboEntities())

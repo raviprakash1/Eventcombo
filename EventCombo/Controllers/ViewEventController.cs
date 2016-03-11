@@ -172,7 +172,10 @@ namespace EventCombo.Controllers
                linkedin = OrganiserDetail.Linkedin;
                 var exceptionList = db.EventVenues.Where(x=> SqlFunctions.DateDiff("s", x.EventEndDate + " " + x.EventEndTime, DateTime.Now) > 0 ).Select(e => e.EventID).ToList();
                 var exceptionList1 = db.MultipleEvents.Where(x => SqlFunctions.DateDiff("s", x.StartingTo + " " + x.EndTime, DateTime.Now) > 0 ).Select(e => e.EventID);
-                orgevents = (from x in db.Event_Orgnizer_Detail where x.OrganizerMaster_Id == OrganiserDetail.Orgnizer_Id && !exceptionList.Contains(x.Orgnizer_Event_Id??0) && !exceptionList1.Contains(x.Orgnizer_Event_Id ?? 0)  select x).Count().ToString();
+                var Organizerevents = db.GetOrganizerEventid(OrganiserDetail.Orgnizer_Id) .ToList() ;
+
+
+                orgevents = (from x in Organizerevents where x.OrganizerMaster_Id == OrganiserDetail.Orgnizer_Id && !exceptionList.Contains(x.Orgnizer_Event_Id??0) && !exceptionList1.Contains(x.Orgnizer_Event_Id ?? 0)  select x).Count().ToString();
 
 
             }
