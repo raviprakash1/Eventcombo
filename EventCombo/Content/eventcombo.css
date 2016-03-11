@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Abel);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 
-
+h1,h2,h3,h4,h5,h6,p,a,span{ word-break: break-all !important; }
 
 
 body{font-family:"Abel",Arial,sans-serif;}
@@ -12,7 +12,7 @@ button:focus { outline: none;}
 .form-control:focus{ border:1px solid #ccc; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;}
 .carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right, .carousel-control .icon-prev, .carousel-control .icon-next{margin-top: 15px;
     top: 0;}
-.fix_head{ position: fixed; width: 100%; float: left; background:#fff; z-index: 999; top:0px; }
+.fix_head{ position: fixed; width: 100%; float: left; background:#fff; z-index: 1111; top:0px; }
 .midd_cont{ position: relative; top: 119px;}
 
 .nav_cus_main{ background: transparent; border: 0px; margin-bottom:5px; min-height:35px; }
@@ -20,7 +20,7 @@ button:focus { outline: none;}
 .nav_cus .panel-group{ margin-bottom: 0px;}
 .nav_btn{ float: left; margin:0 0 5px 0; }
 .nav_cus .panel{ margin: 0px !important; border:0px;}
-.nav_cus .panel-heading { border-radius:0px !important; padding: 5px 15px;}
+.nav_cus .panel-heading { border-radius:0px !important; padding: 5px 10px;}
 .nav_cus .panel-heading.active a{ color: #fff;}
 .nav_cus .panel-heading.active a b{ color:#000;}
 .nav_cus .panel-heading a.menu_title{ color:#fff; font-size: 16px; }
@@ -707,7 +707,7 @@ span.evnt_toltip{
 
 .affix-top {
       position:fixed;
-      min-width:195px;
+      max-width:195px; min-width:195px;
       top: 134px; z-index: 999;
       
   }
@@ -729,7 +729,7 @@ span.evnt_toltip{
 @media (width: 768px) {
   .wid_1024{ width: 50%;}
   .wid_get_buzz{ width: 47% !important; margin-right: 3%;} 
-  .affix-top{top: 147px !important;}
+  .affix-top{top: 147px !important;max-width:130px; }
    #scrollhome.con_scr0l_home{margin-top:156px !important;}
    #eventtopscoll.event_top{ margin-top:132px !important; } 
   .cyan-line-new .stylish-input-group .form-control{ height:56px; line-height:56px; }
@@ -746,7 +746,7 @@ span.evnt_toltip{
 
 }
 @media (max-width: 768px)  {
-  
+ 
   .home_fixed_header{ height: 140px !important;}
   .con_scr0l_home{ margin-top: 150px !important }  
   #midsection{ top:132px;} 
@@ -1598,3 +1598,23 @@ div.file_upload input {
 /*.desc_hide{ width: 100%; float: left; background:rgba(0, 0, 0, 0.6); z-index: 99; color: #fff; position: absolute; top: 0px; display: block; height: 100% }
 .desc_hide p{ padding: 5px; font-size: 16px; }*/
 .map_height{ min-height:200px;}
+
+
+#accordion .menu_title .activeyellow{background:#ffff00 !important; color:#000;}
+#accordion .menu_title .active.activeyellow{background:#ffff00 !important; color:#000;}
+
+#accordion .menu_title .activeyellow.act_ellipses{ text-overflow:ellipsis; overflow:hidden; white-space:nowrap;  }
+
+.ui-tooltip, .arrow:after {
+        background: #fff;
+        border: 0px;
+    }
+
+    .ui-tooltip {
+        padding: 5px !important;
+        color: white;       
+        font-size: .9em;
+        border-radius: 3px;
+        border: 0px !important;
+        color: #000;
+    }

@@ -3,15 +3,17 @@
     ViewBag.Title = "CreatePromotionalCodes";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+
 <link href="~/Content/DateTimePicker.css" rel="stylesheet" />
+
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
         <div id="accordion" class="panel-group">
 
             <div class="panel panel-default menu_list">
                 <a class="menu_title"  href="#">
-                    <div class="panel-heading">
-                        My Account 
+                    <div class="panel-heading activeyellow">
+                        < My Account 
                     </div>
                 </a>  
             </div>
@@ -91,7 +93,7 @@
     </div>
     <div class="clearfix"></div>
     <div class="col-sm-12 col-xs-12 ">
-        <div class="col-sm-12 no_pad mb10">
+        <div class="col-sm-12 no_pad mb20">
             <ul class="cod_dis_type">
                 <li><a class="active" href="#">Coded Discount</a></li>
                 <li><a href="#">Public Discount</a></li>
@@ -117,7 +119,7 @@
 
             <div class="upload_help_icn">
                 <div class="tip">
-                    <img class="help_icon_hov" src="images/icon-question.gif" />
+                    <img class="help_icon_hov" src="~/Images/icon-question.gif" />
                     <span class="upload_help_icn_inner">
                         Spaces apostrophes and non alphanumeric characters
                         (except '-','_' and',' are not allowed. File must be in plain text
@@ -130,7 +132,7 @@
         <div class="col-sm-12 no_pad mt10">
             <div class="col-sm-2 no_pad">
                 <div class="form-group">
-                    <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Single Promo Code">
+                    <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Code">
                 </div>
             </div>
             <div class="mid_or_width"></div>
@@ -146,7 +148,7 @@
         <div class="clearfix"></div>
         <div class="col-sm-12 no_pad mt10">
             <div class="col-sm-2 no_pad">
-                <div class="form-group">
+                <div class="form-group mt10">
                    Uses (Blank for Unlimited)
                 </div>
             </div>
@@ -237,7 +239,7 @@
                 <div class="col-sm-12 apply_code_head">
                     <div class="col-sm-11 no_pad">Discout URL </div>
                     <div class="col-sm-1 no_pad text-right">
-                        <img src="images/icon-question.gif" />
+                        <img src="~/Images/icon-question.gif" />
                     </div>
 
                 </div>
@@ -269,7 +271,7 @@
             $(".upload_help_icn_inner").hide();
           }
         );
-
+        
 
 </script>
 <script type="text/javascript">
