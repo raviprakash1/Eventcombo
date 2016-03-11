@@ -1,0 +1,208 @@
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
+@{
+  ViewBag.Title = "Form";
+  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+}
+
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_inner_container event_top" id="eventtopscoll">
+      <div class="col-sm-12 pt10 bggrey clearfix">
+        <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+          <div class="er_UI_main">
+            <div class="er_UI_img"></div>
+            <div class="er_suc" id="erraccmsg"></div>
+            <button class="close" type="button" id="btndiverrsuc">&#215;</button>
+
+          </div>
+        </div>
+        <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
+          <div class="er_suc_main">
+
+            <div class="er_suc_img"></div>
+            <div class="er_suc" id="succaccmsg"> </div>
+            <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 pt10 bggrey clearfix">
+        <div class="col-sm-9 col-xs-12 pt10 text-right no_pad">
+          <button class="cbtSave btn ev_live_sub_btn mb5 cdisable" type="submit">
+            <span class="SPview"> SAVE > </span>
+          </button>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+      @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+      {
+        <div class="col-sm-12 no_pad">
+          @ViewBag.StateMessage
+        </div>
+      }
+      @Html.HiddenFor(m => m.OrderTemplateId)
+      @Html.HiddenFor(m => m.EventId)
+
+
+      <div class="event_detail_container">
+        <div class="evnt_tile_head">
+          <div class="evnt_tile_bg_l"></div>
+          <div class="col-sm-12 col-xs-12 text-left no_pad">
+            <h2 class="fb_dis_head pt5">ATTENDEE INFORMATION</h2>
+          </div>
+
+          <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body">
+          <div class="col-sm-12 no_pad">
+            <div class="clearfix"></div>
+            <div class="form-group">
+              <div class="col-sm-12 no_pad">
+                <label class="no_pad label-control ev_tickt_lebel pl0">
+                  Collection type
+                </label>
+              </div>
+              <div class="clearfix"></div>
+              @foreach (var otType in ViewBag.OrderTemplateTypes)
+              {
+                bool rdChecked = otType.OrderTemplateTypeId == Model.OrderTemplateTypeId;
+                <div class="col-sm-12 no_pad">
+                  <label class="Pubpage label-control ev_tickt_lebel pl0">
+                    <input type="radio" name="OrderTemplateTypeId" id="rdOTT@(otType.OrderTemplateTypeId)" value="@otType.OrderTemplateTypeId" checked="@(rdChecked)" />
+                    &#10; @otType.OrderTemplateTypeName
+                  </label>
+                  <div class="clearfix"></div>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="col-sm-12 no_pad">
+            <div class="clearfix"></div>
+            <div class="form-group">
+              <div class="col-sm-12 no_pad">
+                <label class="no_pad label-control ev_tickt_lebel pl0">
+                  Collect information by ticket type
+                </label>
+              </div>
+              <div class="clearfix"></div>
+              @for (int i = 0; i < Model.CollectTickets.Count; i++)
+              {
+                <div class="col-sm-12 no_pad">
+                  <input id="CollectTickets_@(i)__OrderTemplateTicketId" name="CollectTickets[@(i)].OrderTemplateTicketId" type="hidden" value="@Model.CollectTickets[i].OrderTemplateTicketId" />
+                  <input id="CollectTickets_@(i)__CollectInformation" name="CollectTickets[@(i)].CollectInformation" type="checkbox" value="true" checked="@Model.CollectTickets[i].CollectInformation" />
+                  <input name="CollectTickets[@(i)].CollectInformation" type="hidden" value="false" />
+                  <label for="CollectTickets@(i)__CollectInformation" class="no_pad label-control ev_tickt_lebel pl0">@Model.CollectTickets[i].CollectTicket.T_name</label>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="col-sm-12 no_pad">
+            <label class="no_pad label-control ev_tickt_lebel pl0">
+              Information to collect
+            </label>
+          </div>
+          <div class="clearfix"></div>
+          <table width="100%" border="0" cellspacing="0">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="no_pad label-control ev_tickt_lebel pl0">Include</th>
+                <th class="no_pad label-control ev_tickt_lebel pl0">Require</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (int i = 0; i < Model.Questions.Count; i++)
+              {
+                <tr>
+                  <td>
+                    <label class="no_pad label-control ev_tickt_lebel pl0">@Model.Questions[i].Question.Title</label>
+                    <input id="Questions_@(i)__OrderTemplateQuestionId" name="Questions[@(i)].OrderTemplateQuestionId" type="hidden" value="@Model.Questions[i].OrderTemplateQuestionId" />
+                  </td>
+                  <td>
+                    <input id="Questions_@(i)__Include" name="Questions[@(i)].Include" type="checkbox" value="true" checked="@Model.Questions[i].Include" />
+                    <input name="Questions[@(i)].Include" type="hidden" value="false" />
+                  </td>
+                  <td>
+                    <input id="Questions_@(i)__Require" name="Questions[@(i)].Require" type="checkbox" value="true" checked="@Model.Questions[i].Require" />
+                    <input name="Questions[@(i)].Require" type="hidden" value="false" />
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="event_detail_container">
+        <div class="evnt_tile_head">
+          <div class="evnt_tile_bg_l"></div>
+          <div class="col-sm-12 col-xs-12 text-left no_pad">
+            <h2 class="fb_dis_head pt5">REGISTRATION OPTIONS</h2>
+          </div>
+          <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body">
+          <div class="col-sm-12 no_pad">
+            <label for="txtTitle" class="no_pad label-control ev_tickt_lebel pl0">
+              Title for the registration page
+            </label>
+            <input id="txtTitle" name="Title" maxlength="200" class="form-control evnt_inp_cont" type="text" value="@Model.Title">
+          </div>
+          <div class="col-sm-12 mt10 no_pad">
+            <label for="Instruction" class="no_pad label-control ev_tickt_lebel pl0">Instructions for your attendees</label>
+            <textarea style="width: 100%; height: 200px" maxlength="200" type="text" name="Instruction" id="Instruction">@Model.Instruction</textarea>
+          </div>
+          <div class="col-sm-12 no_pad">
+            <label for="TimeLimit" class="no_pad label-control ev_tickt_lebel pl0">
+              Registration time limit
+            </label>
+            <input id="TimeLimit" name="TimeLimit" style="width: 200px" class="form-control evnt_inp_cont" type="number" value="@Model.TimeLimit">
+          </div>
+          <div class="col-sm-12 mt10 no_pad">
+            <label for="AfterMessage" class="no_pad label-control ev_tickt_lebel pl0">Message to display after ticket sales end</label>
+            <textarea style="width: 100%; height: 200px" maxlength="200" type="text" name="AfterMessage" id="AfterMessage">@Model.AfterMessage</textarea>
+          </div>
+          <div class="col-sm-12 no_pad">
+            <input id="AllowCallPickup" name="AllowCallPickup" type="checkbox" value="true" checked="@Model.AllowCallPickup" />
+            <input name="AllowCallPickup" type="hidden" value="false" />
+            <label for="AllowCallPickup" class="no_pad label-control ev_tickt_lebel pl0">Allow will call pickup</label>
+          </div>
+          <div class="col-sm-12 no_pad">
+            <input id="AllowEdit" name="AllowEdit" type="checkbox" value="true" checked="@Model.AllowEdit" />
+            <input name="AllowEdit" type="hidden" value="false" />
+            <label for="AllowEdit" class="no_pad label-control ev_tickt_lebel pl0">Allow attendees to edit information after registration</label>
+          </div>
+          <div class="col-sm-12 no_pad">
+            <input id="AcceptRefund" name="AcceptRefund" type="checkbox" value="true" checked="@Model.AcceptRefund" />
+            <input name="AcceptRefund" type="hidden" value="false" />
+            <label for="AcceptRefund" class="no_pad label-control ev_tickt_lebel pl0">Accept refund requests</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 pt10 bggrey clearfix">
+      <div class="col-sm-9 col-xs-12 pt10 text-right no_pad">
+        <button class="cbtSave btn ev_live_sub_btn mb5 cdisable" type="submit">
+          <span class="SPview"> SAVE </span>
+        </button>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+}

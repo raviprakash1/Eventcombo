@@ -1,0 +1,120 @@
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
+@{
+  ViewBag.Title = "Confirmation";
+  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+}
+
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_top">
+      @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+      {
+        <div class="col-sm-12 no_pad">
+          @ViewBag.StateMessage
+        </div>
+      }
+      @Html.HiddenFor(m => m.OrderTemplateId)
+      @Html.HiddenFor(m => m.EventId)
+      <div class="clearfix"></div>
+      <div class="col-sm-12 no_pad evnt_title_date2">
+        Order Confirmation
+      </div>
+      <div class="clearfix"></div>
+      <div class="col-sm-12 no_pad">
+        After purchasing a ticket or registering for your event, attendees will view a message on Eventbrite and receive an email, both of which you can customize below.
+      </div>
+      <div class="clearfix"></div>
+      <div class="evnt_tile_head">
+        <div class="evnt_tile_bg_l"></div>
+        <div class="col-sm-12 col-xs-12 text-left no_pad">
+          <h2 class="fb_dis_head pt5">Customize Webpage</h2>
+        </div>
+        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+      </div>
+      <div class="col-sm-12 no_pad">
+        After registering for your event, attendees will see an onscreen message. Modify this message below, and include special instructions or other useful information. If left blank, we will use the standard message.
+      </div>
+      <div class="col-sm-12 no_pad">
+        <label for="ConfirmationMessage" class="no_pad label-control ev_tickt_lebel pl0">Message for Order Confirmation Page</label>
+        <textarea style="width: 100%; height: 200px" name="ConfirmationMessage" id="ConfirmationMessage">@Model.ConfirmationMessage</textarea>
+      </div>
+
+      <div class="evnt_tile_head">
+        <div class="evnt_tile_bg_l"></div>
+        <div class="col-sm-12 col-xs-12 text-left no_pad">
+          <h2 class="fb_dis_head pt5">Customize Email</h2>
+        </div>
+        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+      </div>
+      <div class="col-sm-12 no_pad">
+        Your attendees will also receive an email after registration, confirming their order.
+      </div>
+      <div class="col-sm-8 no_pad">
+        <label for="ReplyEmail" class="no_pad label-control ev_tickt_lebel pl0">Default 'reply-to' email address</label>
+        <input class="form-control evnt_inp_cont" maxlength="200" type="text" name="ReplyEmail" id="ReplyEmail" value="@Model.ReplyEmail">
+      </div>
+      <div class="col-sm-12 no_pad">
+        <label for="TicketMessage" class="no_pad label-control ev_tickt_lebel pl0">Message for Email and printable PDF (if included)</label>
+        <textarea style="width: 100%; height: 200px" maxlength="200" type="text" name="TicketMessage" id="TicketMessage">@Model.TicketMessage</textarea>
+      </div>
+
+      <div class="evnt_tile_head">
+        <div class="evnt_tile_bg_l"></div>
+        <div class="col-sm-12 col-xs-12 text-left no_pad">
+          <h2 class="fb_dis_head pt5">Additional Settings</h2>
+        </div>
+        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+      </div>
+      <div class="col-sm-12 no_pad">
+        Configure whether attendees should receive a printable PDF when they register.
+      </div>
+      <div class="col-sm-9 dropheight">
+        @Html.DropDownListFor(m => m.CustomIncludeSettings, ViewBag.SendSettings as IEnumerable<SelectListItem>, new { @class = "form-control selectpicker wd600 chkvalidation" })
+      </div>
+    </div>
+
+    <div class="col-sm-12 no_pad">
+      <label class="no_pad label-control ev_tickt_lebel pl0">Message for Email and printable PDF (if included)</label>
+    </div>
+    <div class="col-sm-12 no_pad">
+      <input class="" type="checkbox" id="IncludePrintableTickets" name="IncludePrintableTickets" value="true" checked="@Model.IncludePrintableTickets">
+      <input name="IncludePrintableTickets" type="hidden" value="false" />
+      <label for="IncludePrintableTickets" class="no_pad label-control ev_tickt_lebel pl0">Include printable tickets in all orders</label>
+    </div>
+
+      @for (int i = 0; i < Model.ReceiveByTypes.Count; i++)
+      {
+        <div class="col-sm-12 no_pad">
+          <input id="ReceiveByTypes_@(i)__OrderTemplateReceiveByTypeId" name="ReceiveByTypes[@(i)].OrderTemplateReceiveByTypeId" type="hidden" value="@Model.ReceiveByTypes[i].OrderTemplateReceiveByTypeId" />
+          <input id="ReceiveByTypes_@(i)__Receive" name="ReceiveByTypes[@(i)].Receive" type="checkbox" value="true" checked="@Model.ReceiveByTypes[i].Receive" />
+          <input name="ReceiveByTypes[@(i)].Receive" type="hidden" value="false" />
+          <label for="ReceiveByTypes_@(i)__Receive" class="no_pad label-control ev_tickt_lebel pl0" >@Model.ReceiveByTypes[i].ReceiveTicket.T_name</label>
+        </div>
+      }
+
+    <div class="col-sm-12 pt10 bggrey clearfix">
+      <div class="col-sm-9 col-xs-12 pt10 text-right no_pad">
+        <button class="cbtSave btn ev_live_sub_btn mb5 cdisable" type="submit">
+          <span class="SPview"> SAVE </span>
+        </button>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+}

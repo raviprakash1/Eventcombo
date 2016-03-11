@@ -1,0 +1,60 @@
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
+@{
+  ViewBag.Title = "EventType";
+  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+}
+
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_top">
+      @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+      {
+        <div class="col-sm-12 no_pad">
+          @ViewBag.StateMessage
+        </div>
+      }
+      <div class="clearfix"></div>
+      <div class="evnt_tile_head">
+        <div class="evnt_tile_bg_l"></div>
+        <div class="col-sm-12 col-xs-12 text-left no_pad">
+          <h2 class="fb_dis_head pt5">EVENT TYPE</h2>
+        </div>
+
+        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+      </div>
+      @Html.HiddenFor(m => m.OrderTemplateId)
+      @Html.HiddenFor(m => m.EventId)
+      @foreach (var et in ViewBag.OrderTemplateEventTypes)
+      {
+        bool inputchecked = et.OrderTemplateEventTypeId == Model.OrderTemplateEventTypeId;
+        <div class="col-sm-12 no_pad">
+          <input class="" type="radio" name="OrderTemplateEventTypeId" value="@et.OrderTemplateEventTypeId" checked="@inputchecked">
+          <label class="no_pad label-control ev_tickt_lebel pl0">@et.Name</label>
+          <label class="no_pad label-control ev_tickt_lebel pl0">@et.Description</label>
+        </div>
+      }
+    </div>
+    <div class="col-sm-12 pt10 bggrey clearfix">
+      <div class="col-sm-9 col-xs-12 pt10 text-right no_pad">
+        <button class="cbtSave btn ev_live_sub_btn mb5 cdisable" type="submit">
+          <span class="SPview"> SAVE </span>
+        </button>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+}
+

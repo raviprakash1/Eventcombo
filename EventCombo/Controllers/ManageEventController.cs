@@ -85,7 +85,7 @@ namespace EventCombo.Controllers
                     if (startdate != null)
                     {
                         DateTime sDate = new DateTime();
-                        sDate = DateTime.Parse(startdate.ToString());
+                        sDate = DateTime.Parse(startdate.ToString(), new CultureInfo("en-US", false));
                         startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
                         sDate_new = sDate.ToString("MMM dd,yyyy");
                     }
@@ -93,14 +93,14 @@ namespace EventCombo.Controllers
                     if (enddate != null)
                     {
                         DateTime eDate = new DateTime();
-                        eDate = DateTime.Parse(enddate.ToString());
+                        eDate = DateTime.Parse(enddate.ToString(), new CultureInfo("en-US", false));
                         endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                         eDate_new = eDate.ToString("MMM dd,yyyy");
                     }
 
                     starttime = evschdetails.EventStartTime.ToString();
                     endtime = evschdetails.EventEndTime.ToString();
-                    ENDATE = DateTime.Parse(enddate + " " + endtime);
+                    ENDATE = DateTime.Parse(enddate + " " + endtime, new CultureInfo("en-US", false));
                 }
             }
             var timezone = "";
@@ -300,6 +300,7 @@ namespace EventCombo.Controllers
             TempData["ForSale"] = GetSaleAmount(Eventid,"FORSALE");
             TempData["NETSale"] = GetSaleAmount(Eventid, "NETSALE");
 
+            ViewBag.EventId = Eventid;
             return View(Mevent);
         }
 

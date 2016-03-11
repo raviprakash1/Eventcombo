@@ -377,6 +377,87 @@
           <Property Name="contenttype" Type="varchar" MaxLength="50" />
           <Property Name="Imagepath" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="OrderTemplate">
+          <Key>
+            <PropertyRef Name="OrderTemplateId" />
+          </Key>
+          <Property Name="OrderTemplateId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventID" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="600" Nullable="false" />
+          <Property Name="OrderTemplateTypeId" Type="bigint" Nullable="false" />
+          <Property Name="Instruction" Type="nvarchar(max)" />
+          <Property Name="TimeLimit" Type="int" Nullable="false" />
+          <Property Name="AfterMessage" Type="nvarchar(max)" />
+          <Property Name="AllowCallPickup" Type="bit" Nullable="false" />
+          <Property Name="AllowEdit" Type="bit" Nullable="false" />
+          <Property Name="AcceptRefund" Type="bit" Nullable="false" />
+          <Property Name="ConfirmationMessage" Type="nvarchar(max)" />
+          <Property Name="ReplyEmail" Type="nvarchar" MaxLength="256" />
+          <Property Name="TicketMessage" Type="nvarchar(max)" />
+          <Property Name="CustomIncludeSettings" Type="bit" Nullable="false" />
+          <Property Name="IncludePrintableTickets" Type="bit" Nullable="false" />
+          <Property Name="OrderTemplateEventTypeID" Type="bigint" Nullable="false" />
+          <Property Name="LanguageId" Type="bigint" Nullable="false" />
+          <Property Name="EnableWaitlist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderTemplateEventType">
+          <Key>
+            <PropertyRef Name="OrderTemplateEventTypeId" />
+          </Key>
+          <Property Name="OrderTemplateEventTypeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="OrderTemplateQuestion">
+          <Key>
+            <PropertyRef Name="OrderTemplateQuestionId" />
+          </Key>
+          <Property Name="OrderTemplateQuestionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderTemplateId" Type="bigint" Nullable="false" />
+          <Property Name="QuestionTypeId" Type="bigint" Nullable="false" />
+          <Property Name="Include" Type="bit" Nullable="false" />
+          <Property Name="Require" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderTemplateReceiveByType">
+          <Key>
+            <PropertyRef Name="OrderTemplateReceiveByTypeId" />
+          </Key>
+          <Property Name="OrderTemplateReceiveByTypeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderTemplateId" Type="bigint" Nullable="false" />
+          <Property Name="TicketId" Type="bigint" Nullable="false" />
+          <Property Name="Receive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderTemplateTicket">
+          <Key>
+            <PropertyRef Name="OrderTemplateTicketId" />
+          </Key>
+          <Property Name="OrderTemplateTicketId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="bigint" Nullable="false" />
+          <Property Name="OrderTemplateId" Type="bigint" Nullable="false" />
+          <Property Name="CollectInformation" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderTemplateType">
+          <Key>
+            <PropertyRef Name="OrderTemplateTypeId" />
+          </Key>
+          <Property Name="OrderTemplateTypeId" Type="bigint" Nullable="false" />
+          <Property Name="OrderTemplateTypeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OrderTemplateWaitlist">
+          <Key>
+            <PropertyRef Name="OrderTemplateWaitlistId" />
+          </Key>
+          <Property Name="OrderTemplateWaitlistId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderTemplateId" Type="bigint" Nullable="false" />
+          <Property Name="TicketId" Type="bigint" Nullable="false" />
+          <Property Name="MaxSize" Type="bigint" Nullable="false" />
+          <Property Name="NameRequired" Type="bit" Nullable="false" />
+          <Property Name="EmailRequired" Type="bit" Nullable="false" />
+          <Property Name="PhoneRequired" Type="bit" Nullable="false" />
+          <Property Name="RespondTime" Type="datetime" Nullable="false" />
+          <Property Name="ResponseMessage" Type="nvarchar(max)" />
+          <Property Name="ReleaseMessage" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
             <PropertyRef Name="PaymentInfo_Id" />
@@ -476,6 +557,28 @@
           <Property Name="PE_Scheduled_Date" Type="varchar" MaxLength="50" />
           <Property Name="PE_Start_Time" Type="varchar" MaxLength="50" />
           <Property Name="PE_End_Time" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="QuestionTypeId" />
+          </Key>
+          <Property Name="QuestionTypeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionTypeGroupId" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+          <Property Name="Include" Type="bit" Nullable="false" />
+          <Property Name="Require" Type="bit" Nullable="false" />
+          <Property Name="MustInclude" Type="bit" Nullable="false" />
+          <Property Name="MustRequire" Type="bit" Nullable="false" />
+          <Property Name="SortNum" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestionTypeGroup">
+          <Key>
+            <PropertyRef Name="QuestionTypeGroupId" />
+          </Key>
+          <Property Name="QuestionTypeGroupId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="600" Nullable="false" />
+          <Property Name="SortNum" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="ShippingAddress">
           <Key>
@@ -623,6 +726,7 @@
         </EntityType>
         <EntityType Name="TimeZoneDetail">
           <Key>
+            
             <PropertyRef Name="TimeZone_Id" />
           </Key>
           <Property Name="TimeZone_Name" Type="varchar" MaxLength="500" />
@@ -944,11 +1048,20 @@
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organizer_Master" EntityType="Self.Organizer_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTemplate" EntityType="Self.OrderTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTemplateEventType" EntityType="Self.OrderTemplateEventType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTemplateQuestion" EntityType="Self.OrderTemplateQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTemplateReceiveByType" EntityType="Self.OrderTemplateReceiveByType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTemplateTicket" EntityType="Self.OrderTemplateTicket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTemplateType" EntityType="Self.OrderTemplateType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderTemplateWaitlist" EntityType="Self.OrderTemplateWaitlist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment_Info" EntityType="Self.Payment_Info" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Promo_Code" EntityType="Self.Promo_Code" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionType" EntityType="Self.QuestionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionTypeGroup" EntityType="Self.QuestionTypeGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShippingAddress" EntityType="Self.ShippingAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
@@ -1241,6 +1354,7 @@
           <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
+          <NavigationProperty Name="OrderTemplates" Relationship="EventComboModel.EventOrderTemplate" FromRole="Event" ToRole="OrderTemplate" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1535,6 +1649,9 @@
           <Property Name="T_Customize" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="T_Ecpercent" Type="Decimal" Precision="9" Scale="2" />
           <Property Name="T_EcAmount" Type="Decimal" Precision="9" Scale="2" />
+          <NavigationProperty Name="OrderTemplateReceiveByTypes" Relationship="EventComboModel.TicketOrderTemplateReceiveByType" FromRole="Ticket" ToRole="OrderTemplateReceiveByType" />
+          <NavigationProperty Name="OrderTemplateWaitlists" Relationship="EventComboModel.TicketOrderTemplateWaitlist" FromRole="Ticket" ToRole="OrderTemplateWaitlist" />
+          <NavigationProperty Name="OrderTemplateTickets" Relationship="EventComboModel.TicketOrderTemplateTicket" FromRole="Ticket" ToRole="OrderTemplateTicket" />
         </EntityType>
         <EntityType Name="Ticket_Locked_Detail">
           <Key>
@@ -1953,6 +2070,63 @@
             <Parameter Name="Masterid" Mode="In" Type="Int64" />
 
           </FunctionImport>
+          <EntitySet Name="OrderTemplates" EntityType="EventComboModel.OrderTemplate" />
+          <EntitySet Name="OrderTemplateQuestions" EntityType="EventComboModel.OrderTemplateQuestion" />
+          <EntitySet Name="OrderTemplateTypes" EntityType="EventComboModel.OrderTemplateType" />
+          <EntitySet Name="OrderTemplateWaitlists" EntityType="EventComboModel.OrderTemplateWaitlist" />
+          <EntitySet Name="QuestionTypes" EntityType="EventComboModel.QuestionType" />
+          <EntitySet Name="QuestionTypeGroups" EntityType="EventComboModel.QuestionTypeGroup" />
+          <AssociationSet Name="OrderTemplateOrderTemplateWaitlist" Association="EventComboModel.OrderTemplateOrderTemplateWaitlist">
+            <End Role="OrderTemplate" EntitySet="OrderTemplates" />
+            <End Role="OrderTemplateWaitlist" EntitySet="OrderTemplateWaitlists" />
+          </AssociationSet>
+          <AssociationSet Name="QuestionTypeGroupQuestionType" Association="EventComboModel.QuestionTypeGroupQuestionType">
+            <End Role="QuestionTypeGroup" EntitySet="QuestionTypeGroups" />
+            <End Role="QuestionType" EntitySet="QuestionTypes" />
+          </AssociationSet>
+          <AssociationSet Name="QuestionTypeOrderTemplateQuestion" Association="EventComboModel.QuestionTypeOrderTemplateQuestion">
+            <End Role="QuestionType" EntitySet="QuestionTypes" />
+            <End Role="OrderTemplateQuestion" EntitySet="OrderTemplateQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="OrderTemplateOrderTemplateQuestion" Association="EventComboModel.OrderTemplateOrderTemplateQuestion">
+            <End Role="OrderTemplate" EntitySet="OrderTemplates" />
+            <End Role="OrderTemplateQuestion" EntitySet="OrderTemplateQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="EventOrderTemplate" Association="EventComboModel.EventOrderTemplate">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="OrderTemplate" EntitySet="OrderTemplates" />
+          </AssociationSet>
+          <AssociationSet Name="OrderTemplateOrderTemplateType" Association="EventComboModel.OrderTemplateOrderTemplateType">
+            <End Role="OrderTemplate" EntitySet="OrderTemplates" />
+            <End Role="OrderTemplateType" EntitySet="OrderTemplateTypes" />
+          </AssociationSet>
+          <EntitySet Name="OrderTemplateEventTypes" EntityType="EventComboModel.OrderTemplateEventType" />
+          <EntitySet Name="OrderTemplateReceiveByTypes" EntityType="EventComboModel.OrderTemplateReceiveByType" />
+          <AssociationSet Name="OrderTemplateOrderTemplateEventType" Association="EventComboModel.OrderTemplateOrderTemplateEventType">
+            <End Role="OrderTemplate" EntitySet="OrderTemplates" />
+            <End Role="OrderTemplateEventType" EntitySet="OrderTemplateEventTypes" />
+          </AssociationSet>
+          <AssociationSet Name="OrderTemplateOrderTemplateReceiveByType" Association="EventComboModel.OrderTemplateOrderTemplateReceiveByType">
+            <End Role="OrderTemplate" EntitySet="OrderTemplates" />
+            <End Role="OrderTemplateReceiveByType" EntitySet="OrderTemplateReceiveByTypes" />
+          </AssociationSet>
+          <EntitySet Name="OrderTemplateTickets" EntityType="EventComboModel.OrderTemplateTicket" />
+          <AssociationSet Name="TicketOrderTemplateReceiveByType" Association="EventComboModel.TicketOrderTemplateReceiveByType">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="OrderTemplateReceiveByType" EntitySet="OrderTemplateReceiveByTypes" />
+          </AssociationSet>
+          <AssociationSet Name="TicketOrderTemplateWaitlist" Association="EventComboModel.TicketOrderTemplateWaitlist">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="OrderTemplateWaitlist" EntitySet="OrderTemplateWaitlists" />
+          </AssociationSet>
+          <AssociationSet Name="OrderTemplateOrderTemplateTicket" Association="EventComboModel.OrderTemplateOrderTemplateTicket">
+            <End Role="OrderTemplate" EntitySet="OrderTemplates" />
+            <End Role="OrderTemplateTicket" EntitySet="OrderTemplateTickets" />
+          </AssociationSet>
+          <AssociationSet Name="TicketOrderTemplateTicket" Association="EventComboModel.TicketOrderTemplateTicket">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="OrderTemplateTicket" EntitySet="OrderTemplateTickets" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2110,6 +2284,273 @@
           <Property Type="String" Name="DefaultOrg" Nullable="true" MaxLength="1" />
           <Property Type="Int64" Name="OrganizerMaster_Id" Nullable="false" />
         </ComplexType>
+        <EntityType Name="OrderTemplate">
+          <Key>
+            <PropertyRef Name="OrderTemplateId" />
+          </Key>
+          <Property Name="OrderTemplateId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="OrderTemplateTypeId" Type="Int64" Nullable="false" />
+          <Property Name="Instruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TimeLimit" Type="Int32" Nullable="false" />
+          <Property Name="AfterMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AllowCallPickup" Type="Boolean" Nullable="false" />
+          <Property Name="AllowEdit" Type="Boolean" Nullable="false" />
+          <Property Name="AcceptRefund" Type="Boolean" Nullable="false" />
+          <Property Name="ConfirmationMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReplyEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TicketMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomIncludeSettings" Type="Boolean" Nullable="false" />
+          <Property Name="IncludePrintableTickets" Type="Boolean" Nullable="false" />
+          <Property Name="LanguageId" Type="Int64" Nullable="false" />
+          <Property Name="EnableWaitlist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OrderTemplateWaitlists" Relationship="EventComboModel.OrderTemplateOrderTemplateWaitlist" FromRole="OrderTemplate" ToRole="OrderTemplateWaitlist" />
+          <NavigationProperty Name="OrderTemplateQuestions" Relationship="EventComboModel.OrderTemplateOrderTemplateQuestion" FromRole="OrderTemplate" ToRole="OrderTemplateQuestion" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.EventOrderTemplate" FromRole="OrderTemplate" ToRole="Event" />
+          <NavigationProperty Name="OrderTemplateType" Relationship="EventComboModel.OrderTemplateOrderTemplateType" FromRole="OrderTemplate" ToRole="OrderTemplateType" />
+          <NavigationProperty Name="OrderTemplateEventType" Relationship="EventComboModel.OrderTemplateOrderTemplateEventType" FromRole="OrderTemplate" ToRole="OrderTemplateEventType" />
+          <NavigationProperty Name="OrderTemplateReceiveByTypes" Relationship="EventComboModel.OrderTemplateOrderTemplateReceiveByType" FromRole="OrderTemplate" ToRole="OrderTemplateReceiveByType" />
+          <Property Name="OrderTemplateEventTypeID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="OrderTemplateTickets" Relationship="EventComboModel.OrderTemplateOrderTemplateTicket" FromRole="OrderTemplate" ToRole="OrderTemplateTicket" />
+        </EntityType>
+        <EntityType Name="OrderTemplateQuestion">
+          <Key>
+            <PropertyRef Name="OrderTemplateQuestionId" />
+          </Key>
+          <Property Name="OrderTemplateQuestionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderTemplateId" Type="Int64" Nullable="false" />
+          <Property Name="QuestionTypeId" Type="Int64" Nullable="false" />
+          <Property Name="Include" Type="Boolean" Nullable="false" />
+          <Property Name="Require" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="QuestionType" Relationship="EventComboModel.QuestionTypeOrderTemplateQuestion" FromRole="OrderTemplateQuestion" ToRole="QuestionType" />
+          <NavigationProperty Name="OrderTemplate" Relationship="EventComboModel.OrderTemplateOrderTemplateQuestion" FromRole="OrderTemplateQuestion" ToRole="OrderTemplate" />
+        </EntityType>
+        <EntityType Name="OrderTemplateType">
+          <Key>
+            <PropertyRef Name="OrderTemplateTypeId" />
+          </Key>
+          <Property Name="OrderTemplateTypeId" Type="Int64" Nullable="false" />
+          <Property Name="OrderTemplateTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderTemplates" Relationship="EventComboModel.OrderTemplateOrderTemplateType" FromRole="OrderTemplateType" ToRole="OrderTemplate" />
+        </EntityType>
+        <EntityType Name="OrderTemplateWaitlist">
+          <Key>
+            <PropertyRef Name="OrderTemplateWaitlistId" />
+          </Key>
+          <Property Name="OrderTemplateWaitlistId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderTemplateId" Type="Int64" Nullable="false" />
+          <Property Name="MaxSize" Type="Int64" Nullable="false" />
+          <Property Name="NameRequired" Type="Boolean" Nullable="false" />
+          <Property Name="EmailRequired" Type="Boolean" Nullable="false" />
+          <Property Name="PhoneRequired" Type="Boolean" Nullable="false" />
+          <Property Name="RespondTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ResponseMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReleaseMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderTemplate" Relationship="EventComboModel.OrderTemplateOrderTemplateWaitlist" FromRole="OrderTemplateWaitlist" ToRole="OrderTemplate" />
+          <Property Name="TicketId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="EventComboModel.TicketOrderTemplateWaitlist" FromRole="OrderTemplateWaitlist" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="QuestionTypeId" />
+          </Key>
+          <Property Name="QuestionTypeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionTypeGroupId" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="Include" Type="Boolean" Nullable="false" />
+          <Property Name="Require" Type="Boolean" Nullable="false" />
+          <Property Name="MustInclude" Type="Boolean" Nullable="false" />
+          <Property Name="MustRequire" Type="Boolean" Nullable="false" />
+          <Property Name="SortNum" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="QuestionTypeGroup" Relationship="EventComboModel.QuestionTypeGroupQuestionType" FromRole="QuestionType" ToRole="QuestionTypeGroup" />
+          <NavigationProperty Name="OrderTemplateQuestions" Relationship="EventComboModel.QuestionTypeOrderTemplateQuestion" FromRole="QuestionType" ToRole="OrderTemplateQuestion" />
+        </EntityType>
+        <EntityType Name="QuestionTypeGroup">
+          <Key>
+            <PropertyRef Name="QuestionTypeGroupId" />
+          </Key>
+          <Property Name="QuestionTypeGroupId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="SortNum" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="QuestionTypes" Relationship="EventComboModel.QuestionTypeGroupQuestionType" FromRole="QuestionTypeGroup" ToRole="QuestionType" />
+        </EntityType>
+        <Association Name="OrderTemplateOrderTemplateWaitlist">
+          <End Type="EventComboModel.OrderTemplate" Role="OrderTemplate" Multiplicity="1" />
+          <End Type="EventComboModel.OrderTemplateWaitlist" Role="OrderTemplateWaitlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTemplate">
+              <PropertyRef Name="OrderTemplateId" />
+            </Principal>
+            <Dependent Role="OrderTemplateWaitlist">
+              <PropertyRef Name="OrderTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="QuestionTypeGroupQuestionType">
+          <End Type="EventComboModel.QuestionTypeGroup" Role="QuestionTypeGroup" Multiplicity="1" />
+          <End Type="EventComboModel.QuestionType" Role="QuestionType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionTypeGroup">
+              <PropertyRef Name="QuestionTypeGroupId" />
+            </Principal>
+            <Dependent Role="QuestionType">
+              <PropertyRef Name="QuestionTypeGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="QuestionTypeOrderTemplateQuestion">
+          <End Type="EventComboModel.QuestionType" Role="QuestionType" Multiplicity="1" />
+          <End Type="EventComboModel.OrderTemplateQuestion" Role="OrderTemplateQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="QuestionTypeId" />
+            </Principal>
+            <Dependent Role="OrderTemplateQuestion">
+              <PropertyRef Name="QuestionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderTemplateOrderTemplateQuestion">
+          <End Type="EventComboModel.OrderTemplate" Role="OrderTemplate" Multiplicity="1" />
+          <End Type="EventComboModel.OrderTemplateQuestion" Role="OrderTemplateQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTemplate">
+              <PropertyRef Name="OrderTemplateId" />
+            </Principal>
+            <Dependent Role="OrderTemplateQuestion">
+              <PropertyRef Name="OrderTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventOrderTemplate">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="EventComboModel.OrderTemplate" Role="OrderTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="OrderTemplate">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderTemplateOrderTemplateType">
+          <End Type="EventComboModel.OrderTemplate" Role="OrderTemplate" Multiplicity="*" />
+          <End Type="EventComboModel.OrderTemplateType" Role="OrderTemplateType" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTemplateType">
+              <PropertyRef Name="OrderTemplateTypeId" />
+            </Principal>
+            <Dependent Role="OrderTemplate">
+              <PropertyRef Name="OrderTemplateTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderTemplateEventType">
+          <Key>
+            <PropertyRef Name="OrderTemplateEventTypeId" />
+          </Key>
+          <Property Name="OrderTemplateEventTypeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderTemplates" Relationship="EventComboModel.OrderTemplateOrderTemplateEventType" FromRole="OrderTemplateEventType" ToRole="OrderTemplate" />
+        </EntityType>
+        <EntityType Name="OrderTemplateReceiveByType">
+          <Key>
+            <PropertyRef Name="OrderTemplateReceiveByTypeId" />
+          </Key>
+          <Property Name="OrderTemplateReceiveByTypeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Receive" Type="Boolean" Nullable="false" />
+          <Property Name="OrderTemplateId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="OrderTemplate" Relationship="EventComboModel.OrderTemplateOrderTemplateReceiveByType" FromRole="OrderTemplateReceiveByType" ToRole="OrderTemplate" />
+          <Property Name="TicketId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="EventComboModel.TicketOrderTemplateReceiveByType" FromRole="OrderTemplateReceiveByType" ToRole="Ticket" />
+        </EntityType>
+        <Association Name="OrderTemplateOrderTemplateEventType">
+          <End Type="EventComboModel.OrderTemplate" Role="OrderTemplate" Multiplicity="*" />
+          <End Type="EventComboModel.OrderTemplateEventType" Role="OrderTemplateEventType" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTemplateEventType">
+              <PropertyRef Name="OrderTemplateEventTypeId" />
+            </Principal>
+            <Dependent Role="OrderTemplate">
+              <PropertyRef Name="OrderTemplateEventTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderTemplateOrderTemplateReceiveByType">
+          <End Type="EventComboModel.OrderTemplate" Role="OrderTemplate" Multiplicity="1" />
+          <End Type="EventComboModel.OrderTemplateReceiveByType" Role="OrderTemplateReceiveByType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTemplate">
+              <PropertyRef Name="OrderTemplateId" />
+            </Principal>
+            <Dependent Role="OrderTemplateReceiveByType">
+              <PropertyRef Name="OrderTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderTemplateTicket">
+          <Key>
+            <PropertyRef Name="OrderTemplateTicketId" />
+          </Key>
+          <Property Name="OrderTemplateTicketId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int64" Nullable="false" />
+          <Property Name="OrderTemplateId" Type="Int64" Nullable="false" />
+          <Property Name="CollectInformation" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OrderTemplate" Relationship="EventComboModel.OrderTemplateOrderTemplateTicket" FromRole="OrderTemplateTicket" ToRole="OrderTemplate" />
+          <NavigationProperty Name="Ticket" Relationship="EventComboModel.TicketOrderTemplateTicket" FromRole="OrderTemplateTicket" ToRole="Ticket" />
+        </EntityType>
+        <Association Name="TicketOrderTemplateReceiveByType">
+          <End Type="EventComboModel.Ticket" Role="Ticket" Multiplicity="1" />
+          <End Type="EventComboModel.OrderTemplateReceiveByType" Role="OrderTemplateReceiveByType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="T_Id" />
+            </Principal>
+            <Dependent Role="OrderTemplateReceiveByType">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TicketOrderTemplateWaitlist">
+          <End Type="EventComboModel.Ticket" Role="Ticket" Multiplicity="1" />
+          <End Type="EventComboModel.OrderTemplateWaitlist" Role="OrderTemplateWaitlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="T_Id" />
+            </Principal>
+            <Dependent Role="OrderTemplateWaitlist">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderTemplateOrderTemplateTicket">
+          <End Type="EventComboModel.OrderTemplate" Role="OrderTemplate" Multiplicity="1" />
+          <End Type="EventComboModel.OrderTemplateTicket" Role="OrderTemplateTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderTemplate">
+              <PropertyRef Name="OrderTemplateId" />
+            </Principal>
+            <Dependent Role="OrderTemplateTicket">
+              <PropertyRef Name="OrderTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TicketOrderTemplateTicket">
+          <End Type="EventComboModel.Ticket" Role="Ticket" Multiplicity="1" />
+          <End Type="EventComboModel.OrderTemplateTicket" Role="OrderTemplateTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="T_Id" />
+            </Principal>
+            <Dependent Role="OrderTemplateTicket">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2876,7 +3317,118 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-
+          <EntitySetMapping Name="OrderTemplates">
+            <EntityTypeMapping TypeName="EventComboModel.OrderTemplate">
+              <MappingFragment StoreEntitySet="OrderTemplate">
+                <ScalarProperty Name="OrderTemplateEventTypeID" ColumnName="OrderTemplateEventTypeID" />
+                <ScalarProperty Name="EnableWaitlist" ColumnName="EnableWaitlist" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+                <ScalarProperty Name="IncludePrintableTickets" ColumnName="IncludePrintableTickets" />
+                <ScalarProperty Name="CustomIncludeSettings" ColumnName="CustomIncludeSettings" />
+                <ScalarProperty Name="TicketMessage" ColumnName="TicketMessage" />
+                <ScalarProperty Name="ReplyEmail" ColumnName="ReplyEmail" />
+                <ScalarProperty Name="ConfirmationMessage" ColumnName="ConfirmationMessage" />
+                <ScalarProperty Name="AcceptRefund" ColumnName="AcceptRefund" />
+                <ScalarProperty Name="AllowEdit" ColumnName="AllowEdit" />
+                <ScalarProperty Name="AllowCallPickup" ColumnName="AllowCallPickup" />
+                <ScalarProperty Name="AfterMessage" ColumnName="AfterMessage" />
+                <ScalarProperty Name="TimeLimit" ColumnName="TimeLimit" />
+                <ScalarProperty Name="Instruction" ColumnName="Instruction" />
+                <ScalarProperty Name="OrderTemplateTypeId" ColumnName="OrderTemplateTypeId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="OrderTemplateId" ColumnName="OrderTemplateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTemplateQuestions">
+            <EntityTypeMapping TypeName="EventComboModel.OrderTemplateQuestion">
+              <MappingFragment StoreEntitySet="OrderTemplateQuestion">
+                <ScalarProperty Name="Require" ColumnName="Require" />
+                <ScalarProperty Name="Include" ColumnName="Include" />
+                <ScalarProperty Name="QuestionTypeId" ColumnName="QuestionTypeId" />
+                <ScalarProperty Name="OrderTemplateId" ColumnName="OrderTemplateId" />
+                <ScalarProperty Name="OrderTemplateQuestionId" ColumnName="OrderTemplateQuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTemplateTypes">
+            <EntityTypeMapping TypeName="EventComboModel.OrderTemplateType">
+              <MappingFragment StoreEntitySet="OrderTemplateType">
+                <ScalarProperty Name="OrderTemplateTypeName" ColumnName="OrderTemplateTypeName" />
+                <ScalarProperty Name="OrderTemplateTypeId" ColumnName="OrderTemplateTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTemplateWaitlists">
+            <EntityTypeMapping TypeName="EventComboModel.OrderTemplateWaitlist">
+              <MappingFragment StoreEntitySet="OrderTemplateWaitlist">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="ReleaseMessage" ColumnName="ReleaseMessage" />
+                <ScalarProperty Name="ResponseMessage" ColumnName="ResponseMessage" />
+                <ScalarProperty Name="RespondTime" ColumnName="RespondTime" />
+                <ScalarProperty Name="PhoneRequired" ColumnName="PhoneRequired" />
+                <ScalarProperty Name="EmailRequired" ColumnName="EmailRequired" />
+                <ScalarProperty Name="NameRequired" ColumnName="NameRequired" />
+                <ScalarProperty Name="MaxSize" ColumnName="MaxSize" />
+                <ScalarProperty Name="OrderTemplateId" ColumnName="OrderTemplateId" />
+                <ScalarProperty Name="OrderTemplateWaitlistId" ColumnName="OrderTemplateWaitlistId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionTypes">
+            <EntityTypeMapping TypeName="EventComboModel.QuestionType">
+              <MappingFragment StoreEntitySet="QuestionType">
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
+                <ScalarProperty Name="MustRequire" ColumnName="MustRequire" />
+                <ScalarProperty Name="MustInclude" ColumnName="MustInclude" />
+                <ScalarProperty Name="Require" ColumnName="Require" />
+                <ScalarProperty Name="Include" ColumnName="Include" />
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="QuestionTypeGroupId" ColumnName="QuestionTypeGroupId" />
+                <ScalarProperty Name="QuestionTypeId" ColumnName="QuestionTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionTypeGroups">
+            <EntityTypeMapping TypeName="EventComboModel.QuestionTypeGroup">
+              <MappingFragment StoreEntitySet="QuestionTypeGroup">
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="QuestionTypeGroupId" ColumnName="QuestionTypeGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTemplateEventTypes">
+            <EntityTypeMapping TypeName="EventComboModel.OrderTemplateEventType">
+              <MappingFragment StoreEntitySet="OrderTemplateEventType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrderTemplateEventTypeId" ColumnName="OrderTemplateEventTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTemplateReceiveByTypes">
+            <EntityTypeMapping TypeName="EventComboModel.OrderTemplateReceiveByType">
+              <MappingFragment StoreEntitySet="OrderTemplateReceiveByType">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="OrderTemplateId" ColumnName="OrderTemplateId" />
+                <ScalarProperty Name="Receive" ColumnName="Receive" />
+                <ScalarProperty Name="OrderTemplateReceiveByTypeId" ColumnName="OrderTemplateReceiveByTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderTemplateTickets">
+            <EntityTypeMapping TypeName="EventComboModel.OrderTemplateTicket">
+              <MappingFragment StoreEntitySet="OrderTemplateTicket">
+                <ScalarProperty Name="CollectInformation" ColumnName="CollectInformation" />
+                <ScalarProperty Name="OrderTemplateId" ColumnName="OrderTemplateId" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="OrderTemplateTicketId" ColumnName="OrderTemplateTicketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

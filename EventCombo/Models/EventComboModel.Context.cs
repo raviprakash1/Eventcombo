@@ -74,6 +74,15 @@ namespace EventCombo.Models
         public virtual DbSet<Organizer_Master> Organizer_Master { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
         public virtual DbSet<Promo_Code> Promo_Code { get; set; }
+        public virtual DbSet<OrderTemplate> OrderTemplates { get; set; }
+        public virtual DbSet<OrderTemplateQuestion> OrderTemplateQuestions { get; set; }
+        public virtual DbSet<OrderTemplateType> OrderTemplateTypes { get; set; }
+        public virtual DbSet<OrderTemplateWaitlist> OrderTemplateWaitlists { get; set; }
+        public virtual DbSet<QuestionType> QuestionTypes { get; set; }
+        public virtual DbSet<QuestionTypeGroup> QuestionTypeGroups { get; set; }
+        public virtual DbSet<OrderTemplateEventType> OrderTemplateEventTypes { get; set; }
+        public virtual DbSet<OrderTemplateReceiveByType> OrderTemplateReceiveByTypes { get; set; }
+        public virtual DbSet<OrderTemplateTicket> OrderTemplateTickets { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
