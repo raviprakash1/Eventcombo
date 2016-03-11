@@ -2545,12 +2545,12 @@ namespace EventCombo.Controllers
             bool type = false;
             if (id == 0)
             {
-                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) select x).Any();
+                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) && x.Organizer_Status == "A" select x).Any();
 
             }
             else
             {
-                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) && x.Orgnizer_Id!=id select x).Any();
+                type = (from x in db.Organizer_Master where x.Orgnizer_Name.ToLower().Trim().Equals(Name) && x.Orgnizer_Id!=id && x.Organizer_Status == "A"  select x).Any();
 
             }
             return type;

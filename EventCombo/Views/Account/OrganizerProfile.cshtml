@@ -39,6 +39,8 @@
    
 </style>
 
+<div class="col-sm-12 text-center" id="loader"><img src="~/Images/ajax-loader.gif" /></div>
+
         <div class="col-sm-12">
          
             <p class="p_info">Organizer Profile</p>
@@ -111,7 +113,7 @@
     </a>
 </div>
 <!-- Confirm Msg OK Modal Box -->
-<div class="col-sm-12 text-center" id="loader"><img src="~/Images/ajax-loader.gif" /></div>
+
 
 
 
@@ -160,6 +162,8 @@
             var selectval = $(this).val();
             if (selectval != 0) {
                 if (selectval == "A") {
+                    $("#btnedit").prop("disabled", true);
+                    $("#btndelete").prop("disabled", true);
                     $("#loader").show();
                     LoadOrganiserAddAsyn();
                     $("#loader").hide();
@@ -169,6 +173,10 @@
                     $("#btndelete").prop("disabled", false);
                     $(".maindivnonvis").show();
                 }
+            }else
+            {
+                $("#btnedit").prop("disabled", true);
+                $("#btndelete").prop("disabled", true);
             }
 
         });

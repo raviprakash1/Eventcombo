@@ -98,8 +98,14 @@ namespace EventCombo.Models
                     throw new Exception("Unkown status code: " + status + ".");
             }
         }
-
         
+        
+    }
+
+    public partial class Promo_Code
+    {
+        public string Eventitle{ get; set; }
+        public List<Ticket> Ticketdata { get; set; }
     }
     public class Coordinates
         {

@@ -1275,9 +1275,19 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult CreatePromotionalCodes()
+        public ActionResult CreatePromotionalCodes(long Eventid)
         {
-            return View();
+            CreateEventController cms = new CreateEventController();
+         var Eventdetail=   cms.GetEventdetail(Eventid);
+
+            Promo_Code pm = new Promo_Code();
+            pm.PC_Eventid = Eventid;
+            pm.Eventitle = Eventdetail.EventTitle;
+            pm.Ticketdata = (from x in db.Tickets where x.E_Id == Eventid select x).ToList();
+            pm.Eventitle = Eventdetail.EventTitle;
+
+
+            return View(pm);
         }
 
     }
