@@ -89,34 +89,38 @@
     <!--  <p class="p_info">Payment Information</p> -->
 </div>
 <div class="clearfix"></div>
-<div class="col-sm-12 col-xs-12 ">
-    <div class="col-sm-12 no_pad">
-        <ul class="cod_dis_type">
-            <li><a href="#">Coded Discount</a></li>
-            <li><a href="#">Public Discount</a></li>
-            <li><a href="#">Special Access</a></li>
-        </ul>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-sm-12 no_pad mt20">
+
+@using (Html.BeginForm("CreatePromotionalCodes", "ManageEvent", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="col-sm-12 col-xs-12 ">
+        <div class="col-sm-12 no_pad mb10">
+            <ul class="cod_dis_type">
+                <li><a class="active" href="#">Coded Discount</a></li>
+                <li><a href="#">Public Discount</a></li>
+                <li><a href="#">Special Access</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 no_pad mt20">
+
 
         <div class="col-sm-2 no_pad">
             <div class="form-group">
-                <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode">
+                <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code">
             </div>
         </div>
         <div class="mid_or_width">or</div>
         <div class="custom_file_upload">
             <div class="form-group">
                 <div class="file_upload">
-                    <input type="file" id="file_upload" name="file_upload">
+                    <input type="file" id="file_upload" name="file">
                 </div>
             </div>
         </div>
 
         <div class="upload_help_icn">
             <div class="tip">
-                <img class="help_icon_hov" src="images/icon-question.gif" />
+                <img class="help_icon_hov" src="/Images/icon-question.gif" />
                 <span class="upload_help_icn_inner">
                     Spaces apostrophes and non alphanumeric characters
                     (except '-','_' and',' are not allowed. File must be in plain text
@@ -127,9 +131,14 @@
     </div>
     <div class="clearfix"></div>
     <div class="col-sm-12 no_pad mt10">
-        <div class="col-sm-2 no_pad">
+      <input type="hidden" id="hd_eventid" name="PC_Eventid" value="@Model.PC_Eventid" />
+        <input type="hidden" id="hd_pctype" name="PC_Type"  value="C"/>
+        <input type="hidden" id="hd_discounttype" name="Discount_Type" value="A" />
+        
+        <input type="hidden" name="PC_Apply" id="hd_pcapply"/>     
+           <div class="col-sm-2 no_pad">
             <div class="form-group">
-                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Amount" id="txt_discountmnt">
+                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Amount" id="txt_discountmnt" name="PC_Amount">
             </div>
         </div>
         <div class="mid_or_width"></div>
@@ -152,7 +161,7 @@
         <div class="mid_or_width"></div>
         <div class="col-sm-1 no_pad">
             <div class="form-group">
-                <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" id="txt_use">
+                <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" id="txt_use" name="PC_Uses">
             </div>
         </div>
     </div>
@@ -172,7 +181,7 @@
                 <div class="col-sm-12 no_pad">
                     <div class="form-group">
                         <!-- <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" > -->
-                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate">
+                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start">
                     </div>
 
                 </div>
@@ -190,7 +199,7 @@
                 <div class="col-sm-12 no_pad">
 
                     <div class="form-group">
-                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate">
+                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End">
                     </div>
 
                 </div>
@@ -232,18 +241,18 @@
                             
                             <div class="prm_cd_level">
                            @if (item.Fees_Type == "2")
-                               {
+                           {
                                 <label>@item.T_name ($ @item.Price)</label>
-                                }
-                                else
-                                {
-                               
+                           }
+                           else
+                           {
+
                                     @item.T_name
-                                 }
+                           }
                                     <input type="hidden" value="@item.T_Id" id="hdticket_@i" />
                                 </div>
                             </div>
-                        }
+                }
                         }
                         
 
@@ -256,15 +265,15 @@
                         <div class="col-sm-12 apply_code_head">
                             <div class="col-sm-11 no_pad">Discout URL </div>
                             <div class="col-sm-1 no_pad text-right">
-                                <img src="images/icon-question.gif" />
+                                <img src="/Images/icon-question.gif" />
                             </div>
 
                         </div>
                         <div class="col-sm-12 no_pad mb10">
-                            <div class="col-sm-8 "> <a class="link_url" href="#">http://eventcombo.net/event-names?discount=</a> </div>
+                            <div class="col-sm-8 "> <a class="link_url" name="PC_URL" href="#">http://eventcombo.net/event-names?discount=</a> </div>
                             <div class="col-sm-4  text-right">
-                                <button class="btn soc_btn_dis soc_btn_active"><i class="fa fa-facebook"></i></button>
-                                <button class="btn soc_btn_dis  "><i class="fa fa-twitter"></i></button>
+                                <button class="btn soc_btn_dis "><i class="fa fa-facebook"></i></button>
+                                <button class="btn soc_btn_dis"><i class="fa fa-twitter"></i></button>
                                 <button class="btn soc_btn_dis"><i class="fa fa-envelope"></i></button>
                             </div>
                         </div>
@@ -272,9 +281,10 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad mt10 mb10">
-                    <button class="btn btn-info acnt_btn" type="submit" title="">Save</button>
+                    <button class="btn btn-info acnt_btn" type="submit" title="" id="btnsave">Save</button>
                 </div>
             </div>
+ }
 
 
 
@@ -294,6 +304,80 @@
             <script type="text/javascript">
 
                 $(document).ready(function () {
+                    $("#ddl_discounttype").change(function () {
+
+                        if( $("#ddl_discounttype").val()==0)
+                        {
+                            $("#hd_discounttype").val("A");
+                        } else {
+                            $("#hd_discounttype").val("P");
+                        }
+
+                    });
+                    @*$("#btnsave").click(function () {
+                    
+
+
+                        var model = {
+                            'PC_Eventid': $('#hd_eventid').val(),
+                            'PC_Type': 'C',
+                            'PC_Code': $('#txt_Promocode').val(),
+                            'PC_Amount': $("#txt_discountmnt").val(),
+                            'PC_Percentage': $("#txt_discountmnt").val(),
+                            'PC_Uses': $("#txt_use").val(),
+                            'UserId': '',
+                            'PC_Start': $("#txtstartdate").val(),
+                            'PC_End': $("#txtenddate").val(),
+                            'PC_Apply':''
+
+                        };
+                        $.ajax({
+                            url: '@Url.Action("SavePromocode", "ManageEvent")',
+                            data: { model: model },
+                            type: "Post",
+                            success: function (data) {
+
+                                if (typeof (data.Message) === "undefined") {
+                                    $("#id_selectorg").empty();
+                                    $("#id_selectorg").append("<option value='0'>Select</option>");
+                                    $("#id_selectorg").append("<option value='A'>Add Organizer</option>");
+                                    $.each(data, function (index, optiondata) {
+
+                                        $("#id_selectorg").append("<option value='" + optiondata.Id + "'>" + optiondata.Name + "</option>");
+                                    });
+                                    $('.selectpicker').selectpicker('refresh');
+
+                                } else {
+                                    if (data.Message == "O") {
+                                        window.location.href = '@Url.Action("Index", "Home")';
+
+                                    }
+
+
+                                }
+                                $("#btnedit").prop("disabled", true);
+                                $("#btndelete").prop("disabled", true);
+                                $('#userimage').val("");
+                                $("#image_count").val("0");
+                                $('#ImagePresent').val("No");
+                                $("#dveruimain").removeClass("er_UI_main");
+                                $("#dveruiimg").removeClass("er_UI_img");
+                                $("#dveruimain").addClass("er_suc_main");
+                                $("#dveruiimg").addClass("er_suc_img");
+                                $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgsaveEdit'));
+                                $('#diverroacc').show();
+                                $('html,body').animate({ scrollTop: 0 });
+
+                                $(".maindivnonvis").show();
+                                $("#divorgprofile").empty();
+                                $("#divorgprofile").hide();
+
+                            }
+
+                        });
+                    
+                    
+                    });*@
                     var bIsPopup = displayPopup();
 
                     $("#dtBox").DateTimePicker(

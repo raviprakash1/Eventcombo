@@ -545,6 +545,7 @@
     <Content Include="Images\em_ven_time.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
+    <Content Include="Images\loading.gif" />
     <Content Include="Images\qwe.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

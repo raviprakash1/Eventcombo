@@ -106,6 +106,8 @@ namespace EventCombo.Models
     {
         public string Eventitle{ get; set; }
         public List<Ticket> Ticketdata { get; set; }
+        public string Discount_Type { get; set; }
+
     }
     public class Coordinates
         {

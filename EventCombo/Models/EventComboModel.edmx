@@ -357,7 +357,7 @@
             <PropertyRef Name="Orgnizer_Id" />
           </Key>
           <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Orgnizer_Name" Type="varchar" MaxLength="200" />
+          <Property Name="Orgnizer_Name" Type="varchar" MaxLength="300" />
           <Property Name="Organizer_Desc" Type="nvarchar(max)" />
           <Property Name="Organizer_FBLink" Type="varchar" MaxLength="256" />
           <Property Name="Organizer_Twitter" Type="varchar" MaxLength="256" />
@@ -2014,7 +2014,7 @@
             <PropertyRef Name="Orgnizer_Id" />
           </Key>
           <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Orgnizer_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Orgnizer_Name" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Organizer_FBLink" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Twitter" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
