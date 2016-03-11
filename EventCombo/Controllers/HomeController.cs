@@ -335,7 +335,7 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult DiscoverEvents(string strEt, string strEc,string strPrice)
+        public ActionResult DiscoverEvents(string strEt, string strEc,string strPrice, string strPageIndex)
         {
             if ((Session["AppId"] != null))
             {
@@ -347,13 +347,24 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+            int pageSize = 15;
+            int pageIndex = 1;
+            if (strPageIndex != null && strPageIndex != string.Empty && strPageIndex !="page")
+                pageIndex = Convert.ToInt32(strPageIndex);
+            
 
             if (strEt == null || strEt == "~") strEt = string.Empty;
             if (strEc == null || strEc == "~") strEc = string.Empty;
 
             Session["Fromname"] = "DiscoverEvents";
             List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc,strPrice);
-            ViewBag.DisEvnt = objDiscEvt.ToPagedList(1, 100);
+            double dPageCount = objDiscEvt.Count;
+            double dTotalPages = dPageCount / pageSize;
+            int lTotalPages = (objDiscEvt.Count / pageSize);
+            if (dTotalPages.ToString().Contains(".") == true)
+                lTotalPages  = lTotalPages + 1;
+
+            ViewBag.DisEvnt = objDiscEvt.ToPagedList(pageIndex, pageSize);
             ViewBag.Eventtype = GetDiscoverEventType(strEt);
             ViewBag.EventCat = GetDiscoverEventCategory(strEc);
             if (strEt != null && strEt != string.Empty)
@@ -368,7 +379,8 @@ namespace EventCombo.Controllers
 
             TempData["ETypeSelected"] = strEt;
             TempData["ECatSelected"] = strEc;
-            TempData["tempPrice"] = strPrice;
+            TempData["TotalPages"] = lTotalPages;
+            ViewData["tempPrice"] = (strPrice != null ? strPrice.ToUpper() : "ALL");
             
             return View();
 
@@ -544,9 +556,25 @@ namespace EventCombo.Controllers
                 if (strEventTypeId == null || strEventTypeId == "~") strEventTypeId = string.Empty;
                 if (strEventCatId == null || strEventCatId == "~") strEventCatId = string.Empty;
                 if (strPrice == null || strPrice == "~") strPrice = "ALL";
-                
+
+                var vValue = db.Addresses.SqlQuery("select dbo.distance(28.6139, 77.2090, Latitude, Longitude) discoverdistance,* from Address").ToList().Where(m=> (m.discoverdistance!= null ? Convert.ToInt64(m.discoverdistance) : 21)<=20);
+                //select dbo.distance(28.6139, 77.2090, Latitude, Longitude) dis from Address
+                string strEventIds = "";
+
+                foreach(Address objAdd in vValue)
+                {
+                    if (strEventIds == "")
+                    {
+                        strEventIds = objAdd.EventId.ToString();
+                    }
+                    else
+                    {
+                        strEventIds = strEventIds + "," + objAdd.EventId.ToString();
+                    }
+                }
+
                 DiscoverEvent objDisEv = new DiscoverEvent();
-                sbQuery.Append("Select * from Event where 0=0 ");
+                sbQuery.Append("Select * from Event where EventID in (" + strEventIds + ")");
 
                 if (strEventTypeId.Trim() != string.Empty)
                     sbQuery.Append(" AND EventTypeID in (" + strEventTypeId + ")");

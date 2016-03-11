@@ -1279,12 +1279,12 @@ span.evnt_toltip{
 .list_event_date_time {padding-left: 10px;  color:#3cf; }
   
 
-.desc_list_event_type{ color: #ff008a; font-weight: bold; font-size: 16px; text-transform: uppercase; line-height: 30px; } 
+.desc_list_event_type{ color: #ff008a; font-weight: bold; font-size: 14px; text-transform: uppercase; line-height: 30px; } 
 
 .nav.list_inner_cat_tag{ margin-left: 10px; margin-top: 0px; padding-top: 4px;  padding-bottom: 6px; }
 .nav.list_inner_cat_tag > li{ margin-right: 10px; }
 .nav.list_inner_cat_tag > li > a{  padding: 0; color: #cdcdcd;  border-radius: 0px; font-size: 13px; background:none; }
-.nav.list_inner_cat_tag > li > a:hover, .nav.list_inner_cat_tag > li > a:focus{  background:none; color: #000; text-decoration: underline;  }
+.nav.list_inner_cat_tag > li > a:hover, .nav.list_inner_cat_tag > li > a:focus{  background:none; color: #000; text-decoration: none;  }
 
 .de_ev_li_border{ border-bottom: 1px solid #f5f5f5;  }
 .de_ev_li_border:hover{background-color: #f5f5f5;}
@@ -1293,6 +1293,7 @@ span.evnt_toltip{
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0; margin-top: 0px;
     border: 0 none; margin-right: 7px;
     box-shadow: none;
+
     color: #9b9b9b;
     font-size: 1em;
     padding: 5px 0;
@@ -1375,10 +1376,11 @@ span.evnt_toltip{
 .nav.dis_side_fliter_tag > li{ width: 100%; float: left;line-height: 25px;   }
 .nav-pills.dis_side_fliter_tag > li + li{  margin-left: 0px; }
 .nav.dis_side_fliter_tag > li > a{ border-radius: 0px; padding: 0 10px; color: #000; background:none; display: inline;   }
-.nav.dis_side_fliter_tag > li > a.can_badg{ float: right; background:none; display: none; }
+.nav.dis_side_fliter_tag > li > a.can_badg{ float: right; background:none; display: none;  }
 .nav.dis_side_fliter_tag > li > a:hover{ background:none; color:#000; }
 .nav.dis_side_fliter_tag > li > a:focus{ background:none; color:#000; }
 .nav.dis_side_fliter_tag > li.active{ background:#f1f1f1;  }
+.nav.dis_side_fliter_tag > li.active a{ color: #3cf; }
 .nav.dis_side_fliter_tag > li.active:hover{ background:#e4e4e4;  }
 .nav.dis_side_fliter_tag > li.active:hover a{  color: #3cf; }
 .nav.dis_side_fliter_tag > li.active:hover a.can_badg{ color: #000; }
@@ -1591,3 +1593,8 @@ div.file_upload input {
     position: absolute;
     top: 45%; bottom: 0px; 
     width: 0 auto; }
+
+
+/*.desc_hide{ width: 100%; float: left; background:rgba(0, 0, 0, 0.6); z-index: 99; color: #fff; position: absolute; top: 0px; display: block; height: 100% }
+.desc_hide p{ padding: 5px; font-size: 16px; }*/
+.map_height{ min-height:200px;}
