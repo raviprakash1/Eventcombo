@@ -93,6 +93,8 @@ namespace EventCombo.Models
         public string EventImage { get; set; }
         public long EventTypeId { get; set; }
         public long EventCatId { get; set; }
+        public long EventId { get; set; }
+        public DateTime EventDate { get; set; }
         //public DiscoverEvent[] DiscoverEventList { get; set; }
 
     }

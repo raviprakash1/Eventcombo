@@ -9,13 +9,13 @@
     
     <div class="col-sm-12 col-xs-12 ot_main_pad mb10">
         <div class="col-sm-9 no_pad">
-            <div class="dis_event_ser_title "><h2>New Delhi Business Events </h2></div>
+            <div class="dis_event_ser_title "><h2>Events </h2></div>
         </div>
         <div class="col-sm-3 text-right no_pad">
             <ul class="nav nav-pills dis_fil_nav_right">
-                <li>Sort by:</li>
+                @*<li>Sort by:</li>
                 <li><a href="#">Relevence</a></li>
-                <li><a href="#" class="active">Date</a></li>
+                <li><a href="#" class="active">Date</a></li>*@
             </ul>
         </div>
     </div>
@@ -167,7 +167,7 @@
                                 <div class="col-sm-12 no_pad text-center desc_list_event_type">@item.PriceLable</div>
                             </div>
                             <div class="col-sm-8 no_pad">
-                                <h1 class="list_event_desc_title"> @item.EventTitle </h1>
+                                <h1 class="list_event_desc_title"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString()})'>@item.EventTitle</a></h1>
                                 <p class="list_event_desc">
                                     <span class="des_hover">@item.EventAddress </span>
                                     @*<span class="desc_hide">
@@ -183,8 +183,8 @@
                         <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
                             <div class="col-sm-10 no_pad">
                                 <ul class="nav nav-pills list_inner_cat_tag">
-                                    <li><a href="javascript:void(0);" onclick="FilterbySingleEventType(@item.EventTypeId);">#@item.EventType </a></li>
-                                    <li><a href="javascript:void(0);" onclick="FilterbySingleEventCategory(@item.EventCatId);">#@item.EventCat </a></li>
+                                    <li><a href="javascript:void(0);" onclick="FilterEventType(@item.EventTypeId);">#@item.EventType </a></li>
+                                    <li><a href="javascript:void(0);" onclick="FilterEventCategory(@item.EventCatId);">#@item.EventCat </a></li>
                                 </ul>
                             </div>
                             <div class="col-sm-2 no_pad text-right">
@@ -376,7 +376,7 @@
         var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
         vUrl = vUrl.replace("lat", vLat);
         vUrl = vUrl.replace("long", vlng);
-        alert($("#hdPrice").val());
+      
         vUrl = vUrl.replace("all", Price);
 
         window.location.href = vUrl;
@@ -468,7 +468,7 @@
             var vLong = place.geometry.location.lng();
             vUrl = vUrl.replace("lat", vLat);
             vUrl = vUrl.replace("long", vLong);
-            alert(vUrl);
+     
             window.location.href = vUrl;
 
             if (place.geometry.viewport) {
