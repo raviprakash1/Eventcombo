@@ -684,23 +684,30 @@ namespace EventCombo.Controllers
                     if (strDateFilter == "tommarow") lsDisEvt = lsDisEvt.Where(m => m.EventDate == DateTime.Today.AddDays(1)).ToList();
                     if (strDateFilter == "thisweek")
                     {
-                        int iday = (int)objDisEv.EventDate.DayOfWeek;
-                        DateTime[] dt = new DateTime[7];
-                        for (int i = iday; i <= 7; i++)
+                        int iday = (int)DateTime.Now.DayOfWeek;
+                        int iLen = (7 - iday) +1;
+                        string strDates = "";
+                        DateTime[] dt = new DateTime[iLen];
+                        for (int i = 0; i < iLen; i++)
                         {
+                            if (i == 0)
+                                dt[i] = DateTime.Now;
+                            else
+                                dt[i] = dt[i-1].AddDays(1);
                             //dt[] = objDisEv.EventDate.AddDays(i);
                         }
+                      //  DateTime[] dt = Convert.ToDateTime(strDates.Split(','));
                         lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate)).ToList();
                     }
                     if (strDateFilter == "thisweekend")
                     {
-                        //int iday = (int)objDisEv.EventDate.DayOfWeek;
-                        //DateTime[] dt = new DateTime[7];
-                        //for (int i = iday; i <= 7; i++)
-                        //{
-                        //    dt[] = objDisEv.EventDate.AddDays(i);
-                        //}
-                       // lsDisEvt = lsDisEvt.Where(m => m.EventDate > objDisEv.EventDate).ToList();
+                        int iday = (int)objDisEv.EventDate.DayOfWeek;
+                        DateTime[] dt = new DateTime[7];
+                        for (int i = iday; i <= 7; i++)
+                        {
+                           // dt[] = objDisEv.EventDate.AddDays(i);
+                        }
+                        lsDisEvt = lsDisEvt.Where(m => m.EventDate > objDisEv.EventDate).ToList();
                     }
                     if (strDateFilter == "nextweek")
                     {
