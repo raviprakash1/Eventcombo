@@ -622,7 +622,7 @@ else
                     };
                     var vLat = p.coords.latitude;
                     var vLong = p.coords.longitude;
-                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page", strLat = "lat", strLong = "long" })';
+                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
                     vUrl = vUrl.replace("lat", vLat);
                     vUrl = vUrl.replace("long", vLong);
                     
