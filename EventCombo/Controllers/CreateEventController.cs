@@ -1430,10 +1430,16 @@ namespace EventCombo.Controllers
             {
 
                 return (from myRow in db.EventImages
+<<<<<<< HEAD
                              where myRow.EventID == EventId
                              orderby myRow.EventImageID
                              select "/Images/events/event_flyers/imagepath/" + myRow.EventImageUrl ).ToList();
 
+=======
+                        where myRow.EventID == EventId
+                        orderby myRow.EventImageID
+                        select "/Images/events/event_flyers/imagepath/" + myRow.EventImageUrl).ToList();
+>>>>>>> 51492d76b98ed0539b13ca2c31733e32467b91e8
 
             }
                

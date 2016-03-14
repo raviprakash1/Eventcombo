@@ -887,6 +887,10 @@
           <Parameter Name="EventStatus" Type="varchar" Mode="In" />
           <Parameter Name="UserID" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetLantLong" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Lat" Type="varchar" Mode="In" />
+          <Parameter Name="Long" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetOrganizerEventid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Masterid" Type="bigint" Mode="In" />
         </Function>
@@ -1939,9 +1943,15 @@
             <End Role="Organizer_Master" EntitySet="Organizer_Master" />
             <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
           </AssociationSet>
+
+          <FunctionImport Name="GetLantLong" ReturnType="Collection(String)">
+            <Parameter Name="Lat" Mode="In" Type="String" />
+            <Parameter Name="Long" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="Promo_Code" EntityType="EventComboModel.Promo_Code" />
           <FunctionImport Name="GetOrganizerEventid" ReturnType="Collection(EventComboModel.GetOrganizerEventid_Result)">
             <Parameter Name="Masterid" Mode="In" Type="Int64" />
+
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -2835,6 +2845,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
+          <FunctionImportMapping FunctionImportName="GetLantLong" FunctionName="EventComboModel.Store.GetLantLong" />
+
           <EntitySetMapping Name="Promo_Code">
             <EntityTypeMapping TypeName="EventComboModel.Promo_Code">
               <MappingFragment StoreEntitySet="Promo_Code">
@@ -2863,6 +2876,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

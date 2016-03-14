@@ -4,18 +4,27 @@
 }
 <link href="~/Content/filter-dropdown.css" rel="stylesheet" />
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
-<div id="dvProgress" class="loding_bg"><img src="~/Images/loading.gif" /></div>
+<div id="dvProgress" class="loding_bg"><img src="~/Images/ajax-loader.gif" /></div>
 <div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
     
     <div class="col-sm-12 col-xs-12 ot_main_pad mb10">
         <div class="col-sm-9 no_pad">
-            <div class="dis_event_ser_title "><h2>New Delhi Business Events </h2></div>
+            <div class="dis_event_ser_title "><h2>Events </h2></div>
         </div>
         <div class="col-sm-3 text-right no_pad">
             <ul class="nav nav-pills dis_fil_nav_right">
                 <li>Sort by:</li>
-                <li><a href="#">Relevence</a></li>
-                <li><a href="#" class="active">Date</a></li>
+                @if (@TempData["tSort"].ToString() == "rel")
+                {
+                    <li><a href="javascript:void(0);" onclick="DateRelevenceFilter('rel');" class="active" >Relevence</a></li>
+                    <li><a href="javascript:void(0);" onclick="DateRelevenceFilter('dat');" >Date</a></li>
+                }
+                else
+                {
+                    <li><a href="javascript:void(0);" onclick="DateRelevenceFilter('rel');">Relevence</a></li>
+                    <li><a href="javascript:void(0);" onclick="DateRelevenceFilter('dat');" class="active">Date</a></li>
+                }
+
             </ul>
         </div>
     </div>
@@ -24,32 +33,68 @@
         <div class="col-sm-12 no-padding">
             <div class="col-sm-12 no_pad">
                 <ul id="accordion" class="accordion side_accordian">
-                    <li>
+                    @if (@TempData["tDateFilter"].ToString() != "none")
+                    {
+                    <li class="open">
                         <div class="link">All Dates<i class="glyphicon  glyphicon-triangle-bottom"></i></div>
-                        <ul class="submenu submenu_side">
-                            <li><a href="#">Today</a></li>
-                            <li><a href="#">Tomorrow</a></li>
-                            <li><a href="#">This Week</a></li>
-                            <li><a href="#">This Weekend</a></li>
-                            <li><a href="#">Next Week</a></li>
-                            <li><a href="#">This Month</a></li>
+                        <ul class="submenu submenu_side" style="display:block;">
+                            <li><a href="javascript:void(0);" onclick="DateFilters('today');">Today</a></li>
+                            <li><a href="javascript:void(0);" onclick="DateFilters('tommarow');">Tomorrow</a></li>
+                            <li><a href="javascript:void(0);" onclick="DateFilters('thisweek');">This Week</a></li>
+                            <li><a href="javascript:void(0);" onclick="DateFilters('thisweekend');">This Weekend</a></li>
+                            <li><a href="javascript:void(0);" onclick="DateFilters('nextweek');">Next Week</a></li>
+                            <li><a href="javascript:void(0);" onclick="DateFilters('thismonth');">This Month</a></li>
                             <li>
-                                <a href="#">Custome Date</a>
+                                <a href="#" class="CustDateMain">Custom Date</a>
                                 <div class="clearfix"></div>
-                                <div class="col-sm-12 ot_main_pad mb10">
-                                    <div class="col-sm-10 no_pad mb10">
+                                <div class="CustDate col-sm-12 ot_main_pad mb10">
+                                    <div class=" col-sm-10 no_pad mb10">
                                         <label class="label-control desc_date_lebel">Start Date</label>
-                                        <input class="date_picker form-control" placeholder="mm/dd/yyyy" />
+                                        <input class="date_picker form-control" id="txtstartDate" placeholder="mm/dd/yyyy" />
                                     </div>
                                     <div class="col-sm-10 no_pad mb10">
                                         <label class="label-control desc_date_lebel">End Date</label>
-                                        <input class="date_picker form-control" placeholder="mm/dd/yyyy" />
+                                        <input class="date_picker form-control" id="txtEndDate" placeholder="mm/dd/yyyy" />
                                     </div>
-                                    <button class="btn btn-lg fiter_btn_pop_sub " type="submit">Search</button>
+
+                                    <button class="btn btn-lg fiter_btn_pop_sub " onclick="DateFiltersCustom();" type="submit">Search</button>
                                 </div>
                             </li>
                         </ul>
                     </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <div class="link">All Dates<i class="glyphicon  glyphicon-triangle-bottom"></i></div>
+                            <ul class="submenu submenu_side" style="display:none;">
+                                <li><a href="javascript:void(0);" onclick="DateFilters('today');">Today</a></li>
+                                <li><a href="javascript:void(0);" onclick="DateFilters('tommarow');">Tomorrow</a></li>
+                                <li><a href="javascript:void(0);" onclick="DateFilters('thisweek');">This Week</a></li>
+                                <li><a href="javascript:void(0);" onclick="DateFilters('thisweekend');">This Weekend</a></li>
+                                <li><a href="javascript:void(0);" onclick="DateFilters('nextweek');">Next Week</a></li>
+                                <li><a href="javascript:void(0);" onclick="DateFilters('thismonth');">This Month</a></li>
+                                <li>
+                                    <a href="javascript:void(0);" class="CustDateMain">Custom Date</a>
+                                    <div class="clearfix"></div>
+                                    <div class="CustDate col-sm-12 ot_main_pad mb10">
+                                        <div class=" col-sm-10 no_pad mb10">
+                                            <label class="label-control desc_date_lebel">Start Date</label>
+                                            <input class="date_picker form-control" id="txtstartDate" placeholder="mm/dd/yyyy" />
+                                        </div>
+                                        <div class="col-sm-10 no_pad mb10">
+                                            <label class="label-control desc_date_lebel">End Date</label>
+                                            <input class="date_picker form-control" id="txtEndDate" placeholder="mm/dd/yyyy" />
+                                        </div>
+
+                                        <button class="btn btn-lg fiter_btn_pop_sub " onclick="DateFiltersCustom();" type="submit">Search</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                    }
+
                 </ul>
             </div>
             <div class="clearfix"></div>
@@ -151,24 +196,24 @@
                                 <div class="col-sm-12 no_pad text-center desc_list_event_type">@item.PriceLable</div>
                             </div>
                             <div class="col-sm-8 no_pad">
-                                <h1 class="list_event_desc_title"> @item.EventTitle </h1>
+                                <h1 class="list_event_desc_title"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString()})'>@item.EventTitle</a></h1>
                                 <p class="list_event_desc">
                                     <span class="des_hover">@item.EventAddress </span>
-                                    <span class="desc_hide">
+                                    @*<span class="desc_hide">
                                         @item.EventAddress
-                                    </span>
+                                    </span>*@
                                 </p>
                                 <p class="list_event_date_time">@item.EventTimings </p>
-                                @*<div class="desc_hide">
-
-                                </div>*@
+                                   <div class="desc_hide">
+                                    <p> @item.EventAddress </p>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
                             <div class="col-sm-10 no_pad">
                                 <ul class="nav nav-pills list_inner_cat_tag">
-                                    <li><a href="javascript:void(0);" onclick="FilterbySingleEventType(@item.EventTypeId);">#@item.EventType </a></li>
-                                    <li><a href="javascript:void(0);" onclick="FilterbySingleEventCategory(@item.EventCatId);">#@item.EventCat </a></li>
+                                    <li><a href="javascript:void(0);" onclick="FilterEventType(@item.EventTypeId);">#@item.EventType </a></li>
+                                    <li><a href="javascript:void(0);" onclick="FilterEventCategory(@item.EventCatId);">#@item.EventCat </a></li>
                                 </ul>
                             </div>
                             <div class="col-sm-2 no_pad text-right">
@@ -218,7 +263,12 @@
     </div>
     <input type="hidden" id="hdEventType" value="@TempData["ETypeSelected"]" />
     <input type="hidden" id="hdEventCat" value="@TempData["ECatSelected"]" />
-    <input type="hidden" id="hdPrice" value="@TempData["tempPrice"]" />
+    <input type="hidden" id="hdPrice" value="@ViewData["tempPrice"]" />
+    <input type="hidden" id="hdlat" value="@TempData["tLat"]" />
+    <input type="hidden" id="hdlng" value="@TempData["tLng"]" />
+    <input type="hidden" id="hdSort" value="@TempData["tSort"]" />
+    <input type="hidden" id="hdDateFilter" value="@TempData["tDateFilter"]" />
+
 </div>
 
 
@@ -229,44 +279,99 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
 
+    function DateFilters(vvalue) {
+        $("#hdDateFilter").val(vvalue);
+        NextPage(1);
+    }
+
+    function DateFiltersCustom() {
+        //vvalue = "custom-" + $("#txtstartDate").val() + "-" + $("#txtEndDate").val();
+        vvalue = "";
+        $("#hdDateFilter").val(vvalue);
+        NextPage(1);
+    }
+
+    function DateRelevenceFilter(vvalue)
+    {
+        $("#hdSort").val(vvalue);
+        NextPage(1);
+    }
+
     function NextPage(vIndex)
     {
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
 
-        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
-        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "evc");
+        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "evt");
         var vPrice = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
+
+        
         vUrl = vUrl.replace("all", vPrice);
         vUrl = vUrl.replace("evc", vECat);
         vUrl = vUrl.replace("evt", vEtype);
-        vUrl = vUrl.replace("page", vIndex);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
+
         window.location.href = vUrl;
     }
     function GetPriceFilter(strPrice) {
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="ALL", strPageIndex = "Page" })';
-        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "evc");
         var Price = (strPrice != '' ? strPrice : "ALL");
-        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
+        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "evt");
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
+
         vUrl = vUrl.replace("all", Price);
         vUrl = vUrl.replace("evc", vECat);
         vUrl = vUrl.replace("evt", vEtype);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
         window.location.href = vUrl;
     }
 
     function GetAllEventType() {
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "~", strEc = "evc", strPrice="ALL", strPageIndex = "Page" })';
-        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "evc");
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
-        vUrl = vUrl.replace("ALL", Price);
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
+
+        vUrl = vUrl.replace("all", Price);
         vUrl = vUrl.replace("evc", vECat);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
         window.location.href = vUrl;
     }
     function GetAllEventCategories() {
-         var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "~", strPrice = "ALL", strPageIndex = "Page" })';
-        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
+         var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "evt");
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
-        vUrl = vUrl.replace("ALL", Price);
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
+
+        vUrl = vUrl.replace("all", Price);
         vUrl = vUrl.replace("evt", vEtype);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
         window.location.href = vUrl;
     }
     function DeleteFilterEventType(vEvTypeId)
@@ -283,13 +388,21 @@
                     vValue = vValue + "," + vAry[i];
             }
         }
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
-        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
-        vUrl = vUrl.replace("evt", (vValue == "" ? "~" : vValue));
-        vUrl = vUrl.replace("evc", vECat);
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "evc");
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
-        vUrl = vUrl.replace("ALL", Price);
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
 
+        vUrl = vUrl.replace("evt", (vValue == "" ? "evt" : vValue));
+        vUrl = vUrl.replace("evc", vECat);
+        vUrl = vUrl.replace("all", Price);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
         window.location.href = vUrl;
 
     }
@@ -304,18 +417,26 @@
                     vValue = vValue + "," + vAry[i];
             }
         }
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
-        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
-        vUrl = vUrl.replace("evc", (vValue == "" ? "~" : vValue));
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "evt");
+        vUrl = vUrl.replace("evc", (vValue == "" ? "evc" : vValue));
         vUrl = vUrl.replace("evt", vEtype);
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
-        vUrl = vUrl.replace("ALL", Price);
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
 
+        vUrl = vUrl.replace("all", Price);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
         window.location.href = vUrl;
 
     }
     function FilterEventType(vEvTypeId) {
-        if ($("#hdEventType").val() == "" || $("#hdEventType").val() == "~") {
+        if ($("#hdEventType").val() == "" || $("#hdEventType").val() == "~" || $("#hdEventType").val() == "evt") {
             $("#hdEventType").val(vEvTypeId);
         }
         else {
@@ -326,19 +447,27 @@
                 $("#hdEventType").val(vIds);
             }
         }
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
-        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "~");
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "evc");
         vUrl = vUrl.replace("evt", $("#hdEventType").val());
         vUrl = vUrl.replace("evc", vECat);
-        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
-        vUrl = vUrl.replace("ALL", Price);
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "all");
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
 
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("all", Price);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
         window.location.href = vUrl;
         // alert($("#hdEventType").val());
 
     }
     function FilterEventCategory(vEvCatId) {
-        if ($("#hdEventCat").val() == "" || $("#hdEventCat").val() == "~") {
+        if ($("#hdEventCat").val() == "" || $("#hdEventCat").val() == "~" || $("#hdEventCat").val() == "evc") {
             $("#hdEventCat").val(vEvCatId);
         }
         else {
@@ -349,13 +478,21 @@
             }
         }
 
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
-        var vEType = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "~");
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vEType = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "evt");
         vUrl = vUrl.replace("evt", vEType);
         vUrl = vUrl.replace("evc", $("#hdEventCat").val());
-        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
-        vUrl = vUrl.replace("ALL", Price);
+        var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "all");
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
 
+        vUrl = vUrl.replace("all", Price);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
         window.location.href = vUrl;
 
         // alert($("#hdEventType").val());
@@ -363,31 +500,45 @@
     }
 
     function FilterbySingleEventCategory(vEvCatId) {
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page" })';
-        vUrl = vUrl.replace("evt", "~");
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        //vUrl = vUrl.replace("evt", "~");
         vUrl = vUrl.replace("evc", vEvCatId);
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
-        vUrl = vUrl.replace("ALL", Price);
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
 
+        vUrl = vUrl.replace("all", Price);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
         window.location.href = vUrl;
     }
 
 
     function FilterbySingleEventType(vEvTypeId) {
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "", strPrice = "ALL", strPageIndex = "Page" })';
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
         vUrl = vUrl.replace("evt", vEvTypeId);
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
-        vUrl = vUrl.replace("ALL", Price);
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
 
+        vUrl = vUrl.replace("all", Price);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
         //vUrl = vUrl.replace("evc", "");
         window.location.href = vUrl;
     }
 
 
-    
+
     $(document).ready(function () {
-
-
         var input = document.getElementById('txtAddress');
         var autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -401,13 +552,23 @@
               mapOptions);
             // create a marker
             var latlng = new google.maps.LatLng(6.9167, 79.8473);
+
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map,
                 title: 'My Place'
 
             });
+
             var place = autocomplete.getPlace();
+            var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+            var vLat = place.geometry.location.lat();
+            var vLong = place.geometry.location.lng();
+            vUrl = vUrl.replace("lat", vLat);
+            vUrl = vUrl.replace("long", vLong);
+     
+            window.location.href = vUrl;
+
             if (place.geometry.viewport) {
                 map.fitBounds(place.geometry.viewport);
             }
@@ -426,6 +587,8 @@
             marker.setPosition(place.geometry.location);
             marker.setVisible(true);
 
+
+
             var address = '';
             if (place.address_components) {
                 address = [
@@ -434,36 +597,70 @@
                   (place.address_components[2] && place.address_components[2].short_name || '')
                 ].join(' ');
             }
+
         });
 
+        if ($("#hdlat").val() == "" && $("#hdlng").val() == "") {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (p) {
+                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                    var geocoder = new google.maps.Geocoder;
+                    var infowindow = new google.maps.InfoWindow;
+                    var mapOptions = {
+                        center: { lat: p.coords.latitude, lng: p.coords.longitude },
+                        zoom: 13,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+                    var marker = new google.maps.Marker({
+                        position: LatLng,
+                        map: map
+                    });
+                    google.maps.event.addListener(marker, "click", function (e) {
+                        geocodeLatLng(geocoder, map, infowindow);
+                        var infoWindow = new google.maps.InfoWindow();
+                        infoWindow.setContent(marker.title);
+                        infoWindow.open(map, marker);
+                    });
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (p) {
-                var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-                var geocoder = new google.maps.Geocoder;
-                var infowindow = new google.maps.InfoWindow;
+                });
 
-                var mapOptions = {
-                    center: { lat: p.coords.latitude, lng: p.coords.longitude },
-                    zoom: 13,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-                var marker = new google.maps.Marker({
-                    position: LatLng,
-                    map: map
-                });
-                google.maps.event.addListener(marker, "click", function (e) {
-                    geocodeLatLng(geocoder, map, infowindow);
-                    var infoWindow = new google.maps.InfoWindow();
-                    infoWindow.setContent(marker.title);
-                    infoWindow.open(map, marker);
-                });
-            });
-        } else {
-            alert('Geo Location feature is not supported in this browser.');
+            } else {
+                alert('Geo Location feature is not supported in this browser.');
+            }
         }
+        else
+        {
+            var LatLng = new google.maps.LatLng($("#hdlat").val(), $("#hdlng").val());
+            var geocoder = new google.maps.Geocoder;
+            var infowindow = new google.maps.InfoWindow;
+            var mapOptions = {
+                center: LatLng,
+                zoom: 13,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+            var marker = new google.maps.Marker({
+                position: LatLng,
+                map: map
+            });
+            google.maps.event.addListener(marker, "click", function (e) {
+                geocodeLatLng(geocoder, map, infowindow);
+                var infoWindow = new google.maps.InfoWindow();
+                infoWindow.setContent(marker.title);
+                infoWindow.open(map, marker);
+            });
 
+            var locationurl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + $("#hdlat").val() + ',' + $("#hdlng").val() + '&sensor=true';
+            $.ajax({
+                url: locationurl,
+                type: "Post",
+                success: function (response) {
+                    debugger;
+                    document.getElementById('txtAddress').value = response.results[0].formatted_address;
+                }
+            });
+        }
         //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
 
 
@@ -543,13 +740,23 @@
           });
 
         $(".desc_hide").css({ "display": "none" });
-        $(".des_hover").mouseover(function () {
-            $(".des_hover").css({ "display": "none" });
-            $(".desc_hide").css({ "display": "block" });
+        $(".des_hover").mouseover(function (e) {
+            var $target = $(e.currentTarget);
+            $target.css({ "display": "none" });
+            $target.closest("div").find(".desc_hide").css({ "display": "block" });
         });
-        $(".desc_hide").mouseout(function () {
-            $(".des_hover").css({ "display": "block" });
-            $(".desc_hide").css({ "display": "none" });
+        $(".desc_hide").mouseout(function (e) {
+            var $target = $(e.currentTarget);
+            $target.css({ "display": "none" });
+            $target.parent("div").find(".des_hover").css({ "display": "block" });
+        });
+
+        $(".CustDate").css({ "display": "none" });
+        $(".CustDateMain").click(function () {
+            $('.CustDate').slideToggle(function () {
+                $('.CustDateMain').toggleClass('active');
+            });
+
         });
 
     });

@@ -48,8 +48,8 @@ namespace EventCombo
             routes.MapRoute(
                 name: "EvType",
                 namespaces: new[] { "EventCombo.Controllers" },
-                url: "et/{strEt}/{strEc}/{strPrice}/{strPageIndex}",
-                defaults: new { controller = "Home", action = "DiscoverEvents",strEt = UrlParameter.Optional, strEc = UrlParameter.Optional, strPrice= UrlParameter.Optional, strPageIndex = UrlParameter.Optional }
+                url: "et/{strEt}/{strEc}/{strPrice}/{strPageIndex}/{strLat}/{strLong}/{strSort}/{strDateFilter}",
+                defaults: new { controller = "Home", action = "DiscoverEvents",strEt = UrlParameter.Optional, strEc = UrlParameter.Optional, strPrice= UrlParameter.Optional, strPageIndex = UrlParameter.Optional , strLat = UrlParameter.Optional, strLong = UrlParameter.Optional, strSort = UrlParameter.Optional, strDateFilter = UrlParameter.Optional }
             );
 
        

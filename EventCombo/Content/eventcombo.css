@@ -1601,9 +1601,10 @@ div.file_upload input {
     width: 0 auto; }
 
 
-/*.desc_hide{ width: 100%; float: left; background:rgba(0, 0, 0, 0.6); z-index: 99; color: #fff; position: absolute; top: 0px; display: block; height: 100% }
-.desc_hide p{ padding: 5px; font-size: 16px; }*/
+.desc_hide{ width: 100%; float: left; background:rgba(0, 0, 0, 0.6); z-index: 99; color: #fff; position: absolute; top: 0px; display: block; height: 100% }
+.desc_hide p{ padding: 5px; font-size: 16px; }
 .map_height{ min-height:200px;}
+
 
 
 
@@ -1631,3 +1632,16 @@ div.file_upload input {
 .dtpicker-buttonCont .dtpicker-buttonClear{ display:none !important; }
 
 .org_prof_drop .dropdown-menu.inner{ max-width:200px !important;}
+
+.fiter_btn_pop_sub {
+    background: #00cfff;
+    border: 0 none;
+    border-radius: 3px !important;
+    font-size: 1.2em;
+    line-height: .85 !important;
+    padding-left: 15px;
+    padding-right: 15px; color: #fff !important; min-width: 150px;
+}
+
+.fiter_btn_pop_sub.fiter_btn_pop_reset:hover{ background-color: #ccc; }
+.fiter_btn_pop_sub:hover{background: #00cfff;  }

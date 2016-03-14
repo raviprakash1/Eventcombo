@@ -19,11 +19,7 @@
         <EntityTypeShape EntityType="EventComboModel.Email_Template" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Event" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Event_OrganizerMessages" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
-<<<<<<< HEAD
         <EntityTypeShape EntityType="EventComboModel.Event_VariableDesc" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
-=======
-        
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 5dba282802d0c18f1733868303665125f1d2bec4
         <EntityTypeShape EntityType="EventComboModel.EventCategory" Width="1.5" PointX="12.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventFavourite" Width="1.5" PointX="14.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.EventImage" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
@@ -68,15 +64,11 @@
         <EntityTypeShape EntityType="EventComboModel.TicketOrderDetail" Width="1.5" PointX="17.375" PointY="20.75" />
         <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="19.375" PointY="20.75" />
         <EntityTypeShape EntityType="EventComboModel.Organizer_Master" Width="1.5" PointX="21.375" PointY="3.75" />
-<<<<<<< HEAD
         <EntityTypeShape EntityType="EventComboModel.Event_Orgnizer_Detail" Width="1.75" PointX="3" PointY="7.875" />
         <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Event" />
-=======
-        
-        
         <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" />
         <EntityTypeShape EntityType="EventComboModel.Promo_Code" Width="1.5" PointX="11.98486792109202" PointY="28.749151675379441" />
->>>>>>> 5dba282802d0c18f1733868303665125f1d2bec4
+
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
