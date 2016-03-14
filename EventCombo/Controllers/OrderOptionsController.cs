@@ -14,6 +14,8 @@ namespace EventCombo.Controllers
       return RedirectToAction("Index", "Home");
     }
 
+    private static DateTime startDateTime = DateTime.ParseExact("01-01-2000", "MM-dd-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
     private void SetDefaultViewBag(EventComboEntities db, AutoMapper.IMapper mapper, string Message, bool isError, long eventId)
     {
       if (db == null)
@@ -54,6 +56,7 @@ namespace EventCombo.Controllers
           Selected = false
         });
 
+      ViewBag.StartDateTime = startDateTime;
       ViewBag.SendSettings = SendSettings;
       ViewBag.StateMessage = Message;
       ViewBag.IsError = isError;
@@ -70,6 +73,8 @@ namespace EventCombo.Controllers
         otDB.OrderTemplateTickets.Add(mapper.Map<OrderTemplateTicket>(ct));
       foreach (var q in ot.Questions)
         otDB.OrderTemplateQuestions.Add(mapper.Map<OrderTemplateQuestion>(q));
+      otDB.OrderTemplateWaitlists.Add(mapper.Map<OrderTemplateWaitlist>(ot.Waitlist));
+
       db.OrderTemplates.Add(otDB);
       db.SaveChanges();
       return otDB;
@@ -110,6 +115,13 @@ namespace EventCombo.Controllers
         mapper.Map(otQuestion.QuestionType.QuestionTypeGroup, qvm.Question.Group);
         ot.Questions.Add(qvm);
       }
+
+      var waitlist = db.OrderTemplateWaitlists.Where(wl => wl.OrderTemplateId == ot.OrderTemplateId).OrderBy(w => w.TicketId).FirstOrDefault();
+      if (waitlist != null)
+      {
+        ot.Waitlist = mapper.Map<OrderTemplateWaitlistViewModel>(waitlist);
+        ot.Waitlist.WaitlistTicket = mapper.Map<TicketViewModel>(waitlist.Ticket);
+      }
     }
 
     private OrderTemplateViewModel GetOrderTemplate(long eventId)
@@ -144,6 +156,7 @@ namespace EventCombo.Controllers
           ot.OrderTemplateEventTypeId = ViewBag.OrderTemplateEventTypes[0].OrderTemplateEventTypeId;
           ot.ReplyEmail = objEnt.AspNetUsers.Where(u => u.Id == ot.UserID).FirstOrDefault().Email;
           ot.TicketMessage = "";
+          ot.EnableWaitlist = false;
 
           var tickets = objEnt.Tickets.Where(t => t.E_Id == eventId).OrderBy(k => k.T_Id);
           foreach (var ticket in tickets)
@@ -164,6 +177,13 @@ namespace EventCombo.Controllers
             mapper.Map(question.QuestionTypeGroup, otQuestion.Question.Group);
             ot.Questions.Add(otQuestion);
           }
+
+          ot.Waitlist.NameRequired = true;
+          ot.Waitlist.EmailRequired = true;
+          ot.Waitlist.PhoneRequired = false;
+          ot.Waitlist.RespondTime = startDateTime.AddDays(1);
+          ot.Waitlist.ResponseMessage = "If a ticket becomes available, you will be contacted automatically with further instructions on how to purchase your ticket. No further action is required.";
+          ot.Waitlist.ReleaseMessage = "Congratulations! A spot has opened up for you at this event. You have a limited time to sign up. Please follow the links below to register for the event. If you have any questions, please contact the organizer: " + ot.ReplyEmail;
 
           otDB = CreateOrderTemplate(ot, objEnt, mapper);
 
@@ -328,7 +348,7 @@ namespace EventCombo.Controllers
           SetDefaultViewBag(db, mapper, "Confirmation didn't saved.", true, orderTemplate.EventId);
       }
       ViewBag.EventId = orderTemplate.EventId;
-      return View("Confirmation", orderTemplate);
+      return View(orderTemplate);
     }
 
     [Authorize]
@@ -364,14 +384,56 @@ namespace EventCombo.Controllers
           SetDefaultViewBag(db, mapper, "Event type didn't saved.", true, orderTemplate.EventId);
       }
       ViewBag.EventId = orderTemplate.EventId;
-      return View("EventType", orderTemplate);
+      return View(orderTemplate);
     }
 
-    //    [Authorize]
+    [Authorize]
+    [HttpGet]
     public ActionResult Waitlist(long eventId)
     {
+      ValidationMessageController vmc = new ValidationMessageController();
+      long lastEventId = vmc.GetLatestEventId(eventId);
+
+      OrderTemplateViewModel orderTemplate = GetOrderTemplate(lastEventId);
+      if (orderTemplate == null)
+        return DefaultAction();
+
+      orderTemplate.Waitlist.RespondDays = (orderTemplate.Waitlist.RespondTime - startDateTime).Days;
+      orderTemplate.Waitlist.RespondHours = (orderTemplate.Waitlist.RespondTime.AddDays(orderTemplate.Waitlist.RespondDays) - startDateTime).Hours;
+      orderTemplate.Waitlist.RespondMinutes = (orderTemplate.Waitlist.RespondTime.AddDays(orderTemplate.Waitlist.RespondDays).AddHours(orderTemplate.Waitlist.RespondHours) - startDateTime).Minutes;
+
       ViewBag.EventId = eventId;
-      return View();
+      return View(orderTemplate);
+    }
+
+    [Authorize]
+    [HttpPost]
+    public ActionResult Waitlist(OrderTemplateViewModel orderTemplate)
+    {
+      using (EventComboEntities db = new EventComboEntities())
+      {
+        var mapper = AutomapperConfig.Config.CreateMapper();
+        OrderTemplate otDB = db.OrderTemplates.Where(ot => ot.OrderTemplateId == orderTemplate.OrderTemplateId).FirstOrDefault();
+        if (otDB != null)
+        {
+          orderTemplate.Waitlist.RespondTime = startDateTime.AddDays(orderTemplate.Waitlist.RespondDays).AddHours(orderTemplate.Waitlist.RespondHours).AddMinutes(orderTemplate.Waitlist.RespondMinutes);
+          orderTemplate.Waitlist.NameRequired = true;
+          orderTemplate.Waitlist.EmailRequired = true;
+          otDB.EnableWaitlist = orderTemplate.EnableWaitlist;
+          foreach (var wlDB in otDB.OrderTemplateWaitlists)
+          {
+            orderTemplate.Waitlist.OrderTemplateWaitlistId = wlDB.OrderTemplateWaitlistId;
+            mapper.Map(orderTemplate.Waitlist, wlDB);
+          }
+
+          db.SaveChanges();
+          SetDefaultViewBag(db, mapper, "Waitlist saved.", false, orderTemplate.EventId);
+        }
+        else
+          SetDefaultViewBag(db, mapper, "Waitlist didn't saved.", true, orderTemplate.EventId);
+      }
+      ViewBag.EventId = orderTemplate.EventId;
+      return View(orderTemplate);
     }
   }
 }

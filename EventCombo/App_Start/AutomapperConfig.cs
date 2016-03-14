@@ -43,6 +43,7 @@ namespace EventCombo
       CreateMap<OrderTemplateQuestion, OrderTemplateQuestionViewModel>();
       CreateMap<QuestionType, QuestionTypeViewModel>();
       CreateMap<QuestionTypeGroup, QuestionTypeGroupViewModel>();
+      CreateMap<OrderTemplateWaitlist, OrderTemplateWaitlistViewModel>();
 
       //backward maps
       CreateMap<OrderTemplateViewModel, OrderTemplate>();
@@ -51,6 +52,7 @@ namespace EventCombo
       CreateMap<OrderTemplateQuestionViewModel, OrderTemplateQuestion>();
       CreateMap<QuestionTypeViewModel, QuestionType>();
       CreateMap<QuestionTypeGroupViewModel, QuestionTypeGroup>();
+      CreateMap<OrderTemplateWaitlistViewModel, OrderTemplateWaitlist>();
     }
   }
 }

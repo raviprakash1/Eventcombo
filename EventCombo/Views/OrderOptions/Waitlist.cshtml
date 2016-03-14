@@ -1,8 +1,153 @@
-﻿
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
 @{
-    ViewBag.Title = "Waitlist";
-    Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+  ViewBag.Title = "Waitlist";
+  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
 }
 
-<h2>Waitlist</h2>
 
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_top">
+      <div class="evnt_tile_head">
+        <div class="evnt_tile_bg_l"></div>
+        <div class="col-sm-12 col-xs-12 text-left no_pad">
+          <h2 class="fb_dis_head pt5">WAITLIST SETTINGS</h2>
+        </div>
+        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+      </div>
+      @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+      {
+        <div class="col-sm-12 no_pad">
+          @ViewBag.StateMessage
+        </div>
+      }
+      @Html.HiddenFor(m => m.OrderTemplateId)
+      @Html.HiddenFor(m => m.EventId)
+      <div class="col-sm-12 no_pad">
+        <label for="txtTitle" class="no_pad label-control ev_tickt_lebel pl0">
+          Enable waitlist:
+        </label>
+      </div>
+      <div class="col-sm-12 no_pad">
+        <input id="EnableWaitlistEnable" class="" type="radio" name="EnableWaitlist" value="false" checked="@(Model.EnableWaitlist)">
+        <label for="EnableWaitlistEnable" class="no_pad label-control ev_tickt_lebel pl0">Enable</label>
+      </div>
+      <div class="col-sm-12 no_pad">
+        <input id="EnableWaitlistDisable" class="" type="radio" name="EnableWaitlist" value="true" checked="@(!Model.EnableWaitlist)">
+        <label for="EnableWaitlistDisable" class="no_pad label-control ev_tickt_lebel pl0">Disable</label>
+      </div>
+
+      <div class="col-sm-12 no_pad">
+        <label for="txtTitle" class="no_pad label-control ev_tickt_lebel pl0">
+          Waitlist trigger:
+        </label>
+      </div>
+      @foreach (var ticket in ViewBag.Tickets)
+      {
+        bool inputchecked = ticket.T_Id == Model.Waitlist.TicketId;
+        <div class="col-sm-12 no_pad">
+          <input id="Waitlist_TicketId_@ticket.T_Id" type="radio" name="Waitlist.TicketId" value="@ticket.T_Id" checked="@inputchecked">
+          <label for="Waitlist_TicketId_@ticket.T_Id" class="no_pad label-control ev_tickt_lebel pl0">When "@(ticket.T_name)" sells out</label>
+        </div>
+      }
+      <div class="col-sm-12 no_pad">
+        <input id="Waitlist_TicketId_0" type="radio" name="Waitlist.TicketId" value="0" checked="@(Model.Waitlist.TicketId == 0)">
+        <label for="Waitlist_TicketId_0" class="no_pad label-control ev_tickt_lebel pl0">When total event capacity is reached</label>
+      </div>
+    </div>
+
+    <div class="col-sm-12 no_pad">
+      <label for="MaxSize" class="no_pad label-control ev_tickt_lebel pl0">
+        Maximum waitlist size:
+      </label>
+      <input id="MaxSize" name="Waitlist.MaxSize" style="width: 200px" class="form-control evnt_inp_cont" type="number" value="@Model.Waitlist.MaxSize">
+      <div class="col-sm-5 no_pad">
+        Zero for unlimited
+      </div>
+    </div>
+
+    <div class="col-sm-12 no_pad">
+      <label for="TimeLimit" class="no_pad label-control ev_tickt_lebel pl0">
+        Attendee information to collect:
+      </label>
+    </div>
+    <div class="col-sm-12 no_pad">
+      <input disabled="disabled" id="NameRequired" name="Waitlist.NameRequired" type="checkbox" value="true" checked="@Model.Waitlist.NameRequired" />
+      <input name="Waitlist.NameRequired" type="hidden" value="false" />
+      <label for="NameRequired" class="no_pad label-control ev_tickt_lebel pl0">Full Name (Required)</label>
+    </div>
+    <div class="col-sm-12 no_pad">
+      <input disabled="disabled" id="EmailRequired" name="Waitlist.EmailRequired" type="checkbox" value="true" checked="@Model.Waitlist.EmailRequired" />
+      <input name="Waitlist.EmailRequired" type="hidden" value="false" />
+      <label for="EmailRequired" class="no_pad label-control ev_tickt_lebel pl0">Email Address (Required)</label>
+    </div>
+    <div class="col-sm-12 no_pad">
+      <input id="PhoneRequired" name="Waitlist.PhoneRequired" type="checkbox" value="true" checked="@Model.Waitlist.PhoneRequired" />
+      <input name="Waitlist.PhoneRequired" type="hidden" value="false" />
+      <label for="NameRequired" class="no_pad label-control ev_tickt_lebel pl0">Phone Number</label>
+    </div>
+
+    <div class="col-sm-12 no_pad">
+      <label for="TimeLimit" class="no_pad label-control ev_tickt_lebel pl0">
+        Time to respond:
+      </label>
+    </div>
+    <div class="col-sm-12 no_pad">
+      <table width="100%" border="0" cellspacing="0">
+        <tbody>
+          <tr>
+            <td>
+              <input id="MaxSize" name="Waitlist.RespondDays" style="width: 200px" class="form-control evnt_inp_cont" type="number" value="@Model.Waitlist.RespondDays">
+              Day(s)
+            </td>
+            <td>
+              <input id="MaxSize" name="Waitlist.RespondHours" style="width: 200px" class="form-control evnt_inp_cont" type="number" value="@Model.Waitlist.RespondHours">
+              Hour(s)
+            </td>
+            <td>
+              <input id="MaxSize" name="Waitlist.RespondMinutes" style="width: 200px" class="form-control evnt_inp_cont" type="number" value="@Model.Waitlist.RespondMinutes">
+              Minute(s)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-9 no_pad">
+      <label for="TimeLimit" class="no_pad label-control ev_tickt_lebel pl0">
+        Time allowed for attendees to claim their ticket
+      </label>
+    </div>
+
+
+    <div class="col-sm-12 mt10 no_pad">
+      <label for="ResponseMessage" class="no_pad label-control ev_tickt_lebel pl0">Auto-response message:</label>
+      <textarea style="width: 100%; height: 200px" maxlength="200" type="text" name="Waitlist.ResponseMessage" id="ResponseMessage">@Model.Waitlist.ResponseMessage</textarea>
+    </div>
+
+    <div class="col-sm-12 mt10 no_pad">
+      <label for="ReleaseMessage" class="no_pad label-control ev_tickt_lebel pl0">Waitlist ticket release message:</label>
+      <textarea style="width: 100%; height: 200px" maxlength="200" type="text" name="Waitlist.ReleaseMessage" id="ReleaseMessage">@Model.Waitlist.ReleaseMessage</textarea>
+    </div>
+
+    <div class="col-sm-12 pt10 bggrey clearfix">
+      <div class="col-sm-9 col-xs-12 pt10 text-right no_pad">
+        <button class="cbtSave btn ev_live_sub_btn mb5 cdisable" type="submit">
+          <span class="SPview"> SAVE </span>
+        </button>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+}

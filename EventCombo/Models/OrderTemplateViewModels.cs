@@ -118,7 +118,11 @@ namespace EventCombo.Models
       get { return _waitlistTicket; }
       internal set { _waitlistTicket = value; }
     }
+    public long TicketId { get; set; }
 
+    public int RespondDays { get; set; }
+    public int RespondHours { get; set; }
+    public int RespondMinutes { get; set; }
   }
 
   public class OrderTemplateViewModel
@@ -184,6 +188,14 @@ namespace EventCombo.Models
       internal set { _receiveByTypes = value; }
     }
 
+    public bool EnableWaitlist { get; set; }
+
+    private OrderTemplateWaitlistViewModel _waitlist = new OrderTemplateWaitlistViewModel();
+    public OrderTemplateWaitlistViewModel Waitlist
+    {
+      get { return _waitlist; }
+      internal set { _waitlist = value; }
+    }
 
   }
 }
