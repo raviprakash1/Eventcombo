@@ -336,7 +336,7 @@ namespace EventCombo.Controllers
         }
 
 
-        public ActionResult DiscoverEvents(string strEt, string strEc,string strPrice, string strPageIndex, string strLat,string strLong)
+        public ActionResult DiscoverEvents(string strEt, string strEc,string strPrice, string strPageIndex, string strLat,string strLong,string strSort,string strDateFilter)
         {
             if ((Session["AppId"] != null))
             {
@@ -358,7 +358,7 @@ namespace EventCombo.Controllers
             if (strEc == null || strEc == "~" || strEc == "evc") strEc = string.Empty;
 
             Session["Fromname"] = "DiscoverEvents";
-            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc,strPrice,strLat,strLong);
+            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc,strPrice,strLat,strLong,strSort, strDateFilter);
             double dPageCount = objDiscEvt.Count;
             double dTotalPages = dPageCount / pageSize;
             int lTotalPages = (objDiscEvt.Count / pageSize);
@@ -383,10 +383,10 @@ namespace EventCombo.Controllers
             TempData["TotalPages"] = lTotalPages;
             TempData["tLat"] = strLat;
             TempData["tLng"] = strLong;
+            TempData["tSort"] = strSort;
+            TempData["tDateFilter"] = strDateFilter;
             ViewData["tempPrice"] = (strPrice != null ? strPrice.ToUpper() : "ALL");
-            
             return View();
-
         }
     
         public List<EventType> GetDiscoverEventType(string strSelectedTypes)
@@ -550,7 +550,7 @@ namespace EventCombo.Controllers
             }
             return strResult;
         }
-        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId,string strPrice, string strLat, string strLong)
+        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId,string strPrice, string strLat, string strLong,string strSort, string strDateFilter)
         {
          
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
@@ -563,7 +563,6 @@ namespace EventCombo.Controllers
 
                 //var vValue = db.Addresses.SqlQuery("select dbo.distance(28.6139, 77.2090, Latitude, Longitude) discoverdistance,* from Address").Where(m=> (m.discoverdistance!= null ? Convert.ToInt64(m.discoverdistance) : 21)<=20).ToList();
                 //var vValue = db.Addresses.SqlQuery("select dbo.distance(28.6139, 77.2090, Latitude, Longitude) discoverdistance,* from Address").ToList();
-
                 //select dbo.distance(28.6139, 77.2090, Latitude, Longitude) dis from Address
                 string strEventIds = "";
                 strEventIds = db.GetLantLong(strLat, strLong).FirstOrDefault();
@@ -654,7 +653,9 @@ namespace EventCombo.Controllers
                         if (vTimings != null)
                         {
                             objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
-                            objDisEv.EventDate = (vTimings.EventStartDate != null ? Convert.ToDateTime(vTimings.EventStartDate) : DateTime.Now);
+                            objDisEv.EventDate = (vTimings.EventStartDate != null ? Convert.ToDateTime(vTimings.EventStartDate + " " + vTimings.EventStartTime) : DateTime.Now);
+
+
                         }
                         else
                         {
@@ -678,7 +679,67 @@ namespace EventCombo.Controllers
                         
                         lsDisEvt.Add(objDisEv);
                     }
-                    lsDisEvt.OrderBy(m => m.EventDate);
+                    if (strSort == "dat") lsDisEvt = lsDisEvt.OrderBy(m => m.EventDate).ToList();
+                    if (strDateFilter =="today") lsDisEvt = lsDisEvt.Where(m =>  m.EventDate >= DateTime.Now &&  m.EventDate == DateTime.Today).ToList();
+                    if (strDateFilter == "tommarow") lsDisEvt = lsDisEvt.Where(m => m.EventDate == DateTime.Today.AddDays(1)).ToList();
+                    if (strDateFilter == "thisweek")
+                    {
+                        int iday = (int)DateTime.Now.DayOfWeek;
+                        int iLen = (7 - iday) +1;
+                        string strDates = "";
+                        DateTime[] dt = new DateTime[iLen];
+                        for (int i = 0; i < iLen; i++)
+                        {
+                            if (i == 0)
+                                dt[i] = DateTime.Now;
+                            else
+                                dt[i] = dt[i-1].AddDays(1);
+                            //dt[] = objDisEv.EventDate.AddDays(i);
+                        }
+                      //  DateTime[] dt = Convert.ToDateTime(strDates.Split(','));
+                        lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate)).ToList();
+                    }
+                    if (strDateFilter == "thisweekend")
+                    {
+                        int iday = (int)objDisEv.EventDate.DayOfWeek;
+                        DateTime[] dt = new DateTime[7];
+                        for (int i = iday; i <= 7; i++)
+                        {
+                           // dt[] = objDisEv.EventDate.AddDays(i);
+                        }
+                        lsDisEvt = lsDisEvt.Where(m => m.EventDate > objDisEv.EventDate).ToList();
+                    }
+                    if (strDateFilter == "nextweek")
+                    {
+                        //int iday = (int)objDisEv.EventDate.DayOfWeek;
+                        //DateTime[] dt = new DateTime[7];
+                        //for (int i = iday; i <= 7; i++)
+                        //{
+                        //    dt[] = objDisEv.EventDate.AddDays(i);
+                        //}
+                       // lsDisEvt = lsDisEvt.Where(m => m.EventDate > objDisEv.EventDate).ToList();
+                    }
+
+                    if (strDateFilter == "thismonth")
+                    {
+                        //int iday = (int)objDisEv.EventDate.DayOfWeek;
+                        //DateTime[] dt = new DateTime[7];
+                        //for (int i = iday; i <= 7; i++)
+                        //{
+                        //    dt[] = objDisEv.EventDate.AddDays(i);
+                        //}
+                      //  lsDisEvt = lsDisEvt.Where(m => m.EventDate > objDisEv.EventDate).ToList();
+                    }
+                    if (strDateFilter == "custom")
+                    {
+                        //int iday = (int)objDisEv.EventDate.DayOfWeek;
+                        //DateTime[] dt = new DateTime[7];
+                        //for (int i = iday; i <= 7; i++)
+                        //{
+                        //    dt[] = objDisEv.EventDate.AddDays(i);
+                        //}
+                        //lsDisEvt = lsDisEvt.Where(m => m.EventDate > objDisEv.EventDate).ToList();
+                    }
                 }
                 return lsDisEvt;
             }
