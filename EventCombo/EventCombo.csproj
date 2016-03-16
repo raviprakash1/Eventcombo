@@ -535,6 +535,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-multiselect.css" />
+    <Content Include="Content\custom-scroll.css" />
     <Content Include="Content\DateTimePicker.css" />
     <Content Include="Content\ec-select.css" />
     <Content Include="Content\eventcombo-new.css" />
@@ -560,6 +561,7 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
