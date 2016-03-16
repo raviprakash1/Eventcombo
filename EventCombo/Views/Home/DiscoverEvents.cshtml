@@ -285,8 +285,7 @@
     }
 
     function DateFiltersCustom() {
-        //vvalue = "custom-" + $("#txtstartDate").val() + "-" + $("#txtEndDate").val();
-        vvalue = "";
+        vvalue = "custom@@" + $("#txtstartDate").val().split("/").join(".")  + "@@" + $("#txtEndDate").val().split("/").join(".");
         $("#hdDateFilter").val(vvalue);
         NextPage(1);
     }
@@ -309,7 +308,7 @@
         var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
         var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
 
-        
+
         vUrl = vUrl.replace("all", vPrice);
         vUrl = vUrl.replace("evc", vECat);
         vUrl = vUrl.replace("evt", vEtype);
@@ -566,7 +565,7 @@
             var vLong = place.geometry.location.lng();
             vUrl = vUrl.replace("lat", vLat);
             vUrl = vUrl.replace("long", vLong);
-     
+
             window.location.href = vUrl;
 
             if (place.geometry.viewport) {
