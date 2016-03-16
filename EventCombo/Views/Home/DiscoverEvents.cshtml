@@ -4,6 +4,7 @@
 }
 <link href="~/Content/filter-dropdown.css" rel="stylesheet" />
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/custom-scroll.css" rel="stylesheet" />
 <div id="dvProgress" class="loding_bg"><img src="~/Images/ajax-loader.gif" /></div>
 <div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
     
@@ -136,52 +137,161 @@
                         }
                     </ul>
                 </div>
-                <div class="col-sm-12 no_pad">
+                <div class="col-sm-12 no_pad xs-desk-show">
+                     <div class="col-sm-12 no_pad">
                     <p class="side_desc_fil_head">Event Type</p>
-                    <ul class="nav nav-pills dis_side_fliter_tag dis_side_fliter_scrol">
-                    @if (ViewBag.ETSelected != null)
-                    {
-                        foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
-                        {
-                            <li class="active"><a href="javascript:void(0);"  onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a> <a href="javascript:void(0);" class="can_badg " onclick="DeleteFilterEventType('@item.EventTypeID');">X</a></li>
-                        }
-                        <li><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>
-                    }
-                    else
-                    {
-                        <li class="active"><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>
-                    }
-                    
-                    @foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.Eventtype)
-                    {
-                        <li><a href="javascript:void(0);" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a></li>
-                    }
-                    </ul>
+                        <div class="scrollbox">
+                            <ul class="nav nav-pills dis_side_fliter_tag">
+                                @if (ViewBag.ETSelected != null)
+                                {
+                                    foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
+                                    {
+                                        <li class="active"><a href="javascript:void(0);" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a> <a href="javascript:void(0);" class="can_badg cat_remov" onclick="DeleteFilterEventType('@item.EventTypeID');"> + </a></li>
+                                    }
+                                    <li><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>
+                                }
+                                else
+                                {
+                                    <li class="active"><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>
+                                }
+
+                                @foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.Eventtype)
+                                {
+                                    <li><a href="javascript:void(0);" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a></li>
+                                }
+                            </ul>
+                      </div>
+                    </div>
+                     
+                     <div class="col-sm-12 no_pad mt10 mb10">
+                        <p class="side_desc_fil_head">Category</p>
+                        <div class="scrollbox2">
+                            <ul class="nav nav-pills dis_side_fliter_tag">
+                                @if (ViewBag.ECatSelected != null)
+                                    {
+                                        foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.ECatSelected)
+                                        {
+                                    <li class="active"><a href="javascript:void(0);" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a> <a href="javascript:void(0);" class="can_badg cat_remov" onclick="DeleteFilterEventCategory('@item.EventCategoryID');"> + </a></li>
+                                        }
+                                    <li><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>
+                                    }
+                                    else
+                                    {
+                                    <li class="active"><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>
+                                    }
+
+                                @foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.EventCat)
+                                    {
+                                    <li><a href="javascript:void(0);" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a></li>
+                                    }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-12 no_pad xs-mobile-show">
+                    <div class="col-sm-12 no_pad mb10 mt10">
+                        <ul class="nav nav-pills dis_side_fliter_tag ">
+                            <li class="active">
+                                <a class="" href="#">Event type 1 </a>
+                                <a href="#" class="can_badg cat_remov"> +  </a>
+                            </li>
+                            <li class="active">
+                                <a class="" href="#">Event type 1 </a>
+                                <a href="#" class="can_badg cat_remov"> +  </a>
+                            </li>
+                            <li class="active">
+                                <a class="" href="#">Event type 1 </a>
+                                <a href="#" class="can_badg cat_remov"> +  </a>
+                            </li>
+                            <li class="active">
+                                <a class="" href="#">Event type 1 </a>
+                                <a href="#" class="can_badg cat_remov"> +  </a>
+                            </li>
+                        </ul>
+                        <div class="col-sm-12 DesccatClick mobile_side_desc_fil_head">
+                            Event Type
+                            <span class="float-right"> <i class="glyphicon  glyphicon-triangle-bottom"></i> </span>
+                        </div>
+                        
+                        <div class="Desccatshow categ_type_accord">
+                            <div class="mobilescrollbox">
+                                <ul class="nav nav-pills dis_side_fliter_tag ">
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                   
+                                    
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-12 no_pad mb10">
+                        <ul class="nav nav-pills dis_side_fliter_tag ">
+                            <li class="active">
+                                <a class="" href="#">Event type 1 </a>
+                                <a href="#" class="can_badg cat_remov"> + </a>
+                            </li>
+                            <li class="active">
+                                <a class="" href="#">Event type 1 </a>
+                                <a href="#" class="can_badg cat_remov"> + </a>
+                            </li>
+                            <li class="active">
+                                <a class="" href="#">Event type 1 </a>
+                                <a href="#" class="can_badg cat_remov"> + </a>
+                            </li>
+                            <li class="active">
+                                <a class="" href="#">Event type 1 </a>
+                                <a href="#" class="can_badg cat_remov"> + </a>
+                            </li>
+                        </ul>
+                        <div class="col-sm-12 DesccatClick2 mobile_side_desc_fil_head">
+                            Event Type
+                            <span class="float-right"> <i class="glyphicon  glyphicon-triangle-bottom"></i> </span>
+                        </div>
+                        
+                        <div class="Desccatshow2 categ_type_accord">
+                            <div class="mobilescrollbox">
+                                <ul class="nav nav-pills dis_side_fliter_tag ">
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                    <li class="">
+                                        <a class="" href="#">Event type 1 </a>
+                                    </li>
+                                    
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 </div>
-                <div class="col-sm-12 no_pad mt10">
-                    <p class="side_desc_fil_head">Category</p>
-                    <ul class="nav nav-pills dis_side_fliter_tag dis_side_fliter_scrol">
-                        @if(ViewBag.ECatSelected != null)
-                        {
-                            foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.ECatSelected)
-                            {
-                                <li class="active"><a href="javascript:void(0);"  onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a> <a href="javascript:void(0);" class="can_badg " onclick="DeleteFilterEventCategory('@item.EventCategoryID');">X</a></li>
-                            }
-                            <li><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>
-                        }
-                        else
-                        {
-                            <li class="active"><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>
-                        }
-                        
-                        @foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.EventCat)
-                        {
-                            <li><a href="javascript:void(0);" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a></li>
-                        }
-                    </ul>
-                </div>
-            </div>
 
         </div>
     </div>
@@ -189,25 +299,27 @@
         <div class="col-sm-12 no_pad">
             @foreach (var item in (PagedList.IPagedList<EventCombo.Models.DiscoverEvent>)ViewBag.DisEvnt)
             {
-                <div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
+                <div class="col-md-4 col-xs-12 col-sm-12 ot_pad">
                     <div class="col-sm-12 col-xs-12 in_shadw no_pad">
                         <div class="col-sm-12 col-xs-12 in_pad">
                             <div class="col-sm-4 no_pad">
                                 <div class="dis_evnt_img"><img  src="@item.EventImage" alt=""></div>
-                                <div class="col-sm-12 no_pad text-center desc_list_event_type">@item.PriceLable</div>
+                                <div class="col-sm-12 no_pad text-center desc_list_event_type desc_list_event_type_dollar">@item.PriceLable</div>
+                             
                             </div>
                             <div class="col-sm-8 no_pad">
                                 <h1 class="list_event_desc_title"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString()})'>@item.EventTitle</a></h1>
                                 <p class="list_event_desc">
-                                    <span class="des_hover">@item.EventAddress </span>
+                                    @item.EventAddress
+                                    @*<span class="des_hover">@item.EventAddress </span>*@
                                     @*<span class="desc_hide">
                                         @item.EventAddress
                                     </span>*@
                                 </p>
                                 <p class="list_event_date_time">@item.EventTimings </p>
-                                   <div class="desc_hide">
+                                   @*<div class="desc_hide">
                                     <p> @item.EventAddress </p>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                         <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
@@ -217,11 +329,11 @@
                                     <li><a href="javascript:void(0);" onclick="FilterEventCategory(@item.EventCatId);">#@item.EventCat </a></li>
                                 </ul>
                             </div>
-                            <div class="col-sm-2 no_pad text-right">
-                                <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                            <div class="col-sm-2 no_pad text-right ">
+                                <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
                                     <i class="fa fa-share-alt"></i>
                                 </button>
-                                <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                                <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn" title="Your Favourite" type="button">
                                     <i class="fa fa-heart"></i>
                                 </button>
                             </div>
@@ -276,6 +388,7 @@
 
 <script src="~/Scripts/bootstrap-datepicker.js"></script>
 <script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/custom-scroll.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
@@ -540,6 +653,14 @@
 
 
     $(document).ready(function () {
+
+        $('.scrollbox').enscroll();
+        $('.scrollbox2').enscroll();
+
+        $('.mobilescrollbox').enscroll();
+        $('.mobilescrollbox2').enscroll();
+
+
         var input = document.getElementById('txtAddress');
         var autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -728,7 +849,7 @@
 
         $("#dvProgress").hide();
 
-
+        
 
 
 
@@ -756,6 +877,22 @@
         $(".CustDateMain").click(function () {
             $('.CustDate').slideToggle(function () {
                 $('.CustDateMain').toggleClass('active');
+            });
+
+        });
+
+        $(".Desccatshow").css({ "display": "none" });
+        $(".DesccatClick").click(function () {
+            $('.Desccatshow').slideToggle(function () {
+                // $('.def_color').toggleClass('active');
+            });
+
+        });
+
+        $(".Desccatshow2").css({ "display": "none" });
+        $(".DesccatClick2").click(function () {
+            $('.Desccatshow2').slideToggle(function () {
+                // $('.def_color').toggleClass('active');
             });
 
         });
