@@ -2062,9 +2062,9 @@ namespace EventCombo.Controllers
                             var lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
                             var givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
 
-                            Email = emailClaim.Value;
-                            firstname = givenNameClaim.Value;
-                            Lastnmae = lastNameClaim.Value;
+                            Email = emailClaim.Value != null ? emailClaim.Value : "";
+                            firstname = givenNameClaim.Value != null ? givenNameClaim.Value : "";
+                            Lastnmae = lastNameClaim.Value != null ? lastNameClaim.Value : "";
 
                         }
                         bool getprofstatus = Getprofiledetails(user1.Id);
@@ -2171,9 +2171,9 @@ namespace EventCombo.Controllers
                     var lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
                     var givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
 
-                    Email = emailClaim.Value;
-                    firstname = givenNameClaim.Value;
-                    Lastnmae = lastNameClaim.Value;
+                    Email = emailClaim.Value!=null? emailClaim.Value:"";
+                    firstname = givenNameClaim.Value!=null? givenNameClaim.Value:"";
+                    Lastnmae = lastNameClaim.Value != null ? lastNameClaim.Value:"";
                     ////request profile image
                     //using (var webClient = new System.Net.WebClient())
                     //{
