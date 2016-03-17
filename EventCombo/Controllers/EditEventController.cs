@@ -28,111 +28,115 @@ namespace EventCombo.Controllers
             if ((Session["AppId"] != null))
             {
 
+                try {
 
-
-                HomeController hmc = new HomeController();
-                string usernme = hmc.getusername();
-                if (string.IsNullOrEmpty(usernme))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                Session["logo"] = "events";
-                Session["Fromname"] = "events";
-                var url = Url.Action("CreateEvent", "CreateEvent");
-                Session["ReturnUrl"] = "CreateEvent~" + url;
-
-                string defaultCountry = "";
-                using (EventComboEntities db = new EventComboEntities())
-                {
-                    var countryQuery = (from c in db.Countries
-                                        orderby c.Country1 ascending
-                                        select c).Distinct();
-                    List<SelectListItem> countryList = new List<SelectListItem>();
-                    defaultCountry = "United States";
-
-                    foreach (var item in countryQuery)
+                    HomeController hmc = new HomeController();
+                    string usernme = hmc.getusername();
+                    if (string.IsNullOrEmpty(usernme))
                     {
-                        countryList.Add(new SelectListItem()
-                        {
-                            Text = item.Country1,
-                            Value = item.CountryID.ToString(),
-                            Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
-                        });
+                        return RedirectToAction("Index", "Home");
                     }
+                    Session["logo"] = "events";
+                    Session["Fromname"] = "events";
+                    var url = Url.Action("CreateEvent", "CreateEvent");
+                    Session["ReturnUrl"] = "CreateEvent~" + url;
 
-                    var rows = (from myRow in db.EventTypes
-                                select myRow).ToList();
-                    List<SelectListItem> EventType = new List<SelectListItem>();
-                    EventType.Add(new SelectListItem()
+                    string defaultCountry = "";
+                    using (EventComboEntities db = new EventComboEntities())
                     {
-                        Text = "Select",
-                        Value = "0",
-                        Selected = true
-                    });
-                    foreach (var item in rows)
-                    {
-                        if (objCr.EventTypeID == item.EventTypeID)
+                        var countryQuery = (from c in db.Countries
+                                            orderby c.Country1 ascending
+                                            select c).Distinct();
+                        List<SelectListItem> countryList = new List<SelectListItem>();
+                        defaultCountry = "United States";
+
+                        foreach (var item in countryQuery)
                         {
-                            EventType.Add(new SelectListItem()
+                            countryList.Add(new SelectListItem()
                             {
-                                Text = item.EventType1,
-                                Value = item.EventTypeID.ToString(),
-                                Selected=true
-
+                                Text = item.Country1,
+                                Value = item.CountryID.ToString(),
+                                Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
                             });
                         }
-                        else
-                        {
-                            EventType.Add(new SelectListItem()
-                            {
-                                Text = item.EventType1,
-                                Value = item.EventTypeID.ToString()
-                            });
-                        }
-                    }
 
-
-                    var EventCat = (from myRow in db.EventCategories
+                        var rows = (from myRow in db.EventTypes
                                     select myRow).ToList();
-                    List<SelectListItem> EventCategory = new List<SelectListItem>();
-                    EventCategory.Add(new SelectListItem()
-                    {
-                        Text = "Select",
-                        Value = "0",
-                        Selected = true
-                    });
-                    foreach (var item in EventCat)
-                    {
-                        if (item.EventCategoryID == objCr.EventCategoryID)
+                        List<SelectListItem> EventType = new List<SelectListItem>();
+                        EventType.Add(new SelectListItem()
                         {
-                            EventCategory.Add(new SelectListItem()
-                            {
-                                Text = item.EventCategory1,
-                                Value = item.EventCategoryID.ToString(),
-                                Selected=true
-                            });
-                        }
-                        else
+                            Text = "Select",
+                            Value = "0",
+                            Selected = true
+                        });
+                        foreach (var item in rows)
                         {
-                            EventCategory.Add(new SelectListItem()
+                            if (objCr.EventTypeID == item.EventTypeID)
                             {
-                                Text = item.EventCategory1,
-                                Value = item.EventCategoryID.ToString()
-                                
-                            });
+                                EventType.Add(new SelectListItem()
+                                {
+                                    Text = item.EventType1,
+                                    Value = item.EventTypeID.ToString(),
+                                    Selected = true
+
+                                });
+                            }
+                            else
+                            {
+                                EventType.Add(new SelectListItem()
+                                {
+                                    Text = item.EventType1,
+                                    Value = item.EventTypeID.ToString()
+                                });
+                            }
                         }
+
+
+                        var EventCat = (from myRow in db.EventCategories
+                                        select myRow).ToList();
+                        List<SelectListItem> EventCategory = new List<SelectListItem>();
+                        EventCategory.Add(new SelectListItem()
+                        {
+                            Text = "Select",
+                            Value = "0",
+                            Selected = true
+                        });
+                        foreach (var item in EventCat)
+                        {
+                            if (item.EventCategoryID == objCr.EventCategoryID)
+                            {
+                                EventCategory.Add(new SelectListItem()
+                                {
+                                    Text = item.EventCategory1,
+                                    Value = item.EventCategoryID.ToString(),
+                                    Selected = true
+                                });
+                            }
+                            else
+                            {
+                                EventCategory.Add(new SelectListItem()
+                                {
+                                    Text = item.EventCategory1,
+                                    Value = item.EventCategoryID.ToString()
+
+                                });
+                            }
+                        }
+
+
+                        ViewBag.CountryID = countryList;
+                        ViewBag.EventType = EventType;
+                        ViewBag.ddlEventCategory = EventCategory;
+
                     }
 
 
-                    ViewBag.CountryID = countryList;
-                    ViewBag.EventType = EventType;
-                    ViewBag.ddlEventCategory = EventCategory;
-
+                    EventCreation ObjEV = new EventCreation();
+                    ObjEV.EventTitle = "Form Editing";
+                }catch(Exception ex)
+                {
+                    ExceptionLogging.SendErrorToText(ex);
                 }
-
-
-                EventCreation ObjEV = new EventCreation();
-                ObjEV.EventTitle = "Form Editing";
 
 
                 return View(objCr);
@@ -147,192 +151,198 @@ namespace EventCombo.Controllers
       
         public ActionResult ModifyEvent(string Eventid)
         {
+            EventCreation objCr = new EventCreation();
             if ((Session["AppId"] != null))
             {
-                var vRefferer = ControllerContext.HttpContext.Request.UrlReferrer;
-                if (vRefferer.ToString().ToLower().Contains("createevent") == true)
-                    TempData["IsNewEvent"] = "Y";
-                else if (vRefferer.ToString().ToLower().Contains("modifyevent") == true)
-                    TempData["IsNewEvent"] = "M";
-                else
-                    TempData["IsNewEvent"] = "N";
+                try {
+                    var vRefferer = ControllerContext.HttpContext.Request.UrlReferrer;
+                    if (vRefferer.ToString().ToLower().Contains("createevent") == true)
+                        TempData["IsNewEvent"] = "Y";
+                    else if (vRefferer.ToString().ToLower().Contains("modifyevent") == true)
+                        TempData["IsNewEvent"] = "M";
+                    else
+                        TempData["IsNewEvent"] = "N";
 
 
 
-                long EventIid = 0;
-                string Isadmin = "N";
-                if (Eventid.Contains("ß"))
-                {
-                    var res = Eventid.Split('ß');
-
-                    EventIid = long.Parse(res[0]);
-                    Isadmin = "Y";
-                }
-                else
-                {
-                    EventIid = long.Parse(Eventid);
-                }
-
-            ValidationMessageController vmc = new ValidationMessageController();
-            EventIid = vmc.GetLatestEventId(EventIid);
-            EventCreation objCr = GetEventDataEditing(EventIid);
-            if (objCr == null) return RedirectToAction("Index", "Home");
-          
-                if (Session["AppId"].ToString().Trim() != objCr.UserID.Trim())
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
-                string usernme = hmc.getusername();
-                if (string.IsNullOrEmpty(usernme))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                Session["logo"] = "events";
-                Session["Fromname"] = "events";
-                var url = Url.Action("CreateEvent", "CreateEvent");
-                Session["ReturnUrl"] = "CreateEvent~" + url;
-
-                string defaultCountry = "";
-                string timezone = objCr.TimeZone != null ? objCr.TimeZone : "";
-                using (EventComboEntities db = new EventComboEntities())
-                {
-                    var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
-                    List<SelectListItem> Timezonelist = new List<SelectListItem>();
-                    foreach(var item in Timezone)
+                    long EventIid = 0;
+                    string Isadmin = "N";
+                    if (Eventid.Contains("ß"))
                     {
-                        Timezonelist.Add(new SelectListItem()
-                        {
-                            Text = item.TimeZone_Name.ToString(),
-                            Value = item.TimeZone_Id.ToString(),
-                            Selected = (item.TimeZone_Id.ToString().Trim() == timezone.Trim() ? true : false)
+                        var res = Eventid.Split('ß');
 
-                        });
+                        EventIid = long.Parse(res[0]);
+                        Isadmin = "Y";
+                    }
+                    else
+                    {
+                        EventIid = long.Parse(Eventid);
                     }
 
-                    var countryQuery = (from c in db.Countries
-                                        orderby c.Country1 ascending
-                                        select c).Distinct();
-                    List<SelectListItem> countryList = new List<SelectListItem>();
-                    defaultCountry = "United States";
+                    ValidationMessageController vmc = new ValidationMessageController();
+                    EventIid = vmc.GetLatestEventId(EventIid);
+                     objCr = GetEventDataEditing(EventIid);
+                    if (objCr == null) return RedirectToAction("Index", "Home");
 
-                    foreach (var item in countryQuery)
+                    if (Session["AppId"].ToString().Trim() != objCr.UserID.Trim())
                     {
-                        countryList.Add(new SelectListItem()
-                        {
-                            Text = item.Country1,
-                            Value = item.CountryID.ToString(),
-                            Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
-                        });
+                        return RedirectToAction("Index", "Home");
                     }
+                    HomeController hmc = new HomeController();
+                    hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                    string usernme = hmc.getusername();
+                    if (string.IsNullOrEmpty(usernme))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    Session["logo"] = "events";
+                    Session["Fromname"] = "events";
+                    var url = Url.Action("CreateEvent", "CreateEvent");
+                    Session["ReturnUrl"] = "CreateEvent~" + url;
 
-                    var rows = (from myRow in db.EventTypes
-                                where myRow.EventHide == "N" || string.IsNullOrEmpty(myRow.EventHide)
-                                select myRow).ToList();
-                    List<SelectListItem> EventType = new List<SelectListItem>();
-                    EventType.Add(new SelectListItem()
+                    string defaultCountry = "";
+                    string timezone = objCr.TimeZone != null ? objCr.TimeZone : "";
+                    using (EventComboEntities db = new EventComboEntities())
                     {
-                        Text = "Select",
-                        Value = "0",
-                        Selected = true
-                    });
-                    foreach (var item in rows)
-                    {
-                        if (objCr.EventTypeID == item.EventTypeID)
+                        var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
+                        List<SelectListItem> Timezonelist = new List<SelectListItem>();
+                        foreach (var item in Timezone)
                         {
-                            EventType.Add(new SelectListItem()
+                            Timezonelist.Add(new SelectListItem()
                             {
-                                Text = item.EventType1,
-                                Value = item.EventTypeID.ToString(),
-                                Selected = true
+                                Text = item.TimeZone_Name.ToString(),
+                                Value = item.TimeZone_Id.ToString(),
+                                Selected = (item.TimeZone_Id.ToString().Trim() == timezone.Trim() ? true : false)
 
                             });
                         }
-                        else
+
+                        var countryQuery = (from c in db.Countries
+                                            orderby c.Country1 ascending
+                                            select c).Distinct();
+                        List<SelectListItem> countryList = new List<SelectListItem>();
+                        defaultCountry = "United States";
+
+                        foreach (var item in countryQuery)
                         {
-                            EventType.Add(new SelectListItem()
+                            countryList.Add(new SelectListItem()
                             {
-                                Text = item.EventType1,
-                                Value = item.EventTypeID.ToString()
+                                Text = item.Country1,
+                                Value = item.CountryID.ToString(),
+                                Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
                             });
                         }
-                    }
 
-
-                    var EventCat = (from myRow in db.EventCategories
+                        var rows = (from myRow in db.EventTypes
+                                    where myRow.EventHide == "N" || string.IsNullOrEmpty(myRow.EventHide)
                                     select myRow).ToList();
-                    List<SelectListItem> EventCategory = new List<SelectListItem>();
-                    EventCategory.Add(new SelectListItem()
-                    {
-                        Text = "Select",
-                        Value = "0",
-                        Selected = true
-                    });
-                    foreach (var item in EventCat)
-                    {
-                        if (item.EventCategoryID == objCr.EventCategoryID)
+                        List<SelectListItem> EventType = new List<SelectListItem>();
+                        EventType.Add(new SelectListItem()
                         {
-                            EventCategory.Add(new SelectListItem()
-                            {
-                                Text = item.EventCategory1,
-                                Value = item.EventCategoryID.ToString(),
-                                Selected = true
-                            });
-                        }
-                        else
+                            Text = "Select",
+                            Value = "0",
+                            Selected = true
+                        });
+                        foreach (var item in rows)
                         {
-                            EventCategory.Add(new SelectListItem()
+                            if (objCr.EventTypeID == item.EventTypeID)
                             {
-                                Text = item.EventCategory1,
-                                Value = item.EventCategoryID.ToString()
+                                EventType.Add(new SelectListItem()
+                                {
+                                    Text = item.EventType1,
+                                    Value = item.EventTypeID.ToString(),
+                                    Selected = true
 
-                            });
+                                });
+                            }
+                            else
+                            {
+                                EventType.Add(new SelectListItem()
+                                {
+                                    Text = item.EventType1,
+                                    Value = item.EventTypeID.ToString()
+                                });
+                            }
                         }
+
+
+                        var EventCat = (from myRow in db.EventCategories
+                                        select myRow).ToList();
+                        List<SelectListItem> EventCategory = new List<SelectListItem>();
+                        EventCategory.Add(new SelectListItem()
+                        {
+                            Text = "Select",
+                            Value = "0",
+                            Selected = true
+                        });
+                        foreach (var item in EventCat)
+                        {
+                            if (item.EventCategoryID == objCr.EventCategoryID)
+                            {
+                                EventCategory.Add(new SelectListItem()
+                                {
+                                    Text = item.EventCategory1,
+                                    Value = item.EventCategoryID.ToString(),
+                                    Selected = true
+                                });
+                            }
+                            else
+                            {
+                                EventCategory.Add(new SelectListItem()
+                                {
+                                    Text = item.EventCategory1,
+                                    Value = item.EventCategoryID.ToString()
+
+                                });
+                            }
+                        }
+
+
+                        ViewBag.CountryID = countryList;
+                        ViewBag.EventType = EventType;
+                        ViewBag.ddlEventCategory = EventCategory;
+                        ViewBag.Timezonelist = Timezonelist;
+                        var Images = (from myEvent in db.EventImages
+                                      where myEvent.EventID == EventIid
+                                      select myEvent).ToList();
+
+                        List<image> eList = new List<image>();
+                        if (Images != null)
+                        {
+                            int count = Images.Count;
+                            int k = 0;
+
+                            foreach (EventImage Objimg in Images)
+                            {
+
+                                var path = "/Images/events/event_flyers/imagepath/" + Objimg.EventImageUrl;
+                                image img = new image();
+                                img.type = Objimg.ImageType;
+                                img.name = Objimg.EventImageUrl;
+                                img.file = path;
+                                eList.Add(img);
+
+
+                            }
+
+                        }
+                        var javaScriptSerializer = new
+        System.Web.Script.Serialization.JavaScriptSerializer();
+                        string jsonString = javaScriptSerializer.Serialize(eList);
+
+                        ViewData["Image"] = jsonString.ToString();
+
+
                     }
 
 
-                    ViewBag.CountryID = countryList;
-                    ViewBag.EventType = EventType;
-                    ViewBag.ddlEventCategory = EventCategory;
-                    ViewBag.Timezonelist = Timezonelist;
-                    var Images = (from myEvent in db.EventImages
-                                  where myEvent.EventID == EventIid
-                                  select myEvent).ToList();
-            
-                    List<image> eList = new List<image>();
-                    if (Images != null)
-                    {
-                        int count = Images.Count;
-                        int k = 0;
-                       
-                        foreach (EventImage Objimg in Images)
-                        {
-                          
-                            var path = "/Images/events/event_flyers/imagepath/" + Objimg.EventImageUrl;
-                            image img = new image();
-                            img.type = Objimg.ImageType;
-                            img.name = Objimg.EventImageUrl;
-                            img.file = path;
-                            eList.Add(img);
-
-
-                        }
-                       
-                    }
-                    var javaScriptSerializer = new
-    System.Web.Script.Serialization.JavaScriptSerializer();
-                    string jsonString = javaScriptSerializer.Serialize(eList);
-                 
-                    ViewData["Image"] = jsonString.ToString();
-
-
+                    EventCreation ObjEV = new EventCreation();
+                    ObjEV.EventTitle = "Form Editing";
+                    objCr.Isadmin = Isadmin;
+                }catch(Exception ex)
+                {
+                    ExceptionLogging.SendErrorToText(ex);
                 }
-
-
-                EventCreation ObjEV = new EventCreation();
-                ObjEV.EventTitle = "Form Editing";
-                objCr.Isadmin = Isadmin;
 
                 return View(objCr);
             }
@@ -376,6 +386,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionLogging.SendErrorToText(ex);
                 return strHtml.ToString();
 
             }
@@ -409,6 +420,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionLogging.SendErrorToText(ex);
                 return strHtml.ToString();
 
             }
@@ -437,6 +449,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionLogging.SendErrorToText(ex);
                 return "Y";
 
             }
@@ -769,6 +782,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionLogging.SendErrorToText(ex);
                 return 0;
             }
             return lEventId;
@@ -844,634 +858,639 @@ namespace EventCombo.Controllers
             GetEventData objJson = new GetEventData();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                var Event = (from myEnt in objEnt.Events where myEnt.EventID == EventIid select myEnt).FirstOrDefault();
+                try {
+                    var Event = (from myEnt in objEnt.Events where myEnt.EventID == EventIid select myEnt).FirstOrDefault();
 
-                var ev = (from myEvent in objEnt.EventVenues
-                          where myEvent.EventID == EventIid
-                          select myEvent).FirstOrDefault();
-                if (ev != null)
-                {
+                    var ev = (from myEvent in objEnt.EventVenues
+                              where myEvent.EventID == EventIid
+                              select myEvent).FirstOrDefault();
+                    if (ev != null)
+                    {
+                        objJson.EventID = Event.EventID;
+                        objJson.EventStartDate = Convert.ToString(ev.EventStartDate);
+                        objJson.EventStartTime = ev.EventStartTime;
+                        objJson.EventEndDate = ev.EventEndDate;
+                        objJson.EventEndTime = ev.EventEndTime;
+
+
+                        objJson.MultipleSchTime = "S";
+                    }
+
+
+
+
+                    var Mv = (from myEvent in objEnt.MultipleEvents
+                              where myEvent.EventID == EventIid
+                              select myEvent).FirstOrDefault();
+
+                    if (Mv != null)
+                    {
+                        objJson.Frequency = Mv.Frequency;
+                        objJson.WeeklyDay = Mv.WeeklyDay;
+                        objJson.MonthlyDay = Mv.MonthlyDay;
+                        objJson.MonthlyWeek = Mv.MonthlyWeek;
+                        objJson.MonthlyWeekDays = Mv.MonthlyWeekDays;
+                        objJson.StartingFrom = Mv.StartingFrom;
+                        objJson.StartingTo = Mv.StartingTo;
+                        objJson.StartTime = Mv.StartTime;
+                        objJson.EndTime = Mv.EndTime;
+                        objJson.MultipleSchTime = "M";
+                    }
+
+
+                    var Addr = (from myEvent in objEnt.Addresses
+                                where myEvent.EventId == EventIid
+                                select myEvent).ToList();
+                    StringBuilder strHTML = new StringBuilder();
+                    int i = 0;
+                    foreach (Address objAdd in Addr)
+                    {
+                        i = i + 1;
+                        if (i == 1) { objJson.FirstAddress = objAdd.ConsolidateAddress; }
+                        strHTML.Append("<tr>");
+                        strHTML.Append("<td style='display: none'>");
+                        strHTML.Append(i);
+                        strHTML.Append("</td>");
+
+                        strHTML.Append("<td style='display: none'>  <input type = 'hidden' id = VenueId" + i.ToString() + " value = '" + objAdd.AddressID + "' /></td>");
+                        strHTML.Append("<td style='display: none'> <input type='text' name='' id=VenueName" + i.ToString() + " style='width: 100px;'  value='" + objAdd.VenueName + "' /></td>");
+                        strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address1" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Address1 + "' /></td>");
+                        strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address2" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Address2 + "' /></td>");
+                        strHTML.Append("<td style='display: none'> <input type='text' name='' id=City" + i.ToString() + " style='width: 100px;'  value='" + objAdd.City + "' /></td>");
+                        strHTML.Append("<td style='display: none'> <input type='text' name='' id=State" + i.ToString() + " style='width: 100px;'  value='" + objAdd.State + "' /></td>");
+                        strHTML.Append("<td style='display: none'> <input type='text' name='' id=Zip" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Zip + "' /></td>");
+                        strHTML.Append("<td style='display: none'> <input type='text' name='' id=CountryID" + i.ToString() + " style='width: 100px;'  value='" + objAdd.CountryID + "' /></td>");
+                        strHTML.Append("<td style='display: none'> <input type='text' name='' id=CID" + i.ToString() + " style='width: 100px;'  value='" + objAdd.CountryID + "' /></td>");
+                        strHTML.Append("<td align='left'><label id=consolidate" + i.ToString() + ">" + objAdd.ConsolidateAddress + "</label></td>");
+                        strHTML.Append("<td><div class='trigger mt5 ent_add'><a href = '#' onclick='editRow(" + i.ToString() + ");'><i class='fa fa-map-marker'></i> Edit</a><a href = '#' id='btAddDelete' onclick='DeleteTableRow(" + i.ToString() + ")'>Delete</a> </div> </td>");
+                        strHTML.Append("</tr>");
+
+                        //strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
+                    }
                     objJson.EventID = Event.EventID;
-                    objJson.EventStartDate = Convert.ToString(ev.EventStartDate);
-                    objJson.EventStartTime = ev.EventStartTime;
-                    objJson.EventEndDate = ev.EventEndDate;
-                    objJson.EventEndTime = ev.EventEndTime;
-                  
-                  
-                    objJson.MultipleSchTime = "S";
-                }
-             
-
-
-
-                var Mv = (from myEvent in objEnt.MultipleEvents
-                          where myEvent.EventID == EventIid
-                          select myEvent).FirstOrDefault();
-
-                if (Mv != null)
-                {
-                    objJson.Frequency = Mv.Frequency;
-                    objJson.WeeklyDay = Mv.WeeklyDay;
-                    objJson.MonthlyDay = Mv.MonthlyDay;
-                    objJson.MonthlyWeek = Mv.MonthlyWeek;
-                    objJson.MonthlyWeekDays = Mv.MonthlyWeekDays;
-                    objJson.StartingFrom = Mv.StartingFrom;
-                    objJson.StartingTo = Mv.StartingTo;
-                    objJson.StartTime = Mv.StartTime;
-                    objJson.EndTime = Mv.EndTime;
-                    objJson.MultipleSchTime = "M";
-                }
-
-
-                var Addr = (from myEvent in objEnt.Addresses
-                            where myEvent.EventId == EventIid
-                            select myEvent).ToList();
-                StringBuilder strHTML = new StringBuilder();
-                int i = 0;
-                foreach (Address objAdd in Addr)
-                {
-                    i = i + 1;
-                    if (i == 1) { objJson.FirstAddress = objAdd.ConsolidateAddress; }
-                    strHTML.Append("<tr>");
-                    strHTML.Append("<td style='display: none'>");
-                    strHTML.Append(i);
-                    strHTML.Append("</td>");
-                   
-                    strHTML.Append("<td style='display: none'>  <input type = 'hidden' id = VenueId" + i.ToString() + " value = '" + objAdd.AddressID + "' /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=VenueName" + i.ToString() + " style='width: 100px;'  value='" + objAdd.VenueName + "' /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address1" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Address1 + "' /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Address2" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Address2 + "' /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=City" + i.ToString() + " style='width: 100px;'  value='" + objAdd.City + "' /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=State" + i.ToString() + " style='width: 100px;'  value='" + objAdd.State + "' /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=Zip" + i.ToString() + " style='width: 100px;'  value='" + objAdd.Zip + "' /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=CountryID" + i.ToString() + " style='width: 100px;'  value='" + objAdd.CountryID + "' /></td>");
-                    strHTML.Append("<td style='display: none'> <input type='text' name='' id=CID" + i.ToString() + " style='width: 100px;'  value='" + objAdd.CountryID + "' /></td>");
-                    strHTML.Append("<td align='left'><label id=consolidate" + i.ToString() + ">" + objAdd.ConsolidateAddress + "</label></td>");
-                    strHTML.Append("<td><div class='trigger mt5 ent_add'><a href = '#' onclick='editRow(" + i.ToString() + ");'><i class='fa fa-map-marker'></i> Edit</a><a href = '#' id='btAddDelete' onclick='DeleteTableRow(" + i.ToString() + ")'>Delete</a> </div> </td>");
-                    strHTML.Append("</tr>");
-
-                    //strHTML = strHTML + '<td style="display:none"> <input type="text" name=" " id="' + CellId + '" style="width:100px;" value="' + ColAry[i] + '" /></td>';
-                }
-                objJson.EventID = Event.EventID;
-                objJson.AddressStatus = Event.AddressStatus;
-                objJson.Addresses = strHTML.ToString();
-                objJson.EventDescription = Event.EventDescription;
-                objJson.EventStatus = Event.EventStatus;
-                objJson.timezone = Event.TimeZone;
-                //Tickets Section
-                long capacity = 00000;
-                decimal? percent=0m;
-                decimal? amount=0m;
-                var feestruct = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
-                if(feestruct!=null)
-                {
-                    percent = (feestruct.FS_Percentage!= null ? feestruct.FS_Percentage : 5);
-                    amount = (feestruct.FS_Amount!=null ? feestruct.FS_Amount:0.99m);
-
-                }
-                else
-                {
-                    percent = 5;
-                    amount = 0.99m;
-
-                }
-                var Tick = (from myEvent in objEnt.Tickets
-                            where myEvent.E_Id == EventIid
-                            select myEvent).ToList();
-
-                StringBuilder strticketHtml = new StringBuilder();
-                int j = 0;
-                foreach (Ticket ObjTick in Tick)
-                {
-                    var type = "";
-                    var fee = "";
-                    var ecfee = "";
-                    var total = "";
-                    var custdate = "0";
-                    var Price = "";
-                    var discount = "";
-                    var customerfee = "";
-                    var totaoln = "";
-                    string ecfeepercentage = "", ecamount = "";
-                    var startdate = String.Format("{0:MM/dd/yyyy}", ObjTick.Sale_Start_Date);
-                    var enddate = String.Format("{0:MM/dd/yyyy}", ObjTick.Sale_End_Date);
-                    var untilldate = String.Format("{0:MM/dd/yyyy}", ObjTick.Hide_Untill_Date);
-                    var afterdate = String.Format("{0:MM/dd/yyyy}", ObjTick.Hide_After_Date);
-                    capacity += ObjTick.Qty_Available;
-                    if (ObjTick.Price != null)
+                    objJson.AddressStatus = Event.AddressStatus;
+                    objJson.Addresses = strHTML.ToString();
+                    objJson.EventDescription = Event.EventDescription;
+                    objJson.EventStatus = Event.EventStatus;
+                    objJson.timezone = Event.TimeZone;
+                    //Tickets Section
+                    long capacity = 00000;
+                    decimal? percent = 0m;
+                    decimal? amount = 0m;
+                    var feestruct = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
+                    if (feestruct != null)
                     {
-                        Price = String.Format("{0:#,###,##0.00}", ObjTick.Price);
+                        percent = (feestruct.FS_Percentage != null ? feestruct.FS_Percentage : 5);
+                        amount = (feestruct.FS_Amount != null ? feestruct.FS_Amount : 0.99m);
 
                     }
-                    if (ObjTick.T_Discount != null)
+                    else
                     {
-                        discount = String.Format("{0:#,###,##0.00}", ObjTick.T_Discount);
+                        percent = 5;
+                        amount = 0.99m;
 
                     }
-                    if (ObjTick.TotalPrice != null)
-                    {
-                        totaoln = String.Format("{0:#,###,##0.00}", ObjTick.TotalPrice);
-                    }
-                    if (ObjTick.TicketTypeID == 1)
-                    {
-                        ecfee = "0";
-                        fee = "0";
-                        customerfee = "0";
-                        type = "Free";
-                        total = "0";
-                        ecfeepercentage = "0";
-                        ecamount = "0";
-                    }
-                    if (ObjTick.TicketTypeID == 2)
-                    {
+                    var Tick = (from myEvent in objEnt.Tickets
+                                where myEvent.E_Id == EventIid
+                                select myEvent).ToList();
 
-                        total = ObjTick.TotalPrice.ToString();
-                        var ecfeenew= 0m;
-                        if(ObjTick.EC_Fee!=null)
+                    StringBuilder strticketHtml = new StringBuilder();
+                    int j = 0;
+                    foreach (Ticket ObjTick in Tick)
+                    {
+                        var type = "";
+                        var fee = "";
+                        var ecfee = "";
+                        var total = "";
+                        var custdate = "0";
+                        var Price = "";
+                        var discount = "";
+                        var customerfee = "";
+                        var totaoln = "";
+                        string ecfeepercentage = "", ecamount = "";
+                        var startdate = String.Format("{0:MM/dd/yyyy}", ObjTick.Sale_Start_Date);
+                        var enddate = String.Format("{0:MM/dd/yyyy}", ObjTick.Sale_End_Date);
+                        var untilldate = String.Format("{0:MM/dd/yyyy}", ObjTick.Hide_Untill_Date);
+                        var afterdate = String.Format("{0:MM/dd/yyyy}", ObjTick.Hide_After_Date);
+                        capacity += ObjTick.Qty_Available;
+                        if (ObjTick.Price != null)
                         {
-                            ecfeenew = ((decimal.Parse(Price) * percent) / 100) + amount??0;
-                           
+                            Price = String.Format("{0:#,###,##0.00}", ObjTick.Price);
+
                         }
+                        if (ObjTick.T_Discount != null)
+                        {
+                            discount = String.Format("{0:#,###,##0.00}", ObjTick.T_Discount);
 
-                        ecfee= String.Format("{0:#,###,##0.00}",(ObjTick.EC_Fee!=null?  ObjTick.EC_Fee: ecfeenew));
-                      
-                        type = "Paid";
-                    }
-                    if (ObjTick.TicketTypeID == 3)
-                    {
-                       
-
-                        ecfee = "0";
-                        fee = "0";
-                        type = "Donate";
-                    }
-                    if (ObjTick.TicketTypeID != 1)
-                    {
-                        customerfee = String.Format("{0:#,###,##0.00}", (ObjTick.Customer_Fee != null ? ObjTick.Customer_Fee : 0));
-
-                        ecfeepercentage = (ObjTick.T_Ecpercent != null ? ObjTick.T_Ecpercent.ToString() : percent.ToString());
-                        ecamount = String.Format("{0:#,###,##0.00}", (ObjTick.T_EcAmount != null ? ObjTick.T_EcAmount : amount));
-                    }
-                    strticketHtml.Append("<div id='clonediv-" + j + "' class='ticket_haeding ev_ticket_haeding mt10 pb10' tabindex='-1'>");
-                    strticketHtml.Append("<div class='col-sm-10 col-xs-12' ><div class='col-sm-1 text-center no_pad ev_row_mov'>");
-                    strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");
-                    strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value='"+ObjTick.T_Id+"'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_ecfeeback_id-" + j + "'  value='" + ecfee + "'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_ecpercentback_id-" + j + "'  value='" + ecfeepercentage + "'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_ecammountback_id-" + j + "'  value='" + ecamount + "'/>");
-                    strticketHtml.Append("<input type='hidden' id='id_order-" + j + "' value='" + ObjTick.T_order + "' />");
-                    strticketHtml.Append("<input type='hidden' id='id_Tickettype-" + j + "' value=" + type + " />");
-                    strticketHtml.Append("<input type='hidden' id=id_fee-" + j + " value=" + customerfee + " />");
-                    strticketHtml.Append("<input type='hidden' id='id_total-" + j + "' value=" + total + " />");
-                    strticketHtml.Append("<input type='hidden' id='id_customize-" + j + "' value=" + (ObjTick.T_Customize!=null? ObjTick.T_Customize:"0") + " />");
-
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<input type='hidden' id='id_feetype-" + j + "' value='" + ObjTick.Fees_Type + "' />");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='hidden' value='0' id='id_feetype-" + j + "' />");
-                    }
-                    strticketHtml.Append("<input type='text' value='0 id=id_totalamt-" + j + "' hidden /> ");
-                    strticketHtml.Append("<input type='text' value='0' id='id_msg-" + j + "' hidden />");
-                    strticketHtml.Append("</div>");
-                    strticketHtml.Append("<div class='col-sm-3 no_pad'>");
-                    strticketHtml.Append("<div class='form-group'>");
-                    strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel'>Ticket</label>");
-                    strticketHtml.Append("<div class='col-sm-8'>");
-                    if (ObjTick.TicketTypeID == 3)
-                    {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont chkvalidation' id='id_ticket_type-" + j + "' placeholder='Dontion' maxlength='256' title='Donation'  value='" + ObjTick.T_name + "'  onblur='checkvalidatetkt(this.id)' />");
-
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont chkvalidation' id='id_ticket_type-" + j + "' placeholder='Early Bird, RSVP...' maxlength='256' title='Give your ticket a name, like General Admission, Early Bird, RSVP, etc.'  value='" + ObjTick.T_name + "' />");
-
-                    }
-                    strticketHtml.Append("</div>");
-                    strticketHtml.Append("</div>");
-                    strticketHtml.Append("</div>");
-                    strticketHtml.Append("<div class='col-sm-2 no_pad'><div class='form-group'>");
-                    strticketHtml.Append("<label class='col-sm-3 control-label ev_tickt_lebel'>Qty</label>");
-                    strticketHtml.Append("<div class='col-sm-9'>");
-                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont txtsum numbers' id='id_quantity_total-" + j + "' maxlength='6' placeholder='' onblur='changeqty(this.id)' onkeypress='allownumber(this,event,this.id)' value='" + ObjTick.Qty_Available + "' />");
-                    strticketHtml.Append("</div></div> </div>");
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<div class='col-sm-3 no_pad'><div class='form-group paidticket-" + j + "' id='id_paid-" + j + "'>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<div class='col-sm-3 no_pad'><div class='form-group paidticket-" + j + "' id='id_paid-" + j + "' style='display:none;'>");
-                    }
-                    strticketHtml.Append("<label class='col-sm-5 no_pad control-label ev_tickt_lebel'>Price $</label>");
-                    strticketHtml.Append("<div class='col-sm-7'>");
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' value=" + Price + " />");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' />");
-
-                    }
-                    strticketHtml.Append("</div></div>");
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<div class='form-group normalticket-" + j + "' style='display:none; text-align:center;' id='id_normal-" + j + "'>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<div class='form-group normalticket-" + j + "' style='display:block; text-align:center;' id='id_normal-" + j + "'>");
-
-                    }
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<label class='col-sm-4 no_pad control-label ev_tickt_lebel' id='id_paymenttype-" + j + "'/>");
-                    }
-                    else if (ObjTick.TicketTypeID == 1)
-                    {
-                        strticketHtml.Append("<label class='col-sm-4 no_pad control-label ev_tickt_lebel' id='id_paymenttype-" + j + "'>Free</label>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<label class='col-sm-4 no_pad control-label ev_tickt_lebel' id='id_paymenttype-" + j + "'>Donation</label>");
-                    }
-                    strticketHtml.Append("</div>");
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<div class='label-control lbl_bot_price paidticket-" + j + "' id='idlbuyertotal-" + j + "'>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<div class='label-control lbl_bot_price paidticket-" + j + "' id='idlbuyertotal-" + j + "' style='display:none;'>");
-
-                    }
-                    strticketHtml.Append("<span class='buyer_tot'>Buyer(s) total: </span>");
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<span class='buyer_price' id='id_buyerprice-" + j + "' >$" + totaoln + "</span>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<span class='buyer_price' id='id_buyerprice-" + j + "' >$0.00 </span>");
-
-                    }
-                    strticketHtml.Append("<span class='evnt_toltip'><i class='fa fa-info-circle'></i></span>");
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<div class='tooltip' id='id_tooltip-" + j + "'>Ticket Price &nbsp; &nbsp; &nbsp; $" + Price + " <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $" + customerfee + " <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $" + totaoln + "</div>");
-
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<div class='tooltip' id='id_tooltip-" + j + "'>Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>");
-
-                    }
-                    strticketHtml.Append("<label class='pull-right' style='color:red;display:none;' id='id_lblprice-" + j + "'>Please enter valid number</label>");
-                    strticketHtml.Append("</div>  <div class='clearfix'></div></div><div class='col-sm-3 no_pad xs768det-del'>");
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<div class='form-group paidticket-" + j + "' id='id_Disc-" + j + "' style='display:block;'>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<div class='form-group paidticket-" + j + "' id='id_Disc-" + j + "' style='display:none;'>");
-
-                    }
-                    strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel'>Disc.$</label>");
-                    strticketHtml.Append("<div class='col-sm-8'>");
-                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)'  onblur='tofixed(this.id)' maxlength='9' value='" + discount + "' />");
-                    strticketHtml.Append("</div></div></div>");
-                    strticketHtml.Append("<div class='clearfix'></div>");
-                    if (Isadmin == "Y")
-                    {
+                        }
+                        if (ObjTick.TotalPrice != null)
+                        {
+                            totaoln = String.Format("{0:#,###,##0.00}", ObjTick.TotalPrice);
+                        }
                         if (ObjTick.TicketTypeID == 1)
                         {
-                            strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad  adminvis' id='isadmin-" + j + "' style='display:none;'>");
+                            ecfee = "0";
+                            fee = "0";
+                            customerfee = "0";
+                            type = "Free";
+                            total = "0";
+                            ecfeepercentage = "0";
+                            ecamount = "0";
+                        }
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+
+                            total = ObjTick.TotalPrice.ToString();
+                            var ecfeenew = 0m;
+                            if (ObjTick.EC_Fee != null)
+                            {
+                                ecfeenew = ((decimal.Parse(Price) * percent) / 100) + amount ?? 0;
+
+                            }
+
+                            ecfee = String.Format("{0:#,###,##0.00}", (ObjTick.EC_Fee != null ? ObjTick.EC_Fee : ecfeenew));
+
+                            type = "Paid";
+                        }
+                        if (ObjTick.TicketTypeID == 3)
+                        {
+
+
+                            ecfee = "0";
+                            fee = "0";
+                            type = "Donate";
+                        }
+                        if (ObjTick.TicketTypeID != 1)
+                        {
+                            customerfee = String.Format("{0:#,###,##0.00}", (ObjTick.Customer_Fee != null ? ObjTick.Customer_Fee : 0));
+
+                            ecfeepercentage = (ObjTick.T_Ecpercent != null ? ObjTick.T_Ecpercent.ToString() : percent.ToString());
+                            ecamount = String.Format("{0:#,###,##0.00}", (ObjTick.T_EcAmount != null ? ObjTick.T_EcAmount : amount));
+                        }
+                        strticketHtml.Append("<div id='clonediv-" + j + "' class='ticket_haeding ev_ticket_haeding mt10 pb10' tabindex='-1'>");
+                        strticketHtml.Append("<div class='col-sm-10 col-xs-12' ><div class='col-sm-1 text-center no_pad ev_row_mov'>");
+                        strticketHtml.Append("<span class='ev_row_icn'><i class='fa fa-ellipsis-v'></i></span>");
+                        strticketHtml.Append("<input type='hidden' id='id_ticket_id-" + j + "'  value='" + ObjTick.T_Id + "'/>");
+                        strticketHtml.Append("<input type='hidden' id='id_ecfeeback_id-" + j + "'  value='" + ecfee + "'/>");
+                        strticketHtml.Append("<input type='hidden' id='id_ecpercentback_id-" + j + "'  value='" + ecfeepercentage + "'/>");
+                        strticketHtml.Append("<input type='hidden' id='id_ecammountback_id-" + j + "'  value='" + ecamount + "'/>");
+                        strticketHtml.Append("<input type='hidden' id='id_order-" + j + "' value='" + ObjTick.T_order + "' />");
+                        strticketHtml.Append("<input type='hidden' id='id_Tickettype-" + j + "' value=" + type + " />");
+                        strticketHtml.Append("<input type='hidden' id=id_fee-" + j + " value=" + customerfee + " />");
+                        strticketHtml.Append("<input type='hidden' id='id_total-" + j + "' value=" + total + " />");
+                        strticketHtml.Append("<input type='hidden' id='id_customize-" + j + "' value=" + (ObjTick.T_Customize != null ? ObjTick.T_Customize : "0") + " />");
+
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<input type='hidden' id='id_feetype-" + j + "' value='" + ObjTick.Fees_Type + "' />");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type='hidden' value='0' id='id_feetype-" + j + "' />");
+                        }
+                        strticketHtml.Append("<input type='text' value='0 id=id_totalamt-" + j + "' hidden /> ");
+                        strticketHtml.Append("<input type='text' value='0' id='id_msg-" + j + "' hidden />");
+                        strticketHtml.Append("</div>");
+                        strticketHtml.Append("<div class='col-sm-3 no_pad'>");
+                        strticketHtml.Append("<div class='form-group'>");
+                        strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel'>Ticket</label>");
+                        strticketHtml.Append("<div class='col-sm-8'>");
+                        if (ObjTick.TicketTypeID == 3)
+                        {
+                            strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont chkvalidation' id='id_ticket_type-" + j + "' placeholder='Dontion' maxlength='256' title='Donation'  value='" + ObjTick.T_name + "'  onblur='checkvalidatetkt(this.id)' />");
 
                         }
                         else
                         {
-                            strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad  adminvis' id='isadmin-" + j + "' style='display:block;'>");
+                            strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont chkvalidation' id='id_ticket_type-" + j + "' placeholder='Early Bird, RSVP...' maxlength='256' title='Give your ticket a name, like General Admission, Early Bird, RSVP, etc.'  value='" + ObjTick.T_name + "' />");
+
+                        }
+                        strticketHtml.Append("</div>");
+                        strticketHtml.Append("</div>");
+                        strticketHtml.Append("</div>");
+                        strticketHtml.Append("<div class='col-sm-2 no_pad'><div class='form-group'>");
+                        strticketHtml.Append("<label class='col-sm-3 control-label ev_tickt_lebel'>Qty</label>");
+                        strticketHtml.Append("<div class='col-sm-9'>");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont txtsum numbers' id='id_quantity_total-" + j + "' maxlength='6' placeholder='' onblur='changeqty(this.id)' onkeypress='allownumber(this,event,this.id)' value='" + ObjTick.Qty_Available + "' />");
+                        strticketHtml.Append("</div></div> </div>");
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<div class='col-sm-3 no_pad'><div class='form-group paidticket-" + j + "' id='id_paid-" + j + "'>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<div class='col-sm-3 no_pad'><div class='form-group paidticket-" + j + "' id='id_paid-" + j + "' style='display:none;'>");
+                        }
+                        strticketHtml.Append("<label class='col-sm-5 no_pad control-label ev_tickt_lebel'>Price $</label>");
+                        strticketHtml.Append("<div class='col-sm-7'>");
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' value=" + Price + " />");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' />");
+
+                        }
+                        strticketHtml.Append("</div></div>");
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<div class='form-group normalticket-" + j + "' style='display:none; text-align:center;' id='id_normal-" + j + "'>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<div class='form-group normalticket-" + j + "' style='display:block; text-align:center;' id='id_normal-" + j + "'>");
+
+                        }
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<label class='col-sm-4 no_pad control-label ev_tickt_lebel' id='id_paymenttype-" + j + "'/>");
+                        }
+                        else if (ObjTick.TicketTypeID == 1)
+                        {
+                            strticketHtml.Append("<label class='col-sm-4 no_pad control-label ev_tickt_lebel' id='id_paymenttype-" + j + "'>Free</label>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<label class='col-sm-4 no_pad control-label ev_tickt_lebel' id='id_paymenttype-" + j + "'>Donation</label>");
+                        }
+                        strticketHtml.Append("</div>");
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<div class='label-control lbl_bot_price paidticket-" + j + "' id='idlbuyertotal-" + j + "'>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<div class='label-control lbl_bot_price paidticket-" + j + "' id='idlbuyertotal-" + j + "' style='display:none;'>");
+
+                        }
+                        strticketHtml.Append("<span class='buyer_tot'>Buyer(s) total: </span>");
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<span class='buyer_price' id='id_buyerprice-" + j + "' >$" + totaoln + "</span>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<span class='buyer_price' id='id_buyerprice-" + j + "' >$0.00 </span>");
+
+                        }
+                        strticketHtml.Append("<span class='evnt_toltip'><i class='fa fa-info-circle'></i></span>");
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<div class='tooltip' id='id_tooltip-" + j + "'>Ticket Price &nbsp; &nbsp; &nbsp; $" + Price + " <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $" + customerfee + " <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $" + totaoln + "</div>");
+
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<div class='tooltip' id='id_tooltip-" + j + "'>Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>");
+
+                        }
+                        strticketHtml.Append("<label class='pull-right' style='color:red;display:none;' id='id_lblprice-" + j + "'>Please enter valid number</label>");
+                        strticketHtml.Append("</div>  <div class='clearfix'></div></div><div class='col-sm-3 no_pad xs768det-del'>");
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<div class='form-group paidticket-" + j + "' id='id_Disc-" + j + "' style='display:block;'>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<div class='form-group paidticket-" + j + "' id='id_Disc-" + j + "' style='display:none;'>");
+
+                        }
+                        strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel'>Disc.$</label>");
+                        strticketHtml.Append("<div class='col-sm-8'>");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)'  onblur='tofixed(this.id)' maxlength='9' value='" + discount + "' />");
+                        strticketHtml.Append("</div></div></div>");
+                        strticketHtml.Append("<div class='clearfix'></div>");
+                        if (Isadmin == "Y")
+                        {
+                            if (ObjTick.TicketTypeID == 1)
+                            {
+                                strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad  adminvis' id='isadmin-" + j + "' style='display:none;'>");
+
+                            }
+                            else
+                            {
+                                strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad  adminvis' id='isadmin-" + j + "' style='display:block;'>");
+
+                            }
+
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad  adminvis' id='isadmin-" + j + "' style='display:none;'>");
+
+                        }
+                        strticketHtml.Append("<div class='col-sm-1 no_pad ev_row_mov'></div>");
+                        strticketHtml.Append("<div class='col-sm-4 no_pad '>");
+                        strticketHtml.Append("<div class='form-group'>");
+                        strticketHtml.Append("<label class='col-sm-5 no_pad control-label ev_tickt_lebel'>EC Fee</label>");
+                        strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>%</label>");
+                        strticketHtml.Append("<div class='col-sm-6'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_ecfeeper-" + j + "' value=" + ecfeepercentage + "  onkeypress='allownumber(this,event,this.id)' onblur='changeinecfee(this.id)' maxlength=3  />");
+                        strticketHtml.Append("  </div></div></div>");
+                        strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> + </div><div class='col-sm-2 no_pad'><div class='form-group'>");
+                        strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>");
+                        strticketHtml.Append("<div class='col-sm-11'><input type='text' class='form-control evnt_inp_cont'  id='id_ecfeeamt-" + j + "' value=" + ecamount + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id);changeinecfee(this.id)'  maxlength=8 >");
+                        strticketHtml.Append("</div> </div></div>");
+                        strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> =   </div>");
+                        strticketHtml.Append("<div class='col-sm-3 no_pad'>");
+                        strticketHtml.Append("<div class='form-group'> <label class='col-sm-3 no_pad control-label ev_tickt_lebel'>Total:</label>");
+                        strticketHtml.Append(" <div class='col-sm-9'>   <input type='hidden' id='hd_ecfee-" + j + "' value=" + ecfee + " />");
+                        strticketHtml.Append("<label class='form-control evnt_inp_cont' id='id_ecfee-" + j + "'> " + ecfee + " </label>");
+                        strticketHtml.Append("</div></div ></div >");
+                        strticketHtml.Append(" <div class='clearfix'></div>");
+                        strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad mt10'>");
+                        strticketHtml.Append("<div class='col-sm-1 no_pad ev_row_mov'></div>");
+                        strticketHtml.Append("<div class='col-sm-4 no_pad'><div class='form-group'>");
+                        strticketHtml.Append("<label class='col-sm-6 no_pad control-label ev_tickt_lebel'>Cutomer Fee</label>");
+                        strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>");
+                        strticketHtml.Append("<div class='col-sm-5'>");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont'  id='id_customerfee-" + j + "' placeholder='' value=" + customerfee + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id);reflectfeechange(this.id)'  maxlength=8 />");
+                        strticketHtml.Append("<input type='hidden'  id='hd_customerfee-" + j + "' value=" + customerfee + " />");
+                        strticketHtml.Append("<input type='hidden'  id='hd_customchange-" + j + "' value=0 />");
+                        strticketHtml.Append("</div></div ></div ></div ></div> </div>");
+                        strticketHtml.Append("<div class='col-sm-2 col-xs-12 text-right'><div class='col-sm-1 no_pad evnt_sett_main xs768detail'>");
+                        strticketHtml.Append("<div class='nav evnt_setting'>");
+                        strticketHtml.Append("<span class='evnt_set ev_set_more' id='id_setting-" + j + "' onclick='showsettingdiv(this.id);'> Detail</span>");
+                        strticketHtml.Append("<a class='btn ev_set_del_btn evnt_set' id='btndelete-" + j + "' type='button' href='#cnfrmdelete-" + j + "' data-toggle='modal'>");
+                        strticketHtml.Append(" <i class='fa fa-trash'></i></a>");
+                        strticketHtml.Append("</div></div></div><div class='clearfix'></div>");
+                        strticketHtml.Append("<div class='tab-content' id='evnt_set-" + j + "'>");
+                        strticketHtml.Append("<div class='col-sm-12 no_pad'><div class='modal-content evnt_set_panel'><div class='modal-body pb0'> <div class='col-sm-12'>");
+                        strticketHtml.Append("<div class='form-group'><label class='col-sm-2 control-label ev_tickt_lebel pl0'>Description</label><div class='col-sm-6'>");
+                        if (!string.IsNullOrEmpty(ObjTick.T_Desc))
+                        {
+                            strticketHtml.Append("<input type ='text' class='form-control evnt_inp_cont' id='id_descriptionclass-" + j + "' placeholder='Ticket description' maxlength='1000' value='" + ObjTick.T_Desc + "' />");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type ='text' class='form-control evnt_inp_cont' id='id_descriptionclass-" + j + "' placeholder='Ticket description' maxlength='1000'  />");
+
+                        }
+                        strticketHtml.Append(" </div> </div><div class='clearfix'></div><div class='form-group'><label class='label-control pl0 ev_tickt_lebel mt5'>");
+                        if (ObjTick.Show_T_Desc == "0")
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_show_description-" + j + "'/>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_show_description-" + j + "' checked='checked'/>");
+
+                        }
+                        strticketHtml.Append("Show ticket description on event page</label></div><div class='clearfix'></div>");
+                        if (ObjTick.TicketTypeID == 2)
+                        {
+                            strticketHtml.Append("<div class='form-group' id='id_feestruct-" + j + "' style='display:block;'>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<div class='form-group' id='id_feestruct-" + j + "' style='display:none'>");
+
+                        }
+                        strticketHtml.Append("<label class='col-sm-1 control-label ev_tickt_lebel pl0'>Fees</label>");
+                        strticketHtml.Append("<div class='col-sm-5'>");
+                        if (ObjTick.Fees_Type == "0")
+                        {
+                            strticketHtml.Append("<select class='form-control ev_drop_label' id='id_include_ticket_fees-" + j + "' onchange='feechange(this.id)'>");
+
+                            strticketHtml.Append("<option value='0' selected='selected' >customer pays the fees</option>");
+                            strticketHtml.Append("<option value = '1'> I absorb the fee </option ></select > ");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<select class='form-control ev_drop_label' id='id_include_ticket_fees-" + j + "' onchange='feechange(this.id)'>");
+
+                            strticketHtml.Append("<option value='0'>customer pays the fees</option>");
+                            strticketHtml.Append("<option value='1' selected='selected'> I absorb the fee </option ></select > ");
+                        }
+                        strticketHtml.Append("</div></div>");
+                        strticketHtml.Append("<div class='clearfix'></div><div class='form-group mt20'> <div class='col-sm-6 ev_pad_l0'><div class='col-sm-12 no_pad'>");
+                        strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel'>Ticket Sales Start</label></div><div class='col-sm-8 ev_pad_l0'>");
+                        strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_salestart-" + j + "' onchange='changetext(this.id);' value='" + startdate + "' />");
+                        strticketHtml.Append("</div><div class='col-sm-4 no_pad'><input type='hidden' value='0' id='id_hdsaletimestart-" + j + "' value='" + ObjTick.Sale_Start_Time + "' />");
+                        strticketHtml.Append("<input id='id_saletimestart-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Sale_Start_Time + "' />");
+                        strticketHtml.Append("</div></div>");
+                        strticketHtml.Append("<div class='col-sm-6 ev_pad_r0'><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel'>Ticket Sales End</label>");
+                        strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_saleend-" + j + "' onchange='checkvalidDate(this.id)' value='" + enddate + "' />");
+                        strticketHtml.Append("</div><div class='col-sm-4 no_pad'> <input type='hidden' value='0' id='id_hdsaletimeend-" + j + "' value='" + ObjTick.Sale_End_Time + "' />");
+                        strticketHtml.Append("<input id='id_saletimeend-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id) ' value='" + ObjTick.Sale_End_Time + "' />");
+                        strticketHtml.Append("</div> </div></div><div class='clearfix'></div>");
+                        strticketHtml.Append("<div class='form-group'><div class='col-sm-12 mt10 no_pad'>");
+                        strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel mt5'>");
+                        if (ObjTick.Hide_Ticket == "0")
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_ticketshidden-" + j + "' onclick='showdiv(this.id)' />");
+
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_ticketshidden-" + j + "' onclick='showdiv(this.id)' checked='checked' />");
 
                         }
 
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad  adminvis' id='isadmin-" + j + "' style='display:none;'>");
-
-                    }
-                    strticketHtml.Append("<div class='col-sm-1 no_pad ev_row_mov'></div>");
-                    strticketHtml.Append("<div class='col-sm-4 no_pad '>");
-                    strticketHtml.Append("<div class='form-group'>");
-                    strticketHtml.Append("<label class='col-sm-5 no_pad control-label ev_tickt_lebel'>EC Fee</label>");
-                    strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>%</label>");
-                    strticketHtml.Append("<div class='col-sm-6'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_ecfeeper-" + j + "' value=" + ecfeepercentage + "  onkeypress='allownumber(this,event,this.id)' onblur='changeinecfee(this.id)' maxlength=3  />");
-                    strticketHtml.Append("  </div></div></div>");
-                    strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> + </div><div class='col-sm-2 no_pad'><div class='form-group'>");
-                    strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>");
-                    strticketHtml.Append("<div class='col-sm-11'><input type='text' class='form-control evnt_inp_cont'  id='id_ecfeeamt-" + j + "' value=" + ecamount + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id);changeinecfee(this.id)'  maxlength=8 >");
-                    strticketHtml.Append("</div> </div></div>");
-                    strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> =   </div>");
-                    strticketHtml.Append("<div class='col-sm-3 no_pad'>");
-                    strticketHtml.Append("<div class='form-group'> <label class='col-sm-3 no_pad control-label ev_tickt_lebel'>Total:</label>");
-                    strticketHtml.Append(" <div class='col-sm-9'>   <input type='hidden' id='hd_ecfee-" + j + "' value="+ecfee+" />");
-                    strticketHtml.Append("<label class='form-control evnt_inp_cont' id='id_ecfee-" + j + "'> "+ecfee+" </label>");
-                    strticketHtml.Append("</div></div ></div >");
-                    strticketHtml.Append(" <div class='clearfix'></div>");
-                    strticketHtml.Append("<div class='col-sm-12 col-xs-12 no_pad mt10'>");
-                    strticketHtml.Append("<div class='col-sm-1 no_pad ev_row_mov'></div>");
-                    strticketHtml.Append("<div class='col-sm-4 no_pad'><div class='form-group'>");
-                    strticketHtml.Append("<label class='col-sm-6 no_pad control-label ev_tickt_lebel'>Cutomer Fee</label>");
-                    strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>"); 
-                    strticketHtml.Append("<div class='col-sm-5'>");
-                    strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont'  id='id_customerfee-" + j + "' placeholder='' value=" + customerfee + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id);reflectfeechange(this.id)'  maxlength=8 />");
-                    strticketHtml.Append("<input type='hidden'  id='hd_customerfee-" + j + "' value=" + customerfee + " />");
-                    strticketHtml.Append("<input type='hidden'  id='hd_customchange-" + j + "' value=0 />");
-                    strticketHtml.Append("</div></div ></div ></div ></div> </div>");
-                    strticketHtml.Append("<div class='col-sm-2 col-xs-12 text-right'><div class='col-sm-1 no_pad evnt_sett_main xs768detail'>");
-                    strticketHtml.Append("<div class='nav evnt_setting'>");
-                    strticketHtml.Append("<span class='evnt_set ev_set_more' id='id_setting-" + j + "' onclick='showsettingdiv(this.id);'> Detail</span>");
-                    strticketHtml.Append("<a class='btn ev_set_del_btn evnt_set' id='btndelete-" + j + "' type='button' href='#cnfrmdelete-" + j + "' data-toggle='modal'>");
-                    strticketHtml.Append(" <i class='fa fa-trash'></i></a>");
-                    strticketHtml.Append("</div></div></div><div class='clearfix'></div>");
-                    strticketHtml.Append("<div class='tab-content' id='evnt_set-" + j + "'>");
-                    strticketHtml.Append("<div class='col-sm-12 no_pad'><div class='modal-content evnt_set_panel'><div class='modal-body pb0'> <div class='col-sm-12'>");
-                    strticketHtml.Append("<div class='form-group'><label class='col-sm-2 control-label ev_tickt_lebel pl0'>Description</label><div class='col-sm-6'>");
-                    if (!string.IsNullOrEmpty(ObjTick.T_Desc))
-                    {
-                        strticketHtml.Append("<input type ='text' class='form-control evnt_inp_cont' id='id_descriptionclass-" + j + "' placeholder='Ticket description' maxlength='1000' value='" + ObjTick.T_Desc + "' />");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type ='text' class='form-control evnt_inp_cont' id='id_descriptionclass-" + j + "' placeholder='Ticket description' maxlength='1000'  />");
-
-                    }
-                    strticketHtml.Append(" </div> </div><div class='clearfix'></div><div class='form-group'><label class='label-control pl0 ev_tickt_lebel mt5'>");
-                    if (ObjTick.Show_T_Desc == "0")
-                    {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_show_description-" + j + "'/>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_show_description-" + j + "' checked='checked'/>");
-
-                    }
-                    strticketHtml.Append("Show ticket description on event page</label></div><div class='clearfix'></div>");
-                    if (ObjTick.TicketTypeID == 2)
-                    {
-                        strticketHtml.Append("<div class='form-group' id='id_feestruct-" + j + "' style='display:block;'>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<div class='form-group' id='id_feestruct-" + j + "' style='display:none'>");
-
-                    }
-                    strticketHtml.Append("<label class='col-sm-1 control-label ev_tickt_lebel pl0'>Fees</label>");
-                    strticketHtml.Append("<div class='col-sm-5'>");
-                    if (ObjTick.Fees_Type == "0")
-                    {
-                        strticketHtml.Append("<select class='form-control ev_drop_label' id='id_include_ticket_fees-" + j + "' onchange='feechange(this.id)'>");
-
-                        strticketHtml.Append("<option value='0' selected='selected' >customer pays the fees</option>");
-                        strticketHtml.Append("<option value = '1'> I absorb the fee </option ></select > ");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<select class='form-control ev_drop_label' id='id_include_ticket_fees-" + j + "' onchange='feechange(this.id)'>");
-
-                        strticketHtml.Append("<option value='0'>customer pays the fees</option>");
-                        strticketHtml.Append("<option value='1' selected='selected'> I absorb the fee </option ></select > ");
-                    }
-                    strticketHtml.Append("</div></div>");
-                    strticketHtml.Append("<div class='clearfix'></div><div class='form-group mt20'> <div class='col-sm-6 ev_pad_l0'><div class='col-sm-12 no_pad'>");
-                    strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel'>Ticket Sales Start</label></div><div class='col-sm-8 ev_pad_l0'>");
-                    strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_salestart-" + j + "' onchange='changetext(this.id);' value='" + startdate + "' />");
-                    strticketHtml.Append("</div><div class='col-sm-4 no_pad'><input type='hidden' value='0' id='id_hdsaletimestart-" + j + "' value='" + ObjTick.Sale_Start_Time + "' />");
-                    strticketHtml.Append("<input id='id_saletimestart-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Sale_Start_Time + "' />");
-                    strticketHtml.Append("</div></div>");
-                    strticketHtml.Append("<div class='col-sm-6 ev_pad_r0'><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel'>Ticket Sales End</label>");
-                    strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_saleend-" + j + "' onchange='checkvalidDate(this.id)' value='" + enddate + "' />");
-                    strticketHtml.Append("</div><div class='col-sm-4 no_pad'> <input type='hidden' value='0' id='id_hdsaletimeend-" + j + "' value='" + ObjTick.Sale_End_Time + "' />");
-                    strticketHtml.Append("<input id='id_saletimeend-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id) ' value='" + ObjTick.Sale_End_Time + "' />");
-                    strticketHtml.Append("</div> </div></div><div class='clearfix'></div>");
-                    strticketHtml.Append("<div class='form-group'><div class='col-sm-12 mt10 no_pad'>");
-                    strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel mt5'>");
-                    if (ObjTick.Hide_Ticket == "0")
-                    {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_ticketshidden-" + j + "' onclick='showdiv(this.id)' />");
-
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_ticketshidden-" + j + "' onclick='showdiv(this.id)' checked='checked' />");
-
-                    }
-
-                    strticketHtml.Append("Hide this ticket type</label></div>");
-                    if (ObjTick.Auto_Hide_Sche == "1")
-                    {
-                        strticketHtml.Append("<label class='EvaddTkt lbl_bot_text' id='id_EvaddTkt-" + j + "' onclick='hideunhide(this.id);' style='display:none;'>Add ticket auto-hide schedule</label>");
-
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<label class='EvaddTkt lbl_bot_text' id='id_EvaddTkt-" + j + "' onclick='hideunhide(this.id);'>Add ticket auto-hide schedule</label>");
-
-                    }
-                    if (ObjTick.Auto_Hide_Sche == "1")
-                    {
-                        strticketHtml.Append("<label class='RemvTkt label-control lbl_bot_text wd600' id='id_RemvTkt-" + j + "' onclick='hideunhide(this.id);' style='display:block;'>Remove ticket auto-hide schedule</label>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<label class='RemvTkt label-control lbl_bot_text wd600' id='id_RemvTkt-" + j + "' onclick='hideunhide(this.id);' style='display:none;'>Remove ticket auto-hide schedule</label>");
-
-                    }
-                    if (ObjTick.Auto_Hide_Sche == "1")
-                    {
-                        strticketHtml.Append("<div class='CusdateCont evnt_cus_date_cont' id='id_CusdateCont-" + j + "' style='display:block;'>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<div class='CusdateCont evnt_cus_date_cont' id='id_CusdateCont-" + j + "' style='display:none;'>");
-
-                    }
-                    strticketHtml.Append("<div class='col-sm-12'><label class='label-control ev_tickt_lebel fs-13' id='id_TktnotSale-" + j + "' onclick='hideunhide(this.id)'>");
-                    if (ObjTick.Auto_Hide_Sche == "1")
-                    {
-                        if (ObjTick.T_AutoSechduleType == "0")
+                        strticketHtml.Append("Hide this ticket type</label></div>");
+                        if (ObjTick.Auto_Hide_Sche == "1")
                         {
-                            custdate = "1";
-                            strticketHtml.Append("<input type='radio' id='id_auto_hide_type_0-" + j + "'  checked='checked' />");
+                            strticketHtml.Append("<label class='EvaddTkt lbl_bot_text' id='id_EvaddTkt-" + j + "' onclick='hideunhide(this.id);' style='display:none;'>Add ticket auto-hide schedule</label>");
+
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<label class='EvaddTkt lbl_bot_text' id='id_EvaddTkt-" + j + "' onclick='hideunhide(this.id);'>Add ticket auto-hide schedule</label>");
+
+                        }
+                        if (ObjTick.Auto_Hide_Sche == "1")
+                        {
+                            strticketHtml.Append("<label class='RemvTkt label-control lbl_bot_text wd600' id='id_RemvTkt-" + j + "' onclick='hideunhide(this.id);' style='display:block;'>Remove ticket auto-hide schedule</label>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<label class='RemvTkt label-control lbl_bot_text wd600' id='id_RemvTkt-" + j + "' onclick='hideunhide(this.id);' style='display:none;'>Remove ticket auto-hide schedule</label>");
+
+                        }
+                        if (ObjTick.Auto_Hide_Sche == "1")
+                        {
+                            strticketHtml.Append("<div class='CusdateCont evnt_cus_date_cont' id='id_CusdateCont-" + j + "' style='display:block;'>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<div class='CusdateCont evnt_cus_date_cont' id='id_CusdateCont-" + j + "' style='display:none;'>");
+
+                        }
+                        strticketHtml.Append("<div class='col-sm-12'><label class='label-control ev_tickt_lebel fs-13' id='id_TktnotSale-" + j + "' onclick='hideunhide(this.id)'>");
+                        if (ObjTick.Auto_Hide_Sche == "1")
+                        {
+                            if (ObjTick.T_AutoSechduleType == "0")
+                            {
+                                custdate = "1";
+                                strticketHtml.Append("<input type='radio' id='id_auto_hide_type_0-" + j + "'  checked='checked' />");
+                            }
+                            else
+                            {
+                                strticketHtml.Append("<input type='radio' id='id_auto_hide_type_0-" + j + "'   />");
+
+                            }
                         }
                         else
                         {
                             strticketHtml.Append("<input type='radio' id='id_auto_hide_type_0-" + j + "'   />");
 
                         }
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='radio' id='id_auto_hide_type_0-" + j + "'   />");
 
-                    }
+                        strticketHtml.Append("When ticket is not on sale</label> </div><div class='clearfix'></div><div class='col-sm-12'><label class='label-control ev_tickt_lebel fs-13 mt5' id='id_CusdateTime-" + j + "' onclick='hideunhide(this.id)'>");
 
-                    strticketHtml.Append("When ticket is not on sale</label> </div><div class='clearfix'></div><div class='col-sm-12'><label class='label-control ev_tickt_lebel fs-13 mt5' id='id_CusdateTime-" + j + "' onclick='hideunhide(this.id)'>");
-
-                    if (ObjTick.T_AutoSechduleType == "1")
-                    {
-                        strticketHtml.Append("<input type='radio' id='id_auto_hide_type_1-" + j + "' checked='checked' />");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='radio' id='id_auto_hide_type_1-" + j + "'  />");
-
-                    }
-                    if (custdate == "0")
-                    {
-                        strticketHtml.Append("For custom date and time</label> </div> <div class='hide_unt_aft' id='id_HideuntDiv-" + j + "' style='display:block;'>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("For custom date and time</label> </div> <div class='hide_unt_aft' id='id_HideuntDiv-" + j + "' style='display:none;'>");
-
-                    }
-                    strticketHtml.Append("<div class='form-group mt10'><div class='col-sm-6 ev_pad_l0'><div class='col-sm-12 no_pad'>");
-                    if (!string.IsNullOrEmpty(ObjTick.Hide_Untill_Date.ToString()) && !string.IsNullOrEmpty(ObjTick.Hide_Untill_Time))
-                    {
-                        strticketHtml.Append("<input type='checkbox' checked='checked'  id='id_hideuntil-" + j + "' onchange='enablehideafteruntil(this.id)' />");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='checkbox' id='id_hideuntil-" + j + "' onchange='enablehideafteruntil(this.id)' />");
-
-                    }
-                    strticketHtml.Append("<label class='label-control ev_tickt_lebel'>Hide Untill</label>");
-                    strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'>");
-                    if (!string.IsNullOrEmpty(ObjTick.Hide_Untill_Date.ToString()) && !string.IsNullOrEmpty(ObjTick.Hide_Untill_Time))
-                    {
-                        strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_until_Date-" + j + "' onchange='changetext(this.id);' value='" + untilldate + "' />");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_until_Date-" + j + "' onchange='changetext(this.id);' value='' readonly='readonly' />");
-
-                    }
-                    strticketHtml.Append("</div><div class='col-sm-4 no_pad'>");
-                    strticketHtml.Append("<input type='hidden' value='0' id='id_hdautohideuntil-" + j + "' value='" + ObjTick.Hide_Untill_Time + "' />");
-                    strticketHtml.Append("<input id ='id_auto_hide_until_time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_Untill_Time + "' />");
-                    strticketHtml.Append("</div></div><div class='col-sm-6 ev_pad_r0'><div class='col-sm-12 no_pad'>");
-                    if (!string.IsNullOrEmpty(ObjTick.Hide_After_Date.ToString()) && !string.IsNullOrEmpty(ObjTick.Hide_After_Time))
-                    {
-                        strticketHtml.Append("<input type='checkbox' checked='checked' id='id_hideafter-" + j + "' onchange='enablehideafteruntil(this.id)'/>");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='checkbox' id='id_hideafter-" + j + "' onchange='enablehideafteruntil(this.id)'/>");
-
-                    }
-                    strticketHtml.Append("<label class='label-control ev_tickt_lebel'>Hide After</label>");
-                    strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_after_Date-" + j + "' onchange='checkvalidDate(this.id)' value='" + afterdate + "' />");
-                    strticketHtml.Append(" </div> <div class='col-sm-4 no_pad'><input type='hidden' value='0' id='id_hdautohideafter-" + j + "' value='" + ObjTick.Hide_After_Time + "' />");
-                    strticketHtml.Append("<input id ='id_auto_hide_after_Time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_After_Time + "' />");
-                    strticketHtml.Append("</div></div></div></div></div></div>");
-                    if (ObjTick.TicketTypeID != 3)
-                    {
-                        strticketHtml.Append("<div class='clearfix donateshow-" + j + "' id='cleafix-" + j + "'></div><div class='form-group donateshow-" + j + "' id='maxmin-" + j + "'><label class='label-control pl0 ev_tickt_lebel wd600'>Tickets allowed per order</label>");
-                        strticketHtml.Append("<div class='evnt_time_cont wd280 mr5_p'><input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_min_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Min_T_Qty + "' />");
-                        strticketHtml.Append("<label class='label-control lbl_bot_minim'>Minimum</label></div><div class='evnt_time_cont wd280'>");
-                        strticketHtml.Append("<input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_max_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Max_T_Qty + "' />");
-                        strticketHtml.Append("<label class='label-control lbl_bot_minim '>Maximum</label><label class='col-sm-12 no_pad control-label' style='color:red;display:none' id='id_lblmax-" + j + "' >Please enter a valid number</label>");
-                        strticketHtml.Append(" </div></div>");
-                    }
-                    strticketHtml.Append("<div class='clearfix'></div><div class='form-group'><div class='col-sm-12 no_pad' style='display:none;'><label class='label-control pl0 ev_tickt_lebel mt5'>");
-                    if (ObjTick.T_Disable == "1")
-                    {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_disableticket-" + j + "' checked='checked'/>");
-
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_disableticket-" + j + "'/>");
-
-                    }
-                    strticketHtml.Append("Disable Ticket </label> </div><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel mt5'>");
-                    if (ObjTick.T_Mark_SoldOut == "1")
-                    {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_marksoldout-" + j + "' checked='checked' />");
-                    }
-                    else
-                    {
-                        strticketHtml.Append("<input type='checkbox' class='' id='id_marksoldout-" + j + "' />");
-
-                    }
-                    strticketHtml.Append("Mark Sold Out</label> </div>");
-                    if (ObjTick.TicketTypeID != 3)
-                    {
-                        strticketHtml.Append("<div class='col-sm-12 no_pad donateshow - " + j + "' id='display - " + j + "'><label class='label-control pl0 ev_tickt_lebel mt5'>");
-                        if (ObjTick.T_Displayremaining == "1")
+                        if (ObjTick.T_AutoSechduleType == "1")
                         {
-                            strticketHtml.Append("<input type='checkbox' class='' id='id_displayremaining-" + j + "' checked='checked' />");
+                            strticketHtml.Append("<input type='radio' id='id_auto_hide_type_1-" + j + "' checked='checked' />");
                         }
                         else
                         {
-                            strticketHtml.Append("<input type='checkbox' class='' id='id_displayremaining-" + j + "'  />");
+                            strticketHtml.Append("<input type='radio' id='id_auto_hide_type_1-" + j + "'  />");
 
                         }
-                        strticketHtml.Append("Display Remaining Tickets</label></div>");
+                        if (custdate == "0")
+                        {
+                            strticketHtml.Append("For custom date and time</label> </div> <div class='hide_unt_aft' id='id_HideuntDiv-" + j + "' style='display:block;'>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("For custom date and time</label> </div> <div class='hide_unt_aft' id='id_HideuntDiv-" + j + "' style='display:none;'>");
+
+                        }
+                        strticketHtml.Append("<div class='form-group mt10'><div class='col-sm-6 ev_pad_l0'><div class='col-sm-12 no_pad'>");
+                        if (!string.IsNullOrEmpty(ObjTick.Hide_Untill_Date.ToString()) && !string.IsNullOrEmpty(ObjTick.Hide_Untill_Time))
+                        {
+                            strticketHtml.Append("<input type='checkbox' checked='checked'  id='id_hideuntil-" + j + "' onchange='enablehideafteruntil(this.id)' />");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type='checkbox' id='id_hideuntil-" + j + "' onchange='enablehideafteruntil(this.id)' />");
+
+                        }
+                        strticketHtml.Append("<label class='label-control ev_tickt_lebel'>Hide Untill</label>");
+                        strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'>");
+                        if (!string.IsNullOrEmpty(ObjTick.Hide_Untill_Date.ToString()) && !string.IsNullOrEmpty(ObjTick.Hide_Untill_Time))
+                        {
+                            strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_until_Date-" + j + "' onchange='changetext(this.id);' value='" + untilldate + "' />");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_until_Date-" + j + "' onchange='changetext(this.id);' value='' readonly='readonly' />");
+
+                        }
+                        strticketHtml.Append("</div><div class='col-sm-4 no_pad'>");
+                        strticketHtml.Append("<input type='hidden' value='0' id='id_hdautohideuntil-" + j + "' value='" + ObjTick.Hide_Untill_Time + "' />");
+                        strticketHtml.Append("<input id ='id_auto_hide_until_time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_Untill_Time + "' />");
+                        strticketHtml.Append("</div></div><div class='col-sm-6 ev_pad_r0'><div class='col-sm-12 no_pad'>");
+                        if (!string.IsNullOrEmpty(ObjTick.Hide_After_Date.ToString()) && !string.IsNullOrEmpty(ObjTick.Hide_After_Time))
+                        {
+                            strticketHtml.Append("<input type='checkbox' checked='checked' id='id_hideafter-" + j + "' onchange='enablehideafteruntil(this.id)'/>");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type='checkbox' id='id_hideafter-" + j + "' onchange='enablehideafteruntil(this.id)'/>");
+
+                        }
+                        strticketHtml.Append("<label class='label-control ev_tickt_lebel'>Hide After</label>");
+                        strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_auto_hide_after_Date-" + j + "' onchange='checkvalidDate(this.id)' value='" + afterdate + "' />");
+                        strticketHtml.Append(" </div> <div class='col-sm-4 no_pad'><input type='hidden' value='0' id='id_hdautohideafter-" + j + "' value='" + ObjTick.Hide_After_Time + "' />");
+                        strticketHtml.Append("<input id ='id_auto_hide_after_Time-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Hide_After_Time + "' />");
+                        strticketHtml.Append("</div></div></div></div></div></div>");
+                        if (ObjTick.TicketTypeID != 3)
+                        {
+                            strticketHtml.Append("<div class='clearfix donateshow-" + j + "' id='cleafix-" + j + "'></div><div class='form-group donateshow-" + j + "' id='maxmin-" + j + "'><label class='label-control pl0 ev_tickt_lebel wd600'>Tickets allowed per order</label>");
+                            strticketHtml.Append("<div class='evnt_time_cont wd280 mr5_p'><input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_min_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Min_T_Qty + "' />");
+                            strticketHtml.Append("<label class='label-control lbl_bot_minim'>Minimum</label></div><div class='evnt_time_cont wd280'>");
+                            strticketHtml.Append("<input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_max_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Max_T_Qty + "' />");
+                            strticketHtml.Append("<label class='label-control lbl_bot_minim '>Maximum</label><label class='col-sm-12 no_pad control-label' style='color:red;display:none' id='id_lblmax-" + j + "' >Please enter a valid number</label>");
+                            strticketHtml.Append(" </div></div>");
+                        }
+                        strticketHtml.Append("<div class='clearfix'></div><div class='form-group'><div class='col-sm-12 no_pad' style='display:none;'><label class='label-control pl0 ev_tickt_lebel mt5'>");
+                        if (ObjTick.T_Disable == "1")
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_disableticket-" + j + "' checked='checked'/>");
+
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_disableticket-" + j + "'/>");
+
+                        }
+                        strticketHtml.Append("Disable Ticket </label> </div><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel mt5'>");
+                        if (ObjTick.T_Mark_SoldOut == "1")
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_marksoldout-" + j + "' checked='checked' />");
+                        }
+                        else
+                        {
+                            strticketHtml.Append("<input type='checkbox' class='' id='id_marksoldout-" + j + "' />");
+
+                        }
+                        strticketHtml.Append("Mark Sold Out</label> </div>");
+                        if (ObjTick.TicketTypeID != 3)
+                        {
+                            strticketHtml.Append("<div class='col-sm-12 no_pad donateshow - " + j + "' id='display - " + j + "'><label class='label-control pl0 ev_tickt_lebel mt5'>");
+                            if (ObjTick.T_Displayremaining == "1")
+                            {
+                                strticketHtml.Append("<input type='checkbox' class='' id='id_displayremaining-" + j + "' checked='checked' />");
+                            }
+                            else
+                            {
+                                strticketHtml.Append("<input type='checkbox' class='' id='id_displayremaining-" + j + "'  />");
+
+                            }
+                            strticketHtml.Append("Display Remaining Tickets</label></div>");
+                        }
+                        strticketHtml.Append("</div> </div><div class='clearfix'></div><div class='modal-footer no_pad mt5'>");
+                        strticketHtml.Append("<div class='col-sm-12 text-left mt10'><button class='EvntMinim ev_set_del_btn btn' id='id_Minimize-" + j + "'  onclick='minimize(this.id);' type='button'>");
+                        strticketHtml.Append("<i class='fa fa-arrow-up'></i> Minimize Setting </button> </div></div> </div></div></div></div><div class='clearfix'></div>");
+
+                        strticketHtml.Append("<div class='modal fade' id='cnfrmdelete-" + j + "'  tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>");
+                        strticketHtml.Append("<div class='modal-dialog modal-sm confirm-msg ok-msg custom'><div class='modal-content'> <form id = 'contactForm' class='fullw1 add'>");
+                        strticketHtml.Append("<div class='modal-body text-center pv50 txt-msg'> <h4 class='msg' >Are you sure you want to delete?</h4></div>");
+                        strticketHtml.Append("<div class='modal-footer msg-action-btn ok'>");
+                        strticketHtml.Append("<button type='button' class='btn btn-primary yes ok' id='btnyes-" + j + "' onclick='deletediv(this.id);' data-dismiss='modal'>Yes</button>");
+                        strticketHtml.Append("<button type='button' class='btn btn-primary no' data-dismiss='modal'>No</button></div></form></div></div></div></div>");
+
+                        j = j + 1;
+
+
+
                     }
-                    strticketHtml.Append("</div> </div><div class='clearfix'></div><div class='modal-footer no_pad mt5'>");
-                    strticketHtml.Append("<div class='col-sm-12 text-left mt10'><button class='EvntMinim ev_set_del_btn btn' id='id_Minimize-" + j + "'  onclick='minimize(this.id);' type='button'>");
-                    strticketHtml.Append("<i class='fa fa-arrow-up'></i> Minimize Setting </button> </div></div> </div></div></div></div><div class='clearfix'></div>");
 
-                    strticketHtml.Append("<div class='modal fade' id='cnfrmdelete-" + j + "'  tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>");
-                    strticketHtml.Append("<div class='modal-dialog modal-sm confirm-msg ok-msg custom'><div class='modal-content'> <form id = 'contactForm' class='fullw1 add'>");
-                    strticketHtml.Append("<div class='modal-body text-center pv50 txt-msg'> <h4 class='msg' >Are you sure you want to delete?</h4></div>");
-                    strticketHtml.Append("<div class='modal-footer msg-action-btn ok'>");
-                    strticketHtml.Append("<button type='button' class='btn btn-primary yes ok' id='btnyes-" + j + "' onclick='deletediv(this.id);' data-dismiss='modal'>Yes</button>");
-                    strticketHtml.Append("<button type='button' class='btn btn-primary no' data-dismiss='modal'>No</button></div></form></div></div></div></div>");
+                    objJson.Ticket = strticketHtml.ToString();
 
-                    j = j + 1;
+                    objJson.capacity = capacity;
 
 
+                    var vardesc = (from myEvent in objEnt.Event_VariableDesc
+                                   where myEvent.Event_Id == EventIid
+                                   select myEvent).ToList();
 
-                }
+                    StringBuilder strvariableHtml = new StringBuilder();
+                    int k = 0;
+                    foreach (Event_VariableDesc Objvardesc in vardesc)
+                    {
 
-                objJson.Ticket = strticketHtml.ToString();
+                        var PRICE = String.Format("{0:#,###,###.00}", Objvardesc.Price);
 
-                objJson.capacity = capacity;
+                        strvariableHtml.Append(" <div class='col-sm-12 no_pad' id='id_clonevariable-" + k + "' >");
+                        strvariableHtml.Append("<div class='list -group-item ev_var_chrg_list'>");
+                        strvariableHtml.Append(" <div class='form-group'>");
+                        strvariableHtml.Append("<div class='col-sm-7 col-xs-7'><input type='hidden' id='id_varid-" + k + "' value='" + Objvardesc.Variable_Id + "'/>");
+                        strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='Variable Charges Description " + (k + 1) + "' id='id_varsubdesc-" + k + "' maxlength='256' value='" + Objvardesc.VariableDesc + "' onblur='checkvalidatetkt(this.id)'     >");
+                        strvariableHtml.Append(" </div><div class='col-sm-4 col-xs-4'><label class='col-sm-1 control-label ev_tickt_lebel'>$</label> <div class='col-sm-10 no_pad'>");
+                        strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id);checkvalidatetkt(this.id);' value=" + PRICE + ">");
+                        strvariableHtml.Append("</div> </div><div class='col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main'> <button class='btn' type='button' id='btn_vardelete-" + k + "' onclick='deletevariable(this.id)'><i class='fa fa-times'></i></button>");
+                        strvariableHtml.Append("</div> </div></div> </div>");
 
+                        k = k + 1;
+                    }
 
-                var vardesc = (from myEvent in objEnt.Event_VariableDesc
-                               where myEvent.Event_Id == EventIid
-                               select myEvent).ToList();
-
-                StringBuilder strvariableHtml = new StringBuilder();
-                int k = 0;
-                foreach (Event_VariableDesc Objvardesc in vardesc)
+                    objJson.Variabledesc = strvariableHtml.ToString();
+                }catch(Exception ex)
                 {
-                   
-                    var PRICE = String.Format("{0:#,###,###.00}", Objvardesc.Price);
-
-                    strvariableHtml.Append(" <div class='col-sm-12 no_pad' id='id_clonevariable-" + k + "' >");
-                    strvariableHtml.Append("<div class='list -group-item ev_var_chrg_list'>");
-                    strvariableHtml.Append(" <div class='form-group'>");
-                    strvariableHtml.Append("<div class='col-sm-7 col-xs-7'><input type='hidden' id='id_varid-"+k+"' value='"+Objvardesc.Variable_Id+"'/>");
-                    strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='Variable Charges Description "+ (k+1)+"' id='id_varsubdesc-" + k + "' maxlength='256' value='" + Objvardesc.VariableDesc + "' onblur='checkvalidatetkt(this.id)'     >");
-                    strvariableHtml.Append(" </div><div class='col-sm-4 col-xs-4'><label class='col-sm-1 control-label ev_tickt_lebel'>$</label> <div class='col-sm-10 no_pad'>");
-                    strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id);checkvalidatetkt(this.id);' value=" + PRICE + ">");
-                    strvariableHtml.Append("</div> </div><div class='col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main'> <button class='btn' type='button' id='btn_vardelete-" + k + "' onclick='deletevariable(this.id)'><i class='fa fa-times'></i></button>");
-                    strvariableHtml.Append("</div> </div></div> </div>");
-
-                    k = k + 1;
+                    ExceptionLogging.SendErrorToText(ex);
                 }
-
-                objJson.Variabledesc = strvariableHtml.ToString();
 
               
             }
@@ -1891,6 +1910,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionLogging.SendErrorToText(ex);
                 return 0;
             }
             return lEventId;
@@ -2494,6 +2514,7 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
+                    ExceptionLogging.SendErrorToText(ex);
                     return 0;
                 }
                 return Parent_EventID;
@@ -2520,8 +2541,9 @@ namespace EventCombo.Controllers
                     strResult = "Y";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionLogging.SendErrorToText(ex);
                 strResult = "N";
             }
             return strResult;
@@ -2534,70 +2556,75 @@ namespace EventCombo.Controllers
             StringBuilder strDropDown = new StringBuilder();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                var EventOrgID = (from Org in objEnt.Event_Orgnizer_Detail
-                                where Org.Orgnizer_Event_Id == lEventId
-                                select Org.OrganizerMaster_Id).FirstOrDefault();
-                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-                var EventOrg = (from Org in objEnt.Organizer_Master
-                                where Org.UserId == strUserId && (Org.Orgnizer_Name ?? string.Empty) != string.Empty && Org.Organizer_Status == "A"
-                                select Org).ToList();
-                int i = 0;
-                foreach (Organizer_Master EOD in EventOrg)
+                try {
+                    var EventOrgID = (from Org in objEnt.Event_Orgnizer_Detail
+                                      where Org.Orgnizer_Event_Id == lEventId
+                                      select Org.OrganizerMaster_Id).FirstOrDefault();
+                    string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                    var EventOrg = (from Org in objEnt.Organizer_Master
+                                    where Org.UserId == strUserId && (Org.Orgnizer_Name ?? string.Empty) != string.Empty && Org.Organizer_Status == "A"
+                                    select Org).ToList();
+                    int i = 0;
+                    foreach (Organizer_Master EOD in EventOrg)
+                    {
+                        i = i + 1;
+                        strHTML.Append("<tr>");
+                        strHTML.Append("<td style='display: none' width='92%'>");
+                        strHTML.Append(i);
+                        strHTML.Append("</td>");
+
+                        strHTML.Append("<td width='92 %'><label id=OrgName_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Orgnizer_Name);
+                        strHTML.Append("</label></td>");
+                        strHTML.Append("<td style='display: none'>");
+                        strHTML.Append("<label id=OrgId_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Orgnizer_Id);
+                        strHTML.Append("</label>");
+                        strHTML.Append("<label id=OrgEdit_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append("0");
+                        strHTML.Append("</label>");
+                        strHTML.Append("<label id=OrgDes_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Organizer_Desc);
+                        strHTML.Append("</label></td>");
+
+                        strHTML.Append("<td style='display: none'><label id=OrgFB_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Organizer_FBLink);
+                        strHTML.Append("</label></td>");
+
+
+                        strHTML.Append("<td style='display: none'><label id=OrgTw_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Organizer_Twitter);
+                        strHTML.Append("</label></td>");
+
+                        strHTML.Append("<td style='display: none'><label id=OrgLn_");
+                        strHTML.Append(i);
+                        strHTML.Append(">");
+                        strHTML.Append(EOD.Organizer_Linkedin);
+                        strHTML.Append("</label></td>");
+                        strtemp = "<td align='right'><i onclick='editOrgnizer(" + i + ")'; class='fa fa-pencil'></i> | <i onclick='DeleteOrgnizer(" + i + ");' class='fa fa-trash'></i></td>";
+                        strHTML.Append(strtemp);
+                        strHTML.Append("</tr>");
+
+                        if (EOD.Orgnizer_Id == EventOrgID)
+                            strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                        else
+                            strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                    }
+                }catch(Exception ex)
                 {
-                    i = i + 1;
-                    strHTML.Append("<tr>");
-                    strHTML.Append("<td style='display: none' width='92%'>");
-                    strHTML.Append(i);
-                    strHTML.Append("</td>");
-
-                    strHTML.Append("<td width='92 %'><label id=OrgName_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Orgnizer_Name);
-                    strHTML.Append("</label></td>");
-                    strHTML.Append("<td style='display: none'>");
-                    strHTML.Append("<label id=OrgId_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Orgnizer_Id);
-                    strHTML.Append("</label>");
-                    strHTML.Append("<label id=OrgEdit_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append("0");
-                    strHTML.Append("</label>");
-                    strHTML.Append("<label id=OrgDes_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Organizer_Desc);
-                    strHTML.Append("</label></td>");
-
-                    strHTML.Append("<td style='display: none'><label id=OrgFB_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Organizer_FBLink);
-                    strHTML.Append("</label></td>");
-
-
-                    strHTML.Append("<td style='display: none'><label id=OrgTw_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Organizer_Twitter);
-                    strHTML.Append("</label></td>");
-
-                    strHTML.Append("<td style='display: none'><label id=OrgLn_");
-                    strHTML.Append(i);
-                    strHTML.Append(">");
-                    strHTML.Append(EOD.Organizer_Linkedin);
-                    strHTML.Append("</label></td>");
-                    strtemp = "<td align='right'><i onclick='editOrgnizer(" + i + ")'; class='fa fa-pencil'></i> | <i onclick='DeleteOrgnizer(" + i + ");' class='fa fa-trash'></i></td>";
-                    strHTML.Append(strtemp);
-                    strHTML.Append("</tr>");
-
-                    if (EOD.Orgnizer_Id == EventOrgID)
-                        strDropDown.Append("<option selected='selected' value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
-                    else
-                        strDropDown.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + EOD.Orgnizer_Name + "</option>");
+                    ExceptionLogging.SendErrorToText(ex);
                 }
             }
 
@@ -2626,6 +2653,7 @@ namespace EventCombo.Controllers
                     }
                     catch (Exception ex)
                     {
+                        ExceptionLogging.SendErrorToText(ex);
                         msg = "N";
                     }
 
@@ -3014,8 +3042,14 @@ namespace EventCombo.Controllers
                 }
 
                 db.Event_OrganizerMessages.Add(msg);
-                int i = db.SaveChanges();
-                return "saved";
+                try {
+                    int i = db.SaveChanges();
+                }catch(Exception ex)
+                {
+                    ExceptionLogging.SendErrorToText(ex);
+                }
+
+                 return "saved";
 
             }
 
