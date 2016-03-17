@@ -22,9 +22,9 @@
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
             <div class="col-sm-6 col-xs-6 text-left no_pad">
-                <h2 class="fb_dis_head pt5">ORGANIZER INFO </h2>
+                <h2 class="fb_dis_head pt5 pr0">ORGANIZER INFO </h2>
             </div>
-            <div class="col-sm-6 col-xs-6 text-right ev_social_share_btn">
+            <div class="col-sm-6 col-xs-6 pl0 text-right ev_social_share_btn">
                 <a href="javascript:void(0)"><img src="/Images/mail.png"></a>
                 <a href="javascript:void(0)" id="twittershare"><img src="/Images/twi.png"></a>
                 <a href="javascript:void(0)" id="fbshare"><img src="/Images/fac.png"></a>
@@ -35,14 +35,14 @@
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
         <div class="evnt_details_body2">
-            <div class="col-sm-12 ev_white_bg pb10 mt20">
-                <div class="col-sm-9 org_evnt_desc_top">
+            <div class="col-sm-12 ev_white_bg pb10 mt20 clearfix">
+                <div class="col-sm-9 col-xs-12 org_evnt_desc_top">
                     <img class="org_event_img" src="@Model.Imagepath" />
 
                     <h3>@Model.Orgnizer_Name Presents</h3>
                      <p> @Model.Organizer_Desc </p>
                 </div>
-                <div class="col-sm-3 no_pad mt20">
+                <div class="col-sm-3 col-xs-12 no_pad mt20">
                     <div class="col-sm-12 inst_karm_box">
                         <h4>@Model.Orgnizer_Name</h4>
                         <p><a data-target="#contorganizer" data-toggle="modal" href="#">Contact the Organizer </a></p>
@@ -108,12 +108,12 @@ else
 
             <div class="col-sm-12 no_pad">
 
-@if (Model.presentevtcount > Model.maxsetcount)
-{
-    <div class=" col-sm-6 no_pad"><input class="btn sal_viw_mor_btn org_info_btn_link" type="button" id="btnviewmore" value="View More" /> </div>
+                    @if (Model.presentevtcount > Model.maxsetcount)
+                    {
+                        <div class=" col-sm-6 no_pad"><input class="btn sal_viw_mor_btn org_info_btn_link" type="button" id="btnviewmore" value="View More" /> </div>
 
-    <div class="col-sm-6 text-right no_pad"><input class="btn sal_viw_mor_btn org_info_btn_link" type="button" id="btnviewless" value="View Less" style="visibility:hidden" /></div>
-}
+                        <div class="col-sm-6 text-right no_pad"><input class="btn sal_viw_mor_btn org_info_btn_link" type="button" id="btnviewless" value="View Less" style="visibility:hidden" /></div>
+                    }
             </div>
 
         </div>

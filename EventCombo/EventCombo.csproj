@@ -355,6 +355,7 @@
     <Compile Include="Models\Event_VariableDesc.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExceptionLogging .cs" />
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -455,6 +456,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewEvent.cs" />
+    <Compile Include="Models\v_RetrieveEventid.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\Account\MyAccount.generated.cs">
@@ -497,6 +501,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventList.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Home\DiscoverEvents.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DiscoverEvents.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Home\Index.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -535,6 +544,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-multiselect.css" />
+    <Content Include="Content\custom-scroll.css" />
     <Content Include="Content\DateTimePicker.css" />
     <Content Include="Content\ec-select.css" />
     <Content Include="Content\eventcombo-new.css" />
@@ -543,12 +553,22 @@
     <Content Include="Content\flipclock.css" />
     <Content Include="email-content-pdf%281%29.html" />
     <Content Include="Images\ajax-loader.gif" />
+    <Content Include="Images\amr-exp.png" />
+    <Content Include="Images\Bar_Image.Png" />
     <Content Include="Images\default_org_image.jpg" />
     <Content Include="Images\dgd.png" />
+    <Content Include="Images\email_fb.png" />
+    <Content Include="Images\email_loc_icn.png" />
+    <Content Include="Images\email_tw.png" />
     <Content Include="Images\em_ven_time.png" />
+    <Content Include="Images\evnt_lik_1.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
+    <Content Include="Images\Imagemap.png" />
+    <Content Include="Images\Imagemap_T000000199.png" />
     <Content Include="Images\loading.gif" />
+    <Content Include="Images\login_img.png" />
+    <Content Include="Images\paper_tic.png" />
     <Content Include="Images\qwe.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -560,6 +580,7 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
@@ -1099,6 +1120,7 @@
     </Content>
     <Content Include="Views\Home\DiscoverEvents.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DiscoverEvents.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\GetBuzz.cshtml">
       <Generator>RazorGenerator</Generator>

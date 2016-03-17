@@ -419,22 +419,23 @@ WriteLiteral("\');\r\n    }\r\n    $(document).ready(function () {\r\n        $(
 "    if (selectval != 0) {\r\n                if (selectval == \"A\") {\r\n            " +
 "        $(\"#btnedit\").prop(\"disabled\", true);\r\n                    $(\"#btndelete" +
 "\").prop(\"disabled\", true);\r\n                    $(\"#loader\").show();\r\n          " +
-"          LoadOrganiserAddAsyn();\r\n                    $(\"#loader\").hide();\r\n   " +
-"                 $(\".maindivnonvis\").hide();\r\n                } else {\r\n        " +
-"            $(\"#btnedit\").prop(\"disabled\", false);\r\n                    $(\"#btnd" +
-"elete\").prop(\"disabled\", false);\r\n                    $(\".maindivnonvis\").show()" +
-";\r\n                }\r\n            }else\r\n            {\r\n                $(\"#btne" +
-"dit\").prop(\"disabled\", true);\r\n                $(\"#btndelete\").prop(\"disabled\", " +
-"true);\r\n            }\r\n\r\n        });\r\n\r\n        $(document).on(\'blur\', \'#txt_nam" +
-"e\', function () {\r\n            debugger;\r\n            var isValid = false;\r\n    " +
-"     \r\n            var name = $(\'#txt_name\').val();\r\n            var regex = /^[" +
-"a-zA-Z ]*$/;\r\n            isValid = regex.test(name);\r\n            if (isValid) " +
-"{\r\n                var orgid = 0;\r\n\r\n                orgid = $(\'#hd_ID\').val();\r" +
-"\n                if (typeof orgid === \"undefined\") {\r\n                    orgid " +
-"= 0;\r\n                }\r\n\r\n                $.ajax({\r\n                    url: \'");
+"        \r\n                    LoadOrganiserAddAsyn();\r\n                    $(\"#l" +
+"oader\").hide();\r\n                    $(\".maindivnonvis\").hide();\r\n              " +
+"  } else {\r\n                    $(\"#btnedit\").prop(\"disabled\", false);\r\n        " +
+"            $(\"#btndelete\").prop(\"disabled\", false);\r\n                    $(\".ma" +
+"indivnonvis\").show();\r\n                }\r\n            }else\r\n            {\r\n    " +
+"            $(\"#btnedit\").prop(\"disabled\", true);\r\n                $(\"#btndelete" +
+"\").prop(\"disabled\", true);\r\n            }\r\n\r\n        });\r\n\r\n        $(document)." +
+"on(\'blur\', \'#txt_name\', function () {\r\n            debugger;\r\n            var is" +
+"Valid = false;\r\n         \r\n            var name = $(\'#txt_name\').val();\r\n       " +
+"     var regex = /^[a-zA-Z ]*$/;\r\n            isValid = regex.test(name);\r\n     " +
+"       if (isValid) {\r\n                var orgid = 0;\r\n\r\n                orgid =" +
+" $(\'#hd_ID\').val();\r\n                if (typeof orgid === \"undefined\") {\r\n      " +
+"              orgid = 0;\r\n                }\r\n\r\n                $.ajax({\r\n       " +
+"             url: \'");
 
             
-            #line 200 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 201 "..\..\Views\Account\OrganizerProfile.cshtml"
                      Write(Url.Action("chkOrganizerName", "Account"));
 
             
@@ -508,7 +509,7 @@ WriteLiteral("\',\r\n                    data: { Name: name, id: orgid },\r\n   
 "eurl\").val(),\r\n\r\n            };\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 330 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 331 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("saveOrganizer", "Account"));
 
             
@@ -534,7 +535,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 347 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 348 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -562,7 +563,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                  
 "x({\r\n                    url: \'");
 
             
-            #line 401 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 402 "..\..\Views\Account\OrganizerProfile.cshtml"
                      Write(Url.Action("DeleteOrganizer", "Account"));
 
             
@@ -588,7 +589,7 @@ WriteLiteral(@"',
                                 window.location.href = '");
 
             
-            #line 418 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 419 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                    Write(Url.Action("Index", "Home"));
 
             
@@ -628,7 +629,7 @@ WriteLiteral("\';\r\n\r\n                            }\r\n\r\n\r\n              
 "         };\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 481 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 482 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("EditOrganizer", "Account"));
 
             
@@ -654,7 +655,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 498 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 499 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -690,7 +691,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                  
 "        var request = $.ajax({\r\n                url: \'");
 
             
-            #line 575 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 576 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("Index", "ValidationMessage"));
 
             

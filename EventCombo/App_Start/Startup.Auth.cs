@@ -88,24 +88,58 @@ namespace EventCombo
             {
                 ClientId = ConfigurationManager.AppSettings.Get("GoogleID"),
                 ClientSecret = ConfigurationManager.AppSettings.Get("GoogleSecret"),
-                Provider = new GoogleOAuth2AuthenticationProvider()
-                {
-                    OnAuthenticated = context =>
-                    {
-                        var userDetail = context.User;
-                        context.Identity.AddClaim(new Claim(ClaimTypes.Name, context.Identity.FindFirstValue(ClaimTypes.Name)));
-                        context.Identity.AddClaim(new Claim(ClaimTypes.Email, context.Identity.FindFirstValue(ClaimTypes.Email)));
+                //Provider = new GoogleOAuth2AuthenticationProvider()
+                //{
+                //    OnAuthenticated = context =>
+                //    {
+                //        context.Identity.AddClaim(new Claim("urn:google:name", context.Identity.FindFirstValue(ClaimTypes.Name)));
+                //        context.Identity.AddClaim(new Claim("urn:google:email", context.Identity.FindFirstValue(ClaimTypes.Email)));
+                //        //This following line is need to retrieve the profile image
+                //        context.Identity.AddClaim(new System.Security.Claims.Claim("urn:google:accesstoken", context.AccessToken, ClaimValueTypes.String, "Google"));
 
-                        var gender = userDetail.Value<string>("gender");
-                        context.Identity.AddClaim(new Claim(ClaimTypes.Gender, gender));
-                     return Task.FromResult(0);
-                    },
-                },
+                //        return Task.FromResult(0);
+                //    },
+                //},
             };
+            googleOptions.Scope.Add("profile");
             googleOptions.Scope.Add("https://www.googleapis.com/auth/plus.login");
             googleOptions.Scope.Add("https://www.googleapis.com/auth/userinfo.email");
+            googleOptions.Provider = new GoogleOAuth2AuthenticationProvider()
+            {
+                OnAuthenticated = async context =>{string claimType; bool bAddClaim = false;
+                    foreach (var claim in context.User)
+                    {
+
+                        claimType = string.Empty;
+                        bAddClaim = false;
+                        switch (claim.Key)
+                        {
+                            case "given_name":
+                                claimType = "FirstName";
+                                bAddClaim = true;
+                                break;
+                            case "family_name":
+                                claimType = "LastName";
+                                bAddClaim = true;
+                                break;
+                            case "gender":
+                                claimType = "gender";
+                                bAddClaim = true;
+                                break;
+                        }
+
+                        if (bAddClaim)
+                        {
+                            string claimValue = claim.Value.ToString();
+                            if (!context.Identity.HasClaim(claimType, claimValue))
+                                context.Identity.AddClaim(new Claim(claimType, claimValue, "XmlSchemaString", "Google"));
+                        }
+                    }
+                }
+            };
             app.UseGoogleAuthentication(googleOptions);
-       
+           
+
         }
     }
 }
