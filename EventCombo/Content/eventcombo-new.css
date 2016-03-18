@@ -291,7 +291,7 @@ textarea {resize: none;}
 .ev_date_icn2{ position: relative; display: inline-block; vertical-align: text-bottom; }
 .ev_loc_icn2{ position: absolute; display: inline-block; left: -15px; vertical-align: text-bottom; }
 .evnt_title_date2{ font-size: 1.7em;}
-.ev_get_tick_btn{ font-size: 1.5em;}
+.ev_get_tick_btn{ font-size: 1.3em;}
 
 .date_time_list{ color: #000; font-size: 1.2em; }
 
@@ -712,3 +712,4 @@ textarea {resize: none;}
         color: #000;
     }
 
+.eventdescfont{ font-weight:normal; font-size:1.2em; color:#000; }

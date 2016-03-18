@@ -64,7 +64,7 @@
                             <li>@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                             {
 
-                                <ul class="navbar-right ">
+                                <ul class="navbar-right xs-signup-height">
                                     <li class="msg_icn"><span>12</span> </li>
 
                                     <li><a href="#">Welcome @{Html.RenderAction("UserName", "Home");}!</a> </li>
@@ -72,7 +72,7 @@
                                         @Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
                                     </li>
                                     <li>
-                                        <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">Log Out </a>
                                     </li>
                                 </ul>
 
@@ -87,8 +87,8 @@
                 }
                 else
                 {
-                    <div class="col-sm-5 head_left_nav">
-                        <ul class="navbar-right frnt-top-header">
+                    <div class="col-sm-5 head_left_nav clearfix">
+                        <ul class="navbar-right frnt-top-header xs-signup-height">
 
                             <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" id="loginPopup">LogIn | SignUp </a>  </li>
 
@@ -97,18 +97,19 @@
                     </div>
 
                 }
-                <div class="Fix_Head" title="Turn on to fix header">
-                    <label class="switch">
-                       <input type="checkbox" class="switch-input" checked  id="idchecked" onchange="changeheader(this.id);" >
-                        <span class="switch-label" data-on="On" data-off="Off"></span>
-                        <span class="switch-handle"></span>
-                    </label>
-                </div>
+               
                 <div class="col-sm-1 text-right">
-                    <div class="social_icn" style="width:40px; margin-top:10px;">
+                    <div class="social_icn md_social_icn">
                         <a href="http://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
                         <a href="http://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
                     </div>
+                </div>
+                <div class="Fix_Head" title="Turn on to fix header">
+                    <label class="switch">
+                        <input type="checkbox" class="switch-input" checked id="idchecked" onchange="changeheader(this.id);">
+                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                        <span class="switch-handle"></span>
+                    </label>
                 </div>
             </div>
         </div>

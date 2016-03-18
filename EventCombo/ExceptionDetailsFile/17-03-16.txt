@@ -1,0 +1,144 @@
+-----------Exception Details on  03/17/2016 2:15:49 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 03/17/2016 2:15:49 PM
+
+Error Line No : ne 1891
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  03/17/2016 4:11:53 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 03/17/2016 4:11:53 PM
+
+Error Line No : ine 159
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?Eventid=12
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  03/17/2016 4:13:35 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 03/17/2016 4:13:35 PM
+
+Error Line No : ine 159
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?Eventid=12
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  03/17/2016 6:13:10 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 03/17/2016 6:13:10 PM
+
+Error Line No : ne 1891
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  03/17/2016 6:14:34 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 03/17/2016 6:14:34 PM
+
+Error Line No : ne 1891
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  03/17/2016 6:35:27 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 03/17/2016 6:35:27 PM
+
+Error Line No : ne 1891
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

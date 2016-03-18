@@ -329,7 +329,10 @@
                                 </ul>
                             </div>
                             <div class="col-sm-3 col-xs-3 no_pad text-right ">
-                                <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
+                                @*<button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
+                                    <i class="fa fa-share-alt"></i>
+                                </button>*@
+                                <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button" data-toggle="modal" data-target="#sharemodal">
                                     <i class="fa fa-share-alt"></i>
                                 </button>
                                 @*show_like_btn*@
@@ -384,7 +387,39 @@
 
 </div>
 
+<div class="modal fade" id="sharemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content sharmodal_pop">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title text-center"> Share with friends </h3>
+            </div>
+            <div class="modal-body">
 
+
+                <div class="col-md-12 social-buttons text-center mt20">
+                    <div class="col-sm-12  text-center">
+                        <button class="btn soc_btn_fb fb_color"><i class="fa fa-facebook"></i></button>
+                        <button class="btn soc_btn_fb "><i class="fa fa-twitter"></i></button>
+                        <button class="btn soc_btn_fb linkd_color"><i class="fa fa-linkedin"></i></button>
+                        <button class="btn soc_btn_fb msg_color"><i class="fa fa-envelope"></i></button>
+                    </div>
+                </div>
+                <div class="col-md-12 mt10">
+                    <form class="form-horizontal">
+                        <div class="col-sm-12 ">
+                            <div class="form-group">
+                                <input class="form-control sharesocilform" placeholder="" type="text">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <script src="~/Scripts/bootstrap-datepicker.js"></script>
 <script src="~/Scripts/jquery-ui.js"></script>
@@ -998,25 +1033,8 @@
               $('.date_picker').datepicker('hide');
           });
 
-        $(".desc_hide").css({ "display": "none" });
-        $(".des_hover").mouseover(function (e) {
-            var $target = $(e.currentTarget);
-            $target.css({ "display": "none" });
-            $target.closest("div").find(".desc_hide").css({ "display": "block" });
-        });
-        //$(".desc_hide").mouseout(function (e) {
-        //    var $target = $(e.currentTarget);
-        //    $target.css({ "display": "none" });
-        //    $target.parent("div").find(".des_hover").css({ "display": "block" });
-        //});
 
-        //$(".CustDate").css({ "display": "none" });
-        //$(".CustDateMain").click(function () {
-        //    $('.CustDate').slideToggle(function () {
-        //        $('.CustDateMain').toggleClass('active');
-        //    });
 
-        //});
 
         $(".Desccatshow").css({ "display": "none" });
         $(".DesccatClick").click(function () {
@@ -1032,6 +1050,16 @@
                 // $('.def_color').toggleClass('active');
             });
 
+        });
+
+        $(document).on('click', function (e) {
+            var $target = $(e.target);
+            if ($target.closest(".DesccatClick").get(0) == null && $target.closest(".Desccatshow").get(0) == null) {
+                $(".Desccatshow").hide();
+            };
+            if ($target.closest(".DesccatClick2").get(0) == null && $target.closest(".Desccatshow2").get(0) == null) {
+                $(".Desccatshow2").hide();
+            }
         });
 
     });
@@ -1066,46 +1094,3 @@
     });
 </script>
 
-
-
-
-
-@*<div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
-    <div class="col-sm-12 col-xs-12 in_shadw no_pad">
-        <div class="col-sm-12 col-xs-12 in_pad">
-            <div class="col-sm-4 no_pad">
-                <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
-                <div class="col-sm-12 no_pad text-center desc_list_event_type">Free</div>
-            </div>
-            <div class="col-sm-8 no_pad">
-                <h1 class="list_event_desc_title"> New Delhi Innovative Business Ideas</h1>
-                <p class="list_event_desc">
-                    <span class="des_hover">New Delhi Innovative Business Ideas </span>
-                    <span class="desc_hide">
-                        Sun National Bank Arena
-                        81 Hamilton Avenue Sun National Bank Arena
-                        81 Hamilton Avenue
-                    </span>
-                </p>
-                <p class="list_event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
-            </div>
-        </div>
-        <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
-            <div class="col-sm-10 no_pad">
-                <ul class="nav nav-pills list_inner_cat_tag">
-                    <li><a href="">#category1 </a></li>
-                    <li><a href="">#category2 </a></li>
-
-                </ul>
-            </div>
-            <div class="col-sm-2 no_pad text-right">
-                <button class="desc_btn_bg_none " title="Your Favourite" type="button">
-                    <i class="fa fa-share-alt"></i>
-                </button>
-                <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
-                    <i class="fa fa-heart"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>*@
