@@ -462,6 +462,7 @@
           <Property Name="PC_Apply" Type="varchar" MaxLength="50" />
           <Property Name="PC_URL" Type="varchar" MaxLength="150" />
           <Property Name="PC_Eventid" Type="bigint" />
+          <Property Name="SavedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -2038,7 +2039,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           </FunctionImport>
           <EntitySet Name="Promo_Code" EntityType="EventComboModel.Promo_Code" />
           <FunctionImport Name="GetOrganizerEventid" ReturnType="Collection(EventComboModel.GetOrganizerEventid_Result)">
-
           <Parameter Name="Masterid" Mode="In" Type="Int64" />
           </FunctionImport>
           <EntitySet Name="v_RetrieveEventid" EntityType="EventComboModel.v_RetrieveEventid" />
@@ -2191,6 +2191,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="PC_Apply" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PC_URL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="PC_Eventid" Type="Int64" />
+          <Property Name="SavedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <ComplexType Name="GetOrganizerEventid_Result">
           <Property Type="Int64" Name="Orgnizer_Id" Nullable="false" />
@@ -2985,6 +2986,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Promo_Code">
             <EntityTypeMapping TypeName="EventComboModel.Promo_Code">
               <MappingFragment StoreEntitySet="Promo_Code">
+                <ScalarProperty Name="SavedDate" ColumnName="SavedDate" />
                 <ScalarProperty Name="PC_Eventid" ColumnName="PC_Eventid" />
                 <ScalarProperty Name="PC_URL" ColumnName="PC_URL" />
                 <ScalarProperty Name="PC_Apply" ColumnName="PC_Apply" />

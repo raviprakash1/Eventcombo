@@ -1579,7 +1579,7 @@ div.file_upload input {
 
 .soc_btn_dis{ background-color: #3cf; padding: 0px; margin-left: 5px; height: 22px; width: 22px; font-size: 12px; border-radius: 50%; color: #fff; }
 .soc_btn_dis:hover,.soc_btn_dis:focus,.soc_btn_dis.focus{ background-color: #3cf; color: #fff; } 
-
+.dis_evnt_link{ color:#ccc;}
 
 .soc_btn_active{ background-color: #ccc; color: #fff;  }
 .soc_btn_active:hover,.soc_btn_active:focus,.soc_btn_active.focus{ background-color: #ccc; color: #fff;  }

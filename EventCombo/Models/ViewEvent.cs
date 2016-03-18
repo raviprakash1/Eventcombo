@@ -101,13 +101,35 @@ namespace EventCombo.Models
         
         
     }
+    public class showPromocode
+    {
+        public long Eventid { get; set; }
+        public string Eventtitle { get; set; }
 
+        public   List<Promocode> Promocode { get; set; }
+        public int discountcode { get; set; }
+        public string searchquery { get; set; }
+    }
+    public class Promocode
+    {
+        public string Amount { get; set; }
+        public string Start { get; set; }
+        public string End { get; set; }
+        public string Limit { get; set; }
+        public string code { get; set; }
+        public long PCID { get; set; }
+
+    }
     public partial class Promo_Code
     {
         public string Eventitle{ get; set; }
         public List<Ticket> Ticketdata { get; set; }
         public string Discount_Type { get; set; }
+        public int discountcode { get; set; }
+        public string Formtype { get; set; }
+        public string Amounttype { get; set; }
 
+    
     }
     public class Coordinates
         {
