@@ -1,0 +1,120 @@
+-----------Exception Details on  3/17/2016 10:48:46 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 3/17/2016 10:48:46 AM
+
+Error Line No : ne 1891
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  3/17/2016 10:49:49 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 3/17/2016 10:49:49 AM
+
+Error Line No : ne 1891
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  3/17/2016 10:50:47 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 3/17/2016 10:50:47 AM
+
+Error Line No : ne 1891
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  3/17/2016 11:27:37 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 3/17/2016 11:27:37 AM
+
+Error Line No : ine 640
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : Unable to determine the principal end of the 'EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master' relationship. Multiple added entities may have the same primary key.
+
+ Error Page Url: http://localhost:10159/createevent/saveevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  3/17/2016 11:33:56 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 3/17/2016 11:33:56 AM
+
+Error Line No : ine 640
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : Unable to determine the principal end of the 'EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master' relationship. Multiple added entities may have the same primary key.
+
+ Error Page Url: http://localhost:10159/createevent/saveevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

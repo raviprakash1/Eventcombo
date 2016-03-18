@@ -657,7 +657,7 @@
                         <div class="form-group ">
                             <label class="col-sm-12 control-label ev_tickt_lebel pl0">Organizer Name*</label>
                             <div class="col-sm-8 no_pad">
-                                <input id="txtOrgnizer" maxlength="200" class="form-control evnt_inp_cont" type="text">
+                                <input id="txtOrgnizer" maxlength="200" class="form-control evnt_inp_cont" type="text" onkeypress="return onlyAlphabets(event,this);" >
                             </div>
                         </div>
                     </div>
@@ -686,7 +686,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input class="form-control wd600" id="txtOrgFBlink" placeholder="" maxlength="100" />
+                                        <input class="form-control wd600" id="txtOrgFBlink" placeholder="" maxlength="256" />
                                     </div>
                                 </div>
                                 <div class="add_social_input mt10">
@@ -696,7 +696,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input id="txtOrgTWlink" class="form-control wd600" placeholder="" maxlength="100" />
+                                        <input id="txtOrgTWlink" class="form-control wd600" placeholder="" maxlength="256" />
                                     </div>
                                 </div>
                                 <div class="add_social_input mt10">
@@ -706,7 +706,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input id="txtOrgLNlink" class="form-control wd600" placeholder="" maxlength="100" />
+                                        <input id="txtOrgLNlink" class="form-control wd600" placeholder="" maxlength="256" />
                                     </div>
                                 </div>
                             </div>
@@ -729,7 +729,7 @@
                                     <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
                                 </div>
                                 <div class="col-sm-2 col-xs-4">
-                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn">Edit <i class="fa fa-pencil"></i></button>
+                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
                                 <div class="col-sm-2 col-xs-4">
                                     <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
@@ -1832,6 +1832,7 @@
 
 
         function DeleteOrgnizer() {
+
             var Sno = $("#ddlOrgnizers").val();
             var id = $("#OrgId_" + Sno).html();
             if (id != 0)
@@ -1857,13 +1858,17 @@
             {
                
             }
-            $('#tblOrgnizer tr').each(function () {
-                if (Sno == $(this).find("td:first").html()) {
 
+        
+            $('#tblOrgnizer tr').each(function () {
+              
+                if (Sno.trim() == $(this).find("td:first").html().trim()) {
+                   
                     $(this).remove();
+                    
                 }
             });
-
+           
             //$("#dllOrganizer")
             $("#ddlOrgnizers option").each(function (i) {
                 if (Sno == $(this).val()) {
@@ -1871,7 +1876,12 @@
                 }
             });
 
-
+            var length = $('#ddlOrgnizers option').length;
+            if (length == 0)
+            {
+                $("#btneditorg").attr('disabled', true);
+                $("#btndeleteorg").attr('disabled', true);
+            }
 
             $("#hidOrgnizer").val('');
             $("#txtOrgnizer").val('');
@@ -2694,95 +2704,21 @@
                 $("#txtOrgTWlink").val('');
                 $("#Incsocial").prop("checked", false);
                 $("#dvOrgnizerFBTw").hide();
-
+                $("#btneditorg").attr('disabled',false);
+                $("#btndeleteorg").attr('disabled', false);
 
                 var msg = disablebutton();
-                //alert(msg);
+              
                 if (msg == " ") {
                     $(".cdisable").removeAttr("disabled");
                 }
                 $("#txtOrgnizer").removeClass("err-bor");
-                //alert(divlength);
-                //var addOption = '<div class="list-group-item ev_orgz_list"></div> <div id = dvOrg_' + vLenght.toString() + '  class="col-sm-8 no_pad">' + $("#txtOrgnizer").val() + '</div><div class="col-sm-4 no_pad text-right ev_org_edt_main"><a href="#"><i class="fa fa-pencil"></i> </a> | <a href="#"><i class="fa fa-trash"></i></a></div>';
-                //$("#dvOrganizer").append(addOption)
-
-                //'<option value="' + vval + '" id="' + $("#txtOrgnizer").val() + '">' + $("#txtOrgnizer").val() + '</option>';
-                //$("#dllOrganizer").append(addOption);
-
-                //}
-                //else {
-                //    //$('#dllOrganizer option:selected').removeAttr('selected');
-                //    var vval = $("#edSummer2").code();
-                //    $("#dllOrganizer option").each(function (i) {
-                //        //alert($(this).text());
-                //        //alert($("#hidOrgnizer").val());
-                //        if ($("#hidOrgnizer").val() == $(this).text()) {
-
-                //            $(this).remove();
-                //            //alert($("#hidOrgnizer").val());
-                //            //$(this).text($("#txtOrgnizer").val());
-                //            //$(this).val(vval);
-                //        }
-                //        //alert($(this).text() + " : " + $(this).val());
-                //    });
-                //    var vval = $("#edSummer2").code();
-                //    var addOption = '<option value="' + vval + '" id="' + vval + '" >' + $("#txtOrgnizer").val() + '</option>';
-                //    $("#dllOrganizer").append(addOption);
-
-
-
-                //    //var addOption = '<option value="' + vval + '" id="' + vval + '" >' + $("#txtOrgnizer").val() + '</option>';
-                //    //$("#dllOrganizer").append(addOption);
-                //}
-                //}
-                //else {
-                //    alert("Limit Exceeded, System Alow Only 25 Orgnizer.");
-
-                //}
-
-                //$("#hidOrgnizer").val('');
-                //$("#txtOrgnizer").val('');
-                //$("#edSummer2").code('');
-
-                // $("#txtOrgnizer").focus();
-                //$("#dllOrganizer option").each(function (i) {
-                //    alert($(this).text() + " : " + $(this).val());
-                //});
-
-                //alert(vval);
+              
 
             });
 
 
-            //$('#txtEventUrl').bind('keypress', function (event) {
-
-            //    var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
-            //    var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
-            //    alert(ret);
-            //    //document.getElementById("error").style.display = ret ? "none" : "inline";
-            //    return ret;
-
-
-            //    //var yourInput = $(this).val();
-            //    //re = /[`~!#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi;
-            //    //var isSplChar = re.test(yourInput);
-            //    //if (isSplChar) {
-            //    //    event.preventDefault();
-            //    //    return false;
-            //    //}
-
-
-
-
-            //    //var regex = new RegExp("^[a-zA-Z0-9]+$");
-            //    //var charCode = (evt.which) ? evt.which : event.keyCode;
-            //    //var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-            //    //if (!regex.test(key)) {
-            //    //    event.preventDefault();
-            //    //    return false;
-            //    //}
-            //});
-
+         
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
                 event.preventDefault();
@@ -2829,7 +2765,14 @@
                     });
                 }
             });
+            $("#EventType").change(function () {
 
+                var msg = disablebutton();
+              
+                if (msg.trim()=='') {
+                    $(".cdisable").removeAttr("disabled");
+                }
+            });
 
             $("#ddlEventCategory").change(function () {
                 //alert("change Fires");
@@ -2856,6 +2799,13 @@
                         $('html,body').animate({ scrollTop: 0 });
                     }
                 });
+
+                var msg = disablebutton();
+              
+                if (msg.trim() == '') {
+                   
+                    $(".cdisable").removeAttr("disabled");
+                }
             });
 
 
@@ -3367,13 +3317,56 @@
      
 
         $(document).ready(function () {
-         
-            //$("#id_cost-n").each(function () {
-            //    $(this).format({ format: "#,###", locale: "us" });
-            //});
-            //$("#id_Discount-n").each(function () {
-            //    $(this).format({ format: "#,###", locale: "us" });
-            //});
+            $("#txtOrgnizer").blur(function () {
+
+                var isValid = false;
+                var sno = $("#hidOrgnizer").val();
+                var name = $('#txtOrgnizer').val();
+                
+                var regex = /^[a-zA-Z ]*$/; 
+                isValid = regex.test(name);
+                if (isValid) {
+                    var orgid = 0;
+
+                    orgid = $('#OrgId_' + sno).html();
+                 
+                    if (typeof orgid === "undefined") {
+                        orgid = 0;
+                    }
+
+                    $.ajax({
+                        url: '@Url.Action("chkOrganizerName", "Account")',
+                        data: { Name: name, id: orgid },
+                        type: "Post",
+                        success: function (data) {
+
+                            if (data == "True") {
+                              
+                                $('#erraccmsg').html("Organizer name already exist!");
+                                $('#diverroacc').css('display', 'block');
+                                $('#txtOrgnizer').addClass('err-bor');
+                                $('#txtOrgnizer').val('');
+                                $('html,body').animate({ scrollTop: 0 });
+                              
+                                return false;
+                            } else {
+                                $('#txtOrgnizer').removeClass('err-bor');
+                               
+                            }
+
+                        }
+                    });
+                } else {
+                    $('#txtOrgnizer').val('');
+                }
+
+
+
+            });
+
+            $('#txtOrgnizer').bind("cut copy paste", function (e) {
+                e.preventDefault();
+            });
             $('#id_variablecharge').change(function () {
                 if ($(this).is(":checked")) {
                     $('.TicketFees').show();
@@ -3421,8 +3414,14 @@
                 type: "Get",
                 success: function (data) {
                     var getHtml = data.split('¶');
+                  
                     $("#tblOrgnizer").append(getHtml[0]);
                     $("#ddlOrgnizers").append(getHtml[1]);
+                    if( getHtml[1].trim()=="")
+                    {
+                        $("#btneditorg").attr('disabled', true);
+                        $("#btndeleteorg").attr('disabled', true);
+                    }
                 },
                 error: function (data) {
                 }
@@ -4052,6 +4051,7 @@
 
             }
         });
+     
         $('.save_btnfree').click(function () {
 
             $(".ticket_panel").show();
@@ -4167,6 +4167,7 @@
             }
 
         });
+
         function randomString(len, charSet) {
             charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             var randomString = '';
@@ -5816,6 +5817,33 @@
             }
         });
         
+        function onlyAlphabets(e, t) {
+
+
+
+            if (window.event) {
+
+                var charCode = window.event.keyCode;
+
+            }
+
+            else if (e) {
+
+                var charCode = e.which;
+
+            }
+
+            else { return true; }
+
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 32)
+
+                return true;
+
+            else
+
+                return false;
+
+        }
     </script>
 
 }
