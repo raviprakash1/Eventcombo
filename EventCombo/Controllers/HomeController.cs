@@ -597,7 +597,7 @@ namespace EventCombo.Controllers
 
                     if (strPrice.ToUpper() == "FREE")
                     {
-                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID = 1)");
+                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (1,3))");
                     }
 
                     if (strPrice.ToUpper() == "PAID")
@@ -633,9 +633,23 @@ namespace EventCombo.Controllers
                         objDisEv = new DiscoverEvent();
                         objDisEv.EventId = lEventId;
                         objDisEv.EventTitle = objEv.EventTitle;
+                        if (objDisEv.EventTitle.Length >57)
+                        {
+                            objDisEv.EventTitle = objDisEv.EventTitle.Substring(0, 54) + "...";
+                        }
                         objDisEv.EventImage = strImageUrl;
                         objDisEv.EventCat = GetDiscoverEventCategorybyId(objEv.EventCategoryID);
+                        if (objDisEv.EventCat.Length >20)
+                        {
+                            objDisEv.EventCat = objDisEv.EventCat.Substring(0, 16) + "...";
+                        }
                         objDisEv.EventType = GetDiscoverEventTypebyId(objEv.EventTypeID);
+                        if (objDisEv.EventType.Length > 20)
+                        {
+                            objDisEv.EventType = objDisEv.EventType.Substring(0, 16) + "...";
+                        }
+
+
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
@@ -644,11 +658,18 @@ namespace EventCombo.Controllers
                         {
                             if (vAddress.ConsolidateAddress.Trim() != string.Empty)
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
+
                             else
                             {
                                 objDisEv.EventAddress = vAddress.VenueName.Trim() + " " + vAddress.Address1.Trim() + " " + vAddress.Address2.Trim() + " " + vAddress.City.Trim() + " " + vAddress.Zip;
                             }
                         }
+                        if (objDisEv.EventAddress.Length >140)
+                        {
+                            objDisEv.EventAddress = objDisEv.EventAddress.Substring(0, 135) + "...";
+                        }
+                        
+
                         var vTimings = objEv.EventVenues.FirstOrDefault();
                         if (vTimings != null)
                         {
@@ -770,8 +791,9 @@ namespace EventCombo.Controllers
                         {
                             if (str[1].Trim() != "" && str[2].Trim() != "")
                             {
-                                DateTime dtFrom = Convert.ToDateTime(str[1]);
-                                DateTime dtTo = Convert.ToDateTime(str[2]);
+
+                                DateTime dtFrom = Convert.ToDateTime(str[1].ToString());
+                                DateTime dtTo = Convert.ToDateTime(str[2].ToString());
                                 lsDisEvt = lsDisEvt.Where(m => m.EventDate >= dtFrom && m.EventDate <= dtTo).ToList();
                             }
                             else if (str[1].Trim() != "")
