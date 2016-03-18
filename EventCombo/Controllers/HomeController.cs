@@ -506,6 +506,16 @@ namespace EventCombo.Controllers
                 return vEventType;
             }
         }
+
+        public string GetDiscoverEventFavLikes(long lEvId, string strUserId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var vfav = (from ev in db.EventFavourites where ev.eventId == lEvId && ev.UserID == strUserId select ev.UserID).FirstOrDefault();
+                if (vfav != null && vfav.Trim() != "") return "I";
+                else return "D";
+            }
+        }
         public string GetPriceLabel(long lEventId)
         {
             string strResult = "";
@@ -610,6 +620,8 @@ namespace EventCombo.Controllers
                     CreateEventController objCEv = new CreateEventController();
                     string strImageUrl = "";
                     ValidationMessageController vmc = new ValidationMessageController();
+                    string strUserId = "";
+                    if (Session["AppId"] != null && Session["AppId"].ToString() != string.Empty) strUserId = Session["AppId"].ToString();
                     foreach (Event objEv in vEventList)
                     {
                         long lEventId = vmc.GetLatestEventId(objEv.EventID);
@@ -653,6 +665,7 @@ namespace EventCombo.Controllers
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
+                        objDisEv.EventLike = GetDiscoverEventFavLikes(lEventId, strUserId);
                         var vAddress = objEv.Addresses.FirstOrDefault();
                         if (vAddress != null)
                         {

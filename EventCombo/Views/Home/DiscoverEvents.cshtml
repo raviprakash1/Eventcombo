@@ -332,13 +332,21 @@
                                 @*<button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
                                     <i class="fa fa-share-alt"></i>
                                 </button>*@
-                                <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button" data-toggle="modal" data-target="#sharemodal">
+                                <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString()})');" type="button" data-toggle="modal" data-target="#sharemodal">
                                     <i class="fa fa-share-alt"></i>
                                 </button>
-                                @*show_like_btn*@
-                                <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn " title="Your Favourite" type="button">
-                                    <i class="fa fa-heart"></i>
-                                </button>
+                                @if (@item.EventLike == "I")
+                                {
+                                    <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
+                                        <i class="fa fa-heart"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn" id="btnfavourite-@item.EventId"   title="Your Favourite"  onclick="SaveFav('Y','@item.EventId');" type="button">
+                                        <i class="fa fa-heart"></i>
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -399,9 +407,9 @@
 
                 <div class="col-md-12 social-buttons text-center mt20">
                     <div class="col-sm-12  text-center">
-                        <button class="btn soc_btn_fb fb_color"><i class="fa fa-facebook"></i></button>
-                        <button class="btn soc_btn_fb "><i class="fa fa-twitter"></i></button>
-                        <button class="btn soc_btn_fb linkd_color"><i class="fa fa-linkedin"></i></button>
+                        <button class="btn soc_btn_fb fb_color" id="fbshare"><i class="fa fa-facebook"></i></button>
+                        <button class="btn soc_btn_fb " id="twittershare"><i class="fa fa-twitter"></i></button>
+                        <button class="btn soc_btn_fb linkd_color" id="linkshare"><i class="fa fa-linkedin"></i></button>
                         <button class="btn soc_btn_fb msg_color"><i class="fa fa-envelope"></i></button>
                     </div>
                 </div>
@@ -409,7 +417,7 @@
                     <form class="form-horizontal">
                         <div class="col-sm-12 ">
                             <div class="form-group">
-                                <input class="form-control sharesocilform" placeholder="" type="text">
+                                <input class="form-control sharesocilform" id="txtEventUrl" readonly="readonly" placeholder="" type="text">
                             </div>
                         </div>
 
@@ -427,7 +435,41 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
+    function SaveFav(clickfav, eid)
+    {
+        var id = "btnfavourite-" + eid;
+        var msg = "";
+        var clickid = clickfav;
+        var vUrl = location.href;
+        $.ajax({
+            url: '@Url.Action("Discoversavefavourite", "CreateEvent")',
+            data: { Eventid: eid, type: clickid, strUrl: vUrl},
+            type: "Post",
+            success: function (data) {
+                if (data == "Y") {
+                    $("#loginPopup").click();
+                    return false;
+                } else {
+                    if (data == "I") {
+                        $("#" + id).addClass("show_like_btn");
+               
+                    }
+                    if (data == "D") {
+                        $("#" + id).removeClass("show_like_btn");
+                    }
+                }
+            },
+            error: function (data) {
+                alert("Sorry there is some problem.");
+                return false
+            }
+        });
+    }
 
+    function ShowUrl(vurl)
+    {
+        $("#txtEventUrl").val(vurl);
+    }
     function checkDate(field) {
         var allowBlank = true;
         var minYear = (new Date()).getFullYear();
@@ -761,6 +803,28 @@
     }
 
     $(document).ready(function () {
+      
+
+
+        $('#fbshare').click(function () {
+            var vUrl = $("#txtEventUrl").val();
+            window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+        });
+
+        $('#twittershare').click(function () {
+            var vUrl = $("#txtEventUrl").val();
+            window.open('https://twitter.com/share?url=' + encodeURIComponent(vUrl) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+        });
+
+        $('#linkshare').click(function () {
+            var vUrl = $("#txtEventUrl").val();
+            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(vUrl) + '&title=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+        });
+
+
         if ($("#hdDateFilter").val()  != null && $("#hdDateFilter").val() != "")
         {
             var vAry = $("#hdDateFilter").val().split('@@');
@@ -1034,7 +1098,13 @@
           });
 
 
+        $(".CustDate").css({ "display": "none" });
+        $(".CustDateMain").click(function () {
+            $('.CustDate').slideToggle(function () {
+                $('.CustDateMain').toggleClass('active');
+            });
 
+        });
 
         $(".Desccatshow").css({ "display": "none" });
         $(".DesccatClick").click(function () {
