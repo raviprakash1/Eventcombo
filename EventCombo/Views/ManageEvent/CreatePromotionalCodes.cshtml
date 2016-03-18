@@ -410,27 +410,7 @@ else
             <script type="text/javascript">
 
                 $(document).ready(function () {
-<<<<<<< HEAD
-=======
 
-                    $('#crt_promcode').click();
-                    $('#dvcrtpromcode').addClass("active");
-                    $('#dvcrtpromcode b').addClass('opened new-opend');
-
-                    $('#dvcrtpromcode').click(function (e) {
-
-                        var $dvEle = $('#dvcrtpromcode b');
-                        var vclassname = $dvEle.attr('class');
-                        if ($dvEle.hasClass("new-opend")) {
-                            $dvEle.removeClass('opened new-opend').addClass('closed');
-                        }
-                        else {
-                            $dvEle.addClass('opened new-opend');
-                        }
-                    });
-
-                    $("#ddl_discounttype").change(function () {
->>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
 
                     var formtype = "@Model.Formtype";
                     if (formtype == "E") {
