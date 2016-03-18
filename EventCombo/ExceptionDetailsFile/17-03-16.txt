@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 -----------Exception Details on  3/17/2016 10:48:46 AM-----------------
+=======
+-----------Exception Details on  03/17/2016 2:15:49 PM-----------------
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
 -------------------------------------------------------------------------------------
 
 
 
+<<<<<<< HEAD
 Log Written Date: 3/17/2016 10:48:46 AM
+=======
+Log Written Date: 03/17/2016 2:15:49 PM
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
 
 Error Line No : ne 1891
 
@@ -22,11 +30,16 @@ User Host IP:
 
 
 
+<<<<<<< HEAD
 -----------Exception Details on  3/17/2016 10:49:49 AM-----------------
+=======
+-----------Exception Details on  03/17/2016 4:11:53 PM-----------------
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
 -------------------------------------------------------------------------------------
 
 
 
+<<<<<<< HEAD
 Log Written Date: 3/17/2016 10:49:49 AM
 
 Error Line No : ne 1891
@@ -38,6 +51,18 @@ Exception Type: System.Data.Entity.Core.EntityException
 Error Location : The underlying provider failed on Open.
 
  Error Page Url: http://localhost:10159/createevent/geteventurl
+=======
+Log Written Date: 03/17/2016 4:11:53 PM
+
+Error Line No : ine 159
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?Eventid=12
 
 User Host IP: 
 
@@ -46,12 +71,45 @@ User Host IP:
 
 
 
------------Exception Details on  3/17/2016 10:50:47 AM-----------------
+-----------Exception Details on  03/17/2016 4:13:35 PM-----------------
 -------------------------------------------------------------------------------------
 
 
 
+Log Written Date: 03/17/2016 4:13:35 PM
+
+Error Line No : ine 159
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?Eventid=12
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+<<<<<<< HEAD
+-----------Exception Details on  3/17/2016 10:50:47 AM-----------------
+=======
+-----------Exception Details on  03/17/2016 6:13:10 PM-----------------
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
+-------------------------------------------------------------------------------------
+
+
+
+<<<<<<< HEAD
 Log Written Date: 3/17/2016 10:50:47 AM
+=======
+Log Written Date: 03/17/2016 6:13:10 PM
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
 
 Error Line No : ne 1891
 
@@ -70,11 +128,16 @@ User Host IP:
 
 
 
+<<<<<<< HEAD
 -----------Exception Details on  3/17/2016 11:27:37 AM-----------------
+=======
+-----------Exception Details on  03/17/2016 6:14:34 PM-----------------
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
 -------------------------------------------------------------------------------------
 
 
 
+<<<<<<< HEAD
 Log Written Date: 3/17/2016 11:27:37 AM
 
 Error Line No : ine 640
@@ -86,6 +149,19 @@ Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
 Error Location : Unable to determine the principal end of the 'EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master' relationship. Multiple added entities may have the same primary key.
 
  Error Page Url: http://localhost:10159/createevent/saveevent
+=======
+Log Written Date: 03/17/2016 6:14:34 PM
+
+Error Line No : ne 1891
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
 
 User Host IP: 
 
@@ -94,11 +170,16 @@ User Host IP:
 
 
 
+<<<<<<< HEAD
 -----------Exception Details on  3/17/2016 11:33:56 AM-----------------
+=======
+-----------Exception Details on  03/17/2016 6:35:27 PM-----------------
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
 -------------------------------------------------------------------------------------
 
 
 
+<<<<<<< HEAD
 Log Written Date: 3/17/2016 11:33:56 AM
 
 Error Line No : ine 640
@@ -110,6 +191,19 @@ Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
 Error Location : Unable to determine the principal end of the 'EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master' relationship. Multiple added entities may have the same primary key.
 
  Error Page Url: http://localhost:10159/createevent/saveevent
+=======
+Log Written Date: 03/17/2016 6:35:27 PM
+
+Error Line No : ne 1891
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+>>>>>>> 07d231bc3e535b0b90eeab104a7cf6761cd724ca
 
 User Host IP: 
 

@@ -102,7 +102,7 @@
 }
 
 .submenu.submenu_side a:hover {
-  color: #3cf;
+  color: #000;
 }
 
 .accordion.side_accordian li.open .link { text-transform: uppercase; background-color: #e3e3e3; }
