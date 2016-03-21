@@ -79,51 +79,13 @@
               </button>
 
             </div>
+            @* Skip Indian code *@
+            @if (true)
+            {
+              WriteTo(new StringWriter(), RenderSection("sidenav", false));
+            }
             <div id="navbar" class="navbar-collapse collapse nav_cus">
-              <div id="sidebar" class="nav nav-stacked">
-                <div id="accordion" class="panel-group">
-
-                  <div class="panel panel-default menu_list">
-                      <div class="panel-body no-padding">
-                        <p>@Html.ActionLink("Dashboard", "Index", "ManageEvent", new { eventId = @ViewBag.EventId, type = "N" }, null) </p>
-                      </div>
-                  </div>
-                  <div class="panel panel-default menu_list">
-                    <a id="mgeOrder" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                      <div id="dvmgeOrder" class="panel-heading">
-                        Order Options <b class="closed"></b>
-                      </div>
-                    </a>
-                    <div id="collapse1" class="panel-collapse collapse">
-                      <div class="panel-body no-padding">
-                        <p>@Html.ActionLink("Order Form", "Form", "OrderOptions", new { eventId = @ViewBag.EventId }, null) </p>
-                        <p>@Html.ActionLink("Order Confirmation", "Confirmation", "OrderOptions", new { eventId = @ViewBag.EventId }, null)</p>
-                        <p>@Html.ActionLink("Event Type & Language", "EventType", "OrderOptions", new { eventId = @ViewBag.EventId }, null)</p>
-                        <p>@Html.ActionLink("Waitlist", "Waitlist", "OrderOptions", new { eventId = @ViewBag.EventId }, null)</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="panel panel-default menu_list">
-                    <a id="mgeAttendees" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                      <div id="dvmgeAttendees" class="panel-heading">
-                        Manage Attendees <b class="closed"></b>
-                      </div>
-                    </a>
-                    <div id="collapse2" class="panel-collapse collapse">
-                      <div class="panel-body no-padding">
-                        <p>@Html.ActionLink("Orders", "Orders", "ManageAttendees")</p>
-                        <p>@Html.ActionLink("Add Attendees", "Add", "ManageAttendees")</p>
-                        <p>@Html.ActionLink("Emails to Attendees", "Email", "ManageAttendees")</p>
-                        <p>@Html.ActionLink("Guest List", "Guests", "ManageAttendees")</p>
-                        <p>@Html.ActionLink("Name Badges", "Badges", "ManageAttendees")</p>
-                        <p>@Html.ActionLink("Check-in", "Checkin", "ManageAttendees")</p>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
+              @Html.Partial("_ManageEventLeftMenu")
             </div>
           </nav>
         </div>

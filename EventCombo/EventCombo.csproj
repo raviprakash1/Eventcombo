@@ -1218,6 +1218,7 @@
     <Content Include="Views\OrderOptions\Confirmation.cshtml" />
     <Content Include="Views\OrderOptions\EventType.cshtml" />
     <Content Include="Views\OrderOptions\Waitlist.cshtml" />
+    <Content Include="Views\Shared\_ManageEventLeftMenu.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
