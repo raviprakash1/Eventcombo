@@ -34,7 +34,7 @@
         <div class="col-sm-12 no-padding">
             <div class="col-sm-12 no_pad">
                 <ul id="accordion" class="accordion side_accordian">
-                    @if (@TempData["tDateFilter"].ToString() != null && @TempData["tDateFilter"].ToString().ToLower() != "none")
+                    @if (@TempData["tDateFilter"] != null && @TempData["tDateFilter"].ToString().ToLower() != "none")
                     {
                     <li>
                         <div class="link"><span id="spDate">@TempData["tDateFilter"].ToString()</span><i class="glyphicon  glyphicon-triangle-bottom"></i></div>
@@ -115,13 +115,13 @@
             <div class="col-sm-12 no_pad">
                 <div class="col-sm-12 no_pad">
                     <ul class="side_fliter_by_type">
-                        @if (@ViewData["tempPrice"].ToString() == "FREE")
+                        @if (@ViewData["tempPrice"] != null && @ViewData["tempPrice"].ToString() == "FREE")
                         {
                             <li><a href="javascript:void(0);" onclick="GetPriceFilter('ALL');">All Prices</a></li>
                             <li><a href="javascript:void(0);" class="active" onclick="GetPriceFilter('FREE');">Free</a></li>
                             <li><a href="javascript:void(0);" onclick="GetPriceFilter('PAID');">Paid</a></li>
                         }
-                        else if (@ViewData["tempPrice"].ToString() == "PAID")
+                        else if (@ViewData["tempPrice"] != null && @ViewData["tempPrice"].ToString() == "PAID")
                         {
                             <li><a href="javascript:void(0);" onclick="GetPriceFilter('ALL');">All Prices</a></li>
                             <li><a href="javascript:void(0);" onclick="GetPriceFilter('FREE');">Free</a></li>

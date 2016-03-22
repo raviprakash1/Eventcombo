@@ -516,6 +516,15 @@ namespace EventCombo.Controllers
                 else return "D";
             }
         }
+        public double GetDiscoverEventLatLongDis(double dUserLat, double dUserLong, double dAddLat, double dAddLong)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var vDistance = db.GetLantLongDistance(dUserLat, dUserLong, dAddLat, dAddLong).FirstOrDefault();
+                if (vDistance != null) return Convert.ToDouble(vDistance);
+                else return 0;
+            }
+        }
         public string GetPriceLabel(long lEventId)
         {
             string strResult = "";
@@ -667,15 +676,18 @@ namespace EventCombo.Controllers
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
                         objDisEv.EventLike = GetDiscoverEventFavLikes(lEventId, strUserId);
                         var vAddress = objEv.Addresses.FirstOrDefault();
+                        objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
                         if (vAddress != null)
                         {
                             if (vAddress.ConsolidateAddress.Trim() != string.Empty)
+                            {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
-
+                            }
                             else
                             {
                                 objDisEv.EventAddress = vAddress.VenueName.Trim() + " " + vAddress.Address1.Trim() + " " + vAddress.Address2.Trim() + " " + vAddress.City.Trim() + " " + vAddress.Zip;
                             }
+                            objDisEv.EventDisplayAddress = objDisEv.EventAddress;
                         }
                         if (objDisEv.EventAddress.Length >140)
                         {
@@ -713,7 +725,8 @@ namespace EventCombo.Controllers
 
                         lsDisEvt.Add(objDisEv);
                     }
-                    if (strSort == "dat") lsDisEvt = lsDisEvt.OrderBy(m => m.EventDate).ToList();
+                    if (strSort == "dat") lsDisEvt = lsDisEvt.OrderBy(m => m.EventDate).ToList() ;
+                    else lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList();
                     try
                     {
                         if (strDateFilter == "today") lsDisEvt = lsDisEvt.Where(m => m.EventDate >= DateTime.Now && m.EventDate == DateTime.Today).ToList();
