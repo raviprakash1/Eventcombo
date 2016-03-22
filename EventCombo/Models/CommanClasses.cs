@@ -95,6 +95,12 @@ namespace EventCombo.Models
         public long EventCatId { get; set; }
         public long EventId { get; set; }
         public DateTime EventDate { get; set; }
+        public string EventLike { get; set; }
+        public string EventDisplayAddress { get; set; }
+        public double EventDistance { get; set; }
+
+        
+
         //public DiscoverEvent[] DiscoverEventList { get; set; }
 
     }

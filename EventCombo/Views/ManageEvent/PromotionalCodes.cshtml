@@ -1,118 +1,317 @@
-﻿
+﻿@model EventCombo.Models.showPromocode
 @{
     ViewBag.Title = "PromotionalCodes";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+        <div id="accordion" class="panel-group">
 
+            <div class="panel panel-default menu_list">
+
+                <a class="menu_title" href="#">
+                    <div class="panel-heading ">
+                        < My Account
+
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#" title="@Model.Eventtitle">
+                    <div class="panel-heading activeyellow act_ellipses">
+                        @Model.Eventtitle
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        Event Help
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        Event Bundles
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        Event Dashboard
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+                <a class="menu_title" href="#">
+                    <div class="panel-heading">
+                        Modify Order Options
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default menu_list">
+
+                <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                    <div id="dvManage" class="panel-heading">
+                        Invite and Promote <b class="closed"></b>
+                    </div>
+                </a>
+
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body no-padding">
+                        <p>Email Invitations</p>
+                        @if (Model.discountcode > 0)
+                        {
+                            <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid }, null)</p>
+                        }
+                        else
+                        {
+                            <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid }, null)</p>
+                        }
+                        <p>Facebook Integration</p>
+                        <p>Website Integration</p>
+                        <p>Tracing Links</p>
+                        <p>Affialate Programs</p>
+                        <p>Social Stream</p>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+<style type="text/css">
+    .dropheight .dropdown-menu.open .dropdown-menu.inner {
+        max-height: 150px !important;
+    }
+
+
+    .discTable {
+        width: 100%;
+        display: table;
+    }
+
+    .discTablehead {
+        width: 100%;
+        height: 100%;
+        display: table;
+        background: #8c8c8c;
+        padding: 10px 0;
+        font-size: 16px;
+        color: #fff;
+        padding: 0px;
+    }
+
+    .discTableRow {
+        width: 100%;
+        height: 100%;
+        display: table;
+        background: #ebebeb;
+    }
+
+        .discTableRow:nth-child(even) {
+            background: #f5f5f5;
+        }
+
+    .discTableCell {
+        width: 16.66%;
+        height: 100%;
+        font-size: 18px;
+        display: table-cell;
+        padding: 5px 5px;
+        word-break: break-all;
+    }
+
+    .discmidtablecell {
+        width: 16.66%;
+        height: 100%;
+        font-size: 14px;
+        display: table-cell;
+        padding: 5px 5px;
+        vertical-align: top;
+        word-break: break-all;
+    }
+
+    .dis_code_action {
+        color: #ccc;
+    }
+
+        .dis_code_action a {
+            color: #3cf;
+            font-size: 14px;
+        }
+</style>
+@using (Html.BeginForm("PromotionalCodes", "ManageEvent", FormMethod.Post, new { id = "formuser"}))
+{
 
 <div class="col-sm-12 no_pad">
-    <h3 class="acnt_title">Discount Code</h3>
+    <h3 class="acnt_title">Manage Discount Code</h3>
     <!--  <p class="p_info">Payment Information</p> -->
 </div>
-<div class="clearfix"></div>
+<div class="col-sm-12 no_pad text-right mb10">
+    <div class="col-sm-5 col-xs-12 no_pad  text-left ">
+        <a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid })" class="btn-info acnt_btn btn">Create Code</a>
+    </div>
+    <div class="col-sm-3 col-xs-12 no_pad disnt_srh_right ">
+        <form>
+            <div class="input-group stylish-input-group">
+                <input type="text" class="form-control" placeholder="Searh Code" name="searchquery" value="@Model.searchquery">
+                <span class="input-group-addon">
+                    <button type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div>
+    <div class="clearfix"></div>
+    <input type="hidden" name="Eventid" value="@Model.Eventid" />
+ </div>
+
 <div class="col-sm-12 col-xs-12 no_pad">
     <div class="discTable">
         <div class="discTablehead">
             <div class="discTableCell">
-                Name
+                Discount
             </div>
             <div class="discTableCell ">
-                Date
+                Amount
             </div>
             <div class="discTableCell ">
-                Tickets Sold
+                Starts
             </div>
             <div class="discTableCell ">
-                Quick Link
+                Ends
+            </div>
+            <div class="discTableCell ">
+                Available
+            </div>
+            <div class="discTableCell ">
+                Actions
             </div>
 
         </div>
+
+        @foreach (var item in Model.Promocode)
+        {
         <div class="discTableRow">
             <div class="discmidtablecell">
-                My Event 1
+              @item.code
             </div>
             <div class="discmidtablecell ">
-                Nov, 28, 2013
+              @item.Amount
             </div>
             <div class="discmidtablecell ">
-                100
+                @item.Start
+            </div>
+            <div class="discmidtablecell ">
+                @item.End
+            </div>
+            <div class="discmidtablecell ">
+              @item.Limit
             </div>
             <div class="discmidtablecell ">
                 <div class="dis_code_action">
-                    <a href="">Manage </a> |
-                    <a href="">Edit</a> |
-                    <a href="">View</a> |
-                    <a href="">Invite</a> |
-                    <a href="">Analytics</a> |
-                    <a href="">Duplicate</a>
+                   
+                    <a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid, Promocode = @item.PCID })">Edit </a> |
+                    <a href="#confirm-delete-ok" data-toggle="modal"  onclick="ConfirmDelete('@item.PCID');">Delete</a> 
+
+                    
                 </div>
             </div>
         </div>
-        <div class="discTableRow">
-            <div class="discmidtablecell">
-                My Event 1
-            </div>
-            <div class="discmidtablecell ">
-                Nov, 28, 2013
-            </div>
-            <div class="discmidtablecell ">
-                100
-            </div>
-            <div class="discmidtablecell ">
-                <div class="dis_code_action">
-                    <a href="">Manage </a> |
-                    <a href="">Edit</a> |
-                    <a href="">View</a> |
-                    <a href="">Invite</a> |
-                    <a href="">Analytics</a> |
-                    <a href="">Duplicate</a>
-                </div>
-            </div>
-        </div>
-        <div class="discTableRow">
-            <div class="discmidtablecell">
-                My Event 1
-            </div>
-            <div class="discmidtablecell ">
-                Nov, 28, 2013
-            </div>
-            <div class="discmidtablecell ">
-                100
-            </div>
-            <div class="discmidtablecell ">
-                <div class="dis_code_action">
-                    <a href="">Manage </a> |
-                    <a href="">Edit</a> |
-                    <a href="">View</a> |
-                    <a href="">Invite</a> |
-                    <a href="">Analytics</a> |
-                    <a href="">Duplicate</a>
-                </div>
-            </div>
-        </div>
-        <div class="discTableRow">
-            <div class="discmidtablecell">
-                My Event 1
-            </div>
-            <div class="discmidtablecell ">
-                Nov, 28, 2013
-            </div>
-            <div class="discmidtablecell ">
-                100
-            </div>
-            <div class="discmidtablecell ">
-                <div class="dis_code_action">
-                    <a href="">Manage </a> |
-                    <a href="">Edit</a> |
-                    <a href="">View</a> |
-                    <a href="">Invite</a> |
-                    <a href="">Analytics</a> |
-                    <a href="">Duplicate</a>
-                </div>
-            </div>
-        </div>
+        }
+
+
+
+
 
 
 
     </div>
 </div>
+<div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+        <div class="modal-content">
+
+            <form id="contactForm" class="fullw1 add">
+                <div class="modal-body text-center pv50 txt-msg">
+
+                    <h4 class="msg" id="hId"></h4>
+                </div>
+                <div class="modal-footer msg-action-btn ok">
+                    <button type="submit" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
+                    <button type="button" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
+                    <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
+                </div>
+            </form>
+            <input type="hidden" id="hdPromocode" value="" />
+        </div>
+    </div><!-- confirm-msg -->
+</div>
+}
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnYes").click(function () {
+            $.ajax({
+                url: '@Url.Action("DeletePromocode","ManageEvent")',
+                data: { promocode: $("#hdPromocode").val() },
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    location.reload();
+                   
+                }
+            });
+        });
+
+    });
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+
+    function ConfirmDelete(userId) {
+        $("#hdPromocode").val(userId);
+        $("#btnYes").show();
+        $("#btnNo").show();
+        $("#btMesOk").hide();
+
+        // $("#btOk").click();
+
+        $("#hId").text(ajaxsetup("PromotionalCode", "PCDeleetmsg"));
+
+        //var x = confirm("Are you sure you want to delete?");
+
+        //if (x) {
+
+
+        //    return true;
+        //}
+        //else
+        return false;
+
+    }
+</script>

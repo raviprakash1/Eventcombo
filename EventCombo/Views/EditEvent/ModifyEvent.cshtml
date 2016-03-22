@@ -511,7 +511,7 @@
                         <div class="form-group ">
                             <label class="col-sm-12 control-label ev_tickt_lebel pl0">Organizer Name*</label>
                             <div class="col-sm-8 no_pad">
-                                <input id="txtOrgnizer" maxlength="200" class="form-control evnt_inp_cont" type="text">
+                                <input id="txtOrgnizer" maxlength="200" class="form-control evnt_inp_cont" type="text" onkeypress="return onlyAlphabets(event,this);">
                             </div>
                         </div>
                     </div>
@@ -540,7 +540,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input class="form-control wd600" id="txtOrgFBlink" placeholder="" maxlength="100" />
+                                        <input class="form-control wd600" id="txtOrgFBlink" placeholder="" maxlength="256" />
                                     </div>
                                 </div>
                                 <div class="add_social_input mt10">
@@ -550,7 +550,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input id="txtOrgTWlink" class="form-control wd600" placeholder="" maxlength="100" />
+                                        <input id="txtOrgTWlink" class="form-control wd600" placeholder="" maxlength="256" />
                                     </div>
                                 </div>
                                 <div class="add_social_input mt10">
@@ -560,7 +560,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input id="txtOrgLNlink" class="form-control wd600" placeholder="" maxlength="100" />
+                                        <input id="txtOrgLNlink" class="form-control wd600" placeholder="" maxlength="256" />
                                     </div>
                                 </div>
                             </div>
@@ -583,7 +583,7 @@
                                     <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
                                 </div>
                                 <div class="col-sm-2 col-xs-4">
-                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn">Edit <i class="fa fa-pencil"></i></button>
+                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
                                 <div class="col-sm-2 col-xs-4">
                                     <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
@@ -1943,7 +1943,56 @@ else
             }
             $("#btokPrg").click();
         });
+        $("#txtOrgnizer").blur(function () {
 
+            var isValid = false;
+            var sno = $("#hidOrgnizer").val();
+            var name = $('#txtOrgnizer').val();
+                
+            var regex = /^[a-zA-Z ]*$/; 
+            isValid = regex.test(name);
+            if (isValid) {
+                var orgid = 0;
+
+                orgid = $('#OrgId_' + sno).html();
+                 
+                if (typeof orgid === "undefined") {
+                    orgid = 0;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("chkOrganizerName", "Account")',
+                    data: { Name: name, id: orgid },
+                    type: "Post",
+                    success: function (data) {
+
+                        if (data == "True") {
+                              
+                            $('#erraccmsg').html("Organizer name already exist!");
+                            $('#diverroacc').css('display', 'block');
+                            $('#txtOrgnizer').addClass('err-bor');
+                            $('#txtOrgnizer').val('');
+                            $('html,body').animate({ scrollTop: 0 });
+                              
+                            return false;
+                        } else {
+                            $('#txtOrgnizer').removeClass('err-bor');
+                               
+                        }
+
+                    }
+                });
+            } else {
+                $('#txtOrgnizer').val('');
+            }
+
+
+
+        });
+
+        $('#txtOrgnizer').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
         $("#rdPublic").click(function(){
 
             //$("#rdPrivate").prop("checked","false");
@@ -2210,7 +2259,7 @@ else
         function DeleteOrgnizer() {
             var Sno = $("#ddlOrgnizers").val();
             var id = $("#OrgId_" + Sno).html();
-            alert(id);
+           // alert(id);
             if (id != 0)
             {
                 $.ajax({
@@ -2236,7 +2285,7 @@ else
             }
         
             $('#tblOrgnizer tr').each(function () {
-                if (Sno == $(this).find("td:first").html()) {
+                if (Sno.trim() == $(this).find("td:first").html().trim()) {
                     $(this).remove();
                 }
             });
@@ -2248,7 +2297,12 @@ else
                 }
             });
 
-
+            var length = $('#ddlOrgnizers option').length;
+            if (length == 0)
+            {
+                $("#btneditorg").attr('disabled', true);
+                $("#btndeleteorg").attr('disabled', true);
+            }
 
             $("#hidOrgnizer").val('');
             $("#txtOrgnizer").val('');
@@ -3227,7 +3281,8 @@ else
                 $("#txtOrgLNlink").val('');
                 $("#Incsocial").prop("checked", false);
                 $("#dvOrgnizerFBTw").hide();
-
+                $("#btneditorg").attr('disabled',false);
+                $("#btndeleteorg").attr('disabled', false);
                 var msg = disablebutton();
               console.log(msg);
                 //alert(msg);
@@ -3332,6 +3387,14 @@ else
                     });
                 }
             });
+            $("#EventType").change(function () {
+
+                var msg = disablebutton();
+              
+                if (msg.trim()=='') {
+                    $(".cdisable").removeAttr("disabled");
+                }
+            });
 
 
             $("#ddlEventCategory").change(function () {
@@ -3359,6 +3422,12 @@ else
                         $('html,body').animate({ scrollTop: 0 });
                     }
                 });
+                var msg = disablebutton();
+              
+                if (msg.trim() == '') {
+                   
+                    $(".cdisable").removeAttr("disabled");
+                }
             });
 
 
@@ -6955,6 +7024,34 @@ else
                 $(".TmezoneSet").hide();
             }
         });
+
+        function onlyAlphabets(e, t) {
+
+
+
+            if (window.event) {
+
+                var charCode = window.event.keyCode;
+
+            }
+
+            else if (e) {
+
+                var charCode = e.which;
+
+            }
+
+            else { return true; }
+
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 32)
+
+                return true;
+
+            else
+
+                return false;
+
+        }
     </script>
 
 }

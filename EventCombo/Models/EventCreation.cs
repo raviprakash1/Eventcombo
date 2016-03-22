@@ -93,6 +93,7 @@ namespace EventCombo.Models
         public string Descritption { get; internal set; }
 
         public long EventHits { get; set; }
+        public int DiscountCode { get; set; }
 
     }
 
