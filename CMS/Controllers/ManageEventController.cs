@@ -83,6 +83,7 @@ namespace CMS.Controllers
             ViewBag.PageF = PageFilter;
 
             List<EventCreation> objlst1 = GetAllEvents("", "", "", "", "", "", "");
+
             ViewData["Eventscount"] = objlst1.Count;
 
 
@@ -90,8 +91,24 @@ namespace CMS.Controllers
 
         }
 
-        
 
+        public ActionResult EventPaymentInfo(long lEventId)
+        {
+            using (EmsEntities objEntity = new EmsEntities())
+            {
+                var vPInfo = (from myRow in objEntity.Payment_Info where myRow.PI_EventId == lEventId  
+                                   select myRow).FirstOrDefault();
+                Payment_Info objPI = new Payment_Info();
+                if (vPInfo != null)
+                {
+                    objPI = vPInfo;
+                    var vCountry = (from myRow in objEntity.Countries where myRow.CountryID == objPI.PI_Country select myRow.Country1).FirstOrDefault();
+                    TempData["Country"] = vCountry;
+                }
+                return View(objPI);
+            }
+            
+        }
 
         public ActionResult Index()
         {

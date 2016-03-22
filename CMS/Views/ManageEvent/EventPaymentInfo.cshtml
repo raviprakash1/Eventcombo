@@ -1,0 +1,182 @@
+﻿@model CMS.Models.Payment_Info
+
+@{  Layout = null;}
+<div class="panel">
+    @if (Model.PI_PaymentMethod != null)
+    {
+        <div class="panel-body">
+
+            @if (Model.PI_PaymentMethod.ToUpper() == "C")
+            {
+                <div class="col-md-12" id="divChq">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Payment Method</div>
+                            <div class="col-lg-8 col-xs-6">
+                                Cheque
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Name Pay To</div>
+                            <div class="col-lg-8">
+                                @if (@Model.PI_PayTo != null)
+                                {@Model.PI_PayTo}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Mailing Address</div>
+                            <div class="col-lg-8 col-xs-6">
+                                <div class="col-xs-12 no_pad">
+                                    @if (@Model.PI_Address != null)
+                                    {@Model.PI_Address
+
+                                    }
+                                </div>
+                                <div class="col-xs-12 no_pad mt10">
+                                    @if (@Model.PI_Address2 != null)
+                                    {@Model.PI_Address2 }
+                                    @if (Model.PI_City != null)
+                                    { @Model.PI_City}
+                                    @if (Model.PI_PostalCode != null)
+                                    { @Model.PI_PostalCode}
+                                    @if (@TempData["Country"] != null)
+                                    { @TempData["Country"].ToString() }
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-12" id="divDirectDeposit">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Payment Method </div>
+                            <div class="col-lg-8 col-xs-6">
+                                Direct Deposit
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Account Type </div>
+                            <div class="col-lg-8 col-xs-6">
+                                @if (Model.PI_AccountHolderType != null)
+                                {
+                                    if (Model.PI_AccountHolderType.ToUpper() == "I")
+                                    {
+                                        <div class="col-xs-12 no_pad">Individual</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-xs-12 no_pad">Company</div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">
+                                <div class="col-xs-12 no_pad"> Company Name</div>
+                                <div class="col-xs-12 no_pad"> Name an Account</div>
+                            </div>
+                            <div class="col-lg-8">
+                                @if (Model.PI_AccCompName != null)
+                                {
+                                    @Model.PI_AccCompName
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Address </div>
+                            <div class="col-lg-8 col-xs-6">
+                                <div class="col-xs-12 no_pad">
+                                    @if (@Model.PI_Address != null)
+                                    {@Model.PI_Address}
+                                </div>
+                                <div class="col-xs-12 no_pad mt10">
+                                    @if (@Model.PI_Address2 != null)
+                                    {@Model.PI_Address2}
+                                    @if (Model.PI_City != null)
+                                    { @Model.PI_City}
+                                    @if (Model.PI_PostalCode != null)
+                                    { @Model.PI_PostalCode}
+                                    @if (@TempData["Country"] != null)
+                                    { @TempData["Country"].ToString() }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Bank Account Info </div>
+                            @if (Model.PI_BankAccInfo != null)
+                            {
+                                if (Model.PI_BankAccInfo.ToUpper() == "C")
+                                {
+                                    <div class="col-lg-8 col-xs-6">
+                                        Checking
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-lg-8 col-xs-6">
+                                        Savings
+                                    </div>
+
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Bank Name </div>
+                            <div class="col-lg-8 col-xs-6">
+                                @if (@Model.PI_BankName != null)
+                                {@Model.PI_BankName}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Routing Number</div>
+                            <div class="col-lg-8 col-xs-6">
+                                @if (@Model.PI_RoutingNumber != null)
+                                {
+                                    @Model.PI_RoutingNumber}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-xs-6">Account Number</div>
+                            <div class="col-lg-8 col-xs-6">
+                                @if (@Model.PI_AccountNumber != null)
+                                {
+                                    @Model.PI_AccountNumber}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="panel-body">
+            No Information Available.
+        </div>
+
+    }
+</div>
