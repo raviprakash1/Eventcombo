@@ -358,7 +358,10 @@ namespace EventCombo.Controllers
             if (strEc == null || strEc == "~" || strEc == "evc") strEc = string.Empty;
 
             Session["Fromname"] = "DiscoverEvents";
-            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc, strPrice, strLat, strLong, strSort, strDateFilter);
+            string strNearLat = "";
+            string strNearLong = "";
+
+            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc, strPrice, strLat, strLong, strSort, strDateFilter, ref strNearLat, ref strNearLong);
             double dPageCount = objDiscEvt.Count;
             double dTotalPages = dPageCount / pageSize;
             int lTotalPages = (objDiscEvt.Count / pageSize);
@@ -385,6 +388,8 @@ namespace EventCombo.Controllers
             TempData["tLng"] = strLong;
             TempData["tSort"] = strSort;
             TempData["tDateFilter"] = strDateFilter;
+            TempData["NearLat"] = strNearLat;
+            TempData["NearLong"] = strNearLong;
             ViewData["tempPrice"] = (strPrice != null ? strPrice.ToUpper() : "ALL");
             return View();
         }
@@ -569,7 +574,7 @@ namespace EventCombo.Controllers
             }
             return strResult;
         }
-        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter)
+        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter, ref string strNearLat, ref string strNearLong)
         {
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
@@ -631,6 +636,7 @@ namespace EventCombo.Controllers
                     ValidationMessageController vmc = new ValidationMessageController();
                     string strUserId = "";
                     if (Session["AppId"] != null && Session["AppId"].ToString() != string.Empty) strUserId = Session["AppId"].ToString();
+                    bool bflag = true;
                     foreach (Event objEv in vEventList)
                     {
                         long lEventId = vmc.GetLatestEventId(objEv.EventID);
@@ -694,14 +700,18 @@ namespace EventCombo.Controllers
                             objDisEv.EventAddress = objDisEv.EventAddress.Substring(0, 135) + "...";
                         }
                         
+                        if (bflag == true)
+                        {
+                            strNearLat = vAddress.Latitude;
+                            strNearLong = vAddress.Longitude;
+                            bflag = false;
+                        }
 
                         var vTimings = objEv.EventVenues.FirstOrDefault();
                         if (vTimings != null)
                         {
                             objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
                             objDisEv.EventDate = (vTimings.EventStartDate != null ? Convert.ToDateTime(vTimings.EventStartDate + " " + vTimings.EventStartTime) : DateTime.Now);
-
-
                         }
                         else
                         {

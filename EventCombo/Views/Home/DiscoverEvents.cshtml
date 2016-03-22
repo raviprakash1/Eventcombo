@@ -9,7 +9,7 @@
 <div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
     <div class="col-sm-12 col-xs-12 ot_main_pad mb10">
         <div class="col-sm-9 no_pad">
-            <div class="dis_event_ser_title "><h2>Events </h2></div>
+            <div class="dis_event_ser_title "><span id="spEventAddress"></span></div>
         </div>
         <div class="col-sm-3 text-right no_pad">
             <ul class="nav nav-pills dis_fil_nav_right">
@@ -452,7 +452,7 @@
                 } else {
                     if (data == "I") {
                         $("#" + id).addClass("show_like_btn");
-               
+
                     }
                     if (data == "D") {
                         $("#" + id).removeClass("show_like_btn");
@@ -803,7 +803,20 @@
     }
 
     $(document).ready(function () {
-      
+
+        var vLat = '@TempData["NearLat"]';
+        var vLong = '@TempData["NearLong"]';
+        if (vLat != null && vLat != '') var lat = vLat;
+        if (vLong != null && vLong != '') var lng = vLong;
+        var latlng = new google.maps.LatLng(lat, lng);
+        var geocoder = geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    $("#spEventAddress").text("Events " + results[1].formatted_address);
+                }
+            }
+        });
 
 
         $('#fbshare').click(function () {
