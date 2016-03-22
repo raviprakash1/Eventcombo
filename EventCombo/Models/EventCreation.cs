@@ -20,7 +20,8 @@ namespace EventCombo.Models
         public string DisplayStartTime { get; set; }
         public string DisplayEndTime { get; set; }
         public string DisplayTimeZone { get; set; }
-        public string EventDescription { get; set; }
+        [AllowHtml]
+        public string EventDescription { get; set; } 
         public string EventPrivacy { get; set; }
         public string Private_ShareOnFB { get; set; }
         public string Private_GuestOnly { get; set; }
