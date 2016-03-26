@@ -131,12 +131,6 @@ namespace EventCombo.Models
 
     public long EventId { get; set; }
 
-    private List<OrderTemplateTypeViewModel> _orderTemplateTypes = new List<OrderTemplateTypeViewModel>();
-    public List<OrderTemplateTypeViewModel> OrderTemplateTypes
-    {
-      get { return _orderTemplateTypes; }
-      internal set { _orderTemplateTypes = value; }
-    }
     public long OrderTemplateTypeId { get; set; }
 
     public string Title { get; set; }
@@ -196,6 +190,8 @@ namespace EventCombo.Models
       get { return _waitlist; }
       internal set { _waitlist = value; }
     }
+
+    public int LanguageId { get; set; }
 
   }
 }
