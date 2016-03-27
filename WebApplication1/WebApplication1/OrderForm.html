@@ -1,0 +1,490 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href='Resources/css/bootstrap.css' rel='stylesheet' type='text/css'>
+    <link href='Resources/css/bootstrap-switch.css' rel='stylesheet' type='text/css'>
+    <link href='Resources/css/OrderForm.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="Resources/js/jquery-1.12.0.js"></script>
+    <script type="text/javascript" src="Resources/js/bootstrap.js"></script>
+    <script type="text/javascript" src="Resources/js/bootstrap-switch.js"></script>
+    <script type="text/javascript" src="Resources/js/main.js"></script>
+    <title></title>
+</head>
+<body>
+    <div class="mainContainer">
+        <div class="insideContainer">
+            <div class="orderFormTxt"><h1>Order Form</h1></div>
+            <div class="formText">Attendee Information</div>
+
+            <div class="navTabs lastestBestSale">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active first">
+                        <a href="#latestOffer" role="tab" data-toggle="tab">Basic Information</a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#saleOffOffer" role="tab" data-toggle="tab">Buyer Only</a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#bestSale" role="tab" data-toggle="tab">Each Attendee</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="latestOffer">
+                        <div class="productsLatestMain">
+                            <div class="groupRegis">Group Registration</div>
+                            <div class="groupRegisDesp">Allow or require attendees to register as part of a group, team, organization, company or association. To activate group registration, you must collect information for each attendee.</div>
+                            <div class="btn btn-primary">Activate group registration</div>
+
+                            <div class="groupRegis">Additional Items</div>
+                            <div class="groupRegisDesp">Sell up to six additional items on the order form, such as event merchandise. Items will only be available to attendees that register for a paid order. Fulfillment, shipping and handling are the responsibility of the event organizer.</div>
+                            <div class="btn btn-primary">Add Additional Item</div>
+
+                            <div class="groupRegis1">Registration Options</div>
+                            <div class="form-group">
+                                <label for="title">Title for Registration Page:</label>
+                                <input type="text" class="form-control" id="title" placeholder="Registration Information">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Instruction">Instructions for your Attendees:</label>
+                                <textarea class="form-control setHeight" id="Instruction"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">Registration Time Limit:</label>
+                                <input type="text" class="form-control" id="title" placeholder="mins">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Instruction">Message to Display After Ticket Sales End</label>
+                                <textarea class="form-control setHeight" id="Instruction"></textarea>
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <label for="Instruction" style="float:left;">Allow Call Pickup</label>
+                                <div style="float:right;">
+                                    <input type="checkbox" name="my-checkbox" checked>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <label for="Instruction" style="float:left;">Allow Attendees to Edit Information after Registration</label>
+                                <div style="float:right;">
+                                    <input type="checkbox" name="my-checkbox" checked>
+                                </div>
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <label for="Instruction" style="float:left;">Accept Refund Requests</label>
+                                <div style="float:right;">
+                                    <input type="checkbox" name="my-checkbox" checked>
+                                </div>
+
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <div class="btn btn-primary btn-lg">Save</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="saleOffOffer">
+                        <div class="productsLatestMain">
+                            <div class="groupRegis1">Information to Collect</div>
+                            <div class="clearfix">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-3">Include</div>
+                                <div class="col-lg-3">Require</div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Prefix (Mr., Mrs., etc.)</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">First Name</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Last Name</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Suffix</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Email Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Home Phone</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Cell Phone</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Tax & Business Info</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Billing Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Card Info</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Home Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Shipping Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Company / Organization</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Work Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Work Phone</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Website</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Blog</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Gender</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Birth Date</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Age</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="groupRegisDesp">Not finding what you are looking for on this list? Create your own questions with more options.</div>
+                            <div class="btn btn-primary">Create a Question</div>
+
+                            <div class="groupRegis">Group Registration</div>
+                            <div class="groupRegisDesp">Allow or require attendees to register as part of a group, team, organization, company or association. To activate group registration, you must collect information for each attendee.</div>
+                            <div class="btn btn-primary">Activate group registration</div>
+
+                            <div class="groupRegis">Additional Items</div>
+                            <div class="groupRegisDesp">Sell up to six additional items on the order form, such as event merchandise. Items will only be available to attendees that register for a paid order. Fulfillment, shipping and handling are the responsibility of the event organizer.</div>
+                            <div class="btn btn-primary">Add Additional Item</div>
+
+                            <div class="groupRegis1">Registration Options</div>
+                            <div class="form-group">
+                                <label for="title">Title for Registration Page:</label>
+                                <input type="text" class="form-control" id="title" placeholder="Registration Information">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Instruction">Instructions for your Attendees:</label>
+                                <textarea class="form-control setHeight" id="Instruction"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">Registration Time Limit:</label>
+                                <input type="text" class="form-control" id="title" placeholder="mins">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Instruction">Message to Display After Ticket Sales End</label>
+                                <textarea class="form-control setHeight" id="Instruction"></textarea>
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <label for="Instruction" style="float:left;">Allow Call Pickup</label>
+                                <div style="float:right;">
+                                    <input type="checkbox" name="my-checkbox" checked>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <label for="Instruction" style="float:left;">Allow Attendees to Edit Information after Registration</label>
+                                <div style="float:right;">
+                                    <input type="checkbox" name="my-checkbox" checked>
+                                </div>
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <label for="Instruction" style="float:left;">Accept Refund Requests</label>
+                                <div style="float:right;">
+                                    <input type="checkbox" name="my-checkbox" checked>
+                                </div>
+
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <div class="btn btn-primary btn-lg">Save</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="bestSale">
+                        <div class="productsLatestMain">
+                            <div class="groupRegis1">Collect information by ticket type</div>
+                            <div class="groupRegis1">Information to Collect</div>
+                            <div>
+                                <div class="col-sm-4">
+                                    <label>
+                                        <input id="early" checked type="checkbox">
+                                        Early Bid
+                                    </label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>
+                                        <input id="early" checked type="checkbox">
+                                        RSVP
+                                    </label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>
+                                        <input id="early" checked type="checkbox">
+                                        Extra
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-3">Include</div>
+                                <div class="col-lg-3">Require</div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Prefix (Mr., Mrs., etc.)</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">First Name</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Last Name</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Suffix</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Email Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Home Phone</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Cell Phone</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Tax & Business Info</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Billing Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Card Info</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Home Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Shipping Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Company / Organization</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Work Address</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Work Phone</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Website</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Blog</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Gender</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Birth Date</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="clearfix itemsInInfo">
+                                <div class="col-lg-6">Age</div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                                <div class="col-lg-3"><input type="checkbox" name="my-checkbox" checked></div>
+                            </div>
+
+                            <div class="groupRegisDesp">Not finding what you are looking for on this list? Create your own questions with more options.</div>
+                            <div class="btn btn-primary">Create a Question</div>
+
+                            <div class="groupRegis">Group Registration</div>
+                            <div class="groupRegisDesp">Allow or require attendees to register as part of a group, team, organization, company or association. To activate group registration, you must collect information for each attendee.</div>
+                            <div class="btn btn-primary">Activate group registration</div>
+
+                            <div class="groupRegis">Additional Items</div>
+                            <div class="groupRegisDesp">Sell up to six additional items on the order form, such as event merchandise. Items will only be available to attendees that register for a paid order. Fulfillment, shipping and handling are the responsibility of the event organizer.</div>
+                            <div class="btn btn-primary">Add Additional Item</div>
+
+                            <div class="groupRegis1">Registration Options</div>
+                            <div class="form-group">
+                                <label for="title">Title for Registration Page:</label>
+                                <input type="text" class="form-control" id="title" placeholder="Registration Information">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Instruction">Instructions for your Attendees:</label>
+                                <textarea class="form-control setHeight" id="Instruction"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">Registration Time Limit:</label>
+                                <input type="text" class="form-control" id="title" placeholder="mins">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Instruction">Message to Display After Ticket Sales End</label>
+                                <textarea class="form-control setHeight" id="Instruction"></textarea>
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <label for="Instruction" style="float:left;">Allow Call Pickup</label>
+                                <div style="float:right;">
+                                    <input type="checkbox" name="my-checkbox" checked>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <label for="Instruction" style="float:left;">Allow Attendees to Edit Information after Registration</label>
+                                <div style="float:right;">
+                                    <input type="checkbox" name="my-checkbox" checked>
+                                </div>
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <label for="Instruction" style="float:left;">Accept Refund Requests</label>
+                                <div style="float:right;">
+                                    <input type="checkbox" name="my-checkbox" checked>
+                                </div>
+
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <div class="btn btn-primary btn-lg">Save</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+        
+
+    </div>
+</body>
+</html>

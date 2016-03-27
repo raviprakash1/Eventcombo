@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href='Resources/css/bootstrap.css' rel='stylesheet' type='text/css'>
+    <link href='Resources/css/bootstrap-switch.css' rel='stylesheet' type='text/css'>
+    <link href='Resources/css/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
+    <link href='Resources/css/OrderForm.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="Resources/js/jquery-1.12.0.js"></script>
+    <script type="text/javascript" src="Resources/js/bootstrap.js"></script>
+    <script type="text/javascript" src="Resources/js/bootstrap-switch.js"></script>
+    <script type="text/javascript" src="Resources/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="Resources/js/jquery-te-1.4.0.js"></script>
+    <script type="text/javascript" src="Resources/js/main.js"></script>
+    <title></title>
+</head>
+<body>
+    <div class="mainContainer">
+        <div class="insideContainer">
+            <div class="orderFormTxt"><h1>Waitlist Settings</h1></div>
+            <div class="formText" style="font-weight:bold;">Enable Waitlist:</div>
+
+            <div class="radio" onclick="$('.waitListContainer').show();">
+                <label><input type="radio" name="optradio">Enable</label>
+            </div>
+            <div class="radio" onclick="$('.waitListContainer').hide();">
+                <label><input type="radio" name="optradio">Disable</label>
+            </div>
+
+            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                <div class="btn btn-primary btn-lg">Save</div>
+            </div>
+
+            <div class="waitListContainer">
+                <div class="formText">Waitlist Trigger:</div>
+
+                <div class="radio">
+                    <label><input type="radio" name="optradio1">When "early bid" sells out</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="optradio1">When "rsvp" sells out</label>
+                </div>
+
+                <div class="radio">
+                    <label><input type="radio" name="optradio1">When "extra" sells out</label>
+                </div>
+
+                <div class="radio">
+                    <label><input type="radio" name="optradio1">When total event capacity is reached</label>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Maximun Waitlist Size</label>
+                    <input type="text" class="form-control" id="title" placeholder="0">
+                    <span style="font-size: 12px;padding-left: 10px;color: #888;">Zero for unlimited</span>
+                </div>
+
+                <div class="groupRegis">ATTENDEE INFORMATION TO COLLECT:</div>
+
+                <label style="font-weight:normal;">
+                    <input id="early1" checked type="checkbox">
+                    Full Name (Required)    
+                </label><br />
+                <label style="font-weight:normal;">
+                    <input id="early2" checked type="checkbox">
+                    Email Address (Required)
+                </label><br />
+                <label style="font-weight:normal;">
+                    <input id="early3" type="checkbox">
+                    Phone Number
+                </label>
+                <br />
+
+                <div class="form-group">
+                    <label for="title" style="display:block;">TIME TO RESPOND:</label>
+                    <input type="text" class="form-control timeRespondWidth" id="days" placeholder="Day(s)">
+                    <input type="text" class="form-control timeRespondWidth" id="hours" placeholder="Hour(s)">
+                    <input type="text" class="form-control timeRespondWidth" id="mins" placeholder="Minute(s)">
+                </div>
+                <span style="font-size: 12px;padding-left: 10px;color: #888;">Time allowed for attendees to claim their ticket</span>
+
+                <div class="form-group">
+                    <label for="title">AUTO-RESPONSE MESSAGE:</label>
+                    <textarea id="uiEditorBox1" class="editor jqte-test" name="text1"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">WAITLIST TICKET RELEASE MESSAGE:</label>
+                    <textarea id="uiEditorBox2" class="editor jqte-test" name="text1"></textarea>
+                </div>
+                <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                    <div class="btn btn-primary btn-lg">Save</div>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+</body>
+</html>

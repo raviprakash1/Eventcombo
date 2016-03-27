@@ -1,0 +1,802 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href='Resources/css/bootstrap.css' rel='stylesheet' type='text/css'>
+    <link href='Resources/css/bootstrap-switch.css' rel='stylesheet' type='text/css'>
+    <link href='Resources/css/OrderForm.css' rel='stylesheet' type='text/css'>
+    <link href='Resources/css/OrderFormDesign.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="Resources/js/jquery-1.12.0.js"></script>
+    <script type="text/javascript" src="Resources/js/bootstrap.js"></script>
+    <script type="text/javascript" src="Resources/js/bootstrap-switch.js"></script>
+    <title></title>
+
+    <script type="text/javascript">
+        
+        var dragSrcEl = null;
+
+        function handleDragStart(e,obj) {
+            //$(obj).css("opacity", "0.4");  // this / e.target is the source node.
+            dragSrcEl = obj;
+
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', obj.innerHTML);
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault(); // Necessary. Allows us to drop.
+            }
+
+            e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+
+            return false;
+        }
+
+        function handleDragEnter(e,obj) {
+            // this / e.target is the current hover target.
+            //$(obj).addClass('over');
+        }
+
+        function handleDragLeave(e,obj) {
+            //$(obj).removeClass('over');  // this / e.target is previous target element.
+        }
+
+        function handleDrop(e, obj) {
+            // this / e.target is current target element.
+
+            if (e.stopPropagation) {
+                e.stopPropagation(); // stops the browser from redirecting.
+            }
+            // Don't do anything if dropping the same column we're dragging.
+            if (dragSrcEl != obj) {
+                // Set the source column's HTML to the HTML of the column we dropped on.
+                dragSrcEl.innerHTML = obj.innerHTML;
+                obj.innerHTML = e.dataTransfer.getData('text/html');
+            }
+            // See the section on the DataTransfer object.
+
+            return false;
+        }
+
+        function handleDragEnd(e, obj) {
+            // this/e.target is the source node.
+            //$(obj).removeClass('over');
+            
+        }
+
+        function setCheckBoxChecked(obj) {
+            if ($(obj).hasClass('basicInfoUnCheckBox')) {
+                $(obj).addClass('basicInfoCheckBox');
+                $(obj).removeClass('basicInfoUnCheckBox');
+            }
+            else {
+                $(obj).removeClass('basicInfoCheckBox');
+                $(obj).addClass('basicInfoUnCheckBox');
+            }
+        }
+
+        function setdropDownItems(obj)
+        {
+            $('#dropdownMenu1 .text').html($(obj).html());
+        }
+        function addQuestionToContainer()
+        {
+            var question = $('#questions').val();
+            var dropDownTxt = $('#dropdownMenu1 .text').html();
+            var innerHtml = '<div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);"><div class="col-xs-2"><div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div></div><div class="col-xs-6"><div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">' + question + '</div></div><div class="col-xs-2"><div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div></div><div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="Resources/imgs/cross.png" /></a></div></div>';
+            $("#questionContainerDiv").append(innerHtml);
+            $("#questionContainerDiv").show();
+
+            $('#questions').val('');
+        }
+
+        function removeItemList(obj) {
+            var parent = $(obj).closest('div[class^="dragableDivContent"]');
+            $(parent).hide();
+            
+        }
+
+        function showHideDiv(obj)
+        {   
+            if ($('#leftMenuHeaderID span img').attr('src').indexOf('downarrow.png') > -1)
+            {
+                $('#leftMenuBodyID').slideUp();
+                $('#leftMenuHeaderID span img').attr('src', 'Resources/imgs/leftarrow.png');
+            }
+            else {
+                $('#leftMenuBodyID').slideDown();
+                $('#leftMenuHeaderID span img').attr('src', 'Resources/imgs/downarrow.png');
+            }
+        }
+
+        function showHideForm(id) {
+            for (var i = 1; i <= 4; i++)
+            {
+                $('#mainForm' + i).hide();
+            }
+            $('#mainForm' + id).show();
+        }
+    </script>
+</head>
+<body>
+    <div class="mainContainer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <div class="leftMenu">
+                        <div id="leftMenuHeaderID" class="leftMenuHeader" onclick="showHideDiv(this)">Invite and Promote <span><img src="Resources/imgs/downarrow.png" /></span></div>
+                        <div id="leftMenuBodyID" class="leftMenuBody">
+                            <div class="leftMenuBodyItem1" onclick="showHideForm(1)">Order Form</div>
+                            <div class="leftMenuBodyItem2" onclick="showHideForm(2)">WishList</div>
+                            <div class="leftMenuBodyItem1" onclick="showHideForm(3)">Events</div>
+                            <div class="leftMenuBodyItem2" onclick="showHideForm(4)">Order Confirmation</div>
+                            <div class="leftMenuBodyItem1">Tracking Links</div>
+                            <div class="leftMenuBodyItem2">Affiliate Programs</div>
+                            <div class="leftMenuBodyItem1">Social Stream</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="insideContainer col-md-9 col-xs-12">
+                    <div id="mainForm1" style="display:none;">
+                        <div class="orderFormTxt"><h2>Order Form Design</h2></div>
+
+                        <div class="navTabs lastestBestSale">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active first">
+                                    <a href="#latestOffer" role="tab" data-toggle="tab">Basic Information</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#saleOffOffer" role="tab" data-toggle="tab">Group Form</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="latestOffer">
+                                    <div class="form-group setFullSpaceforDiv">
+                                        <input type="text" class="form-control timeRespondWidth2" id="days" placeholder="Order Form">
+                                        <input type="text" class="form-control timeRespondWidth1" id="hours" placeholder="8:00">
+                                    </div>
+                                    <div class="form-group setFullSpaceforDiv">
+                                        <label class="timeRespondWidth2 lblTxtClass">Order Page Title</label>
+                                        <label class="timeRespondWidth1 lblTxtClass">Time Limit to Checkout</label>
+                                    </div>
+
+                                    <div class="form-group setFullSpaceforDiv txtAreaMainDiv">
+                                        <textarea class="form-control setHeight" id="Instruction" placeholder="Please complete this order form. You will recieve your tickets electronically."></textarea>
+                                    </div>
+                                    <div class="form-group setFullSpaceforDiv">
+                                        <label class="timeRespondWidth2 lblTxtClass">Instructions for ordering</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="Instruction">Message for Order Confirmation Page</label>
+                                        <textarea class="form-control setHeight" id="Instruction" placeholder="e.g. Thanks for registering don't forget to keep your tickets handly, either in the Eventbrite app or print them out and bring them with you"></textarea>
+                                    </div>
+
+                                    <div class="form-group dragDropItemsDiv">
+                                        <div class="requiredTxt">Required</div>
+                                        <div class="dragDropContainer">
+                                            <div class="dragDropItemsHead">
+                                                Basic Information
+                                                <img src="Resources/imgs/info.png" alt="" style="height: 90%;float: right;" />
+                                            </div>
+                                            <div class="dragDropItemsBody">
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Suffix</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoCheckBox" onclick="setCheckBoxChecked(this)">First Name</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoCheckBox" onclick="setCheckBoxChecked(this)">Last Name</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoCheckBox" onclick="setCheckBoxChecked(this)">Email Address</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Phone</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoCheckBox" onclick="setCheckBoxChecked(this)">Shipping Address</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group dragDropItemsDiv">
+                                        <div class="dragDropContainer">
+                                            <div class="dragDropItemsHead">
+                                                ADDITIONAL INFORMATION
+                                            </div>
+                                            <div class="dragDropItemsBody">
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Cell Phone</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Tax & Business Info</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoCheckBox" onclick="setCheckBoxChecked(this)">Billing Address</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoCheckBox" onclick="setCheckBoxChecked(this)">Card Info</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Home Address</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Shipping Address</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Job Title</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Company / Organization</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Work Address</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Work Phone</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Website</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Blog</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Gender</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Birth Date</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                                                    <div class="col-xs-2">
+                                                        <div class="dragIconItems"><img src="Resources/imgs/drag.png" /></div>
+                                                    </div>
+
+                                                    <div class="col-xs-8">
+                                                        <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Age</div>
+                                                    </div>
+
+                                                    <div class="col-xs-2">
+                                                        <div class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this)"></div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group dragDropItemsDiv">
+                                        <div class="dragDropContainer">
+                                            <div class="dragDropItemsHead">
+                                                ADD A NEW QUESTION
+                                            </div>
+                                            <div class="questionItemsHead">
+                                                <div id="questionContainerDiv">
+
+                                                </div>
+                                                <div class="form-group" style="padding-bottom: 31px;">
+                                                    <input type="text" class="form-control questionsTxtbox" id="questions" placeholder="Question">
+                                                    <div class="dropdown questionsDropDown">
+                                                        <button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                            <span class="text">Text</span>
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                            <li><a href="javascript:void(0)" onclick="setdropDownItems(this)">Text</a></li>
+                                                            <li><a href="javascript:void(0)" onclick="setdropDownItems(this)">Text 1</a></li>
+                                                            <li><a href="javascript:void(0)" onclick="setdropDownItems(this)">Text 2</a></li>
+                                                            <li><a href="javascript:void(0)" onclick="setdropDownItems(this)">Text 3</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <a href="javascript:void(0)" onclick="addQuestionToContainer()" class="btn btn-primary">ADD <span class="glyphicon glyphicon-plus"></span></a>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="btnSaveCancel">
+                                                <div class="col-xs-6" style="float:left; padding:0px;">
+                                                    <a href="javascript:void(0)" onclick="addQuestionToContainer()" class="btn btn-default mainButtonSaveCancel" style="background-color: #c1c1c1;color: #fff;">CANCEL</a>
+                                                </div>
+                                                <div class="col-xs-6" style="float:right; text-align:right; padding:0px;">
+                                                    <a href="javascript:void(0)" onclick="addQuestionToContainer()" class="btn btn-primary mainButtonSaveCancel">SAVE</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="saleOffOffer">
+                                    <div style="font-size: 15px;line-height: 22px;font-weight: 400;">Allow people to create and join groups when they register. Groups get their own page to share and invite others to join.</div>
+									<div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                                    <label for="title" style="display:block">GROUP TYPE</label>
+                                    <div class="dropdown" style="width: 46%;float:left;display: inline-block;">
+                                        <button style="    width: 46%;text-align: left;" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            Group
+                                            <span class="caret" style="float: right;margin-top: 8px;"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li><a href="#">Group</a></li>
+                                            <li><a href="#">Team</a></li>
+                                            <li><a href="#">Organization</a></li>
+                                            <li><a href="#">Company</a></li>
+                                            <li><a href="#">Association</a></li>
+                                        </ul>
+                                    </div>
+                                    <div style="color: #c1c1c1;display: inline-block;float: left;font-size: 13px;">This group type will appear when attendees register</div>
+                                </div>
+
+                                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                                    <label for="title" style="display:block;">MAX ATTENDEES PER TEAM</label>
+                                    <input type="text" class="form-control timeRespondWidth" id="days" placeholder="0">
+                                    <span style="font-size: 12px;padding-left: 10px;color: #888;">0 means no maximum</span>
+                                </div>
+                                
+                                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                                    <label for="title" style="display:block;">ENABLE GROUP REGISTRATION BY TICKET TYPE</label>
+                                    <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Early Bid</div>
+                                    <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Rsvp</div>
+                                    <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Extra</div>
+                                </div>
+
+                                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                                    <label for="title" style="display:block;">GROUP PAGE HEADLINE</label>
+                                    <input type="text" class="form-control timeRespondWidth2" id="days" placeholder="Eg. Join our team!">
+                                </div>
+
+                                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                                    <label for="Instruction">GROUP PAGE DESCRIPTION</label>
+                                    <textarea class="form-control setHeight" id="Instruction" placeholder="Eg. We are looking for a great group of people to join our team so we can raise money for our favorite charity!"></textarea>
+                                </div>
+
+                                <div style="border-bottom:1px solid #888;"><h2>Optional Settings</h2></div>
+
+                                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                                    <label for="title" style="display:block;">GROUP PASSWORDS</label>
+                                    <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Allow group manager to password-protect their group</div>
+                                    
+                                </div>
+
+                                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                                    <label for="title" style="display:block;">PREFERRED GROUP START TIMES</label>
+                                    <div class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this)">Allow groups to select a preferred start time</div>
+
+                                </div>
+
+                                <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                    <div class="btn btn-primary btn-lg">Save</div>
+                                    <div class="btn btn-primary btn-lg" style="    background-color: #fff;color: #286090;">Cancel</div>
+                                </div>
+								</div>
+
+                                
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="mainForm2" style="display:none;">
+                        <div class="orderFormTxt"><h1>Waitlist Settings</h1></div>
+                        <div class="formText" style="font-weight:bold;">Enable Waitlist:</div>
+
+                        <div class="radio" onclick="$('.waitListContainer').show();">
+                            <label><input type="radio" name="optradio" checked>Enable</label>
+                        </div>
+                        <div class="radio" onclick="$('.waitListContainer').hide();">
+                            <label><input type="radio" name="optradio">Disable</label>
+                        </div>
+
+                        <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                            <div class="btn btn-primary btn-lg">Save</div>
+                        </div>
+
+                        <div class="waitListContainer">
+                            <div class="formText">Waitlist Trigger:</div>
+
+                            <div class="radio">
+                                <label><input type="radio" name="optradio1" checked>When "early bid" sells out</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio1">When "rsvp" sells out</label>
+                            </div>
+
+                            <div class="radio">
+                                <label><input type="radio" name="optradio1">When "extra" sells out</label>
+                            </div>
+
+                            <div class="radio">
+                                <label><input type="radio" name="optradio1">When total event capacity is reached</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">Maximun Waitlist Size</label>
+                                <input type="text" class="form-control" id="title" placeholder="0">
+                                <span style="font-size: 12px;padding-left: 10px;color: #888;">Zero for unlimited</span>
+                            </div>
+
+                            <div class="groupRegis">ATTENDEE INFORMATION TO COLLECT:</div>
+
+                            <label style="font-weight:normal;">
+                                <input id="early1" checked type="checkbox">
+                                Full Name (Required)
+                            </label><br />
+                            <label style="font-weight:normal;">
+                                <input id="early2" checked type="checkbox">
+                                Email Address (Required)
+                            </label><br />
+                            <label style="font-weight:normal;">
+                                <input id="early3" type="checkbox">
+                                Phone Number
+                            </label>
+                            <br />
+
+                            <div class="form-group">
+                                <label for="title" style="display:block;">TIME TO RESPOND:</label>
+                                <input type="text" class="form-control timeRespondWidth" id="days" placeholder="Day(s)">
+                                <input type="text" class="form-control timeRespondWidth" id="hours" placeholder="Hour(s)">
+                                <input type="text" class="form-control timeRespondWidth" id="mins" placeholder="Minute(s)">
+                            </div>
+                            <span style="font-size: 12px;padding-left: 10px;color: #888;">Time allowed for attendees to claim their ticket</span>
+
+                            <div class="form-group">
+                                <label for="title">AUTO-RESPONSE MESSAGE:</label>
+                                <textarea id="uiEditorBox1" class="editor jqte-test" name="text1"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">WAITLIST TICKET RELEASE MESSAGE:</label>
+                                <textarea id="uiEditorBox2" class="editor jqte-test" name="text1"></textarea>
+                            </div>
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <div class="btn btn-primary btn-lg">Save</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="mainForm3" style="display:none">
+                        <div class="orderFormTxt"><h1>Event Type & Language</h1></div>
+                        <div class="formText" style="font-weight:bold;">Event Type</div>
+
+                        <div class="radio">
+                            <label><input type="radio" name="optradio" checked>Ticketed Event</label><span style="font-size: 12px;padding-left: 10px;color: #888;">(Examples: Buy Tickets, Ticket Information, Ticket Type)</span>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio">Registration Event</label><span style="font-size: 12px;padding-left: 10px;color: #888;">(Examples: Register, Registration Information, Registration Type)</span>
+                        </div>
+
+                        <div class="formText">Event Page Language</div>
+
+                        <div class="dropdown" style="margin-top:15px;">
+                            <button class="btn btn-default dropdown-toggle dropdownItemClass" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                English (US)
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#">French</a></li>
+                                <li><a href="#">German</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                            <div class="btn btn-primary btn-lg">Save</div>
+                        </div>
+                    </div>
+
+                    <div id="mainForm4" style="display:none;">
+                            <div class="orderFormTxt"><h1>Order Confirmation</h1></div>
+                            <div class="groupRegisDesp orderConHead">After purchasing a ticket or registering for your event, attendees will view a message on Eventbrite and receive an email, both of which you can customize below.</div>
+
+                            <div class="groupRegis">Customize Webpage</div>
+                            <div class="groupRegisDesp">After registering for your event, attendees will see an onscreen message. Modify this message below, and include special instructions or other useful information. If left blank, we will use the standard message.</div>
+
+                            <div class="form-group">
+                                <label for="Instruction">Message for Order Confirmation Page</label>
+                                <textarea class="form-control setHeight" id="Instruction" placeholder="e.g. Thanks for registering don't forget to keep your tickets handly, either in the Eventbrite app or print them out and bring them with you"></textarea>
+                            </div>
+
+                            <div class="groupRegis">Customize Email</div>
+                            <div class="groupRegisDesp">Your attendees will also receive an email after registration, confirming their order.</div>
+
+                            <div class="form-group">
+                                <label for="title">DEFAULT 'REPLY-TO' EMAIL ADDRESS</label>
+                                <input type="text" class="form-control" id="title">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">MESSAGE FOR EMAIL AND PRINTABLE PDF (IF INCLUDED)</label>
+                                <textarea id="uiEditorBox" class="editor jqte-test" name="text1"></textarea>
+                            </div>
+
+                            <div class="groupRegis1">Additional Settings</div>
+                            <div class="form-group">
+                                <label for="title">Configure whether attendees should receive a printable PDF when they register.</label>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Same settings for all ticket types
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        <li><a href="#">Same settings for all ticket types</a></li>
+                                        <li><a href="#">Custom settings for each ticket type</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="groupRegis">PRINTABLE TICKETS</div>
+
+                            <label>
+                                <input id="early" checked type="checkbox">
+                                Include printable tickets in all orders
+                            </label>
+
+                            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                                <div class="btn btn-primary btn-lg">Save Settings</div>
+                            </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        
+
+
+    </div>
+</body>
+</html>
