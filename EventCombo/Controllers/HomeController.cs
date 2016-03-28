@@ -390,6 +390,7 @@ namespace EventCombo.Controllers
             TempData["tDateFilter"] = strDateFilter;
             TempData["NearLat"] = strNearLat;
             TempData["NearLong"] = strNearLong;
+            TempData["PageIndex"] = (strPageIndex.ToLower() == "page" ? "1" : strPageIndex);
             ViewData["tempPrice"] = (strPrice != null ? strPrice.ToUpper() : "ALL");
             return View();
         }
@@ -571,6 +572,11 @@ namespace EventCombo.Controllers
                 {
                     strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
                 }
+                else if (vFree != null && vDonate != null && vMaxPrice <= 0)
+                {
+                    strResult = "FREE";
+                }
+
             }
             return strResult;
         }
@@ -656,7 +662,15 @@ namespace EventCombo.Controllers
 
 
                         strImageUrl = objCEv.GetImages(lEventId).FirstOrDefault();
-                        if (strImageUrl == null) strImageUrl = "/Images/default_event_image.jpg";
+
+                        if (strImageUrl != null && strImageUrl != "")
+                        {
+                            if (!System.IO.File.Exists(Server.MapPath(strImageUrl)))
+                                strImageUrl = "/Images/default_event_image.jpg";
+                        }
+                        else
+                            strImageUrl = "/Images/default_event_image.jpg";
+                            
                         objDisEv = new DiscoverEvent();
                         objDisEv.EventId = lEventId;
                         objDisEv.EventTitle = objEv.EventTitle;
