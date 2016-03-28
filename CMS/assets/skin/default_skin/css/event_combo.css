@@ -56,5 +56,7 @@ top: 40%; left: 30%; border:1px solid #e2e2e2; display: none; }
 
 .no_pad{ padding: 0px; }
 .mt10{ margin-top:10px; }
-.pay_dollar_btn{ background:none; font-size: 15px; box-shadow:none; border:0px; color:#666666; padding: 0px; }
-.pay_dollar_btn:hover{ color: #666666; }
+.pay_dollar_btn{ background:none; font-size: 16px; box-shadow:none; border:0px; color:#666666; padding: 0px; }
+.pay_dollar_btn:hover{ color: #666666; background:none; }
+.Payment-form-body{ background:#fff; }
+.admin-form.Payment-form-body .panel{ border:0px;}

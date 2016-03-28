@@ -704,7 +704,6 @@ span.evnt_toltip{
 
 
 
-
 @media (min-width: 979px) {
 
 .affix-top {
@@ -1370,16 +1369,16 @@ span.evnt_toltip{
 
 
 .ot_main_pad{ padding: 0px 10px; }
-.ot_pad{ padding: 0px 5px; margin-bottom: 10px; }
+.ot_pad{ padding: 0px 5px; margin-bottom: 10px;  }
 .in_pad{ padding: 6px 8px; }    
 
 
-.in_shadw{ border: 1px solid #f5f5f5;}
+.in_shadw{ border: 1px solid #f5f5f5;  }
 .in_shadw:hover{ box-shadow: 0 0 5px #ccc; border: 1px solid #fff;}
 .in_shadw:hover > .de_ev_li_border{background-color: #f5f5f5;}
-.share_like_btn{ display:none;}
-.in_shadw:hover > .de_ev_li_border .share_like_btn{ display:inline-block;}
-.show_like_btn{ display:inline-block; color:#3cf; }
+.share_like_btn{ visibility:hidden;}
+.in_shadw:hover > .de_ev_li_border .share_like_btn{ visibility:visible;}
+.show_like_btn{ visibility:visible; color:#3cf; }
 .desc_list_event_type_dollar{color: #979797; }
 
 .desc_date_lebel {
@@ -1688,8 +1687,9 @@ div.file_upload input {
 
 .fiter_btn_pop_sub.fiter_btn_pop_reset:hover{ background-color: #ccc; }
 .fiter_btn_pop_sub:hover{background: #00cfff;  }
+.dis_search_control{ border-top-left-radius: 5px; border-bottom-left-radius: 5px; font-size: 16px; min-height: 40px;  }
+.dis_search_addon{border-top-right-radius: 5px; border-bottom-right-radius: 5px;}
 .desc_share_btn{ color:#000;}
-
 .cat_remov{ 
 font-size: 15px; background-color: #ccc; color: #fff; font-weight: bold; -ms-transform: rotate(45deg); /* IE 9 */
 -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */

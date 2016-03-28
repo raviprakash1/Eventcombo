@@ -2,13 +2,12 @@
 
 @{  Layout = null;}
 <div class="panel">
+    
     @if (Model.PI_PaymentMethod != null)
     {
         <div class="panel-body">
-
-            @if (Model.PI_PaymentMethod.ToUpper() == "C")
-            {
-                <div class="col-md-12" id="divChq">
+            <form class="form-horizontal">
+                  @if (Model.PI_PaymentMethod.ToUpper() == "C") { <div class="col-md-12" id="divChq">
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="col-lg-4 col-xs-6">Payment Method</div>
@@ -45,7 +44,7 @@
                                     { @Model.PI_PostalCode}
                                     @if (@TempData["Country"] != null)
                                     { @TempData["Country"].ToString() }
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -170,6 +169,7 @@
                     </div>
                 </div>
             }
+            </form>
         </div>
     }
     else
@@ -179,4 +179,6 @@
         </div>
 
     }
+
+
 </div>
