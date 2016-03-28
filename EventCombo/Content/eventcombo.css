@@ -75,7 +75,7 @@ button:focus { outline: none;}
 .head_left_nav ul li:first-child{ border:0px;}
 .head_left_nav ul li:last-child{ border:0px;}
 .head_left_nav ul li a:hover{ text-decoration: none;}
-.social_icn{ width:20px; float: right;}
+.social_icn{ width:50px; float: right;}
 .filter_sep {
        background-color: #fff;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
@@ -778,7 +778,7 @@ span.evnt_toltip{
 .home_fixed_header{ height: 142px !important; }
 .frnt-top-header{ width:100%; float:left; padding:0px; }
 
-#divmain .social_icn{ width:auto; position:absolute; margin-top:-8px !important; right:15px;}
+#divmain .social_icn{ width:50px; position:absolute; margin-top:-8px !important; right:15px;}
 
 .cont_margin2{ margin-bottom: 15px;margin-top: 0px;}
 .navbar-right { margin:0px; padding:0px;}
@@ -786,7 +786,9 @@ span.evnt_toltip{
 
 .col12{ width:100%; float:left; }
 #scrollhome.con_scr0l_home{margin-top:228px !important;}
-
+#eventtopscoll.view_evnt_top.viewevent_container{margin-top:162px !important;}
+.navbar-wrapper{ top:0px;}
+.xs-icondeal img{ width:23px;}
 
 .xs-desk-show{ display: none; }
 .xs-mobile-show{display: block;}
@@ -797,21 +799,22 @@ span.evnt_toltip{
 @media (width: 320px) {
 #mainhead .Fix_Head{ top:40px !important;}
 
-#eventtopscoll.event_top{ margin-top:139px !important; } 
+/*#eventtopscoll.event_top{ margin-top:139px !important; }*/ 
 /*#eventtopscoll .cbtMakeLive { right:87px; position:relative; }*/
 .home_fixed_header{ height:132px !important; }
 /*.headr_main{ padding-bottom:15px;}*/
-#eventtopscoll.view_evnt_top.viewevent_container{margin-top:134px !important;}
+*#eventtopscoll.view_evnt_top.viewevent_container{margin-top:163px !important;}
 #divmain .Fix_Head{ position:absolute; top:20px;}
 /*#divmain .social_icn{ position:absolute; margin-top:0 !important; right:15px;}*/
-.outer-header .outer-container .con_scr0l_home{}
+
 }
 @media (width: 480px){
 #navtop.affix-top {top:118px !important;}
 #midsection.midd_cont {top:116px !important;}
 /*#scrollhome.con_scr0l_home{margin-top:205px !important;}*/
+#divmain .social_icn{ margin-top:10px !important;}
 
-#eventtopscoll.view_evnt_top.viewevent_container{margin-top:142px !important;}
+#eventtopscoll.view_evnt_top.viewevent_container{margin-top:168px !important;}
 #eventtopscoll.view_evnt_top.event_top .event-slide-container{ margin-top:0px !important;}
 #eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}
 
@@ -826,7 +829,8 @@ span.evnt_toltip{
 .affix-top {margin-top:1px; position:relative; }
 .midd_cont {margin-top: 13px;}
 
-.social_icn{ width: auto; margin-top: 10px;}
+.social_icn{ top:15px; width:50px; margin-top:10px; }
+
 .con_scr0l_home {margin-top: 0 !important;}
 
 #mainhead .Fix_Head {position:absolute; top:0px !important; right:5px;}
@@ -837,9 +841,11 @@ span.evnt_toltip{
 /*#midsection{ top:132px;}*/ 
 .navbar-right { margin:0px; padding:0px;}
 .col12{ width:100%; float:left; }
-.eventtopscoll.event_top{}  
+ 
 .xspad0{ padding:0px;}
 #scrollhome.con_scr0l_home{margin-top:229px !important;}
+.eventtopscoll.event_top{margin-top:128px !important; } 
+#eventtopscoll.view_evnt_top.viewevent_container{margin-top:168px !important;}
 
 .xs-desk-show{ display: none; }
 .xs-mobile-show{display: block;}
@@ -850,9 +856,9 @@ span.evnt_toltip{
 
 @media (width: 360px) {
 
-#eventtopscoll.event_top{ margin-top:138px !important; } 
+/*#eventtopscoll.event_top{ margin-top:138px !important; }*/ 
 /*#eventtopscoll .cbtMakeLive { right:0; position:absolute; }*/
-#eventtopscoll.view_evnt_top.viewevent_container{margin-top:134px !important;}
+/*#eventtopscoll.view_evnt_top.viewevent_container{margin-top:134px !important;}*/
 #eventtopscoll.view_evnt_top.event_top .event-slide-container{ margin-top:0px !important;}
 #eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}
 .ev_btn_type .col12{ width:100%; float:left; }
@@ -872,7 +878,7 @@ span.evnt_toltip{
 .frnt_cret_evnt{ display:inline;}
 
 .home_fixed_header{ height:132px !important; }
-#eventtopscoll.view_evnt_top.viewevent_container{margin-top:132px !important;}
+#eventtopscoll.view_evnt_top.viewevent_container{margin-top:132px !important;}      
 #eventtopscoll.view_evnt_top.event_top .event-slide-container{ margin-top:0px !important;}
 #eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}
 
