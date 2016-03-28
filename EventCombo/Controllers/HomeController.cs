@@ -746,8 +746,8 @@ namespace EventCombo.Controllers
                     else lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList();
                     try
                     {
-                        if (strDateFilter == "today") lsDisEvt = lsDisEvt.Where(m => m.EventDate >= DateTime.Now && m.EventDate == DateTime.Today).ToList();
-                        if (strDateFilter == "tommarow") lsDisEvt = lsDisEvt.Where(m => m.EventDate == DateTime.Today.AddDays(1)).ToList();
+                        if (strDateFilter == "today") lsDisEvt = lsDisEvt.Where(m => m.EventDate >= DateTime.Now && m.EventDate.Date == DateTime.Today.Date).ToList();
+                        if (strDateFilter == "tommarow") lsDisEvt = lsDisEvt.Where(m => m.EventDate.Date == DateTime.Today.AddDays(1).Date).ToList();
                         if (strDateFilter == "thisweek")
                         {
                             int iday = (int)DateTime.Now.DayOfWeek;
@@ -757,11 +757,11 @@ namespace EventCombo.Controllers
                             for (int i = 0; i < iLen; i++)
                             {
                                 if (i == 0)
-                                    dt[i] = DateTime.Now;
+                                    dt[i] = DateTime.Now.Date;
                                 else
-                                    dt[i] = dt[i - 1].AddDays(1);
+                                    dt[i] = dt[i - 1].AddDays(1).Date;
                             }
-                            lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate)).ToList();
+                            lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate.Date)).ToList();
                         }
                         if (strDateFilter == "thisweekend")
                         {
@@ -777,21 +777,21 @@ namespace EventCombo.Controllers
                             {
                                 dttemp = dttemp.AddDays(1);
                                 if (i == 5)
-                                    dt[iTemp] = dttemp;
+                                    dt[iTemp] = dttemp.Date;
                                 else if (i > 5)
                                 {
                                     if (iday > 5)
                                     {
-                                        dt[iTemp] = dt[iTemp].AddDays(1);
+                                        dt[iTemp] = dt[iTemp].AddDays(1).Date;
                                     }
                                     else
                                     {
                                         iTemp = iTemp + 1;
-                                        dt[iTemp] = dt[iTemp - 1].AddDays(1);
+                                        dt[iTemp] = dt[iTemp - 1].AddDays(1).Date;
                                     }
                                 }
                             }
-                            lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate)).ToList();
+                            lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate.Date)).ToList();
                         }
                         if (strDateFilter == "nextweek")
                         {
@@ -803,12 +803,12 @@ namespace EventCombo.Controllers
                             for (int i = 0; i <= 6; i++)
                             {
                                 if (i == 0)
-                                    dt[i] = dtnow.AddDays(1);
+                                    dt[i] = dtnow.AddDays(1).Date;
                                 else
-                                    dt[i] = dt[i - 1].AddDays(1);
+                                    dt[i] = dt[i - 1].AddDays(1).Date;
                             }
 
-                            lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate)).ToList();
+                            lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate.Date)).ToList();
                         }
 
                         if (strDateFilter == "thismonth")
@@ -821,12 +821,12 @@ namespace EventCombo.Controllers
                             for (int i = 0; i < iRemDays; i++)
                             {
                                 if (i == 0)
-                                    dt[i] = dtnow.AddDays(1);
+                                    dt[i] = dtnow.AddDays(1).Date;
                                 else
-                                    dt[i] = dt[i - 1].AddDays(1);
+                                    dt[i] = dt[i - 1].AddDays(1).Date;
                             }
 
-                            lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate)).ToList();
+                            lsDisEvt = lsDisEvt.Where(m => dt.Contains(m.EventDate.Date)).ToList();
                         }
 
                         string[] str = strDateFilter.Split('@');
@@ -837,17 +837,17 @@ namespace EventCombo.Controllers
 
                                 DateTime dtFrom = Convert.ToDateTime(str[1].ToString());
                                 DateTime dtTo = Convert.ToDateTime(str[2].ToString());
-                                lsDisEvt = lsDisEvt.Where(m => m.EventDate >= dtFrom && m.EventDate <= dtTo).ToList();
+                                lsDisEvt = lsDisEvt.Where(m => m.EventDate.Date >= dtFrom.Date && m.EventDate.Date <= dtTo.Date).ToList();
                             }
                             else if (str[1].Trim() != "")
                             {
                                 DateTime dtFrom = Convert.ToDateTime(str[1]);
-                                lsDisEvt = lsDisEvt.Where(m => m.EventDate >= dtFrom).ToList();
+                                lsDisEvt = lsDisEvt.Where(m => m.EventDate.Date >= dtFrom.Date).ToList();
                             }
                             else if (str[2].Trim() != "")
                             {
                                 DateTime dtTo = Convert.ToDateTime(str[2]);
-                                lsDisEvt = lsDisEvt.Where(m => m.EventDate <= dtTo).ToList();
+                                lsDisEvt = lsDisEvt.Where(m => m.EventDate.Date <= dtTo.Date).ToList();
                             }
                         }
                     }
