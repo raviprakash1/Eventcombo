@@ -36,34 +36,58 @@
                 <ul id="accordion" class="accordion side_accordian">
                     @if (@TempData["tDateFilter"] != null && @TempData["tDateFilter"].ToString().ToLower() != "none")
                     {
-                    <li>
-                        <div class="link"><span id="spDate">@TempData["tDateFilter"].ToString()</span><i class="glyphicon  glyphicon-triangle-bottom"></i></div>
-                        <ul class="submenu submenu_side" style="display:none;">
-                            <li><a href="javascript:void(0);" onclick="DateFilters('none');">All Dates</a></li>
-                            <li><a href="javascript:void(0);" onclick="DateFilters('today');">Today</a></li>
-                            <li><a href="javascript:void(0);" onclick="DateFilters('tommarow');">Tomorrow</a></li>
-                            <li><a href="javascript:void(0);" onclick="DateFilters('thisweek');">This Week</a></li>
-                            <li><a href="javascript:void(0);" onclick="DateFilters('thisweekend');">This Weekend</a></li>
-                            <li><a href="javascript:void(0);" onclick="DateFilters('nextweek');">Next Week</a></li>
-                            <li><a href="javascript:void(0);" onclick="DateFilters('thismonth');">This Month</a></li>
-                            <li>
-                                <a href="#" class="CustDateMain">Custom Date</a>
-                                <div class="clearfix"></div>
-                                <div class="CustDate col-sm-12 ot_main_pad mb10">
-                                    <div class=" col-sm-10 no_pad mb10">
-                                        <label class="label-control desc_date_lebel">Start Date</label>
-                                        <input class="date_picker form-control" id="txtstartDate" placeholder="mm/dd/yyyy" />
-                                    </div>
-                                    <div class="col-sm-10 no_pad mb10">
-                                        <label class="label-control desc_date_lebel">End Date</label>
-                                        <input class="date_picker form-control" id="txtEndDate" placeholder="mm/dd/yyyy" />
-                                    </div>
+                        <li>
+                            <div class="link">
+                                @if (@TempData["tDateFilter"].ToString().ToLower() == "none")
+                                {<span id="spDate">All Dates</span>}
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "today")
+                                {<span id="spDate">Today</span>}
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "tommarow")
+                                {<span id="spDate">Tomorrow</span>}
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "thisweek")
+                                {<span id="spDate">This Week</span>}
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "thisweekend")
+                                {<span id="spDate">This Weekend</span>}
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "nextweek")
+                                {<span id="spDate">Next Week</span>}
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "thismonth")
+                                {<span id="spDate">This Month</span>}
+                                else
+                                {<span id="spDate">@TempData["tDateFilter"].ToString()</span>}
+                                
+                                <i class="glyphicon  glyphicon-triangle-bottom"></i>
+                            </div>
+                            <ul class="submenu submenu_side" style="display:none;">
+                                @if (@TempData["tDateFilter"].ToString().ToLower() != "today") {<li><a href="javascript:void(0);" onclick="DateFilters('today');">Today</a></li>}
+                                @if (@TempData["tDateFilter"].ToString().ToLower() != "tommarow")
+                                {<li><a href="javascript:void(0);" onclick="DateFilters('tommarow');">Tomorrow</a></li>}
+                                @if (@TempData["tDateFilter"].ToString().ToLower() != "thisweek")
+                                {<li><a href="javascript:void(0);" onclick="DateFilters('thisweek');">This Week</a></li>}
+                                @if (@TempData["tDateFilter"].ToString().ToLower() != "thisweekend")
+                                {<li><a href="javascript:void(0);" onclick="DateFilters('thisweekend');">This Weekend</a></li>}
+                                @if (@TempData["tDateFilter"].ToString().ToLower() != "nextweek")
+                                {<li><a href="javascript:void(0);" onclick="DateFilters('nextweek');">Next Week</a></li>}
+                                @if (@TempData["tDateFilter"].ToString().ToLower() != "thismonth")
+                                {<li><a href="javascript:void(0);" onclick="DateFilters('thismonth');">This Month</a></li>}
+                                <li>
+                                    <a href="#" class="CustDateMain">Custom Date</a>
+                                    <div class="clearfix"></div>
+                                    <div class="CustDate col-sm-12 ot_main_pad mb10">
+                                        <div class=" col-sm-10 no_pad mb10">
+                                            <label class="label-control desc_date_lebel">Start Date</label>
+                                            <input class="date_picker form-control" id="txtstartDate" placeholder="mm/dd/yyyy" />
+                                        </div>
+                                        <div class="col-sm-10 no_pad mb10">
+                                            <label class="label-control desc_date_lebel">End Date</label>
+                                            <input class="date_picker form-control" id="txtEndDate" placeholder="mm/dd/yyyy" />
+                                        </div>
 
-                                    <button class="btn btn-lg fiter_btn_pop_sub " onclick="DateFiltersCustom();" type="submit">Search</button>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
+                                        <button class="btn btn-lg fiter_btn_pop_sub " onclick="DateFiltersCustom();" type="submit">Search</button>
+                                    </div>
+                                </li>
+                                <li><a href="javascript:void(0);" onclick="DateFilters('none');">All Dates</a></li>
+                            </ul>
+                        </li>
                     }
                     else
                     {
@@ -92,6 +116,7 @@
                                         <button class="btn btn-lg fiter_btn_pop_sub " onclick="DateFiltersCustom();" type="submit">Search</button>
                                     </div>
                                 </li>
+                                
                             </ul>
                         </li>
                     }
@@ -136,22 +161,22 @@
                     </ul>
                 </div>
                 <div class="col-sm-12 no_pad xs-desk-show">
-                     <div class="col-sm-12 no_pad">
-                    <p class="side_desc_fil_head">Event Type</p>
-                         <ul class="nav nav-pills dis_side_fliter_tag ">
-                             @if (ViewBag.ETSelected != null)
-                             {
-                                 foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
-                                 {
-                                     <li class="active"><a href="javascript:void(0);" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a> <a href="javascript:void(0);" class="can_badg cat_remov" onclick="DeleteFilterEventType('@item.EventTypeID');"> + </a></li>
-                                 }
-                                 @*<li><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>*@
-                             }
-                             else
-                             {
-                                 <li class="active"><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>
-                             }
-                         </ul>
+                    <div class="col-sm-12 no_pad">
+                        <p class="side_desc_fil_head">Event Type</p>
+                        <ul class="nav nav-pills dis_side_fliter_tag ">
+                            @if (ViewBag.ETSelected != null)
+                            {
+                                foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
+                                {
+                                    <li class="active"><a href="javascript:void(0);" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a> <a href="javascript:void(0);" class="can_badg cat_remov" onclick="DeleteFilterEventType('@item.EventTypeID');"> + </a></li>
+                                }
+                                @*<li><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>*@
+                            }
+                            else
+                            {
+                                <li class="active"><a href="javascript:void(0);" onclick="GetAllEventType();">ALL</a></li>
+                            }
+                        </ul>
                         <div class="scrollbox">
                             <ul class="nav nav-pills dis_side_fliter_tag">
                                 @if (ViewBag.ETSelected != null)
@@ -163,25 +188,25 @@
                                     <li><a href="javascript:void(0);" onclick="FilterEventType('@item.EventTypeID')">@item.EventType1 </a></li>
                                 }
                             </ul>
-                      </div>
+                        </div>
                     </div>
-                     
-                     <div class="col-sm-12 no_pad mt10 mb10">
+
+                    <div class="col-sm-12 no_pad mt10 mb10">
                         <p class="side_desc_fil_head">Category</p>
-                         <ul class="nav nav-pills dis_side_fliter_tag ">
-                             @if (ViewBag.ECatSelected != null)
-                             {
-                                 foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.ECatSelected)
-                                 {
-                                     <li class="active"><a href="javascript:void(0);" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a> <a href="javascript:void(0);" class="can_badg cat_remov" onclick="DeleteFilterEventCategory('@item.EventCategoryID');"> + </a></li>
-                                 }
-                                 @*<li><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>*@
-                             }
-                             else
-                             {
-                                 <li class="active"><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>
-                             }
-                         </ul>
+                        <ul class="nav nav-pills dis_side_fliter_tag ">
+                            @if (ViewBag.ECatSelected != null)
+                            {
+                                foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.ECatSelected)
+                                {
+                                    <li class="active"><a href="javascript:void(0);" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a> <a href="javascript:void(0);" class="can_badg cat_remov" onclick="DeleteFilterEventCategory('@item.EventCategoryID');"> + </a></li>
+                                }
+                                @*<li><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>*@
+                            }
+                            else
+                            {
+                                <li class="active"><a href="javascript:void(0);" onclick="GetAllEventCategories();">ALL</a></li>
+                            }
+                        </ul>
                         <div class="scrollbox2">
                             <ul class="nav nav-pills dis_side_fliter_tag">
                                 @if (ViewBag.ECatSelected != null)
@@ -190,9 +215,9 @@
                                 }
 
                                 @foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.EventCat)
-                                    {
+                                {
                                     <li><a href="javascript:void(0);" onclick="FilterEventCategory('@item.EventCategoryID')">@item.EventCategory1</a></li>
-                                    }
+                                }
                             </ul>
                         </div>
                     </div>
@@ -201,7 +226,7 @@
                 <div class="col-sm-12 no_pad xs-mobile-show">
                     <div class="col-sm-12 no_pad mb10 mt10">
                         <p class="side_desc_fil_head">Event Type</p>
-                      
+
                         <ul class="nav nav-pills dis_side_fliter_tag ">
                             @if (ViewBag.ETSelected != null)
                             {
@@ -220,7 +245,7 @@
                             Select
                             <span class="float-right"> <i class="glyphicon  glyphicon-triangle-bottom"></i> </span>
                         </div>
-                        
+
                         <div class="Desccatshow categ_type_accord">
                             <div class="mobilescrollbox">
                                 <ul class="nav nav-pills dis_side_fliter_tag ">
@@ -259,7 +284,7 @@
                             Select
                             <span class="float-right"> <i class="glyphicon  glyphicon-triangle-bottom"></i> </span>
                         </div>
-                        
+
                         <div class="Desccatshow2 categ_type_accord">
                             <div class="mobilescrollbox">
                                 <ul class="nav nav-pills dis_side_fliter_tag">
@@ -277,7 +302,7 @@
                     </div>
                 </div>
 
-                </div>
+            </div>
 
         </div>
     </div>
@@ -289,18 +314,18 @@
                     <div class="col-sm-12 col-xs-12 in_shadw no_pad">
                         <div class="col-sm-12 col-xs-12 in_pad">
                             <div class="col-sm-4 no_pad">
-                                <div class="dis_evnt_img"><img  src="@item.EventImage" alt=""></div>
+                                <div class="dis_evnt_img"><img src="@item.EventImage" alt=""></div>
                                 @*<div class="col-sm-12 no_pad text-center desc_list_event_type desc_list_event_type_dollar">@item.PriceLable</div>*@
-                             
+
                             </div>
                             <div class="col-sm-8 no_pad">
                                 <h1 class="list_event_desc_title xs-title-height"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString()})'>@item.EventTitle</a></h1>
                                 <p class="list_event_desc xs-address-height">
-                                     @item.EventAddress
-                                   
+                                    @item.EventAddress
+
                                 </p>
                                 @*<p class="list_event_date_time">@item.EventTimings </p>*@
-                                  
+
                             </div>
                             <div class="col-sm-12 col-xs-12 no_pad">
                                 @if (@item.PriceLable.ToLower().Trim() == "free")
@@ -313,11 +338,11 @@
                                 else
                                 {
                                     <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type_disable">
-                                       @item.PriceLable
+                                        @item.PriceLable
                                     </div>
                                 }
                                 <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
-                                   @item.EventTimings
+                                    @item.EventTimings
                                 </div>
                             </div>
                         </div>
@@ -330,8 +355,8 @@
                             </div>
                             <div class="col-sm-3 col-xs-3 no_pad text-right ">
                                 @*<button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
-                                    <i class="fa fa-share-alt"></i>
-                                </button>*@
+                                        <i class="fa fa-share-alt"></i>
+                                    </button>*@
                                 <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString()})');" type="button" data-toggle="modal" data-target="#sharemodal">
                                     <i class="fa fa-share-alt"></i>
                                 </button>
@@ -343,7 +368,7 @@
                                 }
                                 else
                                 {
-                                    <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn" id="btnfavourite-@item.EventId"   title="Your Favourite"  onclick="SaveFav('Y','@item.EventId');" type="button">
+                                    <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
                                         <i class="fa fa-heart"></i>
                                     </button>
                                 }
@@ -355,7 +380,7 @@
                
             }
 
-</div>
+        </div>
         <div class="col-sm-12 col-xs-12 text-center">
             <nav>
                 <ul class="pagination desc_pagination">
@@ -364,16 +389,16 @@
                             <span><i class="fa fa-angle-left"></i> </span>
                         </a>
                     </li>
-                    @for(int i=1;i<= Convert.ToInt32(@TempData["TotalPages"]);i++)
+                    @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
                     {
                         <li><a href="javascript:void(0)" onclick="NextPage(@i);">@i</a></li>
                     }
 
                     @*<li><a href="javascript:void(0)" onclick="NextPage(1);">1</a></li>
-                    <li><a href="javascript:void(0)" onclick="NextPage(2);">2</a></li>
-                    <li><a href="javascript:void(0)" onclick="NextPage(3);">3</a></li>
-                    <li><a href="javascript:void(0)" onclick="NextPage(4);">4</a></li>
-                    <li><a href="javascript:void(0)" onclick="NextPage(5);">5</a></li>*@
+                        <li><a href="javascript:void(0)" onclick="NextPage(2);">2</a></li>
+                        <li><a href="javascript:void(0)" onclick="NextPage(3);">3</a></li>
+                        <li><a href="javascript:void(0)" onclick="NextPage(4);">4</a></li>
+                        <li><a href="javascript:void(0)" onclick="NextPage(5);">5</a></li>*@
                     <li>
                         <a href="javascript:void(0)">
                             <span><i class="fa fa-angle-right"></i> </span>
@@ -437,15 +462,14 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
-    function SaveFav(clickfav, eid)
-    {
+    function SaveFav(clickfav, eid) {
         var id = "btnfavourite-" + eid;
         var msg = "";
         var clickid = clickfav;
         var vUrl = location.href;
         $.ajax({
             url: '@Url.Action("Discoversavefavourite", "CreateEvent")',
-            data: { Eventid: eid, type: clickid, strUrl: vUrl},
+            data: { Eventid: eid, type: clickid, strUrl: vUrl },
             type: "Post",
             success: function (data) {
                 if (data == "Y") {
@@ -468,8 +492,7 @@
         });
     }
 
-    function ShowUrl(vurl)
-    {
+    function ShowUrl(vurl) {
         $("#txtEventUrl").val(vurl);
     }
     function checkDate(field) {
@@ -494,7 +517,7 @@
             if (regs = value.match(re)) {
                 if (regs[2] != '' && regs[2] != '' && regs[3] != '') {
                     if (regs[2] < 1 || regs[2] > 31) {
-                        errorMsg = "<br/>Invalid Date" ;
+                        errorMsg = "<br/>Invalid Date";
                     } else if (regs[1] < 1 || regs[1] > 12) {
                         errorMsg = "<br/>Invalid Date";
                     } else if (regs[3] < minYear || regs[3] > maxYear) {
@@ -526,8 +549,7 @@
         debugger;
         if ($("#txtstartDate").val() != "" && $("#txtEndDate").val() != "") {
             var vResult = compare($("#txtstartDate").val(), $("#txtEndDate").val());
-            if (vResult != "")
-            {
+            if (vResult != "") {
                 var dt = new Date();
                 var vCurrentdate = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
                 $("#txtstartDate").val(vCurrentdate);
@@ -539,14 +561,12 @@
         NextPage(1);
     }
 
-    function DateRelevenceFilter(vvalue)
-    {
+    function DateRelevenceFilter(vvalue) {
         $("#hdSort").val(vvalue);
         NextPage(1);
     }
 
-    function NextPage(vIndex)
-    {
+    function NextPage(vIndex) {
         var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
 
         var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "evc");
@@ -606,7 +626,7 @@
         window.location.href = vUrl;
     }
     function GetAllEventCategories() {
-         var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
         var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "evt");
         var Price = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
         var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
@@ -622,14 +642,11 @@
         vUrl = vUrl.replace("none", vDateFilter);
         window.location.href = vUrl;
     }
-    function DeleteFilterEventType(vEvTypeId)
-    {
-        var vValue="";
+    function DeleteFilterEventType(vEvTypeId) {
+        var vValue = "";
         var vAry = $("#hdEventType").val().split(',');
-        for (i = 0; i < vAry.length; i++)
-        {
-            if (vAry[i] != vEvTypeId)
-            {
+        for (i = 0; i < vAry.length; i++) {
+            if (vAry[i] != vEvTypeId) {
                 if (vValue == "")
                     vValue = vAry[i];
                 else
@@ -840,21 +857,26 @@
         });
 
 
-        if ($("#hdDateFilter").val()  != null && $("#hdDateFilter").val() != "")
-        {
+        if ($("#hdDateFilter").val() != null && $("#hdDateFilter").val() != "") {
             var vAry = $("#hdDateFilter").val().split('@@');
-            if (vAry.length >1)
-            {
-                var vlbl = "Custom";
+            if (vAry.length > 1) {
+                var vlbl = "";
+                var vStart = "";
+                var vEnd = "";
                 if (vAry[1] != null && vAry[1].toString() != "") {
                     $("#txtstartDate").val(vAry[1].split('.').join('/'));
-                    vlbl = vlbl + " " + vAry[1].split('.').join('/');
-
+                    vStart = vAry[1].split('.').join('/');
                 }
                 if (vAry[2] != null && vAry[2].toString() != "") {
                     $("#txtEndDate").val(vAry[2].split('.').join('/'));
-                    vlbl = vlbl + " - " + vAry[2].split('.').join('/');
+                    vEnd = vAry[2].split('.').join('/');
                 }
+                if (vStart != "" && vEnd != "")
+                    vlbl = vStart + " - " + vEnd
+                else if (vStart != "" && vEnd == "")
+                    vlbl = "Start " + vStart;
+                else if (vStart == "" && vEnd != "")
+                    vlbl = "End " + vEnd;
 
                 //var vLbl = vAry.join(' - ').split('.').join('/');
                 $("#spDate").text(vlbl);
@@ -862,14 +884,12 @@
         }
 
         $("#txtstartDate").focusout(function () {
-            if (checkDate("txtstartDate") != "")
-            {
+            if (checkDate("txtstartDate") != "") {
                 var dt = new Date();
-                var vCurrentdate = (dt.getMonth() +1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                var vCurrentdate = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
                 $("#txtstartDate").val(vCurrentdate);
             }
-            else
-            {
+            else {
                 if ($("#txtstartDate").val() != "" && $("#txtEndDate").val() != "") {
                     var vResult = compare($("#txtstartDate").val(), $("#txtEndDate").val());
                     if (vResult != "") {
@@ -889,8 +909,7 @@
                 var vCurrentdate = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
                 $("#txtEndDate").val(vCurrentdate);
             }
-            else
-            {
+            else {
                 if ($("#txtstartDate").val() != "" && $("#txtEndDate").val() != "") {
                     var vResult = compare($("#txtstartDate").val(), $("#txtEndDate").val());
                     if (vResult != "") {
@@ -1002,8 +1021,7 @@
                 alert('Geo Location feature is not supported in this browser.');
             }
         }
-        else
-        {
+        else {
             var LatLng = new google.maps.LatLng($("#hdlat").val(), $("#hdlng").val());
             var geocoder = new google.maps.Geocoder;
             var infowindow = new google.maps.InfoWindow;
