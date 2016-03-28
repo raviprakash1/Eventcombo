@@ -1318,6 +1318,8 @@ span.evnt_toltip{
 
 .desc_list_event_type{ color: #ff008a;  font-size: 14px; text-transform: uppercase;  } 
 
+.desc_list_event_type_disable{ color:#ccc;}
+
 .nav.list_inner_cat_tag{ margin-left: 10px; margin-top: 0px; padding-top: 4px;  padding-bottom: 6px; }
 .nav.list_inner_cat_tag > li{ margin-right: 10px; }
 .nav.list_inner_cat_tag > li > a{  padding: 0; color: #cdcdcd;  border-radius: 0px; font-size: 13px; background:none; }
@@ -1583,7 +1585,7 @@ div.file_upload input {
 
 .soc_btn_dis{ background-color: #3cf; padding: 0px; margin-left: 5px; height: 22px; width: 22px; font-size: 12px; border-radius: 50%; color: #fff; }
 .soc_btn_dis:hover,.soc_btn_dis:focus,.soc_btn_dis.focus{ background-color: #3cf; color: #fff; } 
-
+.dis_evnt_link{ color:#ccc;}
 
 .soc_btn_active{ background-color: #ccc; color: #fff;  }
 .soc_btn_active:hover,.soc_btn_active:focus,.soc_btn_active.focus{ background-color: #ccc; color: #fff;  }

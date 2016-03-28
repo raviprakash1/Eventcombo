@@ -7,6 +7,10 @@
 
 <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
 
+<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+<link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
+<link href="~/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" />
+
 @using (Html.BeginForm("Index", "ManageEvent", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
 {
 
@@ -56,20 +60,20 @@
                                         <span class="view_evnt fs26 col-sm-6"> Event</span>
                                         <label class="field select admin-form col-sm-4 text-right srh-by-no">
                                             Total no. of Events : @ViewData["Eventscount"] &nbsp; &nbsp; &nbsp; &nbsp;
-                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { @class="pagination" })
+                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { @class = "pagination" })
                                             @*@Html.DropDownList("PaF", new { @class = "pagination" })*@
                                             @*<select name="forma" onchange="location = this.options[this.selectedIndex].value;">
-                                                <option value="Contact.php">Contact</option>
-                                                <option value="Sitemap.php">Sitemap</option>
-                                            </select>*@
+                                                    <option value="Contact.php">Contact</option>
+                                                    <option value="Sitemap.php">Sitemap</option>
+                                                </select>*@
 
-                                            
+
                                             @*<select >
-                                                <option value="0">Select</option>
-                                                <option value="0">01 - 50</option>
-                                                <option value="1">51 - 100</option>
-                                                <option value="2">101 - 150</option>
-                                            </select>*@
+                                                    <option value="0">Select</option>
+                                                    <option value="0">01 - 50</option>
+                                                    <option value="1">51 - 100</option>
+                                                    <option value="2">101 - 150</option>
+                                                </select>*@
                                             <i class="arrow double"></i>
                                         </label>
                                     </div>
@@ -77,11 +81,11 @@
                                         <!--  <hr class="short alt"> -->
                                         <form class="admin-form">
                                             <div class="col-md-2 col-sm-2">
-                                               
-                                                     <label> Event Title </label>
-                                                    @Html.TextBox("SearchStringEventTitle", "", new { Class = "form-control", placeholder = "Search Event Title" })
-                                                    @*<input type="text" class="form-control" placeholder="Search Event Title" value="Search Event Title">*@
-                                               
+
+                                                <label> Event Title </label>
+                                                @Html.TextBox("SearchStringEventTitle", "", new { Class = "form-control", placeholder = "Search Event Title" })
+                                                @*<input type="text" class="form-control" placeholder="Search Event Title" value="Search Event Title">*@
+
                                             </div>
 
 
@@ -98,40 +102,40 @@
                                                 <label>Event SubCategory</label>
                                                 <select id="ddlEventSubCategory" class="form-control"></select>
                                             </div>
-                                        
-                                           
-                                           
+
+
+
                                             <div class="col-md-2 col-sm-2 mt10">
                                                 <label> Feature </label>
                                                 <div class="section">
-                                                  
+
                                                     @Html.DropDownList("Features", ViewBag.Features as List<SelectListItem>, new { @class = "form-control" })
-                                                 
+
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-sm-2 mt10">
                                                 <label> Any Event </label>
                                                 <div class="section">
                                                     @Html.DropDownList("Events", ViewBag.Events as List<SelectListItem>, new { @class = "form-control" })
-                                                  
-                                    </div>
+
+                                                </div>
                                             </div>
                                             <div class="col-md-2 col-sm-2 mt10">
                                                 <label> Any Ticket Sales </label>
                                                 <div class="section">
                                                     @Html.DropDownList("Tickets", ViewBag.Tickets as List<SelectListItem>, new { @class = "form-control" })
-                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-2 col-sm-2 mt10">
                                                 <label> &nbsp;  </label>
                                                 <button class="btn btn-info br2 col-md-12 fs15">Search</button>
-                                              
+
                                             </div>
                                             <div class="col-md-2 col-sm-2 mt10">
                                                 <label> &nbsp;  </label>
-                                                <button class="btn btn-info br2 col-md-12 fs15" type="button" id="btnReset" >Reset</button>
+                                                <button class="btn btn-info br2 col-md-12 fs15" type="button" id="btnReset">Reset</button>
                                             </div>
-</form>
+                                        </form>
 
                                     </div>
                                 </div>
@@ -149,6 +153,7 @@
                                             <th>Organizer Name & Email</th>
                                             <th>Venue name & address</th>
                                             <th>Action</th>
+                                            <th>$</th>
                                             @*<th>Manage Ticketing</th>*@
                                             <th>Tickets Sold</th>
                                             <th>Feature </th>
@@ -156,37 +161,44 @@
                                     </thead>
                                     <tbody>
                                         @{ int i = 0;
-                                                string host = Request.Url.Host;
-                                                foreach (var obj in Model)
-                                                {
-                                                    i = i + 1;
+                                            string host = Request.Url.Host;
+                                            foreach (var obj in Model)
+                                            {
+                                                i = i + 1;
                                                 <tr>
                                                     <td>@i.ToString()</td>
                                                     <td><a target="_blank" href="http://@host/CreateEvent/ViewEvent?strUrlData=@obj.EventTitle.Trim()౼@obj.EventID౼N">@obj.EventTitle</a></td>
                                                     <td>@obj.EventType</td>
                                                     <td>@obj.EventCategory-@obj.EventSubCategory</td>
                                                     <td>@obj.EventTiming</td>
-                                                    <td style="table-layout: fixed; word-break: break-all;">@obj.Orgnizer_Name  &
-                                                    
-                                                    <a  href="mailto:@obj.Email">@obj.Email</a></td>
+                                                    <td style="table-layout: fixed; word-break: break-all;">
+                                                        @obj.Orgnizer_Name  &
+
+                                                        <a href="mailto:@obj.Email">@obj.Email</a>
+                                                    </td>
                                                     <td>@obj.EventAddress</td>
                                                     <td>
-                                                        <a href="#" class="btn btn-success br2 btn-xs fs12" onclick="EditEvent('@obj.EventID','@obj.UserID');" ><i class="fa fa-edit"></i> </a>
+                                                        <a href="#" class="btn btn-success br2 btn-xs fs12" onclick="EditEvent('@obj.EventID','@obj.UserID');"><i class="fa fa-edit"></i> </a>
                                                         @if (obj.Purchasedqty <= 0)
                                                         {
-                                                        <a class="td-btn" type="button" onclick="ConfirmDelete('@obj.EventID');" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
-                                                            <i class="fa fa-remove"></i>
-                                                        </a>
+                                                            <a class="td-btn" type="button" onclick="ConfirmDelete('@obj.EventID');" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
+                                                                <i class="fa fa-remove"></i>
+                                                            </a>
                                                         }
                                                         @*@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")/*@
                                                     </td>
                                                     @*<td>Manage Ticketing</td>*@
+                                                    <td>
+                                                        <a class="holder-active animation-switcher" href="#modal-panel" id="payment-@obj.EventID">
+                                                            <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" onclick="LoadPaymentInfo('@obj.EventID');" id="btnRoles" type="button">$</button>
+                                                        </a>
+                                                    </td>
                                                     <td>@obj.Purchasedqty</td>
                                                     <td>
                                                         <div class="view_sel_wid">
                                                             @if (obj.Feature == 1)
                                                             {
-                                                                <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)" >
+                                                                <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
                                                                     <option text=0 value="0">Select</option>
                                                                     <option value=1 selected="selected">Platinum</option>
                                                                     <option value=2>Gold</option>
@@ -238,7 +250,7 @@
 
                                                         </div>
                                                     </td>
-                                                  
+
 
 
 
@@ -271,6 +283,18 @@
 
                 </div>
                 <!-- Confirm Msg OK Modal Box -->
+                <div id="modal-panel" class="popup-basic bg-none popup-lg mfp-with-anim mfp-hide">
+                    <div class="panel-heading">
+                        <span class="panel-title">Payment Info</span>
+
+                    </div>
+
+                    <div id="dvLoadPaymentInfo" class="panel-body admin-form">
+                            
+
+                    </div>
+                </div>
+
 
                 <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
@@ -291,12 +315,17 @@
                         </div>
                     </div><!-- confirm-msg -->
                 </div>
+
                 <div>
                     <a class="td-btn" id="btOk" type="button" href="#confirm-delete-ok" data-toggle="modal" style="display:none">
 
                     </a>
                 </div>
                 <input type="hidden" id="hdUserId" value="" />
+
+
+
+
                 <!-- Confirm Msg OK Modal Box -->
                 <!--  <div id="modal-text" class="popup-basic p25 popup-lg mfp-with-anim mfp-hide">
                      <div class="row">
@@ -342,9 +371,23 @@
 
             </div>
         </div>
+
+
+        @*<div id="payment-modal-panel" class="popup-basic bg-none popup-lg mfp-with-anim mfp-hide">
+                Testing
+
+            </div>*@
         <!-- End: Content -->
+
         <script>
-            function EditEvent(eventId,UserID) {
+            function LoadPaymentInfo(vEventId)
+            {
+                var url = '@Url.Action("EventPaymentInfo", "ManageEvent", new { lEventId = "-parameter" })';
+                url = url.replace("-parameter", vEventId);
+                $('#dvLoadPaymentInfo').load(url);
+
+            }
+            function EditEvent(eventId, UserID) {
                 var appSetting = '@(System.Configuration.ConfigurationManager.AppSettings["EventComboClientDomain"].ToString())';
                 var url = appSetting + '/CMS/Index?id=' + eventId + '&e=' + UserID;
                 var w = 960, h = 600,
@@ -370,10 +413,10 @@
             $('#ulpage').click(function () {
                 console.log(this);
 
-               console.log( $('#ulpage li.active'));
-              var datapage=$('#ulpage li.active').children().attr('data-page');
+                console.log($('#ulpage li.active'));
+                var datapage = $('#ulpage li.active').children().attr('data-page');
 
-              $('#PageF').val(datapage);
+                $('#PageF').val(datapage);
 
             });
 
@@ -383,8 +426,8 @@
                 $("#ulpage li").removeClass('active');
                 $('#ulpage li a[data-page=' + value + ']').click();
                 console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
-               //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
-              
+                //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
+
 
             });
             function ConfirmDelete(userId) {
@@ -427,8 +470,7 @@
                 });
                 return msgnew;
             }
-            function SaveFeature(EventId,vValue)
-            {
+            function SaveFeature(EventId, vValue) {
                 $.ajax({
                     url: '@Url.Action("UpdateEventFeature", "ManageEvent")',
                     data: { iFid: parseInt(vValue), lEventId: parseInt(EventId) },
@@ -447,26 +489,26 @@
 
             }
             $(document).ready(function () {
-              
 
-        $("#btnYes").click(function () {
-        $.ajax({
-            url: '@Url.Action("Deleteevent","ManageEvent")',
-            data: { Eventid: $("#hdUserId").val() },
-            datatype: "Text",
-            type: "Post",
-            success: function (response) {
-                $("#formuser").submit();
-                //$.post("Users\Users");
-               // if (response == "Deleted")
-                   // alert("Record Deleted Successfully.");
-                    //$("#hId").text(GetMess("CMSUsers", "UsersDeleteSuccUI"));
 
-                //else
-                //    alert("Some error occur while Deleting");
-            }
-        });
-    });
+                $("#btnYes").click(function () {
+                    $.ajax({
+                        url: '@Url.Action("Deleteevent","ManageEvent")',
+                        data: { Eventid: $("#hdUserId").val() },
+                        datatype: "Text",
+                        type: "Post",
+                        success: function (response) {
+                            $("#formuser").submit();
+                            //$.post("Users\Users");
+                            // if (response == "Deleted")
+                            // alert("Record Deleted Successfully.");
+                            //$("#hId").text(GetMess("CMSUsers", "UsersDeleteSuccUI"));
+
+                            //else
+                            //    alert("Some error occur while Deleting");
+                        }
+                    });
+                });
                 $("#ddlEventCategory").change(function () {
                     //alert("change Fires");
                     var vCatId = $("#ddlEventCategory").val();
@@ -511,4 +553,4 @@
 
         </script>
     </section>
-}
+                                            }

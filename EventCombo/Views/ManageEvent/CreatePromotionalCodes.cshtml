@@ -5,7 +5,7 @@
 }
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/DateTimePicker.css" rel="stylesheet" />
-
+<script src="~/Scripts/jquery.masked.js"></script>
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
         <div id="accordion" class="panel-group">
@@ -65,7 +65,14 @@
                 <div id="collapse2" class="panel-collapse collapse">
                     <div class="panel-body no-padding">
                         <p>Email Invitations</p>
-                        <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.PC_Eventid })</p>
+                        @if (Model.discountcode > 0)
+                        {
+                            <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventid = Model.PC_Eventid }, null)</p>
+                        }
+                        else
+                        {
+                            <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.PC_Eventid }, null)</p>
+                        }
                         <p>Facebook Integration</p>
                         <p>Website Integration</p>
                         <p>Tracing Links</p>
@@ -96,6 +103,17 @@
 
 @using (Html.BeginForm("CreatePromotionalCodes", "ManageEvent", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+
+    <div class="col-sm-10 mb10 col-xs-12" id="diverro1acc" style="display:none ">
+        <div class="er_UI_main">
+
+
+            <div class="er_sys_img"></div>
+            <div class="er_suc" id="erraccsucc"></div>
+            <button class="close" type="button" onclick="$('#diverro1acc').css('display', 'none');" id="btndiverro1acc" tabindex="-1">&#215;</button>
+        </div>
+
+    </div>
     <div class="col-sm-12 col-xs-12 ">
         <div class="col-sm-12 no_pad mb20">
             <ul class="cod_dis_type">
@@ -108,15 +126,20 @@
         <div class="col-sm-12 no_pad mt20">
                 <div class="col-sm-2 no_pad">
                     <div class="form-group">
-                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code">
+                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code">
                     </div>
                 </div>
+            @if (Model.Formtype == "S")
+            {
                 <div class="mid_or_width">or</div>
                 <div class="custom_file_upload">
                     <div class="form-group">
                         <div class="file_upload">
-                            <input type="file" id="file_upload" name="file">
+                            <input type="file" id="file_upload" name="file" >
                         </div>
+                        <label id="id_filename" class="filename" style="display:none"></label>
+                        <input id="id_close" type="button" class="filename" style="display:none" value="X" />
+                       
                     </div>
                 </div>
 
@@ -125,32 +148,83 @@
                         <img class="help_icon_hov" src="/Images/icon-question.gif" />
                         <span class="xs-upload-tooltip upload_help_icn_inner">
                             Spaces apostrophes and non alphanumeric characters
-                            (except '-','_' and',' are not allowed. File must be in plain text
+                            (except '-','_',@@ and',' are not allowed. File must be in plain text
                             ( CSV or TXT)
                         </span>
                     </div>
                 </div>
+            }
         </div>
     <div class="clearfix"></div>
     <div class="col-sm-12 no_pad mt10">
       <input type="hidden" id="hd_eventid" name="PC_Eventid" value="@Model.PC_Eventid" />
+        <input type="hidden" name="Formtype" value="@Model.Formtype" />
+        <input type="hidden" name="PC_id" value="@Model.PC_id" />
         <input type="hidden" id="hd_pctype" name="PC_Type"  value="C"/>
+@if (Model.Formtype == "S")
+{
         <input type="hidden" id="hd_discounttype" name="Discount_Type" value="A" />
-        
-        <input type="hidden" name="PC_Apply" id="hd_pcapply"/>     
+}
+else
+{
+    if (Model.Amounttype == "A")
+    {
+        <input type="hidden" id="hd_discounttype" name="Discount_Type" value="A" />
+    }
+    else
+    {
+        <input type="hidden" id="hd_discounttype" name="Discount_Type" value="P" />
+    }
+}
+
+        <input type="hidden" name="PC_Apply" id="hd_pcapply" value="@Model.PC_Apply"/>     
            <div class="col-sm-2 no_pad">
             <div class="form-group">
-                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Amount" id="txt_discountmnt" name="PC_Amount">
+@if (Model.Formtype == "S")
+{
+                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Amount" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount" >
+}
+else
+{
+    if (Model.Amounttype == "A")
+    {
+    <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Amount" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount">
+    }
+    else
+    {
+        <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Percentage" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount">
 
+    }
+}
             </div>
         </div>
         <div class="mid_or_width"></div>
         <div class="col-sm-1 no_pad">
             <div class="form-group dropheight">
+                @if (Model.Formtype == "S")
+                {
                 <select class="form-control selectpicker" id="ddl_discounttype">
                     <option value="0">$</option>
                     <option value="1">%</option>
                 </select>
+                }
+                else
+                {
+                    if (Model.Amounttype == "A")
+                    {
+                        <select class="form-control selectpicker" id="ddl_discounttype">
+                            <option value="0" selected="selected">$</option>
+                            <option value="1">%</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <select class="form-control selectpicker" id="ddl_discounttype">
+                            <option value="0" selected="selected">$</option>
+                            <option value="1" selected="selected">%</option>
+                        </select>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -186,7 +260,8 @@
                 <div class="col-sm-12 no_pad">
                     <div class="form-group">
                         <!-- <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" > -->
-                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start">
+                        <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
+                     
                     </div>
 
                 </div>
@@ -197,14 +272,15 @@
                     <div class="prm_befor_level"> End</div>
                     <div class="squaredOne">
                         <input type="checkbox" value="None" id="befendevnt" name="check" />
-                        <label for="befendevnt"></label>
+                       
                     </div>
                     <div class="prm_cd_level"> before event</div>
                 </div>
                 <div class="col-sm-12 no_pad">
 
                     <div class="form-group">
-                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End">
+                        <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
+                        
                     </div>
 
                 </div>
@@ -223,30 +299,30 @@
             </div>
             <div class="col-sm-12 no_pad">
                 <div class="squaredOne">
-                    <input type="checkbox" value="None" id="all_ticket" name="check" />
+                    <input type="checkbox" value="0" id="all_ticket" name="Ticketcheck" />
                     <label for="all_ticket"></label>
                 </div>
                 <div class="prm_cd_level"> All</div>
             </div>
             @{ int i = 0;
-                foreach (var item in Model.Ticketdata)
+                    foreach (var item in Model.Ticketdata)
                 {
                     <div class="col-sm-12 no_pad">
                         <div class="squaredOne">
-                            @if (item.Fees_Type == "2")
+                            @if (item.TicketTypeID == 2)
                             {
-                                <input type="checkbox" value="None" id="chk_@i" name="check" />
+                                <input type="checkbox" value="@item.T_Id" id="chk_@i" name="Ticketcheck" />
 
                             }
                             else
                             {
-                                <input type="checkbox" value="None" id="chk_@i" name="check" disabled />
+                                <input type="checkbox" value="@item.T_Id" id="chk_@i" name="Ticketcheck" disabled />
                             }
-                            <label for=" @item.T_name"></label>
+                            <label for="chk_@i"></label>
                         </div>
                             
                             <div class="prm_cd_level">
-                           @if (item.Fees_Type == "2")
+                           @if (item.TicketTypeID == 2)
                            {
                                 <label>@item.T_name ($ @item.Price)</label>
                            }
@@ -258,7 +334,9 @@
                                     <input type="hidden" value="@item.T_Id" id="hdticket_@i" />
                                 </div>
                             </div>
+                    i = i + 1;
                 }
+
                         }
                         
 
@@ -276,11 +354,29 @@
 
                         </div>
                         <div class="col-sm-12 no_pad mb10">
-                            <div class="col-sm-8 "> <a class="link_url" name="PC_URL" href="#">http://eventcombo.net/event-names?discount=</a> </div>
-                            <div class="col-sm-4  text-right">
-                                <button class="btn soc_btn_dis "><i class="fa fa-facebook"></i></button>
-                                <button class="btn soc_btn_dis"><i class="fa fa-twitter"></i></button>
-                                <button class="btn soc_btn_dis"><i class="fa fa-envelope"></i></button>
+                            <div class="col-sm-9 ">
+                            @if (Model.Formtype == "S")
+                            {
+                            <span class="dis_evnt_link">http://eventcombo.net/event-names?discount=Example</span>
+                            }
+                            else
+                            {
+                                <a class="link_url " name="PC_URL" href="#">http://eventcombo.net/event-names?discount=Example</a>
+                            }
+                                 @**@ </div>
+                            <div class="col-sm-3  text-right">
+@if (Model.Formtype == "S")
+{
+                                <button class="btn soc_btn_dis soc_btn_active" type="button"><i class="fa fa-facebook"></i></button>
+                                <button class="btn soc_btn_dis soc_btn_active" type="button"><i class="fa fa-twitter"></i></button>
+                                <button class="btn soc_btn_dis soc_btn_active" type="button"><i class="fa fa-envelope"></i></button>
+}
+else
+{
+    <button class="btn soc_btn_dis " type="button"><i class="fa fa-facebook"></i></button>
+    <button class="btn soc_btn_dis " type="button"><i class="fa fa-twitter"></i></button>
+                                <button class="btn soc_btn_dis " type="button"><i class="fa fa-envelope"></i></button>
+}
                             </div>
                         </div>
                     </div>
@@ -315,19 +411,253 @@
 
                 $(document).ready(function () {
 
-                    $('#crt_promcode').click();
-                    $('#dvcrtpromcode').addClass("active");
-                    $('#dvcrtpromcode b').addClass('opened new-opend');
 
-                    $('#dvcrtpromcode').click(function (e) {
+                    var formtype = "@Model.Formtype";
+                    if (formtype == "E") {
+                        var PC_Apply = "@Model.PC_Apply";
 
-                        var $dvEle = $('#dvcrtpromcode b');
-                        var vclassname = $dvEle.attr('class');
-                        if ($dvEle.hasClass("new-opend")) {
-                            $dvEle.removeClass('opened new-opend').addClass('closed');
+                        if (PC_Apply == "") {
+
+                        } else {
+                            if (PC_Apply == "A") {
+                                $("input[name='Ticketcheck']:not(:disabled)").prop('checked', 'checked');
+                            } else {
+                                if (PC_Apply.indexOf(",") > -1) {
+                                    var dobPC_Apply = PC_Apply.split(",");
+
+                                    for (var i = 0; i < dobPC_Apply.length; i++) {
+                                        var cboxes = document.getElementsByName('Ticketcheck');
+                                        var len = cboxes.length;
+
+                                        for (var j = 0; j < len; i++) {
+
+                                            if (cboxes[j].value == dobPC_Apply[i]) {
+                                                document.getElementById(cboxes[i].id).checked = true;
+
+
+
+                                            }
+
+
+
+                                        }
+
+                                    }
+
+                                } else {
+
+                                    var cboxes = document.getElementsByName('Ticketcheck');
+                                    var len = cboxes.length;
+
+                                    for (var i = 0; i < len; i++) {
+
+                                        if (cboxes[i].value == PC_Apply) {
+                                            document.getElementById(cboxes[i].id).checked = true;
+
+
+
+                                        }
+
+
+
+                                    }
+                                }
+
+                            }
                         }
-                        else {
-                            $dvEle.addClass('opened new-opend');
+                    }
+
+                    $('#all_ticket').change(function () {
+                        var apply = "";
+
+                        if ($(this).is(":checked"))
+                        {
+                            $("#hd_pcapply").val("A");
+                            $("input[name='Ticketcheck']:not(:disabled)").prop('checked', $(this).prop("checked"));
+                        } else {
+                            $("#hd_pcapply").val("");
+                            $("input[name='Ticketcheck']:not(:disabled)").prop('checked',true);
+                            $(this).prop('checked', false);
+
+                            var cboxes = document.getElementsByName('Ticketcheck');
+                            var len = cboxes.length;
+                            
+                            for (var i = 0; i < len; i++) {
+                                if (cboxes[i].checked)
+                                {
+                                    if (apply == '')
+                                    {
+                                        apply += cboxes[i].value;
+                                    }else{
+                                        apply += ','+cboxes[i].value
+                                    }
+                                   
+                                }
+                                
+                            }
+                            $("#hd_pcapply").val(apply);
+                        }
+                       
+                       
+                        
+                  
+                    });
+                    $("input[name='Ticketcheck']").change(function () {
+                      
+                        var apply = "";
+                        var cboxes = document.getElementsByName('Ticketcheck');
+                        var len = cboxes.length;
+                        var length=  $('[name=Ticketcheck]:checked').length;
+                      
+                        if (length == 0) {
+                            $("#hd_pcapply").val('');
+                        } else {
+                           
+                            for (var i = 0; i < len; i++) {
+                                if (cboxes[i].checked) {
+                                    if (cboxes[i].value != 0) {
+                                        if (apply == '') {
+                                            apply += cboxes[i].value;
+                                        } else {
+                                            apply += ',' + cboxes[i].value
+                                        }
+                                    }
+
+                                }
+
+                            }
+                            if (!cboxes[0].checked) {
+                                $("#hd_pcapply").val(apply);
+                            }
+                        }
+
+                    });
+                    $("input[id^='txt_discountmnt']").mask('000,000.00', { reverse: true });
+                    $("#ddl_discounttype").change(function (e) {
+                        $('#txt_discountmnt').val('');
+                        if($("#ddl_discounttype").val()==0)
+                        {
+                            $('#hd_discounttype').val('A');
+                            $("#txt_discountmnt").attr("placeholder", "Enter Discount Amount")
+
+                        } else {
+                            $('#hd_discounttype').val('P');
+                            $("#txt_discountmnt").attr("placeholder", "Enter Discount Percentage")
+                        }
+
+                    });
+
+                    $("#file_upload").change(function () {
+                       
+                        $('#txt_Promocode').val('');
+                        var filename = $('input[type=file]').val().split('\\').pop();
+                        var extension = filename.replace(/^.*\./, '');
+
+                      
+                        if (extension == filename) {
+                            extension = '';
+                        } else {
+                            
+                            extension = extension.toLowerCase();
+                        }
+                       
+                        if(extension=="txt" || extension=="csv")
+                        {
+                           
+                            $('#txt_Promocode').attr('disabled', true);
+                            $(".file_upload").hide();
+                            $("#id_filename").html(filename);
+                            $(".filename").show();
+                        } else {
+                          
+                            $('#diverro1acc').show();
+                            $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidpccodefile'));
+                            $('html,body').animate({ scrollTop: 0 });
+                            return false;
+                        }
+                     
+                    });
+
+                    $("#id_close").click(function () {
+                        $(".file_upload").show();
+                        $(".filename").hide();
+                        $('#txt_Promocode').attr('disabled', false);
+
+                        var fileUpload = $("[id*=file_upload]");
+                        var id = fileUpload.attr("id");
+                        var name = fileUpload.attr("name");
+
+                        //Create a new FileUpload element.
+                        var newFileUpload = $("<input type = 'file' />");
+
+                        //Append it next to the original FileUpload.
+                        fileUpload.after(newFileUpload);
+
+                        //Remove the original FileUpload.
+                        fileUpload.remove();
+
+                        //Set the Id and Name to the new FileUpload.
+                        newFileUpload.attr("id", id);
+                        newFileUpload.attr("name", name);
+
+                    });
+                    $('#txt_Promocode').blur(function (e) {
+
+                        var value = $(this).val();
+                        if(value!='')
+                        {
+                            $("#file_upload").attr('disabled', true);
+                        } else {
+                            $("#file_upload").attr('disabled', false);
+                        }
+
+
+                    });
+                    $('#txt_Promocode').keypress(function (e) {
+                        var regex = new RegExp("^[a-zA-Z0-9@@_,-]+$");
+                        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                        if (regex.test(str)) {
+                            return true;
+                        }
+
+                        e.preventDefault();
+                        return false;
+                    });
+                    $('#txt_discountmnt').keypress(function (e) {
+                        var regex = new RegExp("^[0-9.]+$");
+                        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                        if (regex.test(str)) {
+                            
+                           return true;
+                        }
+                        e.preventDefault();
+                        return false;
+
+                    });
+                    $('#txt_use').keypress(function (e) {
+                        var regex = new RegExp("^[0-9]+$");
+                        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                        if (regex.test(str)) {
+
+                            return true;
+                        }
+                        e.preventDefault();
+                        return false;
+
+                    });
+
+                    $('#txt_discountmnt').keyup(function (e) {
+                        var txt = parseFloat($(this).val().replace(',', ''));
+                        var ddlval = $("#ddl_discounttype").val();
+                        if (ddlval == 0) {
+                            if (txt > 99999) {
+                                $(this).val(99999);
+                            }
+                        } else {
+                            if (txt > 100) {
+
+                                $(this).val(100);
+                            }
                         }
                     });
 
@@ -341,84 +671,7 @@
                         }
 
                     });
-                    @*$("#btnsave").click(function () {
-                    
-
-
-                        var model = {
-                            'PC_Eventid': $('#hd_eventid').val(),
-                            'PC_Type': 'C',
-                            'PC_Code': $('#txt_Promocode').val(),
-                            'PC_Amount': $("#txt_discountmnt").val(),
-                            'PC_Percentage': $("#txt_discountmnt").val(),
-                            'PC_Uses': $("#txt_use").val(),
-                            'UserId': '',
-                            'PC_Start': $("#txtstartdate").val(),
-                            'PC_End': $("#txtenddate").val(),
-                            'PC_Apply':''
-
-                        };
-                        $.ajax({
-                            url: '@Url.Action("SavePromocode", "ManageEvent")',
-                            data: { model: model },
-                            type: "Post",
-                            success: function (data) {
-
-<<<<<<< HEAD
-                                if (typeof (data.Message) === "undefined") {
-                                    $("#id_selectorg").empty();
-                                    $("#id_selectorg").append("<option value='0'>Select</option>");
-                                    $("#id_selectorg").append("<option value='A'>Add Organizer</option>");
-                                    $.each(data, function (index, optiondata) {
-
-                                        $("#id_selectorg").append("<option value='" + optiondata.Id + "'>" + optiondata.Name + "</option>");
-                                    });
-                                    $('.selectpicker').selectpicker('refresh');
-=======
-<script type="text/javascript">
-      $(".upload_help_icn_inner").css("display", "none");
-         $('.help_icon_hov').hover(
-          function () {
-            $(".upload_help_icn_inner").show();
-          },
-          function () {
-            $(".upload_help_icn_inner").hide();
-          }
-        );
-        
->>>>>>> 3b81ee1ea1edd131f8a290bbb238ca6b0ef8ad32
-
-                                } else {
-                                    if (data.Message == "O") {
-                                        window.location.href = '@Url.Action("Index", "Home")';
-
-                                    }
-
-
-                                }
-                                $("#btnedit").prop("disabled", true);
-                                $("#btndelete").prop("disabled", true);
-                                $('#userimage').val("");
-                                $("#image_count").val("0");
-                                $('#ImagePresent').val("No");
-                                $("#dveruimain").removeClass("er_UI_main");
-                                $("#dveruiimg").removeClass("er_UI_img");
-                                $("#dveruimain").addClass("er_suc_main");
-                                $("#dveruiimg").addClass("er_suc_img");
-                                $('#erraccmsg').html(ajaxsetup('OrganizerMaster', 'OrgsaveEdit'));
-                                $('#diverroacc').show();
-                                $('html,body').animate({ scrollTop: 0 });
-
-                                $(".maindivnonvis").show();
-                                $("#divorgprofile").empty();
-                                $("#divorgprofile").hide();
-
-                            }
-
-                        });
-                    
-                    
-                    });*@
+   
                     var bIsPopup = displayPopup();
 
                     $("#dtBox").DateTimePicker(
@@ -438,6 +691,61 @@
                         }
                     });
 
+                    $('#btnsave').click(function () {
+                        var formtype = "@Model.Formtype";
+                        if (formtype == "S") {
+                            var filename = $('input[type=file]').val().split('\\').pop();
+                            var extension = filename.replace(/^.*\./, '');
+
+
+                            if (extension == filename) {
+                                extension = '';
+                            } else {
+
+                                extension = extension.toLowerCase();
+                            }
+                            if ($('#txt_Promocode').val() == '' && filename == '') {
+                                $('#diverro1acc').show();
+                                $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidpccode'));
+                                $('html,body').animate({ scrollTop: 0 });
+                                return false;
+                            }
+                            if (filename != '') {
+                                if (extension != 'txt' || extension != 'csv') {
+                                    $('#diverro1acc').show();
+                                    $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidpccodefile'));
+                                    $('html,body').animate({ scrollTop: 0 });
+                                    return false;
+                                }
+                            }
+                        } else {
+                            if ($('#txt_Promocode').val() == '') {
+                                $('#diverro1acc').show();
+                                $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidpccode'));
+                                $('html,body').animate({ scrollTop: 0 });
+                                return false;
+                            }
+                        }
+                        var amnt = $('#txt_discountmnt').val();
+                        if (amnt == '')
+                        {
+                            $('#diverro1acc').show();
+                            $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidamount'));
+                            $('html,body').animate({ scrollTop: 0 });
+                            return false;
+                        }
+                        var length = $('[name=Ticketcheck]:checked').length;
+                        if (length == 0)
+                        {
+                            $('#diverro1acc').show();
+                            $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCselectcheckbox'));
+                            $('html,body').animate({ scrollTop: 0 });
+                            return false;
+                        }
+                       
+                    });
+
+
 
                 });
 
@@ -448,6 +756,27 @@
                         return false;
                     else
                         return true;
+
+
+                }
+
+                function ajaxsetup(strname, strFormTag) {
+                    var msgnew = "";
+
+                    var request = $.ajax({
+                        url: '@Url.Action("Index", "ValidationMessage")',
+                        async: false,
+                        data: { strFormName: strname, strFormTag: strFormTag },
+                        type: 'Post'
+                    });
+                    request.done(function (msg) {
+                        msgnew += msg;
+                    });
+
+                    request.fail(function (jqXHR, textStatus) {
+                        msgnew += "Some Error occur!!";
+                    });
+                    return msgnew;
                 }
 
             </script>

@@ -462,6 +462,7 @@
           <Property Name="PC_Apply" Type="varchar" MaxLength="50" />
           <Property Name="PC_URL" Type="varchar" MaxLength="150" />
           <Property Name="PC_Eventid" Type="bigint" />
+          <Property Name="SavedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -905,6 +906,12 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Distance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="lat1" Type="float" Mode="In" />
+          <Parameter Name="long1" Type="float" Mode="In" />
+          <Parameter Name="lat2" Type="float" Mode="In" />
+          <Parameter Name="long2" Type="float" Mode="In" />
+        </Function>
         <Function Name="func_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DelimitedString" Type="varchar" Mode="In" />
           <Parameter Name="Delimiter" Type="varchar" Mode="In" />
@@ -937,6 +944,12 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
         <Function Name="GetLantLong" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Lat" Type="varchar" Mode="In" />
           <Parameter Name="Long" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetLantLongDistance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lat1" Type="float" Mode="In" />
+          <Parameter Name="long1" Type="float" Mode="In" />
+          <Parameter Name="lat2" Type="float" Mode="In" />
+          <Parameter Name="long2" Type="float" Mode="In" />
         </Function>
         <Function Name="GetOrganizerEventid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Masterid" Type="bigint" Mode="In" />
@@ -2038,10 +2051,15 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           </FunctionImport>
           <EntitySet Name="Promo_Code" EntityType="EventComboModel.Promo_Code" />
           <FunctionImport Name="GetOrganizerEventid" ReturnType="Collection(EventComboModel.GetOrganizerEventid_Result)">
-
           <Parameter Name="Masterid" Mode="In" Type="Int64" />
           </FunctionImport>
           <EntitySet Name="v_RetrieveEventid" EntityType="EventComboModel.v_RetrieveEventid" />
+          <FunctionImport Name="GetLantLongDistance" ReturnType="Collection(Double)">
+            <Parameter Name="lat1" Mode="In" Type="Double" />
+            <Parameter Name="long1" Mode="In" Type="Double" />
+            <Parameter Name="lat2" Mode="In" Type="Double" />
+            <Parameter Name="long2" Mode="In" Type="Double" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2191,6 +2209,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="PC_Apply" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PC_URL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="PC_Eventid" Type="Int64" />
+          <Property Name="SavedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <ComplexType Name="GetOrganizerEventid_Result">
           <Property Type="Int64" Name="Orgnizer_Id" Nullable="false" />
@@ -2985,6 +3004,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Promo_Code">
             <EntityTypeMapping TypeName="EventComboModel.Promo_Code">
               <MappingFragment StoreEntitySet="Promo_Code">
+                <ScalarProperty Name="SavedDate" ColumnName="SavedDate" />
                 <ScalarProperty Name="PC_Eventid" ColumnName="PC_Eventid" />
                 <ScalarProperty Name="PC_URL" ColumnName="PC_URL" />
                 <ScalarProperty Name="PC_Apply" ColumnName="PC_Apply" />
@@ -3053,6 +3073,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetLantLongDistance" FunctionName="EventComboModel.Store.GetLantLongDistance" />
 
         </EntityContainerMapping>
       </Mapping>

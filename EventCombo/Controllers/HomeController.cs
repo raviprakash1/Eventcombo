@@ -358,7 +358,10 @@ namespace EventCombo.Controllers
             if (strEc == null || strEc == "~" || strEc == "evc") strEc = string.Empty;
 
             Session["Fromname"] = "DiscoverEvents";
-            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc, strPrice, strLat, strLong, strSort, strDateFilter);
+            string strNearLat = "";
+            string strNearLong = "";
+
+            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc, strPrice, strLat, strLong, strSort, strDateFilter, ref strNearLat, ref strNearLong);
             double dPageCount = objDiscEvt.Count;
             double dTotalPages = dPageCount / pageSize;
             int lTotalPages = (objDiscEvt.Count / pageSize);
@@ -385,6 +388,8 @@ namespace EventCombo.Controllers
             TempData["tLng"] = strLong;
             TempData["tSort"] = strSort;
             TempData["tDateFilter"] = strDateFilter;
+            TempData["NearLat"] = strNearLat;
+            TempData["NearLong"] = strNearLong;
             ViewData["tempPrice"] = (strPrice != null ? strPrice.ToUpper() : "ALL");
             return View();
         }
@@ -506,6 +511,25 @@ namespace EventCombo.Controllers
                 return vEventType;
             }
         }
+
+        public string GetDiscoverEventFavLikes(long lEvId, string strUserId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var vfav = (from ev in db.EventFavourites where ev.eventId == lEvId && ev.UserID == strUserId select ev.UserID).FirstOrDefault();
+                if (vfav != null && vfav.Trim() != "") return "I";
+                else return "D";
+            }
+        }
+        public double GetDiscoverEventLatLongDis(double dUserLat, double dUserLong, double dAddLat, double dAddLong)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var vDistance = db.GetLantLongDistance(dUserLat, dUserLong, dAddLat, dAddLong).FirstOrDefault();
+                if (vDistance != null) return Convert.ToDouble(vDistance);
+                else return 0;
+            }
+        }
         public string GetPriceLabel(long lEventId)
         {
             string strResult = "";
@@ -550,7 +574,7 @@ namespace EventCombo.Controllers
             }
             return strResult;
         }
-        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter)
+        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter, ref string strNearLat, ref string strNearLong)
         {
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
@@ -597,7 +621,7 @@ namespace EventCombo.Controllers
 
                     if (strPrice.ToUpper() == "FREE")
                     {
-                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID = 1)");
+                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (1,3))");
                     }
 
                     if (strPrice.ToUpper() == "PAID")
@@ -610,6 +634,9 @@ namespace EventCombo.Controllers
                     CreateEventController objCEv = new CreateEventController();
                     string strImageUrl = "";
                     ValidationMessageController vmc = new ValidationMessageController();
+                    string strUserId = "";
+                    if (Session["AppId"] != null && Session["AppId"].ToString() != string.Empty) strUserId = Session["AppId"].ToString();
+                    bool bflag = true;
                     foreach (Event objEv in vEventList)
                     {
                         long lEventId = vmc.GetLatestEventId(objEv.EventID);
@@ -633,29 +660,58 @@ namespace EventCombo.Controllers
                         objDisEv = new DiscoverEvent();
                         objDisEv.EventId = lEventId;
                         objDisEv.EventTitle = objEv.EventTitle;
+                        if (objDisEv.EventTitle.Length >57)
+                        {
+                            objDisEv.EventTitle = objDisEv.EventTitle.Substring(0, 54) + "...";
+                        }
                         objDisEv.EventImage = strImageUrl;
                         objDisEv.EventCat = GetDiscoverEventCategorybyId(objEv.EventCategoryID);
+                        if (objDisEv.EventCat.Length >20)
+                        {
+                            objDisEv.EventCat = objDisEv.EventCat.Substring(0, 16) + "...";
+                        }
                         objDisEv.EventType = GetDiscoverEventTypebyId(objEv.EventTypeID);
+                        if (objDisEv.EventType.Length > 20)
+                        {
+                            objDisEv.EventType = objDisEv.EventType.Substring(0, 16) + "...";
+                        }
+
+
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
+                        objDisEv.EventLike = GetDiscoverEventFavLikes(lEventId, strUserId);
                         var vAddress = objEv.Addresses.FirstOrDefault();
+                        objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
                         if (vAddress != null)
                         {
                             if (vAddress.ConsolidateAddress.Trim() != string.Empty)
+                            {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
+                            }
                             else
                             {
                                 objDisEv.EventAddress = vAddress.VenueName.Trim() + " " + vAddress.Address1.Trim() + " " + vAddress.Address2.Trim() + " " + vAddress.City.Trim() + " " + vAddress.Zip;
                             }
+                            objDisEv.EventDisplayAddress = objDisEv.EventAddress;
                         }
+                        if (objDisEv.EventAddress.Length >140)
+                        {
+                            objDisEv.EventAddress = objDisEv.EventAddress.Substring(0, 135) + "...";
+                        }
+                        
+                        if (bflag == true)
+                        {
+                            strNearLat = vAddress.Latitude;
+                            strNearLong = vAddress.Longitude;
+                            bflag = false;
+                        }
+
                         var vTimings = objEv.EventVenues.FirstOrDefault();
                         if (vTimings != null)
                         {
                             objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
                             objDisEv.EventDate = (vTimings.EventStartDate != null ? Convert.ToDateTime(vTimings.EventStartDate + " " + vTimings.EventStartTime) : DateTime.Now);
-
-
                         }
                         else
                         {
@@ -679,7 +735,8 @@ namespace EventCombo.Controllers
 
                         lsDisEvt.Add(objDisEv);
                     }
-                    if (strSort == "dat") lsDisEvt = lsDisEvt.OrderBy(m => m.EventDate).ToList();
+                    if (strSort == "dat") lsDisEvt = lsDisEvt.OrderBy(m => m.EventDate).ToList() ;
+                    else lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList();
                     try
                     {
                         if (strDateFilter == "today") lsDisEvt = lsDisEvt.Where(m => m.EventDate >= DateTime.Now && m.EventDate == DateTime.Today).ToList();
@@ -770,8 +827,9 @@ namespace EventCombo.Controllers
                         {
                             if (str[1].Trim() != "" && str[2].Trim() != "")
                             {
-                                DateTime dtFrom = Convert.ToDateTime(str[1]);
-                                DateTime dtTo = Convert.ToDateTime(str[2]);
+
+                                DateTime dtFrom = Convert.ToDateTime(str[1].ToString());
+                                DateTime dtTo = Convert.ToDateTime(str[2].ToString());
                                 lsDisEvt = lsDisEvt.Where(m => m.EventDate >= dtFrom && m.EventDate <= dtTo).ToList();
                             }
                             else if (str[1].Trim() != "")

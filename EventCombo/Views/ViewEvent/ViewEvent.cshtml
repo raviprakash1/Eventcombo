@@ -1382,24 +1382,17 @@ function pad(n) { return n < 10 ? '0' + n : n };
                 $('#comments').append(scriptNode);
             }
         });
-        $('#fbshare').click(function () {
 
+        $('#fbshare').click(function () {
             var title = $('#evtitle').html();
-         
             window.open('https://www.facebook.com/sharer.php?s=100&p[title]='+encodeURIComponent(title.trim())+'&p[url]=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
-
-
-
         });
 
         $('#twittershare').click(function () {
-
             var title = $('#evtitle').html();
-          
             window.open('https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
-
         });
 
         $('#linkshare').click(function () {

@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Data.Entity.SqlServer;
+using PagedList;
 
 namespace EventCombo.Controllers
 {
@@ -28,7 +30,7 @@ namespace EventCombo.Controllers
             var Edetails = createevent.GetEventdetail(Eventid);
             //Getting event details
             //Get Address detail
-
+            var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == Eventid select x).Count();
             var Addresstype = Edetails.AddressStatus;
 
 
@@ -168,6 +170,7 @@ namespace EventCombo.Controllers
             Mevent.Eventdate = startday.ToString() + " " + sDate_new + " " + starttime;
             Mevent.Eventprivacy = Edetails.EventPrivacy;
             Mevent.EventHits = GetEventTotalHits(Eventid);
+            Mevent.DiscountCode = Discountcode;
             Session["logo"] = "events";
             Session["Fromname"] = "myevents";
             ValidationMessageController vmc = new ValidationMessageController();
@@ -1270,23 +1273,111 @@ namespace EventCombo.Controllers
 
         }
 
-        public ActionResult PromotionalCodes()
+        public ActionResult PromotionalCodes(long Eventid,string searchquery="")
         {
-            return View();
+            showPromocode sc = new showPromocode();
+            sc.Eventid = Eventid;
+            int pageSize = 20;
+            int pageIndex = 1;
+            CreateEventController cms = new CreateEventController();
+            var Eventdetail = cms.GetEventdetail(Eventid);
+            var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == Eventid select x).Count();
+            sc.Eventtitle = Eventdetail.EventTitle;
+            if(!string.IsNullOrWhiteSpace(searchquery))
+            {
+                var ls = (from x in db.Promo_Code
+                         orderby x.SavedDate descending
+                          where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
+                          select new Promocode
+                          {
+                              code = x.PC_Code,
+                              Amount = x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%",
+                              Start = SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
+                              End = x.PC_End,
+                              Limit = x.PC_Uses != null ? x.PC_Uses : "Unlimited",
+                              PCID = x.PC_id,
+                            
+
+
+                          }).ToList();
+                sc.Promocode = ls.ToPagedList(pageIndex, pageSize).ToList();
+            }
+            else
+            {
+                var ls = (from x in db.Promo_Code
+                          orderby x.SavedDate descending
+                          where x.PC_Eventid == Eventid
+                          select new Promocode
+                          {
+                              code = x.PC_Code,
+                              Amount = x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%",
+                              Start = SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
+                              End = x.PC_End,
+                              Limit = x.PC_Uses != null ? x.PC_Uses : "Unlimited",
+                              PCID = x.PC_id
+
+
+                          }).ToList();
+                sc.Promocode = ls.ToPagedList(pageIndex, pageSize).ToList();
+            }
+            sc.searchquery = searchquery;
+            sc.discountcode = Discountcode;
+           
+            return View(sc);
         }
 
 
-        public ActionResult CreatePromotionalCodes(long Eventid)
+        public ActionResult CreatePromotionalCodes(long Eventid, long Promocode = 0)
         {
-            CreateEventController cms = new CreateEventController();
-         var Eventdetail=   cms.GetEventdetail(Eventid);
-
             Promo_Code pm = new Promo_Code();
-            pm.PC_Eventid = Eventid;
+            CreateEventController cms = new CreateEventController();
+            string startdate = "", enddate = "";
+         var Eventdetail=   cms.GetEventdetail(Eventid);
             pm.Eventitle = Eventdetail.EventTitle;
-            pm.Ticketdata = (from x in db.Tickets where x.E_Id == Eventid select x).ToList();
             pm.Eventitle = Eventdetail.EventTitle;
 
+
+            var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == Eventid select x).Count();
+            pm.discountcode = Discountcode;
+            pm.PC_Eventid = Eventid;
+            if (Promocode == 0)
+            {
+                pm.Ticketdata = (from x in db.Tickets where x.E_Id == Eventid select x).ToList();
+
+                pm.Formtype = "S";
+                var singleevnt = (from x in db.EventVenues where x.EventID == Eventid select x).Any();
+                startdate = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt");
+
+
+                pm.PC_Start = startdate;
+                if (singleevnt)
+                {
+                    var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
+
+                    pm.PC_End = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+                }
+                else
+                {
+                    var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
+                    pm.PC_End = DateTime.Parse(y.StartingFrom + " " + y.StartTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+                }
+                pm.PC_id = 0;
+            }
+            else
+            {
+                var p = (from x in db.Promo_Code where x.PC_id == Promocode select x).FirstOrDefault();
+                pm.PC_Code = p.PC_Code;
+                pm.PC_id = p.PC_id;
+                pm.PC_Uses = p.PC_Uses;
+                pm.Ticketdata = (from x in db.Tickets where x.E_Id == Eventid select x).ToList();
+                pm.PC_Start = p.PC_Start;
+                pm.PC_End = p.PC_End;
+                pm.PC_Amount = p.PC_Amount!=null?p.PC_Amount:p.PC_Percentage;
+                pm.Amounttype= p.PC_Amount != null ? "A" :"P";
+                pm.PC_Percentage = p.PC_Percentage;
+                pm.Formtype = "E";
+                pm.PC_Apply = p.PC_Apply;
+            }
 
             return View(pm);
         }
@@ -1294,23 +1385,26 @@ namespace EventCombo.Controllers
         public ActionResult CreatePromotionalCodes(HttpPostedFileBase file,Promo_Code model)
         {
             var msg = "";
+            var containsspecial = 0;
+            var Invalidrepeatcode = "";
             using (EventComboEntities db = new EventComboEntities())
             {
-                if (file != null && file.ContentLength > 0)
+                if (model.Formtype == "E")
                 {
-                    var fileName = Path.GetFileName(file.FileName);
-                    string ext = System.IO.Path.GetExtension(file.FileName);
-                    string[] allowedExtenstions = new string[] { ".txt", ".csv" };
-                    if (allowedExtenstions.Contains(ext))
+
+                    if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9,@-_,]*$"))
                     {
-                        StreamReader csvreader = new StreamReader(file.InputStream);
-                        while (!csvreader.EndOfStream)
+                        var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id!=model.PC_id select v).Any();
+                        if (ifany)
                         {
-                            var line = csvreader.ReadLine();
-                            Promo_Code org = new Promo_Code();
+                            Invalidrepeatcode += model.PC_Code;
+                        }
+                        else
+                        {
+                            Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
                             org.PC_Eventid = model.PC_Eventid;
                             org.PC_Type = model.PC_Type;
-                            org.PC_Code = line;
+                            org.PC_Code = model.PC_Code;
                             if (org.Discount_Type == "A")
                             {
                                 org.PC_Amount = model.PC_Amount;
@@ -1327,12 +1421,12 @@ namespace EventCombo.Controllers
                             org.PC_End = model.PC_End;
                             org.PC_Apply = model.PC_Apply;
                             org.PC_Eventid = model.PC_Eventid;
+                            org.SavedDate = DateTime.Now;
 
 
 
 
-
-                            db.Promo_Code.Add(org);
+                   
                             try
                             {
                                 int i = db.SaveChanges();
@@ -1344,61 +1438,220 @@ namespace EventCombo.Controllers
                                 msg = "N";
                             }
                         }
-
-
-
-                        }
+                    }
                     else
                     {
-                        return RedirectToAction("CreatePromotionalCodes", "ManageEvent", new { Eventid = model.PC_Eventid });
+                        containsspecial++;
+                        Invalidrepeatcode = model.PC_Code;
+
                     }
                 }
                 else
                 {
 
 
-
-
-                    Promo_Code org = new Promo_Code();
-                    org.PC_Eventid = model.PC_Eventid;
-                    org.PC_Type = model.PC_Type;
-                    org.PC_Code = model.PC_Code;
-                    if (org.Discount_Type == "A")
+                    if (!string.IsNullOrWhiteSpace(model.PC_Code))
                     {
-                        org.PC_Amount = model.PC_Amount;
+                        if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9,@-_,]*$"))
+                        {
+                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() select v).Any();
+                            if (ifany)
+                            {
+                                Invalidrepeatcode += model.PC_Code;
+                            }
+                            else
+                             {
+                                Promo_Code org = new Promo_Code();
+                                org.PC_Eventid = model.PC_Eventid;
+                                org.PC_Type = model.PC_Type;
+                                org.PC_Code = model.PC_Code;
+                                if (org.Discount_Type == "A")
+                                {
+                                    org.PC_Amount = model.PC_Amount;
+                                }
+                                else
+                                {
+                                    org.PC_Percentage = model.PC_Amount;
+
+                                }
+
+
+                                org.PC_Uses = model.PC_Uses;
+                                org.PC_Start = model.PC_Start;
+                                org.PC_End = model.PC_End;
+                                org.PC_Apply = model.PC_Apply;
+                                org.PC_Eventid = model.PC_Eventid;
+
+                                org.SavedDate = DateTime.Now;
+
+
+
+                                db.Promo_Code.Add(org);
+                                try
+                                {
+                                    int i = db.SaveChanges();
+                                    msg = "S";
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    msg = "N";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Invalidrepeatcode += model.PC_Code;
+                            containsspecial++;
+                        }
                     }
                     else
                     {
-                        org.PC_Percentage = model.PC_Amount;
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            var fileName = Path.GetFileName(file.FileName);
+                            string ext = System.IO.Path.GetExtension(file.FileName);
+                            string[] allowedExtenstions = new string[] { ".txt", ".csv" };
+                            if (allowedExtenstions.Contains(ext))
+                            {
+                                StreamReader csvreader = new StreamReader(file.InputStream);
+                                while (!csvreader.EndOfStream)
+                                {
+                                    var line = csvreader.ReadLine();
+                                    if (line.Contains(','))
+                                    {
+                                        var innerlines = line.Split(',');
+                                        foreach (var item in innerlines)
+                                        {
+                                            if (Regex.IsMatch(line.ToString(), "^[-_,@A-Za-z0-9]$"))
+                                            {
+                                                var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == line.Trim().ToLower() select v).Any();
+                                                if (ifany)
+                                                {
+                                                    Invalidrepeatcode += model.PC_Code;
+                                                }
+                                                else
+                                                {
+                                                    Promo_Code org = new Promo_Code();
+                                                    org.PC_Eventid = model.PC_Eventid;
+                                                    org.PC_Type = model.PC_Type;
+                                                    org.PC_Code = item;
+                                                    if (org.Discount_Type == "A")
+                                                    {
+                                                        org.PC_Amount = model.PC_Amount;
+                                                    }
+                                                    else
+                                                    {
+                                                        org.PC_Percentage = model.PC_Amount;
 
-                    }
+                                                    }
 
 
-                    org.PC_Uses = model.PC_Uses;
-                    org.PC_Start = model.PC_Start;
-                    org.PC_End = model.PC_End;
-                    org.PC_Apply = model.PC_Apply;
-                    org.PC_Eventid = model.PC_Eventid;
+                                                    org.PC_Uses = model.PC_Uses;
+                                                    org.PC_Start = model.PC_Start;
+                                                    org.PC_End = model.PC_End;
+                                                    org.PC_Apply = model.PC_Apply;
+                                                    org.PC_Eventid = model.PC_Eventid;
+                                                    org.SavedDate = DateTime.Now;
 
 
 
 
+                                                    db.Promo_Code.Add(org);
+                                                    try
+                                                    {
+                                                        int i = db.SaveChanges();
+                                                        msg = "S";
 
-                    db.Promo_Code.Add(org);
-                    try
-                    {
-                        int i = db.SaveChanges();
-                        msg = "S";
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        msg = "N";
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Invalidrepeatcode += model.PC_Code;
+                                                containsspecial++;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Regex.IsMatch(line.ToString(), "^[-_,@A-Za-z0-9]$"))
+                                        {
+                                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == line.Trim().ToLower() select v).Any();
+                                            if (ifany)
+                                            {
+                                                Invalidrepeatcode += model.PC_Code;
+                                            }
+                                            else
+                                            {
+                                                Promo_Code org = new Promo_Code();
+                                                org.PC_Eventid = model.PC_Eventid;
+                                                org.PC_Type = model.PC_Type;
+                                                org.PC_Code = line;
+                                                if (org.Discount_Type == "A")
+                                                {
+                                                    org.PC_Amount = model.PC_Amount;
+                                                }
+                                                else
+                                                {
+                                                    org.PC_Percentage = model.PC_Amount;
 
-                    }
-                    catch (Exception ex)
-                    {
-                        msg = "N";
+                                                }
+
+
+                                                org.PC_Uses = model.PC_Uses;
+                                                org.PC_Start = model.PC_Start;
+                                                org.PC_End = model.PC_End;
+                                                org.PC_Apply = model.PC_Apply;
+                                                org.PC_Eventid = model.PC_Eventid;
+
+
+                                                org.SavedDate = DateTime.Now;
+
+
+                                                db.Promo_Code.Add(org);
+                                                try
+                                                {
+                                                    int i = db.SaveChanges();
+                                                    msg = "S";
+
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    msg = "N";
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Invalidrepeatcode += model.PC_Code;
+                                            containsspecial++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
 
-            return RedirectToAction("CreatePromotionalCodes", "ManageEvent", new { Eventid = model.PC_Eventid });
+            if (!string.IsNullOrWhiteSpace(Invalidrepeatcode))
+            {
+
+                return RedirectToAction("CreatePromotionalCodes", "ManageEvent", new { Eventid = model.PC_Eventid });
+            }
+            else
+            {
+                return RedirectToAction("PromotionalCodes", "ManageEvent", new { Eventid = model.PC_Eventid });
+
+
+            }
+
+
 
         }
 
@@ -1446,6 +1699,32 @@ namespace EventCombo.Controllers
                 return "o";
 
             }
+        }
+
+        public string DeletePromocode(long promocode)
+        {
+            try
+            {
+
+
+
+              
+                Promo_Code prof = db.Promo_Code.Where(i => i.PC_id == promocode).FirstOrDefault();
+                db.Promo_Code.Remove(prof);
+                db.SaveChanges();
+
+               
+
+
+                return "D";
+
+            }
+            catch (Exception ex)
+            {
+                return "E";
+
+            }
+
         }
 
     }
