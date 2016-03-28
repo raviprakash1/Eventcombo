@@ -715,17 +715,24 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
-                            long? lMin; long? lMax;
-                            lMin = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == lEventId select evt.PE_Id).Min();
-                            lMax = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == lEventId select evt.PE_Id).Max();
+                            long lCont = 0;
+                            lCont = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == lEventId select evt.PE_Id).Count();
+                            long? lMin =0; long? lMax=0;
+                            if (lCont > 0)
+                            {
+                                lMin = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == lEventId select evt.PE_Id).Min();
+                                lMax = (from evt in db.Publish_Event_Detail where evt.PE_Event_Id == lEventId select evt.PE_Id).Max();
+                            }
+                            
+                            
                             string strTiming = "";
-                            if (lMin != null)
+                            if (lMin != null && lMin > 0)
                             {
                                 var vMin = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMin select evt).FirstOrDefault();
                                 strTiming = vMin.PE_Scheduled_Date + " " + vMin.PE_Start_Time;
                                 objDisEv.EventDate = (vMin.PE_Scheduled_Date != null ? Convert.ToDateTime(vMin.PE_Scheduled_Date) : DateTime.Now);
                             }
-                            if (lMax != null)
+                            if (lMax != null && lMax > 0)
                             {
                                 var vMax = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMax select evt).FirstOrDefault();
                                 strTiming = strTiming + " - " + vMax.PE_Scheduled_Date + " " + vMax.PE_End_Time;
