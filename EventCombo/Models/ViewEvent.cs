@@ -128,6 +128,7 @@ namespace EventCombo.Models
         public int discountcode { get; set; }
         public string Formtype { get; set; }
         public string Amounttype { get; set; }
+        public int ticketype { get; set; }
 
     
     }

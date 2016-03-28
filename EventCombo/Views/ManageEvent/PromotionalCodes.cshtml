@@ -236,6 +236,36 @@
 
     </div>
 </div>
+
+<div class="col-sm-12 col-xs-12 text-center">
+    <nav>
+        <ul class="pagination desc_pagination">
+            <li>
+                <a href="javascript:void(0)">
+                    <span><i class="fa fa-angle-left"></i> </span>
+                </a>
+            </li>
+            @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
+            {
+                <li><a href="javascript:void(0)" onclick="NextPage(@i);">@i</a></li>
+            }
+
+            @*<li><a href="javascript:void(0)" onclick="NextPage(1);">1</a></li>
+                <li><a href="javascript:void(0)" onclick="NextPage(2);">2</a></li>
+                <li><a href="javascript:void(0)" onclick="NextPage(3);">3</a></li>
+                <li><a href="javascript:void(0)" onclick="NextPage(4);">4</a></li>
+                <li><a href="javascript:void(0)" onclick="NextPage(5);">5</a></li>*@
+            <li>
+                <a href="javascript:void(0)">
+                    <span><i class="fa fa-angle-right"></i> </span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="col-sm-12 pagination_desc">
+        @*1 - 12 of 95 Mumbai Events*@
+    </div>
+</div>
 <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
         <div class="modal-content">
