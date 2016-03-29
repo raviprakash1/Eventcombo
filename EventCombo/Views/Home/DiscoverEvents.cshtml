@@ -54,21 +54,28 @@
                                 {<span id="spDate">This Month</span>}
                                 else
                                 {<span id="spDate">@TempData["tDateFilter"].ToString()</span>}
-                                
+
                                 <i class="glyphicon  glyphicon-triangle-bottom"></i>
                             </div>
                             <ul class="submenu submenu_side" style="display:none;">
-                                @if (@TempData["tDateFilter"].ToString().ToLower() != "today") {<li><a href="javascript:void(0);" onclick="DateFilters('today');">Today</a></li>}
+                                @if (@TempData["tDateFilter"].ToString().ToLower() != "today")
+                                {
+                                    <li><a href="javascript:void(0);" onclick="DateFilters('today');">Today</a></li>}
                                 @if (@TempData["tDateFilter"].ToString().ToLower() != "tommarow")
-                                {<li><a href="javascript:void(0);" onclick="DateFilters('tommarow');">Tomorrow</a></li>}
+                                {
+                                    <li><a href="javascript:void(0);" onclick="DateFilters('tommarow');">Tomorrow</a></li>}
                                 @if (@TempData["tDateFilter"].ToString().ToLower() != "thisweek")
-                                {<li><a href="javascript:void(0);" onclick="DateFilters('thisweek');">This Week</a></li>}
+                                {
+                                    <li><a href="javascript:void(0);" onclick="DateFilters('thisweek');">This Week</a></li>}
                                 @if (@TempData["tDateFilter"].ToString().ToLower() != "thisweekend")
-                                {<li><a href="javascript:void(0);" onclick="DateFilters('thisweekend');">This Weekend</a></li>}
+                                {
+                                    <li><a href="javascript:void(0);" onclick="DateFilters('thisweekend');">This Weekend</a></li>}
                                 @if (@TempData["tDateFilter"].ToString().ToLower() != "nextweek")
-                                {<li><a href="javascript:void(0);" onclick="DateFilters('nextweek');">Next Week</a></li>}
+                                {
+                                    <li><a href="javascript:void(0);" onclick="DateFilters('nextweek');">Next Week</a></li>}
                                 @if (@TempData["tDateFilter"].ToString().ToLower() != "thismonth")
-                                {<li><a href="javascript:void(0);" onclick="DateFilters('thismonth');">This Month</a></li>}
+                                {
+                                    <li><a href="javascript:void(0);" onclick="DateFilters('thismonth');">This Month</a></li>}
                                 <li>
                                     <a href="#" class="CustDateMain">Custom Date</a>
                                     <div class="clearfix"></div>
@@ -116,7 +123,7 @@
                                         <button class="btn btn-lg fiter_btn_pop_sub " onclick="DateFiltersCustom();" type="submit">Search</button>
                                     </div>
                                 </li>
-                                
+
                             </ul>
                         </li>
                     }
@@ -307,80 +314,86 @@
         </div>
     </div>
     <div class="col-sm-9 col-xs-12 ot_main_pad">
+
         <div class="col-sm-12 no_pad">
-            @foreach (var item in (PagedList.IPagedList<EventCombo.Models.DiscoverEvent>)ViewBag.DisEvnt)
-            {
-                <div class="col-md-4 col-xs-12 col-sm-6 ot_pad ">
-                    <div class="col-sm-12 col-xs-12 in_shadw no_pad">
-                        <div class="col-sm-12 col-xs-12 in_pad">
-                            <div class="col-sm-4 no_pad">
-                                <div class="dis_evnt_img"><img src="@item.EventImage" alt=""></div>
-                                @*<div class="col-sm-12 no_pad text-center desc_list_event_type desc_list_event_type_dollar">@item.PriceLable</div>*@
+            @{  int iCnt = 0;
+                foreach (var item in (PagedList.IPagedList<EventCombo.Models.DiscoverEvent>)ViewBag.DisEvnt)
+                {
+                    iCnt = 1;
+                    <div class="col-md-4 col-xs-12 col-sm-6 ot_pad ">
+                        <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+                            <div class="col-sm-12 col-xs-12 in_pad">
+                                <div class="col-sm-4 no_pad">
+                                    <div class="dis_evnt_img"><img src="@item.EventImage" alt=""></div>
+                                    @*<div class="col-sm-12 no_pad text-center desc_list_event_type desc_list_event_type_dollar">@item.PriceLable</div>*@
 
-                            </div>
-                            <div class="col-sm-8 no_pad">
-                                <h1 class="list_event_desc_title xs-title-height"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString()})'>@item.EventTitle</a></h1>
-                                <p class="list_event_desc xs-address-height">
-                                    @item.EventAddress
+                                </div>
+                                <div class="col-sm-8 no_pad">
+                                    <h1 class="list_event_desc_title xs-title-height"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })'>@item.EventTitle</a></h1>
+                                    <p class="list_event_desc xs-address-height">
+                                        @item.EventAddress
 
-                                </p>
-                                @*<p class="list_event_date_time">@item.EventTimings </p>*@
+                                    </p>
+                                    @*<p class="list_event_date_time">@item.EventTimings </p>*@
 
-                            </div>
-                            <div class="col-sm-12 col-xs-12 no_pad">
-                                @if (@item.PriceLable.ToLower().Trim() == "free")
-                                {
-                                    <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type">
-                                        @item.PriceLable
+                                </div>
+                                <div class="col-sm-12 col-xs-12 no_pad">
+                                    @if (@item.PriceLable.ToLower().Trim() == "free")
+                                    {
+                                        <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type">
+                                            @item.PriceLable
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type_disable">
+                                            @item.PriceLable
+                                        </div>
+                                    }
+                                    <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
+                                        @item.EventTimings
                                     </div>
-
-                                }
-                                else
-                                {
-                                    <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type_disable">
-                                        @item.PriceLable
-                                    </div>
-                                }
-                                <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
-                                    @item.EventTimings
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                                <div class="col-sm-9 col-xs-9 no_pad  xs-event-type-height">
+                                    <ul class="nav nav-pills list_inner_cat_tag ">
+                                        <li><a href="javascript:void(0);" onclick="FilterEventType(@item.EventTypeId);">#@item.EventType </a></li>
+                                        <li><a href="javascript:void(0);" onclick="FilterEventCategory(@item.EventCatId);">#@item.EventCat </a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-3 col-xs-3 no_pad text-right ">
+                                    @*<button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
+                                            <i class="fa fa-share-alt"></i>
+                                        </button>*@
+                                    <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
+                                        <i class="fa fa-share-alt"></i>
+                                    </button>
+                                    @if (@item.EventLike == "I")
+                                    {
+                                        <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
+                                            <i class="fa fa-heart"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
+                                            <i class="fa fa-heart"></i>
+                                        </button>
+                                    }
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
-                            <div class="col-sm-9 col-xs-9 no_pad  xs-event-type-height">
-                                <ul class="nav nav-pills list_inner_cat_tag ">
-                                    <li><a href="javascript:void(0);" onclick="FilterEventType(@item.EventTypeId);">#@item.EventType </a></li>
-                                    <li><a href="javascript:void(0);" onclick="FilterEventCategory(@item.EventCatId);">#@item.EventCat </a></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-3 col-xs-3 no_pad text-right ">
-                                @*<button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
-                                        <i class="fa fa-share-alt"></i>
-                                    </button>*@
-                                <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString()})');" type="button" data-toggle="modal" data-target="#sharemodal">
-                                    <i class="fa fa-share-alt"></i>
-                                </button>
-                                @if (@item.EventLike == "I")
-                                {
-                                    <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
-                                        <i class="fa fa-heart"></i>
-                                    </button>
-                                }
-                                else
-                                {
-                                    <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
-                                        <i class="fa fa-heart"></i>
-                                    </button>
-                                }
-                            </div>
-                        </div>
+
                     </div>
-                   
-                </div>
-               
+
+                }
+                if (iCnt == 0) { <span>No Information Found</span> }
             }
 
         </div>
+
         <div class="col-sm-12 col-xs-12 text-center">
             <nav>
                 <ul class="pagination desc_pagination">
@@ -586,7 +599,7 @@
         vUrl = vUrl.replace("long", vlng);
         vUrl = vUrl.replace("rel", vSort);
         vUrl = vUrl.replace("none", vDateFilter);
-        if (vIndex >1)
+        if (vIndex > 1)
             vUrl = vUrl.replace("page", vIndex);
 
 
@@ -709,11 +722,18 @@
             $("#hdEventType").val(vEvTypeId);
         }
         else {
-            vIds = $("#hdEventType").val();
-            // alert(vIds.indexOf(vEvTypeId));
-            if (vIds.indexOf(vEvTypeId) < 0) {
-                vIds = vIds.concat(",", vEvTypeId);
-                $("#hdEventType").val(vIds);
+            var vValues = $("#hdEventType").val();
+            vIds = vValues.split(',');
+            var vflag = false;
+            for (i = 0; i < vIds.length; i++) {
+                if (vIds[i] == vEvTypeId) {
+                    vflag = true;
+                    break;
+                }
+            }
+            if (vflag == false) {
+                vValues = vValues.concat(",", vEvTypeId);
+                $("#hdEventType").val(vValues);
             }
         }
         var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
@@ -740,10 +760,21 @@
             $("#hdEventCat").val(vEvCatId);
         }
         else {
-            vIds = $("#hdEventCat").val();
-            if (vIds.indexOf(vEvCatId) < 0) {
-                vIds = vIds.concat(",", vEvCatId);
-                $("#hdEventCat").val(vIds);
+            var vValues = $("#hdEventCat").val();
+            vIds = vValues.split(',');
+            
+            var vflag =false;
+            for (i = 0; i < vIds.length; i++)
+            {
+                if (vIds[i] == vEvCatId)
+                {
+                    vflag = true;
+                    break;
+                }
+            }
+            if (vflag == false ) {
+                vValues = vValues.concat(",", vEvCatId);
+                $("#hdEventCat").val(vValues);
             }
         }
 
