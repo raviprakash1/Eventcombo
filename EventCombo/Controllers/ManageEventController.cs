@@ -1296,10 +1296,10 @@ namespace EventCombo.Controllers
                               select new Promocode
                               {
                                   code = x.PC_Code,
-                                  Amount = (x.PC_Amount!=null && x.PC_Percentage!=null)? x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%":"-",
+                                  Amount = (x.PC_Amount!=null || x.PC_Percentage!=null)? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%"):"-",
                                   Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
                                   End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
-                                  Limit = x.PC_Uses != null ? x.PC_Uses : "Unlimited",
+                                  Limit = x.PC_Uses != null ? x.PC_Uses.ToString() : "No Limit",
                                   PCID = x.PC_id,
 
 
@@ -1315,10 +1315,10 @@ namespace EventCombo.Controllers
                               select new Promocode
                               {
                                   code = x.PC_Code,
-                                  Amount = (x.PC_Amount != null && x.PC_Percentage != null) ? x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%" : "-",
+                                  Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
                                   Start = (x.PC_Startdatetype!=null && x.PC_Startdatetype=="1")?x.PC_Start+" before event" :SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
                                   End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" :x.PC_End,
-                                  Limit = x.PC_Uses != null ? x.PC_Uses : "Unlimited",
+                                  Limit = x.PC_Uses != null ? x.PC_Uses : "No Limit",
                                   PCID = x.PC_id
 
 
@@ -1351,6 +1351,7 @@ namespace EventCombo.Controllers
             {
                 Promo_Code pm = new Promo_Code();
                 var ttype = 0;
+                DateTime end_date = new DateTime();
                 CreateEventController cms = new CreateEventController();
                 string startdate = "", enddate = "";
                 var Eventdetail = cms.GetEventdetail(Eventid);
@@ -1384,19 +1385,30 @@ namespace EventCombo.Controllers
                     if (singleevnt)
                     {
                         var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
-
+                        end_date = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime);
                         pm.PC_End = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime).ToString("MM-dd-yyyy hh:mm:ss tt");
                     }
                     else
                     {
                         var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
+                        end_date = DateTime.Parse(y.StartingFrom + " " + y.StartTime);
                         pm.PC_End = DateTime.Parse(y.StartingFrom + " " + y.StartTime).ToString("MM-dd-yyyy hh:mm:ss tt");
                     }
                     pm.PC_id = 0;
                     pm.PC_URL = baseurl + urldb + "?discount=Example";
                     pm.Pc_Enddatetype = "0";
                     pm.PC_Startdatetype = "0";
-                    pm.startdays = "0 Days 0 Hrs 0 Min";
+                    if (end_date < DateTime.Now)
+                    {
+                        pm.startdays = "0 Days 0 Hrs 0 Min";
+                       
+                    }
+                    else
+                    {
+                        TimeSpan span = (end_date - DateTime.Now);
+                        pm.startdays = span.Days.ToString()+" Days " + span.Hours.ToString()+" Hrs "+ span.Minutes.ToString()+" Min";
+                       
+                    }
                     pm.enddays = "0 Days 0 Hrs 0 Min";
                 }
                 else
