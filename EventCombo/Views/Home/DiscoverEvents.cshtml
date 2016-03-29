@@ -391,7 +391,7 @@
                     </li>
                     @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
                     {
-                        <li><a href="javascript:void(0)" onclick="NextPage(@i);">@i</a></li>
+                        <li><a href="javascript:void(0)" id="aPageLink-@i" onclick="NextPage(@i);">@i</a></li>
                     }
 
                     @*<li><a href="javascript:void(0)" onclick="NextPage(1);">1</a></li>
@@ -419,6 +419,7 @@
     <input type="hidden" id="hdlng" value="@TempData["tLng"]" />
     <input type="hidden" id="hdSort" value="@TempData["tSort"]" />
     <input type="hidden" id="hdDateFilter" value="@TempData["tDateFilter"]" />
+    <input type="hidden" id="hdPageIndex" value="@TempData["PageIndex"]" />
 
 </div>
 
@@ -585,6 +586,9 @@
         vUrl = vUrl.replace("long", vlng);
         vUrl = vUrl.replace("rel", vSort);
         vUrl = vUrl.replace("none", vDateFilter);
+        if (vIndex >1)
+            vUrl = vUrl.replace("page", vIndex);
+
 
         window.location.href = vUrl;
     }
@@ -823,6 +827,9 @@
 
     $(document).ready(function () {
 
+        var vPageIndex = $("#hdPageIndex").val();
+        $("#aPageLink-" + vPageIndex).addClass("active");
+
         var vLat = '@TempData["NearLat"]';
         var vLong = '@TempData["NearLong"]';
         if (vLat != null && vLat != '') var lat = vLat;
@@ -832,7 +839,10 @@
         geocoder.geocode({ 'latLng': latlng }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
-                    $("#spEventAddress").text("Events " + results[1].formatted_address);
+                    vAry = results[1].formatted_address.split(',');
+                    var vResult = vAry[vAry.length - 2] + " - " + vAry[vAry.length - 1];
+                    //alert(vResult);
+                    $("#spEventAddress").text("Events " + vResult);
                 }
             }
         });

@@ -1299,7 +1299,7 @@ span.evnt_toltip{
 
 .pagination.desc_pagination{ margin-top: 10px; margin-bottom:0px;  }
 .pagination.desc_pagination > li > a, .pagination.desc_pagination > li > span{ border:0px; font-size: 16px; color: #000; margin-left: 0px; }
-.pagination.desc_pagination > li > a:hover, .pagination.desc_pagination > li > span:hover, .pagination.desc_pagination > li > a:focus, .pagination.desc_pagination > li > span:focus{ border-radius: 50%; color: #fff; background:#3cf; }
+.pagination.desc_pagination > li > a:hover,.pagination.desc_pagination > li > a.active, .pagination.desc_pagination > li > span:hover, .pagination.desc_pagination > li > a:focus, .pagination.desc_pagination > li > span:focus{ border-radius: 50%; color: #fff; background:#3cf; }
 .pagination_desc{ font-size: 15px; color: #000; }
 
 
