@@ -36,4 +36,8 @@ namespace CMS.Models
         public string value { get; set; }
         public string Apply { get; set; }
     }
+    public  partial class Payment_Info
+    {
+        public string Country { get; set; }
+    }
 }

@@ -304,6 +304,28 @@
         });
 
     });
+    function NextPage(vIndex) {
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+
+        var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "evc");
+        var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "evt");
+        var vPrice = ($("#hdPrice").val() != '' ? $("#hdPrice").val() : "ALL");
+        var vLat = ($("#hdlat").val() != '' ? $("#hdlat").val() : "lat");
+        var vlng = ($("#hdlng").val() != '' ? $("#hdlng").val() : "long");
+        var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
+        var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
+
+
+        vUrl = vUrl.replace("all", vPrice);
+        vUrl = vUrl.replace("evc", vECat);
+        vUrl = vUrl.replace("evt", vEtype);
+        vUrl = vUrl.replace("lat", vLat);
+        vUrl = vUrl.replace("long", vlng);
+        vUrl = vUrl.replace("rel", vSort);
+        vUrl = vUrl.replace("none", vDateFilter);
+
+        window.location.href = vUrl;
+    }
     function ajaxsetup(strname, strFormTag) {
         var msgnew = "";
 

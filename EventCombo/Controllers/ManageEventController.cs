@@ -1273,7 +1273,7 @@ namespace EventCombo.Controllers
 
         }
 
-        public ActionResult PromotionalCodes(long Eventid,string searchquery="")
+        public ActionResult PromotionalCodes(long Eventid, string strPageIndex="page",string searchquery="")
         {
             if (Session["AppId"] != null)
             {
@@ -1281,6 +1281,8 @@ namespace EventCombo.Controllers
                 sc.Eventid = Eventid;
                 int pageSize = 20;
                 int pageIndex = 1;
+                if (strPageIndex != null && strPageIndex != string.Empty && strPageIndex != "page")
+                    pageIndex = Convert.ToInt32(strPageIndex);
                 CreateEventController cms = new CreateEventController();
                 var Eventdetail = cms.GetEventdetail(Eventid);
                 var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == Eventid select x).Count();
@@ -1322,6 +1324,14 @@ namespace EventCombo.Controllers
                               }).ToList();
                     sc.Promocode = ls.ToPagedList(pageIndex, pageSize).ToList();
                 }
+
+
+                double dPageCount = sc.Promocode.Count;
+                double dTotalPages = dPageCount / pageSize;
+                int lTotalPages = (sc.Promocode.Count / pageSize);
+                if (dTotalPages.ToString().Contains(".") == true)
+                    lTotalPages = lTotalPages + 1;
+                TempData["TotalPages"] = lTotalPages;
                 sc.searchquery = searchquery;
                 sc.discountcode = Discountcode;
 
@@ -1432,13 +1442,16 @@ namespace EventCombo.Controllers
                         var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id!=model.PC_id select v).Any();
                         if (ifany)
                         {
-                            if(Invalidrepeatcode=="")
+                            if (!string.IsNullOrEmpty(model.PC_Code))
                             {
-                                Invalidrepeatcode += model.PC_Code;
-                            }
-                            else
-                            {
-                                Invalidrepeatcode +="," +model.PC_Code;
+                                if (Invalidrepeatcode == "")
+                                {
+                                    Invalidrepeatcode += model.PC_Code;
+                                }
+                                else
+                                {
+                                    Invalidrepeatcode += "," + model.PC_Code;
+                                }
                             }
                             
                         }
@@ -1485,13 +1498,16 @@ namespace EventCombo.Controllers
                     else
                     {
                         containsspecial++;
-                        if (Invalidrepeatcode == "")
+                        if (!string.IsNullOrEmpty(model.PC_Code))
                         {
-                            Invalidrepeatcode += model.PC_Code;
-                        }
-                        else
-                        {
-                            Invalidrepeatcode += "," + model.PC_Code;
+                            if (Invalidrepeatcode == "")
+                            {
+                                Invalidrepeatcode += model.PC_Code;
+                            }
+                            else
+                            {
+                                Invalidrepeatcode += "," + model.PC_Code;
+                            }
                         }
 
                     }
@@ -1636,13 +1652,16 @@ namespace EventCombo.Controllers
                                             }
                                             else
                                             {
-                                                if (Invalidrepeatcode == "")
+                                                if (!string.IsNullOrEmpty(item))
                                                 {
-                                                    Invalidrepeatcode += item.Trim();
-                                                }
-                                                else
-                                                {
-                                                    Invalidrepeatcode += "," + item.Trim();
+                                                    if (Invalidrepeatcode == "")
+                                                    {
+                                                        Invalidrepeatcode += item.Trim();
+                                                    }
+                                                    else
+                                                    {
+                                                        Invalidrepeatcode += "," + item.Trim();
+                                                    }
                                                 }
                                            
                                                 containsspecial++;
@@ -1656,13 +1675,16 @@ namespace EventCombo.Controllers
                                             var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == line.Trim().ToLower() select v).Any();
                                             if (ifany)
                                             {
-                                                if (Invalidrepeatcode == "")
+                                                if (!string.IsNullOrEmpty(line))
                                                 {
-                                                    Invalidrepeatcode += line.Trim();
-                                                }
-                                                else
-                                                {
-                                                    Invalidrepeatcode += "," + line.Trim();
+                                                    if (Invalidrepeatcode == "")
+                                                    {
+                                                        Invalidrepeatcode += line.Trim();
+                                                    }
+                                                    else
+                                                    {
+                                                        Invalidrepeatcode += "," + line.Trim();
+                                                    }
                                                 }
                                                 
                                             }
@@ -1708,13 +1730,16 @@ namespace EventCombo.Controllers
                                         }
                                         else
                                         {
-                                            if (Invalidrepeatcode == "")
+                                            if (!string.IsNullOrEmpty(line))
                                             {
-                                                Invalidrepeatcode += line.Trim();
-                                            }
-                                            else
-                                            {
-                                                Invalidrepeatcode += "," + line.Trim();
+                                                if (Invalidrepeatcode == "")
+                                                {
+                                                    Invalidrepeatcode += line.Trim();
+                                                }
+                                                else
+                                                {
+                                                    Invalidrepeatcode += "," + line.Trim();
+                                                }
                                             }
                                             containsspecial++;
                                         }

@@ -420,21 +420,15 @@
             var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
             var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
             var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
-
             window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
-
         });
         $('#fbshare').click(function () {
             var title='@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
             var description='@Html.DisplayFor(m => m.description).ToString().Trim()';
             var url='@Html.DisplayFor(m => m.url).ToString().Trim()';
-
             window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
-
-
-
         });
 
         $('#twittershare').click(function () {

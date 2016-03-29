@@ -906,6 +906,12 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Distance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="lat1" Type="float" Mode="In" />
+          <Parameter Name="long1" Type="float" Mode="In" />
+          <Parameter Name="lat2" Type="float" Mode="In" />
+          <Parameter Name="long2" Type="float" Mode="In" />
+        </Function>
         <Function Name="func_Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DelimitedString" Type="varchar" Mode="In" />
           <Parameter Name="Delimiter" Type="varchar" Mode="In" />
@@ -938,6 +944,12 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
         <Function Name="GetLantLong" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Lat" Type="varchar" Mode="In" />
           <Parameter Name="Long" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetLantLongDistance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lat1" Type="float" Mode="In" />
+          <Parameter Name="long1" Type="float" Mode="In" />
+          <Parameter Name="lat2" Type="float" Mode="In" />
+          <Parameter Name="long2" Type="float" Mode="In" />
         </Function>
         <Function Name="GetOrganizerEventid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Masterid" Type="bigint" Mode="In" />
@@ -2042,6 +2054,12 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Parameter Name="Masterid" Mode="In" Type="Int64" />
           </FunctionImport>
           <EntitySet Name="v_RetrieveEventid" EntityType="EventComboModel.v_RetrieveEventid" />
+          <FunctionImport Name="GetLantLongDistance" ReturnType="Collection(Double)">
+            <Parameter Name="lat1" Mode="In" Type="Double" />
+            <Parameter Name="long1" Mode="In" Type="Double" />
+            <Parameter Name="lat2" Mode="In" Type="Double" />
+            <Parameter Name="long2" Mode="In" Type="Double" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -3055,6 +3073,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetLantLongDistance" FunctionName="EventComboModel.Store.GetLantLongDistance" />
 
         </EntityContainerMapping>
       </Mapping>

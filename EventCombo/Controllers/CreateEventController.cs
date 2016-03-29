@@ -1549,6 +1549,55 @@ namespace EventCombo.Controllers
         }
 
 
+        [HttpPost]
+        public string Discoversavefavourite(string Eventid, string type,string strUrl)
+        {
+            var EventDetail = GetEventdetail(long.Parse(Eventid));
+            if (Session["AppId"] != null)
+            {
+                var url = Request.Url;
+                var baseurl = url.GetLeftPart(UriPartial.Authority);
+                strUrl = strUrl.Replace(baseurl, "");
+                Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    long? lEventid = (Eventid != "" ? Convert.ToInt64(Eventid) : 0);
+                    string strUserId = Session["AppId"].ToString();
+                    var vfav = (from ev in db.EventFavourites where ev.eventId == lEventid && ev.UserID == strUserId select ev.UserID).FirstOrDefault();
+                    if (vfav != null && vfav.Trim() != "")
+                    {
+                        var userid = Session["AppId"].ToString().Trim();
+                        objEnt.Database.ExecuteSqlCommand("Delete from EventFavourite where UserID='" + userid + "' AND eventId=" + Eventid + "");
+                        objEnt.SaveChanges();
+                        return "D";
+                    }
+                    else
+                    {
+                        EventFavourite ObjEC = new EventFavourite();
+                        ObjEC.eventId = long.Parse(Eventid);
+                        ObjEC.UserID = Session["AppId"].ToString();
+                        objEnt.EventFavourites.Add(ObjEC);
+                        objEnt.SaveChanges();
+                        return "I";
+                    }
+                }
+                
+            }
+            else
+            {
+                //string url = strUrl;
+                var url = Request.Url;
+                var baseurl = url.GetLeftPart(UriPartial.Authority);
+                strUrl = strUrl.Replace(baseurl, "");
+
+                Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
+                return "Y";
+
+            }
+        }
+
+
+
         public FileResult Calendar(string beginDate, string endDate, string location, string subject, string description)
         {
             using (var stream = new MemoryStream())

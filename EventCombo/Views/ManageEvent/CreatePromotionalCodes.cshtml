@@ -492,15 +492,7 @@ else
 
             </script>
             <script type="text/javascript">
-                @*$('#fbshare').click(function () {
-
-                    var url = "@Model.PC_URL";
-                    window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, 'facebook-share-dialog', "width=626,height=436")
-                     return false;
-
-
-
-                });*@
+            
                 $('#btnokpop').click(function () {
 
                     window.location.href = '@Url.Action("PromotionalCodes", "ManageEvent", new { })?Eventid='+@Model.PC_Eventid;
@@ -866,16 +858,13 @@ else
                                 return false;
                             }
                         }
-                        if (@Model.ticketype == 1)
+                        var amnt = $('#txt_discountmnt').val();
+                        if (amnt == '')
                         {
-                            var amnt = $('#txt_discountmnt').val();
-                            if (amnt == '')
-                            {
-                                $('#diverro1acc').show();
-                                $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidamount'));
-                                $('html,body').animate({ scrollTop: 0 });
-                                return false;
-                            }
+                            $('#diverro1acc').show();
+                            $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidamount'));
+                            $('html,body').animate({ scrollTop: 0 });
+                            return false;
                         }
                         var length = $('[name=Ticketcheck]:checked').length;
                         if (length == 0)

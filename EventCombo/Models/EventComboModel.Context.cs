@@ -222,5 +222,26 @@ namespace EventCombo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOrganizerEventid_Result>("GetOrganizerEventid", masteridParameter);
         }
+    
+        public virtual ObjectResult<Nullable<double>> GetLantLongDistance(Nullable<double> lat1, Nullable<double> long1, Nullable<double> lat2, Nullable<double> long2)
+        {
+            var lat1Parameter = lat1.HasValue ?
+                new ObjectParameter("lat1", lat1) :
+                new ObjectParameter("lat1", typeof(double));
+    
+            var long1Parameter = long1.HasValue ?
+                new ObjectParameter("long1", long1) :
+                new ObjectParameter("long1", typeof(double));
+    
+            var lat2Parameter = lat2.HasValue ?
+                new ObjectParameter("lat2", lat2) :
+                new ObjectParameter("lat2", typeof(double));
+    
+            var long2Parameter = long2.HasValue ?
+                new ObjectParameter("long2", long2) :
+                new ObjectParameter("long2", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetLantLongDistance", lat1Parameter, long1Parameter, lat2Parameter, long2Parameter);
+        }
     }
 }

@@ -1117,6 +1117,7 @@
     <Content Include="Views\FeeSetting\Index.cshtml" />
     <Content Include="Views\EventCategory\EventCategoryListPartial.cshtml" />
     <Content Include="Views\EventType\EventTypeListPartial.cshtml" />
+    <Content Include="Views\ManageEvent\EventPaymentInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
