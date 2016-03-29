@@ -52,9 +52,9 @@
                 </a>
             </div>
             <div class="panel panel-default menu_list">
-
-                <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                    <div id="dvManage" class="panel-heading">
+                 
+                <a id="crt_promcode" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                    <div id="dvcrtpromcode" class="panel-heading">
                         Invite and Promote <b class="closed"></b>
                     </div>
                 </a>
@@ -259,6 +259,23 @@
 
 <script>
     $(document).ready(function () {
+        $(document).ready(function () {
+            $('#crt_promcode').click();
+            $('#dvcrtpromcode').addClass("active");
+            $('#dvcrtpromcode b').addClass('opened new-opend');
+
+            $('#dvcrtpromcode').click(function (e) {
+
+                var $dvEle = $('#dvcrtpromcode b');
+                var vclassname = $dvEle.attr('class');
+                if ($dvEle.hasClass("new-opend")) {
+                    $dvEle.removeClass('opened new-opend').addClass('closed');
+                }
+                else {
+                    $dvEle.addClass('opened new-opend');
+                }
+            });
+        });
 
         $("#btnYes").click(function () {
             $.ajax({
