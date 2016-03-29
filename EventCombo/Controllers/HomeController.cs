@@ -767,7 +767,7 @@ namespace EventCombo.Controllers
                     try
                     {
                         if (strDateFilter == "today") lsDisEvt = lsDisEvt.Where(m => m.EventDate >= DateTime.Now && m.EventDate.Date == DateTime.Today.Date).ToList();
-                        if (strDateFilter == "tommarow") lsDisEvt = lsDisEvt.Where(m => m.EventDate.Date == DateTime.Today.AddDays(1).Date).ToList();
+                        if (strDateFilter == "tomorrow") lsDisEvt = lsDisEvt.Where(m => m.EventDate.Date == DateTime.Today.AddDays(1).Date).ToList();
                         if (strDateFilter == "thisweek")
                         {
                             int iday = (int)DateTime.Now.DayOfWeek;

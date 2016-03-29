@@ -42,7 +42,7 @@
                                 {<span id="spDate">All Dates</span>}
                                 else if (@TempData["tDateFilter"].ToString().ToLower() == "today")
                                 {<span id="spDate">Today</span>}
-                                else if (@TempData["tDateFilter"].ToString().ToLower() == "tommarow")
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "tomorrow")
                                 {<span id="spDate">Tomorrow</span>}
                                 else if (@TempData["tDateFilter"].ToString().ToLower() == "thisweek")
                                 {<span id="spDate">This Week</span>}
@@ -61,9 +61,9 @@
                                 @if (@TempData["tDateFilter"].ToString().ToLower() != "today")
                                 {
                                     <li><a href="javascript:void(0);" onclick="DateFilters('today');">Today</a></li>}
-                                @if (@TempData["tDateFilter"].ToString().ToLower() != "tommarow")
+                                @if (@TempData["tDateFilter"].ToString().ToLower() != "tomorrow")
                                 {
-                                    <li><a href="javascript:void(0);" onclick="DateFilters('tommarow');">Tomorrow</a></li>}
+                                    <li><a href="javascript:void(0);" onclick="DateFilters('tomorrow');">Tomorrow</a></li>}
                                 @if (@TempData["tDateFilter"].ToString().ToLower() != "thisweek")
                                 {
                                     <li><a href="javascript:void(0);" onclick="DateFilters('thisweek');">This Week</a></li>}
@@ -102,7 +102,7 @@
                             <div class="link">All Dates  <i class="glyphicon  glyphicon-triangle-bottom"></i></div>
                             <ul class="submenu submenu_side" style="display:none;">
                                 <li><a href="javascript:void(0);" onclick="DateFilters('today');">Today</a></li>
-                                <li><a href="javascript:void(0);" onclick="DateFilters('tommarow');">Tomorrow</a></li>
+                                <li><a href="javascript:void(0);" onclick="DateFilters('tomorrow');">Tomorrow</a></li>
                                 <li><a href="javascript:void(0);" onclick="DateFilters('thisweek');">This Week</a></li>
                                 <li><a href="javascript:void(0);" onclick="DateFilters('thisweekend');">This Weekend</a></li>
                                 <li><a href="javascript:void(0);" onclick="DateFilters('nextweek');">Next Week</a></li>
@@ -389,7 +389,12 @@
                     </div>
 
                 }
-                if (iCnt == 0) { <span>No Information Found</span> }
+
+                if (iCnt == 0) {
+                    <div class="col-sm-12 no_pad text-center no_event_found_text">
+                        <span id="spInfo">No Events Found</span>
+                    </div>
+                }
             }
 
         </div>
@@ -397,9 +402,9 @@
         <div class="col-sm-12 col-xs-12 text-center">
             <nav>
                 <ul class="pagination desc_pagination">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <span><i class="fa fa-angle-left"></i> </span>
+                    <li id="lileft">
+                        <a href="javascript:void(0)" onclick="PreviousArrowPage();">
+                            <span><i class="fa fa-angle-left" ></i> </span>
                         </a>
                     </li>
                     @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
@@ -412,9 +417,9 @@
                         <li><a href="javascript:void(0)" onclick="NextPage(3);">3</a></li>
                         <li><a href="javascript:void(0)" onclick="NextPage(4);">4</a></li>
                         <li><a href="javascript:void(0)" onclick="NextPage(5);">5</a></li>*@
-                    <li>
-                        <a href="javascript:void(0)">
-                            <span><i class="fa fa-angle-right"></i> </span>
+                    <li id="liright">
+                        <a href="javascript:void(0)" onclick="NextArrowPage();">
+                            <span><i class="fa fa-angle-right" ></i> </span>
                         </a>
                     </li>
                 </ul>
@@ -476,6 +481,29 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
+    function PreviousArrowPage()
+    {
+        var vPindex = parseFloat($("#hdPageIndex").val());
+        if (isNaN(vPindex) == true) vPindex = 0;
+
+        if (vPindex > 1) { NextPage(vPindex - 1) };
+
+    }
+
+    function NextArrowPage() {
+        debugger;
+        var vPindex = parseFloat($("#hdPageIndex").val());
+        var vTotalPage = parseFloat(@TempData["TotalPages"]);
+        
+        if (isNaN(vTotalPage) == true) vTotalPage = 0;
+        if (isNaN(vPindex) == true) vPindex = 0;
+
+        if (vPindex < vTotalPage) { NextPage(vPindex + 1) };
+
+    }
+
+
+
     function SaveFav(clickfav, eid) {
         var id = "btnfavourite-" + eid;
         var msg = "";
@@ -859,7 +887,21 @@
     $(document).ready(function () {
 
         var vPageIndex = $("#hdPageIndex").val();
+        
         $("#aPageLink-" + vPageIndex).addClass("active");
+        if ($("#spInfo").text().trim() == "No Events Found")
+        {
+            $("#lileft").hide();
+            $("#liright").hide();
+        }
+        else
+        {
+            $("#lileft").show();
+            $("#liright").show();
+        }
+
+        
+
 
         var vLat = '@TempData["NearLat"]';
         var vLong = '@TempData["NearLong"]';

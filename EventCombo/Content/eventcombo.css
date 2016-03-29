@@ -1736,3 +1736,4 @@ transform: rotate(45deg);
 .msg_color{ background: #bdc0c0; }
 .msg_color:hover,.msg_color:focus,.msg_color.focus{ background: #bdc0c0; }
 .sharesocilform{ min-height: 40px; font-size: 16px; }
+.no_event_found_text{ font-size:20px;}
