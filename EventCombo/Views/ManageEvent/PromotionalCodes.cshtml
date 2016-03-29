@@ -1,4 +1,5 @@
 ﻿@model EventCombo.Models.showPromocode
+ @using EventCombo.Models
 @{
     ViewBag.Title = "PromotionalCodes";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
@@ -38,7 +39,7 @@
                 </a>
             </div>
             <div class="panel panel-default menu_list">
-                <a class="menu_title" href="#">
+                <a class="menu_title" href="@Url.Action("Index","Manageevent", new { })?Eventid=@Model.Eventid&type=N">
                     <div class="panel-heading">
                         Event Dashboard
                     </div>
@@ -147,8 +148,9 @@
             font-size: 14px;
         }
 </style>
-@using (Html.BeginForm("PromotionalCodes", "ManageEvent", FormMethod.Post, new { id = "formuser"}))
+@using (Html.BeginForm("PromotionalCodes", "ManageEvent", FormMethod.Post, new { id = "formuser" }))
 {
+    <input type="hidden" id="hdPageIndex" value="@TempData["PageIndex"]" />
 
 <div class="col-sm-12 no_pad">
     <h3 class="acnt_title">Manage Discount Code</h3>
@@ -198,7 +200,7 @@
 
         </div>
 
-        @foreach (var item in Model.Promocode)
+        @foreach (var item in (PagedList.IPagedList<Promocode>) Model.Promocode)
         {
         <div class="discTableRow">
             <div class="discmidtablecell">
@@ -236,6 +238,36 @@
 
     </div>
 </div>
+
+   if (Convert.ToInt32(@TempData["TotalPages"]) > 1)
+    {
+<div class="col-sm-12 col-xs-12 text-center">
+    <nav>
+        <ul class="pagination desc_pagination">
+            <li>
+                <a href="javascript:void(0)">
+                    <span><i class="fa fa-angle-left"></i> </span>
+                </a>
+            </li>
+           
+            @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
+            {
+                <li><a href="javascript:void(0)" id="aPageLink-@i" onclick="NextPage(@i);">@i</a></li>
+            }
+          
+
+            <li>
+                <a href="javascript:void(0)">
+                    <span><i class="fa fa-angle-right"></i> </span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="col-sm-12 pagination_desc">
+        
+    </div>
+</div>
+    }
 <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
         <div class="modal-content">
@@ -259,7 +291,9 @@
 
 <script>
     $(document).ready(function () {
-
+        var vPageIndex = $("#hdPageIndex").val();
+        $("#aPageLink-" + vPageIndex).addClass("active");
+      
         $("#btnYes").click(function () {
             $.ajax({
                 url: '@Url.Action("DeletePromocode","ManageEvent")',
@@ -274,6 +308,18 @@
         });
 
     });
+    function NextPage(vIndex) {
+      
+      
+        var vUrl = '@Url.Action("PromotionalCodes", "ManageEvent", new {  })?Eventid='+@Model.Eventid+'&strPageIndex=page';
+
+        if (vIndex > 1)
+            vUrl = vUrl.replace("page", vIndex);
+
+     
+
+        window.location.href = vUrl;
+    }
     function ajaxsetup(strname, strFormTag) {
         var msgnew = "";
 

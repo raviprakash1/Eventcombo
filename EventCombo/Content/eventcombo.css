@@ -1736,3 +1736,12 @@ transform: rotate(45deg);
 .msg_color{ background: #bdc0c0; }
 .msg_color:hover,.msg_color:focus,.msg_color.focus{ background: #bdc0c0; }
 .sharesocilform{ min-height: 40px; font-size: 16px; }
+
+/*Create Promotional code pop up*/
+
+.duplicate_codes_pop{ min-height: 250px; border-radius:4px; }
+.duplicate_codes_pop h3{ font-size: 1.5em; font-weight: bold; padding-left:10px;}
+.duplicate_codes_pop .modal-header{ border:0px; padding-bottom:0px;}
+.code_pop_desc{ font-size: 1.3em; margin-bottom: 5px;  }
+.code_pop_desc a{ color: #3cf; text-decoration: none; }
+.code_charc{font-size: 1em; min-height: 30px; max-height: 75px; overflow: auto; }
