@@ -1283,62 +1283,63 @@ namespace EventCombo.Controllers
                 int pageIndex = 1;
                 if (strPageIndex != null && strPageIndex != string.Empty && strPageIndex != "page")
                     pageIndex = Convert.ToInt32(strPageIndex);
+                List<Promocode> ls = new List<Promocode>();
                 CreateEventController cms = new CreateEventController();
                 var Eventdetail = cms.GetEventdetail(Eventid);
                 var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == Eventid select x).Count();
                 sc.Eventtitle = Eventdetail.EventTitle;
                 if (!string.IsNullOrWhiteSpace(searchquery))
                 {
-                    var ls = (from x in db.Promo_Code
+                     ls = (from x in db.Promo_Code
                               orderby x.SavedDate descending
                               where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
                               select new Promocode
                               {
                                   code = x.PC_Code,
                                   Amount = (x.PC_Amount!=null && x.PC_Percentage!=null)? x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%":"-",
-                                  Start = SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
-                                  End = x.PC_End,
+                                  Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
+                                  End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
                                   Limit = x.PC_Uses != null ? x.PC_Uses : "Unlimited",
                                   PCID = x.PC_id,
 
 
 
                               }).ToList();
-                    sc.Promocode = ls.ToPagedList(pageIndex, pageSize).ToList();
+                   
                 }
                 else
                 {
-                    var ls = (from x in db.Promo_Code
+                     ls = (from x in db.Promo_Code
                               orderby x.SavedDate descending
                               where x.PC_Eventid == Eventid
                               select new Promocode
                               {
                                   code = x.PC_Code,
                                   Amount = (x.PC_Amount != null && x.PC_Percentage != null) ? x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%" : "-",
-                                  Start = SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
-                                  End = x.PC_End,
+                                  Start = (x.PC_Startdatetype!=null && x.PC_Startdatetype=="1")?x.PC_Start+" before event" :SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
+                                  End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" :x.PC_End,
                                   Limit = x.PC_Uses != null ? x.PC_Uses : "Unlimited",
                                   PCID = x.PC_id
 
 
                               }).ToList();
-                    sc.Promocode = ls.ToPagedList(pageIndex, pageSize).ToList();
+                    
                 }
-
-
-                double dPageCount = sc.Promocode.Count;
+                double dPageCount = ls.Count;
                 double dTotalPages = dPageCount / pageSize;
-                int lTotalPages = (sc.Promocode.Count / pageSize);
+                int lTotalPages = (ls.Count / pageSize);
                 if (dTotalPages.ToString().Contains(".") == true)
                     lTotalPages = lTotalPages + 1;
+                sc.Promocode = ls.ToPagedList(pageIndex, pageSize);
+              
                 TempData["TotalPages"] = lTotalPages;
                 sc.searchquery = searchquery;
                 sc.discountcode = Discountcode;
-
+                TempData["PageIndex"] = (strPageIndex.ToLower() == "page" ? "1" : strPageIndex);
                 return View(sc);
             }
             else
-            {
+            { 
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -1392,6 +1393,10 @@ namespace EventCombo.Controllers
                     }
                     pm.PC_id = 0;
                     pm.PC_URL = baseurl + urldb + "?discount=Example";
+                    pm.Pc_Enddatetype = "0";
+                    pm.PC_Startdatetype = "0";
+                    pm.startdays = "0 Days 0 Hrs 0 Min";
+                    pm.enddays = "0 Days 0 Hrs 0 Min";
                 }
                 else
                 {
@@ -1410,6 +1415,22 @@ namespace EventCombo.Controllers
                     pm.ticketype = ttype;
                     pm.PC_Start = p.PC_Start;
                     pm.PC_End = p.PC_End;
+                    if (p.PC_Startdatetype != null && p.PC_Startdatetype == "1")
+                    {
+                        pm.startdays = p.PC_Start;
+                    }
+                    else
+                    {
+                        pm.startdays = "0 Days 0 Hrs 0 Min";
+                    }
+                    if (p.Pc_Enddatetype != null && p.Pc_Enddatetype == "1")
+                    {
+                        pm.enddays = p.PC_End;
+                    }
+                    else
+                    {
+                        pm.enddays = "0 Days 0 Hrs 0 Min";
+                    }
                     pm.PC_Amount = p.PC_Amount != null ? p.PC_Amount : p.PC_Percentage;
                     pm.Amounttype = p.PC_Amount != null ? "A" : "P";
                     pm.PC_Percentage = p.PC_Percentage;
@@ -1417,6 +1438,8 @@ namespace EventCombo.Controllers
                     pm.PC_Apply = p.PC_Apply;
                    
                     pm.PC_URL = baseurl+ urldb+"?discount="+ p.PC_Code;
+                    pm.PC_Startdatetype = p.PC_Startdatetype != null ? p.PC_Startdatetype : "0";
+                    pm.Pc_Enddatetype = p.Pc_Enddatetype != null ? p.Pc_Enddatetype : "0";
                 }
 
                 return View(pm);
@@ -1473,8 +1496,25 @@ namespace EventCombo.Controllers
 
 
                             org.PC_Uses = model.PC_Uses;
-                            org.PC_Start = model.PC_Start;
-                            org.PC_End = model.PC_End;
+                            org.PC_Startdatetype = model.PC_Startdatetype;
+                            if (model.PC_Startdatetype == "1")
+                            {
+                                org.PC_Start = model.startdays;
+                            }
+                            else
+                            {
+                                org.PC_Start = model.PC_Start;
+                            }
+                            org.Pc_Enddatetype = model.Pc_Enddatetype;
+                            if (model.Pc_Enddatetype == "1")
+                            {
+                                org.PC_End = model.enddays;
+                            }
+                            else
+                            {
+                                org.PC_End = model.PC_End;
+                            }
+                       
                             org.PC_Apply = model.PC_Apply;
                             org.PC_Eventid = model.PC_Eventid;
                             org.SavedDate = DateTime.Now;
@@ -1550,8 +1590,25 @@ namespace EventCombo.Controllers
 
 
                                 org.PC_Uses = model.PC_Uses;
-                                org.PC_Start = model.PC_Start;
-                                org.PC_End = model.PC_End;
+                                org.PC_Startdatetype = model.PC_Startdatetype;
+                                if (model.PC_Startdatetype == "1")
+                                {
+                                    org.PC_Start = model.startdays;
+                                }
+                                else
+                                {
+                                    org.PC_Start = model.PC_Start;
+                                }
+
+                                org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                if (model.Pc_Enddatetype == "1")
+                                {
+                                    org.PC_End = model.enddays;
+                                }
+                                else
+                                {
+                                    org.PC_End = model.PC_End;
+                                }
                                 org.PC_Apply = model.PC_Apply;
                                 org.PC_Eventid = model.PC_Eventid;
 
@@ -1628,8 +1685,24 @@ namespace EventCombo.Controllers
 
 
                                                     org.PC_Uses = model.PC_Uses;
-                                                    org.PC_Start = model.PC_Start;
-                                                    org.PC_End = model.PC_End;
+                                                    org.PC_Startdatetype = model.PC_Startdatetype;
+                                                    if (model.PC_Startdatetype == "1")
+                                                    {
+                                                        org.PC_Start = model.startdays;
+                                                    }
+                                                    else
+                                                    {
+                                                        org.PC_Start = model.PC_Start;
+                                                    }
+                                                    org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                                    if (model.Pc_Enddatetype == "1")
+                                                    {
+                                                        org.PC_End = model.enddays;
+                                                    }
+                                                    else
+                                                    {
+                                                        org.PC_End = model.PC_End;
+                                                    }
                                                     org.PC_Apply = model.PC_Apply;
                                                     org.PC_Eventid = model.PC_Eventid;
                                                     org.SavedDate = DateTime.Now;
@@ -1706,8 +1779,24 @@ namespace EventCombo.Controllers
 
 
                                                 org.PC_Uses = model.PC_Uses;
-                                                org.PC_Start = model.PC_Start;
-                                                org.PC_End = model.PC_End;
+                                                org.PC_Startdatetype = model.PC_Startdatetype;
+                                                if (model.PC_Startdatetype == "1")
+                                                {
+                                                    org.PC_Start = model.startdays;
+                                                }
+                                                else
+                                                {
+                                                    org.PC_Start = model.PC_Start;
+                                                }
+                                                org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                                if (model.Pc_Enddatetype == "1")
+                                                {
+                                                    org.PC_End = model.enddays;
+                                                }
+                                                else
+                                                {
+                                                    org.PC_End = model.PC_End;
+                                                }
                                                 org.PC_Apply = model.PC_Apply;
                                                 org.PC_Eventid = model.PC_Eventid;
 

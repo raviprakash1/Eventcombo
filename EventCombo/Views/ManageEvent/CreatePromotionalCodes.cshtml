@@ -44,7 +44,7 @@
                 </a>
             </div>
             <div class="panel panel-default menu_list">
-                <a class="menu_title" href="#">
+                <a class="menu_title" href="@Url.Action("Index","Manageevent", new { })?Eventid=@Model.PC_Eventid&type=N">
                     <div class="panel-heading">
                         Event Dashboard
                     </div>
@@ -163,6 +163,8 @@
       <input type="hidden" id="hd_eventid" name="PC_Eventid" value="@Model.PC_Eventid" />
         <input type="hidden" name="Formtype" value="@Model.Formtype" />
         <input type="hidden" name="PC_id" value="@Model.PC_id" />
+        <input type="hidden" name="PC_Startdatetype" value="@Model.PC_Startdatetype" id="hd_startdatetype"  />
+        <input type="hidden" name="Pc_Enddatetype" value="@Model.Pc_Enddatetype" id="hd_enddatetype" />
         <input type="hidden" id="hd_pctype" name="PC_Type"  value="C"/>
 @if (Model.Formtype == "S")
 {
@@ -271,8 +273,14 @@ else
                 <div class="col-sm-12 no_pad">
                     <div class="prm_befor_level"> Start</div>
                     <div class="squaredOne">
-
-                        <input type="checkbox" value="None" id="befstrtdevnt" name="check" />
+                        @if (Model.PC_Startdatetype == "1")
+                        {
+                        <input type="checkbox" value="None" id="befstrtdevnt" name="check" checked="checked" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="None" id="befstrtdevnt" name="check"  />
+                        }
                         <label for="befstrtdevnt"></label>
                     </div>
                     <div class="prm_cd_level"> before event</div>
@@ -280,10 +288,29 @@ else
                 <div class="col-sm-12 no_pad">
                     <div class="form-group">
                         <!-- <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" > -->
+                        @if (Model.Formtype == "S")
+                        {
                         <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
-                        <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
-                      
-                     
+                        <input type="text" class="form-control evnt_inp_cont" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" />
+                        }
+                        else
+                        {
+                            if (Model.PC_Startdatetype == "1")
+                            {
+                                <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" style="display:none"/>
+                                <input type="text" class="form-control evnt_inp_cont" id="txtstartdatedays" name="startdays" value="@Model.startdays"  />
+
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
+                                <input type="text" class="form-control evnt_inp_cont" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" />
+
+                            }
+                        }
+
+
+
                     </div>
 
                 </div>
@@ -293,7 +320,14 @@ else
                 <div class="col-sm-12 no_pad">
                     <div class="prm_befor_level"> End</div>
                     <div class="squaredOne">
-                        <input type="checkbox" value="None" id="befendevnt" name="check" />
+                        @if (Model.Pc_Enddatetype == "1")
+                        {
+                        <input type="checkbox" value="None" id="befendevnt" name="check" checked="checked" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="None" id="befendevnt" name="check"  />
+                        }
                         <label for="befendevnt"></label>
                     </div>
                     <div class="prm_cd_level"> before event</div>
@@ -301,10 +335,28 @@ else
                 <div class="col-sm-12 no_pad">
 
                     <div class="form-group">
+@if (Model.Formtype == "S")
+{
                         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
-                        
-                    </div>
+                        <input type="text" class="form-control evnt_inp_cont" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" />
+}
+else
+{
+    if (Model.Pc_Enddatetype == "1")
+    {
+        <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" style="display:none"/>
+        <input type="text" class="form-control evnt_inp_cont" id="txtenddatedays" name="enddays" value="@Model.enddays"  />
 
+    }
+    else
+    {
+        <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
+        <input type="text" class="form-control evnt_inp_cont" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" />
+
+    }
+}
+                    </div>
+                   
                 </div>
             </div>
 
@@ -508,11 +560,39 @@ else
                 });
                 $(document).ready(function () {
 
-                    $('#befstrtdevnt').change(function(){
+                    $('#befendevnt').change(function(){
                     
-                        if ($(this).is(":checked"))
+                        if ($(this).is(":checked")==true)
                         {
+                            $('#hd_enddatetype').val('1');
+                           
+                            $('#txtenddatedays').val("0 Days 0 Hrs 0 Min");
+                            $('#txtenddatedays').css('display','block');
+                            $('#txtenddate').css('display','none');
+                        }else{
+                            $('#hd_enddatetype').val('0');
+                            $('#txtenddatedays').css('display','none');
+                            $('#txtenddate').val('');
+                            $('#txtenddate').css('display','block');
+                        }
+                    
+                    });
 
+                    $('#befstrtdevnt').change(function(){
+                       
+                        if ($(this).is(":checked")==true)
+                        {
+                            $('#hd_startdatetype').val('1');
+                         
+                            $('#txtstartdatedays').css('display','block');
+                            $('#txtstartdatedays').val("0 Days 0 Hrs 0 Min");
+                            $('#txtstartdate').css('display','none');
+                        }else{
+                            
+                            $('#hd_startdatetype').val('0');
+                            $('#txtstartdatedays').css('display','none');
+                            $('#txtstartdate').val('');
+                            $('#txtstartdate').css('display','block');
                         }
                     
                     });
@@ -858,14 +938,18 @@ else
                                 return false;
                             }
                         }
-                        var amnt = $('#txt_discountmnt').val();
-                        if (amnt == '')
+                        if (@Model.ticketype == 1)
                         {
-                            $('#diverro1acc').show();
-                            $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidamount'));
-                            $('html,body').animate({ scrollTop: 0 });
-                            return false;
+                            var amnt = $('#txt_discountmnt').val();
+                            if (amnt == '')
+                            {
+                                $('#diverro1acc').show();
+                                $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidamount'));
+                                $('html,body').animate({ scrollTop: 0 });
+                                return false;
+                            }
                         }
+
                         var length = $('[name=Ticketcheck]:checked').length;
                         if (length == 0)
                         {
@@ -875,15 +959,17 @@ else
                             return false;
                         }
                         if ($('#befstrtdevnt').is(":checked")) {
-
-                        } else {
+                           
+                        } else 
+                        {
                             chkstart = $('#txtstartdate').val();
                         }
                         if ($('#befendevnt').is(":checked")) {
-
+                           
                         } else {
                             chkend = $('#txtenddate').val();
                         }
+                       
                         if (chkstart != '' && chkend!='')
                         {
                             var asd = compare(chkstart, chkend);
