@@ -1363,6 +1363,7 @@ namespace EventCombo.Controllers
                 var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == Eventid select x).Count();
                 pm.discountcode = Discountcode;
                 pm.PC_Eventid = Eventid;
+                var singleevnt = (from x in db.EventVenues where x.EventID == Eventid select x).Any();
                 if (Promocode == 0)
                 {
                     pm.Ticketdata = (from x in db.Tickets where x.E_Id == Eventid select x).ToList();
@@ -1375,7 +1376,7 @@ namespace EventCombo.Controllers
                     }
                     pm.ticketype = ttype;
                     pm.Formtype = "S";
-                    var singleevnt = (from x in db.EventVenues where x.EventID == Eventid select x).Any();
+                   
                     startdate = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt");
 
 
@@ -1413,22 +1414,38 @@ namespace EventCombo.Controllers
                         }
                     }
                     pm.ticketype = ttype;
-                    pm.PC_Start = p.PC_Start;
-                    pm.PC_End = p.PC_End;
+                   
                     if (p.PC_Startdatetype != null && p.PC_Startdatetype == "1")
                     {
                         pm.startdays = p.PC_Start;
+                        pm.PC_Start = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt"); ;
+                       
                     }
                     else
                     {
+                        pm.PC_Start = p.PC_Start;
                         pm.startdays = "0 Days 0 Hrs 0 Min";
                     }
                     if (p.Pc_Enddatetype != null && p.Pc_Enddatetype == "1")
                     {
+
+                        if (singleevnt)
+                        {
+                            var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
+
+                            pm.PC_End = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+                        }
+                        else
+                        {
+                            var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
+                            pm.PC_End = DateTime.Parse(y.StartingFrom + " " + y.StartTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+                        }
                         pm.enddays = p.PC_End;
                     }
                     else
                     {
+
+                        pm.PC_End = p.PC_End;
                         pm.enddays = "0 Days 0 Hrs 0 Min";
                     }
                     pm.PC_Amount = p.PC_Amount != null ? p.PC_Amount : p.PC_Percentage;
