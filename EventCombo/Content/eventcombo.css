@@ -1259,6 +1259,7 @@ span.evnt_toltip{
 }
 
 .mb20{ margin-bottom:20px;}
+.mt20{ margin-top: 20px;}
 
 .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn.active.focus{ outline: none; }
 .orgaz_editor .note-codable{ display:none;}
@@ -1742,6 +1743,37 @@ transform: rotate(45deg);
 .duplicate_codes_pop{ min-height: 250px; border-radius:4px; }
 .duplicate_codes_pop h3{ font-size: 1.5em; font-weight: bold; padding-left:10px;}
 .duplicate_codes_pop .modal-header{ border:0px; padding-bottom:0px;}
+
 .code_pop_desc{ font-size: 1.3em; margin-bottom: 5px;  }
 .code_pop_desc a{ color: #3cf; text-decoration: none; }
 .code_charc{font-size: 1em; min-height: 30px; max-height: 75px; overflow: auto; }
+.col_days_hrs_picker_main{ 
+    min-height: 135px;
+    padding-left: 20px;
+    padding-top: 40px;
+    position: absolute; font-size: 15px;
+    width: 220px; float: left; background-color: #fff; border:1px solid #ecf0f1; margin-top: 58px; z-index: 1; }
+.col_day_hrs_close{ float: right; width: auto; clear: both; position: absolute; right: 5px; top: 5px; color: #3cf; 
+    cursor: pointer; font-weight: bold; -ms-transform: rotate(45deg); font-size: 1.2em; 
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);  }
+
+
+.col_days{ width: 65px; float: left; }
+.col_hrs{ width: 55px; float: left; }
+.col_mins{ width: 55px; float: left; }
+.col_days_input{ width: 30px; border:0px; padding-right: 5px; box-shadow: none; float: left;  }
+.col_hrs_input{width: 25px; border:0px; box-shadow: none; float: left; }
+.days_btn_arrw{ position: absolute; margin-top: -20px; margin-left: -23px; background:none; box-shadow: none; border:0px; padding: 0px; }
+.days_btn_arrw_down{ position: absolute; margin-top: 20px; margin-left: -49px; background:none; box-shadow: none; border:0px; padding: 0px; }
+
+.hrs_btn_arrw{ position: absolute; margin-top: -20px; margin-left: -23px; background:none; box-shadow: none; border:0px; padding: 0px; }
+.hrs_btn_arrw_down{ position: absolute; margin-top: 20px; margin-left: -41px; background:none; box-shadow: none; border:0px; padding: 0px;}
+
+.min_btn_arrw{ position: absolute; margin-top: -20px; margin-left: -23px; background:none; box-shadow: none; border:0px; padding: 0px; }
+.min_btn_arrw_down{ position: absolute; margin-top: 20px; margin-left: -43px; background:none; box-shadow: none; border:0px; padding: 0px;}
+
+
+.days_hrs_btn{ background-color: #00cafd; border:1px solid #00cafd; padding:2px 15px; font-size:18px; margin-top: 10px; }
+.days_hrs_btn:hover{background-color: #00cafd; border:1px solid #00cafd;}
+.promotional_pop{ word-break:inherit !important; }

@@ -261,7 +261,7 @@ else
         <div class="mid_or_width"></div>
         <div class="col-sm-1 no_pad">
             <div class="form-group">
-                <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" id="txt_use" name="PC_Uses">
+                <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" id="txt_use" name="PC_Uses" value="@Model.PC_Uses">
             </div>
         </div>
      </div>
@@ -291,20 +291,20 @@ else
                         @if (Model.Formtype == "S")
                         {
                         <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
-                        <input type="text" class="form-control evnt_inp_cont" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" />
+                        <input type="text" class="form-control evnt_inp_cont dayspickerclick" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none"  readonly="readonly" />
                         }
                         else
                         {
                             if (Model.PC_Startdatetype == "1")
                             {
                                 <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" style="display:none"/>
-                                <input type="text" class="form-control evnt_inp_cont" id="txtstartdatedays" name="startdays" value="@Model.startdays"  />
+                                <input type="text" class="form-control evnt_inp_cont dayspickerclick" id="txtstartdatedays" name="startdays" value="@Model.startdays"  readonly="readonly"  />
 
                             }
                             else
                             {
                                 <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
-                                <input type="text" class="form-control evnt_inp_cont" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" />
+                                <input type="text" class="form-control evnt_inp_cont dayspickerclick" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" readonly="readonly" />
 
                             }
                         }
@@ -313,6 +313,29 @@ else
 
                     </div>
 
+                </div>
+                <div class="dayspickershow col_days_hrs_picker_main mb10 mt5">
+                    <div class="dayspickerclose col_day_hrs_close"> + </div>
+                    <div class="col_days">
+                        <button class=" days_btn_arrw" type="button" id="btnstartdayplus"><i class='fa fa-angle-up'></i> </button>
+                        <input type="text" class="col_days_input" value="0" id="txtstartday" onkeypress="allownumber(this,event,this.id)"  /> Days
+                        <button class="days_btn_arrw_down" id="btnstartdayminus" type="button"><i class='fa fa-angle-down'></i> </button>
+                    </div>
+                    <div class="col_hrs">
+                        <button class=" hrs_btn_arrw" type="button" id="btnstarthrsplus"><i class='fa fa-angle-up'></i> </button>
+                        <input type="text" class="col_hrs_input chkhrs" value="0" id="txtstarthrs" onkeypress="allownumber(this,event,this.id)"  /> Hrs
+                        <button class="hrs_btn_arrw_down" type="button" id="btnstarthrsminus"><i class='fa fa-angle-down'></i> </button>
+
+                    </div>
+                    <div class="col_mins">
+                        <button class=" min_btn_arrw" type="button" id="btnstartminplus"><i class='fa fa-angle-up'></i> </button>
+                        <input type="text" class="col_hrs_input chkmin" value="0"  id="txtstartmin" onkeypress="allownumber(this,event,this.id)" /> Min
+                        <button class="min_btn_arrw_down" type="button" id="btnstartminminus"><i class='fa fa-angle-down'></i> </button>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 text-center mt20"><button class="btn btn-info days_hrs_btn" type="button" id="btnstartset"> Set</button></div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
             <div class="col-sm-1 colsm1"></div>
@@ -338,25 +361,48 @@ else
 @if (Model.Formtype == "S")
 {
                         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
-                        <input type="text" class="form-control evnt_inp_cont" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" />
+                        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"  />
 }
 else
 {
     if (Model.Pc_Enddatetype == "1")
     {
         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" style="display:none"/>
-        <input type="text" class="form-control evnt_inp_cont" id="txtenddatedays" name="enddays" value="@Model.enddays"  />
+        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays" name="enddays" value="@Model.enddays"  readonly="readonly"  />
 
     }
     else
     {
         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
-        <input type="text" class="form-control evnt_inp_cont" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" />
+        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"   />
 
     }
 }
                     </div>
                    
+                </div>
+                <div class="dayspickershow2 col_days_hrs_picker_main mb10 mt5">
+                    <div class="dayspickerclose2 col_day_hrs_close"> + </div>
+                    <div class="col_days">
+                        <button class=" days_btn_arrw" type="button" id="btnenddayplus"><i class='fa fa-angle-up'></i> </button>
+                        <input type="text" class="col_days_input" value="0" id="txtenddays" onkeypress="allownumber(this,event,this.id)"  /> Days
+                        <button class="days_btn_arrw_down" type="button" id="btnenddayminus"><i class='fa fa-angle-down'></i> </button>
+                    </div>
+                    <div class="col_hrs">
+                        <button class=" hrs_btn_arrw" type="button" id="btnendhrsplus"><i class='fa fa-angle-up'></i> </button>
+                        <input type="text" class="col_hrs_input chkhrs" value="0" id="txtendhrs" onkeypress="allownumber(this,event,this.id)"  /> Hrs
+                        <button class="hrs_btn_arrw_down" type="button" id="btnendhrsminus"><i class='fa fa-angle-down'></i></button>
+
+                    </div>
+                    <div class="col_mins">
+                        <button class=" min_btn_arrw" type="button" id="btnendminplus"><i class='fa fa-angle-up'></i> </button>
+                        <input type="text" class="col_hrs_input chkmin" value="0" id="txtendmin" onkeypress="allownumber(this,event,this.id)"  /> Min
+                        <button class="min_btn_arrw_down" type="button" id="btnendminminus"><i class='fa fa-angle-down'></i> </button>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 text-center mt20"><button class="btn btn-info days_hrs_btn" type="button" id="btnsetenddate"> Set</button></div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
 
@@ -541,6 +587,18 @@ else
                  }
                );
 
+                function allownumber(el, evt, id) {
+
+
+
+                    var charCode = (evt.which) ? evt.which : event.keyCode;
+
+                    if ((charCode < 48 || charCode > 57) && charCode > 31 && charCode != 44) {
+
+                        evt.preventDefault();
+                        return false;
+                    }
+                }
 
             </script>
             <script type="text/javascript">
@@ -585,7 +643,7 @@ else
                             $('#hd_startdatetype').val('1');
                          
                             $('#txtstartdatedays').css('display','block');
-                            $('#txtstartdatedays').val("0 Days 0 Hrs 0 Min");
+                            //$('#txtstartdatedays').val("0 Days 0 Hrs 0 Min");
                             $('#txtstartdate').css('display','none');
                         }else{
                             
@@ -1055,6 +1113,195 @@ else
               });
 
           });
+
+          $(".dayspickershow").css({"display":"none"});
+          $(".dayspickerclick ").click(function(){
+
+              var txtvalue=$('#txtstartdatedays').val();
+              var arr= txtvalue.split(" ");
+             
+              $('#txtstartday').val(arr[0].trim());
+              $('#txtstarthrs').val(arr[2].trim());
+              $('#txtstartmin').val(arr[4].trim());
+              $('.dayspickershow').css({"display":"block"});
+          });
+          $(".chkhrs").blur(function(){
+          
+              var value= parseInt( $(this).val());
+              if(value>24)
+              {
+                  $(this).val(24);
+              }
+
+          
+          });
+          $(".chkmin").blur(function(){
+          
+              var value= parseInt( $(this).val());
+              if(value>60)
+              {
+                  $(this).val(60);
+              }
+
+          
+          });
+          $("#btnstartset").click(function(){
+             var day= $('#txtstartday').val().trim();
+             var hrs= $('#txtstarthrs').val().trim();
+             var min=  $('#txtstartmin').val().trim();
+             var txt=day+" Days "+hrs+" Hrs "+min+" Min"
+             $('#txtstartdatedays').val(txt);
+             $('.dayspickershow').css({"display":"none"});
+          });
+          $("#btnsetenddate").click(function(){
+              var day= $('#txtenddays').val().trim();
+             
+              var hrs= $('#txtendhrs').val().trim();
+              var min=  $('#txtendmin').val().trim();
+              var txt=day+" Days "+hrs+" Hrs "+min+" Min";
+              $('#txtenddatedays').val('');
+              $('#txtenddatedays').val(txt);
+              $('.dayspickershow2').css({"display":"none"});
+          
+          });
+          $('#btnstartdayminus').click(function(){
+              var startday=$('#txtstartday').val();
+              startday=parseInt($('#txtstartday').val())-1;
+              if(startday<=0)
+              {
+                  startday=0;
+              }
+              $('#txtstartday').val(startday);
+          });
+          $('#btnstartdayplus').click(function(){
+              var startday=$('#txtstartday').val();
+              startday=parseInt($('#txtstartday').val())+1;
+           
+              $('#txtstartday').val(startday);
+          });
+          $('#btnstarthrsminus').click(function(){
+              var startday=$('#txtstarthrs').val();
+              startday=parseInt($('#txtstarthrs').val())-1;
+              if(startday<=0)
+              {
+                  startday=0;
+              }
+              $('#txtstarthrs').val(startday);
+          });
+          $('#btnstarthrsplus').click(function(){
+              var startday=$('#txtstarthrs').val();
+              startday=parseInt($('#txtstarthrs').val())+1;
+              if(startday>24)
+              {
+                  startday=24;
+              }
+              $('#txtstarthrs').val(startday);
+          });
+          $('#btnstartminminus').click(function(){
+              var startday=$('#txtstartmin').val();
+              startday=parseInt($('#txtstartmin').val())-1;
+              if(startday<=0)
+              {
+                  startday=0;
+              }
+              $('#txtstartmin').val(startday);
+          });
+          $('#btnstartminplus').click(function(){
+              var startday=$('#txtstartmin').val();
+              startday=parseInt($('#txtstartmin').val())+1;
+              if(startday>60)
+              {
+                  startday=60;
+              }
+              $('#txtstartmin').val(startday);
+          });
+          //enddate
+          $('#btnenddayminus').click(function(){
+              var startday=$('#txtenddays').val();
+              startday=parseInt($('#txtenddays').val())-1;
+              if(startday<=0)
+              {
+                  startday=0;
+              }
+              $('#txtenddays').val(startday);
+          });
+          $('#btnenddayplus').click(function(){
+              var startday=$('#txtenddays').val();
+              startday=parseInt($('#txtenddays').val())+1;
+           
+              $('#txtenddays').val(startday);
+          });
+          $('#btnendhrsminus').click(function(){
+              var startday=$('#txtendhrs').val();
+              startday=parseInt($('#txtendhrs').val())-1;
+              if(startday<=0)
+              {
+                  startday=0;
+              }
+              $('#txtendhrs').val(startday);
+          });
+          $('#btnendhrsplus').click(function(){
+              var startday=$('#txtendhrs').val();
+              startday=parseInt($('#txtendhrs').val())+1;
+              if(startday>24)
+              {
+                  startday=24;
+              }
+              $('#txtendhrs').val(startday);
+          });
+          $('#btnendminminus').click(function(){
+              var startday=$('#txtendmin').val();
+              startday=parseInt($('#txtendmin').val())-1;
+              if(startday<=0)
+              {
+                  startday=0;
+              }
+              $('#txtendmin').val(startday);
+          });
+          $('#btnendminplus').click(function(){
+              var startday=$('#txtendmin').val();
+              startday=parseInt($('#txtendmin').val())+1;
+              if(startday>60)
+              {
+                  startday=60;
+              }
+              $('#txtendmin').val(startday);
+          });
+          //enddate
+          $(".dayspickerclose ").click(function(){
+           
+              $('.dayspickershow').css({"display":"none"});
+          });
+
+          
+
+          $(".dayspickershow2").css({"display":"none"});
+          $(".dayspickerclick2 ").click(function(){
+              var txtvalue=$('#txtenddatedays').val();
+              var arr= txtvalue.split(" ");
+              console.log(arr)
+              $('#txtenddays').val(arr[0].trim());
+              $('#txtendhrs').val(arr[2].trim());
+              $('#txtendmin').val(arr[4].trim());
+              $('.dayspickershow2').css({"display":"block"});
+          });
+
+          $(".dayspickerclose2 ").click(function(){
+              $('.dayspickershow2').css({"display":"none"});
+          });
+
+          $(document).on('click', function (e) {
+              var $target = $(e.target);
+              if ($target.closest(".dayspickerclick").get(0) == null && $target.closest(".dayspickershow").get(0) == null) {
+                  $(".dayspickershow").hide();
+              };
+
+              if ($target.closest(".dayspickerclick2").get(0) == null && $target.closest(".dayspickershow2").get(0) == null) {
+                  $(".dayspickershow2").hide();
+              }
+          });
+
+         
 
       });
 </script>
