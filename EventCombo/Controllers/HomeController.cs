@@ -348,6 +348,12 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+            string strUrl = @Url.RouteUrl("EvType", new { strEt = strEt, strEc = strEc, strPrice = strPrice, strPageIndex = strPageIndex, strLat = strLat, strLong = strLong, strSort = strSort, strDateFilter = strDateFilter });
+
+            Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
+            
+            if (strPageIndex == null) strPageIndex = "page";
+            if (strDateFilter == null) strDateFilter = "none";
             int pageSize = 15;
             int pageIndex = 1;
             if (strPageIndex != null && strPageIndex != string.Empty && strPageIndex != "page")
