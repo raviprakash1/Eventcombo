@@ -106,7 +106,7 @@ namespace EventCombo.Models
         public long Eventid { get; set; }
         public string Eventtitle { get; set; }
 
-        public   List<Promocode> Promocode { get; set; }
+        public PagedList.IPagedList<Promocode> Promocode { get; set; }
         public int discountcode { get; set; }
         public string searchquery { get; set; }
     }
@@ -128,6 +128,9 @@ namespace EventCombo.Models
         public int discountcode { get; set; }
         public string Formtype { get; set; }
         public string Amounttype { get; set; }
+        public int ticketype { get; set; }
+        public string startdays { get; set; }
+        public string enddays { get; set; }
 
     
     }

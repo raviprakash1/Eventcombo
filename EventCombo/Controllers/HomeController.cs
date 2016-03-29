@@ -348,6 +348,12 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+            string strUrl = @Url.RouteUrl("EvType", new { strEt = strEt, strEc = strEc, strPrice = strPrice, strPageIndex = strPageIndex, strLat = strLat, strLong = strLong, strSort = strSort, strDateFilter = strDateFilter });
+
+            Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
+            
+            if (strPageIndex == null) strPageIndex = "page";
+            if (strDateFilter == null) strDateFilter = "none";
             int pageSize = 15;
             int pageIndex = 1;
             if (strPageIndex != null && strPageIndex != string.Empty && strPageIndex != "page")
@@ -761,7 +767,7 @@ namespace EventCombo.Controllers
                     try
                     {
                         if (strDateFilter == "today") lsDisEvt = lsDisEvt.Where(m => m.EventDate >= DateTime.Now && m.EventDate.Date == DateTime.Today.Date).ToList();
-                        if (strDateFilter == "tommarow") lsDisEvt = lsDisEvt.Where(m => m.EventDate.Date == DateTime.Today.AddDays(1).Date).ToList();
+                        if (strDateFilter == "tomorrow") lsDisEvt = lsDisEvt.Where(m => m.EventDate.Date == DateTime.Today.AddDays(1).Date).ToList();
                         if (strDateFilter == "thisweek")
                         {
                             int iday = (int)DateTime.Now.DayOfWeek;

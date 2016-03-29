@@ -3,6 +3,9 @@
     ViewBag.Title = "CreatePromotionalCodes";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+<meta property="fb:app_id" content="1956731254551382" />
+<meta property="og:url" content="@Model.PC_URL" />
+
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/DateTimePicker.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.masked.js"></script>
@@ -41,7 +44,7 @@
                 </a>
             </div>
             <div class="panel panel-default menu_list">
-                <a class="menu_title" href="#">
+                <a class="menu_title" href="@Url.Action("Index","Manageevent", new { })?Eventid=@Model.PC_Eventid&type=N">
                     <div class="panel-heading">
                         Event Dashboard
                     </div>
@@ -160,6 +163,8 @@
       <input type="hidden" id="hd_eventid" name="PC_Eventid" value="@Model.PC_Eventid" />
         <input type="hidden" name="Formtype" value="@Model.Formtype" />
         <input type="hidden" name="PC_id" value="@Model.PC_id" />
+        <input type="hidden" name="PC_Startdatetype" value="@Model.PC_Startdatetype" id="hd_startdatetype"  />
+        <input type="hidden" name="Pc_Enddatetype" value="@Model.Pc_Enddatetype" id="hd_enddatetype" />
         <input type="hidden" id="hd_pctype" name="PC_Type"  value="C"/>
 @if (Model.Formtype == "S")
 {
@@ -180,7 +185,9 @@ else
         <input type="hidden" name="PC_Apply" id="hd_pcapply" value="@Model.PC_Apply"/>     
            <div class="col-sm-2 no_pad">
             <div class="form-group">
-@if (Model.Formtype == "S")
+@if (Model.ticketype == 1)
+{
+if (Model.Formtype == "S")
 {
                 <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Amount" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount" >
 }
@@ -194,14 +201,21 @@ else
     {
         <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Percentage" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount">
 
+        }
     }
+}
+else
+{
+    <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Amount" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount" disabled>
 }
             </div>
         </div>
         <div class="mid_or_width"></div>
         <div class="col-sm-1 no_pad">
             <div class="form-group dropheight">
-                @if (Model.Formtype == "S")
+                @if (Model.ticketype == 1)
+                {
+                if (Model.Formtype == "S")
                 {
                 <select class="form-control selectpicker" id="ddl_discounttype">
                     <option value="0">$</option>
@@ -224,6 +238,14 @@ else
                             <option value="1" selected="selected">%</option>
                         </select>
                     }
+                }
+                }
+                else
+                {
+                    <select class="form-control selectpicker" id="ddl_discounttype" disabled>
+                        <option value="1" selected="selected">$</option>
+                        <option value="0" selected="selected">%</option>
+                    </select>
                 }
             </div>
         </div>
@@ -251,8 +273,14 @@ else
                 <div class="col-sm-12 no_pad">
                     <div class="prm_befor_level"> Start</div>
                     <div class="squaredOne">
-
-                        <input type="checkbox" value="None" id="befstrtdevnt" name="check" />
+                        @if (Model.PC_Startdatetype == "1")
+                        {
+                        <input type="checkbox" value="None" id="befstrtdevnt" name="check" checked="checked" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="None" id="befstrtdevnt" name="check"  />
+                        }
                         <label for="befstrtdevnt"></label>
                     </div>
                     <div class="prm_cd_level"> before event</div>
@@ -260,8 +288,29 @@ else
                 <div class="col-sm-12 no_pad">
                     <div class="form-group">
                         <!-- <input class="form-control evnt_inp_cont " type="text" placeholder="Unlimited" > -->
+                        @if (Model.Formtype == "S")
+                        {
                         <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
-                     
+                        <input type="text" class="form-control evnt_inp_cont" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" />
+                        }
+                        else
+                        {
+                            if (Model.PC_Startdatetype == "1")
+                            {
+                                <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" style="display:none"/>
+                                <input type="text" class="form-control evnt_inp_cont" id="txtstartdatedays" name="startdays" value="@Model.startdays"  />
+
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
+                                <input type="text" class="form-control evnt_inp_cont" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" />
+
+                            }
+                        }
+
+
+
                     </div>
 
                 </div>
@@ -271,18 +320,43 @@ else
                 <div class="col-sm-12 no_pad">
                     <div class="prm_befor_level"> End</div>
                     <div class="squaredOne">
-                        <input type="checkbox" value="None" id="befendevnt" name="check" />
-                       
+                        @if (Model.Pc_Enddatetype == "1")
+                        {
+                        <input type="checkbox" value="None" id="befendevnt" name="check" checked="checked" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="None" id="befendevnt" name="check"  />
+                        }
+                        <label for="befendevnt"></label>
                     </div>
                     <div class="prm_cd_level"> before event</div>
                 </div>
                 <div class="col-sm-12 no_pad">
 
                     <div class="form-group">
+@if (Model.Formtype == "S")
+{
                         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
-                        
-                    </div>
+                        <input type="text" class="form-control evnt_inp_cont" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" />
+}
+else
+{
+    if (Model.Pc_Enddatetype == "1")
+    {
+        <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" style="display:none"/>
+        <input type="text" class="form-control evnt_inp_cont" id="txtenddatedays" name="enddays" value="@Model.enddays"  />
 
+    }
+    else
+    {
+        <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
+        <input type="text" class="form-control evnt_inp_cont" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" />
+
+    }
+}
+                    </div>
+                   
                 </div>
             </div>
 
@@ -324,7 +398,7 @@ else
                             <div class="prm_cd_level">
                            @if (item.TicketTypeID == 2)
                            {
-                                <span>@item.T_name ($ @item.Price)</span>
+                                <label>@item.T_name ($ @item.Price)</label>
                            }
                            else
                            {
@@ -357,11 +431,11 @@ else
                             <div class="col-sm-9 ">
                             @if (Model.Formtype == "S")
                             {
-                            <span class="dis_evnt_link">http://eventcombo.net/event-names?discount=Example</span>
+                            <span class="dis_evnt_link">@Model.PC_URL</span>
                             }
                             else
                             {
-                                <a class="link_url " name="PC_URL" href="#">http://eventcombo.net/event-names?discount=Example</a>
+                                <a class="link_url " name="PC_URL" href="@Model.PC_URL" id="apcurl">@Model.PC_URL</a>
                             }
                                  @**@ </div>
                             <div class="col-sm-3  text-right">
@@ -373,9 +447,10 @@ else
 }
 else
 {
-    <button class="btn soc_btn_dis " type="button"><i class="fa fa-facebook"></i></button>
-    <button class="btn soc_btn_dis " type="button"><i class="fa fa-twitter"></i></button>
-                                <button class="btn soc_btn_dis " type="button"><i class="fa fa-envelope"></i></button>
+    <a class="btn soc_btn_dis "href="#" onclick="shareOnFacebook();"><i class="fa fa-facebook"></i></a>
+    @*<button class="btn soc_btn_dis " type="button" id="fbshare"></button>*@
+    <button class="btn soc_btn_dis " type="button" id="twitshare"><i class="fa fa-twitter"></i></button>
+    <button class="btn soc_btn_dis" type="button"><i class="fa fa-envelope"></i></button>
 }
                             </div>
                         </div>
@@ -387,14 +462,79 @@ else
                 </div>
             </div>
  }
+<div class="modal fade" id="duplicate_codes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content duplicate_codes_pop">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h3 class="modal-title text-center">Invalid/Duplicate Codes </h3>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <p class="code_pop_desc">Some of these codes are invalid or already exist . <a href="#" class="code_viewdetail">View Codes</a></p>
+                </div>
+                <div class="col-md-12 code_viewdetail_show">
+                    <div class="col-md-12 no_pad code_charc" id="dvcodes"> </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12 mt10 text-center">
+                    <button type="button" class="btn btn-info acnt_btn" id="btnokpop">ok</button>
+                </div>
+            </div>
+        </div>
 
+    </div>
+</div>
+
+<button style="visibility:hidden;"  type="button" title="" id="btntoggle" data-toggle="modal" data-target="#duplicate_codes"></button>
 
 <script>
           $(function() {
             $( document ).tooltip();
           });
+<<<<<<< HEAD
 
 </script> 
+=======
+</script>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId: '1956731254551382',                        // App ID from the app dashboard
+      status     : true,                                 // Check Facebook Login status
+      xfbml      : true                                  // Look for social plugins on the page
+    });
+  
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+  var globalFacebookShareObject = { name: 'share', link :'@Model.PC_URL'};
+
+
+    function shareOnFacebook() {
+       
+      FB.ui({
+          method: 'feed',
+          name: globalFacebookShareObject.name,
+          link: globalFacebookShareObject.link
+          
+      }, function (response) {
+          if (response && response.post_id) { }
+          else { }
+      });
+  }
+
+</script>
+
+>>>>>>> 7854f89db3311e093e8b299fa6d2de32f880aa4f
             <script type="text/javascript">
                 $(document).ready(function () {
                     $('#crt_promcode').click();
@@ -427,9 +567,67 @@ else
 
             </script>
             <script type="text/javascript">
+            
+                $('#btnokpop').click(function () {
 
+                    window.location.href = '@Url.Action("PromotionalCodes", "ManageEvent", new { })?Eventid='+@Model.PC_Eventid;
+
+                });
+                $('#twitshare').click(function () {
+
+                    var url = "@Model.PC_URL";
+
+                    window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+                    return false;
+
+                });
                 $(document).ready(function () {
 
+                    $('#befendevnt').change(function(){
+                    
+                        if ($(this).is(":checked")==true)
+                        {
+                            $('#hd_enddatetype').val('1');
+                           
+                            $('#txtenddatedays').val("0 Days 0 Hrs 0 Min");
+                            $('#txtenddatedays').css('display','block');
+                            $('#txtenddate').css('display','none');
+                        }else{
+                            $('#hd_enddatetype').val('0');
+                            $('#txtenddatedays').css('display','none');
+                           
+                            $('#txtenddate').css('display','block');
+                        }
+                    
+                    });
+
+                    $('#befstrtdevnt').change(function(){
+                       
+                        if ($(this).is(":checked")==true)
+                        {
+                            $('#hd_startdatetype').val('1');
+                         
+                            $('#txtstartdatedays').css('display','block');
+                            $('#txtstartdatedays').val("0 Days 0 Hrs 0 Min");
+                            $('#txtstartdate').css('display','none');
+                        }else{
+                            
+                            $('#hd_startdatetype').val('0');
+                            $('#txtstartdatedays').css('display','none');
+                           
+                            $('#txtstartdate').css('display','block');
+                        }
+                    
+                    });
+
+                    var tempdata="@TempData["Invalidcode"]";
+                    if(tempdata!="")
+                    {
+                        var invalidcode=" @TempData["Invalidcode"]";
+                        $('#dvcodes').html(invalidcode);
+                        $('#btntoggle').click();
+
+                    }
 
                     var formtype = "@Model.Formtype";
                     if (formtype == "E") {
@@ -500,7 +698,7 @@ else
 
                             var cboxes = document.getElementsByName('Ticketcheck');
                             var len = cboxes.length;
-                            
+
                             for (var i = 0; i < len; i++) {
                                 if (cboxes[i].checked)
                                 {
@@ -510,28 +708,28 @@ else
                                     }else{
                                         apply += ','+cboxes[i].value
                                     }
-                                   
+
                                 }
-                                
+
                             }
                             $("#hd_pcapply").val(apply);
                         }
-                       
-                       
-                        
-                  
+
+
+
+
                     });
                     $("input[name='Ticketcheck']").change(function () {
-                      
+
                         var apply = "";
                         var cboxes = document.getElementsByName('Ticketcheck');
                         var len = cboxes.length;
                         var length=  $('[name=Ticketcheck]:checked').length;
-                      
+
                         if (length == 0) {
                             $("#hd_pcapply").val('');
                         } else {
-                           
+
                             for (var i = 0; i < len; i++) {
                                 if (cboxes[i].checked) {
                                     if (cboxes[i].value != 0) {
@@ -565,36 +763,37 @@ else
                         }
 
                     });
+                    $(document).on('change', '#file_upload', function () {
 
-                    $("#file_upload").change(function () {
-                       
+
                         $('#txt_Promocode').val('');
                         var filename = $('input[type=file]').val().split('\\').pop();
                         var extension = filename.replace(/^.*\./, '');
 
-                      
+
                         if (extension == filename) {
                             extension = '';
                         } else {
-                            
+
                             extension = extension.toLowerCase();
                         }
-                       
+
                         if(extension=="txt" || extension=="csv")
                         {
-                           
+
                             $('#txt_Promocode').attr('disabled', true);
                             $(".file_upload").hide();
                             $("#id_filename").html(filename);
                             $(".filename").show();
+                            $('#diverro1acc').hide();
                         } else {
-                          
+
                             $('#diverro1acc').show();
                             $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidpccodefile'));
                             $('html,body').animate({ scrollTop: 0 });
                             return false;
                         }
-                     
+
                     });
 
                     $("#id_close").click(function () {
@@ -634,10 +833,18 @@ else
                     });
                     $('#txt_Promocode').keypress(function (e) {
                         var regex = new RegExp("^[a-zA-Z0-9@@_,-]+$");
-                        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                        if (regex.test(str)) {
-                            return true;
+                        var charCode = e.charCode ? e.which : e.charCode;
+
+                        if (charCode == 8 || charCode == 0) {
+                            return;
                         }
+                        else {
+                            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                            if (regex.test(str)) {
+                                return true;
+                            }
+                        }
+
 
                         e.preventDefault();
                         return false;
@@ -646,7 +853,7 @@ else
                         var regex = new RegExp("^[0-9.]+$");
                         var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
                         if (regex.test(str)) {
-                            
+
                            return true;
                         }
                         e.preventDefault();
@@ -690,7 +897,7 @@ else
                         }
 
                     });
-   
+
                     var bIsPopup = displayPopup();
 
                     $("#dtBox").DateTimePicker(
@@ -711,26 +918,35 @@ else
                     });
 
                     $('#btnsave').click(function () {
+
                         var formtype = "@Model.Formtype";
-                        if (formtype == "S") {
+                        var chkstart = "";
+                        var chkend = "";
+                        if (formtype == "S")
+                        {
                             var filename = $('input[type=file]').val().split('\\').pop();
                             var extension = filename.replace(/^.*\./, '');
 
 
-                            if (extension == filename) {
-                                extension = '';
-                            } else {
 
-                                extension = extension.toLowerCase();
-                            }
-                            if ($('#txt_Promocode').val() == '' && filename == '') {
+                            if ($('#txt_Promocode').val() == '' && filename == '')
+                            {
                                 $('#diverro1acc').show();
                                 $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidpccode'));
                                 $('html,body').animate({ scrollTop: 0 });
                                 return false;
                             }
                             if (filename != '') {
-                                if (extension != 'txt' || extension != 'csv') {
+                                if (extension == filename) {
+                                    extension = '';
+                                } else {
+
+                                    extension = extension.toLowerCase();
+                                }
+
+                                if (extension == "txt" || extension == "csv") {
+
+                                } else {
                                     $('#diverro1acc').show();
                                     $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidpccodefile'));
                                     $('html,body').animate({ scrollTop: 0 });
@@ -745,14 +961,18 @@ else
                                 return false;
                             }
                         }
-                        var amnt = $('#txt_discountmnt').val();
-                        if (amnt == '')
+                        if (@Model.ticketype == 1)
                         {
-                            $('#diverro1acc').show();
-                            $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidamount'));
-                            $('html,body').animate({ scrollTop: 0 });
-                            return false;
+                            var amnt = $('#txt_discountmnt').val();
+                            if (amnt == '')
+                            {
+                                $('#diverro1acc').show();
+                                $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCValidamount'));
+                                $('html,body').animate({ scrollTop: 0 });
+                                return false;
+                            }
                         }
+
                         var length = $('[name=Ticketcheck]:checked').length;
                         if (length == 0)
                         {
@@ -761,7 +981,35 @@ else
                             $('html,body').animate({ scrollTop: 0 });
                             return false;
                         }
+                        if ($('#befstrtdevnt').is(":checked")) {
+                           
+                        } else 
+                        {
+                            chkstart = $('#txtstartdate').val();
+                        }
+                        if ($('#befendevnt').is(":checked")) {
+                           
+                        } else {
+                            chkend = $('#txtenddate').val();
+                        }
                        
+                        if (chkstart != '' && chkend!='')
+                        {
+                            var asd = compare(chkstart, chkend);
+                            if (asd != '') {
+                                $('#diverro1acc').show();
+                                $('#erraccsucc').html(ajaxsetup('PromotionalCode', 'PCvaiddate'));
+                                $('html,body').animate({ scrollTop: 0 });
+                                return false;
+                            } else {
+                                $('#diverro1acc').hide();
+                            }
+
+                        } else {
+                            $('#diverro1acc').hide();
+                        }
+
+
                     });
 
 
@@ -778,7 +1026,25 @@ else
 
 
                 }
+                function compare(DateA, DateB) {
+                    var errorMsg = "";
+                    var a = new Date(DateA);
+                    var b = new Date(DateB);
 
+                    var msDateA = Date.UTC(a.getFullYear(), a.getMonth() + 1, a.getDate());
+                    var msDateB = Date.UTC(b.getFullYear(), b.getMonth() + 1, b.getDate());
+
+                    if (parseFloat(msDateA) < parseFloat(msDateB))
+                        return errorMsg = "";  // less than
+                    else if (parseFloat(msDateA) == parseFloat(msDateB))
+                        return errorMsg = "";  // equal
+                    else if (parseFloat(msDateA) > parseFloat(msDateB))
+                        return errorMsg = ajaxsetup("CreateEvent", "CreateEventCompareDateUI") + "<br/>"; // greater than
+                    else
+                        return null;  // error
+
+
+                }
                 function ajaxsetup(strname, strFormTag) {
                     var msgnew = "";
 
@@ -799,5 +1065,21 @@ else
                 }
 
             </script>
+
+<script type="text/javascript">
+
+      $(document).ready(function()
+      {
+
+         $(".code_viewdetail_show").css({"display":"none"});
+          $(".code_viewdetail").click(function(){
+              $('.code_viewdetail_show').slideToggle( function() {
+                // $('.CustDateMain').toggleClass('active');
+              });
+
+          });
+
+      });
+</script>
 
 
