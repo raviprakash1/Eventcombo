@@ -464,7 +464,7 @@ else
         </div>
 </body>
 </html>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
 <script type="text/javascript">
 
     var WindowObjectReference;
@@ -608,7 +608,7 @@ else
         });
 
         if (e == "discover") {
-
+          
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (p) {
@@ -623,23 +623,42 @@ else
                     };
                     var vLat = p.coords.latitude;
                     var vLong = p.coords.longitude;
-                    @*var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "ALL", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';*@
+                    
+                   
 
                     var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
                     
 
                     vUrl = vUrl.replace("lat", vLat);
                     vUrl = vUrl.replace("long", vLong);
-                   // alert(vUrl);
                     window.location.href = vUrl;
+                }, function (p) {
+                    alert("error");
+                    navigator.geolocation.getCurrentPosition(onPositionUpdate);
+
+                    //var watchID = navigator.geolocation.watchPosition(gotPos, gotErr, options);
+                    //alert(watchID);
+                    //var geo = google.gears.factory.create('beta.geolocation');
+                    //geo.getCurrentPosition(function (position) {
+                    //    alert(position.latitude);
+                    //}, function () {
+                    //    alert("Again Error");
+                    //});
+                    //var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                 
+
                 });
 
             } else {
                 alert('Geo Location feature is not supported in this browser.');
             }
 
-
-
+          
+            function onPositionUpdate(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                alert("Current position: " + lat + " " + lng);
+            }
             @*window.location.href = '@Url.Action("DiscoverEvents", "Home")';*@
 
 
