@@ -708,7 +708,7 @@ span.evnt_toltip{
 
 .affix-top {
       position:fixed;
-      max-width:195px; min-width:195px;
+      max-width:198px; min-width:198px;
       top: 134px; z-index: 999;
       
   }
@@ -794,10 +794,12 @@ span.evnt_toltip{
 .dis_evnt_img{height:auto !important; padding:0px!important;} 
 .xs-upload-tooltip{ margin-top:50px;}
 .xs-signup-height{ min-height:50px;}
+
+.xs-100{width:100%; float:left;}
 }
 @media (width: 320px) {
 #mainhead .Fix_Head{ top:40px !important;}
-
+#midsection.midd_cont {top:134px !important;}
 /*#eventtopscoll.event_top{ margin-top:139px !important; }*/ 
 /*#eventtopscoll .cbtMakeLive { right:87px; position:relative; }*/
 .home_fixed_header{ height:132px !important; }
@@ -805,11 +807,11 @@ span.evnt_toltip{
 *#eventtopscoll.view_evnt_top.viewevent_container{margin-top:163px !important;}
 #divmain .Fix_Head{ position:absolute; top:20px;}
 /*#divmain .social_icn{ position:absolute; margin-top:0 !important; right:15px;}*/
-
+.cont_margin{ margin-top: 3px; margin-bottom: 0px;}
 }
 @media (width: 480px){
 #navtop.affix-top {top:118px !important;}
-#midsection.midd_cont {top:116px !important;}
+#midsection.midd_cont {top:110px !important;}
 /*#scrollhome.con_scr0l_home{margin-top:205px !important;}*/
 #divmain .social_icn{ margin-top:10px !important;}
 
@@ -819,7 +821,7 @@ span.evnt_toltip{
 
 #eventtopscoll.viewevent_container.evnt_confma{ margin-top:122px !important; }
 .xspad0{ padding:0px;}
-
+.cont_margin{ margin-top: 11px; margin-bottom: 0px;}
 }
 @media (min-width: 360px) and (max-width: 640px) {
 #mainhead{ padding-top:10px;}
@@ -851,10 +853,12 @@ span.evnt_toltip{
 .dis_evnt_img{height:auto !important; padding:0px!important;} 
 .xs-upload-tooltip{ margin-top:50px;}
 
+.xs-100{width:100%; float:left;}
 }
 
 @media (width: 360px) {
-
+.cont_margin{ margin-top: 11px; margin-bottom: 0px;}
+#midsection.midd_cont {top: 125px !important;}
 /*#eventtopscoll.event_top{ margin-top:138px !important; }*/ 
 /*#eventtopscoll .cbtMakeLive { right:0; position:absolute; }*/
 /*#eventtopscoll.view_evnt_top.viewevent_container{margin-top:134px !important;}*/
@@ -872,7 +876,7 @@ span.evnt_toltip{
 #navtop.affix-top {
     top:149px !important;
 }
-#midsection.midd_cont {top: 146px !important;}
+#midsection.midd_cont {top: 140px !important;}
 #scrollhome.con_scr0l_home{margin-top:190px !important;}
 .frnt_cret_evnt{ display:inline;}
 
@@ -977,6 +981,7 @@ span.evnt_toltip{
 .xs-title-height{ height: 38px; overflow: hidden; }
 .xs-address-height{ height: 70px; overflow: hidden; }
 
+.xs-100{width:100%; float:left;}
 }
 
 @media (min-width: 1280px) {
@@ -1736,6 +1741,8 @@ transform: rotate(45deg);
 .msg_color{ background: #bdc0c0; }
 .msg_color:hover,.msg_color:focus,.msg_color.focus{ background: #bdc0c0; }
 .sharesocilform{ min-height: 40px; font-size: 16px; }
+
+.no_event_found_text{ font-size:20px;}
 
 /*Create Promotional code pop up*/
 
