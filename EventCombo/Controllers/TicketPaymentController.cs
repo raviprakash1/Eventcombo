@@ -270,6 +270,8 @@ namespace EventCombo.Controllers
             {
                 string[] strTAry = strTicketId.Split(',');
                 var PromoCode = (from pc in db.Promo_Code where pc.PC_Code == strCode && pc.PC_Eventid == lEventId select pc).FirstOrDefault();
+                var vPCount = (from pcnt in db.Order_Detail_T where pcnt.O_PromoCodeId == PromoCode.PC_id select pcnt).Count();
+                
                 if (PromoCode != null && PromoCode.PC_Apply != null)
                 {
                     strResult = PromoCode.PC_Apply.Trim();
@@ -482,7 +484,15 @@ namespace EventCombo.Controllers
 
 
 
-
+                    List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
+                    objLockedTic = GetLockTickets();
+                    Ticket_Purchased_Detail objTPD;
+                    long lPromoId = 0;
+                    foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
+                    {
+                        lPromoId = (TLD.TLD_PromoCodeId != null ? Convert.ToInt32(TLD.TLD_PromoCodeId) :0);
+                        break;
+                    }
 
                     Order_Detail_T objOdr = new Order_Detail_T();
                     objOdr.O_Order_Id = "";
@@ -491,7 +501,7 @@ namespace EventCombo.Controllers
                     objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
                     objOdr.O_VariableId = strVarId;
                     objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
-                    objOdr.O_PromoCodeId = CommanClasses.ConvertToLong(strPromId);
+                    objOdr.O_PromoCodeId = lPromoId;
                     objOdr.O_OrderDateTime = DateTime.Now;
                     objOdr.O_PayPal_PayerId = strPayerId;
                     objOdr.O_PayPal_TokenId = strTokenNo;
@@ -501,9 +511,7 @@ namespace EventCombo.Controllers
                     string strOrderNo = GetOrderNo();
 
                     //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
-                    List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
-                    objLockedTic = GetLockTickets();
-                    Ticket_Purchased_Detail objTPD;
+
 
                     foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
                     {
