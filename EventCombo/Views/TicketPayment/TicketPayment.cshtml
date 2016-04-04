@@ -4,7 +4,7 @@
     ViewBag.Title = "TicketPayment";
     //Layout = "~/Views/Shared/_AccountLayout.cshtml";
     Layout = "~/Views/Shared/_Layout.cshtml";
-   
+
 }
 
 
@@ -53,7 +53,7 @@
                                            Add Schedule to calendar
                                         </label>
                                     </div>*@
-                                @*<div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
+                            @*<div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
                                     <div class="ev_time_zone_model date_time_modal">
                                         <div class="modal-content ev_tm_zon_cont">
                                             <div class="modal-header">
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="dvOrderInfo" class="event_detail_container">
             <div class="evnt_tile_head">
                 <div class="evnt_tile_bg_l"></div>
@@ -300,7 +300,7 @@
                                 <div class="col-sm-6 col-xs-12 pl0 xs375zip">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="billzip">
                                 </div>
-                                <div class="col-sm-6 col-xs-12 no_pad dropheight"> 
+                                <div class="col-sm-6 col-xs-12 no_pad dropheight">
                                     @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "billcountry" })
 
 
@@ -474,6 +474,7 @@
                     </div>
                     <div class="col-sm-6 text-center ev_calend_lebel">
                         <i class="fa fa-yahoo"></i> <a href="#" target="_blank" id="yahoocal">Yahoo Calendar </a>
+
                     </div>
                     <div class="clearfix"></div>
 
@@ -584,44 +585,44 @@
     function SavePaypaldetail() {
         var flag = true;
         var Emaillogin = $("#Email").val();
-    
+
 
         var NameList = [];
-     
-            if ($("#confirmEmail").length > 0) {
-                $.ajax({
-                    url: "/Home/IsValid",
-                    async: true,
-                    data: 'Email=' + Emaillogin,
-                    dataType: "text",
-                    success: function (data, textStatus, xhr) {
-                        if (data != '') {
-                            if (data == "NotFound") {
-                                flag = true;
 
-                                $('#hdemailexist').val(true);
+        if ($("#confirmEmail").length > 0) {
+            $.ajax({
+                url: "/Home/IsValid",
+                async: true,
+                data: 'Email=' + Emaillogin,
+                dataType: "text",
+                success: function (data, textStatus, xhr) {
+                    if (data != '') {
+                        if (data == "NotFound") {
+                            flag = true;
 
-                            } else if (data == "Found") {
+                            $('#hdemailexist').val(true);
 
-                                $('#Email').focus();
-                                $("#Email").addClass('err-bor');
+                        } else if (data == "Found") {
+
+                            $('#Email').focus();
+                            $("#Email").addClass('err-bor');
 
 
-                                ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateEmailSy'))
+                            ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateEmailSy'))
 
-                                $('#hdemailexist').val(false);
+                            $('#hdemailexist').val(false);
 
-                            }
                         }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
                     }
-                });
-            }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                }
+            });
+        }
 
 
-        
+
 
 
         var confirmemail = "", cardno = "", expirydate = "", cvv = "", cardtype = "";
@@ -640,8 +641,8 @@
             }
         });
         debugger;
-    
-        if ($('#shippinginfo').is(":checked") == true)  {
+
+        if ($('#shippinginfo').is(":checked") == true) {
 
 
 
@@ -729,10 +730,10 @@
         });
     }
     $('#btPaypal').click(function () {
-      
+
         $("#hdIsPostBack").val("Y");
         var msg = validationpage();
-      
+
         if (msg != "") {
             ShowMessage('E', msg)
             //$('#diverroacc').css('display', 'block');
@@ -747,6 +748,92 @@
 
 
 <script>
+    function CalculatePromoCode() {
+        var vProCode = $("#txtPromoCode").val();
+        var vEventid = $('#hdEventid').val();
+        $.ajax({
+            url: '@Url.Action("CalculatePromoCode", "TicketPayment")',
+            data: { strTicketId: '', strCode: vProCode, lEventId: vEventid },
+            type: "Post",
+            success: function (response) {
+                alert(response);
+                debugger;
+                var vResult = response.split('~');
+                var vTickets = vResult[0].toString();
+                var vProType = vResult[1].toString();
+                var vProMoAmt = parseFloat(vResult[2].toString());
+
+                if (isNaN(vProMoAmt) == true) vProMoAmt = 0;
+
+                if (vProMoAmt > 0) {
+                    var vTicIds = $("#hidTicketIds").val().split(',');
+                    var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
+
+                    var vTotalAmt = 0;
+                    var vGrandAmt = 0;
+                    var vAppliedTickets;
+                    if (vTickets != "A") {
+                        vAppliedTickets = vTickets.split(',');
+                    }
+                    var vflag = true;
+                  
+                    for (i = 0; i < vTicIds.length; i++) {
+                        if (vTickets != "A") {
+                            vflag = false;
+                            for (icnt = 0; icnt < vAppliedTickets.length; i++) {
+                                if (vTicIds[i] == vAppliedTickets[icnt]) {
+                                    vflag = true;
+                                    break;
+                                }
+                            }
+                        }
+                        vPrice = parseFloat($("#spPrice_" + vTicIds[i]).text());
+                        vQty = parseFloat($("#spQty_" + vTicIds[i]).text());
+                        vFee = parseFloat($("#spFee_" + vTicIds[i]).text());
+                        vDonation = parseFloat($("#spDonation_" + vTicIds[i]).text());
+                        vTQDId = parseFloat($("#spTQDId_" + vTicIds[i]).text());
+                        if (isNaN(vPrice) == true) vPrice = 0;
+                        if (isNaN(vTQDId) == true) vTQDId = 0;
+
+                        vQty = parseFloat(vQty); if (isNaN(vQty) == true) vQty = 0;
+                        vFee = parseFloat(vFee); if (isNaN(vFee) == true) vFee = 0;
+                        vDonation = parseFloat(vDonation); if (isNaN(vDonation) == true) vDonation = 0;
+                        alert(vflag);
+                        alert(vProMoAmt);
+                        if (vflag == true) {
+                            if (vProType == "P") {
+                                vProMoAmt = (vProMoAmt * vPrice) / 100;
+                            }
+                            vPrice = (vPrice - vProMoAmt);
+
+                            $.ajax({
+                                url: '@Url.Action("LockPromoCode", "TicketPayment")',
+                                data: { dAmt: vProMoAmt, lTQDId: vTQDId },
+                                type: "Post",
+                                success: function (response) {
+                                    //if (response == "N")
+                                    //{
+                                        
+                                    //}
+                                }
+                            });
+                
+                        }
+
+                        vTotalAmt = ((vQty * vPrice) + vFee + vDonation).toFixed(2);
+                        if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
+                        vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
+                    }
+
+                    if (vVarChanges > 0)
+                        vGrandAmt = vGrandAmt + vVarChanges;
+
+                    $("#spGrdTotal").text(vGrandAmt.toFixed(2));
+                }
+            }
+        });
+    }
+
     function calculateTickTotal(vAmount, vvarId) {
 
         $("#hdVChg").val(vvarId);
@@ -761,7 +848,7 @@
         $("#hdGrandTotal").val(vOrderTotal);
         $("#spSubTotal").text(vOrderTotal);
         var totqty = $('#hidQty').val();
-     
+
         if (vOrderTotal > 0) {
             $('.divvisible').show();
 
@@ -781,7 +868,7 @@
 
     }
     function calculateTickTotalOptional(vCount) {
-       
+
         var vVarValue = $("#hdVarId").val().split(',');
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
         var vSel = '';
@@ -818,7 +905,6 @@
         if (vOrderTotal > 0) {
             $('.divvisible').show();
             if (totqty <= 0) {
-               
                 $('.divqtyvisible').hide();
             } else {
                 $('.divqtyvisible').show();
@@ -1133,8 +1219,7 @@
             if ($("#hidTicketbearer").val() == '') {
                 var qty = parseInt($('#hidQty').val());
                 var ddlength = parseInt($("#ddlListitem option").length);
-                if (ddlength > (qty-1))
-                {
+                if (ddlength > (qty - 1)) {
                     var msg = ajaxsetup('TicketPayment', 'TpayMaxTicketReciepts') + qty;
                     $('#divaccsuc').css('display', 'none');
                     $('#diverroacc').css('display', 'block');
@@ -1162,14 +1247,12 @@
 
 
         $("#selectcard").change(function () {
-            if ($("#selectcard").val() == "P")
-            {
+            if ($("#selectcard").val() == "P") {
                 $("#dvBillingAddress").hide();
                 $("#completeorder").hide();
                 $("#btPaypal").show();
             }
-            else
-            {
+            else {
                 $("#dvBillingAddress").show();
                 $("#completeorder").show();
                 $("#btPaypal").hide();
@@ -1233,7 +1316,7 @@
         //    //$("#result").dialog("open");
         //}
 
-       
+
 
         $('#completeorder').click(function () {
             // $("#dvAjxSave").show();
@@ -1286,7 +1369,7 @@
             }
 
 
-            var confirmemail = "", cardno = "", expirydate = "", cvv = "",cardtype="";
+            var confirmemail = "", cardno = "", expirydate = "", cvv = "", cardtype = "";
             var type = '';
 
 
@@ -1305,7 +1388,7 @@
             });
 
 
-       
+
             if ($('#shippinginfo').is(":checked") == true) {
 
 
@@ -1329,7 +1412,7 @@
             } else {
 
                 type = 'Free';
-               
+
 
 
             }
@@ -1374,7 +1457,7 @@
                 'Acczip': $('#accZip').val(),
                 'Acccountry': $('#accCountry').val(),
                 'cardno': $('#cardno').val(),
-                'card_type':cardtype,
+                'card_type': cardtype,
                 'expirydate': $('#expirationdate').val(),
                 'cvv': $('#cvvcode').val(),
                 'billfname': $('#billfname').val(),
@@ -1414,11 +1497,10 @@
             if (PaymentType == "P") {
                 $.ajax({
                     url: '@Url.Action("SendPaypaldetail", "TicketPayment")',
-                    data: { model: model},
+                    data: { model: model },
                     type: "Post",
                     success: function (response) {
-                        if (response == "Y")
-                        {
+                        if (response == "Y") {
                             ////$('#dialog').dialog('open');
                             //$("#btOkMesPaypal").click();
                             //window.open('@Url.Action("Pay", "Cart")', "Paypal", "location=no,toolbar=no,height=600,width=800,modal=yes,alwaysRaised=yes,resizable=no,position=center");
@@ -1560,8 +1642,7 @@
 
                 if (totqty <= 0) {
                     $('.divqtyvisible').hide();
-                } else
-                {
+                } else {
                     $('.divqtyvisible').show();
                 }
                 if (vGrdTotal > 0) {
@@ -1569,7 +1650,7 @@
                 }
                 else {
                     $('.divvisible').hide();
-                  
+
                 }
 
                 if ($("#hdVarId").val() != "") {
@@ -1580,7 +1661,7 @@
                 }
 
 
-              
+
             },
         });
 
@@ -1819,9 +1900,9 @@
 
 
     });
- 
 
-  
+
+
 
 
     $("#accCountry").change(function () {
@@ -2197,5 +2278,11 @@
 
 
     });
+
+
+
+
+
+
 </script>
 <script src="~/Scripts/jquery.maskedinput.min.js"></script>
