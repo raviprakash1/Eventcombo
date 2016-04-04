@@ -478,7 +478,7 @@
                     </div>
                     <div class="clearfix"></div>
 
-
+                    <input id="hdPromoCodetotal" type="hidden" value="" />
                 </div>
 
             </div>
@@ -756,7 +756,6 @@
             data: { strTicketId: '', strCode: vProCode, lEventId: vEventid },
             type: "Post",
             success: function (response) {
-                alert(response);
                 debugger;
                 var vResult = response.split('~');
                 var vTickets = vResult[0].toString();
@@ -798,8 +797,6 @@
                         vQty = parseFloat(vQty); if (isNaN(vQty) == true) vQty = 0;
                         vFee = parseFloat(vFee); if (isNaN(vFee) == true) vFee = 0;
                         vDonation = parseFloat(vDonation); if (isNaN(vDonation) == true) vDonation = 0;
-                        alert(vflag);
-                        alert(vProMoAmt);
                         if (vflag == true) {
                             if (vProType == "P") {
                                 vProMoAmt = (vProMoAmt * vPrice) / 100;
@@ -811,10 +808,6 @@
                                 data: { dAmt: vProMoAmt, lTQDId: vTQDId },
                                 type: "Post",
                                 success: function (response) {
-                                    //if (response == "N")
-                                    //{
-                                        
-                                    //}
                                 }
                             });
                 
@@ -824,11 +817,12 @@
                         if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
                         vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
                     }
-
+                    $("#hdPromoCodetotal").val(vGrandAmt);
                     if (vVarChanges > 0)
                         vGrandAmt = vGrandAmt + vVarChanges;
 
                     $("#spGrdTotal").text(vGrandAmt.toFixed(2));
+                    $("#hdGrandTotal").val(vGrandAmt.toFixed(2));
                 }
             }
         });
@@ -839,13 +833,26 @@
         $("#hdVChg").val(vvarId);
 
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
+        var vPromoTotal = parseFloat($("#hdPromoCodetotal").val());
+
         var vQty = parseInt($("#hidQty").val());
         vAmt = parseFloat(vAmount);
         if (isNaN(vAmt) == true) vAmt = 0;
         if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
+        if (isNaN(vPromoTotal) == true) vPromoTotal = 0;
         vOrderTotal = (vOrderTotal + vAmt).toFixed(2);
-        $("#spGrdTotal").text(vOrderTotal);
-        $("#hdGrandTotal").val(vOrderTotal);
+        var vGrdTotal =0
+        if (vPromoTotal > 0)
+        {
+            vGrdTotal = (vPromoTotal + vAmt).toFixed(2)
+        }
+        else {
+            vGrdTotal = (vOrderTotal + vAmt).toFixed(2);
+        }
+
+        $("#spGrdTotal").text(vGrdTotal);
+        $("#hdGrandTotal").val(vGrdTotal);
+
         $("#spSubTotal").text(vOrderTotal);
         var totqty = $('#hidQty').val();
 
@@ -871,6 +878,9 @@
 
         var vVarValue = $("#hdVarId").val().split(',');
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
+        var vPromoTotal = parseFloat($("#hdPromoCodetotal").val());
+        if (isNaN(vPromoTotal) == true) vPromoTotal = 0;
+        var vPromoCalc = vPromoTotal;
         var vSel = '';
         if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
         var vVariChanges = 0;
@@ -882,8 +892,12 @@
                     vSel = vSel + ',' + vVarValue[i];
 
                 vAmt = parseFloat($("#sp_" + vVarValue[i]).text());
-                if (isNaN(vAmt) == true) vAmt = 0; vOrderTotal = vOrderTotal + vAmt;
-                if (isNaN(vAmt) == true) vAmt = 0; vVariChanges = vVariChanges + vAmt;
+                if (isNaN(vAmt) == true) vAmt = 0;
+
+                vOrderTotal = vOrderTotal + vAmt;
+                vPromoTotal = vPromoTotal + vAmt;
+                vVariChanges = vVariChanges + vAmt;
+                
             }
         }
         $("#hdVarChanges").val(vVariChanges);
@@ -897,9 +911,15 @@
         //    }
         //}
 
+        if (vPromoCalc > 0) {
+            $("#spGrdTotal").text(vPromoTotal.toFixed(2));
+            $("#hdGrandTotal").val(vPromoTotal.toFixed(2));
+        }
+        else {
+            $("#spGrdTotal").text(vOrderTotal.toFixed(2));
+            $("#hdGrandTotal").val(vOrderTotal.toFixed(2))
+        }
 
-        $("#spGrdTotal").text(vOrderTotal.toFixed(2));
-        $("#hdGrandTotal").val(vOrderTotal.toFixed(2));
         $("#spSubTotal").text(vOrderTotal.toFixed(2));
         var totqty = $('#hidQty').val();
         if (vOrderTotal > 0) {

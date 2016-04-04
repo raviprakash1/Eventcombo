@@ -517,7 +517,8 @@ namespace EventCombo.Controllers
                         objTPD.TPD_GUID = TLD.TLD_GUID;
                         objTPD.TPD_User_Id = Userid;
                         objTPD.TPD_EC_Fee = GetCurrentECFee(TLD.TLD_TQD_Id);
-                       // objTPD.TPD_PromoCodeID = TLD.
+                        objTPD.TPD_PromoCodeID = TLD.TLD_PromoCodeId;
+                        objTPD.TPD_PromoCodeAmount = TLD.TLD_PromoCodeAmount;
                         objEntity.Ticket_Purchased_Detail.Add(objTPD);
                     }
 
@@ -1257,7 +1258,9 @@ namespace EventCombo.Controllers
                                         Locktime = TLD.Locktime,
                                         TLD_GUID = TLD.TLD_GUID,
                                         TLD_Donate = TLD.TLD_Donate,
-                                        TicketAmount = TLD.TicketAmount
+                                        TicketAmount = TLD.TicketAmount,
+                                        TLD_PromoCodeId  = TLD.TLD_PromoCodeId,
+                                        TLD_PromoCodeAmount = TLD.TLD_PromoCodeAmount
                                     }
                                         );
                     return modelTLD.ToList();
