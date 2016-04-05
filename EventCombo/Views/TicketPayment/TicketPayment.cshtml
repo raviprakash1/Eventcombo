@@ -792,10 +792,11 @@
                         var vTickets = vResult[0].toString();
                         var vProType = vResult[1].toString();
                         var vProMoAmt = parseFloat(vResult[2].toString());
-
+                      //alert(vProMoAmt);
                         if (isNaN(vProMoAmt) == true) vProMoAmt = 0;
 
                         if (vProMoAmt > 0) {
+                          
                             var vTicIds = $("#hidTicketIds").val().split(',');
                             var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
 
@@ -810,7 +811,8 @@
                             for (i = 0; i < vTicIds.length; i++) {
                                 if (vTickets != "A") {
                                     vflag = false;
-                                    for (icnt = 0; icnt < vAppliedTickets.length; i++) {
+                                    for (icnt = 0; icnt < vAppliedTickets.length; icnt++) {
+                                      //  alert(vTicIds[i] + " " + vAppliedTickets[icnt]);
                                         if (vTicIds[i] == vAppliedTickets[icnt]) {
                                             vflag = true;
                                             break;
@@ -829,11 +831,14 @@
                                 vFee = parseFloat(vFee); if (isNaN(vFee) == true) vFee = 0;
                                 vDonation = parseFloat(vDonation); if (isNaN(vDonation) == true) vDonation = 0;
                                 if (vflag == true) {
+                                 //   alert(vflag)
                                     if (vProType == "P") {
                                         vProMoAmt = (vProMoAmt * vPrice) / 100;
                                     }
+                                   // alert(vProMoAmt);
+                                    
                                     vPrice = (vPrice - vProMoAmt);
-
+                                    //alert(vPrice);
                                     $.ajax({
                                         url: '@Url.Action("LockPromoCode", "TicketPayment")',
                                         data: { dAmt: vProMoAmt, lTQDId: vTQDId },
@@ -841,10 +846,11 @@
                                         success: function (response) {
                                         }
                                     });
-
                                 }
-
-                                vTotalAmt = ((vQty * vPrice) + vFee + vDonation).toFixed(2);
+                                
+                                //alert(vQty); alert(vPrice); alert(vFee);
+                                vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
+                                alert(vTotalAmt);
                                 if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
                                 vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
                             }
@@ -856,7 +862,7 @@
                             $("#hdGrandTotal").val(vGrandAmt.toFixed(2));
 
 
-                            $("#spValidation").text("Promo Code Applied Successfully.");
+                            $("#spValidation").text("Promo Code Applied.");
                             $("#spValidation").removeClass("promoerrorred");
                             $("#spValidation").addClass("promoerrorgreen");
                         }

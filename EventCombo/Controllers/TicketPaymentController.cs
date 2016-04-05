@@ -382,7 +382,7 @@ namespace EventCombo.Controllers
                         else if (PromoCode.PC_Percentage != null && PromoCode.PC_Percentage > 0)
                         {
                             strResult = strResult + "~" + "P";
-                            strResult = strResult + "~" + PromoCode.PC_Amount.ToString();
+                            strResult = strResult + "~" + PromoCode.PC_Percentage.ToString();
                         }
                         else
                         {
