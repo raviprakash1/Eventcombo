@@ -260,7 +260,7 @@ namespace EventCombo.Controllers
         }
 
 
-        public string CalculatePromoCode(string strTicketId,string strCode, long lEventId)
+        public string CalculatePromoCode(string strTicketId, string strCode, long lEventId)
         {
 
             string strResult = "";
@@ -270,44 +270,165 @@ namespace EventCombo.Controllers
             {
                 string[] strTAry = strTicketId.Split(',');
                 var PromoCode = (from pc in db.Promo_Code where pc.PC_Code == strCode && pc.PC_Eventid == lEventId select pc).FirstOrDefault();
+                if (PromoCode == null) { return "INV"; }
                 var vPCount = (from pcnt in db.Order_Detail_T where pcnt.O_PromoCodeId == PromoCode.PC_id select pcnt).Count();
-                
-                if (PromoCode != null && PromoCode.PC_Apply != null)
+                var vLockCount = (from lck in db.Ticket_Locked_Detail where lck.TLD_PromoCodeId == PromoCode.PC_id && lck.TLD_GUID != strGUID select lck).ToList().Select(x => x.TLD_GUID).Count();
+                if (PromoCode.PC_Uses != null)
                 {
-                    strResult = PromoCode.PC_Apply.Trim();
-
-                    if (PromoCode.PC_Amount != null && PromoCode.PC_Amount > 0)
+                    long lTotalCount = vPCount + vLockCount;
+                    long lUserCount = (PromoCode.PC_Uses.Trim() != string.Empty ? Convert.ToInt32(PromoCode.PC_Uses) : 0);
+                    if (lTotalCount >= lUserCount)
                     {
-                        strResult = strResult + "~" + "AMT";
-                        strResult = strResult + "~" + PromoCode.PC_Amount.ToString();
+                        return "OL";
                     }
-                    else if (PromoCode.PC_Percentage != null && PromoCode.PC_Percentage > 0)
-                    {
-                        strResult = strResult + "~" + "P";
-                        strResult = strResult + "~" + PromoCode.PC_Amount.ToString();
-                    }
-                    else
-                    {
-                        strResult = strResult + "F~" + "0";
-                    }
-
-                    List<Ticket_Locked_Detail> objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID select TLD).ToList();
-                    foreach (Ticket_Locked_Detail tl in objTLD)
-                    {
-                        tl.TLD_PromoCodeId = PromoCode.PC_id;
-                        context.SaveChanges();
-
-                    }
-
                 }
-                //for (int i =0;i<strTAry.Length;i++)
-                //{
+                DateTime dtNow = DateTime.Now;
+                if (PromoCode.PC_Startdatetype != null)
+                {
+                    if (PromoCode.PC_Startdatetype.Trim() == "0")
+                    {
 
-                //}
+                        DateTime dtStartDate = Convert.ToDateTime(PromoCode.PC_Start);
+                        if (dtNow < dtStartDate)
+                        {
+                            return "FDI";
+                        }
+                    }
+                    else if (PromoCode.PC_Startdatetype.Trim() == "1")
+                    {
+                        DateTime dtStartDate = new DateTime();
+
+                        var vEventVenue = (from Ev in db.EventVenues where Ev.EventID == lEventId select Ev).FirstOrDefault();
+                        if (vEventVenue == null)
+                        {
+                            var vMultiEv = (from Ev in db.MultipleEvents where Ev.EventID == lEventId select Ev).FirstOrDefault();
+                            dtStartDate = Convert.ToDateTime(vMultiEv.StartingFrom);
+                        }
+                        else
+                        {
+                            dtStartDate = Convert.ToDateTime(vEventVenue.EventStartDate);
+                        }
+                        string text = PromoCode.PC_Start;// "10 Days 24 Hrs 45 Min";
+                        Regex pattern = new Regex(@"(?:(?<days>\d+) Days )?(?:(?<hrs>\d+) Hrs )?(?:(?<mins>\d+) Min)?");
+                        Match match = pattern.Match(text);
+                        string days = match.Groups["days"].Value == "" ? "0" : match.Groups["days"].Value;
+                        string hrs = match.Groups["hrs"].Value == "" ? "0" : match.Groups["hrs"].Value;
+                        string mins = match.Groups["mins"].Value == "" ? "0" : match.Groups["mins"].Value;
+
+                        //DateTime TodayDate = new DateTime();
+                        //TodayDate = DateTime.Now;
+                        dtStartDate = dtStartDate.AddDays(-int.Parse(days));
+                        dtStartDate = dtStartDate.AddHours(-int.Parse(hrs));
+                        dtStartDate = dtStartDate.AddMinutes(-int.Parse(mins));
+
+                        if (dtNow < dtStartDate)
+                        {
+                            return "FDI";
+                        }
+
+                    }
+
+
+                    if (PromoCode.Pc_Enddatetype.Trim() == "0")
+                    {
+                        DateTime dtEndDate = Convert.ToDateTime(PromoCode.PC_End);
+                        if (dtNow > dtEndDate)
+                        {
+                            return "EDI";
+                        }
+                    }
+                    else if (PromoCode.Pc_Enddatetype.Trim() == "1")
+                    {
+                        DateTime dtEndDate = new DateTime();
+                        var vEventVenue = (from Ev in db.EventVenues where Ev.EventID == lEventId select Ev).FirstOrDefault();
+                        if (vEventVenue == null)
+                        {
+                            var vMultiEv = (from Ev in db.MultipleEvents where Ev.EventID == lEventId select Ev).FirstOrDefault();
+                            dtEndDate = Convert.ToDateTime(vMultiEv.EndTime);
+                        }
+                        else
+                        {
+                            dtEndDate = Convert.ToDateTime(vEventVenue.EventEndDate);
+                        }
+
+                        string text = PromoCode.PC_End;// "10 Days 24 Hrs 45 Min";
+                        Regex pattern = new Regex(@"(?:(?<days>\d+) Days )?(?:(?<hrs>\d+) Hrs )?(?:(?<mins>\d+) Min)?");
+                        Match match = pattern.Match(text);
+                        string days = match.Groups["days"].Value == "" ? "0" : match.Groups["days"].Value;
+                        string hrs = match.Groups["hrs"].Value == "" ? "0" : match.Groups["hrs"].Value;
+                        string mins = match.Groups["mins"].Value == "" ? "0" : match.Groups["mins"].Value;
+
+                        //DateTime TodayDate = new DateTime();
+                        //TodayDate = DateTime.Now;
+                        dtEndDate = dtEndDate.AddDays(-int.Parse(days));
+                        dtEndDate = dtEndDate.AddHours(-int.Parse(hrs));
+                        dtEndDate = dtEndDate.AddMinutes(-int.Parse(mins));
+
+                        if (dtNow > dtEndDate)
+                        {
+                            return "EDI";
+                        }
+                    }
+
+                    if (PromoCode != null && PromoCode.PC_Apply != null)
+                    {
+                        strResult = PromoCode.PC_Apply.Trim();
+
+                        if (PromoCode.PC_Amount != null && PromoCode.PC_Amount > 0)
+                        {
+                            strResult = strResult + "~" + "AMT";
+                            strResult = strResult + "~" + PromoCode.PC_Amount.ToString();
+                        }
+                        else if (PromoCode.PC_Percentage != null && PromoCode.PC_Percentage > 0)
+                        {
+                            strResult = strResult + "~" + "P";
+                            strResult = strResult + "~" + PromoCode.PC_Amount.ToString();
+                        }
+                        else
+                        {
+                            strResult = strResult + "F~" + "0";
+                        }
+
+                        List<Ticket_Locked_Detail> objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID select TLD).ToList();
+                        foreach (Ticket_Locked_Detail tl in objTLD)
+                        {
+                            tl.TLD_PromoCodeId = PromoCode.PC_id;
+                            context.SaveChanges();
+
+                        }
+
+                    }
+                    //for (int i =0;i<strTAry.Length;i++)
+                    //{
+
+                    //}
+                }
             }
             return strResult;
         }
 
+
+        public string ValidatePromoCode(long lEventId,string strCode)
+        {
+            string strResult = "Y";
+            string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+            using (var context = new EventComboEntities())
+            {
+                var PromoCode = (from pc in db.Promo_Code where pc.PC_Code == strCode && pc.PC_Eventid == lEventId select pc).FirstOrDefault();
+                var vPCount = (from pcnt in db.Order_Detail_T where pcnt.O_PromoCodeId == PromoCode.PC_id select pcnt).Count();
+                var vLockCount = (from lck in db.Ticket_Locked_Detail where lck.TLD_PromoCodeId == PromoCode.PC_id && lck.TLD_GUID != strGUID select lck).ToList().Select(x => x.TLD_GUID).Count();
+                if (PromoCode.PC_Uses != null)
+                {
+                    long lTotalCount = vPCount + vLockCount;
+                    long lUserCount = (PromoCode.PC_Uses.Trim() != string.Empty ? Convert.ToInt32(PromoCode.PC_Uses) : 0);
+                    if (lTotalCount >= lUserCount)
+                    {
+                        strResult= "OL";
+                    }
+                }
+            }
+            return strResult;
+        }
 
         public string LockPromoCode(decimal dAmt, long lTQDId)
         {
@@ -490,7 +611,7 @@ namespace EventCombo.Controllers
                     long lPromoId = 0;
                     foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
                     {
-                        lPromoId = (TLD.TLD_PromoCodeId != null ? Convert.ToInt32(TLD.TLD_PromoCodeId) :0);
+                        lPromoId = (TLD.TLD_PromoCodeId != null ? Convert.ToInt32(TLD.TLD_PromoCodeId) : 0);
                         break;
                     }
 
@@ -1267,7 +1388,7 @@ namespace EventCombo.Controllers
                                         TLD_GUID = TLD.TLD_GUID,
                                         TLD_Donate = TLD.TLD_Donate,
                                         TicketAmount = TLD.TicketAmount,
-                                        TLD_PromoCodeId  = TLD.TLD_PromoCodeId,
+                                        TLD_PromoCodeId = TLD.TLD_PromoCodeId,
                                         TLD_PromoCodeAmount = TLD.TLD_PromoCodeAmount
                                     }
                                         );
