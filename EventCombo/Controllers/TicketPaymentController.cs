@@ -62,6 +62,11 @@ namespace EventCombo.Controllers
                 Eventid = objMyEvent.EventID;
 
             }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
 
             Eventid = vmc.GetLatestEventId(Eventid);
 

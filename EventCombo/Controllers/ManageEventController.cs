@@ -13,11 +13,14 @@ using PagedList;
 
 namespace EventCombo.Controllers
 {
+   
     [OutputCacheAttribute(VaryByParam = "None", Duration = 0, NoStore = true)]
     public class ManageEventController : Controller
     {
         // GET: ManageEvent
         EventComboEntities db = new EventComboEntities();
+
+        [Authorize]
         public ActionResult Index(long Eventid,string type)
         {
             var TopAddress = ""; var Topvenue = ""; 
@@ -1151,17 +1154,15 @@ namespace EventCombo.Controllers
                         {
                             objEOrg = new Event_Orgnizer_Detail();
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                            //objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                            //objEOrg.Orgnizer_Desc = objOr.Orgnizer_Desc;
-                            //objEOrg.FBLink = objOr.FBLink;
-                            //objEOrg.Twitter = objOr.Twitter;
+                           
                             objEOrg.DefaultOrg = objOr.DefaultOrg;
-                            //objEOrg.Linkedin = objOr.Linkedin;
+                            objEOrg.OrganizerMaster_Id = objOr.OrganizerMaster_Id;
+
                             objEOrg.UserId = strUserId;
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
                     }
-
+                  
                     var vTicket = (from myEnt in objEnt.Tickets where myEnt.E_Id == Eventid select myEnt).ToList();
                     if (vTicket != null)
                     {
@@ -1272,7 +1273,7 @@ namespace EventCombo.Controllers
             return msg;
 
         }
-
+        [Authorize]
         public ActionResult PromotionalCodes(long Eventid, string strPageIndex="page",string searchquery="")
         {
             if (Session["AppId"] != null)
@@ -1344,7 +1345,7 @@ namespace EventCombo.Controllers
             }
         }
 
-
+        [Authorize]
         public ActionResult CreatePromotionalCodes(long Eventid, long Promocode = 0)
         {
             if (Session["AppId"] != null)
@@ -1378,7 +1379,7 @@ namespace EventCombo.Controllers
                     pm.ticketype = ttype;
                     pm.Formtype = "S";
                    
-                    startdate = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    startdate = DateTime.UtcNow.ToString("MM-dd-yyyy hh:mm:ss tt");
 
 
                     pm.PC_Start = startdate;
@@ -1478,6 +1479,7 @@ namespace EventCombo.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        [Authorize]
         [HttpPost]
         public ActionResult CreatePromotionalCodes(HttpPostedFileBase file,Promo_Code model)
         {

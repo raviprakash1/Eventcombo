@@ -86,11 +86,11 @@
                 <div class="clearfix"></div>
             </div>
             <div class="col-sm-12 no_pad mt20 text-right ">
-                
-                <button class="btn ev_live_sub_btn mb5 mr0" id="btPreview" type="button">
+             
+                <a class="btn ev_live_sub_btn mb5 mr0" id="btPreview" href="@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.urlTitle.Replace(" ","") , strEventId = Model.EventId.ToString()})"  >
                     VIEW &#10;
                     <span>></span>
-                </button>
+                </a>
             </div>
         </div>
     </div>

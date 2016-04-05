@@ -561,7 +561,9 @@
           <Property Name="TLD_Donate" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TicketAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TLD_PromoCodeId" Type="int" />
+
           <Property Name="TLD_PromoCodeAmount" Type="numeric" Precision="18" Scale="2" />
+
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -1658,7 +1660,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="TLD_Donate" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TicketAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="TLD_PromoCodeId" Type="Int32" />
+
           <Property Name="TLD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
+
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -2786,7 +2790,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Ticket_Locked_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Locked_Detail">
               <MappingFragment StoreEntitySet="Ticket_Locked_Detail">
+
                 <ScalarProperty Name="TLD_PromoCodeAmount" ColumnName="TLD_PromoCodeAmount" />
+
                 <ScalarProperty Name="TLD_PromoCodeId" ColumnName="TLD_PromoCodeId" />
                 <ScalarProperty Name="TLD_Id" ColumnName="TLD_Id" />
                 <ScalarProperty Name="TLD_User_Id" ColumnName="TLD_User_Id" />

@@ -1473,12 +1473,13 @@ WriteLiteral(@"',
         });
         return msgnew;
     }
+    $(document).prop('title', 'My Account on Eventcombo');
 </script>
 <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 41401), Tuple.Create("\"", 41442)
-, Tuple.Create(Tuple.Create("", 41407), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 41407), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 41461), Tuple.Create("\"", 41502)
+, Tuple.Create(Tuple.Create("", 41467), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 41467), false)
 );
 
 WriteLiteral("></script>\r\n\r\n");

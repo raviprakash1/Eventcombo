@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Eventcombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
 }
 
 
@@ -121,6 +121,7 @@
     </div>
 </div>
 <script>
+    $(document).prop('title', 'Eventcombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
     $(document).ready(function () {
         $.ajax({
             url: '@Url.Action("GetEventURL", "CreateEvent")',
