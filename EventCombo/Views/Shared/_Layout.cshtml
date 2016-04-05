@@ -17,7 +17,7 @@
     <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
 
     
-    @*<link href="~/Content/ec-select.css" rel="stylesheet" />*@
+    <link href="~/Content/ec-select.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="~/Content/eventcombo.css" rel="stylesheet" />
     <!--  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
@@ -34,7 +34,7 @@
 
     <script src="~/Scripts/jquery.cookie.js"></script>
 
-    @*<script src="~/Scripts/ec-select.js"></script>*@
+    <script src="~/Scripts/ec-select.js"></script>
 
     <style type="text/css">
         html {
@@ -59,12 +59,11 @@
                 @if (HttpContext.Current.Session["AppId"] != null)
                 {
                     <div class="col-sm-5 head_left_nav">
-                        <ul class="navbar-right frnt-top-header">
+                        <ul class="navbar-right frnt-top-header  xs-signup-height">
 
-                            <li>@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                            {
+                           
 
-                                <ul class="navbar-right xs-signup-height">
+                             
                                     <li class="msg_icn"><span>12</span> </li>
 
                                     <li><a href="#">Welcome @{Html.RenderAction("UserName", "Home");}!</a> </li>
@@ -72,13 +71,16 @@
                                         @Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
                                     </li>
                                     <li>
+@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+{
                                         <a href="javascript:document.getElementById('logoutForm').submit()">Log Out </a>
+} 
                                     </li>
-                                </ul>
+                                
 
 
-                               }
-</li>
+                               
+
 
                         </ul>
 
@@ -99,7 +101,7 @@
                 }
                
                 <div class="col-sm-1 text-right">
-                    <div class="social_icn md_social_icn">
+                    <div class="social_icn ">
                         <a href="http://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
                         <a href="http://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
                     </div>
@@ -580,14 +582,14 @@ else
             $('#eventtopscoll').addClass('event_top');
             $('#scrollhome').addClass('con_scr0l_home');
             $('#divcontmain').addClass('mt15');
-            $('#buttonscroll').addClass('mt5');
+           
             $('#eventtopscoll').addClass('viewevent_container');
         } else
         {
             $('#eventtopscoll').removeClass('event_top');
             $('#scrollhome').removeClass('con_scr0l_home');
             $('#divmain').removeClass('home_fixed_header');
-            $('#buttonscroll').removeClass('mt5');
+           
             $('#divcontmain').removeClass('mt15');
 
             $('#eventtopscoll').removeClass('viewevent_container');
