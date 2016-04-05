@@ -624,7 +624,7 @@ namespace EventCombo.Controllers
 
                 if (strEventIds.Trim() != "")
                 {
-                    sbQuery.Append("Select * from Event where EventStatus = 'Live' and isnull(Parent_EventID,0) = 0 and EventID in (" + strEventIds + ")");
+                    sbQuery.Append("Select * from Event where EventStatus = 'Live' and isnull(Parent_EventID,0) = 0");
                     if (strEventTypeId.Trim() != string.Empty)
                         sbQuery.Append(" AND EventTypeID in (" + strEventTypeId + ")");
 
@@ -633,14 +633,16 @@ namespace EventCombo.Controllers
 
                     if (strPrice.ToUpper() == "FREE")
                     {
-                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (1,3))");
+                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (1,3) and E_Id in ( " + strEventIds + "))");
                     }
-
-                    if (strPrice.ToUpper() == "PAID")
+                    else if (strPrice.ToUpper() == "PAID")
                     {
-                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (2,3))");
+                        sbQuery.Append(" AND EventID in (select E_Id from Ticket where TicketTypeID in (2,3) and E_Id in ( " + strEventIds + "))");
                     }
-
+                    else
+                    {
+                        sbQuery.Append(" and EventID in (" + strEventIds + ")");
+                    }
 
                     var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
                     CreateEventController objCEv = new CreateEventController();

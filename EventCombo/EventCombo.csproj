@@ -569,6 +569,7 @@
     <Content Include="Images\loading.gif" />
     <Content Include="Images\login_img.png" />
     <Content Include="Images\paper_tic.png" />
+    <Content Include="Images\PromoCodeLoader.gif" />
     <Content Include="Images\qwe.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

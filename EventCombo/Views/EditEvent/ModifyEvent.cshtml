@@ -101,7 +101,7 @@
                                     <div class="ev_time_zone_model">
                                         <div class="modal-content ev_tm_zon_cont">
                                             <div class="modal-header">
-                                                <button class="close closetimemodal" type="button">
+                                                <button class="close closetimemodal" type="button" id="btSaveTimeZone">
                                                     <span>&#215;</span>
                                                 </button>
                                                 <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Timezone & date setting</h4>
@@ -156,7 +156,7 @@
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="modal-footer">
-                                                <button type="button" id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>
+                                                @*<button type="button" id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>*@
                                             </div>
                                         </div>
                                     </div>
@@ -222,7 +222,7 @@
                         <div class="ev_time_zone_model">
                             <div class="modal-content ev_tm_zon_cont">
                                 <div class="modal-header">
-                                    <button class="close closemodal" type="button">
+                                    <button class="close closemodal" type="button" id="btnAddSch">
                                         <span>&#215;</span>
                                     </button><h4 class="modal-title ev_modal_header_title" id="myModalLabel">Schedule dates</h4>
                                 </div>
@@ -414,7 +414,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="modal-footer mt10">
-                                    <button type="button" id="btnAddSch" class="closemodal btn btn-primary btn-lg ev_add_sub_btn">Save</button>
+                                    @*<button type="button" id="btnAddSch" class="closemodal btn btn-primary btn-lg ev_add_sub_btn">Save</button>*@
                                 </div>
                             </div>
                         </div>
@@ -567,11 +567,11 @@
                         </div>
                     </div>
                     <div class="col-sm-12 mt10 no_pad">
-                        <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn">Add</button>
+                        <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn"> Add New Organizer </button>
                     </div>
                     <div class="col-sm-12 mt20 no_pad">
                         <div class="form-group">
-                            <label class="col-sm-12 control-label ev_tickt_lebel pl0">Added Organizer</label>
+                            <label class="col-sm-12 control-label ev_tickt_lebel pl0">Choose Existing Organizer</label>
                             @*<div class="col-sm-8 Orgz_dro_con">
                                     Organizer(s) List
                                     <span class="OrgIcn org_right pull-right">
@@ -820,11 +820,11 @@
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start</label>
                                                                 </div>
                                                                 <div class="col-sm-8 ev_pad_l0  mb5 xs_pad_0">
-                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
+                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n"   disabled="disabled"/>
                                                                 </div>
                                                                 <div class="col-sm-4 no_pad  mb5 xs_pad_0">
-                                                                    <input type="hidden" value="0" id="id_hdsaletimestart-n" />
-                                                                    <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" />
+                                                                    @*<input type="hidden" value="0" id="id_hdsaletimestart-n" />*@
+                                                                    <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am"  disabled="disabled" />
                                                                 </div>
 
                                                             </div>
@@ -834,11 +834,11 @@
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End</label>
                                                                 </div>
                                                                 <div class="col-sm-8 ev_pad_l0 mb5">
-                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
+                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n"  disabled="disabled" />
                                                                 </div>
                                                                 <div class="col-sm-4 ev_pad_l0 mb5">
-                                                                    <input type="hidden" value="0" id="id_hdsaletimeend-n" />
-                                                                    <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
+                                                                    @*<input type="hidden" value="0" id="id_hdsaletimeend-n" />*@
+                                                                    <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am"  disabled="disabled" />
                                                                 </div>
 
                                                             </div>
@@ -3032,6 +3032,59 @@ else
 
 
         }
+
+        function AddDates()
+        {
+            var days;
+            $("#hidSchLastState").val($("#dlSchOption").val());
+            if ($(".SchmultiDetail").css('display') == 'block') {
+                $("#hdSchType").val('Multiple');
+                vSelecttextDates = "Click here to enter the start and end date";
+                if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
+                    if ($("#dlSchOption").val() == "Daily") {
+                        vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                    }
+                    else if ($("#dlSchOption").val() == "Weekly") {
+                        days= $("#dllWeeklyDayChk").val();
+
+                        vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+
+                    }
+                    else if ($("#dlSchOption").val() == "Monthly") {
+                        days=$("#dllMonthlyWeekDay").val();
+
+                        vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+
+                    }
+                    else if ($("#dlSchOption").val() == "Custom") {
+                        vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+
+                    }
+                }
+                $("#btEnterDates").text(vSelecttextDates);
+            }
+            else {
+                vSelecttextDates = "Click here to enter the start and end date";
+                if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
+                    vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
+                $("#btEnterDates").text(vSelecttextDates);
+                $("#hdSchType").val('Single');
+            }
+        }
+
+        function AddTimeZone()
+        {
+
+            var vval = $("#dllTimeZone option:selected").text();
+
+
+
+            if (vval == null || vval == '')
+                vval = "Timezone & date setting";
+
+            $("#lblTimeZone").text(vval);
+
+        }
         $(document).ready(function () {
             var vCatId = $("#ddlEventCategory").val();
             var vSubCatId = $("#hidSubCat").val();
@@ -3161,9 +3214,9 @@ else
                     return false;
 
                 }
-                if ($("#status").val().trim().toUpperCase() == "LIVE")
-                    save("Live");
-                else
+                //if ($("#status").val().trim().toUpperCase() == "LIVE")
+                //    save("Live");
+                //else
                     save("Save");
 
             });
@@ -3432,11 +3485,17 @@ else
 
 
             $(".closemodal").click(function () {
+                AddDates();
                 $(".StartDatemodal").hide();
-
+               
+                $("input[id^='id_salestart']").attr("disabled", false);
+                $("input[id^='id_saletimestart']").attr("disabled", false);
+                $("input[id^='id_saleend']").attr("disabled", false);
+                $("input[id^='id_saletimeend']").attr("disabled", false);
             });
 
             $(".closetimemodal").click(function () {
+                AddTimeZone();
                 $(".TmezoneSet").hide();
 
             });
@@ -3536,52 +3595,14 @@ else
                 }
             });
             $("#btSaveTimeZone").click(function () {
-                var vval = $("#dllTimeZone option:selected").text();
-                if (vval == null || vval == '')
-                    vval = "Timezone & date setting";
-
-                $("#lblTimeZone").text(vval);
+                AddTimeZone();
 
             });
 
-            $("#btnAddSch").click(function () {
-                debugger;
-                var days;
-                $("#hidSchLastState").val($("#dlSchOption").val());
-                if ($(".SchmultiDetail").css('display') == 'block') {
-                    $("#hdSchType").val('Multiple');
-                    vSelecttextDates = "Click here to enter the start and end date";
-                    if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
-                        if ($("#dlSchOption").val() == "Daily") {
-                            vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-                        }
-                        else if ($("#dlSchOption").val() == "Weekly") {
-                            days= $("#dllWeeklyDayChk").val();
-
-                            vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
-                        }
-                        else if ($("#dlSchOption").val() == "Monthly") {
-                            days=$("#dllMonthlyWeekDay").val();
-
-                            vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
-                        }
-                        else if ($("#dlSchOption").val() == "Custom") {
-                            vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
-                        }
-                    }
-                    $("#btEnterDates").text(vSelecttextDates);
-                }
-                else {
-                    vSelecttextDates = "Click here to enter the start and end date";
-                    if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
-                        vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
-                    $("#btEnterDates").text(vSelecttextDates);
-                    $("#hdSchType").val('Single');
-                }
-            });
+            //$("#btnAddSch").click(function () {
+              
+              
+            //});
 
             if ($("#hidSchLastState").val() == "") {
                 $("#dlSchOption").val("Daily");
@@ -4104,8 +4125,11 @@ else
                     $('#id_auto_hide_until_Date-' + el).focus();
                     $('#id_auto_hide_until_Date-' + el).val("");
                   
-
                 }
+
+                //} else {
+                //    $('#id_auto_hide_after_Date-' + el).val($('#' + e).val());
+                //}
 
             }
             if (al == "id_salestart") {
@@ -4117,8 +4141,38 @@ else
                     $('#id_salestart-' + el).val("");
                     $('#id_saleend-' + el).val("");
 
-                } else {
-                    $('#id_saleend-' + el).val($('#' + e).val());
+                }
+                else
+                {
+                    var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                    var todayDate = new Date($('#id_salestart-' + el).val() + " " + starttimetime1);
+                    var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
+
+                    var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
+
+                    if (todayDate > dateOne)
+                    {
+                        $('#id_saleend-' + el).val($("#id_salestart-" + el).val());
+                        $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
+                    } else
+                    {
+
+                        if ($("#hdSchType").val() == '') {
+                            $('#id_saleend-' + el).val($('#' + e).val());
+                        }
+
+                        if ($("#hdSchType").val() == 'Single') {
+                            $('#id_saleend-' + el).val($("#txtEndDate").val());
+                            $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                        }
+                        if ($("#hdSchType").val() == 'Multiple') {
+                            $('#id_saleend-' + el).val($("#txtDateTo").val());
+                            $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                        }
+                    }
+
+                   
                 }
 
             }
@@ -5241,8 +5295,30 @@ else
 
             $("#id_saletimeend-" + divlength).timepicker();
            
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
+            //var today = formatdate();
+            //var time = formatAMPM();
+            //if ($("#hdSchType").val() == '') {
+            //    $('#id_saleend-' + divlength).val(today);
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saletimeend-' + divlength).val(time);
+            //}
+
+            //if ($("#hdSchType").val() == 'Single') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtEndDate").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtEndTime").val());
+
+            //}
+            //if ($("#hdSchType").val() == 'Multiple') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtDateTo").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtTimeEnd").val());
+            //}
+            //$('#id_saletimestart-' + divlength).val("07:00pm");
+            //$('#id_saletimeend-' + divlength).val("07:00pm");
 
             $("#id_auto_hide_until_Date-" + divlength).attr("readonly", "readonly");
             $("#id_auto_hide_until_time-" + divlength).attr("readonly", "readonly");
@@ -5351,8 +5427,30 @@ else
 
             $("#id_saletimeend-" + divlength).timepicker();
          
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
+            //var today = formatdate();
+            //var time = formatAMPM();
+            //if ($("#hdSchType").val() == '') {
+            //    $('#id_saleend-' + divlength).val(today);
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saletimeend-' + divlength).val(time);
+            //}
+
+            //if ($("#hdSchType").val() == 'Single') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtEndDate").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtEndTime").val());
+
+            //}
+            //if ($("#hdSchType").val() == 'Multiple') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtDateTo").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtTimeEnd").val());
+            //}
+            //$('#id_saletimestart-' + divlength).val("07:00pm");
+            //$('#id_saletimeend-' + divlength).val("07:00pm");
             $("#id_auto_hide_until_Date-" + divlength).attr("readonly", "readonly");
             $("#id_auto_hide_until_time-" + divlength).attr("readonly", "readonly");
             $("#id_auto_hide_until_Date-" + divlength).datepicker("option", "minDate", -1);
@@ -5448,9 +5546,30 @@ else
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-        
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
+            //$('#id_saletimestart-' + divlength).val("07:00pm");
+            //$('#id_saletimeend-' + divlength).val("07:00pm");
+            //var today = formatdate();
+            //var time = formatAMPM();
+            //if ($("#hdSchType").val() == '') {
+            //    $('#id_saleend-' + divlength).val(today);
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saletimeend-' + divlength).val(time);
+            //}
+
+            //if ($("#hdSchType").val() == 'Single') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtEndDate").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtEndTime").val());
+
+            //}
+            //if ($("#hdSchType").val() == 'Multiple') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtDateTo").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtTimeEnd").val());
+            //}
 
 
             $("#id_auto_hide_until_Date-" + divlength).attr("readonly", "readonly");
@@ -5532,6 +5651,36 @@ else
 
 
 
+        }
+
+        function formatdate()
+        {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+
+            today = mm + '/' + dd + '/' + yyyy;
+            return today;
+        }
+        function formatAMPM() {
+            var date = new Date();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            var strTime = hours + ':' + minutes +ampm;
+            return strTime;
         }
         function deletediv(e) {
             {
@@ -5699,7 +5848,6 @@ else
 
         }
         function checkvalidtime(e) {
-            debugger;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
             var al = e.substr(0, e.indexOf('-'));
 
@@ -5711,27 +5859,78 @@ else
 
                     $('#id_saletimestart-' + el).focus();
                     $('#id_saletimestart-' + el).val("7:00pm");
-                    $('#id_saletimeend-' + el).val("7:00pm");
+                
 
-                } else {
-                    var txt=$('#' + e).val();
-                    $('#id_hdsaletimestart-' + el).val(txt);
-                    $('#id_hdsaletimeend-' + el).val(txt);
-                    $('#id_saletimeend-' + el).val($('#' + e).val());
+                }
+                else
+                {
+                    var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                    var todayDate = new Date($('#id_salestart-' + el).val() + " " + starttimetime1);
+                    var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
+
+                    var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
+                   
+                    if (todayDate > dateOne) {
+                        $('#id_saleend-' + el).val($("#id_salestart-" + el).val());
+                        $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
+                    } else
+                    {
+
+                        var txt = $('#' + e).val();
+
+                        if ($("#hdSchType").val() == '') {
+                            $('#id_saletimeend-' + el).val($('#' + e).val());
+                        }
+
+                        if ($("#hdSchType").val() == 'Single') {
+
+                            $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                        }
+                        if ($("#hdSchType").val() == 'Multiple') {
+
+                            $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                        }
+                    }
+                   
+                   
 
                 }
             }
-            if (al == "id_saletimeend") {
+            if (al == "id_saletimeend") 
+            {
                 errorMsg = checkTime(e);
-                if (errorMsg != "") {
+                if (errorMsg != "") 
+                {
+                    if ($("#hdSchType").val() == '') {
+                        $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
+                    }
 
+                    if ($("#hdSchType").val() == 'Single') {
+                      
+                        $('#id_saletimeend-' + el).val($("#txtEndTime").val());
 
-                    $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
-                    $('#id_saletimeend-' + el).focus();
-                    $('#id_hdsaletimeend-' + el).val($('#id_saletimestart-' + el).val());
+                    }
+                    if ($("#hdSchType").val() == 'Multiple') {
+                       
+                        $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                    }
 
-                } else {
-                    $('#id_hdsaletimeend-' + el).val($('#' + e).val());
+                } 
+                else
+                {
+                   
+                    var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                    var todayDate = new Date($("#id_salestart-"+el).val() + " " + starttimetime1);
+                    var enddatetime = convertTo24Hour($('#id_saletimeend-' + el).val());
+
+                    var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddatetime);
+                  
+                    if (todayDate > dateOne) {
+                       
+                        $('#id_saleend-' + el).val($("#id_salestart-"+el).val());
+                        $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
+                    }
                 }
             }
             if (al == "id_auto_hide_until_time") {
@@ -5740,15 +5939,15 @@ else
 
 
 
-                    $('#id_auto_hide_until_time-' + el).focus();
+                    //$('#id_auto_hide_until_time-' + el).focus();
                     $('#id_auto_hide_until_time-' + el).val("");
-                   
+                    //$('#id_auto_hide_after_Time-' + el).val("7:00pm");
 
                 } else {
-
+                
                     $('#id_hdautohideuntil-' + el).val($('#' + e).val());
-                  
-                  
+                    //$('#id_hdautohideafter-' + el).val($('#' + e).val());
+                    //$('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
 
                 }
 
@@ -5756,20 +5955,31 @@ else
             if (al == "id_auto_hide_after_Time") {
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
+                    $("#id_auto_hide_after_Time-" + el).val("");
+                    //$('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
+                  
+                    //$('#id_auto_hide_after_Time-' + el).focus();
 
-                    $('#id_auto_hide_after_Time-' + el).val('');
-
-                    $('#id_auto_hide_after_Time-' + el).focus();
-
-                    $('#id_hdautohideafter-' + el).val('');
+                    $('#id_hdautohideafter-' + el).val("");
 
                 } else {
                     $('#id_hdautohideafter-' + el).val($('#' + e).val());
-
+                    
                 }
             }
 
 
+        }
+
+        function convertTo24Hour(time) {
+            var hours = parseInt(time.substr(0, 2));
+            if (time.indexOf('am') != -1 && hours == 12) {
+                time = time.replace('12', '0');
+            }
+            if (time.indexOf('pm') != -1 && hours < 12) {
+                time = time.replace(hours, (hours + 12));
+            }
+            return time.replace(/(am|pm)/, '');
         }
         function checkvalidDate(e) {
 
@@ -5782,30 +5992,44 @@ else
                 var startdate = $('#id_salestart-' + el).val();
                 if (errorMsg != "") {
 
+                    if ($("#hdSchType").val() == '') {
+                        $('#id_saleend-' + el).val(startdate);
+                    }
+
+                    if ($("#hdSchType").val() == 'Single') {
+                        $('#id_saleend-' + el).val($("#txtEndDate").val());
+                        $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                    }
+                    if ($("#hdSchType").val() == 'Multiple') {
+                        $('#id_saleend-' + el).val($("#txtDateTo").val());
+                        $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                    }
+
+                    
 
 
-                    $('#id_saleend-' + el).focus();
-                    $('#id_saleend-' + el).val(startdate);
+              
 
 
                 }
+                var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                var todayDate = new Date(startdate + " " + starttimetime1);
+                var enddatetime = convertTo24Hour($('#id_saletimeend-' + el).val());
 
-                errorMsg = compare(startdate, enddate);
+                var dateOne = new Date(enddate + " " + enddatetime);
 
-                if (errorMsg != "") {
-
-
-
-                    $('#id_saleend-' + el).focus();
+                if (todayDate > dateOne) {
                     $('#id_saleend-' + el).val(startdate);
-                    // field.value = "";
-
-
+                    $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
                 }
+              
+
+               
             }
             if (al == "id_auto_hide_after_Date") {
-                //var startdate = $('#id_auto_hide_until_Date-' + el).val();
-                //var enddate = $('#id_auto_hide_after_Date-' + el).val();
+                var startdate = $('#id_auto_hide_until_Date-' + el).val();
+                var enddate = $('#id_auto_hide_after_Date-' + el).val();
                 if (errorMsg != "") {
 
 
@@ -5816,18 +6040,7 @@ else
 
                 }
 
-                ////errorMsg = compare(startdate, enddate);
-
-                //if (errorMsg != "") {
-
-
-
-                //    $('#id_auto_hide_after_Date-' + el).focus();
-                //    $('#id_auto_hide_after_Date-' + el).val(startdate);
-                //    // field.value = "";
-
-
-                //}
+              
 
 
             }
@@ -7018,9 +7231,11 @@ else
         $(document).on('click', function (e) {
             var $target = $(e.target);
             if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
+                AddDates();
                 $(".StartDatemodal").hide();
             };
             if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
+                AddTimeZone();
                 $(".TmezoneSet").hide();
             }
         });
@@ -7052,6 +7267,7 @@ else
                 return false;
 
         }
+        $(document).prop('title', 'ventcombo - Edit @Model.EventTitle');
     </script>
 
 }

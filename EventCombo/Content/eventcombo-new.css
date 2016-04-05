@@ -717,3 +717,15 @@ textarea {resize: none;}
     }
 
 .eventdescfont{ font-weight:normal; font-size:1.2em; color:#000; }
+
+
+
+.ticketsubtotalerror{ padding:0px; margin-right:10px;}
+.promoerror{ font-family:Arial; font-size:12px;}
+.promoerrorred{ color:red;}
+.promoerrorgreen{ color:green}
+.PromoLoaderHide { display:none
+}
+.PromoLoaderShow {
+    display: block;
+}

@@ -113,7 +113,7 @@ namespace EventCombo.Controllers
                             Value = item.EventCategoryID.ToString(),
                         });
                     }
-                    var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
+                    var Timezone = (from c in db.TimeZoneDetails  select c).OrderBy(x=>x.Timezone_order);
                     List<SelectListItem> Timezonelist = new List<SelectListItem>();
                     foreach (var item in Timezone)
                     {
@@ -121,7 +121,7 @@ namespace EventCombo.Controllers
                         {
                             Text = item.TimeZone_Name.ToString(),
                             Value = item.TimeZone_Id.ToString(),
-                            Selected = (item.TimeZone_Id.ToString().Trim() == "26" ? true : false)
+                            Selected = (item.TimeZone_Id.ToString().Trim() == "31" ? true : false)
 
                         });
 
