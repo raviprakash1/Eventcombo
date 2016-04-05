@@ -822,7 +822,7 @@
                                     }
                                 }
                                 vPrice = parseFloat($("#spPrice_" + vTicIds[i]).text());
-                                //alert(vPrice);
+                               // alert(vPrice);
                                 vQty = parseFloat($("#spQty_" + vTicIds[i]).text());
                                 vFee = parseFloat($("#spFee_" + vTicIds[i]).text());
                                 vDonation = parseFloat($("#spDonation_" + vTicIds[i]).text());
@@ -853,18 +853,22 @@
                                 
                                 //alert(vQty); alert(vPrice); alert(vFee);
                                 if (vPrice > 0) {
+                                   // alert(vPrice);
                                     vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
                                     if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
                                     vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
                                 }
                                 else if (vDonation >0)
                                 {
+                                   // alert(vDonation);
+                                    vPrice = 0;
                                     vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
                                     if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
                                     vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
 
                                 }
                             }
+                            //alert(vGrandAmt);
                             $("#hdPromoCodetotal").val(vGrandAmt);
                             if (vVarChanges > 0)
                                 vGrandAmt = vGrandAmt + vVarChanges;
