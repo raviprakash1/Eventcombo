@@ -1,5 +1,5 @@
 ﻿@model EventCombo.Models.showPromocode
- @using EventCombo.Models
+@using EventCombo.Models
 @{
     ViewBag.Title = "PromotionalCodes";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
@@ -54,8 +54,8 @@
             </div>
             <div class="panel panel-default menu_list">
 
-                <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                    <div id="dvManage" class="panel-heading">
+                <a id="crt_promcode" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                    <div id="dvcrtpromcode" class="panel-heading">
                         Invite and Promote <b class="closed"></b>
                     </div>
                 </a>
@@ -152,130 +152,131 @@
 {
     <input type="hidden" id="hdPageIndex" value="@TempData["PageIndex"]" />
 
-<div class="col-sm-12 no_pad">
-    <h3 class="acnt_title">Manage Discount Code</h3>
-    <!--  <p class="p_info">Payment Information</p> -->
-</div>
-<div class="col-sm-12 no_pad text-right mb10">
-    <div class="col-sm-5 col-xs-12 no_pad  text-left ">
-        <a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid })" class="btn-info acnt_btn btn">Create Code</a>
+    <div class="col-sm-12 no_pad">
+        <h3 class="acnt_title">Manage Discount Code</h3>
+        <!--  <p class="p_info">Payment Information</p> -->
     </div>
-    <div class="col-sm-3 col-xs-12 no_pad disnt_srh_right ">
-        <form>
-            <div class="input-group stylish-input-group">
-                <input type="text" class="form-control" placeholder="Searh Code" name="searchquery" value="@Model.searchquery">
-                <span class="input-group-addon">
-                    <button type="submit">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
-            </div>
-        </form>
-    </div>
-    <div class="clearfix"></div>
-    <input type="hidden" name="Eventid" value="@Model.Eventid" />
- </div>
-
-<div class="col-sm-12 col-xs-12 no_pad">
-    <div class="discTable">
-        <div class="discTablehead">
-            <div class="discTableCell">
-                Discount
-            </div>
-            <div class="discTableCell ">
-                Amount
-            </div>
-            <div class="discTableCell ">
-                Starts
-            </div>
-            <div class="discTableCell ">
-                Ends
-            </div>
-            <div class="discTableCell ">
-                Available
-            </div>
-            <div class="discTableCell ">
-                Actions
-            </div>
-
+    <div class="col-sm-12 no_pad text-right mb10">
+        <div class="col-sm-5 col-xs-12 no_pad  text-left ">
+            <a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid })" class="btn-info acnt_btn btn">Create Code</a>
         </div>
-
-        @foreach (var item in (PagedList.IPagedList<Promocode>) Model.Promocode)
-        {
-        <div class="discTableRow">
-            <div class="discmidtablecell">
-              @item.code
-            </div>
-            <div class="discmidtablecell ">
-              @item.Amount
-            </div>
-            <div class="discmidtablecell ">
-                @item.Start
-            </div>
-            <div class="discmidtablecell ">
-                @item.End
-            </div>
-            <div class="discmidtablecell ">
-              @item.Limit
-            </div>
-            <div class="discmidtablecell ">
-                <div class="dis_code_action">
-                   
-                    <a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid, Promocode = @item.PCID })">Edit </a> |
-                    <a href="#confirm-delete-ok" data-toggle="modal"  onclick="ConfirmDelete('@item.PCID');">Delete</a> 
-
-                    
+        <div class="col-sm-3 col-xs-12 no_pad disnt_srh_right ">
+            <form>
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control" placeholder="Searh Code" name="searchquery" value="@Model.searchquery">
+                    <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
                 </div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+        <input type="hidden" name="Eventid" value="@Model.Eventid" />
+    </div>
+
+    <div class="col-sm-12 col-xs-12 no_pad">
+        <div class="discTable">
+            <div class="discTablehead">
+                <div class="discTableCell">
+                    Discount
+                </div>
+                <div class="discTableCell ">
+                    Amount
+                </div>
+                <div class="discTableCell ">
+                    Starts
+                </div>
+                <div class="discTableCell ">
+                    Ends
+                </div>
+                <div class="discTableCell ">
+                    Available
+                </div>
+                <div class="discTableCell ">
+                    Actions
+                </div>
+
+            </div>
+
+            @foreach (var item in (PagedList.IPagedList<Promocode>)Model.Promocode)
+            {
+                <div class="discTableRow">
+                    <div class="discmidtablecell">
+                        @item.code
+                    </div>
+                    <div class="discmidtablecell ">
+                        @item.Amount
+                    </div>
+                    <div class="discmidtablecell ">
+                        @item.Start
+                    </div>
+                    <div class="discmidtablecell ">
+                        @item.End
+                    </div>
+                    <div class="discmidtablecell ">
+                        @item.Limit
+                    </div>
+                    <div class="discmidtablecell ">
+                        <div class="dis_code_action">
+
+                            <a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid, Promocode = @item.PCID })">Edit </a> |
+                            <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete('@item.PCID');">Delete</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+    if (Convert.ToInt32(@TempData["TotalPages"]) > 1)
+    {
+        <div class="col-sm-12 col-xs-12 text-center">
+            <nav>
+                <ul class="pagination desc_pagination">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <span><i class="fa fa-angle-left"></i> </span>
+                        </a>
+                    </li>
+
+                    @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
+                    {
+                        <li><a href="javascript:void(0)" id="aPageLink-@i" onclick="NextPage(@i);">@i</a></li>
+                    }
+
+
+                    <li>
+                        <a href="javascript:void(0)">
+                            <span><i class="fa fa-angle-right"></i> </span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="col-sm-12 pagination_desc">
+
             </div>
         </div>
-        }
-
-
-
-
-
-
-
-    </div>
-</div>
-
-   if (Convert.ToInt32(@TempData["TotalPages"]) > 1)
-    {
-<div class="col-sm-12 col-xs-12 text-center">
-    <nav>
-        <ul class="pagination desc_pagination">
-            <li>
-                <a href="javascript:void(0)">
-                    <span><i class="fa fa-angle-left"></i> </span>
-                </a>
-            </li>
-           
-            @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
-            {
-                <li><a href="javascript:void(0)" id="aPageLink-@i" onclick="NextPage(@i);">@i</a></li>
-            }
-          
-
-            <li>
-                <a href="javascript:void(0)">
-                    <span><i class="fa fa-angle-right"></i> </span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <div class="col-sm-12 pagination_desc">
-        
-    </div>
-</div>
     }
-<div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
-        <div class="modal-content">
+    <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
 
-            <form id="contactForm" class="fullw1 add">
-                <div class="modal-body text-center pv50 txt-msg">
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
 
-                    <h4 class="msg" id="hId"></h4>
+
+                    <h4 class="msg promotional_pop" id="hId"></h4>
                 </div>
                 <div class="modal-footer msg-action-btn ok">
                     <button type="submit" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
@@ -287,13 +288,31 @@
         </div>
     </div><!-- confirm-msg -->
 </div>
+
 }
 
 <script>
     $(document).ready(function () {
+
+        $('#crt_promcode').click();
+        $('#dvcrtpromcode').addClass("active");
+        $('#dvcrtpromcode b').addClass('opened new-opend');
+
+        $('#dvcrtpromcode').click(function (e) {
+
+            var $dvEle = $('#dvcrtpromcode b');
+            var vclassname = $dvEle.attr('class');
+            if ($dvEle.hasClass("new-opend")) {
+                $dvEle.removeClass('opened new-opend').addClass('closed');
+            }
+            else {
+                $dvEle.addClass('opened new-opend');
+            }
+        });
+
+
         var vPageIndex = $("#hdPageIndex").val();
         $("#aPageLink-" + vPageIndex).addClass("active");
-      
         $("#btnYes").click(function () {
             $.ajax({
                 url: '@Url.Action("DeletePromocode","ManageEvent")',
@@ -302,21 +321,19 @@
                 type: "Post",
                 success: function (response) {
                     location.reload();
-                   
                 }
             });
         });
-
     });
     function NextPage(vIndex) {
-      
-      
-        var vUrl = '@Url.Action("PromotionalCodes", "ManageEvent", new {  })?Eventid='+@Model.Eventid+'&strPageIndex=page';
+
+
+        var vUrl = '@Url.Action("PromotionalCodes", "ManageEvent", new {  })?Eventid=' +@Model.Eventid +'&strPageIndex=page';
 
         if (vIndex > 1)
             vUrl = vUrl.replace("page", vIndex);
 
-     
+
 
         window.location.href = vUrl;
     }

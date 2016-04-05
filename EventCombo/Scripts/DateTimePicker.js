@@ -54,9 +54,10 @@ $.DateTimePicker = $.DateTimePicker || {
 		titleContentTime: "Set Time",
 		titleContentDateTime: "Set Date & Time",
 	
-		buttonsToDisplay: ["HeaderCloseButton", "SetButton", "ClearButton"],
+		buttonsToDisplay: ["HeaderCloseButton", "SetButton", "NowButton", "ClearButton"],
 		setButtonContent: "Set",
 		clearButtonContent: "Clear",
+		nowButtonContent: "Now",
     	incrementButtonContent: "<i class='fa fa-angle-up'></i>",
 
     	decrementButtonContent: "<i class='fa fa-angle-down'></i>",
@@ -860,7 +861,34 @@ $.cf = {
 			}
 			oDTP._hidePicker("");
 		},
-	
+		_nowButtonAction: function () {
+		    var oDTP = this;
+
+		    if (oDTP.oData.oInputElement !== null) {
+		        var test = new Date();
+		        var curr_date = test.getDate();
+		        if (parseInt(curr_date) < 10) {
+		            curr_date = '0' + curr_date;
+		        }
+		       
+                
+		            var curr_month = test.getMonth();
+		            if (parseInt(curr_month) < 10) {
+		                curr_month = '0' + curr_month;
+		            }
+		           
+		            var curr_year = test.getFullYear();
+		            var hours = test.getHours(); // => 9
+		            var suffix = (hours >= 12) ? 'PM' : 'AM';
+		            hours = (hours > 12) ? hours - 12 : hours;
+		            hours = (hours == '00') ? 12 : hours;
+		          
+		            var minutes = test.getMinutes(); // =>  30
+		            var seconds = test.getSeconds(); //
+		            oDTP._setValueOfElement(curr_month + '-' + curr_date + '-' + curr_year + '  ' + hours + ':' + minutes + ':' + seconds + ' ' + suffix);
+		    }
+		    oDTP._hidePicker("");
+		},
 		_setOutputOnIncrementOrDecrement: function()
 		{
 			var oDTP = this;
@@ -1327,6 +1355,7 @@ $.cf = {
 			var sColumnClass = "dtpicker-comp" + iNumberOfColumns,
 			bDisplayHeaderCloseButton = false,
 			bDisplaySetButton = false,
+            bDisplayNowButton = false,
 			bDisplayClearButton = false,
 			iTempIndex;
 			
@@ -1335,7 +1364,9 @@ $.cf = {
 				if($.cf._compare(oDTP.settings.buttonsToDisplay[iTempIndex], "HeaderCloseButton"))
 					bDisplayHeaderCloseButton = true;
 				else if($.cf._compare(oDTP.settings.buttonsToDisplay[iTempIndex], "SetButton"))
-					bDisplaySetButton = true;
+				    bDisplaySetButton = true;
+				else if ($.cf._compare(oDTP.settings.buttonsToDisplay[iTempIndex], "NowButton"))
+				    bDisplayNowButton = true;
 				else if($.cf._compare(oDTP.settings.buttonsToDisplay[iTempIndex], "ClearButton"))
 					bDisplayClearButton = true;
 			}
@@ -1374,7 +1405,9 @@ $.cf = {
 		
 			var sButtonContClass = "";
 			if(bDisplaySetButton && bDisplayClearButton)
-				sButtonContClass = " dtpicker-twoButtons";
+			    sButtonContClass = " dtpicker-twoButtons";
+			else if (bDisplaySetButton && bDisplayNowButton && bDisplayClearButton)
+			    sButtonContClass = " dtpicker-twoButtons";
 			else
 				sButtonContClass = " dtpicker-singleButton";
 		
@@ -1382,8 +1415,10 @@ $.cf = {
 			sDTPickerButtons += "<div class='dtpicker-buttonCont" + sButtonContClass + "'>";
 			if(bDisplaySetButton)
 				sDTPickerButtons += "<a class='dtpicker-button dtpicker-buttonSet'>" + oDTP.settings.setButtonContent + "</a>";
-			if(bDisplayClearButton)
-				sDTPickerButtons += "<a class='dtpicker-button dtpicker-buttonClear'>" + oDTP.settings.clearButtonContent + "</a>";
+			if(bDisplayNowButton)
+			    sDTPickerButtons += "<a class='dtpicker-button dtpicker-buttonNow' id='id_nowbuton'>" + oDTP.settings.nowButtonContent + "</a>";
+			if (bDisplayClearButton)
+			    sDTPickerButtons += "<a class='dtpicker-button dtpicker-buttonClear'>" + oDTP.settings.clearButtonContent + "</a>";
 			sDTPickerButtons += "</div>";
 		
 			//--------------------------------------------------------------------
@@ -1513,6 +1548,11 @@ $.cf = {
 				if(oDTP.settings.buttonClicked)
 					oDTP.settings.buttonClicked.call(oDTP, "CLEAR", oDTP.oData.oInputElement);
 				oDTP._clearButtonAction();
+			});
+			$(oDTP.element).find('.dtpicker-buttonNow').click(function (e) {
+			    if (oDTP.settings.buttonClicked)
+			        oDTP.settings.buttonClicked.call(oDTP, "NOW", oDTP.oData.oInputElement);
+			    oDTP._nowButtonAction();
 			});
 		
 			// ----------------------------------------------------------------------------
