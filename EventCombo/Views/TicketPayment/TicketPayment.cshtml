@@ -794,7 +794,7 @@
                         var vProMoAmt = parseFloat(vResult[2].toString());
                       //alert(vProMoAmt);
                         if (isNaN(vProMoAmt) == true) vProMoAmt = 0;
-
+                            
                         if (vProMoAmt > 0) {
                           
                             var vTicIds = $("#hidTicketIds").val().split(',');
@@ -820,6 +820,7 @@
                                     }
                                 }
                                 vPrice = parseFloat($("#spPrice_" + vTicIds[i]).text());
+                                //alert(vPrice);
                                 vQty = parseFloat($("#spQty_" + vTicIds[i]).text());
                                 vFee = parseFloat($("#spFee_" + vTicIds[i]).text());
                                 vDonation = parseFloat($("#spDonation_" + vTicIds[i]).text());
@@ -849,10 +850,18 @@
                                 }
                                 
                                 //alert(vQty); alert(vPrice); alert(vFee);
-                                vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
-                               // alert(vTotalAmt);
-                                if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
-                                vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
+                                if (vPrice > 0) {
+                                    vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
+                                    if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
+                                    vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
+                                }
+                                else if (vDonation >0)
+                                {
+                                    vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
+                                    if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
+                                    vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
+
+                                }
                             }
                             $("#hdPromoCodetotal").val(vGrandAmt);
                             if (vVarChanges > 0)
