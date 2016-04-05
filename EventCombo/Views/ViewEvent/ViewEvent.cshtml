@@ -63,7 +63,9 @@
 
     <div class="event_container">
         <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
-            <div class="col-sm-12 mt10 bggrey clearfix" id="buttonscroll">
+            
+            <div class="event-slide-container xs-viewevent-inner">
+                <div class="col-sm-12 no_pad bggrey clearfix" id="buttonscroll">
                 @if (TempData["EventCancel"] != null)
                 {
                     <div class="Moderor" id="diverroacc" tabindex="-1">
@@ -97,12 +99,12 @@
 
                     </div>
                 </div>
-                <div class="col-sm-3 col-xs-6 pt10 text-left no_pad">
+                <div class="col-sm-3 col-xs-6 text-left no_pad">
                     @*<label class="btn ev_live_sub_btn  grn_live_btn"> LIVE </label>*@
 
 
                 </div>
-                <div class="col-sm-9 col-xs-6 pt10 text-right no_pad">
+                <div class="col-sm-9 col-xs-6 text-right no_pad">
 
                     @*<button class="btn ev_live_sub_btn mb5" type="button">
                             SAVE &#10;
@@ -119,8 +121,7 @@
                     </div>
                 </div>
             </div>
-            <div class="event-slide-container">
-
+                <div class="clearfix"></div>
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                     <div class="navbar-wrapper">
                         <div class="col-sm-12">
@@ -305,6 +306,7 @@
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
         <div class="event_detail_container">
             <div class="evnt_tile_head">
                 <div class="evnt_tile_bg_l"></div>
