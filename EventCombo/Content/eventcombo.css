@@ -1758,6 +1758,7 @@ transform: rotate(45deg);
 .code_pop_desc{ font-size: 1.3em; margin-bottom: 5px;  }
 .code_pop_desc a{ color: #3cf; text-decoration: none; }
 .code_charc{font-size: 1em; min-height: 30px; max-height: 75px; overflow: auto; }
+
 .col_days_hrs_picker_main{ 
     min-height: 135px;
     padding-left: 20px;
@@ -1788,3 +1789,4 @@ transform: rotate(45deg);
 .days_hrs_btn{ background-color: #00cafd; border:1px solid #00cafd; padding:2px 15px; font-size:18px; margin-top: 10px; }
 .days_hrs_btn:hover{background-color: #00cafd; border:1px solid #00cafd;}
 .promotional_pop{ word-break:inherit !important; }
+
