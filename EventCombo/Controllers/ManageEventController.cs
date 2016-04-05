@@ -13,11 +13,14 @@ using PagedList;
 
 namespace EventCombo.Controllers
 {
+   
     [OutputCacheAttribute(VaryByParam = "None", Duration = 0, NoStore = true)]
     public class ManageEventController : Controller
     {
         // GET: ManageEvent
         EventComboEntities db = new EventComboEntities();
+
+        [Authorize]
         public ActionResult Index(long Eventid,string type)
         {
             var TopAddress = ""; var Topvenue = ""; 
@@ -1272,7 +1275,7 @@ namespace EventCombo.Controllers
             return msg;
 
         }
-
+        [Authorize]
         public ActionResult PromotionalCodes(long Eventid, string strPageIndex="page",string searchquery="")
         {
             if (Session["AppId"] != null)
@@ -1344,7 +1347,7 @@ namespace EventCombo.Controllers
             }
         }
 
-
+        [Authorize]
         public ActionResult CreatePromotionalCodes(long Eventid, long Promocode = 0)
         {
             if (Session["AppId"] != null)
@@ -1478,6 +1481,7 @@ namespace EventCombo.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        [Authorize]
         [HttpPost]
         public ActionResult CreatePromotionalCodes(HttpPostedFileBase file,Promo_Code model)
         {
