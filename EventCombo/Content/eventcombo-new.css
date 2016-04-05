@@ -515,6 +515,7 @@ textarea {resize: none;}
 .Fix_Head{position:absolute; top:5px; right:5px;}
 
 .xs_pad_0{ padding: 0px;  }
+
 }
 
 @media (min-width: 360px) and (max-width: 640px) {
@@ -539,6 +540,7 @@ textarea {resize: none;}
 .event-slide-container{ margin-top:95px;}
 
 .xs_pad_0{ padding: 0px;  }
+
 }
 
 @media (width: 640px) {

@@ -1,0 +1,24 @@
+-----------Exception Details on  03/30/2016 4:22:45 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 03/30/2016 4:22:45 PM
+
+Error Line No : ne 1940
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Error Page Url: http://localhost:10159/createevent/geteventurl
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
