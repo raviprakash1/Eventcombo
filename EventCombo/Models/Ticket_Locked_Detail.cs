@@ -23,5 +23,6 @@ namespace EventCombo.Models
         public string TLD_GUID { get; set; }
         public Nullable<decimal> TLD_Donate { get; set; }
         public Nullable<decimal> TicketAmount { get; set; }
+        public Nullable<int> TLD_PromoCodeId { get; set; }
     }
 }

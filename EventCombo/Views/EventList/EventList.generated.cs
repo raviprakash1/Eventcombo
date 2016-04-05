@@ -1357,16 +1357,12 @@ WriteLiteral(@"' + '?Eventid=' + response;
         $(""#DivSavedPager"").hide();
     };
     $(document).ready(function () {
-      
-
         var vLastTab = $(""#hdLastTab"").val();
-     
         var vLasttabdata ="""";
-       
             vLasttabdata =""");
 
             
-            #line 359 "..\..\Views\EventList\EventList.cshtml"
+            #line 355 "..\..\Views\EventList\EventList.cshtml"
                       Write(TempData["hdLastTab"]);
 
             
@@ -1402,7 +1398,7 @@ WriteLiteral(@""";
             $(""#DivPastPager"").hide();
         }
     });
-
+    $(document).prop('title', 'Manage Events and Ticketing on Eventcombo');
 </script>
 ");
 

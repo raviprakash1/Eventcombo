@@ -201,11 +201,12 @@ namespace EventCombo.Controllers
                     Session["ReturnUrl"] = "CreateEvent~" + url;
 
                     string defaultCountry = "";
-                    string timezone = objCr.TimeZone != null ? objCr.TimeZone : "";
+                    string timezone = objCr.TimeZone != null ? objCr.TimeZone : "31";
                     using (EventComboEntities db = new EventComboEntities())
                     {
-                        var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
+                        var Timezone = (from c in db.TimeZoneDetails  select c).OrderBy(x => x.Timezone_order);
                         List<SelectListItem> Timezonelist = new List<SelectListItem>();
+                       
                         foreach (var item in Timezone)
                         {
                             Timezonelist.Add(new SelectListItem()

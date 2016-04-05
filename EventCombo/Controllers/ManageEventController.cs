@@ -1378,7 +1378,7 @@ namespace EventCombo.Controllers
                     pm.ticketype = ttype;
                     pm.Formtype = "S";
                    
-                    startdate = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    startdate = DateTime.UtcNow.ToString("MM-dd-yyyy hh:mm:ss tt");
 
 
                     pm.PC_Start = startdate;

@@ -41,7 +41,7 @@ namespace ASP
             
             #line 1 "..\..\Views\Home\Index.cshtml"
   
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Eventcombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
 
             
             #line default
@@ -72,14 +72,14 @@ WriteLiteral(">\r\n                    <img");
 
 WriteLiteral(" class=\"evnt_img\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 380), Tuple.Create("\"", 405)
-, Tuple.Create(Tuple.Create("", 386), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 386), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 450), Tuple.Create("\"", 475)
+, Tuple.Create(Tuple.Create("", 456), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
+, 456), false)
 );
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral(">\r\n                </div>\r\n                <div");
+WriteLiteral(">\r\n                   \r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"event_list_right\"");
 
@@ -158,9 +158,9 @@ WriteLiteral(">\r\n                    <img");
 
 WriteLiteral(" class=\"evnt_img_right\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5143), Tuple.Create("\"", 5168)
-, Tuple.Create(Tuple.Create("", 5149), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 5149), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 5234), Tuple.Create("\"", 5259)
+, Tuple.Create(Tuple.Create("", 5240), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
+, 5240), false)
 );
 
 WriteLiteral(" alt=\"\"");
@@ -206,19 +206,27 @@ WriteLiteral(">\r\n                    <img");
 
 WriteLiteral(" class=\"evnt_img_right\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5934), Tuple.Create("\"", 5959)
-, Tuple.Create(Tuple.Create("", 5940), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 5940), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 6025), Tuple.Create("\"", 6050)
+, Tuple.Create(Tuple.Create("", 6031), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
+, 6031), false)
 );
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral(">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>" +
-"\r\n<script>\r\n    $(document).ready(function () {\r\n        $.ajax({\r\n            u" +
-"rl: \'");
+WriteLiteral(@">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).prop('title', 'Eventcombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
+    $(document).ready(function () {
+        $.ajax({
+            url: '");
 
             
-            #line 124 "..\..\Views\Home\Index.cshtml"
+            #line 126 "..\..\Views\Home\Index.cshtml"
              Write(Url.Action("GetEventURL", "CreateEvent"));
 
             
@@ -239,7 +247,7 @@ WriteLiteral(@"',
             window.location.href = '");
 
             
-            #line 136 "..\..\Views\Home\Index.cshtml"
+            #line 138 "..\..\Views\Home\Index.cshtml"
                                Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = "a", strEventId = "74" }));
 
             
