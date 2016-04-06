@@ -18,25 +18,27 @@
     @Html.HiddenFor(m => m.EventId, new { id = "hdEventid" })
     <div class="event_container ">
         <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
-            <div class="col-sm-12 bggrey">
-                <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
-                    <div class="er_UI_main">
-                        <div class="er_UI_img"></div>
-                        <div class="er_suc" id="erraccmsg">
-                        </div>
-                        <button class="close" type="button" id="btndivaccerr">&#215;</button>
-                    </div>
-                </div>
-                <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
-                    <div class="er_suc_main">
-
-                        <div class="er_suc_img"></div>
-                        <div class="er_suc" id="succaccmsg"> </div>
-                        <button class="close" type="button" id="btndivaccsuc">&#215;</button>
-                    </div>
-                </div>
-            </div>
+            
             <div class="event_detail_container">
+                <div class="col-sm-12 mt10 bggrey">
+                    <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+                        <div class="er_UI_main">
+                            <div class="er_UI_img"></div>
+                            <div class="er_suc" id="erraccmsg">
+                            </div>
+                            <button class="close" type="button" id="btndivaccerr">&#215;</button>
+                        </div>
+                    </div>
+                    <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
+                        <div class="er_suc_main">
+
+                            <div class="er_suc_img"></div>
+                            <div class="er_suc" id="succaccmsg"> </div>
+                            <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
                 <div class="evnt_details_body2">
                     <div class="col-sm-12 no_pad mt10 pt10">
                         <div class="col-sm-3 pl0">
@@ -213,8 +215,8 @@
                                 <div class="col-sm-6 col-xs-12 mb10 pl0 xspad0 xs375zip">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="accZip" value="@Html.DisplayFor(m=>m.Acczip)">
                                 </div>
-                                <div class="col-sm-6 col-xs-12 mb10 no_pad ">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control ev_drop_label", @id = "accCountry" })
+                                <div class="col-sm-6 col-xs-12 mb10 no_pad dropheight">
+                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "accCountry" })
 
                                 </div>
 
@@ -230,10 +232,10 @@
                                     PLEASE ENTER YOUR CREDIT CARD INFORMATION
                                 </label>
                             </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad dropheight">
 
 
-                                <select class="form-control ev_drop_label" id="selectcard" onchange="showcardetails(this.id)">
+                                <select class="form-control selectpicker" id="selectcard" onchange="showcardetails(this.id)">
                                     @foreach (var item in (List<Cardview>)ViewBag.Detailscard)
                                     {
                                         <option value="@item.value">@item.text</option>
@@ -792,10 +794,11 @@
                         var vTickets = vResult[0].toString();
                         var vProType = vResult[1].toString();
                         var vProMoAmt = parseFloat(vResult[2].toString());
-
+                      //alert(vProMoAmt);
                         if (isNaN(vProMoAmt) == true) vProMoAmt = 0;
-
+                            
                         if (vProMoAmt > 0) {
+                          
                             var vTicIds = $("#hidTicketIds").val().split(',');
                             var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
 
@@ -810,7 +813,8 @@
                             for (i = 0; i < vTicIds.length; i++) {
                                 if (vTickets != "A") {
                                     vflag = false;
-                                    for (icnt = 0; icnt < vAppliedTickets.length; i++) {
+                                    for (icnt = 0; icnt < vAppliedTickets.length; icnt++) {
+                                      //  alert(vTicIds[i] + " " + vAppliedTickets[icnt]);
                                         if (vTicIds[i] == vAppliedTickets[icnt]) {
                                             vflag = true;
                                             break;
@@ -818,6 +822,7 @@
                                     }
                                 }
                                 vPrice = parseFloat($("#spPrice_" + vTicIds[i]).text());
+                               // alert(vPrice);
                                 vQty = parseFloat($("#spQty_" + vTicIds[i]).text());
                                 vFee = parseFloat($("#spFee_" + vTicIds[i]).text());
                                 vDonation = parseFloat($("#spDonation_" + vTicIds[i]).text());
@@ -829,11 +834,14 @@
                                 vFee = parseFloat(vFee); if (isNaN(vFee) == true) vFee = 0;
                                 vDonation = parseFloat(vDonation); if (isNaN(vDonation) == true) vDonation = 0;
                                 if (vflag == true) {
+                                 //   alert(vflag)
                                     if (vProType == "P") {
                                         vProMoAmt = (vProMoAmt * vPrice) / 100;
                                     }
+                                   // alert(vProMoAmt);
+                                    
                                     vPrice = (vPrice - vProMoAmt);
-
+                                    //alert(vPrice);
                                     $.ajax({
                                         url: '@Url.Action("LockPromoCode", "TicketPayment")',
                                         data: { dAmt: vProMoAmt, lTQDId: vTQDId },
@@ -841,13 +849,26 @@
                                         success: function (response) {
                                         }
                                     });
+                                }
+                                
+                                //alert(vQty); alert(vPrice); alert(vFee);
+                                if (vPrice > 0) {
+                                   // alert(vPrice);
+                                    vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
+                                    if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
+                                    vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
+                                }
+                                else if (vDonation >0)
+                                {
+                                   // alert(vDonation);
+                                    vPrice = 0;
+                                    vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
+                                    if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
+                                    vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
 
                                 }
-
-                                vTotalAmt = ((vQty * vPrice) + vFee + vDonation).toFixed(2);
-                                if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
-                                vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
                             }
+                            //alert(vGrandAmt);
                             $("#hdPromoCodetotal").val(vGrandAmt);
                             if (vVarChanges > 0)
                                 vGrandAmt = vGrandAmt + vVarChanges;
@@ -856,7 +877,7 @@
                             $("#hdGrandTotal").val(vGrandAmt.toFixed(2));
 
 
-                            $("#spValidation").text("Promo Code Applied Successfully.");
+                            $("#spValidation").text("Promo Code Applied.");
                             $("#spValidation").removeClass("promoerrorred");
                             $("#spValidation").addClass("promoerrorgreen");
                         }
