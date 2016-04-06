@@ -562,27 +562,27 @@ WriteLiteral(" class=\"btn-link manage\"");
 
 WriteLiteral("><a");
 
-WriteLiteral(" href=\"Javscript:void(0)\"");
+WriteLiteral(" href=\"Javascript:void(0)\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 6558), Tuple.Create("\"", 6618)
-, Tuple.Create(Tuple.Create("", 6568), Tuple.Create("DuplicateEvent(", 6568), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 6559), Tuple.Create("\"", 6619)
+, Tuple.Create(Tuple.Create("", 6569), Tuple.Create("DuplicateEvent(", 6569), true)
             
             #line 123 "..\..\Views\EventList\EventList.cshtml"
-                                           , Tuple.Create(Tuple.Create("", 6583), Tuple.Create<System.Object, System.Int32>(item.EventID
+                                            , Tuple.Create(Tuple.Create("", 6584), Tuple.Create<System.Object, System.Int32>(item.EventID
             
             #line default
             #line hidden
-, 6583), false)
-, Tuple.Create(Tuple.Create("", 6596), Tuple.Create(",", 6596), true)
-, Tuple.Create(Tuple.Create(" ", 6597), Tuple.Create("\'", 6598), true)
+, 6584), false)
+, Tuple.Create(Tuple.Create("", 6597), Tuple.Create(",", 6597), true)
+, Tuple.Create(Tuple.Create(" ", 6598), Tuple.Create("\'", 6599), true)
             
             #line 123 "..\..\Views\EventList\EventList.cshtml"
-                                                           , Tuple.Create(Tuple.Create("", 6599), Tuple.Create<System.Object, System.Int32>(item.EventTitle
+                                                            , Tuple.Create(Tuple.Create("", 6600), Tuple.Create<System.Object, System.Int32>(item.EventTitle
             
             #line default
             #line hidden
-, 6599), false)
-, Tuple.Create(Tuple.Create("", 6615), Tuple.Create("\');", 6615), true)
+, 6600), false)
+, Tuple.Create(Tuple.Create("", 6616), Tuple.Create("\');", 6616), true)
 );
 
 WriteLiteral(">Duplicate</a>  </p>\r\n                                            ");
@@ -768,25 +768,25 @@ WriteLiteral("><a");
 
 WriteLiteral(" href=\"Javscript:void(0)\"");
 
-WriteAttribute("onclick", Tuple.Create("  onclick=\"", 9357), Tuple.Create("\"", 9418)
-, Tuple.Create(Tuple.Create("", 9368), Tuple.Create("DuplicateEvent(", 9368), true)
+WriteAttribute("onclick", Tuple.Create("  onclick=\"", 9358), Tuple.Create("\"", 9419)
+, Tuple.Create(Tuple.Create("", 9369), Tuple.Create("DuplicateEvent(", 9369), true)
             
             #line 166 "..\..\Views\EventList\EventList.cshtml"
-                                            , Tuple.Create(Tuple.Create("", 9383), Tuple.Create<System.Object, System.Int32>(item.EventID
+                                            , Tuple.Create(Tuple.Create("", 9384), Tuple.Create<System.Object, System.Int32>(item.EventID
             
             #line default
             #line hidden
-, 9383), false)
-, Tuple.Create(Tuple.Create("", 9396), Tuple.Create(",", 9396), true)
-, Tuple.Create(Tuple.Create(" ", 9397), Tuple.Create("\'", 9398), true)
+, 9384), false)
+, Tuple.Create(Tuple.Create("", 9397), Tuple.Create(",", 9397), true)
+, Tuple.Create(Tuple.Create(" ", 9398), Tuple.Create("\'", 9399), true)
             
             #line 166 "..\..\Views\EventList\EventList.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 9399), Tuple.Create<System.Object, System.Int32>(item.EventTitle
+                                                            , Tuple.Create(Tuple.Create("", 9400), Tuple.Create<System.Object, System.Int32>(item.EventTitle
             
             #line default
             #line hidden
-, 9399), false)
-, Tuple.Create(Tuple.Create("", 9415), Tuple.Create("\');", 9415), true)
+, 9400), false)
+, Tuple.Create(Tuple.Create("", 9416), Tuple.Create("\');", 9416), true)
 );
 
 WriteLiteral(">Duplicate</a>  </p>\r\n                                            ");
