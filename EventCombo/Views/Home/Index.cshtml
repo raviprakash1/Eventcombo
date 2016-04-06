@@ -4,121 +4,397 @@
 
 
 <div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
-    <div class="col-md-9 col-sm-12 no-padding clearfix">
-        <div class="col-md-4 col-xs-12 col-sm-6 wid_1024 ">
-            <div class="event_list_main">
-                <div class="event_list_left">
-                    <img class="evnt_img" src="~/Images/event1.jpg" alt="">
-                   
-                </div>
-                <div class="event_list_right">
-                    @*<p class="event_tit"><a class="aclick" href='@Url.RouteUrl("ViewEvent",new {strEventDs ="a",strEventId="74"})'>Campagnolo Gran Fondo New York 2015</a></p>*@
-                    @*<p class="event_tit"><a class="aclick" href='@Url.Action("ViewEvent","ViewEvent",new {strEventDs ="a",strEventId="74"})'>Campagnolo Gran Fondo New York 2015</a></p>*@
-                    @*<button type="button" value="EventView" id="btTest">Event View</button>*@
-                    <select id="dllEventList"   >
+ <div class="col-sm-9 col-xs-12 ot_main_pad mb10">
+        <div class="col-sm-12 no_pad">
+            <div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
+                <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+                    <div class="col-sm-12 col-xs-12 in_pad">
+                        <div class="col-sm-4 no_pad">
+                            <div class="dis_evnt_img"><img class="" src="../images/event1.jpg" alt=""></div>
+                            <!-- <div class="col-sm-12 no_pad text-center desc_list_event_type">$35.99 - $35.99 </div> -->
+                        </div>
+                        <div class="col-sm-8 no_pad">
+                            <h1 class="list_event_desc_title xs-title-height">New Delhi Business Ideas Ideas</h1>
+                            <p class="list_event_desc xs-address-height">
+                                Sun National Bank Arena 81 ...
+
+                            </p>
+                            <!--  <p class="list_event_date_time xs-dat-time-height"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p> -->
+
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no_pad">
+                            <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type">
+                                $35.99 - $35.99
+                            </div>
+                            <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
+                                Mar 11, 2016 7:00pm
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                        <div class="col-sm-10 no_pad">
+                            <ul class="nav nav-pills list_inner_cat_tag">
+                                <li><a href="">#category1 </a></li>
+                                <li><a href="">#category2 </a></li>
+
+                            </ul>
+                        </div>
+                        <div class="col-sm-2 no_pad text-right">
+                            <button class="desc_btn_bg_none " title="Your Favourite" type="button" data-toggle="modal" data-target="#sharemodal">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+
+                            <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
 
 
-                    </select>
-                    <p class="event_desc">
-                        @*<a class="aclick" href='@Url.RouteUrl("ViewEvent",new {strEventDesc="a",strEventId="74"})'>
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>*@
-                    </p>
-                    @*<p class="event_date_time"><a class="aclick" href='@Url.RouteUrl("ViewEvent",new {strEventDesc="a",strEventId="74"})'>Saturday, Aug 2, 2014 8:00 PM</a> </p>*@
 
-                    @*<p class="event_tit"><a class="aclick" href='@Url.Action("ViewEvent", "ViewEvent",new { strUrlData="a౼74౼N"})'>Campagnolo Gran Fondo New York 2015</a></p>
-                    <p class="event_desc">
-                        <a class="aclick" href='@Url.Action("ViewEvent", "ViewEvent",new { strUrlData="a౼74౼N"})'>
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                    <p  class="event_date_time"><a class="aclick" href='@Url.Action("ViewEvent", "ViewEvent",new { strUrlData="a౼74౼N"})'>Saturday, Aug 2, 2014 8:00 PM</a> </p>*@
                 </div>
             </div>
+
+            <div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
+                <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+                    <div class="col-sm-12 col-xs-12 in_pad">
+                        <div class="col-sm-4 no_pad">
+                            <div class="dis_evnt_img"><img class="" src="http://localhost:10159/Images/default_event_image.jpg" alt=""></div>
+                            <!-- <div class="col-sm-12 no_pad text-center desc_list_event_type">Free</div> -->
+                        </div>
+                        <div class="col-sm-8 no_pad">
+                            <h1 class="list_event_desc_title xs-title-height">New Delhi Innovative  Business Ideas Ideas</h1>
+                            <p class="list_event_desc xs-address-height">
+                                Sun National Bank Arena 81 Hamilton Avenue Sun National Bank Arena
+                                81 Hamilton Avenue
+
+                            </p>
+                            <!--  <p class="list_event_date_time xs-dat-time-height"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p> -->
+
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no_pad">
+                            <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type">
+                                $35.99 - $35.99
+                            </div>
+                            <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
+                                Mar 11, 2016 7:00pm - Apr 29, 2016 7:00pm
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                        <div class="col-sm-10 no_pad">
+                            <ul class="nav nav-pills list_inner_cat_tag">
+                                <li><a href="">#category1 </a></li>
+                                <li><a href="">#category2 </a></li>
+
+                            </ul>
+                        </div>
+                        <div class="col-sm-2 no_pad text-right">
+                            <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+
+                            <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
+                <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+                    <div class="col-sm-12 col-xs-12 in_pad">
+                        <div class="col-sm-4 no_pad">
+                            <div class="dis_evnt_img"><img class="" src="images/long.jpg" alt=""></div>
+                            <!-- <div class="col-sm-12 no_pad text-center desc_list_event_type">$35.99 - $35.99</div> -->
+                        </div>
+                        <div class="col-sm-8 no_pad">
+                            <h1 class="list_event_desc_title xs-title-height">New Delhi Innovative Business Ideas Business Ideas Ideas</h1>
+                            <p class="list_event_desc xs-address-height">
+                                Sun National Bank Arena 81 Hamilton Avenue Sun National Bank Arena
+                                81 Hamilton Avenue 81 Hamilton Avenue Bank...
+
+                            </p>
+
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no_pad">
+                            <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type">
+                                $35.99 - $35.99
+                            </div>
+                            <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
+                                Mar 11, 2016 7:00pm - Apr 29, 2016 7:00pm
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                        <div class="col-sm-10 no_pad">
+                            <ul class="nav nav-pills list_inner_cat_tag">
+                                <li><a href="">#category1 </a></li>
+                                <li><a href="">#category2 </a></li>
+
+                            </ul>
+                        </div>
+                        <div class="col-sm-2 no_pad text-right">
+                            <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+
+                            <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
+                <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+                    <div class="col-sm-12 col-xs-12 in_pad">
+                        <div class="col-sm-4 no_pad">
+                            <div class="dis_evnt_img"><img class="" src="images/long.jpg" alt=""></div>
+                            <!-- <div class="col-sm-12 no_pad text-center desc_list_event_type">$35.99 - $35.99</div> -->
+                        </div>
+                        <div class="col-sm-8 no_pad">
+                            <h1 class="list_event_desc_title xs-title-height">New Delhi Innovative Business Ideas Business Ideas Ideas</h1>
+                            <p class="list_event_desc xs-address-height">
+                                Sun National Bank Arena 81 Hamilton Avenue Sun National Bank Arena
+                                81 Hamilton Avenue 81 Hamilton Avenue Bank...
+
+                            </p>
+
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no_pad">
+                            <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type">
+                                $35.99 - $35.99
+                            </div>
+                            <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
+                                Mar 11, 2016 7:00pm - Apr 29, 2016 7:00pm
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                        <div class="col-sm-10 no_pad">
+                            <ul class="nav nav-pills list_inner_cat_tag">
+                                <li><a href="">#category1 </a></li>
+                                <li><a href="">#category2 </a></li>
+
+                            </ul>
+                        </div>
+                        <div class="col-sm-2 no_pad text-right">
+                            <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+
+                            <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
+                <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+                    <div class="col-sm-12 col-xs-12 in_pad">
+                        <div class="col-sm-4 no_pad">
+                            <div class="dis_evnt_img"><img class="" src="images/long.jpg" alt=""></div>
+                            <!-- <div class="col-sm-12 no_pad text-center desc_list_event_type">$35.99 - $35.99</div> -->
+                        </div>
+                        <div class="col-sm-8 no_pad">
+                            <h1 class="list_event_desc_title xs-title-height">New Delhi Innovative Business Ideas Business Ideas Ideas</h1>
+                            <p class="list_event_desc xs-address-height">
+                                Sun National Bank Arena 81 Hamilton Avenue Sun National Bank Arena
+                                81 Hamilton Avenue 81 Hamilton Avenue Bank...
+
+                            </p>
+
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no_pad">
+                            <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type">
+                                $35.99 - $35.99
+                            </div>
+                            <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
+                                Mar 11, 2016 7:00pm - Apr 29, 2016 7:00pm
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                        <div class="col-sm-10 no_pad">
+                            <ul class="nav nav-pills list_inner_cat_tag">
+                                <li><a href="">#category1 </a></li>
+                                <li><a href="">#category2 </a></li>
+
+                            </ul>
+                        </div>
+                        <div class="col-sm-2 no_pad text-right">
+                            <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+
+                            <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-12 col-sm-6 ot_pad">
+                <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+                    <div class="col-sm-12 col-xs-12 in_pad">
+                        <div class="col-sm-4 no_pad">
+                            <div class="dis_evnt_img"><img class="" src="images/long.jpg" alt=""></div>
+                            <!-- <div class="col-sm-12 no_pad text-center desc_list_event_type">$35.99 - $35.99</div> -->
+                        </div>
+                        <div class="col-sm-8 no_pad">
+                            <h1 class="list_event_desc_title xs-title-height">New Delhi Innovative Business Ideas Business Ideas Ideas</h1>
+                            <p class="list_event_desc xs-address-height">
+                                Sun National Bank Arena 81 Hamilton Avenue Sun National Bank Arena
+                                81 Hamilton Avenue 81 Hamilton Avenue Bank...
+
+                            </p>
+
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no_pad">
+                            <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type">
+                                $35.99 - $35.99
+                            </div>
+                            <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
+                                Mar 11, 2016 7:00pm - Apr 29, 2016 7:00pm
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                        <div class="col-sm-10 no_pad">
+                            <ul class="nav nav-pills list_inner_cat_tag">
+                                <li><a href="">#category1 </a></li>
+                                <li><a href="">#category2 </a></li>
+
+                            </ul>
+                        </div>
+                        <div class="col-sm-2 no_pad text-right">
+                            <button class="desc_btn_bg_none " title="Your Favourite" type="button">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+
+                            <button class="desc_btn_bg_none desc_btn_bg_active" title="Your Favourite" type="button">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
         </div>
-        @*<div class="col-md-4 col-xs-12 col-sm-6 wid_1024">
-            <div class="event_list_main">
-                <div class="event_list_left">
-                    <img class="evnt_img" src="~/Images/event1.jpg" alt="">
-                </div>
-                <div class="event_list_right">
-                    <p class="event_tit"><a href="#">Campagnolo Gran Fondo New York 2015</a></p>
-                    <p class="event_desc">
+
+        <div class="col-sm-12 col-xs-12 text-center mb10">
+            <nav>
+                <ul class="pagination desc_pagination">
+                    <li>
                         <a href="#">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
+                            <span><i class="fa fa-angle-left"></i> </span>
                         </a>
-                    </p>
-                    <p class="event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
-                </div>
-            </div>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#">
+                            <span><i class="fa fa-angle-right"></i> </span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
         </div>
-        <div class="col-md-4 col-xs-12 col-sm-6 wid_1024">
-            <div class="event_list_main">
-                <div class="event_list_left">
-                    <img class="evnt_img" src="~/Images/event1.jpg" alt="">
-                </div>
-                <div class="event_list_right">
-                    <p class="event_tit"><a href="#">Campagnolo Gran Fondo New York 2015</a></p>
-                    <p class="event_desc">
-                        <a href="#">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                    <p class="event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
-                </div>
-            </div>
-        </div>*@
+
     </div>
-    <div class="col-md-3 col-sm-12 clearfix">
+
+    <div class="col-sm-3 col-xs-12 ot_main_pad">
         <div class="col-sm-12 no-padding">
             <div class="the_buz "><h2>What's the BUZZ?</h2></div>
-            <div class="event_list_main buzz_right_main ">
-                <div class="event_list_right buzz_right">
-                    <p class="event_tit buz_title"><a href="#">To Tattoo or Not... 5 of the Hottest Tat Types for Summer</a></p>
-                    <p class="event_desc buz_desc">
+
+            <div class="col-sm-12 no_pad mb10">
+                <div class="col-sm-12 no_pad">
+                    <div class="home-buzz-img"> <img class="" src="../images/event1.jpg" alt=""> </div>
+                </div>
+                <div class="col-sm-12 no_pad">
+                    <h1 class="list_event_desc_title">
                         <a href="#">
                             Sun National Bank Arena
                             81 Hamilton Avenue
                             Trenton, NJ , 08611
                             New York, New York
                         </a>
-                    </p>
+                    </h1>
                 </div>
-                <div class="event_list_left">
-                    <img class="evnt_img_right" src="~/Images/event1.jpg" alt="">
+                <div class="col-sm-12 no_pad ">
+                    <ul class="nav nav-pills list_inner_cat_tag buzz_bot_title">
+                        <li><i class="fa fa-user"></i> Cheris Mcdonald </li>
+                        <li><i class="fa fa-clock-o"></i> 15 minutes ago </li>
+
+                    </ul>
                 </div>
             </div>
-            <div class="event_list_main buzz_right_main">
-                <div class="event_list_right buzz_right">
-                    <p class="event_tit buz_title"><a href="#">To Tattoo or Not... 5 of the Hottest Tat Types for Summer</a></p>
-                    <p class="event_desc buz_desc">
+
+            <div class="col-sm-12 no_pad mb10">
+                <div class="col-sm-12 no_pad">
+                    <div class="home-buzz-img"> <img class="" src="http://localhost:10159/Images/default_event_image.jpg" alt=""> </div>
+                </div>
+                <div class="col-sm-12 no_pad">
+                    <h1 class="list_event_desc_title">
                         <a href="#">
                             Sun National Bank Arena
                             81 Hamilton Avenue
                             Trenton, NJ , 08611
                             New York, New York
                         </a>
-                    </p>
+                    </h1>
                 </div>
-                <div class="event_list_left">
-                    
-                    <img class="evnt_img_right"  src="~/Images/event1.jpg" alt="">
+                <div class="col-sm-12 no_pad ">
+                    <ul class="nav nav-pills list_inner_cat_tag buzz_bot_title">
+                        <li><i class="fa fa-user"></i> Cheris Mcdonald </li>
+                        <li><i class="fa fa-clock-o"></i> 15 minutes ago </li>
+
+                    </ul>
                 </div>
             </div>
+
+            <div class="col-sm-12 no_pad mb10">
+                <div class="col-sm-12 no_pad">
+                    <div class="home-buzz-img"> <img class="" src="../images/event1.jpg" alt=""> </div>
+                </div>
+                <div class="col-sm-12 no_pad">
+                    <h1 class="list_event_desc_title">
+                        <a href="#">
+                            Sun National Bank Arena
+                            81 Hamilton Avenue
+                            Trenton, NJ , 08611
+                            New York, New York
+                        </a>
+                    </h1>
+                </div>
+                <div class="col-sm-12 no_pad ">
+                    <ul class="nav nav-pills list_inner_cat_tag buzz_bot_title">
+                        <li><i class="fa fa-user"></i> Cheris Mcdonald </li>
+                        <li><i class="fa fa-clock-o"></i> 15 minutes ago </li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
+
 </div>
 <script>
     $(document).prop('title', 'Eventcombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
