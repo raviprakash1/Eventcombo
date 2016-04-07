@@ -1265,12 +1265,17 @@ namespace EventCombo.Controllers
                         }
                         strticketHtml.Append("</div></div>");
                         strticketHtml.Append("<div class='clearfix'></div><div class='form-group mt20'> <div class='col-sm-6 ev_pad_l0'><div class='col-sm-12 no_pad'>");
-                        strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel'>Ticket Sales Start</label></div><div class='col-sm-8 ev_pad_l0 mb5 xs_pad_0'>");
+                        strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel'>Ticket Sales Start</label>");
+                        strticketHtml.Append("<div class='upload_help_icn pull-right' style='display:none;'><div class='tip'><img class='help_icon_hov' src='/Images/icon-question.gif' id='hovstart-" + j + "' onmouseover='showhover(this.id);' onmouseout='showhoverout(this.id)' />");
+                        strticketHtml.Append(" <span class='upload_help_icn_inner' style='display:none;' id='help_start_inner-" + j + "''> Your Event's date and time need to be  selected in order to update sales start date  </span>  </div>  </div>");
+                        strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0 mb5 xs_pad_0'>");
                         strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_salestart-" + j + "' onchange='changetext(this.id);' value='" + startdate + "' />");
                         strticketHtml.Append("</div><div class='col-sm-4 no_pad mb5 xs_pad_0'><input type='hidden' value='0' id='id_hdsaletimestart-" + j + "' value='" + ObjTick.Sale_Start_Time + "' />");
                         strticketHtml.Append("<input id='id_saletimestart-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Sale_Start_Time + "' />");
                         strticketHtml.Append("</div></div>");
                         strticketHtml.Append("<div class='col-sm-6 ev_pad_r0 xs_pad_0'><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel'>Ticket Sales End</label>");
+                        strticketHtml.Append("<div class='upload_help_icn pull-right' style='display:none;'><div class='tip'><img class='help_icon_hov' src='/Images/icon-question.gif' id='hovend-" + j + "' onmouseover='showhover(this.id);' onmouseout='showhoverout(this.id)' />");
+                        strticketHtml.Append(" <span class='upload_help_icn_inner' style='display:none;' id='help_end_inner-" + j + "''> Your Event's date and time need to be  selected in order to update sales end date  </span>  </div>  </div>");
                         strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0 mb5'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_saleend-" + j + "' onchange='checkvalidDate(this.id)' value='" + enddate + "' />");
                         strticketHtml.Append("</div><div class='col-sm-4 ev_pad_l0 mb5'> <input type='hidden' value='0' id='id_hdsaletimeend-" + j + "' value='" + ObjTick.Sale_End_Time + "' />");
                         strticketHtml.Append("<input id='id_saletimeend-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id) ' value='" + ObjTick.Sale_End_Time + "' />");

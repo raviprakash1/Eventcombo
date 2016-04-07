@@ -101,7 +101,7 @@ namespace EventCombo.Models
         public string EventDisplayAddress { get; set; }
         public double EventDistance { get; set; }
 
-        
+        public int EventFeature { get; set; }
 
         //public DiscoverEvent[] DiscoverEventList { get; set; }
 

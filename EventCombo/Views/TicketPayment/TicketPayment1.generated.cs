@@ -132,13 +132,14 @@ WriteLiteral(" class=\"event_container \"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"event_inner_container event_top view_evnt_top viewevent_container\"");
+WriteLiteral(" class=\"event_inner_container event_top view_evnt_top viewevent_container xs-paym" +
+"entconf-top\"");
 
 WriteLiteral(" id=\"eventtopscoll\"");
 
 WriteLiteral(">\r\n            \r\n            <div");
 
-WriteLiteral(" class=\"event_detail_container\"");
+WriteLiteral(" class=\"event_detail_container xs-paymentconf-inner\"");
 
 WriteLiteral(">\r\n                <div");
 
@@ -230,14 +231,14 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" class=\"img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2033), Tuple.Create("\"", 2070)
+WriteAttribute("src", Tuple.Create(" src=\"", 2073), Tuple.Create("\"", 2110)
             
             #line 45 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-, Tuple.Create(Tuple.Create("", 2039), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Imageurl)
+, Tuple.Create(Tuple.Create("", 2079), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Imageurl)
             
             #line default
             #line hidden
-, 2039), false)
+, 2079), false)
 );
 
 WriteLiteral(">\r\n                        </div>\r\n                        <div");
@@ -312,9 +313,9 @@ WriteLiteral(" id=\"dvAjxLoader\"");
 
 WriteLiteral(">\r\n                            <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5374), Tuple.Create("\"", 5404)
-, Tuple.Create(Tuple.Create("", 5380), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 5380), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 5414), Tuple.Create("\"", 5444)
+, Tuple.Create(Tuple.Create("", 5420), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 5420), false)
 );
 
 WriteLiteral(" />\r\n                        </div>\r\n                    </div>\r\n                " +
@@ -452,14 +453,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"FIRST NAME\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8746), Tuple.Create("\"", 8782)
+WriteAttribute("value", Tuple.Create(" value=\"", 8786), Tuple.Create("\"", 8822)
             
             #line 159 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                      , Tuple.Create(Tuple.Create("", 8754), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.FName)
+                                      , Tuple.Create(Tuple.Create("", 8794), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.FName)
             
             #line default
             #line hidden
-, 8754), false)
+, 8794), false)
 );
 
 WriteLiteral(" maxlength=50");
@@ -478,14 +479,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"LAST NAME\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 9035), Tuple.Create("\"", 9071)
+WriteAttribute("value", Tuple.Create(" value=\"", 9075), Tuple.Create("\"", 9111)
             
             #line 162 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                     , Tuple.Create(Tuple.Create("", 9043), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.LName)
+                                     , Tuple.Create(Tuple.Create("", 9083), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.LName)
             
             #line default
             #line hidden
-, 9043), false)
+, 9083), false)
 );
 
 WriteLiteral(" id=\"accLname\"");
@@ -504,14 +505,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"EMAIL\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 9320), Tuple.Create("\"", 9356)
+WriteAttribute("value", Tuple.Create(" value=\"", 9360), Tuple.Create("\"", 9396)
             
             #line 165 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 9328), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Email)
+                                 , Tuple.Create(Tuple.Create("", 9368), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Email)
             
             #line default
             #line hidden
-, 9328), false)
+, 9368), false)
 );
 
 WriteLiteral(" id=\"Email\"");
@@ -697,14 +698,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                        <option");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 14277), Tuple.Create("\"", 14296)
+WriteAttribute("value", Tuple.Create(" value=\"", 14317), Tuple.Create("\"", 14336)
             
             #line 242 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-, Tuple.Create(Tuple.Create("", 14285), Tuple.Create<System.Object, System.Int32>(item.value
+, Tuple.Create(Tuple.Create("", 14325), Tuple.Create<System.Object, System.Int32>(item.value
             
             #line default
             #line hidden
-, 14285), false)
+, 14325), false)
 );
 
 WriteLiteral(">");
@@ -1458,9 +1459,9 @@ WriteLiteral(" style=\"display:none\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 28047), Tuple.Create("\"", 28077)
-, Tuple.Create(Tuple.Create("", 28053), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 28053), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 28087), Tuple.Create("\"", 28117)
+, Tuple.Create(Tuple.Create("", 28093), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 28093), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n            </div>\r\n  " +
@@ -1676,9 +1677,9 @@ WriteLiteral(" class=\"msg\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 30734), Tuple.Create("\"", 30764)
-, Tuple.Create(Tuple.Create("", 30740), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 30740), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 30774), Tuple.Create("\"", 30804)
+, Tuple.Create(Tuple.Create("", 30780), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 30780), false)
 );
 
 WriteLiteral(" />Please wait, Preparing your order.</h4>\r\n                    </div>\r\n         " +
@@ -1871,37 +1872,37 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32967), Tuple.Create("\"", 33000)
-, Tuple.Create(Tuple.Create("", 32973), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/Commonfunction.js")
-, 32973), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 33007), Tuple.Create("\"", 33040)
+, Tuple.Create(Tuple.Create("", 33013), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/Commonfunction.js")
+, 33013), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 33020), Tuple.Create("\"", 33048)
-, Tuple.Create(Tuple.Create("", 33026), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/flipclock.js")
-, 33026), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 33060), Tuple.Create("\"", 33088)
+, Tuple.Create(Tuple.Create("", 33066), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/flipclock.js")
+, 33066), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 33068), Tuple.Create("\"", 33100)
-, Tuple.Create(Tuple.Create("", 33074), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.cookie.js")
-, 33074), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 33108), Tuple.Create("\"", 33140)
+, Tuple.Create(Tuple.Create("", 33114), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.cookie.js")
+, 33114), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 33120), Tuple.Create("\"", 33148)
-, Tuple.Create(Tuple.Create("", 33126), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
-, 33126), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 33160), Tuple.Create("\"", 33188)
+, Tuple.Create(Tuple.Create("", 33166), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
+, 33166), false)
 );
 
 WriteLiteral("></script>\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 33166), Tuple.Create("\"", 33224)
-, Tuple.Create(Tuple.Create("", 33173), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css")
-, 33173), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 33206), Tuple.Create("\"", 33264)
+, Tuple.Create(Tuple.Create("", 33213), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css")
+, 33213), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -1912,9 +1913,9 @@ WriteLiteral(" src=\"//www.paypalobjects.com/api/checkout.js\"");
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 33325), Tuple.Create("\"", 33366)
-, Tuple.Create(Tuple.Create("", 33331), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 33331), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 33365), Tuple.Create("\"", 33406)
+, Tuple.Create(Tuple.Create("", 33371), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 33371), false)
 );
 
 WriteLiteral(@"></script>
@@ -2010,32 +2011,32 @@ WriteLiteral("\',\r\n                        data: { \'Email\': email },\r\n    
 "  } else {\r\n\r\n                    $(\'#blocklist\').css(\'display\', \'block\');\r\n    " +
 "            }\r\n            //if ($(\'.Notifybox\').css(\'display\') == \'block\') {\r\n " +
 "           //   \r\n         \r\n\r\n            //}\r\n            //else {\r\n\r\n        " +
-"    //    $(\'#blocklist\').css(\'display\', \'block\');\r\n            //}\r\n\r\n\r\n\r\n\r\n   " +
-"         var qty = $(\'#hidQty\').val();\r\n\r\n\r\n\r\n\r\n            if ($(\"#hidTicketbea" +
-"rer\").val() == \'\') {\r\n                var qty = parseInt($(\'#hidQty\').val());\r\n " +
-"               var ddlength = parseInt($(\"#ddlListitem option\").length);\r\n      " +
-"          if (ddlength > (qty - 1)) {\r\n                    var msg = ajaxsetup(\'" +
-"TicketPayment\', \'TpayMaxTicketReciepts\') + qty;\r\n                    $(\'#divaccs" +
-"uc\').css(\'display\', \'none\');\r\n                    $(\'#diverroacc\').css(\'display\'" +
-", \'block\');\r\n\r\n                    $(\'#diverroacc\').focus();\r\n                  " +
-"  $(\'#erraccmsg\').html(msg);\r\n                    $(\'html,body\').animate({ scrol" +
-"lTop: 0 });\r\n                    return false;\r\n                }\r\n             " +
-"   AddTicket();\r\n            }\r\n            else\r\n                UpdateTicket($" +
-"(\"#hidTicketbearer\").val());\r\n\r\n\r\n            $(\"#hidTicketbearer\").val(\'\');\r\n  " +
-"          $(\"#nameofticket\").val(\'\');\r\n            $(\"#emailbearer\").val(\'\');\r\n " +
-"           //if ($(\'.Notifybox\').css(\'display\') == \'block\') {\r\n            //   " +
-" $(\'.Notifybox\').css(\'display\', \'none\');\r\n            //}\r\n\r\n        });\r\n\r\n    " +
-"    $(\"#selectcard\").change(function () {\r\n            if ($(\"#selectcard\").val(" +
-") == \"P\") {\r\n                $(\"#dvBillingAddress\").hide();\r\n                $(\"" +
-"#completeorder\").hide();\r\n                $(\"#btPaypal\").show();\r\n            }\r" +
-"\n            else {\r\n                $(\"#dvBillingAddress\").show();\r\n           " +
-"     $(\"#completeorder\").show();\r\n                $(\"#btPaypal\").hide();\r\n\r\n    " +
-"        }\r\n        });\r\n        $(\"#login\").click(function () {\r\n            $(\"" +
-"#hdIsPostBack\").val(\"Y\");\r\n        });\r\n\r\n        $(\'#btBack\').click(function ()" +
-" {\r\n            //alert(url);\r\n            $.ajax({\r\n                url: \'");
+"    //    $(\'#blocklist\').css(\'display\', \'block\');\r\n            //}\r\n\r\n\r\n\r\n\r\n\r\n " +
+"           var qty = $(\'#hidQty\').val();\r\n\r\n\r\n\r\n\r\n            if ($(\"#hidTicketb" +
+"earer\").val() == \'\') {\r\n                var qty = parseInt($(\'#hidQty\').val());\r" +
+"\n                var ddlength = parseInt($(\"#ddlListitem option\").length);\r\n    " +
+"            if (ddlength > (qty - 1)) {\r\n                    var msg = ajaxsetup" +
+"(\'TicketPayment\', \'TpayMaxTicketReciepts\') + qty;\r\n                    $(\'#divac" +
+"csuc\').css(\'display\', \'none\');\r\n                    $(\'#diverroacc\').css(\'displa" +
+"y\', \'block\');\r\n\r\n                    $(\'#diverroacc\').focus();\r\n                " +
+"    $(\'#erraccmsg\').html(msg);\r\n                    $(\'html,body\').animate({ scr" +
+"ollTop: 0 });\r\n                    return false;\r\n                }\r\n           " +
+"     AddTicket();\r\n            }\r\n            else\r\n                UpdateTicket" +
+"($(\"#hidTicketbearer\").val());\r\n\r\n\r\n            $(\"#hidTicketbearer\").val(\'\');\r\n" +
+"            $(\"#nameofticket\").val(\'\');\r\n            $(\"#emailbearer\").val(\'\');\r" +
+"\n            //if ($(\'.Notifybox\').css(\'display\') == \'block\') {\r\n            // " +
+"   $(\'.Notifybox\').css(\'display\', \'none\');\r\n            //}\r\n\r\n        });\r\n\r\n  " +
+"      $(\"#selectcard\").change(function () {\r\n            if ($(\"#selectcard\").va" +
+"l() == \"P\") {\r\n                $(\"#dvBillingAddress\").hide();\r\n                $" +
+"(\"#completeorder\").hide();\r\n                $(\"#btPaypal\").show();\r\n            " +
+"}\r\n            else {\r\n                $(\"#dvBillingAddress\").show();\r\n         " +
+"       $(\"#completeorder\").show();\r\n                $(\"#btPaypal\").hide();\r\n\r\n  " +
+"          }\r\n        });\r\n        $(\"#login\").click(function () {\r\n            $" +
+"(\"#hdIsPostBack\").val(\"Y\");\r\n        });\r\n\r\n        $(\'#btBack\').click(function " +
+"() {\r\n            //alert(url);\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 797 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 798 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("ReleaseTickets", "CreateEvent"));
 
             
@@ -2045,7 +2046,7 @@ WriteLiteral("\',\r\n                type: \"Post\",\r\n                success:
 "\r\n                    window.location.href = \'");
 
             
-            #line 800 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 801 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                        Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()}));
 
             
@@ -2191,7 +2192,7 @@ WriteLiteral("\';\r\n                }\r\n            });\r\n        });\r\n    
 "PaymentType == \"P\") {\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 1111 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1112 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                      Write(Url.Action("SendPaypaldetail", "TicketPayment"));
 
             
@@ -2207,7 +2208,7 @@ WriteLiteral(@"',
                             //window.open('");
 
             
-            #line 1118 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1119 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                       Write(Url.Action("Pay", "Cart"));
 
             
@@ -2224,7 +2225,7 @@ WriteLiteral(@"', ""Paypal"", ""location=no,toolbar=no,height=600,width=800,moda
                     url: '");
 
             
-            #line 1126 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1127 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                      Write(Url.Action("SaveDetails", "TicketPayment"));
 
             
@@ -2239,7 +2240,7 @@ WriteLiteral(@"',
                         window.location.href = '");
 
             
-            #line 1132 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1133 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                            Write(Url.Action("PaymentConfirmation", "TicketPayment"));
 
             
@@ -2251,7 +2252,7 @@ WriteLiteral("\';\r\n                    }\r\n                });\r\n           
 "  url: \'");
 
             
-            #line 1143 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1144 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("LoadTickets", "TicketPayment"));
 
             
@@ -2343,7 +2344,7 @@ WriteLiteral("\',\r\n            beforeSend: function () { $(\'#dvAjxLoader\').s
 "  $.ajax({\r\n                url: \'");
 
             
-            #line 1358 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1359 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("setsession", "TicketPayment"));
 
             
@@ -2375,7 +2376,7 @@ WriteLiteral(@"',
             window.location.href = '");
 
             
-            #line 1381 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1382 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()}));
 
             
@@ -2404,7 +2405,7 @@ WriteLiteral("\';\r\n        });\r\n\r\n        //\r\n        $(\".closetimemoda
 "                 url: \'");
 
             
-            #line 1437 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1438 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                          Write(Url.Action("ReleaseTickets", "TicketPayment"));
 
             
@@ -2419,7 +2420,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 1443 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1444 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                                Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","") , strEventId = Model.EventId.ToString()}));
 
             
@@ -2443,7 +2444,7 @@ WriteLiteral(@"';
                 url: '");
 
             
-            #line 1458 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1459 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("ReleaseTickets", "TicketPayment"));
 
             
@@ -2464,7 +2465,7 @@ WriteLiteral(@"',
         paypal.checkout.setup(""");
 
             
-            #line 1470 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1471 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                           Write(PayPalSettings.MerchantAccountID);
 
             
@@ -2473,7 +2474,7 @@ WriteLiteral(@"',
 WriteLiteral("\", {\r\n            environment: \'");
 
             
-            #line 1471 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1472 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                      Write(PayPalSettings.Environment);
 
             
@@ -2484,7 +2485,7 @@ WriteLiteral("\',\r\n            click: function (event) {\r\n                ev
 "rue;\r\n\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 1478 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1479 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                      Write(Html.Raw(Url.Action("PayPaltoken", "Cart")));
 
             
@@ -2564,7 +2565,7 @@ WriteLiteral("\',\r\n                    type: \"GET\",\r\n                    a
 ".val();\r\n\r\n        $.ajax({\r\n            url: \'");
 
             
-            #line 1635 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1636 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("SetSessionPaypaldetail", "Cart"));
 
             
@@ -2593,7 +2594,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 1655 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1656 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("CalculatePromoCode", "TicketPayment"));
 
             
@@ -2660,7 +2661,7 @@ WriteLiteral("\',\r\n                data: { strTicketId: \'\', strCode: vProCod
 "                                  url: \'");
 
             
-            #line 1740 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1741 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                          Write(Url.Action("LockPromoCode", "TicketPayment"));
 
             
@@ -2751,7 +2752,7 @@ WriteLiteral("\',\r\n                                        data: { dAmt: vProM
 "ajax({\r\n            url: \'");
 
             
-            #line 1912 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1913 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -2911,7 +2912,7 @@ WriteLiteral("\',\r\n            async: false,\r\n            data: { strFormNam
 "     $.ajax({\r\n                url: \'");
 
             
-            #line 2224 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2225 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("returncardetail", "TicketPayment"));
 
             
@@ -2958,7 +2959,7 @@ WriteLiteral(@"',
             url: '");
 
             
-            #line 2262 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2263 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("Nullsession", "TicketPayment"));
 
             
@@ -2969,7 +2970,7 @@ WriteLiteral("\',\r\n            type: \"Get\",\r\n            success: function
 "dow.location.href = \'");
 
             
-            #line 2269 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2270 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                            Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
@@ -3005,7 +3006,8 @@ WriteLiteral(@"' + '?Eventid=' + eventid;
     }
 
 
-</script>");
+</script>
+");
 
         }
     }

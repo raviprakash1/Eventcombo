@@ -15,6 +15,9 @@
 
 <script>
     $(document).ready(function () {
+       
+       
+
         $('#input2').filer({
             limit: 5,
             extensions: ['jpg', 'jpeg', 'png'],
@@ -906,7 +909,17 @@
                                                         <div class="form-group mt20">
                                                             <div class="col-sm-6 ev_pad_l0">
                                                                 <div class="col-sm-12 no_pad">
-                                                                    <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start</label>
+                                                                    <label class="label-control pl0 ev_tickt_lebel" >Ticket Sales Start
+                                                                        <div class="upload_help_icn pull-right">
+                                                                            <div class="tip">
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovstart-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                                <span class="upload_help_icn_inner" id="help_start_inner-n">
+                                                                                    Your Event's date and time need to be
+                                                                                    selected in order to update sales start date
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </label>
                                                                 </div>
                                                                 <div class="col-sm-8 ev_pad_l0 mb5 xs_pad_0">
                                                                     <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" disabled="disabled"     />
@@ -920,7 +933,17 @@
 
                                                             <div class="col-sm-6 ev_pad_r0 xs_pad_0">
                                                                 <div class="col-sm-12 no_pad">
-                                                                    <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End</label>
+                                                                    <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End
+                                                                        <div class="upload_help_icn pull-right">
+                                                                            <div class="tip">
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovend-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                                <span class="upload_help_icn_inner" id="help_end_inner-n">
+                                                                                    Your Event's date and time need to be selected in order to update sales
+                                                                                    end date
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </label>
                                                                 </div>
                                                                 <div class="col-sm-8 ev_pad_l0 mb5">
                                                                     <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" disabled="disabled"  />
@@ -5623,6 +5646,13 @@
             $("input[id^='id_saletimestart']").attr("disabled", false);
             $("input[id^='id_saleend']").attr("disabled", false);
             $("input[id^='id_saletimeend']").attr("disabled", false);
+            $(".upload_help_icn").css('display', 'none');
+            } else {
+                $("input[id^='id_salestart']").attr("disabled", true);
+                $("input[id^='id_saletimestart']").attr("disabled", true);
+                $("input[id^='id_saleend']").attr("disabled", true);
+                $("input[id^='id_saletimeend']").attr("disabled", true);
+                $(".upload_help_icn").css('display', 'block');
             }
 
             var msg = disablebutton();
@@ -5646,6 +5676,9 @@
 
         }
         $(document).ready(function () {
+
+           
+
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
                 disableDragAndDrop: true
@@ -5938,7 +5971,7 @@
             var $target = $(e.target);
 
             var id = $(e.target)[0].id;
-          
+            //alert($($(e.target)[0]).attr("class"));
          
             var uiclasstimepicker = $($(e.target)[0]).attr("class");
             var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class") 
@@ -6003,6 +6036,37 @@
 
       
         $(document).prop('title', 'Eventcombo - Create a new event');
+
+        $(".upload_help_icn_inner").css({ "display": "none" });
+
+     
+        function showhover(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "block" });
+            }
+            if(al=="hovend")
+            {
+                $("#help_end_inner-" + el).css({ "display": "block" });
+            }
+        }
+
+        function showhoverout(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "none" });
+            }
+            if (al == "hovend") {
+                $("#help_end_inner-" + el).css({ "display": "none" });
+            }
+
+        }
+      
+
     </script>
 
 }

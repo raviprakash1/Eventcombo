@@ -1944,3 +1944,22 @@ transform: rotate(45deg);
 .days_hrs_btn:hover{background-color: #00cafd; border:1px solid #00cafd;}
 .promotional_pop{ word-break:inherit !important; }
 
+
+.home-buzz-img {
+    width: 100%;
+    height: 120px;
+    overflow: hidden; margin-bottom: 5px;
+}
+
+.home-buzz-img img{
+    height: 100%;
+    min-width: 100%;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    max-width: none !important;
+    border-radius: inherit;
+}
+.buzz_bot_title{ float: right; padding-top: 0px !important; }
+.buzz_bot_title li{ font-size: 12px; color: #cdcdcd; cursor: default; }
