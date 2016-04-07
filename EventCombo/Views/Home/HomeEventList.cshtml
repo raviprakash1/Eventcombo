@@ -87,7 +87,7 @@
     </div>
 
     <div class="col-sm-12 col-xs-12 text-center mb10">
-               <nav>
+               <nav class="home-pagination">
             @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
             @Html.PagedListPager(Model, page => Url.Action("Index",
@@ -99,6 +99,8 @@
 
     </div>
 <script>
+    $('.home-pagination').find('.pagination').addClass('desc_pagination');
+
     function PreviousArrowPage()
     {
         var vPindex = parseFloat($("#hdPageIndex").val());

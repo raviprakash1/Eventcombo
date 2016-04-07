@@ -1462,12 +1462,15 @@ span.evnt_toltip{
 .desc_day_title{ font-weight: bold; font-size: 16px; }
 
 .pagination.desc_pagination{ margin-top: 10px; margin-bottom:0px;  }
+.pagination.desc_pagination > li > a, .pagination.desc_pagination > li{ margin-left:2px; margin-right:2px;}
 .pagination.desc_pagination > li > a, .pagination.desc_pagination > li > span{ border:0px; font-size: 16px; color: #000; margin-left: 0px; }
 .pagination.desc_pagination > li > a:hover,.pagination.desc_pagination > li > a.active, .pagination.desc_pagination > li > span:hover, .pagination.desc_pagination > li > a:focus, .pagination.desc_pagination > li > span:focus{ border-radius: 50%; color: #fff; background:#3cf; }
 .pagination_desc{ font-size: 15px; color: #000; }
 
 
 .nav.dis_fil_nav_right > li > a.active{ color: #3cf; }
+
+.pagination.desc_pagination > .active > a, .pagination.desc_pagination > .active > span, .pagination.desc_pagination > .active > a:hover, .pagination.desc_pagination > .active > span:hover, .pagination.desc_pagination > .active > a:focus, .pagination.desc_pagination > .active > span:focus{ border-radius: 50%; color: #fff; background:#3cf;  }
 
 
 .list_event_desc_title{ color: #777; padding-left: 10px; cursor: default; font-size: 1.2em; color: #000; margin-bottom: 5px; margin-top:0px; text-transform: capitalize; }

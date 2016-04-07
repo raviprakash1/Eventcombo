@@ -5653,6 +5653,17 @@
 
         }
         $(document).ready(function () {
+
+            $(".upload_help_icn_inner").css({ "display": "none" });
+            $(".help_icon_hov").mouseover(function (e) {
+                var $target = $(e.currentTarget);
+                $target.closest("div").find(".upload_help_icn_inner").css({ "display": "block" });
+            });
+            $(".help_icon_hov").mouseout(function (e) {
+                var $target = $(e.currentTarget);
+                $target.parent("div").find(".upload_help_icn_inner").css({ "display": "none" });
+            });
+
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
                 disableDragAndDrop: true
