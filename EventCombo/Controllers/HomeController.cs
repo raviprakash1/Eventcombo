@@ -898,11 +898,7 @@ namespace EventCombo.Controllers
         public List<DiscoverEvent> GetHomePageEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter, ref string strNearLat, ref string strNearLong)
         {
 
-            if (string.IsNullOrEmpty(strLat))
-            {
-                strLat = "28.6139";
-                strLong = "77.2090";
-            }
+            
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
             using (EventComboEntities db = new EventComboEntities())
@@ -1112,7 +1108,13 @@ namespace EventCombo.Controllers
             }
 
 
-            int pageSize = 3;
+            if (string.IsNullOrEmpty(lat))
+            {
+                lat = "28.6139";
+                lng = "77.2090";
+            }
+
+            int pageSize = 12;
             int pageNumber = (page ?? 1);
             
             string strNearLat = "";

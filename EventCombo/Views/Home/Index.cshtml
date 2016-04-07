@@ -162,20 +162,16 @@
                     var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat= "strLat", lng= "strLong", page = "1"}))';
                     vUrl = vUrl.replace("strLat", vLat);
                     vUrl = vUrl.replace("strLong", vLong);
-                    //alert(vUrl);
                     window.location.replace(vUrl);
-                    //$('#dvEventListing').load(vUrl);
 
                 }, function (p) {
-                    //alert("error");
                     var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
-                    //$('#dvEventListing').load(vUrl);
                     window.location.replace(vUrl);
-
                 });
 
             } else {
-                alert('Geo Location feature is not supported in this browser.');
+                var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
+                window.location.replace(vUrl);
             }
 
         }
