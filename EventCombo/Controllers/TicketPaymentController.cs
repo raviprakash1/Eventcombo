@@ -267,7 +267,6 @@ namespace EventCombo.Controllers
 
         public string CalculatePromoCode(string strTicketId, string strCode, long lEventId)
         {
-
             string strResult = "";
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
             string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");

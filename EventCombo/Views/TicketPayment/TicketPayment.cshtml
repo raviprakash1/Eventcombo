@@ -763,45 +763,42 @@
                 type: "Post",
                 success: function (response) {
                     debugger;
-                    if (response == "OL" || response == "EDI" || response == "FDI") {
-                        $("#spValidation").text("Promo Code Expired.");
+                    if (response == "OL" || response == "EDI") {
+                        $("#spValidation").text("Promo Code Expired");
                         $("#spValidation").removeClass("promoerrorgreen");
                         $("#spValidation").addClass("promoerrorred");
-
-                        //$("#imgPromoLoader").addClass("PromoLoaderHide");
-                        //$("#imgPromoLoader").removeClass("PromoLoaderShow");
-
                         $("#spGrdTotal").text($("#spSubTotal").text());
                         $("#hdGrandTotal").val($("#spSubTotal").text());
-
+                        $("#hdPromoCodetotal").val("0");
+                        return false;
+                    }else if (response == "FDI")
+                    {
+                        $("#spValidation").text("Promo Code Cannot Be Applied Now");
+                        $("#spValidation").removeClass("promoerrorgreen");
+                        $("#spValidation").addClass("promoerrorred");
+                        $("#spGrdTotal").text($("#spSubTotal").text());
+                        $("#hdGrandTotal").val($("#spSubTotal").text());
                         $("#hdPromoCodetotal").val("0");
                         return false;
                     }
                     else if (response == "INV") {
-                        $("#spValidation").text("Invalid Promo Code.");
+                        $("#spValidation").text("Invalid Promo Code");
                         $("#spValidation").removeClass("promoerrorgreen");
                         $("#spValidation").addClass("promoerrorred");
-
                         $("#spGrdTotal").text($("#spSubTotal").text());
                         $("#hdGrandTotal").val($("#spSubTotal").text());
-
                         $("#hdPromoCodetotal").val("0");
                         return false;
-
                     }
                     else {
                         var vResult = response.split('~');
                         var vTickets = vResult[0].toString();
                         var vProType = vResult[1].toString();
                         var vProMoAmt = parseFloat(vResult[2].toString());
-                      //alert(vProMoAmt);
                         if (isNaN(vProMoAmt) == true) vProMoAmt = 0;
-                            
                         if (vProMoAmt > 0) {
-                          
                             var vTicIds = $("#hidTicketIds").val().split(',');
                             var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
-
                             var vTotalAmt = 0;
                             var vGrandAmt = 0;
                             var vAppliedTickets;
@@ -809,20 +806,20 @@
                                 vAppliedTickets = vTickets.split(',');
                             }
                             var vflag = true;
+                            var vLoopFlag = true;
 
                             for (i = 0; i < vTicIds.length; i++) {
                                 if (vTickets != "A") {
                                     vflag = false;
                                     for (icnt = 0; icnt < vAppliedTickets.length; icnt++) {
-                                      //  alert(vTicIds[i] + " " + vAppliedTickets[icnt]);
                                         if (vTicIds[i] == vAppliedTickets[icnt]) {
+                                            vLoopFlag = false;
                                             vflag = true;
                                             break;
                                         }
                                     }
                                 }
                                 vPrice = parseFloat($("#spPrice_" + vTicIds[i]).text());
-                               // alert(vPrice);
                                 vQty = parseFloat($("#spQty_" + vTicIds[i]).text());
                                 vFee = parseFloat($("#spFee_" + vTicIds[i]).text());
                                 vDonation = parseFloat($("#spDonation_" + vTicIds[i]).text());
@@ -834,14 +831,10 @@
                                 vFee = parseFloat(vFee); if (isNaN(vFee) == true) vFee = 0;
                                 vDonation = parseFloat(vDonation); if (isNaN(vDonation) == true) vDonation = 0;
                                 if (vflag == true) {
-                                 //   alert(vflag)
                                     if (vProType == "P") {
                                         vProMoAmt = (vProMoAmt * vPrice) / 100;
                                     }
-                                   // alert(vProMoAmt);
-                                    
                                     vPrice = (vPrice - vProMoAmt);
-                                    //alert(vPrice);
                                     $.ajax({
                                         url: '@Url.Action("LockPromoCode", "TicketPayment")',
                                         data: { dAmt: vProMoAmt, lTQDId: vTQDId },
@@ -850,17 +843,13 @@
                                         }
                                     });
                                 }
-                                
-                                //alert(vQty); alert(vPrice); alert(vFee);
                                 if (vPrice > 0) {
-                                   // alert(vPrice);
                                     vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
                                     if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
                                     vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
                                 }
                                 else if (vDonation >0)
                                 {
-                                   // alert(vDonation);
                                     vPrice = 0;
                                     vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
                                     if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
@@ -868,29 +857,31 @@
 
                                 }
                             }
-                            //alert(vGrandAmt);
                             $("#hdPromoCodetotal").val(vGrandAmt);
                             if (vVarChanges > 0)
                                 vGrandAmt = vGrandAmt + vVarChanges;
 
                             $("#spGrdTotal").text(vGrandAmt.toFixed(2));
                             $("#hdGrandTotal").val(vGrandAmt.toFixed(2));
-
-
-                            $("#spValidation").text("Promo Code Applied.");
-                            $("#spValidation").removeClass("promoerrorred");
-                            $("#spValidation").addClass("promoerrorgreen");
+                            if (vTickets != "A" && vLoopFlag == true) {
+                                $("#spValidation").text("Promo Code Not Applicable");
+                                $("#spValidation").removeClass("promoerrorgreen");
+                                $("#spValidation").addClass("promoerrorred");
+                            }
+                            else
+                            {
+                                $("#spValidation").text("Promo Code Applied");
+                                $("#spValidation").removeClass("promoerrorred");
+                                $("#spValidation").addClass("promoerrorgreen");
+                            }
                         }
-
-                        //$("#imgPromoLoader").addClass("PromoLoaderHide");
-                        //$("#imgPromoLoader").removeClass("PromoLoaderShow");
                     }
                 }
             });
         }
         else {
 
-            $("#spValidation").text("Invalid Promo Code.");
+            $("#spValidation").text("Invalid Promo Code");
             $("#spValidation").removeClass("promoerrorgreen");
             $("#spValidation").addClass("promoerrorred");
 
@@ -930,6 +921,7 @@
         $("#hdGrandTotal").val(vGrdTotal);
 
         $("#spSubTotal").text(vOrderTotal);
+        $("#hdVarChanges").val(vAmt);
         var totqty = $('#hidQty').val();
 
         if (vOrderTotal > 0) {
@@ -1448,7 +1440,7 @@
                 });
             }*@
             //ValidatePromoCode
-            alert("After Promo Code");
+          //  alert("After Promo Code");
             debugger;
             var flag = true;
             var Emaillogin = $("#Email").val();
