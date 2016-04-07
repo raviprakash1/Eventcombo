@@ -199,6 +199,7 @@
           <Property Name="ShowMap" Type="varchar" MaxLength="1" />
           <Property Name="Parent_EventID" Type="bigint" />
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
+          <Property Name="FeatureUpdateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -351,6 +352,9 @@
           <Property Name="O_PayPal_TokenId" Type="varchar" MaxLength="100" />
           <Property Name="O_PayPal_PayerId" Type="varchar" MaxLength="100" />
           <Property Name="O_PayPal_TrancId" Type="varchar" MaxLength="100" />
+          <Property Name="O_First_Name" Type="varchar" MaxLength="100" />
+          <Property Name="O_Last_Name" Type="varchar" MaxLength="100" />
+          <Property Name="O_Email" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Organizer_Master">
           <Key>
@@ -561,9 +565,7 @@
           <Property Name="TLD_Donate" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TicketAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TLD_PromoCodeId" Type="int" />
-
           <Property Name="TLD_PromoCodeAmount" Type="numeric" Precision="18" Scale="2" />
-
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -1351,6 +1353,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
+          <Property Name="FeatureUpdateDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1491,6 +1494,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="O_PayPal_TokenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_PayPal_PayerId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_First_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -2444,6 +2450,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="FeatureUpdateDate" ColumnName="FeatureUpdateDate" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
@@ -2614,6 +2621,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_Email" ColumnName="O_Email" />
+                <ScalarProperty Name="O_Last_Name" ColumnName="O_Last_Name" />
+                <ScalarProperty Name="O_First_Name" ColumnName="O_First_Name" />
                 <ScalarProperty Name="O_PayPal_TrancId" ColumnName="O_PayPal_TrancId" />
                 <ScalarProperty Name="O_PayPal_PayerId" ColumnName="O_PayPal_PayerId" />
                 <ScalarProperty Name="O_PayPal_TokenId" ColumnName="O_PayPal_TokenId" />

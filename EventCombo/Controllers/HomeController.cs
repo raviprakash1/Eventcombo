@@ -961,6 +961,7 @@ namespace EventCombo.Controllers
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
                         objDisEv.EventLike = GetDiscoverEventFavLikes(lEventId, strUserId);
                         objDisEv.EventFeature = (objEv.Feature != null ? Convert.ToInt16(objEv.Feature) : 10); // 10 - becz if feature is null then that event have to show at last according to feature sorting 
+                        objDisEv.FeatureDateTime = (objEv.FeatureUpdateDate != null ? Convert.ToDateTime(objEv.FeatureUpdateDate) : DateTime.Now);
                         var vAddress = objEv.Addresses.FirstOrDefault();
                         objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
                         if (vAddress != null)
@@ -1022,7 +1023,7 @@ namespace EventCombo.Controllers
 
                         lsDisEvt.Add(objDisEv);
                     }
-                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).ToList();
+                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).OrderBy(m => m.FeatureDateTime) .ToList();
                 }
                 return lsDisEvt;
             }
@@ -1625,7 +1626,28 @@ namespace EventCombo.Controllers
             return View();
         }
 
+        public JsonResult Getuserdetails(string Email)
+        {
+            string message = "";
 
+            var user = (from Org in db.Profiles
+                        join pfd in db.AspNetUsers on Org.UserID equals pfd.Id
+                        where pfd.Email == Email
+                        select Org).FirstOrDefault();
+            if (user!=null)
+            {
+                message = "F";
+                return Json(new { Message = message,Fname= user.FirstName,Lname=user.LastName });
+            }
+            else
+            {
+                message = "N";
+
+                return Json(new { Message = message, Fname = "", Lname = ""});
+            }
+           
+
+        }
         public void SendMail(string toaddress, string messagebody, string messageSubject)
         {
             //var fromAddress = new MailAddress("shweta.sindhu@kiwitech.com", "Shweta");
