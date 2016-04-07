@@ -1,0 +1,212 @@
+﻿@{  Layout = null;}
+
+<div class="col-sm-12 no_pad">
+    <div class="col-sm-12 no_pad">
+        @{  int iCnt = 0;
+            foreach (var item in (PagedList.IPagedList<EventCombo.Models.DiscoverEvent>)ViewBag.DisEvnt)
+            {
+                iCnt = 1;
+                <div class="col-md-4 col-xs-12 col-sm-6 ot_pad ">
+                    <div class="col-sm-12 col-xs-12 in_shadw no_pad">
+                        <div class="col-sm-12 col-xs-12 in_pad">
+                            <div class="col-sm-4 no_pad">
+                                <div class="dis_evnt_img"><img src="@item.EventImage" alt=""></div>
+                                @*<div class="col-sm-12 no_pad text-center desc_list_event_type desc_list_event_type_dollar">@item.PriceLable</div>*@
+
+                            </div>
+                            <div class="col-sm-8 no_pad">
+                                <h1 class="list_event_desc_title xs-title-height d_xs_pad_l0"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })'>@item.EventTitle</a></h1>
+                                <p class="list_event_desc xs-address-height d_xs_pad_l0">
+                                    @item.EventAddress
+
+                                </p>
+                                @*<p class="list_event_date_time">@item.EventTimings </p>*@
+
+                            </div>
+                            <div class="col-sm-12 col-xs-12 no_pad">
+                                @if (@item.PriceLable.ToLower().Trim() == "free")
+                                {
+                                    <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type">
+                                        @item.PriceLable
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="col-sm-5 no_pad col-xs-12 text-left desc_list_event_type_disable">
+                                        @item.PriceLable
+                                    </div>
+                                }
+                                <div class="col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height">
+                                    @item.EventTimings
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12 no_pad de_ev_li_border">
+                            <div class="col-sm-9 col-xs-9 no_pad  xs-event-type-height">
+                                <ul class="nav nav-pills list_inner_cat_tag ">
+                                    <li><a href="javascript:void(0);" onclick="FilterEventType(@item.EventTypeId);">#@item.EventType </a></li>
+                                    <li><a href="javascript:void(0);" onclick="FilterEventCategory(@item.EventCatId);">#@item.EventCat </a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-3 col-xs-3 no_pad text-right ">
+                                @*<button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
+                                    <i class="fa fa-share-alt"></i>
+                                </button>*@
+                                <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
+                                    <i class="fa fa-share-alt"></i>
+                                </button>
+                                @if (@item.EventLike == "I")
+                                {
+                                    <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
+                                        <i class="fa fa-heart"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
+                                        <i class="fa fa-heart"></i>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            }
+
+            if (iCnt == 0)
+            {
+                <div class="col-sm-12 no_pad text-center no_event_found_text">
+                    <span id="spInfo">No Events Found</span>
+                </div>
+            }
+        }
+
+    </div>
+
+
+
+
+    <div class="col-sm-12 col-xs-12 text-center mb10">
+        <nav>
+            <ul class="pagination desc_pagination">
+                <li id="lileft">
+                    <a href="javascript:void(0)" onclick="PreviousArrowPage();">
+                        <span><i class="fa fa-angle-left"></i> </span>
+                    </a>
+                </li>
+                @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
+                {
+                    <li><a href="javascript:void(0)" id="aPageLink-@i" onclick="NextPage(@i);">@i</a></li>
+                }
+
+                <li id="liright">
+                    <a href="javascript:void(0)" onclick="NextArrowPage();">
+                        <span><i class="fa fa-angle-right"></i> </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+
+
+    </div>
+
+    <input type="hidden" value="@TempData["tLat"].ToString()" id="hdlat" />
+    <input type="hidden" value="@TempData["tLng"].ToString()" id="hdlng" />
+    <input type="hidden" id="hdPageIndex" value="@TempData["PageIndex"]" />
+
+</div>
+<script>
+    function PreviousArrowPage()
+    {
+        var vPindex = parseFloat($("#hdPageIndex").val());
+        if (isNaN(vPindex) == true) vPindex = 0;
+
+        if (vPindex > 1) { NextPage(vPindex - 1) };
+
+    }
+
+    function NextArrowPage() {
+        debugger;
+        var vPindex = parseFloat($("#hdPageIndex").val());
+        var vTotalPage = parseFloat(@TempData["TotalPages"]);
+
+        if (isNaN(vTotalPage) == true) vTotalPage = 0;
+        if (isNaN(vPindex) == true) vPindex = 0;
+
+        if (vPindex < vTotalPage) { NextPage(vPindex + 1) };
+
+    }
+
+    function NextPage(vIndex) {
+        var vUrl = '@Html.Raw(Url.Action("HomeEventList", "Home", new {strPageIndex="page", strLat= TempData["tLat"], strLong= TempData["tLng"]}))';
+        if (vIndex > 1)
+            vUrl = vUrl.replace("page", vIndex);
+        window.location.href = vUrl;
+    }
+
+    function FilterEventType(vEvTypeId) {
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = TempData["tLat"], strLong = TempData["tLng"], strSort = "rel", strDateFilter = "none" })';
+        vUrl = vUrl.replace("evt", vEvTypeId);
+        window.location.href = vUrl;
+    }
+    function FilterEventCategory(vEvCatId) {
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = TempData["tLat"], strLong = TempData["tLng"], strSort = "rel", strDateFilter = "none" })';
+        vUrl = vUrl.replace("evc", vEvCatId);
+        window.location.href = vUrl;
+    }
+    function SaveFav(clickfav, eid) {
+        var id = "btnfavourite-" + eid;
+        var msg = "";
+        var clickid = clickfav;
+        var vUrl = location.href;
+        $.ajax({
+            url: '@Url.Action("Discoversavefavourite", "CreateEvent")',
+            data: { Eventid: eid, type: clickid, strUrl: vUrl },
+            type: "Post",
+            success: function (data) {
+                if (data == "Y") {
+                    $("#loginPopup").click();
+                    return false;
+                } else {
+                    if (data == "I") {
+                        $("#" + id).addClass("show_like_btn");
+
+                    }
+                    if (data == "D") {
+                        $("#" + id).removeClass("show_like_btn");
+                    }
+                }
+            },
+            error: function (data) {
+                alert("Sorry there is some problem.");
+                return false
+            }
+        });
+    }
+
+    function ShowUrl(vurl) {
+        $("#txtEventUrl").val(vurl);
+    }
+
+    $('#fbshare').click(function () {
+        var vUrl = $("#txtEventUrl").val();
+        window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        return false;
+    });
+
+    $('#twittershare').click(function () {
+        var vUrl = $("#txtEventUrl").val();
+        window.open('https://twitter.com/share?url=' + encodeURIComponent(vUrl) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        return false;
+    });
+
+    $('#linkshare').click(function () {
+        var vUrl = $("#txtEventUrl").val();
+        window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(vUrl) + '&title=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        return false;
+    });
+</script>
