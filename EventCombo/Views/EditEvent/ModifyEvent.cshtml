@@ -3036,6 +3036,7 @@ else
         function AddDates()
         {
             var days;
+            var savedaddress = "";
             $("#hidSchLastState").val($("#dlSchOption").val());
             if ($(".SchmultiDetail").css('display') == 'block') {
                 $("#hdSchType").val('Multiple');
@@ -3043,22 +3044,23 @@ else
                 if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
                     if ($("#dlSchOption").val() == "Daily") {
                         vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
                     }
                     else if ($("#dlSchOption").val() == "Weekly") {
                         days= $("#dllWeeklyDayChk").val();
 
                         vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
+                        savedaddress = vSelecttextDates;
                     }
                     else if ($("#dlSchOption").val() == "Monthly") {
                         days=$("#dllMonthlyWeekDay").val();
 
                         vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
+                        savedaddress = vSelecttextDates;
                     }
                     else if ($("#dlSchOption").val() == "Custom") {
                         vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
+                        savedaddress = vSelecttextDates;
                     }
                 }
                 $("#btEnterDates").text(vSelecttextDates);
@@ -3066,9 +3068,20 @@ else
             else {
                 vSelecttextDates = "Click here to enter the start and end date";
                 if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
+                {
                     vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
+                    savedaddress = vSelecttextDates;
+                }
                 $("#btEnterDates").text(vSelecttextDates);
                 $("#hdSchType").val('Single');
+            }
+
+            if (savedaddress != '')
+            {
+                $("input[id^='id_salestart']").attr("disabled", false);
+                $("input[id^='id_saletimestart']").attr("disabled", false);
+                $("input[id^='id_saleend']").attr("disabled", false);
+                $("input[id^='id_saletimeend']").attr("disabled", false);
             }
         }
 
@@ -7229,15 +7242,44 @@ else
         //});
 
         $(document).on('click', function (e) {
+
+         
+
             var $target = $(e.target);
-            if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
+
+            var id = $(e.target)[0].id;
+          
+         
+            var uiclasstimepicker = $($(e.target)[0]).attr("class");
+            var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class") 
+            var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
+            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined")
+            {
                 AddDates();
+              
                 $(".StartDatemodal").hide();
-            };
+            } else {
+                if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0)) {
+
+                    if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
+                        AddDates();
+
+                        $(".StartDatemodal").hide();
+
+                    }
+
+
+                }
+            }
+           
             if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
                 AddTimeZone();
                 $(".TmezoneSet").hide();
             }
+
+
+              
+
         });
 
         function onlyAlphabets(e, t) {

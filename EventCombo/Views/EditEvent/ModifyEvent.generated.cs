@@ -6245,42 +6245,51 @@ WriteLiteral("?EventId=\' +response;\r\n                            }\r\n       
 "lease check after some time.\');\r\n                $(\'#btndiverrsuc\').focus();\r\n  " +
 "              $(\'html,body\').animate({ scrollTop: 0 });\r\n            }\r\n\r\n\r\n    " +
 "    }\r\n\r\n        function AddDates()\r\n        {\r\n            var days;\r\n        " +
-"    $(\"#hidSchLastState\").val($(\"#dlSchOption\").val());\r\n            if ($(\".Sch" +
-"multiDetail\").css(\'display\') == \'block\') {\r\n                $(\"#hdSchType\").val(" +
-"\'Multiple\');\r\n                vSelecttextDates = \"Click here to enter the start " +
-"and end date\";\r\n                if ($(\"#txtDateFrom\").val() != \'\' && $(\"#txtDate" +
-"From\").val() != null) {\r\n                    if ($(\"#dlSchOption\").val() == \"Dai" +
-"ly\") {\r\n                        vSelecttextDates = \"Daily : \" + $(\"#txtDateFrom\"" +
-").val() + \" \" + $(\"#txtTimeStart\").val() + \" To \" + $(\"#txtDateTo\").val() + \" \" " +
-"+ $(\"#txtTimeEnd\").val();\r\n                    }\r\n                    else if ($" +
-"(\"#dlSchOption\").val() == \"Weekly\") {\r\n                        days= $(\"#dllWeek" +
-"lyDayChk\").val();\r\n\r\n                        vSelecttextDates = \"Weekly : \" + $(" +
-"\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \" To \" + $(\"#txtDateTo\"" +
-").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n\r\n                    }\r\n              " +
-"      else if ($(\"#dlSchOption\").val() == \"Monthly\") {\r\n                        " +
-"days=$(\"#dllMonthlyWeekDay\").val();\r\n\r\n                        vSelecttextDates " +
-"= \"Monthly : \" + $(\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \" To" +
-" \" + $(\"#txtDateTo\").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n\r\n                  " +
-"  }\r\n                    else if ($(\"#dlSchOption\").val() == \"Custom\") {\r\n      " +
-"                  vSelecttextDates = \"Custom : \" + $(\"#txtDateFrom\").val() + \" \"" +
-" + $(\"#txtTimeStart\").val() + \" To \" + $(\"#txtDateTo\").val() + \" \" + $(\"#txtTime" +
-"End\").val();\r\n\r\n                    }\r\n                }\r\n                $(\"#bt" +
-"EnterDates\").text(vSelecttextDates);\r\n            }\r\n            else {\r\n       " +
-"         vSelecttextDates = \"Click here to enter the start and end date\";\r\n     " +
-"           if ($(\"#txtStartDate\").val() != \'\' && $(\"#txtStartDate\").val() != nul" +
-"l)\r\n                    vSelecttextDates = $(\"#txtStartDate\").val() + \" \" + $(\"#" +
-"txtStartTime\").val() + \" To \" + $(\"#txtEndDate\").val() + \" \" + $(\"#txtEndTime\")." +
-"val()\r\n                $(\"#btEnterDates\").text(vSelecttextDates);\r\n             " +
-"   $(\"#hdSchType\").val(\'Single\');\r\n            }\r\n        }\r\n\r\n        function " +
-"AddTimeZone()\r\n        {\r\n\r\n            var vval = $(\"#dllTimeZone option:select" +
-"ed\").text();\r\n\r\n\r\n\r\n            if (vval == null || vval == \'\')\r\n               " +
-" vval = \"Timezone & date setting\";\r\n\r\n            $(\"#lblTimeZone\").text(vval);\r" +
-"\n\r\n        }\r\n        $(document).ready(function () {\r\n            var vCatId = " +
-"$(\"#ddlEventCategory\").val();\r\n            var vSubCatId = $(\"#hidSubCat\").val()" +
-";\r\n            $.ajax({\r\n                url: \'");
+"    var savedaddress = \"\";\r\n            $(\"#hidSchLastState\").val($(\"#dlSchOptio" +
+"n\").val());\r\n            if ($(\".SchmultiDetail\").css(\'display\') == \'block\') {\r\n" +
+"                $(\"#hdSchType\").val(\'Multiple\');\r\n                vSelecttextDat" +
+"es = \"Click here to enter the start and end date\";\r\n                if ($(\"#txtD" +
+"ateFrom\").val() != \'\' && $(\"#txtDateFrom\").val() != null) {\r\n                   " +
+" if ($(\"#dlSchOption\").val() == \"Daily\") {\r\n                        vSelecttextD" +
+"ates = \"Daily : \" + $(\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \"" +
+" To \" + $(\"#txtDateTo\").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n                 " +
+"       savedaddress = vSelecttextDates;\r\n                    }\r\n                " +
+"    else if ($(\"#dlSchOption\").val() == \"Weekly\") {\r\n                        day" +
+"s= $(\"#dllWeeklyDayChk\").val();\r\n\r\n                        vSelecttextDates = \"W" +
+"eekly : \" + $(\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \" To \" + " +
+"$(\"#txtDateTo\").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n                        s" +
+"avedaddress = vSelecttextDates;\r\n                    }\r\n                    else" +
+" if ($(\"#dlSchOption\").val() == \"Monthly\") {\r\n                        days=$(\"#d" +
+"llMonthlyWeekDay\").val();\r\n\r\n                        vSelecttextDates = \"Monthly" +
+" : \" + $(\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \" To \" + $(\"#t" +
+"xtDateTo\").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n                        saveda" +
+"ddress = vSelecttextDates;\r\n                    }\r\n                    else if (" +
+"$(\"#dlSchOption\").val() == \"Custom\") {\r\n                        vSelecttextDates" +
+" = \"Custom : \" + $(\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \" To" +
+" \" + $(\"#txtDateTo\").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n                    " +
+"    savedaddress = vSelecttextDates;\r\n                    }\r\n                }\r\n" +
+"                $(\"#btEnterDates\").text(vSelecttextDates);\r\n            }\r\n     " +
+"       else {\r\n                vSelecttextDates = \"Click here to enter the start" +
+" and end date\";\r\n                if ($(\"#txtStartDate\").val() != \'\' && $(\"#txtSt" +
+"artDate\").val() != null)\r\n                {\r\n                    vSelecttextDate" +
+"s = $(\"#txtStartDate\").val() + \" \" + $(\"#txtStartTime\").val() + \" To \" + $(\"#txt" +
+"EndDate\").val() + \" \" + $(\"#txtEndTime\").val()\r\n                    savedaddress" +
+" = vSelecttextDates;\r\n                }\r\n                $(\"#btEnterDates\").text" +
+"(vSelecttextDates);\r\n                $(\"#hdSchType\").val(\'Single\');\r\n           " +
+" }\r\n\r\n            if (savedaddress != \'\')\r\n            {\r\n                $(\"inp" +
+"ut[id^=\'id_salestart\']\").attr(\"disabled\", false);\r\n                $(\"input[id^=" +
+"\'id_saletimestart\']\").attr(\"disabled\", false);\r\n                $(\"input[id^=\'id" +
+"_saleend\']\").attr(\"disabled\", false);\r\n                $(\"input[id^=\'id_saletime" +
+"end\']\").attr(\"disabled\", false);\r\n            }\r\n        }\r\n\r\n        function A" +
+"ddTimeZone()\r\n        {\r\n\r\n            var vval = $(\"#dllTimeZone option:selecte" +
+"d\").text();\r\n\r\n\r\n\r\n            if (vval == null || vval == \'\')\r\n                " +
+"vval = \"Timezone & date setting\";\r\n\r\n            $(\"#lblTimeZone\").text(vval);\r\n" +
+"\r\n        }\r\n        $(document).ready(function () {\r\n            var vCatId = $" +
+"(\"#ddlEventCategory\").val();\r\n            var vSubCatId = $(\"#hidSubCat\").val();" +
+"\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 3092 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3105 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetSubCat", "EditEvent"));
 
             
@@ -6306,7 +6315,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 3109 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3122 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetOrgnizerDetail", "EditEvent"));
 
             
@@ -6463,7 +6472,7 @@ WriteLiteral("\',\r\n                data: { lEventId: $(\"#hdEventId\").val() }
 " != \'\') {\r\n                    $.ajax({\r\n                        url: \'");
 
             
-            #line 3410 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3423 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "ManageEvent"));
 
             
@@ -6499,7 +6508,7 @@ WriteLiteral("\',\r\n                        data: { strUserUrl: $(\"#txtEventUr
 "       $.ajax({\r\n                    url: \'");
 
             
-            #line 3457 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3470 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -6591,7 +6600,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 " $.ajax({\r\n                url: \'");
 
             
-            #line 3618 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3631 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetPreviousAddressForEditing", "CreateEvent"));
 
             
@@ -6831,7 +6840,7 @@ WriteLiteral("\',\r\n                data: { \"lEid\": $(\"#hdEventId\").val() }
 "ion();\r\n            //});\r\n\r\n\r\n\r\n        });\r\n    </script>\r\n");
 
             
-            #line 4096 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4109 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
     //Ticket Section Starts
@@ -6907,7 +6916,7 @@ WriteLiteral("    <script>\r\n        function CannotFindLocation() {\r\n       
 "     });\r\n              $.ajax({\r\n                url: \'");
 
             
-            #line 4235 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4248 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -7093,7 +7102,7 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 "    var dropval = $(\'#\' + e).val();\r\n            var isadmin=\"");
 
             
-            #line 4584 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4597 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7149,7 +7158,7 @@ WriteLiteral("\";\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.lengt
 ",\',\'\')).toFixed(2));\r\n            var isadmin=\"");
 
             
-            #line 4667 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4680 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7397,7 +7406,7 @@ WriteLiteral("\";\r\n            if (price == 0) {\r\n\r\n                $(\'#i
 "        var isadmin=\"");
 
             
-            #line 5244 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5257 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7487,7 +7496,7 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
 "erDiv\');\r\n\r\n            var isadmin=\"");
 
             
-            #line 5378 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5391 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7934,14 +7943,14 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
 "    }\r\n    </script>\r\n");
 
             
-            #line 6217 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6230 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 6218 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6231 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      
 
             
@@ -7949,9 +7958,9 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 289507), Tuple.Create("\"", 289546)
-, Tuple.Create(Tuple.Create("", 289514), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 289514), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 290226), Tuple.Create("\"", 290265)
+, Tuple.Create(Tuple.Create("", 290233), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 290233), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -7959,7 +7968,7 @@ WriteLiteral(" rel=\"stylesheet\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 6220 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6233 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -7967,9 +7976,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 289580), Tuple.Create("\"", 289637)
-, Tuple.Create(Tuple.Create("", 289587), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 289587), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 290299), Tuple.Create("\"", 290356)
+, Tuple.Create(Tuple.Create("", 290306), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 290306), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -7978,15 +7987,15 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 289671), Tuple.Create("\"", 289708)
-, Tuple.Create(Tuple.Create("", 289677), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 289677), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 290390), Tuple.Create("\"", 290427)
+, Tuple.Create(Tuple.Create("", 290396), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 290396), false)
 );
 
 WriteLiteral("></script>\r\n");
 
             
-            #line 6223 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6236 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
 
@@ -8019,7 +8028,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            //
 "niqueguid\').val(uuid());\r\n\r\n\r\n        });\r\n    </script>\r\n");
 
             
-            #line 6272 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6285 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -8029,7 +8038,7 @@ WriteLiteral("    <script>\r\n        function ajaxsetup(strname, strFormTag) {\
 "msgnew = \"\";\r\n\r\n            var request = $.ajax({\r\n                url:\'");
 
             
-            #line 6278 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6291 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -8085,7 +8094,7 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "in=\"");
 
             
-            #line 6384 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6397 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                             Write(Model.Isadmin);
 
             
@@ -8351,7 +8360,7 @@ WriteLiteral("\";\r\n                   \r\n                    if(isadmin==\"Y\
 "script>\r\n");
 
             
-            #line 6907 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6920 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 
             
@@ -8370,7 +8379,7 @@ WriteLiteral(@"    <script>
         var j= ");
 
             
-            #line 6918 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6931 "..\..\Views\EditEvent\ModifyEvent.cshtml"
           Write(Html.Raw(ViewData["Image"]));
 
             
@@ -8552,22 +8561,35 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 "\r\n\r\n        //$(document).on(\'click\', function(){\r\n        //    $(\'.TmezoneSet\'" +
 ").hide();\r\n        //});\r\n        //$(\'.TmezoneSet, .Timezone\').on(\'click\', func" +
 "tion(e){\r\n        //    e.stopPropagation();\r\n        //});\r\n\r\n        $(documen" +
-"t).on(\'click\', function (e) {\r\n            var $target = $(e.target);\r\n         " +
-"   if ($target.closest(\".StartDate\").get(0) == null && $target.closest(\".StartDa" +
-"temodal\").get(0) == null) {\r\n                AddDates();\r\n                $(\".St" +
-"artDatemodal\").hide();\r\n            };\r\n            if ($target.closest(\".Timezo" +
-"ne\").get(0) == null && $target.closest(\".TmezoneSet\").get(0) == null) {\r\n       " +
-"         AddTimeZone();\r\n                $(\".TmezoneSet\").hide();\r\n            }" +
-"\r\n        });\r\n\r\n        function onlyAlphabets(e, t) {\r\n\r\n\r\n\r\n            if (w" +
-"indow.event) {\r\n\r\n                var charCode = window.event.keyCode;\r\n\r\n      " +
-"      }\r\n\r\n            else if (e) {\r\n\r\n                var charCode = e.which;\r" +
-"\n\r\n            }\r\n\r\n            else { return true; }\r\n\r\n            if ((charCo" +
-"de > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 32" +
-")\r\n\r\n                return true;\r\n\r\n            else\r\n\r\n                return " +
-"false;\r\n\r\n        }\r\n        $(document).prop(\'title\', \'ventcombo - Edit ");
+"t).on(\'click\', function (e) {\r\n\r\n         \r\n\r\n            var $target = $(e.targ" +
+"et);\r\n\r\n            var id = $(e.target)[0].id;\r\n          \r\n         \r\n        " +
+"    var uiclasstimepicker = $($(e.target)[0]).attr(\"class\");\r\n            var ui" +
+"classdatepicker=$($(e.target)[0]).parent().parents(\"div\").attr(\"class\") \r\n      " +
+"      var uidatepickerheader = $($(e.target)[0]).parent().parents(\"div\").attr(\"c" +
+"lass\");\r\n            if (typeof uiclasstimepicker === \"undefined\" && typeof uicl" +
+"assdatepicker === \"undefined\" && typeof uidatepickerheader === \"undefined\")\r\n   " +
+"         {\r\n                AddDates();\r\n              \r\n                $(\".Sta" +
+"rtDatemodal\").hide();\r\n            } else {\r\n                if ((uiclasstimepic" +
+"ker != \"ui-timepicker-selected\") && ($($(e.target)[0]).parent().parents(\"div\").a" +
+"ttr(\"class\").indexOf(\"ui-datepicker-header\") < 0) && ($($(e.target)[0]).parent()" +
+".parents(\"div\").attr(\"class\").indexOf(\"ui-datepicker\") < 0)) {\r\n\r\n              " +
+"      if ($target.closest(\".StartDate\").get(0) == null && $target.closest(\".Star" +
+"tDatemodal\").get(0) == null) {\r\n                        AddDates();\r\n\r\n         " +
+"               $(\".StartDatemodal\").hide();\r\n\r\n                    }\r\n\r\n\r\n      " +
+"          }\r\n            }\r\n           \r\n            if ($target.closest(\".Timez" +
+"one\").get(0) == null && $target.closest(\".TmezoneSet\").get(0) == null) {\r\n      " +
+"          AddTimeZone();\r\n                $(\".TmezoneSet\").hide();\r\n            " +
+"}\r\n\r\n\r\n              \r\n\r\n        });\r\n\r\n        function onlyAlphabets(e, t) {\r\n" +
+"\r\n\r\n\r\n            if (window.event) {\r\n\r\n                var charCode = window.e" +
+"vent.keyCode;\r\n\r\n            }\r\n\r\n            else if (e) {\r\n\r\n                v" +
+"ar charCode = e.which;\r\n\r\n            }\r\n\r\n            else { return true; }\r\n\r\n" +
+"            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode <" +
+" 123) || charCode == 32)\r\n\r\n                return true;\r\n\r\n            else\r\n\r\n" +
+"                return false;\r\n\r\n        }\r\n        $(document).prop(\'title\', \'v" +
+"entcombo - Edit ");
 
             
-            #line 7270 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 7312 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Model.EventTitle);
 
             
@@ -8576,7 +8598,7 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 WriteLiteral("\');\r\n    </script>\r\n");
 
             
-            #line 7272 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 7314 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 
