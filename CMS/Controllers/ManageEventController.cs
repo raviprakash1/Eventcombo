@@ -343,7 +343,7 @@ namespace CMS.Controllers
             try
             {
                 EmsEntities db = new EmsEntities();
-                db.Database.ExecuteSqlCommand("UPDATE Event SET Feature = "  + iFid.ToString() + "  WHERE EventID = " + lEventId.ToString());
+                db.Database.ExecuteSqlCommand("UPDATE Event SET FeatureUpdateDate=getdate(), Feature = " + iFid.ToString() + "  WHERE EventID = " + lEventId.ToString());
                 strResult ="Y";
             }
             catch (Exception ex)

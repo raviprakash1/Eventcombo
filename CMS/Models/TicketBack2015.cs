@@ -12,14 +12,8 @@ namespace CMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Ticket
+    public partial class TicketBack2015
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ticket()
-        {
-            this.Ticket_Quantity_Detail = new HashSet<Ticket_Quantity_Detail>();
-        }
-    
         public long T_Id { get; set; }
         public Nullable<long> E_Id { get; set; }
         public string T_name { get; set; }
@@ -54,12 +48,5 @@ namespace CMS.Models
         public Nullable<decimal> Additional_Fee { get; set; }
         public Nullable<decimal> T_Discount { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
-        public string T_Customize { get; set; }
-        public Nullable<decimal> T_Ecpercent { get; set; }
-        public Nullable<decimal> T_EcAmount { get; set; }
-    
-        public virtual Event Event { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
     }
 }

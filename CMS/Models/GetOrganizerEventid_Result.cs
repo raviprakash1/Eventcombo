@@ -10,17 +10,13 @@
 namespace CMS.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Event_Orgnizer_Detail
+    public partial class GetOrganizerEventid_Result
     {
         public long Orgnizer_Id { get; set; }
         public Nullable<long> Orgnizer_Event_Id { get; set; }
         public string UserId { get; set; }
         public string DefaultOrg { get; set; }
         public long OrganizerMaster_Id { get; set; }
-    
-        public virtual Event Event { get; set; }
-        public virtual Organizer_Master Organizer_Master { get; set; }
     }
 }
