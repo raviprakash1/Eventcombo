@@ -15,6 +15,19 @@
 
 <script>
     $(document).ready(function () {
+        $(".upload_help_icn_inner").css({ "display": "none" });
+        $(".help_icon_hov").mouseover(function (e) {
+            alert("I am an alert box!");
+            var $target = $(e.currentTarget);
+            $target.closest("div").find(".upload_help_icn_inner").css({ "display": "block" });
+        });
+        $(".help_icon_hov").mouseout(function (e) {
+            var $target = $(e.currentTarget);
+            $target.parent("div").find(".upload_help_icn_inner").css({ "display": "none" });
+        });
+
+       
+
         $('#input2').filer({
             limit: 5,
             extensions: ['jpg', 'jpeg', 'png'],
@@ -909,7 +922,7 @@
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start
                                                                         <div class="upload_help_icn pull-right">
                                                                             <div class="tip">
-                                                                                <img class="help_icon_hov" src="images/icon-question.gif" />
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" />
                                                                                 <span class="upload_help_icn_inner">
                                                                                     Your Event's date and time need to be
                                                                                     selected in order to update sales start date
@@ -933,7 +946,7 @@
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End
                                                                         <div class="upload_help_icn pull-right">
                                                                             <div class="tip">
-                                                                                <img class="help_icon_hov" src="images/icon-question.gif" />
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" />
                                                                                 <span class="upload_help_icn_inner">
                                                                                     Your Event's date and time need to be selected in order to update sales
                                                                                     end date
@@ -5653,6 +5666,9 @@
 
         }
         $(document).ready(function () {
+
+           
+
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
                 disableDragAndDrop: true
