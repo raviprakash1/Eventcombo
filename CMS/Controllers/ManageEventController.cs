@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using CMS.Models;
 using System.Text;
+using System.Data.SqlClient;
 
 namespace CMS.Controllers
 {
@@ -343,7 +344,9 @@ namespace CMS.Controllers
             try
             {
                 EmsEntities db = new EmsEntities();
-                db.Database.ExecuteSqlCommand("UPDATE Event SET FeatureUpdateDate=getdate(), Feature = " + iFid.ToString() + "  WHERE EventID = " + lEventId.ToString());
+                var eventID = new SqlParameter("@EventID", lEventId);
+                var featureID = new SqlParameter("@FeatureID", iFid);
+                db.Database.ExecuteSqlCommand("UPDATE Event SET FeatureUpdateDate=getdate(), Feature = @FeatureID  WHERE EventID = @EventID", featureID, eventID);
                 strResult ="Y";
             }
             catch (Exception ex)
