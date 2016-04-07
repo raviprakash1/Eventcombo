@@ -896,6 +896,12 @@ namespace EventCombo.Controllers
         public List<DiscoverEvent> GetHomePageEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter, ref string strNearLat, ref string strNearLong)
         {
 
+            if (string.IsNullOrEmpty(strLat))
+            {
+                strLat = "28.6139";
+                strLong = "77.2090";
+            }
+
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
             using (EventComboEntities db = new EventComboEntities())
             {
@@ -1090,7 +1096,7 @@ namespace EventCombo.Controllers
             SignInManager = signInManager;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string lat, string lng, int? page)
         {
 
             Session["Fromname"] = "Home";
@@ -1102,8 +1108,26 @@ namespace EventCombo.Controllers
                     Session["AppId"] = null;
                 }
             }
-     
-            return View();
+
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            
+            string strNearLat = "";
+            string strNearLong = "";
+            List<DiscoverEvent> objDiscEvt = GetHomePageEventListing("", "", "all", lat, lng, "rel", "none", ref strNearLat, ref strNearLong);
+            double dPageCount = objDiscEvt.Count;
+            double dTotalPages = dPageCount / pageSize;
+            int lTotalPages = (objDiscEvt.Count / pageSize);
+            if (dTotalPages.ToString().Contains(".") == true)
+                lTotalPages = lTotalPages + 1;
+            ViewBag.DisEvnt = objDiscEvt.ToPagedList(pageNumber, pageSize);
+            ViewBag.lat = lat;
+            ViewBag.lng = lng;
+
+            System.Diagnostics.Debug.Print("LAT" + lat + "LNG" + lng);
+
+            return View(objDiscEvt.ToPagedList(pageNumber, pageSize));
 
         }
 
@@ -1111,27 +1135,8 @@ namespace EventCombo.Controllers
         public ActionResult HomeEventList(string strPageIndex, string strLat, string strLong)
         {
 
-            int pageSize = 15;
-            int pageIndex = 1;
-            if (strPageIndex != null && strPageIndex != string.Empty && strPageIndex != "page")
-                pageIndex = Convert.ToInt32(strPageIndex);
-            string strNearLat = "";
-            string strNearLong = "";
-            List<DiscoverEvent> objDiscEvt = GetHomePageEventListing("", "", "all", strLat, strLong, "rel", "none", ref strNearLat, ref strNearLong);
-            double dPageCount = objDiscEvt.Count;
-            double dTotalPages = dPageCount / pageSize;
-            int lTotalPages = (objDiscEvt.Count / pageSize);
-            if (dTotalPages.ToString().Contains(".") == true)
-                lTotalPages = lTotalPages + 1;
-            ViewBag.DisEvnt = objDiscEvt.ToPagedList(pageIndex, pageSize);
-
-            TempData["TotalPages"] = lTotalPages;
-            TempData["tLat"] = strLat;
-            TempData["tLng"] = strLong;
-            TempData["NearLat"] = strNearLat;
-            TempData["NearLong"] = strNearLong;
-            TempData["PageIndex"] = (strPageIndex.ToLower() == "page" ? "1" : strPageIndex);
-            return View();
+            
+            return PartialView();
 
 
 
