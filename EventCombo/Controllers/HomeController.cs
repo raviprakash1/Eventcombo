@@ -1619,7 +1619,28 @@ namespace EventCombo.Controllers
             return View();
         }
 
+        public JsonResult Getuserdetails(string Email)
+        {
+            string message = "";
 
+            var user = (from Org in db.Profiles
+                        join pfd in db.AspNetUsers on Org.UserID equals pfd.Id
+                        where pfd.Email == Email
+                        select Org).FirstOrDefault();
+            if (user!=null)
+            {
+                message = "F";
+                return Json(new { Message = message,Fname= user.FirstName,Lname=user.LastName });
+            }
+            else
+            {
+                message = "N";
+
+                return Json(new { Message = message, Fname = "", Lname = ""});
+            }
+           
+
+        }
         public void SendMail(string toaddress, string messagebody, string messageSubject)
         {
             //var fromAddress = new MailAddress("shweta.sindhu@kiwitech.com", "Shweta");

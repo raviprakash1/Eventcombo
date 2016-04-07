@@ -1,0 +1,96 @@
+-----------Exception Details on  4/7/2016 4:54:51 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/7/2016 4:54:51 PM
+
+Error Line No : ine 118
+
+Error Message: EntityCommandExecutionException
+
+Exception Type: System.Data.Entity.Core.EntityCommandExecutionException
+
+Error Location : An error occurred while executing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/createevent/createevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/7/2016 4:55:06 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/7/2016 4:55:06 PM
+
+Error Line No : ine 118
+
+Error Message: EntityCommandExecutionException
+
+Exception Type: System.Data.Entity.Core.EntityCommandExecutionException
+
+Error Location : An error occurred while executing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/createevent/createevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/7/2016 4:55:56 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/7/2016 4:55:56 PM
+
+Error Line No : ine 118
+
+Error Message: EntityCommandExecutionException
+
+Exception Type: System.Data.Entity.Core.EntityCommandExecutionException
+
+Error Location : An error occurred while executing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/createevent/createevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/7/2016 4:57:43 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/7/2016 4:57:43 PM
+
+Error Line No : ine 118
+
+Error Message: EntityCommandExecutionException
+
+Exception Type: System.Data.Entity.Core.EntityCommandExecutionException
+
+Error Location : An error occurred while executing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/createevent/createevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

@@ -818,6 +818,15 @@
                                                             <div class="col-sm-6 ev_pad_l0">
                                                                 <div class="col-sm-12 no_pad">
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start</label>
+                                                                    <div class="upload_help_icn pull-right">
+                                                                        <div class="tip">
+                                                                            <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovstart-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                            <span class="upload_help_icn_inner" id="help_start_inner-n">
+                                                                                Your Event's date and time need to be
+                                                                                selected in order to update sales start date
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-sm-8 ev_pad_l0  mb5 xs_pad_0">
                                                                     <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n"   disabled="disabled"/>
@@ -832,6 +841,18 @@
                                                             <div class="col-sm-6 ev_pad_r0 xs_pad_0">
                                                                 <div class="col-sm-12 no_pad">
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End</label>
+                                                                 
+                                                                       
+                                                                        <div class="upload_help_icn pull-right">
+                                                                            <div class="tip">
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovend-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                                <span class="upload_help_icn_inner" id="help_end_inner-n">
+                                                                                    Your Event's date and time need to be selected in order to update sales
+                                                                                    end date
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                   
                                                                 </div>
                                                                 <div class="col-sm-8 ev_pad_l0 mb5">
                                                                     <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n"  disabled="disabled" />
@@ -3036,6 +3057,7 @@ else
         function AddDates()
         {
             var days;
+            var savedaddress = "";
             $("#hidSchLastState").val($("#dlSchOption").val());
             if ($(".SchmultiDetail").css('display') == 'block') {
                 $("#hdSchType").val('Multiple');
@@ -3043,22 +3065,23 @@ else
                 if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
                     if ($("#dlSchOption").val() == "Daily") {
                         vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
                     }
                     else if ($("#dlSchOption").val() == "Weekly") {
                         days= $("#dllWeeklyDayChk").val();
 
                         vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
+                        savedaddress = vSelecttextDates;
                     }
                     else if ($("#dlSchOption").val() == "Monthly") {
                         days=$("#dllMonthlyWeekDay").val();
 
                         vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
+                        savedaddress = vSelecttextDates;
                     }
                     else if ($("#dlSchOption").val() == "Custom") {
                         vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
+                        savedaddress = vSelecttextDates;
                     }
                 }
                 $("#btEnterDates").text(vSelecttextDates);
@@ -3066,9 +3089,27 @@ else
             else {
                 vSelecttextDates = "Click here to enter the start and end date";
                 if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
+                {
                     vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
+                    savedaddress = vSelecttextDates;
+                }
                 $("#btEnterDates").text(vSelecttextDates);
                 $("#hdSchType").val('Single');
+            }
+
+            if (savedaddress != '')
+            {
+                $("input[id^='id_salestart']").attr("disabled", false);
+                $("input[id^='id_saletimestart']").attr("disabled", false);
+                $("input[id^='id_saleend']").attr("disabled", false);
+                $("input[id^='id_saletimeend']").attr("disabled", false);
+                $(".upload_help_icn").css('display', 'none');
+            } else {
+                $("input[id^='id_salestart']").attr("disabled", true);
+                $("input[id^='id_saletimestart']").attr("disabled", true);
+                $("input[id^='id_saleend']").attr("disabled", true);
+                $("input[id^='id_saletimeend']").attr("disabled", true);
+                $(".upload_help_icn").css('display', 'block');
             }
         }
 
@@ -7229,15 +7270,44 @@ else
         //});
 
         $(document).on('click', function (e) {
+
+         
+
             var $target = $(e.target);
-            if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
+
+            var id = $(e.target)[0].id;
+          
+         
+            var uiclasstimepicker = $($(e.target)[0]).attr("class");
+            var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class") 
+            var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
+            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined")
+            {
                 AddDates();
+              
                 $(".StartDatemodal").hide();
-            };
+            } else {
+                if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0)) {
+
+                    if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
+                        AddDates();
+
+                        $(".StartDatemodal").hide();
+
+                    }
+
+
+                }
+            }
+           
             if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
                 AddTimeZone();
                 $(".TmezoneSet").hide();
             }
+
+
+              
+
         });
 
         function onlyAlphabets(e, t) {
@@ -7268,6 +7338,35 @@ else
 
         }
         $(document).prop('title', 'ventcombo - Edit @Model.EventTitle');
+
+        $(".upload_help_icn_inner").css({ "display": "none" });
+
+     
+        function showhover(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "block" });
+            }
+            if(al=="hovend")
+            {
+                $("#help_end_inner-" + el).css({ "display": "block" });
+            }
+        }
+
+        function showhoverout(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "none" });
+            }
+            if (al == "hovend") {
+                $("#help_end_inner-" + el).css({ "display": "none" });
+            }
+
+        }
     </script>
 
 }

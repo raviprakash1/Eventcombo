@@ -15,6 +15,9 @@
 
 <script>
     $(document).ready(function () {
+       
+       
+
         $('#input2').filer({
             limit: 5,
             extensions: ['jpg', 'jpeg', 'png'],
@@ -906,11 +909,11 @@
                                                         <div class="form-group mt20">
                                                             <div class="col-sm-6 ev_pad_l0">
                                                                 <div class="col-sm-12 no_pad">
-                                                                    <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start
+                                                                    <label class="label-control pl0 ev_tickt_lebel" >Ticket Sales Start
                                                                         <div class="upload_help_icn pull-right">
                                                                             <div class="tip">
-                                                                                <img class="help_icon_hov" src="images/icon-question.gif" />
-                                                                                <span class="upload_help_icn_inner">
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovstart-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                                <span class="upload_help_icn_inner" id="help_start_inner-n">
                                                                                     Your Event's date and time need to be
                                                                                     selected in order to update sales start date
                                                                                 </span>
@@ -933,8 +936,8 @@
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End
                                                                         <div class="upload_help_icn pull-right">
                                                                             <div class="tip">
-                                                                                <img class="help_icon_hov" src="images/icon-question.gif" />
-                                                                                <span class="upload_help_icn_inner">
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovend-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                                <span class="upload_help_icn_inner" id="help_end_inner-n">
                                                                                     Your Event's date and time need to be selected in order to update sales
                                                                                     end date
                                                                                 </span>
@@ -1297,7 +1300,7 @@
         </div>
     </div>
     //----------Model Starts Here------------------
-    <input type="hidden"  id="lastmodelcalled"/>
+  
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -1476,6 +1479,8 @@
 
 
     <script type="text/javascript">
+
+        var lastmodulecalled = "";
         var map_canvas ;
         var mapProp;
     google.maps.event.addDomListener(window, 'load', initialize);
@@ -1582,10 +1587,7 @@
         return false;
     }
 
-    </script>
 
-
-    <script>
 
 
 
@@ -1604,6 +1606,8 @@
             $(this).removeClass("err-bor");
 
         });
+
+
 
         var specialKeys = new Array();
         specialKeys.push(8); //Backspace
@@ -1757,6 +1761,7 @@
         }
 
         function ValEventTime(e, event) {
+            debugger;
             if ($("#txtStartDate").val() == $("#txtEndDate").val() && (e == "txtEndTime" || e == "txtEndDate")) {
                 var formattedEndTime = parseTime($("#txtEndTime").val());
                 var formattedStartTime = parseTime($("#txtStartTime").val());
@@ -2049,6 +2054,9 @@
         }
 
         $(document).ready(function () {
+
+
+            var lastmodulecalled = "";
             $("#btndeleteorg").click(function () {
                 $("#hId").html(ajaxsetup('OrganizerMaster', 'OrgDeleteMessage'));
                 $("#btdeOrg").click();
@@ -2869,7 +2877,7 @@
                     $(".SchmultiDetail").hide();
                     $(".Schmultisingle").hide();
                 }
-                $("#lastmodelcalled").val("StartDatemodal");
+                lastmodulecalled = "Startmodel";
             });
 
          
@@ -3153,11 +3161,11 @@
 
 
         });
-    </script>
+   
 
 
     //Ticket Section Starts
-    <script>
+   
         function CannotFindLocation() {
             $("#dvAddFooter").hide();
             $("#VenueName").val('');
@@ -4735,13 +4743,13 @@
             }
             return randomString;
         }
-    </script>
+  
 
     @*Image Section*@
  
 
 
-    <script type="text/javascript">
+  
         $(document).ready(function () {
           
             function uuid() {
@@ -4795,10 +4803,10 @@
             //});
            
         });
-    </script>
+ 
 
     //DateTime
-    <script>
+ 
         function ajaxsetup(strname, strFormTag) {
             var msgnew = "";
 
@@ -5591,11 +5599,10 @@
             });
         });
 
-    </script>
-
-    <script type="text/javascript">
+ 
 
         function AddDates() {
+            var savedaddress = "";
             $("#hidSchLastState").val($("#dlSchOption").val());
             if ($(".SchmultiDetail").css('display') == 'block') {
                 $("#hdSchType").val('Multiple');
@@ -5603,18 +5610,19 @@
                 if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
                     if ($("#dlSchOption").val() == "Daily") {
                         vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
                     }
                     else if ($("#dlSchOption").val() == "Weekly") {
                         vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
+                        savedaddress = vSelecttextDates;
                     }
                     else if ($("#dlSchOption").val() == "Monthly") {
                         vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
+                        savedaddress = vSelecttextDates;
                     }
                     else if ($("#dlSchOption").val() == "Custom") {
                         vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
+                        savedaddress = vSelecttextDates;
                     }
 
                 }
@@ -5623,14 +5631,29 @@
             }
             else {
                 vSelecttextDates = "Click here to enter the start and end date";
-                if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
+                if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null) {
                     vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
+                    savedaddress = vSelecttextDates;
+                }
                 $("#btEnterDates").text(vSelecttextDates);
-
+               
                 $("#hdSchType").val('Single');
             }
-
-
+           
+            if (savedaddress != '')
+            {
+           $("input[id^='id_salestart']").attr("disabled", false);
+            $("input[id^='id_saletimestart']").attr("disabled", false);
+            $("input[id^='id_saleend']").attr("disabled", false);
+            $("input[id^='id_saletimeend']").attr("disabled", false);
+            $(".upload_help_icn").css('display', 'none');
+            } else {
+                $("input[id^='id_salestart']").attr("disabled", true);
+                $("input[id^='id_saletimestart']").attr("disabled", true);
+                $("input[id^='id_saleend']").attr("disabled", true);
+                $("input[id^='id_saletimeend']").attr("disabled", true);
+                $(".upload_help_icn").css('display', 'block');
+            }
 
             var msg = disablebutton();
             //alert(msg);
@@ -5653,6 +5676,9 @@
 
         }
         $(document).ready(function () {
+
+           
+
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
                 disableDragAndDrop: true
@@ -5927,45 +5953,58 @@
         //$('.TmezoneSet, .Timezone').on('click', function (e) {
         //    e.stopPropagation();
         //});
+        //$("#datemodel").on('click', function (e) {
+        //    e.stopPropagation();
+           
+        //});
+        //$("#txtStartTime .ui-timepicker-input").change(function (e) {
+        //    e.stopPropagation();
+
+        //});
+
+       
 
         $(document).on('click', function (e) {
 
-
+         
 
             var $target = $(e.target);
 
             var id = $(e.target)[0].id;
-            //console.log($target.parents("#datemodel"))
-            //if (id == "btEnterDates") {
-            //    $(".StartDatemodal").show();
-            //} else {
-            //    if ($('.StartDatemodal').css('display') == 'none') {
+            //alert($($(e.target)[0]).attr("class"));
+         
+            var uiclasstimepicker = $($(e.target)[0]).attr("class");
+            var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class") 
+            var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
+            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined")
+            {
+                AddDates();
+              
+                $(".StartDatemodal").hide();
+            } else {
+                if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0)) {
 
-            //    } else {
-            //        AddDates();
-            //        $(".StartDatemodal").hide();
-            //    }
-            //}
-            //if ($("#" + id).parents("#datemodel").attr("id") == "datemodel") {
+                    if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
+                        AddDates();
+
+                        $(".StartDatemodal").hide();
+
+                    }
 
 
-            //}
-            //else
-            //{
-
-                if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
-
-                    AddDates();
-                    $(".StartDatemodal").hide();
                 }
-                if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
-                    AddTimeZone();
-                    $(".TmezoneSet").hide();
-                }
-            //}
+            }
+           
+           if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
+               AddTimeZone();
+               $(".TmezoneSet").hide();
+           }
 
+
+              
 
         });
+
 
         function onlyAlphabets(e, t) {
 
@@ -5994,7 +6033,40 @@
                 return false;
 
         }
+
+      
         $(document).prop('title', 'Eventcombo - Create a new event');
+
+        $(".upload_help_icn_inner").css({ "display": "none" });
+
+     
+        function showhover(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "block" });
+            }
+            if(al=="hovend")
+            {
+                $("#help_end_inner-" + el).css({ "display": "block" });
+            }
+        }
+
+        function showhoverout(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "none" });
+            }
+            if (al == "hovend") {
+                $("#help_end_inner-" + el).css({ "display": "none" });
+            }
+
+        }
+      
+
     </script>
 
 }
