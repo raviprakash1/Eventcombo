@@ -28,6 +28,8 @@ namespace EventCombo.Service
           IRepository<OrderTemplateQuestionTicket> otqtRepo = new GenericRepository<OrderTemplateQuestionTicket>(_factory.ContextFactory);
           var tickets = tRepo.Get(filter: (t => t.E_Id == eventId)).ToList();
           var otDB = otRepo.Get(filter: (ot => ot.EventID == eventId)).SingleOrDefault();
+          if (otDB == null)
+            return;
 
           var delOTT = otDB.OrderTemplateTickets.Where(ott => !tickets.Any(t => t.T_Id == ott.TicketId)).ToList();
           foreach (var ottDB in delOTT)
