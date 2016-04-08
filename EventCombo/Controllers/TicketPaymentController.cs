@@ -1272,7 +1272,8 @@ namespace EventCombo.Controllers
                                      amount = (g.Key.TotalPrice == null ? 0 : g.Key.TotalPrice) - (g.Key.T_Discount == null ? 0 : g.Key.T_Discount),
                                      Tname = g.Key.T_name,
                                      TicketType = g.Key.TicketTypeID,
-                                     donate = g.Sum(x => x.TPD_Donate)
+                                     donate = g.Sum(x => x.TPD_Donate),
+                                     ticketid=g.Key.T_Id
                                  }).ToList();
                     string orderdet = "", freetype = "", paidtype = "", donatertype = "";
                     orderdet = " " + userdetail.FirstName + " has  ";
@@ -1280,15 +1281,16 @@ namespace EventCombo.Controllers
                     {
                         if (i.TicketType == 1)
                         {
-                            freetype = " " + i.Qty + " * " + i.Tname + " free type for $0.00 ";
+                            freetype = " " + i.Qty + " * " + i.Tname + " free type for $0.00 "  ;
                         }
                         if (i.TicketType == 2)
                         {
-                            paidtype = " " + i.Qty + " * " + i.Tname + " paid type for $ " + i.amount;
+                            paidtype = " " + i.Qty + " * " + i.Tname + " paid type for $ " + i.amount ;
+
                         }
                         if (i.TicketType == 3)
                         {
-                            donatertype = "  Donated for " + i.Tname + " type for $ " + i.donate;
+                            donatertype = "  Donated for " + i.Tname + " type for $ " + i.donate ;
                         }
 
                     }

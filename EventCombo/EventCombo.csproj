@@ -571,6 +571,7 @@
     <Content Include="Images\paper_tic.png" />
     <Content Include="Images\PromoCodeLoader.gif" />
     <Content Include="Images\qwe.png" />
+    <Content Include="Images\share_icon.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
@@ -1202,6 +1203,8 @@
     <Content Include="Views\ManageEvent\PromotionalCodes.cshtml" />
     <Content Include="Views\ManageEvent\CreatePromotionalCodes.cshtml" />
     <Content Include="Views\Home\HomeEventList.cshtml" />
+    <Content Include="Views\ManageEvent\EmailInvitations.cshtml" />
+    <Content Include="Views\ManageEvent\CreateInvitations.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -1960,8 +1960,26 @@ namespace EventCombo.Controllers
 
         }
 
+
+        #region EmailInvitations
+        [Authorize]
+        public ActionResult EmailInvitations()
+        {
+
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult CreateInvitations()
+        {
+
+            return View();
+        }
+
+
+
     }
+    #endregion
 
 
-   
 }

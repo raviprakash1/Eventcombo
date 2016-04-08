@@ -63,7 +63,7 @@
 
             <div id="collapse2" class="panel-collapse collapse">
                 <div class="panel-body no-padding">
-                    <p>Email Invitations</p>
+                    <p>@Html.ActionLink("Email Invitations", "EmailInvitations", "ManageEvent")</p>
                     @if (Model.DiscountCode > 0)
                     {
                         <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid }, null)</p>

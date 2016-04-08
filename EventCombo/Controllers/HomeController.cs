@@ -1115,7 +1115,7 @@ namespace EventCombo.Controllers
                 lng = "77.2090";
             }
 
-            int pageSize = 12;
+            int pageSize = 15;
             int pageNumber = (page ?? 1);
             
             string strNearLat = "";
