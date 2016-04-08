@@ -507,7 +507,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\IManageEventService.cs" />
     <Compile Include="Service\IOrderOptionsService.cs" />
+    <Compile Include="Service\ManageEventService.cs" />
     <Compile Include="Service\OrderOptionsService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\Account\MyAccount.generated.cs">
@@ -1275,6 +1277,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
     <Folder Include="Views\Html2Pdf\" />

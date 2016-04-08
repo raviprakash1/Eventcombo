@@ -16,6 +16,49 @@ namespace EventCombo.Service
 
     private static DateTime startDateTime = DateTime.ParseExact("01-01-2000", "MM-dd-yyyy", System.Globalization.CultureInfo.InvariantCulture);
 
+    private void SyncTickets(long eventId)
+    {
+      using (var uow = _factory.GetUnitOfWork())
+      {
+        try
+        {
+          IRepository<Ticket> tRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
+          IRepository<OrderTemplate> otRepo = new GenericRepository<OrderTemplate>(_factory.ContextFactory);
+          IRepository<OrderTemplateTicket> ottRepo = new GenericRepository<OrderTemplateTicket>(_factory.ContextFactory);
+          IRepository<OrderTemplateQuestionTicket> otqtRepo = new GenericRepository<OrderTemplateQuestionTicket>(_factory.ContextFactory);
+          var tickets = tRepo.Get(filter: (t => t.E_Id == eventId)).ToList();
+          var otDB = otRepo.Get(filter: (ot => ot.EventID == eventId)).SingleOrDefault();
+
+          var delOTT = otDB.OrderTemplateTickets.Where(ott => !tickets.Any(t => t.T_Id == ott.TicketId)).ToList();
+          foreach (var ottDB in delOTT)
+            ottRepo.Delete(ottDB);
+
+          var delOTQT = otDB.OrderTemplateQuestions.Where(q => !q.QuestionType.Visible).SelectMany(q => q.OrderTemplateQuestionTickets).Where(qt => !tickets.Any(t => t.T_Id == qt.TicketId)).ToList();
+          foreach (var otqtDB in delOTQT)
+            otqtRepo.Delete(otqtDB);
+
+          foreach(var ticket in tickets)
+          {
+            if (!otDB.OrderTemplateTickets.Any(ott => ott.TicketId == ticket.T_Id))
+              ottRepo.Insert(new OrderTemplateTicket() { TicketId = ticket.T_Id, CollectInformation = false, Receive = false, DontDisplay = false, EnableRegistration = false, GroupOnly = false, OrderTemplateId = otDB.OrderTemplateId });
+
+            foreach (var question in otDB.OrderTemplateQuestions.Where(q => !q.QuestionType.Visible))
+              if (!question.OrderTemplateQuestionTickets.Any(otqt => otqt.TicketId == ticket.T_Id))
+                otqtRepo.Insert(new OrderTemplateQuestionTicket() { CollectInformation = false, TicketId = ticket.T_Id, OrderTemplateQuestionId = question.OrderTemplateQuestionId });
+          }
+
+          uow.Context.SaveChanges();
+          uow.Commit();
+        }
+        catch (Exception ex)
+        {
+          uow.Rollback();
+          throw new Exception("Exception in the CreateNewOrderTemplate. Transaction rolled back.", ex);
+        }
+      }
+    }
+
+
     public OrderOptionsService(IUnitOfWorkFactory factory, IMapper mapper)
     {
       if (factory == null)
@@ -29,6 +72,7 @@ namespace EventCombo.Service
 
     public OrderTemplateViewModel GetOrderTemplateViewModel(long eventId)
     {
+      SyncTickets(eventId);
       OrderTemplateViewModel ot = new OrderTemplateViewModel();
       OrderTemplate otDB = GetOrderTemplate(eventId);
 

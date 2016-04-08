@@ -1339,6 +1339,10 @@ namespace EventCombo.Controllers
                 sc.searchquery = searchquery;
                 sc.discountcode = Discountcode;
                 TempData["PageIndex"] = (strPageIndex.ToLower() == "page" ? "1" : strPageIndex);
+
+                ViewBag.EventId = Eventid;
+                ViewBag.EventTitle = sc.Eventtitle;
+                ViewBag.DiscountCode = sc.discountcode;
                 return View(sc);
             }
             else
@@ -1474,6 +1478,9 @@ namespace EventCombo.Controllers
                     pm.Pc_Enddatetype = p.Pc_Enddatetype != null ? p.Pc_Enddatetype : "0";
                 }
 
+                ViewBag.EventId = Eventid;
+                ViewBag.EventTitle = pm.Eventitle;
+                ViewBag.DiscountCode = pm.discountcode;
                 return View(pm);
             }
             else

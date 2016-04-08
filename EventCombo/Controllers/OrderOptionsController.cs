@@ -12,10 +12,12 @@ namespace EventCombo.Controllers
   public class OrderOptionsController : Controller
   {
     private IOrderOptionsService _service;
+    private IManageEventService _manageService;
 
     public OrderOptionsController()
     {
       _service = new OrderOptionsService(new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory()), AutomapperConfig.Config.CreateMapper());
+      _manageService = new ManageEventService(new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory()));
     }
 
     private ActionResult DefaultAction()
@@ -59,6 +61,7 @@ namespace EventCombo.Controllers
       ViewBag.StateMessage = Message;
       ViewBag.IsError = isError;
       ViewBag.EventId = eventId;
+      ViewBag.DiscountCode = _manageService.GetPromoCodeCount(eventId);
     }
 
     private bool CheckSecurity(string UserId)
@@ -91,7 +94,6 @@ namespace EventCombo.Controllers
           return DefaultAction();
 
         SetDefaultViewBag("", false, lastEventId);
-        ViewBag.EventId = lastEventId;
         return View(orderTemplate);
       }
       else
@@ -123,7 +125,6 @@ namespace EventCombo.Controllers
         }
 
         OrderTemplateViewModel ot = _service.GetOrderTemplateViewModel(orderTemplate.EventId);
-        ViewBag.EventId = orderTemplate.EventId;
         return View(ot);
       }
       else
@@ -153,7 +154,6 @@ namespace EventCombo.Controllers
           return DefaultAction();
 
         SetDefaultViewBag("", false, lastEventId);
-        ViewBag.EventId = eventId;
         return View(orderTemplate);
       }
       else
@@ -185,7 +185,6 @@ namespace EventCombo.Controllers
         }
 
         OrderTemplateViewModel ot = _service.GetOrderTemplateViewModel(orderTemplate.EventId);
-        ViewBag.EventId = orderTemplate.EventId;
         return View(ot);
       }
       else
@@ -215,7 +214,6 @@ namespace EventCombo.Controllers
           return DefaultAction();
 
         SetDefaultViewBag("", false, lastEventId);
-        ViewBag.EventId = lastEventId;
         return View(orderTemplate);
       }
       else
@@ -247,7 +245,6 @@ namespace EventCombo.Controllers
         }
 
         OrderTemplateViewModel ot = _service.GetOrderTemplateViewModel(orderTemplate.EventId);
-        ViewBag.EventId = orderTemplate.EventId;
         return View(ot);
       }
       else
@@ -277,7 +274,6 @@ namespace EventCombo.Controllers
           return DefaultAction();
 
         SetDefaultViewBag("", false, lastEventId);
-        ViewBag.EventId = lastEventId;
         return View(orderTemplate);
       }
       else
@@ -309,7 +305,6 @@ namespace EventCombo.Controllers
         }
 
         OrderTemplateViewModel ot = _service.GetOrderTemplateViewModel(orderTemplate.EventId);
-        ViewBag.EventId = orderTemplate.EventId;
         return View(ot);
       }
       else
