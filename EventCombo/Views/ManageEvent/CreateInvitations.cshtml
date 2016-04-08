@@ -169,7 +169,7 @@
                     <div class="col-sm-12 col-xs-12 no_pad mt10">
                         <div class="col-sm-12 no_pad">
                             <ul class="inv_mail_list_head">
-                                <li><input type="checkbox"></li>
+                                <li><input id="chkSelectAll" type="checkbox"></li>
                                 <li>  EmailId 
                                     <span class="crt_evnt_drop_up crt_invit_drop_down_a"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
                                     <span class="crt_evnt_drop_down crt_invit_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
@@ -341,12 +341,50 @@
 <script>
     $(document).ready(function () {
         $("#btAddEmail").click(function () {
-            var vValue = $("#txtAddEmail").val();
-            AddEmail(vValue);
+            var vValue = $("#txtAddEmail").val().trim();
+            if (vValue != "")
+            {
+                AddEmail(vValue);
+                $("#txtAddEmail").val("");
+                $("#txtAddEmail").focus();
+            }
         });
         $("#btDeleteEmail").click(function () {
-            $("#UlTest").remove();
+            //$("#UlTest").remove();
+            var vIds = parseFloat($("#hdListId").val());
+            if (isNaN(vIds) == true) vIds = 0;
+
+            if (vIds >0)
+            {
+                for (i=0;i<=vIds;i++)
+                {
+                    if ($("#chk_" + i).is(":checked") == true)
+                    {
+                        $("#UL_" + i).remove();
+                    }
+                }
+            }
+
         });
+
+        $("#chkSelectAll").click(function () {
+
+            var vIds = parseFloat($("#hdListId").val());
+            if (isNaN(vIds) == true) vIds = 0;
+            var vflag = false;
+            if (vIds > 0) {
+                if ($("#chkSelectAll").is(":checked") == true) {
+                    vflag = true;
+                }
+                //alert(vflag);
+                for (i = 0; i <= vIds; i++) {
+                  //  alert(vIds);
+                    $("#chk_" + i).attr("checked", vflag);
+                }
+            }
+
+        });
+
     });
 
     function AddEmail(vValue)
@@ -356,7 +394,7 @@
         vId = vId + 1;
         $("#hdListId").val(vId);
         var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" type="checkbox"></li><li>' + vValue + '</li></ul>';
-        alert(vHtml);
+       // alert(vHtml);
         $("#dvEmaillist").append(vHtml);
     }
 
