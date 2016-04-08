@@ -53,6 +53,10 @@
       <HintPath>..\packages\AuthorizeNet.1.8.5\lib\AuthorizeNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
       <Private>True</Private>
@@ -236,6 +240,7 @@
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CMSController.cs" />
@@ -252,6 +257,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\OrganizerInfoController.cs" />
+    <Compile Include="Controllers\OrderOptionsController.cs" />
     <Compile Include="Controllers\PaymentInfoController.cs" />
     <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Controllers\PayPalReturnController.cs" />
@@ -259,6 +265,10 @@
     <Compile Include="Controllers\TicketPaymentController.cs" />
     <Compile Include="Controllers\ValidationMessageController.cs" />
     <Compile Include="Controllers\ViewEventController.cs" />
+    <Compile Include="DAL\ContextFactory.cs" />
+    <Compile Include="DAL\Repository.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="DAL\UnitOfWorkFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -286,6 +296,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommanClasses.cs" />
+    <Compile Include="Models\ControlType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Country.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -381,6 +394,9 @@
     </Compile>
     <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Language.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -389,6 +405,31 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\OrderTemplate.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderTemplateEventType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderTemplateGroupType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderTemplateQuestion.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderTemplateQuestionTicket.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderTemplateQuestionVariant.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderTemplateTicket.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderTemplateType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderTemplateViewModels.cs" />
     <Compile Include="Models\Order_Detail_T.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -413,6 +454,12 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Publish_Event_Detail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionTypeGroup.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShippingAddress.cs">
@@ -460,6 +507,8 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\IOrderOptionsService.cs" />
+    <Compile Include="Service\OrderOptionsService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\Account\MyAccount.generated.cs">
       <AutoGen>True</AutoGen>
@@ -551,12 +600,20 @@
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
+    <Content Include="Content\jquery-te-1.4.0.css" />
+    <Content Include="Content\jquery-te.png" />
+    <Content Include="Content\OrderForm.css" />
+    <Content Include="Content\OrderFormDesign.css" />
     <Content Include="email-content-pdf%281%29.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\amr-exp.png" />
     <Content Include="Images\Bar_Image.Png" />
+    <Content Include="Images\checked.png" />
+    <Content Include="Images\cross.png" />
     <Content Include="Images\default_org_image.jpg" />
     <Content Include="Images\dgd.png" />
+    <Content Include="Images\downarrow.png" />
+    <Content Include="Images\drag.png" />
     <Content Include="Images\email_fb.png" />
     <Content Include="Images\email_loc_icn.png" />
     <Content Include="Images\email_tw.png" />
@@ -566,10 +623,13 @@
     <Content Include="Images\hjsdjd.png" />
     <Content Include="Images\Imagemap.png" />
     <Content Include="Images\Imagemap_T000000199.png" />
+    <Content Include="Images\info.png" />
+    <Content Include="Images\leftarrow.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\login_img.png" />
     <Content Include="Images\paper_tic.png" />
     <Content Include="Images\qwe.png" />
+    <Content Include="Images\unchecked.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
@@ -877,6 +937,7 @@
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-te-1.4.0.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -1200,6 +1261,12 @@
     <Content Include="Views\OrganizerInfo\OrganiserPresentPartialView.cshtml" />
     <Content Include="Views\ManageEvent\PromotionalCodes.cshtml" />
     <Content Include="Views\ManageEvent\CreatePromotionalCodes.cshtml" />
+    <Content Include="Views\Shared\_ManageEventLayout.cshtml" />
+    <Content Include="Views\OrderOptions\Form.cshtml" />
+    <Content Include="Views\OrderOptions\Confirmation.cshtml" />
+    <Content Include="Views\OrderOptions\EventType.cshtml" />
+    <Content Include="Views\OrderOptions\Waitlist.cshtml" />
+    <Content Include="Views\Shared\_ManageEventLeftMenu.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

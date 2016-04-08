@@ -1,0 +1,151 @@
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
+@{
+  ViewBag.Title = "Confirmation";
+  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+}
+
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+<link href='~/Content/OrderForm.css' rel='stylesheet' type='text/css'>
+<link href="~/Content/OrderFormDesign.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_top">
+      @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+      {
+        <div class="col-sm-12 no_pad">
+          @ViewBag.StateMessage
+        </div>
+      }
+      @Html.HiddenFor(m => m.OrderTemplateId)
+      @Html.HiddenFor(m => m.EventId)
+      
+        <div class="insideContainer col-md-9 col-xs-12">
+            <div id="mainForm4" style="display:block;">
+                <div class="orderFormTxt"><h1>Order Confirmation</h1></div>
+                <div class="groupRegisDesp orderConHead">After purchasing a ticket or registering for your event, attendees will view a message on Eventbrite and receive an email, both of which you can customize below.</div>
+
+                <div class="groupRegis">Customize Webpage</div>
+                <div class="groupRegisDesp">After registering for your event, attendees will see an onscreen message. Modify this message below, and include special instructions or other useful information. If left blank, we will use the standard message.</div>
+
+                <div class="form-group">
+                    <label for="Instruction">Message for Order Confirmation Page</label>
+                    <textarea class="form-control setHeight" id="Instruction" placeholder="e.g. Thanks for registering don't forget to keep your tickets handly, either in the Eventbrite app or print them out and bring them with you" maxlength="2000"></textarea>
+                </div>
+
+                <div class="groupRegis">Customize Email</div>
+                <div class="groupRegisDesp">Your attendees will also receive an email after registration, confirming their order.</div>
+
+                <div class="form-group">
+                    <label for="title">DEFAULT 'REPLY-TO' EMAIL ADDRESS</label>
+                    <input type="email" onblur="checkValidEmail('titleEmail')" class="form-control" id="titleEmail">
+                </div>
+
+                <div class="form-group">
+                    <label for="title">MESSAGE FOR EMAIL AND PRINTABLE PDF (IF INCLUDED)</label>
+                    <textarea id="uiEditorBox" class="form-control setHeight" name="text1" maxlength="2500"></textarea>
+                </div>
+
+                <div class="groupRegis1">Additional Settings</div>
+                <div class="form-group">
+                    <label for="title">Configure whether attendees should receive a printable PDF when they register.</label>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Same settings for all ticket types
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="javascript:void(0)" onclick="setdropDownItems1(this, 1)">Same settings for all ticket types</a></li>
+                            <li><a href="javascript:void(0)" onclick="setdropDownItems1(this, 2)">Custom settings for each ticket type</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="sameSetting1" style="display:block;">
+                    <div class="groupRegis">PRINTABLE TICKETS</div>
+                    <div id="early1" class="basicInfoUnCheckBox" style="font-size: 16px;" onclick="setCheckBoxChecked(this)">Include printable tickets in all orders</div>
+
+                   
+                </div>
+
+                <div id="sameSetting2" style="display:none;">
+                    <div class="groupRegis">Ticket Type Name</div>
+                    <div id="early1" class="basicInfoUnCheckBox" style="font-size: 16px;" onclick="setCheckBoxChecked(this)">Include printable ticket</div>
+
+                </div>
+                
+                <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                    <div class="btn btn-primary btn-lg">Save Settings</div>
+                </div>
+
+            </div>
+        </div>
+
+
+  </div>
+</div>
+
+}
+
+<script type="text/javascript">
+
+    function setCheckBoxChecked(obj) {
+        if ($(obj).hasClass('basicInfoUnCheckBox')) {
+            $(obj).addClass('basicInfoCheckBox');
+            $(obj).removeClass('basicInfoUnCheckBox');
+        }
+        else {
+            $(obj).removeClass('basicInfoCheckBox');
+            $(obj).addClass('basicInfoUnCheckBox');
+        }
+    }
+
+    function setdropDownItems1(obj,id) {
+        $('#dropdownMenu1 .text').html($(obj).html());
+        if(id==1)
+        {
+            $('#sameSetting1').show();
+            $('#sameSetting2').hide();
+        }
+        else {
+            $('#sameSetting1').hide();
+            $('#sameSetting2').show();
+        }
+    }
+
+    function checkValidEmail(id) {
+        var name = ValidEmailAddressByElement($('#' + id));
+        if (name == false) {
+            $('#' + id).addClass('validatorTxt');
+        }
+        else{
+            $('#' + id).removeClass('validatorTxt');
+        }
+        return false;
+    }
+
+    function ValidEmailAddressByElement(elem) {
+        var x = $.trim(elem.val());
+        if (x == "" || x == elem.attr("Placeholder")) {
+            return false;
+        }
+        else {
+            return /^[a-zA-Z0-9\.\-\_]+\@@[a-zA-Z0-9](?:[\.\-]{0,1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,4}$/.test(elem.val());
+        }
+    }
+
+</script>
+
+
+
