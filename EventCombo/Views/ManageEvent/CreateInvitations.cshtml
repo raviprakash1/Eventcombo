@@ -25,13 +25,13 @@
 <div class="clearfix"></div>
 <div class="col-sm-12 col-xs-12 mt20">
     <div class="col-sm-12 no_pad">
-        <h3 class="acnt_title inv_eml_title">Create an email invite</h3>
+        <h3 class="acnt_title inv_eml_title_crt">Create an email invite</h3>
     </div>
     <div class="clearfix"></div>
     <div class="col-sm-12 no_pad mt10">
         <div class="col-sm-2 col-xs-12 no_pad">
             <div class="form-group">
-                <input class="form-control invite_mail_inp_cont " type="text" placeholder="Great Event">
+                <input class="form-control invite_mail_inp_cont " type="text" placeholder="">
                 <p class="bottom-label">Sender's Name</p>
             </div>
         </div>
@@ -40,7 +40,7 @@
     <div class="col-sm-12 no_pad mt10">
         <div class="col-sm-3 col-xs-12 no_pad">
             <div class="form-group">
-                <input class="form-control invite_mail_inp_cont " type="text" placeholder="Come Join Us for an amazing event!">
+                <input class="form-control invite_mail_inp_cont " type="text" placeholder="">
                 <p class="bottom-label">Subject Line</p>
             </div>
         </div>
@@ -54,7 +54,6 @@
                 <p class="inv_mail_joinus"> Please join us for</p>
 
                 <h5 class="awsom_title"> An awesome event title </h5>
-                <p class="inv_mail_address"> New Delhi, Delhi, India</p>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 col-xs-12 no_pad mt20">
                     <div class="col-xs-12 no_pad">
@@ -97,8 +96,8 @@
             </div>
             <div class="clearfix"></div>
             <div class="col-sm-12 col-xs-12 mt20 text-center ">
-                <div class="col-sm-12 col-xs-12 invite_email_btn_bor">
-                    <button class="btn def_btn acnt_btn invite_email_attend_btn" title="" type="button">Attend</button>
+                <div class="col-sm-12 col-xs-12 invite_email_btn_bor ">
+                    <button class="btn def_btn acnt_btn invite_email_attend_btn " title="" type="button">Attend</button>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -129,7 +128,7 @@
             <div class="col-sm-12 no_pad">
                 <div class="col-sm-6 col-xs-12 no_pad ">
                     <div class="form-group">
-                        <input class="form-control invite_mail_inp_cont " type="text" placeholder="Great Event">
+                        <input class="form-control invite_mail_inp_cont " type="text" placeholder="">
                         <p class="bottom-label">Send test to email address</p>
                     </div>
                 </div>
@@ -170,17 +169,24 @@
                     <div class="col-sm-12 col-xs-12 no_pad mt10">
                         <div class="col-sm-12 no_pad">
                             <ul class="inv_mail_list_head">
-                                <li><input type="checkbox"> ALL</li>
-                                <li>  EmailId </li>
+                                <li><input type="checkbox"></li>
+                                <li>  EmailId 
+                                    <span class="crt_evnt_drop_up crt_invit_drop_down_a"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                                    <span class="crt_evnt_drop_down crt_invit_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                                </li>
                             </ul>
                         </div>
                         <div class="clearfix"></div>
                         <div class="col-sm-12 no_pad">
-                            <div class="col-sm-12 no_pad inv_mail_scroll">
-                                <ul class="inv_mail_list">
+                            <div id="dvEmaillist" class="col-sm-12 no_pad inv_mail_scroll">
+                                @*<ul class="inv_mail_list">
                                     <li><input type="checkbox"></li>
                                     <li>  abc@gmail.com </li>
                                 </ul>
+                                <ul class="inv_mail_list">
+                                    <li><input type="checkbox"></li>
+                                    <li>  abc@gmail.com </li>
+                                </ul>*@
                             </div>
                         </div>
 
@@ -220,6 +226,7 @@
             </div>
             <div class="col-sm-4 col-xs-6 no_pad">
                 <button class="btn def_btn acnt_btn send_test_btn" type="submit">Save Draft</button>
+                <input type="hidden" id="hdListId"  />
             </div>
         </div>
     </div>
@@ -236,8 +243,8 @@
         <div class="modal-content">
             <div class="modal-body clearfix">
                 <div class="col-sm-12 text-center">
-                    <h3>Success! </h3> <br>
-                    <p>The Email has been send. </p>
+                    <h3>Success! </h3>
+                    <p class="email_send_desc">The Email has been send. </p>
                     <button type="button" class="btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
                 </div>
             </div>
@@ -255,25 +262,13 @@
             </div>
             <div class="modal-body clearfix">
                 <div class="col-sm-12">
-                    Overflowing text to show scroll behavior
+                    <div class="summernote">summernote 1</div>
 
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+                    <div class="col-sm-12 text-center">
+                        <button type="button" class="btn def_btn acnt_btn send_test_btn">
+                            Save
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -331,7 +326,9 @@
             $('.InvAddlistbox').slideToggle("slow");
           });
 
-
+          $('.summernote').summernote({
+              height: 70,   //set editable area's height
+          });
 
 
 
@@ -343,10 +340,25 @@
 </script>
 <script>
     $(document).ready(function () {
-
-
-
+        $("#btAddEmail").click(function () {
+            var vValue = $("#txtAddEmail").val();
+            AddEmail(vValue);
+        });
+        $("#btDeleteEmail").click(function () {
+            $("#UlTest").remove();
+        });
     });
+
+    function AddEmail(vValue)
+    {
+        var vId = parseFloat($("#hdListId").val());
+        if (isNaN(vId) == true) vId = 0;
+        vId = vId + 1;
+        $("#hdListId").val(vId);
+        var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" type="checkbox"></li><li>' + vValue + '</li></ul>';
+        alert(vHtml);
+        $("#dvEmaillist").append(vHtml);
+    }
 
 
 </script>
