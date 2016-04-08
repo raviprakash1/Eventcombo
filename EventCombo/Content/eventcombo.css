@@ -1963,3 +1963,5 @@ transform: rotate(45deg);
 }
 .buzz_bot_title{ float: right; padding-top: 0px !important; }
 .buzz_bot_title li{ font-size: 12px; color: #cdcdcd; cursor: default; }
+.bld_remove{ font-weight:normal;}
+div.dis_file_upld{ background:#ccc !important;}

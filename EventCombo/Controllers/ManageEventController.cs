@@ -1365,7 +1365,22 @@ namespace EventCombo.Controllers
                 var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == Eventid select x).Count();
                 pm.discountcode = Discountcode;
                 pm.PC_Eventid = Eventid;
+                var startdatesave = "";
                 var singleevnt = (from x in db.EventVenues where x.EventID == Eventid select x).Any();
+                if (singleevnt)
+                {
+                    var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
+                    end_date = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime);
+                    startdatesave= DateTime.Parse(y.EventStartDate + " " + y.EventEndTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+                   
+                }
+                else
+                {
+                    var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
+                    end_date = DateTime.Parse(y.StartingFrom + " " + y.StartTime);
+                    startdatesave= DateTime.Parse(y.StartingFrom + " " + y.StartTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+                   
+                }
                 if (Promocode == 0)
                 {
                     pm.Ticketdata = (from x in db.Tickets where x.E_Id == Eventid select x).ToList();
@@ -1383,18 +1398,8 @@ namespace EventCombo.Controllers
 
 
                     pm.PC_Start = startdate;
-                    if (singleevnt)
-                    {
-                        var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
-                        end_date = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime);
-                        pm.PC_End = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime).ToString("MM-dd-yyyy hh:mm:ss tt");
-                    }
-                    else
-                    {
-                        var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
-                        end_date = DateTime.Parse(y.StartingFrom + " " + y.StartTime);
-                        pm.PC_End = DateTime.Parse(y.StartingFrom + " " + y.StartTime).ToString("MM-dd-yyyy hh:mm:ss tt");
-                    }
+                    pm.PC_End = startdatesave;
+                    pm.startdatesave = end_date.ToString();
                     pm.PC_id = 0;
                     pm.PC_URL = baseurl + urldb + "?discount=Example";
                     pm.Pc_Enddatetype = "0";
@@ -1427,33 +1432,42 @@ namespace EventCombo.Controllers
                         }
                     }
                     pm.ticketype = ttype;
-                   
+                    pm.startdatesave = end_date.ToString();
                     if (p.PC_Startdatetype != null && p.PC_Startdatetype == "1")
                     {
                         pm.startdays = p.PC_Start;
-                        pm.PC_Start = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt"); ;
+                        string[] words= p.PC_Start.Split(' ');
+                        if(end_date< DateTime.Now)
+                        {
+                            pm.PC_Start = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt");
+                        }
+                        else
+                        {
+                           var datenew=  end_date.AddDays(-double.Parse(words[0]));
+                            datenew = datenew.AddHours(-double.Parse(words[2]));
+
+                            datenew = datenew.AddMinutes(-double.Parse(words[4]));
+                            pm.PC_Start= datenew.ToString("MM-dd-yyyy hh:mm:ss tt");
+                        }
+                       
                        
                     }
                     else
                     {
                         pm.PC_Start = p.PC_Start;
+
                         pm.startdays = "0 Days 0 Hrs 0 Min";
                     }
                     if (p.Pc_Enddatetype != null && p.Pc_Enddatetype == "1")
                     {
-
-                        if (singleevnt)
-                        {
-                            var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
-
-                            pm.PC_End = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime).ToString("MM-dd-yyyy hh:mm:ss tt");
-                        }
-                        else
-                        {
-                            var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
-                            pm.PC_End = DateTime.Parse(y.StartingFrom + " " + y.StartTime).ToString("MM-dd-yyyy hh:mm:ss tt");
-                        }
+                       
                         pm.enddays = p.PC_End;
+                        string[] words = p.PC_End.Split(' ');
+                        var datenew = end_date.AddDays(-double.Parse(words[0]));
+                        datenew = datenew.AddHours(-double.Parse(words[2]));
+
+                        datenew = datenew.AddMinutes(-double.Parse(words[4]));
+                        pm.PC_End = datenew.ToString("MM-dd-yyyy hh:mm:ss tt"); ;
                     }
                     else
                     {
@@ -1493,7 +1507,7 @@ namespace EventCombo.Controllers
 
                     if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                     {
-                        var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id!=model.PC_id select v).Any();
+                        var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id!=model.PC_id && v.PC_Eventid==model.PC_Eventid select v).Any();
                         if (ifany)
                         {
                             if (!string.IsNullOrEmpty(model.PC_Code))
@@ -1511,18 +1525,19 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
-                            Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
+                            Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id  select x).FirstOrDefault();
                             org.PC_Eventid = model.PC_Eventid;
                             org.PC_Type = model.PC_Type;
                             org.PC_Code = model.PC_Code;
                             if (model.Discount_Type == "A")
                             {
                                 org.PC_Amount = model.PC_Amount;
+                                org.PC_Percentage =null;
                             }
                             else
                             {
                                 org.PC_Percentage = model.PC_Amount;
-
+                                org.PC_Amount = null;
                             }
 
 
@@ -1591,7 +1606,7 @@ namespace EventCombo.Controllers
                     {
                         if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                         {
-                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() select v).Any();
+                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
                             if (ifany)
                             {
                                 if (Invalidrepeatcode == "")
@@ -1693,7 +1708,7 @@ namespace EventCombo.Controllers
                                         {
                                             if (Regex.IsMatch(item.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                                             {
-                                                var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == item.Trim().ToLower() select v).Any();
+                                                var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == item.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
                                                 if (ifany)
                                                 {
                                                     Invalidrepeatcode += item.Trim();
@@ -1776,7 +1791,7 @@ namespace EventCombo.Controllers
                                     {
                                         if (Regex.IsMatch(line.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                                         {
-                                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == line.Trim().ToLower() select v).Any();
+                                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == line.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
                                             if (ifany)
                                             {
                                                 if (!string.IsNullOrEmpty(line))
@@ -1934,6 +1949,85 @@ namespace EventCombo.Controllers
             }
         }
 
+        public string datechange(string date,string type,string starttype,string typeofs)
+        {
+            string str = "";
+            DateTime endadte = DateTime.Parse(starttype);
+
+            if (typeofs == "s")
+            {
+                if (type == "m")
+                {
+
+                    string[] words = date.Split(' ');
+                    if (words[0] == "0" && words[2] == "0" && words[4] == "0")
+                    {
+                        str = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    }
+                    else
+                    {
+                        var datenew = endadte.AddDays(-double.Parse(words[0]));
+                        datenew = datenew.AddHours(-double.Parse(words[2]));
+
+                        datenew = datenew.AddMinutes(-double.Parse(words[4]));
+                        str = datenew.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    }
+                }
+                if (type == "d")
+                {
+                    DateTime startdate = DateTime.Parse(date);
+                    if (endadte < startdate)
+                    {
+                        str = "0 Days " + "0 Hrs " + "0 Min";
+                    }
+                    else
+                    {
+
+
+                        TimeSpan span = (endadte - startdate);
+                        str = span.Days.ToString() + " Days " + span.Hours.ToString() + " Hrs " + span.Minutes.ToString() + " Min";
+                    }
+
+                }
+            }
+            else
+            {
+                if (type == "m")
+                {
+
+                    string[] words = date.Split(' ');
+                    if (words[0] == "0" && words[2] == "0" && words[4] == "0")
+                    {
+                        str = endadte.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    }
+                    else
+                    {
+                        var datenew = endadte.AddDays(-double.Parse(words[0]));
+                        datenew = datenew.AddHours(-double.Parse(words[2]));
+
+                        datenew = datenew.AddMinutes(-double.Parse(words[4]));
+                        str = datenew.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    }
+                }
+                if (type == "d")
+                {
+                    DateTime startdate = DateTime.Parse(date);
+                    if (endadte < startdate)
+                    {
+                        str = "0 Days " + "0 Hrs " + "0 Min";
+                    }
+                    else
+                    {
+
+
+                        TimeSpan span = (endadte - startdate);
+                        str = span.Days.ToString() + " Days " + span.Hours.ToString() + " Hrs " + span.Minutes.ToString() + " Min";
+                    }
+
+                }
+            }
+            return str;
+        }
         public string DeletePromocode(long promocode)
         {
             try
