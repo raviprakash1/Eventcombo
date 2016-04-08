@@ -131,6 +131,7 @@ namespace EventCombo.Models
         public int ticketype { get; set; }
         public string startdays { get; set; }
         public string enddays { get; set; }
+        public string startdatesave { get; set; }
 
     
     }

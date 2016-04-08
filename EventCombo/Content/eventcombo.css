@@ -2035,3 +2035,5 @@ transform: rotate(45deg);
 
 .crt_inv_mid_row {width: 100%; height: 100%; display: table-row; background:#fff; }
 .crt_inv_mid_cell{ width: 20%; height: 100%; font-size: 16px;  display: table-cell; padding: 8px 5px; vertical-align: top; color: #000;  border-bottom: 1px solid #ddd;  }
+.bld_remove{ font-weight:normal;}
+div.dis_file_upld{ background:#ccc !important;}
