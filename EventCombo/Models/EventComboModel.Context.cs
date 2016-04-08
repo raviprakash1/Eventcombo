@@ -73,16 +73,19 @@ namespace EventCombo.Models
         public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
         public virtual DbSet<Organizer_Master> Organizer_Master { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
-        public virtual DbSet<Promo_Code> Promo_Code { get; set; }
         public virtual DbSet<OrderTemplate> OrderTemplates { get; set; }
         public virtual DbSet<OrderTemplateQuestion> OrderTemplateQuestions { get; set; }
         public virtual DbSet<OrderTemplateType> OrderTemplateTypes { get; set; }
-        public virtual DbSet<OrderTemplateWaitlist> OrderTemplateWaitlists { get; set; }
         public virtual DbSet<QuestionType> QuestionTypes { get; set; }
         public virtual DbSet<QuestionTypeGroup> QuestionTypeGroups { get; set; }
         public virtual DbSet<OrderTemplateEventType> OrderTemplateEventTypes { get; set; }
-        public virtual DbSet<OrderTemplateReceiveByType> OrderTemplateReceiveByTypes { get; set; }
         public virtual DbSet<OrderTemplateTicket> OrderTemplateTickets { get; set; }
+        public virtual DbSet<ControlType> ControlTypes { get; set; }
+        public virtual DbSet<Language> Languages { get; set; }
+        public virtual DbSet<OrderTemplateQuestionTicket> OrderTemplateQuestionTickets { get; set; }
+        public virtual DbSet<OrderTemplateQuestionVariant> OrderTemplateQuestionVariants { get; set; }
+        public virtual DbSet<OrderTemplateGroupType> OrderTemplateGroupTypes { get; set; }
+        public virtual DbSet<Promo_Code> Promo_Code { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
@@ -208,20 +211,20 @@ namespace EventCombo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishEvent", eventIdParameter, userIdParameter);
         }
-
-
+    
         public virtual ObjectResult<string> GetLantLong(string lat, string @long)
         {
             var latParameter = lat != null ?
                 new ObjectParameter("Lat", lat) :
                 new ObjectParameter("Lat", typeof(string));
-
+    
             var longParameter = @long != null ?
                 new ObjectParameter("Long", @long) :
                 new ObjectParameter("Long", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetLantLong", latParameter, longParameter);
         }
+    
         public virtual ObjectResult<GetOrganizerEventid_Result> GetOrganizerEventid(Nullable<long> masterid)
         {
             var masteridParameter = masterid.HasValue ?

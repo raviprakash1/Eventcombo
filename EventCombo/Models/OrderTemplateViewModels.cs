@@ -61,6 +61,42 @@ namespace EventCombo.Models
     public long SortNum { get; set; }
   }
 
+  public partial class OrderTemplateQuestionTicketViewModel
+  {
+    public long OrderTemplateQuestionTicketId { get; set; }
+    public bool CollectInformation { get; set; }
+
+    private TicketViewModel _collectTicket = new TicketViewModel();
+    public TicketViewModel CollectTicket
+    {
+      get { return _collectTicket; }
+      set { _collectTicket = value; }
+    }
+    public long TicketId { get; set; }
+  }
+
+  public partial class OrderTemplateQuestionVariantViewModel
+  {
+    public long OrderTemplateQuestionVariantId { get; set; }
+    public string VariantText { get; set; }
+    public long Quantity { get; set; }
+
+    private List<OrderTemplateQuestionViewModel> _subquestions = new List<OrderTemplateQuestionViewModel>();
+    public List<OrderTemplateQuestionViewModel> Subquestions
+    {
+      get { return _subquestions; }
+      private set { _subquestions = value; }
+    }
+  }
+
+  public partial class ControlTypeViewModel
+  {
+    public long ControlTypeId { get; set; }
+    public string ControlTypeName { get; set; }
+    public int SortNum { get; set; }
+    public string JSFunction { get; set; }
+  }
+
   public class OrderTemplateQuestionViewModel
   {
     public long OrderTemplateQuestionId { get; set; }
@@ -75,14 +111,42 @@ namespace EventCombo.Models
 
     public bool Include { get; set; }
     public bool Require { get; set; }
+    public string QuestionText { get; set; }
+    public int SortNum { get; set; }
+    public bool ShowForTickets { get; set; }
+    public bool LimitQuantity { get; set; }
+    public bool ShowAnswer { get; set; }
+    public bool EnableSubquestions { get; set; }
+    public long ParentId { get; set; }
+
+    private ControlTypeViewModel _control = new ControlTypeViewModel();
+    public ControlTypeViewModel Control
+    {
+      get { return _control; }
+      private set { _control = value; }
+    }
+    public long ControlTypeId { get; set; }
+
+    private List<OrderTemplateQuestionTicketViewModel> _questionTickets = new List<OrderTemplateQuestionTicketViewModel>();
+    public List<OrderTemplateQuestionTicketViewModel> QuestionTickets
+    {
+      get { return _questionTickets; }
+      private set { _questionTickets = value; }
+    }
+
+    private List<OrderTemplateQuestionVariantViewModel> _questionVariants = new List<OrderTemplateQuestionVariantViewModel>();
+    public List<OrderTemplateQuestionVariantViewModel> QuestionVariants
+    {
+      get { return _questionVariants; }
+      private set { _questionVariants = value; }
+    }
   }
 
   public class OrderTemplateEventTypeViewModel
   {
-        public long OrderTemplateEventTypeId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-
+    public long OrderTemplateEventTypeId { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
   }
 
   public class OrderTemplateReceiveByTypeViewModel
@@ -96,9 +160,7 @@ namespace EventCombo.Models
       get { return _receiveTicket; }
       internal set { _receiveTicket = value; }
     }
-
     public long TicketId { get; set; }
-
   }
 
   public class OrderTemplateWaitlistViewModel
@@ -125,19 +187,67 @@ namespace EventCombo.Models
     public int RespondMinutes { get; set; }
   }
 
+  public partial class LanguageViewModel
+  {
+    public long LanguageId { get; set; }
+    public string LanguageName { get; set; }
+  }
+
+  public partial class OrderTemplateGroupTicketViewModel
+  {
+    public long OrderTemplateGroupTicketId { get; set; }
+    public bool EnableRegistration { get; set; }
+    public bool GroupOnly { get; set; }
+    public bool DontDisplay { get; set; }
+
+    private TicketViewModel _groupTicket = new TicketViewModel();
+    public TicketViewModel GroupTicket
+    {
+      get { return _groupTicket; }
+      private set { _groupTicket = value; }
+    }
+    public long TicketId { get; set; }
+  }
+
+  public partial class OrderTemplateGroupTypeViewModel
+  {
+    public long OrderTemplateGroupTypeId { get; set; }
+    public string GroupName { get; set; }
+  }
+
   public class OrderTemplateViewModel
   {
     public long OrderTemplateId { get; set; }
-
     public long EventId { get; set; }
-
     public long OrderTemplateTypeId { get; set; }
-
     public string Title { get; set; }
-
     public string Instruction { get; set; }
-
     public string UserID { get; set; }
+    public int TimeLimit { get; set; }
+    public string AfterMessage { get; set; }
+    public bool AllowCallPickup { get; set; }
+    public bool AllowEdit { get; set; }
+    public bool AcceptRefund { get; set; }
+    public string ConfirmationMessage { get; set; }
+    public string ReplyEmail { get; set; }
+    public string TicketMessage { get; set; }
+    public bool CustomIncludeSettings { get; set; }
+    public bool IncludePrintableTickets { get; set; }
+    public int LanguageId { get; set; }
+    public bool EnableWaitlist { get; set; }
+    public long OrderTemplateEventTypeId { get; set; }
+    public long OrderTemplateGroupTypeId { get; set; }
+    public long GroupMaxAttendees { get; set; }
+    public string GroupPageHeadline { get; set; }
+    public string GroupPageDescription { get; set; }
+    public bool GroupAllowPassword { get; set; }
+    public bool GroupRequirePassword { get; set; }
+    public bool GroupAllowSetTime { get; set; }
+    public bool GroupRequireSetTime { get; set; }
+    public bool GroupAskIndividualTime { get; set; }
+    public Nullable<System.DateTime> GroupStartTime { get; set; }
+    public Nullable<System.DateTime> GroupEndTime { get; set; }
+    public int GroupMinutesBetween { get; set; }
 
     private List<OrderTemplateTicketViewModel> _collectTickets = new List<OrderTemplateTicketViewModel>();
     public List<OrderTemplateTicketViewModel> CollectTickets
@@ -153,27 +263,12 @@ namespace EventCombo.Models
       internal set { _questions = value; }
     }
 
-    public int TimeLimit { get; set; }
-
-    public string AfterMessage { get; set; }
-
-    public bool AllowCallPickup { get; set; }
-
-    public bool AllowEdit { get; set; }
-
-    public bool AcceptRefund { get; set; }
-
-    public string ConfirmationMessage { get; set; }
-
-    public string ReplyEmail { get; set; }
-
-    public string TicketMessage { get; set; }
-
-    public bool CustomIncludeSettings { get; set; }
-
-    public bool IncludePrintableTickets { get; set; }
-
-    public long OrderTemplateEventTypeId { get; set; }
+    private List<OrderTemplateQuestionViewModel> _userQuestions = new List<OrderTemplateQuestionViewModel>();
+    public List<OrderTemplateQuestionViewModel> UserQuestions
+    {
+      get { return _userQuestions; }
+      internal set { _userQuestions = value; }
+    }
 
     private List<OrderTemplateReceiveByTypeViewModel> _receiveByTypes = new List<OrderTemplateReceiveByTypeViewModel>();
     public List<OrderTemplateReceiveByTypeViewModel> ReceiveByTypes
@@ -182,8 +277,6 @@ namespace EventCombo.Models
       internal set { _receiveByTypes = value; }
     }
 
-    public bool EnableWaitlist { get; set; }
-
     private OrderTemplateWaitlistViewModel _waitlist = new OrderTemplateWaitlistViewModel();
     public OrderTemplateWaitlistViewModel Waitlist
     {
@@ -191,7 +284,11 @@ namespace EventCombo.Models
       internal set { _waitlist = value; }
     }
 
-    public int LanguageId { get; set; }
-
+    private List<OrderTemplateGroupTicketViewModel> _groupTickets = new List<OrderTemplateGroupTicketViewModel>();
+    public List<OrderTemplateGroupTicketViewModel> GroupTickets
+    {
+      get { return _groupTickets; }
+      set { _groupTickets = value; }
+    }
   }
 }

@@ -1,0 +1,136 @@
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
+@{
+  ViewBag.Title = "Waitlist";
+  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+}
+
+
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+
+<script type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+<link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
+<link href='~/Content/OrderForm.css' rel='stylesheet' type='text/css'>
+<link href="~/Content/OrderFormDesign.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_top">
+      @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+      {
+        <div class="col-sm-12 no_pad">
+          @ViewBag.StateMessage
+        </div>
+      }
+      @Html.HiddenFor(m => m.OrderTemplateId)
+      @Html.HiddenFor(m => m.EventId)
+      
+        <div class="insideContainer col-md-9 col-xs-12">
+            
+            <div id="mainForm2" style="display:block;">
+                <div class="orderFormTxt"><h1>Waitlist Settings</h1></div>
+                <div class="formText" style="font-weight:bold;">Enable Waitlist:</div>
+
+                <div class="radio" onclick="$('.waitListContainer').show();">
+                    <label><input type="radio" name="optradio" checked>Enable</label>
+                </div>
+                <div class="radio" onclick="$('.waitListContainer').hide();">
+                    <label><input type="radio" name="optradio">Disable</label>
+                </div>
+
+                <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                    <div class="btn btn-primary btn-lg">Save</div>
+                </div>
+
+                <div class="waitListContainer">
+                    <div class="formText">Waitlist Trigger:</div>
+
+                    <div class="radio">
+                        <label><input type="radio" name="optradio1" checked>When free entry sells out</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="optradio1">When head chef Romain Bonnans sells out</label>
+                    </div>
+
+                    <div class="radio">
+                        <label><input type="radio" name="optradio1">When total event capacity is reached</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Maximun Waitlist Size</label>
+                        <input type="text" class="form-control" id="title" placeholder="0">
+                        <span style="font-size: 12px;padding-left: 10px;color: #888;">Zero for unlimited</span>
+                    </div>
+
+                    <div class="groupRegis">ATTENDEE INFORMATION TO COLLECT:</div>
+                    
+                    <div id="early1" class="basicInfoCheckBox" style="font-size: 16px;" >Full Name (Required)</div>
+                    <div id="early2" class="basicInfoCheckBox" style="font-size: 16px;" >Email Address (Required)</div>
+                    <div id="early3" class="basicInfoUnCheckBox" style="font-size: 16px;" onclick="setCheckBoxChecked(this)">Phone Number</div>
+                    
+
+                    <div class="form-group">
+                        <label for="title" style="display:block;">TIME TO RESPOND:</label>
+                        <input type="text" class="form-control timeRespondWidth" id="days" placeholder="Day(s)">
+                        <input type="text" class="form-control timeRespondWidth" id="hours" placeholder="Hour(s)">
+                        <input type="text" class="form-control timeRespondWidth" id="mins" placeholder="Minute(s)">
+                    </div>
+                    <span style="font-size: 12px;padding-left: 0px;color: #888;">Time allowed for attendees to claim their ticket</span>
+
+                    <div class="form-group" >
+                        <label for="title">AUTO-RESPONSE MESSAGE:</label>
+                        <textarea id="uiEditorBox1" class="form-control setHeight" name="text1" maxlength="2500"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">WAITLIST TICKET RELEASE MESSAGE:</label>
+                        <textarea id="uiEditorBox2" class="form-control setHeight" name="text1" maxlength="2500"></textarea>
+                    </div>
+                    <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                        <div class="btn btn-primary btn-lg">Save</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+  </div>
+}
+
+<script type="text/javascript">
+
+    function setCheckBoxChecked(obj) {
+        if ($(obj).hasClass('basicInfoUnCheckBox')) {
+            $(obj).addClass('basicInfoCheckBox');
+            $(obj).removeClass('basicInfoUnCheckBox');
+        }
+        else {
+            $(obj).removeClass('basicInfoCheckBox');
+            $(obj).addClass('basicInfoUnCheckBox');
+        }
+    }
+
+    $(function () {
+        $("#uiEditorBox1").jqte();
+        $("#uiEditorBox2").jqte();
+
+    });
+
+    
+</script>

@@ -12,14 +12,14 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class OrderTemplateReceiveByType
+    public partial class OrderTemplateQuestionTicket
     {
-        public long OrderTemplateReceiveByTypeId { get; set; }
-        public bool Receive { get; set; }
-        public long OrderTemplateId { get; set; }
+        public long OrderTemplateQuestionTicketId { get; set; }
+        public long OrderTemplateQuestionId { get; set; }
         public long TicketId { get; set; }
+        public bool CollectInformation { get; set; }
     
-        public virtual OrderTemplate OrderTemplate { get; set; }
+        public virtual OrderTemplateQuestion OrderTemplateQuestion { get; set; }
         public virtual Ticket Ticket { get; set; }
     }
 }

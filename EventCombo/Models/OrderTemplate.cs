@@ -17,9 +17,7 @@ namespace EventCombo.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OrderTemplate()
         {
-            this.OrderTemplateWaitlists = new HashSet<OrderTemplateWaitlist>();
             this.OrderTemplateQuestions = new HashSet<OrderTemplateQuestion>();
-            this.OrderTemplateReceiveByTypes = new HashSet<OrderTemplateReceiveByType>();
             this.OrderTemplateTickets = new HashSet<OrderTemplateTicket>();
         }
     
@@ -41,17 +39,36 @@ namespace EventCombo.Models
         public long LanguageId { get; set; }
         public bool EnableWaitlist { get; set; }
         public long OrderTemplateEventTypeID { get; set; }
+        public long GroupMaxAttendees { get; set; }
+        public string GroupPageHeadline { get; set; }
+        public string GroupPageDescription { get; set; }
+        public bool GroupAllowPassword { get; set; }
+        public bool GroupRequirePassword { get; set; }
+        public bool GroupAllowSetTime { get; set; }
+        public bool GroupRequireSetTime { get; set; }
+        public bool GroupAskIndividualTime { get; set; }
+        public Nullable<System.DateTime> GroupStartTime { get; set; }
+        public Nullable<System.DateTime> GroupEndTime { get; set; }
+        public int GroupMinutesBetween { get; set; }
+        public long OrderTemplateGroupTypeId { get; set; }
+        public long MaxSize { get; set; }
+        public bool NameRequired { get; set; }
+        public bool EmailRequired { get; set; }
+        public bool PhoneRequired { get; set; }
+        public System.DateTime RespondTime { get; set; }
+        public string ResponseMessage { get; set; }
+        public string ReleaseMessage { get; set; }
+        public long WaitlistTicketId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTemplateWaitlist> OrderTemplateWaitlists { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderTemplateQuestion> OrderTemplateQuestions { get; set; }
         public virtual Event Event { get; set; }
         public virtual OrderTemplateType OrderTemplateType { get; set; }
         public virtual OrderTemplateEventType OrderTemplateEventType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTemplateReceiveByType> OrderTemplateReceiveByTypes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderTemplateTicket> OrderTemplateTickets { get; set; }
+        public virtual Language Language { get; set; }
+        public virtual OrderTemplateGroupType OrderTemplateGroupType { get; set; }
+        public virtual Ticket Ticket { get; set; }
     }
 }

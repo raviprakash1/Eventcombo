@@ -296,6 +296,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommanClasses.cs" />
+    <Compile Include="Models\ControlType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Country.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -390,6 +393,9 @@
     </Compile>
     <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Language.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -404,10 +410,16 @@
     <Compile Include="Models\OrderTemplateEventType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderTemplateGroupType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OrderTemplateQuestion.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OrderTemplateReceiveByType.cs">
+    <Compile Include="Models\OrderTemplateQuestionTicket.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderTemplateQuestionVariant.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrderTemplateTicket.cs">
@@ -417,9 +429,6 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrderTemplateViewModels.cs" />
-    <Compile Include="Models\OrderTemplateWaitlist.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Order_Detail_T.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -581,15 +590,26 @@
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
+    <Content Include="Content\jquery-te-1.4.0.css" />
+    <Content Include="Content\jquery-te.png" />
+    <Content Include="Content\OrderForm.css" />
+    <Content Include="Content\OrderFormDesign.css" />
     <Content Include="email-content-pdf%281%29.html" />
     <Content Include="Images\ajax-loader.gif" />
+    <Content Include="Images\checked.png" />
+    <Content Include="Images\cross.png" />
     <Content Include="Images\default_org_image.jpg" />
     <Content Include="Images\dgd.png" />
+    <Content Include="Images\downarrow.png" />
+    <Content Include="Images\drag.png" />
     <Content Include="Images\em_ven_time.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
+    <Content Include="Images\info.png" />
+    <Content Include="Images\leftarrow.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\qwe.png" />
+    <Content Include="Images\unchecked.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
@@ -883,6 +903,7 @@
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
+    <None Include="Properties\PublishProfiles\My Local.pubxml" />
     <None Include="Properties\PublishProfiles\MyLocal.pubxml" />
     <None Include="Properties\PublishProfiles\temp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -897,6 +918,7 @@
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-te-1.4.0.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_75_ffffff_40x100.png" />

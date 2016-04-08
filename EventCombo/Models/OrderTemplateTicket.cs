@@ -18,6 +18,10 @@ namespace EventCombo.Models
         public long TicketId { get; set; }
         public long OrderTemplateId { get; set; }
         public bool CollectInformation { get; set; }
+        public bool Receive { get; set; }
+        public bool EnableRegistration { get; set; }
+        public bool GroupOnly { get; set; }
+        public bool DontDisplay { get; set; }
     
         public virtual OrderTemplate OrderTemplate { get; set; }
         public virtual Ticket Ticket { get; set; }

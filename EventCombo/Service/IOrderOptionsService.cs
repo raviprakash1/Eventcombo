@@ -14,5 +14,10 @@ namespace EventCombo.Service
     IEnumerable<TicketViewModel> GetTicketsViewModel(long eventId);
     IEnumerable<OrderTemplateTypeViewModel> GetOrderTemplateTypesViewModel();
     IEnumerable<OrderTemplateEventTypeViewModel> GetOrderTemplateEventTypesViewModel();
+    IEnumerable<LanguageViewModel> GetLanguagesViewModel();
+    IEnumerable<ControlTypeViewModel> GetControlTypesViewModel();
+    IEnumerable<QuestionTypeGroupViewModel> GetQuestionTypeGroups();
+    IEnumerable<OrderTemplateGroupTypeViewModel> GetOrderTemplateGroupTypes();
+    string GetEventTitle(long eventId);
   }
 }
