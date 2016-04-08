@@ -1,0 +1,207 @@
+﻿body {
+}
+
+.mainContainer {
+    margin:0px;
+    padding:0px;
+    position:relative;
+    display:block;
+    overflow:hidden;
+    font-size:18px;
+    font-family:Arial;
+}
+
+.insideContainer{
+    padding-bottom:40px;
+}
+
+.formText {
+    font-size:20px;
+    margin-top: 20px;
+}
+
+.orderFormTxt {
+    border-bottom: 1px solid #c1c1c1;
+}
+ul {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+
+.lastestBestSale
+{
+    margin-top: 18px;
+    margin-bottom: 1px;
+}
+
+.lastestBestSale ul.nav {
+    position: relative;
+    margin-bottom: 25px;
+    border: none;
+}
+
+.lastestBestSale ul.nav:before {
+    background: #eaeaea none repeat scroll 0 0;
+    content: "";
+    display: block;
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 12px;
+    width: 100%;
+    z-index: -1;
+}
+
+.lastestBestSale ul.nav li {
+    background: #fff;
+    position: relative;
+    padding: 0 22px;
+    text-align: left;
+}
+
+.lastestBestSale ul.nav li.first {
+    padding-left: 0px;
+}
+.lastestBestSale ul.nav li:after {
+    position: absolute;
+    right: -1px;
+    top: 5px;
+    height: 15px;
+    width: 1px;
+    content: "";
+    display: inline-block;
+    background: #eaeaea;
+    z-index: 2;
+}
+
+.lastestBestSale ul.nav li.active a {
+    transition: all .25s ease 0s;
+    border: none;
+    cursor: pointer;
+}
+
+.lastestBestSale ul.nav li  a:hover {
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.lastestBestSale ul.nav li a {
+    margin: 0 !important;
+    padding: 0;
+    border: none;
+    color: #333333;
+    font-size: 15px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+}
+
+.lastestBestSale ul.nav li a::before {
+    background: #333333 none repeat scroll 0 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 0;
+    margin-top: 10px;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    transition: all .2s ease-out 0s;
+    width: 100%;
+}
+
+.lastestBestSale ul.nav li a:after {
+    border-color: #333333 rgba(0,0,0,0) rgba(0,0,0,0);
+    border-style: solid;
+    border-width: 7px 6px 0;
+    content: "";
+    display: block;
+    height: 0;
+    left: 50%;
+    margin: 10px -8px 0;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    transform: rotate(0deg) !important;
+    transition: all .2s ease-out 0s;
+    width: 0;
+
+}
+
+.lastestBestSale ul.nav li.active a:before, .lastestBestSale ul.nav li.active a:after {
+    opacity: 1;
+    margin-top: 0;
+}
+
+.lastestBestSale ul.nav li a:hover:before, .lastestBestSale ul.nav li a:hover:after {
+    opacity: 1;
+    margin-top: 0;
+}
+
+.groupRegis {
+    font-size:15px;
+    font-weight: bold;
+    padding: 20px 0px 5px 0px;
+}
+
+.groupRegisDesp{
+    padding: 0px 0px 20px 0px;
+    font-weight: normal;
+    font-size: 15px;
+}
+
+
+.groupRegis1 {
+    font-size:15px;
+    font-weight: bold;
+    padding: 20px 0px 10px 0px;
+}
+
+.setHeight{
+    min-height:200px;
+}
+
+.itemsInInfo{
+    padding: 10px 0px 15px 0px;
+    border-bottom: 1px solid #888;
+}
+
+.orderConHead{
+    padding:20px 0px;
+    font-size:16px;
+}
+
+.jqte-test {
+	display:block;
+	margin:0 0 10px;
+	padding:6px;
+	width:95%;
+	background:#FFF;
+	border:#AAA 1px solid;
+	font-size:13px;
+}
+#uiEditorBox.jqte-test, div.jqte-test, span.jqte-test {
+	min-height:100px;
+}
+
+.dropdownItemClass{
+    width: 100%;
+    text-align: left;
+    font-size: 17px;
+}
+
+.timeRespondWidth{
+    width:20%;
+    margin-right:10px;
+    float:left;
+}
+
+.form-group{
+    margin-top:20px;
+}
+
+.validatorTxt {
+    background-color: #FFDDDD !important;
+    border-color: #DE514D !important;
+}

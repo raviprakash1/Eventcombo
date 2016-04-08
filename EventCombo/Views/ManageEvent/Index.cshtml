@@ -8,86 +8,8 @@
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
 @section sidenav{
- <div id="sidebar" class="nav nav-stacked">
-    <div id="accordion" class="panel-group">
-
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                  < My Account
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#" title="@Model.Eventtitle">
-                <div class="panel-heading activeyellow act_ellipses">
-                   @Model.Eventtitle
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                   Event Help
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                    Event Bundles
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                    Event Dashboard
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                    Modify Order Options
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-
-            <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                <div id="dvManage" class="panel-heading">
-                   Invite and Promote <b class="closed"></b>
-                </div>
-            </a>
-
-            <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body no-padding">
-                    <p>Email Invitations</p>
-                    @if (Model.DiscountCode > 0)
-                    {
-                        <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid }, null)</p>
-                    }
-                    else
-                    {
-                    <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.Eventid }, null)</p>
-                    }
-                    <p>Facebook Integration</p>
-                    <p>Website Integration</p>
-                    <p>Tracing Links</p>
-                    <p>Affialate Programs</p>
-                    <p>Social Stream</p>
-                 
-                   
-
-                 
-                </div>
-            </div>
-        </div>
-        
-    </div>
-</div>
-}
+  @Html.Partial("_ManageEventLeftMenu")
+ }
 
 
 @using (Html.BeginForm())

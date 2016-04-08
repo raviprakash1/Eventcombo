@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e1003d660e264b6e9e2ff7b77ce7c251" Name="Diagram1" ZoomLevel="72">
+      <Diagram DiagramId="e1003d660e264b6e9e2ff7b77ce7c251" Name="Diagram1" ZoomLevel="68">
         <EntityTypeShape EntityType="EventComboModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Address" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.AspNetRole" Width="1.5" PointX="5.75" PointY="7.25" IsExpanded="true" />
@@ -40,7 +40,7 @@
         <EntityTypeShape EntityType="EventComboModel.Ticket" Width="1.5" PointX="3" PointY="23.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Ticket_Locked_Detail" Width="1.5" PointX="5.75" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Ticket_Purchased_Detail" Width="1.5" PointX="18.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Ticket_Quantity_Detail" Width="1.5" PointX="5.25" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Quantity_Detail" Width="1.5" PointX="0.875" PointY="28.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.TicketBearer" Width="1.5" PointX="7.75" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.TicketDeliveryMethod" Width="1.5" PointX="15" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.TicketType" Width="1.5" PointX="18.75" PointY="11.75" IsExpanded="true" />
@@ -61,15 +61,45 @@
         <AssociationConnector Association="EventComboModel.FK_EventVenue_EventVenue" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Ticket_Quantity_Info_Ticket" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EventComboModel.TicketOrderDetail" Width="1.5" PointX="17.375" PointY="20.75" />
-        <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="19.375" PointY="20.75" />
+        <EntityTypeShape EntityType="EventComboModel.TicketOrderDetail" Width="1.5" PointX="18.5" PointY="19.875" />
+        <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="20.625" PointY="20.625" />
         <EntityTypeShape EntityType="EventComboModel.Organizer_Master" Width="1.5" PointX="21.375" PointY="3.75" />
         <EntityTypeShape EntityType="EventComboModel.Event_Orgnizer_Detail" Width="1.75" PointX="3" PointY="7.875" />
         <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Event" />
         <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" />
         <EntityTypeShape EntityType="EventComboModel.Promo_Code" Width="1.5" PointX="11.98486792109202" PointY="28.749151675379441" />
-        <EntityTypeShape EntityType="EventComboModel.v_RetrieveEventid" Width="1.5" PointX="8.375" PointY="21.75" />
+        <EntityTypeShape EntityType="EventComboModel.v_RetrieveEventid" Width="1.5" PointX="20.625" PointY="22.625" />
 
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplate" Width="2.125" PointX="10.5" PointY="22.875" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestion" Width="2" PointX="12.875" PointY="21.5" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateType" Width="2.125" PointX="16.125" PointY="28.75" />
+        <EntityTypeShape EntityType="EventComboModel.QuestionType" Width="1.875" PointX="16" PointY="21.5" />
+        <EntityTypeShape EntityType="EventComboModel.QuestionTypeGroup" Width="1.5" PointX="18.75" PointY="22.75" />
+        <AssociationConnector Association="EventComboModel.QuestionTypeGroupQuestionType" />
+        <AssociationConnector Association="EventComboModel.QuestionTypeOrderTemplateQuestion" />
+        <AssociationConnector Association="EventComboModel.OrderTemplateOrderTemplateQuestion" />
+        <AssociationConnector Association="EventComboModel.EventOrderTemplate" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="EventComboModel.OrderTemplateOrderTemplateType" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateEventType" Width="2.125" PointX="9.125" PointY="32.875" />
+        <AssociationConnector Association="EventComboModel.OrderTemplateOrderTemplateEventType" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateTicket" Width="1.875" PointX="6.75" PointY="27.5" />
+        <AssociationConnector Association="EventComboModel.OrderTemplateOrderTemplateTicket" />
+        <AssociationConnector Association="EventComboModel.TicketOrderTemplateTicket" />
+        <EntityTypeShape EntityType="EventComboModel.ControlType" Width="1.5" PointX="15.375" PointY="25" />
+        <EntityTypeShape EntityType="EventComboModel.Language" Width="1.5" PointX="13.875" PointY="27.5" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestionTicket" Width="2.375" PointX="6.875" PointY="24" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestionVariant" Width="2.5" PointX="17.25" PointY="25" />
+        <AssociationConnector Association="EventComboModel.LanguageOrderTemplate" />
+        <AssociationConnector Association="EventComboModel.OrderTemplateQuestionOrderTemplateQuestionVariant" />
+        <AssociationConnector Association="EventComboModel.ControlTypeOrderTemplateQuestion" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="EventComboModel.OrderTemplateQuestionOrderTemplateQuestionTicket" />
+        <AssociationConnector Association="EventComboModel.TicketOrderTemplateQuestionTicket" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateGroupType" Width="2.25" PointX="14.125" PointY="31" />
+        <AssociationConnector Association="EventComboModel.OrderTemplateGroupTypeOrderTemplate" />
+        <AssociationConnector Association="EventComboModel.TicketOrderTemplate" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
