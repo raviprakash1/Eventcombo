@@ -1,4 +1,4 @@
-﻿
+﻿@model PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
@@ -18,76 +18,81 @@
 </div>
 <div class="clearfix"></div>
 
-        <div class="col-sm-12 col-xs-12 mb10">
-            <button class="btn def_btn acnt_btn invite_email_attend_btn crt_inv_btn crt_inv_btn" title="" id="btCreateInv" type="button">Create Invitation</button>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-sm-12">
-            <div class="col-sm-12  custom fs18 no_pad">
-                <ul class="nav nav-tabs evnt-mng-tab">
-                    <li class="active">
-                        <a href="#sectionA" aria-controls="home" role="tab" data-toggle="tab"> Scheduled (11) </a>
-                    </li>
-                    <li class="">
-                        <a href="#sectionB" aria-controls="home" role="tab" data-toggle="tab"> Draft (3) </a>
-                    </li>
+<div class="col-sm-12 col-xs-12 mb10">
+    <button class="btn def_btn acnt_btn invite_email_attend_btn crt_inv_btn crt_inv_btn" title="" id="btCreateInv" type="button">Create Invitation</button>
+</div>
+<div class="clearfix"></div>
+<div class="col-sm-12">
+    <div class="col-sm-12  custom fs18 no_pad">
+        <ul class="nav nav-tabs evnt-mng-tab">
+            <li class="active">
+                <a href="#sectionA" aria-controls="home" role="tab" data-toggle="tab"> Scheduled (11) </a>
+            </li>
+            <li class="">
+                <a href="#sectionB" aria-controls="home" role="tab" data-toggle="tab"> Draft (3) </a>
+            </li>
 
-                </ul>
-            </div>
-            <div class="tab-content mt10">
-                <div id="sectionA" class="tab-pane active">
-                    <div class="col-sm-12 no_pad">
-                        <div class="crt_inv_table">
-                            <div class="crt_inv_tablehead">
-                                <div class="crt_inv_tableCell">
-                                    Subject
-                                    <span class="crt_evnt_drop_up"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
-                                    <span class="crt_evnt_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
-                                </div>
-                                <div class="crt_inv_tableCell ">
-                                    Recipients
-                                    <span class="crt_evnt_drop_up"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
-                                    <span class="crt_evnt_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
-                                </div>
-                                <div class="crt_inv_tableCell ">
-                                    Created
-                                    <span class="crt_evnt_drop_up"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
-                                    <span class="crt_evnt_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
-                                </div>
-                                <div class="crt_inv_tableCell ">
-                                    Send On
-                                    <span class="crt_evnt_drop_up"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
-                                    <span class="crt_evnt_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
-                                </div>
-                                <div class="crt_inv_tableCell ">
-                                    Action
-                                </div>
-                            </div>
-                            <div class="crt_inv_mid_row">
-                                <div class="crt_inv_mid_cell">
-                                    Subject Subject Subject Subject Subject
-                                </div>
-                                <div class="crt_inv_mid_cell ">
-                                    1
-                                </div>
-                                <div class="crt_inv_mid_cell ">
-                                    April 7, 2016 - 3:58 PM (IST)
-                                </div>
-                                <div class="crt_inv_mid_cell ">
-                                    April 7, 2016 - 3:58 PM (IST)
-                                </div>
-                                <div class="crt_inv_mid_cell create_invite_action ">
-                                    <a href="#">Edit </a>  <a href="#">Copy</a>  <a href="#">Delete</a>
-                                </div>
-                            </div>
+        </ul>
+    </div>
+    <div class="tab-content mt10">
+        <div id="sectionA" class="tab-pane active">
+            <div class="col-sm-12 no_pad">
+                <div class="crt_inv_table">
+                    <div class="crt_inv_tablehead">
+                        <div class="crt_inv_tableCell">
+                            Subject
+                            <span class="crt_evnt_drop_up"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                            <span class="crt_evnt_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                        </div>
+                        <div class="crt_inv_tableCell ">
+                            Recipients
+                            <span class="crt_evnt_drop_up"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                            <span class="crt_evnt_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                        </div>
+                        <div class="crt_inv_tableCell ">
+                            Created
+                            <span class="crt_evnt_drop_up"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                            <span class="crt_evnt_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                        </div>
+                        <div class="crt_inv_tableCell ">
+                            Send On
+                            <span class="crt_evnt_drop_up"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                            <span class="crt_evnt_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                        </div>
+                        <div class="crt_inv_tableCell ">
+                            Action
                         </div>
                     </div>
+                    <div class="crt_inv_mid_row">
+
+                        @foreach (var item in Model)
+                        {
+
+                            <div class="crt_inv_mid_cell">
+                                @Html.DisplayFor(modelItem => item.Subject)
+                            </div>
+                            <div class="crt_inv_mid_cell ">
+                                @Html.DisplayFor(modelItem => item.NoOfRecipients)
+                            </div>
+                            <div class="crt_inv_mid_cell ">
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </div>
+                            <div class="crt_inv_mid_cell ">
+                                @Html.DisplayFor(modelItem => item.SendOn)
+                            </div>
+                            <div class="crt_inv_mid_cell create_invite_action ">
+                                <a href="#">Edit </a>  <a href="#">Copy</a>  <a href="#">Delete</a>
+                            </div>
+                        }
+
+                    </div>
                 </div>
-                <div id="sectionB" class="tab-pane"> 2222222222222222</div>
-
             </div>
-
         </div>
+        <div id="sectionB" class="tab-pane"> 2222222222222222
+        </div>
+    </div>
+</div>
 
 
 <script>

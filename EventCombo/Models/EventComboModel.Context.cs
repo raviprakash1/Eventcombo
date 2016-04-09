@@ -75,6 +75,8 @@ namespace EventCombo.Models
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
         public virtual DbSet<Promo_Code> Promo_Code { get; set; }
         public virtual DbSet<v_RetrieveEventid> v_RetrieveEventid { get; set; }
+        public virtual DbSet<Event_Email_Invitation> Event_Email_Invitation { get; set; }
+        public virtual DbSet<Event_Email_List> Event_Email_List { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

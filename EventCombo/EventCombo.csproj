@@ -346,6 +346,12 @@
     <Compile Include="Models\EventVote.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Event_Email_Invitation.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event_Email_List.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Event_OrganizerMessages.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -461,6 +467,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\EmailInvitation.cs" />
     <Compile Include="Views\Account\MyAccount.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
