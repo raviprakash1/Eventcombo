@@ -491,8 +491,7 @@ namespace EventCombo.Controllers
         [Authorize]
         public ActionResult EmailInvitations(long eventId, string sortOrder, int? page)
         {
-            EmailInvitations ei = new EmailInvitations();
-
+            
             ViewBag.CurrentSort = (sortOrder ?? "subject");
 
             ViewBag.EventId = eventId;
@@ -1058,11 +1057,8 @@ namespace EventCombo.Controllers
                 {
 
                     //   var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId + " and Month(convert(date,EventHitDatetime)) = " + iMonth.ToString() + " And Year(convert(date,EventHitDatetime)) = " + iYear.ToString()).Count();
-<<<<<<< HEAD
                     var ticketid = (from v in db.Tickets where v.E_Id == eventId select v.T_Id).ToList();
                     string joined = string.Join(",", ticketid.ToArray());
-=======
->>>>>>> 76bd1279bada0011e46eaaa1f2faeaac4a094057
 
                     string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id LEFT JOIN Order_Detail_T On a.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND b.TQD_Ticket_Id in (" + joined + ") and Month(Convert(date,O_OrderDateTime)) = " + iMonth.ToString() + " and Year(Convert(date,O_OrderDateTime)) = " + iYear.ToString() + " group by Convert(date,O_OrderDateTime) ";
                     var vEvent = objEnt.Database.SqlQuery<SaleTickets>(strQuery).FirstOrDefault();
