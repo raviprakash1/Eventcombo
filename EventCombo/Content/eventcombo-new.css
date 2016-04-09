@@ -257,11 +257,10 @@ textarea {resize: none;}
 /*Start event display page*/
 
 .event-slide-container{
-    width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: 600px;}
+    width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: auto;}
 
 .carousel {
   min-height: 560px;
-  margin-bottom: 60px;
 }
 .carousel .item {
   height: 560px;
@@ -729,3 +728,4 @@ textarea {resize: none;}
 .PromoLoaderShow {
     display: block;
 }
+.promo_code_btn{ height:37px; color:#fff; text-transform:uppercase; vertical-align:top; }

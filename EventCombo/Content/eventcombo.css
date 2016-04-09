@@ -759,6 +759,7 @@ span.evnt_toltip{
 
 
 @media (width: 800px) {
+.ev_date_icn { left:-30px !important; }
  .wid_get_buzz{ width: 47% !important; margin-right: 3%;}
  #scrollhome.con_scr0l_home{margin-top:171px !important;}
 
@@ -770,7 +771,7 @@ span.evnt_toltip{
  
   .home_fixed_header{ height: 140px !important;}
   /*.con_scr0l_home{ margin-top: 150px !important }*/  
-  #midsection{ top:132px;}
+  /*#midsection{ top:132px;}*/
 
 }
 
@@ -792,8 +793,7 @@ span.evnt_toltip{
 
 .wid_get_buzz{ width: 90% !important; margin-right: 3%;} 
 
-/*#divmain{ padding-top:10px;}*/
-/*.con_scr0l_home {margin-top:0px !important;}*/
+
 .filter_sep{ margin-top:10px !important;}
 
 .home_fixed_header{ height: 142px !important; }
@@ -820,13 +820,15 @@ span.evnt_toltip{
 .xs-100{width:100%; float:left;}
 .d_xs_pad_l0{ padding-left:0px;}
 
-#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 154px !important;}
+
 .xs-paymentconf-inner{ margin-top: -9px;}
 
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -24px !important;}
 .xs-viewevent-inner{margin-top: -10px;}
+.desc_pl_0{ padding-left:0px !important}
 }
 @media (width: 320px) {
+.ev_loc_icn{ left:-10px !important; }
 #midsection.midd_cont {top:134px !important;}
 
 #mainhead{ height:155px;}
@@ -843,10 +845,18 @@ span.evnt_toltip{
 .cont_margin{ margin-top: 3px; margin-bottom: 0px;}
 
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -20px !important;}
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 152px !important;}
+.promo_code_btn{ margin-top:10px;}
 }
 @media (width: 480px){
-#navtop.affix-top {top:108px !important;}
-#midsection.midd_cont {top:106px !important;}
+
+.ev_date_icn { left:0px !important;}
+#navtop{margin-top:21px;}
+#midsection{margin-top:15px;}
+#navtop.affix-top {margin-top:13px; position:relative;}
+#midsection.midd_cont {margin-top: 30px !important;}
+
+
 
 #divmain .social_icn{ margin-top:10px !important;}
 
@@ -862,21 +872,12 @@ span.evnt_toltip{
 .xspad0{ padding:0px;}
 .cont_margin{ margin-top: 11px; margin-bottom: 0px;}
 #scrollhome.con_scr0l_home{margin-top:205px !important;}
-
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 154px !important;}
 }
 @media (min-width: 360px) and (max-width: 640px) {
 #mainhead{ padding-top:10px;}
 .headr_main { padding-top:10px;}
-/*#divmain{ padding-top:10px;}*/
 
-/*.affix-top {margin-top:7px; position:relative; }
-.midd_cont {margin-top: 12px;}*/
-#navtop{margin-top:5px;}
-#navtop.affix-top {margin-top:3px; position:relative; }
-.midd_cont {margin-top: 12px !important;}
-
-/*.affix-top {margin-top:35px; position:relative; }
-.midd_cont {margin-top: 3px;}*/
 
 .social_icn{ top:15px; width:50px; margin-top:10px; }
 
@@ -900,6 +901,8 @@ span.evnt_toltip{
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -24px !important;}
 .xs-viewevent-inner{margin-top: -10px;}
 
+
+
 .xs-desk-show{ display: none; }
 .xs-mobile-show{display: block;}
 .dis_evnt_img{height:auto !important; padding:0px!important;} 
@@ -907,9 +910,18 @@ span.evnt_toltip{
 
 .xs-100{width:100%; float:left;}
 .d_xs_pad_l0{ padding-left:0px;}
+.desc_pl_0{ padding-left:0px !important}
 }
 
 @media (width: 360px) {
+.ev_date_icn{left:-10px !important;}
+.ev_loc_icn{ left:0px !important;}
+
+#navtop{margin-top:5px;}
+#midsection{margin-top:15px;}
+#navtop.affix-top {margin-top:0px; position:relative; }
+#midsection.midd_cont {margin-top: 30px !important;}
+
 .cont_margin{ margin-top: 11px; margin-bottom: 0px;}
 
 #mainhead{ height:140px;}
@@ -919,16 +931,20 @@ span.evnt_toltip{
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -18px !important;}
 .ev_btn_type .col12{ width:100%; float:left; }
 .xsmr0{ margin-right:0px !important}
+
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 154px !important;}
+
 }
-/*#eventtopscoll.view_evnt_top{ margin-top:10px !important;}
-#eventtopscoll.view_evnt_top.event_top{ margin-top:163px !important;}
-#eventtopscoll.view_evnt_top.event_top .event-slide-container{ margin-top:0px !important;}
-#eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}*/
+
 
 @media (width: 640px){
+.ev_date_icn{left:150px !important;}
+.ev_loc_icn{ left:200px !important;}
 #navtop{margin-top:21px;}
-#navtop.affix-top {top:143px !important;}
-#midsection.midd_cont {top: 141px !important;}
+#midsection{margin-top:15px;}
+#navtop.affix-top {margin-top:12px; position:relative;}
+#midsection.midd_cont {margin-top: 30px !important;}
+
 #mainhead .filter_sep{margin-top: 10px !important;}
 
 #scrollhome.con_scr0l_home{margin-top:204px !important;}
@@ -941,28 +957,30 @@ span.evnt_toltip{
 .home_fixed_header{ height:132px !important; }
 #divmain .filter_sep{ margin-top:10px !important; } 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:132px !important;}      
-/*#eventtopscoll.view_evnt_top.event_top .event-slide-container{ margin-top:0px !important;}*/
-/*#eventtopscoll.view_evnt_top .event-slide-container{ margin-top:0px !important;}*/
+
 
 #eventtopscoll.viewevent_container.evnt_confma{ margin-top:122px !important; }
 
 
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: 12px !important;}
 .xs-viewevent-inner{margin-top: -10px;}
+
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 154px !important;}
+.xs-paymentconf-inner{ margin-top: -10px;}
 }
 
 @media (min-width: 375px) and (max-width: 667px){
 .xs-signup-height{ min-height:50px;}
 .xs-desk-show{ display: none; }
+.desc_pl_0{ padding-left:0px !important}
 }
 @media (width: 375px) {
 #scrollhome.con_scr0l_home{margin-top:215px !important;}
-/*#eventtopscoll.event_top{ margin-top:138px !important; }*/
-/*#eventtopscoll .cbtMakeLive { right:87px; position:relative; }*/ 
 
 #navtop{margin-top:9px;}
-#navtop.affix-top {margin-top:0px; position:relative; }
-.midd_cont {margin-top: 12px !important;}
+#midsection{margin-top:15px;}
+#navtop.affix-top {margin-top:0px; position:relative;}
+#midsection.midd_cont {margin-top: 30px !important;}
 
 #mainhead{ height:140px;}
 .createeventtop.event_top{ margin-top:125px;}
@@ -974,6 +992,9 @@ span.evnt_toltip{
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: 3px !important;}
 .xs-viewevent-inner{margin-top: -10px;}
 
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 153px !important;}
+.xs-paymentconf-inner{ margin-top:-10px;}
+
 .affix-top {margin-top:2px; position:relative; }
 .midd_cont {margin-top: 12px;}
 
@@ -984,9 +1005,12 @@ span.evnt_toltip{
 
 .ev_date_icn{  margin-top: 0px !important; left: 0px !important; }
 
+
+
 }
 
 @media (width: 667px) {
+.ev_loc_icn{ left:200px !important; }
 .ev_date_time_model{ top:105px;}
 .ev_loca_check_main{ display:inline; }
 .navbar-right { margin:0px; padding:0px;}
@@ -1019,6 +1043,9 @@ span.evnt_toltip{
 .xs-viewevent-inner{margin-top: -10px;}
 #divmain .filter_sep{ margin-top:10px !important; } 
 
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 174px !important;}
+.xs-paymentconf-inner{ margin-top:-10px;}
+
 #eventtopscoll.viewevent_container.evnt_confma{ margin-top:160px !important; }
 .xspad0{ padding:0px;}
 .ev_date_icn{  margin-top: 5px !important; left: 0px !important; }
@@ -1028,6 +1055,7 @@ span.evnt_toltip{
 @media (min-width: 414px) and (max-width: 736px){
 .xs-signup-height{ min-height:50px;}
 .xs-desk-show{ display: none; }
+.desc_pl_0{ padding-left:0px !important}
 }
 
 
@@ -1054,6 +1082,9 @@ span.evnt_toltip{
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: 3px !important;}
 .xs-viewevent-inner{margin-top: -10px;}
 
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 153px !important;}
+.xs-paymentconf-inner{ margin-top:-10px;}
+
 /*.ev_btn_type .col12{ width:100%; float:left; }*/
 #divmain .social_icn{  margin-top:4px !important;}
 .xsmr0{ margin-right:0px !important}
@@ -1062,6 +1093,7 @@ span.evnt_toltip{
 
 }
 @media (width: 736px) {
+.ev_loc_icn{ left:200px !important; }
 .ev_date_time_model{ top:105px;}
 .navbar-right { margin:0px; padding:0px;}
 .ev_loca_check_main{ display:inline; }
@@ -1072,9 +1104,12 @@ span.evnt_toltip{
 /*#midsection.midd_cont {top: 159px !important;}*/
 #mainhead .filter_sep{margin-top: 10px !important;}
 
+
+
 #navtop{margin-top:30px;}
-#navtop.affix-top {margin-top:21px; position:relative; }
-.midd_cont {margin-top: 12px !important;}
+#midsection{margin-top:15px;}
+#navtop.affix-top {margin-top:21px; position:relative;}
+#midsection.midd_cont {margin-top: 30px !important;}
 
 
 .Fix_Head{position:absolute; top:10px !important; right:10px;}
@@ -1090,6 +1125,10 @@ span.evnt_toltip{
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -6px !important;}
 .xs-viewevent-inner{margin-top: -10px;}
 #divmain .filter_sep{ margin-top:10px !important; } 
+
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 174px !important;}
+.xs-paymentconf-inner{ margin-top:-10px;}
+
 
 #mainhead{ height:140px;}
 .createeventtop.event_top{ margin-top:145px;}
@@ -1109,12 +1148,13 @@ span.evnt_toltip{
 
 
 .xs-100{width:100%; float:left;}
-#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 147px !important;}
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 153px !important;}
+.xs-paymentconf-inner{ margin-top:3px;}
 
-
-
-#navtop.affix-top {top:153px !important;}
-#midsection.midd_cont {top: 138px !important;}
+#navtop{margin-top: 3px;}
+#midsection{ margin-top:3px;}
+#navtop.affix-top {top:150px !important;}
+#midsection.midd_cont {top: 135px !important;}
 .nav_ipad_left{ width:160px; position:absolute; z-index:9; }
 .nav_ipad_right{ left:125px;}
 }
@@ -1135,9 +1175,13 @@ span.evnt_toltip{
 .createeventtop.event_top{ margin-top:137px;}
 .createeventtop{margin-top:2px;}
 
-#navtop{ width:195px; }
-#navtop.affix-top {top:153px !important;}
-#midsection.midd_cont {top: 138px !important;}
+#navtop{ width:195px; margin-top:3px; }
+#midsection{ margin-top:3px;}
+#navtop.affix-top {top:150px !important;}
+#midsection.midd_cont {top: 135px !important;}
+
+#eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 153px !important;}
+.xs-paymentconf-inner{ margin-top:3px;}
 }
 
 @media (min-width: 1280px) {
