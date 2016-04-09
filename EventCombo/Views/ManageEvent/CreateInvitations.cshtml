@@ -1,4 +1,4 @@
-﻿
+﻿@model EventCombo.Models.Event_Email_Invitation
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
@@ -31,7 +31,14 @@
     <div class="col-sm-12 no_pad mt10">
         <div class="col-sm-2 col-xs-12 no_pad">
             <div class="form-group">
-                <input class="form-control invite_mail_inp_cont " type="text" placeholder="">
+                @if (Model != null && !String.IsNullOrEmpty(Model.I_SenderName))
+                {
+                    <input class="form-control invite_mail_inp_cont " id="txtSenderName" value="@Model.I_SenderName" type="text" placeholder="">
+                }
+                else
+                {
+                    <input class="form-control invite_mail_inp_cont " id="txtSenderName" type="text" placeholder="">
+                }
                 <p class="bottom-label">Sender's Name</p>
             </div>
         </div>
@@ -40,7 +47,14 @@
     <div class="col-sm-12 no_pad mt10">
         <div class="col-sm-3 col-xs-12 no_pad">
             <div class="form-group">
-                <input class="form-control invite_mail_inp_cont " type="text" placeholder="">
+                @if (Model != null && !String.IsNullOrEmpty(Model.I_SubjectLine))
+                {
+                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" type="text" value="@Model.I_SubjectLine" placeholder="">
+                }
+                else
+                {
+                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" type="text" placeholder="">
+                }
                 <p class="bottom-label">Subject Line</p>
             </div>
         </div>
@@ -114,13 +128,18 @@
             </div>
             <div class="clearfix"></div>
             <div class="col-sm-12">
-                <p class="inv_mail_desc">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was pop
-                    <br> <br>
-                    Hope to see you there!
-                    <br> <br>
-                    Saroosh's Great Events
-                </p>
+                @if (Model != null && !String.IsNullOrEmpty(Model.I_EmailContent))
+                {
+                    <p id="emailcontent" class="inv_mail_desc">
+                        @Model.I_EmailContent
+                    </p>
+                }
+                else
+                {
+                    <p id="emailcontent" class="inv_mail_desc">
+
+                    </p>
+                }
             </div>
         </div>
         <div class="clearfix"></div>
@@ -213,7 +232,14 @@
                 </div>
                 <div class="col-sm-4 no_pad">
                     <div class="form-group">
-                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime">
+                        @if (Model != null && Model.I_ScheduleDate != null)
+                        {
+                            <input type="text" class="form-control evnt_inp_cont fillDateTime" value="@Model.I_ScheduleDate" id="txtSchDate" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime">
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" id="txtSchDate" data-field="datetime">
+                        }
                     </div>
 
                 </div>
@@ -222,11 +248,13 @@
         <div class="clearfix"></div>
         <div class="col-md-6 col-sm-12 no_pad mt20 inv_send_btn_bottom">
             <div class="col-sm-4 col-xs-6 no_pad ">
-                <button class="btn def_btn acnt_btn send_test_btn" type="submit">Send Now</button>
+                <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('S');" type="button">Send Now</button>
             </div>
             <div class="col-sm-4 col-xs-6 no_pad">
-                <button class="btn def_btn acnt_btn send_test_btn" type="submit">Save Draft</button>
+                <button class="btn def_btn acnt_btn send_test_btn" id="btSaveDraft" onclick="SaveDetail('D');" type="button">Save Draft</button>
                 <input type="hidden" id="hdListId"  />
+                <input type="hidden" id="hdId" value="@Model.I_Id" />
+                <input type="hidden" id="hdEventId" value="@TempData["Eventid"]" />
             </div>
         </div>
     </div>
@@ -265,7 +293,7 @@
                     <div class="summernote">summernote 1</div>
 
                     <div class="col-sm-12 text-center">
-                        <button type="button" class="btn def_btn acnt_btn send_test_btn">
+                        <button type="button"  class="btn def_btn acnt_btn send_test_btn">
                             Save
                         </button>
                     </div>
@@ -385,7 +413,47 @@
 
         });
 
+
     });
+
+    function SaveDetail(Mode)
+    {
+        var EmailList = [];
+        var vIds = parseFloat($("#hdListId").val());
+        if (vIds > 0) {
+            for (i = 0; i <= vIds; i++) {
+                vVal = $("#UL_" + i).text();
+                alert(vVal);
+                if (vVal.trim() != '') {
+                    EmailList.push({
+                        L_Id: "0",
+                        L_I_Id: $("#hdId").val(),
+                        L_EmailId: vVal
+                    });
+                }
+            }
+        }
+        var model = {
+            'I_Id': $("#hdId").val(),
+            'I_Event_Id': $("#hdEventId").val(),
+            'I_SenderName': $("#txtSenderName").val(),
+            'I_SubjectLine': $("#txtSubjectLine").val(),
+            'I_EmailContent': $("#emailcontent").text(),
+            'I_ScheduleDate': $("#txtSchDate").val(),
+            'I_Mode': Mode,
+            'EmailList': EmailList
+        };
+
+        $.ajax({
+            url: '@Url.Action("SaveInvitation", "ManageEvent")',
+            data: { model: model},
+            type: "Post",
+            success: function (response) {
+                $("#hdId").val(response);
+            }
+        });
+
+    }
 
     function AddEmail(vValue)
     {

@@ -2064,10 +2064,82 @@ namespace EventCombo.Controllers
         }
 
         [Authorize]
-        public ActionResult CreateInvitations()
+        public ActionResult CreateInvitations(long lEventId)
         {
-
-            return View();
+            Event_Email_Invitation objEEI = new Event_Email_Invitation();
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                objEEI = (from EEI in objEnt.Event_Email_Invitation where EEI.I_Event_Id == lEventId select EEI).FirstOrDefault();
+            }
+            TempData["Eventid"] = lEventId;
+            return View(objEEI);
+        }
+        public long SaveInvitation(Event_Email_Invitation Model)
+        {
+            long lResult = 0;
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    if (Model.I_Id <= 0)
+                    {
+                        Event_Email_Invitation objEInt = new Event_Email_Invitation();
+                        objEInt.I_SenderName = Model.I_SenderName;
+                        objEInt.I_SubjectLine = Model.I_SubjectLine;
+                        objEInt.I_Event_Id = Model.I_Event_Id;
+                        objEInt.I_EmailContent = Model.I_EmailContent;
+                        objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+                        objEInt.I_Mode  = Model.I_Mode;
+                        objEInt.I_CreateDate = DateTime.Now;
+                        if (Model.EmailList != null)
+                        {
+                            Event_Email_List objEList = new Event_Email_List();
+                            foreach (Event_Email_List objEv in Model.EmailList)
+                            {
+                                objEList = new Event_Email_List();
+                                objEList.L_I_Id = objEInt.I_Id;
+                                objEList.L_EmailId = objEv.L_EmailId;
+                                objEnt.Event_Email_List.Add(objEList);
+                            }
+                        }
+                        objEnt.Event_Email_Invitation.Add(objEInt);
+                        objEnt.SaveChanges();
+                        lResult = objEInt.I_Id;
+                    }
+                    else
+                    {
+                        Event_Email_Invitation objEInt = objEnt.Event_Email_Invitation.First(i => i.I_Id  == Model.I_Id);
+                        objEInt.I_SenderName = Model.I_SenderName;
+                        objEInt.I_SubjectLine = Model.I_SubjectLine;
+                        objEInt.I_Event_Id = Model.I_Event_Id;
+                        objEInt.I_EmailContent = Model.I_EmailContent;
+                        objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+                        objEInt.I_Mode = Model.I_Mode;
+                        objEInt.I_ModifyDate = DateTime.Now;
+                        objEnt.Event_Email_List.RemoveRange(objEnt.Event_Email_List.Where(x => x.L_I_Id == Model.I_Id));
+                        if (Model.EmailList != null)
+                        {
+                            Event_Email_List objEList = new Event_Email_List();
+                            foreach (Event_Email_List objEv in Model.EmailList)
+                            {
+                                objEList = new Event_Email_List();
+                                objEList.L_I_Id = Model.I_Id;
+                                objEList.L_EmailId = objEv.L_EmailId;
+                                objEnt.Event_Email_List.Add(objEList);
+                            }
+                        }
+                        objEnt.SaveChanges();
+                        lResult = objEInt.I_Id;
+                    }
+                }
+                return lResult;
+            }
+            catch (Exception)
+            {
+                return lResult;
+            }
+            
         }
 
 

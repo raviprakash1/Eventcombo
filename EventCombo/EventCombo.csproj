@@ -346,6 +346,12 @@
     <Compile Include="Models\EventVote.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Event_Email_Invitation.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event_Email_List.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Event_OrganizerMessages.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>

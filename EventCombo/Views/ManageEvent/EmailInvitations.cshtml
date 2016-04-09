@@ -92,11 +92,11 @@
 
 <script>
     $(document).ready(function () {
-
         $("#btCreateInv").click(function () {
-            window.location.href = '@Url.Action("CreateInvitations", "ManageEvent")';
+            var vUrl = '@Url.Action("CreateInvitations", "ManageEvent",new { lEventId="eventurlid" },null)';
+            vUrl = vUrl.replace("eventurlid","101");
+            window.location.href = vUrl;
         });
-
     });
 
 </script>

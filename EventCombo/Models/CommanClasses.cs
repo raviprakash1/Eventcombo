@@ -111,5 +111,11 @@ namespace EventCombo.Models
     public partial class Address
     {
         public string discoverdistance { get; set; }
+
+
+    }
+    public partial class Event_Email_Invitation
+    {
+        public Event_Email_List[] EmailList { get; set; }
     }
 }
