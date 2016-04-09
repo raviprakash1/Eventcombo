@@ -489,11 +489,12 @@ namespace EventCombo.Controllers
         }
 
         [Authorize]
-        public ActionResult EmailInvitations(long eventId, string sortOrder, int? page)
+        public ActionResult EmailInvitations(long eventId, string tab, string sortOrder, int? page)
         {
             
             ViewBag.CurrentSort = (sortOrder ?? "subject");
 
+            ViewBag.tab = tab;
             ViewBag.EventId = eventId;
             using (EventComboEntities objEnt = new EventComboEntities())
             {
